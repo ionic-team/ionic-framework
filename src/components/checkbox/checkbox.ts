@@ -18,34 +18,34 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
  * @module ionic
  *
  * @description
- * The Checkbox is a simple component styled based on the mode. It can be
- * placed in an `ion-item` or used as a stand-alone checkbox.
+ * The Checkbox is a simple component that is styled based on the mode (iOS, Android, Windows Univeral). 
+ * It can be placed in an `ion-item` or used as a stand-alone checkbox.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
- * for more info on forms and inputs.
+ * For more info on forms and inputs, see the 
+ * [Angular 2 Forms Module Docs](https://angular.io/docs/ts/latest/guide/forms.html).
  *
  *
  * @usage
  * ```html
  *
- *  <ion-list>
+ * <ion-list>
  *
- *    <ion-item>
- *      <ion-label>Pepperoni</ion-label>
- *      <ion-checkbox [(ngModel)]="pepperoni"></ion-checkbox>
- *    </ion-item>
+ *   <ion-item>
+ *     <ion-label>Pepperoni</ion-label>
+ *     <ion-checkbox [(ngModel)]="pepperoni"></ion-checkbox>
+ *   </ion-item>
  *
- *    <ion-item>
- *      <ion-label>Sausage</ion-label>
- *      <ion-checkbox [(ngModel)]="sausage" disabled="true"></ion-checkbox>
- *    </ion-item>
+ *   <ion-item>
+ *     <ion-label>Sausage</ion-label>
+ *     <ion-checkbox [(ngModel)]="sausage" disabled="true"></ion-checkbox>
+ *   </ion-item>
  *
- *    <ion-item>
- *      <ion-label>Mushrooms</ion-label>
- *      <ion-checkbox [(ngModel)]="mushrooms"></ion-checkbox>
- *    </ion-item>
+ *   <ion-item>
+ *     <ion-label>Mushrooms</ion-label>
+ *     <ion-checkbox [(ngModel)]="mushrooms"></ion-checkbox>
+ *   </ion-item>
  *
- *  </ion-list>
+ * </ion-list>
  * ```
  *
  * @demo /docs/v2/demos/src/checkbox/
@@ -103,7 +103,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @output {Checkbox} expression to evaluate when the checkbox value changes
+   * @output {Checkbox} An expression to evaluate when the checkbox value changes
    */
   @Output() ionChange: EventEmitter<Checkbox> = new EventEmitter<Checkbox>();
 
