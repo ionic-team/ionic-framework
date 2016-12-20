@@ -1,4 +1,6 @@
-import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
+import { forwardRef, Inject } from '@angular/core';
+import { ItemReorder } from '../item/item-reorder';
+import { indexForItem, findReorderItem } from './item-reorder-util';
 import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';
@@ -18,7 +20,8 @@ export class ItemReorderGesture {
   private windowHeight: number;
   private events: UIEventManager;
 
-  constructor(public platform: Platform, public reorderList: ItemReorder) {
+
+  constructor(public platform: Platform, @Inject(forwardRef(() => ItemReorder)) public reorderList: ItemReorder) {
     this.events = new UIEventManager(platform);
     this.events.pointerEvents({
       element: this.reorderList.getNativeElement(),
