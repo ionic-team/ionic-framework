@@ -4,6 +4,7 @@ import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
 import { Item } from './item';
+import { findReorderItem } from './item-reorder-util';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
@@ -327,37 +328,4 @@ export class Reorder {
     ev.preventDefault();
     ev.stopPropagation();
   }
-
-}
-
-/**
- * @private
- */
-export function findReorderItem(node: any, listNode: any): HTMLElement {
-  let nested = 0;
-  while (node && nested < 4) {
-    if (indexForItem(node) !== undefined) {
-      if (listNode && node.parentNode !== listNode) {
-        return null;
-      }
-      return node;
-    }
-    node = node.parentNode;
-    nested++;
-  }
-  return null;
-}
-
-/**
- * @private
- */
-export function indexForItem(element: any): number {
-  return element['$ionIndex'];
-}
-
-/**
- * @private
- */
-export function reorderListForItem(element: any): any {
-  return element['$ionReorderList'];
 }
