@@ -18,7 +18,7 @@
 
 For Ionic 1 issues - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
 
-For Ionic 2 issues - http://plnkr.co/edit/GJte2b?p=preview
+For Ionic 2 issues - http://plnkr.co/edit/z0DzVL?p=preview
 -->
 
 **Related code:**
