@@ -75,6 +75,19 @@ export class E2EPage {
     toast.present();
   }
 
+  showDismissPageChangeToast() {
+    const toast = this.toastCtrl.create({
+      message: 'I am dismissed on page change',
+      dismissOnPageChange: true
+    });
+    toast.onDidDismiss(this.dismissHandler);
+    toast.present();
+
+    setTimeout(() => {
+      this.navCtrl.push(AnotherPage);
+    }, 1000);
+  }
+
   private dismissHandler(toast: Toast) {
     console.info('Toast onDidDismiss()');
   }
