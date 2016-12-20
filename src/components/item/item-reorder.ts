@@ -1,9 +1,8 @@
-import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Inject, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
+import { Component, Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
-import { Item } from './item';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
