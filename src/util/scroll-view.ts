@@ -437,7 +437,7 @@ export class ScrollView {
 
       if (!self._el || !self.isScrolling || attempts > maxAttempts) {
         self.isScrolling = false;
-        (<any>self._el.style)[this._platform.Css.transform] = '';
+        (<any>self._el.style)[self._platform.Css.transform] = '';
         done();
         return;
       }
@@ -463,7 +463,7 @@ export class ScrollView {
 
       } else {
         self.isScrolling = false;
-        (<any>self._el.style)[this._platform.Css.transform] = '';
+        (<any>self._el.style)[self._platform.Css.transform] = '';
         done();
       }
     }
