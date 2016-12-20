@@ -4,7 +4,7 @@ import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
 import { findReorderItem } from './item-reorder-util';
-import { ItemReorderGesture } from '../item/item-reorder-gesture';
+import { ItemReorderGestureDelegate, ItemReorderGesture } from '../item/item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
 
@@ -145,7 +145,7 @@ export class ReorderIndexes {
     '[class.reorder-visible]': '_visibleReorder',
   }
 })
-export class ItemReorder {
+export class ItemReorder implements ItemReorderGestureDelegate {
 
   _enableReorder: boolean = false;
   _visibleReorder: boolean = false;

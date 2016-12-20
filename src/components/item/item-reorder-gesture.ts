@@ -1,5 +1,3 @@
-import { forwardRef, Inject } from '@angular/core';
-import { ItemReorder } from '../item/item-reorder';
 import { indexForItem, findReorderItem } from './item-reorder-util';
 import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
@@ -21,7 +19,7 @@ export class ItemReorderGesture {
   private events: UIEventManager;
 
 
-  constructor(public platform: Platform, @Inject(forwardRef(() => ItemReorder)) public reorderList: ItemReorder) {
+  constructor(public platform: Platform, public reorderList: ItemReorderGestureDelegate) {
     this.events = new UIEventManager(platform);
     this.events.pointerEvents({
       element: this.reorderList.getNativeElement(),
@@ -166,3 +164,12 @@ export class ItemReorderGesture {
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
 const ITEM_REORDER_ACTIVE = 'reorder-active';
+
+export interface ItemReorderGestureDelegate {
+  getNativeElement: () => any;
+  _reorderPrepare: () => void;
+  _scrollContent: (scrollPosition: number) => number;
+  _reorderStart: () => void;
+  _reorderMove: (fromIndex: number, toIndex: number, itemHeight: number) => void;
+  _reorderEmit: (fromIndex: number, toIndex: number) => void;
+}
