@@ -311,18 +311,16 @@ export class ItemReorder {
 })
 export class Reorder {
   constructor(
-    @Inject(forwardRef(() => Item)) private item: ItemReorder,
     private elementRef: ElementRef) {
     elementRef.nativeElement['$ionComponent'] = this;
   }
 
   getReorderNode(): HTMLElement {
-    let node = <any>this.item.getNativeElement();
-    return findReorderItem(node, null);
+    return findReorderItem(this.elementRef.nativeElement, null);
   }
 
   @HostListener('click', ['$event'])
-  onClick(ev) {
+  onClick(ev: UIEvent) {
     // Stop propagation if click event reaches ion-reorder
     ev.preventDefault();
     ev.stopPropagation();
@@ -335,7 +333,7 @@ export class Reorder {
  */
 export function findReorderItem(node: any, listNode: any): HTMLElement {
   let nested = 0;
-  while (node && nested < 4) {
+  while (node && nested < 6) {
     if (indexForItem(node) !== undefined) {
       if (listNode && node.parentNode !== listNode) {
         return null;
