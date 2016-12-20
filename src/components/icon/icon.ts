@@ -8,16 +8,15 @@ import { Ion } from '../ion';
 /**
  * @name Icon
  * @description
- * Icons can be used on their own, or inside of a number of Ionic components.
+ * The Icon component is used to include Ionicons in an app. Icons can be used 
+ * on their own or inside of a number of Ionic components, and are styled 
+ * differently depending on the mode the app is running in (iOS, MD, WP). 
+ * For example, by setting the icon name of `alarm`, on iOS the
+ * icon will automatically apply `ios-alarm`, and on Material Design it will
+ * automatically apply `md-alarm`.
+ *
  * For a full list of available icons, check out the
  * [Ionicons docs](../../../../ionicons).
- *
- * One feature of Ionicons in Ionic is when icon names are set, the actual icon
- * which is rendered can change slightly depending on the mode the app is
- * running from. For example, by setting the icon name of `alarm`, on iOS the
- * icon will automatically apply `ios-alarm`, and on Material Design it will
- * automatically apply `md-alarm`. This allows the developer to write the
- * markup once while Ionic applies the appropriate icon based on the mode.
  *
  * @usage
  * ```html
@@ -32,8 +31,39 @@ import { Ion } from '../ion';
  * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
+ * ### Active / Inactive Icons
+ * 
+ * All icons have both `active` and `inactive` states. Active icons are typically 
+ * full and thick, where as inactive icons are outlined and thin. Set the `isActive` 
+ * attribute to `true` or `false` to change the state of the icon. Icons will default 
+ * to active if a value is not specified.
+ * 
+ * ```html
+ * <!-- active -->
+ * <ion-icon name="heart"></ion-icon>
+ *
+ * <!-- inactive -->
+ * <ion-icon name="heart" isActive="false"></ion-icon>
+ * ```
+ * 
+ * ### Dynamcially Changing an Icon
+ * 
+ * To set an icon using a variable, bind the `name` attribute to a value on the component's model:
+ * 
+ * ```html
+ * <ion-icon [name]="myIcon"></ion-icon>
+ * ```
+ * 
+ * ```typescript
+ * export class MyFirstPage {
+ *   // use the home icon
+ *   myIcon: string = "home";
+ * }
+ * ```
+ * 
  * @demo /docs/v2/demos/src/icon/
  * @see {@link /docs/v2/components#icons Icon Component Docs}
+ * @see {@link /docs/v2/ionicons Ionicon Docs}
  *
  */
 @Directive({
@@ -68,7 +98,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode (ios, md, wp) to apply to this component.
    */
   @Input()
   set mode(val: string) {
