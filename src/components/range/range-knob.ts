@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Inject, Input, OnInit } from '@angular/core';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
 import { Range } from './range';
@@ -38,7 +38,7 @@ export class RangeKnob implements OnInit {
     this._upper = isTrueProperty(val);
   }
 
-  constructor(public range: Range) { }
+  constructor(@Inject(forwardRef(() => Range)) public range: Range) { }
 
   get ratio(): number {
     return this._ratio;
