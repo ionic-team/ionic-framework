@@ -19,15 +19,16 @@ export const DATETIME_VALUE_ACCESSOR: any = {
 /**
  * @name DateTime
  * @description
- * The DateTime component is used to present an interface which makes it easy for
- * users to select dates and times. Tapping on `<ion-datetime>` will display a picker
- * interface that slides up from the bottom of the page. The picker then displays
- * scrollable columns that can be used to individually select years, months, days,
- * hours and minute values. The DateTime component is similar to the native
- * `<input type="datetime-local">` element, however, Ionic's DateTime component makes
- * it easy to display the date and time in a preferred format, and manage the datetime
- * values.
+ * The DateTime component that makes it easy for users to select dates and times. Tapping 
+ * on `<ion-datetime>` will display a picker interface that slides up from the bottom of 
+ * the page. The picker then displays scrollable columns that can be used to individually 
+ * select years, months, days, hours and minute values. 
  *
+ * The DateTime component is similar to the native `<input type="datetime-local">` element. 
+ * Ionic's DateTime component, however, makes it easy to display the date and time in a 
+ * preferred format, and manage the datetime values.
+ *
+ * @usage
  * ```html
  * <ion-item>
  *   <ion-label>Date</ion-label>
@@ -71,13 +72,14 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  *
  * ### Display Format
  *
- * The `displayFormat` input property specifies how a datetime's value should be
+ * The `displayFormat` attribute specifies how a datetime's value should be
  * printed, as formatted text, within the `ion-datetime` component.
  *
- * In the following example, the display in the `<ion-datetime>` will use the
- * month's short name, the numerical day with a leading zero, a comma and the
- * four-digit year. In addition to the date, it will display the time with the hours
- * in the 24-hour format and the minutes. Any character can be used as a separator.
+ * In the following example, the display will use the month's short name, the 
+ * numerical day with a leading zero, a comma and the four-digit year. In addition 
+ * to the date, it will display the time with the hours in the 24-hour format and 
+ * the minutes. Any character can be used as a separator.
+ *
  * An example display using this format is: `Jun 17, 2005 11:06`.
  *
  * ```html
@@ -89,13 +91,12 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  *
  * ### Picker Format
  *
- * The `pickerFormat` input property determines which columns should be shown in the
+ * The `pickerFormat` attribute determines which columns should be shown in the
  * interface, the order of the columns, and which format to use within each column.
  * If the `pickerFormat` input is not provided then it will default to the `displayFormat`.
  *
- * In the following example, the display in the `<ion-datetime>` will use the
- * `MM/YYYY` format, such as `06/2020`. However, the picker interface
- * will display two columns with the month's long name, and the four-digit year.
+ * In the following example, the display will use the `MM/YYYY` format, such as `06/2020`, but 
+ * the picker interface will display two columns with the month's long name, and the four-digit year.
  *
  * ```html
  * <ion-item>
@@ -141,8 +142,8 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  * | Hour and Minute      | HH:mm                  | 13:47                        |
  * | Hour, Minute, Second | HH:mm:ss               | 13:47:20                     |
  *
- * Note that the year is always four-digits, milliseconds (if it's added) is always
- * three-digits, and all others are always two-digits. So the number representing
+ * Note that the year is always four digits, milliseconds (if it's added) is always
+ * three digits, and all others are always two digits, so the number representing
  * January always has a leading zero, such as `01`. Additionally, the hour is always
  * in the 24-hour format, so `00` is `12am` on a 12-hour clock, `13` means `1pm`,
  * and `23` means `11pm`.
@@ -156,17 +157,12 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  *
  * ## Min and Max Datetimes
  *
- * Dates are infinite in either direction, so for a user's selection there should be at
- * least some form of restricting the dates that can be selected. Be default, the maximum
- * date is to the end of the current year, and the minimum date is from the beginning
- * of the year that was 100 years ago.
+ * By default, the maximum date a user can pick is the end of the current year, and the 
+ * minimum date is the beginning of the year that was 100 years ago.
  *
- * To customize the minimum and maximum datetime values, the `min` and `max` component
- * inputs can be provided which may make more sense for the app's use-case, rather
- * than the default of the last 100 years. Following the same IS0 8601 format listed
- * in the table above, each component can restrict which dates can be selected by the
- * user. Below is an example of restricting the date selection between the beginning
- * of 2016, and October 31st of 2020:
+ * To customize the minimum and maximum datetime values, use the `min` and `max` component
+ * attributes with the same IS0 8601 format listed above. Below is an example of restricting 
+ * the date selection between the beginning of 2016, and October 31st of 2020:
  *
  * ```html
  * <ion-item>
@@ -180,17 +176,17 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  * ## Month Names and Day of the Week Names
  *
  * At this time, there is no one-size-fits-all standard to automatically choose the correct
- * language/spelling for a month name, or day of the week name, depending on the language
- * or locale. Good news is that there is an
+ * language/spelling for a month or day of the week name, depending on the language
+ * or locale. The good news is that there is an
  * [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat)
  * standard which *most* browsers have adopted. However, at this time the standard has not
- * been fully implemented by all popular browsers so Ionic is unavailable to take advantage
+ * been fully implemented by all popular browsers, so Ionic is unable to take advantage
  * of it *yet*. Additionally, Angular also provides an internationalization service, but it
- * is still under heavy development so Ionic does not depend on it at this time.
+ * is still under heavy development, so Ionic does not depend on it at this time.
  *
- * All things considered, the by far easiest solution is to just provide an array of names
+ * All things considered, the easiest solution is to just provide an array of names
  * if the app needs to use names other than the default English version of month and day
- * names. The month names and day names can be either configured at the app level, or
+ * names. The month names and day names can be either configured at the app level or
  * individual `ion-datetime` level.
  *
  * ### App Config Level
@@ -224,27 +220,14 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  *
  * The datetime picker provides the simplicity of selecting an exact format, and persists
  * the datetime values as a string using the standardized
- * [ISO 8601 datetime format](https://www.w3.org/TR/NOTE-datetime).
- * However, it's important to note that `ion-datetime` does not attempt to solve all
+ * [ISO 8601 datetime format](https://www.w3.org/TR/NOTE-datetime), but
+ * it's important to note that `ion-datetime` does not attempt to solve all
  * situtations when validating and manipulating datetime values. If datetime values need
  * to be parsed from a certain format, or manipulated (such as adding 5 days to a date,
  * subtracting 30 minutes, etc.), or even formatting data to a specific locale, then we highly
  * recommend using [moment.js](http://momentjs.com/) to "Parse, validate, manipulate, and
- * display dates in JavaScript". [Moment.js](http://momentjs.com/) has quickly become
- * our goto standard when dealing with datetimes within JavaScript, but Ionic does not
- * prepackage this dependency since most apps will not require it, and its locale
- * configuration should be decided by the end-developer.
- *
- *
- * @usage
- * ```html
- * <ion-item>
- *   <ion-label>Date</ion-label>
- *   <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate">
- *   </ion-datetime>
- * </ion-item>
- * ```
- *
+ * display dates in JavaScript," although Ionic does not prepackage this dependency since most 
+ * apps will not require it.
  *
  * @demo /docs/v2/demos/src/datetime/
  */
