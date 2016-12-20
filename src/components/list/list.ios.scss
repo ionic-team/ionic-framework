@@ -192,3 +192,10 @@ $list-ios-header-background-color:    transparent !default;
     background-color: $color-base;
   }
 }
+
+// iOS List inputs
+// --------------------------------------------------
+
+.list-ios .item-input:last-child {
+  border-bottom: 1px solid $list-ios-border-color;
+}
