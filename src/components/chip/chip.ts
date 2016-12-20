@@ -7,7 +7,8 @@ import { Ion } from '../ion';
   * @name Chip
   * @module ionic
   * @description
-  * Chips represent complex entities in small blocks, such as a contact.
+  * Chips represent complex entities in small blocks, such as a contact, and are mainly
+  * used as a user interface component for Material Design (Android) apps.
   *
   *
   * @usage
