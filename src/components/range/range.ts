@@ -12,7 +12,7 @@ import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
 import { TimeoutDebouncer } from '../../util/debouncer';
 import { UIEventManager } from '../../gestures/ui-event-manager';
-import { RangeKnob } from './range-knob';
+import { RangeKnobDelegate, RangeKnob } from './range-knob';
 
 
 export const RANGE_VALUE_ACCESSOR: any = {
@@ -115,7 +115,7 @@ export const RANGE_VALUE_ACCESSOR: any = {
   providers: [RANGE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Range extends Ion implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class Range extends Ion implements AfterViewInit, ControlValueAccessor, OnDestroy, RangeKnobDelegate {
   _dual: boolean = false;
   _pin: boolean;
   _disabled: boolean = false;

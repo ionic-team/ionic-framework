@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
-import { Range } from './range';
 
 /**
  * @private
@@ -38,7 +37,7 @@ export class RangeKnob implements OnInit {
     this._upper = isTrueProperty(val);
   }
 
-  constructor(public range: Range) { }
+  constructor(public range: RangeKnobDelegate) { }
 
   get ratio(): number {
     return this._ratio;
@@ -96,4 +95,12 @@ export class RangeKnob implements OnInit {
     this.position();
   }
 
+}
+
+export class RangeKnobDelegate {
+  dualKnobs: boolean;
+  ratioToValue: (ratio: number) => number;
+  valueToRatio: (value: number) => number;
+  value: any;
+  snaps: boolean;
 }
