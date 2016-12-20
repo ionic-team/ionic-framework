@@ -14,8 +14,9 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * @name Config
  * @demo /docs/v2/demos/src/config/
  * @description
- * The Config lets you configure your entire app or specific platforms.
- * You can set the tab placement, icon mode, animations, and more here.
+ * The Config lets you configure your app globally or for specific platform modes 
+ * (iOS, Android, Windows Phone). You can set the tab placement, icon mode, animations, 
+ * and more here.
  *
  * ```ts
  * import { IonicApp, IonicModule } from 'ionic-angular';
@@ -38,9 +39,12 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * })
  * ```
  *
+ * ### Customizing Config by Platform Mode
  *
  * Config can be overwritten at multiple levels allowing for more granular configuration.
- * Below is an example where an app can override any setting we want based on a platform.
+ * Below is an example where an app can override any setting we want based on a platform
+ * by adding a `platforms` object to our Config with separate nested objects for each platform
+ * mode (ios, md, wp):
  *
  * ```ts
  * import { IonicModule } from 'ionic-angular';
@@ -61,14 +65,18 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * })
  * ```
  *
- * We could also configure these values at a component level. Take `tabsPlacement`,
- * we can configure this as a property on our `ion-tabs`.
+ * ### Customizing Config by Component
+ *
+ * We could also configure these values at a component level. For example, the following customizes
+ * `tabsPlacement` by setting it as an attribute on the `ion-tabs` component:
  *
  * ```html
  * <ion-tabs tabsPlacement="top">
  *   <ion-tab tabTitle="Dash" tabIcon="pulse" [root]="tabRoot"></ion-tab>
  * </ion-tabs>
  * ```
+ *
+ * ### Customizing Config with Query Strings
  *
  * The last way we could configure is through URL query strings. This is useful for testing
  * while in the browser. Simply add `?ionic<PROPERTYNAME>=<value>` to the url.
@@ -77,15 +85,18 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * http://localhost:8100/?ionicTabsPlacement=bottom
  * ```
  *
- * Any value can be added to config, and looked up at a later in any component.
+ * ### Setting/Getting Config Programmatically
+ *
+ * Any value can be added to config, and looked up at a later time in any component with the
+ * `set` and `get` functions:
  *
  * ```js
  * config.set('ios', 'favoriteColor', 'green');
  *
- * // from any page in your app:
  * config.get('favoriteColor'); // 'green' when iOS
  * ```
  *
+ * ### Config Properties
  *
  * A config value can come from anywhere and be anything, but there are default
  * values for each mode. The [theming](../../../theming/platform-specific-styles/)
@@ -149,12 +160,11 @@ export class Config {
   /**
    * @name get
    * @description
-   * Returns a single config value, given a key.
+   * Returns the config value for the given key.
    *
    * @param {string} [key] - the key for the config value
    * @param {any} [fallbackValue] - a fallback value to use when the config
-   * value was not found, or is config value is `null`. Fallback value
-   *  defaults to `null`.
+   * value was not found, or is config value is `null`. Defaults to `null`.   
    */
   get(key: string, fallbackValue: any = null): any {
 
@@ -259,11 +269,10 @@ export class Config {
   /**
    * @name getBoolean
    * @description
-   * Same as `get()`, however always returns a boolean value. If the
-   * value from `get()` is `null`, then it'll return the `fallbackValue`
-   * which defaults to `false`. Otherwise, `getBoolean()` will return
-   * if the config value is truthy or not. It also returns `true` if
-   * the config value was the string value `"true"`.
+   * Same as `get()`, but always returns a boolean value of whether the config 
+   * value is truthy or not. Also returns `true` if the config value was the string 
+   * value `"true"`. If the value is `null` the `fallbackValue` will be returned,
+   * which defaults to `false`.
    * @param {string} [key] - the key for the config value
    * @param {boolean} [fallbackValue] - a fallback value to use when the config
    * value was `null`. Fallback value defaults to `false`.
@@ -283,7 +292,7 @@ export class Config {
   /**
    * @name getNumber
    * @description
-   * Same as `get()`, however always returns a number value. Uses `parseFloat()`
+   * Same as `get()`, but always returns a number value. Uses `parseFloat()`
    * on the value received from `get()`. If the result from the parse is `NaN`,
    * then it will return the value passed to `fallbackValue`. If no fallback
    * value was provided then it'll default to returning `NaN` when the result
