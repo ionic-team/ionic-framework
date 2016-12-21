@@ -42,8 +42,29 @@ import { Platform } from '../../platform/platform';
  * </ion-item>
  * ```
  *
-
-
+ * ## Common Usage Patterns
+ * 
+ * ### Inset Inputs
+ * By default each input item will fill 100% of the width of its parent element. Make 
+ * the input inset by including it in a list, then adding the `inset` attribute to the 
+ * `ion-list` component.
+ * 
+ * ```html
+ * <ion-list inset>
+ * 
+ *   <ion-item>
+ *     <ion-label>Username</ion-label>
+ *     <ion-input type="text"></ion-input>
+ *   </ion-item>
+ * 
+ *   <ion-item>
+ *     <ion-label>Password</ion-label>
+ *     <ion-input type="password"></ion-input>
+ *   </ion-item>
+ * 
+ * </ion-list>
+ * ```
+ *
  * @demo /docs/v2/demos/src/input/
  */
 @Component({
