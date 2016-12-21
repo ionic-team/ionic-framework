@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isPresent, isTrueProperty } from '../../util/util';
@@ -12,7 +12,6 @@ import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
 import { TimeoutDebouncer } from '../../util/debouncer';
 import { UIEventManager } from '../../gestures/ui-event-manager';
-import { RangeKnob } from './range-knob';
 
 
 export const RANGE_VALUE_ACCESSOR: any = {
@@ -20,8 +19,6 @@ export const RANGE_VALUE_ACCESSOR: any = {
   useExisting: forwardRef(() => Range),
   multi: true
 };
-
-
 
 
 /**
@@ -103,8 +100,8 @@ export const RANGE_VALUE_ACCESSOR: any = {
       '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active"></div>' +
       '<div class="range-bar"></div>' +
       '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar></div>' +
-      '<div class="range-knob-handle"></div>' +
-      '<div class="range-knob-handle" [upper]="true" *ngIf="_dual"></div>' +
+      '<div class="range-knob-handle" [ratio]="_lowerRatio" [val]="_lowerVal" [pin]="_pin" [min]="_min" [max]="_max" [pressed]="_lowerPressed"></div>' +
+      '<div class="range-knob-handle" [ratio]="_upperRatio" [val]="_upperVal" [pin]="_pin" [min]="_min" [max]="_max" [pressed]="_upperPressed" *ngIf="_dual"></div>' +
     '</div>' +
     '<ng-content select="[range-right]"></ng-content>',
   host: {
@@ -116,34 +113,48 @@ export const RANGE_VALUE_ACCESSOR: any = {
   encapsulation: ViewEncapsulation.None,
 })
 export class Range extends Ion implements AfterViewInit, ControlValueAccessor, OnDestroy {
-  _dual: boolean = false;
+  _dual: boolean;
   _pin: boolean;
-  _disabled: boolean = false;
-  _pressed: boolean;
+  _disabled: boolean;
+  _pressed: boolean = false;
   _labelId: string;
   _fn: Function;
 
-  _active: RangeKnob;
-  _start: PointerCoordinates = null;
+  _start: PointerCoordinates;
   _rect: ClientRect;
   _ticks: any[];
-  _barL: string;
-  _barR: string;
 
   _min: number = 0;
   _max: number = 100;
   _step: number = 1;
-  _snaps: boolean = false;
+  _snaps: boolean;
+
+  _lowerVal: number;
+  _upperVal: number;
+
+  _lowerRatio: number;
+  _upperRatio: number;
+
+  _lowerPressed: boolean;
+  _upperPressed: boolean;
+
+  _barL: string;
+  _barR: string;
 
   _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _events: UIEventManager;
+
+  @ViewChild('bar') public _bar: ElementRef;
+  @ViewChild('slider') public _slider: ElementRef;
+
   /**
    * @private
    */
   value: any;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The predefined color to use. For example: `"primary"`,
+   * `"secondary"`, `"danger"`.
    */
   @Input()
   set color(val: string) {
@@ -157,10 +168,6 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   set mode(val: string) {
     this._setMode(val);
   }
-
-  @ViewChild('bar') public _bar: ElementRef;
-  @ViewChild('slider') public _slider: ElementRef;
-  @ViewChildren(RangeKnob) public _knobs: QueryList<RangeKnob>;
 
   /**
    * @private
@@ -210,7 +217,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {number} If true, the knob snaps to tick marks evenly spaced based on the step property value. Defaults to `false`.
+   * @input {number} If true, the knob snaps to tick marks evenly spaced based
+   * on the step property value. Defaults to `false`.
    */
   @Input()
   get snaps(): boolean {
@@ -221,7 +229,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {number} If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
+   * @input {number} If true, a pin with integer value is shown when the knob
+   * is pressed. Defaults to `false`.
    */
   @Input()
   get pin(): boolean {
@@ -232,8 +241,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {number} How long, in milliseconds, to wait to trigger the `ionChange`
-   * event after each change in the range value. Default `0`.
+   * @input {number} How long, in milliseconds, to wait to trigger the
+   * `ionChange` event after each change in the range value. Default `0`.
    */
   @Input()
   get debounce(): number {
@@ -288,10 +297,10 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     let barL = '';
     let barR = '';
 
-    let firstRatio = this._knobs.first.ratio;
+    const firstRatio = this._lowerRatio;
+    const lastRatio = this._upperRatio;
 
     if (this._dual) {
-      let lastRatio = this._knobs.last.ratio;
       barL = `${(Math.min(firstRatio, lastRatio) * 100)}%`;
       barR = `${100 - (Math.max(firstRatio, lastRatio) * 100)}%`;
 
@@ -299,24 +308,25 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       barR = `${100 - (firstRatio * 100)}%`;
     }
 
+    // set the left/right of the highlight bar
     this._renderer.setElementStyle(this._bar.nativeElement, 'left', barL);
     this._renderer.setElementStyle(this._bar.nativeElement, 'right', barR);
 
     // add touchstart/mousedown listeners
     this._events.pointerEvents({
       element: this._slider.nativeElement,
-      pointerDown: this.pointerDown.bind(this),
-      pointerMove: this.pointerMove.bind(this),
-      pointerUp: this.pointerUp.bind(this),
-      zone: false
+      pointerDown: this._pointerDown.bind(this),
+      pointerMove: this._pointerMove.bind(this),
+      pointerUp: this._pointerUp.bind(this),
+      zone: true
     });
-    this.createTicks();
+
+    // build all the ticks if there are any to show
+    this._createTicks();
   }
 
-  /**
-   * @private
-   */
-  pointerDown(ev: UIEvent): boolean {
+  /** @internal */
+  _pointerDown(ev: UIEvent): boolean {
     // TODO: we could stop listening for events instead of checking this._disabled.
     // since there are a lot of events involved, this solution is
     // enough for the moment
@@ -330,142 +340,127 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     ev.stopPropagation();
 
     // get the start coordinates
-    this._start = pointerCoord(ev);
+    const start = this._start = pointerCoord(ev);
 
     // get the full dimensions of the slider element
-    let rect: ClientRect = this._rect = this._slider.nativeElement.getBoundingClientRect();
+    const rect: ClientRect = this._rect = this._slider.nativeElement.getBoundingClientRect();
 
     // figure out the offset
     // the start of the pointer could actually
     // have been left or right of the slider bar
-    if (this._start.x < rect.left) {
-      rect.xOffset = (this._start.x - rect.left);
+    if (start.x < rect.left) {
+      rect.xOffset = (start.x - rect.left);
 
-    } else if (this._start.x > rect.right) {
-      rect.xOffset = (this._start.x - rect.right);
+    } else if (start.x > rect.right) {
+      rect.xOffset = (start.x - rect.right);
 
     } else {
       rect.xOffset = 0;
     }
 
-    // figure out which knob we're interacting with
-    this.setActiveKnob(this._start, rect);
-
-    // update the ratio for the active knob
-    this.updateKnob(this._start, rect);
-
     // update the active knob's position
-    this._active.position();
-    this._pressed = this._active.pressed = true;
+    this._update(start, rect, true);
 
     this._haptic.gestureSelectionStart();
 
     return true;
   }
 
-  /**
-   * @private
-   */
-  pointerMove(ev: UIEvent) {
+  /** @internal */
+  _pointerMove(ev: UIEvent) {
     console.debug(`range, ${ev.type}`);
 
     // prevent default so scrolling does not happen
     ev.preventDefault();
     ev.stopPropagation();
 
-    // update the ratio for the active knob
-    this.updateKnob(pointerCoord(ev), this._rect);
-
     // update the active knob's position
-    this._active.position();
-    this._pressed = this._active.pressed = true;
+    this._update(pointerCoord(ev), this._rect, true);
   }
 
-  /**
-   * @private
-   */
-  pointerUp(ev: UIEvent) {
-    console.debug(`range, ${ev.type}`);
+  /** @internal */
+  _pointerUp(ev: UIEvent) {
+    if (!this._disabled) {
+      console.debug(`range, ${ev.type}`);
 
-    // prevent default so scrolling does not happen
-    ev.preventDefault();
-    ev.stopPropagation();
+      // prevent default so scrolling does not happen
+      ev.preventDefault();
+      ev.stopPropagation();
 
-    // update the ratio for the active knob
-    this.updateKnob(pointerCoord(ev), this._rect);
+      // update the active knob's position
+      this._update(pointerCoord(ev), this._rect, false);
 
-    // update the active knob's position
-    this._active.position();
-
-    this._haptic.gestureSelectionEnd();
+      this._haptic.gestureSelectionEnd();
+    }
 
     // clear the start coordinates and active knob
-    this._start = this._active = null;
-    this._pressed = this._knobs.first.pressed = this._knobs.last.pressed = false;
+    this._start = null;
   }
 
-  /**
-   * @private
-   */
-  setActiveKnob(current: PointerCoordinates, rect: ClientRect) {
-    // figure out which knob is the closest one to the pointer
-    let ratio = (current.x - rect.left) / (rect.width);
+  /** @internal */
+  _update(current: PointerCoordinates, rect: ClientRect, isPressed: boolean) {
+    // update which knob is pressed
+    this._pressed = isPressed;
 
-    if (this._dual && Math.abs(ratio - this._knobs.first.ratio) > Math.abs(ratio - this._knobs.last.ratio)) {
-      this._active = this._knobs.last;
-
-    } else {
-      this._active = this._knobs.first;
-    }
-  }
-
-  /**
-   * @private
-   */
-  updateKnob(current: PointerCoordinates, rect: ClientRect) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
-    if (this._active) {
-      let oldVal = this._active.value;
-      this._active.ratio = (current.x - rect.left) / (rect.width);
-      let newVal = this._active.value;
+    let ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
+    let val = this._ratioToValue(ratio);
 
-      if (oldVal !== newVal) {
-        // Trigger a haptic selection changed event if this is
-        // a snap range
-        if (this.snaps) {
-          this._haptic.gestureSelectionChanged();
-        }
-
-        // value has been updated
-        if (this._dual) {
-          this.value = {
-            lower: Math.min(this._knobs.first.value, this._knobs.last.value),
-            upper: Math.max(this._knobs.first.value, this._knobs.last.value),
-          };
-
-        } else {
-          this.value = newVal;
-        }
-
-        this._debouncer.debounce(() => {
-          this.onChange(this.value);
-          this.ionChange.emit(this);
-        });
-      }
-
-      this.updateBar();
+    if (this._snaps) {
+      ratio = this._valueToRatio(val);
     }
+
+    if (this._dual && Math.abs(ratio - this._lowerRatio) > Math.abs(ratio - this._upperRatio)) {
+      // upper knob
+      this._upperRatio = ratio;
+      this._upperVal = val;
+      this._upperPressed = isPressed;
+      this._lowerPressed = false;
+
+    } else {
+      // lower knob
+      this._lowerRatio = ratio;
+      this._lowerVal = val;
+      this._lowerPressed = isPressed;
+      this._upperPressed = false;
+    }
+
+    // value has been updated
+    if (this._dual) {
+      if (!this.value) {
+        this.value = {};
+      }
+      this.value.lower = Math.min(this._lowerVal, this._upperVal);
+      this.value.upper = Math.max(this._lowerVal, this._upperVal);
+
+      console.debug(`range, updateKnob: ${ratio}, lower: ${this.value.lower}, upper: ${this.value.upper}`);
+
+    } else {
+      this.value = this._lowerVal;
+      console.debug(`range, updateKnob: ${ratio}, value: ${this.value}`);
+    }
+
+    this._debouncer.debounce(() => {
+      this.onChange(this.value);
+      this.ionChange.emit(this);
+    });
+
+    // trigger a haptic selection changed event
+    // if this is a snap range
+    if (this.snaps) {
+      this._haptic.gestureSelectionChanged();
+    }
+
+    this._updateBar();
   }
 
-  /**
-   * @private
-   */
-  updateBar() {
-    let firstRatio = this._knobs.first.ratio;
+  /** @internal */
+  _updateBar() {
+    const firstRatio = this._lowerRatio;
+    const lastRatio = this._upperRatio;
 
     if (this._dual) {
-      let lastRatio = this._knobs.last.ratio;
       this._barL = `${(Math.min(firstRatio, lastRatio) * 100)}%`;
       this._barR = `${100 - (Math.max(firstRatio, lastRatio) * 100)}%`;
 
@@ -474,36 +469,33 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       this._barR = `${100 - (firstRatio * 100)}%`;
     }
 
-    this.updateTicks();
+    this._updateTicks();
   }
 
-  /**
-   * @private
-   */
-  createTicks() {
+  /** @internal */
+  _createTicks() {
     if (this._snaps) {
       this._dom.write(() => {
         // TODO: Fix to not use RAF
         this._ticks = [];
         for (var value = this._min; value <= this._max; value += this._step) {
-          var ratio = this.valueToRatio(value);
+          var ratio = this._valueToRatio(value);
           this._ticks.push({
             ratio: ratio,
             left: `${ratio * 100}%`,
           });
         }
-        this.updateTicks();
+        this._updateTicks();
       });
     }
   }
 
-  /**
-   * @private
-   */
-  updateTicks() {
+  /** @internal */
+  _updateTicks() {
     const ticks = this._ticks;
+    const ratio = this.ratio;
+
     if (this._snaps && ticks) {
-      var ratio = this.ratio;
       if (this._dual) {
         var upperRatio = this.ratioUpper;
 
@@ -519,19 +511,15 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     }
   }
 
-  /**
-   * @private
-   */
-  ratioToValue(ratio: number) {
+  /** @internal */
+  _ratioToValue(ratio: number) {
     ratio = Math.round(((this._max - this._min) * ratio));
     ratio = Math.round(ratio / this._step) * this._step + this._min;
     return clamp(this._min, ratio, this._max);
   }
 
-  /**
-   * @private
-   */
-  valueToRatio(value: number) {
+  /** @internal */
+  _valueToRatio(value: number) {
     value = Math.round((value - this._min) / this._step) * this._step;
     value = value / (this._max - this._min);
     return clamp(0, value, 1);
@@ -542,21 +530,20 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   writeValue(val: any) {
     if (isPresent(val)) {
-      let knobs = this._knobs;
       this.value = val;
 
-      if (this._knobs) {
-        if (this._dual) {
-          knobs.first.value = val.lower;
-          knobs.last.value = val.upper;
-          knobs.last.position();
+      if (this._dual) {
+        this._lowerVal = val.lower;
+        this._upperVal = val.upper;
+        this._lowerRatio = this._valueToRatio(val.lower);
+        this._upperRatio = this._valueToRatio(val.upper);
 
-        } else {
-          knobs.first.value = val;
-        }
-        knobs.first.position();
-        this.updateBar();
+      } else {
+        this._lowerVal = val;
+        this._lowerRatio = this._valueToRatio(val);
       }
+
+      this._updateBar();
     }
   }
 
@@ -589,23 +576,25 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * Returns the ratio of the knob's is current location, which is a number between `0` and `1`.
-   * If two knobs are used, this property represents the lower value.
+   * Returns the ratio of the knob's is current location, which is a number
+   * between `0` and `1`. If two knobs are used, this property represents
+   * the lower value.
    */
   get ratio(): number {
     if (this._dual) {
-      return Math.min(this._knobs.first.ratio, this._knobs.last.ratio);
+      return Math.min(this._lowerRatio, this._upperRatio);
     }
-    return this._knobs.first.ratio;
+    return this._lowerRatio;
   }
 
   /**
-   * Returns the ratio of the upper value's is current location, which is a number between `0` and `1`.
-   * If there is only one knob, then this will return `null`.
+   * Returns the ratio of the upper value's is current location, which is
+   * a number between `0` and `1`. If there is only one knob, then this
+   * will return `null`.
    */
   get ratioUpper(): number {
     if (this._dual) {
-      return Math.max(this._knobs.first.ratio, this._knobs.last.ratio);
+      return Math.max(this._lowerRatio, this._upperRatio);
     }
     return null;
   }
