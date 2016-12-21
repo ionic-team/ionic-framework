@@ -116,7 +116,7 @@ export class NativeInput {
           // the cloned input fills the area of where native input should be
           // while the native input fakes out the browser by relocating itself
           // before it receives the actual focus event
-          cloneInputComponent(focusedInputEle);
+          cloneInputComponent(this._platform, focusedInputEle);
 
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
@@ -134,7 +134,7 @@ export class NativeInput {
         // should remove the focus
         if (this._clone) {
           // should remove the cloned node
-          removeClone(focusedInputEle);
+          removeClone(this._platform, focusedInputEle);
         }
       }
 
@@ -148,11 +148,11 @@ export class NativeInput {
     console.debug(`native-input, hideFocus, shouldHideFocus: ${shouldHideFocus}, input value: ${focusedInputEle.value}`);
 
     if (shouldHideFocus) {
-      cloneInputComponent(focusedInputEle);
+      cloneInputComponent(this._platform, focusedInputEle);
       (<any>focusedInputEle.style)[this._platform.Css.transform] = 'scale(0)';
 
     } else {
-      removeClone(focusedInputEle);
+      removeClone(this._platform, focusedInputEle);
     }
   }
 
@@ -174,7 +174,7 @@ export class NativeInput {
 
 }
 
-function cloneInputComponent(srcNativeInputEle: HTMLInputElement) {
+function cloneInputComponent(platform: Platform, srcNativeInputEle: HTMLInputElement) {
   // given a native <input> or <textarea> element
   // find its parent wrapping component like <ion-input> or <ion-textarea>
   // then clone the entire component
@@ -208,10 +208,10 @@ function cloneInputComponent(srcNativeInputEle: HTMLInputElement) {
     srcComponentEle.style.pointerEvents = 'none';
   }
 
-  (<any>srcNativeInputEle.style)[this._platform.Css.transform] = 'scale(0)';
+  (<any>srcNativeInputEle.style)[platform.Css.transform] = 'scale(0)';
 }
 
-function removeClone(srcNativeInputEle: HTMLElement) {
+function removeClone(platform: Platform, srcNativeInputEle: HTMLElement) {
   const srcComponentEle = <HTMLElement>srcNativeInputEle.closest('ion-input,ion-textarea');
   if (srcComponentEle && srcComponentEle.parentElement) {
     const clonedInputEles = srcComponentEle.parentElement.querySelectorAll('.cloned-input');
@@ -221,7 +221,7 @@ function removeClone(srcNativeInputEle: HTMLElement) {
 
     srcComponentEle.style.pointerEvents = '';
   }
-  (<any>srcNativeInputEle.style)[this._platform.Css.transform] = '';
+  (<any>srcNativeInputEle.style)[platform.Css.transform] = '';
   srcNativeInputEle.style.opacity = '';
 }
 
