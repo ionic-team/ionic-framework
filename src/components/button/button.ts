@@ -14,7 +14,7 @@ import { isTrueProperty } from '../../util/util';
   * be customized with one or more input properties. For a complete list of
   * input properties, see [Input Properties](#input-properties) below.
   * 
-  * To use the Button component, add the `ion-button` attribute to an
+  * To use the Button component, add the `ion-button` directive to an
   * HTML `<button>`.
   *
   * @usage
