@@ -174,7 +174,7 @@ export { Popover, PopoverController } from './components/popover/popover';
 export { PopoverOptions } from './components/popover/popover-options';
 export { RadioButton } from './components/radio/radio-button';
 export { RadioGroup } from './components/radio/radio-group';
-export { Range, ClientRect } from './components/range/range';
+export { Range } from './components/range/range';
 export { RangeKnob } from './components/range/range-knob';
 export { Refresher } from './components/refresher/refresher';
 export { RefresherContent } from './components/refresher/refresher-content';

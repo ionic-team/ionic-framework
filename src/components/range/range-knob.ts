@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
+import { Key } from '../../platform/key';
 
 /**
  * @private
@@ -7,8 +8,8 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: '.range-knob-handle',
   template:
-    '<div class="range-pin" *ngIf="pin">{{val}}</div>' +
-    '<div class="range-knob"></div>',
+    '<div class="range-pin" *ngIf="pin" role="presentation">{{val}}</div>' +
+    '<div class="range-knob" role="presentation"></div>',
   host: {
     '[class.range-knob-pressed]': 'pressed',
     '[class.range-knob-min]': 'val===min||val===undefined',
@@ -17,8 +18,10 @@ import { Component, Input } from '@angular/core';
     '[attr.aria-valuenow]': 'val',
     '[attr.aria-valuemin]': 'min',
     '[attr.aria-valuemax]': 'max',
-    'role': 'slider',
-    'tabindex': '0'
+    '[attr.aria-disabled]': 'disabled',
+    '[attr.aria-labelledby]': 'labelId',
+    '[tabindex]': 'disabled?-1:0',
+    'role': 'slider'
   }
 })
 export class RangeKnob {
@@ -32,4 +35,25 @@ export class RangeKnob {
   @Input() min: number;
   @Input() max: number;
   @Input() val: number;
+  @Input() disabled: boolean;
+  @Input() labelId: string;
+
+  @Output() ionIncrease = new EventEmitter();
+  @Output() ionDecrease = new EventEmitter();
+
+  @HostListener('keydown', ['$event']) _keyup(ev: KeyboardEvent) {
+    const keyCode = ev.keyCode;
+    if (keyCode === Key.LEFT || keyCode === Key.DOWN) {
+      console.debug(`range-knob, decrease, keyCode: ${keyCode}`);
+      this.ionDecrease.emit();
+      ev.preventDefault();
+      ev.stopPropagation();
+
+    } else if (keyCode === Key.RIGHT || keyCode === Key.UP) {
+      console.debug(`range-knob, increase, keyCode: ${keyCode}`);
+      this.ionIncrease.emit();
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+  }
 }
