@@ -72,7 +72,7 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  *
  * ### Display Format
  *
- * The `displayFormat` attribute specifies how a datetime's value should be
+ * The `displayFormat` input property specifies how a datetime's value should be
  * printed, as formatted text, within the `ion-datetime` component.
  *
  * In the following example, the display will use the month's short name, the 
@@ -91,7 +91,7 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  *
  * ### Picker Format
  *
- * The `pickerFormat` attribute determines which columns should be shown in the
+ * The `pickerFormat` input property determines which columns should be shown in the
  * interface, the order of the columns, and which format to use within each column.
  * If the `pickerFormat` input is not provided then it will default to the `displayFormat`.
  *
@@ -160,8 +160,8 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  * By default, the maximum date a user can pick is the end of the current year, and the 
  * minimum date is the beginning of the year that was 100 years ago.
  *
- * To customize the minimum and maximum datetime values, use the `min` and `max` component
- * attributes with the same IS0 8601 format listed above. Below is an example of restricting 
+ * To customize the minimum and maximum datetime values, use the `min` and `max` input 
+ * properties with the same IS0 8601 format listed above. Below is an example of restricting 
  * the date selection between the beginning of 2016, and October 31st of 2020:
  *
  * ```html

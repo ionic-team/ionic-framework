@@ -35,7 +35,7 @@ import { Ion } from '../ion';
  * 
  * All icons have both `active` and `inactive` states. Active icons are typically 
  * full and thick, where as inactive icons are outlined and thin. Set the `isActive` 
- * attribute to `true` or `false` to change the state of the icon. Icons will default 
+ * input property to `true` or `false` to change the state of the icon. Icons will default 
  * to active if a value is not specified.
  * 
  * ```html
@@ -48,7 +48,7 @@ import { Ion } from '../ion';
  * 
  * ### Dynamcially Changing an Icon
  * 
- * To set an icon using a variable, bind the `name` attribute to a value on the component's model:
+ * To set an icon using a variable, bind the `name` input property to a value on the component's model:
  * 
  * ```html
  * <ion-icon [name]="myIcon"></ion-icon>

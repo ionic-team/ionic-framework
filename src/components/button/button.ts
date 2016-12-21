@@ -11,9 +11,8 @@ import { isTrueProperty } from '../../util/util';
   * @description
   * Buttons are simple components that are optimized to handle touch
   * events on mobile. Buttons can contain text and icons, and can 
-  * be customized with a wide range of attributes. A button
-  * can be styled with multiple attributes. For a complete list of
-  * attributes, see [Input Attributes](@input-attributes) below.
+  * be customized with one or more input properties. For a complete list of
+  * input properties, see [Input Properties](#input-properties) below.
   * 
   * To use the Button component, add the `ion-button` attribute to an
   * HTML `<button>`.
@@ -47,7 +46,7 @@ import { isTrueProperty } from '../../util/util';
   *
   * ### Styling Buttons Dynamically
   * 
-  * All of the [input attributes](#input-attributes) that determine a buttons appearance can be 
+  * All of the [input properties](#input-properties) that determine a buttons appearance can be 
   * set dynamically by binding them to a value on the component's model. For example, most attributes
   * can be toggled by binding them to a `boolean` value on the model:
   *
@@ -59,9 +58,9 @@ import { isTrueProperty } from '../../util/util';
   * <button ion-button [clear]="isClear">Clear Button</button>
   * ```
   *
-  * To set the color of a button, bind the `color` attribute to a value on the model
+  * To set the color of a button, bind the `color` property to a value on the model
   * of the component. Any string that corresponds to a Sass variable defined in your 
-  * [$color map](/docs/v2/theming/theming-your-app/) is valid for the `color` attribute.  
+  * [$color map](/docs/v2/theming/theming-your-app/) is valid for the `color` property.  
   * 
   * ```html
   * <!-- Bind the color to a variable -->
