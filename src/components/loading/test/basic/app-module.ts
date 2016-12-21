@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, LoadingController, NavController } from '../../../..';
+import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../..';
 
 
 @Component({
@@ -242,6 +242,18 @@ export class E2EPage {
 
     }, 500);
   }
+
+  presentLoadingDismissNav() {
+    this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Loading 1 Please Wait...',
+      dismissOnPageChange: true
+    }).present();
+
+    setTimeout(() => {
+      this.navCtrl.push(Page2);
+    }, 500);
+  }
 }
 
 @Component({
@@ -255,7 +267,7 @@ export class E2EPage {
     <ion-footer>
       <ion-toolbar>
         <ion-buttons end>
-          <button ion-button (click)="goToPage3()">
+          <button ion-button icon-right (click)="goToPage3()">
             Navigate
             <ion-icon name="arrow-forward"></ion-icon>
           </button>
@@ -266,12 +278,6 @@ export class E2EPage {
 })
 export class Page2 {
   constructor(public navCtrl: NavController) {}
-
-  ionViewDidLoad() {
-    setTimeout(() => {
-      this.navCtrl.push(Page3);
-    }, 1000);
-  }
 
   goToPage3() {
     this.navCtrl.push(Page3);
@@ -298,6 +304,16 @@ export class Page3 {}
 })
 export class E2EApp {
   root = E2EPage;
+
+  constructor(app: App) {
+    app.viewDidLeave.subscribe(ev => {
+      console.log('App didLeave');
+    });
+
+    app.viewWillLeave.subscribe(ev => {
+      console.log('App willLeave');
+    });
+  }
 }
 
 @NgModule({

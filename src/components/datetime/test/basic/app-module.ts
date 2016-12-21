@@ -18,6 +18,7 @@ export class E2EPage {
   chromeReleased = '2008-09-02';
   leapYearsSummerMonths = '';
   convertedDate = '';
+  specificDaysMonthsYears = '';
 
   leapYearsArray = [2020, 2016, 2008, 2004, 2000, 1996];
 
