@@ -8,7 +8,8 @@ import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
  * @description
  * Ionic supports a variety of touch events and gestures. Basic gestures can 
  * be accessed from HTML by binding to `tap`, `press`, `pan`, `swipe`, `rotate`, 
- * and `pinch` events.
+ * and `pinch` events. You can also add the `tappable` attribute to any element to
+ * remove the browser's 300ms tap delay that some elements, such as divs, experience.
  * 
  * @usage
  * ```html
@@ -21,8 +22,14 @@ import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
  * 
  * ### Using Rotate and Pinch
  * 
- * The `rotate` and `pinch` gestures are disabled by default because they are blocking. To enable, import and create an instance of `Gesture`, then assign an event listener to the desired DOM element.
+ * The `rotate` and `pinch` gestures are disabled by default because they are blocking. 
+ * To enable, import and create an instance of `Gesture`, then assign an event listener 
+ * to the desired DOM element.
  * 
+ * Event listeners can be added for any event supported by hammer.js, e.g. `pinchstart`, 
+ * `pinchend`, `rotatestart`, `rotateend`, etc. For a full list, see the 
+ * [hammer.js recognizers docs](http://hammerjs.github.io/recognizer-pinch/). 
+ *
  * ```ts
  * import { Gesture } from 'ionic-angular';
  * 
@@ -53,7 +60,6 @@ import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
  * }
  * ```
  * 
- * Event listeners can be added for any event supported by hammer.js, e.g. `pinchstart`, `pinchend`, `rotatestart`, `rotateend`, etc. For a full list, see the [hammer.js recognizers docs](http://hammerjs.github.io/recognizer-pinch/). 
  */
 
 export class Gesture {
@@ -61,8 +67,19 @@ export class Gesture {
   private _options: any;
   private _callbacks: any = {};
 
+  /**
+   * @private
+   */
   public element: HTMLElement;
+  
+  /**
+   * @private
+   */
   public direction: string;
+  
+  /**
+   * @private
+   */
   public isListening: boolean = false;
 
   constructor(element: HTMLElement, opts: any = {}) {
@@ -80,10 +97,19 @@ export class Gesture {
     this._options = opts;
   }
 
+  /**
+   * Sets the options for an instance of `Gesture`. 
+   * @param {object} opts The options object. For a complete list of options, see the [Hammer.js Docs](http://hammerjs.github.io/api/#hammerdefaults)
+   */
   options(opts: any) {
     assign(this._options, opts);
   }
 
+  /**
+   * Attaches an event handler to an instance of `Gesture`.
+   * @param {string} type The gesture type to listen for
+   * @param {function} callback A callback function to execute when the gesture occurs
+   */
   on(type: string, cb: Function) {
     if (type === 'pinch' || type === 'rotate') {
       this._hammer.get(type).set({enable: true});
@@ -92,10 +118,18 @@ export class Gesture {
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);
   }
 
+  /**
+   * Detaches an event handler from an instance of `Gesture`.
+   * @param {string} type The gesture type to detach
+   * @param {function} callback A callback function to execute when the gesture is detached
+   */
   off(type: string, cb: Function) {
     this._hammer.off(type, this._callbacks[type] ? cb : null);
   }
 
+  /**
+   * Sets an instance of `Gesture` to listen for events.
+   */
   listen() {
     if (!this.isListening) {
       this._hammer = Hammer(this.element, this._options);
@@ -103,6 +137,9 @@ export class Gesture {
     this.isListening = true;
   }
 
+  /**
+   * Stops an instance of `Gesture` from listening for events.
+   */
   unlisten() {
     let eventType: string;
     let i: number;
@@ -120,6 +157,9 @@ export class Gesture {
     this.isListening = false;
   }
 
+  /**
+   * Destroys an instance of `Gesture`.
+   */
   destroy() {
     this.unlisten();
     this.element = this._options = null;
