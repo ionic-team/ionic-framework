@@ -544,6 +544,13 @@ export class Platform {
   }
 
   /**
+   * @private
+   */
+  getElementBoundingClientRect(ele: HTMLElement) {
+    return ele.getBoundingClientRect();
+  }
+
+  /**
    * Returns `true` if the app is in portait mode.
    */
   isPortrait(): boolean {
