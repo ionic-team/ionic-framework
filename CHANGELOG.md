@@ -23,7 +23,7 @@
     "@angular/platform-browser": "2.2.1",
     "@angular/platform-browser-dynamic": "2.2.1",
     "@angular/platform-server": "2.2.1",
-    "@ionic/storage": "1.1.6",
+    "@ionic/storage": "1.1.7",
     "ionic-angular": "2.0.0-rc.4",
     "ionic-native": "2.2.11",
     "ionicons": "3.0.0",
@@ -205,8 +205,8 @@ first toolbar in a footer. Adding `no-border` to the header or footer will hide 
 
 * This means that `no-border-top` and `no-border-bottom` will not work on iOS and should
 be removed from any toolbars using it.
-  
-  
+
+
 #### Events
 
 * The argument passed to the `events.subscribe(args)` function is no longer an array of parameters.
