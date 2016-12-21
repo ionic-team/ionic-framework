@@ -242,6 +242,9 @@ export class Content extends Ion implements OnDestroy, OnInit {
   get scrollTop(): number {
     return this._scroll.ev.scrollTop;
   }
+  /**
+   * @param {number} top
+   */
   set scrollTop(top: number) {
     this._scroll.setTop(top);
   }
@@ -254,6 +257,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
   get scrollLeft(): number {
     return this._scroll.ev.scrollLeft;
   }
+
+  /**
+   * @param {number} top
+   */
   set scrollLeft(top: number) {
     this._scroll.setLeft(top);
   }
@@ -457,6 +464,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
   get fullscreen(): boolean {
     return !!this._fullscreen;
   }
+
+  /**
+   * @param {boolean} val
+   */
   set fullscreen(val: boolean) {
     this._fullscreen = isTrueProperty(val);
   }
