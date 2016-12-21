@@ -603,7 +603,7 @@ export class Platform {
    */
   raf(callback: {(timeStamp?: number): void}|Function): number {
     const win: any = this._win;
-    return win[win['Zone']['__symbol__']('requestAnimationFrame')](callback);
+    return win['__zone_symbol__requestAnimationFrame'](callback);
   }
 
   /**
@@ -611,7 +611,7 @@ export class Platform {
    */
   cancelRaf(rafId: number) {
     const win: any = this._win;
-    return win[win['Zone']['__symbol__']('cancelAnimationFrame')](rafId);
+    return win['__zone_symbol__cancelAnimationFrame'](rafId);
   }
 
   /**
@@ -620,7 +620,7 @@ export class Platform {
    */
   timeout(callback: Function, timeout: number): number {
     const win: any = this._win;
-    return win[win['Zone']['__symbol__']('setTimeout')](callback, timeout);
+    return win['__zone_symbol__setTimeout'](callback, timeout);
   }
 
   /**
@@ -629,7 +629,7 @@ export class Platform {
    */
   cancelTimeout(timeoutId: number) {
     const win: any = this._win;
-    win[win['Zone']['__symbol__']('clearTimeout')](timeoutId);
+    win['__zone_symbol__clearTimeout'](timeoutId);
   }
 
   /**
