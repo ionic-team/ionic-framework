@@ -218,11 +218,11 @@ export class Toolbar extends ToolbarBase {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
-    this._setMode( val);
+    this._setMode(val);
   }
 
   constructor(

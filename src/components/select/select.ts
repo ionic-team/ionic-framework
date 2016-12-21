@@ -191,7 +191,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectedText: string = '';
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
