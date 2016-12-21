@@ -19,56 +19,29 @@ import { Platform } from '../../platform/platform';
  * @description
  *
  * `ion-input` is meant for text type inputs only, such as `text`,
- * `password`, `email`, `number`, `search`, `tel`, and `url`. Ionic
+ * `password`, `email`, `number`, `search`, `tel`, and `url`, and is 
+ * commonly used with the [Label component](../../label/Label). Ionic
  * still uses an actual `<input type="text">` HTML element within the
  * component, however, with Ionic wrapping the native HTML input
  * element it's able to better handle the user experience and
- * interactivity.
+ * interactivity. Similarly, [`<ion-textarea>`](../TextArea) should be 
+ * used in place of `<textarea>`.
  *
- * Similarily, `<ion-textarea>` should be used in place of `<textarea>`.
+ * Inputs are often used with the 
+ * [Angular 2 Form module](https://angular.io/docs/ts/latest/guide/forms.html) 
+ * to enable features like input validation and form submission.
  *
  * An `ion-input` is **not** used for non-text type inputs, such as a
  * `checkbox`, `radio`, `toggle`, `range`, `select`, etc.
  *
- *
  * @usage
  * ```html
- * <ion-list>
- *   <ion-item>
- *     <ion-label color="primary">Inline Label</ion-label>
- *     <ion-input placeholder="Text Input"></ion-input>
- *   </ion-item>
- *
- *   <ion-item>
- *     <ion-label color="primary" fixed>Fixed Label</ion-label>
- *     <ion-input type="tel" placeholder="Tel Input"></ion-input>
- *   </ion-item>
- *
- *   <ion-item>
- *     <ion-input type="number" placeholder="Number Input with no label"></ion-input>
- *   </ion-item>
- *
- *   <ion-item>
- *     <ion-label color="primary" stacked>Stacked Label</ion-label>
- *     <ion-input type="email" placeholder="Email Input"></ion-input>
- *   </ion-item>
- *
- *   <ion-item>
- *     <ion-label color="primary" stacked>Stacked Label</ion-label>
- *     <ion-input type="password" placeholder="Password Input"></ion-input>
- *   </ion-item>
- *
- *   <ion-item>
- *     <ion-label color="primary" floating>Floating Label</ion-label>
- *     <ion-input></ion-input>
- *   </ion-item>
- *
- *   <ion-item>
- *     <ion-input placeholder="Clear Input" clearInput></ion-input>
- *   </ion-item>
- * </ion-list>
+ * <ion-label color="primary">Inline Label</ion-label>
+ * <ion-input placeholder="Text Input"></ion-input>
  * ```
  *
+
+
  * @demo /docs/v2/demos/src/input/
  */
 @Component({
