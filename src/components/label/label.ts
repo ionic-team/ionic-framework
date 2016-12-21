@@ -13,7 +13,6 @@ import { Ion } from '../ion';
  * @property [fixed] - A persistent label that sits next the input.
  * @property [floating] - A label that will float above the input if the input is empty or loses focus.
  * @property [stacked] - A stacked label will always appear on top of the input.
-
  *
  * @usage
  * ```html
@@ -23,27 +22,12 @@ import { Ion } from '../ion';
  *  </ion-item>
  *
  *  <ion-item>
- *    <ion-label fixed>Website</ion-label>
- *    <ion-input type="url"></ion-input>
- *  </ion-item>
- *
- *  <ion-item>
- *    <ion-label floating>Email</ion-label>
- *    <ion-input type="email"></ion-input>
- *  </ion-item>
- *
- *  <ion-item>
- *    <ion-label stacked>Phone</ion-label>
- *    <ion-input type="tel"></ion-input>
- *  </ion-item>
- *
- *  <ion-item>
- *    <ion-label>Toggle</ion-label>
+ *    <ion-label floating>Toggle</ion-label>
  *    <ion-toggle></ion-toggle>
  *  </ion-item>
  *
  *  <ion-item>
- *    <ion-label>Checkbox</ion-label>
+ *    <ion-label stacked>Checkbox</ion-label>
  *    <ion-checkbox></ion-checkbox>
  *  </ion-item>
  * ```
