@@ -8,7 +8,10 @@ import { Ion } from '../ion';
  * @name Label
  * @description
  * Labels are placed inside of an `ion-item` element and can be used
- * to describe an `ion-input`, `ion-toggle`, `ion-checkbox`, and more.
+ * to describe an `ion-input`, `ion-toggle`, `ion-checkbox`, and more. 
+ * There are several different styles of Labels available, each with a
+ * different look and behavior. For more information, see [Attributes](#attributes) 
+ * below.
  *
  * @property [fixed] - A persistent label that sits next the input.
  * @property [floating] - A label that will float above the input if the input is empty or loses focus.
