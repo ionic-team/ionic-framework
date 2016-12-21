@@ -20,8 +20,8 @@ import { Platform } from '../../platform/platform';
  *
  * `ion-input` is meant for text type inputs only, such as `text`,
  * `password`, `email`, `number`, `search`, `tel`, and `url`, and is 
- * commonly used with the [Label component](../../label/Label). Ionic
- * still uses an actual `<input type="text">` HTML element within the
+ * commonly used with the [Label component](../../label/Label) inside of `ion-item`. 
+ * Ionic uses an actual `<input type="text">` HTML element within the
  * component, however, with Ionic wrapping the native HTML input
  * element it's able to better handle the user experience and
  * interactivity. Similarly, [`<ion-textarea>`](../TextArea) should be 
@@ -36,8 +36,10 @@ import { Platform } from '../../platform/platform';
  *
  * @usage
  * ```html
- * <ion-label color="primary">Inline Label</ion-label>
- * <ion-input placeholder="Text Input"></ion-input>
+ * <ion-item>
+ *   <ion-label color="primary">Inline Label</ion-label>
+ *   <ion-input placeholder="Text Input"></ion-input>
+ * </ion-item>
  * ```
  *
 
