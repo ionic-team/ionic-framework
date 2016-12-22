@@ -135,12 +135,7 @@ export class ScrollView {
         }
       }
 
-      // emit on each scroll event
-      self.scroll.next(ev);
-
-      // debounce for a moment after the last scroll event
-      self._endTmr && self._endTmr();
-      self._endTmr = self._dom.read(function scrollEnd() {
+      function scrollEnd() {
         // haven't scrolled in a while, so it's a scrollend
         self.isScrolling = false;
 
@@ -149,8 +144,14 @@ export class ScrollView {
 
         // emit that the scroll has ended
         self.scrollEnd.next(ev);
-      }, 80);
+      }
 
+      // emit on each scroll event
+      self.scroll.next(ev);
+
+      // debounce for a moment after the last scroll event
+      self._dom.cancel(self._endTmr);
+      self._endTmr = self._dom.read(scrollEnd, SCROLL_END_DEBOUNCE_MS);
     };
 
     // clear out any existing listeners (just to be safe)
@@ -414,30 +415,30 @@ export class ScrollView {
     }
 
     const self = this;
-    if (!self._el) {
+    const el = self._el;
+    if (!el) {
       // invalid element
       done();
       return promise;
     }
 
-    x = x || 0;
-    y = y || 0;
-
-    const fromY = self._el.scrollTop;
-    const fromX = self._el.scrollLeft;
+    const fromY = el.scrollTop;
+    const fromX = el.scrollLeft;
 
     const maxAttempts = (duration / 16) + 100;
+    const transform =  self._platform.Css.transform;
 
     let startTime: number;
     let attempts = 0;
+    let stopScroll = false;
 
     // scroll loop
     function step(timeStamp: number) {
       attempts++;
 
-      if (!self._el || !self.isScrolling || attempts > maxAttempts) {
+      if (!self._el || stopScroll || attempts > maxAttempts) {
         self.isScrolling = false;
-        (<any>self._el.style)[self._platform.Css.transform] = '';
+        (<any>el.style)[transform] = '';
         done();
         return;
       }
@@ -462,8 +463,9 @@ export class ScrollView {
         self._platform.raf(step);
 
       } else {
+        stopScroll = true;
         self.isScrolling = false;
-        (<any>self._el.style)[self._platform.Css.transform] = '';
+        (<any>el.style)[transform] = '';
         done();
       }
     }
@@ -540,7 +542,7 @@ export interface ScrollEvent {
   footerElement?: HTMLElement;
 }
 
-
+const SCROLL_END_DEBOUNCE_MS = 80;
 const MIN_VELOCITY_START_DECELERATION = 4;
 const MIN_VELOCITY_CONTINUE_DECELERATION = 0.12;
 const DECELERATION_FRICTION = 0.97;
