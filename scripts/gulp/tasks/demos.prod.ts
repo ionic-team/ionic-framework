@@ -13,8 +13,8 @@ import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 import { argv } from 'yargs';
 
-import { DEMOS_SRC_ROOT, DIST_DEMOS_COMPONENTS_ROOT, DIST_DEMOS_ROOT, DIST_NAME, DEMOS_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
-import { createTempTsConfig, deleteFiles, runNgc } from '../util';
+import { DEMOS_SRC_ROOT, DIST_DEMOS_COMPONENTS_ROOT, DIST_DEMOS_ROOT, DIST_NAME, DEMOS_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
+import { createTempTsConfig, deleteFiles, getFolderInfo, runNgc } from '../util';
 
 task('demos.prod', demosBuild);
 
@@ -72,7 +72,7 @@ function buildDemoTests(folderInfo: any, done: Function) {
     ];
   }
 
-  createTempTsConfig(includeGlob, ES5, ES_2015, `${DIST_DEMOS_ROOT}/tsconfig.json`);
+  createTempTsConfig(includeGlob, ES5, ES_2015, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_DEMOS_ROOT}/tsconfig.json`);
   runNgc(`${DIST_DEMOS_ROOT}/tsconfig.json`, (err) => {
     if (err) {
       done(err);
@@ -224,19 +224,4 @@ function demosComponentsExists(): boolean {
     return false;
   }
   return true;
-}
-
-function getFolderInfo() {
-  let componentName: string = null;
-  let componentTest: string = null;
-  const folder: string = argv.folder || argv.f;
-  if (folder && folder.length) {
-    const folderSplit = folder.split('/');
-    componentName = folderSplit[0];
-    componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
-  }
-  return {
-    componentName: componentName,
-    componentTest: componentTest
-  };
 }

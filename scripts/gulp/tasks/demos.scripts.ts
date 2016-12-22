@@ -1,30 +1,26 @@
 // THIS FILE IS A WIP TO GET THE FRAMEWORK WORKING WITH APP-SCRIPTS
 
-import { accessSync, F_OK, readFileSync, writeFileSync } from 'fs';
+import { spawn } from 'child_process';
+import { readFileSync } from 'fs';
 import { dirname, join } from 'path';
 
-import * as glob from 'glob';
-import { dest, src, start, task } from 'gulp';
+import { dest, src, task } from 'gulp';
 import * as gulpif from 'gulp-if';
-import * as watch from 'gulp-watch';
-import * as rollup from 'rollup';
-import * as nodeResolve from 'rollup-plugin-node-resolve';
-import * as commonjs from 'rollup-plugin-commonjs';
 import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
-import { argv } from 'yargs';
 
-import { DEMOS_SRC_ROOT, DIST_DEMOS_COMPONENTS_ROOT, DIST_DEMOS_ROOT, DIST_NAME, DEMOS_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
-import { createTempTsConfig, deleteFiles, runNgc } from '../util';
+import { DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DEMOS_NAME, ES5, ES_2015, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
+import { createTempTsConfig, getFolderInfo } from '../util';
 
 task('demos.prod', demosBuild);
 
 function demosBuild(done: (err: any) => void) {
   runSequence(
     'demos.clean',
+    'demos.polyfill',
     'demos.copySource',
-    // 'demos.compileTests',
+    'demos.compileTests',
     done);
 }
 
@@ -55,42 +51,58 @@ task('demos.copySource', (done: Function) => {
   }
 });
 
-// task('demos.compileTests', (done: Function) => {
-//   let folderInfo = getFolderInfo();
-//   buildDemoTests(folderInfo, done);
-// });
+task('demos.compileTests', (done: Function) => {
+  let folderInfo = getFolderInfo();
+  buildDemoTests(folderInfo, done);
+});
 
-// function buildDemoTests(folderInfo: any, done: Function) {
-//   let includeGlob = ['./*/app.module.ts', './*/main.ts'];
-//   if (folderInfo.componentName && folderInfo.componentTest) {
-//     includeGlob = [
-//       `./${folderInfo.componentName}/app.module.ts`,
-//       `./${folderInfo.componentName}/main.ts`,
-//     ];
-//   }
-
-//   createTempTsConfig(includeGlob, ES5, ES_2015, `${DIST_DEMOS_ROOT}/tsconfig.json`);
-//   runNgc(`${DIST_DEMOS_ROOT}/tsconfig.json`, (err) => {
-//     if (err) {
-//       done(err);
-//       return;
-//     }
-//     // clean up any .ts files that remain
-//     deleteFiles([`${DIST_DEMOS_ROOT}/**/*.ts`, `!${DIST_DEMOS_ROOT}/**/*.ngfactory.ts`, `!${DIST_DEMOS_ROOT}/**/*.d.ts`], done);
-//   });
-// }
-
-function getFolderInfo() {
-  let componentName: string = null;
-  let componentTest: string = null;
-  const folder: string = argv.folder || argv.f;
-  if (folder && folder.length) {
-    const folderSplit = folder.split('/');
-    componentName = folderSplit[0];
-    componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
+function buildDemoTests(folderInfo: any, done: Function) {
+  let includeGlob = ['./dist/demos/**/*.ts'];
+  let pathToWriteFile = `${DIST_DEMOS_ROOT}/tsconfig.json`;
+  if (folderInfo.componentName && folderInfo.componentTest) {
+    includeGlob = [
+      `./dist/demos/${folderInfo.componentName}/**/*.ts`
+    ];
+    pathToWriteFile = `${DIST_DEMOS_ROOT}/${folderInfo.componentName}/tsconfig.json`;
   }
-  return {
-    componentName: componentName,
-    componentTest: componentTest
-  };
+
+  createTempTsConfig(includeGlob, ES5, ES_2015, `${DEMOS_SRC_ROOT}/tsconfig.json`, pathToWriteFile);
+  runAppScripts(folderInfo, done);
+}
+
+function runAppScripts(folderInfo: any, done: Function) {
+  let sassConfigPath = 'scripts/demos/sass.config.js';
+
+  let appEntryPoint = 'dist/demos/action-sheet/main.ts';
+  let distDir = 'dist/demos/action-sheet/';
+
+  if (folderInfo.componentName) {
+    console.log('Running App Scripts for', folderInfo.componentName);
+    appEntryPoint = `dist/demos/${folderInfo.componentName}/main.ts`;
+    distDir = `dist/demos/${folderInfo.componentName}/`;
+  }
+
+  let tsConfig = distDir + 'tsconfig.json';
+
+  const scriptsCmd = spawn('ionic-app-scripts',
+    ['build',
+     '--prod',
+     '--sass', sassConfigPath,
+     '--appEntryPoint', appEntryPoint,
+     '--srcDir', distDir,
+     '--wwwDir', distDir,
+     '--tsconfig', tsConfig
+    ]);
+
+  scriptsCmd.stdout.on('data', function (data) {
+    console.log(data.toString());
+  });
+
+  scriptsCmd.stderr.on('data', function (data) {
+    console.log('npm err: ' + data.toString());
+  });
+
+  scriptsCmd.on('close', function() {
+    done();
+  });
 }
