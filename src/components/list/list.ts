@@ -19,6 +19,15 @@ import { DomController } from '../../util/dom-controller';
  * interaction modes such as swipe to edit, drag to reorder, and
  * removing items.
  *
+ * @usage
+ * ```html
+ * <ion-list>
+ *   <ion-item *ngFor="let contact of contacts">
+ *     {% raw %}{{contact.firstName}} {{contact.lastName}}{% endraw %}
+ *   </ion-item>
+ * </ion-list>
+ * ```
+ *
  * ## Common Usage Patterns
  *
  * ### Inset List
