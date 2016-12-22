@@ -501,11 +501,11 @@ export class ScrollView {
    * @private
    */
   destroy() {
+    this._endTmr && this._endTmr();
     this.scrollStart.unsubscribe();
     this.scroll.unsubscribe();
     this.scrollEnd.unsubscribe();
     this.stop();
-    this._endTmr && this._endTmr();
     this._lsn && this._lsn();
     let ev = this.ev;
     ev.domWrite = ev.contentElement = ev.fixedElement = ev.scrollElement = ev.headerElement = null;
