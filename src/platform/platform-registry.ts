@@ -8,7 +8,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * core
    */
-  core: {
+  'core': {
     settings: {
       mode: 'md',
       keyboardHeight: 290
@@ -18,12 +18,12 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * mobile
    */
-  mobile: {},
+  'mobile': {},
 
   /**
    * phablet
    */
-  phablet: {
+  'phablet': {
     isMatch(p: Platform) {
       let smallest = Math.min(p.width(), p.height());
       let largest = Math.max(p.width(), p.height());
@@ -35,7 +35,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * tablet
    */
-  tablet: {
+  'tablet': {
     isMatch(p: Platform) {
       let smallest = Math.min(p.width(), p.height());
       let largest = Math.max(p.width(), p.height());
@@ -47,7 +47,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * android
    */
-  android: {
+  'android': {
     superset: 'mobile',
     subsets: [
       'phablet',
@@ -96,7 +96,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * ios
    */
-  ios: {
+  'ios': {
     superset: 'mobile',
     subsets: [
       'ipad',
@@ -127,7 +127,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * ipad
    */
-  ipad: {
+  'ipad': {
     superset: 'tablet',
     settings: {
       keyboardHeight: 500,
@@ -140,7 +140,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * iphone
    */
-  iphone: {
+  'iphone': {
     subsets: [
       'phablet'
     ],
@@ -152,7 +152,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * Windows
    */
-  windows: {
+  'windows': {
     superset: 'mobile',
     subsets: [
       'phablet',
@@ -174,7 +174,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * cordova
    */
-  cordova: {
+  'cordova': {
     isEngine: true,
     initialize: function(p: Platform) {
 
@@ -243,15 +243,9 @@ function isWK(p: Platform): boolean {
   return !!p.win()['webkit'];
 }
 
-// Commented out becuase it is not used yet
-// function isIOSWK(p: Platform): boolean {
-//   return isIOS(p) && isWK();
-// }
-
 function isIOSUI(p: Platform): boolean {
   return isIOS(p) && !isWK(p) && !isSafari(p);
 }
-
 
 
 export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');
