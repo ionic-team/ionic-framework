@@ -162,7 +162,7 @@ export class ScrollView {
     // a scroll event callback will always be right before the raf callback
     // so there's little to no value of using raf here since it'll all ways immediately
     // call the raf if it was set within the scroll event, so this will save us some time
-    self._lsn = self._platform.addEventListener(self._el, 'scroll', scrollCallback, EVENT_OPTS);
+    self._lsn = self._platform.addListener(self._el, 'scroll', scrollCallback, EVENT_OPTS);
   }
 
 
@@ -334,9 +334,9 @@ export class ScrollView {
     }
 
     const platform = self._platform;
-    const unRegStart = platform.addEventListener(ele, 'touchstart', jsScrollTouchStart, EVENT_OPTS);
-    const unRegMove = platform.addEventListener(ele, 'touchmove', jsScrollTouchMove, EVENT_OPTS);
-    const unRegEnd = platform.addEventListener(ele, 'touchend', jsScrollTouchEnd, EVENT_OPTS);
+    const unRegStart = platform.addListener(ele, 'touchstart', jsScrollTouchStart, EVENT_OPTS);
+    const unRegMove = platform.addListener(ele, 'touchmove', jsScrollTouchMove, EVENT_OPTS);
+    const unRegEnd = platform.addListener(ele, 'touchend', jsScrollTouchEnd, EVENT_OPTS);
 
     ele.parentElement.classList.add('js-scroll');
 

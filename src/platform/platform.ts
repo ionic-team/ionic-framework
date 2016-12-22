@@ -638,48 +638,54 @@ export class Platform {
    * If options are not supported, then just return a boolean which
    * represents "capture". Returns a method to remove the listener.
    */
-  addEventListener(ele: any, eventName: string, callback: Function, opts: EventListenerOptions): Function {
+  addListener(ele: any, eventName: string, callback: Function, opts: EventListenerOptions): Function {
     const listenerOpts = this._uiEvtOpts ? {
-        capture: !!opts.capture,
-        passive: !!opts.passive
+        'capture': !!opts.capture,
+        'passive': !!opts.passive,
       } : !!opts.capture;
 
-    const rawEvent = (!opts.zone && !!ele.__zone_symbol__addEventListener);
-    if (rawEvent) {
+    const rawEvent = ele['__zone_symbol__addEventListener'];
+    if (!opts.zone && rawEvent) {
       // do not wrap this even in zone and we've verified we can use the raw addEventListener
-      ele.__zone_symbol__addEventListener(eventName, callback, listenerOpts);
-      return () => ele.__zone_symbol__removeEventListener(eventName, callback, listenerOpts);
+      rawEvent(eventName, callback, listenerOpts);
+      return function unregisterListener() {
+        ele['__zone_symbol__removeEventListener'](eventName, callback, listenerOpts);
+      };
     }
 
     ele.addEventListener(eventName, callback, listenerOpts);
-    return () => ele.removeEventListener(eventName, callback, listenerOpts);
+
+    return function unregisterListener() {
+      ele.removeEventListener(eventName, callback, listenerOpts);
+    };
   }
 
   /**
    * @private
    */
   transitionEnd(el: HTMLElement, callback: Function) {
-    const self = this;
+    const unRegs: Function[] = [];
+
     function unregister() {
-      self.Css.transitionEnd.split(' ').forEach(eventName => {
-        el.removeEventListener(eventName, onEvent);
+      unRegs.forEach(unReg => {
+        unReg();
       });
     }
 
-    if (el) {
-      self.Css.transitionEnd.split(' ').forEach(eventName => {
-        el.addEventListener(eventName, onEvent);
-      });
-
-      return unregister;
-    }
-
-    function onEvent(ev: UIEvent) {
+    function onTransitionEnd(ev: UIEvent) {
       if (el === ev.target) {
         unregister();
         callback(ev);
       }
     }
+
+    if (el) {
+      this.Css.transitionEnd.split(' ').forEach(eventName => {
+        unRegs.push(this.addListener(el, eventName, onTransitionEnd, { zone: false }));
+      });
+    }
+
+    return unregister;
   }
 
   /**
@@ -688,17 +694,15 @@ export class Platform {
   windowLoad(callback: Function) {
     const win = this._win;
     const doc = this._doc;
+    let unreg: Function;
 
     if (doc.readyState === 'complete') {
       callback(win, doc);
 
     } else {
-      win.addEventListener('load', completed, false);
-    }
-
-    function completed() {
-      win.removeEventListener('load', completed, false);
-      callback(win, doc);
+      unreg = this.addListener(win, 'load', () => {
+        callback(win, doc);
+      }, { zone: false });
     }
   }
 
@@ -768,7 +772,7 @@ export class Platform {
     // add the window resize event listener XXms after
     this.timeout(() => {
       var timerId: number;
-      this.addEventListener(this._win, 'resize', () => {
+      this.addListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
         timerId = setTimeout(() => {

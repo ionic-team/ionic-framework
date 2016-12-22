@@ -363,7 +363,7 @@ export class Img implements OnDestroy {
   ngAfterContentInit() {
     this._img = this._elementRef.nativeElement.firstChild;
 
-    this._unreg = this._platform.addEventListener(this._img, 'load', () => {
+    this._unreg = this._platform.addListener(this._img, 'load', () => {
       this._hasLoaded = true;
       this.update();
     }, { passive: true });

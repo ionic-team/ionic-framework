@@ -36,8 +36,8 @@ export class PointerEvents {
     this.bindTouchEnd = this.handleTouchEnd.bind(this);
     this.bindMouseUp = this.handleMouseUp.bind(this);
 
-    this.rmTouchStart = this.platform.addEventListener(ele, 'touchstart', this.handleTouchStart.bind(this), option);
-    this.rmMouseStart = this.platform.addEventListener(ele, 'mousedown', this.handleMouseDown.bind(this), option);
+    this.rmTouchStart = this.platform.addListener(ele, 'touchstart', this.handleTouchStart.bind(this), option);
+    this.rmMouseStart = this.platform.addListener(ele, 'mousedown', this.handleMouseDown.bind(this), option);
   }
 
   private handleTouchStart(ev: any) {
@@ -50,13 +50,13 @@ export class PointerEvents {
       return;
     }
     if (!this.rmTouchMove && this.pointerMove) {
-      this.rmTouchMove = this.platform.addEventListener(this.ele, 'touchmove', this.pointerMove, this.option);
+      this.rmTouchMove = this.platform.addListener(this.ele, 'touchmove', this.pointerMove, this.option);
     }
     if (!this.rmTouchEnd) {
-      this.rmTouchEnd = this.platform.addEventListener(this.ele, 'touchend', this.bindTouchEnd, this.option);
+      this.rmTouchEnd = this.platform.addListener(this.ele, 'touchend', this.bindTouchEnd, this.option);
     }
     if (!this.rmTouchCancel) {
-      this.rmTouchCancel = this.platform.addEventListener(this.ele, 'touchcancel', this.bindTouchEnd, this.option);
+      this.rmTouchCancel = this.platform.addListener(this.ele, 'touchcancel', this.bindTouchEnd, this.option);
     }
   }
 
@@ -73,10 +73,10 @@ export class PointerEvents {
       return;
     }
     if (!this.rmMouseMove && this.pointerMove) {
-      this.rmMouseMove = this.platform.addEventListener(this.platform.doc(), 'mousemove', this.pointerMove, this.option);
+      this.rmMouseMove = this.platform.addListener(this.platform.doc(), 'mousemove', this.pointerMove, this.option);
     }
     if (!this.rmMouseUp) {
-      this.rmMouseUp = this.platform.addEventListener(this.platform.doc(), 'mouseup', this.bindMouseUp, this.option);
+      this.rmMouseUp = this.platform.addListener(this.platform.doc(), 'mouseup', this.bindMouseUp, this.option);
     }
   }
 
