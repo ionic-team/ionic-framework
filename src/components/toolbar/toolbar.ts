@@ -28,6 +28,14 @@ import { ViewController } from '../../navigation/view-controller';
  * <ion-content></ion-content>
  * ```
  *
+ * ### Box Shadow and Border
+ * In `md` (Material Design) mode, the `<ion-header>` will receive a box-shadow on the bottom
+ * In `ios` mode, the `<ion-header>` will receive a border on the bottom. Both the `md` box-shadow 
+ * and the `ios` border can be removed by adding the `no-border` attribute to the element.
+ *
+ * @property [no-border] - Removes the default box-shadow or border from the header
+ *
+ * @see {@link ../Toolbar Toolbar API Docs}
  */
 @Directive({
   selector: 'ion-header'
@@ -59,6 +67,15 @@ export class Header extends Ion {
  *   </ion-toolbar>
  * </ion-footer>
  * ```
+ *
+ * ### Box Shadow and Border
+ * In `md` (Material Design) mode, the `<ion-footer>` will receive a box-shadow on the top.  In `ios` mode, 
+ * the `<ion-footer>` will receive a border on the top. Both the `md` box-shadow and the `ios` border can 
+ * be removed by adding the `no-border` attribute to the element.
+ *
+ * @property [no-border] - Removes the default box-shadow or border from the footer
+ *
+ * @see {@link ../Toolbar Toolbar API Docs}
  *
  */
 @Directive({
@@ -110,7 +127,6 @@ export class ToolbarBase extends Ion {
  * the toolbars stay fixed in their respective location. When placed within
  * `<ion-content>`, toolbars will scroll with the content.
  *
- *
  * ### Buttons in a Toolbar
  * Buttons placed in a toolbar should be placed inside of the `<ion-buttons>`
  * element. An exception to this is a [menuToggle](../../menu/MenuToggle) button.
@@ -119,37 +135,7 @@ export class ToolbarBase extends Ion {
  * toolbar using different properties. The below chart has a description of each
  * property.
  *
- * | Property    | Description                                                                                                           |
- * |-------------|-----------------------------------------------------------------------------------------------------------------------|
- * | `start`     | Positions element to the left of the content in `ios` mode, and directly to the right in `md` and `wp` mode.    |
- * | `end`       | Positions element to the right of the content in `ios` mode, and to the far right in `md` and `wp` mode.        |
- * | `left`      | Positions element to the left of all other elements.                                                            |
- * | `right`     | Positions element to the right of all other elements.                                                           |
- *
- *
- * ### Header / Footer Box Shadow and Border
- * In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and the
- * `<ion-footer>` will receive a box-shadow on the top.  In `ios` mode, the `<ion-header>`
- * will receive a border on the bottom, and the `<ion-footer>` will receive a border on the
- * top. Both the `md` box-shadow and the `ios` border can be removed by adding the `no-border`
- * attribute to the element.
- *
- * ```html
- * <ion-header no-border>
- *   <ion-toolbar>
- *     <ion-title>Header</ion-title>
- *   </ion-toolbar>
- * </ion-header>
- *
- * <ion-content>
- * </ion-content>
- *
- * <ion-footer no-border>
- *   <ion-toolbar>
- *     <ion-title>Footer</ion-title>
- *   </ion-toolbar>
- * </ion-footer>
- * ```
+ * 
  *
  * @usage
  *
@@ -186,8 +172,192 @@ export class ToolbarBase extends Ion {
  * </ion-footer>
  *  ```
  *
+ * ### Changing the Color
+ * 
+ * You can change the toolbars color by changing the property on the element.
+ * 
+ * ```typescript
+ * 
+ * @Component({
+ *   template: `
+ *     <ion-toolbar color="primary">
+ *       <ion-title>Toolbar</ion-title>
+ *     </ion-toolbar>
+ * 
+ * 
+ *     <ion-toolbar color="secondary">
+ *       <ion-title>Toolbar</ion-title>
+ *     </ion-toolbar>
+ * 
+ *     <ion-toolbar color="danger">
+ *       <ion-title>Toolbar</ion-title>
+ *     </ion-toolbar>
+ * 
+ * 
+ *     <ion-toolbar color="dark">
+ *       <ion-title>Toolbar</ion-title>
+ *     </ion-toolbar>
+ *   `
+ *   })
+ * 
+ * ```
+ * 
+ * You can also change the navbar's color the same way. This will allow you to have 
+ * a different color navbar per page in your app.
+ * 
+ * ```html
+ * <ion-header>
+ *   <ion-navbar color="dark">
+ *     <ion-title>Dark</ion-title>
+ *   </ion-navbar>
+ * </ion-header>
+ * 
+ * 
+ * <ion-header>
+ *   <ion-navbar color="danger">
+ *     <ion-title>Danger</ion-title>
+ *   </ion-navbar>
+ * </ion-header>
+ * 
+ * <ion-header>
+ *   <ion-navbar color="secondary">
+ *     <ion-title>Secondary</ion-title>
+ *   </ion-navbar>
+ * </ion-header>
+ * ```
+ * 
+ * ## Common Usage Patterns
+ *
+ * ### Header
+ * 
+ * One of the best uses of the toolbar is as a header.
+ * 
+ * ```html
+ * <ion-header>
+ *   <ion-toolbar color="primary">
+ *     <ion-buttons start>
+ *       <button ion-button icon-only>
+ *         <ion-icon name="content"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ * 
+ *     <ion-title>Header</ion-title>
+ * 
+ *     <ion-buttons end>
+ *       <button ion-button icon-only>
+ *         <ion-icon name="search"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ * 
+ *   </ion-toolbar>
+ * </ion-header>
+ * 
+ * <ion-content>
+ *   <p>There is a header above me!</p>
+ * </ion-content>
+ * 
+ * ```
+ * 
+ * ### Buttons in Toolbars
+ * 
+ * Buttons can be added to both header and footer toolbars. To add a button 
+ * to a toolbar, we need to first add an `ion-buttons` component. This component 
+ * wraps one or more buttons, and can be positioned using one of following attributes:
+ *
+ * | Property    | Description                                                                                                           |
+ * |-------------|-----------------------------------------------------------------------------------------------------------------------|
+ * | `start`     | Positions element to the left of the content in `ios` mode, and directly to the right in `md` and `wp` mode.    |
+ * | `end`       | Positions element to the right of the content in `ios` mode, and to the far right in `md` and `wp` mode.        |
+ * | `left`      | Positions element to the left of all other elements.                                                            |
+ * | `right`     | Positions element to the right of all other elements. 
+ * 
+ * ```html
+ * <ion-header>
+ *   <ion-toolbar>
+ *     <ion-buttons start>
+ *       <button ion-button icon-only color="royal">
+ *         <ion-icon name="search"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *     <ion-title>Send To...</ion-title>
+ *     <ion-buttons end>
+ *       <button ion-button icon-only color="royal">
+ *         <ion-icon name="person-add"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *   </ion-toolbar>
+ * </ion-header>
+ * 
+ * <ion-content></ion-content>
+ * 
+ * <ion-footer>
+ *   <ion-toolbar>
+ *     <p>Ash, Misty, Brock</p>
+ *     <ion-buttons end>
+ *       <button ion-button icon-right color="royal">
+ *         Send
+ *         <ion-icon name="send"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *   </ion-toolbar>
+ * </ion-footer>
+ * ```
+ * 
+ * 
+ * ### Segment in Toolbars
+ * 
+ * [Segments](#segment) are a great way to allow users to switch between different 
+ * sets of data. Use the following markup to add a segment to a toolbar:
+ * 
+ * ```html
+ * <ion-header>
+ *   <ion-toolbar>
+ *     <ion-buttons start>
+ *       <button ion-button icon-only>
+ *         <ion-icon name="create"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *     <ion-segment>
+ *       <ion-segment-button value="new">
+ *         New
+ *       </ion-segment-button>
+ *       <ion-segment-button value="hot">
+ *         Hot
+ *       </ion-segment-button>
+ *     </ion-segment>
+ *     <ion-buttons end>
+ *       <button ion-button icon-only>
+ *         <ion-icon name="more"></ion-icon>
+ *       </button>
+ *     </ion-buttons>
+ *   </ion-toolbar>
+ * </ion-header>
+ * ```
+ * 
+ * ### Searchbar in Toolbars
+ * 
+ * Another common design paradigm is to include a searchbar inside your toolbar.
+ * 
+ * ```html
+ * <ion-header>
+ *   <ion-toolbar color="primary">
+ *     <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+ *   </ion-toolbar>
+ * </ion-header>
+ * 
+ * <ion-content>
+ *   <ion-list>
+ *     <ion-item *ngFor="let item of items">
+ *       {% raw %}{{ item }}{% endraw %}
+ *     </ion-item>
+ *   </ion-list>
+ * </ion-content>
+ * ```
+ *
  * @demo /docs/v2/demos/src/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
+ * @see {@link ../Header/ Header API Docs}
+ * @see {@link ../Footer/ Footer API Docs}
  */
 @Component({
   selector: 'ion-toolbar',
