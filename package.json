@@ -20,6 +20,7 @@
     "url": "https://github.com/driftyco/ionic.git"
   },
   "scripts": {
+    "build": "ionic-app-scripts build --prod --debug --appEntryPoint dist/demos/action-sheet/main.ts --srcDir dist/demos/action-sheet/ --wwwDir dist/demos/action-sheet/",
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link"
@@ -39,6 +40,7 @@
     "zone.js": "~0.6.26"
   },
   "devDependencies": {
+    "@ionic/app-scripts": "0.0.48",
     "@ionic/commit-hooks": "1.0.3",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
@@ -122,9 +124,9 @@
     "ts-node": "1.3.0",
     "tslint": "3.15.1",
     "tslint-ionic-rules": "0.0.7",
-    "typescript": "2.0.9",
+    "typescript": "~2.0.10",
     "vinyl": "1.2.0",
-    "webpack": "2.1.0-beta.26",
+    "webpack": "^2.1.0-beta.27",
     "yargs": "5.0.0"
   },
   "config": {
