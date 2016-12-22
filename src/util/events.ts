@@ -152,12 +152,12 @@ export function setupEvents(platform: Platform, dom: DomController): Events {
             (<any>contentEle.style)['WebkitTransform'] = '';
           }
 
-          let didScrollTimeout = setTimeout(() => {
+          let didScrollTimeout = platform.timeout(() => {
             finish();
           }, 400);
 
           scroll.scrollTo(0, 0, 300).then(() => {
-            clearTimeout(didScrollTimeout);
+            platform.cancelTimeout(didScrollTimeout);
             finish();
           });
         });
