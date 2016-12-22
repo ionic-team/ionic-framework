@@ -205,7 +205,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 
             // cordova has its own exitApp method
             p.exitApp = function() {
-              (<any>win.navigator).app.exitApp();
+              win['navigator']['app'].exitApp();
             };
 
             // cordova has fully loaded and we've added listeners
@@ -223,7 +223,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 
 function isCordova(p: Platform): boolean {
   const win: any = p.win();
-  return !!win.cordova || win.PhoneGap || win.phonegap;
+  return !!(win['cordova'] || win['PhoneGap'] || win['phonegap']);
 }
 
 function isIOS(p: Platform): boolean {
