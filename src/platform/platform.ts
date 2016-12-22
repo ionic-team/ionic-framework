@@ -701,6 +701,7 @@ export class Platform {
 
     } else {
       unreg = this.addListener(win, 'load', () => {
+        unreg && unreg();
         callback(win, doc);
       }, { zone: false });
     }
@@ -722,14 +723,14 @@ export class Platform {
    * @private
    */
   isActiveElement(ele: HTMLElement) {
-    return !!(ele && (this._doc.activeElement === ele));
+    return !!(ele && (this.getActiveElement() === ele));
   }
 
   /**
    * @private
    */
   getActiveElement() {
-    return this._doc.activeElement;
+    return this._doc['activeElement'];
   }
 
   /**
@@ -743,7 +744,7 @@ export class Platform {
    * @private
    */
   hasFocusedTextInput() {
-    const ele = this._doc.activeElement;
+    const ele = this.getActiveElement();
     if (isTextInput(ele)) {
       return (ele.parentElement.querySelector(':focus') === ele);
     }
