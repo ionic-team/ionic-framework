@@ -11,20 +11,9 @@ import { ViewController } from './view-controller';
  *
  * NavController is the base class for navigation controller components like
  * [`Nav`](../Nav/) and [`Tab`](../../tabs/Tab/). You use navigation controllers
- * to navigate to [pages](#view-creation) in your app. At a basic level, a
- * navigation controller is an array of pages representing a particular history
- * (of a Tab for example). This array can be manipulated to navigate throughout
- * an app by pushing and popping pages or inserting and removing them at
- * arbitrary locations in history.
+ * to navigate to [pages](#view-creation) in your app.
  *
- * The current page is the last one in the array, or the top of the stack if we
- * think of it that way. [Pushing](#push) a new page onto the top of the
- * navigation stack causes the new page to be animated in, while [popping](#pop)
- * the current page will navigate to the previous page in the stack.
- *
- * Unless you are using a directive like [NavPush](../../components/nav/NavPush/), or need a
- * specific NavController, most times you will inject and use a reference to the
- * nearest NavController to manipulate the navigation stack.
+ * For more information, see the [Navigation Controller doc](/docs/v2/navigation/navigation-controller).
  *
  * @see {@link /docs/v2/navigation Navigation Docs}
  */
