@@ -6,7 +6,7 @@ import { Gesture } from '../../gestures/gesture';
 import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
 import { Ion } from '../ion';
-import { Swiper } from './swiper-widget';
+import { Swiper } from './swiper/swiper';
 
 
 /**

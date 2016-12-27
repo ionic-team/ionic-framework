@@ -52,7 +52,7 @@ export class Platform {
   /** @private */
   zone: NgZone;
 
-  /** @private */
+  /** @internal */
   _platforms: string[] = [];
 
   constructor() {
