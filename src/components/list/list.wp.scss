@@ -176,9 +176,3 @@ $list-wp-header-color:           $list-wp-text-color !default;
   }
 }
 
-// Windows List inputs
-// --------------------------------------------------
-
-.list-wp .item-input:last-child {
-  border-bottom: 1px solid $list-wp-border-color;
-}
