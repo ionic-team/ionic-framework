@@ -7,7 +7,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
-import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
+import { isBlank, isCheckedProperty, isTrueProperty, deepCopy } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
@@ -191,7 +191,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectedText: string = '';
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -257,7 +257,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     console.debug('select, open alert');
 
     // the user may have assigned some options specifically for the alert
-    let selectOptions = merge({}, this.selectOptions);
+    const selectOptions = deepCopy(this.selectOptions);
 
     // make sure their buttons array is removed from the options
     // and we create a new array for the alert's two buttons

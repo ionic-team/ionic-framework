@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter
 
 import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
-import { Gesture } from '../../gestures/gesture';
-import { CSS } from '../../util/dom';
 import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
+import { Gesture } from '../../gestures/gesture';
 import { Ion } from '../ion';
+import { Platform } from '../../platform/platform';
 import { Swiper } from './swiper/swiper';
+
 
 
 /**
@@ -323,7 +324,7 @@ export class Slides extends Ion {
   @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+  constructor(config: Config, public platform: Platform, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer, 'slides');
     this.rapidUpdate = debounce(() => {
       this.update();
@@ -491,7 +492,7 @@ export class Slides extends Ion {
     this.zoomGesture.on('pinch', (e: any) => {
       this.scale = Math.max(1, Math.min(lastScale * e.scale, 10));
       console.debug('Scaling', this.scale);
-      (<any>this.zoomElement.style)[CSS.transform] = 'scale(' + this.scale + ')';
+      (<any>this.zoomElement.style)[this.platform.Css.transform] = 'scale(' + this.scale + ')';
 
       zoomRect = this.zoomElement.getBoundingClientRect();
     });
@@ -499,7 +500,7 @@ export class Slides extends Ion {
     this.zoomGesture.on('pinchend', () => {
       // last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
       if (this.scale > this.maxScale) {
-        let za = new Animation(this.zoomElement)
+        let za = new Animation(this.platform, this.zoomElement)
           .duration(this.zoomDuration)
           .easing('linear')
           .from('scale', this.scale)
@@ -516,8 +517,8 @@ export class Slides extends Ion {
    */
   resetZoom() {
     if (this.zoomElement) {
-      (<any>this.zoomElement.parentElement.style)[CSS.transform] = '';
-      (<any>this.zoomElement.style)[CSS.transform] = 'scale(1)';
+      (<any>this.zoomElement.parentElement.style)[this.platform.Css.transform] = '';
+      (<any>this.zoomElement.style)[this.platform.Css.transform] = 'scale(1)';
     }
 
     this.scale = 1;
@@ -558,7 +559,7 @@ export class Slides extends Ion {
 
     */
 
-    let zi = new Animation(this.touch.target.children[0])
+    let zi = new Animation(this.platform, this.touch.target.children[0])
       .duration(this.zoomDuration)
       .easing('linear');
 
@@ -566,7 +567,7 @@ export class Slides extends Ion {
     //   .duration(this.zoomDuration)
     //   .easing('linear');
 
-    let za = new Animation();
+    let za = new Animation(this.platform);
     za.add(zi);
 
     if (this.scale > 1) {
@@ -683,7 +684,7 @@ export class Slides extends Ion {
     } else {
       console.debug('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
       // this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
-      (<any>this.touch.target.style)[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
+      (<any>this.touch.target.style)[this.platform.Css.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
       e.preventDefault();
       e.stopPropagation();
       return false;

@@ -1,6 +1,5 @@
 import { Config } from '../config';
 import { Platform } from '../../platform/platform';
-import { QueryParams } from '../../platform/query-params';
 import { PLATFORM_CONFIGS } from '../../platform/platform-registry';
 import { registerModeConfigs } from '../mode-registry';
 
@@ -10,9 +9,9 @@ describe('Config', () => {
   it('should set activator setting to none for old Android Browser on a linux device', () => {
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('linux');
-    platform.setQueryParams(qp);
+    platform.setQueryParams('');
     platform.init();
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('activator')).toEqual('none');
   });
@@ -20,9 +19,9 @@ describe('Config', () => {
   it('should set activator setting to ripple for Android dev tools simulation on a mac', () => {
     platform.setUserAgent('Mozilla/5.0 (Linux; U; Android 4.2.2; nl-nl; GT-I9505 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
     platform.setNavigatorPlatform('MacIntel');
-    platform.setQueryParams(qp);
+    platform.setQueryParams('');
     platform.init();
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('activator')).toEqual('ripple');
   });
@@ -30,9 +29,9 @@ describe('Config', () => {
   it('should set activator setting to none for Android Chrome versions below v36 on a linux device', () => {
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.2.2; GT-I9505 Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1650.59 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
-    platform.setQueryParams(qp);
+    platform.setQueryParams('');
     platform.init();
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('activator')).toEqual('none');
   });
@@ -40,9 +39,9 @@ describe('Config', () => {
   it('should set activator setting to ripple for Android v5.0 and above using Chrome v36 and above on a linux device', () => {
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 5.0; Google Nexus 5 - 5.1.0 - API 22 - 1080x1920 Build/LMY47D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Crosswalk/22.52.561.4 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
-    platform.setQueryParams(qp);
+    platform.setQueryParams('');
     platform.init();
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('activator')).toEqual('ripple');
   });
@@ -50,9 +49,9 @@ describe('Config', () => {
   it('should set activator setting to none for Android v4.4 and below and Chrome v36 and above on a linux device', () => {
     platform.setUserAgent('Mozilla/5.0 (Linux; Android 4.4.2; XT901 Build/KDA20.92-3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Crosswalk/22.52.561.4 Mobile Safari/537.36');
     platform.setNavigatorPlatform('linux');
-    platform.setQueryParams(qp);
+    platform.setQueryParams('');
     platform.init();
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('activator')).toEqual('none');
   });
@@ -60,9 +59,9 @@ describe('Config', () => {
   it('should set activator setting to ripple for Android v5.0 and above on a linux device not using Chrome', () => {
     platform.setUserAgent('Mozilla/5.0 (Android 5.0; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
-    platform.setQueryParams(qp);
+    platform.setQueryParams('');
     platform.init();
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('activator')).toEqual('ripple');
   });
@@ -70,9 +69,9 @@ describe('Config', () => {
   it('should set activator setting to none for Android versions below v5.0 on a linux device not using Chrome', () => {
     platform.setUserAgent('Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0');
     platform.setNavigatorPlatform('linux');
-    platform.setQueryParams(qp);
+    platform.setQueryParams('');
     platform.init();
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('activator')).toEqual('none');
   });
@@ -81,7 +80,7 @@ describe('Config', () => {
     platform._platforms = ['ios'];
     config.init({
       mode: 'md'
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('mode')).toEqual('md');
     expect(config.get('iconMode')).toEqual('md');
@@ -95,38 +94,38 @@ describe('Config', () => {
           mode: 'md'
         }
       }
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('mode')).toEqual('md');
     expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should get boolean value from querystring', () => {
-    qp = new QueryParams('http://biff.com/?ionicanimate=true');
-    config.init(null, qp, platform);
+    platform.setQueryParams('http://biff.com/?ionicanimate=true');
+    config.init(null, platform);
     expect(config.get('animate')).toEqual(true);
 
     config = new Config();
-    qp = new QueryParams('http://biff.com/?ionicanimate=false');
     platform = new Platform();
-    config.init(null, qp, platform);
+    platform.setQueryParams('http://biff.com/?ionicanimate=false');
+    config.init(null, platform);
     expect(config.get('animate')).toEqual(false);
   });
 
   it('should get value from case insensitive querystring key', () => {
-    qp = new QueryParams('http://biff.com/?ionicConfigKey=b');
+    platform.setQueryParams('http://biff.com/?ionicConfigKey=b');
     config.init({
       mode: 'a'
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('configKey')).toEqual('b');
   });
 
   it('should get value from querystring', () => {
-    qp = new QueryParams('http://biff.com/?ionicmode=modeB');
+    platform.setQueryParams('http://biff.com/?ionicmode=modeB');
     config.init({
       mode: 'modeA'
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('mode')).toEqual('modeB');
   });
@@ -143,7 +142,7 @@ describe('Config', () => {
           mode: 'modeC'
         }
       }
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('mode')).toEqual('modeB');
   });
@@ -152,7 +151,7 @@ describe('Config', () => {
     platform._platforms = ['core'];
     config.init({
       mode: 'modeA'
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('mode')).toEqual('modeA');
   });
@@ -161,35 +160,35 @@ describe('Config', () => {
     platform._platforms = ['ios'];
     config.init({
       hoverCSS: true
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('hoverCSS')).toEqual(true);
   });
 
   it('should get md mode for core platform', () => {
     platform._platforms = ['core'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('mode')).toEqual('md');
   });
 
   it('should get ios mode for ipad platform', () => {
     platform._platforms = ['mobile', 'ios', 'ipad', 'tablet'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('mode')).toEqual('ios');
   });
 
   it('should get md mode for windows platform', () => {
     platform._platforms = ['mobile', 'windows'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('mode')).toEqual('wp');
   });
 
   it('should get md mode for android platform', () => {
     platform._platforms = ['mobile', 'android'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('mode')).toEqual('md');
   });
@@ -203,7 +202,7 @@ describe('Config', () => {
           tabsPlacement: 'top'
         }
       }
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('tabsPlacement')).toEqual('top');
   });
@@ -212,28 +211,28 @@ describe('Config', () => {
     platform._platforms = ['ios'];
     config.init({
       tabsPlacement: 'top'
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('tabsPlacement')).toEqual('top');
   });
 
   it('should get setting from md mode', () => {
     platform._platforms = ['android'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('iconMode')).toEqual('md');
   });
 
   it('should get setting from ios mode', () => {
     platform._platforms = ['ios'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     expect(config.get('tabsPlacement')).toEqual('bottom');
   });
 
   it('should set/get platform setting from set()', () => {
     platform._platforms = ['ios'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     config.set('tabsPlacement', 'bottom');
     config.set('ios', 'tabsPlacement', 'top');
@@ -243,7 +242,7 @@ describe('Config', () => {
 
   it('should set/get setting from set()', () => {
     platform._platforms = ['ios'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     config.set('tabsPlacement', 'top');
 
@@ -252,7 +251,7 @@ describe('Config', () => {
 
   it('should set ios platform settings from settings()', () => {
     platform._platforms = ['ios'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     config.settings('ios', {
       key: 'iosValue'
@@ -271,7 +270,7 @@ describe('Config', () => {
           key: 'mobileValue'
         }
       }
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('key')).toEqual('mobileValue');
   });
@@ -286,7 +285,7 @@ describe('Config', () => {
           key: 'mobileValue'
         }
       }
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('key')).toEqual('mobileValue');
   });
@@ -303,14 +302,14 @@ describe('Config', () => {
           key: 'androidValue'
         }
       }
-    }, qp, platform);
+    }, platform);
 
     expect(config.get('key')).toEqual('androidValue');
   });
 
   it('should set/get ios setting w/ platforms set', () => {
     platform._platforms = ['ios'];
-    config.init(null, qp, platform);
+    config.init(null, platform);
 
     config.settings({
       key: 'defaultValue',
@@ -356,7 +355,7 @@ describe('Config', () => {
   });
 
   it('should get null setting', () => {
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.get('name')).toEqual(null);
     expect(config.get('name')).toEqual(null);
     expect(config.get('occupation')).toEqual(null);
@@ -364,7 +363,7 @@ describe('Config', () => {
   });
 
   it('should set/get single setting', () => {
-    config.init(null, null, null);
+    config.init(null, null);
     config.set('name', 'Doc Brown');
     config.set('occupation', 'Weather Man');
 
@@ -378,7 +377,7 @@ describe('Config', () => {
     config.init({
       name: 'Doc Brown',
       occupation: 'Weather Man'
-    }, null, null);
+    }, null);
     expect(config.get('name')).toEqual('Doc Brown');
     expect(config.get('occupation')).toEqual('Weather Man');
   });
@@ -386,7 +385,7 @@ describe('Config', () => {
   it('should get a fallback value', () => {
     config.init({
       name: 'Doc Brown'
-    }, null, null);
+    }, null);
     expect(config.get('name', 'Marty')).toEqual('Doc Brown');
     expect(config.get('occupation', 'Weather Man')).toEqual('Weather Man');
   });
@@ -395,7 +394,7 @@ describe('Config', () => {
     config.init({
       key1: true,
       key2: false
-    }, null, null);
+    }, null);
     expect(config.getBoolean('key1')).toEqual(true);
     expect(config.getBoolean('key2')).toEqual(false);
   });
@@ -405,7 +404,7 @@ describe('Config', () => {
       key1: 'true',
       key2: 'false',
       key3: 'whatever'
-    }, null, null);
+    }, null);
     expect(config.getBoolean('key1')).toEqual(true);
     expect(config.getBoolean('key2')).toEqual(false);
     expect(config.getBoolean('key3')).toEqual(false);
@@ -418,7 +417,7 @@ describe('Config', () => {
       key1: 0,
       key2: 1,
       key3: 'whatever'
-    }, null, null);
+    }, null);
     expect(config.getBoolean('key1')).toEqual(false);
     expect(config.getBoolean('key2')).toEqual(true);
   });
@@ -426,7 +425,7 @@ describe('Config', () => {
   it('should get a number value with a number config value', () => {
     config.init({
       key: 6
-    }, null, null);
+    }, null);
     expect(config.getNumber('key')).toEqual(6);
   });
 
@@ -435,7 +434,7 @@ describe('Config', () => {
       key: '6',
       numThenString: '6baymax',
       stringThenNum: 'baymax6'
-    }, null, null);
+    }, null);
     expect(config.getNumber('key', 5)).toEqual(6);
     expect(config.getNumber('numThenString', 4)).toEqual(6);
     expect( isNaN(config.getNumber('stringThenNum')) ).toEqual(true);
@@ -446,7 +445,7 @@ describe('Config', () => {
       allString: 'allstring',
       imNull: null,
       imUndefined: undefined
-    }, null, null);
+    }, null);
     expect( isNaN(config.getNumber('notfound'))).toEqual(true);
     expect( isNaN(config.getNumber('allString'))).toEqual(true);
     expect( isNaN(config.getNumber('imNull'))).toEqual(true);
@@ -458,7 +457,7 @@ describe('Config', () => {
       allString: 'allstring',
       imNull: null,
       imUndefined: undefined
-    }, null, null);
+    }, null);
     expect( config.getNumber('notfound', 6)).toEqual(6);
     expect( config.getNumber('allString', 6)).toEqual(6);
     expect( config.getNumber('imNull', 6)).toEqual(6);
@@ -470,7 +469,7 @@ describe('Config', () => {
     config.init({
       name: 'Doc Brown',
       occupation: 'Weather Man'
-    }, null, null);
+    }, null);
 
     expect(config.settings()).toEqual({
       name: 'Doc Brown',
@@ -480,56 +479,56 @@ describe('Config', () => {
 
   it('should create default config w/ bad settings value', () => {
     let config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
 
     config = new Config();
-    config.init(null, null, null);
+    config.init(null, null);
     expect(config.settings()).toEqual({});
   });
 
   let platform: Platform;
   let config: Config;
-  let qp: QueryParams;
 
   beforeEach(() => {
     config = new Config();
     registerModeConfigs(config)();
-    qp = new QueryParams('');
     platform = new Platform();
     platform.setPlatformConfigs(PLATFORM_CONFIGS);
+    platform.setWindow(window);
+    platform.setDocument(document);
   });
 
 });

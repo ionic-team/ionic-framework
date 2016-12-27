@@ -1,7 +1,6 @@
 import { OpaqueToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
-import { windowLoad } from '../util/dom';
 
 
 export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
@@ -9,7 +8,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * core
    */
-  core: {
+  'core': {
     settings: {
       mode: 'md',
       keyboardHeight: 290
@@ -19,12 +18,12 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * mobile
    */
-  mobile: {},
+  'mobile': {},
 
   /**
    * phablet
    */
-  phablet: {
+  'phablet': {
     isMatch(p: Platform) {
       let smallest = Math.min(p.width(), p.height());
       let largest = Math.max(p.width(), p.height());
@@ -36,7 +35,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * tablet
    */
-  tablet: {
+  'tablet': {
     isMatch(p: Platform) {
       let smallest = Math.min(p.width(), p.height());
       let largest = Math.max(p.width(), p.height());
@@ -48,7 +47,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * android
    */
-  android: {
+  'android': {
     superset: 'mobile',
     subsets: [
       'phablet',
@@ -97,7 +96,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * ios
    */
-  ios: {
+  'ios': {
     superset: 'mobile',
     subsets: [
       'ipad',
@@ -128,7 +127,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * ipad
    */
-  ipad: {
+  'ipad': {
     superset: 'tablet',
     settings: {
       keyboardHeight: 500,
@@ -141,7 +140,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * iphone
    */
-  iphone: {
+  'iphone': {
     subsets: [
       'phablet'
     ],
@@ -153,7 +152,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * Windows
    */
-  windows: {
+  'windows': {
     superset: 'mobile',
     subsets: [
       'phablet',
@@ -175,30 +174,30 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
   /**
    * cordova
    */
-  cordova: {
+  'cordova': {
     isEngine: true,
     initialize: function(p: Platform) {
 
       // prepare a custom "ready" for cordova "deviceready"
       p.prepareReady = function() {
         // 1) ionic bootstrapped
-        windowLoad(function() {
+        p.windowLoad(function(win: Window, doc: HTMLDocument) {
           // 2) window onload triggered or completed
-          document.addEventListener('deviceready', function() {
+          doc.addEventListener('deviceready', function() {
             // 3) cordova deviceready event triggered
 
             // add cordova listeners to emit platform events
-            document.addEventListener('backbutton', function(ev: Event) {
+            doc.addEventListener('backbutton', function(ev: Event) {
               p.zone.run(() => {
                 p.backButton.emit(ev);
               });
             });
-            document.addEventListener('pause', function(ev: Event) {
+            doc.addEventListener('pause', function(ev: Event) {
               p.zone.run(() => {
                 p.pause.emit(ev);
               });
             });
-            document.addEventListener('resume', function(ev: Event) {
+            doc.addEventListener('resume', function(ev: Event) {
               p.zone.run(() => {
                 p.resume.emit(ev);
               });
@@ -206,7 +205,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 
             // cordova has its own exitApp method
             p.exitApp = function() {
-              (<any>window.navigator).app.exitApp();
+              win['navigator']['app'].exitApp();
             };
 
             // cordova has fully loaded and we've added listeners
@@ -216,14 +215,15 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       };
 
     },
-    isMatch(): boolean {
-      return !!((<any>window).cordova || (<any>window).PhoneGap || (<any>window).phonegap);
+    isMatch(p: Platform): boolean {
+      return isCordova(p);
     }
   }
 };
 
-function isCordova(): boolean {
-  return !!((<any>window).cordova);
+function isCordova(p: Platform): boolean {
+  const win: any = p.win();
+  return !!(win['cordova'] || win['PhoneGap'] || win['phonegap']);
 }
 
 function isIOS(p: Platform): boolean {
@@ -239,19 +239,13 @@ function isSafari(p: Platform): boolean {
 }
 
 
-function isWK(): boolean {
-  return !!window['webkit'];
+function isWK(p: Platform): boolean {
+  return !!p.win()['webkit'];
 }
-
-// Commented out becuase it is not used yet
-// function isIOSWK(p: Platform): boolean {
-//   return isIOS(p) && isWK();
-// }
 
 function isIOSUI(p: Platform): boolean {
-  return isIOS(p) && !isWK() && !isSafari(p);
+  return isIOS(p) && !isWK(p) && !isSafari(p);
 }
-
 
 
 export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');

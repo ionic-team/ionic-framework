@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Content } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { isPresent, isTrueProperty } from '../../util/util';
-import { listenEvent, eventOptions } from '../../util/ui-event-manager';
 import { Platform } from '../../platform/platform';
 
 
@@ -364,12 +363,10 @@ export class Img implements OnDestroy {
   ngAfterContentInit() {
     this._img = this._elementRef.nativeElement.firstChild;
 
-    this._unreg && this._unreg();
-    const opts = eventOptions(false, true);
-    this._unreg = listenEvent(this._img, 'load', false, opts, () => {
+    this._unreg = this._platform.addListener(this._img, 'load', () => {
       this._hasLoaded = true;
       this.update();
-    });
+    }, { passive: true });
   }
 
   /**

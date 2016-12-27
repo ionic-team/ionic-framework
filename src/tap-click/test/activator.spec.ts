@@ -1,5 +1,7 @@
 import { Activator } from '../activator';
-import { Config } from '../../../config/config';
+import { Config } from '../../config/config';
+import { mockDomController, MockDomController } from '../../util/mock-providers';
+
 
 describe('Activator', () => {
 
@@ -11,138 +13,108 @@ describe('Activator', () => {
     expect(activator._css).toEqual('enabled');
   });
 
-  it('should sync add/remove css class', () => {
-    const {ev, ele, pos} = testValues();
-
-    let activator = mockActivator(true, 'activo');
-    activator.activatedDelay = 0;
-    activator.clearDelay = 0;
-
-    activator.downAction(ev, ele, pos);
-    expect(ele.classList.contains('activo')).toBeTruthy();
-
-    activator.upAction(ev, ele, pos);
-    expect(ele.classList.contains('activo')).toBeFalsy();
-
-    activator.downAction(ev, ele, pos);
-    expect(ele.classList.contains('activo')).toBeTruthy();
-
-    activator.upAction(null, null, pos);
-    expect(ele.classList.contains('activo')).toBeFalsy();
-
-    activator.downAction(ev, ele, pos);
-    expect(ele.classList.contains('activo')).toBeTruthy();
-
-    activator.clickAction(null, null, pos);
-    expect(ele.classList.contains('activo')).toBeFalsy();
-  });
-
   it('should async down/up/click action (normal flow)', (done) => {
     const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
-    activator.activatedDelay = 6;
-    activator.clearDelay = 6;
+    activator.activatedDelay = 80;
+    activator.clearDelay = 80;
 
     activator.downAction(ev, ele, pos);
     expect(ele.classList.contains('activated')).toBeFalsy();
 
     // upAction
-    setTimeout(() => {
+    dom.flushUntil(100, () => {
       expect(ele.classList.contains('activated')).toBeTruthy();
       activator.upAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeTruthy();
-    }, (6 + 2) * 16);
 
-    // clickAction
-    setTimeout(() => {
+      // clickAction
       expect(ele.classList.contains('activated')).toBeTruthy();
       activator.clickAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeTruthy();
-    }, (6 + 2 + 2) * 16);
 
-    // Read final results
-    setTimeout(() => {
-      expect(ele.classList.contains('activated')).toBeFalsy();
-      done();
-    }, (6 + 6 + 4) * 16);
-  }, 10000);
+      // Read final results
+      dom.flushUntil(2000, () => {
+        expect(ele.classList.contains('activated')).toBeFalsy();
+        done();
+      });
+    });
+  });
 
   it('should async down then down', (done) => {
     const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
-    activator.activatedDelay = 6;
-    activator.clearDelay = 6;
+    activator.activatedDelay = 80;
+    activator.clearDelay = 80;
 
     activator.downAction(ev, ele, pos);
 
-    setTimeout(() => {
+    dom.flushUntil(100, () => {
       expect(ele.classList.contains('activated')).toBeTruthy();
       activator.downAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeFalsy();
-    }, (6 + 2) * 16);
 
-    setTimeout(() => {
-      expect(ele.classList.contains('activated')).toBeTruthy();
-      done();
-    }, (6 + 6 + 4) * 16);
-  }, 10000);
+      dom.flushUntil(100, () => {
+        expect(ele.classList.contains('activated')).toBeTruthy();
+        done();
+      });
+    });
+
+  });
 
   it('should async down then click', (done) => {
     const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
-    activator.activatedDelay = 6;
-    activator.clearDelay = 6;
+    activator.activatedDelay = 80;
+    activator.clearDelay = 80;
 
     activator.downAction(ev, ele, pos);
 
-    setTimeout(() => {
+    dom.flushUntil(16, () => {
       expect(ele.classList.contains('activated')).toBeFalsy();
       activator.clickAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeTruthy();
-    }, 16);
 
-    setTimeout(() => {
-      expect(ele.classList.contains('activated')).toBeFalsy();
-    }, (6 + 3) * 16);
+      dom.flushUntil(100, () => {
+        expect(ele.classList.contains('activated')).toBeFalsy();
 
-    // Check the value is stable
-    setTimeout(() => {
-      expect(ele.classList.contains('activated')).toBeFalsy();
-      done();
-    }, 20 * 16);
-  }, 10000);
+        // Check the value is stable
+        dom.flushUntil(2000, () => {
+          expect(ele.classList.contains('activated')).toBeFalsy();
+          done();
+        });
+      });
+
+    });
+  });
 
   it('should async down then click then down (fast clicking)', (done) => {
     const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
-    activator.activatedDelay = 6;
-    activator.clearDelay = 6;
+    activator.activatedDelay = 80;
+    activator.clearDelay = 80;
 
     activator.downAction(ev, ele, pos);
 
-    setTimeout(() => {
+    dom.flushUntil(16, () => {
       expect(ele.classList.contains('activated')).toBeFalsy();
       activator.clickAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeTruthy();
-    }, 16);
 
-    setTimeout(() => {
-      expect(ele.classList.contains('activated')).toBeTruthy();
-      activator.downAction(ev, ele, pos);
-      expect(ele.classList.contains('activated')).toBeFalsy();
-    }, 16 * 2);
+      dom.flushUntil(32, () => {
+        expect(ele.classList.contains('activated')).toBeTruthy();
+        activator.downAction(ev, ele, pos);
+        expect(ele.classList.contains('activated')).toBeFalsy();
 
-    setTimeout(() => {
-      expect(ele.classList.contains('activated')).toBeTruthy();
-      done();
-    }, 16 * 12);
+        done();
+      });
+    });
 
-  }, 10000);
-
+  });
 
 });
 
@@ -157,8 +129,10 @@ function testValues() {
   };
 }
 
+var dom: MockDomController;
 
 function mockActivator(appEnabled: boolean, css: string) {
+  dom = mockDomController();
   let app = {
     isEnabled: () => { return appEnabled; },
   };
@@ -166,5 +140,5 @@ function mockActivator(appEnabled: boolean, css: string) {
   if (css) {
     config.set('activatedClass', css);
   }
-  return new Activator(<any>app, config);
+  return new Activator(<any>app, config, dom);
 }

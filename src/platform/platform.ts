@@ -1,7 +1,7 @@
-import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
+import { EventEmitter, NgZone } from '@angular/core';
 
+import { getCss, isTextInput } from '../util/dom';
 import { QueryParams } from './query-params';
-import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
 import { removeArrayItem } from '../util/util';
 
 
@@ -30,16 +30,17 @@ import { removeArrayItem } from '../util/util';
  * @demo /docs/v2/demos/src/platform/
  */
 export class Platform {
+  private _win: Window;
+  private _doc: HTMLDocument;
   private _versions: {[name: string]: PlatformVersion} = {};
   private _dir: string;
   private _lang: string;
   private _ua: string;
-  private _qp: QueryParams;
+  private _qp = new QueryParams();
   private _bPlt: string;
   private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
-  private _resizeTm: any;
   private _bbActions: BackButtonAction[] = [];
   private _registry: {[name: string]: PlatformConfig};
   private _default: string;
@@ -48,11 +49,25 @@ export class Platform {
   private _lW = 0;
   private _lH = 0;
   private _isPortrait: boolean = null;
+  private _uiEvtOpts = false;
 
   /** @private */
   zone: NgZone;
 
   /** @internal */
+  Css: {
+    transform?: string;
+    transition?: string;
+    transitionDuration?: string;
+    transitionDelay?: string;
+    transitionTimingFn?: string;
+    transitionStart?: string;
+    transitionEnd?: string;
+    transformOrigin?: string;
+    animationDelay?: string;
+  };
+
+  /** @private */
   _platforms: string[] = [];
 
   constructor() {
@@ -70,8 +85,43 @@ export class Platform {
   /**
    * @private
    */
+  setWindow(win: Window) {
+    this._win = win;
+  }
+
+  /**
+   * @private
+   */
+  win() {
+    return this._win;
+  }
+
+  /**
+   * @private
+   */
+  setDocument(doc: HTMLDocument) {
+    this._doc = doc;
+  }
+
+  /**
+   * @private
+   */
+  doc() {
+    return this._doc;
+  }
+
+  /**
+   * @private
+   */
   setZone(zone: NgZone) {
     this.zone = zone;
+  }
+
+  /**
+   * @private
+   */
+  setCssProps(docElement: HTMLElement) {
+    this.Css = getCss(docElement);
   }
 
 
@@ -245,9 +295,21 @@ export class Platform {
    * value is `dom`.
    */
   prepareReady() {
-    ready(() => {
-      this.triggerReady('dom');
-    });
+    const self = this;
+
+    if (self._doc.readyState === 'complete' || self._doc.readyState === 'interactive') {
+      self.triggerReady('dom');
+
+    } else {
+      self._doc.addEventListener('DOMContentLoaded', completed, false);
+      self._win.addEventListener('load', completed, false);
+    }
+
+    function completed() {
+      self._doc.removeEventListener('DOMContentLoaded', completed, false);
+      self._win.removeEventListener('load', completed, false);
+      self.triggerReady('dom');
+    }
   }
 
   /**
@@ -262,7 +324,7 @@ export class Platform {
   setDir(dir: string, updateDocument: boolean) {
     this._dir = (dir || '').toLowerCase();
     if (updateDocument !== false) {
-      document.documentElement.setAttribute('dir', dir);
+      this._doc.documentElement.setAttribute('dir', dir);
     }
   }
 
@@ -300,7 +362,7 @@ export class Platform {
   setLang(language: string, updateDocument: boolean) {
     this._lang = language;
     if (updateDocument !== false) {
-      document.documentElement.setAttribute('lang', language);
+      this._doc.documentElement.setAttribute('lang', language);
     }
   }
 
@@ -408,8 +470,22 @@ export class Platform {
   /**
    * @private
    */
-  setQueryParams(queryParams: QueryParams) {
-    this._qp = queryParams;
+  setQueryParams(url: string) {
+    this._qp.parseUrl(url);
+  }
+
+  /**
+   * Get the query string parameter
+   */
+  getQueryParam(key: string) {
+    return this._qp.get(key);
+  }
+
+  /**
+   * Get the current url.
+   */
+  url() {
+    return this._win.location.href;
   }
 
   /**
@@ -454,6 +530,27 @@ export class Platform {
   }
 
   /**
+   * @private
+   */
+  getElementComputedStyle(ele: HTMLElement) {
+    return this._win.getComputedStyle(ele);
+  }
+
+  /**
+   * @private
+   */
+  getElementFromPoint(x: number, y: number) {
+    return <HTMLElement>this._doc.elementFromPoint(x, y);
+  }
+
+  /**
+   * @private
+   */
+  getElementBoundingClientRect(ele: HTMLElement) {
+    return ele.getBoundingClientRect();
+  }
+
+  /**
    * Returns `true` if the app is in portait mode.
    */
   isPortrait(): boolean {
@@ -468,31 +565,33 @@ export class Platform {
     return !this.isPortrait();
   }
 
-  /**
-   * @private
-   */
-  _calcDim() {
+  private _calcDim() {
+    // we're caching window dimensions so that
+    // we're not forcing many layouts
+    // if _isPortrait is null then that means
+    // the dimensions needs to be looked up again
     if (this._isPortrait === null) {
-      const winDimensions = windowDimensions();
-      const screenWidth = window.screen.width || winDimensions.width;
-      const screenHeight = window.screen.height || winDimensions.height;
+      var win = this._win;
 
-      if (screenWidth < screenHeight) {
+      // we're keeping track of portrait and landscape dimensions
+      // separately because the virtual keyboard can really mess
+      // up accurate values when the keyboard up
+      if (win.screen.width < win.screen.height) {
         this._isPortrait = true;
-        if (this._pW < winDimensions.width) {
-          this._pW = winDimensions.width;
+        if (this._pW < win.innerWidth) {
+          this._pW = win.innerWidth;
         }
-        if (this._pH < winDimensions.height) {
-          this._pH = winDimensions.height;
+        if (this._pH < win.innerHeight) {
+          this._pH = win.innerHeight;
         }
 
       } else {
         this._isPortrait = false;
-        if (this._lW < winDimensions.width) {
-          this._lW = winDimensions.width;
+        if (this._lW < win.innerWidth) {
+          this._lW = win.innerWidth;
         }
-        if (this._lH < winDimensions.height) {
-          this._lH = winDimensions.height;
+        if (this._lH < win.innerHeight) {
+          this._lH = win.innerHeight;
         }
       }
     }
@@ -500,22 +599,112 @@ export class Platform {
 
   /**
    * @private
+   * This requestAnimationFrame will NOT be wrapped by zone.
    */
-  windowResize() {
-    clearTimeout(this._resizeTm);
+  raf(callback: {(timeStamp?: number): void}|Function): number {
+    const win: any = this._win;
+    return win['__zone_symbol__requestAnimationFrame'](callback);
+  }
 
-    this._resizeTm = setTimeout(() => {
-      flushDimensionCache();
-      this._isPortrait = null;
+  /**
+   * @private
+   */
+  cancelRaf(rafId: number) {
+    const win: any = this._win;
+    return win['__zone_symbol__cancelAnimationFrame'](rafId);
+  }
 
-      for (let i = 0; i < this._onResizes.length; i++) {
-        try {
-          this._onResizes[i]();
-        } catch (e) {
-          console.error(e);
-        }
+  /**
+   * @private
+   * This setTimeout will NOT be wrapped by zone.
+   */
+  timeout(callback: Function, timeout: number): number {
+    const win: any = this._win;
+    return win['__zone_symbol__setTimeout'](callback, timeout);
+  }
+
+  /**
+   * @private
+   * This setTimeout will NOT be wrapped by zone.
+   */
+  cancelTimeout(timeoutId: number) {
+    const win: any = this._win;
+    win['__zone_symbol__clearTimeout'](timeoutId);
+  }
+
+  /**
+   * @private
+   * Built to use modern event listener options, like "passive".
+   * If options are not supported, then just return a boolean which
+   * represents "capture". Returns a method to remove the listener.
+   */
+  addListener(ele: any, eventName: string, callback: Function, opts: EventListenerOptions): Function {
+    const listenerOpts = this._uiEvtOpts ? {
+        'capture': !!opts.capture,
+        'passive': !!opts.passive,
+      } : !!opts.capture;
+
+    const rawEvent = ele['__zone_symbol__addEventListener'];
+    if (!opts.zone && rawEvent) {
+      // do not wrap this even in zone and we've verified we can use the raw addEventListener
+      rawEvent(eventName, callback, listenerOpts);
+      return function unregisterListener() {
+        ele['__zone_symbol__removeEventListener'](eventName, callback, listenerOpts);
+      };
+    }
+
+    ele.addEventListener(eventName, callback, listenerOpts);
+
+    return function unregisterListener() {
+      ele.removeEventListener(eventName, callback, listenerOpts);
+    };
+  }
+
+  /**
+   * @private
+   */
+  transitionEnd(el: HTMLElement, callback: Function) {
+    const unRegs: Function[] = [];
+
+    function unregister() {
+      unRegs.forEach(unReg => {
+        unReg();
+      });
+    }
+
+    function onTransitionEnd(ev: UIEvent) {
+      if (el === ev.target) {
+        unregister();
+        callback(ev);
       }
-    }, 200);
+    }
+
+    if (el) {
+      this.Css.transitionEnd.split(' ').forEach(eventName => {
+        unRegs.push(this.addListener(el, eventName, onTransitionEnd, { zone: false }));
+      });
+    }
+
+    return unregister;
+  }
+
+  /**
+   * @private
+   */
+  windowLoad(callback: Function) {
+    const win = this._win;
+    const doc = this._doc;
+    let unreg: Function;
+
+    if (doc.readyState === 'complete') {
+      callback(win, doc);
+
+    } else {
+      unreg = this.addListener(win, 'load', () => {
+        unreg && unreg();
+        callback(win, doc);
+      }, { zone: false });
+    }
   }
 
   /**
@@ -528,6 +717,80 @@ export class Platform {
     return function() {
       removeArrayItem(self._onResizes, cb);
     };
+  }
+
+  /**
+   * @private
+   */
+  isActiveElement(ele: HTMLElement) {
+    return !!(ele && (this.getActiveElement() === ele));
+  }
+
+  /**
+   * @private
+   */
+  getActiveElement() {
+    return this._doc['activeElement'];
+  }
+
+  /**
+   * @private
+   */
+  hasFocus(ele: HTMLElement) {
+    return !!((ele && (this.getActiveElement() === ele)) && (ele.parentElement.querySelector(':focus') === ele));
+  }
+
+  /**
+   * @private
+   */
+  hasFocusedTextInput() {
+    const ele = this.getActiveElement();
+    if (isTextInput(ele)) {
+      return (ele.parentElement.querySelector(':focus') === ele);
+    }
+    return false;
+  }
+
+  /**
+   * @private
+   */
+  focusOutActiveElement() {
+    const activeElement: any = this.getActiveElement();
+    activeElement && activeElement.blur && activeElement.blur();
+  }
+
+  private _initEvents() {
+    // Test via a getter in the options object to see if the passive property is accessed
+    try {
+      var opts = Object.defineProperty({}, 'passive', {
+        get: () => {
+          this._uiEvtOpts = true;
+        }
+      });
+      this._win.addEventListener('optsTest', null, opts);
+    } catch (e) { }
+
+    // add the window resize event listener XXms after
+    this.timeout(() => {
+      var timerId: number;
+      this.addListener(this._win, 'resize', () => {
+        clearTimeout(timerId);
+
+        timerId = setTimeout(() => {
+          // setting _isPortrait to null means the
+          // dimensions will need to be looked up again
+          this._isPortrait = null;
+
+          for (let i = 0; i < this._onResizes.length; i++) {
+            try {
+              this._onResizes[i]();
+            } catch (e) {
+              console.error(e);
+            }
+          }
+        }, 200);
+      }, { passive: true, zone: true });
+    }, 2000);
   }
 
 
@@ -629,6 +892,8 @@ export class Platform {
 
   /** @private */
   init() {
+    this._initEvents();
+
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
 
@@ -864,37 +1129,40 @@ interface BackButtonAction {
 }
 
 
-/**
- * @private
- */
-export function setupPlatform(platformConfigs: {[key: string]: PlatformConfig}, queryParams: QueryParams, userAgent: string, navigatorPlatform: string, docDirection: string, docLanguage: string, zone: NgZone): Platform {
-  const p = new Platform();
-  p.setDefault('core');
-  p.setPlatformConfigs(platformConfigs);
-  p.setUserAgent(userAgent);
-  p.setQueryParams(queryParams);
-  p.setNavigatorPlatform(navigatorPlatform);
-  p.setDir(docDirection, false);
-  p.setLang(docLanguage, false);
-  p.setZone(zone);
-  p.init();
-  return p;
+export interface EventListenerOptions {
+  capture?: boolean;
+  passive?: boolean;
+  zone?: boolean;
 }
 
 
 /**
  * @private
  */
-export const UserAgentToken = new OpaqueToken('USERAGENT');
-/**
- * @private
- */
-export const NavigatorPlatformToken = new OpaqueToken('NAVPLT');
-/**
- * @private
- */
-export const DocumentDirToken = new OpaqueToken('DOCDIR');
-/**
- * @private
- */
-export const DocLangToken = new OpaqueToken('DOCLANG');
+export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]: PlatformConfig}, zone: NgZone): Platform {
+  const p = new Platform();
+  p.setDefault('core');
+  p.setPlatformConfigs(platformConfigs);
+  p.setZone(zone);
+
+  // set values from "document"
+  const docElement = doc.documentElement;
+  p.setDocument(doc);
+  p.setDir(docElement.dir, false);
+  p.setLang(docElement.lang, false);
+
+  // set css properties
+  p.setCssProps(docElement);
+
+  // set values from "window"
+  const win = doc.defaultView;
+  p.setWindow(win);
+  p.setNavigatorPlatform(win.navigator.platform);
+  p.setUserAgent(win.navigator.userAgent);
+
+  // set location values
+  p.setQueryParams(win.location.href);
+
+  p.init();
+  return p;
+}

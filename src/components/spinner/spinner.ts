@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEn
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { CSS } from '../../util/dom';
 import { isTrueProperty } from '../../util/util';
 
 /**
@@ -133,7 +132,7 @@ export class Spinner extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -231,12 +230,16 @@ const SPINNERS: any = {
     dur: 1000,
     lines: 12,
     fn: function (dur: number, index: number, total: number) {
+      const transform = 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)';
+      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         y1: 17,
         y2: 29,
         style: {
-          [CSS.transform]: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
+          transform: transform,
+          webkitTransform: transform,
+          animationDelay: animationDelay,
+          webkitAnimationDelay: animationDelay
         }
       };
     }
@@ -246,12 +249,16 @@ const SPINNERS: any = {
     dur: 1000,
     lines: 12,
     fn: function (dur: number, index: number, total: number) {
+      const transform = 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)';
+      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         y1: 12,
         y2: 20,
         style: {
-          [CSS.transform]: 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)',
-          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
+          transform: transform,
+          webkitTransform: transform,
+          animationDelay: animationDelay,
+          webkitAnimationDelay: animationDelay
         }
       };
     }
@@ -261,12 +268,14 @@ const SPINNERS: any = {
     dur: 1000,
     circles: 9,
     fn: function (dur: number, index: number, total: number) {
+      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         r: 5,
         style: {
           top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
           left: (9 * Math.cos(2 * Math.PI * index / total)) + 'px',
-          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
+          animationDelay: animationDelay,
+          webkitAnimationDelay: animationDelay
         }
       };
     }
@@ -276,12 +285,14 @@ const SPINNERS: any = {
     dur: 1000,
     circles: 8,
     fn: function (dur: number, index: number, total: number) {
+      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
       return {
         r: 5,
         style: {
           top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
           left: (9 * Math.cos(2 * Math.PI * index / total)) + 'px',
-          [CSS.animationDelay]: -(dur - ((dur / total) * index)) + 'ms'
+          animationDelay: animationDelay,
+          webkitAnimationDelay: animationDelay
         }
       };
     }
@@ -302,11 +313,13 @@ const SPINNERS: any = {
     dur: 750,
     circles: 3,
     fn: function (dur: number, index: number, total: number) {
+      const animationDelay = -(110 * index) + 'ms';
       return {
         r: 6,
         style: {
           left: (9 - (9 * index)) + 'px',
-          [CSS.animationDelay]: -(110 * index) + 'ms'
+          animationDelay: animationDelay,
+          webkitAnimationDelay: animationDelay
         }
       };
     }
