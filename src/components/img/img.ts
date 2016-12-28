@@ -10,8 +10,8 @@ import { Platform } from '../../platform/platform';
 /**
  * @name Img
  * @description
- * Two of the biggest cuprits of scroll jank is starting up a new HTTP
- * request, and rendering images. These two reasons is largely why
+ * Two of the biggest cuprits of scroll jank are starting up a new HTTP
+ * request and rendering images. These two reasons are largely why
  * `ion-img` was created. The standard HTML `img` element is often a large
  * source of these problems, and what makes matters worse is that the app
  * does not have fine-grained control of requests and rendering for each
@@ -20,28 +20,28 @@ import { Platform } from '../../platform/platform';
  * The `ion-img` component is similar to the standard `img` element,
  * but it also adds features in order to provide improved performance.
  * Features include only loading images which are visible, using web workers
- * for HTTP requests, preventing jank while scrolling and in-memory caching.
+ * for HTTP requests, preventing jank while scrolling, and in-memory caching.
  *
  * Note that `ion-img` also comes with a few more restrictions in comparison
  * to the standard `img` element. A good rule is, if there are only a few
  * images to be rendered on a page, then the standard `img` is probably
- * best. However, if a page has the potential for hundreds or even thousands
- * of images within a scrollable area, then `ion-img` would be better suited
+ * best, but if a page has the potential for hundreds or even thousands
+ * of images within a scrollable area, then `ion-img` is better suited
  * for the job.
  *
  *
  * ### Lazy Loading
  *
  * Lazy loading images refers to only loading images which are actually
- * visible within the user's viewport. This also means that images which are
- * not viewable on the initial load would not be downloaded or rendered. Next,
- * as the user scrolls, each image which becomes visible is then requested
- * then rendered on-demand.
+ * visible within the user's viewport. This means that images which are
+ * not viewable on the initial load will not be downloaded or rendered. 
+ * As the user scrolls, each image is requested and rendered on-demand
+ * when it enters the viewport.
  *
- * The benefits of this approach is that unnecessary and resource intensive
- * HTTP requests are not started, valuable bandwidth isn't wasted, and this
+ * The benefits of this approach are that unnecessary and resource intensive
+ * HTTP requests are not started, valuable bandwidth isn't wasted. This
  * allows the browser to free up resources which would be wasted on images
- * which are not even viewable. For example, animated GIFs are enourmous
+ * that are not even viewable. For example, animated GIFs are enourmous
  * performance drains, however, with `ion-img` the app is able to dedicate
  * resources to just the viewable images. But again, if the problems listed
  * above are not problems within your app, then the standard `img` element
@@ -52,14 +52,14 @@ import { Platform } from '../../platform/platform';
  *
  * By providing image dimensions up front, Ionic is able to accurately size
  * up the image's location within the viewport, which helps lazy load only
- * images which are viewable. Image dimensions can either by set as
+ * images which are viewable. Image dimensions can either be set as
  * properties, inline styles, or external stylesheets. It doesn't matter
  * which method of setting dimensions is used, but it's important that somehow
  * each `ion-img` has been given an exact size.
  *
  * For example, by default `<ion-avatar>` and `<ion-thumbnail>` already come
  * with exact sizes when placed within an `<ion-item>`. By giving each image
- * an exact size, this then further locks in the size of each `ion-item`,
+ * an exact size, this further locks in the size of each `ion-item`,
  * which again helps improve scroll performance.
  *
  * ```html
