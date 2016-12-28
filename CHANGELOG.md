@@ -7,6 +7,7 @@
 1. Update the Ionic CLI to the latest version:
 
   ```
+  npm uninstall -g ionic
   npm install -g ionic
   ```
 
