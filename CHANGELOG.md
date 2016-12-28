@@ -257,6 +257,7 @@ Update the following dependencies in your `package.json` file:
 },
 "devDependencies": {
   "@ionic/app-scripts": "0.0.45",
+   "typescript": "2.0.6"
 }
 ```
 
