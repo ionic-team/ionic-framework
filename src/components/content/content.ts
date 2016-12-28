@@ -322,7 +322,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
   constructor(
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     private _dom: DomController,
     elementRef: ElementRef,
     renderer: Renderer,
@@ -344,7 +344,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       viewCtrl._setIONContentRef(elementRef);
     }
 
-    this._scroll = new ScrollView(_platform, _dom);
+    this._scroll = new ScrollView(_plt, _dom);
   }
 
   /**
@@ -404,8 +404,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /**
    * @private
    */
-  onScrollElementTransitionEnd(callback: Function) {
-    this._platform.transitionEnd(this._scrollEle, callback);
+  onScrollElementTransitionEnd(callback: {(ev: TransitionEvent)}) {
+    this._plt.transitionEnd(this._scrollEle, callback);
   }
 
   /**

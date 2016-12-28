@@ -51,7 +51,7 @@ describe('Img', () => {
   let img: Img;
   let elementRef: ElementRef;
   let renderer: Renderer;
-  let platform: Platform;
+  let plt: Platform;
   let content: Content;
   let dom: DomController;
 
@@ -59,9 +59,9 @@ describe('Img', () => {
     content = mockContent();
     elementRef = mockElementRef();
     renderer = mockRenderer();
-    platform = mockPlatform();
+    plt = mockPlatform();
     dom = mockDomController();
-    img = new Img(elementRef, renderer, platform, mockZone(), content, dom);
+    img = new Img(elementRef, renderer, plt, mockZone(), content, dom);
   });
 
 });

@@ -160,7 +160,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
 
   constructor(
-    private _platform: Platform,
+    private _plt: Platform,
     private _dom: DomController,
     elementRef: ElementRef,
     private _rendered: Renderer,
@@ -197,7 +197,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
 
     } else if (enabled && !this._reorderGesture) {
       console.debug('enableReorderItems');
-      this._reorderGesture = new ItemReorderGesture(this._platform, this);
+      this._reorderGesture = new ItemReorderGesture(this._plt, this);
 
       this._enableReorder = true;
 
@@ -246,7 +246,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     let len = children.length;
 
     this.setElementClass('reorder-list-active', false);
-    let transform = this._platform.Css.transform;
+    let transform = this._plt.Css.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
     }
@@ -267,7 +267,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     let children = this._element.children;
 
     /********* DOM WRITE ********* */
-    let transform = this._platform.Css.transform;
+    let transform = this._plt.Css.transform;
     if (toIndex >= lastToIndex) {
       for (var i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {

@@ -11,13 +11,13 @@ import { Toggle } from './toggle';
 export class ToggleGesture extends PanGesture {
 
   constructor(
-    platform: Platform,
+    plt: Platform,
     public toogle: Toggle,
     gestureCtrl: GestureController,
     domCtrl: DomController
   ) {
     super(
-      platform,
+      plt,
       toogle.getNativeElement(), {
       threshold: 0,
       domController: domCtrl,

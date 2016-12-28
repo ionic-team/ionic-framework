@@ -55,7 +55,7 @@ export class List extends Ion {
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
-    private _platform: Platform,
+    private _plt: Platform,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
   ) {
@@ -99,7 +99,7 @@ export class List extends Ion {
 
     } else if (!this._slidingGesture) {
       console.debug('enableSlidingItems');
-      this._slidingGesture = new ItemSlidingGesture(this._platform, this, this._gestureCtrl, this._domCtrl);
+      this._slidingGesture = new ItemSlidingGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
       this._slidingGesture.listen();
     }
   }

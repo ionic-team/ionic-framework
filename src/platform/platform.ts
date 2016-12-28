@@ -22,8 +22,8 @@ import { removeArrayItem } from '../util/util';
  *
  * @Component({...})
  * export MyPage {
- *   constructor(platform: Platform) {
- *     this.platform = platform;
+ *   constructor(public plt: Platform) {
+ *
  *   }
  * }
  * ```
@@ -67,7 +67,7 @@ export class Platform {
     animationDelay?: string;
   };
 
-  /** @private */
+  /** @internal */
   _platforms: string[] = [];
 
   constructor() {
@@ -144,10 +144,8 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(platform: Platform) {
-   *     this.platform = platform;
-   *
-   *     if (this.platform.is('ios')) {
+   *   constructor(public plt: Platform) {
+   *     if (this.plt.is('ios')) {
    *       // This will only print when on iOS
    *       console.log("I'm an iOS device!");
    *     }
@@ -187,11 +185,9 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(platform: Platform) {
-   *     this.platform = platform;
-   *
+   *   constructor(public plt: Platform) {
    *     // This will print an array of the current platforms
-   *     console.log(this.platform.platforms());
+   *     console.log(this.plt.platforms());
    *   }
    * }
    * ```
@@ -211,12 +207,10 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(platform: Platform) {
-   *     this.platform = platform;
-   *
+   *   constructor(public plt: Platform) {
    *     // This will print an object containing
    *     // all of the platforms and their versions
-   *     console.log(platform.versions());
+   *     console.log(plt.versions());
    *   }
    * }
    * ```
@@ -260,8 +254,8 @@ export class Platform {
    *
    * @Component({...})
    * export MyApp {
-   *   constructor(platform: Platform) {
-   *     platform.ready().then((readySource) => {
+   *   constructor(public plt: Platform) {
+   *     this.plt.ready().then((readySource) => {
    *       console.log('Platform ready from', readySource);
    *       // Platform now ready, execute any required native code
    *     });
@@ -324,7 +318,7 @@ export class Platform {
   setDir(dir: string, updateDocument: boolean) {
     this._dir = (dir || '').toLowerCase();
     if (updateDocument !== false) {
-      this._doc.documentElement.setAttribute('dir', dir);
+      this._doc['documentElement'].setAttribute('dir', dir);
     }
   }
 
@@ -362,7 +356,7 @@ export class Platform {
   setLang(language: string, updateDocument: boolean) {
     this._lang = language;
     if (updateDocument !== false) {
-      this._doc.documentElement.setAttribute('lang', language);
+      this._doc['documentElement'].setAttribute('lang', language);
     }
   }
 
@@ -485,7 +479,7 @@ export class Platform {
    * Get the current url.
    */
   url() {
-    return this._win.location.href;
+    return this._win['location']['href'];
   }
 
   /**
@@ -532,22 +526,22 @@ export class Platform {
   /**
    * @private
    */
-  getElementComputedStyle(ele: HTMLElement) {
-    return this._win.getComputedStyle(ele);
+  getElementComputedStyle(ele: HTMLElement, pseudoEle?: string) {
+    return this._win['getComputedStyle'](ele, pseudoEle);
   }
 
   /**
    * @private
    */
   getElementFromPoint(x: number, y: number) {
-    return <HTMLElement>this._doc.elementFromPoint(x, y);
+    return <HTMLElement>this._doc['elementFromPoint'](x, y);
   }
 
   /**
    * @private
    */
   getElementBoundingClientRect(ele: HTMLElement) {
-    return ele.getBoundingClientRect();
+    return ele['getBoundingClientRect']();
   }
 
   /**
@@ -578,20 +572,20 @@ export class Platform {
       // up accurate values when the keyboard up
       if (win.screen.width < win.screen.height) {
         this._isPortrait = true;
-        if (this._pW < win.innerWidth) {
-          this._pW = win.innerWidth;
+        if (this._pW < win['innerWidth']) {
+          this._pW = win['innerWidth'];
         }
-        if (this._pH < win.innerHeight) {
-          this._pH = win.innerHeight;
+        if (this._pH < win['innerHeight']) {
+          this._pH = win['innerHeight'];
         }
 
       } else {
         this._isPortrait = false;
-        if (this._lW < win.innerWidth) {
-          this._lW = win.innerWidth;
+        if (this._lW < win['innerWidth']) {
+          this._lW = win['innerWidth'];
         }
-        if (this._lH < win.innerHeight) {
-          this._lH = win.innerHeight;
+        if (this._lH < win['innerHeight']) {
+          this._lH = win['innerHeight'];
         }
       }
     }
@@ -618,7 +612,7 @@ export class Platform {
    * @private
    * This setTimeout will NOT be wrapped by zone.
    */
-  timeout(callback: Function, timeout: number): number {
+  timeout(callback: Function, timeout?: number): number {
     const win: any = this._win;
     return win['__zone_symbol__setTimeout'](callback, timeout);
   }
@@ -638,32 +632,44 @@ export class Platform {
    * If options are not supported, then just return a boolean which
    * represents "capture". Returns a method to remove the listener.
    */
-  addListener(ele: any, eventName: string, callback: Function, opts: EventListenerOptions): Function {
-    const listenerOpts = this._uiEvtOpts ? {
+  addListener(ele: any, eventName: string, callback: {(ev?: UIEvent)}, opts: EventListenerOptions, unregisterListenersCollection?: Function[]): Function {
+    // use event listener options when supported
+    // otherwise it's just a boolean for the "capture" arg
+    const listenerOpts: any = this._uiEvtOpts ? {
         'capture': !!opts.capture,
         'passive': !!opts.passive,
       } : !!opts.capture;
 
+    let unReg: Function;
     const rawEvent = ele['__zone_symbol__addEventListener'];
+
     if (!opts.zone && rawEvent) {
-      // do not wrap this even in zone and we've verified we can use the raw addEventListener
+      // do not wrap this event in zone and we've verified we can use the raw addEventListener
       rawEvent(eventName, callback, listenerOpts);
-      return function unregisterListener() {
+      unReg = function unregisterListener() {
         ele['__zone_symbol__removeEventListener'](eventName, callback, listenerOpts);
+      };
+
+    } else {
+      // use the native addEventListener, which is wrapped with zone
+      ele['addEventListener'](eventName, callback, listenerOpts);
+
+      unReg = function unregisterListener() {
+        ele['removeEventListener'](eventName, callback, listenerOpts);
       };
     }
 
-    ele.addEventListener(eventName, callback, listenerOpts);
+    if (unregisterListenersCollection) {
+      unregisterListenersCollection.push(unReg);
+    }
 
-    return function unregisterListener() {
-      ele.removeEventListener(eventName, callback, listenerOpts);
-    };
+    return unReg;
   }
 
   /**
    * @private
    */
-  transitionEnd(el: HTMLElement, callback: Function) {
+  transitionEnd(el: HTMLElement, callback: {(ev?: TransitionEvent)}) {
     const unRegs: Function[] = [];
 
     function unregister() {
@@ -672,7 +678,7 @@ export class Platform {
       });
     }
 
-    function onTransitionEnd(ev: UIEvent) {
+    function onTransitionEnd(ev: TransitionEvent) {
       if (el === ev.target) {
         unregister();
         callback(ev);
@@ -680,9 +686,8 @@ export class Platform {
     }
 
     if (el) {
-      this.Css.transitionEnd.split(' ').forEach(eventName => {
-        unRegs.push(this.addListener(el, eventName, onTransitionEnd, { zone: false }));
-      });
+      this.addListener(el, 'webkitTransitionEnd', <any>onTransitionEnd, { zone: false }, unRegs);
+      this.addListener(el, 'transitionend', <any>onTransitionEnd, { zone: false }, unRegs);
     }
 
     return unregister;
@@ -1042,13 +1047,13 @@ class PlatformNode {
     return this.c.isMatch && this.c.isMatch(p) || false;
   }
 
-  initialize(platform: Platform) {
-    this.c.initialize && this.c.initialize(platform);
+  initialize(plt: Platform) {
+    this.c.initialize && this.c.initialize(plt);
   }
 
-  version(p: Platform): PlatformVersion {
+  version(plt: Platform): PlatformVersion {
     if (this.c.versionParser) {
-      const v = this.c.versionParser(p);
+      const v = this.c.versionParser(plt);
       if (v) {
         const str = v.major + '.' + v.minor;
         return {
@@ -1061,8 +1066,8 @@ class PlatformNode {
     }
   }
 
-  getRoot(p: Platform): PlatformNode {
-    if (this.isMatch(p)) {
+  getRoot(plt: Platform): PlatformNode {
+    if (this.isMatch(plt)) {
 
       let parents = this.getSubsetParents(this.name);
 
@@ -1077,7 +1082,7 @@ class PlatformNode {
         platformNode = new PlatformNode(this.registry, parents[i]);
         platformNode.child = this;
 
-        rootPlatformNode = platformNode.getRoot(p);
+        rootPlatformNode = platformNode.getRoot(plt);
         if (rootPlatformNode) {
           this.parent = platformNode;
           return rootPlatformNode;
@@ -1090,12 +1095,12 @@ class PlatformNode {
 
   getSubsetParents(subsetPlatformName: string): string[] {
     const parentPlatformNames: string[] = [];
-    let platform: PlatformConfig = null;
+    let pltConfig: PlatformConfig = null;
 
     for (let platformName in this.registry) {
-      platform = this.registry[platformName];
+      pltConfig = this.registry[platformName];
 
-      if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
+      if (pltConfig.subsets && pltConfig.subsets.indexOf(subsetPlatformName) > -1) {
         parentPlatformNames.push(platformName);
       }
     }

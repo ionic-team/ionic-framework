@@ -59,7 +59,7 @@ export class DomController {
   private w: Function[] = [];
   private q: boolean;
 
-  constructor(public platform: Platform) {}
+  constructor(public plt: Platform) {}
 
   debouncer(): DomDebouncer {
     return new DomDebouncer(this);
@@ -67,7 +67,7 @@ export class DomController {
 
   read(fn: DomCallback, timeout?: number): any {
     if (timeout) {
-      (<any>fn).timeoutId = this.platform.timeout(() => {
+      (<any>fn).timeoutId = this.plt.timeout(() => {
         this.r.push(fn);
         this._queue();
       }, timeout);
@@ -81,7 +81,7 @@ export class DomController {
 
   write(fn: DomCallback, timeout?: number): any {
     if (timeout) {
-      (<any>fn).timeoutId = this.platform.timeout(() => {
+      (<any>fn).timeoutId = this.plt.timeout(() => {
         this.w.push(fn);
         this._queue();
       }, timeout);
@@ -96,7 +96,7 @@ export class DomController {
   cancel(fn: any): void {
     if (fn) {
       if (fn.timeoutId) {
-        this.platform.cancelTimeout(fn.timeoutId);
+        this.plt.cancelTimeout(fn.timeoutId);
       }
       removeArrayItem(this.r, fn) || removeArrayItem(this.w, fn);
     }
@@ -106,7 +106,7 @@ export class DomController {
     const self = this;
     if (!self.q) {
       self.q = true;
-      self.platform.raf(function rafCallback(timeStamp) {
+      self.plt.raf(function rafCallback(timeStamp) {
         self._flush(timeStamp);
       });
     }

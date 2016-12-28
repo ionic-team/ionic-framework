@@ -20,7 +20,7 @@ export class OverlayPortal extends NavControllerBase {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
-    platform: Platform,
+    plt: Platform,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
@@ -32,7 +32,7 @@ export class OverlayPortal extends NavControllerBase {
     viewPort: ViewContainerRef,
     domCtrl: DomController,
   ) {
-    super(null, app, config, platform, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
+    super(null, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
     this._isPortal = true;
     this._init = true;
     this.setViewport(viewPort);

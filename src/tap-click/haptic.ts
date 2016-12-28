@@ -27,10 +27,10 @@ import { Platform } from '../platform/platform';
 export class Haptic {
   private _p: any;
 
-  constructor(platform: Platform) {
-    if (platform) {
-      platform.ready().then(() => {
-        this._p = (<any>platform.win()).TapticEngine;
+  constructor(plt: Platform) {
+    if (plt) {
+      plt.ready().then(() => {
+        this._p = (<any>plt.win()).TapticEngine;
       });
     }
   }

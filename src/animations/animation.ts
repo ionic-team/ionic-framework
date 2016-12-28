@@ -31,7 +31,7 @@ export class Animation {
   private _isAsync: boolean;
   private _twn: boolean;
 
-  platform: Platform;
+  plt: Platform;
   parent: Animation;
   opts: AnimationOptions;
   hasChildren: boolean = false;
@@ -39,7 +39,7 @@ export class Animation {
   hasCompleted: boolean = false;
 
   constructor(platform: Platform, ele?: any, opts?: AnimationOptions) {
-    this.platform = platform;
+    this.plt = platform;
     this.element(ele);
     this.opts = opts;
   }
@@ -47,7 +47,7 @@ export class Animation {
   element(ele: any): Animation {
     if (ele) {
       if (typeof ele === 'string') {
-        ele = this.platform.doc().querySelectorAll(ele);
+        ele = this.plt.doc().querySelectorAll(ele);
         for (var i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
@@ -155,7 +155,7 @@ export class Animation {
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
       // otherwise just clear the actual property
-      this.afterClearStyles([ fx.trans ? this.platform.Css.transform : prop]);
+      this.afterClearStyles([ fx.trans ? this.plt.Css.transform : prop]);
     }
 
     return this;
@@ -193,7 +193,7 @@ export class Animation {
         trans: shouldTrans,
 
         // add the will-change property for transforms or opacity
-        wc: (shouldTrans ? this.platform.Css.transform : prop)
+        wc: (shouldTrans ? this.plt.Css.transform : prop)
       };
       this._fx.push(fxProp);
     }
@@ -323,7 +323,7 @@ export class Animation {
    */
   play(opts?: PlayOptions) {
     // If the animation was already invalidated (it did finish), do nothing
-    if (!this.platform) {
+    if (!this.plt) {
       return;
     }
 
@@ -346,8 +346,8 @@ export class Animation {
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    this.platform.raf(() => {
-      this.platform.raf(this._playDomInspect.bind(this, opts));
+    this.plt.raf(() => {
+      this.plt.raf(this._playDomInspect.bind(this, opts));
     });
   }
 
@@ -408,10 +408,10 @@ export class Animation {
     // ******** DOM WRITE ****************
     this._playProgress(opts);
 
-    if (this._isAsync && this.platform) {
+    if (this._isAsync && this.plt) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this.platform.raf(this._playToStep.bind(this, 1));
+      this.plt.raf(this._playToStep.bind(this, 1));
     }
   }
 
@@ -513,11 +513,11 @@ export class Animation {
     }
 
     // set the TRANSITION END event on one of the transition elements
-    self._unrgTrns = this.platform.transitionEnd(self._transEl(), onTransitionEnd);
+    self._unrgTrns = this.plt.transitionEnd(self._transEl(), onTransitionEnd);
 
     // set a fallback timeout if the transition end event never fires, or is too slow
     // transition end fallback: (animation duration + XXms)
-    self._tm = self.platform.timeout(onTransitionFallback, (dur + ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS));
+    self._tm = self.plt.timeout(onTransitionFallback, (dur + ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS));
   }
 
   /**
@@ -688,7 +688,7 @@ export class Animation {
         finalTransform += 'translateZ(0px)';
       }
 
-      var cssTransform = this.platform.Css.transform;
+      var cssTransform = this.plt.Css.transform;
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
         (<any>elements[i].style)[cssTransform] = finalTransform;
@@ -711,7 +711,7 @@ export class Animation {
     const elements = this._e;
     const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
     const durString = dur + 'ms';
-    const Css = this.platform.Css;
+    const Css = this.plt.Css;
     const cssTransform = Css.transition;
     const cssTransitionDuration = Css.transitionDuration;
     const cssTransitionTimingFn = Css.transitionTimingFn;
@@ -869,7 +869,7 @@ export class Animation {
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      (<any>ele).style[this.platform.Css.transitionDuration] = (<any>ele).style[this.platform.Css.transitionTimingFn] = '';
+      (<any>ele).style[this.plt.Css.transitionDuration] = (<any>ele).style[this.plt.Css.transitionTimingFn] = '';
 
       if (this._rv) {
         // finished in reverse direction
@@ -1048,7 +1048,7 @@ export class Animation {
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this.platform && this.platform.raf(this._playToStep.bind(this, stepValue));
+      this.plt && this.plt.raf(this._playToStep.bind(this, stepValue));
     }
   }
 
@@ -1166,7 +1166,7 @@ export class Animation {
 
     this._clearAsync();
 
-    this.parent = this.platform = this._e = this._rdFn = this._wrFn = null;
+    this.parent = this.plt = this._e = this._rdFn = this._wrFn = null;
 
     if (this._c) {
       this._c.length = this._cL = 0;

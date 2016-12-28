@@ -59,7 +59,7 @@ export class ActionSheetCmp {
   constructor(
     private _viewCtrl: ViewController,
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
@@ -123,7 +123,7 @@ export class ActionSheetCmp {
   }
 
   ionViewDidEnter() {
-    this._platform.focusOutActiveElement();
+    this._plt.focusOutActiveElement();
 
     let focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {

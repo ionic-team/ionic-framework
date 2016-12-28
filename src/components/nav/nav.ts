@@ -62,7 +62,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     @Optional() parent: NavController,
     app: App,
     config: Config,
-    platform: Platform,
+    plt: Platform,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
@@ -73,7 +73,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     @Optional() linker: DeepLinker,
     domCtrl: DomController,
   ) {
-    super(parent, app, config, platform, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
+    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav

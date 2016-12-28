@@ -12,12 +12,12 @@ import { SlideEdgeGesture } from '../gestures/slide-edge-gesture';
 export class SwipeBackGesture extends SlideEdgeGesture {
 
   constructor(
-    platform: Platform,
+    plt: Platform,
     private _nav: NavControllerBase,
     gestureCtlr: GestureController,
     domCtrl: DomController,
   ) {
-    super(platform, platform.doc().body, {
+    super(plt, plt.doc().body, {
       direction: 'x',
       edge: 'left',
       maxEdgeStart: 75,

@@ -29,13 +29,13 @@ export class TapClick {
 
   constructor(
     config: Config,
-    private platform: Platform,
+    private plt: Platform,
     dom: DomController,
     private app: App,
     zone: NgZone,
     private gestureCtrl: GestureController
   ) {
-    this.events = new UIEventManager(platform);
+    this.events = new UIEventManager(plt);
 
     let activator = config.get('activator');
     if (activator === 'ripple') {
@@ -204,7 +204,7 @@ export class TapClick {
       // dispatch a mouse click event
       console.debug(`create click from touch ${Date.now()}`);
 
-      let clickEvent: any = this.platform.doc().createEvent('MouseEvents');
+      let clickEvent: any = this.plt.doc().createEvent('MouseEvents');
       clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
       clickEvent.isIonicTap = true;
       ev.target.dispatchEvent(clickEvent);
@@ -253,8 +253,8 @@ const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
 /**
  * @private
  */
-export function setupTapClick(config: Config, platform: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
+export function setupTapClick(config: Config, plt: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
   return function() {
-    return new TapClick(config, platform, dom, app, zone, gestureCtrl);
+    return new TapClick(config, plt, dom, app, zone, gestureCtrl);
   };
 }

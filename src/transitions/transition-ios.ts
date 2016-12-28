@@ -19,7 +19,7 @@ export class IOSTransition extends PageTransition {
   init() {
     super.init();
 
-    const platform = this.platform;
+    const platform = this.plt;
     const enteringView = this.enteringView;
     const leavingView = this.leavingView;
     const opts = this.opts;

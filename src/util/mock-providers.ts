@@ -184,14 +184,14 @@ export function mockApp(config?: Config, platform?: MockPlatform) {
   return app;
 }
 
-export function mockIonicApp(app: App, config: Config, platform: MockPlatform): IonicApp {
+export function mockIonicApp(app: App, config: Config, plt: MockPlatform): IonicApp {
   let appRoot = new IonicApp(
-    null, null, mockElementRef(), mockRenderer(), config, platform, app);
+    null, null, mockElementRef(), mockRenderer(), config, plt, app);
 
-  appRoot._loadingPortal = mockOverlayPortal(app, config, platform);
-  appRoot._toastPortal = mockOverlayPortal(app, config, platform);
-  appRoot._overlayPortal = mockOverlayPortal(app, config, platform);
-  appRoot._modalPortal = mockOverlayPortal(app, config, platform);
+  appRoot._loadingPortal = mockOverlayPortal(app, config, plt);
+  appRoot._toastPortal = mockOverlayPortal(app, config, plt);
+  appRoot._overlayPortal = mockOverlayPortal(app, config, plt);
+  appRoot._modalPortal = mockOverlayPortal(app, config, plt);
 
   return appRoot;
 }
@@ -414,10 +414,10 @@ export function mockNavController(): NavControllerBase {
   return nav;
 }
 
-export function mockOverlayPortal(app: App, config: Config, platform: MockPlatform): OverlayPortal {
+export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): OverlayPortal {
   let zone = mockZone();
-  let dom = mockDomController(platform);
-  let keyboard = new Keyboard(config, platform, zone, dom);
+  let dom = mockDomController(plt);
+  let keyboard = new Keyboard(config, plt, zone, dom);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let componentFactoryResolver: any = null;
@@ -429,7 +429,7 @@ export function mockOverlayPortal(app: App, config: Config, platform: MockPlatfo
   return new OverlayPortal(
     app,
     config,
-    platform,
+    plt,
     keyboard,
     elementRef,
     zone,

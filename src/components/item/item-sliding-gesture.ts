@@ -18,13 +18,13 @@ export class ItemSlidingGesture extends PanGesture {
   private firstTimestamp: number;
 
   constructor(
-    platform: Platform,
+    plt: Platform,
     public list: List,
     gestureCtrl: GestureController,
     domCtrl: DomController
   ) {
     super(
-      platform,
+      plt,
       list.getNativeElement(), {
       maxAngle: 20,
       threshold: 5,

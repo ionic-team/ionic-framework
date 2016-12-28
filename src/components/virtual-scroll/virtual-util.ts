@@ -1,4 +1,4 @@
-import { ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
+import { ViewContainerRef, TemplateRef, EmbeddedViewRef } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 
@@ -247,7 +247,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
 /**
  * DOM READ
  */
-export function initReadNodes(platform: Platform, nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData) {
+export function initReadNodes(plt: Platform, nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData) {
   if (nodes.length && cells.length) {
     // first node
     // ******** DOM READ ****************
@@ -258,7 +258,7 @@ export function initReadNodes(platform: Platform, nodes: VirtualNode[], cells: V
     firstCell.row = 0;
 
     // ******** DOM READ ****************
-    updateDimensions(platform, nodes, cells, data, true);
+    updateDimensions(plt, nodes, cells, data, true);
   }
 }
 
@@ -266,7 +266,7 @@ export function initReadNodes(platform: Platform, nodes: VirtualNode[], cells: V
 /**
  * DOM READ
  */
-export function updateDimensions(platform: Platform, nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData, initialUpdate: boolean) {
+export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData, initialUpdate: boolean) {
   let node: VirtualNode;
   let element: VirtualHtmlElement;
   let cell: VirtualCell;
@@ -282,7 +282,7 @@ export function updateDimensions(platform: Platform, nodes: VirtualNode[], cells
       element = getElement(node);
 
       // ******** DOM READ ****************
-      readElements(platform, cell, element);
+      readElements(plt, cell, element);
 
       if (initialUpdate) {
         // update estimated dimensions with more accurate dimensions
@@ -375,9 +375,9 @@ export function updateNodeContext(nodes: VirtualNode[], cells: VirtualCell[], da
 /**
  * DOM READ
  */
-function readElements(platform: Platform, cell: VirtualCell, element: VirtualHtmlElement) {
+function readElements(plt: Platform, cell: VirtualCell, element: VirtualHtmlElement) {
   // ******** DOM READ ****************
-  const styles = platform.getElementComputedStyle(<any>element);
+  const styles = plt.getElementComputedStyle(<any>element);
 
   // ******** DOM READ ****************
   cell.left = (element.clientLeft - parseFloat(styles.marginLeft));
@@ -393,7 +393,7 @@ function readElements(platform: Platform, cell: VirtualCell, element: VirtualHtm
 /**
  * DOM WRITE
  */
-export function writeToNodes(platform: Platform, nodes: VirtualNode[], cells: VirtualCell[], totalRecords: number) {
+export function writeToNodes(plt: Platform, nodes: VirtualNode[], cells: VirtualCell[], totalRecords: number) {
   let node: VirtualNode;
   let element: VirtualHtmlElement;
   let cell: VirtualCell;
@@ -411,7 +411,7 @@ export function writeToNodes(platform: Platform, nodes: VirtualNode[], cells: Vi
 
       if (element) {
         // ******** DOM WRITE ****************
-        element.style[platform.Css.transform] = node.lastTransform = transform;
+        element.style[plt.Css.transform] = node.lastTransform = transform;
 
         // ******** DOM WRITE ****************
         element.classList.add('virtual-position');

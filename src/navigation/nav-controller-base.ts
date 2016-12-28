@@ -53,7 +53,7 @@ export class NavControllerBase extends Ion implements NavController {
     public parent: any,
     public _app: App,
     public config: Config,
-    public platform: Platform,
+    public plt: Platform,
     public _keyboard: Keyboard,
     elementRef: ElementRef,
     public _zone: NgZone,
@@ -568,7 +568,7 @@ export class NavControllerBase extends Ion implements NavController {
       direction: opts.direction,
       duration: (opts.animate === false ? 0 : opts.duration),
       easing: opts.easing,
-      isRTL: this._config.platform.isRTL(),
+      isRTL: this._config.plt.isRTL(),
       ev: opts.ev,
     };
 
@@ -963,7 +963,7 @@ export class NavControllerBase extends Ion implements NavController {
   _swipeBackCheck() {
     if (this.canSwipeBack()) {
       if (!this._sbGesture) {
-        this._sbGesture = new SwipeBackGesture(this.platform, this, this._gestureCtrl, this._domCtrl);
+        this._sbGesture = new SwipeBackGesture(this.plt, this, this._gestureCtrl, this._domCtrl);
       }
       this._sbGesture.listen();
 

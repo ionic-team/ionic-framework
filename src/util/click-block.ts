@@ -19,7 +19,7 @@ export class ClickBlock {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
-    private platform: Platform,
+    private plt: Platform,
     private elementRef: ElementRef,
     private renderer: Renderer
   ) {
@@ -33,11 +33,11 @@ export class ClickBlock {
 
   activate(shouldShow: boolean, expire: number = 100) {
     if (this.isEnabled) {
-      this.platform.cancelTimeout(this._tmr);
+      this.plt.cancelTimeout(this._tmr);
       if (shouldShow) {
         this._activate(true);
       }
-      this._tmr = this.platform.timeout(this._activate.bind(this, false), expire);
+      this._tmr = this.plt.timeout(this._activate.bind(this, false), expire);
     }
   }
 

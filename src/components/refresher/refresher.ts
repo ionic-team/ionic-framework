@@ -200,8 +200,8 @@ export class Refresher {
   @Output() ionStart: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
 
-  constructor(private _platform: Platform, @Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
-    this._events = new UIEventManager(_platform);
+  constructor(private _plt: Platform, @Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
+    this._events = new UIEventManager(_plt);
     _content.setElementClass('has-refresher', true);
     this._gesture = gestureCtrl.createGesture({
       name: GESTURE_REFRESHER,
@@ -437,7 +437,7 @@ export class Refresher {
   _close(state: string, delay: string) {
     var timer: number;
 
-    function close(ev: any) {
+    function close(ev: TransitionEvent) {
       // closing is done, return to inactive state
       if (ev) {
         clearTimeout(timer);
@@ -469,7 +469,7 @@ export class Refresher {
     this._appliedStyles = (y > 0);
 
     const content = this._content;
-    const Css = this._platform.Css;
+    const Css = this._plt.Css;
     content.setScrollElementStyle(Css.transform, ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)'));
     content.setScrollElementStyle(Css.transitionDuration, duration);
     content.setScrollElementStyle(Css.transitionDelay, delay);

@@ -109,13 +109,13 @@ export class Events {
 /**
  * @private
  */
-export function setupEvents(platform: Platform, dom: DomController): Events {
+export function setupEvents(plt: Platform, dom: DomController): Events {
   const events = new Events();
-  const win = platform.win();
-  const doc = platform.doc();
+  const win = plt.win();
+  const doc = plt.doc();
 
   // start listening for resizes XXms after the app starts
-  platform.timeout(() => {
+  plt.timeout(() => {
     win.addEventListener('online', (ev) => {
       events.publish('app:online', ev);
     }, false);
@@ -131,12 +131,12 @@ export function setupEvents(platform: Platform, dom: DomController): Events {
     // When that status taps, we respond
     win.addEventListener('statusTap', (ev) => {
       // TODO: Make this more better
-      let el = <HTMLElement>doc.elementFromPoint(platform.width() / 2, platform.height() / 2);
+      let el = <HTMLElement>doc.elementFromPoint(plt.width() / 2, plt.height() / 2);
       if (!el) { return; }
 
       let contentEle = <HTMLElement>el.closest('.scroll-content');
       if (contentEle) {
-        var scroll = new ScrollView(platform, dom);
+        var scroll = new ScrollView(plt, dom);
         scroll.init(contentEle, 0, 0);
           // We need to stop scrolling if it's happening and scroll up
 
@@ -152,12 +152,12 @@ export function setupEvents(platform: Platform, dom: DomController): Events {
             (<any>contentEle.style)['WebkitTransform'] = '';
           }
 
-          let didScrollTimeout = platform.timeout(() => {
+          let didScrollTimeout = plt.timeout(() => {
             finish();
           }, 400);
 
           scroll.scrollTo(0, 0, 300).then(() => {
-            platform.cancelTimeout(didScrollTimeout);
+            plt.cancelTimeout(didScrollTimeout);
             finish();
           });
         });

@@ -1,14 +1,12 @@
-import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter, Input, Host, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, ElementRef, EventEmitter, Input, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Animation } from '../../animations/animation';
 import { Config } from '../../config/config';
-import { debounce, defaults, isTrueProperty, isPresent } from '../../util/util';
-import { Gesture } from '../../gestures/gesture';
 import { Ion } from '../ion';
 import { Platform } from '../../platform/platform';
-import { Swiper } from './swiper/swiper';
-
-
+import { SlideContainer, SlideElement, SlideEffects, SlideParams, SlideTouchEvents, SlideTouches } from './swiper/swiper-interfaces';
+import { initEvents } from './swiper/swiper-events';
+import { slideTo, slideNext, slidePrev, update, swiperInit, swiperDestroy } from './swiper/swiper';
+import { enableKeyboardControl } from './swiper/swiper-keyboard';
 
 /**
  * @name Slides
@@ -164,18 +162,16 @@ import { Swiper } from './swiper/swiper';
  * }
  * ```
  *
- * For all of the methods you can call on the `Slider` instance, see the
- * [Instance Members](#instance-members).
- *
  * @demo /docs/v2/demos/src/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
- * Swiper.js:
- * The most modern mobile touch slider and framework with hardware accelerated transitions
+ * Adopted from Swiper.js:
+ * The most modern mobile touch slider and framework with
+ * hardware accelerated transitions.
  *
  * http://www.idangero.us/swiper/
  *
- * Copyright 2015, Vladimir Kharlampidi
+ * Copyright 2016, Vladimir Kharlampidi
  * The iDangero.us
  * http://www.idangero.us/
  *
@@ -196,94 +192,6 @@ import { Swiper } from './swiper/swiper';
 export class Slides extends Ion {
 
   /**
-   * @private
-   */
-  public rapidUpdate: Function;
-
-  /**
-   * @private
-   */
-  id: number;
-
-  /**
-   * @private
-   */
-  slideId: string;
-
-  /**
-   * @private
-   */
-  showPager: boolean;
-
-  /**
-   * @private
-   */
-  slider: Swiper;
-
-  /**
-   * @private
-   */
-  maxScale: number;
-
-  /**
-   * @private
-   */
-  zoomElement: HTMLElement;
-
-  /**
-   * @private
-   */
-  zoomGesture: Gesture;
-
-  /**
-   * @private
-   */
-  scale: number;
-
-  /**
-   * @private
-   */
-  zoomLastPosX: number;
-
-  /**
-   * @private
-   */
-  zoomLastPosY: number;
-
-  /**
-   * @private
-   */
-  viewportWidth: number;
-
-  /**
-   * @private
-   */
-  viewportHeight: number;
-
-  /**
-   * @private
-   */
-  enableZoom: boolean;
-
-  /**
-   * @private
-   */
-  touch: {
-    x: number,
-    y: number,
-    startX: number,
-    startY: number,
-    deltaX: number,
-    deltaY: number,
-    lastX: number,
-    lastY: number,
-    target: HTMLElement,
-    zoomable: HTMLElement,
-    zoomableWidth: number,
-    zoomableHeight: number
-  };
-
-  /**
    * @input {Object} Any configuration for the slides
    */
   @Input() options: any;
@@ -292,21 +200,6 @@ export class Slides extends Ion {
    * @private Deprecated
    */
   @Input() pager: any;
-
-  /**
-   * @private Deprecated
-   */
-  @Input() zoom: any;
-
-  /**
-   * @private Deprecated
-   */
-  @Input() zoomDuration: any;
-
-  /**
-   * @private Deprecated
-   */
-  @Input() zoomMax: any;
 
   /**
    * @output {any} Expression to evaluate when a slide change starts.
@@ -323,404 +216,110 @@ export class Slides extends Ion {
    */
   @Output() ionDrag: EventEmitter<any> = new EventEmitter();
 
+  id: number;
+  slideId: string;
 
-  constructor(config: Config, public platform: Platform, elementRef: ElementRef, renderer: Renderer) {
+  activeIndex: number;
+  allowClick: boolean;
+  animating: boolean;
+  autoplaying: boolean;
+  autoplayPaused: boolean;
+  autoplayTimeoutId: number;
+  bullets: HTMLElement[];
+  container: SlideContainer;
+  classNames: string[];
+  clickedIndex: number;
+  clickedSlide: SlideElement;
+  disableKeyboardControl: boolean;
+  effects: SlideEffects;
+  height: number;
+  isBeginning: boolean;
+  isEnd: boolean;
+  liveRegion: HTMLElement;
+  loopedSlides: number;
+  nextButton: HTMLElement;
+  originalParams: SlideParams;
+  paginationContainer: HTMLElement;
+  params: SlideParams;
+  prevButton: HTMLElement;
+  previousIndex: number;
+  progress: number;
+  realIndex: number;
+  rtl: boolean;
+  slides: SlideElement[];
+  snapIndex: number;
+  size: number;
+  translate: number;
+  velocity: number;
+  virtualSize: any;
+  width: number;
+  wrapper: HTMLElement;
+  keyboardUnReg: Function;
+  swipeDirection: string;
+  touchEventsDesktop: SlideTouchEvents;
+  touchEvents: SlideTouchEvents;
+  supportTouch: boolean;
+
+  currentBreakpoint: any;
+  snapGrid: any;
+  slidesGrid: any;
+  slidesSizesGrid: any;
+  touches: SlideTouches;
+
+  ionAutoplay = new EventEmitter();
+  ionAutoplayStart = new EventEmitter();
+  ionAutoplayStop = new EventEmitter();
+  ionReachBeginning = new EventEmitter();
+  ionReachEnd = new EventEmitter();
+  ionProgress = new EventEmitter();
+  ionTransitionStart = new EventEmitter();
+  ionSlideChangeStart = new EventEmitter();
+  ionSlideNextStart = new EventEmitter();
+  ionSlidePrevStart = new EventEmitter();
+  ionTransitionEnd = new EventEmitter();
+  ionSlideChangeEnd = new EventEmitter();
+  ionSlideNextEnd = new EventEmitter();
+  ionSlidePrevEnd = new EventEmitter();
+  ionSetTransition = new EventEmitter();
+  ionSetTranslate = new EventEmitter();
+  ionTouchStart = new EventEmitter();
+  ionTouchMove = new EventEmitter();
+  ionTouchMoveOpposite = new EventEmitter();
+  ionSliderMove = new EventEmitter();
+  ionTouchEnd = new EventEmitter();
+  ionTap = new EventEmitter();
+  ionClick = new EventEmitter();
+  ionDoubleTap = new EventEmitter();
+
+  private _tmr: number;
+  private _init: boolean;
+  private _unregs: Function[] = [];
+
+
+  constructor(config: Config, private _plt: Platform, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer, 'slides');
-    this.rapidUpdate = debounce(() => {
-      this.update();
-    }, 10);
 
     this.id = ++slidesId;
     this.slideId = 'slides-' + this.id;
 
     this.setElementClass(this.slideId, true);
+
+    this.container = this.getNativeElement().children[0];
   }
 
   /**
    * @private
    */
-  ngOnInit() {
-    if (!this.options) {
-      this.options = {};
-    }
-
-    if (isPresent(this.options.pager)) {
-      this.showPager = isTrueProperty(this.options.pager);
-    }
-
-    let paginationId = '.' + this.slideId + ' .swiper-pagination';
-
-    var options = defaults({
-      pagination: paginationId
-    }, this.options);
-
-    options.onTap = (swiper: any, e: any) => {
-      this.onTap(swiper, e);
-      return this.options.onTap && this.options.onTap(swiper, e);
-    };
-    options.onClick = (swiper: any, e: any) => {
-      this.onClick(swiper, e);
-      return this.options.onClick && this.options.onClick(swiper, e);
-    };
-    options.onDoubleTap = (swiper: any, e: any) => {
-      this.onDoubleTap(swiper, e);
-      return this.options.onDoubleTap && this.options.onDoubleTap(swiper, e);
-    };
-    options.onTransitionStart = (swiper: any, e: any) => {
-      this.onTransitionStart(swiper, e);
-      return this.options.onTransitionStart && this.options.onTransitionStart(swiper, e);
-    };
-    options.onTransitionEnd = (swiper: any, e: any) => {
-      this.onTransitionEnd(swiper, e);
-      return this.options.onTransitionEnd && this.options.onTransitionEnd(swiper, e);
-    };
-    options.onSlideChangeStart = (swiper: any) => {
-      this.ionWillChange.emit(swiper);
-      return this.options.onSlideChangeStart && this.options.onSlideChangeStart(swiper);
-    };
-    options.onSlideChangeEnd = (swiper: any) => {
-      this.ionDidChange.emit(swiper);
-      return this.options.onSlideChangeEnd && this.options.onSlideChangeEnd(swiper);
-    };
-    options.onLazyImageLoad = (swiper: any, slide: any, img: any) => {
-      return this.options.onLazyImageLoad && this.options.onLazyImageLoad(swiper, slide, img);
-    };
-    options.onLazyImageReady = (swiper: any, slide: any, img: any) => {
-      return this.options.onLazyImageReady && this.options.onLazyImageReady(swiper, slide, img);
-    };
-    options.onSliderMove = (swiper: any, e: any) => {
-      this.ionDrag.emit(swiper);
-      return this.options.onSliderMove && this.options.onSliderMove(swiper, e);
-    };
-
-
-    setTimeout(() => {
-      var swiper = new Swiper(this.getNativeElement().children[0], options);
-      this.slider = swiper;
-    }, 300);
-
-    /*
-    * TODO: Finish this
-    if (isTrueProperty(this.zoom)) {
-      this.enableZoom = true;
-      setTimeout(() => {
-        this.initZoom();
-      })
-    }
-    */
-
-  }
-
-  /**
-   * @private
-   */
-  onTap(swiper: any, e: any) {
-  }
-  /**
-   * @private
-   */
-  onClick(swiper: any, e: any) {
-  }
-  /**
-   * @private
-   */
-  onDoubleTap(swiper: any, e: any) {
-    this.toggleZoom(swiper, e);
-  }
-  /**
-   * @private
-   */
-  onLazyImageLoad(swiper: any, slide: any, img: any) {
-  }
-  /**
-   * @private
-   */
-  onLazyImageReady(swiper: any, slide: any, img: any) {
-  }
-
-  /*
-  nextButton(swiper: any, e: any) {
-  }
-  prevButton() {
-  }
-  indexButton() {
-  }
-  */
-
-  /**
-   * @private
-   */
-  initZoom() {
-    this.zoomDuration = this.zoomDuration || 230;
-    this.maxScale = this.zoomMax || 3;
-
-    this.zoomElement = this.getNativeElement().children[0].children[0];
-
-    this.zoomElement && this.zoomElement.classList.add('ion-scroll-zoom');
-
-    this.zoomGesture = new Gesture(this.zoomElement);
-    this.zoomGesture.listen();
-
-    this.scale = 1;
-
-    this.zoomLastPosX = 0;
-    this.zoomLastPosY = 0;
-
-
-    let lastScale: number, zoomRect: any;
-
-    this.viewportWidth = this.getNativeElement().offsetWidth;
-    this.viewportHeight = this.getNativeElement().offsetHeight;
-
-    this.zoomElement.addEventListener('touchstart', (e) => {
-      this.onTouchStart(e);
-    });
-
-    this.zoomElement.addEventListener('touchmove', (e) => {
-      this.onTouchMove(e);
-    });
-
-    this.zoomElement.addEventListener('touchend', (e) => {
-      this.onTouchEnd(e);
-    });
-
-    this.zoomGesture.on('pinchstart', (e: any) => {
-      lastScale = this.scale;
-      console.debug('Last scale', e.scale);
-    });
-
-    this.zoomGesture.on('pinch', (e: any) => {
-      this.scale = Math.max(1, Math.min(lastScale * e.scale, 10));
-      console.debug('Scaling', this.scale);
-      (<any>this.zoomElement.style)[this.platform.Css.transform] = 'scale(' + this.scale + ')';
-
-      zoomRect = this.zoomElement.getBoundingClientRect();
-    });
-
-    this.zoomGesture.on('pinchend', () => {
-      // last_scale = Math.max(1, Math.min(last_scale * e.scale, 10));
-      if (this.scale > this.maxScale) {
-        let za = new Animation(this.platform, this.zoomElement)
-          .duration(this.zoomDuration)
-          .easing('linear')
-          .from('scale', this.scale)
-          .to('scale', this.maxScale);
-          za.play();
-
-          this.scale = this.maxScale;
-      }
-    });
-  }
-
-  /**
-   * @private
-   */
-  resetZoom() {
-    if (this.zoomElement) {
-      (<any>this.zoomElement.parentElement.style)[this.platform.Css.transform] = '';
-      (<any>this.zoomElement.style)[this.platform.Css.transform] = 'scale(1)';
-    }
-
-    this.scale = 1;
-    this.zoomLastPosX = 0;
-    this.zoomLastPosY = 0;
-  }
-
-  /**
-   * @private
-   */
-  toggleZoom(swiper: any, e: any) {
-    console.debug('Try toggle zoom');
-    if (!this.enableZoom) { return; }
-
-    console.debug('Toggling zoom', e);
-
-    /*
-    let x = e.pointers[0].clientX;
-    let y = e.pointers[0].clientY;
-
-    let mx = this.viewportWidth / 2;
-    let my = this.viewportHeight / 2;
-
-    let tx, ty;
-
-    if (x > mx) {
-      // Greater than half
-      tx = -x;
-    } else {
-      // Less than or equal to half
-      tx = (this.viewportWidth - x);
-    }
-    if (y > my) {
-      ty = -y;
-    } else {
-      ty = y-my;
-    }
-
-    */
-
-    let zi = new Animation(this.platform, this.touch.target.children[0])
-      .duration(this.zoomDuration)
-      .easing('linear');
-
-    // let zw = new Animation(this.touch.target.children[0])
-    //   .duration(this.zoomDuration)
-    //   .easing('linear');
-
-    let za = new Animation(this.platform);
-    za.add(zi);
-
-    if (this.scale > 1) {
-      // zoom out
-
-      // zw.fromTo('translateX', posX + 'px', '0px');
-      // zw.fromTo('translateY', posY + 'px', '0px');
-
-      zi.from('scale', this.scale);
-      zi.to('scale', 1);
-      za.play();
-
-      // posX = 0;
-      // posY = 0;
-
-      this.scale = 1;
-    } else {
-      // zoom in
-
-      // zw.fromTo('translateX', posX + 'px', tx + 'px');
-      // zw.fromTo('translateY', posY + 'px', ty + 'px');
-
-      zi.from('scale', this.scale);
-      zi.to('scale', this.maxScale);
-      za.play();
-
-      // posX = tx;
-      // posY = ty;
-
-      this.scale = this.maxScale;
-    }
-  }
-
-  /**
-   * @private
-   */
-  onTransitionStart(swiper: any, e: any) {
-  }
-  /**
-   * @private
-   */
-  onTransitionEnd(swiper: any, e: any) {
-  }
-
-  /**
-   * @private
-   */
-  onTouchStart(e: any) {
-    console.debug('Touch start', e);
-
-    // TODO: Support mice as well
-
-    let target = ((e.target.closest('.slide').children[0] as HTMLElement).children[0] as HTMLElement);
-
-    this.touch = {
-      x: null,
-      y: null,
-      startX: e.touches[0].clientX,
-      startY: e.touches[0].clientY,
-      deltaX: 0,
-      deltaY: 0,
-      lastX: 0,
-      lastY: 0,
-      target: target.parentElement,
-      zoomable: target,
-      zoomableWidth: target.offsetWidth,
-      zoomableHeight: target.offsetHeight
-    };
-    console.debug('Target', this.touch.target);
-
-    // TODO: android prevent default
-  }
-
-  /**
-   * @private
-   */
-  onTouchMove(e: any) {
-    this.touch.deltaX = e.touches[0].clientX - this.touch.startX;
-    this.touch.deltaY = e.touches[0].clientY - this.touch.startY;
-
-    // TODO: Make sure we need to transform (image is bigger than viewport)
-
-    let zoomableScaledWidth = this.touch.zoomableWidth * this.scale;
-    let zoomableScaledHeight = this.touch.zoomableHeight * this.scale;
-
-    let x1 = Math.min((this.viewportWidth / 2) - zoomableScaledWidth / 2, 0);
-    let x2 = -x1;
-    let y1 = Math.min((this.viewportHeight / 2) - zoomableScaledHeight / 2, 0);
-    let y2 = -y1;
-
-    console.debug('BOUNDS', x1, x2, y1, y2);
-
-    if (this.scale <= 1) {
-      return;
-    }
-
-    console.debug('PAN', e);
-
-    // move image
-    this.touch.x = this.touch.deltaX + this.touch.lastX;
-    this.touch.y = this.touch.deltaY + this.touch.lastY;
-
-    if (this.touch.x < x1) {
-      console.debug('OUT ON LEFT');
-    }
-    if (this.touch.x > x2 ) {
-      console.debug('OUT ON RIGHT');
-    }
-
-    if (this.touch.x > this.viewportWidth) {
-      // too far on the left side, let the event bubble up (to enable slider on edges, for example)
-    } else if (-this.touch.x > this.viewportWidth) {
-      // too far on the right side, let the event bubble up (to enable slider on edges, for example)
-    } else {
-      console.debug('TRANSFORM', this.touch.x, this.touch.y, this.touch.target);
-      // this.touch.target.style[CSS.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
-      (<any>this.touch.target.style)[this.platform.Css.transform] = 'translateX(' + this.touch.x + 'px) translateY(' + this.touch.y + 'px)';
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    }
-
-  }
-
-  /**
-   * @private
-   */
-  onTouchEnd(e: UIEvent) {
-    console.debug('PANEND', e);
-
-    if (this.scale > 1) {
-
-      if (Math.abs(this.touch.x) > this.viewportWidth) {
-        // TODO what is posX?
-        var posX: number = posX > 0 ? this.viewportWidth - 1 : -(this.viewportWidth - 1);
-        console.debug('Setting on posx', this.touch.x);
-      }
-
-      /*
-      if (posY > this.viewportHeight/2) {
-        let z = new Animation(this.zoomElement.parentElement);
-        z.fromTo('translateY', posY + 'px', Math.min(this.viewportHeight/2 + 30, posY));
-        z.play();
-      } else {
-        let z = new Animation(this.zoomElement.parentElement);
-        z.fromTo('translateY', posY + 'px', Math.max(this.viewportHeight/2 - 30, posY));
-        z.play();
-      }
-      */
-
-      this.touch.lastX = this.touch.x;
-      this.touch.lastY = this.touch.y;
-    }
+  ngAfterContentInit() {
+    const s = this;
+    const plt = s._plt;
+
+    swiperInit(s, plt, {});
+    this._unregs.push(initEvents(s, plt));
+    // zoom init
+    s.enableKeyboardControl(true);
+
+    this._init = true;
   }
 
   /**
@@ -728,15 +327,18 @@ export class Slides extends Ion {
    * Update the underlying slider implementation. Call this if you've added or removed
    * child slides.
    */
-  update() {
-    setTimeout(() => {
-      this.slider.update();
+  update(debounce = 300) {
+    if (this._init) {
+      this._plt.cancelTimeout(this._tmr);
+      this._tmr = this._plt.timeout(() => {
+        update(this, this._plt);
 
-      // Don't allow pager to show with > 10 slides
-      if (this.length() > 10) {
-        this.showPager = false;
-      }
-    }, 300);
+        // Don't allow pager to show with > 10 slides
+        // if (this.length() > 10) {
+        //   this.showPager = false;
+        // }
+      }, debounce);
+    }
   }
 
   /**
@@ -747,7 +349,7 @@ export class Slides extends Ion {
    * @param {boolean} [runCallbacks] Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
-    this.slider.slideTo(index, speed, runCallbacks);
+    slideTo(this, this._plt, index, speed, runCallbacks);
   }
 
   /**
@@ -757,7 +359,7 @@ export class Slides extends Ion {
    * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slideNext(speed?: number, runCallbacks?: boolean) {
-    this.slider.slideNext(runCallbacks, speed);
+    slideNext(this, this._plt, runCallbacks, speed, true);
   }
 
   /**
@@ -767,25 +369,7 @@ export class Slides extends Ion {
    * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
    */
   slidePrev(speed?: number, runCallbacks?: boolean) {
-    this.slider.slidePrev(runCallbacks, speed);
-  }
-
-  /**
-   * Get the index of the active slide.
-   *
-   * @returns {number} The index number of the current slide.
-   */
-  getActiveIndex(): number {
-    return this.slider.activeIndex;
-  }
-
-  /**
-   * Get the index of the previous slide.
-   *
-   * @returns {number} The index number of the previous slide.
-   */
-  getPreviousIndex(): number {
-    return this.slider.previousIndex;
+    slidePrev(this, this._plt, runCallbacks, speed, true);
   }
 
   /**
@@ -794,40 +378,57 @@ export class Slides extends Ion {
    * @returns {number} The total number of slides.
    */
   length(): number {
-    return this.slider.slides.length;
+    return this.slides.length;
+  }
+
+
+  /*=========================
+    Locks, unlocks
+    ===========================*/
+  lockSwipeToNext() {
+    this.params.allowSwipeToNext = false;
+  }
+
+  lockSwipeToPrev() {
+    this.params.allowSwipeToPrev = false;
+  }
+
+  lockSwipes() {
+    this.params.allowSwipeToNext = this.params.allowSwipeToPrev = false;
+  }
+
+  unlockSwipeToNext() {
+    this.params.allowSwipeToNext = true;
+  }
+
+  unlockSwipeToPrev() {
+    this.params.allowSwipeToPrev = true;
+  }
+
+  unlockSwipes() {
+    this.params.allowSwipeToNext = this.params.allowSwipeToPrev = true;
+  }
+
+  enableKeyboardControl(shouldEnableKeyboard: boolean) {
+    enableKeyboardControl(this, this._plt, shouldEnableKeyboard);
   }
 
   /**
-   * Get whether or not the current slide is the last slide.
-   *
-   * @returns {boolean} If the slide is the last slide or not.
+   * @private
    */
-  isEnd(): boolean {
-    return this.slider.isEnd;
+  ngOnDestroy() {
+    this._unregs.forEach(unReg => {
+      unReg();
+    });
+    this._unregs = null;
+
+    swiperDestroy(this, true, true);
+
+    this.enableKeyboardControl(false);
   }
 
-  /**
-   * Get whether or not the current slide is the first slide.
-   *
-   * @returns {boolean} If the slide is the first slide or not.
-   */
-  isBeginning(): boolean {
-    return this.slider.isBeginning;
-  }
-
-  /**
-   * Get the `Swiper` instance.
-   *
-   * The Slides component wraps the `Swiper` component built by iDangero.us. See the
-   * [Swiper API Docs](http://idangero.us/swiper/api/) for information on using
-   * the `Swiper` instance directly.
-   *
-   * @returns {Swiper}
-   */
-  getSlider() {
-    return this.slider;
-  }
 }
+
 
  /**
   * @name Slide
@@ -849,42 +450,27 @@ export class Slides extends Ion {
 })
 export class Slide {
 
-  /**
-   * @private
-   */
-  ele: HTMLElement;
-
-
-  /**
-   * @private
-   */
-  @Input() zoom: any;
-
   constructor(
     elementRef: ElementRef,
-
-  /**
-   * @private
-   */
-    @Host() public slides: Slides
+    renderer: Renderer,
+    private _slides: Slides
   ) {
-    this.ele = elementRef.nativeElement;
-    this.ele.classList.add('swiper-slide');
-
-    slides.rapidUpdate();
+    renderer.setElementClass(elementRef.nativeElement, 'swiper-slide', true);
+    _slides.update(0);
   }
 
   /**
    * @private
    */
   ngOnDestroy() {
-    this.slides.rapidUpdate();
+    this._slides.update(0);
   }
 }
 
- /**
-  * @private
-  */
+
+/**
+* @private
+*/
 @Directive({
   selector: 'slide-lazy',
   host: {

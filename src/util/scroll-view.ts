@@ -22,7 +22,7 @@ export class ScrollView {
   private _endTmr: Function;
 
 
-  constructor(private _platform: Platform, private _dom: DomController) {
+  constructor(private _plt: Platform, private _dom: DomController) {
     this.ev = {
       timeStamp: 0,
       scrollTop: 0,
@@ -162,7 +162,7 @@ export class ScrollView {
     // a scroll event callback will always be right before the raf callback
     // so there's little to no value of using raf here since it'll all ways immediately
     // call the raf if it was set within the scroll event, so this will save us some time
-    self._lsn = self._platform.addListener(self._el, 'scroll', scrollCallback, EVENT_OPTS);
+    self._lsn = self._plt.addListener(self._el, 'scroll', scrollCallback, EVENT_OPTS);
   }
 
 
@@ -333,7 +333,7 @@ export class ScrollView {
       positions.length = 0;
     }
 
-    const platform = self._platform;
+    const platform = self._plt;
     const unRegStart = platform.addListener(ele, 'touchstart', jsScrollTouchStart, EVENT_OPTS);
     const unRegMove = platform.addListener(ele, 'touchmove', jsScrollTouchMove, EVENT_OPTS);
     const unRegEnd = platform.addListener(ele, 'touchend', jsScrollTouchEnd, EVENT_OPTS);
@@ -380,7 +380,7 @@ export class ScrollView {
     this._t = top;
 
     if (this._js) {
-      (<any>this._el.style)[this._platform.Css.transform] = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
+      (<any>this._el.style)[this._plt.Css.transform] = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
 
     } else {
       this._el.scrollTop = top;
@@ -394,7 +394,7 @@ export class ScrollView {
     this._l = left;
 
     if (this._js) {
-      (<any>this._el.style)[this._platform.Css.transform] = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
+      (<any>this._el.style)[this._plt.Css.transform] = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
 
     } else {
       this._el.scrollLeft = left;
@@ -426,7 +426,7 @@ export class ScrollView {
     const fromX = el.scrollLeft;
 
     const maxAttempts = (duration / 16) + 100;
-    const transform =  self._platform.Css.transform;
+    const transform =  self._plt.Css.transform;
 
     let startTime: number;
     let attempts = 0;
@@ -460,7 +460,7 @@ export class ScrollView {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        self._platform.raf(step);
+        self._plt.raf(step);
 
       } else {
         stopScroll = true;

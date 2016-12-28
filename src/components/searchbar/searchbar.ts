@@ -186,7 +186,7 @@ export class Searchbar extends Ion {
 
   constructor(
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() ngControl: NgControl
@@ -278,7 +278,7 @@ export class Searchbar extends Ion {
 
     } else {
       // Create a dummy span to get the placeholder width
-      var doc = this._platform.doc();
+      var doc = this._plt.doc();
       var tempSpan = doc.createElement('span');
       tempSpan.innerHTML = this.placeholder;
       doc.body.appendChild(tempSpan);

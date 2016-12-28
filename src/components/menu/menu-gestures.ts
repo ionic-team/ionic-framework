@@ -11,12 +11,12 @@ import { SlideData } from '../../gestures/slide-gesture';
 export class MenuContentGesture extends SlideEdgeGesture {
 
   constructor(
-    platform: Platform,
+    plt: Platform,
     public menu: Menu,
     gestureCtrl: GestureController,
     domCtrl: DomController,
   ) {
-    super(platform, platform.doc().body, {
+    super(plt, plt.doc().body, {
       direction: 'x',
       edge: menu.side,
       threshold: 5,

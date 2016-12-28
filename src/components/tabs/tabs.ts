@@ -245,7 +245,7 @@ export class Tabs extends Ion implements AfterViewInit {
     private _app: App,
     config: Config,
     elementRef: ElementRef,
-    private _platform: Platform,
+    private _plt: Platform,
     renderer: Renderer,
     private _linker: DeepLinker
   ) {
@@ -292,7 +292,7 @@ export class Tabs extends Ion implements AfterViewInit {
     this._setConfig('tabsHighlight', this.tabsHighlight);
 
     if (this.tabsHighlight) {
-      this._platform.onResize(() => {
+      this._plt.onResize(() => {
         this._highlight.select(this.getSelected());
       });
     }

@@ -133,14 +133,14 @@ export class Config {
   /**
    * @private
    */
-  platform: Platform;
+  plt: Platform;
 
   /**
    * @private
    */
-  init(config: any, platform: Platform) {
+  init(config: any, plt: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
-    this.platform = platform;
+    this.plt = plt;
   }
 
 
@@ -155,7 +155,7 @@ export class Config {
    *  defaults to `null`.
    */
   get(key: string, fallbackValue: any = null): any {
-    const platform = this.platform;
+    const platform = this.plt;
 
     if (!isDefined(this._c[key])) {
       if (!isDefined(key)) {
@@ -395,9 +395,9 @@ export class Config {
 /**
  * @private
  */
-export function setupConfig(userConfig: any, platform: Platform): Config {
+export function setupConfig(userConfig: any, plt: Platform): Config {
   const config = new Config();
-  config.init(userConfig, platform);
+  config.init(userConfig, plt);
   return config;
 }
 

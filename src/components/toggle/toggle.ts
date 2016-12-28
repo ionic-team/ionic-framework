@@ -117,7 +117,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   constructor(
     public _form: Form,
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
     private _haptic: Haptic,
@@ -140,7 +140,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    */
   ngAfterContentInit() {
     this._init = true;
-    this._gesture = new ToggleGesture(this._platform, this, this._gestureCtrl, this._domCtrl);
+    this._gesture = new ToggleGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
     this._gesture.listen();
   }
 

@@ -44,7 +44,7 @@ export class PopoverCmp {
     public _elementRef: ElementRef,
     public _renderer: Renderer,
     public _config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController,
@@ -65,7 +65,7 @@ export class PopoverCmp {
   }
 
   ionViewPreLoad() {
-    this._platform.focusOutActiveElement();
+    this._plt.focusOutActiveElement();
     this._load(this._navParams.data.component);
   }
 

@@ -26,25 +26,25 @@ import { Platform } from './platform';
 export class Keyboard {
   private _tmr: any;
 
-  constructor(config: Config, private _platform: Platform, private _zone: NgZone, private _dom: DomController) {
+  constructor(config: Config, private _plt: Platform, private _zone: NgZone, private _dom: DomController) {
     this.focusOutline(config.get('focusOutline'));
 
-    const win = _platform.win();
+    const win = _plt.win();
 
-    _platform.addListener(win, 'native.keyboardhide', () => {
-      _platform.cancelTimeout(this._tmr);
-      this._tmr = _platform.timeout(() => {
+    _plt.addListener(win, 'native.keyboardhide', () => {
+      _plt.cancelTimeout(this._tmr);
+      this._tmr = _plt.timeout(() => {
         // this custom cordova plugin event fires when the keyboard will hide
         // useful when the virtual keyboard is closed natively
         // https://github.com/driftyco/ionic-plugin-keyboard
         if (this.isOpen()) {
-          this._platform.focusOutActiveElement();
+          this._plt.focusOutActiveElement();
         }
       }, 80);
     }, { zone: false, passive: true });
 
-    _platform.addListener(win, 'native.keyboardshow', () => {
-      _platform.cancelTimeout(this._tmr);
+    _plt.addListener(win, 'native.keyboardshow', () => {
+      _plt.cancelTimeout(this._tmr);
     }, { zone: false, passive: true });
 
   }
@@ -103,7 +103,7 @@ export class Keyboard {
     function checkKeyboard() {
       console.debug(`keyboard, isOpen: ${self.isOpen()}`);
       if (!self.isOpen() || checks > pollingChecksMax) {
-        self._platform.timeout(function() {
+        self._plt.timeout(function() {
           self._zone.run(function() {
             console.debug(`keyboard, closed`);
             callback();
@@ -111,12 +111,12 @@ export class Keyboard {
         }, 400);
 
       } else {
-        self._platform.timeout(checkKeyboard, pollingInternval);
+        self._plt.timeout(checkKeyboard, pollingInternval);
       }
       checks++;
     }
 
-    self._platform.timeout(checkKeyboard, pollingInternval);
+    self._plt.timeout(checkKeyboard, pollingInternval);
 
     return promise;
   }
@@ -130,7 +130,7 @@ export class Keyboard {
         // only focus out when a text input has focus
         console.debug(`keyboard, close()`);
         this._dom.write(() => {
-          this._platform.focusOutActiveElement();
+          this._plt.focusOutActiveElement();
         });
       }
     });
@@ -153,7 +153,7 @@ export class Keyboard {
      */
 
     const self = this;
-    const platform = self._platform;
+    const platform = self._plt;
     const doc = platform.doc();
     let isKeyInputEnabled = false;
     let unRegMouse: Function;
@@ -205,7 +205,7 @@ export class Keyboard {
   }
 
   hasFocusedTextInput() {
-    const activeEle = this._platform.getActiveElement();
+    const activeEle = this._plt.getActiveElement();
     if (isTextInput(activeEle)) {
       return (activeEle.parentElement.querySelector(':focus') === activeEle);
     }
