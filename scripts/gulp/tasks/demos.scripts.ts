@@ -1,7 +1,5 @@
-// THIS FILE IS A WIP TO GET THE FRAMEWORK WORKING WITH APP-SCRIPTS
-
-import { spawn } from 'child_process';
-import { readFileSync } from 'fs';
+import { spawnSync } from 'child_process';
+import { readdirSync, readFileSync, stat, statSync } from 'fs';
 import { dirname, join } from 'path';
 
 import { dest, src, task } from 'gulp';
@@ -18,7 +16,7 @@ task('demos.prod', demosBuild);
 function demosBuild(done: (err: any) => void) {
   runSequence(
     'demos.clean',
-    'demos.polyfill',
+    // 'demos.polyfill',
     'demos.copySource',
     'demos.compileTests',
     done);
@@ -53,56 +51,80 @@ task('demos.copySource', (done: Function) => {
 
 task('demos.compileTests', (done: Function) => {
   let folderInfo = getFolderInfo();
-  buildDemoTests(folderInfo, done);
+
+  if (folderInfo.componentName && folderInfo.componentTest) {
+    buildTest(folderInfo.componentName);
+  } else {
+    buildAllTests(done);
+  }
 });
 
-function buildDemoTests(folderInfo: any, done: Function) {
-  let includeGlob = ['./dist/demos/**/*.ts'];
-  let pathToWriteFile = `${DIST_DEMOS_ROOT}/tsconfig.json`;
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    includeGlob = [
-      `./dist/demos/${folderInfo.componentName}/**/*.ts`
-    ];
-    pathToWriteFile = `${DIST_DEMOS_ROOT}/${folderInfo.componentName}/tsconfig.json`;
-  }
+function buildTest(folderName: string) {
+  console.log('Running buildTest with', folderName);
+
+  let includeGlob = [`./dist/demos/${folderName}/*.ts`];
+  let pathToWriteFile = `${DIST_DEMOS_ROOT}/${folderName}/tsconfig.json`;
 
   createTempTsConfig(includeGlob, ES5, ES_2015, `${DEMOS_SRC_ROOT}/tsconfig.json`, pathToWriteFile);
-  runAppScripts(folderInfo, done);
+  return runAppScripts(folderName);
 }
 
-function runAppScripts(folderInfo: any, done: Function) {
+function buildAllTests(done: Function) {
+  let folders = getFolders('./dist/demos/');
+  let promises: Promise<any>[] = [];
+
+  folders.forEach(folder => {
+    stat(`./dist/demos/${folder}/app.module.ts`, function(err, stat) {
+      if (err == null) {
+        console.log('File exists in', folder);
+        const promise = buildTest(folder);
+        promises.push(promise);
+      }
+    });
+  });
+
+  Promise.all(promises).then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
+}
+
+function runAppScripts(folderName: string) {
+  console.log('Running app scripts with', folderName);
+
   let sassConfigPath = 'scripts/demos/sass.config.js';
 
-  let appEntryPoint = 'dist/demos/action-sheet/main.ts';
-  let distDir = 'dist/demos/action-sheet/';
-
-  if (folderInfo.componentName) {
-    console.log('Running App Scripts for', folderInfo.componentName);
-    appEntryPoint = `dist/demos/${folderInfo.componentName}/main.ts`;
-    distDir = `dist/demos/${folderInfo.componentName}/`;
-  }
+  let appEntryPoint = `dist/demos/${folderName}/main.ts`;
+  let distDir = `dist/demos/${folderName}/`;
 
   let tsConfig = distDir + 'tsconfig.json';
 
-  const scriptsCmd = spawn('ionic-app-scripts',
-    ['build',
-     '--prod',
-     '--sass', sassConfigPath,
-     '--appEntryPoint', appEntryPoint,
-     '--srcDir', distDir,
-     '--wwwDir', distDir,
-     '--tsconfig', tsConfig
-    ]);
+  try {
+    const scriptsCmd = spawnSync('ionic-app-scripts',
+      ['build',
+      '--prod',
+      '--sass', sassConfigPath,
+      '--appEntryPoint', appEntryPoint,
+      '--srcDir', distDir,
+      '--wwwDir', distDir,
+      '--tsconfig', tsConfig
+      ]);
 
-  scriptsCmd.stdout.on('data', function (data) {
-    console.log(data.toString());
-  });
+    if (scriptsCmd.status !== 0) {
+      return Promise.reject(scriptsCmd.stderr.toString());
+    }
 
-  scriptsCmd.stderr.on('data', function (data) {
-    console.log('npm err: ' + data.toString());
-  });
+    console.log(scriptsCmd.output.toString());
+    return Promise.resolve();
+  } catch (ex) {
+    return Promise.reject(ex);
+  }
+}
 
-  scriptsCmd.on('close', function() {
-    done();
-  });
+function getFolders(dir) {
+  return readdirSync(dir)
+    .filter(function(file) {
+      return statSync(join(dir, file)).isDirectory();
+    });
 }
