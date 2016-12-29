@@ -8,22 +8,33 @@ import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 
-import { DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DEMOS_NAME, ES5, ES_2015, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
+import { DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DEMOS_NAME, ES5, ES_2015, SCRIPTS_ROOT } from '../constants';
 import { createTempTsConfig, getFolderInfo } from '../util';
 
 task('demos.prod', demosBuild);
 
 function demosBuild(done: (err: any) => void) {
   runSequence(
+    'demos.copyIonic',
     'demos.clean',
-    // 'demos.polyfill',
+    'demos.polyfill',
     'demos.copySource',
     'demos.compileTests',
     done);
 }
 
+task('demos.copyIonic', (done: (err: any) => void) => {
+  runSequence(
+    'compile.release',
+    'release.compileSass',
+    'release.fonts',
+    'release.sass',
+    'release.createUmdBundle',
+    done);
+});
+
 task('demos.copySource', (done: Function) => {
-  const stream = src([`${SRC_ROOT}/**/*`, `!${SRC_ROOT}/components/*/test{,/**/*}`, `${DEMOS_SRC_ROOT}/**/*`])
+  const stream = src([`${DEMOS_SRC_ROOT}/**/*`])
     .pipe(gulpif(/app.module.ts$/, createIndexHTML()))
     .pipe(dest(DIST_DEMOS_ROOT));
 
@@ -60,8 +71,6 @@ task('demos.compileTests', (done: Function) => {
 });
 
 function buildTest(folderName: string) {
-  console.log('Running buildTest with', folderName);
-
   let includeGlob = [`./dist/demos/${folderName}/*.ts`];
   let pathToWriteFile = `${DIST_DEMOS_ROOT}/${folderName}/tsconfig.json`;
 
@@ -76,7 +85,6 @@ function buildAllTests(done: Function) {
   folders.forEach(folder => {
     stat(`./dist/demos/${folder}/app.module.ts`, function(err, stat) {
       if (err == null) {
-        console.log('File exists in', folder);
         const promise = buildTest(folder);
         promises.push(promise);
       }
