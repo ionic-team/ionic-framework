@@ -212,6 +212,7 @@ button.swiper-pagination-bullet {
   display: block;
 }
 .swiper-container-horizontal > .swiper-pagination {
+  position: fixed;
   bottom: 20px;
   left: 0;
   width: 100%;
