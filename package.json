@@ -20,7 +20,6 @@
     "url": "https://github.com/driftyco/ionic.git"
   },
   "scripts": {
-    "build": "ionic-app-scripts build --prod --debug --sass ./demos/sass.config.js --appEntryPoint dist/demos/action-sheet/main.ts --srcDir dist/demos/action-sheet/ --wwwDir dist/demos/action-sheet/ --tsconfig dist/demos/action-sheet/tsconfig.json",
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link"
