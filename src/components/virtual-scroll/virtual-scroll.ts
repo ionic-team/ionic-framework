@@ -22,7 +22,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * instead a small subset of records (enough to fill the viewport) are rendered
  * and reused as the user scrolls.
  *
- * ### The Basics
+ * ## The Basics
  *
  * The array of records is passed to the `virtualScroll` property.
  * The data given to the `virtualScroll` property must be an array. An item
@@ -40,7 +40,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * ```
  *
  *
- * ### Section Headers and Footers
+ * ## Section Headers and Footers
  *
  * Section headers and footers are optional. They can be dynamically created
  * from developer-defined functions. For example, a large list of contacts
@@ -82,7 +82,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * ```
  *
  *
- * ### Approximate Widths and Heights
+ * ## Approximate Widths and Heights
  *
  * If the height of items in the virtual scroll are not close to the
  * default size of 40px, it is extremely important to provide an value for
@@ -99,7 +99,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * slightly different heights between platforms, which is perfectly fine.
  *
  *
- * ### Images Within Virtual Scroll
+ * ## Images Within Virtual Scroll
  *
  * HTTP requests, image decoding, and image rendering can cause jank while
  * scrolling. In order to better control images, Ionic provides `<ion-img>`
@@ -135,7 +135,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * ```
  *
  *
- * ### Custom Components
+ * ## Custom Components
  *
  * If a custom component is going to be used within Virtual Scroll, it's best
  * to wrap it with a good old `<div>` to ensure the component is rendered
@@ -158,7 +158,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * ## Virtual Scroll Performance Tips
  *
- * #### iOS Cordova WKWebView
+ * ### iOS Cordova WKWebView
  *
  * When deploying to iOS with Cordova, it's highly recommended to use the
  * [WKWebView plugin](http://blog.ionic.io/cordova-ios-performance-improvements-drop-in-speed-with-wkwebview/)
@@ -166,7 +166,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * WKWebView is superior at scrolling efficiently in comparision to the older
  * UIWebView.
  *
- * #### Lock in element dimensions and locations
+ * ### Lock in element dimensions and locations
  *
  * In order for virtual scroll to efficiently size and locate every item, it's
  * very important every element within each virtual item does not dynamically
@@ -174,14 +174,14 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * does not change, it's recommended each virtual item has locked in its size
  * via CSS.
  *
- * #### Use `ion-img` for images
+ * ### Use `ion-img` for images
  *
  * When including images within Virtual Scroll, be sure to use
  * [`ion-img`](../img/Img/) rather than the standard `<img>` HTML element.
  * With `ion-img`, images are lazy loaded so only the viewable ones are
  * rendered, and HTTP requests are efficiently controlled while scrolling.
  *
- * #### Set Approximate Widths and Heights
+ * ### Set Approximate Widths and Heights
  *
  * As mentioned above, all elements should lock in their dimensions. However,
  * virtual scroll isn't aware of the dimensions until after they have been
@@ -191,7 +191,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * therefore allowing virtual scroll to decide how many items should be
  * created.
  *
- * #### Changing dataset should use `virtualTrackBy`
+ * ### Changing dataset should use `virtualTrackBy`
  *
  * It is possible for the identities of elements in the iterator to change
  * while the data does not. This can happen, for example, if the iterator
@@ -200,7 +200,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * different identities, and Ionic will tear down the entire DOM and rebuild
  * it. This is an expensive operation and should be avoided if possible.
  *
- * #### Efficient headers and footer functions
+ * ### Efficient headers and footer functions
  *
  * Each virtual item must stay extremely efficient, but one way to really
  * kill its performance is to perform any DOM operations within section header
