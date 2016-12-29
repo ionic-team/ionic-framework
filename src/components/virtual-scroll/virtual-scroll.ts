@@ -15,9 +15,8 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * @name VirtualScroll
  * @description
  * Virtual Scroll displays a virtual, "infinite" list. An array of records
- * is passed to the virtual scroll containing the data to create templates
- * for. The template created for each record, referred to as a cell, can
- * consist of items, headers, and footers.
+ * is passed to the Virtual Scroll, which creates templates for each record. Each 
+ * template is referred to as a cell, and can consist of items, headers, and footers.
  *
  * For performance reasons, not every record in the list is rendered at once;
  * instead a small subset of records (enough to fill the viewport) are rendered
@@ -25,7 +24,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  *
  * ### The Basics
  *
- * The array of records should be passed to the `virtualScroll` property.
+ * The array of records is passed to the `virtualScroll` property.
  * The data given to the `virtualScroll` property must be an array. An item
  * template with the `*virtualItem` property is required in the `virtualScroll`.
  * The `virtualScroll` and `*virtualItem` properties can be added to any element.
@@ -413,6 +412,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
   }
 
+  /**
+   * @private
+   */
   readUpdate() {
     console.debug(`virtual-scroll, readUpdate`);
 
@@ -429,6 +431,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
                    this.bufferRatio);
   }
 
+  /**
+   * @private
+   */
   writeUpdate() {
     console.debug(`virtual-scroll, writeUpdate`);
 
