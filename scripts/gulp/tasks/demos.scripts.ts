@@ -19,6 +19,9 @@ function demosBuild(done: (err: any) => void) {
     'demos.clean',
     'demos.polyfill',
     'demos.copySource',
+    'demos.copyExternalDependencies',
+    'demos.sass',
+    'demos.fonts',
     'demos.compileTests',
     done);
 }

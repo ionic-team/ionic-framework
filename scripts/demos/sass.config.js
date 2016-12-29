@@ -41,9 +41,9 @@ module.exports = {
    * paths to search for sass imports by just name.
    */
   includePaths: [
-    'node_modules/ionic-angular/themes',
+    'src/themes',
     'node_modules/ionicons/dist/scss',
-    'node_modules/ionic-angular/fonts'
+    'src/fonts'
   ],
 
   /**
@@ -71,7 +71,7 @@ module.exports = {
    * to be imported so their values override default variables.
    */
   variableSassFiles: [
-    './dist/ionic-angular/themes/ionic.theme.default.scss'
+    './scripts/demos/variables.scss'
   ],
 
   /**
