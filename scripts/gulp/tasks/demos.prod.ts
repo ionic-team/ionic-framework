@@ -196,7 +196,12 @@ function demosWatch(componentName: string, componentTest: string) {
     start('demos.sass');
   });
 
-  console.log(`http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${DEMOS_NAME}/${componentName}`);
+  let serverUrl = `http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${DEMOS_NAME}`;
+  if (componentName) {
+    serverUrl += `/${componentName}`;
+  }
+
+  console.log(serverUrl);
 
   start('demos.serve');
 }
