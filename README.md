@@ -11,6 +11,7 @@ See the [Building apps with Ionic 2](http://adamdbradley.github.io/building-with
 ### Getting Started with Ionic 2
 
 To use Ionic 2 today, visit the [Ionic 2 Docs](http://ionicframework.com/docs/v2/). We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
+zzzzzzzzzzzzzzzz
 
 ### Contributing to Ionic 2
 
