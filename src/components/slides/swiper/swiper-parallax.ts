@@ -7,7 +7,7 @@ import { eachChild, isHorizontal, transform, transition } from './swiper-utils';
   ===========================*/
 function setParallaxTransform(s: Slides, el: HTMLElement, progress) {
   var p, pX, pY;
-  var rtlFactor = s.rtl ? -1 : 1;
+  var rtlFactor = s._rtl ? -1 : 1;
 
   p = el.getAttribute('data-swiper-parallax') || '0';
   pX = el.getAttribute('data-swiper-parallax-x');
@@ -48,8 +48,8 @@ export function parallaxSetTranslate(s: Slides) {
     setParallaxTransform(s, el, s.progress);
   });
 
-  for (var i = 0; i < s.slides.length; i++) {
-    var slide = s.slides[i];
+  for (var i = 0; i < s._slides.length; i++) {
+    var slide = s._slides[i];
     eachChild(slide, '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]', (el) => {
       var progress = Math.min(Math.max(slide[0].progress, -1), 1);
       setParallaxTransform(s, slide, progress);
@@ -58,7 +58,7 @@ export function parallaxSetTranslate(s: Slides) {
 }
 
 export function parallaxSetTransition(s: Slides, duration: number) {
-  if (typeof duration === 'undefined') duration = s.params.speed;
+  if (typeof duration === 'undefined') duration = s.speed;
 
   eachChild(s.container, '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]', (el) => {
     var parallaxDuration = parseInt(el.getAttribute('data-swiper-parallax-duration'), 10) || duration;

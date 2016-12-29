@@ -6,29 +6,30 @@ export function round(a) {
   return Math.floor(a);
 }
 
-
 export function inlineStyle(ele: HTMLElement|HTMLElement[], styles: any) {
-  if (Array.isArray(ele)) {
-    ele.forEach(el => {
-      inlineStyle(el, styles);
-    });
+  if (ele) {
+    if (Array.isArray(ele)) {
+      ele.forEach(el => {
+        inlineStyle(el, styles);
+      });
 
-  } else {
-    var cssProps = Object.keys(styles);
-    for (var i = 0; i < cssProps.length; i++) {
-      ele.style[cssProps[i]] = styles[cssProps[i]];
+    } else {
+      var cssProps = Object.keys(styles);
+      for (var i = 0; i < cssProps.length; i++) {
+        ele.style[cssProps[i]] = styles[cssProps[i]];
+      }
     }
   }
 }
 
-export function addClass(ele: HTMLElement|HTMLElement[], className: string) {
+export function addClass(ele: any, className: string) {
   if (ele) {
-    if (Array.isArray(ele)) {
+    if (ele.length) {
       ele.forEach(el => {
         addClass(el, className);
       });
 
-    } else {
+    } else if (ele.nodeType) {
       if (Array.isArray(className)) {
         className.forEach(cls => {
           ele.classList.add(cls);
@@ -40,14 +41,14 @@ export function addClass(ele: HTMLElement|HTMLElement[], className: string) {
   }
 }
 
-export function removeClass(ele: HTMLElement|HTMLElement[], className: any) {
+export function removeClass(ele: any, className: any) {
   if (ele) {
-    if (Array.isArray(ele)) {
+    if (ele.length) {
       ele.forEach(el => {
         removeClass(el, className);
       });
 
-    } else {
+    } else if (ele.nodeType) {
       if (Array.isArray(className)) {
         className.forEach(cls => {
           ele.classList.remove(cls);
@@ -59,7 +60,6 @@ export function removeClass(ele: HTMLElement|HTMLElement[], className: any) {
   }
 }
 
-
 export function getElementIndex(ele: any) {
   var i = 0;
   if (ele) {
@@ -70,7 +70,6 @@ export function getElementIndex(ele: any) {
   return i;
 }
 
-
 export function queryChildren(parentEle: HTMLElement, query: string): HTMLElement[] {
   if (parentEle) {
     return <any>parentEle.querySelectorAll(query);
@@ -78,16 +77,14 @@ export function queryChildren(parentEle: HTMLElement, query: string): HTMLElemen
   return [];
 }
 
-
 export function eachChild(parentEle: HTMLElement, query: string, callback: {(foundEle: HTMLElement)}): void {
   if (parentEle) {
-    var ele = <any>parentEle.querySelectorAll(query);
-    if (ele) {
-      callback(ele);
+    var nodes = parentEle.querySelectorAll(query);
+    for (var i = 0; i < nodes.length; i++) {
+      callback(<any>nodes[i]);
     }
   }
 }
-
 
 export function transform(ele: HTMLElement, val: any) {
   if (ele) {
@@ -95,7 +92,6 @@ export function transform(ele: HTMLElement, val: any) {
     elStyle.webkitTransform = elStyle.MsTransform = elStyle.msTransform = elStyle.transform = val;
   }
 }
-
 
 export function transition(ele: HTMLElement, duration: any) {
   if (ele) {
@@ -107,7 +103,6 @@ export function transition(ele: HTMLElement, duration: any) {
   }
 }
 
-
 export function triggerTransitionEnd(plt: Platform, ele: HTMLElement) {
   try {
     var win: any = plt.win();
@@ -116,16 +111,15 @@ export function triggerTransitionEnd(plt: Platform, ele: HTMLElement) {
   } catch (e) {}
 }
 
-
-export function offset(el: HTMLElement, plt: Platform) {
-  if (el) {
-    var box = plt.getElementBoundingClientRect(el);
+export function offset(ele: HTMLElement, plt: Platform) {
+  if (ele) {
+    var box = plt.getElementBoundingClientRect(ele);
     var body = plt.doc().body;
     var win = plt.win();
-    var clientTop  = el.clientTop  || body.clientTop  || 0;
-    var clientLeft = el.clientLeft || body.clientLeft || 0;
-    var scrollTop  = win.pageYOffset || el.scrollTop;
-    var scrollLeft = win.pageXOffset || el.scrollLeft;
+    var clientTop  = ele.clientTop  || body.clientTop  || 0;
+    var clientLeft = ele.clientLeft || body.clientLeft || 0;
+    var scrollTop  = win.pageYOffset || ele.scrollTop;
+    var scrollLeft = win.pageXOffset || ele.scrollLeft;
     return {
       top: box.top  + scrollTop  - clientTop,
       left: box.left + scrollLeft - clientLeft
@@ -134,16 +128,14 @@ export function offset(el: HTMLElement, plt: Platform) {
   return null;
 }
 
-
 export function updateSlidesOffset(s: Slides) {
-  for (var i = 0; i < s.slides.length; i++) {
-    s.slides[i].swiperSlideOffset = isHorizontal(s) ? s.slides[i].offsetLeft : s.slides[i].offsetTop;
+  for (var i = 0; i < s._slides.length; i++) {
+    s._slides[i].swiperSlideOffset = isHorizontal(s) ? s._slides[i].offsetLeft : s._slides[i].offsetTop;
   }
 }
 
-
 export function isHorizontal(s: Slides) {
-  return s.params.direction === 'horizontal';
+  return s.direction === 'horizontal';
 }
 
 const formElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'VIDEO'];
@@ -156,9 +148,9 @@ export function isFormElement(el: any) {
   Min/Max Translate
   ===========================*/
 export function minTranslate(s: Slides) {
-  return (-s.snapGrid[0]);
+  return (-s._snapGrid[0]);
 }
 
 export function maxTranslate(s: Slides) {
-  return (-s.snapGrid[s.snapGrid.length - 1]);
+  return (-s._snapGrid[s._snapGrid.length - 1]);
 }

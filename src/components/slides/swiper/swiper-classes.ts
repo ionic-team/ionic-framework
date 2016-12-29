@@ -1,6 +1,7 @@
-import { a11yDisable, a11yEnable } from './swiper-a11y';
-import { addClass, eachChild, removeClass, isHorizontal, queryChildren, transform, transition } from './swiper-utils';
+import { ariaDisable, ariaHidden } from './swiper-a11y';
+import { addClass, removeClass, queryChildren } from './swiper-utils';
 import { Slides } from '../slides';
+import { updatePaginationClasses } from './swiper-pagination';
 
 
 /*=========================
@@ -8,143 +9,123 @@ import { Slides } from '../slides';
   ===========================*/
 export function updateClasses(s: Slides) {
   var childElements;
-  removeClass(s.slides, [s.params.slideActiveClass, s.params.slideNextClass, + s.params.slidePrevClass, s.params.slideDuplicateActiveClass, s.params.slideDuplicateNextClass, s.params.slideDuplicatePrevClass]);
 
-  var activeSlide = s.slides[s.activeIndex];
+  removeClass(s._slides, [CLS.slideActive, CLS.slideNext, CLS.slidePrev, CLS.slideDuplicateActive, CLS.slideDuplicateNext, CLS.slideDuplicatePrev]);
+  for (var i = 0; i < s._slides.length; i++) {
+    ariaHidden(s._slides[i], true);
+  }
+
+  var activeSlide = s._slides[s._activeIndex];
+  if (!activeSlide) {
+    return;
+  }
 
   // Active classes
-  addClass(activeSlide, s.params.slideActiveClass);
+  addClass(activeSlide, CLS.slideActive);
+  ariaHidden(activeSlide, false);
 
-  if (s.params.loop) {
+  if (s.loop) {
     // Duplicate to all looped slides
-    if (activeSlide.classList.contains(s.params.slideDuplicateClass)) {
-      childElements = queryChildren(s.wrapper, '.' + s.params.slideClass + ':not(.' + s.params.slideDuplicateClass + ')[data-swiper-slide-index="' + s.realIndex + '"]');
+    if (activeSlide.classList.contains(CLS.slideDuplicate)) {
+      childElements = queryChildren(s._wrapper, '.' + CLS.slide + ':not(.' + CLS.slideDuplicate + ')[data-swiper-slide-index="' + s.realIndex + '"]');
 
     } else {
-      childElements = queryChildren(s.wrapper, '.' + s.params.slideClass + '.' + s.params.slideDuplicateClass + '[data-swiper-slide-index="' + s.realIndex + '"]');
+      childElements = queryChildren(s._wrapper, '.' + CLS.slide + '.' + CLS.slideDuplicate + '[data-swiper-slide-index="' + s.realIndex + '"]');
     }
 
-    addClass(childElements, s.params.slideDuplicateActiveClass);
+    addClass(childElements, CLS.slideDuplicateActive);
   }
 
   // Next Slide
   var nextSlide = activeSlide.nextElementSibling;
-  if (s.params.loop && !nextSlide) {
-    nextSlide = s.slides[0];
+  if (s.loop && !nextSlide) {
+    nextSlide = s._slides[0];
   }
-  nextSlide && nextSlide.classList.add(s.params.slideNextClass);
+  nextSlide && nextSlide.classList.add(CLS.slideNext);
 
   // Prev Slide
   var prevSlide = activeSlide.previousElementSibling;
-  if (s.params.loop && !prevSlide) {
-    prevSlide = s.slides[s.slides.length - 1];
+  if (s.loop && !prevSlide) {
+    prevSlide = s._slides[s._slides.length - 1];
   }
-  prevSlide && prevSlide.classList.add(s.params.slidePrevClass);
+  prevSlide && prevSlide.classList.add(CLS.slidePrev);
 
-  if (s.params.loop) {
+  if (s.loop) {
     // Duplicate to all looped slides
-    if (nextSlide.classList.contains(s.params.slideDuplicateClass)) {
-      childElements = queryChildren(s.wrapper, '.' + s.params.slideClass + ':not(.' + s.params.slideDuplicateClass + ')[data-swiper-slide-index="' + nextSlide.getAttribute('data-swiper-slide-index') + '"]');
+    if (nextSlide.classList.contains(CLS.slideDuplicate)) {
+      childElements = queryChildren(s._wrapper, '.' + CLS.slide + ':not(.' + CLS.slideDuplicate + ')[data-swiper-slide-index="' + nextSlide.getAttribute('data-swiper-slide-index') + '"]');
     } else {
-      childElements = queryChildren(s.wrapper, '.' + s.params.slideClass + '.' + s.params.slideDuplicateClass + '[data-swiper-slide-index="' + nextSlide.getAttribute('data-swiper-slide-index') + '"]');
+      childElements = queryChildren(s._wrapper, '.' + CLS.slide + '.' + CLS.slideDuplicate + '[data-swiper-slide-index="' + nextSlide.getAttribute('data-swiper-slide-index') + '"]');
     }
-    addClass(childElements, s.params.slideDuplicateNextClass);
+    addClass(childElements, CLS.slideDuplicateNext);
 
-    if (prevSlide.classList.contains(s.params.slideDuplicateClass)) {
-      childElements = queryChildren(s.wrapper, '.' + s.params.slideClass + ':not(.' + s.params.slideDuplicateClass + ')[data-swiper-slide-index="' + prevSlide.getAttribute('data-swiper-slide-index') + '"]');
+    if (prevSlide.classList.contains(CLS.slideDuplicate)) {
+      childElements = queryChildren(s._wrapper, '.' + CLS.slide + ':not(.' + CLS.slideDuplicate + ')[data-swiper-slide-index="' + prevSlide.getAttribute('data-swiper-slide-index') + '"]');
     } else {
-      childElements = queryChildren(s.wrapper, '.' + s.params.slideClass + '.' + s.params.slideDuplicateClass + '[data-swiper-slide-index="' + prevSlide.getAttribute('data-swiper-slide-index') + '"]');
+      childElements = queryChildren(s._wrapper, '.' + CLS.slide + '.' + CLS.slideDuplicate + '[data-swiper-slide-index="' + prevSlide.getAttribute('data-swiper-slide-index') + '"]');
     }
-    addClass(childElements, s.params.slideDuplicatePrevClass);
+    addClass(childElements, CLS.slideDuplicatePrev);
   }
 
   // Pagination
-  if (s.paginationContainer) {
-    // Current/Total
-    var current,
-      total = s.params.loop ? Math.ceil((s.slides.length - s.loopedSlides * 2) / s.params.slidesPerGroup) : s.snapGrid.length;
-    if (s.params.loop) {
-      current = Math.ceil((s.activeIndex - s.loopedSlides) / s.params.slidesPerGroup);
-      if (current > s.slides.length - 1 - s.loopedSlides * 2) {
-        current = current - (s.slides.length - s.loopedSlides * 2);
-      }
-      if (current > total - 1) {
-        current = current - total;
-      }
-      if (current < 0 && s.params.paginationType !== 'bullets') {
-        current = total + current;
-      }
-
-    } else {
-      if (typeof s.snapIndex !== 'undefined') {
-        current = s.snapIndex;
-      } else {
-        current = s.activeIndex || 0;
-      }
-    }
-
-    // Types
-    if (s.params.paginationType === 'bullets' && s.bullets && s.bullets.length) {
-      for (var i = 0; i < s.bullets.length; i++) {
-        if (i === current) {
-          addClass(s.bullets[i], s.params.bulletActiveClass);
-        } else {
-          removeClass(s.bullets[i], s.params.bulletActiveClass);
-        }
-      }
-    }
-
-    if (s.params.paginationType === 'fraction') {
-      eachChild(s.paginationContainer, '.' + s.params.paginationCurrentClass, ele => {
-        ele.textContent = current + 1;
-      });
-      eachChild(s.paginationContainer, '.' + s.params.paginationTotalClass, ele => {
-        ele.textContent = total;
-      });
-    }
-
-    if (s.params.paginationType === 'progress') {
-      var scale = (current + 1) / total,
-        scaleX = scale,
-        scaleY = 1;
-      if (!isHorizontal(s)) {
-        scaleY = scale;
-        scaleX = 1;
-      }
-      eachChild(s.paginationContainer, '.' + s.params.paginationProgressbarClass, ele => {
-        transform(ele, 'translate3d(0,0,0) scaleX(' + scaleX + ') scaleY(' + scaleY + ')');
-        transition(ele, s.params.speed);
-      });
-    }
+  if (s._paginationContainer) {
+    updatePaginationClasses(s);
   }
 
   // Next/active buttons
-  if (!s.params.loop) {
-    if (s.params.prevButton && s.prevButton) {
-      if (s.isBeginning) {
-        s.prevButton.classList.add(s.params.buttonDisabledClass);
-        if (s.params.a11y) {
-          a11yDisable(s.prevButton);
-        }
+  if (!s.loop) {
+    if (s.prevButton) {
+      if (s._isBeginning) {
+        s.prevButton.classList.add(CLS.buttonDisabled);
+        ariaDisable(s.prevButton, true);
+
       } else {
-        s.prevButton.classList.remove(s.params.buttonDisabledClass);
-        if (s.params.a11y) {
-          a11yEnable(s.prevButton);
-        }
+        s.prevButton.classList.remove(CLS.buttonDisabled);
+        ariaDisable(s.prevButton, false);
       }
     }
-    if (s.params.nextButton && s.nextButton) {
-      if (s.isEnd) {
-        s.nextButton.classList.add(s.params.buttonDisabledClass);
-        if (s.params.a11y) {
-          a11yDisable(s.nextButton);
-        }
+
+    if (s.nextButton) {
+      if (s._isEnd) {
+        s.nextButton.classList.add(CLS.buttonDisabled);
+        ariaDisable(s.nextButton, true);
+
       } else {
-        s.nextButton.classList.remove(s.params.buttonDisabledClass);
-        if (s.params.a11y) {
-          a11yEnable(s.nextButton);
-        }
+        s.nextButton.classList.remove(CLS.buttonDisabled);
+        ariaDisable(s.nextButton, false);
       }
     }
   }
 }
+
+export const CLS = {
+  // Classnames
+  noSwiping: 'swiper-no-swiping',
+  containerModifier: 'swiper-container-',
+  slide: 'swiper-slide',
+  slideActive: 'swiper-slide-active',
+  slideDuplicateActive: 'swiper-slide-duplicate-active',
+  slideVisible: 'swiper-slide-visible',
+  slideDuplicate: 'swiper-slide-duplicate',
+  slideNext: 'swiper-slide-next',
+  slideDuplicateNext: 'swiper-slide-duplicate-next',
+  slidePrev: 'swiper-slide-prev',
+  slideDuplicatePrev: 'swiper-slide-duplicate-prev',
+  wrapper: 'swiper-wrapper',
+  bullet: 'swiper-pagination-bullet',
+  bulletActive: 'swiper-pagination-bullet-active',
+  buttonDisabled: 'swiper-button-disabled',
+  paginationCurrent: 'swiper-pagination-current',
+  paginationTotal: 'swiper-pagination-total',
+  paginationHidden: 'swiper-pagination-hidden',
+  paginationProgressbar: 'swiper-pagination-progressbar',
+  paginationClickable: 'swiper-pagination-clickable',
+  paginationModifier: 'swiper-pagination-',
+  lazyLoading: 'swiper-lazy',
+  lazyStatusLoading: 'swiper-lazy-loading',
+  lazyStatusLoaded: 'swiper-lazy-loaded',
+  lazyPreloader: 'swiper-lazy-preloader',
+  notification: 'swiper-notification',
+  preloader: 'preloader',
+  zoomContainer: 'swiper-zoom-container',
+};

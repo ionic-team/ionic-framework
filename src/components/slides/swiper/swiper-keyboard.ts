@@ -2,6 +2,7 @@ import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
 import { isHorizontal, offset } from './swiper-utils';
 import { slideNext, slidePrev } from './swiper';
+import { CLS } from './swiper-classes';
 
 
 /*=========================
@@ -12,11 +13,11 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
 
   var kc = e.keyCode || e.charCode;
   // Directions locks
-  if (!s.params.allowSwipeToNext && (isHorizontal(s) && kc === 39 || !isHorizontal(s) && kc === 40)) {
+  if (!s._allowSwipeToNext && (isHorizontal(s) && kc === 39 || !isHorizontal(s) && kc === 40)) {
     return false;
   }
 
-  if (!s.params.allowSwipeToPrev && (isHorizontal(s) && kc === 37 || !isHorizontal(s) && kc === 38)) {
+  if (!s._allowSwipeToPrev && (isHorizontal(s) && kc === 37 || !isHorizontal(s) && kc === 38)) {
     return false;
   }
 
@@ -32,7 +33,7 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
   if (kc === 37 || kc === 39 || kc === 38 || kc === 40) {
     var inView = false;
     // Check that swiper should be inside of visible area of window
-    if (s.container.closest('.' + s.params.slideClass) && !s.container.closest('.' + s.params.slideActiveClass)) {
+    if (s.container.closest('.' + CLS.slide) && !s.container.closest('.' + CLS.slideActive)) {
       return;
     }
     var windowScroll = {
@@ -43,15 +44,15 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
     var windowHeight = plt.height();
     var swiperOffset = offset(s.container, plt);
 
-    if (s.rtl) {
+    if (s._rtl) {
       swiperOffset.left = swiperOffset.left - s.container[0].scrollLeft;
     }
 
     var swiperCoord = [
       [swiperOffset.left, swiperOffset.top],
-      [swiperOffset.left + s.width, swiperOffset.top],
-      [swiperOffset.left, swiperOffset.top + s.height],
-      [swiperOffset.left + s.width, swiperOffset.top + s.height]
+      [swiperOffset.left + s.renderedWidth, swiperOffset.top],
+      [swiperOffset.left, swiperOffset.top + s.renderedHeight],
+      [swiperOffset.left + s.renderedWidth, swiperOffset.top + s.renderedHeight]
     ];
 
     for (var i = 0; i < swiperCoord.length; i++) {
@@ -76,11 +77,11 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
       }
     }
 
-    if ((kc === 39 && !s.rtl) || (kc === 37 && s.rtl)) {
+    if ((kc === 39 && !s._rtl) || (kc === 37 && s._rtl)) {
       slideNext(s, plt);
     }
 
-    if ((kc === 37 && !s.rtl) || (kc === 39 && s.rtl)) {
+    if ((kc === 37 && !s._rtl) || (kc === 39 && s._rtl)) {
       slidePrev(s, plt);
     }
 
@@ -104,14 +105,12 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
 }
 
 export function enableKeyboardControl(s: Slides, plt: Platform, shouldEnable: boolean) {
-  s.params.keyboardControl = shouldEnable;
-
-  if (shouldEnable && !s.keyboardUnReg) {
-    s.keyboardUnReg = plt.addListener(plt.doc(), 'keydown', (ev: KeyboardEvent) => {
+  if (shouldEnable && !s._keyboardUnReg) {
+    s._keyboardUnReg = plt.addListener(plt.doc(), 'keydown', (ev: KeyboardEvent) => {
       handleKeyboard(s, plt, ev);
     }, { zone: false });
 
-  } else if (!shouldEnable && s.keyboardUnReg) {
-    s.keyboardUnReg();
+  } else if (!shouldEnable && s._keyboardUnReg) {
+    s._keyboardUnReg();
   }
 }

@@ -1,0 +1,17 @@
+
+<ion-slides loop zoom id="slider" style="background-color: black">
+
+  <ion-slide *ngFor="let image of images">
+    <img [src]="getImageUrl(image)">
+  </ion-slide>
+
+</ion-slides>
+
+<style>
+
+ion-scroll {
+  width: 100%;
+  height: 100%;
+}
+
+</style>

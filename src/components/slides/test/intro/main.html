@@ -14,7 +14,12 @@
 
 <ion-content>
 
-  <ion-slides pager [options]="mySlideOptions" (ionDidChange)="onSlideChanged($event)" (ionWillChange)="onSlideChangeStart($event)" (ionDrag)="onSlideMove($event)">
+  <ion-slides pager
+              effect="flip"
+              (ionSlideDidChange)="onSlideChanged($event)"
+              (ionSlideWillChange)="onSlideChangeStart($event)"
+              (ionSlideDrag)="onSlideMove($event)">
+
     <ion-slide>
       <h3>Thank you for choosing the Awesome App!</h3>
       <div id="logo">
@@ -24,6 +29,7 @@
         The number one app for everything awesome.
       </p>
     </ion-slide>
+
     <ion-slide>
       <h3>Using Awesome</h3>
 
@@ -37,9 +43,11 @@
        </div>
        <button ion-button (click)="toggleLastSlide()">Toggle Last Slide</button>
     </ion-slide>
+
     <ion-slide *ngIf="showSlide">
       <h3>Any questions?</h3>
     </ion-slide>
+
   </ion-slides>
 
 </ion-content>

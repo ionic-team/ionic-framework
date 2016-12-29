@@ -2,131 +2,6 @@ import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
 
 
-export interface SlideParams {
-  a11y?: boolean;
-  allowSwipeToNext?: boolean;
-  allowSwipeToPrev?: boolean;
-  autoHeight?: boolean;
-  autoplay?: boolean;
-  autoplayStopOnLast?: boolean;
-  autoplayDisableOnInteraction?: boolean;
-  breakpoints?: any;
-  bulletClass?: string;
-  bulletActiveClass?: string;
-  buttonDisabledClass?: string;
-  centeredSlides?: boolean;
-  containerModifierClass?: string;
-  direction?: string;
-  effect?: string;
-  freeModeMomentum?: boolean;
-  freeModeMinimumVelocity?: number;
-  freeModeMomentumVelocityRatio?: number;
-  freeModeMomentumRatio?: number;
-  freeModeMomentumBounceRatio?: number;
-  freeModeMomentumBounce?: number;
-  freeModeSticky?: boolean;
-  firstSlideMessage?: string;
-  followFinger?: boolean;
-  freeMode?: boolean;
-  height?: number;
-  initialSlide?: number;
-  iOSEdgeSwipeDetection?: boolean;
-  iOSEdgeSwipeThreshold?: number;
-  keyboardControl?: boolean;
-  lastSlideMessage?: string;
-  loop?: boolean;
-  loopedSlides?: number;
-  loopAdditionalSlides?: number;
-  longSwipes?: boolean;
-  longSwipesMs?: number;
-  longSwipesRatio?: number;
-  nested?: boolean;
-  nextButton?: string;
-  nextSlideMessage?: string;
-  normalizeSlideIndex?: boolean;
-  noSwiping?: boolean;
-  noSwipingClass?: string;
-  notificationClass?: string;
-  onlyExternal?: boolean;
-  pagination?: string;
-  paginationBulletMessage?: string;
-  paginationClickable?: boolean;
-  paginationCurrentClass?: string;
-  paginationElement?: string;
-  paginationModifierClass?: string;
-  paginationProgressbarClass?: string;
-  paginationTotalClass?: string;
-  paginationHiddenClass?: string;
-  paginationHide?: boolean;
-  paginationType?: string;
-  parallax?: boolean;
-  prevButton?: string;
-  preventClicks?: boolean;
-  preventClicksPropagation?: boolean;
-  prevSlideMessage?: string;
-  resistance?: number;
-  resistanceRatio?: number;
-  roundLengths?: boolean;
-  runCallbacksOnInit?: boolean;
-  setWrapperSize?: boolean;
-  shortSwipes?: boolean;
-  simulateTouch?: boolean;
-  slideVisibleClass?: string;
-  slideActiveClass?: string;
-  slideClass?: string;
-  slideNextClass?: string;
-  slidesOffsetAfter?: number;
-  slidesOffsetBefore?: number;
-  slideDuplicateClass?: string;
-  slideDuplicateActiveClass?: string;
-  slideDuplicateNextClass?: string;
-  slideDuplicatePrevClass?: string;
-  slidePrevClass?: string;
-  slidesPerColumn?: number;
-  slidesPerColumnFill?: string;
-  slidesPerGroup?: number;
-  slidesPerView?: any;
-  slideToClickedSlide?: boolean;
-  speed?: number;
-  spaceBetween?: any;
-  swipeHandler?: any;
-  threshold?: number;
-  touchAngle?: number;
-  touchEventsTarget?: string;
-  touchRatio?: number;
-  touchReleaseOnEdges?: boolean;
-  touchMoveStopPropagation?: boolean;
-  virtualTranslate?: boolean;
-  watchSlidesProgress?: boolean;
-  watchSlidesVisibility?: boolean;
-  width?: number;
-  wrapperClass?: string;
-
-  coverflow?: {
-    rotate: number;
-    stretch: number;
-    depth: number;
-    modifier: number;
-    slideShadows: boolean;
-  };
-
-  flip?: {
-    slideShadows: boolean;
-    limitRotation: boolean;
-  };
-
-  cube?: {
-    slideShadows: boolean;
-    shadow: boolean;
-    shadowOffset: number;
-    shadowScale: number;
-  };
-
-  fade?: {
-    crossFade: boolean;
-  };
-}
-
 export interface SlideElement extends HTMLElement {
   progress: number;
   swiperSlideSize: number;
@@ -166,4 +41,50 @@ export interface SlideTouchEvents {
   start: string;
   move: string;
   end: string;
+}
+
+export interface SlideZoom {
+  scale: number;
+  currentScale: number;
+  isScaling: boolean;
+  gesture: {
+    slide: SlideElement;
+    slideWidth: number;
+    slideHeight: number;
+    image: HTMLElement;
+    imageWrap: HTMLElement;
+    zoomMax: number;
+    scaleStart?: number;
+    scaleMove?: number;
+  };
+  image: {
+    isTouched: boolean;
+    isMoved: boolean;
+    currentX: number;
+    currentY: number;
+    minX: number;
+    minY: number;
+    maxX: number;
+    maxY: number;
+    width: number;
+    height: number;
+    startX: number;
+    startY: number;
+    touchesStart: {
+      x?: number;
+      y?: number;
+    },
+    touchesCurrent: {
+      x?: number;
+      y?: number;
+    }
+  };
+  velocity: {
+    x: number;
+    y: number;
+    prevPositionX: number;
+    prevPositionY: number;
+    prevTime: number
+  };
+  unRegs: Function[];
 }

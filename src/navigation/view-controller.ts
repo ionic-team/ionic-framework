@@ -79,6 +79,16 @@ export class ViewController {
    */
   willUnload: EventEmitter<any> = new EventEmitter();
 
+  /**
+   * @private
+   */
+  readReady: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * @private
+   */
+  writeReady: EventEmitter<any> = new EventEmitter<any>();
+
   /** @private */
   data: any;
 

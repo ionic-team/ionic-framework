@@ -14,28 +14,12 @@ export class PageTransition extends Transition {
       this.add(this.enteringPage.beforeAddClass('show-page'));
 
       // Resize content before transition starts
-      this.beforeAddRead(this.readDimensions.bind(this));
-      this.beforeAddWrite(this.writeDimensions.bind(this));
-    }
-  }
-
-  /**
-   * DOM READ
-   */
-  readDimensions() {
-    const content = this.enteringView.getIONContent();
-    if (content) {
-      content.readDimensions();
-    }
-  }
-
-  /**
-   * DOM WRITE
-   */
-  writeDimensions() {
-    const content = this.enteringView.getIONContent();
-    if (content) {
-      content.writeDimensions();
+      this.beforeAddRead(() => {
+        this.enteringView.readReady.emit();
+      });
+      this.beforeAddWrite(() => {
+        this.enteringView.writeReady.emit();
+      });
     }
   }
 

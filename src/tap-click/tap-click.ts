@@ -82,17 +82,13 @@ export class TapClick {
   }
 
   pointerMove(ev: UIEvent) {
-    assert(this.startCoord, 'startCoord must be valid');
-    assert(this.dispatchClick === true, 'disableClick must be true');
-
-    if (this.shouldCancelEvent(ev)) {
+    if (this.startCoord && this.shouldCancelEvent(ev)) {
       this.pointerCancel(ev);
     }
   }
 
   pointerEnd(ev: any, type: PointerEventType) {
-    assert(this.startCoord, 'startCoord must be valid');
-    assert(this.dispatchClick === true, 'disableClick must be true');
+    if (!this.dispatchClick) return;
 
     runInDev(() => this.lastTouchEnd = Date.now());
 

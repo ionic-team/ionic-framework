@@ -3,40 +3,39 @@ import { updateClasses } from './swiper-classes';
 
 
 export function updateActiveIndex(s: Slides) {
-  var translate = s.rtl ? s.translate : -s.translate;
+  var translate = s._rtl ? s._translate : -s._translate;
   var newActiveIndex, i, snapIndex;
-  for (i = 0; i < s.slidesGrid.length; i ++) {
-    if (typeof s.slidesGrid[i + 1] !== 'undefined') {
-      if (translate >= s.slidesGrid[i] && translate < s.slidesGrid[i + 1] - (s.slidesGrid[i + 1] - s.slidesGrid[i]) / 2) {
+  for (i = 0; i < s._slidesGrid.length; i ++) {
+    if (typeof s._slidesGrid[i + 1] !== 'undefined') {
+      if (translate >= s._slidesGrid[i] && translate < s._slidesGrid[i + 1] - (s._slidesGrid[i + 1] - s._slidesGrid[i]) / 2) {
         newActiveIndex = i;
-      } else if (translate >= s.slidesGrid[i] && translate < s.slidesGrid[i + 1]) {
+      } else if (translate >= s._slidesGrid[i] && translate < s._slidesGrid[i + 1]) {
         newActiveIndex = i + 1;
       }
     } else {
-      if (translate >= s.slidesGrid[i]) {
+      if (translate >= s._slidesGrid[i]) {
         newActiveIndex = i;
       }
     }
   }
-  // Normalize slideIndex
-  if (s.params.normalizeSlideIndex) {
-    if (newActiveIndex < 0 || typeof newActiveIndex === 'undefined') newActiveIndex = 0;
-  }
 
-  snapIndex = Math.floor(newActiveIndex / s.params.slidesPerGroup);
-  if (snapIndex >= s.snapGrid.length) snapIndex = s.snapGrid.length - 1;
+  snapIndex = Math.floor(newActiveIndex / s.slidesPerGroup);
+  if (snapIndex >= s._snapGrid.length) snapIndex = s._snapGrid.length - 1;
 
-  if (newActiveIndex === s.activeIndex) {
+  if (newActiveIndex === s._activeIndex) {
     return;
   }
-  s.snapIndex = snapIndex;
-  s.previousIndex = s.activeIndex;
-  s.activeIndex = newActiveIndex;
+  s._snapIndex = snapIndex;
+  s._previousIndex = s._activeIndex;
+  s._activeIndex = newActiveIndex;
 
   updateClasses(s);
   updateRealIndex(s);
 }
 
 export function updateRealIndex(s: Slides) {
-  s.realIndex = parseInt(<any>s.slides[s.activeIndex].getAttribute('data-swiper-slide-index') || s.activeIndex, 10);
+  var activeSlide = <any>s._slides[s._activeIndex];
+  if (activeSlide) {
+    s.realIndex = parseInt(activeSlide.getAttribute('data-swiper-slide-index') || s._activeIndex, 10);
+  }
 }

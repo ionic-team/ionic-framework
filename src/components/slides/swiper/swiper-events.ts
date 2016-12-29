@@ -2,10 +2,11 @@ import { Slides } from '../slides';
 import { SlideUIEvent, SlideElement } from './swiper-interfaces';
 import { maxTranslate, minTranslate, isFormElement, isHorizontal, getElementIndex, triggerTransitionEnd } from './swiper-utils';
 import { getWrapperTranslate, setWrapperTranslate, setWrapperTransition } from './swiper-transition';
-import { currentSlidesPerView, fixLoop, slideNext, slidePrev, slideTo, slideReset, setBreakpoint, stopAutoplay, pauseAutoplay, updateAutoHeight, updateContainerSize, updatePagination, updateSlidesSize, onTransitionStart, onTransitionEnd } from './swiper';
+import { currentSlidesPerView, fixLoop, slideNext, slidePrev, slideTo, slideReset, stopAutoplay, pauseAutoplay, updateAutoHeight, updateContainerSize, updateSlidesSize, onTransitionStart, onTransitionEnd } from './swiper';
 import { updateProgress } from './swiper-progress';
 import { updateActiveIndex } from './swiper-index';
-import { updateClasses } from './swiper-classes';
+import { updatePagination } from './swiper-pagination';
+import { updateClasses, CLS } from './swiper-classes';
 import { Platform } from '../../../platform/platform';
 
 
@@ -15,30 +16,57 @@ import { Platform } from '../../../platform/platform';
 
 // Attach/detach events
 export function initEvents(s: Slides, plt: Platform): Function {
+  const win: any = plt.win();
+  const doc: any = plt.doc();
+
+  s._supportTouch = (() => {
+    return !!(('ontouchstart' in win) || win.DocumentTouch && doc instanceof win.DocumentTouch);
+  })();
+
+  // Define Touch Events
+  s._touchEventsDesktop = {start: 'mousedown', move: 'mousemove', end: 'mouseup'};
+
+  if (win.navigator.pointerEnabled) {
+    s._touchEventsDesktop = {start: 'pointerdown', move: 'pointermove', end: 'pointerup'};
+  } else if (win.navigator.msPointerEnabled) {
+    s._touchEventsDesktop = {start: 'MSPointerDown', move: 'MSPointerMove', end: 'MSPointerUp'};
+  }
+
+  s._touchEvents = {
+    start : s._supportTouch || !s.simulateTouch  ? 'touchstart' : s._touchEventsDesktop.start,
+    move : s._supportTouch || !s.simulateTouch ? 'touchmove' : s._touchEventsDesktop.move,
+    end : s._supportTouch || !s.simulateTouch ? 'touchend' : s._touchEventsDesktop.end
+  };
+
+
+  // WP8 Touch Events Fix
+  if (win.navigator.pointerEnabled || win.navigator.msPointerEnabled) {
+    (s.touchEventsTarget === 'container' ? s.container : s._wrapper).classList.add('swiper-wp8-' + s.direction);
+  }
+
   let unregs: Function[] = [];
 
-  const touchEventsTarget = s.params.touchEventsTarget === 'container' ? s.container : s.wrapper;
-  const moveCapture = s.params.nested ? true : false;
+  const touchEventsTarget = s.touchEventsTarget === 'container' ? s.container : s._wrapper;
 
   // Touch Events
-  if (s.supportTouch) {
+  if (s._supportTouch) {
     // touchstart
-    plt.addListener(touchEventsTarget, s.touchEvents.start, (ev: SlideUIEvent) => {
+    plt.addListener(touchEventsTarget, s._touchEvents.start, (ev: SlideUIEvent) => {
       onTouchStart(s, plt, ev);
     }, { passive: true, zone: false }, unregs);
 
     // touchmove
-    plt.addListener(touchEventsTarget, s.touchEvents.move, (ev: SlideUIEvent) => {
+    plt.addListener(touchEventsTarget, s._touchEvents.move, (ev: SlideUIEvent) => {
       onTouchMove(s, plt, ev);
-    }, { passive: true, zone: false, capture: moveCapture }, unregs);
+    }, { passive: true, zone: false }, unregs);
 
     // touchend
-    plt.addListener(touchEventsTarget, s.touchEvents.end, (ev: SlideUIEvent) => {
+    plt.addListener(touchEventsTarget, s._touchEvents.end, (ev: SlideUIEvent) => {
       onTouchEnd(s, plt, ev);
     }, { passive: true, zone: false }, unregs);
   }
 
-  if ((s.params.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.params.simulateTouch && !s.supportTouch && plt.is('ios'))) {
+  if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouch && !s._supportTouch && plt.is('ios'))) {
     // mousedown
     plt.addListener(touchEventsTarget, 'mousedown', (ev: SlideUIEvent) => {
       onTouchStart(s, plt, ev);
@@ -46,12 +74,12 @@ export function initEvents(s: Slides, plt: Platform): Function {
 
     // mousemove
     plt.addListener(plt.doc(), 'mousemove', (ev: SlideUIEvent) => {
-      onTouchStart(s, plt, ev);
-    }, { zone: false, capture: moveCapture }, unregs);
+      onTouchMove(s, plt, ev);
+    }, { zone: false }, unregs);
 
     // mouseup
     plt.addListener(plt.doc(), 'mouseup', (ev: SlideUIEvent) => {
-      onTouchStart(s, plt, ev);
+      onTouchEnd(s, plt, ev);
     }, { zone: false }, unregs);
   }
 
@@ -61,34 +89,32 @@ export function initEvents(s: Slides, plt: Platform): Function {
   }));
 
   // Next, Prev, Index
-  if (s.params.nextButton && s.nextButton) {
+  if (s.nextButton) {
     plt.addListener(s.nextButton, 'click', (ev) => {
       onClickNext(s, plt, ev);
     }, { zone: false }, unregs);
   }
 
-  if (s.params.prevButton && s.prevButton) {
+  if (s.prevButton) {
     plt.addListener(s.prevButton, 'click', (ev) => {
       onClickPrev(s, plt, ev);
     }, { zone: false }, unregs);
   }
 
-  // if (s.params.pagination && s.params.paginationClickable) {
-  //   plt.addListener(s.prevButton, 'click', (ev) => {
-  //     onClickIndex(s, plt, ev);
-  //   }, { zone: false }, unregs);
-
-  //   s.paginationContainer[actionDom]('click', '.' + s.params.bulletClass, s.onClickIndex);
-  //   if (s.params.a11y) s.paginationContainer[actionDom]('keydown', '.' + s.params.bulletClass, s.a11y.onEnterKey);
-  // }
+  if (s.paginationType) {
+    plt.addListener(s._paginationContainer, 'click', (ev) => {
+      onClickIndex(s, plt, ev);
+    }, { zone: false }, unregs);
+  }
 
   // Prevent Links Clicks
-  if (s.params.preventClicks || s.params.preventClicksPropagation) {
+  if (s.preventClicks || s.preventClicksPropagation) {
     plt.addListener(touchEventsTarget, 'click', (ev) => {
       preventClicks(s, ev);
     }, { zone: false, capture: true }, unregs);
   }
 
+  // return a function that removes all of the added listeners
   return function() {
     unregs.forEach(unreg => {
       unreg();
@@ -103,11 +129,11 @@ export function initEvents(s: Slides, plt: Platform): Function {
 // Prevent Clicks
 
 function preventClicks(s: Slides, e: UIEvent) {
-  if (!s.allowClick) {
-    if (s.params.preventClicks) {
+  if (!s._allowClick) {
+    if (s.preventClicks) {
       e.preventDefault();
     }
-    if (s.params.preventClicksPropagation && s.animating) {
+    if (s.preventClicksPropagation && s._animating) {
       e.stopPropagation();
       e.stopImmediatePropagation();
     }
@@ -118,7 +144,7 @@ function preventClicks(s: Slides, e: UIEvent) {
 // Clicks
 function onClickNext(s: Slides, plt: Platform, e: UIEvent) {
   e.preventDefault();
-  if (s.isEnd && !s.params.loop) {
+  if (s._isEnd && !s.loop) {
     return;
   }
   slideNext(s, plt);
@@ -126,19 +152,23 @@ function onClickNext(s: Slides, plt: Platform, e: UIEvent) {
 
 function onClickPrev(s: Slides, plt: Platform, e: UIEvent) {
   e.preventDefault();
-  if (s.isBeginning && !s.params.loop) {
+  if (s._isBeginning && !s.loop) {
     return;
   }
   slidePrev(s, plt);
 }
 
-// function onClickIndex(s: Slides, plt: Platform, index: number, e: UIEvent) {
-//   e.preventDefault();
-//   if (s.params.loop) {
-//     index = index + s.loopedSlides;
-//   }
-//   slideTo(s, plt, index);
-// }
+function onClickIndex(s: Slides, plt: Platform, e: UIEvent) {
+  var indexStr = (<HTMLElement>e.target).getAttribute('data-slide-index');
+  if (indexStr) {
+    var index = parseInt(indexStr, 10);
+    e.preventDefault();
+    if (s.loop) {
+      index = index + s.loopedSlides;
+    }
+    slideTo(s, plt, index);
+  }
+}
 
 
 /*=========================
@@ -166,12 +196,12 @@ function findElementInEvent(e: SlideUIEvent, selector: any) {
 
 
 function updateClickedSlide(s: Slides, plt: Platform, e: SlideUIEvent) {
-  var slide: SlideElement = <any>findElementInEvent(e, '.' + s.params.slideClass);
+  var slide: SlideElement = <any>findElementInEvent(e, '.' + CLS.slide);
   var slideIndex = -1;
 
   if (slide) {
-    for (var i = 0; i < s.slides.length; i++) {
-      if (s.slides[i] === slide) {
+    for (var i = 0; i < s._slides.length; i++) {
+      if (s._slides[i] === slide) {
         slideIndex = i;
         break;
       }
@@ -188,21 +218,21 @@ function updateClickedSlide(s: Slides, plt: Platform, e: SlideUIEvent) {
     return;
   }
 
-  if (s.params.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s.activeIndex) {
+  if (s.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s._activeIndex) {
     var slideToIndex = s.clickedIndex;
     var realIndex;
-    var slidesPerView = s.params.slidesPerView === 'auto' ? currentSlidesPerView(s) : s.params.slidesPerView;
+    var slidesPerView = s.slidesPerView === 'auto' ? currentSlidesPerView(s) : <number>s.slidesPerView;
 
-    if (s.params.loop) {
-      if (s.animating) return;
+    if (s.loop) {
+      if (s._animating) return;
 
       realIndex = parseInt(s.clickedSlide.getAttribute('data-swiper-slide-index'), 10);
 
-      if (s.params.centeredSlides) {
-        if ((slideToIndex < s.loopedSlides - slidesPerView / 2) || (slideToIndex > s.slides.length - s.loopedSlides + slidesPerView / 2)) {
+      if (s.centeredSlides) {
+        if ((slideToIndex < s.loopedSlides - slidesPerView / 2) || (slideToIndex > s._slides.length - s.loopedSlides + slidesPerView / 2)) {
           fixLoop(s, plt);
 
-          slideToIndex = getElementIndex(s.wrapper.querySelector('.' + s.params.slideClass + '[data-swiper-slide-index="' + realIndex + '"]:not(.' + s.params.slideDuplicateClass + ')'));
+          slideToIndex = getElementIndex(s._wrapper.querySelector('.' + CLS.slide + '[data-swiper-slide-index="' + realIndex + '"]:not(.' + CLS.slideDuplicate + ')'));
 
           plt.timeout(() => {
             slideTo(s, plt, slideToIndex);
@@ -213,10 +243,10 @@ function updateClickedSlide(s: Slides, plt: Platform, e: SlideUIEvent) {
         }
 
       } else {
-        if (slideToIndex > s.slides.length - slidesPerView) {
+        if (slideToIndex > s._slides.length - slidesPerView) {
           fixLoop(s, plt);
 
-          slideToIndex = getElementIndex(s.wrapper.querySelector('.' + s.params.slideClass + '[data-swiper-slide-index="' + realIndex + '"]:not(.' + s.params.slideDuplicateClass + ')'));
+          slideToIndex = getElementIndex(s._wrapper.querySelector('.' + CLS.slide + '[data-swiper-slide-index="' + realIndex + '"]:not(.' + CLS.slideDuplicate + ')'));
 
           plt.timeout(() => {
             slideTo(s, plt, slideToIndex);
@@ -251,92 +281,112 @@ var isTouched,
 // Touch handlers
 var isTouchEvent, startMoving;
 
-function onTouchStart(s: Slides, plt: Platform, e: SlideUIEvent) {
-  if (e.originalEvent) e = e.originalEvent;
-  isTouchEvent = e.type === 'touchstart';
+function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
+  console.debug(`ion-slide, onTouchStart: ${ev.type}`);
 
-  if (!isTouchEvent && 'which' in e && e.which === 3) return;
-  if (s.params.noSwiping && findElementInEvent(e, '.' + s.params.noSwipingClass)) {
-    s.allowClick = true;
+  if (ev.originalEvent) {
+    ev = ev.originalEvent;
+  }
+  s.originalEvent = ev;
+
+  isTouchEvent = ev.type === 'touchstart';
+
+  if (!isTouchEvent && 'which' in ev && ev.which === 3) {
     return;
   }
-  if (s.params.swipeHandler) {
-    if (!findElementInEvent(e, s.params.swipeHandler)) return;
+
+  if (s.noSwiping && findElementInEvent(ev, '.' + CLS.noSwiping)) {
+    s._allowClick = true;
+    return;
   }
 
-  var startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-  var startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+  if (s.swipeHandler) {
+    if (!findElementInEvent(ev, s.swipeHandler)) return;
+  }
+
+  var startX = s._touches.currentX = ev.type === 'touchstart' ? ev.targetTouches[0].pageX : ev.pageX;
+  var startY = s._touches.currentY = ev.type === 'touchstart' ? ev.targetTouches[0].pageY : ev.pageY;
 
   // Do NOT start if iOS edge swipe is detected. Otherwise iOS app (UIWebView) cannot swipe-to-go-back anymore
-  if (plt.is('ios') && s.params.iOSEdgeSwipeDetection && startX <= s.params.iOSEdgeSwipeThreshold) {
+  if (plt.is('ios') && s.iOSEdgeSwipeDetection && startX <= s.iOSEdgeSwipeThreshold) {
     return;
   }
 
   isTouched = true;
   isMoved = false;
   allowTouchCallbacks = true;
+
   isScrolling = undefined;
   startMoving = undefined;
-  s.touches.startX = startX;
-  s.touches.startY = startY;
+
+  s._touches.startX = startX;
+  s._touches.startY = startY;
+
   touchStartTime = Date.now();
-  s.allowClick = true;
-  updateContainerSize(s);
+  s._allowClick = true;
+
+  updateContainerSize(s, plt);
   s.swipeDirection = undefined;
 
-  if (s.params.threshold > 0) {
+  if (s.threshold > 0) {
     allowThresholdMove = false;
   }
 
-  if (e.type !== 'touchstart') {
+  if (ev.type !== 'touchstart') {
     var preventDefault = true;
-    if (isFormElement(e.target)) {
+    if (isFormElement(ev.target)) {
       preventDefault = false;
     }
 
     plt.focusOutActiveElement();
 
     if (preventDefault) {
-      e.preventDefault();
+      ev.preventDefault();
     }
   }
 
-  s.ionTouchStart.emit(e);
+  s.ionSlideTouchStart.emit(ev);
 }
 
 
-function onTouchMove(s: Slides, plt: Platform, e: SlideUIEvent) {
-  if (e.originalEvent) e = e.originalEvent;
-  if (isTouchEvent && e.type === 'mousemove') return;
-  if (e.preventedByNestedSwiper) {
-    s.touches.startX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-    s.touches.startY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
+  console.debug(`ion-slide, onTouchMove: ${ev.type}`);
+
+  if (ev.originalEvent) {
+    ev = ev.originalEvent;
+  }
+  s.originalEvent = ev;
+
+  if (isTouchEvent && ev.type === 'mousemove') return;
+  if (ev.preventedByNestedSwiper) {
+    s._touches.startX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
+    s._touches.startY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
     return;
   }
-  if (s.params.onlyExternal) {
+  if (s.onlyExternal) {
     // isMoved = true;
-    s.allowClick = false;
+    s._allowClick = false;
     if (isTouched) {
-      s.touches.startX = s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-      s.touches.startY = s.touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      s._touches.startX = s._touches.currentX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
+      s._touches.startY = s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
       touchStartTime = Date.now();
     }
     return;
   }
 
-  if (isTouchEvent && s.params.touchReleaseOnEdges && !s.params.loop) {
+  if (isTouchEvent && s.touchReleaseOnEdges && !s.loop) {
     if (!isHorizontal(s)) {
       // Vertical
       if (
-        (s.touches.currentY < s.touches.startY && s.translate <= maxTranslate(s)) ||
-        (s.touches.currentY > s.touches.startY && s.translate >= minTranslate(s))
+        (s._touches.currentY < s._touches.startY && s._translate <= maxTranslate(s)) ||
+        (s._touches.currentY > s._touches.startY && s._translate >= minTranslate(s))
         ) {
         return;
       }
     } else {
       if (
-        (s.touches.currentX < s.touches.startX && s.translate <= maxTranslate(s)) ||
-        (s.touches.currentX > s.touches.startX && s.translate >= minTranslate(s))
+        (s._touches.currentX < s._touches.startX && s._translate <= maxTranslate(s)) ||
+        (s._touches.currentX > s._touches.startX && s._translate >= minTranslate(s))
         ) {
         return;
       }
@@ -345,34 +395,26 @@ function onTouchMove(s: Slides, plt: Platform, e: SlideUIEvent) {
 
   const activeEle = plt.getActiveElement();
   if (isTouchEvent && activeEle) {
-    if (e.target === activeEle && isFormElement(e.target)) {
+    if (ev.target === activeEle && isFormElement(ev.target)) {
       isMoved = true;
-      s.allowClick = false;
+      s._allowClick = false;
       return;
     }
   }
 
-  if (allowTouchCallbacks) {
-    s.ionTouchMove.emit(e);
-  }
+  if (ev.targetTouches && ev.targetTouches.length > 1) return;
 
-  if (e.targetTouches && e.targetTouches.length > 1) return;
-
-  s.touches.currentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-  s.touches.currentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+  s._touches.currentX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
+  s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
 
   if (typeof isScrolling === 'undefined') {
     var touchAngle;
-    if (isHorizontal(s) && s.touches.currentY === s.touches.startY || !isHorizontal(s) && s.touches.currentX === s.touches.startX) {
+    if (isHorizontal(s) && s._touches.currentY === s._touches.startY || !isHorizontal(s) && s._touches.currentX === s._touches.startX) {
       isScrolling = false;
     } else {
-      touchAngle = Math.atan2(Math.abs(s.touches.currentY - s.touches.startY), Math.abs(s.touches.currentX - s.touches.startX)) * 180 / Math.PI;
-      isScrolling = isHorizontal(s) ? touchAngle > s.params.touchAngle : (90 - touchAngle > s.params.touchAngle);
+      touchAngle = Math.atan2(Math.abs(s._touches.currentY - s._touches.startY), Math.abs(s._touches.currentX - s._touches.startX)) * 180 / Math.PI;
+      isScrolling = isHorizontal(s) ? touchAngle > s.touchAngle : (90 - touchAngle > s.touchAngle);
     }
-  }
-
-  if (isScrolling) {
-    s.ionTouchMoveOpposite.emit(e);
   }
 
   if (!isTouched) return;
@@ -381,28 +423,29 @@ function onTouchMove(s: Slides, plt: Platform, e: SlideUIEvent) {
     return;
   }
 
-  s.allowClick = false;
-  s.ionSliderMove.emit(e);
-  e.preventDefault();
+  s._allowClick = false;
+  s.ionSlideDrag.emit(s);
 
-  if (s.params.touchMoveStopPropagation && !s.params.nested) {
-    e.stopPropagation();
+  ev.preventDefault();
+
+  if (s.touchMoveStopPropagation) {
+    ev.stopPropagation();
   }
 
   if (!isMoved) {
-    if (s.params.loop) {
+    if (s.loop) {
       fixLoop(s, plt);
     }
 
     startTranslate = getWrapperTranslate(s, plt);
     setWrapperTransition(s, plt, 0);
 
-    if (s.animating) {
-      triggerTransitionEnd(plt, s.wrapper);
+    if (s._animating) {
+      triggerTransitionEnd(plt, s._wrapper);
     }
 
-    if (s.params.autoplay && s.autoplaying) {
-      if (s.params.autoplayDisableOnInteraction) {
+    if (s.autoplay && s._autoplaying) {
+      if (s.autoplayDisableOnInteraction) {
         stopAutoplay(s);
       } else {
         pauseAutoplay(s, plt);
@@ -412,10 +455,10 @@ function onTouchMove(s: Slides, plt: Platform, e: SlideUIEvent) {
   }
   isMoved = true;
 
-  var diff = s.touches.diff = isHorizontal(s) ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
+  var diff = s._touches.diff = isHorizontal(s) ? s._touches.currentX - s._touches.startX : s._touches.currentY - s._touches.startY;
 
-  diff = diff * s.params.touchRatio;
-  if (s.rtl) diff = -diff;
+  diff = diff * s.touchRatio;
+  if (s._rtl) diff = -diff;
 
   s.swipeDirection = diff > 0 ? 'prev' : 'next';
   currentTranslate = diff + startTranslate;
@@ -423,76 +466,83 @@ function onTouchMove(s: Slides, plt: Platform, e: SlideUIEvent) {
   var disableParentSwiper = true;
   if ((diff > 0 && currentTranslate > minTranslate(s))) {
     disableParentSwiper = false;
-    if (s.params.resistance) {
-      currentTranslate = minTranslate(s) - 1 + Math.pow(-minTranslate(s) + startTranslate + diff, s.params.resistanceRatio);
+    if (s.resistance) {
+      currentTranslate = minTranslate(s) - 1 + Math.pow(-minTranslate(s) + startTranslate + diff, s.resistanceRatio);
     }
 
   } else if (diff < 0 && currentTranslate < maxTranslate(s)) {
     disableParentSwiper = false;
-    if (s.params.resistance) currentTranslate = maxTranslate(s) + 1 - Math.pow(maxTranslate(s) - startTranslate - diff, s.params.resistanceRatio);
+    if (s.resistance) currentTranslate = maxTranslate(s) + 1 - Math.pow(maxTranslate(s) - startTranslate - diff, s.resistanceRatio);
   }
 
   if (disableParentSwiper) {
-    e.preventedByNestedSwiper = true;
+    ev.preventedByNestedSwiper = true;
   }
 
   // Directions locks
-  if (!s.params.allowSwipeToNext && s.swipeDirection === 'next' && currentTranslate < startTranslate) {
-    currentTranslate = startTranslate;
-  }
-  if (!s.params.allowSwipeToPrev && s.swipeDirection === 'prev' && currentTranslate > startTranslate) {
+  if (!s._allowSwipeToNext && s.swipeDirection === 'next' && currentTranslate < startTranslate) {
     currentTranslate = startTranslate;
   }
 
+  if (!s._allowSwipeToPrev && s.swipeDirection === 'prev' && currentTranslate > startTranslate) {
+    currentTranslate = startTranslate;
+  }
 
   // Threshold
-  if (s.params.threshold > 0) {
-    if (Math.abs(diff) > s.params.threshold || allowThresholdMove) {
+  if (s.threshold > 0) {
+    if (Math.abs(diff) > s.threshold || allowThresholdMove) {
       if (!allowThresholdMove) {
         allowThresholdMove = true;
-        s.touches.startX = s.touches.currentX;
-        s.touches.startY = s.touches.currentY;
+        s._touches.startX = s._touches.currentX;
+        s._touches.startY = s._touches.currentY;
         currentTranslate = startTranslate;
-        s.touches.diff = isHorizontal(s) ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
+        s._touches.diff = isHorizontal(s) ? s._touches.currentX - s._touches.startX : s._touches.currentY - s._touches.startY;
         return;
       }
+
     } else {
       currentTranslate = startTranslate;
       return;
     }
   }
 
-  if (!s.params.followFinger) return;
+  if (!s.followFinger) return;
 
   // Update active index in free mode
-  if (s.params.freeMode || s.params.watchSlidesProgress) {
+  if (s.freeMode || s.watchSlidesProgress) {
     updateActiveIndex(s);
   }
-  if (s.params.freeMode) {
+  if (s.freeMode) {
     // Velocity
     if (velocities.length === 0) {
       velocities.push({
-        position: s.touches[isHorizontal(s) ? 'startX' : 'startY'],
+        position: s._touches[isHorizontal(s) ? 'startX' : 'startY'],
         time: touchStartTime
       });
     }
     velocities.push({
-      position: s.touches[isHorizontal(s) ? 'currentX' : 'currentY'],
+      position: s._touches[isHorizontal(s) ? 'currentX' : 'currentY'],
       time: (new Date()).getTime()
     });
   }
   // Update progress
-  updateProgress(currentTranslate);
+  updateProgress(s, currentTranslate);
 
   // Update translate
   setWrapperTranslate(s, plt, currentTranslate);
 }
 
 
-function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
-  if (e.originalEvent) e = e.originalEvent;
+function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
+  console.debug(`ion-slide, onTouchEnd: ${ev.type}`);
+
+  if (ev.originalEvent) {
+    ev = ev.originalEvent;
+  }
+  s.originalEvent = ev;
+
   if (allowTouchCallbacks) {
-    s.ionTouchEnd.emit(e);
+    s.ionSlideTouchEnd.emit(ev);
   }
 
   allowTouchCallbacks = false;
@@ -503,9 +553,9 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
   var timeDiff = touchEndTime - touchStartTime;
 
   // Tap, doubleTap, Click
-  if (s.allowClick) {
-    updateClickedSlide(s, plt, e);
-    s.ionTap.emit(e);
+  if (s._allowClick) {
+    updateClickedSlide(s, plt, ev);
+    s.ionSlideTap.emit(s);
 
     if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
       if (clickTimeout) {
@@ -514,53 +564,53 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
 
       clickTimeout = plt.timeout(() => {
         if (!s) return;
-        if (s.params.paginationHide && s.paginationContainer && !(<HTMLElement>e.target).classList.contains(s.params.bulletClass)) {
-          s.paginationContainer.classList.toggle(s.params.paginationHiddenClass);
+        if (s.paginationHide && s._paginationContainer && !(<HTMLElement>ev.target).classList.contains(CLS.bullet)) {
+          s._paginationContainer.classList.toggle(CLS.paginationHidden);
         }
-        s.ionClick.emit(e);
       }, 300);
-
     }
+
     if (timeDiff < 300 && (touchEndTime - lastClickTime) < 300) {
       if (clickTimeout) clearTimeout(clickTimeout);
-      s.ionDoubleTap.emit(e);
+      s.ionSlideDoubleTap.emit(s);
     }
   }
 
   lastClickTime = Date.now();
   plt.timeout(() => {
     if (s) {
-      s.allowClick = true;
+      s._allowClick = true;
     }
   });
 
-  if (!isTouched || !isMoved || !s.swipeDirection || s.touches.diff === 0 || currentTranslate === startTranslate) {
+  if (!isTouched || !isMoved || !s.swipeDirection || s._touches.diff === 0 || currentTranslate === startTranslate) {
     isTouched = isMoved = false;
     return;
   }
   isTouched = isMoved = false;
 
   var currentPos;
-  if (s.params.followFinger) {
-    currentPos = s.rtl ? s.translate : -s.translate;
+  if (s.followFinger) {
+    currentPos = s._rtl ? s._translate : -s._translate;
   } else {
     currentPos = -currentTranslate;
   }
-  if (s.params.freeMode) {
+
+  if (s.freeMode) {
     if (currentPos < -minTranslate(s)) {
-      slideTo(s, plt, s.activeIndex);
+      slideTo(s, plt, s._activeIndex);
       return;
 
     } else if (currentPos > -maxTranslate(s)) {
-      if (s.slides.length < s.snapGrid.length) {
-        slideTo(s, plt, s.snapGrid.length - 1);
+      if (s._slides.length < s._snapGrid.length) {
+        slideTo(s, plt, s._snapGrid.length - 1);
       } else {
-        slideTo(s, plt, s.slides.length - 1);
+        slideTo(s, plt, s._slides.length - 1);
       }
       return;
     }
 
-    if (s.params.freeModeMomentum) {
+    if (s.freeModeMomentum) {
       if (velocities.length > 1) {
         var lastMoveEvent = velocities.pop(), velocityEvent = velocities.pop();
 
@@ -568,7 +618,7 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
         var time = lastMoveEvent.time - velocityEvent.time;
         s.velocity = distance / time;
         s.velocity = s.velocity / 2;
-        if (Math.abs(s.velocity) < s.params.freeModeMinimumVelocity) {
+        if (Math.abs(s.velocity) < s.freeModeMinimumVelocity) {
           s.velocity = 0;
         }
         // this implies that the user stopped moving a finger then released.
@@ -579,20 +629,21 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
       } else {
         s.velocity = 0;
       }
-      s.velocity = s.velocity * s.params.freeModeMomentumVelocityRatio;
+
+      s.velocity = s.velocity * s.freeModeMomentumVelocityRatio;
 
       velocities.length = 0;
-      var momentumDuration = 1000 * s.params.freeModeMomentumRatio;
+      var momentumDuration = 1000 * s.freeModeMomentumRatio;
       var momentumDistance = s.velocity * momentumDuration;
 
-      var newPosition = s.translate + momentumDistance;
-      if (s.rtl) newPosition = - newPosition;
+      var newPosition = s._translate + momentumDistance;
+      if (s._rtl) newPosition = - newPosition;
       var doBounce = false;
       var afterBouncePosition;
-      var bounceAmount = Math.abs(s.velocity) * 20 * s.params.freeModeMomentumBounceRatio;
+      var bounceAmount = Math.abs(s.velocity) * 20 * s.freeModeMomentumBounceRatio;
 
       if (newPosition < maxTranslate(s)) {
-        if (s.params.freeModeMomentumBounce) {
+        if (s.freeModeMomentumBounce) {
           if (newPosition + maxTranslate(s) < -bounceAmount) {
             newPosition = maxTranslate(s) - bounceAmount;
           }
@@ -604,7 +655,7 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
         }
 
       } else if (newPosition > minTranslate(s)) {
-        if (s.params.freeModeMomentumBounce) {
+        if (s.freeModeMomentumBounce) {
           if (newPosition - minTranslate(s) > bounceAmount) {
             newPosition = minTranslate(s) + bounceAmount;
           }
@@ -615,52 +666,52 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
           newPosition = minTranslate(s);
         }
 
-      } else if (s.params.freeModeSticky) {
+      } else if (s.freeModeSticky) {
         var j = 0,
           nextSlide;
-        for (j = 0; j < s.snapGrid.length; j += 1) {
-          if (s.snapGrid[j] > -newPosition) {
+        for (j = 0; j < s._snapGrid.length; j += 1) {
+          if (s._snapGrid[j] > -newPosition) {
             nextSlide = j;
             break;
           }
 
         }
-        if (Math.abs(s.snapGrid[nextSlide] - newPosition) < Math.abs(s.snapGrid[nextSlide - 1] - newPosition) || s.swipeDirection === 'next') {
-          newPosition = s.snapGrid[nextSlide];
+        if (Math.abs(s._snapGrid[nextSlide] - newPosition) < Math.abs(s._snapGrid[nextSlide - 1] - newPosition) || s.swipeDirection === 'next') {
+          newPosition = s._snapGrid[nextSlide];
         } else {
-          newPosition = s.snapGrid[nextSlide - 1];
+          newPosition = s._snapGrid[nextSlide - 1];
         }
-        if (!s.rtl) newPosition = - newPosition;
+        if (!s._rtl) newPosition = - newPosition;
       }
 
       // Fix duration
       if (s.velocity !== 0) {
-        if (s.rtl) {
-          momentumDuration = Math.abs((-newPosition - s.translate) / s.velocity);
+        if (s._rtl) {
+          momentumDuration = Math.abs((-newPosition - s._translate) / s.velocity);
         } else {
-          momentumDuration = Math.abs((newPosition - s.translate) / s.velocity);
+          momentumDuration = Math.abs((newPosition - s._translate) / s.velocity);
         }
 
-      } else if (s.params.freeModeSticky) {
+      } else if (s.freeModeSticky) {
         slideReset(s, plt);
         return;
       }
 
-      if (s.params.freeModeMomentumBounce && doBounce) {
-        updateProgress(afterBouncePosition);
+      if (s.freeModeMomentumBounce && doBounce) {
+        updateProgress(s, afterBouncePosition);
         setWrapperTransition(s, plt, momentumDuration);
         setWrapperTranslate(s, plt, newPosition);
 
         onTransitionStart(s);
-        s.animating = true;
+        s._animating = true;
 
-        plt.transitionEnd(s.wrapper, () => {
+        plt.transitionEnd(s._wrapper, () => {
           if (!s || !allowMomentumBounce) return;
 
-          setWrapperTransition(s, plt, s.params.speed);
+          setWrapperTransition(s, plt, s.speed);
           setWrapperTranslate(s, plt, afterBouncePosition);
 
-          plt.transitionEnd(s.wrapper, () => {
+          plt.transitionEnd(s._wrapper, () => {
             if (!s) return;
             onTransitionEnd(s, plt);
           });
@@ -673,9 +724,9 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
 
         onTransitionStart(s);
 
-        if (!s.animating) {
-          s.animating = true;
-          plt.transitionEnd(s.wrapper, () => {
+        if (!s._animating) {
+          s._animating = true;
+          plt.transitionEnd(s._wrapper, (ev) => {
             if (!s) return;
             onTransitionEnd(s, plt);
           });
@@ -688,7 +739,7 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
       updateActiveIndex(s);
     }
 
-    if (!s.params.freeModeMomentum || timeDiff >= s.params.longSwipesMs) {
+    if (!s.freeModeMomentum || timeDiff >= s.longSwipesMs) {
       updateProgress(s);
       updateActiveIndex(s);
     }
@@ -696,42 +747,44 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
   }
 
   // Find current slide
-  var i, stopIndex = 0, groupSize = s.slidesSizesGrid[0];
-  for (i = 0; i < s.slidesGrid.length; i += s.params.slidesPerGroup) {
-    if (typeof s.slidesGrid[i + s.params.slidesPerGroup] !== 'undefined') {
-      if (currentPos >= s.slidesGrid[i] && currentPos < s.slidesGrid[i + s.params.slidesPerGroup]) {
+  var stopIndex = 0;
+  var groupSize = s._slidesSizesGrid[0];
+
+  for (var i = 0; i < s._slidesGrid.length; i += s.slidesPerGroup) {
+    if (typeof s._slidesGrid[i + s.slidesPerGroup] !== 'undefined') {
+      if (currentPos >= s._slidesGrid[i] && currentPos < s._slidesGrid[i + s.slidesPerGroup]) {
         stopIndex = i;
-        groupSize = s.slidesGrid[i + s.params.slidesPerGroup] - s.slidesGrid[i];
+        groupSize = s._slidesGrid[i + s.slidesPerGroup] - s._slidesGrid[i];
       }
     } else {
-      if (currentPos >= s.slidesGrid[i]) {
+      if (currentPos >= s._slidesGrid[i]) {
         stopIndex = i;
-        groupSize = s.slidesGrid[s.slidesGrid.length - 1] - s.slidesGrid[s.slidesGrid.length - 2];
+        groupSize = s._slidesGrid[s._slidesGrid.length - 1] - s._slidesGrid[s._slidesGrid.length - 2];
       }
     }
   }
 
   // Find current slide size
-  var ratio = (currentPos - s.slidesGrid[stopIndex]) / groupSize;
+  var ratio = (currentPos - s._slidesGrid[stopIndex]) / groupSize;
 
-  if (timeDiff > s.params.longSwipesMs) {
+  if (timeDiff > s.longSwipesMs) {
     // Long touches
-    if (!s.params.longSwipes) {
-      slideTo(s, plt, s.activeIndex);
+    if (!s.longSwipes) {
+      slideTo(s, plt, s._activeIndex);
       return;
     }
 
     if (s.swipeDirection === 'next') {
-      if (ratio >= s.params.longSwipesRatio) {
-        slideTo(s, plt, stopIndex + s.params.slidesPerGroup);
+      if (ratio >= s.longSwipesRatio) {
+        slideTo(s, plt, stopIndex + s.slidesPerGroup);
       } else {
         slideTo(s, plt, stopIndex);
       }
     }
 
     if (s.swipeDirection === 'prev') {
-      if (ratio > (1 - s.params.longSwipesRatio)) {
-        slideTo(s, plt, stopIndex + s.params.slidesPerGroup);
+      if (ratio > (1 - s.longSwipesRatio)) {
+        slideTo(s, plt, stopIndex + s.slidesPerGroup);
       } else {
         slideTo(s, plt, stopIndex);
       }
@@ -739,13 +792,13 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
 
   } else {
     // Short swipes
-    if (!s.params.shortSwipes) {
-      slideTo(s, plt, s.activeIndex);
+    if (!s.shortSwipes) {
+      slideTo(s, plt, s._activeIndex);
       return;
     }
 
     if (s.swipeDirection === 'next') {
-      slideTo(s, plt, stopIndex + s.params.slidesPerGroup);
+      slideTo(s, plt, stopIndex + s.slidesPerGroup);
     }
 
     if (s.swipeDirection === 'prev') {
@@ -759,45 +812,41 @@ function onTouchEnd(s: Slides, plt: Platform, e: SlideUIEvent) {
   Resize Handler
   ===========================*/
 function onResize(s: Slides, plt: Platform, forceUpdatePagination: boolean) {
-  // Breakpoints
-  if (s.params.breakpoints) {
-    setBreakpoint(s, plt);
-  }
-
   // Disable locks on resize
-  var allowSwipeToPrev = s.params.allowSwipeToPrev;
-  var allowSwipeToNext = s.params.allowSwipeToNext;
-  s.params.allowSwipeToPrev = s.params.allowSwipeToNext = true;
+  var allowSwipeToPrev = s._allowSwipeToPrev;
+  var allowSwipeToNext = s._allowSwipeToNext;
 
-  updateContainerSize(s);
-  updateSlidesSize(s);
+  s._allowSwipeToPrev = s._allowSwipeToNext = true;
 
-  if (s.params.slidesPerView === 'auto' || s.params.freeMode || forceUpdatePagination) {
+  updateContainerSize(s, plt);
+  updateSlidesSize(s, plt);
+
+  if (s.slidesPerView === 'auto' || s.freeMode || forceUpdatePagination) {
     updatePagination(s);
   }
 
   var slideChangedBySlideTo = false;
-  if (s.params.freeMode) {
-    var newTranslate = Math.min(Math.max(s.translate, maxTranslate(s)), minTranslate(s));
+  if (s.freeMode) {
+    var newTranslate = Math.min(Math.max(s._translate, maxTranslate(s)), minTranslate(s));
     setWrapperTranslate(s, plt, newTranslate);
     updateActiveIndex(s);
     updateClasses(s);
 
-    if (s.params.autoHeight) {
+    if (s.autoHeight) {
       updateAutoHeight(s);
     }
 
   } else {
     updateClasses(s);
 
-    if ((s.params.slidesPerView === 'auto' || s.params.slidesPerView > 1) && s.isEnd && !s.params.centeredSlides) {
-      slideChangedBySlideTo = slideTo(s, plt, s.slides.length - 1, 0, false, true);
+    if ((s.slidesPerView === 'auto' || s.slidesPerView > 1) && s._isEnd && !s.centeredSlides) {
+      slideChangedBySlideTo = slideTo(s, plt, s._slides.length - 1, 0, false, true);
     } else {
-      slideChangedBySlideTo = slideTo(s, plt, s.activeIndex, 0, false, true);
+      slideChangedBySlideTo = slideTo(s, plt, s._activeIndex, 0, false, true);
     }
   }
 
   // Return locks after resize
-  s.params.allowSwipeToPrev = allowSwipeToPrev;
-  s.params.allowSwipeToNext = allowSwipeToNext;
+  s._allowSwipeToPrev = allowSwipeToPrev;
+  s._allowSwipeToNext = allowSwipeToNext;
 }

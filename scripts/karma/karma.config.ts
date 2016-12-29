@@ -37,8 +37,7 @@ export function config(config) {
     customLaunchers: customLaunchers,
 
     exclude: [
-      'dist/e2e/**/*',
-      'dist/ionic-angular/components/slides/swiper-widget*'
+      'dist/e2e/**/*'
     ],
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
