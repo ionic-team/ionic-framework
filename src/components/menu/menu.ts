@@ -176,6 +176,8 @@ import { DomController } from '../../util/dom-controller';
  *
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../MenuController MenuController API Docs}
+ * @see {@link ../MenuClose MenuClose API Docs}
+ * @see {@link ../MenuToggle MenuToggle API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
  * @see {@link ../../nav/NavController NavController API Docs}
  */

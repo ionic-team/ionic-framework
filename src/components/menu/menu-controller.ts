@@ -114,6 +114,8 @@ import { removeArrayItem } from '../../util/util';
  *
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../Menu Menu API Docs}
+ * @see {@link ../MenuClose MenuClose API Docs}
+ * @see {@link ../MenuToggle MenuToggle API Docs}
  *
  */
 export class MenuController {

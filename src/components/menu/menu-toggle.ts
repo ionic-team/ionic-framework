@@ -83,6 +83,8 @@ import { ViewController } from '../../navigation/view-controller';
  * @demo /docs/v2/demos/src/menu/
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
+ * @see {@link ../MenuController MenuController API Docs}
+ * @see {@link ../MenuClose MenuClose API Docs}
  */
 @Directive({
   selector: '[menuToggle]',

@@ -25,7 +25,9 @@ import { MenuController } from './menu-controller';
  *
  * @demo /docs/v2/demos/src/menu/
  * @see {@link /docs/v2/components#menus Menu Component Docs}
- * @see {@link ../../menu/Menu Menu API Docs}
+ * @see {@link ../Menu Menu API Docs}
+ * @see {@link ../MenuController MenuController API Docs}
+ * @see {@link ../MenuToggle MenuToggle API Docs}
  */
 @Directive({
   selector: '[menuClose]'
