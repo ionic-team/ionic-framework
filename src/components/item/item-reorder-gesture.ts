@@ -19,8 +19,8 @@ export class ItemReorderGesture {
   private events: UIEventManager;
 
 
-  constructor(public platform: Platform, public reorderList: ItemReorderGestureDelegate) {
-    this.events = new UIEventManager(platform);
+  constructor(public plt: Platform, public reorderList: ItemReorderGestureDelegate) {
+    this.events = new UIEventManager(plt);
     this.events.pointerEvents({
       element: this.reorderList.getNativeElement(),
       pointerDown: this.onDragStart.bind(this),
@@ -59,7 +59,7 @@ export class ItemReorderGesture {
     this.lastYcoord = -100;
     this.lastToIndex = indexForItem(item);
 
-    this.windowHeight = this.platform.height() - AUTO_SCROLL_MARGIN;
+    this.windowHeight = this.plt.height() - AUTO_SCROLL_MARGIN;
     this.lastScrollPosition = this.reorderList._scrollContent(0);
 
     this.offset = pointerCoord(ev);
@@ -103,7 +103,7 @@ export class ItemReorderGesture {
 
     // Update selected item position
     let ydiff = Math.round(posY - this.offset.y + scrollPosition);
-    (<any>selectedItem.style)[this.platform.Css.transform] = `translateY(${ydiff}px)`;
+    (<any>selectedItem.style)[this.plt.Css.transform] = `translateY(${ydiff}px)`;
   }
 
   private onDragEnd(ev: any) {
@@ -136,7 +136,7 @@ export class ItemReorderGesture {
   private itemForCoord(coord: PointerCoordinates): HTMLElement {
     const x = this.offset.x - 100;
     const y = coord.y;
-    const element = this.platform.getElementFromPoint(x, y);
+    const element = this.plt.getElementFromPoint(x, y);
     return findReorderItem(element, this.reorderList.getNativeElement());
   }
 

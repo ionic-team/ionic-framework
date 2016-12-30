@@ -18,7 +18,7 @@ export class TransitionController {
   private _ids = 0;
   private _trns: {[key: number]: Transition} = {};
 
-  constructor(public platform: Platform, private _config: Config) {}
+  constructor(public plt: Platform, private _config: Config) {}
 
   getRootTrnsId(nav: NavControllerBase): number {
     let parent = <NavControllerBase>nav.parent;
@@ -36,7 +36,7 @@ export class TransitionController {
   }
 
   get(trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
-    const trns = createTransition(this.platform, this._config, opts.animation, enteringView, leavingView, opts);
+    const trns = createTransition(this.plt, this._config, opts.animation, enteringView, leavingView, opts);
     trns.trnsId = trnsId;
 
     if (!this._trns[trnsId]) {

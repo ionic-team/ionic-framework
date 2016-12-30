@@ -1,6 +1,7 @@
 import { OpaqueToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
+import { isCordova, isIos, isIosUIWebView } from './platform-utils';
 
 
 export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
@@ -24,9 +25,9 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
    * phablet
    */
   'phablet': {
-    isMatch(p: Platform) {
-      let smallest = Math.min(p.width(), p.height());
-      let largest = Math.max(p.width(), p.height());
+    isMatch(plt: Platform) {
+      let smallest = Math.min(plt.width(), plt.height());
+      let largest = Math.max(plt.width(), plt.height());
       return (smallest > 390 && smallest < 520) &&
         (largest > 620 && largest < 800);
     }
@@ -36,9 +37,9 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
    * tablet
    */
   'tablet': {
-    isMatch(p: Platform) {
-      let smallest = Math.min(p.width(), p.height());
-      let largest = Math.max(p.width(), p.height());
+    isMatch(plt: Platform) {
+      let smallest = Math.min(plt.width(), plt.height());
+      let largest = Math.max(plt.width(), plt.height());
       return (smallest > 460 && smallest < 820) &&
         (largest > 780 && largest < 1400);
     }
@@ -54,23 +55,23 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       'tablet'
     ],
     settings: {
-      activator: function(p: Platform): string {
+      activator: function(plt: Platform): string {
         // md mode defaults to use ripple activator
         // however, under-powered devices shouldn't use ripple
         // if this a linux device, and is using Android Chrome v36 (Android 5.0)
         // or above then use ripple, otherwise do not use a ripple effect
-        if (p.testNavigatorPlatform('linux')) {
-          let chromeVersion = p.matchUserAgentVersion(/Chrome\/(\d+).(\d+)?/);
+        if (plt.testNavigatorPlatform('linux')) {
+          let chromeVersion = plt.matchUserAgentVersion(/Chrome\/(\d+).(\d+)?/);
           if (chromeVersion) {
             // linux android device using modern android chrome browser gets ripple
-            if (parseInt(chromeVersion.major, 10) < 36 || p.version().major < 5) {
+            if (parseInt(chromeVersion.major, 10) < 36 || plt.version().major < 5) {
               return 'none';
             } else {
               return 'ripple';
             }
           }
           // linux android device not using chrome browser checks just android's version
-          if (p.version().major < 5) {
+          if (plt.version().major < 5) {
             return 'none';
           }
         }
@@ -85,11 +86,11 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       keyboardHeight: 300,
       mode: 'md',
     },
-    isMatch(p: Platform) {
-      return p.isPlatformMatch('android', ['android', 'silk'], ['windows phone']);
+    isMatch(plt: Platform) {
+      return plt.isPlatformMatch('android', ['android', 'silk'], ['windows phone']);
     },
-    versionParser(p: Platform) {
-      return p.matchUserAgentVersion(/Android (\d+).(\d+)?/);
+    versionParser(plt: Platform) {
+      return plt.matchUserAgentVersion(/Android (\d+).(\d+)?/);
     }
   },
 
@@ -105,22 +106,22 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
     settings: {
       autoFocusAssist: 'delay',
       hoverCSS: false,
-      inputBlurring: isIOS,
-      inputCloning: isIOS,
+      inputBlurring: isIos,
+      inputCloning: isIos,
       keyboardHeight: 300,
       mode: 'ios',
-      scrollAssist: isIOS,
+      scrollAssist: isIos,
       statusbarPadding: isCordova,
-      swipeBackEnabled: isIOS,
-      tapPolyfill: isIOSUI,
-      virtualScrollEventAssist: isIOSUI,
-      disableScrollAssist: isIOS,
+      swipeBackEnabled: isIos,
+      tapPolyfill: isIosUIWebView,
+      virtualScrollEventAssist: isIosUIWebView,
+      disableScrollAssist: isIos,
     },
-    isMatch(p: Platform) {
-      return p.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
+    isMatch(plt: Platform) {
+      return plt.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
     },
-    versionParser(p: Platform) {
-      return p.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
+    versionParser(plt: Platform) {
+      return plt.matchUserAgentVersion(/OS (\d+)_(\d+)?/);
     }
   },
 
@@ -132,8 +133,8 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
     settings: {
       keyboardHeight: 500,
     },
-    isMatch(p: Platform) {
-      return p.isPlatformMatch('ipad');
+    isMatch(plt: Platform) {
+      return plt.isPlatformMatch('ipad');
     }
   },
 
@@ -144,8 +145,8 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
     subsets: [
       'phablet'
     ],
-    isMatch(p: Platform) {
-      return p.isPlatformMatch('iphone');
+    isMatch(plt: Platform) {
+      return plt.isPlatformMatch('iphone');
     }
   },
 
@@ -163,11 +164,11 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       autoFocusAssist: 'immediate',
       hoverCSS: false
     },
-    isMatch(p: Platform): boolean {
-      return p.isPlatformMatch('windows', ['windows phone']);
+    isMatch(plt: Platform): boolean {
+      return plt.isPlatformMatch('windows', ['windows phone']);
     },
-    versionParser(p: Platform): any {
-      return p.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);
+    versionParser(plt: Platform): any {
+      return plt.matchUserAgentVersion(/Windows Phone (\d+).(\d+)?/);
     }
   },
 
@@ -176,76 +177,50 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
    */
   'cordova': {
     isEngine: true,
-    initialize: function(p: Platform) {
+    initialize: function(plt: Platform) {
 
       // prepare a custom "ready" for cordova "deviceready"
-      p.prepareReady = function() {
+      plt.prepareReady = function() {
         // 1) ionic bootstrapped
-        p.windowLoad(function(win: Window, doc: HTMLDocument) {
+        plt.windowLoad(function(win: Window, doc: HTMLDocument) {
           // 2) window onload triggered or completed
           doc.addEventListener('deviceready', function() {
             // 3) cordova deviceready event triggered
 
             // add cordova listeners to emit platform events
             doc.addEventListener('backbutton', function(ev: Event) {
-              p.zone.run(() => {
-                p.backButton.emit(ev);
+              plt.zone.run(() => {
+                plt.backButton.emit(ev);
               });
             });
             doc.addEventListener('pause', function(ev: Event) {
-              p.zone.run(() => {
-                p.pause.emit(ev);
+              plt.zone.run(() => {
+                plt.pause.emit(ev);
               });
             });
             doc.addEventListener('resume', function(ev: Event) {
-              p.zone.run(() => {
-                p.resume.emit(ev);
+              plt.zone.run(() => {
+                plt.resume.emit(ev);
               });
             });
 
             // cordova has its own exitApp method
-            p.exitApp = function() {
+            plt.exitApp = function() {
               win['navigator']['app'].exitApp();
             };
 
             // cordova has fully loaded and we've added listeners
-            p.triggerReady('cordova');
+            plt.triggerReady('cordova');
           });
         });
       };
 
     },
-    isMatch(p: Platform): boolean {
-      return isCordova(p);
+    isMatch(plt: Platform): boolean {
+      return isCordova(plt);
     }
   }
 };
-
-function isCordova(p: Platform): boolean {
-  const win: any = p.win();
-  return !!(win['cordova'] || win['PhoneGap'] || win['phonegap']);
-}
-
-function isIOS(p: Platform): boolean {
-  // shortcut function to be reused internally
-  // checks navigator.platform to see if it's an actual iOS device
-  // this does not use the user-agent string because it is often spoofed
-  // an actual iPad will return true, a chrome dev tools iPad will return false
-  return p.testNavigatorPlatform('iphone|ipad|ipod');
-}
-
-function isSafari(p: Platform): boolean {
-  return p.testUserAgent('Safari');
-}
-
-
-function isWK(p: Platform): boolean {
-  return !!p.win()['webkit'];
-}
-
-function isIOSUI(p: Platform): boolean {
-  return isIOS(p) && !isWK(p) && !isSafari(p);
-}
 
 
 export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');

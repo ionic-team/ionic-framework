@@ -8,7 +8,11 @@ import { Platform, EventListenerOptions } from '../platform/platform';
 export class UIEventManager {
   private evts: Function[] = [];
 
+<<<<<<< HEAD
   constructor(public platform: Platform) {}
+=======
+  constructor(public plt: Platform) {}
+>>>>>>> swiper-modules
 
   pointerEvents(config: PointerEventsConfig): PointerEvents {
     if (!config.element || !config.pointerDown) {
@@ -23,7 +27,11 @@ export class UIEventManager {
     };
 
     const pointerEvents = new PointerEvents(
+<<<<<<< HEAD
       this.platform,
+=======
+      this.plt,
+>>>>>>> swiper-modules
       config.element,
       config.pointerDown,
       config.pointerMove,
@@ -37,7 +45,11 @@ export class UIEventManager {
 
   listen(ele: any, eventName: string, callback: any, opts: EventListenerOptions): Function {
     if (ele) {
+<<<<<<< HEAD
       var removeFunc = this.platform.addListener(ele, eventName, callback, opts);
+=======
+      var removeFunc = this.plt.addListener(ele, eventName, callback, opts);
+>>>>>>> swiper-modules
       this.evts.push(removeFunc);
       return removeFunc;
     }

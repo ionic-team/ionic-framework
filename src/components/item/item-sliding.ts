@@ -219,7 +219,7 @@ export class ItemSliding {
 
   constructor(
     @Optional() list: List,
-    private _platform: Platform,
+    private _plt: Platform,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
     private _zone: NgZone) {
@@ -270,7 +270,7 @@ export class ItemSliding {
    */
   startSliding(startX: number) {
     if (this._tmr) {
-      this._platform.cancelTimeout(this._tmr);
+      this._plt.cancelTimeout(this._tmr);
       this._tmr = null;
     }
     if (this._openAmount === 0) {
@@ -278,7 +278,7 @@ export class ItemSliding {
       this._setState(SlidingState.Enabled);
     }
     this._startX = startX + this._openAmount;
-    this.item.setElementStyle(this._platform.Css.transition, 'none');
+    this.item.setElementStyle(this._plt.Css.transition, 'none');
   }
 
   /**
@@ -348,7 +348,7 @@ export class ItemSliding {
    * @private
    */
   private calculateOptsWidth() {
-    this._platform.raf(() => {
+    this._plt.raf(() => {
       if (!this._optsDirty) {
         return;
       }
@@ -368,7 +368,7 @@ export class ItemSliding {
   }
 
   private _setOpenAmount(openAmount: number, isFinal: boolean) {
-    const platform = this._platform;
+    const platform = this._plt;
 
     platform.cancelTimeout(this._tmr);
     this._openAmount = openAmount;

@@ -265,7 +265,7 @@ export class Tab extends NavControllerBase {
     parent: Tabs,
     app: App,
     config: Config,
-    platform: Platform,
+    plt: Platform,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
@@ -278,7 +278,7 @@ export class Tab extends NavControllerBase {
     private _dom: DomController,
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, platform, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom);
+    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');

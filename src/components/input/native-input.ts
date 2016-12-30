@@ -25,7 +25,7 @@ export class NativeInput {
     public _elementRef: ElementRef,
     public _renderer: Renderer,
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     public ngControl: NgControl
   ) {
     this._clone = config.getBoolean('inputCloning', false);
@@ -56,7 +56,7 @@ export class NativeInput {
       // 2) the newly tapped document element is not an input
       console.debug(`native-input, blurring enabled`);
 
-      var unregTouchEnd = this._platform.addListener(this._platform.doc(), 'touchend', (ev: TouchEvent) => {
+      var unregTouchEnd = this._plt.addListener(this._plt.doc(), 'touchend', (ev: TouchEvent) => {
         var tapped = <HTMLElement>ev.target;
         if (tapped && self.element()) {
           if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
@@ -95,7 +95,7 @@ export class NativeInput {
   setFocus() {
     // let's set focus to the element
     // but only if it does not already have focus
-    if (this._platform.getActiveElement() !== this.element()) {
+    if (this._plt.getActiveElement() !== this.element()) {
       this.element().focus();
     }
   }
@@ -116,12 +116,12 @@ export class NativeInput {
           // the cloned input fills the area of where native input should be
           // while the native input fakes out the browser by relocating itself
           // before it receives the actual focus event
-          cloneInputComponent(this._platform, focusedInputEle);
+          cloneInputComponent(this._plt, focusedInputEle);
 
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
           // area which doesn't require the browser to scroll the input into place
-          (<any>focusedInputEle.style)[this._platform.Css.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+          (<any>focusedInputEle.style)[this._plt.Css.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
           focusedInputEle.style.opacity = '0';
         }
 
@@ -134,7 +134,7 @@ export class NativeInput {
         // should remove the focus
         if (this._clone) {
           // should remove the cloned node
-          removeClone(this._platform, focusedInputEle);
+          removeClone(this._plt, focusedInputEle);
         }
       }
 
@@ -148,11 +148,11 @@ export class NativeInput {
     console.debug(`native-input, hideFocus, shouldHideFocus: ${shouldHideFocus}, input value: ${focusedInputEle.value}`);
 
     if (shouldHideFocus) {
-      cloneInputComponent(this._platform, focusedInputEle);
-      (<any>focusedInputEle.style)[this._platform.Css.transform] = 'scale(0)';
+      cloneInputComponent(this._plt, focusedInputEle);
+      (<any>focusedInputEle.style)[this._plt.Css.transform] = 'scale(0)';
 
     } else {
-      removeClone(this._platform, focusedInputEle);
+      removeClone(this._plt, focusedInputEle);
     }
   }
 

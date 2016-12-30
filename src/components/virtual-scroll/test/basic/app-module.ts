@@ -9,7 +9,7 @@ export class E2EPage {
   items: any[] = [];
   webview: string = '';
 
-  constructor(platform: Platform, public navCtrl: NavController) {
+  constructor(plt: Platform, public navCtrl: NavController) {
     for (var i = 0; i < 200; i++) {
       this.items.push({
         value: i,
@@ -19,8 +19,8 @@ export class E2EPage {
       });
     }
 
-    if (platform.is('ios')) {
-      if (platform.testUserAgent('Safari')) {
+    if (plt.is('ios')) {
+      if (plt.testUserAgent('Safari')) {
         this.webview = ': iOS Safari';
 
       } else if (!!window['webkit']) {

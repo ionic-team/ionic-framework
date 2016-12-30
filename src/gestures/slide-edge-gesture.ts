@@ -11,12 +11,12 @@ export class SlideEdgeGesture extends SlideGesture {
   public maxEdgeStart: any;
   private _d: any;
 
-  constructor(platform: Platform, element: HTMLElement, opts: any = {}) {
+  constructor(plt: Platform, element: HTMLElement, opts: any = {}) {
     defaults(opts, {
       edge: 'left',
       maxEdgeStart: 50
     });
-    super(platform, element, opts);
+    super(plt, element, opts);
     // Can check corners through use of eg 'left top'
     this.edges = opts.edge.split(' ');
     this.maxEdgeStart = opts.maxEdgeStart;
@@ -32,8 +32,8 @@ export class SlideEdgeGesture extends SlideGesture {
     return {
       left: 0,
       top: 0,
-      width: this.platform.width(),
-      height: this.platform.height()
+      width: this.plt.width(),
+      height: this.plt.height()
     };
   }
 

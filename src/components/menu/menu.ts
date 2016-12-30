@@ -302,7 +302,7 @@ export class Menu {
     public _menuCtrl: MenuController,
     private _elementRef: ElementRef,
     private _config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     private _renderer: Renderer,
     private _keyboard: Keyboard,
     private _zone: NgZone,
@@ -310,7 +310,7 @@ export class Menu {
     private _domCtrl: DomController,
     private _app: App,
   ) {
-    this._events = new UIEventManager(_platform);
+    this._events = new UIEventManager(_plt);
     this._gestureBlocker = _gestureCtrl.createBlocker({
       disable: [GESTURE_GO_BACK_SWIPE]
     });
@@ -343,7 +343,7 @@ export class Menu {
     this.setElementAttribute('type', this.type);
 
     // add the gestures
-    this._gesture = new MenuContentGesture(this._platform, this, this._gestureCtrl, this._domCtrl);
+    this._gesture = new MenuContentGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
 
     // register listeners if this menu is enabled
     // check if more than one menu is on the same side
@@ -398,7 +398,7 @@ export class Menu {
    */
   private _getType(): MenuType {
     if (!this._type) {
-      this._type = MenuController.create(this.type, this, this._platform);
+      this._type = MenuController.create(this.type, this, this._plt);
 
       if (this._config.get('animate') === false) {
         this._type.ani.duration(0);

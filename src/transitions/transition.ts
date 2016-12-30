@@ -24,8 +24,8 @@ export class Transition extends Animation {
   parent: Transition;
   trnsId: number;
 
-  constructor(platform: Platform, public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions) {
-    super(platform, null, opts);
+  constructor(plt: Platform, public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions) {
+    super(plt, null, opts);
   }
 
   init() {}

@@ -60,7 +60,7 @@ export class PickerColumnCmp {
 
   constructor(
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     private elementRef: ElementRef,
     private _zone: NgZone,
     private _haptic: Haptic,
@@ -98,7 +98,7 @@ export class PickerColumnCmp {
   }
 
   ngOnDestroy() {
-    this._platform.cancelRaf(this.rafId);
+    this._plt.cancelRaf(this.rafId);
     this.events.destroy();
   }
 
@@ -112,7 +112,7 @@ export class PickerColumnCmp {
     ev.preventDefault();
 
     // cancel any previous raf's that haven't fired yet
-    this._platform.cancelRaf(this.rafId);
+    this._plt.cancelRaf(this.rafId);
 
     // remember where the pointer started from`
     this.startY = pointerCoord(ev).y;
@@ -267,7 +267,7 @@ export class PickerColumnCmp {
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.rafId =  this._platform.raf(this.decelerateFunc);
+        this.rafId =  this._plt.raf(this.decelerateFunc);
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -303,7 +303,7 @@ export class PickerColumnCmp {
     // if there isn't a selected index, then just use the top y position
     let y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
 
-    this._platform.cancelRaf(this.rafId);
+    this._plt.cancelRaf(this.rafId);
     this.velocity = 0;
 
     // so what y position we're at
@@ -361,12 +361,12 @@ export class PickerColumnCmp {
       // Update transition duration
       if (duration !== opt._dur) {
         opt._dur = duration;
-        button.style[this._platform.Css.transitionDuration] = durationStr;
+        button.style[this._plt.Css.transitionDuration] = durationStr;
       }
       // Update transform
       if (transform !== opt._trans) {
         opt._trans = transform;
-        button.style[this._platform.Css.transform] = transform;
+        button.style[this._plt.Css.transform] = transform;
       }
       // Update selected item
       if (selected !== opt._selected) {

@@ -134,7 +134,7 @@ export class FabList {
     private _elementRef: ElementRef,
     private _renderer: Renderer,
     config: Config,
-    private _platform: Platform
+    private _plt: Platform
   ) {
     this._mode = config.get('mode');
   }
@@ -163,7 +163,7 @@ export class FabList {
     let i = 1;
     if (visible) {
       fabs.forEach(fab => {
-        this._platform.timeout(() => fab.setElementClass('show', true), i * 30);
+        this._plt.timeout(() => fab.setElementClass('show', true), i * 30);
         i++;
       });
     } else {

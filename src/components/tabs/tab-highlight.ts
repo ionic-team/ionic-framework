@@ -23,7 +23,7 @@ export class TabHighlight {
 
       dom.write(() => {
         const ele = this._elementRef.nativeElement;
-        (<any>ele.style)[dom.platform.Css.transform] = transform;
+        (<any>ele.style)[dom.plt.Css.transform] = transform;
 
         if (!this._init) {
           this._init = true;

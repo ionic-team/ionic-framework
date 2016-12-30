@@ -23,7 +23,7 @@ export class PanGesture {
   protected direction: string;
   private eventsConfig: PointerEventsConfig;
 
-  constructor(public platform: Platform, private element: HTMLElement, opts: PanGestureConfig = {}) {
+  constructor(public plt: Platform, private element: HTMLElement, opts: PanGestureConfig = {}) {
     defaults(opts, {
       threshold: 20,
       maxAngle: 40,
@@ -32,7 +32,7 @@ export class PanGesture {
       capture: false,
       passive: false,
     });
-    this.events = new UIEventManager(platform);
+    this.events = new UIEventManager(plt);
     if (opts.domController) {
       this.debouncer = opts.domController.debouncer();
     }

@@ -19,9 +19,9 @@ describe('Platform', () => {
         ranAction2 = true;
       };
 
-      platform.registerBackButtonAction(action1, 200);
-      platform.registerBackButtonAction(action2, 100);
-      platform.runBackButtonAction();
+      plt.registerBackButtonAction(action1, 200);
+      plt.registerBackButtonAction(action2, 100);
+      plt.runBackButtonAction();
 
       expect(ranAction1).toEqual(true);
       expect(ranAction2).toEqual(false);
@@ -38,9 +38,9 @@ describe('Platform', () => {
         ranAction2 = true;
       };
 
-      platform.registerBackButtonAction(action1, 100);
-      platform.registerBackButtonAction(action2, 100);
-      platform.runBackButtonAction();
+      plt.registerBackButtonAction(action1, 100);
+      plt.registerBackButtonAction(action2, 100);
+      plt.runBackButtonAction();
 
       expect(ranAction1).toEqual(false);
       expect(ranAction2).toEqual(true);
@@ -52,267 +52,267 @@ describe('Platform', () => {
         ranAction1 = true;
       };
 
-      platform.registerBackButtonAction(action1);
-      platform.runBackButtonAction();
+      plt.registerBackButtonAction(action1);
+      plt.runBackButtonAction();
 
       expect(ranAction1).toEqual(true);
     });
 
     it('should not run any actions when none registered', () => {
-      platform.runBackButtonAction();
+      plt.runBackButtonAction();
     });
 
   });
 
   it('should set core as the fallback', () => {
-    platform.setDefault('core');
-    platform.setQueryParams('');
-    platform.setUserAgent('idk');
-    platform.init();
+    plt.setDefault('core');
+    plt.setQueryParams('');
+    plt.setUserAgent('idk');
+    plt.init();
 
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
-    expect(platform.is('core')).toEqual(true);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
   });
 
   it('should set windows via querystring', () => {
-    platform.setQueryParams('/?ionicplatform=windows');
-    platform.init();
+    plt.setQueryParams('/?ionicplatform=windows');
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('windows')).toEqual(true);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('windows')).toEqual(true);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set ios via querystring', () => {
-    platform.setQueryParams('/?ionicplatform=ios');
-    platform.init();
+    plt.setQueryParams('/?ionicplatform=ios');
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('ios')).toEqual(true);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
   });
 
   it('should set windows via querystring, even with android user agent', () => {
-    platform.setQueryParams('/?ionicplatform=windows');
-    platform.setUserAgent(ANDROID_UA);
-    platform.init();
+    plt.setQueryParams('/?ionicplatform=windows');
+    plt.setUserAgent(ANDROID_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('windows')).toEqual(true);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('windows')).toEqual(true);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set ios via querystring, even with android user agent', () => {
-    platform.setQueryParams('/?ionicplatform=ios');
-    platform.setUserAgent(ANDROID_UA);
-    platform.init();
+    plt.setQueryParams('/?ionicplatform=ios');
+    plt.setUserAgent(ANDROID_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('ios')).toEqual(true);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
   });
 
   it('should set android via querystring', () => {
-    platform.setQueryParams('/?ionicplatform=android');
-    platform.init();
+    plt.setQueryParams('/?ionicplatform=android');
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('android')).toEqual(true);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('android')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set android via querystring, even with ios user agent', () => {
-    platform.setQueryParams('/?ionicplatform=android');
-    platform.setUserAgent(IPHONE_UA);
-    platform.init();
+    plt.setQueryParams('/?ionicplatform=android');
+    plt.setUserAgent(IPHONE_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('android')).toEqual(true);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('android')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set windows platform via user agent', () => {
-    platform.setQueryParams('');
-    platform.setUserAgent(WINDOWS_PHONE_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setUserAgent(WINDOWS_PHONE_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('windows')).toEqual(true);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(true);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set windows platform via windows8 mobile user agent', () => {
-    platform.setQueryParams('');
-    platform.setUserAgent(WINDOWS8_PHONE_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setUserAgent(WINDOWS8_PHONE_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('windows')).toEqual(true);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(true);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set windows platform via windows7 mobile user agent', () => {
-    platform.setQueryParams('');
-    platform.setUserAgent(WINDOWS7_PHONE_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setUserAgent(WINDOWS7_PHONE_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('windows')).toEqual(true);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(true);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set android via user agent', () => {
-    platform.setQueryParams('');
-    platform.setUserAgent(ANDROID_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setUserAgent(ANDROID_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(true);
-    expect(platform.is('ios')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(true);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set iphone via user agent', () => {
-    platform.setQueryParams('');
-    platform.setUserAgent(IPHONE_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setUserAgent(IPHONE_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(true);
-    expect(platform.is('iphone')).toEqual(true);
-    expect(platform.is('tablet')).toEqual(false);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(true);
+    expect(plt.is('tablet')).toEqual(false);
   });
 
   it('should set ipad via user agent', () => {
-    platform.setQueryParams('');
-    platform.setUserAgent(IPAD_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setUserAgent(IPAD_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(false);
-    expect(platform.is('mobile')).toEqual(true);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(true);
-    expect(platform.is('ipad')).toEqual(true);
-    expect(platform.is('tablet')).toEqual(true);
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('tablet')).toEqual(true);
   });
 
   it('should set core platform for osx desktop firefox', () => {
-    platform.setQueryParams('');
-    platform.setDefault('core');
-    platform.setUserAgent(OSX_10_FIREFOX_43_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setDefault('core');
+    plt.setUserAgent(OSX_10_FIREFOX_43_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(true);
-    expect(platform.is('mobile')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
-    expect(platform.is('ipad')).toEqual(false);
-    expect(platform.is('tablet')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
+    expect(plt.is('mobile')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
   });
 
   it('should set core platform for osx desktop safari', () => {
-    platform.setQueryParams('');
-    platform.setDefault('core');
-    platform.setUserAgent(OSX_10_SAFARI_9_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setDefault('core');
+    plt.setUserAgent(OSX_10_SAFARI_9_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(true);
-    expect(platform.is('mobile')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
-    expect(platform.is('ipad')).toEqual(false);
-    expect(platform.is('tablet')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
+    expect(plt.is('mobile')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
   });
 
   it('should set core platform for osx desktop chrome', () => {
-    platform.setQueryParams('');
-    platform.setDefault('core');
-    platform.setUserAgent(OSX_10_CHROME_49_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setDefault('core');
+    plt.setUserAgent(OSX_10_CHROME_49_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(true);
-    expect(platform.is('mobile')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
-    expect(platform.is('ipad')).toEqual(false);
-    expect(platform.is('tablet')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
+    expect(plt.is('mobile')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
   });
 
   it('should set core platform for windows desktop chrome', () => {
-    platform.setQueryParams('');
-    platform.setDefault('core');
-    platform.setUserAgent(WINDOWS_10_CHROME_40_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setDefault('core');
+    plt.setUserAgent(WINDOWS_10_CHROME_40_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(true);
-    expect(platform.is('mobile')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
-    expect(platform.is('ipad')).toEqual(false);
-    expect(platform.is('tablet')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
+    expect(plt.is('mobile')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
   });
 
   it('should set core platform for windows desktop edge', () => {
-    platform.setQueryParams('');
-    platform.setDefault('core');
-    platform.setUserAgent(WINDOWS_10_EDGE_12_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setDefault('core');
+    plt.setUserAgent(WINDOWS_10_EDGE_12_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(true);
-    expect(platform.is('mobile')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
-    expect(platform.is('ipad')).toEqual(false);
-    expect(platform.is('tablet')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
+    expect(plt.is('mobile')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
   });
 
   it('should set core platform for windows desktop IE', () => {
-    platform.setQueryParams('');
-    platform.setDefault('core');
-    platform.setUserAgent(WINDOWS_8_IE_11_UA);
-    platform.init();
+    plt.setQueryParams('');
+    plt.setDefault('core');
+    plt.setUserAgent(WINDOWS_8_IE_11_UA);
+    plt.init();
 
-    expect(platform.is('core')).toEqual(true);
-    expect(platform.is('mobile')).toEqual(false);
-    expect(platform.is('windows')).toEqual(false);
-    expect(platform.is('android')).toEqual(false);
-    expect(platform.is('ios')).toEqual(false);
-    expect(platform.is('ipad')).toEqual(false);
-    expect(platform.is('tablet')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
+    expect(plt.is('mobile')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
   });
 
-  let platform: Platform;
+  let plt: Platform;
 
   beforeEach(() => {
-    platform = new Platform();
-    platform.setWindow(window);
-    platform.setDocument(document);
-    platform.setPlatformConfigs(PLATFORM_CONFIGS);
+    plt = new Platform();
+    plt.setWindow(window);
+    plt.setDocument(document);
+    plt.setPlatformConfigs(PLATFORM_CONFIGS);
     registerModeConfigs(new Config())();
   });
 

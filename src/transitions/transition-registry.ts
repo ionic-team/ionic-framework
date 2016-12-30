@@ -64,13 +64,13 @@ export function registerTransitions(config: Config) {
 }
 
 
-export function createTransition(platform: Platform, config: Config, transitionName: string, enteringView: any, leavingView: any, opts: any): Transition {
+export function createTransition(plt: Platform, config: Config, transitionName: string, enteringView: any, leavingView: any, opts: any): Transition {
   let TransitionClass: any = config.getTransition(transitionName);
   if (!TransitionClass) {
     // didn't find a transition animation, default to ios-transition
     TransitionClass = config.getTransition('ios-transition');
   }
 
-  return new TransitionClass(platform, enteringView, leavingView, opts);
+  return new TransitionClass(plt, enteringView, leavingView, opts);
 }
 

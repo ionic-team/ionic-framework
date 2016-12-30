@@ -310,13 +310,13 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     private _haptic: Haptic,
     @Optional() private _item: Item,
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
     private _dom: DomController
   ) {
     super(config, elementRef, renderer, 'range');
-    this._events = new UIEventManager(_platform);
+    this._events = new UIEventManager(_plt);
     _form.register(this);
 
     if (_item) {
@@ -360,7 +360,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     const current = pointerCoord(ev);
 
     // get the full dimensions of the slider element
-    const rect = this._rect = this._platform.getElementBoundingClientRect(this._slider.nativeElement);
+    const rect = this._rect = this._plt.getElementBoundingClientRect(this._slider.nativeElement);
 
     // figure out which knob they started closer to
     const ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);

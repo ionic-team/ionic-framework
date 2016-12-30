@@ -101,7 +101,8 @@ import { Searchbar } from './components/searchbar/searchbar';
 import { Segment, SegmentButton } from './components/segment/segment';
 import { Select } from './components/select/select';
 import { ShowWhen, HideWhen } from './components/show-hide-when/show-hide-when';
-import { Slides, Slide, SlideLazy } from './components/slides/slides';
+import { Slide } from './components/slides/slide';
+import { Slides } from './components/slides/slides';
 import { Spinner } from './components/spinner/spinner';
 import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
@@ -183,7 +184,8 @@ export { Searchbar } from './components/searchbar/searchbar';
 export { Segment, SegmentButton } from './components/segment/segment';
 export { Select } from './components/select/select';
 export { ShowWhen, HideWhen, DisplayWhen } from './components/show-hide-when/show-hide-when';
-export { Slides, Slide, SlideLazy } from './components/slides/slides';
+export { Slide } from './components/slides/slide';
+export { Slides } from './components/slides/slides';
 export { Spinner } from './components/spinner/spinner';
 export { Tab } from './components/tabs/tab';
 export { TabButton } from './components/tabs/tab-button';
@@ -365,7 +367,6 @@ export { Transition } from './transitions/transition';
     ShowWhen,
     Slide,
     Slides,
-    SlideLazy,
     Spinner,
     Tab,
     Tabs,
@@ -460,7 +461,6 @@ export { Transition } from './transitions/transition';
     ShowWhen,
     Slide,
     Slides,
-    SlideLazy,
     Spinner,
     Tab,
     Tabs,

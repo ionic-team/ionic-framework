@@ -11,7 +11,7 @@ export class E2EPage {
 
   @ViewChild('content') content: ElementRef;
 
-  constructor(platform: Platform) {
+  constructor(plt: Platform) {
     for (var i = 0; i < 200; i++) {
       this.items.push({
         value: i,
@@ -21,7 +21,7 @@ export class E2EPage {
       });
     }
 
-    if (platform.is('ios')) {
+    if (plt.is('ios')) {
       if (window.indexedDB) {
         this.webview = ': WKWebView';
 

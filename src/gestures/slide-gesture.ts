@@ -9,8 +9,8 @@ import { pointerCoord } from '../util/dom';
 export class SlideGesture extends PanGesture {
   public slide: SlideData = null;
 
-  constructor(platform: Platform, element: HTMLElement, opts = {}) {
-    super(platform, element, opts);
+  constructor(plt: Platform, element: HTMLElement, opts = {}) {
+    super(plt, element, opts);
   }
 
   /*

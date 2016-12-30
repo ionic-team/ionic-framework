@@ -108,7 +108,7 @@ export class TextInput extends Ion implements IonicFormInput {
 
   constructor(
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     private _form: Form,
     private _app: App,
     elementRef: ElementRef,
@@ -330,7 +330,7 @@ export class TextInput extends Ion implements IonicFormInput {
       } else if (this._autoFocusAssist === 'delay') {
         // config says to chill out a bit and focus on the input after transitions
         // works best on desktop
-        this._platform.timeout(() => {
+        this._plt.timeout(() => {
           nativeInputEle.focus();
         }, 650);
       }
@@ -372,7 +372,7 @@ export class TextInput extends Ion implements IonicFormInput {
       var ele: HTMLElement = this._elementRef.nativeElement;
       ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
 
-      var scrollData = getScrollData(ele.offsetTop, ele.offsetHeight, content.getContentDimensions(), this._keyboardHeight, this._platform.height());
+      var scrollData = getScrollData(ele.offsetTop, ele.offsetHeight, content.getContentDimensions(), this._keyboardHeight, this._plt.height());
       if (Math.abs(scrollData.scrollAmount) < 4) {
         // the text input is in a safe position that doesn't
         // require it to be scrolled into view, just set focus now
@@ -442,7 +442,7 @@ export class TextInput extends Ion implements IonicFormInput {
 
     // ensure the body hasn't scrolled down
     this._dom.write(() => {
-      this._platform.doc().body.scrollTop = 0;
+      this._plt.doc().body.scrollTop = 0;
     });
   }
 
@@ -507,7 +507,7 @@ export class TextInput extends Ion implements IonicFormInput {
    */
   hasFocus(): boolean {
     // check if an input has focus or not
-    return this._platform.hasFocus(this._native.element());
+    return this._plt.hasFocus(this._native.element());
   }
 
   /**

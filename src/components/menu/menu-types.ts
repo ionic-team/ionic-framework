@@ -80,11 +80,11 @@ export class MenuType {
  * The menu itself, which is under the content, does not move.
  */
 class MenuRevealType extends MenuType {
-  constructor(menu: Menu, platform: Platform) {
-    super(platform);
+  constructor(menu: Menu, plt: Platform) {
+    super(plt);
 
     let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
-    let contentOpen = new Animation(platform, menu.getContentElement());
+    let contentOpen = new Animation(plt, menu.getContentElement());
     contentOpen.fromTo('translateX', '0px', openedX);
     this.ani.add(contentOpen);
   }

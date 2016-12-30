@@ -112,7 +112,7 @@ export class RippleActivator implements ActivatorBase {
 
     // Reset ripple
     // DOM WRITE
-    const Css = this.dom.platform.Css;
+    const Css = this.dom.plt.Css;
     rippleEle.style.opacity = '';
     rippleEle.style[Css.transform] = `translate3d(${clientPointerX}px, ${clientPointerY}px, 0px) scale(0.001)`;
     rippleEle.style[Css.transition] = '';

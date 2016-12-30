@@ -36,7 +36,7 @@ export class LoadingCmp {
   constructor(
     private _viewCtrl: ViewController,
     private _config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
@@ -78,7 +78,7 @@ export class LoadingCmp {
   }
 
   ionViewDidEnter() {
-    this._platform.focusOutActiveElement();
+    this._plt.focusOutActiveElement();
 
     // If there is a duration, dismiss after that amount of time
     if ( this.d && this.d.duration ) {

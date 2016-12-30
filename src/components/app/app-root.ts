@@ -41,7 +41,7 @@ export class IonicApp extends Ion implements OnInit {
     elementRef: ElementRef,
     renderer: Renderer,
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     app: App
   ) {
     super(config, elementRef, renderer);
@@ -62,8 +62,8 @@ export class IonicApp extends Ion implements OnInit {
     // ios/md/wp
     this.setElementClass(this._config.get('mode'), true);
 
-    const versions = this._platform.versions();
-    this._platform.platforms().forEach(platformName => {
+    const versions = this._plt.versions();
+    this._plt.platforms().forEach(platformName => {
       // platform-ios
       let platformClass = 'platform-' + platformName;
       this.setElementClass(platformClass, true);
@@ -89,7 +89,7 @@ export class IonicApp extends Ion implements OnInit {
     // which means angular and ionic has fully loaded!
     // fire off the platform prepare ready, which could
     // have been switched out by any of the platform engines
-    this._platform.prepareReady();
+    this._plt.prepareReady();
   }
 
   /**
@@ -148,7 +148,7 @@ export class IonicApp extends Ion implements OnInit {
   _disableScroll(shouldDisableScroll: boolean) {
     if (shouldDisableScroll) {
       this.stopScroll().then(() => {
-        this._tmr = this._platform.timeout(() => {
+        this._tmr = this._plt.timeout(() => {
           console.debug('App Root: adding .disable-scroll');
           this.setElementClass('disable-scroll', true);
         }, 32);

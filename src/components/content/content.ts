@@ -309,20 +309,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   @Output() ionScrollEnd: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
 
-  /**
-   * @private
-   */
-  @Output() readReady: EventEmitter<any> = new EventEmitter<any>();
-
-  /**
-   * @private
-   */
-  @Output() writeReady: EventEmitter<any> = new EventEmitter<any>();
-
 
   constructor(
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     private _dom: DomController,
     elementRef: ElementRef,
     renderer: Renderer,
@@ -340,11 +330,31 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._imgVelMax = config.getNumber('imgVelocityMax', 3);
 
     if (viewCtrl) {
+      // content has a view controller
       viewCtrl._setIONContent(this);
       viewCtrl._setIONContentRef(elementRef);
+
+      var readSub = viewCtrl.readReady.subscribe(() => {
+        readSub.unsubscribe();
+        this._readDimensions();
+      });
+
+      var writeSub = viewCtrl.writeReady.subscribe(() => {
+        writeSub.unsubscribe();
+        this._writeDimensions();
+      });
+
+    } else {
+      // content does not have a view controller
+      _dom.read(() => {
+        this._readDimensions();
+      });
+      _dom.write(() => {
+        this._writeDimensions();
+      });
     }
 
-    this._scroll = new ScrollView(_platform, _dom);
+    this._scroll = new ScrollView(_plt, _dom);
   }
 
   /**
@@ -404,8 +414,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /**
    * @private
    */
-  onScrollElementTransitionEnd(callback: Function) {
-    this._platform.transitionEnd(this._scrollEle, callback);
+  onScrollElementTransitionEnd(callback: {(ev: TransitionEvent)}) {
+    this._plt.transitionEnd(this._scrollEle, callback);
   }
 
   /**
@@ -577,15 +587,15 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * after dynamically adding headers, footers, or tabs.
    */
   resize() {
-    this._dom.read(this.readDimensions.bind(this));
-    this._dom.write(this.writeDimensions.bind(this));
+    this._dom.read(this._readDimensions.bind(this));
+    this._dom.write(this._writeDimensions.bind(this));
   }
 
   /**
    * @private
    * DOM READ
    */
-  readDimensions() {
+  private _readDimensions() {
     let cachePaddingTop = this._pTop;
     let cachePaddingRight = this._pRight;
     let cachePaddingBottom = this._pBottom;
@@ -720,15 +730,13 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
     // initial imgs refresh
     this.imgsUpdate();
-
-    this.readReady.emit();
   }
 
   /**
    * @private
    * DOM WRITE
    */
-  writeDimensions() {
+  private _writeDimensions() {
     if (!this._dirty) {
       console.debug('Skipping writeDimensions');
       return;
@@ -810,8 +818,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
         this._tabs.setTabbarPosition(-1, 0);
       }
     }
-
-    this.writeReady.emit();
   }
 
   /**

@@ -14,8 +14,13 @@ export class PointerEvents {
   private rmMouseMove: Function = null;
   private rmMouseUp: Function = null;
 
+<<<<<<< HEAD
   private bindTouchEnd: Function;
   private bindMouseUp: Function;
+=======
+  private bindTouchEnd: any;
+  private bindMouseUp: any;
+>>>>>>> swiper-modules
 
   private lastTouchEvent: number = 0;
 
@@ -23,7 +28,11 @@ export class PointerEvents {
   lastEventType: PointerEventType = PointerEventType.UNDEFINED;
 
   constructor(
+<<<<<<< HEAD
     private platform: Platform,
+=======
+    private plt: Platform,
+>>>>>>> swiper-modules
     private ele: any,
     private pointerDown: any,
     private pointerMove: any,
@@ -36,8 +45,13 @@ export class PointerEvents {
     this.bindTouchEnd = this.handleTouchEnd.bind(this);
     this.bindMouseUp = this.handleMouseUp.bind(this);
 
+<<<<<<< HEAD
     this.rmTouchStart = this.platform.addListener(ele, 'touchstart', this.handleTouchStart.bind(this), option);
     this.rmMouseStart = this.platform.addListener(ele, 'mousedown', this.handleMouseDown.bind(this), option);
+=======
+    this.rmTouchStart = this.plt.addListener(ele, 'touchstart', this.handleTouchStart.bind(this), option);
+    this.rmMouseStart = this.plt.addListener(ele, 'mousedown', this.handleMouseDown.bind(this), option);
+>>>>>>> swiper-modules
   }
 
   private handleTouchStart(ev: any) {
@@ -50,6 +64,7 @@ export class PointerEvents {
       return;
     }
     if (!this.rmTouchMove && this.pointerMove) {
+<<<<<<< HEAD
       this.rmTouchMove = this.platform.addListener(this.ele, 'touchmove', this.pointerMove, this.option);
     }
     if (!this.rmTouchEnd) {
@@ -57,6 +72,15 @@ export class PointerEvents {
     }
     if (!this.rmTouchCancel) {
       this.rmTouchCancel = this.platform.addListener(this.ele, 'touchcancel', this.bindTouchEnd, this.option);
+=======
+      this.rmTouchMove = this.plt.addListener(this.ele, 'touchmove', this.pointerMove, this.option);
+    }
+    if (!this.rmTouchEnd) {
+      this.rmTouchEnd = this.plt.addListener(this.ele, 'touchend', this.bindTouchEnd, this.option);
+    }
+    if (!this.rmTouchCancel) {
+      this.rmTouchCancel = this.plt.addListener(this.ele, 'touchcancel', this.bindTouchEnd, this.option);
+>>>>>>> swiper-modules
     }
   }
 
@@ -73,10 +97,17 @@ export class PointerEvents {
       return;
     }
     if (!this.rmMouseMove && this.pointerMove) {
+<<<<<<< HEAD
       this.rmMouseMove = this.platform.addListener(this.platform.doc(), 'mousemove', this.pointerMove, this.option);
     }
     if (!this.rmMouseUp) {
       this.rmMouseUp = this.platform.addListener(this.platform.doc(), 'mouseup', this.bindMouseUp, this.option);
+=======
+      this.rmMouseMove = this.plt.addListener(this.plt.doc(), 'mousemove', this.pointerMove, this.option);
+    }
+    if (!this.rmMouseUp) {
+      this.rmMouseUp = this.plt.addListener(this.plt.doc(), 'mouseup', this.bindMouseUp, this.option);
+>>>>>>> swiper-modules
     }
   }
 
