@@ -15,10 +15,11 @@
  * }
  * ```
  * @demo /docs/v2/demos/src/nav-params/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @see {@link /docs/v2/navigation Navigation Docs}
  * @see {@link ../NavController/ NavController API Docs}
- * @see {@link ../Nav/ Nav API Docs}
+ * @see {@link ../../components/nav/Nav Nav API Docs}
  * @see {@link ../NavPush/ NavPush API Docs}
+ * @see {@link ../NavPop/ NavPop API Docs}
  */
 export class NavParams {
 

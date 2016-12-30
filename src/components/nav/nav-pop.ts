@@ -22,7 +22,9 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * Similar to {@link /docs/v2/api/components/nav/NavPush/ `NavPush` }
  * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @see {@link /docs/v2/navigation Navigation Docs}
+ * @see {@link ../NavController/ NavController API Docs}
+ * @see {@link ../Nav Nav API Docs}
  * @see {@link ../NavPush NavPush API Docs}
  */
 @Directive({

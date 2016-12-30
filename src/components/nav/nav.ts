@@ -43,7 +43,8 @@ import { DomController } from '../../util/dom-controller';
  * ```
  *
  * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @see {@link /docs/v2/navigation Navigation Docs}
+ * @see {@link ../NavController/ NavController API Docs}
  */
 @Component({
   selector: 'ion-nav',

@@ -16,6 +16,7 @@ import { ViewController } from './view-controller';
  * For more information, see the [Navigation Controller doc](/docs/v2/navigation/navigation-controller).
  *
  * @see {@link /docs/v2/navigation Navigation Docs}
+ * @see {@link ../../components/nav/Nav Nav API Docs}
  */
 export abstract class NavController {
 
