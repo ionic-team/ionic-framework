@@ -1,7 +1,6 @@
 import { SlideEffects } from './swiper-interfaces';
-import { isHorizontal, transform, transition, eachChild, triggerTransitionEnd } from './swiper-utils';
+import { isHorizontal, transform, transition, eachChild, triggerTransitionEnd, CLS } from './swiper-utils';
 import { isSafari, isIosUIWebView } from '../../../platform/platform-utils';
-import { CLS } from './swiper-classes';
 
 
 /*=========================

@@ -154,3 +154,35 @@ export function minTranslate(s: Slides) {
 export function maxTranslate(s: Slides) {
   return (-s._snapGrid[s._snapGrid.length - 1]);
 }
+
+export const CLS = {
+  // Classnames
+  noSwiping: 'swiper-no-swiping',
+  containerModifier: 'swiper-container-',
+  slide: 'swiper-slide',
+  slideActive: 'swiper-slide-active',
+  slideDuplicateActive: 'swiper-slide-duplicate-active',
+  slideVisible: 'swiper-slide-visible',
+  slideDuplicate: 'swiper-slide-duplicate',
+  slideNext: 'swiper-slide-next',
+  slideDuplicateNext: 'swiper-slide-duplicate-next',
+  slidePrev: 'swiper-slide-prev',
+  slideDuplicatePrev: 'swiper-slide-duplicate-prev',
+  wrapper: 'swiper-wrapper',
+  bullet: 'swiper-pagination-bullet',
+  bulletActive: 'swiper-pagination-bullet-active',
+  buttonDisabled: 'swiper-button-disabled',
+  paginationCurrent: 'swiper-pagination-current',
+  paginationTotal: 'swiper-pagination-total',
+  paginationHidden: 'swiper-pagination-hidden',
+  paginationProgressbar: 'swiper-pagination-progressbar',
+  paginationClickable: 'swiper-pagination-clickable',
+  paginationModifier: 'swiper-pagination-',
+  lazyLoading: 'swiper-lazy',
+  lazyStatusLoading: 'swiper-lazy-loading',
+  lazyStatusLoaded: 'swiper-lazy-loaded',
+  lazyPreloader: 'swiper-lazy-preloader',
+  notification: 'swiper-notification',
+  preloader: 'preloader',
+  zoomContainer: 'swiper-zoom-container',
+};

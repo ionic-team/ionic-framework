@@ -14,15 +14,16 @@
 
 import { SlideElement } from './swiper-interfaces';
 import { Platform } from '../../../platform/platform';
-import { maxTranslate, minTranslate, addClass, eachChild, inlineStyle, removeClass, isHorizontal, round, updateSlidesOffset } from './swiper-utils';
+import { maxTranslate, minTranslate, addClass, eachChild, inlineStyle, removeClass, isHorizontal, round, updateSlidesOffset, CLS } from './swiper-utils';
 import { Slides } from '../slides';
 import { setWrapperTranslate, setWrapperTransition } from './swiper-transition';
 import { updateProgress } from './swiper-progress';
-import { updateClasses, CLS } from './swiper-classes';
+import { updateClasses } from './swiper-classes';
 import { parallaxSetTranslate } from './swiper-parallax';
 import { updateActiveIndex, updateRealIndex } from './swiper-index';
 import { SWIPER_EFFECTS } from './swiper-effects';
 import { updatePagination } from './swiper-pagination';
+import { resetZoomEvents } from './swiper-zoom';
 
 
 export function initSwiper(s: Slides, plt: Platform) {
@@ -588,6 +589,10 @@ export function update(s: Slides, plt: Platform, updateTranslate?: boolean) {
   updatePagination(s);
   updateClasses(s);
 
+  if (s.zoom) {
+    resetZoomEvents(s, plt);
+  }
+
   var translated, newTranslate;
   function forceSetTranslate() {
     newTranslate = Math.min(Math.max(s._translate, maxTranslate(s)), minTranslate(s));
@@ -595,6 +600,7 @@ export function update(s: Slides, plt: Platform, updateTranslate?: boolean) {
     updateActiveIndex(s);
     updateClasses(s);
   }
+
   if (updateTranslate) {
     if (s.freeMode) {
       forceSetTranslate();

@@ -1,7 +1,6 @@
 import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
-import { transition, transform, isHorizontal, offset } from './swiper-utils';
-import { CLS } from './swiper-classes';
+import { transition, transform, isHorizontal, offset, CLS } from './swiper-utils';
 import { getTranslate } from './swiper-transition';
 
 
@@ -47,7 +46,7 @@ export function initZoom(s: Slides, plt: Platform) {
     unRegs: []
   };
 
-  attachZoomEvents(s, plt);
+  resetZoomEvents(s, plt);
 
   return function() {
     detachZoomEvents(s);
@@ -81,8 +80,9 @@ function onGestureStart(s: Slides, plt: Platform, ev: TouchEvent) {
   }
 
   if (!z.gesture.slide) {
-    debugger
-    //z.gesture.slide = $(this);
+    if (ev.currentTarget && (<any>ev.currentTarget).classList.contains(CLS.slide)) {
+      z.gesture.slide = <any>ev.currentTarget;
+    }
 
     if (!z.gesture.slide) {
       z.gesture.slide = s._slides[s._activeIndex];
@@ -434,7 +434,7 @@ function toggleZoom(s: Slides, plt: Platform) {
 }
 
 
-function attachZoomEvents(s: Slides, plt: Platform) {
+export function resetZoomEvents(s: Slides, plt: Platform) {
   detachZoomEvents(s);
 
   const unRegs = s._zoom.unRegs;

@@ -1,6 +1,6 @@
 import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
-import { CLS } from './swiper-classes';
+import { CLS } from './swiper-utils';
 
 
 export function initA11y(s: Slides, plt: Platform) {

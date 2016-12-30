@@ -1,12 +1,12 @@
 import { Slides } from '../slides';
 import { SlideUIEvent, SlideElement } from './swiper-interfaces';
-import { maxTranslate, minTranslate, isFormElement, isHorizontal, getElementIndex, triggerTransitionEnd } from './swiper-utils';
+import { maxTranslate, minTranslate, isFormElement, isHorizontal, getElementIndex, triggerTransitionEnd, CLS } from './swiper-utils';
 import { getWrapperTranslate, setWrapperTranslate, setWrapperTransition } from './swiper-transition';
 import { currentSlidesPerView, fixLoop, slideNext, slidePrev, slideTo, slideReset, stopAutoplay, pauseAutoplay, updateAutoHeight, updateContainerSize, updateSlidesSize, onTransitionStart, onTransitionEnd } from './swiper';
 import { updateProgress } from './swiper-progress';
 import { updateActiveIndex } from './swiper-index';
 import { updatePagination } from './swiper-pagination';
-import { updateClasses, CLS } from './swiper-classes';
+import { updateClasses } from './swiper-classes';
 import { Platform } from '../../../platform/platform';
 
 

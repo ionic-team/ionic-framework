@@ -1,6 +1,5 @@
-import { addClass, eachChild, isHorizontal, removeClass, transform, transition } from './swiper-utils';
+import { addClass, eachChild, isHorizontal, removeClass, transform, transition, CLS } from './swiper-utils';
 import { Slides } from '../slides';
-import { CLS } from './swiper-classes';
 
 
 /*=========================

@@ -641,11 +641,9 @@ export class Platform {
       } : !!opts.capture;
 
     let unReg: Function;
-    const rawEvent = ele['__zone_symbol__addEventListener'];
-
-    if (!opts.zone && rawEvent) {
+    if (!opts.zone && ele['__zone_symbol__addEventListener']) {
       // do not wrap this event in zone and we've verified we can use the raw addEventListener
-      rawEvent(eventName, callback, listenerOpts);
+      ele['__zone_symbol__addEventListener'](eventName, callback, listenerOpts);
       unReg = function unregisterListener() {
         ele['__zone_symbol__removeEventListener'](eventName, callback, listenerOpts);
       };

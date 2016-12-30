@@ -16,7 +16,10 @@ import { Slides } from './slides';
   */
 @Component({
   selector: 'ion-slide',
-  template: '<div class="swiper-zoom-container"><ng-content></ng-content></div>',
+  template:
+    '<div class="slide-zoom">' +
+      '<ng-content></ng-content>' +
+    '</div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
