@@ -7,6 +7,7 @@
 1. Update the Ionic CLI to the latest version:
 
   ```
+  npm uninstall -g ionic
   npm install -g ionic
   ```
 
@@ -257,6 +258,7 @@ Update the following dependencies in your `package.json` file:
 },
 "devDependencies": {
   "@ionic/app-scripts": "0.0.45",
+   "typescript": "2.0.6"
 }
 ```
 
