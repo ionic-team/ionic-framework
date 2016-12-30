@@ -2,6 +2,7 @@ import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
 import { transition, transform, isHorizontal, offset, CLS } from './swiper-utils';
 import { getTranslate } from './swiper-transition';
+import { SlideElement } from './swiper-interfaces';
 
 
 export function initZoom(s: Slides, plt: Platform) {
@@ -439,10 +440,13 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
 
   const unRegs = s._zoom.unRegs;
   const evtOpts = { passive: s._touchEvents.start === 'touchstart', zone: false };
+  const slides = s._slides;
+  let slide: SlideElement;
 
   // Scale image
   if (s._supportGestures) {
-    s._slides.forEach(slide => {
+    for (var i = 0; i < slides.length; i++) {
+      slide = slides[i];
       // gesturestart
       plt.registerListener(slide, 'gesturestart', (ev: TouchEvent) => {
         onGestureStart(s, plt, ev);
@@ -457,10 +461,11 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
       plt.registerListener(slide, 'gestureend', (ev: TouchEvent) => {
         onGestureEnd(s, plt, ev);
       }, evtOpts, unRegs);
-    });
+    }
 
   } else if (s._touchEvents.start === 'touchstart') {
-    s._slides.forEach(slide => {
+    for (var i = 0; i < slides.length; i++) {
+      slide = slides[i];
       // touchstart
       plt.registerListener(slide, s._touchEvents.start, (ev: TouchEvent) => {
         onGestureStart(s, plt, ev);
@@ -475,7 +480,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
       plt.registerListener(slide, s._touchEvents.end, (ev: TouchEvent) => {
         onGestureEnd(s, plt, ev);
       }, evtOpts, unRegs);
-    });
+    }
   }
 
   // Move image
@@ -484,13 +489,14 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
   });
   unRegs.push(() => { touchStartSub.unsubscribe(); });
 
-  s._slides.forEach(slide => {
+  for (var i = 0; i < slides.length; i++) {
+    slide = slides[i];
     if (slide.querySelector('.' + CLS.zoomContainer)) {
       plt.registerListener(slide, 's.touchEvents.move', (ev: TouchEvent) => {
         onTouchMove(s, plt, ev);
       }, evtOpts, unRegs);
     }
-  });
+  }
 
   var touchEndSub = s.ionSlideTouchEnd.subscribe(() => {
     onTouchEnd(s);

@@ -435,7 +435,8 @@ export class Slides extends Ion {
 
   /**
    * @output {Slides} Same as `ionWillChange` but caused by autoplay.
-   */  @Output() ionSlideAutoplayStart: EventEmitter<Slides> = new EventEmitter();
+   */
+  @Output() ionSlideAutoplayStart: EventEmitter<Slides> = new EventEmitter();
 
   /**
    * @output {Slides} Expression to evaluate when a autoplay stops.

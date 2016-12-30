@@ -29,15 +29,16 @@ export const SWIPER_EFFECTS: SlideEffects = {
       }
     },
     setTransition: function (s, plt, duration) {
-      s._slides.forEach(slide => {
-        transition(slide, duration);
-      });
+      var slides = s._slides;
+      for (var i = 0; i < slides.length; i++) {
+        transition(slides[i], duration);
+      }
 
       if (s.virtualTranslate && duration !== 0) {
         var eventTriggered = false;
 
-        s._slides.forEach(slide => {
-          plt.transitionEnd(slide, () => {
+        for (var i = 0; i < slides.length; i++) {
+          plt.transitionEnd(slides[i], () => {
             if (eventTriggered || !s) return;
 
             eventTriggered = true;
@@ -45,7 +46,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
 
             triggerTransitionEnd(plt, s._wrapper);
           });
-        });
+        }
       }
     }
   },
@@ -104,12 +105,13 @@ export const SWIPER_EFFECTS: SlideEffects = {
       }
     },
     setTransition: function (s, plt, duration) {
-      s._slides.forEach(slide => {
+      for (var i = 0; i < s._slides.length; i++) {
+        var slide = s._slides[i];
         transition(slide, duration);
         eachChild(slide, '.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left', el => {
           transition(el, duration);
         });
-      });
+      }
 
       if (s.virtualTranslate && duration !== 0) {
         var eventTriggered = false;
@@ -236,12 +238,13 @@ export const SWIPER_EFFECTS: SlideEffects = {
       transform(s._wrapper, 'translate3d(0px,0,' + zFactor + 'px) rotateX(' + (isHorizontal(s) ? 0 : wrapperRotate) + 'deg) rotateY(' + (isHorizontal(s) ? -wrapperRotate : 0) + 'deg)');
     },
     setTransition: function (s, plt, duration) {
-      s._slides.forEach(slide => {
+      for (var i = 0; i < s._slides.length; i++) {
+        var slide = s._slides[i];
         transition(slide, duration);
         eachChild(slide, '.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left', el => {
           transition(el, duration);
         });
-      });
+      }
 
       if (s.cube.shadow && !isHorizontal(s)) {
         eachChild(s.container, '.swiper-cube-shadow', el => {
@@ -313,12 +316,13 @@ export const SWIPER_EFFECTS: SlideEffects = {
       }
     },
     setTransition: function (s, plt, duration) {
-      s._slides.forEach(slide => {
+      for (var i = 0; i < s._slides.length; i++) {
+        var slide = s._slides[i];
         transition(slide, duration);
         eachChild(slide, '.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left', (el) => {
           transition(el, duration);
         });
-      });
+      }
     }
   }
 };

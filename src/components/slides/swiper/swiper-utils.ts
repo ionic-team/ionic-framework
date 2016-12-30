@@ -6,14 +6,14 @@ export function round(a) {
   return Math.floor(a);
 }
 
-export function inlineStyle(ele: HTMLElement|HTMLElement[], styles: any) {
+export function inlineStyle(ele: any, styles: any) {
   if (ele) {
-    if (Array.isArray(ele)) {
-      ele.forEach(el => {
-        inlineStyle(el, styles);
-      });
+    if (ele.length) {
+      for (var i = 0; i < ele.length; i++) {
+        inlineStyle(ele[i], styles);
+      }
 
-    } else {
+    } else if (ele.nodeType) {
       var cssProps = Object.keys(styles);
       for (var i = 0; i < cssProps.length; i++) {
         ele.style[cssProps[i]] = styles[cssProps[i]];
@@ -25,9 +25,9 @@ export function inlineStyle(ele: HTMLElement|HTMLElement[], styles: any) {
 export function addClass(ele: any, className: string) {
   if (ele) {
     if (ele.length) {
-      ele.forEach(el => {
-        addClass(el, className);
-      });
+      for (var i = 0; i < ele.length; i++) {
+        addClass(ele[i], className);
+      }
 
     } else if (ele.nodeType) {
       if (Array.isArray(className)) {
@@ -44,9 +44,9 @@ export function addClass(ele: any, className: string) {
 export function removeClass(ele: any, className: any) {
   if (ele) {
     if (ele.length) {
-      ele.forEach(el => {
-        removeClass(el, className);
-      });
+      for (var i = 0; i < ele.length; i++) {
+        removeClass(ele[i], className);
+      }
 
     } else if (ele.nodeType) {
       if (Array.isArray(className)) {

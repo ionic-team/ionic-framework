@@ -364,13 +364,11 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
   s._virtualSize = -spaceBetween;
 
   // reset margins
-  s._slides.forEach(slide => {
-    if (s._rtl) {
-      inlineStyle(slide, {marginLeft: '', marginTop: ''});
-    } else {
-      inlineStyle(slide, {marginRight: '', marginBottom: ''});
-    }
-  });
+  if (s._rtl) {
+    inlineStyle(s._slides, { marginLeft: '', marginTop: '' });
+  } else {
+    inlineStyle(s._slides, { marginRight: '', marginBottom: '' });
+  }
 
   var slidesNumberEvenToRows;
   if (s.slidesPerColumn > 1) {
