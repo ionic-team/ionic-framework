@@ -12,11 +12,11 @@ import { ViewController } from '../../navigation/view-controller';
  * @name Navbar
  * @description
  * Navbar acts as the navigational toolbar, which also comes with a back
- * button. A navbar can contain a `ion-title`, any number of buttons,
+ * button. A navbar can contain an `ion-title`, any number of buttons,
  * a segment, or a searchbar. Navbars must be placed within an
  * `<ion-header>` in order for them to be placed above the content.
- * It's important to note that navbar's are part of the dynamic navigation
- * stack. If you need a static toolbar, use ion-toolbar.
+ * It's important to note that navbars are part of the dynamic navigation
+ * stack. If you need a static toolbar, use [ion-toolbar](../../toolbar/Toolbar).
  *
  * @usage
  * ```html
@@ -103,7 +103,7 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @input {boolean} whether the back button should be shown or not
+   * @input {boolean} whether the back button should be shown or not.
    */
   @Input()
   get hideBackButton(): boolean {
@@ -116,6 +116,9 @@ export class Navbar extends ToolbarBase {
   constructor(
     public _app: App,
     @Optional() viewCtrl: ViewController,
+    /**
+     * @private
+     */
     @Optional() private navCtrl: NavController,
     config: Config,
     elementRef: ElementRef,
@@ -130,7 +133,9 @@ export class Navbar extends ToolbarBase {
     this._backText = config.get('backButtonText', 'Back');
   }
 
-
+  /**
+   * @private
+   */
   backButtonClick(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -139,7 +144,8 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * Set the text of the Back Button in the Nav Bar. Defaults to "Back".
+   * Set the text of the back button in the Nav Bar. Defaults to "Back".
+   * @param {string} text The text to display for the back button.
    */
   setBackButtonText(text: string) {
     this._backText = text;
