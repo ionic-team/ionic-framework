@@ -105,7 +105,7 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
 
 export function enableKeyboardControl(s: Slides, plt: Platform, shouldEnable: boolean) {
   if (shouldEnable && !s._keyboardUnReg) {
-    s._keyboardUnReg = plt.addListener(plt.doc(), 'keydown', (ev: KeyboardEvent) => {
+    s._keyboardUnReg = plt.registerListener(plt.doc(), 'keydown', (ev: KeyboardEvent) => {
       handleKeyboard(s, plt, ev);
     }, { zone: false });
 

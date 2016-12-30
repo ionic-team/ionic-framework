@@ -51,34 +51,34 @@ export function initEvents(s: Slides, plt: Platform): Function {
   // Touch Events
   if (s._supportTouch) {
     // touchstart
-    plt.addListener(touchEventsTarget, s._touchEvents.start, (ev: SlideUIEvent) => {
+    plt.registerListener(touchEventsTarget, s._touchEvents.start, (ev: SlideUIEvent) => {
       onTouchStart(s, plt, ev);
     }, { passive: true, zone: false }, unregs);
 
     // touchmove
-    plt.addListener(touchEventsTarget, s._touchEvents.move, (ev: SlideUIEvent) => {
+    plt.registerListener(touchEventsTarget, s._touchEvents.move, (ev: SlideUIEvent) => {
       onTouchMove(s, plt, ev);
     }, { passive: true, zone: false }, unregs);
 
     // touchend
-    plt.addListener(touchEventsTarget, s._touchEvents.end, (ev: SlideUIEvent) => {
+    plt.registerListener(touchEventsTarget, s._touchEvents.end, (ev: SlideUIEvent) => {
       onTouchEnd(s, plt, ev);
     }, { passive: true, zone: false }, unregs);
   }
 
   if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouch && !s._supportTouch && plt.is('ios'))) {
     // mousedown
-    plt.addListener(touchEventsTarget, 'mousedown', (ev: SlideUIEvent) => {
+    plt.registerListener(touchEventsTarget, 'mousedown', (ev: SlideUIEvent) => {
       onTouchStart(s, plt, ev);
     }, { zone: false }, unregs);
 
     // mousemove
-    plt.addListener(plt.doc(), 'mousemove', (ev: SlideUIEvent) => {
+    plt.registerListener(plt.doc(), 'mousemove', (ev: SlideUIEvent) => {
       onTouchMove(s, plt, ev);
     }, { zone: false }, unregs);
 
     // mouseup
-    plt.addListener(plt.doc(), 'mouseup', (ev: SlideUIEvent) => {
+    plt.registerListener(plt.doc(), 'mouseup', (ev: SlideUIEvent) => {
       onTouchEnd(s, plt, ev);
     }, { zone: false }, unregs);
   }
@@ -90,26 +90,26 @@ export function initEvents(s: Slides, plt: Platform): Function {
 
   // Next, Prev, Index
   if (s.nextButton) {
-    plt.addListener(s.nextButton, 'click', (ev) => {
+    plt.registerListener(s.nextButton, 'click', (ev) => {
       onClickNext(s, plt, ev);
     }, { zone: false }, unregs);
   }
 
   if (s.prevButton) {
-    plt.addListener(s.prevButton, 'click', (ev) => {
+    plt.registerListener(s.prevButton, 'click', (ev) => {
       onClickPrev(s, plt, ev);
     }, { zone: false }, unregs);
   }
 
   if (s.paginationType) {
-    plt.addListener(s._paginationContainer, 'click', (ev) => {
+    plt.registerListener(s._paginationContainer, 'click', (ev) => {
       onClickIndex(s, plt, ev);
     }, { zone: false }, unregs);
   }
 
   // Prevent Links Clicks
   if (s.preventClicks || s.preventClicksPropagation) {
-    plt.addListener(touchEventsTarget, 'click', (ev) => {
+    plt.registerListener(touchEventsTarget, 'click', (ev) => {
       preventClicks(s, ev);
     }, { zone: false, capture: true }, unregs);
   }

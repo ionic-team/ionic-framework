@@ -444,17 +444,17 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
   if (s._supportGestures) {
     s._slides.forEach(slide => {
       // gesturestart
-      plt.addListener(slide, 'gesturestart', (ev: TouchEvent) => {
+      plt.registerListener(slide, 'gesturestart', (ev: TouchEvent) => {
         onGestureStart(s, plt, ev);
       }, evtOpts, unRegs);
 
       // gesturechange
-      plt.addListener(slide, 'gesturechange', (ev: TouchEvent) => {
+      plt.registerListener(slide, 'gesturechange', (ev: TouchEvent) => {
         onGestureChange(s, plt, ev);
       }, evtOpts, unRegs);
 
       // gestureend
-      plt.addListener(slide, 'gestureend', (ev: TouchEvent) => {
+      plt.registerListener(slide, 'gestureend', (ev: TouchEvent) => {
         onGestureEnd(s, plt, ev);
       }, evtOpts, unRegs);
     });
@@ -462,17 +462,17 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
   } else if (s._touchEvents.start === 'touchstart') {
     s._slides.forEach(slide => {
       // touchstart
-      plt.addListener(slide, s._touchEvents.start, (ev: TouchEvent) => {
+      plt.registerListener(slide, s._touchEvents.start, (ev: TouchEvent) => {
         onGestureStart(s, plt, ev);
       }, evtOpts, unRegs);
 
       // touchmove
-      plt.addListener(slide, s._touchEvents.move, (ev: TouchEvent) => {
+      plt.registerListener(slide, s._touchEvents.move, (ev: TouchEvent) => {
         onGestureChange(s, plt, ev);
       }, evtOpts, unRegs);
 
       // touchend
-      plt.addListener(slide, s._touchEvents.end, (ev: TouchEvent) => {
+      plt.registerListener(slide, s._touchEvents.end, (ev: TouchEvent) => {
         onGestureEnd(s, plt, ev);
       }, evtOpts, unRegs);
     });
@@ -486,7 +486,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
 
   s._slides.forEach(slide => {
     if (slide.querySelector('.' + CLS.zoomContainer)) {
-      plt.addListener(slide, 's.touchEvents.move', (ev: TouchEvent) => {
+      plt.registerListener(slide, 's.touchEvents.move', (ev: TouchEvent) => {
         onTouchMove(s, plt, ev);
       }, evtOpts, unRegs);
     }

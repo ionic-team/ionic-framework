@@ -31,7 +31,7 @@ export class Keyboard {
 
     const win = _plt.win();
 
-    _plt.addListener(win, 'native.keyboardhide', () => {
+    _plt.registerListener(win, 'native.keyboardhide', () => {
       _plt.cancelTimeout(this._tmr);
       this._tmr = _plt.timeout(() => {
         // this custom cordova plugin event fires when the keyboard will hide
@@ -43,7 +43,7 @@ export class Keyboard {
       }, 80);
     }, { zone: false, passive: true });
 
-    _plt.addListener(win, 'native.keyboardshow', () => {
+    _plt.registerListener(win, 'native.keyboardshow', () => {
       _plt.cancelTimeout(this._tmr);
     }, { zone: false, passive: true });
 
@@ -195,13 +195,13 @@ export class Keyboard {
 
       if (isKeyInputEnabled) {
         // listen for when a mousedown or touchstart event happens
-        unRegMouse = platform.addListener(doc, 'mousedown', pointerDown, evOpts);
-        unRegTouch = platform.addListener(doc, 'touchstart', pointerDown, evOpts);
+        unRegMouse = platform.registerListener(doc, 'mousedown', pointerDown, evOpts);
+        unRegTouch = platform.registerListener(doc, 'touchstart', pointerDown, evOpts);
       }
     }
 
     // always listen for tab keydown events
-    platform.addListener(platform.doc(), 'keydown', keyDown, evOpts);
+    platform.registerListener(platform.doc(), 'keydown', keyDown, evOpts);
   }
 
   hasFocusedTextInput() {

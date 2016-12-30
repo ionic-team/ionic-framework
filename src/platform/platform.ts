@@ -632,7 +632,7 @@ export class Platform {
    * If options are not supported, then just return a boolean which
    * represents "capture". Returns a method to remove the listener.
    */
-  addListener(ele: any, eventName: string, callback: {(ev?: UIEvent)}, opts: EventListenerOptions, unregisterListenersCollection?: Function[]): Function {
+  registerListener(ele: any, eventName: string, callback: {(ev?: UIEvent)}, opts: EventListenerOptions, unregisterListenersCollection?: Function[]): Function {
     // use event listener options when supported
     // otherwise it's just a boolean for the "capture" arg
     const listenerOpts: any = this._uiEvtOpts ? {
@@ -684,8 +684,8 @@ export class Platform {
     }
 
     if (el) {
-      this.addListener(el, 'webkitTransitionEnd', <any>onTransitionEnd, { zone: false }, unRegs);
-      this.addListener(el, 'transitionend', <any>onTransitionEnd, { zone: false }, unRegs);
+      this.registerListener(el, 'webkitTransitionEnd', <any>onTransitionEnd, { zone: false }, unRegs);
+      this.registerListener(el, 'transitionend', <any>onTransitionEnd, { zone: false }, unRegs);
     }
 
     return unregister;
@@ -703,7 +703,7 @@ export class Platform {
       callback(win, doc);
 
     } else {
-      unreg = this.addListener(win, 'load', () => {
+      unreg = this.registerListener(win, 'load', () => {
         unreg && unreg();
         callback(win, doc);
       }, { zone: false });
@@ -776,7 +776,7 @@ export class Platform {
     // add the window resize event listener XXms after
     this.timeout(() => {
       var timerId: number;
-      this.addListener(this._win, 'resize', () => {
+      this.registerListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
         timerId = setTimeout(() => {

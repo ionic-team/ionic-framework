@@ -56,7 +56,7 @@ export class NativeInput {
       // 2) the newly tapped document element is not an input
       console.debug(`native-input, blurring enabled`);
 
-      var unregTouchEnd = this._plt.addListener(this._plt.doc(), 'touchend', (ev: TouchEvent) => {
+      var unregTouchEnd = this._plt.registerListener(this._plt.doc(), 'touchend', (ev: TouchEvent) => {
         var tapped = <HTMLElement>ev.target;
         if (tapped && self.element()) {
           if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {

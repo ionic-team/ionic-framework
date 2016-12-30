@@ -18,7 +18,7 @@ export function initA11y(s: Slides, plt: Platform) {
     addRole(s.nextButton, 'button');
     addLabel(s.nextButton, s.nextSlideMessage);
 
-    plt.addListener(s.nextButton, 'keydown', (ev: KeyboardEvent) => {
+    plt.registerListener(s.nextButton, 'keydown', (ev: KeyboardEvent) => {
       onEnterKey(s, ev);
     }, { zone: false }, unregs);
   }
@@ -28,7 +28,7 @@ export function initA11y(s: Slides, plt: Platform) {
     addRole(s.prevButton, 'button');
     addLabel(s.prevButton, s.prevSlideMessage);
 
-    plt.addListener(s.prevButton, 'keydown', (ev: KeyboardEvent) => {
+    plt.registerListener(s.prevButton, 'keydown', (ev: KeyboardEvent) => {
       onEnterKey(s, ev);
     }, { zone: false }, unregs);
   }
