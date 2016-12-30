@@ -110,13 +110,13 @@ describe('mock-providers', () => {
       let callback2 = () => { callOrder.push(2); };
       let callback3 = () => { callOrder.push(3); };
 
-      platform.raf(callback1);
-      let tmr2 = platform.raf(callback2);
-      platform.raf(callback3);
+      plt.raf(callback1);
+      let tmr2 = plt.raf(callback2);
+      plt.raf(callback3);
 
-      platform.cancelRaf(tmr2);
+      plt.cancelRaf(tmr2);
 
-      platform.flushRafs(() => {
+      plt.flushRafs(() => {
         expect(callOrder).toEqual([1, 3]);
         done();
       });
@@ -128,10 +128,10 @@ describe('mock-providers', () => {
       let callback1 = (timeStamp) => { callOrder.push(1); timestamps.push(timeStamp); };
       let callback2 = (timeStamp) => { callOrder.push(2); timestamps.push(timeStamp); };
 
-      platform.raf(callback1);
-      platform.raf(callback2);
+      plt.raf(callback1);
+      plt.raf(callback2);
 
-      platform.flushRafs(() => {
+      plt.flushRafs(() => {
         expect(callOrder).toEqual([1, 2]);
         expect(timestamps).toEqual([1, 1]);
         done();
@@ -145,16 +145,16 @@ describe('mock-providers', () => {
       let callback3 = () => { callOrder.push(3); };
       let callback4 = () => { callOrder.push(4); };
 
-      platform.timeout(callback1, 10);
-      platform.timeout(callback2, 20);
-      platform.timeout(callback3, 30);
-      platform.timeout(callback4, 40);
+      plt.timeout(callback1, 10);
+      plt.timeout(callback2, 20);
+      plt.timeout(callback3, 30);
+      plt.timeout(callback4, 40);
 
-      platform.flushTimeoutsUntil(30, () => {
+      plt.flushTimeoutsUntil(30, () => {
         expect(callOrder).toEqual([1, 2]);
         callOrder.length = 0;
 
-        platform.flushTimeoutsUntil(50, () => {
+        plt.flushTimeoutsUntil(50, () => {
           expect(callOrder).toEqual([3, 4]);
           done();
         });
@@ -167,13 +167,13 @@ describe('mock-providers', () => {
       let callback2 = () => { callOrder.push(2); };
       let callback3 = () => { callOrder.push(3); };
 
-      platform.timeout(callback1, 10);
-      let tmr2 = platform.timeout(callback2, 20);
-      platform.timeout(callback3, 30);
+      plt.timeout(callback1, 10);
+      let tmr2 = plt.timeout(callback2, 20);
+      plt.timeout(callback3, 30);
 
-      platform.cancelTimeout(tmr2);
+      plt.cancelTimeout(tmr2);
 
-      platform.flushTimeouts(() => {
+      plt.flushTimeouts(() => {
         expect(callOrder).toEqual([1, 3]);
         done();
       });
@@ -186,12 +186,12 @@ describe('mock-providers', () => {
       let callback3 = () => { callOrder.push(3); };
       let callback4 = () => { callOrder.push(4); };
 
-      platform.timeout(callback1, 30);
-      platform.timeout(callback2, 10);
-      platform.timeout(callback3, 20);
-      platform.timeout(callback4, 10);
+      plt.timeout(callback1, 30);
+      plt.timeout(callback2, 10);
+      plt.timeout(callback3, 20);
+      plt.timeout(callback4, 10);
 
-      platform.flushTimeouts(() => {
+      plt.flushTimeouts(() => {
         expect(callOrder).toEqual([2, 4, 3, 1]);
         done();
       });
@@ -202,18 +202,18 @@ describe('mock-providers', () => {
       let callback1 = () => { callOrder.push(1); };
       let callback2 = () => { callOrder.push(2); };
 
-      platform.timeout(callback1, 10);
-      platform.timeout(callback2, 10);
+      plt.timeout(callback1, 10);
+      plt.timeout(callback2, 10);
 
-      platform.flushTimeouts(() => {
+      plt.flushTimeouts(() => {
         expect(callOrder).toEqual([1, 2]);
         done();
       });
     });
 
-    let platform: MockPlatform;
+    let plt: MockPlatform;
     beforeEach(() => {
-      platform = mockPlatform();
+      plt = mockPlatform();
     });
 
   });

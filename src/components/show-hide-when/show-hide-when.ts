@@ -104,10 +104,10 @@ export class ShowWhen extends DisplayWhen {
 
   constructor(
     @Attribute('showWhen') showWhen: string,
-    platform: Platform,
+    plt: Platform,
     zone: NgZone
   ) {
-    super(showWhen, platform, zone);
+    super(showWhen, plt, zone);
   }
 
 }
@@ -163,10 +163,10 @@ export class HideWhen extends DisplayWhen {
 
   constructor(
     @Attribute('hideWhen') hideWhen: string,
-    platform: Platform,
+    plt: Platform,
     zone: NgZone
   ) {
-    super(hideWhen, platform, zone);
+    super(hideWhen, plt, zone);
   }
 
 }

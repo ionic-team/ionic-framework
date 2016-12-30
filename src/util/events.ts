@@ -172,8 +172,8 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
 /**
  * @private
  */
-export function setupProvideEvents(platform: Platform, dom: DomController) {
+export function setupProvideEvents(plt: Platform, dom: DomController) {
   return function() {
-    return setupEvents(platform, dom);
+    return setupEvents(plt, dom);
   };
 }

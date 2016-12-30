@@ -24,7 +24,7 @@ describe('App', () => {
 
       expect(tabs._selectHistory).toEqual([tab1.id, tab2.id]);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(tabs, 'select');
       spyOn(tab1, 'pop');
       spyOn(tab2, 'pop');
@@ -36,7 +36,7 @@ describe('App', () => {
       expect(tab1.pop).not.toHaveBeenCalled();
       expect(tab2.pop).not.toHaveBeenCalled();
       expect(portal.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).toHaveBeenCalled();
+      expect(plt.exitApp).toHaveBeenCalled();
     });
 
     it('should pop from the active tab, when tabs is nested is the root nav', () => {
@@ -51,7 +51,7 @@ describe('App', () => {
 
       tab2.setSelected(true);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(tab2, 'pop');
       spyOn(portal, 'pop');
 
@@ -63,7 +63,7 @@ describe('App', () => {
 
       expect(tab2.pop).toHaveBeenCalled();
       expect(portal.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should pop from the active tab, when tabs is the root', () => {
@@ -75,7 +75,7 @@ describe('App', () => {
 
       tab2.setSelected(true);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(tab2, 'pop');
 
       let view1 = mockView();
@@ -85,7 +85,7 @@ describe('App', () => {
       app.goBack();
 
       expect(tab2.pop).toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should pop the root nav when nested nav has less than 2 views', () => {
@@ -95,7 +95,7 @@ describe('App', () => {
       nestedNav.parent = rootNav;
       app._setRootNav(rootNav);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(rootNav, 'pop');
       spyOn(nestedNav, 'pop');
       spyOn(portal, 'pop');
@@ -112,7 +112,7 @@ describe('App', () => {
       expect(portal.pop).not.toHaveBeenCalled();
       expect(rootNav.pop).toHaveBeenCalled();
       expect(nestedNav.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should pop a view from the nested nav that has more than 1 view', () => {
@@ -121,7 +121,7 @@ describe('App', () => {
       app._setRootNav(rootNav);
       rootNav.registerChildNav(nestedNav);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(rootNav, 'pop');
       spyOn(nestedNav, 'pop');
       spyOn(portal, 'pop');
@@ -139,14 +139,14 @@ describe('App', () => {
       expect(portal.pop).not.toHaveBeenCalled();
       expect(rootNav.pop).not.toHaveBeenCalled();
       expect(nestedNav.pop).toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should pop the overlay in the portal of the root nav', () => {
       let nav = mockNavController();
       app._setRootNav(nav);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
@@ -161,14 +161,14 @@ describe('App', () => {
 
       expect(portal.pop).toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should pop the second view in the root nav', () => {
       let nav = mockNavController();
       app._setRootNav(nav);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
@@ -180,14 +180,14 @@ describe('App', () => {
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should exit app when only one view in the root nav', () => {
       let nav = mockNavController();
       app._setRootNav(nav);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
@@ -201,14 +201,14 @@ describe('App', () => {
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).toHaveBeenCalled();
+      expect(plt.exitApp).toHaveBeenCalled();
     });
 
     it('should not exit app when only one view in the root nav, but navExitApp config set', () => {
       let nav = mockNavController();
       app._setRootNav(nav);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
@@ -224,14 +224,14 @@ describe('App', () => {
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should not go back if app is not enabled', () => {
       let nav = mockNavController();
       app._setRootNav(nav);
 
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
@@ -244,15 +244,15 @@ describe('App', () => {
 
       expect(portal.pop).not.toHaveBeenCalled();
       expect(nav.pop).not.toHaveBeenCalled();
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should not go back if there is no root nav', () => {
-      spyOn(platform, 'exitApp');
+      spyOn(plt, 'exitApp');
 
       app.goBack();
 
-      expect(platform.exitApp).not.toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
   });
@@ -356,8 +356,8 @@ describe('App', () => {
   describe('setEnabled', () => {
 
     it('should disable click block when app is enabled', (done) => {
-      platform = mockPlatform();
-      app._clickBlock = new ClickBlock(app, mockConfig(), platform, mockElementRef(), mockRenderer());
+      plt = mockPlatform();
+      app._clickBlock = new ClickBlock(app, mockConfig(), plt, mockElementRef(), mockRenderer());
 
       spyOn(app._clickBlock, '_activate');
 
@@ -365,7 +365,7 @@ describe('App', () => {
 
       expect(app._clickBlock._activate).not.toHaveBeenCalledWith();
 
-      platform.flushTimeouts(() => {
+      plt.flushTimeouts(() => {
         expect(app._clickBlock._activate).toHaveBeenCalledWith(false);
         done();
       });
@@ -409,13 +409,13 @@ describe('App', () => {
 
   var app: App;
   var config: Config;
-  var platform: MockPlatform;
+  var plt: MockPlatform;
   var portal: OverlayPortal;
 
   beforeEach(() => {
     config = mockConfig();
-    platform = mockPlatform();
-    app = mockApp(config, platform);
+    plt = mockPlatform();
+    app = mockApp(config, plt);
     portal = app._appRoot._getPortal(AppPortal.MODAL);
   });
 

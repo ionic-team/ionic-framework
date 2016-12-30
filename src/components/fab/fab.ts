@@ -288,8 +288,8 @@ export class FabContainer {
    */
   @ContentChildren(FabList) _fabLists: QueryList<FabList>;
 
-  constructor(private _elementRef: ElementRef, platform: Platform) {
-    this._events = new UIEventManager(platform);
+  constructor(private _elementRef: ElementRef, plt: Platform) {
+    this._events = new UIEventManager(plt);
   }
 
   /**

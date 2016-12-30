@@ -64,10 +64,10 @@ export class PickerColumnCmp {
     private elementRef: ElementRef,
     private _zone: NgZone,
     private _haptic: Haptic,
-    platform: Platform,
+    plt: Platform,
     domCtrl: DomController,
   ) {
-    this.events = new UIEventManager(platform);
+    this.events = new UIEventManager(plt);
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
     this.scaleFactor = config.getNumber('pickerScaleFactor', 1);
     this.decelerateFunc = this.decelerate.bind(this);
@@ -462,7 +462,7 @@ export class PickerCmp {
     private _viewCtrl: ViewController,
     private _elementRef: ElementRef,
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
@@ -568,7 +568,7 @@ export class PickerCmp {
   }
 
   ionViewDidEnter() {
-    this._platform.focusOutActiveElement();
+    this._plt.focusOutActiveElement();
 
     let focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {

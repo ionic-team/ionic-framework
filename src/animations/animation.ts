@@ -38,8 +38,8 @@ export class Animation {
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
-  constructor(platform: Platform, ele?: any, opts?: AnimationOptions) {
-    this.plt = platform;
+  constructor(plt: Platform, ele?: any, opts?: AnimationOptions) {
+    this.plt = plt;
     this.element(ele);
     this.opts = opts;
   }

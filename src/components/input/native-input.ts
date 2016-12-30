@@ -174,7 +174,7 @@ export class NativeInput {
 
 }
 
-function cloneInputComponent(platform: Platform, srcNativeInputEle: HTMLInputElement) {
+function cloneInputComponent(plt: Platform, srcNativeInputEle: HTMLInputElement) {
   // given a native <input> or <textarea> element
   // find its parent wrapping component like <ion-input> or <ion-textarea>
   // then clone the entire component
@@ -208,10 +208,10 @@ function cloneInputComponent(platform: Platform, srcNativeInputEle: HTMLInputEle
     srcComponentEle.style.pointerEvents = 'none';
   }
 
-  (<any>srcNativeInputEle.style)[platform.Css.transform] = 'scale(0)';
+  (<any>srcNativeInputEle.style)[plt.Css.transform] = 'scale(0)';
 }
 
-function removeClone(platform: Platform, srcNativeInputEle: HTMLElement) {
+function removeClone(plt: Platform, srcNativeInputEle: HTMLElement) {
   const srcComponentEle = <HTMLElement>srcNativeInputEle.closest('ion-input,ion-textarea');
   if (srcComponentEle && srcComponentEle.parentElement) {
     const clonedInputEles = srcComponentEle.parentElement.querySelectorAll('.cloned-input');
@@ -221,7 +221,7 @@ function removeClone(platform: Platform, srcNativeInputEle: HTMLElement) {
 
     srcComponentEle.style.pointerEvents = '';
   }
-  (<any>srcNativeInputEle.style)[platform.Css.transform] = '';
+  (<any>srcNativeInputEle.style)[plt.Css.transform] = '';
   srcNativeInputEle.style.opacity = '';
 }
 

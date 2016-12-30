@@ -37,7 +37,7 @@ export class Platform {
   private _lang: string;
   private _ua: string;
   private _qp = new QueryParams();
-  private _bPlt: string;
+  private _nPlt: string;
   private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
@@ -492,15 +492,15 @@ export class Platform {
   /**
    * @private
    */
-  setNavigatorPlatform(navigatorPlatform: string) {
-    this._bPlt = navigatorPlatform;
+  setNavigatorPlatform(navigatorPlt: string) {
+    this._nPlt = navigatorPlt;
   }
 
   /**
    * @private
    */
   navigatorPlatform(): string {
-    return this._bPlt || '';
+    return this._nPlt || '';
   }
 
   /**
@@ -843,7 +843,7 @@ export class Platform {
    */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
     const rgx = new RegExp(navigatorPlatformExpression, 'i');
-    return rgx.test(this._bPlt);
+    return rgx.test(this._nPlt);
   }
 
   /**
@@ -903,24 +903,24 @@ export class Platform {
     let enginePlatformNode: PlatformNode;
 
     // figure out the most specific platform and active engine
-    let tmpPlatform: PlatformNode;
+    let tmpPlt: PlatformNode;
     for (let platformName in this._registry) {
 
-      tmpPlatform = this.matchPlatform(platformName);
-      if (tmpPlatform) {
+      tmpPlt = this.matchPlatform(platformName);
+      if (tmpPlt) {
         // we found a platform match!
         // check if its more specific than the one we already have
 
-        if (tmpPlatform.isEngine) {
+        if (tmpPlt.isEngine) {
           // because it matched then this should be the active engine
           // you cannot have more than one active engine
-          enginePlatformNode = tmpPlatform;
+          enginePlatformNode = tmpPlt;
 
-        } else if (!rootPlatformNode || tmpPlatform.depth > rootPlatformNode.depth) {
+        } else if (!rootPlatformNode || tmpPlt.depth > rootPlatformNode.depth) {
           // only find the root node for platforms that are not engines
           // set this node as the root since we either don't already
           // have one, or this one is more specific that the current one
-          rootPlatformNode = tmpPlatform;
+          rootPlatformNode = tmpPlt;
         }
       }
     }
