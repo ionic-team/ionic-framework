@@ -12,10 +12,9 @@ import * as commonjs from 'rollup-plugin-commonjs';
 import * as runSequence from 'run-sequence';
 import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
-import { argv } from 'yargs';
 
 import { DIST_E2E_COMPONENTS_ROOT, DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_COMPONENTS_ROOT, SRC_ROOT } from '../constants';
-import { createTempTsConfig, deleteFiles, runNgc } from '../util';
+import { createTempTsConfig, deleteFiles, getFolderInfo, runNgc } from '../util';
 
 task('e2e.prod', e2eBuild);
 
@@ -109,7 +108,7 @@ function buildE2ETests(folderInfo: any, done: Function) {
       `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.ts`,
     ];
   }
-  createTempTsConfig(includeGlob, ES5, ES_2015, `${DIST_E2E_ROOT}/tsconfig.json`);
+  createTempTsConfig(includeGlob, ES5, ES_2015, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_E2E_ROOT}/tsconfig.json`);
   runNgc(`${DIST_E2E_ROOT}/tsconfig.json`, (err) => {
     if (err) {
       done(err);
@@ -261,19 +260,4 @@ function e2eComponentsExists(): boolean {
     return false;
   }
   return true;
-}
-
-function getFolderInfo() {
-  let componentName: string = null;
-  let componentTest: string = null;
-  const folder: string = argv.folder || argv.f;
-  if (folder && folder.length) {
-    const folderSplit = folder.split('/');
-    componentName = folderSplit[0];
-    componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
-  }
-  return {
-    componentName: componentName,
-    componentTest: componentTest
-  };
 }
