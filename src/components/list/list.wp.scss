@@ -42,6 +42,24 @@ $list-wp-header-font-size:       2rem !default;
 /// @prop - Text color of the header in a list
 $list-wp-header-color:           $list-wp-text-color !default;
 
+/// @prop - Padding left of the footer in a list
+$list-wp-footer-padding-left:    $item-wp-padding-left !default;
+
+/// @prop - Border bottom of the footer in a list
+$list-wp-footer-border-bottom:   1px solid $list-wp-border-color !default;
+
+/// @prop - Font size of the footer in a list
+$list-wp-footer-font-size:       2rem !default;
+
+/// @prop - Text color of the footer in a list
+$list-wp-footer-color:           $list-wp-text-color !default;
+
+/// @prop - Margin-Top of ion-label child of the footer list
+$list-wp-footer-margin-top:      $item-wp-padding-top / 2;
+
+/// @prop - Margin-Bottom of ion-label child of the footer list
+$list-wp-footer-margin-bottom:   $item-wp-padding-bottom / 2;
+
 
 // Windows Default List
 // --------------------------------------------------
@@ -59,8 +77,8 @@ $list-wp-header-color:           $list-wp-text-color !default;
   border-top: 1px solid $list-wp-border-color;
 }
 
-.list-wp > .item-block:last-child,
-.list-wp > .item-wrapper:last-child .item-block {
+.list-wp > .item-block:last-of-type,
+.list-wp > .item-wrapper:last-of-type .item-block {
   border-bottom: 1px solid $list-wp-border-color;
 }
 
@@ -166,11 +184,33 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 
-// Generate Windows List Header Colors
+// Windows List Footer
+// --------------------------------------------------
+
+.list-footer-wp {
+  padding-left: $list-wp-header-padding-left;
+
+  border-bottom: $list-wp-header-border-bottom;
+  font-size: $list-wp-header-font-size;
+  color: $list-wp-header-color;
+}
+
+.list-footer-wp .label-wp {
+  margin-top: $list-wp-footer-margin-top;
+  margin-bottom: $list-wp-footer-margin-bottom;
+}
+
+
+// Generate Windows List Header and Footer Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
   .list-header-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+  .list-footer-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

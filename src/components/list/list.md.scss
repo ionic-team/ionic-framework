@@ -48,6 +48,26 @@ $list-md-header-font-size:       1.4rem !default;
 /// @prop - Text color of the header in a list
 $list-md-header-color:           #757575 !default;
 
+/// @prop - Padding left of the footer in a list
+$list-md-footer-padding-left:    $item-md-padding-left !default;
+
+/// @prop - Minimum height of the footer in a list
+$list-md-footer-min-height:      4.5rem !default;
+
+/// @prop - Border top of the footer in a list
+$list-md-footer-border-top:      1px solid $list-md-border-color !default;
+
+/// @prop - Font size of the footer in a list
+$list-md-footer-font-size:       1.2rem !default;
+
+/// @prop - Text color of the footer in a list
+$list-md-footer-color:           #757575 !default;
+
+/// @prop - Margin-Top of ion-label child of the footer list
+$list-md-footer-margin-top:      $item-md-padding-top / 2;
+
+/// @prop - Margin-Bottom of ion-label child of the footer list
+$list-md-footer-margin-bottom:   $item-md-padding-bottom / 2;
 
 // Material Design Default List
 // --------------------------------------------------
@@ -60,8 +80,8 @@ $list-md-header-color:           #757575 !default;
   border-bottom: 1px solid $list-md-border-color;
 }
 
-.list-md > .item-block:last-child,
-.list-md > .item-wrapper:last-child {
+.list-md > .item-block:last-of-type,
+.list-md > .item-wrapper:last-of-type {
   ion-label,
   .item-inner {
     border-bottom: 0;
@@ -139,7 +159,8 @@ $list-md-header-color:           #757575 !default;
   margin-top: 0;
 }
 
-.list-md[inset] ion-list-header {
+.list-md[inset] ion-list-header,
+.list-md[inset] ion-list-footer {
   background-color: $list-md-background-color;
 }
 
@@ -169,11 +190,34 @@ $list-md-header-color:           #757575 !default;
 }
 
 
-// Generate Material Design List Header Colors
+// Material Design List Footer
+// --------------------------------------------------
+
+.list-footer-md {
+  padding-left: $list-md-footer-padding-left;
+
+  min-height: $list-md-footer-min-height;
+
+  font-size: $list-md-footer-font-size;
+  color: $list-md-footer-color;
+}
+
+.list-footer-md .label-md {
+  margin-top: $list-md-footer-margin-top;
+  margin-bottom: $list-md-footer-margin-bottom;
+}
+
+
+// Generate Material Design List Header and Footer Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
   .list-header-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+  .list-footer-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }

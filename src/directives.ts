@@ -25,6 +25,7 @@ import { ItemSliding, ItemOptions } from './components/item/item-sliding';
 import { Label } from './components/label/label';
 import { List } from './components/list/list';
 import { ListHeader } from './components/list/list-header';
+import { ListFooter } from './components/list/list-footer';
 import { Menu } from './components/menu/menu';
 import { MenuClose } from './components/menu/menu-close';
 import { MenuToggle } from './components/menu/menu-toggle';
@@ -100,6 +101,7 @@ export { ItemSliding, ItemOptions, ItemSideFlags } from './components/item/item-
 export { Label } from './components/label/label';
 export { List } from './components/list/list';
 export { ListHeader } from './components/list/list-header';
+export { ListFooter } from './components/list/list-footer';
 export { Loading, LoadingController } from './components/loading/loading';
 export { LoadingOptions } from './components/loading/loading-options';
 export { Menu } from './components/menu/menu';
@@ -202,6 +204,7 @@ export const IONIC_DIRECTIVES: any[] = [
   Label,
   List,
   ListHeader,
+  ListFooter,
   Menu,
   MenuClose,
   MenuToggle,

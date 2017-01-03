@@ -17,6 +17,20 @@ ion-list-header {
   min-height: 4rem;
 }
 
+ion-list-footer {
+  display: flex;
+  overflow: hidden;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 3rem;
+}
+
 ion-list {
   display: block;
 
