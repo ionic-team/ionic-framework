@@ -60,6 +60,8 @@ describe('Img', () => {
     contentElementRef = mockElementRef();
     dom = mockDomController();
     content = new Content(mockConfig(), mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
+    content._scrollEle = document.createElement('div');
+    content._scrollEle.className = 'scroll-content';
 
     elementRef = mockElementRef();
     renderer = mockRenderer();
