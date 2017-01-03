@@ -58,7 +58,7 @@ export function initEvents(s: Slides, plt: Platform): Function {
     // touchmove
     plt.registerListener(touchEventsTarget, s._touchEvents.move, (ev: SlideUIEvent) => {
       onTouchMove(s, plt, ev);
-    }, { passive: true, zone: false }, unregs);
+    }, { zone: false }, unregs);
 
     // touchend
     plt.registerListener(touchEventsTarget, s._touchEvents.end, (ev: SlideUIEvent) => {
