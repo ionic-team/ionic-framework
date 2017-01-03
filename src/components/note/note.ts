@@ -7,7 +7,7 @@ import { Ion } from '../ion';
   * @name Note
   * @module ionic
   * @description
-  * A note is detailed item in an ion-item. It creates greyed out element that can be on the left or right side of an item.
+  * A note adds a greyed out element that can be on the left or right side of an item.
   * @usage
   *
   * ```html
