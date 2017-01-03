@@ -135,7 +135,7 @@ describe('Refresher', () => {
       refresher._appliedStyles = true;
 
       refresher.startY = 100;
-      let result = refresher._onMove( <TouchEvent> <any> touchEv(85) );
+      refresher._onMove( <TouchEvent> <any> touchEv(85) );
 
       done();
 
