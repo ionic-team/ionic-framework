@@ -37,7 +37,9 @@ export class OverlayPortal extends NavControllerBase {
 
     // on every page change make sure the portal has
     // dismissed any views that should be auto dismissed on page change
-    app.viewDidLeave.subscribe(this.dismissPageChangeViews.bind(this));
+    app.viewDidLeave.subscribe((ev) => {
+      !ev.isOverlay && this.dismissPageChangeViews();
+    });
   }
 
   @Input('overlay-portal')

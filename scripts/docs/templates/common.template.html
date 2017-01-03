@@ -12,6 +12,13 @@ docType: "<$ doc.docType $>"
 <@ if doc.demo @>show_preview_device: true
 preview_device_url: "<$ doc.demo $>"
 angular_controller: APIDemoCtrl <@ endif @>
+<@- if doc.additionalDemo @>
+additional_preview_device_urls:
+
+<@- for demo in doc.additionalDemo @>
+  - <$ demo $>
+<@- endfor -@>
+<@ endif @>
 ---
 
 
