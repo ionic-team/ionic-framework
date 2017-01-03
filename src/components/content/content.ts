@@ -50,7 +50,7 @@ export { ScrollEvent } from '../../util/scroll-view';
  *
  * @advanced
  *
- * Resizing the content
+ * ### Resizing the Content
  *
  *
  * ```ts
@@ -81,7 +81,7 @@ export { ScrollEvent } from '../../util/scroll-view';
  * ```
  *
  *
- * Scroll to a specific position
+ * ### Scrolling to a Specific Position
  *
  * ```ts
  * import { Component, ViewChild } from '@angular/core';
@@ -101,6 +101,19 @@ export { ScrollEvent } from '../../util/scroll-view';
  *     this.content.scrollTo(0, 500, 200);
  *   }
  * }
+ * ```
+ *
+ * ### Disabling the "Bounce" Effect
+ *
+ * By default, when the user reaches the top or bottom of the content in `ion-content`
+ * there is a "bounce" effect that signals to the user that they've reached the limit of
+ * the scrollable area. This is standard behavior on mobile, but in some cases may not be
+ * desirable. To disable this effect, add the `no-bounce` attribute to `ion-content`.
+ *
+ * ```ts
+ * <ion-content no-bounce>
+ *   Your Non-Bouncing Content Here!
+ * </ion-content>
  * ```
  *
  */
