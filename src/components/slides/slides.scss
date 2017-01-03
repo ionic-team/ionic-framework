@@ -499,3 +499,7 @@ ion-slides {
     max-height: 100%;
   }
 }
+
+ion-slide[scroll] {
+  overflow-y: scroll;
+}
