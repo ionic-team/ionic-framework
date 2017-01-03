@@ -270,8 +270,8 @@ describe('Refresher', () => {
     };
   }
 
-  function getScrollElementStyles() {
-    return content._scrollEle.style;
-  }
+  // function getScrollElementStyles() {
+  //   return content._scrollEle.style;
+  // }
 
 });
