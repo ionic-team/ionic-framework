@@ -4,18 +4,22 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2015"],
-    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "types": ["jasmine"]
+    "types": [
+      "jasmine"
+    ]
   },
   "include": [
-    "./src/**/*.ts",
-    "./demos/src/**/*.ts"
+    "./**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,
