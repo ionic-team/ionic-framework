@@ -221,18 +221,19 @@ describe('Refresher', () => {
   });
 
 
+  let contentElementRef;
   let refresher: Refresher;
   let content: Content;
   let dom: any;
 
   beforeEach(() => {
-    let gestureController = new GestureController(null);
-    let elementRef = mockElementRef();
+    contentElementRef = mockElementRef();
     dom = mockDomController();
-    elementRef.nativeElement.children.push('');
-    content = new Content(mockConfig(), mockPlatform(), dom, mockElementRef(), mockRenderer(), null, null, mockZone(), null, null);
+    content = new Content(mockConfig(), mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
     content._scrollEle = document.createElement('div');
     content._scrollEle.className = 'scroll-content';
+
+    let gestureController = new GestureController(null);
 
     refresher = new Refresher(mockPlatform(), content, mockZone(), gestureController);
   });
