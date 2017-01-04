@@ -18,6 +18,7 @@ import { ViewController } from '../../navigation/view-controller';
   template:
     '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
     '<div class="alert-wrapper">' +
+      '<div class="alert-background"></div>' +
       '<div class="alert-head">' +
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
         '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
@@ -106,6 +107,9 @@ export class AlertCmp {
     this.mode = config.get('mode');
     _renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
+    if (_config.getBoolean('backdropEffects')) {
+      renderer.setElementClass(_elementRef.nativeElement, `backdrop-effect`, true);
+    }
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions

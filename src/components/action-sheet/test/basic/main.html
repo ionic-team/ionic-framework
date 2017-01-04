@@ -17,4 +17,40 @@
     Result: {{result}}
   </pre>
 
+  <div class="float left"></div>
+  <div class="float center"></div>
+  <div class="float right"></div>
+  <div class="float black"></div>
+
 </ion-content>
+
+
+<style>
+  .float {
+    z-index: -2;
+    position: absolute;
+    bottom: 0px;
+    width: 25%;
+    height: 250px;
+  }
+  .left {
+    left: 0;
+    background: #f53d3d;
+  }
+  .center {
+    left: 37.5%;
+    background: #387ef5;
+  }
+  .right {
+    right: 0;
+    height: 400px;
+    background: #32db64;
+  }
+  .black {
+    bottom: 40px;
+    right: 0px;
+    width: 50%;
+    height: 100px;
+    background: black;
+  }
+</style>

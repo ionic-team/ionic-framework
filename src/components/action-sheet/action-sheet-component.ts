@@ -18,6 +18,7 @@ import { assert } from '../../util/util';
     '<div class="action-sheet-wrapper">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group">' +
+          '<div class="action-sheet-background"></div>' +
           '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
           '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
           '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [attr.icon-left]="b.icon ? \'\' : null" [ngClass]="b.cssClass">' +
@@ -69,6 +70,9 @@ export class ActionSheetCmp {
     this.mode = config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
 
+    if (_config.getBoolean('backdropEffects')) {
+      renderer.setElementClass(_elementRef.nativeElement, `backdrop-effect`, true);
+    }
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions

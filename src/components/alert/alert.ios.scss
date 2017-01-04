@@ -458,3 +458,35 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 .alert-ios .alert-button.activated {
   background-color: $alert-ios-button-background-color-activated;
 }
+
+.alert-ios.backdrop-effect .alert-button,
+.alert-ios.backdrop-effect .alert-head,
+.alert-ios.backdrop-effect .alert-message,
+.alert-ios.backdrop-effect .alert-radio-group,
+.alert-ios.backdrop-effect .alert-input-group,
+.alert-ios.backdrop-effect .alert-checkbox-group {
+  background-color: rgba(250, 250, 250, .7);
+}
+
+.alert-ios.backdrop-effect .alert-button.activated {
+  background-color: rgba(230, 230, 230, 0.6);
+}
+
+.alert-ios.backdrop-effect .alert-wrapper {
+  background-color: transparent;
+}
+
+.alert-ios.backdrop-effect .alert-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: -1;
+
+  display: block;
+
+  -webkit-backdrop-filter: blur(20px) brightness(220%) saturate(140%);
+  backdrop-filter: blur(20px) brightness(220%) saturate(140%);
+}
