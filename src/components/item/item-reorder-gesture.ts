@@ -1,7 +1,7 @@
 import { PointerCoordinates, CSS, pointerCoord } from '../../util/dom';
-import { ItemReorder, indexForItem, findReorderItem } from '../item/item-reorder';
+import { ItemReorder, indexForItem } from '../item/item-reorder';
 import { UIEventManager } from '../../util/ui-event-manager';
-
+import { NativeRafDebouncer } from '../../util/debouncer';
 
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
@@ -18,11 +18,13 @@ export class ItemReorderGesture {
   private lastToIndex: number;
   private lastYcoord: number;
   private lastScrollPosition: number;
-  private emptyZone: boolean;
 
   private windowHeight: number;
+  private topOfList: number;
 
   private events: UIEventManager = new UIEventManager(false);
+  private debouncer: NativeRafDebouncer = new NativeRafDebouncer();
+  private cachedHeights;
 
   constructor(public reorderList: ItemReorder) {
     this.events.pointerEvents({
@@ -47,7 +49,7 @@ export class ItemReorderGesture {
       console.error('ion-reorder does not contain $ionComponent');
       return false;
     }
-    this.reorderList._reorderPrepare();
+    this.cachedHeights = this.reorderList._reorderPrepare();
 
     let item = reorderMark.getReorderNode();
     if (!item) {
@@ -58,10 +60,10 @@ export class ItemReorderGesture {
 
     // Preparing state
     this.selectedItemEle = item;
-    this.selectedItemHeight = item.offsetHeight;
     this.lastYcoord = -100;
     this.lastToIndex = indexForItem(item);
-
+    this.selectedItemHeight = this.cachedHeights[this.lastToIndex];
+    this.topOfList = this.reorderList._reorderTopOfList();
     this.windowHeight = window.innerHeight - AUTO_SCROLL_MARGIN;
     this.lastScrollPosition = this.reorderList._scrollContent(0);
 
@@ -80,36 +82,34 @@ export class ItemReorderGesture {
     }
     ev.preventDefault();
 
-    // Get coordinate
-    let coord = pointerCoord(ev);
-    let posY = coord.y;
+    this.debouncer.debounce(() => {
+      // Get coordinate
+      let coord = pointerCoord(ev);
+      let posY = coord.y;
 
-    // Scroll if we reach the scroll margins
-    let scrollPosition = this.scroll(posY);
+      // Scroll if we reach the scroll margins
+      let scrollPosition = this.scroll(posY);
 
-    // Only perform hit test if we moved at least 30px from previous position
-    if (Math.abs(posY - this.lastYcoord) > 30) {
-      let overItem = this.itemForCoord(coord);
-      if (overItem) {
-        let toIndex = indexForItem(overItem);
-        if (toIndex !== undefined && (toIndex !== this.lastToIndex || this.emptyZone)) {
+      // Only perform hit test if we moved at least 30px from previous position
+      if (Math.abs(posY - this.lastYcoord) > 30) {
+        let toIndex = this.itemIndexForCoord(coord);
+        if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
           let fromIndex = indexForItem(selectedItem);
           this.lastToIndex = toIndex;
           this.lastYcoord = posY;
-          this.emptyZone = false;
           this.reorderList._reorderMove(fromIndex, toIndex, this.selectedItemHeight);
         }
-      } else {
-        this.emptyZone = true;
       }
-    }
 
-    // Update selected item position
-    let ydiff = Math.round(posY - this.offset.y + scrollPosition);
-    (<any>selectedItem.style)[CSS.transform] = `translateY(${ydiff}px)`;
+      // Update selected item position
+      let ydiff = Math.round(posY - this.offset.y + scrollPosition);
+      (<any>selectedItem.style)[CSS.transform] = `translateY(${ydiff}px)`;
+    });
   }
 
   private onDragEnd(ev: any) {
+    this.debouncer.cancel();
+
     let selectedItem = this.selectedItemEle;
     if (!selectedItem) {
       return;
@@ -136,8 +136,17 @@ export class ItemReorderGesture {
     this.reorderList._reorderEmit(fromIndex, toIndex);
   }
 
-  private itemForCoord(coord: PointerCoordinates): HTMLElement {
-    return itemForPosition(this.offset.x - 100, coord.y, this.reorderList.getNativeElement());
+  private itemIndexForCoord(coord: PointerCoordinates): number {
+    let heights = this.cachedHeights;
+    let sum = this.topOfList;
+    let i = 0;
+    for (; i < heights.length; i++) {
+      sum += heights[i];
+      if (sum > coord.y) {
+        return i;
+      }
+    }
+    return undefined;
   }
 
   private scroll(posY: number): number {
@@ -160,7 +169,3 @@ export class ItemReorderGesture {
   }
 }
 
-function itemForPosition(x: number, y: number, list: any): HTMLElement {
-  let element = <HTMLElement>document.elementFromPoint(x, y);
-  return findReorderItem(element, list);
-}
