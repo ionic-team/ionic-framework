@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Platform, NavController } from '../';
+import { IonicApp, IonicModule, Platform, NavController } from '../../ionic-angular';
 
 if (!window.localStorage) {
   Object.defineProperty(window, 'localStorage', new (function () {
