@@ -20,22 +20,22 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Floating Label 1: {{ myValues.value1 }}</ion-label>
+      <ion-label floating>ngModel 1: {{ myValues.value1 }}</ion-label>
       <ion-input [(ngModel)]='myValues.value1'></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Floating Label 2</ion-label>
-      <ion-input value="Has Value"></ion-input>
+      <ion-label floating>Value Input: {{ valueInput.value }} </ion-label>
+      <ion-input #valueInput value="Has Value"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Floating Label 3</ion-label>
-      <ion-input type="number"></ion-input>
+      <ion-label floating>Enter Number: {{ numberInput.value }} </ion-label>
+      <ion-input #numberInput type="number"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating color="primary">Floating Label 4: {{ myValues.value2 }}</ion-label>
+      <ion-label floating color="primary">ngModel 2: {{ myValues.value2 }}</ion-label>
       <ion-textarea [(ngModel)]='myValues.value2'></ion-textarea>
       <button ion-button outline item-right>
         View
@@ -43,39 +43,39 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating color="secondary">Floating Label 5</ion-label>
-      <ion-input type="url"></ion-input>
+      <ion-label floating color="secondary">Url Input: {{ urlInput.value }}</ion-label>
+      <ion-input #urlInput type="url"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating color="danger">Floating Label 6</ion-label>
-      <ion-input type="email"></ion-input>
+      <ion-label floating color="danger">Email Input: {{ emailInput.value }}</ion-label>
+      <ion-input #emailInput type="email"></ion-input>
       <ion-avatar item-right>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-avatar>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Floating Label 7</ion-label>
-      <ion-textarea></ion-textarea>
+      <ion-label floating>Textarea Input: {{ textareaInput.value }} </ion-label>
+      <ion-textarea #textareaInput></ion-textarea>
       <ion-thumbnail item-right>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-thumbnail>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Floating Label 8</ion-label>
-      <ion-input></ion-input>
+      <ion-label floating>Random Input: {{ randomInput.value }} </ion-label>
+      <ion-input #randomInput></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Floating Label 9</ion-label>
-      <ion-input type="number"></ion-input>
+      <ion-label floating>Enter Number: {{ randomInput2.value }}</ion-label>
+      <ion-input #randomInput2 type="number"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Floating Label 10</ion-label>
-      <ion-textarea></ion-textarea>
+      <ion-label floating>Another Textarea: {{ randomInput3.value }}</ion-label>
+      <ion-textarea #randomInput3></ion-textarea>
     </ion-item>
 
   </ion-list>

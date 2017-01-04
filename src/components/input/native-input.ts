@@ -156,6 +156,10 @@ export class NativeInput {
     }
   }
 
+  setValue(val: any) {
+    this._elementRef.nativeElement['value'] = val;
+  }
+
   getValue(): string {
     return this.element().value;
   }

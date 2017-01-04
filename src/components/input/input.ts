@@ -288,6 +288,7 @@ export class TextInput extends Ion implements IonicFormInput {
    */
   setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
+    nativeInput.setValue(this._value);
 
     if (this._item && this._item.labelId !== null) {
       nativeInput.labelledBy(this._item.labelId);
