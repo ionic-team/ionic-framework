@@ -58,6 +58,10 @@ $content-ios-transition-background:     #000 !default;
 // iOS Content Scroll
 // --------------------------------------------------
 
+.content-ios[no-bounce] .scroll-content {
+  -webkit-overflow-scrolling: auto;
+}
+
 .content-ios:not([no-bounce]) > .scroll-content::before,
 .content-ios:not([no-bounce]) > .scroll-content::after {
   position: absolute;
