@@ -40,7 +40,7 @@ export class SegmentPage {
   onSlideChanged(slider: any) {
     console.log('Slide changed', slider);
 
-    const currentSlide = this.slides[slider.activeIndex];
+    const currentSlide = this.slides[slider._activeIndex];
     this.selectedSegment = currentSlide.id;
   }
 }
