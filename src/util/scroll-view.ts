@@ -422,6 +422,13 @@ export class ScrollView {
       return promise;
     }
 
+    if (duration < 32) {
+      self.setTop(y);
+      self.setLeft(x);
+      done();
+      return promise;
+    }
+
     const fromY = el.scrollTop;
     const fromX = el.scrollLeft;
 
