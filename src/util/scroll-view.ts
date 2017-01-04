@@ -421,6 +421,13 @@ export class ScrollView {
       return promise;
     }
 
+    if (duration < 32) {
+      self.setTop(y);
+      self.setLeft(x);
+      done();
+      return promise;
+    }
+
     x = x || 0;
     y = y || 0;
 
