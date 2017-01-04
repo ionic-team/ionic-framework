@@ -10,8 +10,8 @@
 <ion-content padding style="text-align:center" no-bounce>
 
   <p>
-    <button ion-button>Default</button>
-    <button ion-button class="activated">Default.activated</button>
+    <button ion-button (click)="test($event)">Default</button>
+    <button ion-button (click)="test($event)" class="activated">Default.activated</button>
   </p>
 
   <p>

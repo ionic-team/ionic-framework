@@ -524,8 +524,8 @@ export class Menu {
 
       this._cntEle.classList.add('menu-content-open');
       let callback = this.onBackdropClick.bind(this);
-      this._events.listen(this._cntEle, 'click', callback, true);
-      this._events.listen(this.backdrop.getNativeElement(), 'click', callback, true);
+      this._events.listen(this._cntEle, 'click', callback, { capture: true });
+      this._events.listen(this.backdrop.getNativeElement(), 'click', callback, { capture: true });
 
       this.ionOpen.emit(true);
 

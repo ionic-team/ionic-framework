@@ -48,9 +48,11 @@ export class TapClick {
     this.usePolyfill = config.getBoolean('tapPolyfill');
     console.debug('Using usePolyfill:', this.usePolyfill);
 
-    this.events.listen(document, 'click', this.click.bind(this), true);
+    const doc = plt.doc();
+
+    this.events.listen(doc, 'click', this.click.bind(this), { passive: false, capture: true });
     this.pointerEvents = this.events.pointerEvents({
-      element: <any>document,
+      element: <any>doc,
       pointerDown: this.pointerStart.bind(this),
       pointerMove: this.pointerMove.bind(this),
       pointerUp: this.pointerEnd.bind(this),
@@ -201,7 +203,7 @@ export class TapClick {
       console.debug(`create click from touch ${Date.now()}`);
 
       let clickEvent: any = this.plt.doc().createEvent('MouseEvents');
-      clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+      clickEvent.initMouseEvent('click', true, true, this.plt.win(), 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
       clickEvent.isIonicTap = true;
       ev.target.dispatchEvent(clickEvent);
     }

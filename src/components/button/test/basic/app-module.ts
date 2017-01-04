@@ -20,6 +20,10 @@ export class E2EPage {
     console.log('dynamic btnColor', this.btnColor);
     this.testingColorIndex = (this.testingColorIndex >= this.testingColors.length - 1 ? 0 : this.testingColorIndex + 1);
   }
+
+  test(ev: UIEvent) {
+    console.log(`button click from: ${ev.type}, timestamp: ${Date.now()}`);
+  }
 }
 
 @Component({
