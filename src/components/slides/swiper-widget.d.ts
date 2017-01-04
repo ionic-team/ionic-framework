@@ -9,4 +9,5 @@ export declare class Swiper {
   slideNext(runCallbacks: boolean, speed: number): boolean;
   slidePrev(runCallbacks: boolean, speed: number): boolean;
   slideTo(slideIndex: number, speed: number, runCallbacks: boolean): boolean;
+  startAutoplay(): any;
 }
