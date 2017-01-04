@@ -398,6 +398,12 @@ export class Config {
 export function setupConfig(userConfig: any, plt: Platform): Config {
   const config = new Config();
   config.init(userConfig, plt);
+
+  // add the config obj to the window
+  const win: any = plt.win();
+  win['Ionic'] = win['Ionic'] || {};
+  win['Ionic']['config'] = config;
+
   return config;
 }
 

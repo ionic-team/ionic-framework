@@ -1143,29 +1143,34 @@ export interface EventListenerOptions {
  * @private
  */
 export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]: PlatformConfig}, zone: NgZone): Platform {
-  const p = new Platform();
-  p.setDefault('core');
-  p.setPlatformConfigs(platformConfigs);
-  p.setZone(zone);
+  const plt = new Platform();
+  plt.setDefault('core');
+  plt.setPlatformConfigs(platformConfigs);
+  plt.setZone(zone);
 
   // set values from "document"
   const docElement = doc.documentElement;
-  p.setDocument(doc);
-  p.setDir(docElement.dir, false);
-  p.setLang(docElement.lang, false);
+  plt.setDocument(doc);
+  plt.setDir(docElement.dir, false);
+  plt.setLang(docElement.lang, false);
 
   // set css properties
-  p.setCssProps(docElement);
+  plt.setCssProps(docElement);
 
   // set values from "window"
   const win = doc.defaultView;
-  p.setWindow(win);
-  p.setNavigatorPlatform(win.navigator.platform);
-  p.setUserAgent(win.navigator.userAgent);
+  plt.setWindow(win);
+  plt.setNavigatorPlatform(win.navigator.platform);
+  plt.setUserAgent(win.navigator.userAgent);
 
   // set location values
-  p.setQueryParams(win.location.href);
+  plt.setQueryParams(win.location.href);
 
-  p.init();
-  return p;
+  plt.init();
+
+  // add the platform obj to the window
+  win['Ionic'] = win['Ionic'] || {};
+  win['Ionic']['platform'] = plt;
+
+  return plt;
 }
