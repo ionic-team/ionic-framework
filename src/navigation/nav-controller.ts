@@ -262,8 +262,8 @@ import { ViewController } from './view-controller';
  *  | `ionViewWillLeave`  | void                       | Runs when the page is about to leave and no longer be the active page.                                                                                                                                                                                         |
  *  | `ionViewDidLeave`   | void                       | Runs when the page has finished leaving and is no longer the active page.                                                                                                                                                                                      |
  *  | `ionViewWillUnload` | void                       | Runs when the page is about to be destroyed and have its elements removed.                                                                                                                                                                                     |
- *  | `ionViewCanEnter`   | boolean \| Promise\<void\> | Runs before the view can enter. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter                                                                                                     |
- *  | `ionViewCanLeave`   | boolean \| Promise\<void\> | Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave                                                                                                     |
+ *  | `ionViewCanEnter`   | boolean / Promise<void> | Runs before the view can enter. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter                                                                                                     |
+ *  | `ionViewCanLeave`   | boolean / Promise<void> | Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave                                                                                                     |
  *
  *
  * ## Nav Guards
@@ -294,8 +294,8 @@ import { ViewController } from './view-controller';
  * }
  * ```
  *
- * We need to make sure that or `navCtrl.push` has a catch in order to catch the and handle the error.
- * If you need to prevent a view from entering, you can do the same thing
+ * We need to make sure that `navCtrl.pop` or `navCtrl.push` has a catch in order to catch the boolean and handle the error.
+ * If you need to prevent a view from entering, you can do the same thing in `ionViewCanEnter`:
  *
  * ```ts
  * export class MyClass{
