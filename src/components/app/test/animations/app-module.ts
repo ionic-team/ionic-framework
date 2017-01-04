@@ -35,7 +35,7 @@ export class E2EPage {
 
       console.log('Play', count);
 
-      let a = new Animation(this.platform, '.green');
+      let a = new Animation(self.platform, '.green');
       a.fromTo('translateX', '0px', '200px');
       a.duration(parseInt(self.duration, 10));
       a.easing(self.easing);
