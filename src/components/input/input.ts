@@ -12,7 +12,7 @@ import { Item } from '../item/item';
 import { NativeInput, NextInput } from './native-input';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
-
+import { isTrueProperty } from '../../util/util';
 
 /**
  * @name Input
@@ -74,10 +74,53 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-input',
   template:
-    '<input [type]="type" [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode">' +
-    '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
-    '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
-    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
+    '<input' +
+      ' [type]="_type"' +
+      ' [(ngModel)]="_value"' +
+      ' (blur)="inputBlurred($event)"' +
+      ' (focus)="inputFocused($event)"' +
+      ' [placeholder]="placeholder"' +
+      ' class="text-input"' +
+      ' [ngClass]="\'text-input-\' + _mode"' +
+      ' [attr.autocomplete]="autocomplete"' +
+      ' [attr.autocorrect]="autocorrect"' +
+      ' [attr.autocapitalize]="autocapitalize"' +
+      ' [autofocus]="_autofocus"' +
+      ' [disabled]="_disabled"' +
+      ' [attr.list]="list"' +
+      ' [attr.max]="max"' +
+      ' [attr.maxlength]="maxlength"' +
+      ' [attr.min]="min"' +
+      ' [attr.minlength]="minlength"' +
+      ' [readonly]="_readonly"' +
+      ' [required]="_required"' +
+      ' [spellcheck]="_spellcheck"' +
+      ' [attr.step]="step"' +
+      ' [attr.tabindex]="tabindex"' +
+      ' [attr.name]="name">' +
+    '<input' +
+      ' [type]="_type"' +
+      ' aria-hidden="true"' +
+      ' next-input' +
+      ' *ngIf="_useAssist">' +
+    '<button' +
+      ' ion-button' +
+      ' clear' +
+      ' [hidden]="!_clearInput"' +
+      ' type="button"' +
+      ' class="text-input-clear-icon"' +
+      ' (click)="clearTextInput()"' +
+      ' (mousedown)="clearTextInput()">' +
+    '</button>' +
+    '<div' +
+      ' (touchstart)="pointerStart($event)"' +
+      ' (touchend)="pointerEnd($event)"'+
+      ' (mousedown)="pointerStart($event)"' +
+      ' (mouseup)="pointerEnd($event)"' +
+      ' class="input-cover"' +
+      ' tappable' +
+      ' *ngIf="_useAssist">' +
+    '</div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class TextInput extends InputBase {
@@ -107,6 +150,101 @@ export class TextInput extends InputBase {
 
   /**
    * @input {string} The placeholder for the input
+   */
+  @Input() autocomplete: string;
+
+  /**
+   * @private
+   */
+  @Input() autocorrect: string;
+
+  /**
+   * @private
+   */
+  @Input() autocapitalize: string;
+
+  /**
+   * @private
+   */
+  get autofocus(): boolean {
+    return this._autofocus;
+  }
+  @Input() set autofocus(value: boolean) {
+    this._autofocus = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  @Input() list: string = null;
+
+  /**
+   * @private
+   */
+  @Input() max: string | number = null;
+
+  /**
+   * @private
+   */
+  @Input() maxlength: number = null;
+
+  /**
+   * @private
+   */
+  @Input() min: string | number = null;
+
+  /**
+   * @private
+   */
+  @Input() minlength: number = null;
+
+  /**
+   * @private
+   */
+  get readonly(): boolean {
+    return this._readonly;
+  }
+  @Input() set readonly(value: boolean) {
+    this._readonly = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  get required(): boolean {
+    return this._required;
+  }
+  @Input() set required(value: boolean) {
+    this._required = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  get spellcheck(): boolean {
+    return this._spellcheck;
+  }
+  @Input() set spellcheck(value: boolean) {
+    this._spellcheck = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  @Input() step: number = null;
+
+  /**
+   * @private
+   */
+  @Input() tabindex: number = null;
+
+  /**
+   * @private
+   */
+  @Input() name: string = null;
+
+  /**
+   * @private
    */
   @Input() placeholder: string = '';
 
@@ -306,9 +444,37 @@ export class TextInput extends InputBase {
 @Component({
   selector: 'ion-textarea',
   template:
-    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode"></textarea>' +
-    '<input type="text" aria-hidden="true" next-input *ngIf="_useAssist">' +
-    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
+    '<textarea' +
+      ' [(ngModel)]="_value"' +
+      ' (blur)="inputBlurred($event)"' +
+      ' (focus)="inputFocused($event)"' +
+      ' [placeholder]="placeholder"' +
+      ' class="text-input"' +
+      ' [ngClass]="\'text-input-\' + _mode">' +
+      ' [attr.autocomplete]="autocomplete"' +
+      ' [attr.autocapitalize]="autocapitalize"' +
+      ' [autofocus]="_autofocus"' +
+      ' [disabled]="_disabled"' +
+      ' [attr.maxlength]="maxlength"' +
+      ' [attr.minlength]="minlength"' +
+      ' [readonly]="_readonly"' +
+      ' [required]="_required"' +
+      ' [spellcheck]="_spellcheck"' +
+      ' [attr.name]="name">' +
+    '</textarea>' +
+    '<input type="text"' +
+      ' aria-hidden="true"' +
+      ' next-input' +
+      ' *ngIf="_useAssist">' +
+    '<div' +
+      ' (touchstart)="pointerStart($event)"' +
+      ' (touchend)="pointerEnd($event)"' +
+      ' (mousedown)="pointerStart($event)"' +
+      ' (mouseup)="pointerEnd($event)"' +
+      ' class="input-cover"' +
+      ' tappable' +
+      ' *ngIf="_useAssist">' +
+    '</div>',
   encapsulation: ViewEncapsulation.None,
 })
 export class TextArea extends InputBase {
@@ -435,4 +601,70 @@ export class TextArea extends InputBase {
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
   }
+
+  /**
+   * @private
+   */
+  @Input() autocomplete: string;
+
+  /**
+   * @private
+   */
+  @Input() autocapitalize: string;
+
+  /**
+   * @private
+   */
+  get autofocus(): boolean {
+    return this._autofocus;
+  }
+  @Input() set autofocus(value: boolean) {
+    this._autofocus = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  @Input() maxlength: number = null;
+
+  /**
+   * @private
+   */
+  @Input() minlength: number = null;
+
+  /**
+   * @private
+   */
+  get readonly(): boolean {
+    return this._readonly;
+  }
+  @Input() set readonly(value: boolean) {
+    this._readonly = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  get required(): boolean {
+    return this._required;
+  }
+  @Input() set required(value: boolean) {
+    this._required = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  get spellcheck(): boolean {
+    return this._spellcheck;
+  }
+  @Input() set spellcheck(value: boolean) {
+    this._spellcheck = isTrueProperty(value);
+  }
+
+  /**
+   * @private
+   */
+  @Input() name: string = null;
+
 }
