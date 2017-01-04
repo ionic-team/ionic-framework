@@ -60,7 +60,7 @@ describe('Toast', () => {
     let config = new Config();
     let platform = new Platform();
     let app = new App(config, platform);
-    toastCtrl = new ToastController(app);
+    toastCtrl = new ToastController(app, config);
   });
 
 });

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { AppPortal } from '../app/app-root';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ToastOptions } from './toast-options';
@@ -14,7 +15,7 @@ import { ViewController } from '../../navigation/view-controller';
 export class Toast extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: ToastOptions = {}) {
+  constructor(app: App, opts: ToastOptions = {}, config: Config) {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
     super(ToastCmp, opts, null);
     this._app = app;
@@ -22,6 +23,10 @@ export class Toast extends ViewController {
     // set the position to the bottom if not provided
     if (!opts.position || !this.isValidPosition(opts.position)) {
       opts.position = TOAST_POSITION_BOTTOM;
+    }
+
+    if (!isPresent(opts.statusBarPadding)) {
+      opts.statusBarPadding = config.getBoolean('statusbarPadding', false);
     }
 
     this.isOverlay = true;
@@ -136,14 +141,14 @@ export class Toast extends ViewController {
 @Injectable()
 export class ToastController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, private _config: Config) {}
 
   /**
    * Create a new toast component. See options below
    * @param {ToastOptions} opts Toast options. See the below table for available options.
    */
   create(opts: ToastOptions = {}) {
-    return new Toast(this._app, opts);
+    return new Toast(this._app, opts, this._config);
   }
 
 }
