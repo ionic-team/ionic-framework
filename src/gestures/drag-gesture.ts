@@ -110,9 +110,7 @@ export class PanGesture {
   pointerMove(ev: any) {
     assert(this.started === true, 'started must be true');
     if (this.captured) {
-      this.debouncer.write(() => {
-        this.onDragMove(ev);
-      });
+      this.onDragMove(ev);
       return;
     }
 

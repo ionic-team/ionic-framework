@@ -71,8 +71,7 @@ export class ItemSlidingGesture extends PanGesture {
   onDragMove(ev: any) {
     ev.preventDefault();
 
-    let coordX = pointerCoord(ev).x;
-    this.selectedContainer.moveSliding(coordX);
+    this.selectedContainer.moveSliding(pointerCoord(ev).x);
   }
 
   onDragEnd(ev: any) {

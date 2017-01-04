@@ -4,6 +4,7 @@ import { isPresent, swipeShouldReset, assert } from '../../util/util';
 import { Item } from './item';
 import { List } from '../list/list';
 import { Platform } from '../../platform/platform';
+import { DomController } from '../../platform/dom-controller';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -220,6 +221,7 @@ export class ItemSliding {
   constructor(
     @Optional() list: List,
     private _plt: Platform,
+    private _dom: DomController,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
     private _zone: NgZone) {
@@ -307,7 +309,13 @@ export class ItemSliding {
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
     }
 
-    this._setOpenAmount(openAmount, false);
+          // this.debouncer.write(() => {
+
+      // });
+    this._dom.write(() => {
+      this._setOpenAmount(openAmount, false);
+    });
+
     return openAmount;
   }
 
