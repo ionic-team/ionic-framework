@@ -1,5 +1,5 @@
 import { Component, Injectable, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Refresher } from '../';
+import { IonicApp, IonicModule, Refresher } from '../../ionic-angular';
 
 
 /**

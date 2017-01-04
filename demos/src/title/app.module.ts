@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../';
+import { IonicApp, IonicModule } from '../../ionic-angular';
 
 
 // Use the toolbar demo but pass in the demo name to change the title

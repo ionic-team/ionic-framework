@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewEncapsulation } from '@angular/core';
-import { IonicApp, IonicModule, ItemSliding, ToastController } from '../';
+import { IonicApp, IonicModule, ItemSliding, ToastController } from '../../ionic-angular';
 
 
 @Component({
