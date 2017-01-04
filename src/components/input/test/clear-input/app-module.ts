@@ -6,7 +6,7 @@ import { IonicApp, IonicModule } from '../../../..';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  myValue = 'value';
+  myValue = 'really long value that overflows to show padding';
 
   clicked() {
     console.log('clicked button');
