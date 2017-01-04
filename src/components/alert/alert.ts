@@ -280,7 +280,7 @@ import { ViewController } from '../../navigation/view-controller';
  *   }
  * });
  * ```
- * @demo /docs/v2/demos/src/alert/
+ * @demo /docs/v2/demos/src/alert/basic
  * @see {@link ../AlertController Alert Controller API Docs}
  *
  */
