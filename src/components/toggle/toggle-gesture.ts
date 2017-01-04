@@ -1,7 +1,8 @@
 import { GestureController, GesturePriority, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
+import { DomController } from '../../platform/dom-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
+import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
-import { DomController } from '../../util/dom-controller';
 import { Toggle } from './toggle';
 
 /**
@@ -10,11 +11,14 @@ import { Toggle } from './toggle';
 export class ToggleGesture extends PanGesture {
 
   constructor(
+    platform: Platform,
     public toogle: Toggle,
     gestureCtrl: GestureController,
     domCtrl: DomController
   ) {
-    super(toogle.getNativeElement(), {
+    super(
+      platform,
+      toogle.getNativeElement(), {
       threshold: 0,
       domController: domCtrl,
       gesture: gestureCtrl.createGesture({

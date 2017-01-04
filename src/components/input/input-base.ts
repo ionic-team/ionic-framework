@@ -5,7 +5,7 @@ import { App } from '../app/app';
 import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { Config } from '../../config/config';
 import { Content, ContentDimensions, ScrollEvent } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { Form, IonicFormInput } from '../../util/form';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
@@ -295,7 +295,7 @@ export class InputBase extends Ion implements IonicFormInput {
    */
   hasFocus(): boolean {
     // check if an input has focus or not
-    return this._native.hasFocus();
+    return this._platform.hasFocus(this._native.element());
   }
 
   /**
@@ -460,7 +460,7 @@ export class InputBase extends Ion implements IonicFormInput {
     this._native.setFocus();
 
     // ensure the body hasn't scrolled down
-    document.body.scrollTop = 0;
+    this._platform.doc().body.scrollTop = 0;
   }
 
   /**

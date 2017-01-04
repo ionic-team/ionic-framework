@@ -2,14 +2,14 @@ import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Ng
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { Img } from '../img/img';
 import { Ion } from '../ion';
 import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
+import { Keyboard } from '../../platform/keyboard';
+import { Platform } from '../../platform/platform';
 import { ScrollView, ScrollEvent } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
-import { transitionEnd } from '../../util/dom';
 import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';
@@ -315,14 +315,15 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
   constructor(
     config: Config,
+    private _platform: Platform,
+    private _dom: DomController,
     elementRef: ElementRef,
     renderer: Renderer,
     public _app: App,
     public _keyboard: Keyboard,
     public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
-    @Optional() public _tabs: Tabs,
-    private _dom: DomController
+    @Optional() public _tabs: Tabs
   ) {
     super(config, elementRef, renderer, 'content');
 
@@ -336,7 +337,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       viewCtrl._setIONContentRef(elementRef);
     }
 
-    this._scroll = new ScrollView(_dom);
+    this._scroll = new ScrollView(_platform, _dom);
   }
 
   /**
@@ -397,7 +398,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @private
    */
   onScrollElementTransitionEnd(callback: Function) {
-    transitionEnd(this._scrollEle, callback);
+    this._platform.transitionEnd(this._scrollEle, callback);
   }
 
   /**
@@ -565,8 +566,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * after dynamically adding headers, footers, or tabs.
    */
   resize() {
-    this._dom.read(this.readDimensions, this);
-    this._dom.write(this.writeDimensions, this);
+    this._dom.read(this.readDimensions.bind(this));
+    this._dom.write(this.writeDimensions.bind(this));
   }
 
   /**

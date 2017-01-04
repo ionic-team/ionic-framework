@@ -1,4 +1,4 @@
-import { assign, isBlank, isPresent, isString } from './util';
+import { isBlank, isPresent, isString } from './util';
 
 
 export function renderDateTime(template: string, value: DateTimeData, locale: LocaleData) {
@@ -238,7 +238,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       newData = parseDate(newData);
       if (newData) {
         // successfully parsed the ISO string to our DateTimeData
-        assign(existingData, newData);
+        Object.assign(existingData, newData);
         return;
       }
 

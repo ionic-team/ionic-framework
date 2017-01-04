@@ -2,9 +2,8 @@ import { App } from '../app';
 import { AppPortal } from '../app-root';
 import { ClickBlock } from '../../../util/click-block';
 import { Config } from '../../../config/config';
-import { mockApp, mockConfig, mockElementRef, mockNavController, mockPlatform, mockRenderer, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
+import { mockApp, mockConfig, mockElementRef, mockNavController, mockPlatform, MockPlatform, mockRenderer, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
 import { OverlayPortal } from '../../nav/overlay-portal';
-import { Platform } from '../../../platform/platform';
 
 
 describe('App', () => {
@@ -357,7 +356,8 @@ describe('App', () => {
   describe('setEnabled', () => {
 
     it('should disable click block when app is enabled', (done) => {
-      app._clickBlock = new ClickBlock(app, mockConfig(), mockElementRef(), mockRenderer());
+      platform = mockPlatform();
+      app._clickBlock = new ClickBlock(app, mockConfig(), platform, mockElementRef(), mockRenderer());
 
       spyOn(app._clickBlock, '_activate');
 
@@ -365,11 +365,11 @@ describe('App', () => {
 
       expect(app._clickBlock._activate).not.toHaveBeenCalledWith();
 
-      setTimeout(() => {
+      platform.flushTimeouts(() => {
         expect(app._clickBlock._activate).toHaveBeenCalledWith(false);
         done();
-      }, 120);
-    }, 1000);
+      });
+    });
 
     it('should enable click block when false is passed with duration', () => {
       // arrange
@@ -409,7 +409,7 @@ describe('App', () => {
 
   var app: App;
   var config: Config;
-  var platform: Platform;
+  var platform: MockPlatform;
   var portal: OverlayPortal;
 
   beforeEach(() => {

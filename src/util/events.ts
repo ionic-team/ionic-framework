@@ -1,5 +1,4 @@
-import { DomController } from '../util/dom-controller';
-import { nativeTimeout, nativeRaf } from '../util/dom';
+import { DomController } from '../platform/dom-controller';
 import { Platform } from '../platform/platform';
 import { ScrollView } from '../util/scroll-view';
 
@@ -112,37 +111,39 @@ export class Events {
  */
 export function setupEvents(platform: Platform, dom: DomController): Events {
   const events = new Events();
+  const win = platform.win();
+  const doc = platform.doc();
 
   // start listening for resizes XXms after the app starts
-  nativeTimeout(() => {
-    window.addEventListener('online', (ev) => {
+  platform.timeout(() => {
+    win.addEventListener('online', (ev) => {
       events.publish('app:online', ev);
     }, false);
 
-    window.addEventListener('offline', (ev) => {
+    win.addEventListener('offline', (ev) => {
       events.publish('app:offline', ev);
     }, false);
 
-    window.addEventListener('orientationchange', (ev) => {
+    win.addEventListener('orientationchange', (ev) => {
       events.publish('app:rotated', ev);
     });
 
     // When that status taps, we respond
-    window.addEventListener('statusTap', (ev) => {
+    win.addEventListener('statusTap', (ev) => {
       // TODO: Make this more better
-      let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
+      let el = <HTMLElement>doc.elementFromPoint(platform.width() / 2, platform.height() / 2);
       if (!el) { return; }
 
       let contentEle = <HTMLElement>el.closest('.scroll-content');
       if (contentEle) {
-        var scroll = new ScrollView(dom);
+        var scroll = new ScrollView(platform, dom);
         scroll.init(contentEle, 0, 0);
           // We need to stop scrolling if it's happening and scroll up
 
         (<any>contentEle.style)['WebkitBackfaceVisibility'] = 'hidden';
         (<any>contentEle.style)['WebkitTransform'] = 'translate3d(0,0,0)';
 
-        nativeRaf(function() {
+        dom.write(function() {
           contentEle.style.overflow = 'hidden';
 
           function finish() {
@@ -161,10 +162,6 @@ export function setupEvents(platform: Platform, dom: DomController): Events {
           });
         });
       }
-    });
-
-    window.addEventListener('resize', () => {
-      platform.windowResize();
     });
 
   }, 2000);

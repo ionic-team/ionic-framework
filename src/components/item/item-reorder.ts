@@ -1,10 +1,11 @@
-import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
+import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Inject, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { CSS, zoneRafFrames } from '../../util/dom';
+import { DomController } from '../../platform/dom-controller';
+import { isTrueProperty, reorderArray } from '../../util/util';
 import { Item } from './item';
 import { ItemReorderGesture } from '../item/item-reorder-gesture';
-import { isTrueProperty, reorderArray } from '../../util/util';
+import { Platform } from '../../platform/platform';
 
 
 export class ReorderIndexes {
@@ -159,10 +160,13 @@ export class ItemReorder {
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
 
   constructor(
+    private _platform: Platform,
+    private _dom: DomController,
     elementRef: ElementRef,
     private _rendered: Renderer,
     private _zone: NgZone,
-    @Optional() private _content: Content) {
+    @Optional() private _content: Content
+  ) {
     this._element = elementRef.nativeElement;
   }
 
@@ -193,10 +197,15 @@ export class ItemReorder {
 
     } else if (enabled && !this._reorderGesture) {
       console.debug('enableReorderItems');
-      this._reorderGesture = new ItemReorderGesture(this);
+      this._reorderGesture = new ItemReorderGesture(this._platform, this);
 
       this._enableReorder = true;
-      zoneRafFrames(2, () => this._visibleReorder = true);
+
+      this._dom.write(() => {
+        this._zone.run(() => {
+          this._visibleReorder = true;
+        });
+      }, 16);
     }
   }
 
@@ -237,7 +246,7 @@ export class ItemReorder {
     let len = children.length;
 
     this.setElementClass('reorder-list-active', false);
-    let transform = CSS.transform;
+    let transform = this._platform.Css.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
     }
@@ -258,7 +267,7 @@ export class ItemReorder {
     let children = this._element.children;
 
     /********* DOM WRITE ********* */
-    let transform = CSS.transform;
+    let transform = this._platform.Css.transform;
     if (toIndex >= lastToIndex) {
       for (var i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {

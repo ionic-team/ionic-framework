@@ -1,5 +1,4 @@
 /* tslint:disable */
-import { assign } from '../util/util';
 
 const win: any = window;
 const doc: any = document;
@@ -91,7 +90,7 @@ function inherit(child, base, properties) {
     childP._super = baseP;
 
     if (properties) {
-        assign(childP, properties);
+        Object.assign(childP, properties);
     }
 }
 
@@ -1258,7 +1257,7 @@ var STATE_FAILED = 32;
  * @param {Object} options
  */
 function Recognizer(options) {
-    this.options = assign({}, this.defaults, options || {});
+    this.options = Object.assign({}, this.defaults, options || {});
 
     this.id = uniqueId();
 
@@ -1286,7 +1285,7 @@ Recognizer.prototype = {
      * @return {Recognizer}
      */
     set: function(options) {
-        assign(this.options, options);
+        Object.assign(this.options, options);
 
         // also update the touchAction, in case something changed about the directions/enabled state
         this.manager && this.manager.touchAction.update();
@@ -1447,7 +1446,7 @@ Recognizer.prototype = {
     recognize: function(inputData) {
         // make a new copy of the inputData
         // so we can change the inputData without messing up the other recognizers
-        var inputDataClone = assign({}, inputData);
+        var inputDataClone = Object.assign({}, inputData);
 
         // is is enabled and allow recognizing?
         if (!boolOrFn(this.options.enable, [this, inputDataClone])) {
@@ -2136,7 +2135,7 @@ var FORCED_STOP = 2;
  * @constructor
  */
 function Manager(element, options) {
-    this.options = assign({}, _defaults, options || {});
+    this.options = Object.assign({}, _defaults, options || {});
 
     this.options.inputTarget = this.options.inputTarget || element;
 
@@ -2164,7 +2163,7 @@ Manager.prototype = {
      * @returns {Manager}
      */
     set: function(options) {
-        assign(this.options, options);
+        Object.assign(this.options, options);
 
         // Options that need a little more setup
         if (options.touchAction) {
@@ -2417,7 +2416,7 @@ function triggerDomEvent(event, data) {
     data.target.dispatchEvent(gestureEvent);
 }
 
-assign(Hammer, {
+Object.assign(Hammer, {
     INPUT_START: INPUT_START,
     INPUT_MOVE: INPUT_MOVE,
     INPUT_END: INPUT_END,

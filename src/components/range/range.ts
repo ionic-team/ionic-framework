@@ -3,13 +3,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isNumber, isPresent, isString, isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
-import { TimeoutDebouncer } from '../../util/debouncer';
+import { DomController } from '../../platform/dom-controller';
 import { Form } from '../../util/form';
+import { Haptic } from '../../tap-click/haptic';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
-import { PointerCoordinates, pointerCoord, raf } from '../../util/dom';
-import { Haptic } from '../../util/haptic';
-import { UIEventManager } from '../../util/ui-event-manager';
+import { Platform } from '../../platform/platform';
+import { PointerCoordinates, pointerCoord } from '../../util/dom';
+import { TimeoutDebouncer } from '../../util/debouncer';
+import { UIEventManager } from '../../gestures/ui-event-manager';
+
 
 export const RANGE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -225,7 +228,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   _snaps: boolean = false;
 
   _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
-  _events: UIEventManager = new UIEventManager();
+  _events: UIEventManager;
   /**
    * @private
    */
@@ -354,10 +357,13 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     private _haptic: Haptic,
     @Optional() private _item: Item,
     config: Config,
+    platform: Platform,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer,
+    private _dom: DomController
   ) {
     super(config, elementRef, renderer, 'range');
+    this._events = new UIEventManager(platform);
     _form.register(this);
 
     if (_item) {
@@ -390,10 +396,11 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
     // add touchstart/mousedown listeners
     this._events.pointerEvents({
-      elementRef: this._slider,
+      element: this._slider.nativeElement,
       pointerDown: this.pointerDown.bind(this),
       pointerMove: this.pointerMove.bind(this),
-      pointerUp: this.pointerUp.bind(this)
+      pointerUp: this.pointerUp.bind(this),
+      zone: false
     });
     this.createTicks();
   }
@@ -567,7 +574,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   createTicks() {
     if (this._snaps) {
-      raf(() => {
+      this._dom.write(() => {
         // TODO: Fix to not use RAF
         this._ticks = [];
         for (var value = this._min; value <= this._max; value += this._step) {
@@ -713,7 +720,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
    */
   ngOnDestroy() {
     this._form.deregister(this);
-    this._events.unlistenAll();
+    this._events.destroy();
   }
 }
 

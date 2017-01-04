@@ -1,5 +1,5 @@
 import { Range } from '../range';
-import { mockConfig, mockRenderer, mockElementRef, mockHaptic } from '../../../util/mock-providers';
+import { mockConfig, mockDomController, mockElementRef, mockHaptic, mockPlatform, mockRenderer } from '../../../util/mock-providers';
 import { Form } from '../../../util/form';
 
 
@@ -65,5 +65,5 @@ describe('Range', () => {
 
 function createRange(): Range {
   let form = new Form();
-  return new Range(form, mockHaptic(), null, mockConfig(), mockElementRef(), mockRenderer());
+  return new Range(form, mockHaptic(), null, mockConfig(), mockPlatform(), mockElementRef(), mockRenderer(), mockDomController());
 }
