@@ -154,7 +154,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
               // tab should be selected and is NOT in the DOM
               // create a new scope and append it
               childScope = $scope.$new();
-              childElement = jqLite(tabContentEle);
+              childElement = jqLite(tabContentEle.cloneNode(true));
               $ionicViewSwitcher.viewEleIsActive(childElement, true);
               tabsCtrl.$element.append(childElement);
               $compile(childElement)(childScope);
