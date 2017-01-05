@@ -9,6 +9,7 @@ import * as multiEntry from 'rollup-plugin-multi-entry';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
+import { argv } from 'yargs';
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -27,15 +28,15 @@ export function mergeObjects(obj1: any, obj2: any ) {
   return obj3;
 }
 
-function getRootTsConfig(): any {
-  const json = fs.readFileSync(`${PROJECT_ROOT}/tsconfig.json`);
+function getRootTsConfig(pathToReadFile): any {
+  const json = fs.readFileSync(pathToReadFile);
 
   let tsConfig = JSON.parse(json.toString());
   return tsConfig;
 }
 
-export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToWriteFile: string): any {
-  let config = getRootTsConfig();
+export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToReadFile: string, pathToWriteFile: string): any {
+  let config = getRootTsConfig(pathToReadFile);
   if (!config.compilerOptions) {
     config.compilerOptions = {};
   }
@@ -271,4 +272,19 @@ function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) 
       dest: outputPath
     });
   });
+}
+
+export function getFolderInfo() {
+  let componentName: string = null;
+  let componentTest: string = null;
+  const folder: string = argv.folder || argv.f;
+  if (folder && folder.length) {
+    const folderSplit = folder.split('/');
+    componentName = folderSplit[0];
+    componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
+  }
+  return {
+    componentName: componentName,
+    componentTest: componentTest
+  };
 }

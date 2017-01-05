@@ -1,0 +1,14 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Inset List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list inset>
+    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+      {{ item }}
+    </button>
+  </ion-list>
+</ion-content>
