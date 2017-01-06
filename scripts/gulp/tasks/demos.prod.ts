@@ -67,11 +67,17 @@ task('demos.copySource', (done: Function) => {
 task('demos.compileTests', (done: Function) => {
   let folderInfo = getFolderInfo();
 
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    buildTest(folderInfo.componentName);
+  if (folderInfo.componentName && folderInfo.componentTest) {    
+    let folders = getFolders(`./dist/demos/${folderInfo.componentName}`);
+    if (folders.length !== 0) {
+      folders.forEach(folder => {
+        buildTest(`${folderInfo.componentName}/${folder}`);        
+      })      
+    }    
   } else {
-    buildAllTests(done);
-  }
+    buildAllTests(done);  
+  }     
+  
 });
 
 function buildTest(folderName: string) {
@@ -87,12 +93,13 @@ function buildAllTests(done: Function) {
   let promises: Promise<any>[] = [];
 
   folders.forEach(folder => {
-    stat(`./dist/demos/${folder}/app.module.ts`, function(err, stat) {
-      if (err == null) {
-        const promise = buildTest(folder);
-        promises.push(promise);
-      }
-    });
+    let subFolders = getFolders(`./dist/demos/${folder}`);
+    
+    if (subFolders.length !== 0) {
+      subFolders.forEach(subFolder=>{
+        promises.push(buildTest(`${folder}/${subFolder}`));
+      })
+    }    
   });
 
   Promise.all(promises).then(() => {
@@ -113,8 +120,9 @@ function runAppScripts(folderName: string) {
   let tsConfig = distDir + 'tsconfig.json';
 
   try {
-    const scriptsCmd = spawnSync('ionic-app-scripts',
-      ['build',
+    const scriptsCmd = spawnSync('npm',
+      ['run',
+      'app-scripts-build',
       '--prod',
       '--sass', sassConfigPath,
       '--appEntryPoint', appEntryPoint,
