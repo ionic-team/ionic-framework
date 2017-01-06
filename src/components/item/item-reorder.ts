@@ -132,7 +132,7 @@ export class ReorderIndexes {
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/item-reorder/
+ * @demo /docs/v2/demos/src/item-reorder/basic
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../Item Item API Docs}

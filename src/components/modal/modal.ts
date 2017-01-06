@@ -169,7 +169,7 @@ export class Modal extends ViewController {
  *
  * }
  * ```
- * @demo /docs/v2/demos/src/modal/
+ * @demo /docs/v2/demos/src/modal/basic
  * @see {@link /docs/v2/components#modals Modal Component Docs}
  */
 @Injectable()

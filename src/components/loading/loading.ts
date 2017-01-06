@@ -163,7 +163,7 @@ export class Loading extends ViewController {
  * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
  * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
  *
- * @demo /docs/v2/demos/src/loading/
+ * @demo /docs/v2/demos/src/loading/basic
  * @see {@link /docs/v2/api/components/spinner/Spinner Spinner API Docs}
  */
 @Injectable()

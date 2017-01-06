@@ -266,7 +266,7 @@ import { ItemReorder } from './item-reorder';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/item/
+ * @demo /docs/v2/demos/src/item/basic
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../ItemSliding ItemSliding API Docs}

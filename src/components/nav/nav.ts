@@ -42,7 +42,7 @@ import { DomController } from '../../util/dom-controller';
  * }
  * ```
  *
- * @demo /docs/v2/demos/src/navigation/
+ * @demo /docs/v2/demos/src/navigation/basic
  * @see {@link /docs/v2/navigation Navigation Docs}
  * @see {@link ../NavController/ NavController API Docs}
  */

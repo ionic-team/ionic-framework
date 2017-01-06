@@ -41,7 +41,7 @@ import { ViewController } from '../../navigation/view-controller';
  * </ion-header>
  * ```
  *
- * @demo /docs/v2/demos/src/navbar/
+ * @demo /docs/v2/demos/src/navbar/basic
  * @see {@link ../../toolbar/Toolbar/ Toolbar API Docs}
  */
 @Component({

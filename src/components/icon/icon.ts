@@ -61,7 +61,7 @@ import { Ion } from '../ion';
  * }
  * ```
  * 
- * @demo /docs/v2/demos/src/icon/
+ * @demo /docs/v2/demos/src/icon/basic
  * @see {@link /docs/v2/components#icons Icon Component Docs}
  * @see {@link /docs/v2/ionicons Ionicon Docs}
  *

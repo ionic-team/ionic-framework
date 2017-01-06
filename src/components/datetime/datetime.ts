@@ -229,7 +229,7 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  * display dates in JavaScript," although Ionic does not prepackage this dependency since most 
  * apps will not require it.
  *
- * @demo /docs/v2/demos/src/datetime/
+ * @demo /docs/v2/demos/src/datetime/basic
  */
 @Component({
   selector: 'ion-datetime',

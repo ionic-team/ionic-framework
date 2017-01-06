@@ -186,7 +186,7 @@ import { DomController } from '../../util/dom-controller';
  *
  * @property [no-lines] - Removes the dividing line between items in the list.
  *
- * @demo /docs/v2/demos/src/list/
+ * @demo /docs/v2/demos/src/list/basic
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../item/Item Item API Docs}
  * @see {@link ../../item/ItemSliding ItemSliding API Docs}

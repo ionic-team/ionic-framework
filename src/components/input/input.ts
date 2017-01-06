@@ -65,7 +65,7 @@ import { Platform } from '../../platform/platform';
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/input/
+ * @demo /docs/v2/demos/src/input/basic
  */
 @Component({
   selector: 'ion-input',

@@ -118,7 +118,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * };
  * ```
  *
- * @demo /docs/v2/demos/src/select/
+ * @demo /docs/v2/demos/src/select/basic
  */
 @Component({
   selector: 'ion-select',

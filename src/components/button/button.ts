@@ -136,7 +136,7 @@ import { isTrueProperty } from '../../util/util';
   *   </ion-item>
   * </ion-list>
   * ```
-  * @demo /docs/v2/demos/src/button/
+  * @demo /docs/v2/demos/src/button/basic
   * @see {@link /docs/v2/components#buttons Button Component Docs}
   * @see {@link /docs/v2/components#fabs FabButton Docs}
   * @see {@link ../../fab/FabButton FabButton API Docs}

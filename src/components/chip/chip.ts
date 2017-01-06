@@ -89,7 +89,7 @@ import { Ion } from '../ion';
   * }
   * ```
   *
-  * @demo /docs/v2/demos/src/chip/
+  * @demo /docs/v2/demos/src/chip/basic
  **/
 @Directive({
   selector: 'ion-chip'

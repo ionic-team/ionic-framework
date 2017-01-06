@@ -143,7 +143,7 @@ export class Popover extends ViewController {
  *
  *
  *
- * @demo /docs/v2/demos/src/popover/
+ * @demo /docs/v2/demos/src/popover/basic
  */
 @Injectable()
 export class PopoverController {

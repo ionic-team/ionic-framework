@@ -38,7 +38,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/segment/
+ * @demo /docs/v2/demos/src/segment/basic
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
  */

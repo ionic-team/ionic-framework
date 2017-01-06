@@ -49,7 +49,7 @@ import { nativeTimeout } from '../../util/dom';
   * </ion-fab>
   * ```
   *
-  * @demo /docs/v2/demos/src/fab/
+  * @demo /docs/v2/demos/src/fab/basic
   * @see {@link /docs/v2/components#fabs FAB Component Docs}
  */
 @Component({
@@ -119,7 +119,7 @@ export class FabButton extends Ion {
   * ```
   * @module ionic
   *
-  * @demo /docs/v2/demos/src/fab/
+  * @demo /docs/v2/demos/src/fab/basic
   * @see {@link /docs/v2/components#fab Fab Component Docs}
  */
 @Directive({
@@ -258,7 +258,7 @@ export class FabList {
   * }
   * ```
   *
-  * @demo /docs/v2/demos/src/fab/
+  * @demo /docs/v2/demos/src/fab/basic
   * @see {@link /docs/v2/components#fabs FAB Component Docs}
  */
 @Component({

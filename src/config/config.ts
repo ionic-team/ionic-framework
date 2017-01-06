@@ -12,7 +12,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
 
 /**
  * @name Config
- * @demo /docs/v2/demos/src/config/
+ * @demo /docs/v2/demos/src/config/basic
  * @description
  * The Config lets you configure your app globally or for specific platform modes 
  * (iOS, Android, Windows Phone). You can set the tab placement, icon mode, animations, 

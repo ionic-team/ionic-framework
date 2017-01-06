@@ -145,7 +145,7 @@ import { ViewController } from '../../navigation/view-controller';
  * actionSheet.present();
  * ```
  *
- * @demo /docs/v2/demos/src/action-sheet/
+ * @demo /docs/v2/demos/src/action-sheet/basic
  * @see {@link ../ActionSheetController ActionSheetController API Docs}
  */
 export class ActionSheet extends ViewController {

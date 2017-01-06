@@ -27,7 +27,7 @@ import { removeArrayItem } from '../util/util';
  *   }
  * }
  * ```
- * @demo /docs/v2/demos/src/platform/
+ * @demo /docs/v2/demos/src/platform/basic
  */
 export class Platform {
   private _versions: {[name: string]: PlatformVersion} = {};

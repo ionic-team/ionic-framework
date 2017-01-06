@@ -166,7 +166,7 @@ import { Swiper } from './swiper-widget';
  * For all of the methods you can call on the `Slider` instance, see the
  * [Instance Members](#instance-members).
  *
- * @demo /docs/v2/demos/src/slides/
+ * @demo /docs/v2/demos/src/slides/basic
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
  * Swiper.js:

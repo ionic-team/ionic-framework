@@ -172,7 +172,7 @@ import { DomController } from '../../util/dom-controller';
  * and usage information.
  *
  *
- * @demo /docs/v2/demos/src/menu/
+ * @demo /docs/v2/demos/src/menu/basic
  *
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../MenuController MenuController API Docs}
