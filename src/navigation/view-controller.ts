@@ -464,13 +464,13 @@ export class ViewController {
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
-  _didLeave() {
+  _didLeave(keepChangeDetectorAttached?: boolean) {
     this.didLeave.emit(null);
     this._lifecycle('DidLeave');
 
     // when this is not the active page
     // we no longer need to detect changes
-    if (!this._detached && this._cmp) {
+    if (!this._detached && this._cmp && !keepChangeDetectorAttached) {
       this._cmp.changeDetectorRef.detach();
       this._detached = true;
     }

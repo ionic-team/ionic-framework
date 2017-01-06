@@ -414,7 +414,8 @@ export class Tabs extends Ion implements AfterViewInit {
       }
 
       selectedPage && selectedPage._didEnter();
-      deselectedPage && deselectedPage._didLeave();
+      const keepChangeDetectorAttached = !selectedTab.root;
+      deselectedPage && deselectedPage._didLeave(keepChangeDetectorAttached);
 
       // track the order of which tabs have been selected, by their index
       // do not track if the tab index is the same as the previous
