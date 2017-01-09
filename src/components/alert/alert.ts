@@ -81,6 +81,7 @@ export class Alert extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
+    navOptions.minClickBlockDuration = navOptions.minClickBlockDuration || 400;
     return this._app.present(this, navOptions);
   }
 

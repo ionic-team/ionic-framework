@@ -63,8 +63,8 @@ ion-input :focus {
   opacity: 0;
   transform: translate3d(0, -100%, 0) translateY(1px);
 
-  // background: red;
-  // opacity: .3;
+  background: red;
+  opacity: .3;
   contain: strict;
 }
 

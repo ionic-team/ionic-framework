@@ -6,6 +6,7 @@ import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/ge
 import { isPresent, assert } from '../../util/util';
 import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
+import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -298,7 +299,10 @@ export class AlertCmp {
   }
 
   dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(this.getValues(), role);
+    const opts: NavOptions = {
+      minClickBlockDuration: 400
+    };
+    return this._viewCtrl.dismiss(this.getValues(), role, opts);
   }
 
   getValues(): any {

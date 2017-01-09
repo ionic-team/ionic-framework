@@ -162,6 +162,7 @@ export interface NavOptions {
   keyboardClose?: boolean;
   progressAnimation?: boolean;
   disableApp?: boolean;
+  minClickBlockDuration?: number;
   ev?: any;
   updateUrl?: boolean;
   isNavRoot?: boolean;
