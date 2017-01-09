@@ -167,6 +167,12 @@ export class ViewController {
     if (!this._nav) {
       return Promise.resolve(false);
     }
+    if (this.isOverlay && !navOptions.minClickBlockDuration) {
+      // This is a Modal being dismissed so we need
+      // to add the minClickBlockDuration option
+      // for UIWebView
+      navOptions.minClickBlockDuration = 400;
+    }
     this._dismissData = data;
     this._dismissRole = role;
 
