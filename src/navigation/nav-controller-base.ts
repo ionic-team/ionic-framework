@@ -663,7 +663,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (duration > DISABLE_APP_MINIMUM_DURATION && opts.disableApp !== false) {
         // if this transition has a duration and this is the root transition
         // then set that the app is actively disabled
-        this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET);
+        this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET, opts.minClickBlockDuration);
       } else {
         console.debug('transition is running but app has not been disabled');
       }

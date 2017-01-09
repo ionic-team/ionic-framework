@@ -14,6 +14,8 @@ import { Platform } from '../platform/platform';
 export class ClickBlock {
   private _tmr: number;
   private _showing: boolean = false;
+  private _start: number;
+  private _minEnd: number;
   isEnabled: boolean;
 
   constructor(
@@ -31,10 +33,15 @@ export class ClickBlock {
     }
   }
 
-  activate(shouldShow: boolean, expire: number = 100) {
+  activate(shouldShow: boolean, expire: number = 100, minDuration: number = 0) {
     if (this.isEnabled) {
       this.plt.cancelTimeout(this._tmr);
       if (shouldShow) {
+        // remember when we started the click block
+        this._start = Date.now();
+        // figure out the minimum time it should be showing until
+        // this is useful for transitions that are less than 300ms
+        this._minEnd = this._start + (minDuration || 0);
         this._activate(true);
       }
       this._tmr = this.plt.timeout(this._activate.bind(this, false), expire);
@@ -44,6 +51,17 @@ export class ClickBlock {
   /** @internal */
   _activate(shouldShow: boolean) {
     if (this._showing !== shouldShow) {
+
+      if (!shouldShow) {
+        // check if it was enabled before the minimum duration
+        // this is useful for transitions that are less than 300ms
+        var now = Date.now();
+        if (now < this._minEnd) {
+          this._tmr = this.plt.timeout(this._activate.bind(this, false), this._minEnd - now);
+          return;
+        }
+      }
+
       this._setElementClass('click-block-active', shouldShow);
       this._showing = shouldShow;
     }

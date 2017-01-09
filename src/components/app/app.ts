@@ -119,17 +119,17 @@ export class App {
    * it will automatically enable the app again. It's basically a fallback incase
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
-  setEnabled(isEnabled: boolean, duration: number = 700) {
+  setEnabled(isEnabled: boolean, duration: number = 700, minDuration: number = 0) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (this._clickBlock) {
       if (isEnabled) {
         // disable the click block if it's enabled, or the duration is tiny
-        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS);
+        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
 
       } else {
         // show the click block for duration + some number
-        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
+        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
       }
     }
   }
