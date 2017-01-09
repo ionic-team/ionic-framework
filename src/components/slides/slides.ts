@@ -129,6 +129,7 @@ export class Slides extends Ion {
    * @input {number}  Delay between transitions (in milliseconds). If this
    * parameter is not passed, autoplay is disabled. Default does
    * not have a value and does not autoplay.
+   * Default: `null`.
    */
   @Input()
   get autoplay() {
@@ -226,7 +227,7 @@ export class Slides extends Ion {
   private _paginationType = 'bullets';
 
   /**
-   * Enable, if you want to use "parallaxed" elements inside of
+   * @input {boolean} Enable, if you want to use "parallaxed" elements inside of
    * slider. Default: `false`.
    */
   @Input()
@@ -265,16 +266,19 @@ export class Slides extends Ion {
   private _isZoom = false;
 
   /**
+   * @private
    * Height of container.
    */
   height: number;
 
   /**
+   * @private
    * Width of container.
    */
   width: number;
 
   /**
+   * @private
    * Enabled this option and swiper will be operated as usual except it will
    * not move, real translate values on wrapper will not be set. Useful when
    * you may need to create custom slide transition.
@@ -282,68 +286,189 @@ export class Slides extends Ion {
   virtualTranslate = false;
 
   /**
+   * @private
    * Set to true to round values of slides width and height to prevent blurry
    * texts on usual resolution screens (if you have such)
    */
   roundLengths = false;
 
   // Slides grid
+  /**
+   * @private
+   */
   spaceBetween = 0;
+  /**
+   * @private
+   */
   slidesPerView: number|string = 1;
+  /**
+   * @private
+   */
   slidesPerColumn = 1;
+  /**
+   * @private
+   */
   slidesPerColumnFill = 'column';
+  /**
+   * @private
+   */
   slidesPerGroup = 1;
+  /**
+   * @private
+   */
   centeredSlides = false;
+  /**
+   * @private
+   */
   slidesOffsetBefore = 0;
+  /**
+   * @private
+   */
   slidesOffsetAfter = 0;
 
+  /**
+   * @private
+   */
   touchEventsTarget: 'container';
 
   // autoplay
+  /**
+   * @private
+   */
   autoplayDisableOnInteraction = true;
+  /**
+   * @private
+   */
   autoplayStopOnLast = false;
 
   // Free mode
+  /**
+   * @private
+   */
   freeMode = false;
+  /**
+   * @private
+   */
   freeModeMomentum = true;
+  /**
+   * @private
+   */
   freeModeMomentumRatio = 1;
+  /**
+   * @private
+   */
   freeModeMomentumBounce = true;
+  /**
+   * @private
+   */
   freeModeMomentumBounceRatio = 1;
+  /**
+   * @private
+   */
   freeModeMomentumVelocityRatio = 1;
+  /**
+   * @private
+   */
   freeModeSticky = false;
+  /**
+   * @private
+   */
   freeModeMinimumVelocity = 0.02;
 
   // Autoheight
+  /**
+   * @private
+   */
   autoHeight = false;
 
   // Set wrapper width
+  /**
+   * @private
+   */
   setWrapperSize = false;
 
   // Zoom
+  /**
+   * @private
+   */
   zoomMax = 3;
+  /**
+   * @private
+   */
   zoomMin = 1;
+  /**
+   * @private
+   */
   zoomToggle = true;
 
   // Touches
+  /**
+   * @private
+   */
   touchRatio = 1;
+  /**
+   * @private
+   */
   touchAngle = 45;
+  /**
+   * @private
+   */
   simulateTouch = true;
+  /**
+   * @private
+   */
   shortSwipes = true;
+  /**
+   * @private
+   */
   longSwipes = true;
+  /**
+   * @private
+   */
   longSwipesRatio = 0.5;
+  /**
+   * @private
+   */
   longSwipesMs = 300;
+  /**
+   * @private
+   */
   followFinger = true;
+  /**
+   * @private
+   */
   onlyExternal = false;
+  /**
+   * @private
+   */
   threshold = 0;
+  /**
+   * @private
+   */
   touchMoveStopPropagation = true;
+  /**
+   * @private
+   */
   touchReleaseOnEdges = false;
 
   // To support iOS's swipe-to-go-back gesture (when being used in-app, with UIWebView).
+  /**
+   * @private
+   */
   iOSEdgeSwipeDetection = false;
+  /**
+   * @private
+   */
   iOSEdgeSwipeThreshold = 20;
 
   // Pagination
+  /**
+   * @private
+   */
   paginationClickable = false;
+  /**
+   * @private
+   */
   paginationHide = false;
 
   // Resistance
@@ -355,25 +480,52 @@ export class Slides extends Ion {
   watchSlidesVisibility = false;
 
   // Clicks
+  /**
+   * @private
+   */
   preventClicks = true;
+  /**
+   * @private
+   */
   preventClicksPropagation = true;
+  /**
+   * @private
+   */
   slideToClickedSlide = false;
 
   // loop
+  /**
+   * @private
+   */
   loopAdditionalSlides = 0;
+  /**
+   * @private
+   */
   loopedSlides = null;
 
   // Swiping/no swiping
+  /**
+   * @private
+   */
   swipeHandler = null;
+  /**
+   * @private
+   */
   noSwiping = true;
 
   // Callbacks
   runCallbacksOnInit = true;
 
   // Keyboard
+  /**
+   * @private
+   */
   keyboardControl = true;
 
   // Effects
+  /**
+   * @private
+   */
   coverflow = {
     rotate: 50,
     stretch: 0,
@@ -381,26 +533,50 @@ export class Slides extends Ion {
     modifier: 1,
     slideShadows: true
   };
+  /**
+   * @private
+   */
   flip = {
     slideShadows: true,
     limitRotation: true
   };
+  /**
+   * @private
+   */
   cube = {
     slideShadows: true,
     shadow: true,
     shadowOffset: 20,
     shadowScale: 0.94
   };
+  /**
+   * @private
+   */
   fade = {
     crossFade: false
   };
 
   // Accessibility
+  /**
+   * @private
+   */
   prevSlideMessage = 'Previous slide';
+  /**
+   * @private
+   */
   nextSlideMessage = 'Next slide';
+  /**
+   * @private
+   */
   firstSlideMessage = 'This is the first slide';
+  /**
+   * @private
+   */
   lastSlideMessage = 'This is the last slide';
 
+  /**
+   * @private
+   */
   originalEvent: any;
 
   /**
@@ -434,7 +610,7 @@ export class Slides extends Ion {
   @Output() ionSlideAutoplay: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionWillChange` but caused by autoplay.
+   * @output {Slides} Same as `ionSlideWillChange` but caused by autoplay.
    */
   @Output() ionSlideAutoplayStart: EventEmitter<Slides> = new EventEmitter();
 
@@ -444,22 +620,22 @@ export class Slides extends Ion {
   @Output() ionSlideAutoplayStop: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionWillChange` but for "forward" direction only.
+   * @output {Slides} Same as `ionSlideWillChange` but for "forward" direction only.
    */
   @Output() ionSlideNextStart: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionWillChange` but for "backward" direction only.
+   * @output {Slides} Same as `ionSlideWillChange` but for "backward" direction only.
    */
   @Output() ionSlidePrevStart: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionDidChange` but for "forward" direction only.
+   * @output {Slides} Same as `ionSlideDidChange` but for "forward" direction only.
    */
   @Output() ionSlideNextEnd: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionDidChange` but for "backward" direction only.
+   * @output {Slides} Same as `ionSlideDidChange` but for "backward" direction only.
    */
   @Output() ionSlidePrevEnd: EventEmitter<Slides> = new EventEmitter();
 
