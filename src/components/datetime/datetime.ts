@@ -7,7 +7,7 @@ import { PickerColumn, PickerColumnOption } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
-import { merge, isBlank, isPresent, isTrueProperty, isArray, isString } from '../../util/util';
+import { deepCopy, isBlank, isPresent, isTrueProperty, isArray, isString } from '../../util/util';
 import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
 export const DATETIME_VALUE_ACCESSOR: any = {
@@ -408,7 +408,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   @Input() pickerOptions: any = {};
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -473,9 +473,9 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     console.debug('datetime, open picker');
 
     // the user may have assigned some options specifically for the alert
-    let pickerOptions = merge({}, this.pickerOptions);
+    const pickerOptions = deepCopy(this.pickerOptions);
 
-    let picker = this._pickerCtrl.create(pickerOptions);
+    const picker = this._pickerCtrl.create(pickerOptions);
     pickerOptions.buttons = [
       {
         text: this.cancelText,

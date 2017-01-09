@@ -1,14 +1,17 @@
 import { Injectable, NgZone } from '@angular/core';
 
-import { ActivatorBase } from './activator-base';
+import { assert, runInDev } from '../util/util';
 import { Activator } from './activator';
-import { App } from '../app/app';
-import { Config } from '../../config/config';
-import { assert, runInDev } from '../../util/util';
-import { hasPointerMoved, pointerCoord } from '../../util/dom';
+import { ActivatorBase } from './activator-base';
+import { App } from '../components/app/app';
+import { Config } from '../config/config';
+import { DomController } from '../platform/dom-controller';
+import { GestureController } from '../gestures/gesture-controller';
+import { Platform } from '../platform/platform';
+import { pointerCoord, hasPointerMoved } from '../util/dom';
+import { PointerEvents, PointerEventType } from '../gestures/pointer-events';
 import { RippleActivator } from './ripple';
-import { UIEventManager, PointerEvents, PointerEventType } from '../../util/ui-event-manager';
-import { GestureController } from '../../gestures/gesture-controller';
+import { UIEventManager } from '../gestures/ui-event-manager';
 
 /**
  * @private
@@ -19,31 +22,37 @@ export class TapClick {
   private usePolyfill: boolean;
   private activator: ActivatorBase;
   private startCoord: any;
-  private events: UIEventManager = new UIEventManager(false);
+  private events: UIEventManager;
   private pointerEvents: PointerEvents;
   private lastTouchEnd: number;
   private dispatchClick: boolean;
 
   constructor(
     config: Config,
+    private plt: Platform,
+    dom: DomController,
     private app: App,
     zone: NgZone,
     private gestureCtrl: GestureController
   ) {
+    this.events = new UIEventManager(plt);
+
     let activator = config.get('activator');
     if (activator === 'ripple') {
-      this.activator = new RippleActivator(app, config);
+      this.activator = new RippleActivator(app, config, dom);
 
     } else if (activator === 'highlight') {
-      this.activator = new Activator(app, config);
+      this.activator = new Activator(app, config, dom);
     }
 
     this.usePolyfill = config.getBoolean('tapPolyfill');
     console.debug('Using usePolyfill:', this.usePolyfill);
 
-    this.events.listen(document, 'click', this.click.bind(this), true);
+    const doc = plt.doc();
+
+    this.events.listen(doc, 'click', this.click.bind(this), { passive: false, capture: true });
     this.pointerEvents = this.events.pointerEvents({
-      element: <any>document,
+      element: <any>doc,
       pointerDown: this.pointerStart.bind(this),
       pointerMove: this.pointerMove.bind(this),
       pointerUp: this.pointerEnd.bind(this),
@@ -75,17 +84,13 @@ export class TapClick {
   }
 
   pointerMove(ev: UIEvent) {
-    assert(this.startCoord, 'startCoord must be valid');
-    assert(this.dispatchClick === true, 'disableClick must be true');
-
-    if (this.shouldCancelEvent(ev)) {
+    if (this.startCoord && this.shouldCancelEvent(ev)) {
       this.pointerCancel(ev);
     }
   }
 
   pointerEnd(ev: any, type: PointerEventType) {
-    assert(this.startCoord, 'startCoord must be valid');
-    assert(this.dispatchClick === true, 'disableClick must be true');
+    if (!this.dispatchClick) return;
 
     runInDev(() => this.lastTouchEnd = Date.now());
 
@@ -197,8 +202,8 @@ export class TapClick {
       // dispatch a mouse click event
       console.debug(`create click from touch ${Date.now()}`);
 
-      let clickEvent: any = document.createEvent('MouseEvents');
-      clickEvent.initMouseEvent('click', true, true, window, 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
+      let clickEvent: any = this.plt.doc().createEvent('MouseEvents');
+      clickEvent.initMouseEvent('click', true, true, this.plt.win(), 1, 0, 0, endCoord.x, endCoord.y, false, false, false, false, 0, null);
       clickEvent.isIonicTap = true;
       ev.target.dispatchEvent(clickEvent);
     }
@@ -242,8 +247,12 @@ const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];
 const POINTER_TOLERANCE = 100;
 const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
 
-export function setupTapClick(config: Config, app: App, zone: NgZone, gestureCtrl: GestureController) {
+
+/**
+ * @private
+ */
+export function setupTapClick(config: Config, plt: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
   return function() {
-    return new TapClick(config, app, zone, gestureCtrl);
+    return new TapClick(config, plt, dom, app, zone, gestureCtrl);
   };
 }

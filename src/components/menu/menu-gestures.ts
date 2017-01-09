@@ -1,8 +1,9 @@
 import { Menu } from './menu';
+import { DomController } from '../../platform/dom-controller';
+import { GestureController, GesturePriority, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
+import { Platform } from '../../platform/platform';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
-import { GestureController, GesturePriority, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
-import { DomController } from '../../util/dom-controller';
 
 /**
  * Gesture attached to the content which the menu is assigned to
@@ -10,11 +11,12 @@ import { DomController } from '../../util/dom-controller';
 export class MenuContentGesture extends SlideEdgeGesture {
 
   constructor(
+    plt: Platform,
     public menu: Menu,
     gestureCtrl: GestureController,
     domCtrl: DomController,
   ) {
-    super(document.body, {
+    super(plt, plt.doc().body, {
       direction: 'x',
       edge: menu.side,
       threshold: 5,

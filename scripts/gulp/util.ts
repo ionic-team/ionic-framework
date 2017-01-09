@@ -1,4 +1,4 @@
-import { UMD_MODULE, ES_2015, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
+import { NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { join } from 'path';
 import * as fs from 'fs';
@@ -136,17 +136,6 @@ export function setSassIonicVersion(version: string) {
 export function copyFile(srcPath: string, destPath: string) {
   const sourceData = fs.readFileSync(srcPath);
   fs.writeFileSync(destPath, sourceData);
-}
-
-export function copySwiperToPath(distPath: string, moduleType: string) {
-  copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.d.ts`, `${distPath}/swiper-widget.d.ts`);
-  if (!moduleType || moduleType === UMD_MODULE) {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.js`, `${distPath}/swiper-widget.js`);
-  } else if (moduleType === ES_2015) {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.es2015.js`, `${distPath}/swiper-widget.js`);
-  } else {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);
-  }
 }
 
 export function runNgc(pathToConfigFile: string, done: Function) {

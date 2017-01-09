@@ -1,10 +1,10 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
-
+import { DomController } from '../../platform/dom-controller';
 import { GestureController, GesturePriority, GESTURE_ITEM_SWIPE } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
+import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
-import { DomController } from '../../util/dom-controller';
 
 /**
  * @private
@@ -18,11 +18,14 @@ export class ItemSlidingGesture extends PanGesture {
   private firstTimestamp: number;
 
   constructor(
+    plt: Platform,
     public list: List,
     gestureCtrl: GestureController,
     domCtrl: DomController
   ) {
-    super(list.getNativeElement(), {
+    super(
+      plt,
+      list.getNativeElement(), {
       maxAngle: 20,
       threshold: 5,
       zone: false,
@@ -68,8 +71,7 @@ export class ItemSlidingGesture extends PanGesture {
   onDragMove(ev: any) {
     ev.preventDefault();
 
-    let coordX = pointerCoord(ev).x;
-    this.selectedContainer.moveSliding(coordX);
+    this.selectedContainer.moveSliding(pointerCoord(ev).x);
   }
 
   onDragEnd(ev: any) {

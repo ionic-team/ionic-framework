@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Config, Animation } from '../../../..';
+import { Animation, Config, IonicApp, IonicModule, Platform } from '../../../..';
 
 
 @Component({
@@ -9,13 +9,13 @@ export class E2EPage {
   duration: string;
   easing: string;
 
-  constructor(config: Config) {
+  constructor(config: Config, public plt: Platform) {
     this.duration = '1000';
     this.easing = 'ease-in-out';
   }
 
   playGreen() {
-    let a = new Animation('.green');
+    let a = new Animation(this.plt, '.green');
     a.fromTo('translateX', '0px', '200px');
     a.duration(parseInt(this.duration, 10));
     a.easing(this.easing);
@@ -35,7 +35,7 @@ export class E2EPage {
 
       console.log('Play', count);
 
-      let a = new Animation('.green');
+      let a = new Animation(self.plt, '.green');
       a.fromTo('translateX', '0px', '200px');
       a.duration(parseInt(self.duration, 10));
       a.easing(self.easing);

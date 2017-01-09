@@ -2,7 +2,7 @@ import { Directive, ElementRef, EventEmitter, HostListener, Output, Renderer } f
 import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { CSS, hasFocus }  from '../../util/dom';
+import { Platform } from '../../platform/platform';
 
 
 /**
@@ -25,6 +25,7 @@ export class NativeInput {
     public _elementRef: ElementRef,
     public _renderer: Renderer,
     config: Config,
+    private _plt: Platform,
     public ngControl: NgControl
   ) {
     this._clone = config.getBoolean('inputCloning', false);
@@ -49,25 +50,27 @@ export class NativeInput {
 
     self.focusChange.emit(true);
 
-    function docTouchEnd(ev: TouchEvent) {
-      var tapped = <HTMLElement>ev.target;
-      if (tapped && self.element()) {
-        if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
-          self.element().blur();
-        }
-      }
-    }
-
     if (self._blurring) {
       // automatically blur input if:
       // 1) this input has focus
       // 2) the newly tapped document element is not an input
       console.debug(`native-input, blurring enabled`);
 
-      document.addEventListener('touchend', docTouchEnd, true);
+      var unregTouchEnd = this._plt.registerListener(this._plt.doc(), 'touchend', (ev: TouchEvent) => {
+        var tapped = <HTMLElement>ev.target;
+        if (tapped && self.element()) {
+          if (tapped.tagName !== 'INPUT' && tapped.tagName !== 'TEXTAREA' && !tapped.classList.contains('input-cover')) {
+            self.element().blur();
+          }
+        }
+      }, {
+        capture: true,
+        zone: false
+      });
+
       self._unrefBlur = function() {
         console.debug(`native-input, blurring disabled`);
-        document.removeEventListener('touchend', docTouchEnd, true);
+        unregTouchEnd();
       };
     }
   }
@@ -92,7 +95,7 @@ export class NativeInput {
   setFocus() {
     // let's set focus to the element
     // but only if it does not already have focus
-    if (document.activeElement !== this.element()) {
+    if (this._plt.getActiveElement() !== this.element()) {
       this.element().focus();
     }
   }
@@ -113,12 +116,12 @@ export class NativeInput {
           // the cloned input fills the area of where native input should be
           // while the native input fakes out the browser by relocating itself
           // before it receives the actual focus event
-          cloneInputComponent(focusedInputEle);
+          cloneInputComponent(this._plt, focusedInputEle);
 
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
           // area which doesn't require the browser to scroll the input into place
-          (<any>focusedInputEle.style)[CSS.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+          (<any>focusedInputEle.style)[this._plt.Css.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
           focusedInputEle.style.opacity = '0';
         }
 
@@ -131,7 +134,7 @@ export class NativeInput {
         // should remove the focus
         if (this._clone) {
           // should remove the cloned node
-          removeClone(focusedInputEle);
+          removeClone(this._plt, focusedInputEle);
         }
       }
 
@@ -145,16 +148,16 @@ export class NativeInput {
     console.debug(`native-input, hideFocus, shouldHideFocus: ${shouldHideFocus}, input value: ${focusedInputEle.value}`);
 
     if (shouldHideFocus) {
-      cloneInputComponent(focusedInputEle);
-      (<any>focusedInputEle.style)[CSS.transform] = 'scale(0)';
+      cloneInputComponent(this._plt, focusedInputEle);
+      (<any>focusedInputEle.style)[this._plt.Css.transform] = 'scale(0)';
 
     } else {
-      removeClone(focusedInputEle);
+      removeClone(this._plt, focusedInputEle);
     }
   }
 
-  hasFocus(): boolean {
-    return hasFocus(this.element());
+  setValue(val: any) {
+    this._elementRef.nativeElement['value'] = val;
   }
 
   getValue(): string {
@@ -175,7 +178,7 @@ export class NativeInput {
 
 }
 
-function cloneInputComponent(srcNativeInputEle: HTMLInputElement) {
+function cloneInputComponent(plt: Platform, srcNativeInputEle: HTMLInputElement) {
   // given a native <input> or <textarea> element
   // find its parent wrapping component like <ion-input> or <ion-textarea>
   // then clone the entire component
@@ -209,10 +212,10 @@ function cloneInputComponent(srcNativeInputEle: HTMLInputElement) {
     srcComponentEle.style.pointerEvents = 'none';
   }
 
-  (<any>srcNativeInputEle.style)[CSS.transform] = 'scale(0)';
+  (<any>srcNativeInputEle.style)[plt.Css.transform] = 'scale(0)';
 }
 
-function removeClone(srcNativeInputEle: HTMLElement) {
+function removeClone(plt: Platform, srcNativeInputEle: HTMLElement) {
   const srcComponentEle = <HTMLElement>srcNativeInputEle.closest('ion-input,ion-textarea');
   if (srcComponentEle && srcComponentEle.parentElement) {
     const clonedInputEles = srcComponentEle.parentElement.querySelectorAll('.cloned-input');
@@ -222,7 +225,7 @@ function removeClone(srcNativeInputEle: HTMLElement) {
 
     srcComponentEle.style.pointerEvents = '';
   }
-  (<any>srcNativeInputEle.style)[CSS.transform] = '';
+  (<any>srcNativeInputEle.style)[plt.Css.transform] = '';
   srcNativeInputEle.style.opacity = '';
 }
 

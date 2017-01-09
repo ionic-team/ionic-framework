@@ -13,6 +13,8 @@
   <p><button ion-button (click)="logout()">Logout</button></p>
   <p><button ion-button (click)="favoritesTab()">Favorites Tab</button></p>
   <p><button ion-button (click)="goBack()">Go Back</button></p>
+  <p><button ion-button (click)="color = !color" [color]="color ? 'primary':'secondary'">Change color</button></p>
+  <p>"Change color" should continue working after clicking Logout in the tabbar and cancelling (No in the alert)</p>
   <p>UserId: {{userId}}</p>
   <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
   <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>

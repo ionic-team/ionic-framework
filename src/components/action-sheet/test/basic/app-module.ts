@@ -7,7 +7,7 @@ import { IonicApp, IonicModule, ActionSheetController, AlertController, ModalCon
 export class E2EPage {
   result: string = '';
 
-  constructor(public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public modalCtrl: ModalController, public platform: Platform) {}
+  constructor(public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public modalCtrl: ModalController, public plt: Platform) {}
 
   presentActionSheet1() {
     this.result = '';
@@ -46,7 +46,7 @@ export class E2EPage {
         },
         {
           text: 'Favorite',
-          icon: !this.platform.is('ios') ? 'heart' : null,
+          icon: !this.plt.is('ios') ? 'heart' : null,
           handler: () => {
             console.log('Favorite clicked');
             this.result = 'Favorited';
@@ -55,7 +55,7 @@ export class E2EPage {
         {
           text: 'Cancel',
           role: 'cancel', // will always sort to be on the bottom
-          icon: !this.platform.is('ios') ? 'close' : null,
+          icon: !this.plt.is('ios') ? 'close' : null,
           handler: () => {
             console.log('Cancel clicked');
             this.result = 'Canceled';

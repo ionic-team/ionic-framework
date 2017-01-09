@@ -38,28 +38,28 @@ export class E2EPage {
     public navCtrl: NavController,
     public modalCtrl: ModalController,
     public toastCtrl: ToastController,
-    config: Config, platform: Platform) {
-    console.log('platforms', platform.platforms());
+    config: Config, plt: Platform) {
+    console.log('platforms', plt.platforms());
     console.log('mode', config.get('mode'));
 
-    console.log('isRTL', platform.isRTL());
-    console.log('core', platform.is('core'));
-    console.log('cordova', platform.is('cordova'));
-    console.log('mobile', platform.is('mobile'));
-    console.log('mobileweb', platform.is('mobileweb'));
-    console.log('ipad', platform.is('ipad'));
-    console.log('iphone', platform.is('iphone'));
-    console.log('phablet', platform.is('phablet'));
-    console.log('tablet', platform.is('tablet'));
-    console.log('ios', platform.is('ios'));
-    console.log('android', platform.is('android'));
-    console.log('windows phone', platform.is('windows'));
+    console.log('isRTL', plt.isRTL());
+    console.log('core', plt.is('core'));
+    console.log('cordova', plt.is('cordova'));
+    console.log('mobile', plt.is('mobile'));
+    console.log('mobileweb', plt.is('mobileweb'));
+    console.log('ipad', plt.is('ipad'));
+    console.log('iphone', plt.is('iphone'));
+    console.log('phablet', plt.is('phablet'));
+    console.log('tablet', plt.is('tablet'));
+    console.log('ios', plt.is('ios'));
+    console.log('android', plt.is('android'));
+    console.log('windows phone', plt.is('windows'));
 
-    platform.ready().then((readySource: string) => {
+    plt.ready().then((readySource: string) => {
       console.log('platform.ready, readySource:', readySource);
     });
 
-    this.platforms = platform.platforms();
+    this.platforms = plt.platforms();
   }
 
   push() {

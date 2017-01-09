@@ -1,4 +1,4 @@
-import { ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Renderer } from '@angular/core';
+import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListHeader } from '../list/list-header';
@@ -108,7 +108,8 @@ export class RadioGroup {
 
   constructor(
     private _renderer: Renderer,
-    private _elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _cd: ChangeDetectorRef
   ) {
     this.id = ++radioGroupIds;
   }
@@ -239,6 +240,7 @@ export class RadioGroup {
     this._update();
     this.onTouched();
     this.ionChange.emit(val);
+    this._cd.detectChanges();
   }
 
   /**

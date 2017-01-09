@@ -69,19 +69,18 @@ export class App {
 
   constructor(
     private _config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     @Optional() private _menuCtrl?: MenuController
   ) {
     // listen for hardware back button events
     // register this back button action with a default priority
-    _platform.registerBackButtonAction(this.goBack.bind(this));
+    _plt.registerBackButtonAction(this.goBack.bind(this));
     this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
-      // window.HWBackButton();
-      if (!(<any>window)['HWBackButton']) {
-        (<any>window)['HWBackButton'] = () => {
+      if (!(<any>_plt.win())['HWBackButton']) {
+        (<any>_plt.win())['HWBackButton'] = () => {
           let p = this.goBack();
           p && p.catch(() => console.debug('hardware go back cancelled'));
           return p;
@@ -247,7 +246,7 @@ export class App {
       // let's exit the app
       if (this._config.getBoolean('navExitApp', true)) {
         console.debug('app, goBack exitApp');
-        this._platform.exitApp();
+        this._plt.exitApp();
       }
     }
     return navPromise;

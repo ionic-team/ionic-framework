@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
-import { CSS, nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/dom';
-import { Item } from './item';
 import { isPresent, swipeShouldReset, assert } from '../../util/util';
+import { Item } from './item';
 import { List } from '../list/list';
+import { Platform } from '../../platform/platform';
+import { DomController } from '../../platform/dom-controller';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -183,7 +184,7 @@ export class ItemSliding {
   private _optsWidthRightSide: number = 0;
   private _optsWidthLeftSide: number = 0;
   private _sides: ItemSideFlags;
-  private _timer: number = null;
+  private _tmr: number = null;
   private _leftOptions: ItemOptions;
   private _rightOptions: ItemOptions;
   private _optsDirty: boolean = true;
@@ -219,6 +220,8 @@ export class ItemSliding {
 
   constructor(
     @Optional() list: List,
+    private _plt: Platform,
+    private _dom: DomController,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
     private _zone: NgZone) {
@@ -268,16 +271,16 @@ export class ItemSliding {
    * @private
    */
   startSliding(startX: number) {
-    if (this._timer) {
-      clearNativeTimeout(this._timer);
-      this._timer = null;
+    if (this._tmr) {
+      this._plt.cancelTimeout(this._tmr);
+      this._tmr = null;
     }
     if (this._openAmount === 0) {
       this._optsDirty = true;
       this._setState(SlidingState.Enabled);
     }
     this._startX = startX + this._openAmount;
-    this.item.setElementStyle(CSS.transition, 'none');
+    this.item.setElementStyle(this._plt.Css.transition, 'none');
   }
 
   /**
@@ -306,7 +309,13 @@ export class ItemSliding {
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
     }
 
-    this._setOpenAmount(openAmount, false);
+          // this.debouncer.write(() => {
+
+      // });
+    this._dom.write(() => {
+      this._setOpenAmount(openAmount, false);
+    });
+
     return openAmount;
   }
 
@@ -347,7 +356,7 @@ export class ItemSliding {
    * @private
    */
   private calculateOptsWidth() {
-    nativeRaf(() => {
+    this._plt.raf(() => {
       if (!this._optsDirty) {
         return;
       }
@@ -367,14 +376,13 @@ export class ItemSliding {
   }
 
   private _setOpenAmount(openAmount: number, isFinal: boolean) {
-    if (this._timer) {
-      clearNativeTimeout(this._timer);
-      this._timer = null;
-    }
+    const platform = this._plt;
+
+    platform.cancelTimeout(this._tmr);
     this._openAmount = openAmount;
 
     if (isFinal) {
-      this.item.setElementStyle(CSS.transition, '');
+      this.item.setElementStyle(platform.Css.transition, '');
 
     } else {
       if (openAmount > 0) {
@@ -393,15 +401,15 @@ export class ItemSliding {
       }
     }
     if (openAmount === 0) {
-      this._timer = nativeTimeout(() => {
+      this._tmr = platform.timeout(() => {
         this._setState(SlidingState.Disabled);
-        this._timer = null;
+        this._tmr = null;
       }, 600);
-      this.item.setElementStyle(CSS.transform, '');
+      this.item.setElementStyle(platform.Css.transform, '');
       return;
     }
 
-    this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
+    this.item.setElementStyle(platform.Css.transform, `translate3d(${-openAmount}px,0,0)`);
     let ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
       ionDrag.emit(this);

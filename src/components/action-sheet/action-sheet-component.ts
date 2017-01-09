@@ -1,12 +1,12 @@
-import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
+import { assert } from '../../util/util';
+import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { Config } from '../../config/config';
-import { focusOutActiveElement } from '../../util/dom';
-import { Key } from '../../util/key';
+import { Key } from '../../platform/key';
+import { Platform } from '../../platform/platform';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
-import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
-import { assert } from '../../util/util';
 
 /**
  * @private
@@ -59,6 +59,7 @@ export class ActionSheetCmp {
   constructor(
     private _viewCtrl: ViewController,
     config: Config,
+    private _plt: Platform,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
@@ -122,7 +123,7 @@ export class ActionSheetCmp {
   }
 
   ionViewDidEnter() {
-    focusOutActiveElement();
+    this._plt.focusOutActiveElement();
 
     let focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {

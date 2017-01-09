@@ -1,23 +1,22 @@
-import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController } from '../../../..';
+import { Component, NgModule, ViewChild } from '@angular/core';
+import { IonicApp, IonicModule, NavController, Slides } from '../../../..';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 export class IntroPage {
+  @ViewChild(Slides) slider: Slides;
+
   continueText: string = 'Skip';
-  startingIndex: number = 1;
   mySlideOptions: any;
   showSlide: boolean = true;
 
-  constructor(public navCtrl: NavController) {
-    this.mySlideOptions = {
-      paginationClickable: true,
-      lazyLoading: true,
-      preloadImages: false,
-      initialSlide: this.startingIndex
-    };
+  constructor(public navCtrl: NavController) {}
+
+  ngOnInit() {
+    this.slider.initialSlide = 1;
+    this.slider.paginationClickable = true;
   }
 
   onSlideChanged(slider: any) {

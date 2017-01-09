@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 
 import { Platform } from '../platform/platform';
 
-declare var window: any;
 
 /**
  * @name Haptic
  * @description
- * The `Haptic` class interacts with a haptic engine on the device, if available. Generally,
- * Ionic components use this under the hood, but you're welcome to get a bit crazy with it
- * if you fancy.
+ * The `Haptic` class interacts with a haptic engine on the device, if
+ * available. Generally, Ionic components use this under the hood, but you're
+ * welcome to get a bit crazy with it if you fancy.
  *
  * Currently, this uses the Taptic engine on iOS.
  *
@@ -26,16 +25,12 @@ declare var window: any;
 
 @Injectable()
 export class Haptic {
+  private _p: any;
 
-  /**
-   * @internal
-   */
-  plugin: any;
-
-  constructor(platform: Platform) {
-    if (platform) {
-      platform.ready().then(() => {
-        this.plugin = window.TapticEngine;
+  constructor(plt: Platform) {
+    if (plt) {
+      plt.ready().then(() => {
+        this._p = (<any>plt.win()).TapticEngine;
       });
     }
   }
@@ -46,40 +41,29 @@ export class Haptic {
    *
    */
   available() {
-    return !!this.plugin;
+    return !!this._p;
   }
 
   /**
-   * Trigger a selection changed haptic event. Good for one-time events (not for gestures)
+   * Trigger a selection changed haptic event. Good for one-time events
+   * (not for gestures)
    */
   selection() {
-    if (!this.plugin) {
-      return;
-    }
-
-    this.plugin.selection();
+    this._p && this._p.selection();
   }
 
   /**
    * Tell the haptic engine that a gesture for a selection change is starting.
    */
   gestureSelectionStart() {
-    if (!this.plugin) {
-      return;
-    }
-
-    this.plugin.gestureSelectionStart();
+    this._p && this._p.gestureSelectionStart();
   }
 
   /**
    * Tell the haptic engine that a selection changed during a gesture.
    */
   gestureSelectionChanged() {
-    if (!this.plugin) {
-      return;
-    }
-
-    this.plugin.gestureSelectionChanged();
+    this._p && this._p.gestureSelectionChanged();
   }
 
   /**
@@ -87,11 +71,7 @@ export class Haptic {
    * called lest resources are not properly recycled.
    */
   gestureSelectionEnd() {
-    if (!this.plugin) {
-      return;
-    }
-
-    this.plugin.gestureSelectionEnd();
+    this._p && this._p.gestureSelectionEnd();
   }
 
   /**
@@ -99,11 +79,7 @@ export class Haptic {
    * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
    */
   notification(options: { type: string }) {
-    if (!this.plugin) {
-      return;
-    }
-
-    this.plugin.notification(options);
+    this._p && this._p.notification(options);
   }
 
   /**
@@ -111,10 +87,6 @@ export class Haptic {
    * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
    */
   impact(options: { style: string }) {
-    if (!this.plugin) {
-      return;
-    }
-
-    this.plugin.impact(options);
+    this._p && this._p.impact(options);
   }
 }

@@ -1,6 +1,6 @@
 import { Directive, ElementRef } from '@angular/core';
 
-import { CSS, rafFrames } from '../../util/dom';
+import { DomController } from '../../platform/dom-controller';
 import { Tab } from './tab';
 
 /**
@@ -12,21 +12,28 @@ import { Tab } from './tab';
 export class TabHighlight {
   private _init: boolean;
 
-  constructor(private _elementRef: ElementRef) {}
+  constructor(private _elementRef: ElementRef, private _dom: DomController) {}
 
   select(tab: Tab) {
-    rafFrames(3, () => {
-      const d = tab.btn.getDimensions();
-      const ele = this._elementRef.nativeElement;
-      (<any>ele.style)[CSS.transform] = `translate3d(${d.left}px,0,0) scaleX(${d.width})`;
+    const dom = this._dom;
 
-      if (!this._init) {
-        this._init = true;
-        rafFrames(6, () => {
-          ele.classList.add('animate');
-        });
-      }
-    });
+    dom.read(() => {
+      const btnEle: HTMLElement = tab.btn.getElementRef().nativeElement;
+      const transform = `translate3d(${btnEle.offsetLeft}px,0,0) scaleX(${btnEle.offsetWidth})`;
+
+      dom.write(() => {
+        const ele = this._elementRef.nativeElement;
+        (<any>ele.style)[dom.plt.Css.transform] = transform;
+
+        if (!this._init) {
+          this._init = true;
+          dom.write(() => {
+            ele.classList.add('animate');
+          }, 80);
+        }
+
+      });
+    }, 32);
   }
 
 }

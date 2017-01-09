@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { Key } from '../../util/key';
+import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';

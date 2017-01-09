@@ -1,16 +1,18 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
-import { Item } from '../item/item';
-import { ToggleGesture } from './toggle-gesture';
-import { GestureController } from '../../gestures/gesture-controller';
-import { Key } from '../../util/key';
-import { Haptic } from '../../util/haptic';
+import { DomController } from '../../platform/dom-controller';
 import { Form, IonicTapInput } from '../../util/form';
+import { GestureController } from '../../gestures/gesture-controller';
+import { Haptic } from '../../tap-click/haptic';
+import { Ion } from '../ion';
 import { isTrueProperty, assert } from '../../util/util';
-import { DomController } from '../../util/dom-controller';
+import { Item } from '../item/item';
+import { Key } from '../../platform/key';
+import { Platform } from '../../platform/platform';
+import { ToggleGesture } from './toggle-gesture';
+
 
 export const TOGGLE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -100,7 +102,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -115,12 +117,14 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   constructor(
     public _form: Form,
     config: Config,
+    private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
     private _haptic: Haptic,
     @Optional() public _item: Item,
     private _gestureCtrl: GestureController,
-    private _domCtrl: DomController
+    private _domCtrl: DomController,
+    private _cd: ChangeDetectorRef
   ) {
     super(config, elementRef, renderer, 'toggle');
     _form.register(this);
@@ -137,7 +141,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    */
   ngAfterContentInit() {
     this._init = true;
-    this._gesture = new ToggleGesture(this, this._gestureCtrl, this._domCtrl);
+    this._gesture = new ToggleGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
     this._gesture.listen();
   }
 
@@ -273,6 +277,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
     this._fn && this._fn(isChecked);
     this._setChecked(isChecked);
     this.onTouched();
+    this._cd.detectChanges();
   }
 
   /**
@@ -303,8 +308,8 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    * @private
    */
   ngOnDestroy() {
-    this._form.deregister(this);
-    this._gesture.destroy();
+    this._form && this._form.deregister(this);
+    this._gesture && this._gesture.destroy();
     this._fn = null;
   }
 

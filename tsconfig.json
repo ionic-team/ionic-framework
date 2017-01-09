@@ -21,5 +21,9 @@
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
+  },
+  "angularCompilerOptions": {
+    "annotationsAs": "static fields",
+    "annotateForClosureCompiler": true
   }
 }

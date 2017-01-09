@@ -1,7 +1,6 @@
 import { ElementRef, Renderer } from '@angular/core';
 
 import { Config } from '../config/config';
-import { getDimensions, clearDimensions } from '../util/dom';
 
 /**
  * Base class for all Ionic components. Exposes some common functionality
@@ -9,8 +8,6 @@ import { getDimensions, clearDimensions } from '../util/dom';
  * sending/receiving app-level events.
  */
 export class Ion {
-  private _ionId: string;
-
   /** @private */
   _config: Config;
 
@@ -102,34 +99,4 @@ export class Ion {
     return this._elementRef.nativeElement;
   }
 
-  /** @private */
-  getDimensions(): { width: number, height: number, left: number, top: number } {
-    return getDimensions(this.getNativeElement(), this._getId());
-  }
-
-  /** @private */
-  width(): number {
-    return getDimensions(this.getNativeElement(), this._getId()).width;
-  }
-
-  /** @private */
-  height(): number {
-    return getDimensions(this.getNativeElement(), this._getId()).height;
-  }
-
-  /** @private */
-  destroy() {
-    clearDimensions(this._ionId);
-  }
-
-  /** internal */
-  _getId() {
-    if (!this._ionId) {
-      this._ionId = 'i' + ids++;
-    }
-    return this._ionId;
-  }
-
 }
-
-let ids: number = 0;

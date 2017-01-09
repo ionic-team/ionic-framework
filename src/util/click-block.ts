@@ -1,8 +1,8 @@
 import { Directive, ElementRef, forwardRef, Inject, Renderer } from '@angular/core';
 
 import { App } from '../components/app/app';
-import { clearNativeTimeout, nativeTimeout } from './dom';
 import { Config } from '../config/config';
+import { Platform } from '../platform/platform';
 
 
 /**
@@ -19,6 +19,7 @@ export class ClickBlock {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
+    private plt: Platform,
     private elementRef: ElementRef,
     private renderer: Renderer
   ) {
@@ -32,11 +33,11 @@ export class ClickBlock {
 
   activate(shouldShow: boolean, expire: number = 100) {
     if (this.isEnabled) {
-      clearNativeTimeout(this._tmr);
+      this.plt.cancelTimeout(this._tmr);
       if (shouldShow) {
         this._activate(true);
       }
-      this._tmr = nativeTimeout(this._activate.bind(this, false), expire);
+      this._tmr = this.plt.timeout(this._activate.bind(this, false), expire);
     }
   }
 

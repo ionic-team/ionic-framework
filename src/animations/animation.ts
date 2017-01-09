@@ -1,5 +1,5 @@
-import { CSS, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
 import { isDefined, assert } from '../util/util';
+import { Platform } from '../platform/platform';
 
 
 /**
@@ -30,24 +30,24 @@ export class Animation {
   private _hasDur: boolean;
   private _isAsync: boolean;
   private _twn: boolean;
-  private _raf: Function;
 
+  plt: Platform;
   parent: Animation;
   opts: AnimationOptions;
   hasChildren: boolean = false;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
-  constructor(ele?: any, opts?: AnimationOptions, raf?: Function) {
+  constructor(plt: Platform, ele?: any, opts?: AnimationOptions) {
+    this.plt = plt;
     this.element(ele);
     this.opts = opts;
-    this._raf = raf || nativeRaf;
   }
 
   element(ele: any): Animation {
     if (ele) {
       if (typeof ele === 'string') {
-        ele = document.querySelectorAll(ele);
+        ele = this.plt.doc().querySelectorAll(ele);
         for (var i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
@@ -155,7 +155,7 @@ export class Animation {
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
       // otherwise just clear the actual property
-      this.afterClearStyles([ fx.trans ? CSS.transform : prop]);
+      this.afterClearStyles([ fx.trans ? this.plt.Css.transform : prop]);
     }
 
     return this;
@@ -187,13 +187,13 @@ export class Animation {
 
     if (!fxProp) {
       // first time we've see this EffectProperty
-      var shouldTrans = (TRANSFORMS[prop] === 1);
+      var shouldTrans = (ANIMATION_TRANSFORMS[prop] === 1);
       fxProp = {
         name: prop,
         trans: shouldTrans,
 
         // add the will-change property for transforms or opacity
-        wc: (shouldTrans ? CSS.transform : prop)
+        wc: (shouldTrans ? this.plt.Css.transform : prop)
       };
       this._fx.push(fxProp);
     }
@@ -207,7 +207,7 @@ export class Animation {
     fxProp[state] = fxState;
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
-      let r = val.match(CSS_VALUE_REGEX);
+      let r = val.match(ANIMATION_CSS_VALUE_REGEX);
       let num = parseFloat(r[1]);
 
       if (!isNaN(num)) {
@@ -323,7 +323,7 @@ export class Animation {
    */
   play(opts?: PlayOptions) {
     // If the animation was already invalidated (it did finish), do nothing
-    if (!this._raf) {
+    if (!this.plt) {
       return;
     }
 
@@ -346,9 +346,8 @@ export class Animation {
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    this._raf(() => {
-      assert(this._raf, '_raf has to be valid');
-      this._raf(this._playDomInspect.bind(this, opts));
+    this.plt.raf(() => {
+      this.plt.raf(this._playDomInspect.bind(this, opts));
     });
   }
 
@@ -391,8 +390,6 @@ export class Animation {
    * ROOT ANIMATION
    */
   _playDomInspect(opts: PlayOptions) {
-    assert(this._raf, '_raf has to be valid');
-
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
     // so we can read their dimensions if need be
@@ -411,10 +408,10 @@ export class Animation {
     // ******** DOM WRITE ****************
     this._playProgress(opts);
 
-    if (this._isAsync && this._raf) {
+    if (this._isAsync && this.plt) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf(this._playToStep.bind(this, 1));
+      this.plt.raf(this._playToStep.bind(this, 1));
     }
   }
 
@@ -516,11 +513,11 @@ export class Animation {
     }
 
     // set the TRANSITION END event on one of the transition elements
-    self._unrgTrns = transitionEnd(self._transEl(), onTransitionEnd);
+    self._unrgTrns = this.plt.transitionEnd(self._transEl(), onTransitionEnd, false);
 
     // set a fallback timeout if the transition end event never fires, or is too slow
     // transition end fallback: (animation duration + XXms)
-    self._tm = nativeTimeout(onTransitionFallback, (dur + TRANSITION_END_FALLBACK_PADDING_MS));
+    self._tm = self.plt.timeout(onTransitionFallback, (dur + ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS));
   }
 
   /**
@@ -691,7 +688,7 @@ export class Animation {
         finalTransform += 'translateZ(0px)';
       }
 
-      var cssTransform = CSS.transform;
+      var cssTransform = this.plt.Css.transform;
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
         (<any>elements[i].style)[cssTransform] = finalTransform;
@@ -714,9 +711,10 @@ export class Animation {
     const elements = this._e;
     const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
     const durString = dur + 'ms';
-    const cssTransform = CSS.transition;
-    const cssTransitionDuration = CSS.transitionDuration;
-    const cssTransitionTimingFn = CSS.transitionTimingFn;
+    const Css = this.plt.Css;
+    const cssTransform = Css.transition;
+    const cssTransitionDuration = Css.transitionDuration;
+    const cssTransitionTimingFn = Css.transitionTimingFn;
 
     let eleStyle: any;
     for (var i = 0; i < this._eL; i++) {
@@ -871,7 +869,7 @@ export class Animation {
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      (<any>ele).style[CSS.transitionDuration] = (<any>ele).style[CSS.transitionTimingFn] = '';
+      (<any>ele).style[this.plt.Css.transitionDuration] = (<any>ele).style[this.plt.Css.transitionTimingFn] = '';
 
       if (this._rv) {
         // finished in reverse direction
@@ -1050,7 +1048,7 @@ export class Animation {
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf && this._raf(this._playToStep.bind(this, stepValue));
+      this.plt && this.plt.raf(this._playToStep.bind(this, stepValue));
     }
   }
 
@@ -1168,7 +1166,7 @@ export class Animation {
 
     this._clearAsync();
 
-    this.parent = this._e = this._rdFn = this._wrFn = this._raf = null;
+    this.parent = this.plt = this._e = this._rdFn = this._wrFn = null;
 
     if (this._c) {
       this._c.length = this._cL = 0;
@@ -1228,7 +1226,7 @@ export interface EffectState {
   unit: string;
 }
 
-const TRANSFORMS: {[key: string]: number} = {
+const ANIMATION_TRANSFORMS: {[key: string]: number} = {
   'translateX': 1,
   'translateY': 1,
   'translateZ': 1,
@@ -1248,6 +1246,6 @@ const TRANSFORMS: {[key: string]: number} = {
   'perspective': 1
 };
 
-const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
+const ANIMATION_CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
 const ANIMATION_DURATION_MIN = 32;
-const TRANSITION_END_FALLBACK_PADDING_MS = 400;
+const ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS = 400;

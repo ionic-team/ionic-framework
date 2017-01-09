@@ -1,20 +1,21 @@
-import { App } from '../app/app';
-import { Config } from '../../config/config';
-import { CSS, PointerCoordinates, nativeTimeout, rafFrames } from '../../util/dom';
 import { ActivatorBase, isActivatedDisabled } from './activator-base';
+import { App } from '../components/app/app';
+import { Config } from '../config/config';
+import { DomController } from '../platform/dom-controller';
+import { PointerCoordinates } from '../util/dom';
 
 
 export class Activator implements ActivatorBase {
   protected _queue: HTMLElement[] = [];
   protected _active: HTMLElement[] = [];
-  protected _activeRafDefer: Function;
-  protected _clearRafDefer: Function;
+  protected _activeDefer: Function;
+  protected _clearDefer: Function;
   _css: string;
   activatedDelay = ADD_ACTIVATED_DEFERS;
   clearDelay = CLEAR_STATE_DEFERS;
 
-  constructor(protected app: App, config: Config) {
-    this._css = config.get('activatedClass') || 'activated';
+  constructor(protected app: App, config: Config, private dom: DomController) {
+    this._css = config.get('activatedClass', 'activated');
   }
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
@@ -47,7 +48,8 @@ export class Activator implements ActivatorBase {
     // queue to have this element activated
     this._queue.push(activatableEle);
 
-    this._activeRafDefer = rafFrames(this.activatedDelay, () => {
+    this._activeDefer = this.dom.write(() => {
+      this._activeDefer = null;
       let activatableEle: HTMLElement;
       for (let i = 0; i < this._queue.length; i++) {
         activatableEle = this._queue[i];
@@ -55,8 +57,7 @@ export class Activator implements ActivatorBase {
         activatableEle.classList.add(this._css);
       }
       this._queue.length = 0;
-      this._clearDeferred();
-    });
+    }, this.activatedDelay);
   }
 
   // the user was pressing down, then just let up
@@ -65,19 +66,19 @@ export class Activator implements ActivatorBase {
   }
 
   _scheduleClear() {
-    if (this._clearRafDefer) {
+    if (this._clearDefer) {
       return;
     }
-    this._clearRafDefer = rafFrames(this.clearDelay, () => {
+    this._clearDefer = this.dom.write(() => {
       this.clearState(true);
-      this._clearRafDefer = null;
-    });
+      this._clearDefer = null;
+    }, this.clearDelay);
   }
 
   unscheduleClear() {
-    if (this._clearRafDefer) {
-      this._clearRafDefer();
-      this._clearRafDefer = null;
+    if (this._clearDefer) {
+      this._clearDefer();
+      this._clearDefer = null;
     }
   }
 
@@ -87,7 +88,7 @@ export class Activator implements ActivatorBase {
       // the app is actively disabled, so don't bother deactivating anything.
       // this makes it easier on the GPU so it doesn't have to redraw any
       // buttons during a transition. This will retry in XX milliseconds.
-      nativeTimeout(() => {
+      this.dom.write(() => {
         this.clearState(animated);
       }, 600);
 
@@ -106,7 +107,7 @@ export class Activator implements ActivatorBase {
     let ele: HTMLElement;
     for (var i = 0; i < this._active.length; i++) {
       ele = this._active[i];
-      ele.style[CSS.transition] = animated ? '' : 'none';
+      ele.style[this.dom.plt.Css.transition] = animated ? '' : 'none';
       ele.classList.remove(this._css);
     }
     this._active.length = 0;
@@ -114,12 +115,12 @@ export class Activator implements ActivatorBase {
 
   _clearDeferred() {
     // Clear any active deferral
-    if (this._activeRafDefer) {
-      this._activeRafDefer();
-      this._activeRafDefer = null;
+    if (this._activeDefer) {
+      this._activeDefer();
+      this._activeDefer = null;
     }
   }
 }
 
-const ADD_ACTIVATED_DEFERS = 6;
-const CLEAR_STATE_DEFERS = 6;
+const ADD_ACTIVATED_DEFERS = 80;
+const CLEAR_STATE_DEFERS = 80;

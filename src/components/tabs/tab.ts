@@ -3,17 +3,17 @@ import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, E
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
+import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { nativeRaf } from '../../util/dom';
-import { Keyboard } from '../../util/keyboard';
+import { Keyboard } from '../../platform/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
+import { Platform } from '../../platform/platform';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
-import { DomController } from '../../util/dom-controller';
 
 /**
  * @name Tab
@@ -265,6 +265,7 @@ export class Tab extends NavControllerBase {
     parent: Tabs,
     app: App,
     config: Config,
+    plt: Platform,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
@@ -274,10 +275,10 @@ export class Tab extends NavControllerBase {
     gestureCtrl: GestureController,
     transCtrl: TransitionController,
     @Optional() private linker: DeepLinker,
-    domCtrl: DomController,
+    private _dom: DomController,
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
+    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');
@@ -313,7 +314,7 @@ export class Tab extends NavControllerBase {
       // if this is not the Tab's initial load then we need
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
-      nativeRaf(() => {
+      this._dom.read(() => {
         const active = this.getActive();
         if (!active) {
           return;

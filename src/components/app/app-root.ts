@@ -1,12 +1,11 @@
 import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
+import { assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
-import { nativeTimeout } from '../../util/dom';
-import { assert } from '../../util/util';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 
@@ -24,9 +23,8 @@ export const AppRootToken = new OpaqueToken('USERROOT');
     '<div class="click-block"></div>'
 })
 export class IonicApp extends Ion implements OnInit {
-
   private _stopScrollPlugin: any;
-  private _rafId: number;
+  private _tmr: number;
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   @ViewChild('modalPortal', { read: OverlayPortal }) _modalPortal: OverlayPortal;
@@ -43,7 +41,7 @@ export class IonicApp extends Ion implements OnInit {
     elementRef: ElementRef,
     renderer: Renderer,
     config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     app: App
   ) {
     super(config, elementRef, renderer);
@@ -64,8 +62,8 @@ export class IonicApp extends Ion implements OnInit {
     // ios/md/wp
     this.setElementClass(this._config.get('mode'), true);
 
-    const versions = this._platform.versions();
-    this._platform.platforms().forEach(platformName => {
+    const versions = this._plt.versions();
+    this._plt.platforms().forEach(platformName => {
       // platform-ios
       let platformClass = 'platform-' + platformName;
       this.setElementClass(platformClass, true);
@@ -91,7 +89,7 @@ export class IonicApp extends Ion implements OnInit {
     // which means angular and ionic has fully loaded!
     // fire off the platform prepare ready, which could
     // have been switched out by any of the platform engines
-    this._platform.prepareReady();
+    this._plt.prepareReady();
   }
 
   /**
@@ -150,17 +148,17 @@ export class IonicApp extends Ion implements OnInit {
   _disableScroll(shouldDisableScroll: boolean) {
     if (shouldDisableScroll) {
       this.stopScroll().then(() => {
-        this._rafId = nativeTimeout(() => {
+        this._tmr = this._plt.timeout(() => {
           console.debug('App Root: adding .disable-scroll');
           this.setElementClass('disable-scroll', true);
-        }, 16 * 2);
+        }, 32);
       });
     } else {
       let plugin = this._stopScrollPlugin;
       if (plugin && plugin.cancel) {
         plugin.cancel();
       }
-      clearTimeout(this._rafId);
+      clearTimeout(this._tmr);
       console.debug('App Root: removing .disable-scroll');
       this.setElementClass('disable-scroll', false);
     }

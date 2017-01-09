@@ -2,8 +2,9 @@ import { Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
 import { DomController } from './dom-controller';
-import { focusOutActiveElement, hasFocusedTextInput, nativeTimeout, clearNativeTimeout } from './dom';
+import { isTextInput } from '../util/dom';
 import { Key } from './key';
+import { Platform } from './platform';
 
 
 /**
@@ -25,27 +26,27 @@ import { Key } from './key';
 export class Keyboard {
   private _tmr: any;
 
-  constructor(config: Config, private _zone: NgZone, private _dom: DomController) {
-    _zone.runOutsideAngular(() => {
-      this.focusOutline(config.get('focusOutline'), document);
+  constructor(config: Config, private _plt: Platform, private _zone: NgZone, private _dom: DomController) {
+    this.focusOutline(config.get('focusOutline'));
 
-      window.addEventListener('native.keyboardhide', () => {
-        clearNativeTimeout(this._tmr);
-        this._tmr = nativeTimeout(() => {
-          // this custom cordova plugin event fires when the keyboard will hide
-          // useful when the virtual keyboard is closed natively
-          // https://github.com/driftyco/ionic-plugin-keyboard
-          if (hasFocusedTextInput()) {
-            focusOutActiveElement();
-          }
-        }, 80);
-      });
+    const win = _plt.win();
 
-      window.addEventListener('native.keyboardshow', () => {
-        clearNativeTimeout(this._tmr);
-      });
+    _plt.registerListener(win, 'native.keyboardhide', () => {
+      _plt.cancelTimeout(this._tmr);
+      this._tmr = _plt.timeout(() => {
+        // this custom cordova plugin event fires when the keyboard will hide
+        // useful when the virtual keyboard is closed natively
+        // https://github.com/driftyco/ionic-plugin-keyboard
+        if (this.isOpen()) {
+          this._plt.focusOutActiveElement();
+        }
+      }, 80);
+    }, { zone: false, passive: true });
 
-    });
+    _plt.registerListener(win, 'native.keyboardshow', () => {
+      _plt.cancelTimeout(this._tmr);
+    }, { zone: false, passive: true });
+
   }
 
   /**
@@ -66,7 +67,7 @@ export class Keyboard {
    * @return {boolean} returns a true or false value if the keyboard is open or not.
    */
   isOpen() {
-    return hasFocusedTextInput();
+    return this.hasFocusedTextInput();
   }
 
   /**
@@ -102,7 +103,7 @@ export class Keyboard {
     function checkKeyboard() {
       console.debug(`keyboard, isOpen: ${self.isOpen()}`);
       if (!self.isOpen() || checks > pollingChecksMax) {
-        nativeTimeout(function() {
+        self._plt.timeout(function() {
           self._zone.run(function() {
             console.debug(`keyboard, closed`);
             callback();
@@ -110,12 +111,12 @@ export class Keyboard {
         }, 400);
 
       } else {
-        nativeTimeout(checkKeyboard, pollingInternval);
+        self._plt.timeout(checkKeyboard, pollingInternval);
       }
       checks++;
     }
 
-    nativeTimeout(checkKeyboard, pollingInternval);
+    self._plt.timeout(checkKeyboard, pollingInternval);
 
     return promise;
   }
@@ -125,11 +126,11 @@ export class Keyboard {
    */
   close() {
     this._dom.read(() => {
-      if (hasFocusedTextInput()) {
+      if (this.isOpen()) {
         // only focus out when a text input has focus
         console.debug(`keyboard, close()`);
         this._dom.write(() => {
-          focusOutActiveElement();
+          this._plt.focusOutActiveElement();
         });
       }
     });
@@ -138,7 +139,7 @@ export class Keyboard {
   /**
    * @private
    */
-  focusOutline(setting: any, document: any) {
+  focusOutline(setting: any) {
     /* Focus Outline
      * --------------------------------------------------
      * By default, when a keydown event happens from a tab key, then
@@ -152,11 +153,16 @@ export class Keyboard {
      */
 
     const self = this;
+    const platform = self._plt;
+    const doc = platform.doc();
     let isKeyInputEnabled = false;
+    let unRegMouse: Function;
+    let unRegTouch: Function;
+    const evOpts = { passive: true, zone: false };
 
     function cssClass() {
       self._dom.write(() => {
-        document.body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
+        platform.doc().body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
       });
     }
 
@@ -184,21 +190,30 @@ export class Keyboard {
     function enableKeyInput() {
       cssClass();
 
-      self._zone.runOutsideAngular(() => {
-        document.removeEventListener('mousedown', pointerDown);
-        document.removeEventListener('touchstart', pointerDown);
+      unRegMouse && unRegMouse();
+      unRegTouch && unRegTouch();
 
-        if (isKeyInputEnabled) {
-          document.addEventListener('mousedown', pointerDown);
-          document.addEventListener('touchstart', pointerDown);
-        }
-      });
+      if (isKeyInputEnabled) {
+        // listen for when a mousedown or touchstart event happens
+        unRegMouse = platform.registerListener(doc, 'mousedown', pointerDown, evOpts);
+        unRegTouch = platform.registerListener(doc, 'touchstart', pointerDown, evOpts);
+      }
     }
 
-    document.addEventListener('keydown', keyDown);
+    // always listen for tab keydown events
+    platform.registerListener(platform.doc(), 'keydown', keyDown, evOpts);
+  }
+
+  hasFocusedTextInput() {
+    const activeEle = this._plt.getActiveElement();
+    if (isTextInput(activeEle)) {
+      return (activeEle.parentElement.querySelector(':focus') === activeEle);
+    }
+    return false;
   }
 
 }
+
 
 const KEYBOARD_CLOSE_POLLING = 150;
 const KEYBOARD_POLLING_CHECKS_MAX = 100;

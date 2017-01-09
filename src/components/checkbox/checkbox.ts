@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -95,7 +95,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -112,7 +112,8 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
     private _form: Form,
     @Optional() private _item: Item,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer,
+    private _cd: ChangeDetectorRef
   ) {
     super(config, elementRef, renderer, 'checkbox');
 
@@ -208,6 +209,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
     console.debug('checkbox, onChange (no ngModel)', isChecked);
     this._setChecked(isChecked);
     this.onTouched();
+    this._cd.detectChanges();
   }
 
   /**

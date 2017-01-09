@@ -3,15 +3,16 @@ import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, Input, 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
+import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
+import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
+import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
-import { DomController } from '../../util/dom-controller';
 
 /**
  * @name Nav
@@ -61,6 +62,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     @Optional() parent: NavController,
     app: App,
     config: Config,
+    plt: Platform,
     keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
@@ -71,7 +73,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     @Optional() linker: DeepLinker,
     domCtrl: DomController,
   ) {
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
+    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
 
     if (viewCtrl) {
       // an ion-nav can also act as an ion-page within a parent ion-nav

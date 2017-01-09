@@ -1,10 +1,10 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { focusOutActiveElement, NON_TEXT_INPUT_REGEX } from '../../util/dom';
+import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isPresent, assert } from '../../util/util';
-import { Key } from '../../util/key';
+import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
@@ -98,7 +98,7 @@ export class AlertCmp {
     gestureCtrl: GestureController,
     params: NavParams,
     private _renderer: Renderer,
-    private _platform: Platform
+    private _plt: Platform
   ) {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
@@ -180,7 +180,7 @@ export class AlertCmp {
     }
 
     const hasTextInput = (this.d.inputs.length && this.d.inputs.some(i => !(NON_TEXT_INPUT_REGEX.test(i.type))));
-    if (hasTextInput && this._platform.is('mobile')) {
+    if (hasTextInput && this._plt.is('mobile')) {
       // this alert has a text input and it's on a mobile device so we should align
       // the alert up high because we need to leave space for the virtual keboard
       // this also helps prevent the layout getting all messed up from
@@ -194,17 +194,17 @@ export class AlertCmp {
   }
 
   ionViewDidLeave() {
-    focusOutActiveElement();
+    this._plt.focusOutActiveElement();
     this.gestureBlocker.unblock();
   }
 
   ionViewWillLeave() {
-    focusOutActiveElement();
+    this._plt.focusOutActiveElement();
   }
 
   ionViewDidEnter() {
     // focus out of the active element
-    focusOutActiveElement();
+    this._plt.focusOutActiveElement();
 
     // set focus on the first input or button in the alert
     // note that this does not always work and bring up the keyboard on

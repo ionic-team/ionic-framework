@@ -1,9 +1,9 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffers, IterableDiffer, NgZone, OnDestroy, Optional, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffers, IterableDiffer, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
 import { Content, ScrollEvent } from '../content/content';
-import { DomController } from '../../util/dom-controller';
+import { DomController } from '../../platform/dom-controller';
 import { isBlank, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
@@ -343,7 +343,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set headerFn(val: Function) {
     if (isFunction(val)) {
-      this._hdrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
+      this._hdrFn = val.bind((this._ctrl._cmp) || this);
     }
   }
 
@@ -356,7 +356,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input() set footerFn(val: Function) {
     if (isFunction(val)) {
-      this._ftrFn = val.bind((this._ctrl && this._ctrl._cmp) || this);
+      this._ftrFn = val.bind((this._ctrl._cmp) || this);
     }
   }
 
@@ -373,8 +373,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     private _zone: NgZone,
     private _cd: ChangeDetectorRef,
     private _content: Content,
-    private _platform: Platform,
-    @Optional() private _ctrl: ViewController,
+    private _plt: Platform,
+    private _ctrl: ViewController,
     private _config: Config,
     private _dom: DomController) {
 
@@ -384,14 +384,14 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     this._renderer.setElementClass(_elementRef.nativeElement, 'virtual-loading', true);
 
     // wait for the content to be rendered and has readable dimensions
-    _content.readReady.subscribe(() => {
+    _ctrl.readReady.subscribe(() => {
       this._init = true;
 
       if (this._hasChanges()) {
         this.readUpdate();
 
         // wait for the content to be writable
-        var subscription = _content.writeReady.subscribe(() => {
+        var subscription = _ctrl.writeReady.subscribe(() => {
           subscription.unsubscribe();
           this.writeUpdate();
         });
@@ -478,7 +478,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // wait a frame before trying to read and calculate the dimensions
     this._dom.read(() => {
       // ******** DOM READ ****************
-      initReadNodes(nodes, cells, data);
+      initReadNodes(this._plt, nodes, cells, data);
     });
 
     this._dom.write(() => {
@@ -509,7 +509,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       renderer.setElementClass(ele, 'virtual-loading', false);
 
       // ******** DOM WRITE ****************
-      writeToNodes(nodes, cells, recordsLength);
+      writeToNodes(this._plt, nodes, cells, recordsLength);
 
       // ******** DOM WRITE ****************
       this._setHeight(
@@ -541,7 +541,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         const recordsLength = this._records.length;
 
         // ******** DOM WRITE ****************
-        writeToNodes(nodes, cells, recordsLength);
+        writeToNodes(this._plt, nodes, cells, recordsLength);
 
         // ******** DOM WRITE ****************
         this._setHeight(
@@ -587,7 +587,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
         }
 
         // ******** DOM READ ****************
-        updateDimensions(nodes, cells, data, false);
+        updateDimensions(this._plt, nodes, cells, data, false);
 
         adjustRendered(cells, data);
 
@@ -621,7 +621,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     const data = this._data;
 
     // ******** DOM READ ****************
-    updateDimensions(nodes, cells, data, false);
+    updateDimensions(this._plt, nodes, cells, data, false);
 
     adjustRendered(cells, data);
 
@@ -639,7 +639,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       }
 
       // ******** DOM WRITE ****************
-      writeToNodes(nodes, cells, recordsLength);
+      writeToNodes(this._plt, nodes, cells, recordsLength);
 
       // ******** DOM WRITE ****************
       this._setHeight(

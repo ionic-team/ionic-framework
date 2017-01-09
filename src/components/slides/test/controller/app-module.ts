@@ -7,10 +7,6 @@ import { IonicApp, IonicModule, Slides } from '../../../..';
 })
 export class MyPage {
   @ViewChild('mySlider') slider: Slides;
-  mySlideOptions = {
-    initialSlide: 1,
-    loop: false
-  };
 
   onSlideChanged() {
     let previousIndex = this.slider.getPreviousIndex();

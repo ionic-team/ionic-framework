@@ -1,4 +1,4 @@
-import { PointerCoordinates } from '../../util/dom';
+import { PointerCoordinates } from '../util/dom';
 
 export abstract class ActivatorBase {
 
