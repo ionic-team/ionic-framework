@@ -300,7 +300,7 @@ export class AlertCmp {
 
   dismiss(role: any): Promise<any> {
     const opts: NavOptions = {
-      minClickBlockDuration: 3500
+      minClickBlockDuration: 400
     };
     return this._viewCtrl.dismiss(this.getValues(), role, opts);
   }

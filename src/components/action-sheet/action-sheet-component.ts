@@ -6,6 +6,7 @@ import { Config } from '../../config/config';
 import { Key } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { NavParams } from '../../navigation/nav-params';
+import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
@@ -174,7 +175,10 @@ export class ActionSheetCmp {
   }
 
   dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
+    const opts: NavOptions = {
+      minClickBlockDuration: 400
+    };
+    return this._viewCtrl.dismiss(null, role, opts);
   }
 
   ngOnDestroy() {
