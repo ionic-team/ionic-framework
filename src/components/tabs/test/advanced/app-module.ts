@@ -124,6 +124,7 @@ export class TabsPage {
   templateUrl: './tab1page1.html'
 })
 export class Tab1Page1 {
+  color: boolean;
   userId: string;
 
   constructor(public navCtrl: NavController, public app: App, public tabs: Tabs, public params: NavParams) {
