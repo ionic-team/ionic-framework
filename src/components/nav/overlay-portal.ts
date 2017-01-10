@@ -6,6 +6,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../platform/keyboard';
+import { Modal } from '../modal/modal';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
@@ -40,7 +41,7 @@ export class OverlayPortal extends NavControllerBase {
     // on every page change make sure the portal has
     // dismissed any views that should be auto dismissed on page change
     app.viewDidLeave.subscribe((ev) => {
-      !ev.isOverlay && this.dismissPageChangeViews();
+      (!ev.isOverlay || ev instanceof Modal) && this.dismissPageChangeViews();
     });
   }
 
