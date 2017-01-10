@@ -409,6 +409,57 @@ describe('App', () => {
       // 700 is the default
       expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 700 + 64, 0);
     });
+
+    it('should enable click block when false is passed with a duration of 0 and with a minDuration', () => {
+      // arrange
+      let mockClickBlock: any = {
+        activate: () => {}
+      };
+
+      spyOn(mockClickBlock, 'activate');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false, 0, 400);
+
+      // assert
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 64, 400);
+    });
+
+    it('should enable click block when false is passed with a null duration and a minDuration', () => {
+      // arrange
+      let mockClickBlock: any = {
+        activate: () => {}
+      };
+
+      spyOn(mockClickBlock, 'activate');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false, null, 400);
+
+      // assert
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 64, 400);
+    });
+
+    it('should enable click block when false is passed with a duration and a minDuration', () => {
+      // arrange
+      let mockClickBlock: any = {
+        activate: () => {}
+      };
+
+      spyOn(mockClickBlock, 'activate');
+
+      app._clickBlock = mockClickBlock;
+
+      // act
+      app.setEnabled(false, 200, 400);
+
+      // assert
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 200 + 64, 400);
+    });
   });
 
   var app: App;
