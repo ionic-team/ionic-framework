@@ -908,7 +908,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("MSPointerCancel", self.touchEnd, false);
       document.addEventListener("wheel", self.mouseWheel, false);
 
-    } else {
+    } 
       // Mouse Events
       var mousedown = false;
 
@@ -956,7 +956,6 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("mouseup", self.mouseUp, false);
       document.addEventListener('mousewheel', self.mouseWheel, false);
       document.addEventListener('wheel', self.mouseWheel, false);
-    }
   },
 
   __cleanup: function() {
