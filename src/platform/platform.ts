@@ -569,24 +569,30 @@ export class Platform {
 
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
-      // up accurate values when the keyboard up
-      if (win.screen.width < win.screen.height) {
-        this._isPortrait = true;
-        if (this._pW < win['innerWidth']) {
-          this._pW = win['innerWidth'];
-        }
-        if (this._pH < win['innerHeight']) {
-          this._pH = win['innerHeight'];
+      // up accurate values when the keyboard is up
+      if (win.screen.width > 0 && win.screen.height > 0) {
+        if (win.screen.width < win.screen.height) {
+
+          if (this._pW < win['innerWidth']) {
+            this._isPortrait = true;
+            this._pW = win['innerWidth'];
+          }
+          if (this._pH < win['innerHeight']) {
+            this._isPortrait = true;
+            this._pH = win['innerHeight'];
+          }
+
+        } else {
+          if (this._lW < win['innerWidth']) {
+            this._isPortrait = false;
+            this._lW = win['innerWidth'];
+          }
+          if (this._lH < win['innerHeight']) {
+            this._isPortrait = false;
+            this._lH = win['innerHeight'];
+          }
         }
 
-      } else {
-        this._isPortrait = false;
-        if (this._lW < win['innerWidth']) {
-          this._lW = win['innerWidth'];
-        }
-        if (this._lH < win['innerHeight']) {
-          this._lH = win['innerHeight'];
-        }
       }
     }
   }
