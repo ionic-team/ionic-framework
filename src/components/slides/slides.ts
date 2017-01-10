@@ -1033,7 +1033,7 @@ export class Slides extends Ion {
    */
   getSlider(): void {
     // deprecated 2016-12-29
-    console.warn(`ion-slides, getSlide() has been removed. Please use the properties and methods on the instance of ion-slide instead.`);
+    console.warn(`ion-slides, getSlider() has been removed. Please use the properties and methods on the instance of ion-slides instead.`);
   }
 }
 
