@@ -389,7 +389,7 @@ describe('App', () => {
       app.setEnabled(false, 200);
 
       // assert
-      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 200 + 64);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 200 + 64, 0);
     });
 
     it('should enable click block when false is passed w/o duration', () => {
@@ -407,7 +407,7 @@ describe('App', () => {
 
       // assert
       // 700 is the default
-      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 700 + 64);
+      expect(mockClickBlock.activate).toHaveBeenCalledWith(true, 700 + 64, 0);
     });
   });
 
