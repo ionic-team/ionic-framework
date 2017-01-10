@@ -68,6 +68,10 @@ import { Platform } from '../../platform/platform';
  *   <ion-item>
  *     <ion-input placeholder="Clear Input" clearInput></ion-input>
  *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-textarea placeholder="Enter a description"></ion-textarea>
+ *   </ion-item>
  * </ion-list>
  * ```
  *
@@ -591,7 +595,9 @@ export class TextInput extends Ion implements IonicFormInput {
 
     this._coord = null;
   }
-
+  /**
+   * @private
+   */
   setItemInputControlCss() {
     let item = this._item;
     let nativeInput = this._native;
