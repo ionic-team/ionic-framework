@@ -196,9 +196,7 @@ export class Slides extends Ion {
   private _isLoop = false;
 
   /**
-   * @input {boolean}  String with type of pagination. Can be
-   * `bullets`, `fraction`, `progress`. Default does not have
-   * pagination set.
+   * @input {boolean}  Whether or not to show the pager. Default: `false`.
    */
   @Input()
   get pager() {
@@ -210,7 +208,7 @@ export class Slides extends Ion {
   private _pager = false;
 
   /**
-   * @input {boolean}  String with type of pagination. Can be
+   * @input {string}  String with type of pagination. Can be
    * `bullets`, `fraction`, `progress`. Default: `bullets`.
    * (Note that the pager will not show unless `pager` input
    * is set to true).
