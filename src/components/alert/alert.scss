@@ -111,3 +111,7 @@ ion-alert input {
   text-align: left;
   background: transparent;
 }
+
+ html[dir="rtl"] .alert-tappable {
+  text-align: right;
+}
