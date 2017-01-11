@@ -455,6 +455,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @ngdoc method
      * @name $ionicHistory#currentView
      * @description The app's current view.
+     * @param Optional param with view to set as current
      * @returns {object} Returns the current view.
      */
     currentView: function(view) {
@@ -496,6 +497,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * @description Returns the view that was before the current view in the history stack.
      * If the user navigated from View A to View B, then View A would be the back view, and
      * View B would be the current view.
+     * @param Optional param with view to set as back view
      * @returns {object} Returns the back view.
      */
     backView: function(view) {
@@ -523,6 +525,7 @@ function($rootScope, $state, $location, $window, $timeout, $ionicViewSwitcher, $
      * A forward view would exist if the user navigated from View A to View B, then
      * navigated back to View A. At this point then View B would be the forward view, and View
      * A would be the current view.
+     * @param Optional param with view to set as next view
      * @returns {object} Returns the forward view.
      */
     forwardView: function(view) {
