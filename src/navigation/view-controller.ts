@@ -463,7 +463,7 @@ export class ViewController {
 
   /**
    * @private
-   * The view has is about to leave and no longer be the active view.
+   * The view is about to leave and no longer be the active view.
    */
   _willLeave(willUnload: boolean) {
     this.willLeave.emit(null);
