@@ -29,7 +29,7 @@
       "ionicons": "3.0.0",
       "rxjs": "5.0.0-beta.12",
       "zone.js": "0.6.26",
-      “sw-toolbox”: “3.4.0”
+      "sw-toolbox": "3.4.0"
     },
     "devDependencies": {
       "@ionic/app-scripts": "1.0.0",
