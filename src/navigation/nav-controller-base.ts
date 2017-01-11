@@ -686,7 +686,7 @@ export class NavControllerBase extends Ion implements NavController {
   _viewsWillLifecycles(enteringView: ViewController, leavingView: ViewController) {
     if (enteringView || leavingView) {
       this._zone.run(() => {
-        // Here, the order is important. WillLeave must called before WillEnter.
+        // Here, the order is important. WillLeave must be called before WillEnter.
         leavingView && this._willLeave(leavingView, !enteringView);
         enteringView && this._willEnter(enteringView);
       });
