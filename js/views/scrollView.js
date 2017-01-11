@@ -909,53 +909,53 @@ ionic.views.Scroll = ionic.views.View.inherit({
       document.addEventListener("wheel", self.mouseWheel, false);
 
     } 
-      // Mouse Events
-      var mousedown = false;
+    // Mouse Events
+    var mousedown = false;
 
-      self.mouseDown = function(e) {
-        if ( ionic.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT' ) {
-          return;
-        }
-        self.doTouchStart(getEventTouches(e), e.timeStamp);
+    self.mouseDown = function(e) {
+      if ( ionic.tap.ignoreScrollStart(e) || e.target.tagName === 'SELECT' ) {
+        return;
+      }
+      self.doTouchStart(getEventTouches(e), e.timeStamp);
 
-        if ( !ionic.tap.isTextInput(e.target) ) {
-          e.preventDefault();
-        }
-        mousedown = true;
-      };
+      if ( !ionic.tap.isTextInput(e.target) ) {
+        e.preventDefault();
+      }
+      mousedown = true;
+    };
 
-      self.mouseMove = function(e) {
-        if (self.options.freeze || !mousedown || (!mousedown && e.defaultPrevented)) {
-          return;
-        }
+    self.mouseMove = function(e) {
+      if (self.options.freeze || !mousedown || (!mousedown && e.defaultPrevented)) {
+        return;
+      }
 
-        self.doTouchMove(getEventTouches(e), e.timeStamp);
+      self.doTouchMove(getEventTouches(e), e.timeStamp);
 
-        mousedown = true;
-      };
+      mousedown = true;
+    };
 
-      self.mouseMoveBubble = function(e) {
-        if (mousedown && self.options.preventDefault) {
-          e.preventDefault();
-        }
-      };
+    self.mouseMoveBubble = function(e) {
+      if (mousedown && self.options.preventDefault) {
+        e.preventDefault();
+      }
+    };
 
-      self.mouseUp = function(e) {
-        if (!mousedown) {
-          return;
-        }
+    self.mouseUp = function(e) {
+      if (!mousedown) {
+        return;
+      }
 
-        self.doTouchEnd(e, e.timeStamp);
+      self.doTouchEnd(e, e.timeStamp);
 
-        mousedown = false;
-      };
+      mousedown = false;
+    };
 
-      container.addEventListener("mousedown", self.mouseDown, false);
-      if(self.options.preventDefault) container.addEventListener("mousemove", self.mouseMoveBubble, false);
-      document.addEventListener("mousemove", self.mouseMove, false);
-      document.addEventListener("mouseup", self.mouseUp, false);
-      document.addEventListener('mousewheel', self.mouseWheel, false);
-      document.addEventListener('wheel', self.mouseWheel, false);
+    container.addEventListener("mousedown", self.mouseDown, false);
+    if(self.options.preventDefault) container.addEventListener("mousemove", self.mouseMoveBubble, false);
+    document.addEventListener("mousemove", self.mouseMove, false);
+    document.addEventListener("mouseup", self.mouseUp, false);
+    document.addEventListener('mousewheel', self.mouseWheel, false);
+    document.addEventListener('wheel', self.mouseWheel, false);
   },
 
   __cleanup: function() {
