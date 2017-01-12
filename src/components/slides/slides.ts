@@ -97,22 +97,25 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * @advanced
- * Slides can be customized quite a bit to create very unique slides.
- * But exposing all the of the option underneath can make slides overwhelming.
- * So Ionic only exposes the most common properties. If there is a property that
- * you would like to customize though, you can change it's value like so.
+ *
+ * There are several options available to create customized slides. Ionic exposes
+ * the most commonly used options as [inputs](http://learnangular2.com/inputs/).
+ * In order to use an option that isn't exposed as an input the following code
+ * should be used, where `freeMode` is the option to change:
  *
  * ```ts
- * export class MySlides {
- *   @ViewChild(Slides) slider: Slides;
+ * class MyPage {
+ *   @ViewChild(Slides) slides: Slides;
+ *
  *   ngAfterViewInit() {
- *     this.slider.freeMode = true;
+ *     this.slides.freeMode = true;
  *   }
  * }
  *
  * ```
  *
- * To see all the options, look at the [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts#L144)
+ * To see all of the available options, take a look at the
+ * [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts).
  *
  * @demo /docs/v2/demos/src/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
