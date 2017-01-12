@@ -253,12 +253,24 @@ export class DeepLinker {
   /**
    * @internal
    */
-  getComponentFromName(componentName: any): any {
+  getComponentFromName(componentName: any): Promise<any> {
     const segment = this._serializer.createSegmentFromName(componentName);
-    if (segment && segment.component) {
-      return segment.component;
+    if (segment) {
+
+      if (!segment.component) {
+        // INSERT ASYNC BUNDLE LOADING HERE!!!
+        // INSERT ASYNC BUNDLE LOADING HERE!!!
+        // INSERT ASYNC BUNDLE LOADING HERE!!!
+        return Promise.resolve('async bundle loading magic');
+      }
+
+      if (segment.component) {
+        return Promise.resolve(segment.component);
+      }
+
     }
-    return null;
+
+    return Promise.resolve(null);
   }
 
   /**
@@ -408,22 +420,18 @@ export class DeepLinker {
   /**
    * @internal
    */
-  initViews(segment: NavSegment): ViewController[] {
-    let views: ViewController[];
-
-    if (isArray(segment.defaultHistory)) {
-      views = convertToViews(this, segment.defaultHistory);
-
-    } else {
-      views = [];
-    }
-
+  initViews(segment: NavSegment) {
     const view = new ViewController(segment.component, segment.data);
     view.id = segment.id;
 
-    views.push(view);
+    if (isArray(segment.defaultHistory)) {
+      return convertToViews(this, segment.defaultHistory).then(views => {
+        views.push(view);
+        return views;
+      });
+    }
 
-    return views;
+    return Promise.resolve([view]);
   }
 
   /**

@@ -62,9 +62,9 @@ export class MyCmpTest {
           <ion-label>Text Input</ion-label>
           <ion-textarea></ion-textarea>
         </ion-item>
-        <button ion-item navPush="FullPage">Push FullPage w/ navPush="FullPage"</button>
+        <button ion-item navPush="first-page">Push FullPage w/ navPush="first-page"</button>
         <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
-        <button ion-item [navPush]="'FirstPage'">Push w/ [navPush] and string view name</button>
+        <button ion-item [navPush]="'first-page'">Push w/ [navPush] and string view name</button>
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="pop()">Pop</button>
@@ -316,7 +316,7 @@ export class FullPage {
 
   setPages() {
     let items = [
-      { page: FirstPage },
+      { page: 'first-page' },
       { page: PrimaryHeaderPage }
     ];
 
@@ -332,7 +332,7 @@ export class FullPage {
   }
 
   pushFirstPage() {
-    this.navCtrl.push(FirstPage);
+    this.navCtrl.push('first-page');
   }
 
   presentAlert() {
@@ -444,7 +444,7 @@ export class PrimaryHeaderPage {
   }
 
   insert() {
-    this.navCtrl.insert(2, FirstPage);
+    this.navCtrl.insert(2, 'first-page');
   }
 
   removeSecond() {
@@ -485,7 +485,7 @@ export class PrimaryHeaderPage {
         <button ion-item (click)="pushFullPage()">Push to FullPage</button>
         <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
         <button ion-item (click)="pushFirstPage()">Push to FirstPage</button>
-        <button ion-item (click)="setRoot()">setRoot(FirstPage)</button>
+        <button ion-item (click)="setRoot()">setRoot('first-page')</button>
         <button ion-item (click)="toggleBackButton()">Toggle hideBackButton</button>
         <button ion-item (click)="setBackButtonText()">Set Back Button Text</button>
         <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
@@ -546,11 +546,11 @@ export class AnotherPage {
   }
 
   pushFirstPage() {
-    this.navCtrl.push(FirstPage);
+    this.navCtrl.push('first-page');
   }
 
   setRoot() {
-    this.navCtrl.setRoot(FirstPage);
+    this.navCtrl.setRoot('first-page');
   }
 
   toggleBackButton() {
