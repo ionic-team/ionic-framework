@@ -17,8 +17,8 @@ export class E2EPage {
 
   appleCtrl = new FormControl(true);
   bananaCtrl = new FormControl(true);
-  cherryCtrl = new FormControl(false);
-  grapeCtrl = new FormControl(true);
+  cherryCtrl = new FormControl({value: false, disabled: true});
+  grapeCtrl = new FormControl({value: true, disabled: true});
 
   fruitsForm = new FormGroup({
     'apple': this.appleCtrl,
@@ -28,7 +28,6 @@ export class E2EPage {
   });
 
   constructor() {
-    this.grapeDisabled = true;
     this.grapeChecked = true;
     this.standAloneChecked = true;
   }
@@ -38,7 +37,7 @@ export class E2EPage {
   }
 
   toggleGrapeDisabled() {
-    this.grapeDisabled = !this.grapeDisabled;
+    this.fruitsForm.get('grape').enabled ? this.fruitsForm.get('grape').disable() : this.fruitsForm.get('grape').enable();
   }
 
   kiwiChange(checkbox: Checkbox) {
