@@ -10,7 +10,7 @@ import { setWrapperTransition, setWrapperTranslate } from './swiper-transition';
 /*=========================
   Controller
   ===========================*/
-export const SWIPER_CONTROLLER = {
+export const SWIPER_CONTROLLER: any = {
   LinearSpline: function (s: Slides, plt: Platform, x: any, y: any) {
     this.x = x;
     this.y = y;
@@ -18,9 +18,9 @@ export const SWIPER_CONTROLLER = {
     // Given an x value (x2), return the expected y2 value:
     // (x1,y1) is the known point before given value,
     // (x3,y3) is the known point after given value.
-    var i1, i3;
+    var i1: number, i3: number;
 
-    this.interpolate = function (x2) {
+    this.interpolate = function (x2: number) {
       if (!x2) return 0;
 
       // Get the indexes of x1 and x3 (the array indexes before and after given x2):
@@ -33,8 +33,8 @@ export const SWIPER_CONTROLLER = {
     };
 
     var binarySearch = (function () {
-      var maxIndex, minIndex, guess;
-      return function (array, val) {
+      var maxIndex: number, minIndex: number, guess: number;
+      return function (array: any[], val: number) {
         minIndex = -1;
         maxIndex = array.length;
         while (maxIndex - minIndex > 1)
@@ -55,7 +55,7 @@ export const SWIPER_CONTROLLER = {
   },
   setTranslate: function (s: Slides, plt: Platform, translate: number, byController: Slides) {
     var controlled = s.control;
-    var multiplier, controlledTranslate;
+    var multiplier: number, controlledTranslate: number;
     function setControlledTranslate(c: Slides) {
       // this will create an Interpolate function based on the snapGrids
       // x is the Grid of the scrolled scroller and y will be the controlled scroller
@@ -93,7 +93,7 @@ export const SWIPER_CONTROLLER = {
   },
   setTransition: function (s: Slides, plt: Platform, duration: number, byController: Slides) {
     var controlled = s.control;
-    var i;
+    var i: number;
     function setControlledTransition(c: Slides) {
       setWrapperTransition(c, plt, duration, s);
       if (duration !== 0) {
