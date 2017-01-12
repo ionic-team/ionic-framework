@@ -96,6 +96,27 @@ import { ViewController } from '../../navigation/view-controller';
  * }
  * ```
  *
+ * @advanced
+ *
+ * There are several options available to create customized slides. Ionic exposes
+ * the most commonly used options as [inputs](http://learnangular2.com/inputs/).
+ * In order to use an option that isn't exposed as an input the following code
+ * should be used, where `freeMode` is the option to change:
+ *
+ * ```ts
+ * class MyPage {
+ *   @ViewChild(Slides) slides: Slides;
+ *
+ *   ngAfterViewInit() {
+ *     this.slides.freeMode = true;
+ *   }
+ * }
+ *
+ * ```
+ *
+ * To see all of the available options, take a look at the
+ * [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts).
+ *
  * @demo /docs/v2/demos/src/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
@@ -291,14 +312,25 @@ export class Slides extends Ion {
   roundLengths = false;
 
   // Slides grid
-  /**
-   * @private
-   */
-  spaceBetween = 0;
-  /**
-   * @private
-   */
-  slidesPerView: number|string = 1;
+
+  @Input()
+  get spaceBetween() {
+    return this._spaceBetween;
+  }
+  set spaceBetween(val: any) {
+    this._spaceBetween = parseInt(val, 10);
+  }
+  private _spaceBetween = 0;
+
+  @Input()
+  get slidesPerView() {
+    return this._slidesPerView;
+  }
+  set slidesPerView(val: any) {
+    this._slidesPerView = parseInt(val, 10);
+  }
+  private _slidesPerView = 1;
+
   /**
    * @private
    */
@@ -470,11 +502,15 @@ export class Slides extends Ion {
   paginationHide = false;
 
   // Resistance
+  /** @private */
   resistance = true;
+  /** @private */
   resistanceRatio = 0.85;
 
   // Progress
+  /** @private */
   watchSlidesProgress = false;
+  /** @private */
   watchSlidesVisibility = false;
 
   // Clicks
@@ -512,6 +548,7 @@ export class Slides extends Ion {
   noSwiping = true;
 
   // Callbacks
+  /** @private */
   runCallbacksOnInit = true;
 
   // Keyboard
@@ -810,7 +847,9 @@ export class Slides extends Ion {
   /** @internal */
   _zoom: SlideZoom;
 
+  /** @private */
   nextButton: HTMLElement;
+  /** @private */
   prevButton: HTMLElement;
 
 
