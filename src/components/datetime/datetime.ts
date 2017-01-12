@@ -863,6 +863,13 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   /**
    * @private
    */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this._form.deregister(this);
   }
