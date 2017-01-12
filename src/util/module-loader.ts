@@ -11,8 +11,8 @@ export class ModuleLoader {
     private _injector: Injector) {
   }
 
-  loadModule(viewName: string): Promise<any>{
-    const deepLinkMetadata = this.getModulePath(viewName);
+  loadModule(viewName: string): Promise<LoadedModule>{
+    const deepLinkMetadata = getModulePath(this._deepLinkConfig, viewName);
     if (!deepLinkMetadata) {
       throw new Error(`There is not an entry with a key of "${viewName}"  in the app's deeplink config`)
     }
@@ -27,15 +27,15 @@ export class ModuleLoader {
         return loadedModule;
       });
   }
+}
 
-  getModulePath(viewName: string): DeepLinkMetadata {
-    if (this._deepLinkConfig && this._deepLinkConfig.links) {
-      for (const deepLink of this._deepLinkConfig.links) {
-        if (deepLink.name === viewName) {
-          return deepLink;
-        }
+export function getModulePath(deepLinkConfig: DeepLinkConfig, viewName: string): DeepLinkMetadata {
+  if (deepLinkConfig && deepLinkConfig.links) {
+    for (const deepLink of deepLinkConfig.links) {
+      if (deepLink.name === viewName) {
+        return deepLink;
       }
     }
-    return null;
   }
+  return null;
 }
