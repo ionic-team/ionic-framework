@@ -832,6 +832,10 @@ function onResize(s: Slides, plt: Platform, forceUpdatePagination: boolean) {
     updatePagination(s);
   }
 
+  if (s._spline) {
+    s._spline = undefined;
+  }
+
   var slideChangedBySlideTo = false;
   if (s.freeMode) {
     var newTranslate = Math.min(Math.max(s._translate, maxTranslate(s)), minTranslate(s));

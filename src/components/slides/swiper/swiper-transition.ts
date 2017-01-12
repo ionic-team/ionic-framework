@@ -4,10 +4,11 @@ import { parallaxSetTransition, parallaxSetTranslate } from './swiper-parallax';
 import { Platform } from '../../../platform/platform';
 import { updateProgress } from './swiper-progress';
 import { updateActiveIndex } from './swiper-index';
+import { SWIPER_CONTROLLER } from './swiper-controller';
 import { SWIPER_EFFECTS } from './swiper-effects';
 
 
-export function setWrapperTranslate(s: Slides, plt: Platform, translate: any, shouldUpdateActiveIndex?: boolean, byController?: any) {
+export function setWrapperTranslate(s: Slides, plt: Platform, translate: any, shouldUpdateActiveIndex?: boolean, byController?: Slides) {
   var x = 0, y = 0, z = 0;
   if (isHorizontal(s)) {
     x = s._rtl ? -translate : translate;
@@ -50,6 +51,10 @@ export function setWrapperTranslate(s: Slides, plt: Platform, translate: any, sh
 
   if (s.parallax) {
     parallaxSetTranslate(s);
+  }
+
+  if (s.control) {
+      SWIPER_CONTROLLER.setTranslate(s, plt, s._translate, byController);
   }
 }
 
@@ -127,7 +132,7 @@ export function getWrapperTranslate(s: Slides, plt: Platform, axis?: any) {
   return getTranslate(s, plt, s._wrapper, axis);
 }
 
-export function setWrapperTransition(s: Slides, plt: Platform, duration: number, byController?: any) {
+export function setWrapperTransition(s: Slides, plt: Platform, duration: number, byController?: Slides) {
   transition(s._wrapper, duration);
 
   if (s.effect !== 'slide' && SWIPER_EFFECTS[s.effect]) {
@@ -136,5 +141,9 @@ export function setWrapperTransition(s: Slides, plt: Platform, duration: number,
 
   if (s.parallax) {
     parallaxSetTransition(s, duration);
+  }
+
+  if (s.control) {
+      SWIPER_CONTROLLER.setTransition(s, plt, duration, byController);
   }
 }

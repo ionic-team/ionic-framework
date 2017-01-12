@@ -162,6 +162,22 @@ export class Slides extends Ion {
   private _autoplayMs: number;
 
   /**
+   * @input {Slides}  Pass another Slides instance or array of Slides instances
+   * that should be controlled by this Slides instance.
+   * Default: `null`.
+   */
+  @Input()
+  get control() {
+    return this._control;
+  }
+  set control(val: Slides | Slides[]) {
+    if (val instanceof Slides || Array.isArray(val)) {
+      this._control = val;
+    }
+  }
+  private _control: Slides | Slides[] = null;
+
+  /**
    * @input {string} Could be `slide`, `fade`, `cube`, `coverflow` or `flip`.
    * Default: `slide`.
    */
@@ -551,6 +567,10 @@ export class Slides extends Ion {
   /** @private */
   runCallbacksOnInit = true;
 
+  // Controller
+  controlBy = 'slide';
+  controlInverse = false;
+
   // Keyboard
   /**
    * @private
@@ -826,6 +846,8 @@ export class Slides extends Ion {
   _snapIndex: number;
   /** @internal */
   _slidesSizesGrid: any;
+  /** @internal */
+  _spline: any;
   /** @internal */
   _supportTouch: boolean;
   /** @internal */

@@ -618,6 +618,9 @@ export function update(s: Slides, plt: Platform, updateTranslate?: boolean) {
   }
 
   if (updateTranslate) {
+    if (s._spline) {
+      s._spline = undefined;
+    }
     if (s.freeMode) {
       forceSetTranslate();
       if (s.autoHeight) {
