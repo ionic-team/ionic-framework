@@ -314,7 +314,18 @@ export class PickerColumnCmp {
     // ensure we've got a good round number :)
     y = Math.round(y);
 
-    let i, button, opt, optOffset, visible, translateX, translateY, translateZ, rotateX, transform, selected;
+    let i: number;
+    let button: any;
+    let opt: any;
+    let optOffset: number;
+    let visible: boolean;
+    let translateX: number;
+    let translateY: number;
+    let translateZ: number;
+    let rotateX: number;
+    let transform: string;
+    let selected: boolean;
+
     const parent = this.colEle.nativeElement;
     const children = parent.children;
     const length = children.length;

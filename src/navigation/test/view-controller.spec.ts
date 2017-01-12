@@ -7,7 +7,7 @@ describe('ViewController', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.willEnter.subscribe((event) => {
+      subscription = viewController.willEnter.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
@@ -24,7 +24,7 @@ describe('ViewController', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.didEnter.subscribe((event) => {
+      subscription = viewController.didEnter.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
@@ -41,7 +41,7 @@ describe('ViewController', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.willLeave.subscribe((event) => {
+      subscription = viewController.willLeave.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
@@ -58,7 +58,7 @@ describe('ViewController', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.didLeave.subscribe((event) => {
+      subscription = viewController.didLeave.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
@@ -75,7 +75,7 @@ describe('ViewController', () => {
     it('should emit LifeCycleEvent when called with component data', (done) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.willUnload.subscribe((event) => {
+      subscription = viewController.willUnload.subscribe((event: any) => {
         expect(event).toEqual(null);
         done();
       }, (err: any) => {

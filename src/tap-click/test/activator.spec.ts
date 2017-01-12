@@ -120,7 +120,7 @@ describe('Activator', () => {
 
 });
 
-function testValues() {
+function testValues(): any {
   let parent = document.createElement('div');
   let ele = document.createElement('a');
   parent.appendChild(ele);

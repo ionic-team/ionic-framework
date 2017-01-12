@@ -1175,8 +1175,8 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
   plt.init();
 
   // add the platform obj to the window
-  win['Ionic'] = win['Ionic'] || {};
-  win['Ionic']['platform'] = plt;
+  (<any>win)['Ionic'] = (<any>win)['Ionic'] || {};
+  (<any>win)['Ionic']['platform'] = plt;
 
   return plt;
 }

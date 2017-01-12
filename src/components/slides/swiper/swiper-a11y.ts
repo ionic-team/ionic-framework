@@ -53,7 +53,7 @@ export function addRole(ele: HTMLElement, role: string) {
   ele.setAttribute('role', role);
 }
 
-export function addLabel(ele: HTMLElement, label) {
+export function addLabel(ele: HTMLElement, label: string) {
   ele.setAttribute('aria-label', label);
 }
 

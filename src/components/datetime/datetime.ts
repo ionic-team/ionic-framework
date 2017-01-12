@@ -814,7 +814,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
     ['monthNames', 'monthShortNames', 'dayNames', 'dayShortNames'].forEach(type => {
-      this._locale[type] = convertToArrayOfStrings(isPresent(this[type]) ? this[type] : this._config.get(type), type);
+      (<any>this)._locale[type] = convertToArrayOfStrings(isPresent((<any>this)[type]) ? (<any>this)[type] : this._config.get(type), type);
     });
 
     // update how the datetime value is displayed as formatted text

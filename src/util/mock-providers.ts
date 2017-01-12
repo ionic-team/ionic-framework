@@ -101,7 +101,7 @@ export class MockPlatform extends Platform {
         return 0;
       });
 
-      const keepers = [];
+      const keepers: any[] = [];
       this.timeouts.forEach(t => {
         if (t.timeout < timeout) {
           t.callback();
@@ -160,7 +160,7 @@ export class MockDomController extends DomController {
 
   flush(done: any) {
     this.mockedPlatform.flushTimeouts(() => {
-      this.mockedPlatform.flushRafs(timeStamp => {
+      this.mockedPlatform.flushRafs((timeStamp: number) => {
         done(timeStamp);
       });
     });
@@ -168,7 +168,7 @@ export class MockDomController extends DomController {
 
   flushUntil(timeout: number, done: any) {
     this.mockedPlatform.flushTimeoutsUntil(timeout, () => {
-      this.mockedPlatform.flushRafs(timeStamp => {
+      this.mockedPlatform.flushRafs((timeStamp: number) => {
         done(timeStamp);
       });
     });

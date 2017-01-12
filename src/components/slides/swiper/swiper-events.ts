@@ -220,7 +220,7 @@ function updateClickedSlide(s: Slides, plt: Platform, e: SlideUIEvent) {
 
   if (s.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s._activeIndex) {
     var slideToIndex = s.clickedIndex;
-    var realIndex;
+    var realIndex: number;
     var slidesPerView = s.slidesPerView === 'auto' ? currentSlidesPerView(s) : <number>s.slidesPerView;
 
     if (s.loop) {
@@ -263,23 +263,27 @@ function updateClickedSlide(s: Slides, plt: Platform, e: SlideUIEvent) {
   }
 }
 
-var isTouched,
-  isMoved,
-  allowTouchCallbacks,
-  touchStartTime,
-  isScrolling,
-  currentTranslate,
-  startTranslate,
-  allowThresholdMove,
-  // Last click time
-  lastClickTime = Date.now(), clickTimeout,
-  // Velocities
-  velocities = [],
-  allowMomentumBounce;
+var isTouched: boolean;
+var isMoved: boolean;
+var allowTouchCallbacks: boolean;
+var touchStartTime: number;
+var isScrolling: boolean;
+var currentTranslate: number;
+var startTranslate: any;
+var allowThresholdMove: any;
+
+// Last click time
+var lastClickTime = Date.now();
+var clickTimeout: any;
+
+// Velocities
+var velocities: any[] = [];
+var allowMomentumBounce: boolean;
 
 
 // Touch handlers
-var isTouchEvent, startMoving;
+var isTouchEvent: boolean;
+var startMoving: boolean;
 
 function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
   console.debug(`ion-slide, onTouchStart: ${ev.type}`);
@@ -408,7 +412,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
 
   if (typeof isScrolling === 'undefined') {
-    var touchAngle;
+    var touchAngle: number;
     if (isHorizontal(s) && s._touches.currentY === s._touches.startY || !isHorizontal(s) && s._touches.currentX === s._touches.startX) {
       isScrolling = false;
     } else {
@@ -516,12 +520,12 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
     // Velocity
     if (velocities.length === 0) {
       velocities.push({
-        position: s._touches[isHorizontal(s) ? 'startX' : 'startY'],
+        position: (<any>s._touches)[isHorizontal(s) ? 'startX' : 'startY'],
         time: touchStartTime
       });
     }
     velocities.push({
-      position: s._touches[isHorizontal(s) ? 'currentX' : 'currentY'],
+      position: (<any>s._touches)[isHorizontal(s) ? 'currentX' : 'currentY'],
       time: (new Date()).getTime()
     });
   }
@@ -592,7 +596,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
   isTouched = isMoved = false;
 
-  var currentPos;
+  var currentPos: number;
   if (s.followFinger) {
     currentPos = s._rtl ? s._translate : -s._translate;
   } else {
@@ -642,7 +646,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
       var newPosition = s._translate + momentumDistance;
       if (s._rtl) newPosition = - newPosition;
       var doBounce = false;
-      var afterBouncePosition;
+      var afterBouncePosition: number;
       var bounceAmount = Math.abs(s.velocity) * 20 * s.freeModeMomentumBounceRatio;
 
       if (newPosition < maxTranslate(s)) {
@@ -670,8 +674,8 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
         }
 
       } else if (s.freeModeSticky) {
-        var j = 0,
-          nextSlide;
+        var j = 0;
+        var nextSlide: number;
         for (j = 0; j < s._snapGrid.length; j += 1) {
           if (s._snapGrid[j] > -newPosition) {
             nextSlide = j;

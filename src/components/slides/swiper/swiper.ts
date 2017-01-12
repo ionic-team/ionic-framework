@@ -290,9 +290,9 @@ export function pauseAutoplay(s: Slides, plt: Platform, speed?: number) {
   Slider/slides sizes
   ===========================*/
 export function updateAutoHeight(s: Slides) {
-  var activeSlides = [];
+  var activeSlides: SlideElement[] = [];
   var newHeight = 0;
-  var i;
+  var i: number;
 
   // Find slides currently in view
   if (s.slidesPerView !== 'auto' && s.slidesPerView > 1) {
@@ -378,7 +378,7 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
     inlineStyle(s._slides, { marginRight: '', marginBottom: '' });
   }
 
-  var slidesNumberEvenToRows;
+  var slidesNumberEvenToRows: number;
   if (s.slidesPerColumn > 1) {
     if (Math.floor(s._slides.length / s.slidesPerColumn) === s._slides.length / s.slidesPerColumn) {
       slidesNumberEvenToRows = s._slides.length;
@@ -401,8 +401,10 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
     var slide = s._slides[i];
     if (s.slidesPerColumn > 1) {
       // Set slides order
-      var newSlideOrderIndex;
-      var column, row;
+      var newSlideOrderIndex: number;
+      var column: number;
+      var row: number;
+
       if (s.slidesPerColumnFill === 'column') {
         column = Math.floor(i / slidesPerColumn);
         row = i - column * slidesPerColumn;
@@ -427,7 +429,7 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
       }
 
       var cssVal = (row !== 0 && s.spaceBetween) && (s.spaceBetween + 'px');
-      var cssObj = {};
+      var cssObj: {[key: string]: string} = {};
 
       if (isHorizontal(s)) {
         cssObj['marginTop'] = cssVal;
@@ -436,8 +438,8 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
       }
 
       inlineStyle(slide, cssObj);
-      slide.setAttribute('data-swiper-column', column);
-      slide.setAttribute('data-swiper-row', row);
+      slide.setAttribute('data-swiper-column', <any>column);
+      slide.setAttribute('data-swiper-row', <any>row);
     }
 
     if (slide.style.display === 'none') {
@@ -487,7 +489,7 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
     index ++;
   }
   s._virtualSize = Math.max(s._virtualSize, s._renderedSize) + s.slidesOffsetAfter;
-  var newSlidesGrid;
+  var newSlidesGrid: any[];
 
   if (
     s._rtl && (s.effect === 'slide' || s.effect === 'coverflow')) {
@@ -554,10 +556,14 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
   Dynamic Slides Per View
   ===========================*/
 export function currentSlidesPerView(s: Slides) {
-  var spv = 1, i, j;
+  var spv = 1;
+  var i: number;
+  var j: number;
+
   if (s.centeredSlides) {
     var size = s._slides[s._activeIndex].swiperSlideSize;
-    var breakLoop;
+    var breakLoop: boolean;
+
     for (i = s._activeIndex + 1; i < s._slides.length; i++) {
       if (s._slides[i] && !breakLoop) {
         size += s._slides[i].swiperSlideSize;
@@ -565,6 +571,7 @@ export function currentSlidesPerView(s: Slides) {
         if (size > s._renderedSize) breakLoop = true;
       }
     }
+
     for (j = s._activeIndex - 1; j >= 0; j--) {
       if (s._slides[j] && !breakLoop) {
         size += s._slides[j].swiperSlideSize;
@@ -572,6 +579,7 @@ export function currentSlidesPerView(s: Slides) {
         if (size > s._renderedSize) breakLoop = true;
       }
     }
+
   } else {
     for (i = s._activeIndex + 1; i < s._slides.length; i++) {
       if (s._slidesGrid[i] - s._slidesGrid[s._activeIndex] < s._renderedSize) {
@@ -599,7 +607,9 @@ export function update(s: Slides, plt: Platform, updateTranslate?: boolean) {
     resetZoomEvents(s, plt);
   }
 
-  var translated, newTranslate;
+  var translated: boolean;
+  var newTranslate: number;
+
   function forceSetTranslate() {
     newTranslate = Math.min(Math.max(s._translate, maxTranslate(s)), minTranslate(s));
     setWrapperTranslate(s, plt, newTranslate);
@@ -654,8 +664,8 @@ function createLoop(s: Slides) {
     s.loopedSlides = slides.length;
   }
 
-  var prependSlides = [];
-  var appendSlides = [];
+  var prependSlides: SlideElement[] = [];
+  var appendSlides: SlideElement[] = [];
 
   for (var i = 0; i < slides.length; i++) {
     var slide = slides[i];
@@ -686,7 +696,8 @@ function destroyLoop(s: Slides) {
 }
 
 export function fixLoop(s: Slides, plt: Platform) {
-  var newIndex;
+  var newIndex: number;
+
   if (s._activeIndex < s.loopedSlides) {
     // Fix For Negative Oversliding
     newIndex = s._slides.length - s.loopedSlides * 3 + s._activeIndex;

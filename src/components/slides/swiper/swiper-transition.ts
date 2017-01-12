@@ -27,7 +27,7 @@ export function setWrapperTranslate(s: Slides, plt: Platform, translate: any, sh
   s._translate = isHorizontal(s) ? x : y;
 
   // Check if we need to update progress
-  var progress;
+  var progress: number;
   var translatesDiff = maxTranslate(s) - minTranslate(s);
 
   if (translatesDiff === 0) {
@@ -56,7 +56,10 @@ export function setWrapperTranslate(s: Slides, plt: Platform, translate: any, sh
 
 export function getTranslate(s: Slides, plt: Platform, el: HTMLElement, axis: string) {
   var win: any = plt.win();
-  var matrix, curTransform, curStyle, transformMatrix;
+  var matrix: string[];
+  var curTransform: any;
+  var curStyle: CSSStyleDeclaration;
+  var transformMatrix: any;
 
   // automatic axis detection
   if (typeof axis === 'undefined') {
@@ -71,7 +74,7 @@ export function getTranslate(s: Slides, plt: Platform, el: HTMLElement, axis: st
   if (win.WebKitCSSMatrix) {
     curTransform = curStyle.transform || curStyle.webkitTransform;
     if (curTransform.split(',').length > 6) {
-      curTransform = curTransform.split(', ').map(function(a){
+      curTransform = curTransform.split(', ').map(function(a: any){
         return a.replace(',', '.');
       }).join(', ');
     }
@@ -80,14 +83,14 @@ export function getTranslate(s: Slides, plt: Platform, el: HTMLElement, axis: st
     transformMatrix = new win.WebKitCSSMatrix(curTransform === 'none' ? '' : curTransform);
 
   } else {
-    transformMatrix = curStyle.MozTransform || curStyle.OTransform || curStyle.MsTransform || curStyle.msTransform  || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
+    transformMatrix = (<any>curStyle).MozTransform || (<any>curStyle).OTransform || (<any>curStyle).MsTransform || (<any>curStyle).msTransform  || curStyle.transform || curStyle.getPropertyValue('transform').replace('translate(', 'matrix(1, 0, 0, 1,');
     matrix = transformMatrix.toString().split(',');
   }
 
   if (axis === 'x') {
     if (win.WebKitCSSMatrix) {
       // Latest Chrome and webkits Fix
-      curTransform = transformMatrix.m41;
+      curTransform = <any>transformMatrix.m41;
     } else if (matrix.length === 16) {
       // Crazy IE10 Matrix
       curTransform = parseFloat(matrix[12]);

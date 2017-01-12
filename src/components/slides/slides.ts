@@ -499,13 +499,13 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  loopedSlides = null;
+  loopedSlides: number = null;
 
   // Swiping/no swiping
   /**
    * @private
    */
-  swipeHandler = null;
+  swipeHandler: any = null;
   /**
    * @private
    */
