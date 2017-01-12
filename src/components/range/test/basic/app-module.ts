@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { IonicApp, IonicModule, Range } from '../../../..';
 
 
@@ -12,6 +13,14 @@ export class Page1 {
   singleValue4: number = 1300;
   dualValue: any;
   dualValue2 = {lower: 33, upper: 60};
+
+  rangeCtrl = new FormControl({value: '66', disabled: true});
+  dualRangeCtrl = new FormControl({value: {lower: 33, upper: 60}, disabled: true});
+
+  rangeForm = new FormGroup({
+    'range': this.rangeCtrl,
+    'dualRange': this.dualRangeCtrl
+  });
 
   rangeChange(range: Range) {
     console.log(`range, change, ratio: ${range.ratio}, value: ${range.value}`);
