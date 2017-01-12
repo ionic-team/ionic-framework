@@ -1,4 +1,4 @@
-import { Renderer, TypeDecorator } from '@angular/core';
+import { Renderer, Type, TypeDecorator } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
 import { isArray, isPresent } from '../util/util';
@@ -110,7 +110,7 @@ export interface DeepLinkMetadataType {
  * @private
  */
 export class DeepLinkMetadata implements DeepLinkMetadataType {
-  component: any;
+  component?: Type<any>;
   path: string;
   namedExport: string;
   viewFactoryFunction?: string;
@@ -140,7 +140,7 @@ export interface DeepLinkConfig {
 
 // internal link interface, not exposed publicly
 export interface NavLink {
-  component: any;
+  component: Type<any>;
   name?: string;
   segment?: string;
   parts?: string[];

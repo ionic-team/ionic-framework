@@ -1,7 +1,10 @@
+import { Type } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { convertToViews, DeepLinkConfig, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { ModuleLoader } from '../util/module-loader';
+import { LoadedModule } from '../util/system-js-ng-module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -130,7 +133,7 @@ export class DeepLinker {
    */
   indexAliasUrl: string;
 
-  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location) { }
+  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location, public _deepLinkConfig: DeepLinkConfig, public _moduleLoader: ModuleLoader) { }
 
   /**
    * @internal
@@ -258,10 +261,7 @@ export class DeepLinker {
     if (segment) {
 
       if (!segment.component) {
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        return Promise.resolve('async bundle loading magic');
+        return this.loadModuleAndUpdateDeeplinkConfig(this._deepLinkConfig, componentName);
       }
 
       if (segment.component) {
@@ -271,6 +271,16 @@ export class DeepLinker {
     }
 
     return Promise.resolve(null);
+  }
+
+  loadModuleAndUpdateDeeplinkConfig(deepLinkConfig: DeepLinkConfig, componentName: string) {
+    return this._moduleLoader.loadModule(componentName).then((loadedModule: LoadedModule) => {
+      // update the existing deepLinkConfig entry with the component
+      deepLinkConfig.links.filter(deepLinkMetadata => deepLinkMetadata.name === componentName)
+        .forEach(deepLinkMetadata => deepLinkMetadata.component = loadedModule.component);
+
+      return loadedModule.component;
+    });
   }
 
   /**
@@ -553,8 +563,8 @@ export class DeepLinker {
 }
 
 
-export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
-  const deepLinker = new DeepLinker(app, serializer, location);
+export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
+  const deepLinker = new DeepLinker(app, serializer, location, deepLinkConfig, moduleLoader);
   deepLinker.init();
   return deepLinker;
 }
