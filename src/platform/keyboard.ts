@@ -162,7 +162,7 @@ export class Keyboard {
 
     function cssClass() {
       self._dom.write(() => {
-        platform.doc().body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
+        (<any>platform.doc().body.classList)[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
       });
     }
 

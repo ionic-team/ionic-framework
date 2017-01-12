@@ -40,32 +40,32 @@ export class App {
   /**
    * @private
    */
-  viewDidLoad: EventEmitter<any> = new EventEmitter();
+  viewDidLoad: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewWillEnter: EventEmitter<any> = new EventEmitter();
+  viewWillEnter: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewDidEnter: EventEmitter<any> = new EventEmitter();
+  viewDidEnter: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewWillLeave: EventEmitter<any> = new EventEmitter();
+  viewWillLeave: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewDidLeave: EventEmitter<any> = new EventEmitter();
+  viewDidLeave: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewWillUnload: EventEmitter<any> = new EventEmitter();
+  viewWillUnload: EventEmitter<ViewController> = new EventEmitter();
 
   constructor(
     private _config: Config,

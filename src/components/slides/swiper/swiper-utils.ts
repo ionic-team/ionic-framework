@@ -2,7 +2,7 @@ import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
 
 
-export function round(a) {
+export function round(a: any) {
   return Math.floor(a);
 }
 
@@ -77,7 +77,7 @@ export function queryChildren(parentEle: HTMLElement, query: string): HTMLElemen
   return [];
 }
 
-export function eachChild(parentEle: HTMLElement, query: string, callback: {(foundEle: HTMLElement)}): void {
+export function eachChild(parentEle: HTMLElement, query: string, callback: {(foundEle: HTMLElement): void}): void {
   if (parentEle) {
     var nodes = parentEle.querySelectorAll(query);
     for (var i = 0; i < nodes.length; i++) {

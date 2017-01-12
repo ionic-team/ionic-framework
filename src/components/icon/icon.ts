@@ -161,29 +161,30 @@ export class Icon extends Ion {
    * @private
    */
   update() {
-    let name;
+    let iconName: string;
+
     if (this._ios && this._iconMode === 'ios') {
-      name = this._ios;
+      iconName = this._ios;
     } else if (this._md && this._iconMode === 'md') {
-      name = this._md;
+      iconName = this._md;
     } else {
-      name = this._name;
+      iconName = this._name;
     }
-    let hidden = this._hidden = (name === null);
+    let hidden = this._hidden = (iconName === null);
     if (hidden) {
       return;
     }
 
-    let iconMode = name.split('-', 2)[0];
+    let iconMode = iconName.split('-', 2)[0];
     if (
       iconMode === 'ios' &&
       !this._isActive &&
-      name.indexOf('logo-') < 0 &&
-      name.indexOf('-outline') < 0) {
-      name += '-outline';
+      iconName.indexOf('logo-') < 0 &&
+      iconName.indexOf('-outline') < 0) {
+      iconName += '-outline';
     }
 
-    let css = 'ion-' + name;
+    let css = 'ion-' + iconName;
     if (this._css === css) {
       return;
     }
@@ -193,7 +194,7 @@ export class Icon extends Ion {
     this._css = css;
     this.setElementClass(css, true);
 
-    let label = name
+    let label = iconName
       .replace('ios-', '')
       .replace('md-', '')
       .replace('-', ' ');

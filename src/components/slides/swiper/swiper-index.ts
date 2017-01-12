@@ -4,7 +4,10 @@ import { updateClasses } from './swiper-classes';
 
 export function updateActiveIndex(s: Slides) {
   var translate = s._rtl ? s._translate : -s._translate;
-  var newActiveIndex, i, snapIndex;
+  var newActiveIndex: number;
+  var i: number;
+  var snapIndex: number;
+
   for (i = 0; i < s._slidesGrid.length; i ++) {
     if (typeof s._slidesGrid[i + 1] !== 'undefined') {
       if (translate >= s._slidesGrid[i] && translate < s._slidesGrid[i + 1] - (s._slidesGrid[i + 1] - s._slidesGrid[i]) / 2) {

@@ -50,7 +50,7 @@ export class IonicErrorHandler extends ErrorHandler {
   handleError(err: any): void {
     super.handleError(err);
     try {
-      const devServer = window['IonicDevServer'];
+      const devServer = (<any>window)['IonicDevServer'];
       if (devServer) {
         devServer.handleError(err);
       }

@@ -107,7 +107,7 @@ export class Activator implements ActivatorBase {
     let ele: HTMLElement;
     for (var i = 0; i < this._active.length; i++) {
       ele = this._active[i];
-      ele.style[this.dom.plt.Css.transition] = animated ? '' : 'none';
+      (<any>ele.style)[this.dom.plt.Css.transition] = animated ? '' : 'none';
       ele.classList.remove(this._css);
     }
     this._active.length = 0;

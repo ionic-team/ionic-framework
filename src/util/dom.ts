@@ -17,7 +17,7 @@ export function getCss(docEle: HTMLElement) {
   var keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
 
   for (i = 0; i < keys.length; i++) {
-    if (docEle.style[keys[i]] !== undefined) {
+    if ((<any>docEle.style)[keys[i]] !== undefined) {
       css.transform = keys[i];
       break;
     }
@@ -26,7 +26,7 @@ export function getCss(docEle: HTMLElement) {
   // transition
   keys = ['webkitTransition', 'transition'];
   for (i = 0; i < keys.length; i++) {
-    if (docEle.style[keys[i]] !== undefined) {
+    if ((<any>docEle.style)[keys[i]] !== undefined) {
       css.transition = keys[i];
       break;
     }

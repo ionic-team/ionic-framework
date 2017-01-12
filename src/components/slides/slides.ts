@@ -96,6 +96,27 @@ import { ViewController } from '../../navigation/view-controller';
  * }
  * ```
  *
+ * @advanced
+ *
+ * There are several options available to create customized slides. Ionic exposes
+ * the most commonly used options as [inputs](http://learnangular2.com/inputs/).
+ * In order to use an option that isn't exposed as an input the following code
+ * should be used, where `freeMode` is the option to change:
+ *
+ * ```ts
+ * class MyPage {
+ *   @ViewChild(Slides) slides: Slides;
+ *
+ *   ngAfterViewInit() {
+ *     this.slides.freeMode = true;
+ *   }
+ * }
+ *
+ * ```
+ *
+ * To see all of the available options, take a look at the
+ * [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts).
+ *
  * @demo /docs/v2/demos/src/slides/
  * @see {@link /docs/v2/components#slides Slides Component Docs}
  *
@@ -139,6 +160,22 @@ export class Slides extends Ion {
     this._autoplayMs = parseInt(val, 10);
   }
   private _autoplayMs: number;
+
+  /**
+   * @input {Slides}  Pass another Slides instance or array of Slides instances
+   * that should be controlled by this Slides instance.
+   * Default: `null`.
+   */
+  @Input()
+  get control() {
+    return this._control;
+  }
+  set control(val: Slides | Slides[]) {
+    if (val instanceof Slides || Array.isArray(val)) {
+      this._control = val;
+    }
+  }
+  private _control: Slides | Slides[] = null;
 
   /**
    * @input {string} Could be `slide`, `fade`, `cube`, `coverflow` or `flip`.
@@ -196,9 +233,7 @@ export class Slides extends Ion {
   private _isLoop = false;
 
   /**
-   * @input {boolean}  String with type of pagination. Can be
-   * `bullets`, `fraction`, `progress`. Default does not have
-   * pagination set.
+   * @input {boolean}  Whether or not to show the pager. Default: `false`.
    */
   @Input()
   get pager() {
@@ -210,7 +245,7 @@ export class Slides extends Ion {
   private _pager = false;
 
   /**
-   * @input {boolean}  String with type of pagination. Can be
+   * @input {string}  String with type of pagination. Can be
    * `bullets`, `fraction`, `progress`. Default: `bullets`.
    * (Note that the pager will not show unless `pager` input
    * is set to true).
@@ -293,14 +328,25 @@ export class Slides extends Ion {
   roundLengths = false;
 
   // Slides grid
-  /**
-   * @private
-   */
-  spaceBetween = 0;
-  /**
-   * @private
-   */
-  slidesPerView: number|string = 1;
+
+  @Input()
+  get spaceBetween() {
+    return this._spaceBetween;
+  }
+  set spaceBetween(val: any) {
+    this._spaceBetween = parseInt(val, 10);
+  }
+  private _spaceBetween = 0;
+
+  @Input()
+  get slidesPerView() {
+    return this._slidesPerView;
+  }
+  set slidesPerView(val: any) {
+    this._slidesPerView = parseInt(val, 10);
+  }
+  private _slidesPerView = 1;
+
   /**
    * @private
    */
@@ -472,11 +518,15 @@ export class Slides extends Ion {
   paginationHide = false;
 
   // Resistance
+  /** @private */
   resistance = true;
+  /** @private */
   resistanceRatio = 0.85;
 
   // Progress
+  /** @private */
   watchSlidesProgress = false;
+  /** @private */
   watchSlidesVisibility = false;
 
   // Clicks
@@ -501,20 +551,25 @@ export class Slides extends Ion {
   /**
    * @private
    */
-  loopedSlides = null;
+  loopedSlides: number = null;
 
   // Swiping/no swiping
   /**
    * @private
    */
-  swipeHandler = null;
+  swipeHandler: any = null;
   /**
    * @private
    */
   noSwiping = true;
 
   // Callbacks
+  /** @private */
   runCallbacksOnInit = true;
+
+  // Controller
+  controlBy = 'slide';
+  controlInverse = false;
 
   // Keyboard
   /**
@@ -792,6 +847,8 @@ export class Slides extends Ion {
   /** @internal */
   _slidesSizesGrid: any;
   /** @internal */
+  _spline: any;
+  /** @internal */
   _supportTouch: boolean;
   /** @internal */
   _supportGestures: boolean;
@@ -812,7 +869,9 @@ export class Slides extends Ion {
   /** @internal */
   _zoom: SlideZoom;
 
+  /** @private */
   nextButton: HTMLElement;
+  /** @private */
   prevButton: HTMLElement;
 
 

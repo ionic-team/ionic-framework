@@ -354,7 +354,24 @@ function toggleZoom(s: Slides, plt: Platform) {
 
   if (!z.gesture.image) return;
 
-  var touchX, touchY, offsetX, offsetY, diffX, diffY, translateX, translateY, imageWidth, imageHeight, scaledWidth, scaledHeight, translateMinX, translateMinY, translateMaxX, translateMaxY, slideWidth, slideHeight;
+  var touchX: number;
+  var touchY: number;
+  var offsetX: number;
+  var offsetY: number;
+  var diffX: number;
+  var diffY: number;
+  var translateX: number;
+  var translateY: number;
+  var imageWidth: number;
+  var imageHeight: number;
+  var scaledWidth: number;
+  var scaledHeight: number;
+  var translateMinX: number;
+  var translateMinY: number;
+  var translateMaxX: number;
+  var translateMaxY: number;
+  var slideWidth: number;
+  var slideHeight: number;
 
   if (typeof z.image.touchesStart.x === 'undefined' && ev) {
     touchX = ev.type === 'touchend' ? ev.changedTouches[0].pageX : (<any>ev).pageX;

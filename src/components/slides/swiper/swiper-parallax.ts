@@ -5,8 +5,10 @@ import { eachChild, isHorizontal, transform, transition } from './swiper-utils';
 /*=========================
   Parallax
   ===========================*/
-function setParallaxTransform(s: Slides, el: HTMLElement, progress) {
-  var p, pX, pY;
+function setParallaxTransform(s: Slides, el: HTMLElement, progress: number) {
+  var p: string;
+  var pX: string;
+  var pY: string;
   var rtlFactor = s._rtl ? -1 : 1;
 
   p = el.getAttribute('data-swiper-parallax') || '0';
@@ -30,13 +32,13 @@ function setParallaxTransform(s: Slides, el: HTMLElement, progress) {
   if ((pX).indexOf('%') >= 0) {
     pX = parseInt(pX, 10) * progress * rtlFactor + '%';
   } else {
-    pX = pX * progress * rtlFactor + 'px' ;
+    pX = <any>pX * progress * rtlFactor + 'px' ;
   }
 
   if ((pY).indexOf('%') >= 0) {
     pY = parseInt(pY, 10) * progress + '%';
   } else {
-    pY = pY * progress + 'px' ;
+    pY = <any>pY * progress + 'px' ;
   }
 
   transform(el, 'translate3d(' + pX + ', ' + pY + ',0px)');
@@ -51,7 +53,7 @@ export function parallaxSetTranslate(s: Slides) {
   for (var i = 0; i < s._slides.length; i++) {
     var slide = s._slides[i];
     eachChild(slide, '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]', (el) => {
-      var progress = Math.min(Math.max(slide[0].progress, -1), 1);
+      var progress = Math.min(Math.max(slide.progress, -1), 1);
       setParallaxTransform(s, slide, progress);
     });
   }

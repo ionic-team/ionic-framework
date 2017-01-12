@@ -638,7 +638,7 @@ export class Platform {
    * If options are not supported, then just return a boolean which
    * represents "capture". Returns a method to remove the listener.
    */
-  registerListener(ele: any, eventName: string, callback: {(ev?: UIEvent)}, opts: EventListenerOptions, unregisterListenersCollection?: Function[]): Function {
+  registerListener(ele: any, eventName: string, callback: {(ev?: UIEvent): void}, opts: EventListenerOptions, unregisterListenersCollection?: Function[]): Function {
     // use event listener options when supported
     // otherwise it's just a boolean for the "capture" arg
     const listenerOpts: any = this._uiEvtOpts ? {
@@ -673,7 +673,7 @@ export class Platform {
   /**
    * @private
    */
-  transitionEnd(el: HTMLElement, callback: {(ev?: TransitionEvent)}, zone = true) {
+  transitionEnd(el: HTMLElement, callback: {(ev?: TransitionEvent): void}, zone = true) {
     const unRegs: Function[] = [];
 
     function unregister() {
@@ -1175,8 +1175,8 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
   plt.init();
 
   // add the platform obj to the window
-  win['Ionic'] = win['Ionic'] || {};
-  win['Ionic']['platform'] = plt;
+  (<any>win)['Ionic'] = (<any>win)['Ionic'] || {};
+  (<any>win)['Ionic']['platform'] = plt;
 
   return plt;
 }

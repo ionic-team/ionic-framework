@@ -95,8 +95,8 @@ describe('Infinite Scroll', () => {
   let config = mockConfig();
   let inf: InfiniteScroll;
   let content: Content;
-  let contentElementRef;
-  let infiniteElementRef;
+  let contentElementRef: any;
+  let infiniteElementRef: any;
   let ev: ScrollEvent = (<any>{});
   let dom: DomController;
 
@@ -112,15 +112,15 @@ describe('Infinite Scroll', () => {
     inf = new InfiniteScroll(content, mockZone(), infiniteElementRef, dom);
   });
 
-  function setInfiniteScrollTop(scrollTop) {
+  function setInfiniteScrollTop(scrollTop: any) {
     infiniteElementRef.nativeElement.scrollTop = scrollTop;
   }
 
-  function setInfiniteScrollHeight(scrollHeight) {
+  function setInfiniteScrollHeight(scrollHeight: any) {
     infiniteElementRef.nativeElement.scrollHeight = scrollHeight;
   }
 
-  function mockGetContentDimensions(scrollHeight, scrollTop, contentHeight) {
+  function mockGetContentDimensions(scrollHeight: any, scrollTop: any, contentHeight: any): any {
     return {
           scrollHeight: scrollHeight,
           scrollTop: scrollTop,

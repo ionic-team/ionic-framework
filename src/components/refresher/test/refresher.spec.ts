@@ -225,7 +225,7 @@ describe('Refresher', () => {
   });
 
 
-  let contentElementRef;
+  let contentElementRef: any;
   let refresher: Refresher;
   let content: Content;
   let dom: any;
@@ -251,7 +251,7 @@ describe('Refresher', () => {
     };
   }
 
-  function setContentScrollTop(scrollTop) {
+  function setContentScrollTop(scrollTop: any) {
     content.getContentDimensions = function() {
       return {
         scrollTop: scrollTop,

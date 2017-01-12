@@ -7,7 +7,7 @@
     "lib": ["dom", "es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",

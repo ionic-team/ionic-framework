@@ -8,7 +8,7 @@ import { updatePaginationClasses } from './swiper-pagination';
   Classes
   ===========================*/
 export function updateClasses(s: Slides) {
-  var childElements;
+  var childElements: HTMLElement[];
 
   removeClass(s._slides, [CLS.slideActive, CLS.slideNext, CLS.slidePrev, CLS.slideDuplicateActive, CLS.slideDuplicateNext, CLS.slideDuplicatePrev]);
   for (var i = 0; i < s._slides.length; i++) {

@@ -125,8 +125,8 @@ describe('mock-providers', () => {
     it('should set rafs', (done) => {
       let callOrder: number[] = [];
       let timestamps: number[] = [];
-      let callback1 = (timeStamp) => { callOrder.push(1); timestamps.push(timeStamp); };
-      let callback2 = (timeStamp) => { callOrder.push(2); timestamps.push(timeStamp); };
+      let callback1 = (timeStamp: number) => { callOrder.push(1); timestamps.push(timeStamp); };
+      let callback2 = (timeStamp: number) => { callOrder.push(2); timestamps.push(timeStamp); };
 
       plt.raf(callback1);
       plt.raf(callback2);

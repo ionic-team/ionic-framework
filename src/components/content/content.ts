@@ -414,7 +414,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /**
    * @private
    */
-  onScrollElementTransitionEnd(callback: {(ev: TransitionEvent)}) {
+  onScrollElementTransitionEnd(callback: {(ev: TransitionEvent): void}) {
     this._plt.transitionEnd(this._scrollEle, callback);
   }
 

@@ -1,3 +1,74 @@
+<a name="2.0.0-rc.5"></a>
+# [2.0.0-rc.5](https://github.com/driftyco/ionic/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2017-01-11)
+
+### Updating to 2.0.0-rc.5
+
+1. Update to the latest version of the Ionic CLI:
+
+  ```
+  npm uninstall -g ionic
+  npm install -g ionic
+  ```
+
+2. Update your `package.json` to match the following dependencies, remove existing `node_modules` directory, and then run `npm install`:
+
+  ```
+  "dependencies": {
+      "@angular/common": "2.2.1",
+      "@angular/compiler": "2.2.1",
+      "@angular/compiler-cli": "2.2.1",
+      "@angular/core": "2.2.1",
+      "@angular/forms": "2.2.1",
+      "@angular/http": "2.2.1",
+      "@angular/platform-browser": "2.2.1",
+      "@angular/platform-browser-dynamic": "2.2.1",
+      "@angular/platform-server": "2.2.1",
+      "@ionic/storage": "1.1.7",
+      "ionic-angular": "2.0.0-rc.5",
+      "ionic-native": "2.2.11",
+      "ionicons": "3.0.0",
+      "rxjs": "5.0.0-beta.12",
+      "zone.js": "0.6.26",
+      "sw-toolbox": "3.4.0"
+    },
+    "devDependencies": {
+      "@ionic/app-scripts": "1.0.0",
+      "typescript": "2.0.9"
+    }
+  ```
+
+  Note: please ensure you are using the exact TypeScript and Angular versions listed above. There have been issues with the latest versions.
+
+
+### What’s changed?
+Internal refactor completed in order to improve tree shaking and dead code removal. The public API, with the exception of the slides component, has stayed the same. However, internally many changes were required so bundlers could better exclude modules which should not be bundled. Ultimately most changes resorted to removing references to `window` or `document`, or a module that referenced one of those.
+
+### What’s new?
+Service Worker Toolbox ([sw-toolbox](https://googlechrome.github.io/sw-toolbox/docs/releases/v3.2.0/)) is now built in to the starters and conference app. This allows you to customize your service worker using a high level API instead of using the raw service worker API. Our out of the box configuration will give your app a good, network independent experience but you can easily customize this to fit your app’s unique use cases.
+
+
+### BREAKING CHANGES
+
+#### Slides
+
+ion-slides was refactored to remove the external dependencies, and rewritten in TypeScript/ES6 modules to again improve tree shaking abilities. In order to work with tree shaking, the `options` attribute had to be removed. See the [Slides API Documentation](http://ionicframework.com/docs/v2/api/components/slides/Slides/) for usage information.
+
+
+### Bug Fixes
+
+* **clickblock:** add NavOptions.minClickBlockDuration ([8ca9797](https://github.com/driftyco/ionic/commit/8ca9797))
+* **datetime:** enable custom day values ([#9708](https://github.com/driftyco/ionic/issues/9708)) ([acba3c0](https://github.com/driftyco/ionic/commit/acba3c0)), closes [#7190](https://github.com/driftyco/ionic/issues/7190) [#7190](https://github.com/driftyco/ionic/issues/7190)
+* **input:** fix the text jumping for stacked/floating inputs on iOS ([877fcf1](https://github.com/driftyco/ionic/commit/877fcf1)), closes [#9605](https://github.com/driftyco/ionic/issues/9605)
+* **input:** only add padding right if it has clear input ([717cada](https://github.com/driftyco/ionic/commit/717cada)), closes [#9865](https://github.com/driftyco/ionic/issues/9865)
+* **input:** remove click events from disabled inputs ([#9676](https://github.com/driftyco/ionic/issues/9676)) ([22ba043](https://github.com/driftyco/ionic/commit/22ba043)), closes [#9070](https://github.com/driftyco/ionic/issues/9070)
+* **list:** add border to last item in MD list ([#9679](https://github.com/driftyco/ionic/issues/9679)) ([64346bd](https://github.com/driftyco/ionic/commit/64346bd)), closes [#9619](https://github.com/driftyco/ionic/issues/9619)
+* **overlay:** don't call to dismiss pages if the view is an overlay ([8b25798](https://github.com/driftyco/ionic/commit/8b25798))
+* **platform:** only set isPortrait when the width/height is set ([e9adab0](https://github.com/driftyco/ionic/commit/e9adab0))
+* **scroll:** handle low duration in scrollTo ([14eb2fd](https://github.com/driftyco/ionic/commit/14eb2fd))
+* **show-hide-when:** remove whitespaces from conditions before check phase ([#9573](https://github.com/driftyco/ionic/issues/9573)) ([cd342c2](https://github.com/driftyco/ionic/commit/cd342c2))
+* **tabs:** current tab still active if selected tab does not have a root ([f09c300](https://github.com/driftyco/ionic/commit/f09c300)), closes [#9392](https://github.com/driftyco/ionic/issues/9392) [#9811](https://github.com/driftyco/ionic/issues/9811) [#9392](https://github.com/driftyco/ionic/issues/9392)
+
+
 <a name="2.0.0-rc.4"></a>
 # [2.0.0-rc.4](https://github.com/driftyco/ionic/compare/v2.0.0-rc.3...v2.0.0-rc.4) (2016-12-15)
 

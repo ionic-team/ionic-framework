@@ -44,7 +44,7 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
     var swiperOffset = offset(s.container, plt);
 
     if (s._rtl) {
-      swiperOffset.left = swiperOffset.left - s.container[0].scrollLeft;
+      swiperOffset.left = swiperOffset.left - s.container.scrollLeft;
     }
 
     var swiperCoord = [

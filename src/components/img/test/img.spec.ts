@@ -48,7 +48,7 @@ describe('Img', () => {
   });
 
 
-  let contentElementRef;
+  let contentElementRef: any;
   let img: Img;
   let elementRef: ElementRef;
   let renderer: Renderer;

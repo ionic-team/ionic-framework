@@ -24,6 +24,28 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
  * to the app's content element. There can be any number of menus attached to the content.
  * These can be controlled from the templates, or programmatically using the [MenuController](../MenuController).
  *
+ * @usage
+ *
+ * ```html
+ * <ion-menu [content]="mycontent">
+ *   <ion-content>
+ *     <ion-list>
+ *       <p>some menu content, could be list items</p>
+ *     </ion-list>
+ *   </ion-content>
+ * </ion-menu>
+ *
+ * <ion-nav #mycontent [root]="rootPage"></ion-nav>
+ * ```
+ *
+ * To add a menu to an app, the `<ion-menu>` element should be added as a sibling to the `ion-nav` it will belongs
+ * to. A [local variable](https://angular.io/docs/ts/latest/guide/user-input.html#local-variables)
+ * should be added to the `ion-nav` and passed to the `ion-menu`s `content` property.
+ *
+ * This tells the menu what it is bound to and what element to watch for gestures.
+ * In the below example, `content` is using [property binding](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#property-binding)
+ * because `mycontent` is a reference to the `<ion-nav>` element, and not a string.
+ *
  *
  * ### Opening/Closing Menus
  *
@@ -63,29 +85,6 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
  * on all pages in the navigation stack. To make a menu persistent set `persistent` to `true` on the
  * `<ion-menu>` element. Note that this will only affect the `MenuToggle` button in the `Navbar` attached
  * to the `Menu` with `persistent` set to true, any other `MenuToggle` buttons will not be affected.
- *
- *
- * @usage
- *
- * To add a menu to an application, the `<ion-menu>` element should be added as a sibling to
- * the content it belongs to. A [local variable](https://angular.io/docs/ts/latest/guide/user-input.html#local-variables)
- * should be added to the content element and passed to the menu element in the `content` property.
- * This tells the menu which content it is attached to, so it knows which element to watch for
- * gestures. In the below example, `content` is using [property binding](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#property-binding)
- * because `mycontent` is a reference to the `<ion-nav>` element, and not a string.
- *
- * ```html
- * <ion-menu [content]="mycontent">
- *   <ion-content>
- *     <ion-list>
- *     ...
- *     </ion-list>
- *   </ion-content>
- * </ion-menu>
- *
- * <ion-nav #mycontent [root]="rootPage"></ion-nav>
- * ```
- *
  * ### Menu Side
  *
  * By default, menus slide in from the left, but this can be overridden by passing `right`

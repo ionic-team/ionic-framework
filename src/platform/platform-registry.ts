@@ -206,7 +206,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 
             // cordova has its own exitApp method
             plt.exitApp = function() {
-              win['navigator']['app'].exitApp();
+              (<any>win)['navigator']['app'].exitApp();
             };
 
             // cordova has fully loaded and we've added listeners
