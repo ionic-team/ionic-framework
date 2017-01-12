@@ -288,4 +288,3 @@ export function getFolderInfo() {
     componentTest: componentTest
   };
 }
-
