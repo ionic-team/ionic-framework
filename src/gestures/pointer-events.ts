@@ -44,7 +44,7 @@ export class PointerEvents {
     assert(this.ele, 'element can not be null');
     assert(this.pointerDown, 'pointerDown can not be null');
 
-    this.lastTouchEvent = Date.now() + this.mouseWait;
+    this.lastTouchEvent = performance.now() + this.mouseWait;
     this.lastEventType = PointerEventType.TOUCH;
     if (!this.pointerDown(ev, PointerEventType.TOUCH)) {
       return;
@@ -64,7 +64,7 @@ export class PointerEvents {
     assert(this.ele, 'element can not be null');
     assert(this.pointerDown, 'pointerDown can not be null');
 
-    if (this.lastTouchEvent > Date.now()) {
+    if (this.lastTouchEvent > performance.now()) {
       console.debug('mousedown event dropped because of previous touch');
       return;
     }

@@ -268,7 +268,7 @@ export class Refresher {
 
     // if we just updated stuff less than 16ms ago
     // then don't check again, just chillout plz
-    let now = Date.now();
+    let now = performance.now();
     if (this._lastCheck + 16 > now) {
       return 3;
     }

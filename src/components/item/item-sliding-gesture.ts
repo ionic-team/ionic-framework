@@ -26,16 +26,16 @@ export class ItemSlidingGesture extends PanGesture {
     super(
       plt,
       list.getNativeElement(), {
-      maxAngle: 20,
-      threshold: 5,
-      zone: false,
-      domController: domCtrl,
-      gesture: gestureCtrl.createGesture({
-        name: GESTURE_ITEM_SWIPE,
-        priority: GesturePriority.SlidingItem,
-        disableScroll: true
-      })
-    });
+        maxAngle: 20,
+        threshold: 5,
+        zone: false,
+        domController: domCtrl,
+        gesture: gestureCtrl.createGesture({
+          name: GESTURE_ITEM_SWIPE,
+          priority: GesturePriority.SlidingItem,
+          disableScroll: true
+        })
+      });
   }
 
   canStart(ev: any): boolean {
@@ -56,7 +56,7 @@ export class ItemSlidingGesture extends PanGesture {
     let coord = pointerCoord(ev);
     this.preSelectedContainer = container;
     this.firstCoordX = coord.x;
-    this.firstTimestamp = Date.now();
+    this.firstTimestamp = performance.now();
     return true;
   }
 
@@ -79,7 +79,7 @@ export class ItemSlidingGesture extends PanGesture {
 
     let coordX = pointerCoord(ev).x;
     let deltaX = (coordX - this.firstCoordX);
-    let deltaT = (Date.now() - this.firstTimestamp);
+    let deltaT = (performance.now() - this.firstTimestamp);
     this.selectedContainer.endSliding(deltaX / deltaT);
     this.selectedContainer = null;
     this.preSelectedContainer = null;

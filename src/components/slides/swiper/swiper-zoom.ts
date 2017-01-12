@@ -265,17 +265,17 @@ function onTouchMove(s: Slides, plt: Platform, ev: TouchEvent) {
   // Velocity
   if (!z.velocity.prevPositionX) z.velocity.prevPositionX = z.image.touchesCurrent.x;
   if (!z.velocity.prevPositionY) z.velocity.prevPositionY = z.image.touchesCurrent.y;
-  if (!z.velocity.prevTime) z.velocity.prevTime = Date.now();
+  if (!z.velocity.prevTime) z.velocity.prevTime = performance.now();
 
-  z.velocity.x = (z.image.touchesCurrent.x - z.velocity.prevPositionX) / (Date.now() - z.velocity.prevTime) / 2;
-  z.velocity.y = (z.image.touchesCurrent.y - z.velocity.prevPositionY) / (Date.now() - z.velocity.prevTime) / 2;
+  z.velocity.x = (z.image.touchesCurrent.x - z.velocity.prevPositionX) / (performance.now() - z.velocity.prevTime) / 2;
+  z.velocity.y = (z.image.touchesCurrent.y - z.velocity.prevPositionY) / (performance.now() - z.velocity.prevTime) / 2;
 
   if (Math.abs(z.image.touchesCurrent.x - z.velocity.prevPositionX) < 2) z.velocity.x = 0;
   if (Math.abs(z.image.touchesCurrent.y - z.velocity.prevPositionY) < 2) z.velocity.y = 0;
 
   z.velocity.prevPositionX = z.image.touchesCurrent.x;
   z.velocity.prevPositionY = z.image.touchesCurrent.y;
-  z.velocity.prevTime = Date.now();
+  z.velocity.prevTime = performance.now();
 
   transform(z.gesture.imageWrap, 'translate3d(' + z.image.currentX + 'px, ' + z.image.currentY + 'px,0)');
 }

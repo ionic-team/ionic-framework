@@ -92,7 +92,7 @@ export class TapClick {
   pointerEnd(ev: any, type: PointerEventType) {
     if (!this.dispatchClick) return;
 
-    runInDev(() => this.lastTouchEnd = Date.now());
+    runInDev(() => this.lastTouchEnd = performance.now());
 
     if (!this.startCoord) {
       return;
@@ -168,7 +168,7 @@ export class TapClick {
 
   private profileClickDelay(ev: any) {
     if (this.lastTouchEnd) {
-      let diff = Date.now() - this.lastTouchEnd;
+      let diff = performance.now() - this.lastTouchEnd;
       if (diff < 100) {
         console.debug(`FAST click dispatched. Delay(ms):`, diff);
       } else {
@@ -192,7 +192,7 @@ export class TapClick {
       return;
     }
     // prevent native mouse click events for XX amount of time
-    this.disableClick = Date.now() + DISABLE_NATIVE_CLICK_AMOUNT;
+    this.disableClick = performance.now() + DISABLE_NATIVE_CLICK_AMOUNT;
 
     if (this.app.isScrolling()) {
       // do not fire off a click event while the app was scrolling
@@ -210,7 +210,7 @@ export class TapClick {
   }
 
   isDisabledNativeClick() {
-    return this.disableClick > Date.now();
+    return this.disableClick > performance.now();
   }
 
 }
@@ -230,7 +230,7 @@ function getActivatableTarget(ele: HTMLElement) {
  * @private
  */
 export const isActivatable = function (ele: HTMLElement) {
-  if (ACTIVATABLE_ELEMENTS.indexOf(ele.tagName) > -1) {
+  if (ACTIVATABLE_ELEMENTS.indexOf(ele.tagName) > -1)  {
     return true;
   }
 
@@ -252,7 +252,7 @@ const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
  * @private
  */
 export function setupTapClick(config: Config, plt: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
-  return function() {
+  return function () {
     return new TapClick(config, plt, dom, app, zone, gestureCtrl);
   };
 }

@@ -17,52 +17,52 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-alert',
   template:
-    '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
-    '<div class="alert-wrapper">' +
-      '<div class="alert-head">' +
-        '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
-        '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
-      '</div>' +
-      '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
-      '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
+  '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
+  '<div class="alert-wrapper">' +
+  '<div class="alert-head">' +
+  '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
+  '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
+  '</div>' +
+  '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
+  '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
-        '<template ngSwitchCase="radio">' +
-          '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
-              '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
-              '<div class="alert-radio-label">' +
-                '{{i.label}}' +
-              '</div>' +
-            '</button>' +
-          '</div>' +
-        '</template>' +
+  '<template ngSwitchCase="radio">' +
+  '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
+  '<button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+  '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
+  '<div class="alert-radio-label">' +
+  '{{i.label}}' +
+  '</div>' +
+  '</button>' +
+  '</div>' +
+  '</template>' +
 
-        '<template ngSwitchCase="checkbox">' +
-          '<div class="alert-checkbox-group">' +
-            '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
-              '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
-              '<div class="alert-checkbox-label">' +
-                '{{i.label}}' +
-              '</div>' +
-            '</button>' +
-          '</div>' +
-        '</template>' +
+  '<template ngSwitchCase="checkbox">' +
+  '<div class="alert-checkbox-group">' +
+  '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
+  '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
+  '<div class="alert-checkbox-label">' +
+  '{{i.label}}' +
+  '</div>' +
+  '</button>' +
+  '</div>' +
+  '</template>' +
 
-        '<template ngSwitchDefault>' +
-          '<div class="alert-input-group">' +
-            '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
-            '</div>' +
-          '</div>' +
-        '</template>' +
+  '<template ngSwitchDefault>' +
+  '<div class="alert-input-group">' +
+  '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
+  '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
+  '</div>' +
+  '</div>' +
+  '</template>' +
 
-      '</div>' +
-      '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
-        '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
-          '{{b.text}}' +
-        '</button>' +
-      '</div>' +
-    '</div>',
+  '</div>' +
+  '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
+  '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
+  '{{b.text}}' +
+  '</button>' +
+  '</div>' +
+  '</div>',
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
@@ -222,7 +222,7 @@ export class AlertCmp {
   keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ENTER) {
-        if (this.lastClick + 1000 < Date.now()) {
+        if (this.lastClick + 1000 < performance.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
           // key to click the button. However, both the click handler and
@@ -245,7 +245,7 @@ export class AlertCmp {
     }
 
     // keep the time of the most recent button click
-    this.lastClick = Date.now();
+    this.lastClick = performance.now();
 
     let shouldDismiss = true;
 
@@ -321,7 +321,7 @@ export class AlertCmp {
 
     // this is an alert with text inputs
     // return an object of all the values with the input name as the key
-    const values: {[k: string]: string} = {};
+    const values: { [k: string]: string } = {};
     this.d.inputs.forEach(i => {
       values[i.name] = i.value;
     });

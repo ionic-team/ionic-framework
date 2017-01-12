@@ -38,7 +38,7 @@ export class ClickBlock {
       this.plt.cancelTimeout(this._tmr);
       if (shouldShow) {
         // remember when we started the click block
-        this._start = Date.now();
+        this._start = performance.now();
         // figure out the minimum time it should be showing until
         // this is useful for transitions that are less than 300ms
         this._minEnd = this._start + (minDuration || 0);
@@ -55,7 +55,7 @@ export class ClickBlock {
       if (!shouldShow) {
         // check if it was enabled before the minimum duration
         // this is useful for transitions that are less than 300ms
-        var now = Date.now();
+        var now = performance.now();
         if (now < this._minEnd) {
           this._tmr = this.plt.timeout(this._activate.bind(this, false), this._minEnd - now);
           return;

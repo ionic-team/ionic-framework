@@ -120,7 +120,7 @@ export class PickerColumnCmp {
     // reset everything
     this.velocity = 0;
     this.pos.length = 0;
-    this.pos.push(this.startY, Date.now());
+    this.pos.push(this.startY, performance.now());
 
     let options = this.col.options;
     let minY = (options.length - 1);
@@ -142,7 +142,7 @@ export class PickerColumnCmp {
     ev.stopPropagation();
 
     let currentY = pointerCoord(ev).y;
-    this.pos.push(currentY, Date.now());
+    this.pos.push(currentY, performance.now());
 
     this.debouncer.write(() => {
       if (this.startY === null) {
@@ -200,11 +200,11 @@ export class PickerColumnCmp {
 
     let endY = pointerCoord(ev).y;
 
-    this.pos.push(endY, Date.now());
+    this.pos.push(endY, performance.now());
 
     let endPos = (this.pos.length - 1);
     let startPos = endPos;
-    let timeRange = (Date.now() - 100);
+    let timeRange = (performance.now() - 100);
 
     // move pointer to position measured 100ms ago
     for (var i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
@@ -561,7 +561,7 @@ export class PickerCmp {
   _keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ENTER) {
-        if (this.lastClick + 1000 < Date.now()) {
+        if (this.lastClick + 1000 < performance.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
           // key to click the button. However, both the click handler and
@@ -594,7 +594,7 @@ export class PickerCmp {
     }
 
     // keep the time of the most recent button click
-    this.lastClick = Date.now();
+    this.lastClick = performance.now();
 
     let shouldDismiss = true;
 
