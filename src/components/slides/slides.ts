@@ -261,6 +261,10 @@ export class Slides extends Ion {
   }
   private _paginationType = 'bullets';
 
+
+  /** @private */
+  paginationBulletRender: (index?: number, cssClass?: string) => void = null;
+
   /**
    * @input {boolean} Enable, if you want to use "parallaxed" elements inside of
    * slider. Default: `false`.

@@ -13,7 +13,11 @@ export function updatePagination(s: Slides) {
   if (s.paginationType === 'bullets') {
     var numberOfBullets = s.loop ? Math.ceil((s._slides.length - s.loopedSlides * 2) / s.slidesPerGroup) : s._snapGrid.length;
     for (var i = 0; i < numberOfBullets; i++) {
-      paginationHTML += `<button class="${CLS.bullet}" aria-label="Go to slide ${i + 1}" data-slide-index="${i}"></button>`;
+      if (s.paginationBulletRender) {
+        paginationHTML += s.paginationBulletRender(i, CLS.bullet);
+      } else {
+        paginationHTML += `<button class="${CLS.bullet}" aria-label="Go to slide ${i + 1}" data-slide-index="${i}"></button>`;
+      }
     }
 
   } else if (s.paginationType === 'fraction') {
@@ -91,4 +95,3 @@ export function updatePaginationClasses(s: Slides) {
     });
   }
 }
-
