@@ -173,7 +173,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
    */
   @Input()
   get disabled(): boolean {
-    return this._disabled;
+    return this._disabled || (this._group != null && this._group.disabled);
   }
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
@@ -206,6 +206,10 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   ngOnInit() {
     if (this._group && isPresent(this._group.value)) {
       this.checked = isCheckedProperty(this._group.value, this.value);
+    }
+
+    if (this._group && this._group.disabled) {
+      this.disabled = this._group.disabled;
     }
   }
 

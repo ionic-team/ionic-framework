@@ -142,4 +142,30 @@
     </ion-item>
   </ion-list>
 
+  <ion-list radio-group disabled="true" [(ngModel)]="relationship">
+    <ion-list-header>Disabled radio-group</ion-list-header>
+    <ion-item>
+      <ion-label>Friends</ion-label>
+      <ion-radio value="friends"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Enemies</ion-label>
+      <ion-radio value="enemies"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <form [formGroup]="friendsForm">
+    <ion-list radio-group formControlName="friendsCtrl">
+      <ion-list-header>Disabled formGroup</ion-list-header>
+      <ion-item>
+        <ion-label>Friends</ion-label>
+        <ion-radio value="friends"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Enemies</ion-label>
+        <ion-radio value="enemies"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </form>
+
 </ion-content>
