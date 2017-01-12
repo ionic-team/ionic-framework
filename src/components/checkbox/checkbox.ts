@@ -234,6 +234,13 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   /**
    * @private
    */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this._form.deregister(this);
   }
