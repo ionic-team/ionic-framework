@@ -35,12 +35,12 @@
 
       <ion-item>
         <ion-label>Cherry, formControlName, disabled</ion-label>
-        <ion-toggle disabled="true" formControlName="cherry"></ion-toggle>
+        <ion-toggle formControlName="cherry"></ion-toggle>
       </ion-item>
 
       <ion-item>
         <ion-label>Grape, formControlName, checked, disabled</ion-label>
-        <ion-toggle [checked]="grapeChecked" [disabled]="grapeDisabled" formControlName="grape"></ion-toggle>
+        <ion-toggle [checked]="grapeChecked" formControlName="grape"></ion-toggle>
       </ion-item>
 
       <ion-item>
@@ -51,6 +51,11 @@
       <ion-item>
         <ion-label>Strawberry, (ionChange) [checked]="true"</ion-label>
         <ion-toggle color="danger" (ionChange)="strawberryChange($event)" [checked]="true"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>disabled="true"</ion-label>
+        <ion-toggle disabled="true"></ion-toggle>
       </ion-item>
 
     </ion-list>
