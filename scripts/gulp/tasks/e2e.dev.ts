@@ -59,7 +59,7 @@ task('e2e.build', function () {
     .on('error', function (error) {
       console.log(error.message);
     })
-    .pipe(gulpif(/app-module.js$/, createIndexHTML()))
+    .pipe(gulpif(/app.module.js$/, createIndexHTML()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()));
 
   var testFiles = src([
