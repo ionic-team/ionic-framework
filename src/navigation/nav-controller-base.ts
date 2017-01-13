@@ -975,7 +975,7 @@ export class NavControllerBase extends Ion implements NavController {
   canSwipeBack(): boolean {
     return (this._sbEnabled &&
             !this._isPortal &&
-            !this._children.length &&
+            this._children.length <= 1 &&
             !this.isTransitioning() &&
             this._app.isEnabled() &&
             this.canGoBack());
