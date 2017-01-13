@@ -3,8 +3,7 @@ import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
 import { convertToViews, DeepLinkConfig, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
-import { ModuleLoader } from '../util/module-loader';
-import { LoadedModule } from '../util/system-js-ng-module-loader';
+import { LoadedModule, ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -133,6 +132,11 @@ export class DeepLinker {
    */
   indexAliasUrl: string;
 
+  /**
+   * @internal
+   */
+  nameToModuleMap = new Map<string, LoadedModule>();
+
   constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location, public _deepLinkConfig: DeepLinkConfig, public _moduleLoader: ModuleLoader) { }
 
   /**
@@ -256,16 +260,24 @@ export class DeepLinker {
   /**
    * @internal
    */
-  getComponentFromName(componentName: any): Promise<any> {
+  getComponentFromName(componentName: string): Promise<LoadedModule> {
     const segment = this._serializer.createSegmentFromName(componentName);
     if (segment) {
 
       if (!segment.component) {
-        return this.loadModuleAndUpdateDeeplinkConfig(this._deepLinkConfig, componentName);
+        return this.loadModuleAndUpdateDeeplinkConfig(this._deepLinkConfig, componentName).then((loadedModule: LoadedModule) => {
+          this.nameToModuleMap.set(componentName, loadedModule);
+          return loadedModule;
+        });
       }
 
       if (segment.component) {
-        return Promise.resolve(segment.component);
+        let loadedModule = this.nameToModuleMap.get(componentName);
+        if (!loadedModule) {
+          loadedModule = { component: segment.component, componentFactoryResolver: null, injector: null, injectorFactory: null};
+          this.nameToModuleMap.set(componentName, loadedModule);
+        }
+        return Promise.resolve(loadedModule);
       }
 
     }
@@ -278,15 +290,14 @@ export class DeepLinker {
       // update the existing deepLinkConfig entry with the component
       deepLinkConfig.links.filter(deepLinkMetadata => deepLinkMetadata.name === componentName)
         .forEach(deepLinkMetadata => deepLinkMetadata.component = loadedModule.component);
-
-      return loadedModule.component;
+      return loadedModule;
     });
   }
 
   /**
    * @internal
    */
-  createUrl(nav: any, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
+  createUrl(nav: any, nameOrComponent: string | Type<any>, data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
     const segment = this._serializer.createSegmentFromName(nameOrComponent);
     if (segment) {
@@ -306,7 +317,7 @@ export class DeepLinker {
    *
    * @internal
    */
-  pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
+  pathFromNavs(nav: NavController, component?: Type<any>, data?: any): NavSegment[] {
     const segments: NavSegment[] = [];
     let view: ViewController;
     let segment: NavSegment;

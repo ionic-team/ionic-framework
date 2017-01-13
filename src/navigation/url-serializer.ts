@@ -1,4 +1,4 @@
-import { OpaqueToken } from '@angular/core';
+import { OpaqueToken, Type } from '@angular/core';
 
 import { DeepLinkConfig, DeepLinkMetadata, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
@@ -62,7 +62,7 @@ export class UrlSerializer {
   /**
    * Serializes a component and its data into a NavSegment.
    */
-  serializeComponent(component: any, data: any): NavSegment {
+  serializeComponent(component: Type<any>, data: any): NavSegment {
     if (component) {
       const link = findLinkByComponentData(this.links, component, data);
       if (link) {
@@ -212,7 +212,7 @@ export const createMatchedData = (matchedUrlParts: string[], link: NavLink): any
   return data;
 };
 
-export const findLinkByComponentData = (links: NavLink[], component: any, instanceData: any): NavLink => {
+export const findLinkByComponentData = (links: NavLink[], component: Type<any>, instanceData: any): NavLink => {
   let foundLink: NavLink = null;
   let foundLinkDataMatches = -1;
 

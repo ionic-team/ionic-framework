@@ -1,4 +1,4 @@
-import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Injector, Output, Renderer, Type } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
 import { isPresent } from '../util/util';
@@ -104,7 +104,11 @@ export class ViewController {
   /** @private */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
+  componentFactoryResolver: ComponentFactoryResolver;
+  injector: Injector;
+  injectorFactory: (parent: Injector) => Injector;
+
+  constructor(public component?: Type<any>, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 

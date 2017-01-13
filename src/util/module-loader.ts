@@ -1,6 +1,6 @@
-import { Injectable, Injector, NgModuleFactory } from '@angular/core';
+import { ComponentFactoryResolver, Injectable, Injector, NgModuleFactory, Type } from '@angular/core';
 import { DeepLinkConfig, DeepLinkMetadata } from '../navigation/nav-util';
-import { SystemJsNgModuleLoader, LoadedModule } from './system-js-ng-module-loader';
+import { SystemJsNgModuleLoader, SystemJsLoadedModule } from './system-js-ng-module-loader';
 
 const DEFAULT_VIEW_FACTORY_FUNCTION_NAME = 'getView';
 
@@ -22,11 +22,18 @@ export class ModuleLoader {
       viewFactoryFunction = deepLinkMetadata.viewFactoryFunction;
     }
     return this._systemJsNgModuleLoader.load({modulePath: deepLinkMetadata.path, ngModuleExport: deepLinkMetadata.namedExport, viewFactoryFunction: viewFactoryFunction})
-      .then((loadedModule: LoadedModule) => {
-        // TODO - verify we don't need to do anything else here to make everything happy from an angular pov
-        return loadedModule;
+      .then((loadedModule: SystemJsLoadedModule) => {
+
+        const ref = loadedModule.ngModuleFactory.create(this._injector);
+        const injectorFactory = (parent: Injector) => loadedModule.ngModuleFactory.create(parent).injector;
+        return {
+          componentFactoryResolver: ref.componentFactoryResolver,
+          component: loadedModule.component,
+          injector: ref.injector,
+          injectorFactory: injectorFactory,
+        };
       });
-  }
+    }
 }
 
 export function getModulePath(deepLinkConfig: DeepLinkConfig, viewName: string): DeepLinkMetadata {
@@ -39,3 +46,10 @@ export function getModulePath(deepLinkConfig: DeepLinkConfig, viewName: string):
   }
   return null;
 }
+
+export interface LoadedModule {
+  componentFactoryResolver: ComponentFactoryResolver;
+  injector: Injector;
+  injectorFactory: (parent: Injector) => Injector;
+  component: Type<any>;
+};

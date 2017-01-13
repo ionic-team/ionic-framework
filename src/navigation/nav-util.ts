@@ -1,6 +1,7 @@
 import { Renderer, Type, TypeDecorator } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
+import { LoadedModule } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
@@ -15,15 +16,19 @@ export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?:
   }
 
   if (typeof nameOrPageOrView === 'string') {
-    return linker.getComponentFromName(nameOrPageOrView).then((component) => {
-      return new ViewController(component, params);
+    return linker.getComponentFromName(nameOrPageOrView).then((loadedModule: LoadedModule) => {
+      const viewController = new ViewController(loadedModule.component, params);
+      viewController.componentFactoryResolver = loadedModule.componentFactoryResolver;
+      viewController.injector = loadedModule.injector;
+      viewController.injectorFactory = loadedModule.injectorFactory;
+      return viewController;
     });
   }
 
   return Promise.resolve(null);
 }
 
-export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any) {
+export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any): Promise<ViewController> {
   if (nameOrPageOrView) {
     if (isViewController(nameOrPageOrView)) {
       // is already a ViewController
@@ -154,7 +159,7 @@ export interface NavLink {
 export interface NavSegment {
   id: string;
   name: string;
-  component: any;
+  component: Type<any>;
   data: any;
   navId?: string;
   defaultHistory?: NavSegment[];
