@@ -365,7 +365,7 @@ export function mockDeepLinker(linkConfig: DeepLinkConfig = null, app?: App) {
 
   let location = mockLocation();
 
-  return new DeepLinker(app || mockApp(), serializer, location);
+  return new DeepLinker(app || mockApp(), serializer, location, null, null, null);
 }
 
 export function mockNavController(): NavControllerBase {
@@ -424,7 +424,7 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   let gestureCtrl = new GestureController(app);
   let serializer = new UrlSerializer(null);
   let location = mockLocation();
-  let deepLinker = new DeepLinker(app, serializer, location);
+  let deepLinker = new DeepLinker(app, serializer, location, null, null, null);
 
   return new OverlayPortal(
     app,
