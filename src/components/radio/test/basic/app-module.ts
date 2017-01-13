@@ -18,6 +18,11 @@ export class E2EPage {
     'fruitsCtrl': this.fruitsCtrl
   });
 
+  friendsCtrl = new FormControl({value: 'enemies', disabled: true});
+  friendsForm = new FormGroup({
+    'friendsCtrl': this.friendsCtrl
+  });
+
   currenciesControl = new FormControl('EUR');
   currencyForm = new FormGroup({
     'currenciesControl': this.currenciesControl

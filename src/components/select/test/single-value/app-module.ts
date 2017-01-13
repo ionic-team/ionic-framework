@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { IonicApp, IonicModule } from '../../../..';
 
 export interface Currency {
@@ -54,6 +55,11 @@ export class E2EPage {
     }
   ];
   currency: Currency;
+
+  fruitCtrl = new FormControl({value: 'grape', disabled: true});
+  fruitsForm = new FormGroup({
+    'fruit': this.fruitCtrl
+  });
 
   constructor() {
     this.currency = this.currencies[0];

@@ -307,6 +307,13 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   /**
    * @private
    */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this._form && this._form.deregister(this);
     this._gesture && this._gesture.destroy();

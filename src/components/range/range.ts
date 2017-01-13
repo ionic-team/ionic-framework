@@ -629,6 +629,13 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   /**
    * @private
    */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this._form.deregister(this);
     this._events.destroy();

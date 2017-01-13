@@ -15,8 +15,8 @@ export class E2EPage {
 
   appleCtrl = new FormControl(false);
   bananaCtrl = new FormControl(true);
-  cherryCtrl = new FormControl(false);
-  grapeCtrl = new FormControl(true);
+  cherryCtrl = new FormControl({value: false, disabled: true});
+  grapeCtrl = new FormControl({value: true, disabled: true});
 
   fruitsForm = new FormGroup({
     'apple': this.appleCtrl,
@@ -35,7 +35,7 @@ export class E2EPage {
   }
 
   toggleGrapeDisabled() {
-    this.grapeDisabled = !this.grapeDisabled;
+    this.grapeCtrl.enabled ? this.grapeCtrl.disable() : this.grapeCtrl.enable();
   }
 
   appleChange(toggle: Toggle) {
