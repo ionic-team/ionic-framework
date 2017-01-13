@@ -35,6 +35,9 @@
         },
  *      buttonClicked: function(index) {
  *        return true;
+ *      },
+ *      destructiveButtonClicked: function(index) {
+ *        // add destructive code..
  *      }
  *    });
  *
