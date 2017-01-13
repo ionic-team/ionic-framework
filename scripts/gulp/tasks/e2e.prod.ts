@@ -44,7 +44,7 @@ task('e2e.copySource', (done: Function) => {
 
   function createIndexHTML() {
     const indexTemplate = readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.prod.html`);
-    const indexTs = readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/entry.ts`);
+    const indexTs = readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/main.ts`);
 
     return obj(function (file, enc, next) {
       this.push(new VinylFile({
@@ -55,7 +55,7 @@ task('e2e.copySource', (done: Function) => {
       this.push(new VinylFile({
         base: file.base,
         contents: new Buffer(indexTs),
-        path: join(dirname(file.path), 'entry.ts'),
+        path: join(dirname(file.path), 'main.ts'),
       }));
       next(null, file);
     });
@@ -101,11 +101,11 @@ task('e2e.compileTests', (done: Function) => {
 });
 
 function buildE2ETests(folderInfo: any, done: Function) {
-  let includeGlob = ['./components/*/test/*/app.module.ts', './components/*/test/*/entry.ts'];
+  let includeGlob = ['./components/*/test/*/app.module.ts', './components/*/test/*/main.ts'];
   if (folderInfo.componentName && folderInfo.componentTest) {
     includeGlob = [
       `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app.module.ts`,
-      `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.ts`,
+      `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/main.ts`,
     ];
   }
   createTempTsConfig(includeGlob, ES5, ES_2015, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_E2E_ROOT}/tsconfig.json`);
