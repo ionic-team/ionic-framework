@@ -35,6 +35,11 @@ describe('TapClick', () => {
       expect( isActivatable(ele) ).toBe(true);
     });
 
+    it('should be not activatable on element without "hasAttribute" function', () => {
+      let doc = document.createDocumentFragment();
+      expect( isActivatable(<any>doc) ).toBe(false);
+    });
+
   });
 
 });
