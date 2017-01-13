@@ -38,7 +38,7 @@ export class UrlSerializer {
     const configLink = this.links.find((link: NavLink) => {
       return (link.component === nameOrComponent) ||
              (link.name === nameOrComponent) ||
-             (link.component.name === nameOrComponent);
+             (link.component && link.component.name === nameOrComponent);
     });
 
     return configLink ? {
