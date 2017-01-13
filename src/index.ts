@@ -2,7 +2,7 @@
 /**
  * Import Angular
  */
-import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, Inject, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { DOCUMENT, BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -546,7 +546,7 @@ export class IonicModule {
 
         { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [ new Inject(APP_BASE_HREF), new Optional()], Config ] },
         { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
-        { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location ] },
+        { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location, ComponentFactoryResolver ] },
       ]
     };
   }

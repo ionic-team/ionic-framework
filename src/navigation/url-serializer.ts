@@ -45,6 +45,7 @@ export class UrlSerializer {
       id: configLink.name,
       name: configLink.name,
       component: configLink.component,
+      loadChildren: configLink.loadChildren,
       data: null,
       defaultHistory: configLink.defaultHistory
     } : null;
@@ -101,6 +102,7 @@ export class UrlSerializer {
       id: urlParts.join('/'),
       name: configLink.name,
       component: configLink.component,
+      loadChildren: configLink.loadChildren,
       data: data,
       defaultHistory: configLink.defaultHistory
     };
@@ -151,6 +153,7 @@ export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavSe
           id: urlParts[i],
           name: urlParts[i],
           component: null,
+          loadChildren: null,
           data: null
         };
       }
@@ -181,6 +184,7 @@ export const fillMatchedUrlParts = (segments: NavSegment[], urlParts: string[], 
         id: matchedUrlParts.join('/'),
         name: configLink.name,
         component: configLink.component,
+        loadChildren: configLink.loadChildren,
         data: createMatchedData(matchedUrlParts, configLink),
         defaultHistory: configLink.defaultHistory
       };

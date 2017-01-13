@@ -1,3 +1,4 @@
+import { ComponentFactoryResolver, CompilerFactory } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
@@ -130,7 +131,10 @@ export class DeepLinker {
    */
   indexAliasUrl: string;
 
-  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location) { }
+
+  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location, public baseCfr: ComponentFactoryResolver) {
+
+  }
 
   /**
    * @internal
@@ -257,20 +261,39 @@ export class DeepLinker {
     const segment = this._serializer.createSegmentFromName(componentName);
     if (segment) {
 
-      if (!segment.component) {
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        return Promise.resolve('async bundle loading magic');
-      }
-
       if (segment.component) {
         return Promise.resolve(segment.component);
+      }
+
+      if (segment.loadChildren) {
+        return new Promise((resolve) => {
+          let loadedComponent: any = null;
+          let loadedComponentFactoryResolver: any = null;
+
+          this.registerCfr(loadedComponent, loadedComponentFactoryResolver);
+
+          return loadedComponent;
+        });
       }
 
     }
 
     return Promise.resolve(null);
+  }
+
+  registerCfr(component: any, cfr: ComponentFactoryResolver) {
+
+  }
+
+  resolveComponentFactory(component: any): any {
+
+    // let cfr = this.someMap.get(component);
+    // if (!crf) {
+    //   cfr = this.baseCfr;
+    // }
+
+    // fallback to base component factory resolver
+    return this.baseCfr.resolveComponentFactory(component);
   }
 
   /**
@@ -553,8 +576,8 @@ export class DeepLinker {
 }
 
 
-export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
-  const deepLinker = new DeepLinker(app, serializer, location);
+export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, baseCfr: ComponentFactoryResolver) {
+  const deepLinker = new DeepLinker(app, serializer, location, baseCfr);
   deepLinker.init();
   return deepLinker;
 }

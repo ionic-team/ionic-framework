@@ -110,7 +110,8 @@ export interface DeepLinkMetadataType {
  * @private
  */
 export class DeepLinkMetadata implements DeepLinkMetadataType {
-  component: any;
+  component?: any;
+  loadChildren?: string;
   name: string;
   segment?: string;
   defaultHistory?: any[];
@@ -137,7 +138,8 @@ export interface DeepLinkConfig {
 
 // internal link interface, not exposed publicly
 export interface NavLink {
-  component: any;
+  component?: any;
+  loadChildren?: string;
   name?: string;
   segment?: string;
   parts?: string[];
@@ -151,7 +153,8 @@ export interface NavLink {
 export interface NavSegment {
   id: string;
   name: string;
-  component: any;
+  component?: any;
+  loadChildren?: string;
   data: any;
   navId?: string;
   defaultHistory?: NavSegment[];

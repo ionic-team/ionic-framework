@@ -63,7 +63,7 @@ export class MyCmpTest {
           <ion-textarea></ion-textarea>
         </ion-item>
         <button ion-item navPush="first-page">Push FullPage w/ navPush="first-page"</button>
-        <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
+        <button ion-item [navPush]="'full-page'" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
         <button ion-item [navPush]="'first-page'">Push w/ [navPush] and string view name</button>
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
@@ -83,7 +83,6 @@ export class MyCmpTest {
     </ion-content>`
 })
 export class FirstPage {
-  pushPage = FullPage;
   title = 'First Page';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;
@@ -197,7 +196,7 @@ export class FirstPage {
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] }, {
+    this.navCtrl.push('full-page', { id: 8675309, myData: [1, 2, 3, 4] }, {
       animate: true,
       animation: 'md-transition'
     }).catch(() => {
@@ -440,7 +439,7 @@ export class PrimaryHeaderPage {
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
+    this.navCtrl.push('full-page', { id: 8675309, myData: [1, 2, 3, 4] });
   }
 
   insert() {
@@ -538,7 +537,7 @@ export class AnotherPage {
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage);
+    this.navCtrl.push('full-page');
   }
 
   pushPrimaryHeaderPage() {
@@ -809,7 +808,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     { component: FirstPage, name: 'first-page' },
     { component: AnotherPage, name: 'another-page' },
     { component: MyCmpTest, name: 'tab1-page1' },
-    { component: FullPage, name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
+    { loadChildren: './comment-page/comment-page.module#CommentPageModule', name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
     { component: PrimaryHeaderPage, name: 'primary-header-page', defaultHistory: ['first-page', 'full-page'] },
     { component: Tabs, name: 'tabs' },
     { component: Tab1, name: 'tab1' },

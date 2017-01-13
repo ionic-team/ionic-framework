@@ -1,4 +1,4 @@
-import { ComponentRef, ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentRef, ComponentFactoryResolver, ComponentFactory, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
@@ -480,7 +480,7 @@ export class NavControllerBase extends Ion implements NavController {
       { provide: ViewController, useValue: enteringView },
       { provide: NavParams, useValue: enteringView.getNavParams() }
     ]);
-    const componentFactory = this._cfr.resolveComponentFactory(enteringView.component);
+    const componentFactory = <ComponentFactory<any>>this._linker.resolveComponentFactory(enteringView.component);
     const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
 
     // create ComponentRef and set it to the entering view
