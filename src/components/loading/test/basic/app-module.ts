@@ -1,6 +1,36 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../..';
+import { App, IonicApp, IonicModule, LoadingController, ModalController, NavController, ViewController } from '../../../..';
 
+
+@Component({
+  template: `
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Modal w/ Loading</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content padding>
+    This is a modal to close
+  </ion-content>
+  `
+})
+export class MyModal {
+  constructor(public loadingCtrl: LoadingController, public viewCtrl: ViewController) {}
+
+  ionViewDidEnter() {
+    this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Loading 1 Please Wait...',
+      dismissOnPageChange: true
+    }).present().then(() => {
+      setTimeout(() => {
+        this.viewCtrl.dismiss().then(() => {
+          // => Modal and Loading should close
+        });
+      }, 1000);
+    });
+  }
+}
 
 @Component({
   templateUrl: 'main.html',
@@ -80,7 +110,7 @@ import { App, IonicApp, IonicModule, LoadingController, NavController } from '..
   ]
 })
 export class E2EPage {
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
+  constructor(public loadingCtrl: LoadingController, public modalCtrl: ModalController, public navCtrl: NavController, public viewCtrl: ViewController) {}
 
   presentLoadingIos() {
     let loading = this.loadingCtrl.create({
@@ -254,6 +284,10 @@ export class E2EPage {
       this.navCtrl.push(Page2);
     }, 500);
   }
+
+  presentLoadingDismissModal() {
+    this.modalCtrl.create(MyModal).present();
+  }
 }
 
 @Component({
@@ -321,7 +355,8 @@ export class E2EApp {
     E2EApp,
     E2EPage,
     Page2,
-    Page3
+    Page3,
+    MyModal
   ],
   imports: [
     IonicModule.forRoot(E2EApp)
@@ -331,7 +366,8 @@ export class E2EApp {
     E2EApp,
     E2EPage,
     Page2,
-    Page3
+    Page3,
+    MyModal
   ]
 })
 export class AppModule {}
