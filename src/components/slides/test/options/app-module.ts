@@ -20,6 +20,11 @@ export class E2EPage {
     console.log(`onSlideDrag: ${s}`);
   }
 
+  ngAfterViewInit() {
+    this.slider.paginationBulletRender = (index: number, className: string) => {
+      return `<span class="${className}">${index + 1}</span>`;
+    };
+  }
 }
 
 @Component({
