@@ -42,7 +42,7 @@ export const enum ItemSideFlags {
 })
 export class ItemOptions {
   /**
-   * @input {string} the side the option button should be on. Defaults to right
+   * @input {string} the side the option button should be on. Defaults to right.
    * If you have multiple `ion-item-options`, a side must be provided for each.
    */
   @Input() side: string;
@@ -103,7 +103,7 @@ export const enum SlidingState {
  *       <button ion-button (click)="favorite(item)">Favorite</button>
  *       <button ion-button color="danger" (click)="share(item)">Share</button>
  *     </ion-item-options>
-
+ *
  *     <ion-item-options side="right">
  *       <button ion-button (click)="unread(item)">Unread</button>
  *     </ion-item-options>
@@ -125,7 +125,7 @@ export const enum SlidingState {
  *     Archive
  *   </button>
  * </ion-item-options>
-
+ *
  * <ion-item-options side="left">
  *   <button ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
@@ -233,6 +233,10 @@ export class ItemSliding {
   @ContentChildren(ItemOptions)
   set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
+
+    // Reset left and right options in case they were removed
+    this._leftOptions = this._rightOptions = null;
+
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
       if (side === ItemSideFlags.Left) {
@@ -293,10 +297,12 @@ export class ItemSliding {
     }
 
     let openAmount = (this._startX - x);
+
     switch (this._sides) {
       case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
       case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
       case ItemSideFlags.Both: break;
+      case ItemSideFlags.None: return;
       default: assert(false, 'invalid ItemSideFlags value'); break;
     }
 
