@@ -72,7 +72,7 @@
 
 	<script>
     System.import('@angular/platform-browser-dynamic').then(function(platformBrowserDynamic) {
-      System.import('app-module.js').then(function(appModule) {
+      System.import('app.module.js').then(function(appModule) {
         platformBrowserDynamic.platformBrowserDynamic().bootstrapModule(appModule.AppModule);
       }, console.error.bind(console));
     }, console.error.bind(console));

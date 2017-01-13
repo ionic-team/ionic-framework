@@ -36,7 +36,7 @@ task('e2e.copySource', (done: Function) => {
   const buildConfig = require('../../build/config');
 
   const stream = src([`${SRC_ROOT}/**/*`, `!${SRC_ROOT}/**/*.spec.ts`])
-    .pipe(gulpif(/app-module.ts$/, createIndexHTML()))
+    .pipe(gulpif(/app.module.ts$/, createIndexHTML()))
     .pipe(gulpif(/e2e.ts$/, createPlatformTests()))
     .pipe(dest(DIST_E2E_ROOT));
 
@@ -101,10 +101,10 @@ task('e2e.compileTests', (done: Function) => {
 });
 
 function buildE2ETests(folderInfo: any, done: Function) {
-  let includeGlob = ['./components/*/test/*/app-module.ts', './components/*/test/*/entry.ts'];
+  let includeGlob = ['./components/*/test/*/app.module.ts', './components/*/test/*/entry.ts'];
   if (folderInfo.componentName && folderInfo.componentTest) {
     includeGlob = [
-      `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app-module.ts`,
+      `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app.module.ts`,
       `./components/${folderInfo.componentName}/test/${folderInfo.componentTest}/entry.ts`,
     ];
   }
@@ -198,7 +198,7 @@ task('e2e.watchProd', ['e2e.copyExternalDependencies', 'e2e.sass', 'e2e.fonts'],
   let e2eTestPath = SRC_COMPONENTS_ROOT;
 
   if (folderInfo.componentName && folderInfo.componentTest) {
-    e2eTestPath = join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app-module.ts');
+    e2eTestPath = join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app.module.ts');
   }
 
   try {
