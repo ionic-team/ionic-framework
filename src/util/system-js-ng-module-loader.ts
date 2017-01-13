@@ -39,12 +39,12 @@ export class SystemJsNgModuleLoader {
     this._config = config || DEFAULT_CONFIG;
   }
 
-  load(toLoad: DataToLoad): Promise<LoadedModule> {
+  load(toLoad: DataToLoad): Promise<SystemJsLoadedModule> {
     const offlineMode = this._compiler instanceof Compiler;
     return offlineMode ? this.loadFactory(toLoad) : this.loadAndCompile(toLoad);
   }
 
-  private loadAndCompile(toLoad: DataToLoad): Promise<LoadedModule> {
+  private loadAndCompile(toLoad: DataToLoad) {
     if (!toLoad.ngModuleExport) {
       toLoad.ngModuleExport = 'default'
     }
@@ -76,7 +76,7 @@ export class SystemJsNgModuleLoader {
       });
   }
 
-  private loadFactory(toLoad: DataToLoad): Promise<LoadedModule> {
+  private loadFactory(toLoad: DataToLoad) {
     let factoryClassSuffix = FACTORY_CLASS_SUFFIX;
     if (toLoad.ngModuleExport === undefined) {
       toLoad.ngModuleExport = 'default';
@@ -117,7 +117,7 @@ export interface DataToLoad {
   viewFactoryFunction: string;
 };
 
-export interface LoadedModule {
+export interface SystemJsLoadedModule {
   rawModule: any;
   ngModuleFactory: NgModuleFactory<any>;
   component: Type<any>;

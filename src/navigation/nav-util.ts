@@ -111,6 +111,7 @@ export interface DeepLinkMetadataType {
  */
 export class DeepLinkMetadata implements DeepLinkMetadataType {
   component?: any;
+  viewFactoryFunction?: string;
   loadChildren?: string;
   name: string;
   segment?: string;
