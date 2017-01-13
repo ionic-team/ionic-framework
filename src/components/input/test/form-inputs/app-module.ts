@@ -18,11 +18,6 @@ export class E2EPage {
     comments: ''
   };
 
-  user = {
-    username: 'asdf',
-    password: '82'
-  };
-
   submitted: boolean = false;
   isTextAreaDisabled: boolean;
 
@@ -39,8 +34,10 @@ export class E2EPage {
     });
 
     this.userForm = fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', Validators.required],
+      username: [{value: 'administrator', disabled: true}, Validators.required],
+      password: [{value: 'password', disabled: false}, Validators.required],
+      comments: [{value: 'Comments are disabled', disabled: true}, Validators.required]
     });
   }
 
@@ -52,13 +49,21 @@ export class E2EPage {
     }
   }
 
-  submit(ev: UIEvent, value: any) {
+  submit(ev: UIEvent, value?: any) {
     console.log('Submitted', value);
     this.submitted = true;
   }
 
   disable() {
     this.isTextAreaDisabled = !this.isTextAreaDisabled;
+  }
+
+  toggleDisable() {
+    let userNameCtrl = this.userForm.get('username');
+    userNameCtrl.enabled ? userNameCtrl.disable() : userNameCtrl.enable();
+
+    let commentsCtrl = this.userForm.get('comments');
+    commentsCtrl.enabled ? commentsCtrl.disable() : commentsCtrl.enable();
   }
 
 }

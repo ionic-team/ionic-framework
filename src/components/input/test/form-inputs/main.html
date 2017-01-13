@@ -54,24 +54,38 @@
     </ion-list>
   </form>
 
-  <form [formGroup]="userForm" (ngSubmit)="submit($event, user)" #lf="ngForm">
+  <form [formGroup]="userForm" (ngSubmit)="submit($event, userForm)" #lf="ngForm">
     <ion-list>
+      <ion-list-header>
+        Form w/ disabled inputs
+      </ion-list-header>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
       <ion-item>
         <ion-label floating>Username</ion-label>
-        <ion-input [(ngModel)]="user.username" formControlName="username" required></ion-input>
+        <ion-input formControlName="username"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password" formControlName="password" required></ion-input>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Comments</ion-label>
+        <ion-textarea formControlName="comments"></ion-textarea>
       </ion-item>
       <div padding-left padding-right>
         <button ion-button block type="submit">Login</button>
+        <button ion-button block type="button" color="secondary" (click)="toggleDisable()">Disable (toggle)</button>
       </div>
       <div padding-left>
         <b>Valid form?:</b> {{ lf.form.valid }}<br>
         <b>Submitted form?:</b> {{ submitted }}<br>
-        <b>Username:</b> {{ user.username }}<br>
-        <b>Password:</b> {{ user.password }}<br>
+        <b>Email:</b> {{ userForm.controls.email.value }}<br>
+        <b>Username:</b> {{ userForm.controls.username.value }}<br>
+        <b>Password:</b> {{ userForm.controls.password.value }}<br>
+        <b>Comments:</b> {{ userForm.controls.comments.value }}<br>
       </div>
     </ion-list>
   </form>
