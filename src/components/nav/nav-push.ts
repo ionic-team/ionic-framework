@@ -1,4 +1,4 @@
-import { AfterContentInit, Directive, Host, HostListener, Input, Optional } from '@angular/core';
+import { AfterContentInit, Directive, Host, HostListener, Input, Optional, Type } from '@angular/core';
 
 import { DeepLinker } from '../../navigation/deep-linker';
 import { NavController } from '../../navigation/nav-controller';
@@ -52,7 +52,7 @@ export class NavPush {
   /**
    * @input {Page} The Page to push onto the Nav.
    */
-  @Input() navPush: any[]|string;
+  @Input() navPush: Type<any> | string;
 
   /**
    * @input {any} Parameters to pass to the page.

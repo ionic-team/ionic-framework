@@ -1,7 +1,9 @@
+import { Type } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { convertToViews, DeepLinkConfig, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { LoadedModule, ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -130,7 +132,12 @@ export class DeepLinker {
    */
   indexAliasUrl: string;
 
-  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location) { }
+  /**
+   * @internal
+   */
+  nameToModuleMap = new Map<string, LoadedModule>();
+
+  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location, public _deepLinkConfig: DeepLinkConfig, public _moduleLoader: ModuleLoader) { }
 
   /**
    * @internal
@@ -253,19 +260,24 @@ export class DeepLinker {
   /**
    * @internal
    */
-  getComponentFromName(componentName: any): Promise<any> {
+  getComponentFromName(componentName: string): Promise<LoadedModule> {
     const segment = this._serializer.createSegmentFromName(componentName);
     if (segment) {
 
       if (!segment.component) {
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        // INSERT ASYNC BUNDLE LOADING HERE!!!
-        return Promise.resolve('async bundle loading magic');
+        return this.loadModuleAndUpdateDeeplinkConfig(this._deepLinkConfig, componentName).then((loadedModule: LoadedModule) => {
+          this.nameToModuleMap.set(componentName, loadedModule);
+          return loadedModule;
+        });
       }
 
       if (segment.component) {
-        return Promise.resolve(segment.component);
+        let loadedModule = this.nameToModuleMap.get(componentName);
+        if (!loadedModule) {
+          loadedModule = { component: segment.component, componentFactoryResolver: null, injector: null, injectorFactory: null};
+          this.nameToModuleMap.set(componentName, loadedModule);
+        }
+        return Promise.resolve(loadedModule);
       }
 
     }
@@ -273,10 +285,19 @@ export class DeepLinker {
     return Promise.resolve(null);
   }
 
+  loadModuleAndUpdateDeeplinkConfig(deepLinkConfig: DeepLinkConfig, componentName: string) {
+    return this._moduleLoader.loadModule(componentName).then((loadedModule: LoadedModule) => {
+      // update the existing deepLinkConfig entry with the component
+      deepLinkConfig.links.filter(deepLinkMetadata => deepLinkMetadata.name === componentName)
+        .forEach(deepLinkMetadata => deepLinkMetadata.component = loadedModule.component);
+      return loadedModule;
+    });
+  }
+
   /**
    * @internal
    */
-  createUrl(nav: any, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
+  createUrl(nav: any, nameOrComponent: string | Type<any>, data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
     const segment = this._serializer.createSegmentFromName(nameOrComponent);
     if (segment) {
@@ -296,7 +317,7 @@ export class DeepLinker {
    *
    * @internal
    */
-  pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
+  pathFromNavs(nav: NavController, component?: Type<any>, data?: any): NavSegment[] {
     const segments: NavSegment[] = [];
     let view: ViewController;
     let segment: NavSegment;
@@ -553,8 +574,8 @@ export class DeepLinker {
 }
 
 
-export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
-  const deepLinker = new DeepLinker(app, serializer, location);
+export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
+  const deepLinker = new DeepLinker(app, serializer, location, deepLinkConfig, moduleLoader);
   deepLinker.init();
   return deepLinker;
 }

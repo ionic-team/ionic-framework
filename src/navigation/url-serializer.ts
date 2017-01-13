@@ -1,6 +1,6 @@
-import { OpaqueToken } from '@angular/core';
+import { OpaqueToken, Type } from '@angular/core';
 
-import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
+import { DeepLinkConfig, DeepLinkMetadata, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
@@ -10,9 +10,10 @@ import { isArray, isBlank, isPresent } from '../util/util';
 export class UrlSerializer {
   links: NavLink[];
 
-  constructor(config: DeepLinkConfig) {
-    if (config && isArray(config.links)) {
-      this.links = normalizeLinks(config.links);
+  constructor(public _config: DeepLinkConfig) {
+    if (_config && isArray(_config.links)) {
+      const navLinks = convertToNavLinks(_config.links)
+      this.links = normalizeLinks(navLinks);
 
     } else {
       this.links = [];
@@ -38,7 +39,7 @@ export class UrlSerializer {
     const configLink = this.links.find((link: NavLink) => {
       return (link.component === nameOrComponent) ||
              (link.name === nameOrComponent) ||
-             (link.component.name === nameOrComponent);
+             (link.component && link.component.name === nameOrComponent);
     });
 
     return configLink ? {
@@ -61,7 +62,7 @@ export class UrlSerializer {
   /**
    * Serializes a component and its data into a NavSegment.
    */
-  serializeComponent(component: any, data: any): NavSegment {
+  serializeComponent(component: Type<any>, data: any): NavSegment {
     if (component) {
       const link = findLinkByComponentData(this.links, component, data);
       if (link) {
@@ -211,7 +212,7 @@ export const createMatchedData = (matchedUrlParts: string[], link: NavLink): any
   return data;
 };
 
-export const findLinkByComponentData = (links: NavLink[], component: any, instanceData: any): NavLink => {
+export const findLinkByComponentData = (links: NavLink[], component: Type<any>, instanceData: any): NavLink => {
   let foundLink: NavLink = null;
   let foundLinkDataMatches = -1;
 
@@ -316,4 +317,11 @@ export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
 
 export function setupUrlSerializer(userDeepLinkConfig: any): UrlSerializer {
   return new UrlSerializer(userDeepLinkConfig);
+}
+
+export function convertToNavLinks(deepLinkMetadataList: DeepLinkMetadata[]) {
+  const navLinks = deepLinkMetadataList.map(deepLinkMetadata => {
+    return Object.assign({}, deepLinkMetadata, { component: null });
+  });
+  return navLinks;
 }

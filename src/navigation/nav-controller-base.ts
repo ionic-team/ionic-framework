@@ -480,7 +480,12 @@ export class NavControllerBase extends Ion implements NavController {
       { provide: ViewController, useValue: enteringView },
       { provide: NavParams, useValue: enteringView.getNavParams() }
     ]);
-    const componentFactory = this._cfr.resolveComponentFactory(enteringView.component);
+
+    let componentResolverFactory = enteringView.componentFactoryResolver;
+    if (!componentResolverFactory) {
+      componentResolverFactory = this._cfr;
+    }
+    const componentFactory = componentResolverFactory.resolveComponentFactory(enteringView.component);
     const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
 
     // create ComponentRef and set it to the entering view

@@ -520,7 +520,7 @@ export class Tabs extends Ion implements AfterViewInit {
 
       } else {
         getComponent(this._linker, tab.root).then(viewController => {
-          if (viewController !== active.component) {
+          if (viewController && viewController.component !== active.component) {
             // Otherwise, if the page we're on is not our real root
             // reset it to our default root type
             tab.setRoot(tab.root);
