@@ -14,6 +14,8 @@ export class E2EPage {
   moreText: string = 'Dynamic More';
   archiveText: string = 'Dynamic Archive';
 
+  showOptions: boolean = false;
+
   constructor(private nav: NavController, private alertCtrl: AlertController, private toastCtrl: ToastController) {
     for (let x = 0; x < 5; x++) {
       this.items.push(x);
@@ -28,10 +30,11 @@ export class E2EPage {
     if (this.moreText.includes('Dynamic')) {
       this.moreText = 'Changed More';
       this.archiveText = 'Changed Archive';
-
+      this.showOptions = true;
     } else {
       this.moreText = 'Dynamic More';
       this.archiveText = 'Dynamic Archive';
+      this.showOptions = false;
     }
   }
 
