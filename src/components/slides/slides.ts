@@ -333,6 +333,9 @@ export class Slides extends Ion {
 
   // Slides grid
 
+  /**
+   * @input {number}  Distance between slides in px. Default: `0`.
+   */
   @Input()
   get spaceBetween() {
     return this._spaceBetween;
@@ -342,6 +345,9 @@ export class Slides extends Ion {
   }
   private _spaceBetween = 0;
 
+  /**
+   * @input {number}  Slides per view. Slides visible at the same time. Default: `1`.
+   */
   @Input()
   get slidesPerView() {
     return this._slidesPerView;
