@@ -328,6 +328,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._imgReqBfr = config.getNumber('imgRequestBuffer', 1400);
     this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
     this._imgVelMax = config.getNumber('imgVelocityMax', 3);
+    this._scroll = new ScrollView(_plt, _dom);
 
     if (viewCtrl) {
       // content has a view controller
@@ -346,15 +347,9 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
     } else {
       // content does not have a view controller
-      _dom.read(() => {
-        this._readDimensions();
-      });
-      _dom.write(() => {
-        this._writeDimensions();
-      });
+      _dom.read(this._readDimensions.bind(this));
+      _dom.write(this._writeDimensions.bind(this));
     }
-
-    this._scroll = new ScrollView(_plt, _dom);
   }
 
   /**
