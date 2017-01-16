@@ -167,6 +167,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
   _fixedEle: HTMLElement;
   /** @internal */
   _imgs: Img[] = [];
+  /** @internal */
+  _viewCtrlReadSub: any;
+  /** @internal */
+  _viewCtrlWriteSub: any;
 
   private _imgReqBfr: number;
   private _imgRndBfr: number;
@@ -334,13 +338,13 @@ export class Content extends Ion implements OnDestroy, OnInit {
       viewCtrl._setIONContent(this);
       viewCtrl._setIONContentRef(elementRef);
 
-      var readSub = viewCtrl.readReady.subscribe(() => {
-        readSub.unsubscribe();
+      this._viewCtrlReadSub = viewCtrl.readReady.subscribe(() => {
+        this._viewCtrlReadSub.unsubscribe();
         this._readDimensions();
       });
 
-      var writeSub = viewCtrl.writeReady.subscribe(() => {
-        writeSub.unsubscribe();
+      this._viewCtrlWriteSub = viewCtrl.writeReady.subscribe(() => {
+        this._viewCtrlWriteSub.unsubscribe();
         this._writeDimensions();
       });
 
@@ -400,6 +404,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   ngOnDestroy() {
     this._scLsn && this._scLsn();
+    this._viewCtrlReadSub && this._viewCtrlReadSub.unsubscribe();
+    this._viewCtrlWriteSub && this._viewCtrlWriteSub.unsubscribe();
     this._scroll && this._scroll.destroy();
     this._scrollEle = this._fixedEle = this._footerEle = this._scLsn = this._scroll = null;
   }
