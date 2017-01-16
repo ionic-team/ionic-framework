@@ -19,3 +19,7 @@ See [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONT
 ### Ionic 2 Examples
 
 The [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) is a full featured Ionic 2 app. It is the perfect starting point for learning and building your own app.
+
+### Ionic 1.x
+
+The source code for Ionic 1.x has been moved to [driftyco/ionic-v1](https://github.com/driftyco/ionic-v1). Please file issues and pull requests related to Ionic 1.x at that repo. 1.x issues and PRs on this repo will be closed.
