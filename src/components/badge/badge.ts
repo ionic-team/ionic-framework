@@ -9,6 +9,7 @@ import { Ion } from '../ion';
   * @module ionic
   * @description
   * Badges are simple components in Ionic containing numbers or text. You can display a badge to indicate that there is new information associated with the item it is on.
+  * @demo /docs/v2/demos/src/badge/basic
   * @see {@link /docs/v2/components/#badges Badges Component Docs}
  */
 @Directive({

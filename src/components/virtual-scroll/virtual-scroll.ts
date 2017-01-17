@@ -207,6 +207,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * and footer functions. These functions are called for every record in the
  * dataset, so please make sure they're performant.
  *
+ * @demo /docs/v2/demos/src/virtual-scroll/basic 
  */
 @Directive({
   selector: '[virtualScroll]'

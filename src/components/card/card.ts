@@ -219,6 +219,7 @@ import { Ion } from '../ion';
  * 
  * Coming soon.* --> 
  *
+ * @demo /docs/v2/demos/src/card/basic 
  * @see {@link /docs/v2/components/#cards Card Component Docs}
  */
 @Directive({
