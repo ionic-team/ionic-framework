@@ -9,7 +9,24 @@ import { ToastCmp } from './toast-component';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
- * @private
+ * @name Toast
+ * @description
+ * A Toast is a subtle notification commonly used in modern applications.
+ * It can be used to provide feedback about an operation or to
+ * display a system message. The toast appears on top of the app's content,
+ * and can be dismissed by the app to resume user interaction with
+ * the app.
+ *
+ * Instances of the Toast component are created by calling the `create()` function
+ * of the [ToastController class](../ToastController). The Toast is displayed
+ * to the user by calling `present()` on the Toast instance.
+ * 
+ * @usage
+ * For a complete usage example, see the [ToastController API docs](../ToastController). 
+ *
+ * @demo /docs/v2/demos/src/toast/basic 
+ * @see {@link /docs/v2/components#toast Toast Component Docs}
+ * @see {@link ../ToastController/ ToastController API Docs} 
  */
 export class Toast extends ViewController {
   private _app: App;
@@ -43,6 +60,8 @@ export class Toast extends ViewController {
   }
 
   /**
+   * Set the message for the instance of Toast
+   *
    * @param {string} message  Toast message content
    */
   setMessage(message: string) {
@@ -50,7 +69,7 @@ export class Toast extends ViewController {
   }
 
   /**
-   * Present the toast instance.
+   * Present the Toast instance.
    *
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
@@ -61,7 +80,7 @@ export class Toast extends ViewController {
   }
 
   /**
-   * Dismiss all toast components which have been presented.
+   * Dismiss all Toast components which have been presented.
    */
   dismissAll() {
     this._nav && this._nav.popAll();
@@ -73,11 +92,7 @@ export class Toast extends ViewController {
 /**
  * @name ToastController
  * @description
- * A Toast is a subtle notification commonly used in modern applications.
- * It can be used to provide feedback about an operation or to
- * display a system message. The toast appears on top of the app's content,
- * and can be dismissed by the app to resume user interaction with
- * the app.
+ * The ToastController class is used to create instances of the Toast component.
  *
  * ### Creating
  * All of the toast options should be passed in the first argument of
@@ -120,7 +135,7 @@ export class Toast extends ViewController {
  *   toast.present();
  * }
  * ```
- * @advanced
+ * ## Toast Options
  * | Property              | Type      | Default         | Description                                                                                                   |
  * |-----------------------|-----------|-----------------|---------------------------------------------------------------------------------------------------------------|
  * | message               | `string`  | -               | The message for the toast. Long strings will wrap and the toast container will expand.                        |
@@ -132,6 +147,8 @@ export class Toast extends ViewController {
  * | dismissOnPageChange   | `boolean` | false           | Whether to dismiss the toast when navigating to a new page.                                                   |
  *
  * @demo /docs/v2/demos/src/toast/basic
+ * @see {@link /docs/v2/components#toast Toast Component Docs}
+ * @see {@link ../Toast/ Toast API Docs} 
  */
 @Injectable()
 export class ToastController {
@@ -139,8 +156,8 @@ export class ToastController {
   constructor(private _app: App) {}
 
   /**
-   * Create a new toast component. See options below
-   * @param {ToastOptions} opts Toast options. See the below table for available options.
+   * Create a new instance of the Toast component.
+   * @param {ToastOptions} opts See [Toast Options](#toast-options).
    */
   create(opts: ToastOptions = {}) {
     return new Toast(this._app, opts);
