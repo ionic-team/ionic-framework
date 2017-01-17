@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Virtual Scroll</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list [virtualScroll]="items">
+    <ion-item *virtualItem="let item">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+</ion-content>
