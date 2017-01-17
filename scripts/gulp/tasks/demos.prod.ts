@@ -1,5 +1,4 @@
-import { spawnSync } from 'child_process';
-import { accessSync, F_OK, readdirSync, readFileSync, stat, statSync } from 'fs';
+import { accessSync, F_OK, readFileSync, stat } from 'fs';
 import { dirname, join } from 'path';
 
 import { dest, src, start, task } from 'gulp';
@@ -85,7 +84,7 @@ function buildTest(folderInfo: any) {
   let appEntryPoint = `dist/demos/${folderInfo.componentName}/main.ts`;
   let distDir = `dist/demos/${folderInfo.componentName}/`;
 
-  return runAppScripts(sassConfigPath, appEntryPoint, distDir);
+  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, distDir);
 }
 
 function buildAllTests(done: Function) {
@@ -95,7 +94,11 @@ function buildAllTests(done: Function) {
   folders.forEach(folder => {
     stat(`./dist/demos/${folder}/app.module.ts`, function(err, stat) {
       if (err == null) {
-        const promise = buildTest(folder);
+        let folderInfo = {
+          componentName: folder,
+          componentTest: 'basic'
+        };
+        const promise = buildTest(folderInfo);
         promises.push(promise);
       }
     });

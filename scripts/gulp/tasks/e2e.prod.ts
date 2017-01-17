@@ -122,18 +122,28 @@ function buildTest(folderInfo: any) {
   let appEntryPoint = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/main.ts`;
   let distDir = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/`;
 
-  return runAppScripts(sassConfigPath, appEntryPoint, distDir);
+  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, distDir);
 }
 
 function buildAllTests(done: Function) {
-  let folders = getFolders('./dist/e2e/');
+  let folders = getFolders('./dist/e2e/components');
   let promises: Promise<any>[] = [];
 
   folders.forEach(folder => {
-    stat(`./dist/e2e/${folder}/app.module.ts`, function(err, stat) {
+    console.log(folder);
+    stat(`./dist/e2e/components/${folder}/test`, function(err, stat) {
       if (err == null) {
-        const promise = buildTest(folder);
-        promises.push(promise);
+        let testFolders = getFolders(`./dist/e2e/components/${folder}/test`);
+
+        testFolders.forEach(test => {
+          console.log('build test for ', folder, test);
+          let folderInfo = {
+            componentName: folder,
+            componentTest: test
+          };
+          const promise = buildTest(folderInfo);
+          promises.push(promise);
+        });
       }
     });
   });

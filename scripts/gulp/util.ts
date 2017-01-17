@@ -178,7 +178,8 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScripts(sassConfigPath: string, appEntryPoint: string, distDir: string) {
+export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryPoint: string, distDir: string) {
+  console.log('Running ionic-app-scripts build with', folderInfo.componentName, '/', folderInfo.componentTest);
   let tsConfig = distDir + 'tsconfig.json';
   let scriptArgs = [
     'build',
