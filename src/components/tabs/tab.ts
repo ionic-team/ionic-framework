@@ -246,7 +246,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @input {boolean} Whether it's possible to swipe-to-go-back on this tab or not.
+   * @input {boolean} Whether to hide the tabs on child pages or not. If `true` it will not show the tabs on child pages.
    */
   @Input()
   get tabsHideOnSubPages(): boolean {
