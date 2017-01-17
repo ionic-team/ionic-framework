@@ -406,6 +406,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._scLsn && this._scLsn();
     this._viewCtrlReadSub && this._viewCtrlReadSub.unsubscribe();
     this._viewCtrlWriteSub && this._viewCtrlWriteSub.unsubscribe();
+    this._viewCtrlReadSub = this._viewCtrlWriteSub = null;
     this._scroll && this._scroll.destroy();
     this._scrollEle = this._fixedEle = this._footerEle = this._scLsn = this._scroll = null;
   }
