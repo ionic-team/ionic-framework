@@ -10,9 +10,7 @@ export class DisplayWhen {
   isMatch: boolean = false;
   conditions: string[];
 
-  constructor(conditions: string, public platform: Platform, public zone: NgZone) {
-    this.platform = platform;
-
+  constructor(conditions: string, public _plt: Platform, public zone: NgZone) {
     if (!conditions) return;
 
     this.conditions = conditions.replace(/\s/g, '').split(',');
@@ -20,7 +18,7 @@ export class DisplayWhen {
     // check if its one of the matching platforms first
     // a platform does not change during the life of an app
     for (let i = 0; i < this.conditions.length; i++) {
-      if (this.conditions[i] && platform.is(this.conditions[i])) {
+      if (this.conditions[i] && _plt.is(this.conditions[i])) {
         this.isMatch = true;
         return;
       }
@@ -28,7 +26,7 @@ export class DisplayWhen {
 
     if (this.orientation()) {
       // add window resize listener
-      platform.onResize(() => {
+      _plt.onResize(() => {
         zone.run(() => {
           this.orientation();
         });
@@ -42,12 +40,12 @@ export class DisplayWhen {
     for (let i = 0; i < this.conditions.length; i++) {
 
       if (this.conditions[i] === 'portrait') {
-        this.isMatch = this.platform.isPortrait();
+        this.isMatch = this._plt.isPortrait();
         return true;
       }
 
       if (this.conditions[i] === 'landscape') {
-        this.isMatch = this.platform.isLandscape();
+        this.isMatch = this._plt.isLandscape();
         return true;
       }
     }
@@ -106,10 +104,10 @@ export class ShowWhen extends DisplayWhen {
 
   constructor(
     @Attribute('showWhen') showWhen: string,
-    platform: Platform,
+    plt: Platform,
     zone: NgZone
   ) {
-    super(showWhen, platform, zone);
+    super(showWhen, plt, zone);
   }
 
 }
@@ -165,10 +163,10 @@ export class HideWhen extends DisplayWhen {
 
   constructor(
     @Attribute('hideWhen') hideWhen: string,
-    platform: Platform,
+    plt: Platform,
     zone: NgZone
   ) {
-    super(hideWhen, platform, zone);
+    super(hideWhen, plt, zone);
   }
 
 }

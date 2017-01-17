@@ -1,4 +1,4 @@
-import { UMD_MODULE, ES_2015, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
+import { NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { join } from 'path';
 import * as fs from 'fs';
@@ -10,6 +10,9 @@ import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
 import { argv } from 'yargs';
+
+// These packages lack of types.
+const resolveBin = require('resolve-bin');
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -138,20 +141,10 @@ export function copyFile(srcPath: string, destPath: string) {
   fs.writeFileSync(destPath, sourceData);
 }
 
-export function copySwiperToPath(distPath: string, moduleType: string) {
-  copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.d.ts`, `${distPath}/swiper-widget.d.ts`);
-  if (!moduleType || moduleType === UMD_MODULE) {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.js`, `${distPath}/swiper-widget.js`);
-  } else if (moduleType === ES_2015) {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.es2015.js`, `${distPath}/swiper-widget.js`);
-  } else {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);
-  }
-}
-
 export function runNgc(pathToConfigFile: string, done: Function) {
   let exec = require('child_process').exec;
-  var shellCommand = `node --max_old_space_size=8096 ${PROJECT_ROOT}/node_modules/.bin/ngc -p ${pathToConfigFile}`;
+  let ngcPath = getBinaryPath('@angular/compiler-cli', 'ngc');
+  let shellCommand = `node --max_old_space_size=8096 ${ngcPath} -p ${pathToConfigFile}`;
 
   exec(shellCommand, function(err, stdout, stderr) {
     console.log(stdout);
@@ -162,7 +155,8 @@ export function runNgc(pathToConfigFile: string, done: Function) {
 
 export function runTsc(pathToConfigFile: string, done: Function) {
   let exec = require('child_process').exec;
-  var shellCommand = `node --max_old_space_size=8096 ${PROJECT_ROOT}/node_modules/.bin/tsc -p ${pathToConfigFile}`;
+  let tscPath = getBinaryPath('typescript', 'tsc');
+  let shellCommand = `node --max_old_space_size=8096 ${tscPath} -p ${pathToConfigFile}`;
 
   exec(shellCommand, function(err, stdout, stderr) {
     console.log(stdout);
@@ -173,13 +167,19 @@ export function runTsc(pathToConfigFile: string, done: Function) {
 
 export function runWebpack(pathToWebpackConfig: string, done: Function) {
   let exec = require('child_process').exec;
-  let shellCommand = `node --max_old_space_size=8096 ./node_modules/.bin/webpack --config ${pathToWebpackConfig} --display-error-details`;
+  let webpackPath = getBinaryPath('webpack');
+  let shellCommand = `node --max_old_space_size=8096 ${webpackPath} --config ${pathToWebpackConfig} --display-error-details`;
 
   exec(shellCommand, function(err, stdout, stderr) {
     console.log(stdout);
     console.log(stderr);
     done(err);
   });
+}
+
+/** Resolves the path for a node package executable. */
+export function getBinaryPath(packageName: string, executable = packageName): string {
+  return resolveBin.sync(packageName, {executable});
 }
 
 export function deleteFiles(glob: string[], done: Function) {

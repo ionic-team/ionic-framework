@@ -101,7 +101,20 @@
       <ion-label>dual, step=3, snaps, {{dualValue2 | json}}</ion-label>
       <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range>
     </ion-item>
-
   </ion-list>
+
+  <form [formGroup]="rangeForm">
+    <ion-list>
+      <ion-item>
+        <ion-label>disabled, range, formControlName</ion-label>
+        <ion-range formControlName="range"></ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>dual, disabled, formControlName</ion-label>
+        <ion-range dualKnobs="true" formControlName="dualRange"></ion-range>
+      </ion-item>
+    </ion-list>
+  </form>
 
 </ion-content>

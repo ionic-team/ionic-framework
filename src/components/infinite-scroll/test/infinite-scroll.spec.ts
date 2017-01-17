@@ -1,6 +1,7 @@
 import { Content, ScrollEvent } from '../../content/content';
+import { DomController } from '../../../platform/dom-controller';
 import { InfiniteScroll } from '../infinite-scroll';
-import { mockConfig, MockDomController, mockElementRef, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 
 
 describe('Infinite Scroll', () => {
@@ -94,32 +95,32 @@ describe('Infinite Scroll', () => {
   let config = mockConfig();
   let inf: InfiniteScroll;
   let content: Content;
-  let contentElementRef;
-  let infiniteElementRef;
+  let contentElementRef: any;
+  let infiniteElementRef: any;
   let ev: ScrollEvent = (<any>{});
-  let dom: MockDomController;
+  let dom: DomController;
 
   beforeEach(() => {
     contentElementRef = mockElementRef();
-    content = new Content(config, contentElementRef, mockRenderer(), null, null, null, null, null, dom);
+    dom = mockDomController();
+    content = new Content(config, mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
     content._scrollEle = document.createElement('div');
     content._scrollEle.className = 'scroll-content';
 
     infiniteElementRef = mockElementRef();
-    dom = new MockDomController();
 
     inf = new InfiniteScroll(content, mockZone(), infiniteElementRef, dom);
   });
 
-  function setInfiniteScrollTop(scrollTop) {
+  function setInfiniteScrollTop(scrollTop: any) {
     infiniteElementRef.nativeElement.scrollTop = scrollTop;
   }
 
-  function setInfiniteScrollHeight(scrollHeight) {
+  function setInfiniteScrollHeight(scrollHeight: any) {
     infiniteElementRef.nativeElement.scrollHeight = scrollHeight;
   }
 
-  function mockGetContentDimensions(scrollHeight, scrollTop, contentHeight) {
+  function mockGetContentDimensions(scrollHeight: any, scrollTop: any, contentHeight: any): any {
     return {
           scrollHeight: scrollHeight,
           scrollTop: scrollTop,

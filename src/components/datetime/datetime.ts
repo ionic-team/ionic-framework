@@ -7,7 +7,7 @@ import { PickerColumn, PickerColumnOption } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
-import { merge, isBlank, isPresent, isTrueProperty, isArray, isString } from '../../util/util';
+import { deepCopy, isBlank, isPresent, isTrueProperty, isArray, isString } from '../../util/util';
 import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
 export const DATETIME_VALUE_ACCESSOR: any = {
@@ -391,7 +391,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   @Input() pickerOptions: any = {};
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -456,9 +456,9 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     console.debug('datetime, open picker');
 
     // the user may have assigned some options specifically for the alert
-    let pickerOptions = merge({}, this.pickerOptions);
+    const pickerOptions = deepCopy(this.pickerOptions);
 
-    let picker = this._pickerCtrl.create(pickerOptions);
+    const picker = this._pickerCtrl.create(pickerOptions);
     pickerOptions.buttons = [
       {
         text: this.cancelText,
@@ -797,7 +797,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
     ['monthNames', 'monthShortNames', 'dayNames', 'dayShortNames'].forEach(type => {
-      this._locale[type] = convertToArrayOfStrings(isPresent(this[type]) ? this[type] : this._config.get(type), type);
+      (<any>this)._locale[type] = convertToArrayOfStrings(isPresent((<any>this)[type]) ? (<any>this)[type] : this._config.get(type), type);
     });
 
     // update how the datetime value is displayed as formatted text
@@ -842,6 +842,13 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    * @private
    */
   onTouched() { }
+
+  /**
+   * @private
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
 
   /**
    * @private

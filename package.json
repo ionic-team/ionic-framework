@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ionic2",
-  "version": "2.0.0-rc.4",
+  "version": "2.0.0-rc.5",
   "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular 2",
   "keywords": [
     "ionic",
@@ -103,6 +103,7 @@
     "karma-coverage": "1.1.1",
     "karma-jasmine": "1.0.2",
     "karma-sourcemap-loader": "0.3.7",
+    "karma-spec-reporter": "0.0.26",
     "merge2": "1.0.2",
     "mkdirp": "0.5.1",
     "node-html-encoder": "0.0.2",

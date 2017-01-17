@@ -1,7 +1,7 @@
 import { RadioGroup } from '../radio-group';
 import { RadioButton } from '../radio-button';
 import { Form } from '../../../util/form';
-import { mockConfig, mockRenderer, mockElementRef } from '../../../util/mock-providers';
+import { mockChangeDetectorRef, mockConfig, mockRenderer, mockElementRef } from '../../../util/mock-providers';
 
 
 describe('RadioGroup', () => {
@@ -91,7 +91,7 @@ describe('RadioGroup', () => {
   });
 
   beforeEach(() => {
-    rg = new RadioGroup(mockRenderer(), mockElementRef());
+    rg = new RadioGroup(mockRenderer(), mockElementRef(), mockChangeDetectorRef());
     form = new Form();
   });
 
@@ -115,7 +115,7 @@ describe('RadioButton', () => {
   });
 
   beforeEach(() => {
-    rg = new RadioGroup(mockRenderer(), mockElementRef());
+    rg = new RadioGroup(mockRenderer(), mockElementRef(), mockChangeDetectorRef());
     form = new Form();
   });
 

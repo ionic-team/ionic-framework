@@ -1,11 +1,12 @@
 import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { DomController } from '../../platform/dom-controller';
+import { GestureController } from '../../gestures/gesture-controller';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { ItemSlidingGesture } from '../item/item-sliding-gesture';
-import { GestureController } from '../../gestures/gesture-controller';
-import { DomController } from '../../util/dom-controller';
+import { Platform } from '../../platform/platform';
 
 /**
  * The List is a widely used interface element in almost any mobile app,
@@ -204,6 +205,7 @@ export class List extends Ion {
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
+    private _plt: Platform,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
   ) {
@@ -211,7 +213,7 @@ export class List extends Ion {
   }
 
   /**
-   * @input {string} The platform mode to apply to this component (ios, md, wp).
+   * @input {string} The platform mode to apply to this component. Mode can be `ios`, `wp`, or `md`.   
    */
   @Input()
   set mode(val: string) {
@@ -247,7 +249,7 @@ export class List extends Ion {
 
     } else if (!this._slidingGesture) {
       console.debug('enableSlidingItems');
-      this._slidingGesture = new ItemSlidingGesture(this, this._gestureCtrl, this._domCtrl);
+      this._slidingGesture = new ItemSlidingGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
       this._slidingGesture.listen();
     }
   }

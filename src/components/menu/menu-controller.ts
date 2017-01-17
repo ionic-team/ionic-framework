@@ -122,7 +122,7 @@ export class MenuController {
   private _menus: Array<Menu> = [];
 
   /**
-   * Progamatically open the Menu.
+   * Programatically open the Menu.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu is fully opened
    */
@@ -139,7 +139,7 @@ export class MenuController {
   }
 
   /**
-   * Progamatically close the Menu. If no `menuId` is given as the first
+   * Programatically close the Menu. If no `menuId` is given as the first
    * argument then it'll close any menu which is open. If a `menuId`
    * is given then it'll close that exact menu.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
@@ -319,8 +319,8 @@ export class MenuController {
   /**
    * @private
    */
-  static create(type: string, menuCmp: Menu, platform: Platform) {
-    return new menuTypes[type](menuCmp, platform);
+  static create(type: string, menuCmp: Menu, plt: Platform) {
+    return new menuTypes[type](menuCmp, plt);
   }
 
 }

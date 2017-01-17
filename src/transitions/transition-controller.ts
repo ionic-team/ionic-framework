@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { Config } from '../config/config';
+import { createTransition } from './transition-registry';
 import { isPresent } from '../util/util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
+import { Platform } from '../platform/platform';
 import { Transition } from './transition';
-import { createTransition } from './transition-registry';
 import { ViewController } from '../navigation/view-controller';
 
 
@@ -17,7 +18,7 @@ export class TransitionController {
   private _ids = 0;
   private _trns: {[key: number]: Transition} = {};
 
-  constructor(private _config: Config) {}
+  constructor(public plt: Platform, private _config: Config) {}
 
   getRootTrnsId(nav: NavControllerBase): number {
     let parent = <NavControllerBase>nav.parent;
@@ -35,7 +36,7 @@ export class TransitionController {
   }
 
   get(trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
-    const trns = createTransition(this._config, opts.animation, enteringView, leavingView, opts);
+    const trns = createTransition(this.plt, this._config, opts.animation, enteringView, leavingView, opts);
     trns.trnsId = trnsId;
 
     if (!this._trns[trnsId]) {

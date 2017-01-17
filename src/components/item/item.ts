@@ -284,7 +284,7 @@ import { ItemReorder } from './item-reorder';
         '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
       '</div>' +
       '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
-      '<ion-reorder *ngIf="_shouldHaveReorder"></ion-reorder>' +
+      '<ion-reorder *ngIf="_hasReorder"></ion-reorder>' +
     '</div>' +
     '<div class="button-effect"></div>',
   host: {
@@ -299,7 +299,7 @@ export class Item extends Ion {
   _label: Label;
   _viewLabel: boolean = true;
   _name: string = 'item';
-  _shouldHaveReorder: boolean = false;
+  _hasReorder: boolean;
 
   /**
    * @private
@@ -320,7 +320,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -337,7 +337,7 @@ export class Item extends Ion {
     super(config, elementRef, renderer, 'item');
 
     this._setName(elementRef);
-    this._shouldHaveReorder = !!reorder;
+    this._hasReorder = !!reorder;
     this.id = form.nextId().toString();
 
     // auto add "tappable" attribute to ion-item components that have a click listener

@@ -1,9 +1,10 @@
 import { swipeShouldReset } from '../util/util';
+import { DomController } from '../platform/dom-controller';
 import { GestureController, GesturePriority, GESTURE_GO_BACK_SWIPE } from '../gestures/gesture-controller';
 import { NavControllerBase } from './nav-controller-base';
+import { Platform } from '../platform/platform';
 import { SlideData } from '../gestures/slide-gesture';
 import { SlideEdgeGesture } from '../gestures/slide-edge-gesture';
-import { DomController } from '../util/dom-controller';
 
 /**
  * @private
@@ -11,11 +12,12 @@ import { DomController } from '../util/dom-controller';
 export class SwipeBackGesture extends SlideEdgeGesture {
 
   constructor(
+    plt: Platform,
     private _nav: NavControllerBase,
     gestureCtlr: GestureController,
     domCtrl: DomController,
   ) {
-    super(document.body, {
+    super(plt, plt.doc().body, {
       direction: 'x',
       edge: 'left',
       maxEdgeStart: 75,

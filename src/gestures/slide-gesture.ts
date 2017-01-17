@@ -1,5 +1,6 @@
 import { PanGesture } from './drag-gesture';
 import { clamp, assert } from '../util/util';
+import { Platform } from '../platform/platform';
 import { pointerCoord } from '../util/dom';
 
 /**
@@ -8,8 +9,8 @@ import { pointerCoord } from '../util/dom';
 export class SlideGesture extends PanGesture {
   public slide: SlideData = null;
 
-  constructor(element: HTMLElement, opts = {}) {
-    super(element, opts);
+  constructor(plt: Platform, element: HTMLElement, opts = {}) {
+    super(plt, element, opts);
   }
 
   /*

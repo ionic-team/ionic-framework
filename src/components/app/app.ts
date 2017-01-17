@@ -40,48 +40,47 @@ export class App {
   /**
    * @private
    */
-  viewDidLoad: EventEmitter<any> = new EventEmitter();
+  viewDidLoad: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewWillEnter: EventEmitter<any> = new EventEmitter();
+  viewWillEnter: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewDidEnter: EventEmitter<any> = new EventEmitter();
+  viewDidEnter: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewWillLeave: EventEmitter<any> = new EventEmitter();
+  viewWillLeave: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewDidLeave: EventEmitter<any> = new EventEmitter();
+  viewDidLeave: EventEmitter<ViewController> = new EventEmitter();
 
   /**
    * @private
    */
-  viewWillUnload: EventEmitter<any> = new EventEmitter();
+  viewWillUnload: EventEmitter<ViewController> = new EventEmitter();
 
   constructor(
     private _config: Config,
-    private _platform: Platform,
+    private _plt: Platform,
     @Optional() private _menuCtrl?: MenuController
   ) {
     // listen for hardware back button events
     // register this back button action with a default priority
-    _platform.registerBackButtonAction(this.goBack.bind(this));
+    _plt.registerBackButtonAction(this.goBack.bind(this));
     this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
-      // window.HWBackButton();
-      if (!(<any>window)['HWBackButton']) {
-        (<any>window)['HWBackButton'] = () => {
+      if (!(<any>_plt.win())['HWBackButton']) {
+        (<any>_plt.win())['HWBackButton'] = () => {
           let p = this.goBack();
           p && p.catch(() => console.debug('hardware go back cancelled'));
           return p;
@@ -120,17 +119,17 @@ export class App {
    * it will automatically enable the app again. It's basically a fallback incase
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
-  setEnabled(isEnabled: boolean, duration: number = 700) {
+  setEnabled(isEnabled: boolean, duration: number = 700, minDuration: number = 0) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (this._clickBlock) {
       if (isEnabled) {
         // disable the click block if it's enabled, or the duration is tiny
-        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS);
+        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
 
       } else {
         // show the click block for duration + some number
-        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
+        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
       }
     }
   }
@@ -247,7 +246,7 @@ export class App {
       // let's exit the app
       if (this._config.getBoolean('navExitApp', true)) {
         console.debug('app, goBack exitApp');
-        this._platform.exitApp();
+        this._plt.exitApp();
       }
     }
     return navPromise;

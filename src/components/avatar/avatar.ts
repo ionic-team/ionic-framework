@@ -17,7 +17,7 @@ import { Directive } from '@angular/core';
   * ```
   *
   * @demo /docs/v2/demos/src/avatar/basic
-  * @see {@link /docs/v2/components/#list Avatar Component Docs}
+  * @see {@link /docs/v2/components/#avatar-list Avatar Component Docs}
   * @see {@link ../item/Item Item API Docs}
  */
 @Directive({

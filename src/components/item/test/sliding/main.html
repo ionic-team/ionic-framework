@@ -20,6 +20,50 @@
 
   <ion-list #myList>
 
+    <ion-item-sliding>
+      <ion-item>
+        <h2>No Options</h2>
+        <p>Should not error or swipe without options</p>
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item6>
+      <ion-item>
+        One Line, dynamic option and text
+      </ion-item>
+      <ion-item-options *ngIf="showOptions">
+        <button ion-button color="primary">
+          <ion-icon name="more"></ion-icon>
+          {{ moreText }}
+        </button>
+        <button ion-button color="secondary" (click)="archive(item6)">
+          <ion-icon name="archive"></ion-icon>
+          {{ archiveText }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item6>
+      <ion-item>
+        Two options, one dynamic option and text
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button icon-only color="primary">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-item-options>
+      <ion-item-options side="right" *ngIf="showOptions">
+        <button ion-button color="primary">
+          <ion-icon name="more"></ion-icon>
+          {{ moreText }}
+        </button>
+        <button ion-button color="secondary" (click)="archive(item6)">
+          <ion-icon name="archive"></ion-icon>
+          {{ archiveText }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
     <ion-item-sliding #item100>
       <a ion-item>
         <h2>HubStruck Notifications</h2>
@@ -39,7 +83,7 @@
         <button ion-button icon-only color="danger" (click)="unread(item100)">
           <ion-icon name="trash"></ion-icon>
         </button>
-        <button ion-button icon-only (click)="unread(item100)" >
+        <button ion-button icon-only (click)="unread(item100)">
           <ion-icon name="star"></ion-icon>
         </button>
       </ion-item-options>
@@ -89,7 +133,6 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-
 
     <ion-item-sliding #item3>
       <ion-item text-wrap detail-push>
@@ -146,21 +189,6 @@
       </ion-item-options>
     </ion-item-sliding>
 
-    <ion-item-sliding #item6>
-      <ion-item>
-        One Line, dynamic option
-      </ion-item>
-      <ion-item-options>
-        <button ion-button color="primary">
-          <ion-icon name="more"></ion-icon>
-          {{ moreText }}
-        </button>
-        <button ion-button color="secondary" (click)="archive(item6)">
-          <ion-icon name="archive"></ion-icon>
-          {{ archiveText }}
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
 
     <ion-item-sliding #item7>
       <ion-item>
@@ -240,6 +268,7 @@
   img {
     height: 100px;
   }
+
   #download-spinner {
     display: none;
   }
@@ -247,10 +276,13 @@
   svg circle {
     stroke: white;
   }
+
   .downloading #download-spinner {
     display: block;
   }
+
   .downloading .download-hide {
     display: none;
   }
+
 </style>

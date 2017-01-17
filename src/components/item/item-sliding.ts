@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
-import { CSS, nativeRaf, nativeTimeout, clearNativeTimeout } from '../../util/dom';
-import { Item } from './item';
 import { isPresent, swipeShouldReset, assert } from '../../util/util';
+import { Item } from './item';
 import { List } from '../list/list';
+import { Platform } from '../../platform/platform';
+import { DomController } from '../../platform/dom-controller';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -41,7 +42,7 @@ export const enum ItemSideFlags {
 })
 export class ItemOptions {
   /**
-   * @input {string} the side the option button should be on. Defaults to right
+   * @input {string} the side the option button should be on. Defaults to right.
    * If you have multiple `ion-item-options`, a side must be provided for each.
    */
   @Input() side: string;
@@ -102,7 +103,7 @@ export const enum SlidingState {
  *       <button ion-button (click)="favorite(item)">Favorite</button>
  *       <button ion-button color="danger" (click)="share(item)">Share</button>
  *     </ion-item-options>
-
+ *
  *     <ion-item-options side="right">
  *       <button ion-button (click)="unread(item)">Unread</button>
  *     </ion-item-options>
@@ -124,7 +125,7 @@ export const enum SlidingState {
  *     Archive
  *   </button>
  * </ion-item-options>
-
+ *
  * <ion-item-options side="left">
  *   <button ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
@@ -183,7 +184,7 @@ export class ItemSliding {
   private _optsWidthRightSide: number = 0;
   private _optsWidthLeftSide: number = 0;
   private _sides: ItemSideFlags;
-  private _timer: number = null;
+  private _tmr: number = null;
   private _leftOptions: ItemOptions;
   private _rightOptions: ItemOptions;
   private _optsDirty: boolean = true;
@@ -219,6 +220,8 @@ export class ItemSliding {
 
   constructor(
     @Optional() list: List,
+    private _plt: Platform,
+    private _dom: DomController,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
     private _zone: NgZone) {
@@ -230,6 +233,10 @@ export class ItemSliding {
   @ContentChildren(ItemOptions)
   set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
+
+    // Reset left and right options in case they were removed
+    this._leftOptions = this._rightOptions = null;
+
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
       if (side === ItemSideFlags.Left) {
@@ -268,16 +275,16 @@ export class ItemSliding {
    * @private
    */
   startSliding(startX: number) {
-    if (this._timer) {
-      clearNativeTimeout(this._timer);
-      this._timer = null;
+    if (this._tmr) {
+      this._plt.cancelTimeout(this._tmr);
+      this._tmr = null;
     }
     if (this._openAmount === 0) {
       this._optsDirty = true;
       this._setState(SlidingState.Enabled);
     }
     this._startX = startX + this._openAmount;
-    this.item.setElementStyle(CSS.transition, 'none');
+    this.item.setElementStyle(this._plt.Css.transition, 'none');
   }
 
   /**
@@ -290,10 +297,12 @@ export class ItemSliding {
     }
 
     let openAmount = (this._startX - x);
+
     switch (this._sides) {
       case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
       case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
       case ItemSideFlags.Both: break;
+      case ItemSideFlags.None: return;
       default: assert(false, 'invalid ItemSideFlags value'); break;
     }
 
@@ -306,7 +315,13 @@ export class ItemSliding {
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
     }
 
-    this._setOpenAmount(openAmount, false);
+          // this.debouncer.write(() => {
+
+      // });
+    this._dom.write(() => {
+      this._setOpenAmount(openAmount, false);
+    });
+
     return openAmount;
   }
 
@@ -347,7 +362,7 @@ export class ItemSliding {
    * @private
    */
   private calculateOptsWidth() {
-    nativeRaf(() => {
+    this._plt.raf(() => {
       if (!this._optsDirty) {
         return;
       }
@@ -367,14 +382,13 @@ export class ItemSliding {
   }
 
   private _setOpenAmount(openAmount: number, isFinal: boolean) {
-    if (this._timer) {
-      clearNativeTimeout(this._timer);
-      this._timer = null;
-    }
+    const platform = this._plt;
+
+    platform.cancelTimeout(this._tmr);
     this._openAmount = openAmount;
 
     if (isFinal) {
-      this.item.setElementStyle(CSS.transition, '');
+      this.item.setElementStyle(platform.Css.transition, '');
 
     } else {
       if (openAmount > 0) {
@@ -393,15 +407,15 @@ export class ItemSliding {
       }
     }
     if (openAmount === 0) {
-      this._timer = nativeTimeout(() => {
+      this._tmr = platform.timeout(() => {
         this._setState(SlidingState.Disabled);
-        this._timer = null;
+        this._tmr = null;
       }, 600);
-      this.item.setElementStyle(CSS.transform, '');
+      this.item.setElementStyle(platform.Css.transform, '');
       return;
     }
 
-    this.item.setElementStyle(CSS.transform, `translate3d(${-openAmount}px,0,0)`);
+    this.item.setElementStyle(platform.Css.transform, `translate3d(${-openAmount}px,0,0)`);
     let ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
       ionDrag.emit(this);

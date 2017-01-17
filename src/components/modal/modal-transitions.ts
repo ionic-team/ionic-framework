@@ -1,6 +1,5 @@
 import { Animation } from '../../animations/animation';
 import { PageTransition } from '../../transitions/page-transition';
-import { windowDimensions } from '../../util/dom';
 
 
 /**
@@ -11,8 +10,8 @@ export class ModalSlideIn extends PageTransition {
     super.init();
     const ele: HTMLElement = this.enteringView.pageRef().nativeElement;
     const backdropEle = ele.querySelector('ion-backdrop');
-    const backdrop = new Animation(backdropEle);
-    const wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    const backdrop = new Animation(this.plt, backdropEle);
+    const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
 
     wrapper.beforeStyles({ 'opacity': 1 });
     wrapper.fromTo('translateY', '100%', '0%');
@@ -33,15 +32,14 @@ export class ModalSlideOut extends PageTransition {
   init() {
     super.init();
     const ele: HTMLElement = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
     let wrapperEle = <HTMLElement>ele.querySelector('.modal-wrapper');
     let wrapperEleRect = wrapperEle.getBoundingClientRect();
-    let wrapper = new Animation(wrapperEle);
+    let wrapper = new Animation(this.plt, wrapperEle);
 
     // height of the screen - top of the container tells us how much to scoot it down
     // so it's off-screen
-    let screenDimensions = windowDimensions();
-    wrapper.fromTo('translateY', '0px', `${screenDimensions.height - wrapperEleRect.top}px`);
+    wrapper.fromTo('translateY', '0px', `${this.plt.height() - wrapperEleRect.top}px`);
     backdrop.fromTo('opacity', 0.4, 0.0);
 
     this
@@ -58,8 +56,8 @@ export class ModalMDSlideIn extends PageTransition {
   init() {
     super.init();
     const ele: HTMLElement = this.enteringView.pageRef().nativeElement;
-    const backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    const wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '40px', '0px');
@@ -78,8 +76,8 @@ export class ModalMDSlideOut extends PageTransition {
   init() {
     super.init();
     const ele: HTMLElement = this.leavingView.pageRef().nativeElement;
-    const backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    const wrapper = new Animation(ele.querySelector('.modal-wrapper'));
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
 
     backdrop.fromTo('opacity', 0.4, 0.0);
     wrapper.fromTo('translateY', '0px', '40px');

@@ -95,6 +95,8 @@ export class Popover extends ViewController {
  * ```
  *
  * ```ts
+ * import { PopoverController } from 'ionic-angular';
+ *
  * @Component({})
  * class MyPage {
  *   constructor(public popoverCtrl: PopoverController) {}

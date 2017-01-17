@@ -1,6 +1,6 @@
 import { task } from 'gulp';
 import { DIST_BUILD_ROOT, DIST_BUILD_ES2015_ROOT, DIST_BUILD_UMD_ROOT, ES5, ES_2015, PROJECT_ROOT, UMD_MODULE } from '../constants';
-import { copySourceToDest, copySwiperToPath, createTempTsConfig, deleteFiles, runNgc } from '../util';
+import { copySourceToDest, createTempTsConfig, deleteFiles, runNgc } from '../util';
 
 
 export function buildIonicAngularUmd(excludeSpec: boolean, stripDebug: boolean, done: Function) {
@@ -14,7 +14,6 @@ export function buildIonicAngularUmd(excludeSpec: boolean, stripDebug: boolean, 
         return;
       }
 
-      copySwiperToPath(`${DIST_BUILD_UMD_ROOT}/components/slides`, UMD_MODULE);
       // clean up any .ts files that remain as well as ngc metadata
       deleteFiles([`${DIST_BUILD_UMD_ROOT}/**/*.ts`,
                   `${DIST_BUILD_UMD_ROOT}/node_modules`,
@@ -34,7 +33,6 @@ export function buildIonicAngularEsm(stripDebug: boolean, done: Function) {
         done(err);
         return;
       }
-      copySwiperToPath(`${DIST_BUILD_ROOT}/components/slides`, ES_2015);
       // clean up any .ts files that remain as well as ngc metadata
       deleteFiles([`${DIST_BUILD_ROOT}/**/*.ts`,
                   `${DIST_BUILD_ROOT}/node_modules`,
@@ -54,7 +52,6 @@ export function buildIonicPureEs6(stripDebug: boolean, done: Function) {
         done(err);
         return;
       }
-      copySwiperToPath(`${DIST_BUILD_ES2015_ROOT}/components/slides`, ES_2015);
       // clean up any .ts files that remain as well as ngc metadata
       deleteFiles([`${DIST_BUILD_ES2015_ROOT}/**/*.ts`,
                   `${DIST_BUILD_ES2015_ROOT}/node_modules`,

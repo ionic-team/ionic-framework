@@ -255,7 +255,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} Sets the platform mode styling for this button: md, ios, or wp.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {

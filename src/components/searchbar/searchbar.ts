@@ -4,6 +4,7 @@ import { NgControl }  from '@angular/forms';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isPresent, isTrueProperty } from '../../util/util';
+import { Platform } from '../../platform/platform';
 import { TimeoutDebouncer } from '../../util/debouncer';
 
 
@@ -74,7 +75,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -185,6 +186,7 @@ export class Searchbar extends Ion {
 
   constructor(
     config: Config,
+    private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() ngControl: NgControl
@@ -273,22 +275,24 @@ export class Searchbar extends Ion {
     if (this._shouldAlignLeft) {
       inputEle.removeAttribute('style');
       iconEle.removeAttribute('style');
+
     } else {
       // Create a dummy span to get the placeholder width
-      let tempSpan = document.createElement('span');
+      var doc = this._plt.doc();
+      var tempSpan = doc.createElement('span');
       tempSpan.innerHTML = this.placeholder;
-      document.body.appendChild(tempSpan);
+      doc.body.appendChild(tempSpan);
 
       // Get the width of the span then remove it
-      let textWidth = tempSpan.offsetWidth;
+      var textWidth = tempSpan.offsetWidth;
       tempSpan.remove();
 
       // Set the input padding left
-      let inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
+      var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
       inputEle.style.paddingLeft = inputLeft;
 
       // Set the icon margin left
-      let iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
+      var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
       iconEle.style.marginLeft = iconLeft;
     }
   }

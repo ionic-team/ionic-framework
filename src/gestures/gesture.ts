@@ -1,4 +1,4 @@
-import { defaults, assign } from '../util/util';
+import { defaults } from '../util/util';
 import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
 
 // TODO(mlynch): Re-enable the DOM event simulation that was causing issues (or verify hammer does this already, it might);
@@ -102,7 +102,7 @@ export class Gesture {
    * @param {object} opts The options object. For a complete list of options, see the [Hammer.js Docs](http://hammerjs.github.io/api/#hammerdefaults)
    */
   options(opts: any) {
-    assign(this._options, opts);
+    Object.assign(this._options, opts);
   }
 
   /**

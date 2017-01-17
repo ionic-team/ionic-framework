@@ -1,7 +1,8 @@
 import { ElementRef, Renderer } from '@angular/core';
 import { Content } from '../../content/content';
+import { DomController } from '../../../platform/dom-controller';
 import { Img } from '../img';
-import { mockContent, MockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 import { Platform } from '../../../platform/platform';
 
 
@@ -47,20 +48,26 @@ describe('Img', () => {
   });
 
 
+  let contentElementRef: any;
   let img: Img;
   let elementRef: ElementRef;
   let renderer: Renderer;
-  let platform: Platform;
+  let plt: Platform;
   let content: Content;
-  let dom: MockDomController;
+  let dom: DomController;
 
   beforeEach(() => {
-    content = mockContent();
+    contentElementRef = mockElementRef();
+    dom = mockDomController();
+    content = new Content(mockConfig(), mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
+    content._scrollEle = document.createElement('div');
+    content._scrollEle.className = 'scroll-content';
+
     elementRef = mockElementRef();
     renderer = mockRenderer();
-    platform = mockPlatform();
-    dom = new MockDomController();
-    img = new Img(elementRef, renderer, platform, mockZone(), content, dom);
+    plt = mockPlatform();
+    dom = mockDomController();
+    img = new Img(elementRef, renderer, plt, mockZone(), content, dom);
   });
 
 });
