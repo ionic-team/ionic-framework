@@ -405,10 +405,10 @@ export class Tabs extends Ion implements AfterViewInit {
     // Let's start the transition
     opts.animate = false;
     selectedTab.load(opts, () => {
+      this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
       if (opts.updateUrl !== false) {
         this._linker.navChange(DIRECTION_SWITCH);
       }
-      this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
     });
   }
 
