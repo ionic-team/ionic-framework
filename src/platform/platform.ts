@@ -571,25 +571,37 @@ export class Platform {
       // separately because the virtual keyboard can really mess
       // up accurate values when the keyboard is up
       if (win.screen.width > 0 && win.screen.height > 0) {
-        if (win.screen.width < win.screen.height) {
+        if (win['innerWidth'] < win['innerHeight']) {
 
-          if (this._pW < win['innerWidth']) {
+          // the device is in portrait
+          if (this._pW < win['innerWidth'] || this._pW === win['innerWidth']) {
+            console.debug('setting _isPortrait to true');
             this._isPortrait = true;
             this._pW = win['innerWidth'];
           }
-          if (this._pH < win['innerHeight']) {
+          if (this._pH < win['innerHeight'] || this._pH === win['innerHeight']) {
+            console.debug('setting _isPortrait to true');
             this._isPortrait = true;
             this._pH = win['innerHeight'];
           }
 
         } else {
-          if (this._lW < win['innerWidth']) {
+          // the device is in landscape
+          if (this._lW < win['innerWidth'] || this._lW === win['innerWidth']) {
+            console.debug('setting _isPortrait to false');
             this._isPortrait = false;
             this._lW = win['innerWidth'];
           }
-          if (this._lH < win['innerHeight']) {
+          if (this._lH < win['innerHeight'] || this._lH === win['innerHeight']) {
+            console.debug('setting _isPortrait to false');
             this._isPortrait = false;
             this._lH = win['innerHeight'];
+          }
+          if (this._lW > win['innerWidth']) {
+            // Special case: keyboard is open and device is in portrait
+            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
+            this._isPortrait = true;
+            this._lW = win['innerWidth'];
           }
         }
 

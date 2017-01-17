@@ -64,6 +64,30 @@ describe('Platform', () => {
 
   });
 
+  describe('orientation', () => {
+    it('Should return true if orientation is landscape', () => {
+      expect(plt.isLandscape()).toEqual(true);
+    });
+
+    it('Should return false if orientation is not portrait', () => {
+      expect(plt.isPortrait()).toEqual(false);
+    });
+
+    it('Should return a number that is equal to window.innerWidth', () => {
+      let type = typeof plt.width();
+
+      expect(type).toEqual('number');
+      expect(plt.width()).toEqual(window.innerWidth);
+    });
+
+    it('Should return a number that is equal to window.innerHeight', () => {
+      let type = typeof plt.height();
+
+      expect(type).toEqual('number');
+      expect(plt.height()).toEqual(window.innerHeight);
+    });
+  });
+
   it('should set core as the fallback', () => {
     plt.setDefault('core');
     plt.setQueryParams('');
