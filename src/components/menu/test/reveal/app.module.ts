@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Nav } from '../../../..';
+import { IonicApp, IonicModule, Nav } from '../../../../../ionic-angular';
 
 
 @Component({templateUrl: 'page1.html'})

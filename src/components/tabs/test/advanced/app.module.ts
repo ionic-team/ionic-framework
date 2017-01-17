@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { /*DeepLink,*/AlertController, DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../..';
+import { /*DeepLink,*/AlertController, DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../ionic-angular';
 
 
 // @DeepLink({ name: 'sign-in' })

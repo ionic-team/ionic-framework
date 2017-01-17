@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Toast, ToastController, NavController } from '../../../..';
+import { IonicApp, IonicModule, Toast, ToastController, NavController } from '../../../../../ionic-angular';
 
 
 @Component({

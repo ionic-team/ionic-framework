@@ -1,5 +1,5 @@
 import { NgModule, Component } from '@angular/core';
-import { IonicApp, IonicModule, NavController } from '../../../..';
+import { IonicApp, IonicModule, NavController } from '../../../../../ionic-angular';
 
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`,
