@@ -16,7 +16,7 @@ task('e2e.prod', e2eBuild);
 
 function e2eBuild(done: (err: any) => void) {
   runSequence(
-    // 'e2e.copyIonic',
+    'e2e.copyIonic',
     'e2e.clean',
     'e2e.polyfill',
     'e2e.copySource',
@@ -160,7 +160,7 @@ task('e2e.watchProd', (done: Function) => {
   let e2eTestPath = SRC_ROOT;
 
   if (folderInfo.componentName && folderInfo.componentTest) {
-    e2eTestPath = join(SRC_ROOT, folderInfo.componentName, 'app.module.ts');
+    e2eTestPath = join(`${SRC_ROOT}/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app.module.ts`);
   }
 
   try {
