@@ -574,12 +574,12 @@ export class Platform {
         if (win['innerWidth'] < win['innerHeight']) {
 
           // the device is in portrait
-          if (this._pW < win['innerWidth'] || this._pW === win['innerWidth']) {
+          if (this._pW <= win['innerWidth']) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
             this._pW = win['innerWidth'];
           }
-          if (this._pH < win['innerHeight'] || this._pH === win['innerHeight']) {
+          if (this._pH <= win['innerHeight']) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
             this._pH = win['innerHeight'];
@@ -587,12 +587,12 @@ export class Platform {
 
         } else {
           // the device is in landscape
-          if (this._lW < win['innerWidth'] || this._lW === win['innerWidth']) {
+          if (this._lW <= win['innerWidth']) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
             this._lW = win['innerWidth'];
           }
-          if (this._lH < win['innerHeight'] || this._lH === win['innerHeight']) {
+          if (this._lH <= win['innerHeight']) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
             this._lH = win['innerHeight'];
