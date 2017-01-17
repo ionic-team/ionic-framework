@@ -159,7 +159,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
   position: relative;
 }
 
-.input-ios .text-input {
+.input-ios[clearInput] .text-input {
   padding-right: $text-input-ios-input-clear-icon-width;
 }
 
