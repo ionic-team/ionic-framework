@@ -31,11 +31,8 @@ export class ModuleLoader {
     const modulePath = splitString[0];
     const namedExport = splitString[1];
 
-    // let viewFactoryFunction = DEFAULT_VIEW_FACTORY_FUNCTION_NAME;
-    // if (deepLinkMetadata.viewFactoryFunction) {
-    //   viewFactoryFunction = deepLinkMetadata.viewFactoryFunction;
-    // }
-    return this._systemJsNgModuleLoader.load({modulePath: modulePath, ngModuleExport: namedExport, viewFactoryFunction: ''})
+    return this._systemJsNgModuleLoader.load({modulePath: modulePath, ngModuleExport: namedExport})
+
       .then((loadedModule: SystemJsLoadedModule) => {
 
         debugger;

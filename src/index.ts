@@ -7,6 +7,7 @@ import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLo
 import { DOCUMENT, BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
 
 /**
  * Import Other
@@ -299,12 +300,14 @@ export { Transition } from './transitions/transition';
  * ```
  */
 @NgModule({
-  imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
-  exports: [
-    BrowserModule,
+  imports: [
+    CommonModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+
+  ],
+  exports: [
 
     Avatar,
     Backdrop,
@@ -496,6 +499,16 @@ export { Transition } from './transitions/transition';
   ]
 })
 export class IonicModule {
+
+  static forChild(cls: any) {
+    return {
+      ngModule: LazyModule,
+      providers: [
+        { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
+      ]
+    };
+  }
+
     /**
      * Set the root app component for you IonicModule
      * @param {any} appRoot The root AppComponent for this app.
@@ -558,15 +571,31 @@ export class IonicModule {
       ]
     };
   }
+}
 
-  static loadModule(cls: any) {
+
+
+@NgModule({
+  imports: [IonicModule],
+  exports: [
+    IonicModule
+  ],
+  declarations: [
+    // Badge
+  ],
+  entryComponents: []
+})
+export class LazyModule {
+
+  static forChild(cls: any) {
     return {
-      ngModule: IonicModule,
+      ngModule: LazyModule,
       providers: [
         { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
       ]
     };
   }
+
 }
 
 

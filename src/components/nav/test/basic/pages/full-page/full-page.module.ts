@@ -8,7 +8,7 @@ import { FullPage } from './full-page';
     FullPage
   ],
   imports: [
-    IonicModule.loadModule(FullPage)
+    // IonicModule.loadModule(FullPage)
   ],
   // bootstrap: [IonicApp],
   entryComponents: [
