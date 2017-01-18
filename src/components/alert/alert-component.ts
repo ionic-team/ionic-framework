@@ -154,7 +154,7 @@ export class AlertCmp {
         label: input.label,
         checked: !!input.checked,
         disabled: !!input.disabled,
-        id: `alert-input-${this.id}-${index}`,
+        id: isPresent(input.id) ? input.id : `alert-input-${this.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
       };
     });
