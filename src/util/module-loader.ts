@@ -32,7 +32,7 @@ export class ModuleLoader {
     if (deepLinkMetadata.viewFactoryFunction) {
       viewFactoryFunction = deepLinkMetadata.viewFactoryFunction;
     }
-    return this._systemJsNgModuleLoader.load({modulePath: modulePath, ngModuleExport: namedExport, viewFactoryFunction: viewFactoryFunction})
+    return this._systemJsNgModuleLoader.load({modulePath: modulePath, ngModuleExport: namedExport})
       .then((loadedModule: SystemJsLoadedModule) => {
 
         const ref = loadedModule.ngModuleFactory.create(this._injector);

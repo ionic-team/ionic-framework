@@ -62,15 +62,9 @@ export class SystemJsNgModuleLoader {
       }).then((type: any) => {
         return this._compiler.compileModuleAsync(type)
       }).then((ngModuleFactory: NgModuleFactory<any>) => {
-        if (!_module[toLoad.viewFactoryFunction]) {
-          throw new Error(`Module ${toLoad.modulePath} does not export a view via ${toLoad.viewFactoryFunction}`);
-        }
-
-        const component = _module[toLoad.viewFactoryFunction]();
 
         return {
           ngModuleFactory: ngModuleFactory,
-          component: component,
           rawModule: _module
         };
       });
@@ -95,15 +89,9 @@ export class SystemJsNgModuleLoader {
         }
         return ngModuleFactory;
       }).then((ngModuleFactory: NgModuleFactory<any>) => {
-        if (!_module[toLoad.viewFactoryFunction]) {
-          throw new Error(`Module ${toLoad.modulePath} does not export a view via ${toLoad.viewFactoryFunction}`);
-        }
-
-        const component = _module[toLoad.viewFactoryFunction]();
 
         return {
           ngModuleFactory: ngModuleFactory,
-          component: component,
           rawModule: _module
         };
 
@@ -114,11 +102,9 @@ export class SystemJsNgModuleLoader {
 export interface DataToLoad {
   modulePath: string;
   ngModuleExport: string;
-  viewFactoryFunction: string;
 };
 
 export interface SystemJsLoadedModule {
   rawModule: any;
   ngModuleFactory: NgModuleFactory<any>;
-  component: Type<any>;
 };
