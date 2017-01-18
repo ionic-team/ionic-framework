@@ -127,7 +127,9 @@ export class Alert extends ViewController {
  * inputs. Do note however, different types of "text"" inputs can be mixed,
  * such as `url`, `email`, `text`, etc. If you require a complex form UI
  * which doesn't fit within the guidelines of an alert then we recommend
- * building the form within a modal instead.
+ * building the form within a modal instead. When using the `id` option, please 
+ * note the value of `id` will be written to the DOM as `alert-input-[id]-[index]`, 
+ * where index is the index of the input option.
  *
  *
  * @usage
@@ -232,7 +234,7 @@ export class Alert extends ViewController {
  *  | value       | `string`  | The input's value.                                              |
  *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
  *  | checked     | `boolean` | Whether or not the input is checked.                            |
- *  | id          | `string`  | The input's id.                                                 |
+ *  | id          | `string`  | The input's id.(written to the DOM as alert-input-{id}-{index}) |
  *
  *  Button options
  *
