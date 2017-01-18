@@ -564,7 +564,14 @@ export class Platform {
     // we're not forcing many layouts
     // if _isPortrait is null then that means
     // the dimensions needs to be looked up again
-    if (this._isPortrait === null) {
+    // this also has to cover an edge case that only
+    // happens on iOS 10 (not other versions of iOS)
+    // where window.innerWidth is always bigger than
+    // window.innerHeight when it is first measured,
+    // even when the device is in portrait but
+    // the second time it is measured it is correct.
+    // Hopefully this check will not be needed in the future
+    if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
       var win = this._win;
 
       // we're keeping track of portrait and landscape dimensions
