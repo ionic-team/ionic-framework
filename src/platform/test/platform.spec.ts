@@ -78,7 +78,7 @@ describe('Platform', () => {
           height: 300
         }
       };
-      plt.setWindow(portraitWindow);g
+      plt.setWindow(portraitWindow);
 
       expect(plt.isLandscape()).toEqual(false);
     });
