@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { IonicModule } from '../../../../../../';
 import { FullPage } from './full-page';
 
 
@@ -7,9 +8,7 @@ import { FullPage } from './full-page';
     FullPage
   ],
   imports: [
-    // IonicModule.forRoot(E2EApp, {
-    //   swipeBackEnabled: true
-    // }, deepLinkConfig)
+    IonicModule.loadModule(FullPage)
   ],
   // bootstrap: [IonicApp],
   entryComponents: [

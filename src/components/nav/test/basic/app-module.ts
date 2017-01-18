@@ -711,7 +711,11 @@ export const deepLinkConfig: DeepLinkConfig = {
     { component: FirstPage, name: 'first-page' },
     { component: AnotherPage, name: 'another-page' },
     { component: MyCmpTest, name: 'tab1-page1' },
-    { loadChildren: './full-page.module#LinkModule', name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
+
+
+    { loadChildren: './pages/full-page/full-page.module', name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
+
+
     { component: PrimaryHeaderPage, name: 'primary-header-page', defaultHistory: ['first-page', 'full-page'] },
     { component: Tabs, name: 'tabs' },
     { component: Tab1, name: 'tab1' },

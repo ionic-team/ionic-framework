@@ -32,7 +32,7 @@ import { Keyboard } from './platform/keyboard';
 import { LoadingController } from './components/loading/loading';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal';
-import { ModuleLoader } from './util/module-loader';
+import { ModuleLoader, LAZY_LOADED_TOKEN } from './util/module-loader';
 import { PickerController } from './components/picker/picker';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
@@ -558,13 +558,23 @@ export class IonicModule {
       ]
     };
   }
+
+  static loadModule(cls: any) {
+    return {
+      ngModule: IonicModule,
+      providers: [
+        { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
+      ]
+    };
+  }
 }
+
 
 /**
  * @private
  */
 export function provideModuleLoader(deepLinkConfig: DeepLinkConfig, systemJsNgModuleLoader: SystemJsNgModuleLoader, injector: Injector) {
-    return new ModuleLoader(deepLinkConfig, systemJsNgModuleLoader, injector);
+  return new ModuleLoader(deepLinkConfig, systemJsNgModuleLoader, injector);
 }
 
 /**
