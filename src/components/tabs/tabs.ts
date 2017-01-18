@@ -384,38 +384,34 @@ export class Tabs extends Ion implements AfterViewInit {
     // it's possible the tab is only for opening modal's or signing out
     // and doesn't actually have content. In the case there's no content
     // for a tab then do nothing and leave the current view as is
-    if (!selectedTab.root) {
-      selectedTab.ionSelect.emit(selectedTab);
-      this.ionChange.emit(selectedTab);
-      return;
-    }
-
-    // At this point we are going to perform a page switch
-    // Let's fire willLeave in the current tab page
-    let currentPage: ViewController;
-    if (currentTab) {
-      currentPage = currentTab.getActive();
-      currentPage && currentPage._willLeave(false);
-    }
-
-    // Fire willEnter in the new selected tab
-    const selectedPage = selectedTab.getActive();
-    selectedPage && selectedPage._willEnter();
-
-    // Let's start the transition
-    opts.animate = false;
-    selectedTab.load(opts, () => {
-      this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
-      if (opts.updateUrl !== false) {
-        this._linker.navChange(DIRECTION_SWITCH);
+    if (selectedTab.root) {
+      // At this point we are going to perform a page switch
+      // Let's fire willLeave in the current tab page
+      var currentPage: ViewController;
+      if (currentTab) {
+        currentPage = currentTab.getActive();
+        currentPage && currentPage._willLeave(false);
       }
-    });
+
+      // Fire willEnter in the new selected tab
+      const selectedPage = selectedTab.getActive();
+      selectedPage && selectedPage._willEnter();
+
+      // Let's start the transition
+      opts.animate = false;
+      selectedTab.load(opts, () => {
+        this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
+        if (opts.updateUrl !== false) {
+          this._linker.navChange(DIRECTION_SWITCH);
+        }
+      });
+    }
+
+    selectedTab.ionSelect.emit(selectedTab);
+    this.ionChange.emit(selectedTab);
   }
 
   _tabSwitchEnd(selectedTab: Tab, selectedPage: ViewController, currentPage: ViewController) {
-    selectedTab.ionSelect.emit(selectedTab);
-    this.ionChange.emit(selectedTab);
-
     // Update tabs selection state
     const tabs = this._tabs;
     let tab: Tab;
