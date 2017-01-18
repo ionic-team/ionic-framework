@@ -69,8 +69,55 @@ describe('Platform', () => {
       expect(plt.isLandscape()).toEqual(true);
     });
 
+    it('Should return false if orientation is not landscape', () => {
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      plt.setWindow(portraitWindow);g
+
+      expect(plt.isLandscape()).toEqual(false);
+    });
+
+    it('Should return true if orientation is landscape but window.screen shows portrait', () => {
+      // Even though we do not use window.screen.height/width
+      // anymore beyond checking if they are > 0
+      // as that api is broken on iOS, we should still check
+      // this edge case
+
+      let iOSLandscapeWindow: any = {
+        innerWidth: 300,
+        innerHeight: 200,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      plt.setWindow(iOSLandscapeWindow);
+
+      expect(plt.isLandscape()).toEqual(true);
+    });
+
     it('Should return false if orientation is not portrait', () => {
       expect(plt.isPortrait()).toEqual(false);
+    });
+
+    it('Should return true if orientation is portrait', () => {
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      plt.setWindow(portraitWindow);
+
+      expect(plt.isPortrait()).toEqual(true);
     });
 
     it('Should return a number that is equal to window.innerWidth', () => {
