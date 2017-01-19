@@ -256,7 +256,9 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * @demo /docs/v2/demos/src/tabs/basic
- *
+ * @additionalDemo icon-tabs: /docs/v2/demos/src/tabs/icon/
+ * @additionalDemo icon-and-text-tabs: /docs/v2/demos/src/tabs/icon-text/
+ * @additionalDemo badges-on-tabs: /docs/v2/demos/src/tabs/badges/
  * @see {@link /docs/v2/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
  * @see {@link ../../config/Config Config API Docs}

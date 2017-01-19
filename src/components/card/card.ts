@@ -220,6 +220,12 @@ import { Ion } from '../ion';
  * Coming soon.* --> 
  *
  * @demo /docs/v2/demos/src/card/basic 
+ * @additionalDemo using-components-in-cards: /docs/v2/demos/src/card/list/
+ * @additionalDemo card-headers: /docs/v2/demos/src/card/header/
+ * @additionalDemo header-image: /docs/v2/demos/src/card/image/
+ * @additionalDemo background-image: /docs/v2/demos/src/card/background/
+ * @additionalDemo social-cards: /docs/v2/demos/src/card/advanced-social/
+ * @additionalDemo map-cards: /docs/v2/demos/src/card/advanced-map/
  * @see {@link /docs/v2/components/#cards Card Component Docs}
  */
 @Directive({

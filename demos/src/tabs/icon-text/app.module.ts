@@ -4,14 +4,15 @@ import { IonicApp, IonicModule, Platform } from '../../../ionic-angular';
 @Component({
   template: `
     <ion-header>
-      <ion-navbar [color]="isAndroid ? 'royal' : 'primary'">
+      <ion-navbar>
         <ion-title>Tabs</ion-title>
       </ion-navbar>
     </ion-header>
 
-    <ion-content>
-    </ion-content>
-`})
+    <ion-content></ion-content>
+  `,    
+  selector: 'tab-page'
+})
 export class TabPage {
   isAndroid: boolean = false;
 
@@ -22,7 +23,8 @@ export class TabPage {
 
 
 @Component({
-  templateUrl: 'page.html'
+  templateUrl: 'page.html',
+  selector: 'api-demo-page'
 })
 export class ApiDemoPage {
   root = TabPage;

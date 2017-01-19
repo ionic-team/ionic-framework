@@ -167,7 +167,6 @@ import { ViewController } from '../../navigation/view-controller';
  * ## Common Usage Patterns
  *
  * ### Alert with Text Input
- *
  * Prompts offer a way to input data or information.  Often times  Prompts will be used to ask 
  * the user for a password before moving forward in an application’s flow.
  *
@@ -199,7 +198,6 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * ### Confirmation Alerts
- *
  * Confirmation Alerts are used when the user is required to explicitly confirm a choice before 
  * progressing forward in the app. A common example of the Confirmation Alert is checking to make 
  * sure a user wants to delete or remove a contact from their address book.
@@ -226,7 +224,6 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * ### Alert with Radio Buttons
- *
  * Alerts can use the [Radio Button component](/docs/v2/components/#radio) to 
  * offer the user several choices. Only one option can be chosen.
  *
@@ -251,7 +248,6 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * ### Alert with Checkboxes
- *
  * Alerts can use the [Checkbox component](/docs/v2/components/#checkbox) to offer several choices. 
  * Multiple options can be chosen.
  *
@@ -281,6 +277,10 @@ import { ViewController } from '../../navigation/view-controller';
  * });
  * ```
  * @demo /docs/v2/demos/src/alert/basic
+ * @additionalDemo alert-with-text-input: /docs/v2/demos/src/alert/prompt/
+ * @additionalDemo alert-with-checkboxes: /docs/v2/demos/src/alert/checkbox/
+ * @additionalDemo alert-with-radio-buttons: /docs/v2/demos/src/alert/radio/
+ * @additionalDemo confirmation-alerts: /docs/v2/demos/src/alert/confirm/
  * @see {@link ../AlertController Alert Controller API Docs}
  *
  */

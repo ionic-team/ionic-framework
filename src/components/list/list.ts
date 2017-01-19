@@ -188,6 +188,14 @@ import { Platform } from '../../platform/platform';
  * @property [no-lines] - Removes the dividing line between items in the list.
  *
  * @demo /docs/v2/demos/src/list/basic
+ * @additionalDemo inset-list: /docs/v2/demos/src/list/inset/
+ * @additionalDemo list-headers: /docs/v2/demos/src/list/headers/
+ * @additionalDemo list-dividers: /docs/v2/demos/src/list/dividers/
+ * @additionalDemo icon-list: /docs/v2/demos/src/list/icon/
+ * @additionalDemo avatar-list: /docs/v2/demos/src/list/avatar/
+ * @additionalDemo multi-line-list: /docs/v2/demos/src/list/multiline/
+ * @additionalDemo sliding-list: /docs/v2/demos/src/list/sliding/
+ * @additionalDemo thumbnail-list: /docs/v2/demos/src/list/thumbnail/
  * @see {@link /docs/v2/components#lists List Component Docs}
  * @see {@link ../../item/Item Item API Docs}
  * @see {@link ../../item/ItemSliding ItemSliding API Docs}

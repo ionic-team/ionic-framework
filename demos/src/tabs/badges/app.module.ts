@@ -10,14 +10,16 @@ import { IonicApp, IonicModule, Platform } from '../../../ionic-angular';
       </ion-navbar>
     </ion-header>
 
-    <ion-content>
-    </ion-content>
-`})
+    <ion-content></ion-content>
+  `,
+  selector: 'tab-page'
+})
 export class TabPage {}
 
 
 @Component({
-  templateUrl: 'page.html'
+  templateUrl: 'page.html',
+  selector: 'api-demo-page'
 })
 export class ApiDemoPage {
   root = TabPage;

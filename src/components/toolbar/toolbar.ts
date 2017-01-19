@@ -34,7 +34,9 @@ import { ViewController } from '../../navigation/view-controller';
  * and the `ios` border can be removed by adding the `no-border` attribute to the element.
  *
  * @property [no-border] - Removes the default box-shadow or border from the header
- *
+ * @demo /docs/v2/demos/src/toolbar/basic
+ * @additionalDemo segment-in-toolbars: /docs/v2/demos/src/toolbar/segment/
+ * @additionalDemo searchbar-in-toolbars: /docs/v2/demos/src/toolbar/searchbar/
  * @see {@link ../Toolbar Toolbar API Docs}
  */
 @Directive({
