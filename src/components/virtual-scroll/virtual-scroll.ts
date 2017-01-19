@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffers, IterableDiffer, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
@@ -213,7 +213,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
   selector: '[virtualScroll]'
 })
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
-  _differ: IterableDiffer;
+  _differ: any;
   _scrollSub: any;
   _scrollEndSub: any;
   _init: boolean;
