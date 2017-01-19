@@ -1,5 +1,4 @@
-import { spawnSync } from 'child_process';
-import { accessSync, F_OK, readdirSync, readFileSync, stat, statSync } from 'fs';
+import { accessSync, F_OK, readFileSync, stat } from 'fs';
 import { dirname, join } from 'path';
 
 import { dest, src, start, task } from 'gulp';
@@ -10,7 +9,7 @@ import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 
 import { DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DIST_NAME, DEMOS_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, SCRIPTS_ROOT } from '../constants';
-import { createTempTsConfig, getFolderInfo } from '../util';
+import { createTempTsConfig, getFolderInfo, getFolders, runAppScripts } from '../util';
 
 task('demos.prod', demosBuild);
 
@@ -68,18 +67,24 @@ task('demos.compileTests', (done: Function) => {
   let folderInfo = getFolderInfo();
 
   if (folderInfo.componentName && folderInfo.componentTest) {
-    buildTest(folderInfo.componentName);
+    buildTest(folderInfo);
   } else {
     buildAllTests(done);
   }
 });
 
-function buildTest(folderName: string) {
-  let includeGlob = [`./dist/demos/${folderName}/*.ts`];
-  let pathToWriteFile = `${DIST_DEMOS_ROOT}/${folderName}/tsconfig.json`;
+function buildTest(folderInfo: any) {
+  let includeGlob = [`./dist/demos/${folderInfo.componentName}/*.ts`];
+  let pathToWriteFile = `${DIST_DEMOS_ROOT}/${folderInfo.componentName}/tsconfig.json`;
 
   createTempTsConfig(includeGlob, ES5, ES_2015, `${DEMOS_SRC_ROOT}/tsconfig.json`, pathToWriteFile);
-  return runAppScripts(folderName);
+
+  let sassConfigPath = 'scripts/demos/sass.config.js';
+
+  let appEntryPoint = `dist/demos/${folderInfo.componentName}/main.ts`;
+  let distDir = `dist/demos/${folderInfo.componentName}/`;
+
+  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, distDir);
 }
 
 function buildAllTests(done: Function) {
@@ -89,7 +94,11 @@ function buildAllTests(done: Function) {
   folders.forEach(folder => {
     stat(`./dist/demos/${folder}/app.module.ts`, function(err, stat) {
       if (err == null) {
-        const promise = buildTest(folder);
+        let folderInfo = {
+          componentName: folder,
+          componentTest: 'basic'
+        };
+        const promise = buildTest(folderInfo);
         promises.push(promise);
       }
     });
@@ -100,45 +109,6 @@ function buildAllTests(done: Function) {
   }).catch(err => {
     done(err);
   });
-}
-
-function runAppScripts(folderName: string) {
-  console.log('Running app scripts with', folderName);
-
-  let sassConfigPath = 'scripts/demos/sass.config.js';
-
-  let appEntryPoint = `dist/demos/${folderName}/main.ts`;
-  let distDir = `dist/demos/${folderName}/`;
-
-  let tsConfig = distDir + 'tsconfig.json';
-
-  try {
-    const scriptsCmd = spawnSync('ionic-app-scripts',
-      ['build',
-      '--prod',
-      '--sass', sassConfigPath,
-      '--appEntryPoint', appEntryPoint,
-      '--srcDir', distDir,
-      '--wwwDir', distDir,
-      '--tsconfig', tsConfig
-      ]);
-
-    if (scriptsCmd.status !== 0) {
-      return Promise.reject(scriptsCmd.stderr.toString());
-    }
-
-    console.log(scriptsCmd.output.toString());
-    return Promise.resolve();
-  } catch (ex) {
-    return Promise.reject(ex);
-  }
-}
-
-function getFolders(dir) {
-  return readdirSync(dir)
-    .filter(function(file) {
-      return statSync(join(dir, file)).isDirectory();
-    });
 }
 
 task('demos.watchProd', (done: Function) => {

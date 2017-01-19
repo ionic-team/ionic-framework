@@ -80,8 +80,8 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-input,ion-textarea',
   template:
-    '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
-    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
+    '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
+    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
     '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
@@ -120,7 +120,7 @@ export class TextInput extends Ion implements IonicFormInput {
     @Optional() private _content: Content,
     @Optional() private _item: Item,
     @Optional() nav: NavController,
-    @Optional() ngControl: NgControl,
+    @Optional() public ngControl: NgControl,
     private _dom: DomController
   ) {
     super(config, elementRef, renderer, 'input');
@@ -212,7 +212,7 @@ export class TextInput extends Ion implements IonicFormInput {
    */
   @Input()
   get disabled() {
-    return this._disabled;
+    return this.ngControl ? this.ngControl.disabled : this._disabled;
   }
   set disabled(val: boolean) {
     this.setDisabled(this._disabled = isTrueProperty(val));
@@ -293,6 +293,7 @@ export class TextInput extends Ion implements IonicFormInput {
   setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
     nativeInput.setValue(this._value);
+    nativeInput.isDisabled(this.disabled);
 
     if (this._item && this._item.labelId !== null) {
       nativeInput.labelledBy(this._item.labelId);

@@ -72,6 +72,11 @@ export class TapClick {
     this.lastTouchEnd = 0;
     this.dispatchClick = true;
 
+    if (this.plt.doc() === ev.target) {
+      this.startCoord = pointerCoord(ev);
+      return true;
+    }
+
     let activatableEle = getActivatableTarget(ev.target);
     if (!activatableEle) {
       this.startCoord = null;
@@ -97,7 +102,7 @@ export class TapClick {
     if (!this.startCoord) {
       return;
     }
-    if (this.activator) {
+    if (this.activator && ev.target !== this.plt.doc()) {
       let activatableEle = getActivatableTarget(ev.target);
       if (activatableEle) {
         this.activator.upAction(ev, activatableEle, this.startCoord);
@@ -133,7 +138,7 @@ export class TapClick {
       return;
     }
 
-    if (this.activator) {
+    if (this.activator && this.plt.doc() !== ev.target) {
       // cool, a click is gonna happen, let's tell the activator
       // so the element can get the given "active" style
       const activatableEle = getActivatableTarget(ev.target);
@@ -235,7 +240,7 @@ export const isActivatable = function (ele: HTMLElement) {
   }
 
   for (let i = 0, l = ACTIVATABLE_ATTRIBUTES.length; i < l; i++) {
-    if (ele.hasAttribute(ACTIVATABLE_ATTRIBUTES[i])) {
+    if (ele.hasAttribute && ele.hasAttribute(ACTIVATABLE_ATTRIBUTES[i])) {
       return true;
     }
   }

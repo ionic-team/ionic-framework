@@ -261,6 +261,10 @@ export class Slides extends Ion {
   }
   private _paginationType = 'bullets';
 
+
+  /** @private */
+  paginationBulletRender: (index?: number, cssClass?: string) => void = null;
+
   /**
    * @input {boolean} Enable, if you want to use "parallaxed" elements inside of
    * slider. Default: `false`.
@@ -329,6 +333,9 @@ export class Slides extends Ion {
 
   // Slides grid
 
+  /**
+   * @input {number}  Distance between slides in px. Default: `0`.
+   */
   @Input()
   get spaceBetween() {
     return this._spaceBetween;
@@ -338,14 +345,17 @@ export class Slides extends Ion {
   }
   private _spaceBetween = 0;
 
+  /**
+   * @input {number}  Slides per view. Slides visible at the same time. Default: `1`.
+   */
   @Input()
   get slidesPerView() {
     return this._slidesPerView;
   }
   set slidesPerView(val: any) {
-    this._slidesPerView = parseInt(val, 10);
+    this._slidesPerView = val === 'auto' ? 'auto' : parseInt(val, 10);
   }
-  private _slidesPerView = 1;
+  private _slidesPerView: number|string = 1;
 
   /**
    * @private

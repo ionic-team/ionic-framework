@@ -490,6 +490,13 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   /**
    * @private
    */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  /**
+   * @private
+   */
   ngOnDestroy() {
     this._form.deregister(this);
   }

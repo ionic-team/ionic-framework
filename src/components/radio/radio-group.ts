@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Renderer } from '@angular/core';
+import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListHeader } from '../list/list-header';
-import { isCheckedProperty } from '../../util/util';
+import { isCheckedProperty, isTrueProperty } from '../../util/util';
 import { RadioButton } from './radio-button';
 
 export const RADIO_VALUE_ACCESSOR: any = {
@@ -72,6 +72,11 @@ export const RADIO_VALUE_ACCESSOR: any = {
 export class RadioGroup {
 
   /**
+   * @internal
+   */
+  _disabled: boolean = false;
+
+  /**
    * @private
    */
   _btns: RadioButton[] = [];
@@ -100,6 +105,17 @@ export class RadioGroup {
    * @private
    */
   id: number;
+
+  /**
+   * @input {boolean} Whether all radio buttons in the group should be disabled. Default false.
+   */
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(val: boolean) {
+    this._disabled = isTrueProperty(val);
+  }
 
   /**
    * @output {any} expression to be evaluated when selection has been changed
@@ -247,6 +263,13 @@ export class RadioGroup {
    * @private
    */
   onTouched() {}
+
+  /**
+   * @private
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
 
 }
 
