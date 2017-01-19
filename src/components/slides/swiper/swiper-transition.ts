@@ -54,7 +54,7 @@ export function setWrapperTranslate(s: Slides, plt: Platform, translate: any, sh
   }
 
   if (s.control) {
-      SWIPER_CONTROLLER.setTranslate(s, plt, s._translate, byController);
+    SWIPER_CONTROLLER.setTranslate(s, plt, s._translate, byController, setWrapperTranslate);
   }
 }
 
@@ -144,6 +144,6 @@ export function setWrapperTransition(s: Slides, plt: Platform, duration: number,
   }
 
   if (s.control) {
-      SWIPER_CONTROLLER.setTransition(s, plt, duration, byController);
+    SWIPER_CONTROLLER.setTransition(s, plt, duration, byController, setWrapperTransition);
   }
 }

@@ -4,13 +4,12 @@ import { fixLoop, onTransitionEnd, onTransitionStart } from './swiper';
 import { updateActiveIndex } from './swiper-index';
 import { isHorizontal, maxTranslate, minTranslate } from './swiper-utils';
 import { updateProgress } from './swiper-progress';
-import { setWrapperTransition, setWrapperTranslate } from './swiper-transition';
 
 
 /*=========================
   Controller
   ===========================*/
-export const SWIPER_CONTROLLER: any = {
+export const SWIPER_CONTROLLER = {
   LinearSpline: function (s: Slides, plt: Platform, x: any, y: any) {
     this.x = x;
     this.y = y;
@@ -50,10 +49,10 @@ export const SWIPER_CONTROLLER: any = {
   // xxx: for now i will just save one spline function to to
   getInterpolateFunction: function (s: Slides, plt: Platform, c: Slides) {
     if (!s._spline) s._spline = s.loop ?
-      new SWIPER_CONTROLLER.LinearSpline(s, plt, s._slidesGrid, c._slidesGrid) :
-      new SWIPER_CONTROLLER.LinearSpline(s, plt, s._snapGrid, c._snapGrid);
+      new (<any>SWIPER_CONTROLLER).LinearSpline(s, plt, s._slidesGrid, c._slidesGrid) :
+      new (<any>SWIPER_CONTROLLER).LinearSpline(s, plt, s._snapGrid, c._snapGrid);
   },
-  setTranslate: function (s: Slides, plt: Platform, translate: number, byController: Slides) {
+  setTranslate: function (s: Slides, plt: Platform, translate: number, byController: Slides, setWrapperTranslate: any) {
     var controlled = s.control;
     var multiplier: number, controlledTranslate: number;
     function setControlledTranslate(c: Slides) {
@@ -91,7 +90,7 @@ export const SWIPER_CONTROLLER: any = {
       setControlledTranslate(controlled);
     }
   },
-  setTransition: function (s: Slides, plt: Platform, duration: number, byController: Slides) {
+  setTransition: function (s: Slides, plt: Platform, duration: number, byController: Slides, setWrapperTransition: any) {
     var controlled = s.control;
     var i: number;
     function setControlledTransition(c: Slides) {
