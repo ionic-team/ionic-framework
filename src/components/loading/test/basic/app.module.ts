@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../..';
+import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../../../ionic-angular';
 
 
 @Component({

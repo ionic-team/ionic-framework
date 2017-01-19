@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 
-import { IonicApp, IonicModule, NavParams } from '../../../..';
+import { IonicApp, IonicModule, NavParams } from '../../../../../ionic-angular';
 
 
 

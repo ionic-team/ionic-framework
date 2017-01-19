@@ -1,6 +1,6 @@
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../..';
+import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 
 
 @Component({

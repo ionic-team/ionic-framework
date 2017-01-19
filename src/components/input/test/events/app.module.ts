@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, TextInput } from '../../../..';
+import { IonicApp, IonicModule, TextInput } from '../../../../../ionic-angular';
 
 
 @Component({

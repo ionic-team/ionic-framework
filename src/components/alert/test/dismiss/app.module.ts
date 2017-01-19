@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../..';
+import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../../../ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 
 

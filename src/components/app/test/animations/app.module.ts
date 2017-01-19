@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { Animation, Config, IonicApp, IonicModule, Platform } from '../../../..';
+import { Animation, Config, IonicApp, IonicModule, Platform } from '../../../../../ionic-angular';
 
 
 @Component({

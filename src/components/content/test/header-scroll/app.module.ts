@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, ScrollEvent } from '../../../..';
+import { IonicApp, IonicModule, ScrollEvent } from '../../../../../ionic-angular';
 
 
 @Component({
