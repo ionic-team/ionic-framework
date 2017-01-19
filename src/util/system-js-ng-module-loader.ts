@@ -1,6 +1,4 @@
-import { Compiler, Injectable, NgModuleFactory, NgModuleFactoryLoader, Optional, Type } from '@angular/core';
-
-const _SEPARATOR = '#';
+import { Compiler, Injectable, NgModuleFactory, Optional } from '@angular/core';
 
 const FACTORY_CLASS_SUFFIX = 'NgFactory';
 
@@ -46,7 +44,7 @@ export class SystemJsNgModuleLoader {
 
   private loadAndCompile(toLoad: DataToLoad) {
     if (!toLoad.ngModuleExport) {
-      toLoad.ngModuleExport = 'default'
+      toLoad.ngModuleExport = 'default';
     }
 
     let _module: any;
@@ -60,7 +58,7 @@ export class SystemJsNgModuleLoader {
         }
         return type;
       }).then((type: any) => {
-        return this._compiler.compileModuleAsync(type)
+        return this._compiler.compileModuleAsync(type);
       }).then((ngModuleFactory: NgModuleFactory<any>) => {
 
         return {
@@ -81,7 +79,7 @@ export class SystemJsNgModuleLoader {
     return System.import(this._config.factoryPathPrefix + toLoad.modulePath + this._config.factoryPathSuffix)
       .then((module: any) => {
         _module = module;
-        return module[toLoad.ngModuleExport + factoryClassSuffix]
+        return module[toLoad.ngModuleExport + factoryClassSuffix];
       })
       .then((ngModuleFactory: NgModuleFactory<any>) => {
         if (!ngModuleFactory) {
@@ -95,16 +93,16 @@ export class SystemJsNgModuleLoader {
           rawModule: _module
         };
 
-      })
+      });
   }
 }
 
 export interface DataToLoad {
   modulePath: string;
   ngModuleExport: string;
-};
+}
 
 export interface SystemJsLoadedModule {
   rawModule: any;
   ngModuleFactory: NgModuleFactory<any>;
-};
+}

@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, CompilerFactory } from '@angular/core';
+import { ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
