@@ -35,7 +35,6 @@ export class ModuleLoader {
 
       .then((loadedModule: SystemJsLoadedModule) => {
 
-        debugger;
 
         const ref = loadedModule.ngModuleFactory.create(this._injector);
 
