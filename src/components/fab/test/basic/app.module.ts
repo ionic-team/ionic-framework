@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, FabContainer } from '../../../..';
+import { IonicApp, IonicModule, FabContainer } from '../../../../../ionic-angular';
 
 @Component({
   templateUrl: 'main.html'

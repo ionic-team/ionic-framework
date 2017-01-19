@@ -1,5 +1,5 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
-import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../..';
+import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../../../ionic-angular';
 
 @Component({
   selector: 'my-cmp2',

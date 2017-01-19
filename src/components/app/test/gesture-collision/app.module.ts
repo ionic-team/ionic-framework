@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, MenuController, NavController, AlertController, Nav, Refresher } from '../../../..';
+import { IonicApp, IonicModule, MenuController, NavController, AlertController, Nav, Refresher } from '../../../../../ionic-angular';
 
 
 @Component({

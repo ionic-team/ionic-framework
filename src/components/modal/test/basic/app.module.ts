@@ -2,7 +2,7 @@ import { Component, Injectable, NgModule } from '@angular/core';
 
 import { ActionSheetController, AlertController, App, Config,
   IonicApp, IonicModule, ModalController, NavController,
-  NavParams, Platform, ToastController, ViewController } from '../../../..';
+  NavParams, Platform, ToastController, ViewController } from '../../../../../ionic-angular';
 
 
 @Injectable()

@@ -1,7 +1,8 @@
-import { NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT } from './constants';
+import { spawnSync } from 'child_process';
+import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { join } from 'path';
-import * as fs from 'fs';
+import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs';
 import { rollup } from 'rollup';
 import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -32,7 +33,7 @@ export function mergeObjects(obj1: any, obj2: any ) {
 }
 
 function getRootTsConfig(pathToReadFile): any {
-  const json = fs.readFileSync(pathToReadFile);
+  const json = readFileSync(pathToReadFile);
 
   let tsConfig = JSON.parse(json.toString());
   return tsConfig;
@@ -53,7 +54,7 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   }
   config.include = includeGlob;
   let json = JSON.stringify(config, null, 2);
-  fs.writeFileSync(pathToWriteFile, json);
+  writeFileSync(pathToWriteFile, json);
 }
 
 function removeDebugStatements() {
@@ -133,12 +134,12 @@ export function compileSass(destinationPath: string) {
 }
 
 export function setSassIonicVersion(version: string) {
-  fs.writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
 }
 
 export function copyFile(srcPath: string, destPath: string) {
-  const sourceData = fs.readFileSync(srcPath);
-  fs.writeFileSync(destPath, sourceData);
+  const sourceData = readFileSync(srcPath);
+  writeFileSync(destPath, sourceData);
 }
 
 export function runNgc(pathToConfigFile: string, done: Function) {
@@ -175,6 +176,38 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
     console.log(stderr);
     done(err);
   });
+}
+
+export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryPoint: string, distDir: string) {
+  console.log('Running ionic-app-scripts build with', folderInfo.componentName, '/', folderInfo.componentTest);
+  let tsConfig = distDir + 'tsconfig.json';
+  let scriptArgs = [
+    'build',
+    '--prod',
+    '--sass', sassConfigPath,
+    '--appEntryPoint', appEntryPoint,
+    '--srcDir', distDir,
+    '--wwwDir', distDir,
+    '--tsconfig', tsConfig
+    ];
+
+  const debug: boolean = argv.debug;
+  if (debug) {
+    scriptArgs.push('--debug');
+  }
+
+  try {
+    const scriptsCmd = spawnSync('ionic-app-scripts', scriptArgs);
+
+    if (scriptsCmd.status !== 0) {
+      return Promise.reject(scriptsCmd.stderr.toString());
+    }
+
+    console.log(scriptsCmd.output.toString());
+    return Promise.resolve();
+  } catch (ex) {
+    return Promise.reject(ex);
+  }
 }
 
 /** Resolves the path for a node package executable. */
@@ -287,4 +320,11 @@ export function getFolderInfo() {
     componentName: componentName,
     componentTest: componentTest
   };
+}
+
+export function getFolders(dir) {
+  return readdirSync(dir)
+    .filter(function(file) {
+      return statSync(join(dir, file)).isDirectory();
+    });
 }

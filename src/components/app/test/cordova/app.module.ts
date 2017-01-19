@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, ModalController, ViewController } from '../../../..';
+import { IonicApp, IonicModule, NavController, ModalController, ViewController } from '../../../../../ionic-angular';
 import { Injectable } from '@angular/core';
 
 

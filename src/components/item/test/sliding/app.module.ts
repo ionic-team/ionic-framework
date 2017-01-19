@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, AlertController, NavController, List, ItemSliding, ToastController } from '../../../..';
+import { IonicApp, IonicModule, AlertController, NavController, List, ItemSliding, ToastController } from '../../../../../ionic-angular';
 
 
 @Component({

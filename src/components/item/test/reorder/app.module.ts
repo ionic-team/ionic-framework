@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, reorderArray } from '../../../..';
+import { IonicApp, IonicModule, reorderArray } from '../../../../../ionic-angular';
 
 
 @Component({

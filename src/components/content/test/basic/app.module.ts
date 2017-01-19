@@ -1,5 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { IonicApp, IonicModule, Content, ScrollEvent } from '../../../..';
+import { IonicApp, IonicModule, Content, ScrollEvent } from '../../../../../ionic-angular';
 
 @Component({
   templateUrl: 'tabs.html'

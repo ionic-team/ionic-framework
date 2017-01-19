@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController } from '../../../..';
+import { IonicApp, IonicModule, NavController } from '../../../../../ionic-angular';
 
 
 let delay = 100;
