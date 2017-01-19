@@ -196,10 +196,13 @@ export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryP
     scriptArgs.push('--debug');
   }
 
+  console.log('$ ionic-app-scripts', scriptArgs.join(' '));
+
   try {
     const scriptsCmd = spawnSync('ionic-app-scripts', scriptArgs);
 
     if (scriptsCmd.status !== 0) {
+      console.log(scriptsCmd.stderr.toString());
       return Promise.reject(scriptsCmd.stderr.toString());
     }
 
