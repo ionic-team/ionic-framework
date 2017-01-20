@@ -103,6 +103,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `backButtonText`         | `string`            | The text to display by the back button icon in the navbar.                                                                                       |
  * | `backButtonIcon`         | `string`            | The icon to use as the back button icon.                                                                                                         |
  * | `iconMode`               | `string`            | The mode to use for all icons throughout the application. Available options: `"ios"`, `"md"`                                                     |
+ * | `locationStrategy`       | `string`            | Set to 'path' to remove hashbangs when using Deeplinking.                                                                                        |
  * | `loadingEnter`           | `string`            | The name of the transition to use while a loading indicator is presented.                                                                        |
  * | `loadingLeave`           | `string`            | The name of the transition to use while a loading indicator is dismissed.                                                                        |
  * | `menuType`               | `string`            | Type of menu to display. Available options: `"overlay"`, `"reveal"`, `"push"`.                                                                   |
