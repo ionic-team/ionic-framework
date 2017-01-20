@@ -22,8 +22,7 @@
   "scripts": {
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
-    "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link",
-    "app-scripts-build": "ionic-app-scripts build"
+    "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
