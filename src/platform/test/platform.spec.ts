@@ -120,6 +120,44 @@ describe('Platform', () => {
       expect(plt.isPortrait()).toEqual(true);
     });
 
+    it('Should return false when orientation is landscape and then true when changed to portrait', () => {
+
+      // start in landscape
+      expect(plt.isPortrait()).toEqual(false);
+
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      // change to portrait
+      plt.setWindow(portraitWindow);
+
+      expect(plt.isPortrait()).toEqual(true);
+    });
+
+    it('Should return true when orientation is landscape and then false when changed to portrait', () => {
+
+      // start in landscape
+      expect(plt.isLandscape()).toEqual(true);
+
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      // change to portrait
+      plt.setWindow(portraitWindow);
+
+      expect(plt.isLandscape()).toEqual(false);
+    });
+
     it('Should return a number that is equal to window.innerWidth', () => {
       let type = typeof plt.width();
 
