@@ -72,7 +72,9 @@ export class NavPush {
   @HostListener('click')
   onClick(): boolean {
     if (this._nav && this.navPush) {
-      this._nav.push(this.navPush, this.navParams, null);
+      this._nav.push(this.navPush, this.navParams).catch(() => {
+        console.debug('navPush was rejected');
+      });
       return false;
     }
     return true;
