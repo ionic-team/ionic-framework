@@ -315,12 +315,7 @@ export class ItemSliding {
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
     }
 
-          // this.debouncer.write(() => {
-
-      // });
-    this._dom.write(() => {
-      this._setOpenAmount(openAmount, false);
-    });
+    this._setOpenAmount(openAmount, false);
 
     return openAmount;
   }
@@ -362,29 +357,30 @@ export class ItemSliding {
    * @private
    */
   private calculateOptsWidth() {
-    this._plt.raf(() => {
-      if (!this._optsDirty) {
-        return;
-      }
-      this._optsWidthRightSide = 0;
-      if (this._rightOptions) {
-        this._optsWidthRightSide = this._rightOptions.width();
-        assert(this._optsWidthRightSide > 0, '_optsWidthRightSide should not be zero');
-      }
+    if (!this._optsDirty) {
+      return;
+    }
+    this._optsWidthRightSide = 0;
+    if (this._rightOptions) {
+      this._optsWidthRightSide = this._rightOptions.width();
+      assert(this._optsWidthRightSide > 0, '_optsWidthRightSide should not be zero');
+    }
 
-      this._optsWidthLeftSide = 0;
-      if (this._leftOptions) {
-        this._optsWidthLeftSide = this._leftOptions.width();
-        assert(this._optsWidthLeftSide > 0, '_optsWidthLeftSide should not be zero');
-      }
-      this._optsDirty = false;
-    });
+    this._optsWidthLeftSide = 0;
+    if (this._leftOptions) {
+      this._optsWidthLeftSide = this._leftOptions.width();
+      assert(this._optsWidthLeftSide > 0, '_optsWidthLeftSide should not be zero');
+    }
+    this._optsDirty = false;
   }
 
   private _setOpenAmount(openAmount: number, isFinal: boolean) {
     const platform = this._plt;
 
-    platform.cancelTimeout(this._tmr);
+    if (this._tmr) {
+      platform.cancelTimeout(this._tmr);
+      this._tmr = null;
+    }
     this._openAmount = openAmount;
 
     if (isFinal) {
