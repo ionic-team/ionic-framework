@@ -80,8 +80,8 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-input,ion-textarea',
   template:
-    '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
-    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
+    '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
+    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
     '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
@@ -96,6 +96,7 @@ export class TextInput extends Ion implements IonicFormInput {
   _coord: PointerCoordinates;
   _didBlurAfterEdit: boolean;
   _disabled: boolean = false;
+  _readonly: boolean = false;
   _isTouch: boolean;
   _keyboardHeight: number;
   _native: NativeInput;
@@ -164,7 +165,7 @@ export class TextInput extends Ion implements IonicFormInput {
   @Input() placeholder: string = '';
 
   /**
-   * @input {bool} A clear icon will appear in the input when there is a value. Clicking it clears the input.
+   * @input {boolean} A clear icon will appear in the input when there is a value. Clicking it clears the input.
    */
   @Input()
   get clearInput() {
@@ -208,7 +209,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {bool} If the input should be disabled or not
+   * @input {boolean} If the input should be disabled or not
    */
   @Input()
   get disabled() {
@@ -224,6 +225,17 @@ export class TextInput extends Ion implements IonicFormInput {
   setDisabled(val: boolean) {
     this._item && this._item.setElementClass('item-input-disabled', val);
     this._native && this._native.isDisabled(val);
+  }
+
+  /**
+   * @input {boolean} If the input should be readonly or not
+   */
+  @Input()
+  get readonly() {
+    return this._readonly;
+  }
+  set readonly(val: boolean) {
+    this._readonly = isTrueProperty(val);
   }
 
   /**
