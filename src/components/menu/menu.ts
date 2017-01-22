@@ -139,7 +139,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
  * <ion-menu [content]="mycontent">
  *   <ion-content>
  *     <ion-list>
- *       <button ion-button menuClose ion-item detail-none>Close Menu</button>
+ *       <ion-item menuClose detail-none>Close Menu</ion-item>
  *     </ion-list>
  *   </ion-content>
  * </ion-menu>
