@@ -301,6 +301,7 @@ export class TextInput extends Ion implements IonicFormInput {
 
     nativeInput.valueChange.subscribe((inputValue: any) => {
       this.onChange(inputValue);
+      this.checkHasValue(inputValue);
     });
 
     nativeInput.keydown.subscribe((inputValue: any) => {
