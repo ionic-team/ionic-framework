@@ -183,9 +183,7 @@ export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryP
   let tsConfig = distDir + 'tsconfig.json';
   let scriptArgs = [
     'build',
-    '--aot',
-    '--minifyCss',
-    '--optimizeJs',
+    '--prod',
     '--sass', sassConfigPath,
     '--appEntryPoint', appEntryPoint,
     '--srcDir', distDir,

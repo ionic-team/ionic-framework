@@ -1,12 +1,14 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
-import { /*DeepLink,*/AlertController, DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../ionic-angular';
+import { AlertController, DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../ionic-angular';
 
 
 // @DeepLink({ name: 'sign-in' })
 @Component({
   templateUrl: './signIn.html'
 })
-export class SignIn {}
+export class SignIn {
+  tabsPage = TabsPage;
+}
 
 
 @Component({
@@ -32,6 +34,9 @@ export class ChatPage {
 })
 export class TabsPage {
   showTab: boolean = false;
+  rootPage1 = Tab1Page1;
+  rootPage2 = Tab2Page1;
+  rootPage3 = Tab3Page1;
 
   @ViewChild(Tabs) tabs: Tabs;
 
@@ -125,6 +130,7 @@ export class TabsPage {
   templateUrl: './tab1page1.html'
 })
 export class Tab1Page1 {
+  tab1Page2 = Tab1Page2;
   color: boolean;
   userId: string;
 
@@ -176,6 +182,8 @@ export class Tab1Page1 {
   templateUrl: './tab1page2.html'
 })
 export class Tab1Page2 {
+  tab1Page3 = Tab1Page3;
+
   constructor(public tabs: Tabs) { }
 
   favoritesTab() {
@@ -243,6 +251,7 @@ export class Tab1Page3 {
   templateUrl: './tab2page1.html'
 })
 export class Tab2Page1 {
+  tab2Page2 = Tab2Page2;
 
   ionViewWillEnter() {
     console.log('Tab2Page1, ionViewWillEnter');
@@ -271,6 +280,7 @@ export class Tab2Page1 {
   templateUrl: './tab2page2.html'
 })
 export class Tab2Page2 {
+  tab2Page3 = Tab2Page3;
 
   ionViewWillEnter() {
     console.log('Tab2Page2, ionViewWillEnter');
