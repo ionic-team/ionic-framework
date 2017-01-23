@@ -5,7 +5,14 @@ import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EPage {}
+export class E2EPage {
+  isReadonly: boolean = true;
+
+  toggleReadonly() {
+    this.isReadonly = !this.isReadonly;
+  }
+
+}
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'
