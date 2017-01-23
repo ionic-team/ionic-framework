@@ -8,7 +8,7 @@ import { DomController } from '../../platform/dom-controller';
  * @name InfiniteScroll
  * @description
  * The Infinite Scroll allows you to perform an action when the user
- * scrolls a specified distance from the bottom of the page.
+ * scrolls a specified distance from the bottom or top of the page.
  *
  * The expression assigned to the `infinite` event is called when
  * the user scrolls to the specified distance. When this expression
@@ -102,6 +102,7 @@ export class InfiniteScroll {
   _thr: string = '15%';
   _thrPx: number = 0;
   _thrPc: number = 0.15;
+  _position: string = POSITION_BOTTOM;
   _init: boolean = false;
 
 
@@ -147,6 +148,21 @@ export class InfiniteScroll {
   }
 
   /**
+   * @input {string} The position of the infinite scroll element.
+   * The value can be either `top` or `bottom`.
+   * Default is `bottom`.
+   */
+  @Input()
+  get position(): string {
+    return this._position;
+  }
+  set position(val: string) {
+    if (val === POSITION_TOP || val === POSITION_BOTTOM) {
+      this._position = val;
+    }
+  }
+
+  /**
    * @output {event} The expression to call when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
@@ -183,17 +199,20 @@ export class InfiniteScroll {
 
     // ******** DOM READ ****************
     const d = this._content.getContentDimensions();
+    const height = d.contentHeight;
 
-    let reloadY = d.contentHeight;
-    if (this._thrPc) {
-      reloadY += (reloadY * this._thrPc);
-    } else {
-      reloadY += this._thrPx;
-    }
+    const threshold = this._thrPc ? (height * this._thrPc) : this._thrPx;
 
     // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
 
-    const distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;
+    let distanceFromInfinite: number;
+
+    if (this._position === POSITION_BOTTOM) {
+      distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - height - threshold;
+    } else if (this._position === POSITION_TOP) {
+      distanceFromInfinite = d.scrollTop - infiniteHeight - threshold;
+    }
+
     if (distanceFromInfinite < 0) {
       // ******** DOM WRITE ****************
       this._dom.write(() => {
@@ -276,3 +295,6 @@ export class InfiniteScroll {
 const STATE_ENABLED = 'enabled';
 const STATE_DISABLED = 'disabled';
 const STATE_LOADING = 'loading';
+
+const POSITION_TOP = 'top';
+const POSITION_BOTTOM = 'bottom';
