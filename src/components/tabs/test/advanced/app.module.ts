@@ -81,6 +81,7 @@ export class TabsPage {
               alert.dismiss().then(() => {
                 resolve();
               });
+              return false;
             }
           }
         ]
