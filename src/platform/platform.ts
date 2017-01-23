@@ -593,6 +593,11 @@ export class Platform {
           }
 
         } else {
+          if (this._lW > win['innerWidth']) {
+            // Special case: keyboard is open and device is in portrait
+            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
+            this._isPortrait = true;
+          }
           // the device is in landscape
           if (this._lW <= win['innerWidth']) {
             console.debug('setting _isPortrait to false');
@@ -603,12 +608,6 @@ export class Platform {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
             this._lH = win['innerHeight'];
-          }
-          if (this._lW > win['innerWidth']) {
-            // Special case: keyboard is open and device is in portrait
-            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
-            this._isPortrait = true;
-            this._lW = win['innerWidth'];
           }
         }
 
@@ -807,7 +806,9 @@ export class Platform {
         timerId = setTimeout(() => {
           // setting _isPortrait to null means the
           // dimensions will need to be looked up again
-          this._isPortrait = null;
+          if (this.hasFocusedTextInput() === false) {
+            this._isPortrait = null;
+          }
 
           for (let i = 0; i < this._onResizes.length; i++) {
             try {
