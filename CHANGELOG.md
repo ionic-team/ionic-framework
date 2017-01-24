@@ -1,3 +1,62 @@
+<a name="2.0.0-rc.6"></a>
+# [2.0.0-rc.6](https://github.com/driftyco/ionic/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2017-01-24)
+
+### Updating to 2.0.0-rc.6
+
+1. Update the framework:
+
+    ```
+    npm install --save --save-exact ionic-angular@2.0.0-rc.6
+    ```
+
+2. Change the import for ionicons in your `theme/variables.scss` file from this:
+
+    ```
+    @import "ionicons";
+    ```
+
+    to
+
+    ```
+    @import "ionic.ionicons";
+    ```
+
+    See the [conference app](https://github.com/driftyco/ionic-conference-app/blob/master/src/theme/variables.scss#L81) for an example. This fixes a bug with ionicons getting styled incorrectly.
+
+### Bug Fixes
+
+* **alert:** input missing id attribute from input options ([6da9eb6](https://github.com/driftyco/ionic/commit/6da9eb6)), closes [#9457](https://github.com/driftyco/ionic/issues/9457)
+* **alert:** unhandled promise exception ([ee2268f](https://github.com/driftyco/ionic/commit/ee2268f))
+* **checkbox:** set disabled state from FormControl ([b44ff41](https://github.com/driftyco/ionic/commit/b44ff41))
+* **content:** unsubscribe from viewCtrl observables after content ins… ([#10050](https://github.com/driftyco/ionic/issues/10050)) ([3a718de](https://github.com/driftyco/ionic/commit/3a718de)), closes [#9593](https://github.com/driftyco/ionic/issues/9593) [#10045](https://github.com/driftyco/ionic/issues/10045)
+* **datetime:** set disabled state from FormControl ([99c493e](https://github.com/driftyco/ionic/commit/99c493e))
+* **gestures:** drag events are debounced ([23a70e1](https://github.com/driftyco/ionic/commit/23a70e1))
+* **input:** pass disabled down to input when it is set from form ([5844a83](https://github.com/driftyco/ionic/commit/5844a83)), closes [#9834](https://github.com/driftyco/ionic/issues/9834)
+* **input:** pass readonly from ion-input down to native input ([f9a576e](https://github.com/driftyco/ionic/commit/f9a576e)), closes [#6408](https://github.com/driftyco/ionic/issues/6408)
+* **input:** show clear-input on inputs with ngModel/formControlName ([7a6ba2d](https://github.com/driftyco/ionic/commit/7a6ba2d)), closes [#9077](https://github.com/driftyco/ionic/issues/9077)
+* **item-sliding:** don't error or allow swipes with no options ([421b7da](https://github.com/driftyco/ionic/commit/421b7da)), closes [#9914](https://github.com/driftyco/ionic/issues/9914)
+* **modal:** overlay-zindex is not changed in back direction ([fba1596](https://github.com/driftyco/ionic/commit/fba1596)), closes [#9409](https://github.com/driftyco/ionic/issues/9409)
+* **nav:** swipe back after getRootNav().push ([eaa6248](https://github.com/driftyco/ionic/commit/eaa6248)), fixes [#9558](https://github.com/driftyco/ionic/issues/9558) ([#9767](https://github.com/driftyco/ionic/issues/9767))
+* **nav-pop:** add catch for unhandled promise exception ([b995ca8](https://github.com/driftyco/ionic/commit/b995ca8))
+* **nav-push:** add catch for unhandled promise exception ([8c4fd56](https://github.com/driftyco/ionic/commit/8c4fd56))
+* **platform:** detect the orientation correctly ([8840124](https://github.com/driftyco/ionic/commit/8840124))
+* **range:** set disabled state from FormControl ([8e64a28](https://github.com/driftyco/ionic/commit/8e64a28))
+* **select:** set disabled state from FormControl ([40e7eb2](https://github.com/driftyco/ionic/commit/40e7eb2))
+* **slides:** allow auto to be passed ([e56028e](https://github.com/driftyco/ionic/commit/e56028e)), closes [#10000](https://github.com/driftyco/ionic/issues/10000) [#10037](https://github.com/driftyco/ionic/issues/10037)
+* **tabs:** ionChange event is dispatched after the switch ([ba9e7b3](https://github.com/driftyco/ionic/commit/ba9e7b3))
+* **tap:** allow document to be tap polyfilled ([9168bc1](https://github.com/driftyco/ionic/commit/9168bc1)), closes [#9726](https://github.com/driftyco/ionic/issues/9726)
+* **toggle:** set disabled state from FormControl ([0aad835](https://github.com/driftyco/ionic/commit/0aad835))
+
+
+### Features
+
+* **radio:** add disabled to radio-group and support disabled formcontrol ([3e9427b](https://github.com/driftyco/ionic/commit/3e9427b)), closes [#9998](https://github.com/driftyco/ionic/issues/9998)
+* **slides:** add option for paginationBulletRender ([21667c6](https://github.com/driftyco/ionic/commit/21667c6)), closes [#10002](https://github.com/driftyco/ionic/issues/10002)
+* **slides:** add swiper controller ([#9983](https://github.com/driftyco/ionic/issues/9983)) ([f499496](https://github.com/driftyco/ionic/commit/f499496))
+* **slides:** expose more options ([#9992](https://github.com/driftyco/ionic/issues/9992)) ([2d26edb](https://github.com/driftyco/ionic/commit/2d26edb)), closes [#9988](https://github.com/driftyco/ionic/issues/9988)
+
+
+
 <a name="2.0.0-rc.5"></a>
 # [2.0.0-rc.5](https://github.com/driftyco/ionic/compare/v2.0.0-rc.4...v2.0.0-rc.5) (2017-01-11)
 
