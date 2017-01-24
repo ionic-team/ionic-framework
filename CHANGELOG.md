@@ -108,6 +108,9 @@ Service Worker Toolbox ([sw-toolbox](https://googlechrome.github.io/sw-toolbox/d
 
 ### BREAKING CHANGES
 
+#### Inputs
+As part of the refactor to improve tree shaking the `TextArea` has been merged into the `TextInput` class. This means that if you are importing the `TextArea` class you will need to change this to be `TextInput`.
+
 #### Slides
 
 ion-slides was refactored to remove the external dependencies, and rewritten in TypeScript/ES6 modules to again improve tree shaking abilities. In order to work with tree shaking, the `options` attribute had to be removed. See the [Slides API Documentation](http://ionicframework.com/docs/v2/api/components/slides/Slides/) for usage information.
