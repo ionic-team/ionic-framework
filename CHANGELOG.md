@@ -1,3 +1,8 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/driftyco/ionic/compare/v2.0.0-rc.6...v2.0.0) (2017-01-25)
+
+Enjoy! :tada:
+
 <a name="2.0.0-rc.6"></a>
 # [2.0.0-rc.6](https://github.com/driftyco/ionic/compare/v2.0.0-rc.5...v2.0.0-rc.6) (2017-01-24)
 
