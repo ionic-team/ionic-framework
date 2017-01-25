@@ -89,7 +89,7 @@ task('release.copyProdVersion', () => {
   // Increment the version and update the source package file
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
 
-  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, 'prerelease', true);
+  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, 'major', true);
 
   const sourcePrettyPrintedJson = JSON.stringify(sourcePackageJSON, null, 2);
   writeFileSync(`${PROJECT_ROOT}/package.json`, sourcePrettyPrintedJson);
