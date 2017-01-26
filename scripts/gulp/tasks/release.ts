@@ -2,7 +2,8 @@ import { exec, spawnSync, spawn } from 'child_process';
 import { writeFileSync } from 'fs';
 import * as changelog from 'conventional-changelog';
 import * as GithubApi from 'github';
-import { dest, src, task } from 'gulp';
+import { dest, src, start, task } from 'gulp';
+import { prompt } from 'inquirer';
 import { rollup } from 'rollup';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
@@ -14,82 +15,146 @@ import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PR
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
 
-task('nightly', (done: (err: any) => void) => {
-  runSequence('release.pullLatest',
-              'validate',
-              'release.prepareReleasePackage',
-              'release.publishNightly',
-              done);
-});
+// task('nightly', (done: (err: any) => void) => {
+//   runSequence('release.pullLatest',
+//               'validate',
+//               'release.prepareReleasePackage',
+//               'release.publishNightly',
+//               done);
+// });
 
 task('release', (done: (err: any) => void) => {
-  runSequence('release.pullLatest',
-              'validate',
-              'release.prepareReleasePackage',
-              'release.copyProdVersion',
-              'release.prepareChangelog',
-              'release.publishNpmRelease',
-              'release.publishGithubRelease',
+  runSequence(// 'release.pullLatest',
+              // 'validate',
+              // 'release.prepareReleasePackage',
+              'release.promptVersion',
               done);
 });
 
-task('release.test', (done: (err: any) => void) => {
-  runSequence('validate',
-              'release.prepareReleasePackage',
-              'release.copyProdVersion',
-              done);
-});
+// task('release.test', (done: (err: any) => void) => {
+//   runSequence('validate',
+//               'release.prepareReleasePackage',
+//               'release.promptVersion',
+//               done);
+// });
 
 
 task('release.publishGithubRelease', (done: Function) => {
+  console.log('This is where you publish to github');
 
-  const packageJSON = require('../../../package.json');
+  // const packageJSON = require('../../../package.json');
 
-  const github = new GithubApi({
-    version: '3.0.0'
-  });
+  // const github = new GithubApi({
+  //   version: '3.0.0'
+  // });
 
-  github.authenticate({
-    type: 'oauth',
-    token: process.env.GH_TOKEN
-  });
+  // github.authenticate({
+  //   type: 'oauth',
+  //   token: process.env.GH_TOKEN
+  // });
 
-  return changelog({
-    preset: 'angular'
-  })
-  .pipe(obj(function(file, enc, cb){
-    github.releases.createRelease({
-      owner: 'driftyco',
-      repo: 'ionic',
-      target_commitish: 'master',
-      tag_name: 'v' + packageJSON.version,
-      name: packageJSON.version,
-      body: file.toString(),
-      prerelease: false
-    }, done);
-  }));
+  // return changelog({
+  //   preset: 'angular'
+  // })
+  // .pipe(obj(function(file, enc, cb){
+  //   github.releases.createRelease({
+  //     owner: 'driftyco',
+  //     repo: 'ionic',
+  //     target_commitish: 'master',
+  //     tag_name: 'v' + packageJSON.version,
+  //     name: packageJSON.version,
+  //     body: file.toString(),
+  //     prerelease: false
+  //   }, done);
+  // }));
 });
 
 task('release.publishNpmRelease', (done: Function) => {
-  const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
-  npmCmd.stdout.on('data', function (data) {
-    console.log(data.toString());
-  });
+  console.log('This is where you publish to npm');
+  done();
+  // const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
+  // npmCmd.stdout.on('data', function (data) {
+  //   console.log(data.toString());
+  // });
 
-  npmCmd.stderr.on('data', function (data) {
-    console.log('npm err: ' + data.toString());
-  });
+  // npmCmd.stderr.on('data', function (data) {
+  //   console.log('npm err: ' + data.toString());
+  // });
 
-  npmCmd.on('close', function() {
-    done();
+  // npmCmd.on('close', function() {
+  //   done();
+  // });
+});
+
+task('release.promptVersion', (done: Function) => {
+  prompt([
+    {
+      'type': 'list',
+      'name': 'release',
+      'message': 'What type of release is this?',
+      'choices': [
+        {
+          name: 'Major:              Incompatible API changes',
+          value: 'major'
+        }, {
+          name: 'Minor:              Backwards-compatible functionality',
+          value: 'minor'
+        }, {
+          name: 'Patch:              Backwards-compatible bug fixes',
+          value: 'patch'
+        }, {
+          name: 'Premajor:           ',
+          value: 'premajor'
+        }, {
+          name: 'Preminor:           ',
+          value: 'preminor'
+        }, {
+          name: 'Prepatch:           ',
+          value: 'prepatch'
+        }, {
+          name: 'Prerelease:         ',
+          value: 'prerelease'
+        }
+      ]
+    }, {
+      type: 'list',
+      name: 'confirmRelease',
+      choices: [
+        {
+          name: 'Yes',
+          value: 'yes'
+        }, {
+          name: 'Abort release',
+          value: 'no'
+        }
+      ],
+      message: function(answers) {
+        var SEP = '---------------------------------';
+        console.log('\n' + SEP + '\n' + getVersion(answers) + '\n' + SEP + '\n');
+        return 'Are you sure you want to proceed with the release version above?';
+      }
+    }
+  ]).then(function (answers) {
+    // Continue with the release if version was confirmed
+    if (answers.confirmRelease === 'yes') {
+      updateVersion(answers);
+    }
   });
 });
 
-task('release.copyProdVersion', () => {
+function getVersion(answers) {
+  const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
+
+  let version = semver.inc(sourcePackageJSON.version, answers.release, true);
+
+  return version;
+}
+
+function updateVersion(answers) {
   // Increment the version and update the source package file
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
 
-  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, 'major', true);
+  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, answers.release, true);
 
   const sourcePrettyPrintedJson = JSON.stringify(sourcePackageJSON, null, 2);
   writeFileSync(`${PROJECT_ROOT}/package.json`, sourcePrettyPrintedJson);
@@ -101,6 +166,16 @@ task('release.copyProdVersion', () => {
 
   const prettyPrintedJson = JSON.stringify(packageJsonToUpdate, null, 2);
   writeFileSync(`${DIST_BUILD_ROOT}/package.json`, prettyPrintedJson);
+
+  start('release.publish');
+}
+
+task('release.publish', (done: (err: any) => void) => {
+console.log('in release publish');
+  runSequence('release.prepareChangelog',
+              'release.publishNpmRelease',
+              'release.publishGithubRelease',
+              done);
 });
 
 task('release.prepareReleasePackage', (done: (err: any) => void) => {
