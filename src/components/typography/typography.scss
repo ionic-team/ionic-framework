@@ -7,15 +7,31 @@
 // $font-size-root value, which is on the <html> element
 // is what can scale all fonts
 
+/// @prop - Font size of the root html
 $font-size-root:               62.5% !default;
+
+/// @prop - Font weight of all headings
 $headings-font-weight:         500 !default;
+
+/// @prop - Line height of all headings
 $headings-line-height:         1.2 !default;
 
+/// @prop - Font size of heading level 1
 $h1-font-size:                 2.6rem !default;
+
+/// @prop - Font size of heading level 2
 $h2-font-size:                 2.4rem !default;
+
+/// @prop - Font size of heading level 3
 $h3-font-size:                 2.2rem !default;
+
+/// @prop - Font size of heading level 4
 $h4-font-size:                 2rem !default;
+
+/// @prop - Font size of heading level 5
 $h5-font-size:                 1.8rem !default;
+
+/// @prop - Font size of heading level 6
 $h6-font-size:                 1.6rem !default;
 
 
