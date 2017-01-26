@@ -99,6 +99,9 @@ export class TextInput extends Ion implements IonicFormInput {
   _readonly: boolean = false;
   _isTouch: boolean;
   _keyboardHeight: number;
+  _min: any;
+  _max: any;
+  _step: any;
   _native: NativeInput;
   _nav: NavControllerBase;
   _scrollStart: any;
@@ -258,6 +261,60 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
+   * @input {any} The minimum value, which must not be greater than its maximum (max attribute) value.
+   */
+  @Input()
+  get min() {
+    return this._min;
+  }
+  set min(val: any) {
+    this.setMin(this._min = val);
+  }
+
+  /**
+   * @private
+   */
+  setMin(val: any) {
+    this._native && this._native.setMin(val);
+  }
+
+  /**
+   * @input {any} The maximum value, which must not be less than its minimum (min attribute) value.
+   */
+  @Input()
+  get max() {
+    return this._max;
+  }
+  set max(val: any) {
+    this.setMax(this._max = val);
+  }
+
+  /**
+   * @private
+   */
+  setMax(val: any) {
+    this._native && this._native.setMax(val);
+  }
+
+  /**
+   * @input {any} Works with the min and max attributes to limit the increments at which a value can be set.
+   */
+  @Input()
+  get step() {
+    return this._step;
+  }
+  set step(val: any) {
+    this.setStep(this._step = val);
+  }
+
+  /**
+   * @private
+   */
+  setStep(val: any) {
+    this._native && this._native.setStep(val);
+  }
+
+  /**
    * @private
    */
   @ViewChild('input', { read: NativeInput })
@@ -305,6 +362,9 @@ export class TextInput extends Ion implements IonicFormInput {
   setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
     nativeInput.setValue(this._value);
+    nativeInput.setMin(this._min);
+    nativeInput.setMax(this._max);
+    nativeInput.setStep(this._step);
     nativeInput.isDisabled(this.disabled);
 
     if (this._item && this._item.labelId !== null) {
