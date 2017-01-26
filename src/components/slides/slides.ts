@@ -943,7 +943,6 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
    * Update the underlying slider implementation. Call this if you've added or removed
    * child slides.
    */
