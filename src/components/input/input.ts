@@ -216,7 +216,7 @@ export class TextInput extends Ion implements IonicFormInput {
    */
   @Input()
   get disabled() {
-    return this.ngControl ? this.ngControl.disabled : this._disabled;
+    return this._disabled;
   }
   set disabled(val: boolean) {
     this.setDisabled(this._disabled = isTrueProperty(val));
@@ -226,8 +226,16 @@ export class TextInput extends Ion implements IonicFormInput {
    * @private
    */
   setDisabled(val: boolean) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', val ? '' : null);
     this._item && this._item.setElementClass('item-input-disabled', val);
     this._native && this._native.isDisabled(val);
+  }
+
+  /**
+   * @private
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   /**

@@ -94,7 +94,7 @@ input.text-input:-webkit-autofill {
   height: 100%;
 }
 
-ion-input[disabled] .input-cover {
+.input[disabled] .input-cover {
   pointer-events: none;
 }
 
