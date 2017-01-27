@@ -14,30 +14,60 @@ import { obj } from 'through2';
 import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
+var promptAnswers;
 
-// task('nightly', (done: (err: any) => void) => {
-//   runSequence('release.pullLatest',
-//               'validate',
-//               'release.prepareReleasePackage',
-//               'release.publishNightly',
-//               done);
-// });
+// Nightly: releases a nightly version
+task('nightly', (done: (err: any) => void) => {
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
+              'release.publishNightly',
+              done);
+});
 
+// Release: prompt, update, publish
 task('release', (done: (err: any) => void) => {
   runSequence(// 'release.pullLatest',
               // 'validate',
               // 'release.prepareReleasePackage',
               'release.promptVersion',
+              'release.update',
+              'release.publish',
               done);
 });
 
-// task('release.test', (done: (err: any) => void) => {
-//   runSequence('validate',
-//               'release.prepareReleasePackage',
-//               'release.promptVersion',
-//               done);
-// });
+// Release.test: prompt and update
+task('release.test', (done: (err: any) => void) => {
+  runSequence('validate',
+              'release.prepareReleasePackage',
+              'release.promptVersion',
+              'release.update',
+              done);
+});
 
+// Release.update: update package.json and changelog
+task('release.update', (done: (err: any) => void) => {
+  if (promptAnswers.confirmRelease === 'yes') {
+    console.log('Running update', promptAnswers);
+    runSequence('release.copyProdVersion',
+                'release.prepareChangelog',
+                done);
+  } else {
+    done(null);
+  }
+});
+
+// Release.publish: publish to GitHub and npm
+task('release.publish', (done: (err: any) => void) => {
+  if (promptAnswers.confirmRelease === 'yes') {
+    console.log('Running publish', promptAnswers);
+    runSequence('release.publishNpmRelease',
+                'release.publishGithubRelease',
+                done);
+  } else {
+    done(null);
+  }
+});
 
 task('release.publishGithubRelease', (done: Function) => {
   console.log('This is where you publish to github');
@@ -89,10 +119,10 @@ task('release.publishNpmRelease', (done: Function) => {
 task('release.promptVersion', (done: Function) => {
   prompt([
     {
-      'type': 'list',
-      'name': 'release',
-      'message': 'What type of release is this?',
-      'choices': [
+      type: 'list',
+      name: 'release',
+      message: 'What type of release is this?',
+      choices: [
         {
           name: 'Major:              Incompatible API changes',
           value: 'major'
@@ -119,6 +149,7 @@ task('release.promptVersion', (done: Function) => {
     }, {
       type: 'list',
       name: 'confirmRelease',
+      default: 'no',
       choices: [
         {
           name: 'Yes',
@@ -136,25 +167,22 @@ task('release.promptVersion', (done: Function) => {
     }
   ]).then(function (answers) {
     // Continue with the release if version was confirmed
-    if (answers.confirmRelease === 'yes') {
-      updateVersion(answers);
-    }
+    promptAnswers = answers;
+    done();
   });
 });
 
 function getVersion(answers) {
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
 
-  let version = semver.inc(sourcePackageJSON.version, answers.release, true);
-
-  return version;
+  return semver.inc(sourcePackageJSON.version, answers.release, true);
 }
 
-function updateVersion(answers) {
+task('release.copyProdVersion', () => {
   // Increment the version and update the source package file
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
 
-  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, answers.release, true);
+  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, promptAnswers.release, true);
 
   const sourcePrettyPrintedJson = JSON.stringify(sourcePackageJSON, null, 2);
   writeFileSync(`${PROJECT_ROOT}/package.json`, sourcePrettyPrintedJson);
@@ -166,16 +194,6 @@ function updateVersion(answers) {
 
   const prettyPrintedJson = JSON.stringify(packageJsonToUpdate, null, 2);
   writeFileSync(`${DIST_BUILD_ROOT}/package.json`, prettyPrintedJson);
-
-  start('release.publish');
-}
-
-task('release.publish', (done: (err: any) => void) => {
-console.log('in release publish');
-  runSequence('release.prepareChangelog',
-              'release.publishNpmRelease',
-              'release.publishGithubRelease',
-              done);
 });
 
 task('release.prepareReleasePackage', (done: (err: any) => void) => {
