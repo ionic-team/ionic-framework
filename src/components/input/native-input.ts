@@ -164,6 +164,18 @@ export class NativeInput {
     return this.element().value;
   }
 
+  setMin(val: any) {
+    this._elementRef.nativeElement['min'] = val;
+  }
+
+  setMax(val: any) {
+    this._elementRef.nativeElement['max'] = val;
+  }
+
+  setStep(val: any) {
+    this._elementRef.nativeElement['step'] = val;
+  }
+
   setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }

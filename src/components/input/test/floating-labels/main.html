@@ -30,8 +30,9 @@
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Enter Number: {{ numberInput.value }} </ion-label>
-      <ion-input #numberInput type="number"></ion-input>
+      <ion-label floating>value: {{ numberInput.value }} min: {{ minValue }} max: {{ maxValue }} step: {{ stepValue }} </ion-label>
+      <ion-input #numberInput [min]="minValue" [max]="maxValue" [step]="stepValue" type="number"></ion-input>
+      <button item-right outline ion-button (click)="toggleValues()">Toggle</button>
     </ion-item>
 
     <ion-item>

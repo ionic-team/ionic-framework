@@ -99,6 +99,9 @@ export class TextInput extends Ion implements IonicFormInput {
   _readonly: boolean = false;
   _isTouch: boolean;
   _keyboardHeight: number;
+  _min: any;
+  _max: any;
+  _step: any;
   _native: NativeInput;
   _nav: NavControllerBase;
   _scrollStart: any;
@@ -213,7 +216,7 @@ export class TextInput extends Ion implements IonicFormInput {
    */
   @Input()
   get disabled() {
-    return this.ngControl ? this.ngControl.disabled : this._disabled;
+    return this._disabled;
   }
   set disabled(val: boolean) {
     this.setDisabled(this._disabled = isTrueProperty(val));
@@ -223,8 +226,16 @@ export class TextInput extends Ion implements IonicFormInput {
    * @private
    */
   setDisabled(val: boolean) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', val ? '' : null);
     this._item && this._item.setElementClass('item-input-disabled', val);
     this._native && this._native.isDisabled(val);
+  }
+
+  /**
+   * @private
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   /**
@@ -255,6 +266,60 @@ export class TextInput extends Ion implements IonicFormInput {
   }
   set clearOnEdit(val: any) {
     this._clearOnEdit = isTrueProperty(val);
+  }
+
+  /**
+   * @input {any} The minimum value, which must not be greater than its maximum (max attribute) value.
+   */
+  @Input()
+  get min() {
+    return this._min;
+  }
+  set min(val: any) {
+    this.setMin(this._min = val);
+  }
+
+  /**
+   * @private
+   */
+  setMin(val: any) {
+    this._native && this._native.setMin(val);
+  }
+
+  /**
+   * @input {any} The maximum value, which must not be less than its minimum (min attribute) value.
+   */
+  @Input()
+  get max() {
+    return this._max;
+  }
+  set max(val: any) {
+    this.setMax(this._max = val);
+  }
+
+  /**
+   * @private
+   */
+  setMax(val: any) {
+    this._native && this._native.setMax(val);
+  }
+
+  /**
+   * @input {any} Works with the min and max attributes to limit the increments at which a value can be set.
+   */
+  @Input()
+  get step() {
+    return this._step;
+  }
+  set step(val: any) {
+    this.setStep(this._step = val);
+  }
+
+  /**
+   * @private
+   */
+  setStep(val: any) {
+    this._native && this._native.setStep(val);
   }
 
   /**
@@ -305,6 +370,9 @@ export class TextInput extends Ion implements IonicFormInput {
   setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
     nativeInput.setValue(this._value);
+    nativeInput.setMin(this._min);
+    nativeInput.setMax(this._max);
+    nativeInput.setStep(this._step);
     nativeInput.isDisabled(this.disabled);
 
     if (this._item && this._item.labelId !== null) {
