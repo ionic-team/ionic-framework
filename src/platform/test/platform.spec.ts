@@ -318,6 +318,7 @@ describe('Platform', () => {
     expect(plt.is('android')).toEqual(false);
     expect(plt.is('ios')).toEqual(true);
     expect(plt.is('iphone')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(false);
     expect(plt.is('tablet')).toEqual(false);
 
     plt.setQueryParams('');
@@ -330,6 +331,7 @@ describe('Platform', () => {
     expect(plt.is('android')).toEqual(false);
     expect(plt.is('ios')).toEqual(true);
     expect(plt.is('iphone')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(false);
     expect(plt.is('tablet')).toEqual(false);
   });
 
@@ -344,6 +346,7 @@ describe('Platform', () => {
     expect(plt.is('android')).toEqual(false);
     expect(plt.is('ios')).toEqual(true);
     expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
     expect(plt.is('tablet')).toEqual(true);
 
     plt.setQueryParams('');
@@ -356,6 +359,7 @@ describe('Platform', () => {
     expect(plt.is('android')).toEqual(false);
     expect(plt.is('ios')).toEqual(true);
     expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
     expect(plt.is('tablet')).toEqual(true);
   });
 
