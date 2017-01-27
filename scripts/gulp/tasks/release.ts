@@ -27,9 +27,9 @@ task('nightly', (done: (err: any) => void) => {
 
 // Release: prompt, update, publish
 task('release', (done: (err: any) => void) => {
-  runSequence(// 'release.pullLatest',
-              // 'validate',
-              // 'release.prepareReleasePackage',
+  runSequence('release.pullLatest',
+              'validate',
+              'release.prepareReleasePackage',
               'release.promptVersion',
               'release.update',
               'release.publish',
@@ -48,11 +48,11 @@ task('release.test', (done: (err: any) => void) => {
 // Release.update: update package.json and changelog
 task('release.update', (done: (err: any) => void) => {
   if (promptAnswers.confirmRelease === 'yes') {
-    console.log('Running update', promptAnswers);
     runSequence('release.copyProdVersion',
                 'release.prepareChangelog',
                 done);
   } else {
+    console.log('Did not run release.update tasks, aborted release');
     done(null);
   }
 });
@@ -60,60 +60,56 @@ task('release.update', (done: (err: any) => void) => {
 // Release.publish: publish to GitHub and npm
 task('release.publish', (done: (err: any) => void) => {
   if (promptAnswers.confirmRelease === 'yes') {
-    console.log('Running publish', promptAnswers);
     runSequence('release.publishNpmRelease',
                 'release.publishGithubRelease',
                 done);
   } else {
+    console.log('Did not run release.publish tasks, aborted release');
     done(null);
   }
 });
 
 task('release.publishGithubRelease', (done: Function) => {
-  console.log('This is where you publish to github');
+  const packageJSON = require('../../../package.json');
 
-  // const packageJSON = require('../../../package.json');
+  const github = new GithubApi({
+    version: '3.0.0'
+  });
 
-  // const github = new GithubApi({
-  //   version: '3.0.0'
-  // });
+  github.authenticate({
+    type: 'oauth',
+    token: process.env.GH_TOKEN
+  });
 
-  // github.authenticate({
-  //   type: 'oauth',
-  //   token: process.env.GH_TOKEN
-  // });
-
-  // return changelog({
-  //   preset: 'angular'
-  // })
-  // .pipe(obj(function(file, enc, cb){
-  //   github.releases.createRelease({
-  //     owner: 'driftyco',
-  //     repo: 'ionic',
-  //     target_commitish: 'master',
-  //     tag_name: 'v' + packageJSON.version,
-  //     name: packageJSON.version,
-  //     body: file.toString(),
-  //     prerelease: false
-  //   }, done);
-  // }));
+  return changelog({
+    preset: 'angular'
+  })
+  .pipe(obj(function(file, enc, cb){
+    github.releases.createRelease({
+      owner: 'driftyco',
+      repo: 'ionic',
+      target_commitish: 'master',
+      tag_name: 'v' + packageJSON.version,
+      name: packageJSON.version,
+      body: file.toString(),
+      prerelease: false
+    }, done);
+  }));
 });
 
 task('release.publishNpmRelease', (done: Function) => {
-  console.log('This is where you publish to npm');
-  done();
-  // const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
-  // npmCmd.stdout.on('data', function (data) {
-  //   console.log(data.toString());
-  // });
+  const npmCmd = spawn('npm', ['publish', DIST_BUILD_ROOT]);
+  npmCmd.stdout.on('data', function (data) {
+    console.log(data.toString());
+  });
 
-  // npmCmd.stderr.on('data', function (data) {
-  //   console.log('npm err: ' + data.toString());
-  // });
+  npmCmd.stderr.on('data', function (data) {
+    console.log('npm err: ' + data.toString());
+  });
 
-  // npmCmd.on('close', function() {
-  //   done();
-  // });
+  npmCmd.on('close', function() {
+    done();
+  });
 });
 
 task('release.promptVersion', (done: Function) => {
@@ -124,25 +120,25 @@ task('release.promptVersion', (done: Function) => {
       message: 'What type of release is this?',
       choices: [
         {
-          name: 'Major:              Incompatible API changes',
+          name: 'Major:    Incompatible API changes',
           value: 'major'
         }, {
-          name: 'Minor:              Backwards-compatible functionality',
+          name: 'Minor:    Backwards-compatible functionality',
           value: 'minor'
         }, {
-          name: 'Patch:              Backwards-compatible bug fixes',
+          name: 'Patch:    Backwards-compatible bug fixes',
           value: 'patch'
         }, {
-          name: 'Premajor:           ',
+          name: 'Premajor',
           value: 'premajor'
         }, {
-          name: 'Preminor:           ',
+          name: 'Preminor',
           value: 'preminor'
         }, {
-          name: 'Prepatch:           ',
+          name: 'Prepatch',
           value: 'prepatch'
         }, {
-          name: 'Prerelease:         ',
+          name: 'Prerelease',
           value: 'prerelease'
         }
       ]
