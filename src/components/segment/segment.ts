@@ -70,7 +70,7 @@ export class SegmentButton {
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
   /**
-   * @input {string} disabled state of the button. Optional.
+   * @input {boolean} disabled state of the button. Optional.
    */
   @Input()
   get disabled(): boolean {
