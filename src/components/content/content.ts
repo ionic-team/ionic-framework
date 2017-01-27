@@ -605,7 +605,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     let cacheHeaderHeight = this._hdrHeight;
     let cacheFooterHeight = this._ftrHeight;
     let cacheTabsPlacement = this._tabsPlacement;
-    let scrollEvent;
+    let scrollEvent: any;
     let tabsTop = 0;
     this._pTop = 0;
     this._pRight = 0;
