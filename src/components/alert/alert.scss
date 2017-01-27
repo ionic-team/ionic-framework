@@ -15,6 +15,9 @@ $alert-button-line-height:        20px !default;
 /// @prop - Font size of the alert button
 $alert-button-font-size:          14px !default;
 
+/// @prop - Color of the alert input placeholder
+$alert-input-placeholder-color:   #999 !default;
+
 
 ion-alert {
   position: absolute;
@@ -75,7 +78,7 @@ ion-alert input {
 }
 
 .alert-input {
-  @include placeholder();
+  @include placeholder($alert-input-placeholder-color);
 
   padding: 10px 0;
 
