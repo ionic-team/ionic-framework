@@ -796,7 +796,7 @@ export class TextInput extends Ion implements IonicFormInput {
  * @name TextArea
  * @description
  *
- * `ion-textarea` is is used for multi-line text inputs. Ionic still
+ * `ion-textarea` is used for multi-line text inputs. Ionic still
  * uses an actual `<textarea>` HTML element within the component;
  * however, with Ionic wrapping the native HTML text area element, Ionic
  * is able to better handle the user experience and interactivity.
