@@ -605,7 +605,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     let cacheHeaderHeight = this._hdrHeight;
     let cacheFooterHeight = this._ftrHeight;
     let cacheTabsPlacement = this._tabsPlacement;
-    let scrollEvent: any;
+    let scrollEvent: ScrollEvent;
     let tabsTop = 0;
     this._pTop = 0;
     this._pRight = 0;
@@ -620,11 +620,9 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
     // In certain cases this._scroll is undefined
     // if that is the case then we should just return
-    if (this._scroll) {
-      scrollEvent = this._scroll.ev;
-    } else {
-      return;
-    }
+    if (!this._scroll) return;
+
+    scrollEvent = this._scroll.ev;
 
     let ele: HTMLElement = this._elementRef.nativeElement;
     if (!ele) {
