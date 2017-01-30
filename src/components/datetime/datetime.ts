@@ -852,6 +852,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     console.debug('datetime, onChange w/out formControlName', val);
     this.setValue(val);
     this.updateText();
+    this.checkHasValue(val);
     this.onTouched();
   }
 
