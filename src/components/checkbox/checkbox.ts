@@ -142,7 +142,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @input {boolean} If `true`, the element is selected.
+   * @input {boolean} If true, the element is selected.
    */
   @Input()
   get checked(): boolean {

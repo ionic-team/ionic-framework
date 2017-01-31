@@ -213,7 +213,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @input {boolean} If `true`, the element is selected.
+   * @input {boolean} If true, the element is selected.
    */
   @Input()
   get checked(): boolean {
