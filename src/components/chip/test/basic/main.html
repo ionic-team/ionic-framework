@@ -93,4 +93,14 @@
     </button>
   </ion-chip>
 
+  <ion-item>
+    <ion-label>Chip Item</ion-label>
+    <ion-chip item-right #chip1>
+      <ion-icon name="pin" color="primary"></ion-icon>
+      <ion-label>Default</ion-label>
+      <button ion-button clear color="light" (click)="delete(chip1)">
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+    </ion-chip>
+  </ion-item>
 </ion-content>
