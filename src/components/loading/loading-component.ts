@@ -1,11 +1,12 @@
 import { Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isDefined, isUndefined, assert } from '../../util/util';
-import { NavParams } from '../../navigation/nav-params';
-import { ViewController } from '../../navigation/view-controller';
 import { LoadingOptions } from './loading-options';
-import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { NavParams } from '../../navigation/nav-params';
+import { Platform } from '../../platform/platform';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
 * @private
@@ -35,6 +36,7 @@ export class LoadingCmp {
   constructor(
     private _viewCtrl: ViewController,
     private _config: Config,
+    private _plt: Platform,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
@@ -76,8 +78,7 @@ export class LoadingCmp {
   }
 
   ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    activeElement && activeElement.blur();
+    this._plt.focusOutActiveElement();
 
     // If there is a duration, dismiss after that amount of time
     if ( this.d && this.d.duration ) {

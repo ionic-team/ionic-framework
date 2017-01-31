@@ -1,5 +1,3 @@
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-
 # Ionic 2
 
 Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-source mobile app development SDK that makes it easy to build top quality native and progressive web apps with web technologies.
@@ -19,3 +17,7 @@ See [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONT
 ### Ionic 2 Examples
 
 The [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) is a full featured Ionic 2 app. It is the perfect starting point for learning and building your own app.
+
+### Ionic 1.x
+
+The source code for Ionic 1.x has been moved to [driftyco/ionic-v1](https://github.com/driftyco/ionic-v1). Please file issues and pull requests related to Ionic 1.x at that repo. 1.x issues and PRs on this repo will be closed.

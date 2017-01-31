@@ -59,7 +59,7 @@ task('e2e.build', function () {
     .on('error', function (error) {
       console.log(error.message);
     })
-    .pipe(gulpif(/app-module.js$/, createIndexHTML()))
+    .pipe(gulpif(/app.module.js$/, createIndexHTML()))
     .pipe(gulpif(/e2e.js$/, createPlatformTests()));
 
   var testFiles = src([
@@ -127,12 +127,8 @@ task('e2e.build', function () {
  * Creates SystemJS bundle from Ionic source files.
  */
 task('e2e.bundle', function () {
-  var tsResult = tsCompile(getTscOptions('es6'), 'system')
-    .pipe(babel(babelOptions));
-
-  var swiper = src('src/components/slides/swiper-widget.system.js');
-
-  return merge([tsResult, swiper])
+  return tsCompile(getTscOptions('es6'), 'system')
+    .pipe(babel(babelOptions))
     .pipe(remember('system'))
     .pipe(concat('ionic.system.js'))
     .pipe(dest(`${DIST_NAME}/bundles`))

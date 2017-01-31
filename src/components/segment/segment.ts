@@ -70,7 +70,7 @@ export class SegmentButton {
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
   /**
-   * @private
+   * @input {boolean} disabled state of the button. Optional.
    */
   @Input()
   get disabled(): boolean {
@@ -195,7 +195,7 @@ export class Segment extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {

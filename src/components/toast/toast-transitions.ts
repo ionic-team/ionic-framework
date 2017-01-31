@@ -7,7 +7,7 @@ export class ToastSlideIn extends Transition {
     // DOM READS
     let ele = this.enteringView.pageRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
-    let wrapper = new Animation(wrapperEle);
+    let wrapper = new Animation(this.plt, wrapperEle);
 
     if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_TOP) {
       // top
@@ -39,7 +39,7 @@ export class ToastSlideOut extends Transition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
     const wrapperEle = <HTMLElement> ele.querySelector('.toast-wrapper');
-    let wrapper = new Animation(wrapperEle);
+    let wrapper = new Animation(this.plt, wrapperEle);
 
     if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_TOP) {
       // top
@@ -67,7 +67,7 @@ export class ToastMdSlideIn extends Transition {
     // DOM reads
     let ele = this.enteringView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
-    let wrapper = new Animation(wrapperEle);
+    let wrapper = new Animation(this.plt, wrapperEle);
 
     if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_TOP) {
       // top
@@ -99,7 +99,7 @@ export class ToastMdSlideOut extends Transition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
-    let wrapper = new Animation(wrapperEle);
+    let wrapper = new Animation(this.plt, wrapperEle);
 
     if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_TOP) {
       // top
@@ -126,7 +126,7 @@ export class ToastWpPopIn extends Transition {
   init() {
     let ele = this.enteringView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
-    let wrapper = new Animation(wrapperEle);
+    let wrapper = new Animation(this.plt, wrapperEle);
 
     if (this.enteringView.data && this.enteringView.data.position === TOAST_POSITION_TOP) {
       // top
@@ -159,7 +159,7 @@ export class ToastWpPopOut extends Transition {
     // DOM reads
     let ele = this.leavingView.pageRef().nativeElement;
     const wrapperEle = ele.querySelector('.toast-wrapper');
-    let wrapper = new Animation(wrapperEle);
+    let wrapper = new Animation(this.plt, wrapperEle);
 
     if (this.leavingView.data && this.leavingView.data.position === TOAST_POSITION_TOP) {
       // top

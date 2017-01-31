@@ -1,10 +1,11 @@
-import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
+import { Component, Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { CSS, zoneRafFrames } from '../../util/dom';
-import { Item } from './item';
-import { ItemReorderGesture } from '../item/item-reorder-gesture';
+import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
+import { findReorderItem } from './item-reorder-util';
+import { ItemReorderGestureDelegate, ItemReorderGesture } from '../item/item-reorder-gesture';
+import { Platform } from '../../platform/platform';
 
 
 export class ReorderIndexes {
@@ -144,7 +145,7 @@ export class ReorderIndexes {
     '[class.reorder-visible]': '_visibleReorder',
   }
 })
-export class ItemReorder {
+export class ItemReorder implements ItemReorderGestureDelegate {
 
   _enableReorder: boolean = false;
   _visibleReorder: boolean = false;
@@ -159,10 +160,13 @@ export class ItemReorder {
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
 
   constructor(
+    private _plt: Platform,
+    private _dom: DomController,
     elementRef: ElementRef,
     private _rendered: Renderer,
     private _zone: NgZone,
-    @Optional() private _content: Content) {
+    @Optional() private _content: Content
+  ) {
     this._element = elementRef.nativeElement;
   }
 
@@ -193,10 +197,15 @@ export class ItemReorder {
 
     } else if (enabled && !this._reorderGesture) {
       console.debug('enableReorderItems');
-      this._reorderGesture = new ItemReorderGesture(this);
+      this._reorderGesture = new ItemReorderGesture(this._plt, this);
 
       this._enableReorder = true;
-      zoneRafFrames(2, () => this._visibleReorder = true);
+
+      this._dom.write(() => {
+        this._zone.run(() => {
+          this._visibleReorder = true;
+        });
+      }, 16);
     }
   }
 
@@ -237,7 +246,7 @@ export class ItemReorder {
     let len = children.length;
 
     this.setElementClass('reorder-list-active', false);
-    let transform = CSS.transform;
+    let transform = this._plt.Css.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
     }
@@ -258,7 +267,7 @@ export class ItemReorder {
     let children = this._element.children;
 
     /********* DOM WRITE ********* */
-    let transform = CSS.transform;
+    let transform = this._plt.Css.transform;
     if (toIndex >= lastToIndex) {
       for (var i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {
@@ -302,53 +311,18 @@ export class ItemReorder {
 })
 export class Reorder {
   constructor(
-    @Inject(forwardRef(() => Item)) private item: ItemReorder,
     private elementRef: ElementRef) {
     elementRef.nativeElement['$ionComponent'] = this;
   }
 
   getReorderNode(): HTMLElement {
-    let node = <any>this.item.getNativeElement();
-    return findReorderItem(node, null);
+    return findReorderItem(this.elementRef.nativeElement, null);
   }
 
   @HostListener('click', ['$event'])
-  onClick(ev) {
+  onClick(ev: UIEvent) {
     // Stop propagation if click event reaches ion-reorder
     ev.preventDefault();
     ev.stopPropagation();
   }
-
-}
-
-/**
- * @private
- */
-export function findReorderItem(node: any, listNode: any): HTMLElement {
-  let nested = 0;
-  while (node && nested < 4) {
-    if (indexForItem(node) !== undefined) {
-      if (listNode && node.parentNode !== listNode) {
-        return null;
-      }
-      return node;
-    }
-    node = node.parentNode;
-    nested++;
-  }
-  return null;
-}
-
-/**
- * @private
- */
-export function indexForItem(element: any): number {
-  return element['$ionIndex'];
-}
-
-/**
- * @private
- */
-export function reorderListForItem(element: any): any {
-  return element['$ionReorderList'];
 }

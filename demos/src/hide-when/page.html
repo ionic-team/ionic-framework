@@ -1,0 +1,61 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>HideWhen</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="hide-when-demo">
+
+  <h5 margin>Hide Icon Per Platform</h5>
+  <p margin>In this example we're using the <code>hideWhen</code> directive to decide whether to hide an icon based on the platform.</p>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <ion-icon name="logo-apple" hideWhen="android,windows"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <code> &lt;ion-icon name="logo-apple" hideWhen="android,windows"&gt;&lt;/ion-icon&gt; </code>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-icon name="logo-android" hideWhen="ios,windows"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <code> &lt;ion-icon name="logo-android" hideWhen="ios,windows"&gt;&lt;/ion-icon&gt; </code>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-icon name="logo-windows" hideWhen="ios,android"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <code> &lt;ion-icon name="logo-windows" hideWhen="ios,android"&gt;&lt;/ion-icon&gt; </code>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<style>
+  .hide-when-demo ion-col {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    margin: 1%;
+    max-width: 48%;
+    flex: 0 0 48%;
+    min-height: 120px;
+  }
+
+  .hide-when-demo code {
+    background: #f8f8f8;
+  }
+
+  .hide-when-demo ion-icon {
+    font-size: 100px;
+  }
+</style>

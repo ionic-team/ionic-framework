@@ -140,7 +140,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 }
 
 .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-.item-ios.item-label-floating .label-ios + .input + .cloned-input {
+.item-ios.item-label-floating .label-ios + .input + .cloned-input {
   margin-left: 0;
 }
 
@@ -159,7 +159,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
   position: relative;
 }
 
-.input-ios .text-input {
+.input-ios[clearInput] .text-input {
   padding-right: $text-input-ios-input-clear-icon-width;
 }
 

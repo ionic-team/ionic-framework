@@ -3,8 +3,14 @@
 // Infinite Scroll
 // --------------------------------------------------
 
+
+/// @prop - Margin of the infinite scroll loading icon
 $infinite-scroll-loading-margin:         0 0 32px 0 !default;
+
+/// @prop - Color of the infinite scroll loading indicator
 $infinite-scroll-loading-color:          #666 !default;
+
+/// @prop - Margin of the infinite scroll loading text
 $infinite-scroll-loading-text-margin:    4px 32px 0 32px !default;
 
 

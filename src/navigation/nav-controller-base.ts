@@ -7,17 +7,18 @@ import { convertToView, convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FO
          TransitionResolveFn, TransitionInstruction, ViewState } from './nav-util';
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
+import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
 import { isBlank, isNumber, isPresent, assert, removeArrayItem } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
-import { Keyboard } from '../util/keyboard';
+import { Keyboard } from '../platform/keyboard';
 import { NavController } from './nav-controller';
 import { NavParams } from './nav-params';
+import { Platform } from '../platform/platform';
 import { SwipeBackGesture } from './swipe-back';
 import { Transition } from '../transitions/transition';
 import { TransitionController } from '../transitions/transition-controller';
-import { DomController } from '../util/dom-controller';
 
 /**
  * @private
@@ -52,6 +53,7 @@ export class NavControllerBase extends Ion implements NavController {
     public parent: any,
     public _app: App,
     public config: Config,
+    public plt: Platform,
     public _keyboard: Keyboard,
     elementRef: ElementRef,
     public _zone: NgZone,
@@ -566,7 +568,7 @@ export class NavControllerBase extends Ion implements NavController {
       direction: opts.direction,
       duration: (opts.animate === false ? 0 : opts.duration),
       easing: opts.easing,
-      isRTL: this._config.platform.isRTL(),
+      isRTL: this._config.plt.isRTL(),
       ev: opts.ev,
     };
 
@@ -661,7 +663,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (duration > DISABLE_APP_MINIMUM_DURATION && opts.disableApp !== false) {
         // if this transition has a duration and this is the root transition
         // then set that the app is actively disabled
-        this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET);
+        this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET, opts.minClickBlockDuration);
       } else {
         console.debug('transition is running but app has not been disabled');
       }
@@ -684,7 +686,7 @@ export class NavControllerBase extends Ion implements NavController {
   _viewsWillLifecycles(enteringView: ViewController, leavingView: ViewController) {
     if (enteringView || leavingView) {
       this._zone.run(() => {
-        // Here, the order is important. WillLeave must called before WillEnter.
+        // Here, the order is important. WillLeave must be called before WillEnter.
         leavingView && this._willLeave(leavingView, !enteringView);
         enteringView && this._willEnter(enteringView);
       });
@@ -961,7 +963,7 @@ export class NavControllerBase extends Ion implements NavController {
   _swipeBackCheck() {
     if (this.canSwipeBack()) {
       if (!this._sbGesture) {
-        this._sbGesture = new SwipeBackGesture(this, this._gestureCtrl, this._domCtrl);
+        this._sbGesture = new SwipeBackGesture(this.plt, this, this._gestureCtrl, this._domCtrl);
       }
       this._sbGesture.listen();
 
@@ -973,7 +975,7 @@ export class NavControllerBase extends Ion implements NavController {
   canSwipeBack(): boolean {
     return (this._sbEnabled &&
             !this._isPortal &&
-            !this._children.length &&
+            this._children.length <= 1 &&
             !this.isTransitioning() &&
             this._app.isEnabled() &&
             this.canGoBack());

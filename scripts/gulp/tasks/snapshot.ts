@@ -11,7 +11,7 @@ import { DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, PROJECT_ROOT, SCRIPTS_ROOT } f
 import { mergeObjects } from '../util';
 
 
-task('snapshot', ['e2e.clean', 'e2e.prod'], (done: Function) => {
+task('snapshot', ['e2e.prod'], (done: Function) => {
   snapshot(false, false, done);
 });
 
@@ -19,7 +19,7 @@ task('snapshot.skipBuild', ['e2e.sass'], (done: Function) => {
   snapshot(false, false, done);
 });
 
-task('snapshot.dev', ['e2e.clean', 'e2e'], (done: Function) => {
+task('snapshot.dev', ['e2e'], (done: Function) => {
   snapshot(false, true, done);
 });
 

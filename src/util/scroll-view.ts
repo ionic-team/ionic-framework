@@ -1,9 +1,9 @@
 import { Subject } from 'rxjs/Subject';
 
 import { assert } from './util';
-import { CSS, nativeRaf, pointerCoord, rafFrames } from './dom';
-import { DomController, DomCallback } from './dom-controller';
-import { eventOptions, listenEvent } from './ui-event-manager';
+import { DomController, DomCallback } from '../platform/dom-controller';
+import { Platform, EventListenerOptions } from '../platform/platform';
+import { pointerCoord } from './dom';
 
 
 export class ScrollView {
@@ -22,7 +22,7 @@ export class ScrollView {
   private _endTmr: Function;
 
 
-  constructor(private _dom: DomController) {
+  constructor(private _plt: Platform, private _dom: DomController) {
     this.ev = {
       timeStamp: 0,
       scrollTop: 0,
@@ -135,12 +135,7 @@ export class ScrollView {
         }
       }
 
-      // emit on each scroll event
-      self.scroll.next(ev);
-
-      // debounce for a moment after the last scroll event
-      self._endTmr && self._endTmr();
-      self._endTmr = rafFrames(6, function scrollEnd() {
+      function scrollEnd() {
         // haven't scrolled in a while, so it's a scrollend
         self.isScrolling = false;
 
@@ -148,9 +143,17 @@ export class ScrollView {
         ev.velocityY = ev.velocityX = 0;
 
         // emit that the scroll has ended
-        self.scrollEnd.next(ev);
-      });
+        self.scrollEnd && self.scrollEnd.next(ev);
 
+        self._endTmr = null;
+      }
+
+      // emit on each scroll event
+      self.scroll.next(ev);
+
+      // debounce for a moment after the last scroll event
+      self._dom.cancel(self._endTmr);
+      self._endTmr = self._dom.read(scrollEnd, SCROLL_END_DEBOUNCE_MS);
     };
 
     // clear out any existing listeners (just to be safe)
@@ -161,8 +164,7 @@ export class ScrollView {
     // a scroll event callback will always be right before the raf callback
     // so there's little to no value of using raf here since it'll all ways immediately
     // call the raf if it was set within the scroll event, so this will save us some time
-    const opts = eventOptions(false, false);
-    self._lsn = listenEvent(self._el, 'scroll', false, opts, scrollCallback);
+    self._lsn = self._plt.registerListener(self._el, 'scroll', scrollCallback, EVENT_OPTS);
   }
 
 
@@ -234,7 +236,7 @@ export class ScrollView {
             ev.velocityY = ev.velocityX = 0;
 
             // emit that the scroll has ended
-            self.scrollEnd.next(ev);
+            self.scrollEnd && self.scrollEnd.next(ev);
           }
         });
       }
@@ -289,7 +291,7 @@ export class ScrollView {
       if (!positions.length && self.isScrolling) {
         self.isScrolling = false;
         ev.velocityY = ev.velocityX = 0;
-        self.scrollEnd.next(ev);
+        self.scrollEnd && self.scrollEnd.next(ev);
         return;
       }
 
@@ -327,16 +329,16 @@ export class ScrollView {
       } else {
         self.isScrolling = false;
         ev.velocityY = 0;
-        self.scrollEnd.next(ev);
+        self.scrollEnd && self.scrollEnd.next(ev);
       }
 
       positions.length = 0;
     }
 
-    const opts = eventOptions(false, true);
-    const unRegStart = listenEvent(ele, 'touchstart', false, opts, jsScrollTouchStart);
-    const unRegMove = listenEvent(ele, 'touchmove', false, opts, jsScrollTouchMove);
-    const unRegEnd = listenEvent(ele, 'touchend', false, opts, jsScrollTouchEnd);
+    const plt = self._plt;
+    const unRegStart = plt.registerListener(ele, 'touchstart', jsScrollTouchStart, EVENT_OPTS);
+    const unRegMove = plt.registerListener(ele, 'touchmove', jsScrollTouchMove, EVENT_OPTS);
+    const unRegEnd = plt.registerListener(ele, 'touchend', jsScrollTouchEnd, EVENT_OPTS);
 
     ele.parentElement.classList.add('js-scroll');
 
@@ -380,7 +382,7 @@ export class ScrollView {
     this._t = top;
 
     if (this._js) {
-      (<any>this._el.style)[CSS.transform] = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
+      (<any>this._el.style)[this._plt.Css.transform] = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
 
     } else {
       this._el.scrollTop = top;
@@ -394,7 +396,7 @@ export class ScrollView {
     this._l = left;
 
     if (this._js) {
-      (<any>this._el.style)[CSS.transform] = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
+      (<any>this._el.style)[this._plt.Css.transform] = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
 
     } else {
       this._el.scrollLeft = left;
@@ -415,30 +417,37 @@ export class ScrollView {
     }
 
     const self = this;
-    if (!self._el) {
+    const el = self._el;
+    if (!el) {
       // invalid element
       done();
       return promise;
     }
 
-    x = x || 0;
-    y = y || 0;
+    if (duration < 32) {
+      self.setTop(y);
+      self.setLeft(x);
+      done();
+      return promise;
+    }
 
-    const fromY = self._el.scrollTop;
-    const fromX = self._el.scrollLeft;
+    const fromY = el.scrollTop;
+    const fromX = el.scrollLeft;
 
     const maxAttempts = (duration / 16) + 100;
+    const transform =  self._plt.Css.transform;
 
     let startTime: number;
     let attempts = 0;
+    let stopScroll = false;
 
     // scroll loop
     function step(timeStamp: number) {
       attempts++;
 
-      if (!self._el || !self.isScrolling || attempts > maxAttempts) {
+      if (!self._el || stopScroll || attempts > maxAttempts) {
         self.isScrolling = false;
-        (<any>self._el.style)[CSS.transform] = '';
+        (<any>el.style)[transform] = '';
         done();
         return;
       }
@@ -460,11 +469,12 @@ export class ScrollView {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        nativeRaf(step);
+        self._plt.raf(step);
 
       } else {
+        stopScroll = true;
         self.isScrolling = false;
-        (<any>self._el.style)[CSS.transform] = '';
+        (<any>el.style)[transform] = '';
         done();
       }
     }
@@ -473,10 +483,10 @@ export class ScrollView {
     self.isScrolling = true;
 
     // chill out for a frame first
-    rafFrames(2, (timeStamp: number) => {
+    self._dom.write(timeStamp => {
       startTime = timeStamp;
       step(timeStamp);
-    });
+    }, 16);
 
     return promise;
   }
@@ -501,12 +511,15 @@ export class ScrollView {
    * @private
    */
   destroy() {
-    this.scrollStart.unsubscribe();
-    this.scroll.unsubscribe();
-    this.scrollEnd.unsubscribe();
     this.stop();
-    this._endTmr && this._endTmr();
+
+    this._endTmr && this._dom.cancel(this._endTmr);
     this._lsn && this._lsn();
+
+    this.scrollStart && this.scrollStart.unsubscribe();
+    this.scroll && this.scroll.unsubscribe();
+    this.scrollEnd && this.scrollEnd.unsubscribe();
+
     let ev = this.ev;
     ev.domWrite = ev.contentElement = ev.fixedElement = ev.scrollElement = ev.headerElement = null;
     this._lsn = this._el = this._dom = this.ev = ev = null;
@@ -541,8 +554,12 @@ export interface ScrollEvent {
   footerElement?: HTMLElement;
 }
 
-
+const SCROLL_END_DEBOUNCE_MS = 80;
 const MIN_VELOCITY_START_DECELERATION = 4;
 const MIN_VELOCITY_CONTINUE_DECELERATION = 0.12;
 const DECELERATION_FRICTION = 0.97;
 const FRAME_MS = (1000 / 60);
+const EVENT_OPTS: EventListenerOptions = {
+  passive: true,
+  zone: false
+};

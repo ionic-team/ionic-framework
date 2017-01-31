@@ -89,12 +89,14 @@ export class Popover extends ViewController {
  * which creates and presents the popover:
  *
  * ```html
- * <button ion-button (click)="presentPopover($event)">
+ * <button ion-button icon-only (click)="presentPopover($event)">
  *   <ion-icon name="more"></ion-icon>
  * </button>
  * ```
  *
  * ```ts
+ * import { PopoverController } from 'ionic-angular';
+ *
  * @Component({})
  * class MyPage {
  *   constructor(public popoverCtrl: PopoverController) {}

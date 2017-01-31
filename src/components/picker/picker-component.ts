@@ -1,18 +1,18 @@
 import { Component, ElementRef, EventEmitter, Input, HostListener, NgZone, Output, QueryList, Renderer, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 
-import { CSS, cancelRaf, pointerCoord, nativeRaf } from '../../util/dom';
 import { clamp, isNumber, isPresent, isString, assert } from '../../util/util';
 import { Config } from '../../config/config';
-import { Key } from '../../util/key';
+import { DomController, DomDebouncer } from '../../platform/dom-controller';
+import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { Haptic } from '../../tap-click/haptic';
+import { Key } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-options';
-import { Haptic } from '../../util/haptic';
-import { UIEventManager } from '../../util/ui-event-manager';
-import { DomController, DomDebouncer } from '../../util/dom-controller';
+import { Platform } from '../../platform/platform';
+import { pointerCoord } from '../../util/dom';
+import { UIEventManager } from '../../gestures/ui-event-manager';
 import { ViewController } from '../../navigation/view-controller';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 
 /**
  * @private
@@ -54,18 +54,20 @@ export class PickerColumnCmp {
   lastTempIndex: number;
   decelerateFunc: Function;
   debouncer: DomDebouncer;
-  events: UIEventManager = new UIEventManager(false);
+  events: UIEventManager;
 
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   constructor(
     config: Config,
+    private _plt: Platform,
     private elementRef: ElementRef,
-    private _sanitizer: DomSanitizer,
     private _zone: NgZone,
     private _haptic: Haptic,
+    plt: Platform,
     domCtrl: DomController,
   ) {
+    this.events = new UIEventManager(plt);
     this.rotateFactor = config.getNumber('pickerRotateFactor', 0);
     this.scaleFactor = config.getNumber('pickerScaleFactor', 1);
     this.decelerateFunc = this.decelerate.bind(this);
@@ -86,20 +88,18 @@ export class PickerColumnCmp {
 
     // Listening for pointer events
     this.events.pointerEvents({
-      elementRef: this.elementRef,
+      element: this.elementRef.nativeElement,
       pointerDown: this.pointerStart.bind(this),
       pointerMove: this.pointerMove.bind(this),
       pointerUp: this.pointerEnd.bind(this),
-      capture: true
+      capture: true,
+      zone: false
     });
   }
 
   ngOnDestroy() {
-    this.events.unlistenAll();
-    if (this.rafId) {
-      cancelRaf(this.rafId);
-      this.rafId = null;
-    }
+    this._plt.cancelRaf(this.rafId);
+    this.events.destroy();
   }
 
   pointerStart(ev: UIEvent): boolean {
@@ -112,10 +112,7 @@ export class PickerColumnCmp {
     ev.preventDefault();
 
     // cancel any previous raf's that haven't fired yet
-    if (this.rafId) {
-      cancelRaf(this.rafId);
-      this.rafId = null;
-    }
+    this._plt.cancelRaf(this.rafId);
 
     // remember where the pointer started from`
     this.startY = pointerCoord(ev).y;
@@ -270,7 +267,7 @@ export class PickerColumnCmp {
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.rafId = nativeRaf(this.decelerateFunc);
+        this.rafId =  this._plt.raf(this.decelerateFunc);
       }
 
     } else if (this.y % this.optHeight !== 0) {
@@ -306,10 +303,7 @@ export class PickerColumnCmp {
     // if there isn't a selected index, then just use the top y position
     let y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
 
-    if (this.rafId) {
-      cancelRaf(this.rafId);
-      this.rafId = null;
-    }
+    this._plt.cancelRaf(this.rafId);
     this.velocity = 0;
 
     // so what y position we're at
@@ -320,7 +314,18 @@ export class PickerColumnCmp {
     // ensure we've got a good round number :)
     y = Math.round(y);
 
-    let i, button, opt, optOffset, visible, translateX, translateY, translateZ, rotateX, transform, selected;
+    let i: number;
+    let button: any;
+    let opt: any;
+    let optOffset: number;
+    let visible: boolean;
+    let translateX: number;
+    let translateY: number;
+    let translateZ: number;
+    let rotateX: number;
+    let transform: string;
+    let selected: boolean;
+
     const parent = this.colEle.nativeElement;
     const children = parent.children;
     const length = children.length;
@@ -367,12 +372,12 @@ export class PickerColumnCmp {
       // Update transition duration
       if (duration !== opt._dur) {
         opt._dur = duration;
-        button.style[CSS.transitionDuration] = durationStr;
+        button.style[this._plt.Css.transitionDuration] = durationStr;
       }
       // Update transform
       if (transform !== opt._trans) {
         opt._trans = transform;
-        button.style[CSS.transform] = transform;
+        button.style[this._plt.Css.transform] = transform;
       }
       // Update selected item
       if (selected !== opt._selected) {
@@ -468,6 +473,7 @@ export class PickerCmp {
     private _viewCtrl: ViewController,
     private _elementRef: ElementRef,
     config: Config,
+    private _plt: Platform,
     gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
@@ -573,10 +579,7 @@ export class PickerCmp {
   }
 
   ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (activeElement) {
-      activeElement.blur();
-    }
+    this._plt.focusOutActiveElement();
 
     let focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {

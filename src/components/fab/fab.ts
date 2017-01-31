@@ -2,10 +2,10 @@ import { Component, ContentChild, Input, ContentChildren, QueryList, ChangeDetec
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-
-import { UIEventManager } from '../../util/ui-event-manager';
 import { isTrueProperty } from '../../util/util';
-import { nativeTimeout } from '../../util/dom';
+import { Platform } from '../../platform/platform';
+import { UIEventManager } from '../../gestures/ui-event-manager';
+
 
 /**
   * @name FabButton
@@ -74,7 +74,7 @@ export class FabButton extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
    */
   @Input()
   set mode(val: string) {
@@ -133,7 +133,8 @@ export class FabList {
   constructor(
     private _elementRef: ElementRef,
     private _renderer: Renderer,
-    config: Config
+    config: Config,
+    private _plt: Platform
   ) {
     this._mode = config.get('mode');
   }
@@ -162,7 +163,7 @@ export class FabList {
     let i = 1;
     if (visible) {
       fabs.forEach(fab => {
-        nativeTimeout(() => fab.setElementClass('show', true), i * 30);
+        this._plt.timeout(() => fab.setElementClass('show', true), i * 30);
         i++;
       });
     } else {
@@ -270,7 +271,7 @@ export class FabContainer {
   /**
    * @private
    */
-  _events: UIEventManager = new UIEventManager();
+  _events: UIEventManager;
 
   /**
    * @private
@@ -287,17 +288,20 @@ export class FabContainer {
    */
   @ContentChildren(FabList) _fabLists: QueryList<FabList>;
 
-  constructor(private _elementRef: ElementRef) { }
+  constructor(private _elementRef: ElementRef, plt: Platform) {
+    this._events = new UIEventManager(plt);
+  }
 
   /**
    * @private
    */
   ngAfterContentInit() {
-    if (!this._mainButton || !this._mainButton.getNativeElement()) {
+    const mainButton = this._mainButton;
+    if (!mainButton || !mainButton.getNativeElement()) {
       console.error('FAB container needs a main <button ion-fab>');
       return;
     }
-    this._events.listen(this._mainButton.getNativeElement(), 'click', this.clickHandler.bind(this));
+    this._events.listen(mainButton.getNativeElement(), 'click', this.clickHandler.bind(this), { zone: true });
   }
 
   /**
@@ -353,6 +357,6 @@ export class FabContainer {
    * @private
    */
   ngOnDestroy() {
-    this._events.unlistenAll();
+    this._events.destroy();
   }
 }

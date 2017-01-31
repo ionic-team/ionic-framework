@@ -1,4 +1,5 @@
 import { Config } from '../config/config';
+import { Platform } from '../platform/platform';
 import { Transition } from './transition';
 import { IOSTransition } from './transition-ios';
 import { MDTransition } from './transition-md';
@@ -63,13 +64,13 @@ export function registerTransitions(config: Config) {
 }
 
 
-export function createTransition(config: Config, transitionName: string, enteringView: any, leavingView: any, opts: any): Transition {
+export function createTransition(plt: Platform, config: Config, transitionName: string, enteringView: any, leavingView: any, opts: any): Transition {
   let TransitionClass: any = config.getTransition(transitionName);
   if (!TransitionClass) {
     // didn't find a transition animation, default to ios-transition
     TransitionClass = config.getTransition('ios-transition');
   }
 
-  return new TransitionClass(enteringView, leavingView, opts);
+  return new TransitionClass(plt, enteringView, leavingView, opts);
 }
 

@@ -1,4 +1,4 @@
-import { assign, isBlank, isPresent, isString } from './util';
+import { isBlank, isPresent, isString } from './util';
 
 
 export function renderDateTime(template: string, value: DateTimeData, locale: LocaleData) {
@@ -11,9 +11,9 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {
       var token = '{' + index + '}';
-      var text = renderTextFormat(format.f, value[format.k], value, locale);
+      var text = renderTextFormat(format.f, (<any>value)[format.k], value, locale);
 
-      if (!hasText && text && isPresent(value[format.k])) {
+      if (!hasText && text && isPresent((<any>value)[format.k])) {
         hasText = true;
       }
 
@@ -238,7 +238,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       newData = parseDate(newData);
       if (newData) {
         // successfully parsed the ISO string to our DateTimeData
-        assign(existingData, newData);
+        Object.assign(existingData, newData);
         return;
       }
 
@@ -259,7 +259,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       // merge new values from the picker's selection
       // to the existing DateTimeData values
       for (var k in newData) {
-        existingData[k] = newData[k].value;
+        (<any>existingData)[k] = newData[k].value;
       }
 
       return;
@@ -271,7 +271,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
   } else {
     // blank data, clear everything out
     for (var k in existingData) {
-      delete existingData[k];
+      delete (<any>existingData)[k];
     }
   }
 }
@@ -318,7 +318,7 @@ export function getValueFromFormat(date: DateTimeData, format: string) {
   if (format === FORMAT_hh || format === FORMAT_h) {
     return (date.hour > 12 ? date.hour - 12 : date.hour);
   }
-  return date[convertFormatToKey(format)];
+  return (<any>date)[convertFormatToKey(format)];
 }
 
 

@@ -125,4 +125,16 @@
     <br>
   </p>
 
+  <form [formGroup]="fruitsForm">
+    <ion-item>
+      <ion-label>formControlName, disabled</ion-label>
+      <ion-select formControlName="fruit">
+        <ion-option>Grape</ion-option>
+        <ion-option>Cherry</ion-option>
+        <ion-option>Strawberry</ion-option>
+        <ion-option>Mango</ion-option>
+      </ion-select>
+    </ion-item>
+  </form>
+
 </ion-content>

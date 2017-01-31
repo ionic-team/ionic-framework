@@ -1,23 +1,23 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Platform, NavController } from '../';
+import { Config, IonicApp, IonicModule, Platform, NavController } from '../../ionic-angular';
 
 if (!window.localStorage) {
   Object.defineProperty(window, 'localStorage', new (function () {
-    var aKeys = [], oStorage = {};
+    var aKeys: any[] = [], oStorage = {};
     Object.defineProperty(oStorage, 'getItem', {
-      value: function (sKey) { return sKey ? this[sKey] : null; },
+      value: function (sKey: number) { return sKey ? this[sKey] : null; },
       writable: false,
       configurable: false,
       enumerable: false
     });
     Object.defineProperty(oStorage, 'key', {
-      value: function (nKeyId) { return aKeys[nKeyId]; },
+      value: function (nKeyId: number) { return aKeys[nKeyId]; },
       writable: false,
       configurable: false,
       enumerable: false
     });
     Object.defineProperty(oStorage, 'setItem', {
-      value: function (sKey, sValue) {
+      value: function (sKey: string, sValue: string) {
         if (!sKey) { return; }
         document.cookie = encodeURI(sKey) + '=' + encodeURI(sValue) + '; expires=Tue, 19 Jan 2038 03:14:07 GMT; path=/';
       },
@@ -31,7 +31,7 @@ if (!window.localStorage) {
       enumerable: false
     });
     Object.defineProperty(oStorage, 'removeItem', {
-      value: function (sKey) {
+      value: function (sKey: string) {
         if (!sKey) { return; }
         document.cookie = encodeURI(sKey) + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
       },
@@ -40,21 +40,21 @@ if (!window.localStorage) {
       enumerable: false
     });
     this.get = function () {
-      var iThisIndx;
+      var iThisIndx: number;
       for (var sKey in oStorage) {
         iThisIndx = aKeys.indexOf(sKey);
         if (iThisIndx === -1) {
-          (oStorage as any).setItem(sKey, oStorage[sKey]);
+          (oStorage as any).setItem(sKey, (oStorage as any)[sKey]);
         } else {
           aKeys.splice(iThisIndx, 1);
         }
-        delete oStorage[sKey];
+        delete (oStorage as any)[sKey];
       }
       for (aKeys; aKeys.length > 0; aKeys.splice(0, 1)) { (oStorage as any).removeItem(aKeys[0]); }
-      for (var aCouple, iKey, nIdx = 0, aCouples = document.cookie.split(/\s*;\s*/); nIdx < aCouples.length; nIdx++) {
+      for (var aCouple: any, iKey: any, nIdx = 0, aCouples = document.cookie.split(/\s*;\s*/); nIdx < aCouples.length; nIdx++) {
         aCouple = aCouples[nIdx].split(/\s*=\s*/);
         if (aCouple.length > 1) {
-          oStorage[iKey = decodeURI(aCouple[0])] = decodeURI(aCouple[1]);
+          (oStorage as any)[iKey = decodeURI(aCouple[0])] = decodeURI(aCouple[1]);
           aKeys.push(iKey);
         }
       }
@@ -62,10 +62,10 @@ if (!window.localStorage) {
     };
     this.configurable = false;
     this.enumerable = true;
-  })());
+  } as any)());
 }
 
-var CONFIG_DEMO = null;
+var CONFIG_DEMO: any = null;
 
 if (window.localStorage.getItem('configDemo')) {
   CONFIG_DEMO = JSON.parse(window.localStorage.getItem('configDemo'));
@@ -86,33 +86,11 @@ export class TabPage {
 export class ApiDemoPage {
   config: any;
   initialConfig: any;
-
-  constructor(public platform: Platform, public navCtrl: NavController) {
-
-    if (window.localStorage.getItem('configDemo') !== null) {
-      this.config = JSON.parse(window.localStorage.getItem('configDemo'));
-    } else if (platform.is('ios')) {
-      this.config = {
-        'backButtonIcon': 'ios-arrow-back',
-        'iconMode': 'ios',
-        'tabsPlacement': 'bottom'
-      };
-    } else if (platform.is('windows')) {
-      this.config = {
-        'backButtonIcon': 'ios-arrow-back',
-        'iconMode': 'ios',
-        'tabsPlacement': 'top'
-      };
-    } else {
-      this.config = {
-        'backButtonIcon': 'md-arrow-back',
-        'iconMode': 'md',
-        'tabsPlacement': 'bottom'
-      };
-    }
-
-    this.initialConfig = JSON.parse(JSON.stringify(this.config));
+  constructor(_config: Config,  public navCtrl: NavController) {
+    this.config = _config.settings();
+    this.initialConfig = this.config;
   }
+
 
   load() {
     window.localStorage.setItem('configDemo', JSON.stringify(this.config));
@@ -140,7 +118,36 @@ export class PushPage {
   template: '<ion-nav [root]="root" #content></ion-nav>'
 })
 export class ApiDemoApp {
+  config: any;
   root = TabPage;
+  constructor(public _config: Config, public platform: Platform) {
+
+    if (window.localStorage.getItem('configDemo') !== null) {
+      this.config = JSON.parse(window.localStorage.getItem('configDemo'));
+    } else if (platform.is('ios')) {
+      this.config = {
+        'backButtonIcon': 'ios-arrow-back',
+        'iconMode': 'ios',
+        'tabsPlacement': 'bottom'
+      };
+    } else if (platform.is('windows')) {
+      this.config = {
+        'backButtonIcon': 'ios-arrow-back',
+        'iconMode': 'ios',
+        'tabsPlacement': 'top'
+      };
+    } else {
+      this.config = {
+        'backButtonIcon': 'md-arrow-back',
+        'iconMode': 'md',
+        'tabsPlacement': 'bottom'
+      };
+    }
+
+    this._config.set('tabsPlacement', this.config.tabsPlacement);
+    this._config.set('iconMode', this.config.iconMode);
+    this._config.set('backButtonIcon', this.config.backButtonIcon);
+  }
 }
 
 

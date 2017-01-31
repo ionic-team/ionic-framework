@@ -1,5 +1,4 @@
 /* tslint:disable */
-import { assign } from '../util/util';
 
 const win: any = window;
 const doc: any = document;
@@ -27,7 +26,7 @@ var now = Date.now;
  * @param {Object} context
  * @returns {number}
  */
-function setTimeoutContext(fn, timeout, context) {
+function setTimeoutContext(fn: any, timeout: any, context: any) {
     return setTimeout(bindFn(fn, context), timeout);
 }
 
@@ -40,7 +39,7 @@ function setTimeoutContext(fn, timeout, context) {
  * @param {Object} [context]
  * @returns {Boolean}
  */
-function invokeArrayArg(arg, fn, context) {
+function invokeArrayArg(arg: any, fn: any, context: any) {
     if (Array.isArray(arg)) {
         each(arg, context[fn], context);
         return true;
@@ -54,8 +53,8 @@ function invokeArrayArg(arg, fn, context) {
  * @param {Function} iterator
  * @param {Object} context
  */
-function each(obj, iterator, context?) {
-    var i;
+function each(obj: any, iterator: any, context?: any) {
+    var i: any;
 
     if (!obj) {
         return;
@@ -82,16 +81,16 @@ function each(obj, iterator, context?) {
  * @param {Function} base
  * @param {Object} [properties]
  */
-function inherit(child, base, properties) {
+function inherit(child: any, base: any, properties: any) {
     var baseP = base.prototype,
-        childP;
+        childP: any;
 
     childP = child.prototype = Object.create(baseP);
     childP.constructor = child;
     childP._super = baseP;
 
     if (properties) {
-        assign(childP, properties);
+        Object.assign(childP, properties);
     }
 }
 
@@ -101,7 +100,7 @@ function inherit(child, base, properties) {
  * @param {Object} context
  * @returns {Function}
  */
-function bindFn(fn, context) {
+function bindFn(fn: any, context: any) {
     return function boundFn() {
         return fn.apply(context, arguments);
     };
@@ -114,7 +113,7 @@ function bindFn(fn, context) {
  * @param {Array} [args]
  * @returns {Boolean}
  */
-function boolOrFn(val, args) {
+function boolOrFn(val: any, args: any) {
     if (typeof val == TYPE_FUNCTION) {
         return val.apply(args ? args[0] || undefined : undefined, args);
     }
@@ -127,7 +126,7 @@ function boolOrFn(val, args) {
  * @param {*} val2
  * @returns {*}
  */
-function ifUndefined(val1, val2) {
+function ifUndefined(val1: any, val2: any) {
     return (val1 === undefined) ? val2 : val1;
 }
 
@@ -137,8 +136,8 @@ function ifUndefined(val1, val2) {
  * @param {String} types
  * @param {Function} handler
  */
-function addEventListeners(target, types, handler) {
-    each(splitStr(types), function(type) {
+function addEventListeners(target: any, types: any, handler: any) {
+    each(splitStr(types), function(type: any) {
         target.addEventListener(type, handler, false);
     });
 }
@@ -149,8 +148,8 @@ function addEventListeners(target, types, handler) {
  * @param {String} types
  * @param {Function} handler
  */
-function removeEventListeners(target, types, handler) {
-    each(splitStr(types), function(type) {
+function removeEventListeners(target: any, types: any, handler: any) {
+    each(splitStr(types), function(type: any) {
         target.removeEventListener(type, handler, false);
     });
 }
@@ -162,7 +161,7 @@ function removeEventListeners(target, types, handler) {
  * @param {HTMLElement} parent
  * @return {Boolean} found
  */
-function hasParent(node, parent) {
+function hasParent(node: any, parent: any) {
     while (node) {
         if (node == parent) {
             return true;
@@ -178,7 +177,7 @@ function hasParent(node, parent) {
  * @param {String} find
  * @returns {Boolean} found
  */
-function inStr(str, find) {
+function inStr(str: any, find: any) {
     return str.indexOf(find) > -1;
 }
 
@@ -187,7 +186,7 @@ function inStr(str, find) {
  * @param {String} str
  * @returns {Array} words
  */
-function splitStr(str) {
+function splitStr(str: any) {
     return str.trim().split(/\s+/g);
 }
 
@@ -198,7 +197,7 @@ function splitStr(str) {
  * @param {String} [findByKey]
  * @return {Boolean|Number} false when not found, or the index
  */
-function inArray(src, find, findByKey?) {
+function inArray(src: any, find: any, findByKey?: any) {
     if (src.indexOf && !findByKey) {
         return src.indexOf(find);
     } else {
@@ -218,7 +217,7 @@ function inArray(src, find, findByKey?) {
  * @param {Object} obj
  * @returns {Array}
  */
-function toArray(obj) {
+function toArray(obj: any) {
     return Array.prototype.slice.call(obj, 0);
 }
 
@@ -229,9 +228,9 @@ function toArray(obj) {
  * @param {Boolean} [sort=False]
  * @returns {Array} [{id:1},{id:2}]
  */
-function uniqueArray(src, key, sort) {
-    var results = [];
-    var values = [];
+function uniqueArray(src: any, key: any, sort: any) {
+    var results: any = [];
+    var values: any = [];
     var i = 0;
 
     while (i < src.length) {
@@ -247,7 +246,7 @@ function uniqueArray(src, key, sort) {
         if (!key) {
             results = results.sort();
         } else {
-            results = results.sort(function sortUniqueArray(a, b) {
+            results = results.sort(function sortUniqueArray(a: any, b: any) {
                 return a[key] > b[key] ? 1 : 0;
             });
         }
@@ -262,8 +261,8 @@ function uniqueArray(src, key, sort) {
  * @param {String} property
  * @returns {String|Undefined} prefixed
  */
-function prefixed(obj, property) {
-    var prefix, prop;
+function prefixed(obj: any, property: any) {
+    var prefix: any, prop: any;
     var camelProp = property[0].toUpperCase() + property.slice(1);
 
     var i = 0;
@@ -293,7 +292,7 @@ function uniqueId() {
  * @param {HTMLElement} element
  * @returns {DocumentView|Window}
  */
-function getWindowForElement(element) {
+function getWindowForElement(element: any) {
     var doc = element.ownerDocument || element;
     return (doc.defaultView || doc.parentWindow || window);
 }
@@ -336,7 +335,7 @@ var PROPS_CLIENT_XY = ['clientX', 'clientY'];
  * @returns {Input}
  * @constructor
  */
-function Input(manager, callback) {
+function Input(manager: any, callback: any) {
     var self = this;
     this.manager = manager;
     this.callback = callback;
@@ -345,7 +344,7 @@ function Input(manager, callback) {
 
     // smaller wrapper around the handler, for the scope and the enabled state of the manager,
     // so when disabled the input events are completely bypassed.
-    this.domHandler = function(ev) {
+    this.domHandler = function(ev: any) {
         if (boolOrFn(manager.options.enable, [manager])) {
             self.handler(ev);
         }
@@ -387,8 +386,8 @@ Input.prototype = {
  * @param {Hammer} manager
  * @returns {Input}
  */
-function createInputInstance(manager) {
-    var Type;
+function createInputInstance(manager: any) {
+    var Type: any;
     var inputClass = manager.options.inputClass;
 
     if (inputClass) {
@@ -411,7 +410,7 @@ function createInputInstance(manager) {
  * @param {String} eventType
  * @param {Object} input
  */
-function inputHandler(manager, eventType, input) {
+function inputHandler(manager: any, eventType: any, input: any) {
     var pointersLen = input.pointers.length;
     var changedPointersLen = input.changedPointers.length;
     var isFirst = (eventType & INPUT_START && (pointersLen - changedPointersLen === 0));
@@ -443,7 +442,7 @@ function inputHandler(manager, eventType, input) {
  * @param {Object} manager
  * @param {Object} input
  */
-function computeInputData(manager, input) {
+function computeInputData(manager: any, input: any) {
     var session = manager.session;
     var pointers = input.pointers;
     var pointersLength = pointers.length;
@@ -495,7 +494,7 @@ function computeInputData(manager, input) {
     input.target = target;
 }
 
-function computeDeltaXY(session, input) {
+function computeDeltaXY(session: any, input: any) {
     var center = input.center;
     var offset = session.offsetDelta || {};
     var prevDelta = session.prevDelta || {};
@@ -522,10 +521,10 @@ function computeDeltaXY(session, input) {
  * @param {Object} session
  * @param {Object} input
  */
-function computeIntervalInputData(session, input) {
+function computeIntervalInputData(session: any, input: any) {
     var last = session.lastInterval || input,
         deltaTime = input.timeStamp - last.timeStamp,
-        velocity, velocityX, velocityY, direction;
+        velocity: any, velocityX: any, velocityY: any, direction: any;
 
     if (input.eventType != INPUT_CANCEL && (deltaTime > COMPUTE_INTERVAL || last.velocity === undefined)) {
         var deltaX = input.deltaX - last.deltaX;
@@ -557,10 +556,10 @@ function computeIntervalInputData(session, input) {
  * @param {Object} input
  * @returns {Object} clonedInputData
  */
-function simpleCloneInputData(input) {
+function simpleCloneInputData(input: any) {
     // make a simple copy of the pointers because we will get a reference if we don't
     // we only need clientXY for the calculations
-    var pointers = [];
+    var pointers: any = [];
     var i = 0;
     while (i < input.pointers.length) {
         pointers[i] = {
@@ -584,7 +583,7 @@ function simpleCloneInputData(input) {
  * @param {Array} pointers
  * @return {Object} center contains `x` and `y` properties
  */
-function getCenter(pointers) {
+function getCenter(pointers: any) {
     var pointersLength = pointers.length;
 
     // no need to loop when only one touch
@@ -615,7 +614,7 @@ function getCenter(pointers) {
  * @param {Number} y
  * @return {Object} velocity `x` and `y`
  */
-function getVelocity(deltaTime, x, y) {
+function getVelocity(deltaTime: any, x: any, y: any) {
     return {
         x: x / deltaTime || 0,
         y: y / deltaTime || 0
@@ -628,7 +627,7 @@ function getVelocity(deltaTime, x, y) {
  * @param {Number} y
  * @return {Number} direction
  */
-function getDirection(x, y) {
+function getDirection(x: any, y: any) {
     if (x === y) {
         return DIRECTION_NONE;
     }
@@ -646,7 +645,7 @@ function getDirection(x, y) {
  * @param {Array} [props] containing x and y keys
  * @return {Number} distance
  */
-function getDistance(p1, p2, props?) {
+function getDistance(p1: any, p2: any, props?: any) {
     if (!props) {
         props = PROPS_XY;
     }
@@ -663,7 +662,7 @@ function getDistance(p1, p2, props?) {
  * @param {Array} [props] containing x and y keys
  * @return {Number} angle
  */
-function getAngle(p1, p2, props?) {
+function getAngle(p1: any, p2: any, props?: any) {
     if (!props) {
         props = PROPS_XY;
     }
@@ -678,7 +677,7 @@ function getAngle(p1, p2, props?) {
  * @param {Array} end array of pointers
  * @return {Number} rotation
  */
-function getRotation(start, end) {
+function getRotation(start: any, end: any) {
     return getAngle(end[1], end[0], PROPS_CLIENT_XY) + getAngle(start[1], start[0], PROPS_CLIENT_XY);
 }
 
@@ -689,11 +688,11 @@ function getRotation(start, end) {
  * @param {Array} end array of pointers
  * @return {Number} scale
  */
-function getScale(start, end) {
+function getScale(start: any, end: any) {
     return getDistance(end[0], end[1], PROPS_CLIENT_XY) / getDistance(start[0], start[1], PROPS_CLIENT_XY);
 }
 
-var MOUSE_INPUT_MAP = {
+var MOUSE_INPUT_MAP: any = {
     mousedown: INPUT_START,
     mousemove: INPUT_MOVE,
     mouseup: INPUT_END
@@ -722,7 +721,7 @@ inherit(MouseInput, Input, {
      * handle mouse events
      * @param {Object} ev
      */
-    handler: function MEhandler(ev) {
+    handler: function MEhandler(ev: any) {
         var eventType = MOUSE_INPUT_MAP[ev.type];
 
         // on start we want to have the left mouse button down
@@ -752,7 +751,7 @@ inherit(MouseInput, Input, {
     }
 });
 
-var POINTER_INPUT_MAP = {
+var POINTER_INPUT_MAP: any = {
     pointerdown: INPUT_START,
     pointermove: INPUT_MOVE,
     pointerup: INPUT_END,
@@ -761,7 +760,7 @@ var POINTER_INPUT_MAP = {
 };
 
 // in IE10 the pointer types is defined as an enum
-var IE10_POINTER_TYPE_ENUM = {
+var IE10_POINTER_TYPE_ENUM: any = {
     2: INPUT_TYPE_TOUCH,
     3: INPUT_TYPE_PEN,
     4: INPUT_TYPE_MOUSE,
@@ -796,7 +795,7 @@ inherit(PointerEventInput, Input, {
      * handle mouse events
      * @param {Object} ev
      */
-    handler: function PEhandler(ev) {
+    handler: function PEhandler(ev: any) {
         var store = this.store;
         var removePointer = false;
 
@@ -841,7 +840,7 @@ inherit(PointerEventInput, Input, {
     }
 });
 
-var SINGLE_TOUCH_INPUT_MAP = {
+var SINGLE_TOUCH_INPUT_MAP: any = {
     touchstart: INPUT_START,
     touchmove: INPUT_MOVE,
     touchend: INPUT_END,
@@ -865,7 +864,7 @@ function SingleTouchInput() {
 }
 
 inherit(SingleTouchInput, Input, {
-    handler: function TEhandler(ev) {
+    handler: function TEhandler(ev: any) {
         var type = SINGLE_TOUCH_INPUT_MAP[ev.type];
 
         // should we handle the touch events?
@@ -899,7 +898,7 @@ inherit(SingleTouchInput, Input, {
  * @param {Number} type flag
  * @returns {undefined|Array} [all, changed]
  */
-function normalizeSingleTouches(ev, type) {
+function normalizeSingleTouches(ev: any, type: any) {
     var all = toArray(ev.touches);
     var changed = toArray(ev.changedTouches);
 
@@ -910,7 +909,7 @@ function normalizeSingleTouches(ev, type) {
     return [all, changed];
 }
 
-var TOUCH_INPUT_MAP = {
+var TOUCH_INPUT_MAP : any= {
     touchstart: INPUT_START,
     touchmove: INPUT_MOVE,
     touchend: INPUT_END,
@@ -924,7 +923,7 @@ var TOUCH_TARGET_EVENTS = 'touchstart touchmove touchend touchcancel';
  * @constructor
  * @extends Input
  */
-function TouchInput(manager: any, handler: any) {
+function TouchInput(manager: any, handler: any): void {
     this.evTarget = TOUCH_TARGET_EVENTS;
     this.targetIds = {};
 
@@ -932,7 +931,7 @@ function TouchInput(manager: any, handler: any) {
 }
 
 inherit(TouchInput, Input, {
-    handler: function MTEhandler(ev) {
+    handler: function MTEhandler(ev: any) {
         var type = TOUCH_INPUT_MAP[ev.type];
         var touches = getTouches.call(this, ev, type);
         if (!touches) {
@@ -954,7 +953,7 @@ inherit(TouchInput, Input, {
  * @param {Number} type flag
  * @returns {undefined|Array} [all, changed]
  */
-function getTouches(ev, type) {
+function getTouches(ev: any, type: any) {
     var allTouches = toArray(ev.touches);
     var targetIds = this.targetIds;
 
@@ -964,14 +963,14 @@ function getTouches(ev, type) {
         return [allTouches, allTouches];
     }
 
-    var i,
-        targetTouches,
+    var i: any,
+        targetTouches: any,
         changedTouches = toArray(ev.changedTouches),
-        changedTargetTouches = [],
+        changedTargetTouches: any = [],
         target = this.target;
 
     // get target touches from touches
-    targetTouches = allTouches.filter(function(touch) {
+    targetTouches = allTouches.filter(function(touch: any) {
         return hasParent(touch.target, target);
     });
 
@@ -1018,12 +1017,12 @@ function getTouches(ev, type) {
  * @constructor
  * @extends Input
  */
-function TouchMouseInput() {
+function TouchMouseInput(): void {
     Input.apply(this, arguments);
 
     var handler = bindFn(this.handler, this);
-    this.touch = new TouchInput(this.manager, handler);
-    this.mouse = new MouseInput(this.manager, handler);
+    this.touch = new (<any>TouchInput)(this.manager, handler);
+    this.mouse = new (<any>MouseInput)(this.manager, handler);
 }
 
 inherit(TouchMouseInput, Input, {
@@ -1033,7 +1032,7 @@ inherit(TouchMouseInput, Input, {
      * @param {String} inputEvent
      * @param {Object} inputData
      */
-    handler: function TMEhandler(manager, inputEvent, inputData) {
+    handler: function TMEhandler(manager: any, inputEvent: any, inputData: any) {
         var isTouch = (inputData.pointerType == INPUT_TYPE_TOUCH),
             isMouse = (inputData.pointerType == INPUT_TYPE_MOUSE);
 
@@ -1080,7 +1079,7 @@ var TOUCH_ACTION_PAN_Y = 'pan-y';
  * @param {String} value
  * @constructor
  */
-function TouchAction(manager, value) {
+function TouchAction(manager: any, value: any) {
     this.manager = manager;
     this.set(value);
 }
@@ -1090,7 +1089,7 @@ TouchAction.prototype = {
      * set the touchAction value on the element or enable the polyfill
      * @param {String} value
      */
-    set: function(value) {
+    set: function(value: any) {
         // find out the touch-action by the event handlers
         if (value == TOUCH_ACTION_COMPUTE) {
             value = this.compute();
@@ -1114,8 +1113,8 @@ TouchAction.prototype = {
      * @returns {String} value
      */
     compute: function() {
-        var actions = [];
-        each(this.manager.recognizers, function(recognizer) {
+        var actions: any = [];
+        each(this.manager.recognizers, function(recognizer: any) {
             if (boolOrFn(recognizer.options.enable, [recognizer])) {
                 actions = actions.concat(recognizer.getTouchAction());
             }
@@ -1127,7 +1126,7 @@ TouchAction.prototype = {
      * this method is called on each input cycle and provides the preventing of the browser behavior
      * @param {Object} input
      */
-    preventDefaults: function(input) {
+    preventDefaults: function(input: any) {
         // not needed with native support for the touchAction property
         if (NATIVE_TOUCH_ACTION) {
             return;
@@ -1175,7 +1174,7 @@ TouchAction.prototype = {
      * call preventDefault to prevent the browser's default behavior (scrolling in most cases)
      * @param {Object} srcEvent
      */
-    preventSrc: function(srcEvent) {
+    preventSrc: function(srcEvent: any) {
         this.manager.session.prevented = true;
         srcEvent.preventDefault();
     }
@@ -1186,7 +1185,7 @@ TouchAction.prototype = {
  * @param {String} actions
  * @returns {*}
  */
-function cleanTouchActions(actions) {
+function cleanTouchActions(actions: any) {
     // none
     if (inStr(actions, TOUCH_ACTION_NONE)) {
         return TOUCH_ACTION_NONE;
@@ -1257,8 +1256,8 @@ var STATE_FAILED = 32;
  * @constructor
  * @param {Object} options
  */
-function Recognizer(options) {
-    this.options = assign({}, this.defaults, options || {});
+function Recognizer(options: any) {
+    this.options = Object.assign({}, this.defaults, options || {});
 
     this.id = uniqueId();
 
@@ -1285,8 +1284,8 @@ Recognizer.prototype = {
      * @param {Object} options
      * @return {Recognizer}
      */
-    set: function(options) {
-        assign(this.options, options);
+    set: function(options: any) {
+        Object.assign(this.options, options);
 
         // also update the touchAction, in case something changed about the directions/enabled state
         this.manager && this.manager.touchAction.update();
@@ -1298,7 +1297,7 @@ Recognizer.prototype = {
      * @param {Recognizer} otherRecognizer
      * @returns {Recognizer} this
      */
-    recognizeWith: function(otherRecognizer) {
+    recognizeWith: function(otherRecognizer: any) {
         if (invokeArrayArg(otherRecognizer, 'recognizeWith', this)) {
             return this;
         }
@@ -1317,7 +1316,7 @@ Recognizer.prototype = {
      * @param {Recognizer} otherRecognizer
      * @returns {Recognizer} this
      */
-    dropRecognizeWith: function(otherRecognizer) {
+    dropRecognizeWith: function(otherRecognizer: any) {
         if (invokeArrayArg(otherRecognizer, 'dropRecognizeWith', this)) {
             return this;
         }
@@ -1332,7 +1331,7 @@ Recognizer.prototype = {
      * @param {Recognizer} otherRecognizer
      * @returns {Recognizer} this
      */
-    requireFailure: function(otherRecognizer) {
+    requireFailure: function(otherRecognizer: any) {
         if (invokeArrayArg(otherRecognizer, 'requireFailure', this)) {
             return this;
         }
@@ -1351,7 +1350,7 @@ Recognizer.prototype = {
      * @param {Recognizer} otherRecognizer
      * @returns {Recognizer} this
      */
-    dropRequireFailure: function(otherRecognizer) {
+    dropRequireFailure: function(otherRecognizer: any) {
         if (invokeArrayArg(otherRecognizer, 'dropRequireFailure', this)) {
             return this;
         }
@@ -1377,7 +1376,7 @@ Recognizer.prototype = {
      * @param {Recognizer} otherRecognizer
      * @returns {Boolean}
      */
-    canRecognizeWith: function(otherRecognizer) {
+    canRecognizeWith: function(otherRecognizer: any) {
         return !!this.simultaneous[otherRecognizer.id];
     },
 
@@ -1386,11 +1385,11 @@ Recognizer.prototype = {
      * that all the needed recognizers has failed before emitting.
      * @param {Object} input
      */
-    emit: function(input) {
+    emit: function(input: any) {
         var self = this;
         var state = this.state;
 
-        function emit(event) {
+        function emit(event: any) {
             self.manager.emit(event, input);
         }
 
@@ -1417,7 +1416,7 @@ Recognizer.prototype = {
      * otherwise, setup the state to FAILED.
      * @param {Object} input
      */
-    tryEmit: function(input) {
+    tryEmit: function(input: any) {
         if (this.canEmit()) {
             return this.emit(input);
         }
@@ -1444,10 +1443,10 @@ Recognizer.prototype = {
      * update the recognizer
      * @param {Object} inputData
      */
-    recognize: function(inputData) {
+    recognize: function(inputData: any) {
         // make a new copy of the inputData
         // so we can change the inputData without messing up the other recognizers
-        var inputDataClone = assign({}, inputData);
+        var inputDataClone = Object.assign({}, inputData);
 
         // is is enabled and allow recognizing?
         if (!boolOrFn(this.options.enable, [this, inputDataClone])) {
@@ -1477,7 +1476,7 @@ Recognizer.prototype = {
      * @param {Object} inputData
      * @returns {Const} STATE
      */
-    process: function(inputData) { }, // jshint ignore:line
+    process: function(inputData: any) { }, // jshint ignore:line
 
     /**
      * return the preferred touch-action
@@ -1499,7 +1498,7 @@ Recognizer.prototype = {
  * @param {Const} state
  * @returns {String} state
  */
-function stateStr(state) {
+function stateStr(state: any) {
     if (state & STATE_CANCELLED) {
         return 'cancel';
     } else if (state & STATE_ENDED) {
@@ -1517,7 +1516,7 @@ function stateStr(state) {
  * @param {Const} direction
  * @returns {String}
  */
-function directionStr(direction) {
+function directionStr(direction: any) {
     if (direction == DIRECTION_DOWN) {
         return 'down';
     } else if (direction == DIRECTION_UP) {
@@ -1536,7 +1535,7 @@ function directionStr(direction) {
  * @param {Recognizer} recognizer
  * @returns {Recognizer}
  */
-function getRecognizerByNameIfManager(otherRecognizer, recognizer) {
+function getRecognizerByNameIfManager(otherRecognizer: any, recognizer: any) {
     var manager = recognizer.manager;
     if (manager) {
         return manager.get(otherRecognizer);
@@ -1572,7 +1571,7 @@ inherit(AttrRecognizer, Recognizer, {
      * @param {Object} input
      * @returns {Boolean} recognized
      */
-    attrTest: function(input) {
+    attrTest: function(input: any) {
         var optionPointers = this.options.pointers;
         return optionPointers === 0 || input.pointers.length === optionPointers;
     },
@@ -1583,7 +1582,7 @@ inherit(AttrRecognizer, Recognizer, {
      * @param {Object} input
      * @returns {*} State
      */
-    process: function(input) {
+    process: function(input: any) {
         var state = this.state;
         var eventType = input.eventType;
 
@@ -1632,7 +1631,7 @@ inherit(PanRecognizer, AttrRecognizer, {
 
     getTouchAction: function() {
         var direction = this.options.direction;
-        var actions = [];
+        var actions: any = [];
         if (direction & DIRECTION_HORIZONTAL) {
             actions.push(TOUCH_ACTION_PAN_Y);
         }
@@ -1642,7 +1641,7 @@ inherit(PanRecognizer, AttrRecognizer, {
         return actions;
     },
 
-    directionTest: function(input) {
+    directionTest: function(input: any) {
         var options = this.options;
         var hasMoved = true;
         var distance = input.distance;
@@ -1666,12 +1665,12 @@ inherit(PanRecognizer, AttrRecognizer, {
         return hasMoved && distance > options.threshold && direction & options.direction;
     },
 
-    attrTest: function(input) {
+    attrTest: function(input: any) {
         return AttrRecognizer.prototype.attrTest.call(this, input) &&
             (this.state & STATE_BEGAN || (!(this.state & STATE_BEGAN) && this.directionTest(input)));
     },
 
-    emit: function(input) {
+    emit: function(input: any) {
 
         this.pX = input.deltaX;
         this.pY = input.deltaY;
@@ -1710,12 +1709,12 @@ inherit(PinchRecognizer, AttrRecognizer, {
         return [TOUCH_ACTION_NONE];
     },
 
-    attrTest: function(input) {
+    attrTest: function(input: any) {
         return this._super.attrTest.call(this, input) &&
             (Math.abs(input.scale - 1) > this.options.threshold || this.state & STATE_BEGAN);
     },
 
-    emit: function(input) {
+    emit: function(input: any) {
         if (input.scale !== 1) {
             var inOut = input.scale < 1 ? 'in' : 'out';
             input.additionalEvent = this.options.event + inOut;
@@ -1753,7 +1752,7 @@ inherit(PressRecognizer, Recognizer, {
         return [TOUCH_ACTION_AUTO];
     },
 
-    process: function(input) {
+    process: function(input: any) {
         var options = this.options;
         var validPointers = input.pointers.length === options.pointers;
         var validMovement = input.distance < options.threshold;
@@ -1781,7 +1780,7 @@ inherit(PressRecognizer, Recognizer, {
         clearTimeout(this._timer);
     },
 
-    emit: function(input) {
+    emit: function(input: any) {
         if (this.state !== STATE_RECOGNIZED) {
             return;
         }
@@ -1820,7 +1819,7 @@ inherit(RotateRecognizer, AttrRecognizer, {
         return [TOUCH_ACTION_NONE];
     },
 
-    attrTest: function(input) {
+    attrTest: function(input: any) {
         return this._super.attrTest.call(this, input) &&
             (Math.abs(input.rotation) > this.options.threshold || this.state & STATE_BEGAN);
     }
@@ -1853,9 +1852,9 @@ inherit(SwipeRecognizer, AttrRecognizer, {
         return PanRecognizer.prototype.getTouchAction.call(this);
     },
 
-    attrTest: function(input) {
+    attrTest: function(input: any) {
         var direction = this.options.direction;
-        var velocity;
+        var velocity: any;
 
         if (direction & (DIRECTION_HORIZONTAL | DIRECTION_VERTICAL)) {
             velocity = input.overallVelocity;
@@ -1872,7 +1871,7 @@ inherit(SwipeRecognizer, AttrRecognizer, {
             abs(velocity) > this.options.velocity && input.eventType & INPUT_END;
     },
 
-    emit: function(input) {
+    emit: function(input: any) {
         var direction = directionStr(input.offsetDirection);
         if (direction) {
             this.manager.emit(this.options.event + direction, input);
@@ -1924,7 +1923,7 @@ inherit(TapRecognizer, Recognizer, {
         return [TOUCH_ACTION_MANIPULATION];
     },
 
-    process: function(input) {
+    process: function(input: any) {
         var options = this.options;
 
         var validPointers = input.pointers.length === options.pointers;
@@ -2003,10 +2002,10 @@ inherit(TapRecognizer, Recognizer, {
  * @param {Object} [options]
  * @constructor
  */
-function Hammer(element, options) {
+function Hammer(element: any, options: any): any {
     options = options || {};
     options.recognizers = ifUndefined(options.recognizers, _defaults.preset);
-    return new Manager(element, options);
+    return new (<any>Manager)(element, options);
 }
 
 /**
@@ -2018,7 +2017,7 @@ var VERSION = '2.0.6';
  * default settings
  * @namespace
  */
-var _defaults = {
+var _defaults: any = {
     /**
      * set if DOM events are being triggered.
      * But this is slower and unused by simple implementations, so disabled by default.
@@ -2135,8 +2134,8 @@ var FORCED_STOP = 2;
  * @param {Object} [options]
  * @constructor
  */
-function Manager(element, options) {
-    this.options = assign({}, _defaults, options || {});
+function Manager(element: any, options: any) {
+    this.options = Object.assign({}, _defaults, options || {});
 
     this.options.inputTarget = this.options.inputTarget || element;
 
@@ -2146,11 +2145,11 @@ function Manager(element, options) {
 
     this.element = element;
     this.input = createInputInstance(this);
-    this.touchAction = new TouchAction(this, this.options.touchAction);
+    this.touchAction = new (<any>TouchAction)(this, this.options.touchAction);
 
     toggleCssProps(this, true);
 
-    each(this.options.recognizers, function(item) {
+    each(this.options.recognizers, function(item: any) {
         var recognizer = this.add(new (item[0])(item[1]));
         item[2] && recognizer.recognizeWith(item[2]);
         item[3] && recognizer.requireFailure(item[3]);
@@ -2163,8 +2162,8 @@ Manager.prototype = {
      * @param {Object} options
      * @returns {Manager}
      */
-    set: function(options) {
-        assign(this.options, options);
+    set: function(options: any) {
+        Object.assign(this.options, options);
 
         // Options that need a little more setup
         if (options.touchAction) {
@@ -2185,7 +2184,7 @@ Manager.prototype = {
      * When forced, the recognizer cycle is stopped immediately.
      * @param {Boolean} [force]
      */
-    stop: function(force) {
+    stop: function(force: any) {
         this.session.stopped = force ? FORCED_STOP : STOP;
     },
 
@@ -2195,7 +2194,7 @@ Manager.prototype = {
      * it walks through all the recognizers and tries to detect the gesture that is being made
      * @param {Object} inputData
      */
-    recognize: function(inputData) {
+    recognize: function(inputData: any) {
         var session = this.session;
         if (session.stopped) {
             return;
@@ -2204,7 +2203,7 @@ Manager.prototype = {
         // run the touch-action polyfill
         this.touchAction.preventDefaults(inputData);
 
-        var recognizer;
+        var recognizer: any;
         var recognizers = this.recognizers;
 
         // this holds the recognizer that is being recognized.
@@ -2250,7 +2249,7 @@ Manager.prototype = {
      * @param {Recognizer|String} recognizer
      * @returns {Recognizer|Null}
      */
-    get: function(recognizer) {
+    get: function(recognizer: any) {
         if (recognizer instanceof Recognizer) {
             return recognizer;
         }
@@ -2270,7 +2269,7 @@ Manager.prototype = {
      * @param {Recognizer} recognizer
      * @returns {Recognizer|Manager}
      */
-    add: function(recognizer) {
+    add: function(recognizer: any) {
         if (invokeArrayArg(recognizer, 'add', this)) {
             return this;
         }
@@ -2293,7 +2292,7 @@ Manager.prototype = {
      * @param {Recognizer|String} recognizer
      * @returns {Manager}
      */
-    remove: function(recognizer) {
+    remove: function(recognizer: any) {
         if (invokeArrayArg(recognizer, 'remove', this)) {
             return this;
         }
@@ -2320,9 +2319,9 @@ Manager.prototype = {
      * @param {Function} handler
      * @returns {EventEmitter} this
      */
-    on: function(events, handler) {
+    on: function(events: any, handler: any) {
         var handlers = this.handlers;
-        each(splitStr(events), function(event) {
+        each(splitStr(events), function(event: any) {
             handlers[event] = handlers[event] || [];
             handlers[event].push(handler);
         });
@@ -2335,9 +2334,9 @@ Manager.prototype = {
      * @param {Function} [handler]
      * @returns {EventEmitter} this
      */
-    off: function(events, handler) {
+    off: function(events: any, handler: any) {
         var handlers = this.handlers;
-        each(splitStr(events), function(event) {
+        each(splitStr(events), function(event: any) {
             if (!handler) {
                 delete handlers[event];
             } else {
@@ -2352,7 +2351,7 @@ Manager.prototype = {
      * @param {String} event
      * @param {Object} data
      */
-    emit: function(event, data) {
+    emit: function(event: any, data: any) {
         // we also want to trigger dom events
         if (this.options.domEvents) {
             triggerDomEvent(event, data);
@@ -2395,12 +2394,12 @@ Manager.prototype = {
  * @param {Manager} manager
  * @param {Boolean} add
  */
-function toggleCssProps(manager, add) {
+function toggleCssProps(manager: any, add: any) {
     var element = manager.element;
     if (!element.style) {
         return;
     }
-    each(manager.options.cssProps, function(value, name) {
+    each(manager.options.cssProps, function(value: any, name: any) {
         element.style[prefixed(element.style, name)] = add ? value : '';
     });
 }
@@ -2410,14 +2409,14 @@ function toggleCssProps(manager, add) {
  * @param {String} event
  * @param {Object} data
  */
-function triggerDomEvent(event, data) {
+function triggerDomEvent(event: any, data: any) {
     var gestureEvent: any = doc.createEvent('Event');
     gestureEvent.initEvent(event, true, true);
     gestureEvent.gesture = data;
     data.target.dispatchEvent(gestureEvent);
 }
 
-assign(Hammer, {
+Object.assign(Hammer, {
     INPUT_START: INPUT_START,
     INPUT_MOVE: INPUT_MOVE,
     INPUT_END: INPUT_END,

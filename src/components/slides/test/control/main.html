@@ -1,0 +1,40 @@
+
+<ion-content no-bounce>
+
+  <div style="height: 200px; background-color: #eee;">
+    <ion-slides class="my-slides" #firstSlider [control]="secondSlider">
+
+      <ion-slide padding>
+        <h1>Slide 1</h1>
+      </ion-slide>
+
+      <ion-slide padding>
+        <h1>Slide 2</h1>
+      </ion-slide>
+
+      <ion-slide padding>
+        <h1>Slide 3</h1>
+      </ion-slide>
+
+    </ion-slides>
+  </div>
+
+  <div style="height: 200px; background-color: #ddd;">
+    <ion-slides class="my-slides" #secondSlider [control]="firstSlider">
+
+      <ion-slide padding>
+        <h1>Slide 1</h1>
+      </ion-slide>
+
+      <ion-slide padding>
+        <h1>Slide 2</h1>
+      </ion-slide>
+
+      <ion-slide padding>
+        <h1>Slide 3</h1>
+      </ion-slide>
+
+    </ion-slides>
+  </div>
+
+</ion-content>

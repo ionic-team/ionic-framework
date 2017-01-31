@@ -58,7 +58,9 @@ let portalZindex = 9999;
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
     if (nav._isPortal) {
-      enteringView._setZIndex(nav._zIndexOffset + portalZindex, renderer);
+      if (direction === DIRECTION_FORWARD) {
+        enteringView._setZIndex(nav._zIndexOffset + portalZindex, renderer);
+      }
       portalZindex++;
       return;
     }
@@ -162,6 +164,7 @@ export interface NavOptions {
   keyboardClose?: boolean;
   progressAnimation?: boolean;
   disableApp?: boolean;
+  minClickBlockDuration?: number;
   ev?: any;
   updateUrl?: boolean;
   isNavRoot?: boolean;
