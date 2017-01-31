@@ -91,7 +91,9 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   id: string;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -103,7 +105,9 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -111,7 +115,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @output {any} expression to be evaluated when selected
+   * @output {any} Emitted when the radio button is selected.
    */
   @Output() ionSelect: EventEmitter<any> = new EventEmitter();
 
@@ -153,15 +157,15 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @input {boolean} Whether the radio button should be checked or not. Default false.
+   * @input {boolean} If true, the element is selected, and other buttons in the group are unselected.
    */
   @Input()
   get checked(): boolean {
     return this._checked;
   }
 
-  set checked(isChecked: boolean) {
-    this._checked = isTrueProperty(isChecked);
+  set checked(val: boolean) {
+    this._checked = isTrueProperty(val);
 
     if (this._item) {
       this._item.setElementClass('item-radio-checked', this._checked);
@@ -169,7 +173,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @input {boolean} Whether the radio button should be disabled or not. Default false.
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
   get disabled(): boolean {

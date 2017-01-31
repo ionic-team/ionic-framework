@@ -121,7 +121,9 @@ export class Spinner extends Ion {
   _paused: boolean = false;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   get color(): string {
@@ -132,7 +134,9 @@ export class Spinner extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -164,7 +168,7 @@ export class Spinner extends Ion {
   }
 
   /**
-   * @input {boolean} If the animation is paused or not. Defaults to `false`.
+   * @input {boolean} If true, pause the animation.
    */
   @Input()
   get paused(): boolean {

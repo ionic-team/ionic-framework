@@ -87,7 +87,9 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   id: string;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -95,7 +97,9 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -103,7 +107,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @output {Checkbox} expression to evaluate when the checkbox value changes
+   * @output {Checkbox} Emitted when the checkbox value changes.
    */
   @Output() ionChange: EventEmitter<Checkbox> = new EventEmitter<Checkbox>();
 
@@ -138,7 +142,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @input {boolean} whether or not the checkbox is checked (defaults to false)
+   * @input {boolean} If `true`, the element is selected.
    */
   @Input()
   get checked(): boolean {
@@ -189,7 +193,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @input {boolean} whether or not the checkbox is disabled or not.
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
   get disabled(): boolean {

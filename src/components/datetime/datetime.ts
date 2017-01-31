@@ -408,7 +408,9 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   @Input() pickerOptions: any = {};
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -416,12 +418,12 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @output {any} Any expression to evaluate when the datetime selection has changed.
+   * @output {any} Emitted when the datetime selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @output {any} Any expression to evaluate when the datetime selection was cancelled.
+   * @output {any} Emitted when the datetime selection was cancelled.
    */
   @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
@@ -784,14 +786,14 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @input {boolean} Whether or not the datetime component is disabled. Default `false`.
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
-  get disabled() {
+  get disabled(): boolean {
     return this._disabled;
   }
 
-  set disabled(val) {
+  set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
     this._item && this._item.setElementClass('item-datetime-disabled', this._disabled);
   }

@@ -154,7 +154,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   _element: HTMLElement;
 
   /**
-   * @output {object} The expression to evaluate when the item is reordered. Emits an object
+   * @output {object} Emitted when the item is reordered. Emits an object
    * with `from` and `to` properties.
    */
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();

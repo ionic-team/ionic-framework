@@ -463,23 +463,15 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @input {boolean} By default, content is positioned between the headers
-   * and footers. However, using `fullscreen="true"`, the content will be
-   * able to scroll "under" the headers and footers. At first glance the
-   * fullscreen option may not look any different than the default, however,
-   * by adding a transparency effect to a header then the content can be
-   * seen under the header as the user scrolls.
-   *
-   * @returns {boolean}
+   * @input {boolean} If true, the content will scroll behind the headers
+   * and footers. This effect can easily be seen by setting the toolbar
+   * to transparent.
    */
   @Input()
   get fullscreen(): boolean {
     return !!this._fullscreen;
   }
 
-  /**
-   * @param {boolean} val
-   */
   set fullscreen(val: boolean) {
     this._fullscreen = isTrueProperty(val);
   }

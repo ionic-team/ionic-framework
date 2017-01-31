@@ -42,13 +42,13 @@ export const enum ItemSideFlags {
 })
 export class ItemOptions {
   /**
-   * @input {string} the side the option button should be on. Defaults to right.
+   * @input {string} The side the option button should be on. Defaults to `"right"`.
    * If you have multiple `ion-item-options`, a side must be provided for each.
    */
   @Input() side: string;
 
   /**
-   * @output {event} Expression to evaluate when the item has been fully swiped.
+   * @output {event} Emitted when the item has been fully swiped.
    */
   @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
@@ -196,7 +196,7 @@ export class ItemSliding {
   @ContentChild(Item) item: Item;
 
   /**
-   * @output {event} Expression to evaluate when the sliding position changes.
+   * @output {event} Emitted when the sliding position changes.
    * It reports the relative position.
    *
    * ```ts

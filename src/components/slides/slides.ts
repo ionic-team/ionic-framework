@@ -147,7 +147,7 @@ import { ViewController } from '../../navigation/view-controller';
 export class Slides extends Ion {
 
   /**
-   * @input {number}  Delay between transitions (in milliseconds). If this
+   * @input {number} Delay between transitions (in milliseconds). If this
    * parameter is not passed, autoplay is disabled. Default does
    * not have a value and does not autoplay.
    * Default: `null`.
@@ -162,7 +162,7 @@ export class Slides extends Ion {
   private _autoplayMs: number;
 
   /**
-   * @input {Slides}  Pass another Slides instance or array of Slides instances
+   * @input {Slides} Pass another Slides instance or array of Slides instances
    * that should be controlled by this Slides instance.
    * Default: `null`.
    */
@@ -178,7 +178,8 @@ export class Slides extends Ion {
   private _control: Slides | Slides[] = null;
 
   /**
-   * @input {string} Could be `slide`, `fade`, `cube`, `coverflow` or `flip`.
+   * @input {string} The animation effect of the slides.
+   * Possible values are: `slide`, `fade`, `cube`, `coverflow` or `flip`.
    * Default: `slide`.
    */
   @Input()
@@ -220,8 +221,8 @@ export class Slides extends Ion {
   private _initialSlide = 0;
 
   /**
-   * @input {boolean}  Whether to continuously loop from the last slide to the
-   * first slide. Default: `false`.
+   * @input {boolean} If true, continuously loop from the last slide to the
+   * first slide.
    */
   @Input()
   get loop() {
@@ -233,7 +234,7 @@ export class Slides extends Ion {
   private _isLoop = false;
 
   /**
-   * @input {boolean}  Whether or not to show the pager. Default: `false`.
+   * @input {boolean}  If true, show the pager.
    */
   @Input()
   get pager() {
@@ -245,7 +246,7 @@ export class Slides extends Ion {
   private _pager = false;
 
   /**
-   * @input {string}  String with type of pagination. Can be
+   * @input {string}  Type of pagination. Possible values are:
    * `bullets`, `fraction`, `progress`. Default: `bullets`.
    * (Note that the pager will not show unless `pager` input
    * is set to true).
@@ -266,8 +267,8 @@ export class Slides extends Ion {
   paginationBulletRender: (index?: number, cssClass?: string) => void = null;
 
   /**
-   * @input {boolean} Enable, if you want to use "parallaxed" elements inside of
-   * slider. Default: `false`.
+   * @input {boolean} If true, allows you to use "parallaxed" elements inside of
+   * slider.
    */
   @Input()
   get parallax() {
@@ -279,7 +280,7 @@ export class Slides extends Ion {
   private _isParallax = false;
 
   /**
-   * @input {number}  Duration of transition between slides
+   * @input {number} Duration of transition between slides
    * (in milliseconds). Default: `300`.
    */
   @Input()
@@ -292,8 +293,7 @@ export class Slides extends Ion {
   private _speedMs = 300;
 
   /**
-   * @input {boolean}  Set to `true` to enable zooming functionality.
-   * Default: `false`.
+   * @input {boolean} If true, enables zooming functionality.
    */
   @Input()
   get zoom() {
@@ -334,7 +334,7 @@ export class Slides extends Ion {
   // Slides grid
 
   /**
-   * @input {number}  Distance between slides in px. Default: `0`.
+   * @input {number} Distance between slides in px. Default: `0`.
    */
   @Input()
   get spaceBetween() {
@@ -346,7 +346,7 @@ export class Slides extends Ion {
   private _spaceBetween = 0;
 
   /**
-   * @input {number}  Slides per view. Slides visible at the same time. Default: `1`.
+   * @input {number} Slides per view. Slides visible at the same time. Default: `1`.
    */
   @Input()
   get slidesPerView() {
@@ -645,72 +645,72 @@ export class Slides extends Ion {
   originalEvent: any;
 
   /**
-   * @output {Slides} Expression to evaluate when a slide change starts.
+   * @output {Slides} Emitted when a slide change starts.
    */
   @Output() ionSlideWillChange: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Expression to evaluate when a slide change ends.
+   * @output {Slides} Emitted when a slide change ends.
    */
   @Output() ionSlideDidChange: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Expression to evaluate when a slide moves.
+   * @output {Slides} Emitted when a slide moves.
    */
   @Output() ionSlideDrag: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} When slides reach its beginning (initial position).
+   * @output {Slides} Emitted when slides reaches its beginning (initial position).
    */
   @Output() ionSlideReachStart: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} When slides reach its last slide.
+   * @output {Slides} Emitted when slides reaches its last slide.
    */
   @Output() ionSlideReachEnd: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Expression to evaluate when a slide moves.
+   * @output {Slides} Emitted when a slide moves.
    */
   @Output() ionSlideAutoplay: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionSlideWillChange` but caused by autoplay.
+   * @output {Slides} Emitted when a autoplay starts.
    */
   @Output() ionSlideAutoplayStart: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Expression to evaluate when a autoplay stops.
+   * @output {Slides} Emitted when a autoplay stops.
    */
   @Output() ionSlideAutoplayStop: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionSlideWillChange` but for "forward" direction only.
+   * @output {Slides} Emitted when a slide change starts with the "forward" direction.
    */
   @Output() ionSlideNextStart: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionSlideWillChange` but for "backward" direction only.
+   * @output {Slides} Emitted when a slide change starts with the "backward" direction.
    */
   @Output() ionSlidePrevStart: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionSlideDidChange` but for "forward" direction only.
+   * @output {Slides} Emitted when a slide change ends with the "forward" direction.
    */
   @Output() ionSlideNextEnd: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} Same as `ionSlideDidChange` but for "backward" direction only.
+   * @output {Slides} Emitted when a slide change ends with the "backward" direction.
    */
   @Output() ionSlidePrevEnd: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} When the user taps/clicks on the slide's container.
+   * @output {Slides} Emitted when the user taps/clicks on the slide's container.
    */
   @Output() ionSlideTap: EventEmitter<Slides> = new EventEmitter();
 
   /**
-   * @output {Slides} When the user double taps on the slide's container.
+   * @output {Slides} Emitted when the user double taps on the slide's container.
    */
   @Output() ionSlideDoubleTap: EventEmitter<Slides> = new EventEmitter();
 

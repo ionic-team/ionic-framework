@@ -163,12 +163,12 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {string} The placeholder for the input
+   * @input {string} Instructional text that shows before the input has a value.
    */
   @Input() placeholder: string = '';
 
   /**
-   * @input {boolean} A clear icon will appear in the input when there is a value. Clicking it clears the input.
+   * @input {boolean} If true, a clear icon will appear in the input when there is a value. Clicking it clears the input.
    */
   @Input()
   get clearInput() {
@@ -179,7 +179,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {string} The text value of the input
+   * @input {string} The text value of the input.
    */
   @Input()
   get value() {
@@ -191,7 +191,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {string} The HTML input type (text, password, email, number, search, tel, or url)
+   * @input {string} The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
   @Input()
   get type() {
@@ -212,10 +212,10 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {boolean} If the input should be disabled or not
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
-  get disabled() {
+  get disabled(): boolean {
     return this._disabled;
   }
   set disabled(val: boolean) {
@@ -239,7 +239,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {boolean} If the input should be readonly or not
+   * @input {boolean} If true, the user cannot modify the value.
    */
   @Input()
   get readonly() {
@@ -250,7 +250,9 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -258,7 +260,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {boolean} whether to clear the input upon editing or not
+   * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Input()
   get clearOnEdit() {
@@ -355,12 +357,12 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @output {event} Expression to call when the input no longer has focus
+   * @output {event} Emitted when the input no longer has focus.
    */
   @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @output {event} Expression to call when the input has focus
+   * @output {event} Emitted when the input has focus.
    */
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 

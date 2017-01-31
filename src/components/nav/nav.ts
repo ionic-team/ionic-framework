@@ -146,7 +146,7 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   @Input() rootParams: any;
 
   /**
-   * @input {boolean} Whether it's possible to swipe-to-go-back on this nav controller or not.
+   * @input {boolean} If true, swipe to go back is enabled.
    */
   @Input()
   get swipeBackEnabled(): boolean {

@@ -240,7 +240,7 @@ export class Menu {
   @Input() type: string;
 
   /**
-   * @input {boolean} Whether or not the menu should be enabled. Default `true`.
+   * @input {boolean} If true, the menu is enabled. Default `true`.
    */
   @Input()
   get enabled(): boolean {
@@ -253,7 +253,7 @@ export class Menu {
   }
 
   /**
-   * @input {boolean} Whether or not swiping the menu should be enabled. Default `true`.
+   * @input {boolean} If true, swiping the menu is enabled. Default `true`.
    */
   @Input()
   get swipeEnabled(): boolean {
@@ -266,7 +266,7 @@ export class Menu {
   }
 
   /**
-   * @input {string} Whether or not the menu should persist on child pages. Default `false`.
+   * @input {boolean} If true, the menu will persist on child pages.
    */
   @Input()
   get persistent(): boolean {
@@ -283,17 +283,17 @@ export class Menu {
   @Input() maxEdgeStart: number;
 
   /**
-   * @output {event} When the menu is being dragged open.
+   * @output {event} Emitted when the menu is being dragged open.
    */
   @Output() ionDrag: EventEmitter<number> = new EventEmitter<number>();
 
   /**
-   * @output {event} When the menu has been opened.
+   * @output {event} Emitted when the menu has been opened.
    */
   @Output() ionOpen: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   /**
-   * @output {event} When the menu has been closed.
+   * @output {event} Emitted when the menu has been closed.
    */
   @Output() ionClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 

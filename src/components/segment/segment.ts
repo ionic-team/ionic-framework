@@ -63,14 +63,14 @@ export class SegmentButton {
   @Input() value: string;
 
   /**
-   * @output {SegmentButton} expression to evaluate when a segment button has been clicked
+   * @output {SegmentButton} Emitted when a segment button has been clicked.
    */
   @Output() ionSelect: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
   /**
-   * @input {boolean} disabled state of the button. Optional.
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
   get disabled(): boolean {
@@ -187,7 +187,9 @@ export class Segment extends Ion {
   value: string;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -195,7 +197,9 @@ export class Segment extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -203,7 +207,7 @@ export class Segment extends Ion {
   }
 
   /**
-   * @output {Any}  expression to evaluate when a segment button has been changed
+   * @output {Any} Emitted when a segment button has been changed.
    */
   @Output() ionChange: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
 
@@ -227,7 +231,7 @@ export class Segment extends Ion {
   }
 
   /**
-   * @private
+   * @input {boolean} If true, the user cannot interact with any of the buttons in the segment.
    */
   @Input()
   get disabled(): boolean {

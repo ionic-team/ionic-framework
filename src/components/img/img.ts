@@ -146,7 +146,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @input {string} Image src.
+   * @input {string} The source of the image.
    */
   @Input()
   get src(): string {

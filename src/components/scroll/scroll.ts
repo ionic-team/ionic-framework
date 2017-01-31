@@ -41,7 +41,7 @@ export class Scroll {
   _maxZoom: number = 1;
 
   /**
-   * @input {boolean} whether to enable scrolling along the X axis
+   * @input {boolean} If true, scrolling along the X axis is enabled.
    */
   @Input()
   get scrollX() {
@@ -52,7 +52,7 @@ export class Scroll {
   }
 
   /**
-   * @input {boolean} whether to enable scrolling along the Y axis; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
+   * @input {boolean} If true, scrolling along the Y axis is enabled; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
    */
   @Input()
   get scrollY() {
@@ -63,7 +63,7 @@ export class Scroll {
   }
 
   /**
-   * @input {boolean} whether to enable zooming
+   * @input {boolean} If true, zooming is enabled.
    */
   @Input()
   get zoom() {
@@ -74,7 +74,7 @@ export class Scroll {
   }
 
   /**
-   * @input {number} set the max zoom amount for ion-scroll
+   * @input {number} Set the max zoom amount.
    */
   @Input()
   get maxZoom() {

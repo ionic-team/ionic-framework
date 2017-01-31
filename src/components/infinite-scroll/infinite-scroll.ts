@@ -137,7 +137,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * @input {boolean} Whether or not the infinite scroll should be
+   * @input {boolean} If true, Whether or not the infinite scroll should be
    * enabled or not. Setting to `false` will remove scroll event listeners
    * and hide the display.
    */
@@ -147,7 +147,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * @output {event} The expression to call when the scroll reaches
+   * @output {event} Emitted when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.

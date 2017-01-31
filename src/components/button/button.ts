@@ -153,7 +153,7 @@ export class Button extends Ion {
   _init: boolean;
 
   /**
-   * @input {boolean} Large button.
+   * @input {boolean} If true, activates the large button size.
    */
   @Input()
   set large(val: boolean) {
@@ -161,7 +161,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Small button.
+   * @input {boolean} If true, activates the small button size.
    */
   @Input()
   set small(val: boolean) {
@@ -169,7 +169,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Default button.
+   * @input {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
    */
   @Input()
   set default(val: boolean) {
@@ -177,7 +177,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A transparent button with a border.
+   * @input {boolean} If true, activates a transparent button style with a border.
    */
   @Input()
   set outline(val: boolean) {
@@ -185,7 +185,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A transparent button without a border.
+   * @input {boolean} If true, activates a transparent button style without a border.
    */
   @Input()
   set clear(val: boolean) {
@@ -193,7 +193,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Force a solid button. Useful for buttons within an item.
+   * @input {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
    */
   @Input()
   set solid(val: boolean) {
@@ -201,7 +201,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button with rounded corners.
+   * @input {boolean} If true, activates a button with rounded corners.
    */
   @Input()
   set round(val: boolean) {
@@ -209,7 +209,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that fills its parent container with a border-radius.
+   * @input {boolean} If true, activates a button style that fills the available width.
    */
   @Input()
   set block(val: boolean) {
@@ -217,7 +217,8 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {boolean} If true, activates a button style that fills the available width without
+   * a left and right border.
    */
   @Input()
   set full(val: boolean) {
@@ -225,7 +226,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that has strong importance, ie. it represents an important action.
+   * @input {boolean} If true, activates a button with a heavier font weight.
    */
   @Input()
   set strong(val: boolean) {
@@ -233,7 +234,9 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -264,7 +267,9 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
