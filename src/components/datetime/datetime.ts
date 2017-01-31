@@ -424,14 +424,6 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
    * @output {any} Any expression to evaluate when the datetime selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
