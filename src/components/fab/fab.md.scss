@@ -1,0 +1,101 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design FAB Button
+// --------------------------------------------------
+
+/// @prop - Box shadow of the FAB button
+$fab-md-box-shadow:                               0 4px 6px 0 rgba(0, 0, 0, .14), 0 4px 5px rgba(0, 0, 0, .1) !default;
+
+/// @prop - Box shadow of the activated FAB button
+$fab-md-box-shadow-activated:                     0 5px 15px 0 rgba(0, 0, 0, .4), 0 4px 7px 0 rgba(0, 0, 0, .1) !default;
+
+/// @prop - Background color of the button
+$fab-md-background-color:                         color($colors-md, primary) !default;
+
+/// @prop - Text color of the button
+$fab-md-text-color:                               color-contrast($colors-md, $fab-md-background-color) !default;
+
+/// @prop - Background color of the activated button
+$fab-md-background-color-activated:               color-shade($fab-md-background-color) !default;
+
+/// @prop - Background color of the button in a list
+$fab-md-list-button-background-color:             $fab-list-button-background-color !default;
+
+/// @prop - Text color of the button in a list
+$fab-md-list-button-text-color:                   color-contrast($colors-md, $fab-md-list-button-background-color) !default;
+
+/// @prop - Background color of the activated button in a list
+$fab-md-list-button-background-color-activated:   color-shade($fab-md-list-button-background-color) !default;
+
+/// @prop - Transition duration of the transform and opacity of the button in a list
+$fab-md-list-button-transition-duration:          200ms !default;
+
+/// @prop - Speed curve of the transition of the transform and opacity of the button in a list
+$fab-md-list-button-transition-timing-function:   ease !default;
+
+/// @prop - Transition delay of the transform and opacity of the button in a list
+$fab-md-list-button-transition-delay:             10ms !default;
+
+
+.fab-md {
+  color: $fab-md-text-color;
+  background-color: $fab-md-background-color;
+
+  box-shadow: $fab-md-box-shadow;
+
+  transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
+              background-color $button-md-transition-duration $button-md-transition-timing-function,
+              color $button-md-transition-duration $button-md-transition-timing-function;
+}
+
+.fab-md.activated {
+  background-color: $fab-md-background-color-activated;
+  box-shadow: $fab-md-box-shadow-activated;
+}
+
+.fab-md-in-list {
+  color: $fab-md-list-button-text-color;
+  background-color: $fab-md-list-button-background-color;
+
+  transition: transform $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
+              opacity $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
+              box-shadow $button-md-transition-duration $button-md-transition-timing-function,
+              background-color $button-md-transition-duration $button-md-transition-timing-function,
+              color $button-md-transition-duration $button-md-transition-timing-function;
+}
+
+.fab-md-in-list.activated {
+  background-color: $fab-md-list-button-background-color-activated;
+}
+
+// Material Design FAB Ripple
+// --------------------------------------------------
+
+.fab-md .button-effect {
+  background-color: color-contrast($colors-md, $fab-md-background-color);
+}
+
+
+// Generate MD FAB colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  $bg-color: $color-base;
+  $bg-color-activated: color-shade($bg-color);
+  $fg-color: $color-contrast;
+
+  .fab-md-#{$color-name} {
+    color: $fg-color;
+    background-color: $bg-color;
+  }
+
+  .fab-md-#{$color-name}.activated {
+    background-color: $bg-color-activated;
+  }
+
+  .fab-md-#{$color-name} .button-effect {
+    background-color: $fg-color;
+  }
+}
+

@@ -2,6 +2,9 @@
 
   <ion-navbar>
     <ion-title>Picker</ion-title>
+    <ion-buttons end>
+      <button ion-button strong (click)="push()">Push</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -9,19 +12,19 @@
 
 <ion-content padding>
 
-  <button block class="e2eTwoColumns" (click)="twoColumns()">
+  <button ion-button block class="e2eTwoColumns" (click)="twoColumns()">
     2 Columns
   </button>
 
-  <button block class="e2ePrefixLabel" (click)="prefixLabel()">
+  <button ion-button block class="e2ePrefixLabel" (click)="prefixLabel()">
     Prefix Label
   </button>
 
-  <button block class="e2eSuffixLabel" (click)="suffixLabel()">
+  <button ion-button block class="e2eSuffixLabel" (click)="suffixLabel()">
     Suffix Label
   </button>
 
-  <button block class="e2eColumnSizesLabel" (click)="columnSizes()">
+  <button ion-button block class="e2eColumnSizesLabel" (click)="columnSizes()">
     Columns with sizes
   </button>
 

@@ -1,4 +1,4 @@
-import { defaults, assign } from '../util';
+import { defaults } from '../util/util';
 import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
 
 /**
@@ -33,12 +33,12 @@ export class Gesture {
   }
 
   options(opts: any) {
-    assign(this._options, opts);
+    Object.assign(this._options, opts);
   }
 
   on(type: string, cb: Function) {
     if (type === 'pinch' || type === 'rotate') {
-      this._hammer.get('pinch').set({enable: true});
+      this._hammer.get(type).set({enable: true});
     }
     this._hammer.on(type, cb);
     (this._callbacks[type] || (this._callbacks[type] = [])).push(cb);

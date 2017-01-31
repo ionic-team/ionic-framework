@@ -1,12 +1,15 @@
-import { AfterContentInit, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Provider, Renderer } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ListHeader } from '../list/list';
-import { isCheckedProperty } from '../../util/util';
+import { ListHeader } from '../list/list-header';
+import { isCheckedProperty, isTrueProperty } from '../../util/util';
 import { RadioButton } from './radio-button';
 
-export const RADIO_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => RadioGroup), multi: true});
+export const RADIO_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => RadioGroup),
+  multi: true
+};
 
 /**
  * @name RadioGroup
@@ -55,23 +58,43 @@ export const RADIO_VALUE_ACCESSOR = new Provider(
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/radio/
+ * @demo /docs/v2/demos/src/radio/
  * @see {@link /docs/v2/components#radio Radio Component Docs}
  * @see {@link ../RadioButton RadioButton API Docs}
 */
 @Directive({
   selector: '[radio-group]',
   host: {
-    '[attr.aria-activedescendant]': 'activeId',
     'role': 'radiogroup'
   },
   providers: [RADIO_VALUE_ACCESSOR]
 })
-export class RadioGroup implements AfterContentInit, ControlValueAccessor {
-  private _btns: Array<RadioButton> = [];
-  private _fn: Function;
-  private _ids: number = -1;
-  private _init: boolean = false;
+export class RadioGroup {
+
+  /**
+   * @internal
+   */
+  _disabled: boolean = false;
+
+  /**
+   * @private
+   */
+  _btns: RadioButton[] = [];
+
+  /**
+   * @private
+   */
+  _fn: Function;
+
+  /**
+   * @private
+   */
+  _ids: number = -1;
+
+  /**
+   * @private
+   */
+  _init: boolean = false;
 
   /**
    * @private
@@ -84,13 +107,25 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   id: number;
 
   /**
+   * @input {boolean} Whether all radio buttons in the group should be disabled. Default false.
+   */
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(val: boolean) {
+    this._disabled = isTrueProperty(val);
+  }
+
+  /**
    * @output {any} expression to be evaluated when selection has been changed
    */
   @Output() ionChange: EventEmitter<RadioGroup> = new EventEmitter<RadioGroup>();
 
   constructor(
     private _renderer: Renderer,
-    private _elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _cd: ChangeDetectorRef
   ) {
     this.id = ++radioGroupIds;
   }
@@ -145,7 +180,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
   /**
    * @private
    */
-  private _update() {
+  _update() {
     // loop through each of the radiobuttons
     let hasChecked = false;
     this._btns.forEach(radioButton => {
@@ -163,7 +198,10 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
     });
   }
 
-  private _setActive(radioButton: RadioButton) {
+  /**
+   * @private
+   */
+  _setActive(radioButton: RadioButton) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
   }
 
@@ -199,7 +237,7 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
    * @private
    */
   @ContentChild(ListHeader)
-  private set _header(header: any) {
+  set _header(header: any) {
     if (header) {
       if (!header.id) {
         header.id = 'rg-hdr-' + this.id;
@@ -218,12 +256,20 @@ export class RadioGroup implements AfterContentInit, ControlValueAccessor {
     this._update();
     this.onTouched();
     this.ionChange.emit(val);
+    this._cd.detectChanges();
   }
 
   /**
    * @private
    */
   onTouched() {}
+
+  /**
+   * @private
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
 
 }
 

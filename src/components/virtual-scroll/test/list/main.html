@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Virtual Scroll: List</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="reload()">
+        Reload
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <div padding>
+    <button ion-button (click)="fillList()">Fill List</button>
+    <button ion-button (click)="emptyList()">Empty List</button>
+    <button ion-button (click)="toggleGifs()">Gifs</button>
+  </div>
+
+  <div padding>
+    <code>gulp test.imageserver</code>
+  </div>
+
+  <ion-list [virtualScroll]="items">
+
+    <ion-item class="item-text-wrap" *virtualItem="let item; let itemBounds = bounds;">
+      <ion-thumbnail item-left>
+        <ion-img [src]="item.url" [bounds]="itemBounds"></ion-img>
+      </ion-thumbnail>
+
+      <h2 class="text-wrap">{{item.id}}, top: {{itemBounds.top}}, bottom: {{itemBounds.bottom}}, height: {{itemBounds.height}}</h2>
+
+      <!--<ion-thumbnail item-right>
+        <ion-img [src]="item.gif" [bounds]="itemBounds"></ion-img>
+      </ion-thumbnail>-->
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

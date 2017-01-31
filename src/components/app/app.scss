@@ -1,0 +1,160 @@
+
+// Globals
+// --------------------------------------------------
+@import "../../themes/ionic.globals";
+
+
+// Normalize
+// --------------------------------------------------
+@import "../../themes/normalize";
+
+
+// Util
+// --------------------------------------------------
+@import "../../themes/util";
+
+
+// App Structure
+// --------------------------------------------------
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+
+  text-size-adjust: 100%;
+}
+
+body {
+  position: fixed;
+  overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+
+  text-rendering: optimizeLegibility;
+
+  -webkit-user-drag: none;
+
+  -ms-content-zooming: none;
+  touch-action: manipulation;
+
+  word-wrap: break-word;
+
+  text-size-adjust: none;
+  user-select: none;
+}
+
+
+// Nav Container Structure
+// --------------------------------------------------
+
+ion-app,
+ion-nav,
+ion-tab,
+ion-tabs,
+.app-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-page-container;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+ion-nav,
+ion-tab,
+ion-tabs {
+  overflow: hidden;
+}
+
+ion-tab {
+  display: none;
+}
+
+ion-tab.show-tab {
+  display: block;
+}
+
+ion-app,
+ion-nav,
+ion-tab,
+ion-tabs,
+.app-root,
+.ion-page {
+  contain: strict;
+}
+
+
+// Page Container Structure
+// --------------------------------------------------
+
+.ion-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  // do not show, but still render so we can get dimensions
+  opacity: 0;
+}
+
+.ion-page.show-page {
+  // show the page now that it's ready
+  opacity: 1;
+}
+
+
+// Toolbar Container Structure
+// --------------------------------------------------
+
+ion-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-toolbar;
+  display: block;
+
+  width: 100%;
+}
+
+ion-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: $z-index-toolbar;
+  display: block;
+
+  width: 100%;
+}
+
+
+// Misc
+// --------------------------------------------------
+
+[app-viewport],
+[overlay-portal],
+[nav-viewport],
+[tab-portal],
+.nav-decor {
+  display: none;
+}

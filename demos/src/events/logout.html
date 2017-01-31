@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+      Events
+    </ion-title>
+  </ion-navbar>
+  
+</ion-header>
+
+<ion-content>
+  <h3 margin-left>Logout</h3>
+  <p margin>Click the logout button to logout. Then, toggle the menu to see the menu items change.</p>
+
+  <div padding>
+    <button ion-button block (click)="logout()">Logout</button>
+    <button ion-button block color="secondary" menuToggle>Toggle Menu</button>
+  </div>
+</ion-content>

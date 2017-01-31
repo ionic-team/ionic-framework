@@ -60,14 +60,14 @@ module.exports = function(currentVersion, initialVersionBuild) {
   }
 
   // new version, add it to the versions list
-  if (currentVersion != 'nightly' && !_.contains(versions, currentVersion)){
+  if (currentVersion != 'nightly' && !_.includes(versions, currentVersion)){
     versions.unshift(currentVersion);
   }
 
   // sort by version so we can find latest
   versions.sort(semver.rcompare);
   // add nightly if it isn't in the list
-  !_.contains(versions, 'nightly') && versions.unshift('nightly');
+  !_.includes(versions, 'nightly') && versions.unshift('nightly');
 
   //First semver valid version is latest
   var latestVersion = _.find(versions, semver.valid);
@@ -77,7 +77,7 @@ module.exports = function(currentVersion, initialVersionBuild) {
     //Instead set latest version in docs root if not initial build
     var folder = (version == latestVersion) && !initialVersionBuild ? '' : version;
     return {
-      href: path.join('/' + config.v2DocsDir, folder),
+      href: path.join('/' + config.v2DocsDir, folder).replace('/content',''),
       folder: folder,
       name: version
     };
@@ -137,6 +137,13 @@ module.exports = function(currentVersion, initialVersionBuild) {
 //   });
 // })
 
+// Configure allowedDocTypes
+.config(function(extractAccessTransform) {
+  var allowedDocTypes = ['member'];
+  allowedDocTypes.forEach(function(docType) {
+    extractAccessTransform.allowedDocTypes.add(docType);
+  });
+})
 
 // Configure links
 .config(function(getLinkInfo) {

@@ -3,7 +3,7 @@
   <ion-navbar>
     <ion-title>Item Groups</ion-title>
     <ion-buttons end>
-      <button (click)="reload()">Reload</button>
+      <button ion-button (click)="reload()">Reload</button>
     </ion-buttons>
   </ion-navbar>
 
@@ -31,7 +31,7 @@
           </p>
         </button>
         <ion-item-options>
-          <button (click)="addFavorite(timeSlot, session, slidingItem)">Add to<br>Favorites</button>
+          <button ion-button (click)="addFavorite(timeSlot, session, slidingItem)">Add to<br>Favorites</button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-item-group>

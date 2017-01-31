@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+      Events
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <h3 margin-left>Login</h3>
+  <p margin>Click the login button to use the credentials below. Then, toggle the menu to see the menu items change.</p>
+
+  <ion-list no-margin>
+    <ion-item>
+      <ion-label stacked color="primary">Name</ion-label>
+      <ion-input [(ngModel)]="user.name" disabled></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked color="primary">Username</ion-label>
+      <ion-input [(ngModel)]="user.username" disabled></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <button ion-button block (click)="login()">Login</button>
+    <button ion-button block color="secondary" menuToggle>Toggle Menu</button>
+  </div>
+
+</ion-content>

@@ -4,8 +4,8 @@ import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
 import { AlertOptions, AlertInputOptions } from './alert-options';
 import { isPresent } from '../../util/util';
-import { NavOptions } from '../nav/nav-interfaces';
-import { ViewController } from '../nav/view-controller';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -19,14 +19,9 @@ export class Alert extends ViewController {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(AlertCmp, opts);
+    super(AlertCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
-
-    // by default, alerts should not fire lifecycle events of other views
-    // for example, when an alert enters, the current active view should
-    // not fire its lifecycle events because it's not conceptually leaving
-    this.fireOtherLifecycles = false;
   }
 
   /**
@@ -49,15 +44,6 @@ export class Alert extends ViewController {
    */
   setSubTitle(subTitle: string) {
     this.data.subTitle = subTitle;
-  }
-
-  /**
-   * @private
-   */
-  private setBody(message: string) {
-    // deprecated warning
-    console.warn('Alert setBody() has been renamed to setMessage()');
-    this.setMessage(message);
   }
 
   /**
@@ -95,16 +81,8 @@ export class Alert extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
+    navOptions.minClickBlockDuration = navOptions.minClickBlockDuration || 400;
     return this._app.present(this, navOptions);
-  }
-
-  /**
-   * @private
-   * DEPRECATED: Please inject AlertController instead
-   */
-  private static create(opt: any) {
-    // deprecated warning: added beta.11 2016-06-27
-    console.warn('Alert.create(..) has been deprecated. Please inject AlertController instead');
   }
 
 }
@@ -129,7 +107,7 @@ export class Alert extends ViewController {
  * In the array of `buttons`, each button includes properties for its `text`,
  * and optionally a `handler`. If a handler returns `false` then the alert
  * will not automatically be dismissed when the button is clicked. All
- * buttons will show  up in the order they have been added to the `buttons`
+ * buttons will show up in the order they have been added to the `buttons`
  * array, from left to right. Note: The right most button (the last one in
  * the array) is the main button.
  *
@@ -235,35 +213,36 @@ export class Alert extends ViewController {
  *
  *  | Property              | Type      | Description                                                               |
  *  |-----------------------|-----------|---------------------------------------------------------------------------|
- *  | title                 | `string`  | The string for the alert (optional)                                       |
- *  | subTitle              | `string`  | The subtitle for the alert (optional)                                     |
- *  | message               | `string`  | The message for the alert (optional)                                      |
- *  | cssClass              | `string`  | Any additional class for the alert (optional)                             |
- *  | inputs                | `array`   | An array of inputs for the alert. See input options. (optional)           |
- *  | buttons               | `array`   | An array of buttons for the alert. See buttons options. (optional)        |
- *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop (optional)  |
+ *  | title                 | `string`  | The title for the alert.                                                  |
+ *  | subTitle              | `string`  | The subtitle for the alert.                                               |
+ *  | message               | `string`  | The message for the alert.                                                |
+ *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                |
+ *  | inputs                | `array`   | An array of inputs for the alert. See input options.                      |
+ *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                   |
+ *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop.            |
  *
  *
  *  Input options
  *
  *  | Property    | Type      | Description                                                     |
  *  |-------------|-----------|-----------------------------------------------------------------|
- *  | type        | `string`  | The type the input should be, text, tel, number, etc (optional) |
- *  | name        | `string`  | The name for the input (optional)                               |
- *  | placeholder | `string`  | The input's placeholder (optional, for textual/numeric inputs)  |
- *  | value       | `string`  | The input's value (optional)                                    |
- *  | label       | `string`  | The input's label (optional, only for radio/checkbox inputs)    |
- *  | checked     | `boolean` | Whether or not the input is checked or not (optional)           |
- *  | id          | `string`  | The input's id (optional)                                       |
+ *  | type        | `string`  | The type the input should be: text, tel, number, etc.           |
+ *  | name        | `string`  | The name for the input.                                         |
+ *  | placeholder | `string`  | The input's placeholder (for textual/numeric inputs)            |
+ *  | value       | `string`  | The input's value.                                              |
+ *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
+ *  | checked     | `boolean` | Whether or not the input is checked.                            |
+ *  | id          | `string`  | The input's id.                                                 |
  *
  *  Button options
  *
- *  | Property | Type     | Description                                                    |
- *  |----------|----------|----------------------------------------------------------------|
- *  | text     | `string` | The buttons displayed text                                     |
- *  | handler  | `any`    | Expression that should be evaluated when the button is pressed |
- *  | cssClass | `string` | An additional CSS class for the button                         |
- *  | role     | `string` | The buttons role, null or `cancel`                             |
+ *  | Property | Type     | Description                                                     |
+ *  |----------|----------|-----------------------------------------------------------------|
+ *  | text     | `string` | The buttons displayed text.                                     |
+ *  | handler  | `any`    | Expression that should be evaluated when the button is pressed. |
+ *  | cssClass | `string` | An additional CSS class for the button.                         |
+ *  | role     | `string` | The buttons role, null or `cancel`.                             |
+ *
  * ### Dismissing And Async Navigation
  *
  * After an alert has been dismissed, the app may need to also transition
@@ -319,7 +298,7 @@ export class Alert extends ViewController {
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/alert/
+ * @demo /docs/v2/demos/src/alert/
  */
 @Injectable()
 export class AlertController {

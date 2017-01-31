@@ -1,26 +1,36 @@
-@import "../../globals.wp";
-@import "./datetime";
+@import "../../themes/ionic.globals.wp";
 
 // Windows DateTime
 // --------------------------------------------------
 
+/// @prop - Min width of the DateTime component
 $datetime-wp-min-width:           45% !default;
 
+/// @prop - Padding top of the DateTime component
 $datetime-wp-padding-top:         $item-wp-padding-top !default;
+
+/// @prop - Padding right of the DateTime component
 $datetime-wp-padding-right:       ($item-wp-padding-right / 2) !default;
+
+/// @prop - Padding bottom of the DateTime component
 $datetime-wp-padding-bottom:      $item-wp-padding-bottom !default;
+
+/// @prop - Padding left of the DateTime component
 $datetime-wp-padding-left:        $item-wp-padding-left !default;
 
+/// @prop - Border width of the DateTime component
 $datetime-wp-border-width:        2px !default;
+
+/// @prop - Border color of the DateTime component
 $datetime-wp-border-color:        $input-wp-border-color !default;
 
-ion-datetime {
+.datetime-wp {
   padding: $datetime-wp-padding-top $datetime-wp-padding-right $datetime-wp-padding-bottom $datetime-wp-padding-left;
 
   min-width: $datetime-wp-min-width;
 }
 
-.datetime-text {
+.datetime-wp .datetime-text {
   padding: 0 8px;
 
   min-height: 3.4rem;
@@ -29,6 +39,6 @@ ion-datetime {
   line-height: 3rem;
 }
 
-.item-datetime ion-label[floating] {
+.item-datetime .datetime-wp ion-label[floating] {
   transform: translate3d(8px, 41px, 0);
 }

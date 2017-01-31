@@ -1,25 +1,25 @@
-@import "../../globals.wp";
-@import "./content";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Content
 // --------------------------------------------------
 
-$content-wp-padding:              $content-padding !default;
-$content-wp-margin:               $content-margin !default;
-
-
-ion-content {
+.content-wp {
+  color: $text-wp-color;
   background-color: $background-wp-color;
+}
+
+.content-wp hr {
+  background-color: rgba(0, 0, 0, .08);
 }
 
 
 // Windows Content Padding
 // --------------------------------------------------
 
-@include content-padding($content-wp-padding);
+@include content-padding('wp', $content-wp-padding);
 
 
 // Windows Content Margin
 // --------------------------------------------------
 
-@include content-margin($content-wp-margin);
+@include content-margin('wp', $content-wp-margin);

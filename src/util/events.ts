@@ -1,3 +1,7 @@
+import { DomController } from '../platform/dom-controller';
+import { Platform } from '../platform/platform';
+import { ScrollView } from '../util/scroll-view';
+
 /**
  * @name Events
  * @description
@@ -13,20 +17,20 @@
  * // first page (publish an event when a user is created)
  * function createUser(user) {
  *   console.log('User created!')
- *   events.publish('user:created', user);
+ *   events.publish('user:created', user, Date.now());
  * }
  *
  * // second page (listen for the user created event)
- * events.subscribe('user:created', (userEventData) => {
- *   // userEventData is an array of parameters, so grab our first and only arg
- *   console.log('Welcome', userEventData[0]);
+ * events.subscribe('user:created', (user, time) => {
+ *   // user and time are the same arguments passed in `events.publish(user, time)`
+ *   console.log('Welcome', user, 'at', time);
  * });
  *
  * ```
- * @demo /docs/v2/demos/events/
+ * @demo /docs/v2/demos/src/events/
  */
 export class Events {
-  private _channels: Array<any> = [];
+  private _channels: any = [];
 
   /**
    * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
@@ -51,7 +55,7 @@ export class Events {
    *
    * @return true if a handler was removed
    */
-  unsubscribe(topic: string, handler: Function) {
+  unsubscribe(topic: string, handler: Function = null) {
     let t = this._channels[topic];
     if (!t) {
       // Wasn't found, wasn't removed
@@ -96,8 +100,80 @@ export class Events {
 
     let responses: any[] = [];
     t.forEach((handler: any) => {
-      responses.push(handler(args));
+      responses.push(handler(...args));
     });
     return responses;
   }
+}
+
+/**
+ * @private
+ */
+export function setupEvents(plt: Platform, dom: DomController): Events {
+  const events = new Events();
+  const win = plt.win();
+  const doc = plt.doc();
+
+  // start listening for resizes XXms after the app starts
+  plt.timeout(() => {
+    win.addEventListener('online', (ev) => {
+      events.publish('app:online', ev);
+    }, false);
+
+    win.addEventListener('offline', (ev) => {
+      events.publish('app:offline', ev);
+    }, false);
+
+    win.addEventListener('orientationchange', (ev) => {
+      events.publish('app:rotated', ev);
+    });
+
+    // When that status taps, we respond
+    win.addEventListener('statusTap', (ev) => {
+      // TODO: Make this more better
+      let el = <HTMLElement>doc.elementFromPoint(plt.width() / 2, plt.height() / 2);
+      if (!el) { return; }
+
+      let contentEle = <HTMLElement>el.closest('.scroll-content');
+      if (contentEle) {
+        var scroll = new ScrollView(plt, dom);
+        scroll.init(contentEle, 0, 0);
+          // We need to stop scrolling if it's happening and scroll up
+
+        (<any>contentEle.style)['WebkitBackfaceVisibility'] = 'hidden';
+        (<any>contentEle.style)['WebkitTransform'] = 'translate3d(0,0,0)';
+
+        dom.write(function() {
+          contentEle.style.overflow = 'hidden';
+
+          function finish() {
+            contentEle.style.overflow = '';
+            (<any>contentEle.style)['WebkitBackfaceVisibility'] = '';
+            (<any>contentEle.style)['WebkitTransform'] = '';
+          }
+
+          let didScrollTimeout = plt.timeout(() => {
+            finish();
+          }, 400);
+
+          scroll.scrollTo(0, 0, 300).then(() => {
+            plt.cancelTimeout(didScrollTimeout);
+            finish();
+          });
+        });
+      }
+    });
+
+  }, 2000);
+
+  return events;
+}
+
+/**
+ * @private
+ */
+export function setupProvideEvents(plt: Platform, dom: DomController) {
+  return function() {
+    return setupEvents(plt, dom);
+  };
 }

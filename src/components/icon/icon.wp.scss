@@ -1,0 +1,15 @@
+
+// Windows Icon
+// --------------------------------------------------
+
+
+// Generate Windows Icon Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .icon-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+}

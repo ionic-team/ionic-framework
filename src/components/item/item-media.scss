@@ -1,4 +1,4 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Item Media
 // --------------------------------------------------
@@ -18,22 +18,24 @@
 
 .item > ion-icon,
 .item-inner > ion-icon {
-  min-height: 2.4rem;
+  min-height: 2.8rem;
 
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   line-height: 1;
+}
 
-  &[large] {
-    min-height: 3.2rem;
+.item > ion-icon[large],
+.item-inner > ion-icon[large] {
+  min-height: 3.2rem;
 
-    font-size: 3.2rem;
-  }
+  font-size: 3.2rem;
+}
 
-  &[small] {
-    min-height: 1.8rem;
+.item > ion-icon[small],
+.item-inner > ion-icon[small] {
+  min-height: 1.8rem;
 
-    font-size: 1.8rem;
-  }
+  font-size: 1.8rem;
 }
 
 ion-avatar,
@@ -41,10 +43,11 @@ ion-thumbnail {
   display: block;
 
   line-height: 1;
+}
 
-  img {
-    display: block;
-  }
+ion-avatar img,
+ion-thumbnail img {
+  display: block;
 }
 
 .item-cover {

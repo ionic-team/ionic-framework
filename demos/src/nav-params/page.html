@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Nav Params</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list no-margin>
+    <ion-list-header>
+      Enter Parameters to Pass to the Next Page
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Parameters</ion-label>
+      <ion-select [(ngModel)]="myParam" multiple="true">
+        <ion-option value="Bangkok">Bangkok</ion-option>
+        <ion-option value="Nonthaburi">Nonthaburi</ion-option>
+        <ion-option value="Nakhon Ratchasima">Nakhon Ratchasima</ion-option>
+        <ion-option value="Chiang Mai">Chiang Mai</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <button ion-button color="secondary" block (click)="pushParams()">Navigate with Parameters</button>
+  </div>
+
+</ion-content>

@@ -1,111 +1,243 @@
-@import "../../globals.wp";
-@import "./alert";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Alerts
 // --------------------------------------------------
 
+/// @prop - Background of the alert backdrop
 $alert-wp-backdrop-background:                 #fff !default;
 
+/// @prop - Width of the alert
 $alert-wp-width:                               100% !default;
+
+/// @prop - Max width of the alert
 $alert-wp-max-width:                           520px !default;
+
+/// @prop - Border width of the alert
 $alert-wp-border-width:                        1px !default;
+
+/// @prop - Border style of the alert
 $alert-wp-border-style:                        solid !default;
+
+/// @prop - Border color of the alert
 $alert-wp-border-color:                        color($colors-wp, primary) !default;
+
+/// @prop - Border radius of the alert
 $alert-wp-border-radius:                       0 !default;
+
+/// @prop - Background color of the alert
 $alert-wp-background:                          #e6e6e6 !default;
 
+/// @prop - Padding of the alert head
 $alert-wp-head-padding:                        20px 22px 5px 22px !default;
+
+/// @prop - Text align of the alert head
 $alert-wp-head-text-align:                     left !default;
 
+/// @prop - Font size of the alert title
 $alert-wp-title-font-size:                     20px !default;
+
+/// @prop - Font weight of the alert title
 $alert-wp-title-font-weight:                   400 !default;
 
+/// @prop - Font size of the alert sub title
 $alert-wp-sub-title-font-size:                 16px !default;
 
+/// @prop - Padding of the alert message
 $alert-wp-message-padding:                     0 22px 8px 22px !default;
+
+/// @prop - Padding of the alert empty message
 $alert-wp-message-padding-empty:               0 !default;
+
+/// @prop - Text color of the alert message
 $alert-wp-message-text-color:                  #000 !default;
+
+/// @prop - Font size of the alert message
 $alert-wp-message-font-size:                   13px !default;
 
+/// @prop - Maximum height of the alert content
 $alert-wp-content-max-height:                  240px !default;
 
+/// @prop - Margin of the alert input
 $alert-wp-input-margin:                        5px 0 5px 0 !default;
+
+/// @prop - Padding on the alert input
 $alert-wp-input-padding:                       0 8px !default;
+
+/// @prop - Border width of the alert input
 $alert-wp-input-border-width:                  2px !default;
+
+/// @prop - Border style of the alert input
 $alert-wp-input-border-style:                  $alert-wp-border-style !default;
+
+/// @prop - Border color of the alert input
 $alert-wp-input-border-color:                  $input-wp-border-color !default;
+
+/// @prop - Border color of the alert input when focused
 $alert-wp-input-border-color-focused:          color($colors-wp, primary) !default;
+
+/// @prop - Line height of the alert input
 $alert-wp-input-line-height:                   3rem !default;
+
+/// @prop - Color of the text in the alert input
 $alert-wp-input-text-color:                    #000 !default;
 
+/// @prop - Padding of the alert button
 $alert-wp-button-padding:                      5px !default;
+
+/// @prop - Width of the alert button
 $alert-wp-button-width:                        49.5% !default;
+
+/// @prop - Border radius of the alert button
 $alert-wp-button-border-radius:                0 !default;
+
+/// @prop - Font weight of the alert button
 $alert-wp-button-font-weight:                  400 !default;
+
+/// @prop - Color of the text in the alert button
 $alert-wp-button-text-color:                   #000 !default;
+
+/// @prop - Background color of the alert button
 $alert-wp-button-background:                   #b8b8b8 !default;
+
+/// @prop - Background color of the activated alert button
 $alert-wp-button-background-activated:         color-shade($alert-wp-button-background) !default;
+
+/// @prop - Margin right of the alert button
 $alert-wp-button-margin-right:                 1% !default;
 
+/// @prop - Padding of the alert button group
 $alert-wp-button-group-padding:                20px 22px 20px 22px !default;
+
+/// @prop - Justify content of the alert button group
 $alert-wp-button-group-justify-content:        flex-end !default;
+
+/// @prop - Flex wrap of the alert button group
 $alert-wp-button-group-flex-wrap:              wrap-reverse !default;
 
+/// @prop - Vertical width of the vertical alert button group
 $alert-wp-button-group-vertical-width:         100% !default;
+
+/// @prop - Margin top of the vertical alert button group
 $alert-wp-button-group-vertical-margin-top:    5px !default;
 
+
+/// @prop - Background color of the radio alert
 $alert-wp-radio-background:                    color($colors-wp, primary) !default;
+
+/// @prop - Border color of the radio alert
 $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 
+/// @prop - Padding of the label for the radio alert
 $alert-wp-radio-label-padding:                 13px 26px !default;
+
+/// @prop - Text color of the label for the checked radio alert
 $alert-wp-radio-label-text-color-checked:      $alert-wp-button-text-color !default;
 
+/// @prop - Top of the radio alert
 $alert-wp-radio-top:                           0 !default;
+
+/// @prop - Left of the radio alert
 $alert-wp-radio-left:                          13px !default;
+
+/// @prop - Width of the radio alert
 $alert-wp-radio-width:                         16px !default;
+
+/// @prop - Height of the radio alert
 $alert-wp-radio-height:                        16px !default;
+
+/// @prop - Border width of the radio alert
 $alert-wp-radio-border-width:                  2px !default;
+
+/// @prop - Border style of the radio alert
 $alert-wp-radio-border-style:                  solid !default;
+
+/// @prop - Border radius of the radio alert
 $alert-wp-radio-border-radius:                 50% !default;
+
+/// @prop - Border color of the radio alert
 $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 
+/// @prop - Top of the icon in the radio alert
 $alert-wp-radio-icon-top:                      2px !default;
+
+/// @prop - Left of the icon in the radio alert
 $alert-wp-radio-icon-left:                     2px !default;
+
+/// @prop - Width of the icon in the radio alert
 $alert-wp-radio-icon-width:                    8px !default;
+
+/// @prop - Height of the icon in the radio alert
 $alert-wp-radio-icon-height:                   8px !default;
+
+/// @prop - Border radius of the icon in the radio alert
 $alert-wp-radio-icon-border-radius:            $alert-wp-radio-border-radius !default;
 
+/// @prop - Padding of the label for the checkbox in the alert
 $alert-wp-checkbox-label-padding:              13px 26px !default;
+
+/// @prop - Text color of the label for the checked checkbox in the alert
 $alert-wp-checkbox-label-text-color-checked:   initial !default;
 
+/// @prop - Top of the checkbox in the alert
 $alert-wp-checkbox-top:                        0 !default;
+
+/// @prop - Left of the checkbox in the alert
 $alert-wp-checkbox-left:                       13px !default;
+
+/// @prop - Width of the checkbox in the alert
 $alert-wp-checkbox-width:                      16px !default;
+
+/// @prop - Height of the checkbox in the alert
 $alert-wp-checkbox-height:                     16px !default;
+
+/// @prop - Border width of the checkbox in the alert
 $alert-wp-checkbox-border-width:               2px !default;
+
+/// @prop - Border style of the checkbox in the alert
 $alert-wp-checkbox-border-style:               solid !default;
+
+/// @prop - Border radius of the checkbox in the alert
 $alert-wp-checkbox-border-radius:              0 !default;
+
+/// @prop - Border color of the checkbox in the alert
 $alert-wp-checkbox-border-color:               $input-wp-border-color !default;
+
+/// @prop - Background color of the checkbox in the alert when off
 $alert-wp-checkbox-background-off:             transparent !default;
+
+/// @prop - Background color of the checkbox in the alert when on
 $alert-wp-checkbox-background-on:              color($colors-wp, primary) !default;
 
+/// @prop - Top of the icon in the checkbox alert
 $alert-wp-checkbox-icon-top:                   -2px !default;
+
+/// @prop - Left of the icon in the checkbox alert
 $alert-wp-checkbox-icon-left:                  3px !default;
+
+/// @prop - Width of the icon in the checkbox alert
 $alert-wp-checkbox-icon-width:                 6px !default;
+
+/// @prop - Height of the icon in the checkbox alert
 $alert-wp-checkbox-icon-height:                12px !default;
+
+/// @prop - Border width of the icon in the checkbox alert
 $alert-wp-checkbox-icon-border-width:          1px !default;
+
+/// @prop - Border style of the icon in the checkbox alert
 $alert-wp-checkbox-icon-border-style:          solid !default;
+
+/// @prop - Border color of the icon in the checkbox alert
 $alert-wp-checkbox-icon-border-color:          color-contrast($colors-wp, $alert-wp-checkbox-background-on) !default;
+
+/// @prop - Transform of the icon in the checkbox alert
 $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 
-ion-alert {
-  ion-backdrop {
-    background: $alert-wp-backdrop-background;
-  }
+.alert-wp ion-backdrop {
+  background: $alert-wp-backdrop-background;
 }
 
-.alert-wrapper {
+.alert-wp .alert-wrapper {
   width: $alert-wp-width;
   max-width: $alert-wp-max-width;
 
@@ -117,18 +249,18 @@ ion-alert {
 // Windows Alert Header
 // --------------------------------------------------
 
-.alert-head {
+.alert-wp .alert-head {
   padding: $alert-wp-head-padding;
 
   text-align: $alert-wp-head-text-align;
 }
 
-.alert-title {
+.alert-wp .alert-title {
   font-size: $alert-wp-title-font-size;
   font-weight: $alert-wp-title-font-weight;
 }
 
-.alert-sub-title {
+.alert-wp .alert-sub-title {
   font-size: $alert-wp-sub-title-font-size;
 }
 
@@ -136,53 +268,53 @@ ion-alert {
 // Windows Alert Message
 // --------------------------------------------------
 
-.alert-message,
-.alert-input-group {
+.alert-wp .alert-message,
+.alert-wp .alert-input-group {
   padding: $alert-wp-message-padding;
 
   color: $alert-wp-message-text-color;
 }
 
-.alert-message {
+.alert-wp .alert-message {
   max-height: $alert-wp-content-max-height;
 
   font-size: $alert-wp-message-font-size;
+}
 
-  &:empty {
-    padding: $alert-wp-message-padding-empty;
-  }
+.alert-wp .alert-message:empty {
+  padding: $alert-wp-message-padding-empty;
 }
 
 
 // Windows Alert Input
 // --------------------------------------------------
 
-.alert-input {
+.alert-wp .alert-input {
   margin: $alert-wp-input-margin;
   padding: $alert-wp-input-padding;
 
   border: $alert-wp-input-border-width $alert-wp-input-border-style $alert-wp-input-border-color;
   line-height: $alert-wp-input-line-height;
   color: $alert-wp-input-text-color;
+}
 
-  &:focus {
-    border-color: $alert-wp-input-border-color-focused;
-  }
+.alert-wp .alert-input:focus {
+  border-color: $alert-wp-input-border-color-focused;
 }
 
 
 // Windows Alert Radio/Checkbox Group
 // --------------------------------------------------
 
-.alert-radio-group,
-.alert-checkbox-group {
+.alert-wp .alert-radio-group,
+.alert-wp .alert-checkbox-group {
   position: relative;
   overflow: auto;
 
   max-height: $alert-wp-content-max-height;
 }
 
-.alert-tappable {
+.alert-wp .alert-tappable {
   position: relative;
   display: flex;
 
@@ -196,7 +328,7 @@ ion-alert {
 // Windows Alert Radio Label
 // --------------------------------------------------
 
-.alert-radio-label {
+.alert-wp .alert-radio-label {
   overflow: hidden;
 
   flex: 1;
@@ -210,7 +342,7 @@ ion-alert {
 // Windows Alert Radio Unchecked Circle
 // ---------------------------------------------------
 
-.alert-radio-icon {
+.alert-wp .alert-radio-icon {
   position: relative;
   top: $alert-wp-radio-top;
   left: $alert-wp-radio-left;
@@ -230,7 +362,7 @@ ion-alert {
 // Windows Alert Radio Checked Dot
 // ---------------------------------------------------
 
-.alert-radio-inner {
+.alert-wp .alert-radio-inner {
   position: absolute;
   top: $alert-wp-radio-icon-top;
   left: $alert-wp-radio-icon-left;
@@ -246,25 +378,23 @@ ion-alert {
 // Windows Alert Radio Checked
 // ---------------------------------------------------
 
-.alert-radio[aria-checked=true] {
-  .alert-radio-label {
-    color: $alert-wp-radio-label-text-color-checked;
-  }
+.alert-wp [aria-checked=true] .alert-radio-label {
+  color: $alert-wp-radio-label-text-color-checked;
+}
 
-  .alert-radio-icon {
-    border-color: $alert-wp-radio-border-color;
-  }
+.alert-wp [aria-checked=true] .alert-radio-icon {
+  border-color: $alert-wp-radio-border-color;
+}
 
-  .alert-radio-inner {
-    display: block;
-  }
+.alert-wp [aria-checked=true] .alert-radio-inner {
+  display: block;
 }
 
 
 // Windows Alert Checkbox Label
 // --------------------------------------------------
 
-.alert-checkbox-label {
+.alert-wp .alert-checkbox-label {
   overflow: hidden;
 
   flex: 1;
@@ -275,14 +405,14 @@ ion-alert {
   white-space: nowrap;
 }
 
-.alert-checkbox[aria-checked=true] .alert-checkbox-label {
+.alert-wp [aria-checked=true] .alert-checkbox-label {
   color: $alert-wp-checkbox-label-text-color-checked;
 }
 
 // Windows Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
 
-.alert-checkbox-icon {
+.alert-wp .alert-checkbox-icon {
   position: relative;
   top: $alert-wp-checkbox-top;
   left: $alert-wp-checkbox-left;
@@ -300,7 +430,7 @@ ion-alert {
 // Windows Alert Checkbox Outline: Checked
 // --------------------------------------------------
 
-.alert-checkbox[aria-checked=true] .alert-checkbox-icon {
+.alert-wp [aria-checked=true] .alert-checkbox-icon {
   border-color: $alert-wp-checkbox-background-on;
   background: $alert-wp-checkbox-background-on;
 }
@@ -308,7 +438,7 @@ ion-alert {
 // Windows Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
-.alert-checkbox[aria-checked=true] .alert-checkbox-inner {
+.alert-wp [aria-checked=true] .alert-checkbox-inner {
   position: absolute;
   top: $alert-wp-checkbox-icon-top;
   left: $alert-wp-checkbox-icon-left;
@@ -328,24 +458,25 @@ ion-alert {
 // Windows Alert Button
 // --------------------------------------------------
 
-.alert-button-group {
+.alert-wp .alert-button-group {
   flex-wrap: $alert-wp-button-group-flex-wrap;
   justify-content: $alert-wp-button-group-justify-content;
 
   padding: $alert-wp-button-group-padding;
-
-  &.vertical .alert-button {
-    margin-top: $alert-wp-button-group-vertical-margin-top;
-
-    width: $alert-wp-button-group-vertical-width;
-
-    &:first-child:not(:only-child) {
-      margin-top: 0;
-    }
-  }
 }
 
-.alert-button {
+.alert-wp .alert-button-group-vertical .alert-button {
+  margin-top: $alert-wp-button-group-vertical-margin-top;
+
+  width: $alert-wp-button-group-vertical-width;
+}
+
+.alert-wp .alert-button-group-vertical .alert-button:first-child:not(:only-child) {
+  margin-top: 0;
+  margin-right: 0;
+}
+
+.alert-wp .alert-button {
   padding: $alert-wp-button-padding;
 
   width: $alert-wp-button-width;
@@ -354,12 +485,12 @@ ion-alert {
   font-weight: $alert-wp-button-font-weight;
   color: $alert-wp-button-text-color;
   background: $alert-wp-button-background;
+}
 
-  &:first-child:not(:only-child) {
-    margin-right: $alert-wp-button-margin-right;
-  }
+.alert-wp .alert-button:first-child:not(:only-child) {
+  margin-right: $alert-wp-button-margin-right;
+}
 
-  &.activated {
-    background: $alert-wp-button-background-activated;
-  }
+.alert-wp .alert-button.activated {
+  background: $alert-wp-button-background-activated;
 }

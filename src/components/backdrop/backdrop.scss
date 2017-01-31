@@ -1,8 +1,9 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Backdrop
 // --------------------------------------------------
 
+/// @prop - Color of the backdrop
 $backdrop-color: #000 !default;
 
 ion-backdrop {
@@ -20,6 +21,6 @@ ion-backdrop {
   transform: translateZ(0);
 }
 
-ion-backdrop.hide-backdrop {
-  display: none;
+ion-backdrop.backdrop-no-tappable {
+  cursor: auto;
 }

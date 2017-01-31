@@ -1,0 +1,76 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Checkbox</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.jon"></ion-checkbox>
+      <ion-label>Jon Snow</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.daenerys" color="vibrant"></ion-checkbox>
+      <ion-label>Daenerys Targaryen</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.arya" disabled="true"></ion-checkbox>
+      <ion-label>Arya Stark</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.tyroin" color="secondary"></ion-checkbox>
+      <ion-label>Tyrion Lannister</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.sansa" color="danger"></ion-checkbox>
+      <ion-label>Sansa Stark</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.khal"></ion-checkbox>
+      <ion-label>Khal Drogo</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.cersei" color="dark"></ion-checkbox>
+      <ion-label>Cersei Lannister</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.stannis"></ion-checkbox>
+      <ion-label>Stannis Baratheon</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.petyr" disabled="true"></ion-checkbox>
+      <ion-label>Petyr Baelish</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.hodor" color="dark"></ion-checkbox>
+      <ion-label>Hodor</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.catelyn" color="secondary"></ion-checkbox>
+      <ion-label>Catelyn Stark</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-checkbox [(ngModel)]="data.bronn" color="vibrant"></ion-checkbox>
+      <ion-label>Bronn</ion-label>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

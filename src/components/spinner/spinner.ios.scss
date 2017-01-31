@@ -1,0 +1,65 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Spinner
+// --------------------------------------------------
+
+/// @prop - Color of the ios spinner
+$spinner-ios-ios-color:            #69717d !default;
+
+/// @prop - Color of the bubbles spinner
+$spinner-ios-bubbles-color:        #000 !default;
+
+/// @prop - Color of the circles spinner
+$spinner-ios-circles-color:        #69717d !default;
+
+/// @prop - Color of the crescent spinner
+$spinner-ios-crescent-color:       #000 !default;
+
+/// @prop - Color of the dots spinner
+$spinner-ios-dots-color:           #444 !default;
+
+
+.spinner-ios-ios line,
+.spinner-ios-ios-small line {
+  stroke: $spinner-ios-ios-color;
+}
+
+.spinner-ios-bubbles circle {
+  fill: $spinner-ios-bubbles-color;
+}
+
+.spinner-ios-circles circle {
+  fill: $spinner-ios-circles-color;
+}
+
+.spinner-ios-crescent circle {
+  stroke: $spinner-ios-crescent-color;
+}
+
+.spinner-ios-dots circle {
+  fill: $spinner-ios-dots-color;
+}
+
+
+// Generate iOS Spinner Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .spinner-ios-#{$color-name} {
+
+    &.spinner-ios line,
+    &.spinner-ios-small line,
+    &.spinner-crescent circle {
+      stroke: $color-base;
+    }
+
+    &.spinner-bubbles circle,
+    &.spinner-circles circle,
+    &.spinner-dots circle {
+      fill: $color-base;
+    }
+
+  }
+
+}

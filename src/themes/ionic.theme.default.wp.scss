@@ -1,0 +1,66 @@
+@import "./ionic.theme.default";
+
+// Windows Default Theme
+// ----------------------------------
+
+$colors-wp: copy-colors($colors) !default;
+
+
+$text-wp-color:                       $text-color !default;
+$background-wp-color:                 $background-color !default;
+$subdued-text-wp-color:               $subdued-text-color !default;
+
+$font-family-wp-base:                 "Segoe UI", "Noto Sans", sans-serif !default;
+$font-size-wp-base:                   $font-size-base !default;
+
+$content-wp-padding:                  $content-padding !default;
+$content-wp-margin:                   $content-margin !default;
+
+
+// Windows Toolbar
+// --------------------------------------------------
+
+$toolbar-wp-height:                   46px !default;
+$toolbar-wp-padding:                  4px !default;
+$toolbar-wp-background:               $toolbar-background !default;
+$toolbar-wp-border-color:             $toolbar-border-color !default;
+$toolbar-wp-text-color:               $toolbar-text-color !default;
+$toolbar-wp-active-color:             $toolbar-active-color !default;
+$toolbar-wp-inactive-color:           $toolbar-inactive-color !default;
+
+
+// Windows Tabs
+// --------------------------------------------------
+
+$tabs-wp-background:                  $tabs-background !default;
+$tabs-wp-border-color:                transparent !default;
+$tabs-wp-tab-color-inactive:          $tabs-tab-color-inactive !default;
+$tabs-wp-tab-color-active:            $tabs-tab-color-active !default;
+
+
+// Windows List
+// --------------------------------------------------
+
+$list-wp-text-color:                  $list-text-color !default;
+$list-wp-border-color:                transparent !default;
+$list-wp-background-color:            $list-background-color !default;
+$list-wp-activated-background-color:  #aaa !default;
+
+
+// Windows Item
+// --------------------------------------------------
+
+$item-wp-padding-top:                 13px !default;
+$item-wp-padding-right:               16px !default;
+$item-wp-padding-bottom:              13px !default;
+$item-wp-padding-left:                16px !default;
+$item-wp-padding-media-top:           9px !default;
+$item-wp-padding-media-bottom:        9px !default;
+$item-wp-padding-icon-top:            11px !default;
+$item-wp-padding-icon-bottom:         10px !default;
+
+
+// Windows Input
+// --------------------------------------------------
+
+$input-wp-border-color:               rgba(0, 0, 0, .5) !default;

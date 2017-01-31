@@ -20,10 +20,14 @@ module.exports = function jekyll(renderDocsProcessor) {
         docs[i].URL = doc.outputPath.replace('docs/v2//', 'docs/v2/')
                                     .replace('/index.md', '')
                                     .replace('//home/ubuntu/ionic/src', '')
-                                    .replace('//', '/');
+                                    .replace('//', '/')
+                                    .replace('content/', '');
         if (docs[i].relativePath) {
           docs[i].relativePath = doc.relativePath
                                     .replace('/home/ubuntu/ionic', '');
+        }
+        if (docs[i].href) {
+          docs[i].href = doc.href.replace('content/', '');
         }
       });
 
@@ -31,20 +35,20 @@ module.exports = function jekyll(renderDocsProcessor) {
         docType: 'api-menu',
         id: 'api-menu',
         template: 'api_menu.template.html',
-        outputPath: '_includes/v2_fluid/api_menu.html'
+        outputPath: 'content/_includes/v2_fluid/api_menu.html'
       });
       docs.push({
         docType: 'api-menu-flat-version',
         id: 'api-menu-flat-version',
         template: 'api_menu_flat_version.template.html',
-        outputPath: '_includes/v2_fluid/api_menu_flat_' + currentVersion +
+        outputPath: 'content/_includes/v2_fluid/api_menu_flat_' + currentVersion +
                     '.html'
       });
       docs.push({
         docType: 'api-version-select',
         id: 'api-version-select',
         template: 'api_version_select.template.html',
-        outputPath: '_includes/v2_fluid/api_version_select.html'
+        outputPath: 'content/_includes/v2_fluid/api_version_select.html'
       });
 
       // returning docs will replace docs object in the next process

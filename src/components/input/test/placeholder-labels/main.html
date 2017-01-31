@@ -2,6 +2,9 @@
 
   <ion-toolbar>
     <ion-title>Placeholder Label Text Input</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="toggleReadonly()">Toggle</button>
+    </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
@@ -20,6 +23,10 @@
     </ion-item>
 
     <ion-item>
+      <ion-input placeholder="Text Input Readonly" [readonly]="isReadonly" value="Text Input Readonly"></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-icon name="call" item-left></ion-icon>
       <ion-input placeholder="Text Input Placeholder"></ion-input>
     </ion-item>
@@ -35,6 +42,10 @@
 
     <ion-item>
       <ion-textarea placeholder="ion-textarea Placeholder" value="Textarea value"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="ion-textarea Readonly" [readonly]="isReadonly" value="Textarea Readonly"></ion-textarea>
     </ion-item>
 
   </ion-list>

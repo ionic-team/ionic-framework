@@ -1,7 +1,7 @@
 <ion-menu [content]="content" side="left" persistent="true">
 
   <ion-header>
-    <ion-toolbar secondary>
+    <ion-toolbar color="secondary">
       <ion-title>Left Menu</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -15,12 +15,22 @@
           {{p.title}}
         </button>
         <ion-item-options side="left">
-          <button>Test</button>
+          <button ion-button>Test</button>
         </ion-item-options>
         <ion-item-options>
-          <button>Test</button>
+          <button ion-button>Test</button>
         </ion-item-options>
       </ion-item-sliding>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle item-left></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle></ion-toggle>
+      </ion-item>
 
       <button ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
         Close Menu
@@ -74,7 +84,7 @@
   </ion-content>
 
   <ion-footer>
-    <ion-toolbar secondary>
+    <ion-toolbar color="secondary">
       <ion-title>Footer</ion-title>
     </ion-toolbar>
   </ion-footer>
@@ -85,7 +95,7 @@
 <ion-menu [content]="content" side="right">
 
   <ion-header>
-    <ion-toolbar danger>
+    <ion-toolbar color="danger">
       <ion-title>Right Menu</ion-title>
     </ion-toolbar>
   </ion-header>
@@ -93,6 +103,16 @@
   <ion-content>
 
     <ion-list>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle item-left></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle></ion-toggle>
+      </ion-item>
 
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}

@@ -1,12 +1,12 @@
 <ion-header>
 
-  <ion-navbar no-border-bottom>
+  <ion-navbar>
     <ion-title>
       Segment Swipeable under Navbar
     </ion-title>
   </ion-navbar>
 
-  <ion-toolbar no-border-top>
+  <ion-toolbar>
     <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChanged($event)">
       <ion-segment-button value="first">
         First
@@ -25,7 +25,7 @@
 
 <ion-content padding>
 
-  <ion-slides (ionDidChange)="onSlideChanged($event)" #loopSlider>
+  <ion-slides (ionSlideDidChange)="onSlideChanged($event)" #loopSlider>
     <ion-slide *ngFor="let slide of slides">
       <h1>{{ slide.title }}</h1>
     </ion-slide>

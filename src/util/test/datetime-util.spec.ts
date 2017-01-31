@@ -1,6 +1,4 @@
-import * as datetime from '../../../src/util/datetime-util';
-
-export function run() {
+import * as datetime from '../datetime-util';
 
 describe('convertDataToISO', () => {
 
@@ -323,6 +321,13 @@ describe('parseTemplate', () => {
     expect(formats[2]).toEqual('a');
   });
 
+  it('should allow am/pm when using only 12-hour', () => {
+    var formats = datetime.parseTemplate('hh a');
+    expect(formats.length).toEqual(2);
+    expect(formats[0]).toEqual('hh');
+    expect(formats[1]).toEqual('a');
+  });
+
   it('should allow am/pm when using 12-hour', () => {
     var formats = datetime.parseTemplate('hh:mm a');
     expect(formats.length).toEqual(3);
@@ -331,7 +336,7 @@ describe('parseTemplate', () => {
     expect(formats[2]).toEqual('a');
   });
 
-  it('should not add am/pm when not using 24-hour', () => {
+  it('should not add am/pm when using 24-hour', () => {
     var formats = datetime.parseTemplate('HH:mm a');
     expect(formats.length).toEqual(2);
     expect(formats[0]).toEqual('HH');
@@ -827,6 +832,74 @@ describe('parseISODate', () => {
 
 });
 
+describe('updateDate', () => {
+
+  it('should update year in existing date', () => {
+    var existingDate = { year: 2016, month: 10, day: 1 };
+    datetime.updateDate(existingDate, { year: { value: 2017 } });
+    expect(existingDate.year).toEqual(2017);
+  });
+
+  it('should update month in existing date', () => {
+    var existingDate = { year: 2016, month: 10, day: 1 };
+    datetime.updateDate(existingDate, { month: { value: 11 } });
+    expect(existingDate.month).toEqual(11);
+  });
+
+  it('should update day in existing date', () => {
+    var existingDate = { year: 2016, month: 10, day: 1 };
+    datetime.updateDate(existingDate, { day: { value: 2 } });
+    expect(existingDate.day).toEqual(2);
+  });
+
+  it('should update hour in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 11 } });
+    expect(existingDate.hour).toEqual(11);
+  });
+
+  it('should update minute in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { minute: { value: 45 } });
+    expect(existingDate.minute).toEqual(45);
+  });
+
+  it('should update second in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { second: { value: 10 } });
+    expect(existingDate.second).toEqual(10);
+  });
+
+  it('should update hour PM in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 1 }, ampm: { value: 'pm' }});
+    expect(existingDate.hour).toEqual(13);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 12 }, ampm: { value: 'pm' }});
+    expect(existingDate.hour).toEqual(12);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 4 }, ampm: { value: 'pm' }});
+    expect(existingDate.hour).toEqual(16);
+  });
+
+  it('should update hour AM in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 1 }, ampm: { value: 'am' }});
+    expect(existingDate.hour).toEqual(1);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 12 }, ampm: { value: 'am' }});
+    expect(existingDate.hour).toEqual(0);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 4 }, ampm: { value: 'am' }});
+    expect(existingDate.hour).toEqual(4);
+  });
+
+});
+
 // pt-br
 var customLocale: datetime.LocaleData = {
   dayNames: [
@@ -876,5 +949,3 @@ var customLocale: datetime.LocaleData = {
     'dez'
   ],
 };
-
-}

@@ -1,7 +1,10 @@
-import { DateTime, Form, Picker, Config, NavController } from '../../../../src';
-import * as datetime from '../../../../src/util/datetime-util';
 
-export function run() {
+import { DateTime } from '../datetime';
+import { Form } from '../../../util/form';
+import { Picker, PickerController } from '../../picker/picker';
+import * as datetime from '../../../util/datetime-util';
+import { mockApp, mockConfig, mockElementRef, mockRenderer } from '../../../util/mock-providers';
+
 
 describe('DateTime', () => {
 
@@ -11,7 +14,7 @@ describe('DateTime', () => {
       datetime.max = '2001-12-15';
       datetime.min = '2000-01-15';
       datetime.pickerFormat = 'MM DD YYYY';
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
 
       var columns = picker.getColumns();
@@ -41,7 +44,7 @@ describe('DateTime', () => {
       datetime.max = '2010-11-15';
       datetime.min = '2000-02-15';
       datetime.pickerFormat = 'MM DD YYYY';
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
 
       var columns = picker.getColumns();
@@ -69,7 +72,7 @@ describe('DateTime', () => {
       datetime.min = '2000-01-01';
       datetime.pickerFormat = 'MM DD YYYY';
 
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
 
       var columns = picker.getColumns();
@@ -102,9 +105,107 @@ describe('DateTime', () => {
       expect(columns[1].options[30].disabled).toEqual(true);
     });
 
+    it('should enable all of the values given', () => {
+      datetime.monthValues = '6,7,8';
+      datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 14';
+      datetime.yearValues = '2014,2015';
+
+      datetime.pickerFormat = 'MM DD YYYY';
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+
+      var columns = picker.getColumns();
+
+      expect(columns[0].options.length).toEqual(3); // months
+      expect(columns[1].options.length).toEqual(13); // days
+      expect(columns[2].options.length).toEqual(2); // years
+
+      datetime.validate(picker);
+
+      // Months
+      for (var i = 0; i < columns[0].options.length; i++) {
+        expect(columns[0].options[i].disabled).toEqual(false);
+      }
+
+      // // Days
+      for (var i = 0; i < columns[1].options.length; i++) {
+        expect(columns[1].options[i].disabled).toEqual(false);
+      }
+    });
+  });
+
+  describe('writeValue', () => {
+
+    it('should updateText with default MMM D, YYYY when no displayFormat or pickerFormat', () => {
+      datetime.ngAfterContentInit();
+      datetime.writeValue('1994-12-15T13:47:20.789Z');
+
+      expect(datetime._text).toEqual('Dec 15, 1994');
+    });
+
+    it('should updateText with pickerFormat when no displayFormat', () => {
+      datetime.pickerFormat = 'YYYY';
+      datetime.ngAfterContentInit();
+      datetime.writeValue('1994-12-15T13:47:20.789Z');
+
+      expect(datetime._text).toEqual('1994');
+    });
+
+    it('should updateText with displayFormat when no pickerFormat', () => {
+      datetime.displayFormat = 'YYYY';
+      datetime.ngAfterContentInit();
+      datetime.writeValue('1994-12-15T13:47:20.789Z');
+
+      expect(datetime._text).toEqual('1994');
+    });
+
   });
 
   describe('generate', () => {
+
+    it('should generate with default MMM D, YYYY when no displayFormat or pickerFormat', () => {
+      datetime.monthShortNames = customLocale.monthShortNames;
+      datetime.ngAfterContentInit();
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(3);
+      expect(columns[0].name).toEqual('month');
+      expect(columns[1].name).toEqual('day');
+      expect(columns[2].name).toEqual('year');
+    });
+
+    it('should generate with only displayFormat', () => {
+      datetime.monthShortNames = customLocale.monthShortNames;
+      datetime.ngAfterContentInit();
+      datetime.displayFormat = 'YYYY';
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(1);
+      expect(columns[0].name).toEqual('year');
+    });
+
+    it('should generate with only pickerFormat', () => {
+      datetime.monthShortNames = customLocale.monthShortNames;
+      datetime.ngAfterContentInit();
+      datetime.pickerFormat = 'YYYY';
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+
+      var picker = new Picker(mockApp());
+      datetime.generate(picker);
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(1);
+      expect(columns[0].name).toEqual('year');
+    });
 
     it('should generate with custom locale short month names from input property', () => {
       datetime.monthShortNames = customLocale.monthShortNames;
@@ -112,7 +213,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'MMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -128,7 +229,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'MMMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -142,7 +243,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'DDDD D M YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -156,7 +257,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'DDDD M YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -171,7 +272,7 @@ describe('DateTime', () => {
       datetime.min = '2000-01-01';
       datetime.pickerFormat = 'MM DD YYYY';
 
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -194,7 +295,7 @@ describe('DateTime', () => {
       datetime.min = '2000-01-01';
       datetime.pickerFormat = 'YYYY';
 
-      var picker = new Picker();
+      var picker = new Picker(mockApp());
       datetime.generate(picker);
       var columns = picker.getColumns();
 
@@ -250,6 +351,68 @@ describe('DateTime', () => {
       expect(datetime._max.hour).toEqual(23);
       expect(datetime._max.minute).toEqual(59);
       expect(datetime._max.second).toEqual(59);
+    });
+
+    it('should set max and min date when neither set', () => {
+      const todaysDate = new Date();
+      todaysDate.setFullYear(1994);
+
+      datetime.calcMinMax(todaysDate);
+
+      expect(datetime._min.year).toEqual(1894);
+      expect(datetime._max.year).toEqual(1994);
+    });
+
+    it('should set max date when min date far back in time, and only min set', () => {
+      const todaysDate = new Date();
+      todaysDate.setFullYear(1994);
+
+      datetime.min = '1776';
+      datetime.calcMinMax(todaysDate);
+
+      expect(datetime._min.year).toEqual(1776);
+      expect(datetime._max.year).toEqual(1994);
+    });
+
+    it('should reset min.day when greater than max.day and the same year and month', () => {
+      datetime.min = '1994-12-18T13:47:20.789Z';
+      datetime.max = '1994-12-15T13:47:20.789Z';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1994);
+      expect(datetime._min.month).toEqual(12);
+      expect(datetime._min.day).toEqual(1);
+      expect(datetime._max.year).toEqual(1994);
+      expect(datetime._max.month).toEqual(12);
+      expect(datetime._max.day).toEqual(15);
+    });
+
+    it('should reset min.month when greater than max.month and the same year', () => {
+      datetime.min = '1994-12-15T13:47:20.789Z';
+      datetime.max = '1994-10-15T13:47:20.789Z';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1994);
+      expect(datetime._min.month).toEqual(1);
+      expect(datetime._max.year).toEqual(1994);
+      expect(datetime._max.month).toEqual(10);
+    });
+
+    it('should reset min.year when greater than max.year', () => {
+      datetime.min = '1876';
+      datetime.max = '1776';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1676);
+      expect(datetime._max.year).toEqual(1776);
+    });
+
+    it('should set min date when max date far back in time, and only max set', () => {
+      datetime.max = '1776';
+      datetime.calcMinMax();
+
+      expect(datetime._min.year).toEqual(1676);
+      expect(datetime._max.year).toEqual(1776);
     });
 
     it('should max date from max input string', () => {
@@ -472,7 +635,7 @@ describe('DateTime', () => {
   var datetime: DateTime;
 
   beforeEach(() => {
-    datetime = new DateTime(new Form(), new Config(), null, <NavController>{});
+    datetime = new DateTime(new Form(), mockConfig(), mockElementRef(), mockRenderer(), null, <PickerController>{});
   });
 
   console.warn = function(){};
@@ -528,5 +691,3 @@ describe('DateTime', () => {
   };
 
 });
-
-}

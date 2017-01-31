@@ -1,6 +1,6 @@
-import { Component, ElementRef, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
 
-import { Ion } from '../ion';
+import { isTrueProperty } from '../../util/util';
 
 /**
  * @name Scroll
@@ -17,53 +17,93 @@ import { Ion } from '../ion';
  * <ion-scroll scrollX="true" scrollY="true">
  * </ion-scroll>
  * ```
- *@property {boolean} [scrollX] - whether to enable scrolling along the X axis
- *@property {boolean} [scrollY] - whether to enable scrolling along the Y axis
- *@property {boolean} [zoom] - whether to enable zooming
- *@property {number} [maxZoom] - set the max zoom amount for ion-scroll
- * @demo /docs/v2/demos/scroll/
+ * @demo /docs/v2/demos/src/scroll/
  */
 @Component({
   selector: 'ion-scroll',
-  inputs: [
-    'scrollX', 'scrollY', 'zoom', 'maxZoom'
-  ],
+  template:
+    '<div class="scroll-content">' +
+      '<div class="scroll-zoom-wrapper">' +
+        '<ng-content></ng-content>' +
+      '</div>' +
+    '</div>',
   host: {
     '[class.scroll-x]': 'scrollX',
     '[class.scroll-y]': 'scrollY'
   },
-  template:
-    '<scroll-content>' +
-      '<div class="scroll-zoom-wrapper">' +
-        '<ng-content></ng-content>' +
-      '</div>' +
-    '</scroll-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Scroll extends Ion {
-  /**
-   * @private
-   */
-  private maxScale: number = 3;
-  /**
-   * @private
-   */
-  private zoomDuration: number = 250;
-  /**
-   * @private
-   */
-  private scrollElement: HTMLElement;
+export class Scroll {
+  _scrollX: boolean = false;
+  _scrollY: boolean = false;
+  _zoom: boolean = false;
+  _maxZoom: number = 1;
 
-  constructor(elementRef: ElementRef) {
-    super(elementRef);
+  /**
+   * @input {boolean} whether to enable scrolling along the X axis
+   */
+  @Input()
+  get scrollX() {
+    return this._scrollX;
+  }
+  set scrollX(val: any) {
+    this._scrollX = isTrueProperty(val);
+  }
+
+  /**
+   * @input {boolean} whether to enable scrolling along the Y axis; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
+   */
+  @Input()
+  get scrollY() {
+    return this._scrollY;
+  }
+  set scrollY(val: any) {
+    this._scrollY = isTrueProperty(val);
+  }
+
+  /**
+   * @input {boolean} whether to enable zooming
+   */
+  @Input()
+  get zoom() {
+    return this._zoom;
+  }
+  set zoom(val: any) {
+    this._zoom = isTrueProperty(val);
+  }
+
+  /**
+   * @input {number} set the max zoom amount for ion-scroll
+   */
+  @Input()
+  get maxZoom() {
+    return this._maxZoom;
+  }
+  set maxZoom(val: any) {
+    this._maxZoom = val;
   }
 
   /**
    * @private
    */
+  maxScale: number = 3;
+  /**
+   * @private
+   */
+  zoomDuration: number = 250;
+  /**
+   * @private
+   */
+  scrollElement: HTMLElement;
+
+  constructor(private _elementRef: ElementRef) {}
+
+  /**
+   * @private
+   */
   ngOnInit() {
-    this.scrollElement = this.getNativeElement().children[0];
+    this.scrollElement = this._elementRef.nativeElement.children[0];
   }
 
   /**

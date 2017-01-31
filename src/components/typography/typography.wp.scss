@@ -1,0 +1,11 @@
+
+// Windows Typography
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .text-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+}
