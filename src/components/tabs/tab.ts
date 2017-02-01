@@ -209,10 +209,9 @@ export class Tab extends NavControllerBase {
   @Input() tabBadgeStyle: string;
 
   /**
-   * @input {boolean} If the tab is enabled or not. If the tab
-   * is not enabled then the tab button will still show, however,
-   * the button will appear grayed out and will not be clickable.
-   * Defaults to `true`.
+   * @input {boolean} If true, enable the tab. If false,
+   * the user cannot interact with this element.
+   * Default: `true`.
    */
   @Input()
   get enabled(): boolean {
@@ -223,8 +222,8 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @input {boolean} If the tab button is visible within the
-   * tabbar or not. Defaults to `true`.
+   * @input {boolean} If true, the tab button is visible within the
+   * tabbar. Default: `true`.
    */
   @Input()
   get show(): boolean {
@@ -235,7 +234,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @input {boolean} Whether it's possible to swipe-to-go-back on this tab or not.
+   * @input {boolean} If true, swipe to go back is enabled.
    */
   @Input()
   get swipeBackEnabled(): boolean {
@@ -246,7 +245,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @input {boolean} Whether to hide the tabs on child pages or not. If `true` it will not show the tabs on child pages.
+   * @input {boolean} If true, hide the tabs on child pages.
    */
   @Input()
   get tabsHideOnSubPages(): boolean {
@@ -257,7 +256,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @output {Tab} Method to call when the current tab is selected
+   * @output {Tab} Emitted when the current tab is selected.
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 

@@ -18,14 +18,14 @@ export class Option {
   _value: any;
 
   /**
-   * @input {any} Event to evaluate when option is selected
+   * @output {any} Event to evaluate when option is selected.
    */
   @Output() ionSelect: EventEmitter<any> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
 
   /**
-   * @input {boolean} Whether or not the option is already selected
+   * @input {boolean} If true, the element is selected.
    */
   @Input()
   get selected() {
@@ -37,7 +37,7 @@ export class Option {
   }
 
   /**
-   * @input {any} The value of the option
+   * @input {any} The value of the option.
    */
   @Input()
   get value() {
@@ -52,14 +52,14 @@ export class Option {
   }
 
   /**
-   * @input {boolean} Whether or not the option is disabled
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
-  get disabled() {
+  get disabled(): boolean {
     return this._disabled;
   }
 
-  set disabled(val) {
+  set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
   }
 

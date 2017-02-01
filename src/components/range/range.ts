@@ -152,8 +152,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   value: any;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`,
-   * `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -161,7 +162,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -216,7 +219,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {number} If true, the knob snaps to tick marks evenly spaced based
+   * @input {boolean} If true, the knob snaps to tick marks evenly spaced based
    * on the step property value. Defaults to `false`.
    */
   @Input()
@@ -228,7 +231,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {number} If true, a pin with integer value is shown when the knob
+   * @input {boolean} If true, a pin with integer value is shown when the knob
    * is pressed. Defaults to `false`.
    */
   @Input()
@@ -263,7 +266,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {boolean} Whether or not the range is disabled. Defaults to `false`.
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
   get disabled(): boolean {
@@ -300,7 +303,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @output {Range} Expression to evaluate when the range value changes.
+   * @output {Range} Emitted when the range value changes.
    */
   @Output() ionChange: EventEmitter<Range> = new EventEmitter<Range>();
 

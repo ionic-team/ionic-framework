@@ -7,11 +7,20 @@ import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 })
 export class E2EPage {
   myParam = '';
+  minValue = 8;
+  maxValue = 12;
+  stepValue = 2;
 
   myValues = {
     value1: 'Dynamic Input',
     value2: 'Dynamic Textarea'
   };
+
+  toggleValues() {
+    this.minValue === 8 ? this.minValue = 4 : this.minValue = 8;
+    this.maxValue === 12 ? this.maxValue = 20 : this.maxValue = 12;
+    this.stepValue === 2 ? this.stepValue = 4 : this.stepValue = 2;
+  }
 }
 
 @Component({

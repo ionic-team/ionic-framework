@@ -182,20 +182,20 @@ export class Refresher {
   }
 
   /**
-   * @output {event} When the user lets go and has pulled down far enough, which would be
-   * farther than the `pullMin`, then your refresh hander if fired and the state is
-   * updated to `refreshing`. From within your refresh handler, you must call the
-   * `complete()` method when your async operation has completed.
+   * @output {event} Emitted when the user lets go and has pulled down
+   * far enough, which would be farther than the `pullMin`, then your refresh hander if
+   * fired and the state is updated to `refreshing`. From within your refresh handler,
+   * you must call the `complete()` method when your async operation has completed.
    */
   @Output() ionRefresh: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
   /**
-   * @output {event} While the user is pulling down the content and exposing the refresher.
+   * @output {event} Emitted while the user is pulling down the content and exposing the refresher.
    */
   @Output() ionPull: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 
   /**
-   * @output {event} When the user begins to start pulling down.
+   * @output {event} Emitted when the user begins to start pulling down.
    */
   @Output() ionStart: EventEmitter<Refresher> = new EventEmitter<Refresher>();
 

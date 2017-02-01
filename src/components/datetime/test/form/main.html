@@ -20,6 +20,11 @@
     </ion-item>
 
     <ion-item>
+      <ion-label floating>Floating</ion-label>
+      <ion-datetime formControlName="floating2" displayFormat="MMMM YY"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
       <ion-label fixed>Fixed</ion-label>
       <ion-datetime formControlName="fixed" displayFormat="MM/DD/YYYY"></ion-datetime>
     </ion-item>
@@ -29,4 +34,9 @@
       <ion-datetime formControlName="inline" displayFormat="MM/DD/YYYY"></ion-datetime>
     </ion-item>
   </form>
+
+  <ion-item>
+    <ion-label floating>Floating outside form</ion-label>
+    <ion-datetime displayFormat="MMMM YY"></ion-datetime>
+  </ion-item>
 </ion-content>

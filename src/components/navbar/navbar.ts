@@ -87,7 +87,9 @@ export class Navbar extends ToolbarBase {
   _sbPadding: boolean;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -95,7 +97,9 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -103,7 +107,7 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @input {boolean} whether the back button should be shown or not
+   * @input {boolean} If true, the back button will be hidden.
    */
   @Input()
   get hideBackButton(): boolean {

@@ -43,7 +43,9 @@ export class NavPop {
   onClick(): boolean {
     // If no target, or if target is _self, prevent default browser behavior
     if (this._nav) {
-      this._nav.pop(null, null);
+      this._nav.pop().catch(() => {
+        console.debug('navPop was rejected');
+      });
       return false;
     }
 

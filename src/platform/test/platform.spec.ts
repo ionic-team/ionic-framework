@@ -64,6 +64,115 @@ describe('Platform', () => {
 
   });
 
+  describe('orientation', () => {
+    it('Should return true if orientation is landscape', () => {
+      expect(plt.isLandscape()).toEqual(true);
+    });
+
+    it('Should return false if orientation is not landscape', () => {
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      plt.setWindow(portraitWindow);
+
+      expect(plt.isLandscape()).toEqual(false);
+    });
+
+    it('Should return true if orientation is landscape but window.screen shows portrait', () => {
+      // Even though we do not use window.screen.height/width
+      // anymore beyond checking if they are > 0
+      // as that api is broken on iOS, we should still check
+      // this edge case
+
+      let iOSLandscapeWindow: any = {
+        innerWidth: 300,
+        innerHeight: 200,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      plt.setWindow(iOSLandscapeWindow);
+
+      expect(plt.isLandscape()).toEqual(true);
+    });
+
+    it('Should return false if orientation is not portrait', () => {
+      expect(plt.isPortrait()).toEqual(false);
+    });
+
+    it('Should return true if orientation is portrait', () => {
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      plt.setWindow(portraitWindow);
+
+      expect(plt.isPortrait()).toEqual(true);
+    });
+
+    it('Should return false when orientation is landscape and then true when changed to portrait', () => {
+
+      // start in landscape
+      expect(plt.isPortrait()).toEqual(false);
+
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      // change to portrait
+      plt.setWindow(portraitWindow);
+
+      expect(plt.isPortrait()).toEqual(true);
+    });
+
+    it('Should return true when orientation is landscape and then false when changed to portrait', () => {
+
+      // start in landscape
+      expect(plt.isLandscape()).toEqual(true);
+
+      let portraitWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+      // change to portrait
+      plt.setWindow(portraitWindow);
+
+      expect(plt.isLandscape()).toEqual(false);
+    });
+
+    it('Should return a number that is equal to window.innerWidth', () => {
+      let type = typeof plt.width();
+
+      expect(type).toEqual('number');
+      expect(plt.width()).toEqual(window.innerWidth);
+    });
+
+    it('Should return a number that is equal to window.innerHeight', () => {
+      let type = typeof plt.height();
+
+      expect(type).toEqual('number');
+      expect(plt.height()).toEqual(window.innerHeight);
+    });
+  });
+
   it('should set core as the fallback', () => {
     plt.setDefault('core');
     plt.setQueryParams('');
@@ -186,6 +295,16 @@ describe('Platform', () => {
     expect(plt.is('windows')).toEqual(false);
     expect(plt.is('android')).toEqual(true);
     expect(plt.is('ios')).toEqual(false);
+
+    plt.setQueryParams('');
+    plt.setUserAgent(ANDROID_7_1_1_UA);
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(true);
+    expect(plt.is('ios')).toEqual(false);
   });
 
   it('should set iphone via user agent', () => {
@@ -199,6 +318,20 @@ describe('Platform', () => {
     expect(plt.is('android')).toEqual(false);
     expect(plt.is('ios')).toEqual(true);
     expect(plt.is('iphone')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
+
+    plt.setQueryParams('');
+    plt.setUserAgent(IPHONE_10_2_UA);
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(false);
     expect(plt.is('tablet')).toEqual(false);
   });
 
@@ -213,6 +346,20 @@ describe('Platform', () => {
     expect(plt.is('android')).toEqual(false);
     expect(plt.is('ios')).toEqual(true);
     expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(true);
+
+    plt.setQueryParams('');
+    plt.setUserAgent(IPAD_10_2_UA);
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
     expect(plt.is('tablet')).toEqual(true);
   });
 
@@ -331,5 +478,9 @@ const WINDOWS8_PHONE_UA = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0
 const WINDOWS7_PHONE_UA = 'Mozilla/4.0 (compatible; MSIE 7.0; Windows Phone OS 7.0; Trident/3.1; IEMobile/7.0; LG; GW910)';
 
 const ANDROID_UA = 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.20 Mobile Safari/537.36';
+const ANDROID_7_1_1_UA = 'Mozilla/5.0 (Linux; Android 7.1.1; Nexus 6 Build/N6F26Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.91 Mobile Safari/537.36';
+
 const IPHONE_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4';
+const IPHONE_10_2_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_2 like Mac OS X) AppleWebKit/602.3.12 (KHTML, like Gecko) Mobile/14C89 (140564782665216)';
 const IPAD_UA = 'Mozilla/5.0 (iPad; CPU OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53';
+const IPAD_10_2_UA = 'Mozilla/5.0 (iPad; CPU OS 10_2 like Mac OS X) AppleWebKit/602.3.12 (KHTML, like Gecko) Mobile/14C89 (140342232906320)';

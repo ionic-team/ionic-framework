@@ -1,4 +1,6 @@
 import { Component, NgModule } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
 import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 
 
@@ -6,7 +8,15 @@ import { IonicApp, IonicModule } from '../../../../../ionic-angular';
   templateUrl: 'main.html'
 })
 export class E2EPage {
+  userForm: any;
   myValue = 'really long value that overflows to show padding';
+
+  constructor(fb: FormBuilder) {
+    this.userForm = fb.group({
+      username: [{value: '', disabled: false}, Validators.required],
+      password: [{value: '', disabled: false}, Validators.required],
+    });
+  }
 
   clicked() {
     console.log('clicked button');

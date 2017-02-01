@@ -57,7 +57,9 @@ export class Icon extends Ion {
   _css: string = '';
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   get color(): string {
@@ -68,7 +70,9 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -94,7 +98,8 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} Icon to use. Will load the appropriate icon for each mode
+   * @input {string} Specifies which icon to use. The appropriate icon will be used based on the mode.
+   * For more information, see [Ionicons](/docs/v2/ionicons/).
    */
   @Input()
   get name(): string {
@@ -113,7 +118,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} Explicitly set the icon to use on iOS
+   * @input {string} Specifies which icon to use on `ios` mode.
    */
   @Input()
   get ios(): string {
@@ -126,7 +131,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} Explicitly set the icon to use on MD
+   * @input {string} Specifies which icon to use on `md` mode.
    */
   @Input()
   get md(): string {
@@ -140,7 +145,9 @@ export class Icon extends Ion {
 
 
   /**
-   * @input {bool} Whether or not the icon has an "active" appearance. On iOS an active icon is filled in or full appearance, and an inactive icon on iOS will use an outlined version of the icon same icon. Material Design icons do not change appearance depending if they're active or not. The `isActive` property is largely used by the tabbar.
+   * @input {boolean} If true, the icon is styled with an "active" appearance.
+   * An active icon is filled in, and an inactive icon is the outline of the icon.
+   * The `isActive` property is largely used by the tabbar. Only affects `ios` icons.
    */
   @Input()
   get isActive(): boolean {

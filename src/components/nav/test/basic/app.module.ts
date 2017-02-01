@@ -62,9 +62,9 @@ export class MyCmpTest {
           <ion-label>Text Input</ion-label>
           <ion-textarea></ion-textarea>
         </ion-item>
-        <button ion-item navPush="FullPage">Push FullPage w/ navPush="FullPage"</button>
+        <button ion-item [navPush]="pushPage">Push FullPage w/ [navPush]="pushPage"</button>
         <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
-        <button ion-item [navPush]="'FirstPage'">Push w/ [navPush] and string view name</button>
+        <button ion-item [navPush]="firstPage">Push w/ [navPush] and firstPage</button>
         <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
         <button ion-item (click)="pop()">Pop</button>
@@ -84,6 +84,7 @@ export class MyCmpTest {
 })
 export class FirstPage {
   pushPage = FullPage;
+  firstPage = FirstPage;
   title = 'First Page';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;

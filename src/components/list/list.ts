@@ -63,7 +63,9 @@ export class List extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -71,7 +73,7 @@ export class List extends Ion {
   }
 
   /**
-   * @input {boolean} shouldEnable whether the item-sliding should be enabled or not
+   * @input {boolean} If true, the sliding items will be enabled.
    */
   @Input()
   get sliding(): boolean {

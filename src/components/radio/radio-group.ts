@@ -107,7 +107,7 @@ export class RadioGroup {
   id: number;
 
   /**
-   * @input {boolean} Whether all radio buttons in the group should be disabled. Default false.
+   * @input {boolean} If true, the user cannot interact with any of the buttons in the group.
    */
   @Input()
   get disabled(): boolean {
@@ -118,7 +118,7 @@ export class RadioGroup {
   }
 
   /**
-   * @output {any} expression to be evaluated when selection has been changed
+   * @output {any} Emitted when the selected button has changed.
    */
   @Output() ionChange: EventEmitter<RadioGroup> = new EventEmitter<RadioGroup>();
 

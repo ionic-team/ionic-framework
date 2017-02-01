@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-  <p><button ion-button class="e2eGoToTab1Page2" navPush="Tab1Page2">Go to Tab 1, Page 2</button></p>
+  <p><button ion-button class="e2eGoToTab1Page2" [navPush]="tab1Page2">Go to Tab 1, Page 2</button></p>
   <p><button ion-button (click)="logout()">Logout</button></p>
   <p><button ion-button (click)="favoritesTab()">Favorites Tab</button></p>
   <p><button ion-button (click)="goBack()">Go Back</button></p>

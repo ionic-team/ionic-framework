@@ -564,30 +564,48 @@ export class Platform {
     // we're not forcing many layouts
     // if _isPortrait is null then that means
     // the dimensions needs to be looked up again
-    if (this._isPortrait === null) {
+    // this also has to cover an edge case that only
+    // happens on iOS 10 (not other versions of iOS)
+    // where window.innerWidth is always bigger than
+    // window.innerHeight when it is first measured,
+    // even when the device is in portrait but
+    // the second time it is measured it is correct.
+    // Hopefully this check will not be needed in the future
+    if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
       var win = this._win;
 
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
       // up accurate values when the keyboard is up
       if (win.screen.width > 0 && win.screen.height > 0) {
-        if (win.screen.width < win.screen.height) {
+        if (win['innerWidth'] < win['innerHeight']) {
 
-          if (this._pW < win['innerWidth']) {
+          // the device is in portrait
+          if (this._pW <= win['innerWidth']) {
+            console.debug('setting _isPortrait to true');
             this._isPortrait = true;
             this._pW = win['innerWidth'];
           }
-          if (this._pH < win['innerHeight']) {
+          if (this._pH <= win['innerHeight']) {
+            console.debug('setting _isPortrait to true');
             this._isPortrait = true;
             this._pH = win['innerHeight'];
           }
 
         } else {
-          if (this._lW < win['innerWidth']) {
+          if (this._lW > win['innerWidth']) {
+            // Special case: keyboard is open and device is in portrait
+            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
+            this._isPortrait = true;
+          }
+          // the device is in landscape
+          if (this._lW <= win['innerWidth']) {
+            console.debug('setting _isPortrait to false');
             this._isPortrait = false;
             this._lW = win['innerWidth'];
           }
-          if (this._lH < win['innerHeight']) {
+          if (this._lH <= win['innerHeight']) {
+            console.debug('setting _isPortrait to false');
             this._isPortrait = false;
             this._lH = win['innerHeight'];
           }
@@ -788,7 +806,9 @@ export class Platform {
         timerId = setTimeout(() => {
           // setting _isPortrait to null means the
           // dimensions will need to be looked up again
-          this._isPortrait = null;
+          if (this.hasFocusedTextInput() === false) {
+            this._isPortrait = null;
+          }
 
           for (let i = 0; i < this._onResizes.length; i++) {
             try {

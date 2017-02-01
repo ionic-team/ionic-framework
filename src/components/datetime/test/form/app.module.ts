@@ -10,12 +10,14 @@ import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 export class E2EPage {
   stackedCtrl = new FormControl('1994-12-15T13:47:20.789');
   floatingCtrl = new FormControl('1995-04-15');
+  floatingCtrl2 = new FormControl('');
   fixedCtrl = new FormControl({value: '2002-09-23T15:03:46.789', disabled: true});
   inlineCtrl = new FormControl({value: '2005-06-17T11:06Z', disabled: true});
 
   datetimeForm = new FormGroup({
     'stacked': this.stackedCtrl,
     'floating': this.floatingCtrl,
+    'floating2': this.floatingCtrl2,
     'fixed': this.fixedCtrl,
     'inline': this.inlineCtrl
   });

@@ -67,7 +67,9 @@ export class Searchbar extends Ion {
   _animated: boolean = false;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -75,7 +77,9 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component. Mode can be `ios`, `wp`, or `md`.
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -88,7 +92,7 @@ export class Searchbar extends Ion {
   @Input() cancelButtonText: string = 'Cancel';
 
   /**
-   * @input {boolean} Whether to show the cancel button or not. Default: `"false"`.
+   * @input {boolean} If true, show the cancel button.
    */
   @Input()
   get showCancelButton(): boolean {
@@ -144,7 +148,7 @@ export class Searchbar extends Ion {
   @Input() type: string = 'search';
 
   /**
-   * @input {boolean} Configures if the searchbar is animated or no. By default, animation is `false`.
+   * @input {boolean} If true, enable searchbar animation.
    */
   @Input()
   get animated(): boolean {
@@ -155,27 +159,27 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @output {event} When the Searchbar input has changed including cleared.
+   * @output {event} Emitted when the Searchbar input has changed, including when it's cleared.
    */
   @Output() ionInput: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
   /**
-   * @output {event} When the Searchbar input has blurred.
+   * @output {event} Emitted when the Searchbar input has blurred.
    */
   @Output() ionBlur: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
   /**
-   * @output {event} When the Searchbar input has focused.
+   * @output {event} Emitted when the Searchbar input has focused.
    */
   @Output() ionFocus: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
   /**
-   * @output {event} When the cancel button is clicked.
+   * @output {event} Emitted when the cancel button is clicked.
    */
   @Output() ionCancel: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
   /**
-   * @output {event} When the clear input button is clicked.
+   * @output {event} Emitted when the clear input button is clicked.
    */
   @Output() ionClear: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 

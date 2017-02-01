@@ -80,8 +80,8 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-input,ion-textarea',
   template:
-    '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
-    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
+    '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
+    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
     '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
     '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
@@ -96,8 +96,12 @@ export class TextInput extends Ion implements IonicFormInput {
   _coord: PointerCoordinates;
   _didBlurAfterEdit: boolean;
   _disabled: boolean = false;
+  _readonly: boolean = false;
   _isTouch: boolean;
   _keyboardHeight: number;
+  _min: any;
+  _max: any;
+  _step: any;
   _native: NativeInput;
   _nav: NavControllerBase;
   _scrollStart: any;
@@ -159,12 +163,12 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {string} The placeholder for the input
+   * @input {string} Instructional text that shows before the input has a value.
    */
   @Input() placeholder: string = '';
 
   /**
-   * @input {bool} A clear icon will appear in the input when there is a value. Clicking it clears the input.
+   * @input {boolean} If true, a clear icon will appear in the input when there is a value. Clicking it clears the input.
    */
   @Input()
   get clearInput() {
@@ -175,7 +179,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {string} The text value of the input
+   * @input {string} The text value of the input.
    */
   @Input()
   get value() {
@@ -187,7 +191,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {string} The HTML input type (text, password, email, number, search, tel, or url)
+   * @input {string} The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
   @Input()
   get type() {
@@ -208,11 +212,11 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {bool} If the input should be disabled or not
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
-  get disabled() {
-    return this.ngControl ? this.ngControl.disabled : this._disabled;
+  get disabled(): boolean {
+    return this._disabled;
   }
   set disabled(val: boolean) {
     this.setDisabled(this._disabled = isTrueProperty(val));
@@ -222,12 +226,33 @@ export class TextInput extends Ion implements IonicFormInput {
    * @private
    */
   setDisabled(val: boolean) {
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', val ? '' : null);
     this._item && this._item.setElementClass('item-input-disabled', val);
     this._native && this._native.isDisabled(val);
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @private
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  /**
+   * @input {boolean} If true, the user cannot modify the value.
+   */
+  @Input()
+  get readonly() {
+    return this._readonly;
+  }
+  set readonly(val: boolean) {
+    this._readonly = isTrueProperty(val);
+  }
+
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -235,7 +260,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {boolean} whether to clear the input upon editing or not
+   * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Input()
   get clearOnEdit() {
@@ -243,6 +268,60 @@ export class TextInput extends Ion implements IonicFormInput {
   }
   set clearOnEdit(val: any) {
     this._clearOnEdit = isTrueProperty(val);
+  }
+
+  /**
+   * @input {any} The minimum value, which must not be greater than its maximum (max attribute) value.
+   */
+  @Input()
+  get min() {
+    return this._min;
+  }
+  set min(val: any) {
+    this.setMin(this._min = val);
+  }
+
+  /**
+   * @private
+   */
+  setMin(val: any) {
+    this._native && this._native.setMin(val);
+  }
+
+  /**
+   * @input {any} The maximum value, which must not be less than its minimum (min attribute) value.
+   */
+  @Input()
+  get max() {
+    return this._max;
+  }
+  set max(val: any) {
+    this.setMax(this._max = val);
+  }
+
+  /**
+   * @private
+   */
+  setMax(val: any) {
+    this._native && this._native.setMax(val);
+  }
+
+  /**
+   * @input {any} Works with the min and max attributes to limit the increments at which a value can be set.
+   */
+  @Input()
+  get step() {
+    return this._step;
+  }
+  set step(val: any) {
+    this.setStep(this._step = val);
+  }
+
+  /**
+   * @private
+   */
+  setStep(val: any) {
+    this._native && this._native.setStep(val);
   }
 
   /**
@@ -278,12 +357,12 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @output {event} Expression to call when the input no longer has focus
+   * @output {event} Emitted when the input no longer has focus.
    */
   @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @output {event} Expression to call when the input has focus
+   * @output {event} Emitted when the input has focus.
    */
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
@@ -293,6 +372,9 @@ export class TextInput extends Ion implements IonicFormInput {
   setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
     nativeInput.setValue(this._value);
+    nativeInput.setMin(this._min);
+    nativeInput.setMax(this._max);
+    nativeInput.setStep(this._step);
     nativeInput.isDisabled(this.disabled);
 
     if (this._item && this._item.labelId !== null) {
@@ -301,6 +383,7 @@ export class TextInput extends Ion implements IonicFormInput {
 
     nativeInput.valueChange.subscribe((inputValue: any) => {
       this.onChange(inputValue);
+      this.checkHasValue(inputValue);
     });
 
     nativeInput.keydown.subscribe((inputValue: any) => {
@@ -715,7 +798,7 @@ export class TextInput extends Ion implements IonicFormInput {
  * @name TextArea
  * @description
  *
- * `ion-textarea` is is used for multi-line text inputs. Ionic still
+ * `ion-textarea` is used for multi-line text inputs. Ionic still
  * uses an actual `<textarea>` HTML element within the component;
  * however, with Ionic wrapping the native HTML text area element, Ionic
  * is able to better handle the user experience and interactivity.

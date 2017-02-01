@@ -239,7 +239,7 @@ export class Alert extends ViewController {
  *  | Property | Type     | Description                                                     |
  *  |----------|----------|-----------------------------------------------------------------|
  *  | text     | `string` | The buttons displayed text.                                     |
- *  | handler  | `any`    | Expression that should be evaluated when the button is pressed. |
+ *  | handler  | `any`    | Emitted when the button is pressed.                             |
  *  | cssClass | `string` | An additional CSS class for the button.                         |
  *  | role     | `string` | The buttons role, null or `cancel`.                             |
  *
