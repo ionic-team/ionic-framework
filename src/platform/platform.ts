@@ -986,6 +986,16 @@ export class Platform {
       while (platformNode) {
         platformNode.initialize(this);
 
+        // extra check for ipad pro issue
+        // https://forums.developer.apple.com/thread/25948
+        if (platformNode.name === 'iphone' && this.navigatorPlatform() === 'iPad') {
+          // this is an ipad pro so push ipad and tablet to platforms
+          // and then return as we are done
+          this._platforms.push('tablet');
+          this._platforms.push('ipad');
+          return;
+        }
+
         // set the array of active platforms with
         // the last one in the array the most important
         this._platforms.push(platformNode.name);
