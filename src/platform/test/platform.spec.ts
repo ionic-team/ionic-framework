@@ -363,6 +363,37 @@ describe('Platform', () => {
     expect(plt.is('tablet')).toEqual(true);
   });
 
+  // for https://forums.developer.apple.com/thread/25948
+  it('should set ipad when user agent is iphone but navigator.platform is iPad', () => {
+    plt.setQueryParams('');
+    plt.setUserAgent(IPHONE_UA);
+    plt.setNavigatorPlatform('iPad');
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(true);
+
+    plt.setQueryParams('');
+    plt.setUserAgent(IPHONE_10_2_UA);
+    plt.setNavigatorPlatform('iPad');
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(true);
+  });
+
   it('should set core platform for osx desktop firefox', () => {
     plt.setQueryParams('');
     plt.setDefault('core');
