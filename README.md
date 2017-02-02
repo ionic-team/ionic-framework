@@ -1,3 +1,7 @@
+[![npm version](https://badge.fury.io/js/ionic-angular.svg)](https://badge.fury.io/js/ionic-angular)
+[![Issue Stats](http://issuestats.com/github/driftyco/ionic/badge/pr?style=flat)](http://issuestats.com/github/driftyco/ionic)
+[![Issue Stats](http://issuestats.com/github/driftyco/ionic/badge/issue?style=flat)](http://issuestats.com/github/driftyco/ionic)
+
 # Ionic 2
 
 Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-source mobile app development SDK that makes it easy to build top quality native and progressive web apps with web technologies.
