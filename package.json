@@ -93,6 +93,7 @@
     "gulp-util": "3.0.7",
     "gulp-watch": "4.3.9",
     "html-entities": "1.2.0",
+    "inquirer": "3.0.1",
     "ionic-cz-conventional-changelog": "1.0.0",
     "ionic-native": "^2.2.6",
     "jasmine-core": "2.5.2",
