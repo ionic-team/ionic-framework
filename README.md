@@ -1,27 +1,38 @@
 [![npm version](https://badge.fury.io/js/ionic-angular.svg)](https://badge.fury.io/js/ionic-angular)
 [![Issue Stats](http://issuestats.com/github/driftyco/ionic/badge/pr?style=flat)](http://issuestats.com/github/driftyco/ionic)
 [![Issue Stats](http://issuestats.com/github/driftyco/ionic/badge/issue?style=flat)](http://issuestats.com/github/driftyco/ionic)
+[![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/driftyco/ionic)
 
-# Ionic 2
+# Ionic
 
-Ionic 2 is the next generation of [Ionic](http://ionicframework.com/), the open-source mobile app development SDK that makes it easy to build top quality native and progressive web apps with web technologies.
+[Ionic](http://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
+build top quality native and progressive web apps with web technologies.
 
-Ionic 2 is based on the new [2.x version of Angular](https://angular.io/), and comes with many significant performance, usability, and feature improvements.
+Ionic is based on [Angular](https://angular.io/) and comes with many significant performance, usability, and
+feature improvements over the past versions.
 
-See the [Building apps with Ionic 2](http://adamdbradley.github.io/building-with-ionic2) slides for a quick overview of Ionic 2.
+See the [Building Apps with Ionic 2](http://adamdbradley.github.io/building-with-ionic2) slides for a quick
+overview of Ionic.
 
-### Getting Started with Ionic 2
+### Getting Started
 
-To use Ionic 2 today, visit the [Ionic 2 Docs](http://ionicframework.com/docs/v2/). We would love any feedback you have or to know when you encounter issues, by filing an issue report on this repo.
+Start a new project by following our quick [Getting Started guide](http://ionicframework.com/getting-started/).
+We would love to hear from you! If you have any feedback or run into issues using our framework, please file
+an [issue](https://github.com/driftyco/ionic/issues/new) on this repository.
 
-### Contributing to Ionic 2
+### Contributing
 
-See [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md)
+Thanks for your interest in contributing! Read up on our guidelines for
+[contributing](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md)
+and then look through our issues with a [help wanted](https://github.com/driftyco/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
+label.
 
-### Ionic 2 Examples
+### Examples
 
-The [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) is a full featured Ionic 2 app. It is the perfect starting point for learning and building your own app.
+The [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) is a full featured Ionic app.
+It is the perfect starting point for learning and building your own app.
 
 ### Ionic 1.x
 
-The source code for Ionic 1.x has been moved to [driftyco/ionic-v1](https://github.com/driftyco/ionic-v1). Please file issues and pull requests related to Ionic 1.x at that repo. 1.x issues and PRs on this repo will be closed.
+The source code for Ionic 1.x has been moved to [driftyco/ionic-v1](https://github.com/driftyco/ionic-v1).
+Please open any issues and pull requests related to Ionic 1.x on that repository.
