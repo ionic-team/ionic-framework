@@ -12,7 +12,8 @@ Ionic is based on [Angular](https://angular.io/) and comes with many significant
 feature improvements over the past versions.
 
 See the [Building Apps with Ionic 2](http://adamdbradley.github.io/building-with-ionic2) slides for a quick
-overview of Ionic.
+overview or watch our [Crash Course](https://youtu.be/O2WiI9QrS5s) video for a quick walkthrough on how to get
+started using Ionic.
 
 ### Getting Started
 
