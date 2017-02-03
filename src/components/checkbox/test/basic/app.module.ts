@@ -27,6 +27,9 @@ export class E2EPage {
     'grape': this.grapeCtrl
   });
 
+  public checked: boolean = false;
+  public disabled: boolean = false;
+
   constructor() {
     this.grapeChecked = true;
     this.standAloneChecked = true;

@@ -229,7 +229,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    * @private
    */
   _setChecked(isChecked: boolean) {
-    if (!this._disabled && isChecked !== this._checked) {
+    if (isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {
         this.ionChange.emit(this);
