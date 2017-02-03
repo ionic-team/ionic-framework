@@ -88,4 +88,20 @@
 
   <pre aria-hidden="true" padding>{{formResults}}</pre>
 
+  <ion-item>
+    <ion-label>Checkbox / Toggle</ion-label>
+    <ion-checkbox [(ngModel)]="checked" [disabled]="disabled"></ion-checkbox>
+    <ion-toggle [(ngModel)]="checked" [disabled]="disabled"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>checked</ion-label>
+    <ion-checkbox [(ngModel)]="checked"></ion-checkbox>
+    <ion-toggle [(ngModel)]="checked"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>disabled</ion-label>
+    <ion-checkbox [(ngModel)]="disabled"></ion-checkbox>
+    <ion-toggle [(ngModel)]="disabled"></ion-toggle>
+  </ion-item>
+
 </ion-content>
