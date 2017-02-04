@@ -1,9 +1,12 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Picker
 // --------------------------------------------------
 
+/// @prop - Width of the picker
 $picker-width:                             100% !default;
+
+/// @prop - Max width of the picker
 $picker-max-width:                         500px !default;
 
 
@@ -16,10 +19,16 @@ ion-picker-cmp {
 
   width: $picker-width;
   height: $picker-width;
+
+  contain: strict;
 }
 
 .picker-toolbar {
   z-index: 1;
+
+  width: 100%;
+
+  contain: strict;
 }
 
 .picker-wrapper {
@@ -40,6 +49,8 @@ ion-picker-cmp {
   max-width: $picker-max-width;
 
   transform: translate3d(0, 100%, 0);
+
+  contain: strict;
 }
 
 .picker-columns {
@@ -49,30 +60,39 @@ ion-picker-cmp {
   overflow: hidden;
 
   justify-content: center;
+
+  contain: strict;
 }
 
 .picker-col {
   position: relative;
   display: flex;
 
-  max-height: 100%;
+  flex: 1;
+  justify-content: center;
+
+  height: 100%;
+
+  box-sizing: content-box;
+
+  contain: content;
 }
 
 .picker-opts {
   position: relative;
 
-  width: 100%;
-  min-width: 50px;
+  flex: 1;
+
   max-width: 100%;
 }
 
 .picker-prefix {
   position: relative;
 
-  flex: 1;
+  flex: 2;
 
-  min-width: 50px;
   min-width: 45%;
+  max-width: 50%;
 
   text-align: right;
   white-space: nowrap;
@@ -81,50 +101,46 @@ ion-picker-cmp {
 .picker-suffix {
   position: relative;
 
-  flex: 1;
+  flex: 2;
 
-  min-width: 50px;
   min-width: 45%;
+  max-width: 50%;
 
   text-align: left;
   white-space: nowrap;
 }
 
+// contain property is supported by Chrome
 .picker-opt {
   position: absolute;
   top: 0;
   left: 0;
+  display: block;
   overflow: hidden;
-
-  flex: 1;
 
   width: 100%;
-}
 
-.picker-opt .button-inner {
-  display: block;
-
-  overflow: hidden;
-
+  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  transition: opacity 150ms ease-in-out;
+  will-change: transform;
+  contain: strict;
 }
 
 .picker-opt.picker-opt-disabled {
   pointer-events: none;
 }
 
-.picker-opt-disabled .button-inner {
+.picker-opt-disabled {
   opacity: 0;
 }
 
-.picker-opts-left .button-inner {
+.picker-opts-left {
   justify-content: flex-start;
 }
 
-.picker-opts-right .button-inner {
+.picker-opts-right {
   justify-content: flex-end;
 }
 

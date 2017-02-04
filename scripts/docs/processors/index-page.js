@@ -10,14 +10,16 @@ module.exports = function indexPage(renderDocsProcessor) {
       var currentVersion = versionData.current.name;
       var latestVersion = versionData.latest.name;
 
-      var versionPath = currentVersion == 'nightly' ? '' : currentVersion;
+      // var versionPath = currentVersion == 'nightly' ? '' : currentVersion;
+      // If latest and not initial build, set path to docs root
+      var versionPath = (currentVersion == latestVersion) && !versionData.initialVersionBuild ? '' : currentVersion;
 
       docs.push({
         docType: 'index-page',
         id: 'index-page',
         currentVersion: currentVersion,
         template: 'api_index.template.html',
-        outputPath: 'docs/v2/' + versionPath + '/api/index.md'
+        outputPath: 'content/docs/v2/' + versionPath + '/api/index.md'
       });
     }
   }

@@ -1,65 +1,75 @@
-
-import { defaults } from '../util';
+import { assert, defaults } from '../util/util';
+import { DomDebouncer, DomController } from '../platform/dom-controller';
 import { GestureDelegate } from '../gestures/gesture-controller';
-import { PointerEvents, UIEventManager } from '../util/ui-event-manager';
 import { PanRecognizer } from './recognizers';
-import { pointerCoord, Coordinates } from '../util/dom';
+import { Platform } from '../platform/platform';
+import { pointerCoord } from '../util/dom';
+import { PointerEvents, PointerEventsConfig } from './pointer-events';
+import { UIEventManager } from './ui-event-manager';
 
-/**
- * @private
- */
-export interface PanGestureConfig {
-  threshold?: number;
-  maxAngle?: number;
-  direction?: 'x' | 'y';
-  gesture?: GestureDelegate;
-}
 
 /**
  * @private
  */
 export class PanGesture {
-  private dragging: boolean;
-  private events: UIEventManager = new UIEventManager(false);
+  private debouncer: DomDebouncer;
+  private events: UIEventManager;
   private pointerEvents: PointerEvents;
   private detector: PanRecognizer;
-  private started: boolean = false;
-  private captured: boolean = false;
-  public isListening: boolean = false;
+  protected started: boolean;
+  private captured: boolean;
+  public isListening: boolean;
   protected gestute: GestureDelegate;
   protected direction: string;
+  private eventsConfig: PointerEventsConfig;
 
-  constructor(private element: HTMLElement, opts: PanGestureConfig = {}) {
+  constructor(public plt: Platform, private element: HTMLElement, opts: PanGestureConfig = {}) {
     defaults(opts, {
       threshold: 20,
       maxAngle: 40,
-      direction: 'x'
+      direction: 'x',
+      zone: true,
+      capture: false,
+      passive: false,
     });
+    this.events = new UIEventManager(plt);
+    if (opts.domController) {
+      this.debouncer = opts.domController.debouncer();
+    }
     this.gestute = opts.gesture;
     this.direction = opts.direction;
-    this.detector = new PanRecognizer(opts.direction, opts.threshold, opts.maxAngle);
+    this.eventsConfig = {
+      element: this.element,
+      pointerDown: this.pointerDown.bind(this),
+      pointerMove: this.pointerMove.bind(this),
+      pointerUp: this.pointerUp.bind(this),
+      zone: opts.zone,
+      capture: opts.capture,
+      passive: opts.passive
+    };
+    if (opts.threshold > 0) {
+      this.detector = new PanRecognizer(opts.direction, opts.threshold, opts.maxAngle);
+    }
   }
 
   listen() {
     if (!this.isListening) {
-      this.pointerEvents = this.events.pointerEvents({
-        element: this.element,
-        pointerDown: this.pointerDown.bind(this),
-        pointerMove: this.pointerMove.bind(this),
-        pointerUp: this.pointerUp.bind(this),
-      });
+      this.pointerEvents = this.events.pointerEvents(this.eventsConfig);
       this.isListening = true;
     }
   }
 
   unlisten() {
-    this.gestute && this.gestute.release();
-    this.events.unlistenAll();
-    this.isListening = false;
+    if (this.isListening) {
+      this.gestute && this.gestute.release();
+      this.events.destroy();
+      this.isListening = false;
+    }
   }
 
   destroy() {
     this.gestute && this.gestute.destroy();
+    this.gestute = null;
     this.unlisten();
     this.element = null;
   }
@@ -79,44 +89,48 @@ export class PanGesture {
         return false;
       }
     }
-
-    let coord = pointerCoord(ev);
-    this.detector.start(coord);
     this.started = true;
     this.captured = false;
+
+    const coord = pointerCoord(ev);
+    if (this.detector) {
+      this.detector.start(coord);
+
+    } else {
+      if (!this.tryToCapture(ev)) {
+        this.started = false;
+        this.captured = false;
+        this.gestute.release();
+        return false;
+      }
+    }
     return true;
   }
 
   pointerMove(ev: any) {
-    if (!this.started) {
-      return;
-    }
+    assert(this.started === true, 'started must be true');
     if (this.captured) {
-      this.onDragMove(ev);
+      this.debouncer.write(() => {
+        this.onDragMove(ev);
+      });
       return;
     }
-    let coord = pointerCoord(ev);
+
+    assert(this.detector, 'detector has to be valid');
+    const coord = pointerCoord(ev);
     if (this.detector.detect(coord)) {
-
-      if (this.detector.pan() !== 0 && this.canCapture(ev) &&
-        (!this.gestute || this.gestute.capture())) {
-        this.onDragStart(ev);
-        this.captured = true;
-        return;
+      if (this.detector.pan() !== 0) {
+        if (!this.tryToCapture(ev)) {
+          this.abort(ev);
+        }
       }
-
-      // Detection/capturing was not successful, aborting!
-      this.started = false;
-      this.captured = false;
-      this.pointerEvents.stop();
-      this.notCaptured(ev);
     }
   }
 
   pointerUp(ev: any) {
-    if (!this.started) {
-      return;
-    }
+    assert(this.started, 'started failed');
+    this.debouncer.cancel();
+
     this.gestute && this.gestute.release();
 
     if (this.captured) {
@@ -128,15 +142,49 @@ export class PanGesture {
     this.started = false;
   }
 
+  tryToCapture(ev: any): boolean {
+    assert(this.started === true, 'started has be true');
+    assert(this.captured === false, 'captured has be false');
+
+    if (this.gestute && !this.gestute.capture()) {
+      return false;
+    }
+    this.onDragStart(ev);
+    this.captured = true;
+    return true;
+  }
+
+  abort(ev: any) {
+    this.started = false;
+    this.captured = false;
+    this.gestute.release();
+    this.pointerEvents.stop();
+    this.notCaptured(ev);
+  }
+
   getNativeElement(): HTMLElement {
     return this.element;
   }
 
   // Implemented in a subclass
   canStart(ev: any): boolean { return true; }
-  canCapture(ev: any): boolean { return true; }
   onDragStart(ev: any) { }
   onDragMove(ev: any) { }
   onDragEnd(ev: any) { }
   notCaptured(ev: any) { }
+}
+
+
+/**
+ * @private
+ */
+export interface PanGestureConfig {
+  threshold?: number;
+  maxAngle?: number;
+  direction?: 'x' | 'y';
+  gesture?: GestureDelegate;
+  domController?: DomController;
+  zone?: boolean;
+  capture?: boolean;
+  passive?: boolean;
 }

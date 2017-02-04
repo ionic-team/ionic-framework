@@ -1,91 +1,129 @@
-@import "../../globals.wp";
-@import "./tabs";
+@import "../../themes/ionic.globals.wp";
 
 // Windows Tabs
 // --------------------------------------------------
 
-$tabbar-wp-background:               $toolbar-wp-background !default;
-$tabbar-wp-item-padding:             12px 10px 5px 10px !default;
-$tabbar-wp-item-font-size:           1.2rem !default;
-$tabbar-wp-item-font-weight:         normal !default;
-$tabbar-wp-item-icon-size:           2.4rem !default;
-$tabbar-wp-item-height:              4.8rem !default;
+/// @prop - Padding on the tab button
+$tabs-wp-tab-padding:                   12px 10px 5px 10px !default;
 
-$tab-button-wp-active-color:         $toolbar-wp-active-color !default;
-$tab-button-wp-inactive-opacity:     .7 !default;
-$tab-button-wp-inactive-color:       rgba($toolbar-wp-inactive-color, $tab-button-wp-inactive-opacity) !default;
+/// @prop - Minimum height of the tab button
+$tabs-wp-tab-min-height:                4.8rem !default;
 
-$tab-button-wp-background-activated: rgba(0, 0, 0, .1) !default;
+/// @prop - Font size of the tab button text
+$tabs-wp-tab-font-size:                 1.2rem !default;
 
-ion-tabbar {
-  background: $tabbar-wp-background;
+/// @prop - Font weight of the tab button text
+$tabs-wp-tab-font-weight:               normal !default;
+
+/// @prop - Opacity of the inactive tab button
+$tabs-wp-tab-opacity:                   .7 !default;
+
+/// @prop - Text color of the inactive tab button
+$tabs-wp-tab-color:                     rgba($tabs-wp-tab-color-inactive, $tabs-wp-tab-opacity) !default;
+
+/// @prop - Text color of the active tab button
+$tabs-wp-tab-color-active:              $tabs-wp-tab-color-active !default;
+
+/// @prop - Icon color of the inactive tab button
+$tabs-wp-tab-icon-color:                rgba($tabs-wp-tab-color-inactive, $tabs-wp-tab-opacity) !default;
+
+/// @prop - Icon color of the active tab button
+$tabs-wp-tab-icon-color-active:         $tabs-wp-tab-color-active !default;
+
+/// @prop - Border on the inactive tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+$tabs-wp-tab-border:                    2px solid $tabs-wp-border-color !default;
+
+/// @prop - Border color on the active tab button (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+$tabs-wp-tab-border-color-active:       $tabs-wp-tab-color-active !default;
+
+/// @prop - Background of the tab button when pressed
+$tabs-wp-tab-background-activated:      rgba(0, 0, 0, .1) !default;
+
+/// @prop - Size of the tab button icon
+$tabs-wp-tab-icon-size:                 2.4rem !default;
+
+
+.tabs-wp .tabbar {
+  background: $tabs-wp-background;
 }
 
+.tabs-wp .tab-button {
+  padding: $tabs-wp-tab-padding;
 
-.tab-button {
-  padding: $tabbar-wp-item-padding;
+  min-height: $tabs-wp-tab-min-height;
 
-  min-height: $tabbar-wp-item-height;
-
-  border-bottom: 2px solid transparent;
+  border-bottom: $tabs-wp-tab-border;
   border-radius: 0;
-  font-size: $tabbar-wp-item-font-size;
-  font-weight: $tabbar-wp-item-font-weight;
-  color: $tab-button-wp-inactive-color;
+  font-size: $tabs-wp-tab-font-size;
+  font-weight: $tabs-wp-tab-font-weight;
+  color: $tabs-wp-tab-color;
   box-shadow: none;
-
-  &[aria-selected=true] {
-    border-bottom-color: $tab-button-wp-active-color;
-    color: $tab-button-wp-active-color;
-  }
-
-  &.activated {
-    background: $tab-button-wp-background-activated;
-  }
 }
 
-.tab-button-text {
+.tabs-wp .tab-button[aria-selected=true] {
+  border-bottom-color: $tabs-wp-tab-border-color-active;
+  color: $tabs-wp-tab-color-active;
+}
+
+.tabs-wp .tab-button.activated {
+  background: $tabs-wp-tab-background-activated;
+}
+
+.tabs-wp[tabsPlacement=bottom] .tab-button {
+  border-top: $tabs-wp-tab-border;
+  border-bottom-width: 0;
+}
+
+.tabs-wp[tabsPlacement=bottom] .tab-button[aria-selected=true] {
+  border-top-color: $tabs-wp-tab-border-color-active;
+}
+
+
+// Windows Tab Button Text
+// --------------------------------------------------
+
+.tabs-wp .tab-button-text {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-.tab-button-icon {
-  min-width: $tabbar-wp-item-icon-size;
 
-  font-size: $tabbar-wp-item-icon-size;
+// Windows Tab Button Icon
+// --------------------------------------------------
+
+.tabs-wp .tab-button-icon {
+  min-width: $tabs-wp-tab-icon-size;
+
+  font-size: $tabs-wp-tab-icon-size;
+
+  color: $tabs-wp-tab-icon-color;
 }
 
-[tabsLayout=icon-bottom] .tab-button {
+.tabs-wp .tab-button[aria-selected=true] .tab-button-icon {
+  color: $tabs-wp-tab-icon-color-active;
+}
+
+.tabs-wp[tabsLayout=icon-bottom] .tab-button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-[tabsLayout=icon-right] .tab-button,
-[tabsLayout=icon-left] .tab-button {
+.tabs-wp[tabsLayout=icon-right] .tab-button,
+.tabs-wp[tabsLayout=icon-left] .tab-button {
   padding-bottom: 10px;
-
-  ion-icon {
-    min-width: 24px;
-  }
 }
 
-[tabsLayout=icon-hide] .tab-button,
-[tabsLayout=title-hide] .tab-button,
-.tab-button.icon-only,
-.tab-button.has-title-only {
+.tabs-wp[tabsLayout=icon-right] .tab-button ion-icon,
+.tabs-wp[tabsLayout=icon-left] .tab-button ion-icon {
+  min-width: 24px;
+}
+
+.tabs-wp[tabsLayout=icon-hide] .tab-button,
+.tabs-wp[tabsLayout=title-hide] .tab-button,
+.tabs-wp .tab-button.icon-only,
+.tabs-wp .tab-button.has-title-only {
   padding: 6px 10px;
 }
-
-[tabsPlacement=bottom] .tab-button {
-  border-top: 2px solid transparent;
-  border-bottom-width: 0;
-
-  &[aria-selected=true] {
-    border-top-color: $tab-button-wp-active-color;
-  }
-}
-
-
 
 
 // Windows Tabbar Color Mixin
@@ -93,18 +131,21 @@ ion-tabbar {
 
 @mixin tabbar-wp($color-name, $color-base, $color-contrast) {
 
-  ion-tabs[#{$color-name}] ion-tabbar {
+  .tabs-wp-#{$color-name} .tabbar {
     background-color: $color-base;
+  }
 
-    .tab-button {
-      color: rgba($color-contrast, $tab-button-wp-inactive-opacity);
-    }
+  .tabs-wp-#{$color-name} .tab-button,
+  .tabs-wp-#{$color-name} .tab-button-icon {
+    color: rgba($color-contrast, $tabs-wp-tab-opacity);
+  }
 
-    .tab-button:hover:not(.disable-hover),
-    .tab-button[aria-selected=true] {
-      border-color: $color-contrast;
-      color: $color-contrast;
-    }
+  .tabs-wp-#{$color-name} .tab-button:hover:not(.disable-hover),
+  .tabs-wp-#{$color-name} .tab-button:hover:not(.disable-hover) .tab-button-icon,
+  .tabs-wp-#{$color-name} .tab-button[aria-selected=true],
+  .tabs-wp-#{$color-name} .tab-button[aria-selected=true] .tab-button-icon {
+    border-color: $color-contrast;
+    color: $color-contrast;
   }
 
 }

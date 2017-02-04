@@ -1,14 +1,15 @@
-import { Directive, ElementRef, Input, HostListener, Optional } from '@angular/core';
+import { Directive, Input, HostListener, Optional } from '@angular/core';
 
+import { Button } from '../button/button';
 import { MenuController } from './menu-controller';
 import { Navbar } from '../navbar/navbar';
-import { ViewController } from '../nav/view-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @name MenuToggle
  * @description
  * The `menuToggle` directive can be placed on any button to toggle a menu open or closed.
- * If it is added to the [NavBar](../../nav/NavBar) of a page, the button will only appear
+ * If it is added to the [NavBar](../../navbar/NavBar) of a page, the button will only appear
  * when the page it's in is currently a root page. See the [Menu Navigation Bar Behavior](../Menu#navigation-bar-behavior)
  * docs for more information.
  *
@@ -18,14 +19,14 @@ import { ViewController } from '../nav/view-controller';
  * A simple `menuToggle` button can be added using the following markup:
  *
  * ```html
- * <button menuToggle>Toggle Menu</button>
+ * <button ion-button menuToggle>Toggle Menu</button>
  * ```
  *
  * To toggle a specific menu by its id or side, give the `menuToggle`
  * directive a value.
  *
  * ```html
- * <button menuToggle="right">Toggle Right Menu</button>
+ * <button ion-button menuToggle="right">Toggle Right Menu</button>
  * ```
  *
  * If placing the `menuToggle` in a navbar or toolbar, it should be
@@ -37,18 +38,18 @@ import { ViewController } from '../nav/view-controller';
  *
  *   <ion-navbar>
  *     <ion-buttons start>
- *       <button>
+ *       <button ion-button>
  *         <ion-icon name="contact"></ion-icon>
  *       </button>
  *     </ion-buttons>
- *     <button menuToggle>
+ *     <button ion-button menuToggle>
  *       <ion-icon name="menu"></ion-icon>
  *     </button>
  *     <ion-title>
  *       Title
  *     </ion-title>
  *     <ion-buttons end>
- *       <button (click)="doClick()">
+ *       <button ion-button (click)="doClick()">
  *         <ion-icon name="more"></ion-icon>
  *       </button>
  *     </ion-buttons>
@@ -62,14 +63,14 @@ import { ViewController } from '../nav/view-controller';
  *
  * ```html
  * <ion-toolbar>
- *   <button menuToggle right>
+ *   <button ion-button menuToggle right>
  *     <ion-icon name="menu"></ion-icon>
  *   </button>
  *   <ion-title>
  *     Title
  *   </ion-title>
  *   <ion-buttons end>
- *     <button (click)="doClick()">
+ *     <button ion-button (click)="doClick()">
  *       <ion-icon name="more"></ion-icon>
  *     </button>
  *   </ion-buttons>
@@ -79,15 +80,14 @@ import { ViewController } from '../nav/view-controller';
  * See the [Toolbar API docs](../../toolbar/Toolbar) for more information
  * on the different positions.
  *
- * @demo /docs/v2/demos/menu/
+ * @demo /docs/v2/demos/src/menu/
  * @see {@link /docs/v2/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
  */
 @Directive({
   selector: '[menuToggle]',
   host: {
-    '[hidden]': 'isHidden',
-    'menuToggle': '' // ensures the attr is there for css when using [menuToggle]
+    '[hidden]': 'isHidden'
   }
 })
 export class MenuToggle {
@@ -100,15 +100,28 @@ export class MenuToggle {
   /**
    * @private
    */
+  private _isButton: boolean;
+
+  /**
+   * @private
+   */
   private _inNavbar: boolean;
 
   constructor(
     private _menu: MenuController,
-    elementRef: ElementRef,
     @Optional() private _viewCtrl: ViewController,
+    @Optional() private _button: Button,
     @Optional() private _navbar: Navbar
   ) {
+    this._isButton = !!_button;
     this._inNavbar = !!_navbar;
+  }
+
+  ngAfterContentInit() {
+    // Add the bar-button-menutoggle / button-menutoggle class
+    if (this._isButton) {
+      this._button._setClass('menutoggle', true);
+    }
   }
 
   /**

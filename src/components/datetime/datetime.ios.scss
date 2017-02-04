@@ -1,15 +1,21 @@
-@import "../../globals.ios";
-@import "./datetime";
+@import "../../themes/ionic.globals.ios";
 
 // iOS DateTime
 // --------------------------------------------------
 
+/// @prop - Padding top of the DateTime component
 $datetime-ios-padding-top:         $item-ios-padding-top !default;
+
+/// @prop - Padding right of the DateTime component
 $datetime-ios-padding-right:       ($item-ios-padding-right / 2) !default;
+
+/// @prop - Padding bottom of the DateTime component
 $datetime-ios-padding-bottom:      $item-ios-padding-bottom !default;
+
+/// @prop - Padding left of the DateTime component
 $datetime-ios-padding-left:        $item-ios-padding-left !default;
 
 
-ion-datetime {
+.datetime-ios {
   padding: $datetime-ios-padding-top $datetime-ios-padding-right $datetime-ios-padding-bottom $datetime-ios-padding-left;
 }

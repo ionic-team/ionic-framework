@@ -1,9 +1,5 @@
-import {Animation} from '../animations/animation';
-import {closest} from '../util/dom';
-import {Content} from '../components/content/content';
-import {Tabs} from '../components/tabs/tabs';
-import {Transition, TransitionOptions} from './transition';
-import {ViewController} from '../components/nav/view-controller';
+import { Animation } from '../animations/animation';
+import { Transition } from './transition';
 
 
 /**
@@ -12,44 +8,24 @@ import {ViewController} from '../components/nav/view-controller';
 export class PageTransition extends Transition {
   enteringPage: Animation;
 
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
+  init() {
+    if (this.enteringView) {
+      this.enteringPage = new Animation(this.plt, this.enteringView.pageRef());
+      this.add(this.enteringPage.beforeAddClass('show-page'));
 
-    this.enteringPage = new Animation(this.enteringView.pageRef());
-    this.enteringPage.before.addClass('show-page');
-    this.add(this.enteringPage);
-
-    this.before.addDomReadFn(this.readDimensions.bind(this));
-    this.before.addDomWriteFn(this.writeDimensions.bind(this));
-  }
-
-  /**
-   * DOM READ
-   */
-  readDimensions() {
-    let content = <Content>this.enteringView.getContent();
-    if (content && content instanceof Content) {
-      content.readDimensions();
-    }
-  }
-
-  /**
-   * DOM WRITE
-   */
-  writeDimensions() {
-    let content = <Content>this.enteringView.getContent();
-    if (content && content instanceof Content) {
-      content.writeDimensions();
+      // Resize content before transition starts
+      this.beforeAddRead(() => {
+        this.enteringView.readReady.emit();
+      });
+      this.beforeAddWrite(() => {
+        this.enteringView.writeReady.emit();
+      });
     }
   }
 
   destroy() {
     super.destroy();
-    this.enteringView = this.enteringPage = null;
+    this.enteringPage = null;
   }
 
-}
-
-function parsePxUnit(val: string): number {
-  return (val.indexOf('px') > 0) ? parseInt(val, 10) : 0;
 }

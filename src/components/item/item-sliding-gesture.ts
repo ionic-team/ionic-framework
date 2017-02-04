@@ -1,27 +1,39 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
-
-import { closest, Coordinates, pointerCoord } from '../../util/dom';
-import { PointerEvents, UIEventManager } from '../../util/ui-event-manager';
-import { GestureDelegate, GestureOptions, GesturePriority } from '../../gestures/gesture-controller';
+import { DomController } from '../../platform/dom-controller';
+import { GestureController, GesturePriority, GESTURE_ITEM_SWIPE } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
+import { Platform } from '../../platform/platform';
+import { pointerCoord } from '../../util/dom';
 
-const DRAG_THRESHOLD = 10;
-const MAX_ATTACK_ANGLE = 20;
-
+/**
+ * @private
+ */
 export class ItemSlidingGesture extends PanGesture {
+
   private preSelectedContainer: ItemSliding = null;
   private selectedContainer: ItemSliding = null;
   private openContainer: ItemSliding = null;
   private firstCoordX: number;
   private firstTimestamp: number;
 
-  constructor(public list: List) {
-    super(list.getNativeElement(), {
-      maxAngle: MAX_ATTACK_ANGLE,
-      threshold: DRAG_THRESHOLD,
-      gesture: list.gestureCtrl.create('item-sliding', {
+  constructor(
+    plt: Platform,
+    public list: List,
+    gestureCtrl: GestureController,
+    domCtrl: DomController
+  ) {
+    super(
+      plt,
+      list.getNativeElement(), {
+      maxAngle: 20,
+      threshold: 5,
+      zone: false,
+      domController: domCtrl,
+      gesture: gestureCtrl.createGesture({
+        name: GESTURE_ITEM_SWIPE,
         priority: GesturePriority.SlidingItem,
+        disableScroll: true
       })
     });
   }
@@ -59,8 +71,7 @@ export class ItemSlidingGesture extends PanGesture {
   onDragMove(ev: any) {
     ev.preventDefault();
 
-    let coordX = pointerCoord(ev).x;
-    this.selectedContainer.moveSliding(coordX);
+    this.selectedContainer.moveSliding(pointerCoord(ev).x);
   }
 
   onDragEnd(ev: any) {
@@ -69,13 +80,15 @@ export class ItemSlidingGesture extends PanGesture {
     let coordX = pointerCoord(ev).x;
     let deltaX = (coordX - this.firstCoordX);
     let deltaT = (Date.now() - this.firstTimestamp);
-    let openAmount = this.selectedContainer.endSliding(deltaX / deltaT);
+    this.selectedContainer.endSliding(deltaX / deltaT);
     this.selectedContainer = null;
     this.preSelectedContainer = null;
   }
 
   notCaptured(ev: any) {
-    this.closeOpened();
+    if (!clickedOptionButton(ev)) {
+      this.closeOpened();
+    }
   }
 
   closeOpened(): boolean {
@@ -101,9 +114,14 @@ export class ItemSlidingGesture extends PanGesture {
 }
 
 function getContainer(ev: any): ItemSliding {
-  let ele = closest(ev.target, 'ion-item-sliding', true);
+  let ele = ev.target.closest('ion-item-sliding');
   if (ele) {
     return (<any>ele)['$ionComponent'];
   }
   return null;
+}
+
+function clickedOptionButton(ev: any): boolean {
+  let ele = ev.target.closest('ion-item-options>button');
+  return !!ele;
 }

@@ -1,4 +1,4 @@
-import {isBlank, isPresent, isString, isObject, assign} from './util';
+import { isBlank, isPresent, isString } from './util';
 
 
 export function renderDateTime(template: string, value: DateTimeData, locale: LocaleData) {
@@ -11,9 +11,9 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {
       var token = '{' + index + '}';
-      var text = renderTextFormat(format.f, value[format.k], value, locale);
+      var text = renderTextFormat(format.f, (<any>value)[format.k], value, locale);
 
-      if (!hasText && text && isPresent(value[format.k])) {
+      if (!hasText && text && isPresent((<any>value)[format.k])) {
         hasText = true;
       }
 
@@ -238,11 +238,11 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       newData = parseDate(newData);
       if (newData) {
         // successfully parsed the ISO string to our DateTimeData
-        assign(existingData, newData);
+        Object.assign(existingData, newData);
         return;
       }
 
-    } else if ((isPresent(newData.year) || isPresent(newData.hour))) {
+    } else if ((isPresent(newData.year) || isPresent(newData.hour) || isPresent(newData.month) || isPresent(newData.day) || isPresent(newData.minute) || isPresent(newData.second))) {
       // newData is from of a datetime picker's selected values
       // update the existing DateTimeData data with the new values
 
@@ -259,7 +259,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       // merge new values from the picker's selection
       // to the existing DateTimeData values
       for (var k in newData) {
-        existingData[k] = newData[k].value;
+        (<any>existingData)[k] = newData[k].value;
       }
 
       return;
@@ -271,14 +271,14 @@ export function updateDate(existingData: DateTimeData, newData: any) {
   } else {
     // blank data, clear everything out
     for (var k in existingData) {
-      delete existingData[k];
+      delete (<any>existingData)[k];
     }
   }
 }
 
 
 export function parseTemplate(template: string): string[] {
-  let formats: string[] = [];
+  const formats: string[] = [];
 
   template = template.replace(/[^\w\s]/gi, ' ');
 
@@ -288,17 +288,17 @@ export function parseTemplate(template: string): string[] {
     }
   });
 
-  let words = template.split(' ').filter(w => w.length > 0);
+  const words = template.split(' ').filter(w => w.length > 0);
   words.forEach((word, i) => {
     FORMAT_KEYS.forEach(format => {
       if (word === format.f) {
         if (word === FORMAT_A || word === FORMAT_a) {
           // this format is an am/pm format, so it's an "a" or "A"
           if ((formats.indexOf(FORMAT_h) < 0 && formats.indexOf(FORMAT_hh) < 0) ||
-              (words[i - 1] !== FORMAT_m && words[i - 1] !== FORMAT_mm)) {
+              VALID_AMPM_PREFIX.indexOf(words[i - 1]) === -1) {
             // template does not already have a 12-hour format
-            // or this am/pm format doesn't have a minute format immediately before it
-            // so do not treat this word "a" or "A" as an am/pm format
+            // or this am/pm format doesn't have a hour, minute, or second format immediately before it
+            // so do not treat this word "a" or "A" as the am/pm format
             return;
           }
         }
@@ -318,7 +318,7 @@ export function getValueFromFormat(date: DateTimeData, format: string) {
   if (format === FORMAT_hh || format === FORMAT_h) {
     return (date.hour > 12 ? date.hour - 12 : date.hour);
   }
-  return date[convertFormatToKey(format)];
+  return (<any>date)[convertFormatToKey(format)];
 }
 
 
@@ -390,15 +390,15 @@ export function convertDataToISO(data: DateTimeData): string {
 }
 
 function twoDigit(val: number): string {
-  return ('0' + (isPresent(val) ? val : '0')).slice(-2);
+  return ('0' + (isPresent(val) ? Math.abs(val) : '0')).slice(-2);
 }
 
 function threeDigit(val: number): string {
-  return ('00' + (isPresent(val) ? val : '0')).slice(-3);
+  return ('00' + (isPresent(val) ? Math.abs(val) : '0')).slice(-3);
 }
 
 function fourDigit(val: number): string {
-  return ('000' + (isPresent(val) ? val : '0')).slice(-4);
+  return ('000' + (isPresent(val) ? Math.abs(val) : '0')).slice(-4);
 }
 
 
@@ -466,8 +466,6 @@ const FORMAT_KEYS = [
   { f: FORMAT_a, k: 'ampm' },
 ];
 
-const FORMAT_REGEX = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|DD?D?D?|ddd?d?|YYYY|YY|a|A|hh?|HH?|mm?|ss?|.)/g;
-
 const DAY_NAMES = [
   'Sunday',
   'Monday',
@@ -516,4 +514,8 @@ const MONTH_SHORT_NAMES = [
   'Oct',
   'Nov',
   'Dec',
+];
+
+const VALID_AMPM_PREFIX = [
+  FORMAT_hh, FORMAT_h, FORMAT_mm, FORMAT_m, FORMAT_ss, FORMAT_s
 ];

@@ -1,6 +1,6 @@
-import { ToastController, App, Platform, Config } from '../../../../src';
+import { mockApp } from '../../../util/mock-providers';
+import { ToastController } from '../../toast/toast';
 
-export function run() {
 
 describe('Toast', () => {
 
@@ -56,12 +56,7 @@ describe('Toast', () => {
 
   let toastCtrl: ToastController;
   beforeEach(() => {
-    let config = new Config();
-    let platform = new Platform();
-    let app = new App(config, platform);
-    toastCtrl = new ToastController(app);
+    toastCtrl = new ToastController(mockApp());
   });
 
 });
-
-}

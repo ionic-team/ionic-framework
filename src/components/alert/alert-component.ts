@@ -1,15 +1,14 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
-import { NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { NgModel } from '@angular/forms';
 
-import { Animation } from '../../animations/animation';
-import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
-import { isPresent } from '../../util/util';
-import { Key } from '../../util/key';
-import { NavParams } from '../nav/nav-params';
-import { Transition, TransitionOptions } from '../../transitions/transition';
-import { ViewController } from '../nav/view-controller';
+import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
+import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { isPresent, assert } from '../../util/util';
+import { Key } from '../../platform/key';
+import { NavParams } from '../../navigation/nav-params';
+import { NavOptions } from '../../navigation/nav-util';
+import { Platform } from '../../platform/platform';
+import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -17,68 +16,59 @@ import { ViewController } from '../nav/view-controller';
  */
 @Component({
   selector: 'ion-alert',
-  template: `
-    <ion-backdrop (click)="bdClick()"></ion-backdrop>
-    <div class="alert-wrapper">
-      <div class="alert-head">
-        <h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>
-        <h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>
-      </div>
-      <div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>
-      <div *ngIf="d.inputs.length" [ngSwitch]="inputType">
+  template:
+    '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
+    '<div class="alert-wrapper">' +
+      '<div class="alert-head">' +
+        '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
+        '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
+      '</div>' +
+      '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
+      '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
-        <div *ngIf="d.hasSearch" class="alert-input-group">
-          <div class="alert-input-wrapper">
-            <input placeholder="Search" [ngModel]="searchModel" (ngModelChange)="_filterOut($event)" class="alert-input">
-          </div>
-        </div>
+        '<template ngSwitchCase="radio">' +
+          '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
+            '<template ngFor let-i [ngForOf]="d.inputs">' +
+              '<button ion-button="alert-radio-button" *ngIf="i && i.filtered" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+                '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
+                '<div class="alert-radio-label">' +
+                  '{{i.label}}' +
+                '</div>' +
+              '</button>' +
+            '</template>' +
+          '</div>' +
+        '</template>' +
 
-        <template ngSwitchCase="radio">
-          <div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">
-            <template ngFor let-i [ngForOf]="d.inputs">
-              <button category="alert-radio-button" *ngIf="i && i.filtered" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">
-                <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
-                <div class="alert-radio-label">
-                  {{i.label}}
-                </div>
-              </button>
-            </template>
-          </div>
-        </template>
+        '<template ngSwitchCase="checkbox">' +
+          '<div class="alert-checkbox-group">' +
+            '<template ngFor let-i [ngForOf]="d.inputs">' +
+              '<button ion-button="alert-checkbox-button" *ngIf="i && i.filtered" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
+                '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
+                '<div class="alert-checkbox-label">' +
+                  '{{i.label}}' +
+                '</div>' +
+              '</button>' +
+            '</template>' +
+          '</div>' +
+        '</template>' +
 
-        <template ngSwitchCase="checkbox">
-          <div class="alert-checkbox-group">
-            <template ngFor let-i [ngForOf]="d.inputs">
-              <button category="alert-checkbox-button" *ngIf="i && i.filtered" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">
-                <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
-                <div class="alert-checkbox-label">
-                  {{i.label}}
-                </div>
-              </button>
-            </template>
-          </div>
-        </template>
+        '<template ngSwitchDefault>' +
+          '<div class="alert-input-group">' +
+            '<template ngFor let-i [ngForOf]="d.inputs">' +
+              '<div *ngIf="i && i.filtered" class="alert-input-wrapper">' +
+                '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
+              '</div>' +
+            '</template>' +
+          '</div>' +
+        '</template>' +
 
-        <template ngSwitchDefault>
-          <div class="alert-input-group">
-            <template ngFor let-i [ngForOf]="d.inputs">
-              <div *ngIf="i && i.filtered" class="alert-input-wrapper">
-                <div class="alert-input-label" *ngIf="i.label">{{ i.label }}</div>
-                <input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">
-              </div>
-            </template>
-          </div>
-        </template>
-
-      </div>
-      <div class="alert-button-group" [ngClass]="{vertical: d.buttons.length>2}">
-        <button category="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">
-          {{b.text}}
-        </button>
-      </div>
-    </div>
-    `,
-  directives: [Backdrop, NgClass, NgFor, NgIf, NgModel, NgSwitch, NgSwitchCase, NgSwitchDefault],
+      '</div>' +
+      '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
+        '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
+          '{{b.text}}' +
+        '</button>' +
+      '</div>' +
+    '</div>',
   host: {
     'role': 'dialog',
     '[attr.aria-labelledby]': 'hdrId',
@@ -87,39 +77,48 @@ import { ViewController } from '../nav/view-controller';
   encapsulation: ViewEncapsulation.None,
 })
 export class AlertCmp {
-  private activeId: string;
-  private descId: string;
-  private d: {
+  activeId: string;
+  descId: string;
+  d: {
     cssClass?: string;
     message?: string;
+    title?: string;
     subTitle?: string;
     buttons?: any[];
     inputs?: any[];
     enableBackdropDismiss?: boolean;
     hasSearch?: boolean;
   };
-  private enabled: boolean;
-  private hdrId: string;
-  private id: number;
-  private inputType: string;
-  private lastClick: number;
-  private msgId: string;
-  private subHdrId: string;
-  private searchModel: string;
+  enabled: boolean;
+  hdrId: string;
+  id: number;
+  inputType: string;
+  lastClick: number;
+  msgId: string;
+  subHdrId: string;
+  mode: string;
+  gestureBlocker: BlockerDelegate;
+  searchModel: string;
 
   constructor(
-    private _viewCtrl: ViewController,
-    private _elementRef: ElementRef,
-    private _config: Config,
+    public _viewCtrl: ViewController,
+    public _elementRef: ElementRef,
+    config: Config,
+    gestureCtrl: GestureController,
     params: NavParams,
-    renderer: Renderer
+    private _renderer: Renderer,
+    private _plt: Platform
   ) {
+    // gesture blocker is used to disable gestures dynamically
+    this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
+    this.mode = config.get('mode');
+    _renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions
-        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+        if (cssClass.trim() !== '') _renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
       });
     }
 
@@ -143,9 +142,9 @@ export class AlertCmp {
     }
   }
 
-  ionViewLoaded() {
+  ionViewDidLoad() {
     // normalize the data
-    let data = this.d;
+    const data = this.d;
 
     data.buttons = data.buttons.map(button => {
       if (typeof button === 'string') {
@@ -163,15 +162,16 @@ export class AlertCmp {
         label: input.label,
         checked: !!input.checked,
         disabled: !!input.disabled,
+        id: isPresent(input.id) ? input.id : `alert-input-${this.id}-${index}`,
+        handler: isPresent(input.handler) ? input.handler : null,
         filtered: true,
-        id: 'alert-input-' + this.id + '-' + index
       };
     });
 
 
     // An alert can be created with several different inputs. Radios,
     // checkboxes and inputs are all accepted, but they cannot be mixed.
-    let inputTypes: any[] = [];
+    const inputTypes: string[] = [];
     data.inputs.forEach(input => {
       if (inputTypes.indexOf(input.type) < 0) {
         inputTypes.push(input.type);
@@ -179,15 +179,52 @@ export class AlertCmp {
     });
 
     if (inputTypes.length > 1 && (inputTypes.indexOf('checkbox') > -1 || inputTypes.indexOf('radio') > -1)) {
-      console.warn('Alert cannot mix input types: ' + (inputTypes.join('/')) + '. Please see alert docs for more info.');
+      console.warn(`Alert cannot mix input types: ${(inputTypes.join('/'))}. Please see alert docs for more info.`);
     }
 
     this.inputType = inputTypes.length ? inputTypes[0] : null;
 
-    let checkedInput = this.d.inputs.find(input => input.checked);
+    const checkedInput = this.d.inputs.find(input => input.checked);
     if (checkedInput) {
       this.activeId = checkedInput.id;
     }
+
+    const hasTextInput = (this.d.inputs.length && this.d.inputs.some(i => !(NON_TEXT_INPUT_REGEX.test(i.type))));
+    if (hasTextInput && this._plt.is('mobile')) {
+      // this alert has a text input and it's on a mobile device so we should align
+      // the alert up high because we need to leave space for the virtual keboard
+      // this also helps prevent the layout getting all messed up from
+      // the browser trying to scroll the input into a safe area
+      this._renderer.setElementClass(this._elementRef.nativeElement, 'alert-top', true);
+    }
+  }
+
+  ionViewWillEnter() {
+    this.gestureBlocker.block();
+  }
+
+  ionViewDidLeave() {
+    this._plt.focusOutActiveElement();
+    this.gestureBlocker.unblock();
+  }
+
+  ionViewWillLeave() {
+    this._plt.focusOutActiveElement();
+  }
+
+  ionViewDidEnter() {
+    // focus out of the active element
+    this._plt.focusOutActiveElement();
+
+    // set focus on the first input or button in the alert
+    // note that this does not always work and bring up the keyboard on
+    // devices since the focus command must come from the user's touch event
+    // and ionViewDidEnter is not in the same callstack as the touch event :(
+    const focusableEle = this._elementRef.nativeElement.querySelector('input,button');
+    if (focusableEle) {
+      focusableEle.focus();
+    }
+    this.enabled = true;
   }
 
   private _filterOut(event: string) {
@@ -200,7 +237,7 @@ export class AlertCmp {
   };
 
   @HostListener('body:keyup', ['$event'])
-  private _keyUp(ev: KeyboardEvent) {
+  keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
       if (ev.keyCode === Key.ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
@@ -208,32 +245,19 @@ export class AlertCmp {
           // this can happen when the button has focus and used the enter
           // key to click the button. However, both the click handler and
           // this keyup event will fire, so only allow one of them to go.
-          console.debug('alert, enter button');
+          console.debug(`alert, enter button`);
           let button = this.d.buttons[this.d.buttons.length - 1];
           this.btnClick(button);
         }
 
       } else if (ev.keyCode === Key.ESCAPE) {
-        console.debug('alert, escape button');
+        console.debug(`alert, escape button`);
         this.bdClick();
       }
     }
   }
 
-  ionViewDidEnter() {
-    let activeElement: any = document.activeElement;
-    if (document.activeElement) {
-      activeElement.blur();
-    }
-
-    let focusableEle = this._elementRef.nativeElement.querySelector('input,button');
-    if (focusableEle) {
-      focusableEle.focus();
-    }
-    this.enabled = true;
-  }
-
-  btnClick(button: any, dismissDelay?: number) {
+  btnClick(button: any) {
     if (!this.enabled) {
       return;
     }
@@ -253,9 +277,9 @@ export class AlertCmp {
     }
 
     if (shouldDismiss) {
-      setTimeout(() => {
-        this.dismiss(button.role);
-      }, dismissDelay || this._config.get('pageTransitionDelay'));
+      this.dismiss(button.role).catch(() => {
+        console.debug('alert can not be dismissed');
+      });
     }
   }
 
@@ -265,12 +289,20 @@ export class AlertCmp {
         input.checked = (checkedInput === input);
       });
       this.activeId = checkedInput.id;
+
+      if (checkedInput.handler) {
+        checkedInput.handler(checkedInput);
+      }
     }
   }
 
   cbClick(checkedInput: any) {
     if (this.enabled) {
       checkedInput.checked = !checkedInput.checked;
+
+      if (checkedInput.handler) {
+        checkedInput.handler(checkedInput);
+      }
     }
   }
 
@@ -278,7 +310,7 @@ export class AlertCmp {
     if (this.enabled && this.d.enableBackdropDismiss) {
       let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
-        this.btnClick(cancelBtn, 1);
+        this.btnClick(cancelBtn);
 
       } else {
         this.dismiss('backdrop');
@@ -287,14 +319,17 @@ export class AlertCmp {
   }
 
   dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(this.getValues(), role);
+    const opts: NavOptions = {
+      minClickBlockDuration: 400
+    };
+    return this._viewCtrl.dismiss(this.getValues(), role, opts);
   }
 
-  getValues() {
+  getValues(): any {
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
-      let checkedInput = this.d.inputs.find(i => i.checked);
+      const checkedInput = this.d.inputs.find(i => i.checked);
       return checkedInput ? checkedInput.value : undefined;
     }
 
@@ -306,142 +341,17 @@ export class AlertCmp {
 
     // this is an alert with text inputs
     // return an object of all the values with the input name as the key
-    let values: {[k: string]: string} = {};
+    const values: {[k: string]: string} = {};
     this.d.inputs.forEach(i => {
       values[i.name] = i.value;
     });
     return values;
   }
-}
 
-
-/**
- * Animations for alerts
- */
-class AlertPopIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-    backdrop.fromTo('opacity', 0.01, 0.3);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
+  ngOnDestroy() {
+    assert(this.gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this.gestureBlocker.destroy();
   }
 }
-Transition.register('alert-pop-in', AlertPopIn);
-
-
-class AlertPopOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-    backdrop.fromTo('opacity', 0.3, 0);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-pop-out', AlertPopOut);
-
-
-class AlertMdPopIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
-    backdrop.fromTo('opacity', 0.01, 0.5);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-md-pop-in', AlertMdPopIn);
-
-
-class AlertMdPopOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
-    backdrop.fromTo('opacity', 0.5, 0);
-
-    this
-      .easing('ease-in-out')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-md-pop-out', AlertMdPopOut);
-
-
-
-class AlertWpPopIn extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.3, 1);
-    backdrop.fromTo('opacity', 0.01, 0.5);
-
-    this
-      .easing('cubic-bezier(0,0 0.05,1)')
-      .duration(200)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-wp-pop-in', AlertWpPopIn);
-
-
-class AlertWpPopOut extends Transition {
-  constructor(enteringView: ViewController, leavingView: ViewController, opts: TransitionOptions) {
-    super(enteringView, leavingView, opts);
-
-    let ele = leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.alert-wrapper'));
-
-    wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 1.3);
-    backdrop.fromTo('opacity', 0.5, 0);
-
-    this
-      .easing('ease-out')
-      .duration(150)
-      .add(backdrop)
-      .add(wrapper);
-  }
-}
-Transition.register('alert-wp-pop-out', AlertWpPopOut);
 
 let alertIds = -1;

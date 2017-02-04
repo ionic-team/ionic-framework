@@ -1,13 +1,17 @@
-import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { Form } from '../../util/form';
-import { Item } from '../item/item';
+import { Config } from '../../config/config';
+import { Form, IonicTapInput } from '../../util/form';
+import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
+import { Item } from '../item/item';
 
-export const CHECKBOX_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, {useExisting: forwardRef(() => Checkbox), multi: true});
-
+export const CHECKBOX_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => Checkbox),
+  multi: true
+};
 
 /**
  * @name Checkbox
@@ -44,58 +48,85 @@ export const CHECKBOX_VALUE_ACCESSOR = new Provider(
  *  </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/checkbox/
+ * @demo /docs/v2/demos/src/checkbox/
  * @see {@link /docs/v2/components#checkbox Checkbox Component Docs}
  */
 @Component({
   selector: 'ion-checkbox',
-  template: `
-    <div class="checkbox-icon" [class.checkbox-checked]="_checked">
-      <div class="checkbox-inner"></div>
-    </div>
-    <button role="checkbox"
-            type="button"
-            category="item-cover"
-            [id]="id"
-            [attr.aria-checked]="_checked"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled"
-            class="item-cover">
-    </button>
-  `,
+  template:
+    '<div class="checkbox-icon" [class.checkbox-checked]="_checked">' +
+      '<div class="checkbox-inner"></div>' +
+    '</div>' +
+    '<button role="checkbox" ' +
+            'type="button" ' +
+            'ion-button="item-cover" ' +
+            '[id]="id" ' +
+            '[attr.aria-checked]="_checked" ' +
+            '[attr.aria-labelledby]="_labelId" ' +
+            '[attr.aria-disabled]="_disabled" ' +
+            'class="item-cover"> ' +
+    '</button>',
   host: {
     '[class.checkbox-disabled]': '_disabled'
   },
   providers: [CHECKBOX_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  private _checked: boolean = false;
-  private _init: boolean;
-  private _disabled: boolean = false;
-  private _labelId: string;
-  private _fn: Function;
-
-  /**
-   * @private
-   */
+export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, ControlValueAccessor, OnDestroy {
+  /** @private */
+  _checked: boolean = false;
+  /** @private */
+  _init: boolean;
+  /** @private */
+  _disabled: boolean = false;
+  /** @private */
+  _labelId: string;
+  /** @private */
+  _fn: Function;
+  /** @private */
   id: string;
 
   /**
-   * @output {Checkbox} expression to evaluate when the checkbox value changes
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor(val);
+  }
+
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode(val);
+  }
+
+  /**
+   * @output {Checkbox} Emitted when the checkbox value changes.
    */
   @Output() ionChange: EventEmitter<Checkbox> = new EventEmitter<Checkbox>();
 
   constructor(
+    config: Config,
     private _form: Form,
-    @Optional() private _item: Item
+    @Optional() private _item: Item,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    private _cd: ChangeDetectorRef
   ) {
+    super(config, elementRef, renderer, 'checkbox');
+
     _form.register(this);
 
     if (_item) {
       this.id = 'chk-' + _item.registerInput('checkbox');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-checkbox', true);
+      this._item.setElementClass('item-checkbox', true);
     }
   }
 
@@ -103,7 +134,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
    * @private
    */
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     console.debug('checkbox, checked');
     ev.preventDefault();
     ev.stopPropagation();
@@ -111,7 +142,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   }
 
   /**
-   * @input {boolean} whether or not the checkbox is checked (defaults to false)
+   * @input {boolean} If true, the element is selected.
    */
   @Input()
   get checked(): boolean {
@@ -126,13 +157,13 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   /**
    * @private
    */
-  private _setChecked(isChecked: boolean) {
+  _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
       this._checked = isChecked;
       if (this._init) {
         this.ionChange.emit(this);
       }
-      this._item && this._item.setCssClass('item-checkbox-checked', isChecked);
+      this._item && this._item.setElementClass('item-checkbox-checked', isChecked);
     }
   }
 
@@ -140,7 +171,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
    * @private
    */
   writeValue(val: any) {
-    this._setChecked( isTrueProperty(val) );
+    this._setChecked(isTrueProperty(val));
   }
 
   /**
@@ -162,7 +193,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @input {boolean} whether or not the checkbox is disabled or not.
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
   get disabled(): boolean {
@@ -171,7 +202,7 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._item && this._item.setCssClass('item-checkbox-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-checkbox-disabled', this._disabled);
   }
 
   /**
@@ -182,18 +213,33 @@ export class Checkbox implements AfterContentInit, ControlValueAccessor, OnDestr
     console.debug('checkbox, onChange (no ngModel)', isChecked);
     this._setChecked(isChecked);
     this.onTouched();
+    this._cd.detectChanges();
   }
 
   /**
    * @private
    */
-  onTouched() {}
+  initFocus() {
+    this._elementRef.nativeElement.querySelector('button').focus();
+  }
+
+  /**
+   * @private
+   */
+  onTouched() { }
 
   /**
    * @private
    */
   ngAfterContentInit() {
     this._init = true;
+  }
+
+  /**
+   * @private
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   /**

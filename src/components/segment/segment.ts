@@ -1,6 +1,8 @@
 import { Component, ContentChildren, Directive, ElementRef, EventEmitter, HostListener, Input, Output, Optional, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
 import { isPresent, isTrueProperty } from '../../util/util';
 
 
@@ -14,7 +16,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
  * ```html
  * <ion-content>
  *   <!-- Segment buttons with icons -->
- *   <ion-segment [(ngModel)]="icons" secondary>
+ *   <ion-segment [(ngModel)]="icons" color="secondary">
  *     <ion-segment-button value="camera">
  *       <ion-icon name="camera"></ion-icon>
  *     </ion-segment-button>
@@ -24,7 +26,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
  *   </ion-segment>
  *
  *   <!-- Segment buttons with text -->
- *   <ion-segment [(ngModel)]="relationship" primary>
+ *   <ion-segment [(ngModel)]="relationship" color="primary">
  *     <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
  *       Friends
  *     </ion-segment-button>
@@ -36,16 +38,15 @@ import { isPresent, isTrueProperty } from '../../util/util';
  * ```
  *
  *
- * @demo /docs/v2/demos/segment/
+ * @demo /docs/v2/demos/src/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
  */
 @Component({
   selector: 'ion-segment-button',
-  template: `
-    <ng-content></ng-content>
-    <ion-button-effect></ion-button-effect>
-  `,
+  template:
+    '<ng-content></ng-content>' +
+    '<div class="button-effect"></div>',
   host: {
     'tappable': '',
     'class': 'segment-button',
@@ -54,7 +55,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class SegmentButton {
-  private _disabled: boolean = false;
+  _disabled: boolean = false;
 
   /**
    * @input {string} the value of the segment button. Required.
@@ -62,14 +63,14 @@ export class SegmentButton {
   @Input() value: string;
 
   /**
-   * @output {SegmentButton} expression to evaluate when a segment button has been clicked
+   * @output {SegmentButton} Emitted when a segment button has been clicked.
    */
   @Output() ionSelect: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
 
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
   /**
-   * @private
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
   get disabled(): boolean {
@@ -78,13 +79,13 @@ export class SegmentButton {
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this.setCssClass('segment-button-disabled', this._disabled);
+    this._setElementClass('segment-button-disabled', this._disabled);
   }
 
   /**
    * @private
    */
-  setCssClass(cssClass: string, shouldAdd: boolean) {
+  _setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
@@ -93,7 +94,7 @@ export class SegmentButton {
    * On click of a SegmentButton
    */
   @HostListener('click')
-  private onClick() {
+  onClick() {
     console.debug('SegmentButton, select', this.value);
     this.ionSelect.emit(this);
   }
@@ -123,14 +124,14 @@ export class SegmentButton {
  * @description
  * A Segment is a group of buttons, sometimes known as Segmented Controls, that allow the user to interact with a compact group of a number of controls.
  * Segments provide functionality similar to tabs, selecting one will unselect all others. You should use a tab bar instead of a segmented control when you want to let the user move back and forth between distinct pages in your app.
- * You could use Angular 2's `ngModel` or `FormBuilder` API. For an overview on how `FormBuilder` works, checkout [Angular 2 Forms](http://learnangular2.com/forms/), or [Angular FormBuilder](https://angular.io/docs/ts/latest/api/common/FormBuilder-class.html)
+ * You could use Angular 2's `ngModel` or `FormBuilder` API. For an overview on how `FormBuilder` works, checkout [Angular 2 Forms](http://learnangular2.com/forms/), or [Angular FormBuilder](https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html)
  *
  *
  * ```html
  * <!-- Segment in a header -->
  * <ion-header>
  *   <ion-toolbar>
- *     <ion-segment [(ngModel)]="icons" secondary>
+ *     <ion-segment [(ngModel)]="icons" color="secondary">
  *       <ion-segment-button value="camera">
  *         <ion-icon name="camera"></ion-icon>
  *       </ion-segment-button>
@@ -143,7 +144,7 @@ export class SegmentButton {
  *
  * <ion-content>
  *   <!-- Segment in content -->
- *   <ion-segment [(ngModel)]="relationship" primary>
+ *   <ion-segment [(ngModel)]="relationship" color="primary">
  *     <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
  *       Friends
  *     </ion-segment-button>
@@ -154,7 +155,7 @@ export class SegmentButton {
  *
  *   <!-- Segment in a form -->
  *   <form [formGroup]="myForm">
- *     <ion-segment formControlName="mapStyle" danger>
+ *     <ion-segment formControlName="mapStyle" color="danger">
  *       <ion-segment-button value="standard">
  *         Standard
  *       </ion-segment-button>
@@ -170,24 +171,43 @@ export class SegmentButton {
  * ```
  *
  *
- * @demo /docs/v2/demos/segment/
+ * @demo /docs/v2/demos/src/segment/
  * @see {@link /docs/v2/components#segment Segment Component Docs}
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
 @Directive({
   selector: 'ion-segment'
 })
-export class Segment {
-  private _disabled: boolean = false;
+export class Segment extends Ion {
+  _disabled: boolean = false;
 
   /**
    * @private
    */
   value: string;
 
+  /**
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor(val);
+  }
 
   /**
-   * @output {Any}  expression to evaluate when a segment button has been changed
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode( val);
+  }
+
+  /**
+   * @output {Any} Emitted when a segment button has been changed.
    */
   @Output() ionChange: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
 
@@ -197,14 +217,21 @@ export class Segment {
    */
   @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
-  constructor(@Optional() ngControl: NgControl) {
+  constructor(
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    @Optional() ngControl: NgControl
+  ) {
+    super(config, elementRef, renderer, 'segment');
+
     if (ngControl) {
       ngControl.valueAccessor = this;
     }
   }
 
   /**
-   * @private
+   * @input {boolean} If true, the user cannot interact with any of the buttons in the segment.
    */
   @Input()
   get disabled(): boolean {
@@ -215,10 +242,9 @@ export class Segment {
     this._disabled = isTrueProperty(val);
 
     if (this._buttons) {
-      let buttons = this._buttons.toArray();
-      for (let button of buttons) {
-        button.setCssClass('segment-button-disabled', this._disabled);
-      }
+      this._buttons.forEach(button => {
+        button._setElementClass('segment-button-disabled', this._disabled);
+      });
     }
   }
 
@@ -240,8 +266,7 @@ export class Segment {
    * @private
    */
   ngAfterViewInit() {
-   let buttons = this._buttons.toArray();
-   for (let button of buttons) {
+   this._buttons.forEach(button => {
      button.ionSelect.subscribe((selectedButton: any) => {
        this.writeValue(selectedButton.value);
        this.onChange(selectedButton.value);
@@ -253,10 +278,9 @@ export class Segment {
      }
 
      if (isTrueProperty(this._disabled)) {
-       button.setCssClass('segment-button-disabled', this._disabled);
+       button._setElementClass('segment-button-disabled', this._disabled);
      }
-
-   }
+   });
   }
 
   /**

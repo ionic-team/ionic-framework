@@ -1,39 +1,64 @@
-@import "../../globals.ios";
+@import "../../themes/ionic.globals.ios";
 
 // iOS Toggle
 // --------------------------------------------------
 
+/// @prop - Width of the toggle
 $toggle-ios-width:                     51px !default;
+
+/// @prop - Height of the toggle
 $toggle-ios-height:                    32px !default;
+
+/// @prop - Border width of the toggle
 $toggle-ios-border-width:              2px !default;
+
+/// @prop - Border radius of the toggle
 $toggle-ios-border-radius:             $toggle-ios-height / 2 !default;
 
+/// @prop - Background color of the unchecked toggle
 $toggle-ios-background-color-off:      $list-ios-background-color !default;
+
+/// @prop - Border color of the unchecked toggle
 $toggle-ios-border-color-off:          grayscale(lighten($list-ios-border-color, 11%)) !default;
 
+/// @prop - Background color of the checked toggle
 $toggle-ios-background-color-on:       color($colors-ios, primary) !default;
 
+/// @prop - Width of the toggle handle
 $toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;
+
+/// @prop - Height of the toggle handle
 $toggle-ios-handle-height:             $toggle-ios-handle-width !default;
+
+/// @prop - Border radius of the toggle handle
 $toggle-ios-handle-border-radius:      $toggle-ios-handle-height / 2 !default;
+
+/// @prop - Box shadow of the toggle handle
 $toggle-ios-handle-box-shadow:         0 3px 12px rgba(0, 0, 0, .16), 0 3px 1px rgba(0, 0, 0, .1) !default;
 
+/// @prop - Background color of the toggle handle
 $toggle-ios-handle-background-color:   $toggle-ios-background-color-off !default;
 
+/// @prop - Margin of the toggle handle
 $toggle-ios-media-margin:              0 !default;
 
+/// @prop - Transition duration of the toggle icon
 $toggle-ios-transition-duration:       300ms !default;
 
+/// @prop - Opacity of the disabled toggle
 $toggle-ios-disabled-opacity:          .3 !default;
 
+/// @prop - Padding of the toggle positioned on the left in an item
 $toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
+
+/// @prop - Padding of the toggle positioned on the right in an item
 $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
 
 
 // iOS Toggle
 // -----------------------------------------
 
-ion-toggle {
+.toggle-ios {
   position: relative;
 }
 
@@ -41,7 +66,7 @@ ion-toggle {
 // iOS Toggle Background Track: Unchecked
 // -----------------------------------------
 
-.toggle-icon {
+.toggle-ios .toggle-icon {
   position: relative;
   display: block;
 
@@ -60,7 +85,7 @@ ion-toggle {
 // iOS Toggle Background Oval: Unchecked
 // -----------------------------------------
 
-.toggle-icon::before {
+.toggle-ios .toggle-icon::before {
   position: absolute;
   top: $toggle-ios-border-width;
   right: $toggle-ios-border-width;
@@ -79,7 +104,7 @@ ion-toggle {
 // iOS Toggle Inner Knob: Unchecked
 // -----------------------------------------
 
-.toggle-inner {
+.toggle-ios .toggle-inner {
   position: absolute;
   top: $toggle-ios-border-width;
   left: $toggle-ios-border-width;
@@ -98,7 +123,7 @@ ion-toggle {
 // iOS Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-checked {
+.toggle-ios .toggle-checked {
   background-color: $toggle-ios-background-color-on;
 }
 
@@ -106,8 +131,8 @@ ion-toggle {
 // iOS Toggle Background Oval: Activated or Checked
 // -----------------------------------------
 
-.toggle-activated::before,
-.toggle-checked::before {
+.toggle-ios .toggle-activated::before,
+.toggle-ios .toggle-checked::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -115,7 +140,7 @@ ion-toggle {
 // iOS Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-checked .toggle-inner {
+.toggle-ios .toggle-checked .toggle-inner {
   transform: translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0);
 
 }
@@ -123,7 +148,7 @@ ion-toggle {
 // iOS Toggle Background Oval: Activated and Checked
 // -----------------------------------------
 
-.toggle-activated.toggle-checked::before {
+.toggle-ios .toggle-activated.toggle-checked::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -131,7 +156,7 @@ ion-toggle {
 // iOS Toggle Inner Knob: Activated and Unchecked
 // -----------------------------------------
 
-.toggle-activated .toggle-inner {
+.toggle-ios .toggle-activated .toggle-inner {
   width: $toggle-ios-handle-width + 6;
 }
 
@@ -139,7 +164,7 @@ ion-toggle {
 // iOS Toggle Inner Knob: Activated and Checked
 // -----------------------------------------
 
-.toggle-activated.toggle-checked .toggle-inner {
+.toggle-ios .toggle-activated.toggle-checked .toggle-inner {
   // when pressing down on the toggle and IS checked
   // make the knob wider and move it left a bit
   left: $toggle-ios-border-width - 6;
@@ -149,28 +174,24 @@ ion-toggle {
 // iOS Toggle: Disabled
 // -----------------------------------------
 
-.toggle-disabled,
-.item-toggle-disabled ion-label {
+.toggle-ios.toggle-disabled,
+.item-ios.item-toggle-disabled ion-label {
   opacity: $toggle-ios-disabled-opacity;
 
   pointer-events: none;
-}
-
-.toggle-disabled ion-radio {
-  opacity: $toggle-ios-disabled-opacity;
 }
 
 
 // iOS Toggle Within An Item
 // -----------------------------------------
 
-.item ion-toggle {
+.item-ios .toggle-ios {
   margin: $toggle-ios-media-margin;
   padding: $toggle-ios-item-right-padding;
+}
 
-  &[item-left] {
-    padding: $toggle-ios-item-left-padding;
-  }
+.item-ios .toggle-ios[item-left] {
+  padding: $toggle-ios-item-left-padding;
 }
 
 
@@ -179,7 +200,7 @@ ion-toggle {
 
 @mixin ios-toggle-theme($color-name, $color-base) {
 
-  ion-toggle[#{$color-name}] .toggle-checked {
+  .toggle-ios-#{$color-name} .toggle-checked {
     background-color: $color-base;
   }
 
@@ -190,7 +211,5 @@ ion-toggle {
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-
   @include ios-toggle-theme($color-name, $color-base);
-
 }

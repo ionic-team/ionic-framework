@@ -1,6 +1,4 @@
-import * as datetime from '../../../src/util/datetime-util';
-
-export function run() {
+import * as datetime from '../datetime-util';
 
 describe('convertDataToISO', () => {
 
@@ -32,6 +30,22 @@ describe('convertDataToISO', () => {
 
     var str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994-12-15T13:47:20.789+05:30');
+  });
+
+  it('should convert DateTimeData to datetime string, -300 tz offset', () => {
+    var data: datetime.DateTimeData = {
+      year: 1994,
+      month: 12,
+      day: 15,
+      hour: 13,
+      minute: 47,
+      second: 20,
+      millisecond: 789,
+      tzOffset: -300,
+    };
+
+    var str = datetime.convertDataToISO(data);
+    expect(str).toEqual('1994-12-15T13:47:20.789-05:00');
   });
 
   it('should convert DateTimeData to datetime string, Z timezone', () => {
@@ -161,7 +175,7 @@ describe('convertDataToISO', () => {
     var str = datetime.convertDataToISO(data);
     expect(str).toEqual('');
 
-    var str = datetime.convertDataToISO({});
+    str = datetime.convertDataToISO({});
     expect(str).toEqual('');
   });
 
@@ -221,7 +235,7 @@ describe('getValueFromFormat', () => {
     expect(datetime.getValueFromFormat(d, 'hh')).toEqual(0);
     expect(datetime.getValueFromFormat(d, 'h')).toEqual(0);
 
-    var d = datetime.parseDate('11:47');
+    d = datetime.parseDate('11:47');
     expect(datetime.getValueFromFormat(d, 'hh')).toEqual(11);
     expect(datetime.getValueFromFormat(d, 'h')).toEqual(11);
   });
@@ -231,7 +245,7 @@ describe('getValueFromFormat', () => {
     expect(datetime.getValueFromFormat(d, 'hh')).toEqual(12);
     expect(datetime.getValueFromFormat(d, 'h')).toEqual(12);
 
-    var d = datetime.parseDate('13:47');
+    d = datetime.parseDate('13:47');
     expect(datetime.getValueFromFormat(d, 'hh')).toEqual(1);
     expect(datetime.getValueFromFormat(d, 'h')).toEqual(1);
   });
@@ -241,7 +255,7 @@ describe('getValueFromFormat', () => {
     expect(datetime.getValueFromFormat(d, 'A')).toEqual('am');
     expect(datetime.getValueFromFormat(d, 'a')).toEqual('am');
 
-    var d = datetime.parseDate('11:47');
+    d = datetime.parseDate('11:47');
     expect(datetime.getValueFromFormat(d, 'A')).toEqual('am');
     expect(datetime.getValueFromFormat(d, 'a')).toEqual('am');
   });
@@ -251,7 +265,7 @@ describe('getValueFromFormat', () => {
     expect(datetime.getValueFromFormat(d, 'A')).toEqual('pm');
     expect(datetime.getValueFromFormat(d, 'a')).toEqual('pm');
 
-    var d = datetime.parseDate('23:47');
+    d = datetime.parseDate('23:47');
     expect(datetime.getValueFromFormat(d, 'A')).toEqual('pm');
     expect(datetime.getValueFromFormat(d, 'a')).toEqual('pm');
   });
@@ -307,6 +321,13 @@ describe('parseTemplate', () => {
     expect(formats[2]).toEqual('a');
   });
 
+  it('should allow am/pm when using only 12-hour', () => {
+    var formats = datetime.parseTemplate('hh a');
+    expect(formats.length).toEqual(2);
+    expect(formats[0]).toEqual('hh');
+    expect(formats[1]).toEqual('a');
+  });
+
   it('should allow am/pm when using 12-hour', () => {
     var formats = datetime.parseTemplate('hh:mm a');
     expect(formats.length).toEqual(3);
@@ -315,7 +336,7 @@ describe('parseTemplate', () => {
     expect(formats[2]).toEqual('a');
   });
 
-  it('should not add am/pm when not using 24-hour', () => {
+  it('should not add am/pm when using 24-hour', () => {
     var formats = datetime.parseTemplate('HH:mm a');
     expect(formats.length).toEqual(2);
     expect(formats[0]).toEqual('HH');
@@ -446,11 +467,11 @@ describe('renderTextFormat', () => {
     expect(datetime.renderTextFormat('a', 'am', d, {})).toEqual('am');
     expect(datetime.renderTextFormat('a', 'am', null, {})).toEqual('am');
 
-    var d = datetime.parseDate('11:47');
+    d = datetime.parseDate('11:47');
     expect(datetime.renderTextFormat('a', 'am', d, {})).toEqual('am');
     expect(datetime.renderTextFormat('a', 'am', null, {})).toEqual('am');
 
-    var d = datetime.parseDate('12:47');
+    d = datetime.parseDate('12:47');
     expect(datetime.renderTextFormat('a', 'pm', d, {})).toEqual('pm');
     expect(datetime.renderTextFormat('a', 'pm', null, {})).toEqual('pm');
   });
@@ -460,11 +481,11 @@ describe('renderTextFormat', () => {
     expect(datetime.renderTextFormat('A', 'am', d, {})).toEqual('AM');
     expect(datetime.renderTextFormat('A', 'am', null, {})).toEqual('AM');
 
-    var d = datetime.parseDate('11:47');
+    d = datetime.parseDate('11:47');
     expect(datetime.renderTextFormat('A', 'am', d, {})).toEqual('AM');
     expect(datetime.renderTextFormat('A', 'am', null, {})).toEqual('AM');
 
-    var d = datetime.parseDate('12:47');
+    d = datetime.parseDate('12:47');
     expect(datetime.renderTextFormat('A', 'pm', d, {})).toEqual('PM');
     expect(datetime.renderTextFormat('A', 'pm', null, {})).toEqual('PM');
   });
@@ -776,25 +797,25 @@ describe('parseISODate', () => {
     var parsed = datetime.parseDate('12/15/1994');
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('12-15-1994');
+    parsed = datetime.parseDate('12-15-1994');
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('1994-1994');
+    parsed = datetime.parseDate('1994-1994');
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('1994 12 15');
+    parsed = datetime.parseDate('1994 12 15');
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('12.15.1994');
+    parsed = datetime.parseDate('12.15.1994');
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('12\\15\\1994');
+    parsed = datetime.parseDate('12\\15\\1994');
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('200');
+    parsed = datetime.parseDate('200');
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('holla');
+    parsed = datetime.parseDate('holla');
     expect(parsed).toEqual(null);
   });
 
@@ -802,11 +823,79 @@ describe('parseISODate', () => {
     var parsed = datetime.parseDate(null);
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate(undefined);
+    parsed = datetime.parseDate(undefined);
     expect(parsed).toEqual(null);
 
-    var parsed = datetime.parseDate('');
+    parsed = datetime.parseDate('');
     expect(parsed).toEqual(null);
+  });
+
+});
+
+describe('updateDate', () => {
+
+  it('should update year in existing date', () => {
+    var existingDate = { year: 2016, month: 10, day: 1 };
+    datetime.updateDate(existingDate, { year: { value: 2017 } });
+    expect(existingDate.year).toEqual(2017);
+  });
+
+  it('should update month in existing date', () => {
+    var existingDate = { year: 2016, month: 10, day: 1 };
+    datetime.updateDate(existingDate, { month: { value: 11 } });
+    expect(existingDate.month).toEqual(11);
+  });
+
+  it('should update day in existing date', () => {
+    var existingDate = { year: 2016, month: 10, day: 1 };
+    datetime.updateDate(existingDate, { day: { value: 2 } });
+    expect(existingDate.day).toEqual(2);
+  });
+
+  it('should update hour in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 11 } });
+    expect(existingDate.hour).toEqual(11);
+  });
+
+  it('should update minute in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { minute: { value: 45 } });
+    expect(existingDate.minute).toEqual(45);
+  });
+
+  it('should update second in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { second: { value: 10 } });
+    expect(existingDate.second).toEqual(10);
+  });
+
+  it('should update hour PM in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 1 }, ampm: { value: 'pm' }});
+    expect(existingDate.hour).toEqual(13);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 12 }, ampm: { value: 'pm' }});
+    expect(existingDate.hour).toEqual(12);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 4 }, ampm: { value: 'pm' }});
+    expect(existingDate.hour).toEqual(16);
+  });
+
+  it('should update hour AM in existing time', () => {
+    var existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 1 }, ampm: { value: 'am' }});
+    expect(existingDate.hour).toEqual(1);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 12 }, ampm: { value: 'am' }});
+    expect(existingDate.hour).toEqual(0);
+
+    existingDate = { hour: 10, minute: 30, second: 0 };
+    datetime.updateDate(existingDate, { hour: { value: 4 }, ampm: { value: 'am' }});
+    expect(existingDate.hour).toEqual(4);
   });
 
 });
@@ -860,5 +949,3 @@ var customLocale: datetime.LocaleData = {
     'dez'
   ],
 };
-
-}

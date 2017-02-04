@@ -1,0 +1,38 @@
+<ion-menu [content]="content" id="menu1">
+
+  <ion-header>
+    <ion-toolbar color="secondary">
+      <ion-title>Menu 1</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose="menu1" detail-none>
+        Close Menu 1
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+
+<ion-menu [content]="content" id="menu2">
+
+  <ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>Menu 2</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose="menu2" detail-none>
+        Close Menu 2
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="root" #content swipeBackEnabled="false"></ion-nav>

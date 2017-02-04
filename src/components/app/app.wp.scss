@@ -1,44 +1,10 @@
-@import "../../globals.wp";
+@import "../../themes/ionic.globals.wp";
 
 // Windows App
 // --------------------------------------------------
 
-ion-content {
-  color: $text-wp-color;
-}
-
-p {
-  color: $paragraph-wp-color;
-}
-
-a {
-  color: $link-wp-color;
-}
-
-hr {
-  background-color: rgba(0, 0, 0, .08);
-}
-
-@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  span,
-  a:not([button]),
-  small,
-  b,
-  i,
-  strong,
-  em,
-  sub,
-  sup,
-  ion-icon {
-    &[#{$color-name}] {
-      color: $color-base;
-    }
-  }
+ion-app.wp {
+  font-family: $font-family-wp-base;
+  font-size: $font-size-wp-base;
+  background-color: $background-wp-color;
 }

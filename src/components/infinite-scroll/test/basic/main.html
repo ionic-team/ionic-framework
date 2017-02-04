@@ -13,7 +13,7 @@
     InfiniteScroll is enabled: {{enabled}}
   </p>
 
-  <button (click)="toggleInfiniteScroll()" block>
+  <button ion-button (click)="toggleInfiniteScroll()" block>
     Toggle InfiniteScroll Enabled
   </button>
 
@@ -23,7 +23,7 @@
     </button>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" threshold="100px">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="enabled" threshold="100px">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Loading more data...">

@@ -1,4 +1,14 @@
 <ion-content>
+
+  <div>
+    <ion-fab top center>
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </div>
+  <ion-fab bottom center>
+    <button ion-fab><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+
   <ion-list>
     <ion-item-group *ngFor="let group of groups">
       <ion-item-divider sticky>{{group.title}}</ion-item-divider>

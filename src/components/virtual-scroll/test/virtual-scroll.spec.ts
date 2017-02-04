@@ -1,15 +1,12 @@
-import {VirtualScroll} from '../../../../src/components/virtual-scroll/virtual-scroll';
-import {VirtualCell, VirtualData, VirtualNode} from '../../../../src/components/virtual-scroll/virtual-util';
-import {processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered} from '../../../../src/components/virtual-scroll/virtual-util';
+import { VirtualCell, VirtualData, VirtualNode } from '../virtual-util';
+import { processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered, estimateHeight } from '../virtual-util';
+import { mockPlatform } from '../../../util/mock-providers';
 
-
-
-export function run() {
 
 describe('VirtualScroll', () => {
 
   beforeEach(() => {
-    records = [0,1,2,3,4,5,6,7,8,9];
+    records = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     cells = [];
     nodes = [];
     headerFn = null;
@@ -31,15 +28,24 @@ describe('VirtualScroll', () => {
         marginRight: '0px',
         marginBottom: '0px',
         marginLeft: '0px'
-      }
+      };
       return styles;
     };
+  });
+
+  describe('estimateHeight', () =>  {
+
+    it('should return zero when no records', () => {
+      const h = estimateHeight(0, undefined, 100, .25);
+      expect(h).toEqual(0);
+    });
+
   });
 
   describe('processRecords', () =>  {
 
     it('should load data for 100% width items', () => {
-      records = [0,1,2,3,4]
+      records = [0, 1, 2, 3, 4];
       let stopAtHeight = 200;
 
       processRecords(stopAtHeight, records, cells,
@@ -68,7 +74,7 @@ describe('VirtualScroll', () => {
     });
 
     it('should load data for 30% width items', () => {
-      records = [0,1,2,3,4];
+      records = [0, 1, 2, 3, 4];
       let stopAtHeight = 1000;
       data.viewWidth = 300;
       data.itmWidth = 90; // 30%, 3 per row
@@ -153,7 +159,7 @@ describe('VirtualScroll', () => {
     });
 
     it('should process more data', () => {
-      records = [0,1,2,3,4,5,6,7,8,9];
+      records = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       let stopAtHeight = 100;
       data.viewWidth = 200;
       data.itmWidth = 90; // 2 per row
@@ -216,6 +222,20 @@ describe('VirtualScroll', () => {
 
   describe('populateNodeData', () => {
 
+    it('should set no nodes when no records', () => {
+      nodes = [];
+      records = [];
+
+      let startCellIndex = 0;
+      let endCellIndex = 0;
+
+      populateNodeData(startCellIndex, endCellIndex, data.viewWidth, true,
+                    cells, records, nodes, viewContainer,
+                    itmTmp, hdrTmp, ftrTmp, false);
+
+      expect(nodes.length).toBe(0);
+    });
+
     it('should skip already rendered, and create nodes', () => {
       cells = [
         {row: 0, tmpl: TEMPLATE_ITEM},
@@ -270,7 +290,7 @@ describe('VirtualScroll', () => {
                        cells, records, nodes, viewContainer,
                        itmTmp, hdrTmp, ftrTmp, true);
 
-      expect(nodes.length).toBe(6);
+      expect(nodes.length).toBe(3);
 
       expect(nodes[0].cell).toBe(2);
       expect(nodes[1].cell).toBe(3);
@@ -305,7 +325,7 @@ describe('VirtualScroll', () => {
         {row: 0, tmpl: TEMPLATE_FOOTER, reads: 0},
       ];
 
-      initReadNodes(nodes, cells, data);
+      initReadNodes(mockPlatform(), nodes, cells, data);
 
       expect(cells[0].top).toBe(firstTop);
       expect(cells[0].left).toBe(0);
@@ -355,7 +375,7 @@ describe('VirtualScroll', () => {
         {row: 4, tmpl: TEMPLATE_FOOTER, reads: 0},
       ];
 
-      initReadNodes(nodes, cells, data);
+      initReadNodes(mockPlatform(), nodes, cells, data);
 
       expect(cells[0].top).toBe(0);
       expect(cells[0].height).toBe(HEIGHT_HEADER);
@@ -534,7 +554,7 @@ describe('VirtualScroll', () => {
     }
   };
 
-  function getView(width?:number, height?: number, top?: number, left?: number): any {
+  function getView(width?: number, height?: number, top?: number, left?: number): any {
     return {
       context: {},
       rootNodes: [{
@@ -556,12 +576,10 @@ describe('VirtualScroll', () => {
         setAttribute: function(){},
         innerHTML: '',
       }]
-    }
+    };
   }
 
 });
-
-}
 
 const TEMPLATE_ITEM = 0;
 const TEMPLATE_HEADER = 1;

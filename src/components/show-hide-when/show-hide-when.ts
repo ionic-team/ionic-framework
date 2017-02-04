@@ -7,30 +7,27 @@ import { Platform } from '../../platform/platform';
  * @private
  */
 export class DisplayWhen {
-  protected isMatch: boolean = false;
-  private platform: Platform;
-  private conditions: string[];
+  isMatch: boolean = false;
+  conditions: string[];
 
-  constructor(conditions: string, platform: Platform, ngZone: NgZone) {
-    this.platform = platform;
-
+  constructor(conditions: string, public _plt: Platform, public zone: NgZone) {
     if (!conditions) return;
 
-    this.conditions = conditions.split(',');
+    this.conditions = conditions.replace(/\s/g, '').split(',');
 
     // check if its one of the matching platforms first
     // a platform does not change during the life of an app
     for (let i = 0; i < this.conditions.length; i++) {
-      if (this.conditions[i] && platform.is(this.conditions[i])) {
+      if (this.conditions[i] && _plt.is(this.conditions[i])) {
         this.isMatch = true;
         return;
       }
     }
 
-    if ( this.orientation() ) {
+    if (this.orientation()) {
       // add window resize listener
-      platform.onResize(() => {
-        ngZone.run(() => {
+      _plt.onResize(() => {
+        zone.run(() => {
           this.orientation();
         });
       });
@@ -43,12 +40,12 @@ export class DisplayWhen {
     for (let i = 0; i < this.conditions.length; i++) {
 
       if (this.conditions[i] === 'portrait') {
-        this.isMatch = this.platform.isPortrait();
+        this.isMatch = this._plt.isPortrait();
         return true;
       }
 
       if (this.conditions[i] === 'landscape') {
-        this.isMatch = this.platform.isLandscape();
+        this.isMatch = this._plt.isLandscape();
         return true;
       }
     }
@@ -93,7 +90,7 @@ export class DisplayWhen {
  *  I am visible on Landscape!
  * </div>
  * ```
- * @demo /docs/v2/demos/show-when/
+ * @demo /docs/v2/demos/src/show-when/
  * @see {@link ../HideWhen HideWhen API Docs}
  * @see {@link ../../../platform/Platform Platform API Docs}
  */
@@ -107,10 +104,10 @@ export class ShowWhen extends DisplayWhen {
 
   constructor(
     @Attribute('showWhen') showWhen: string,
-    platform: Platform,
-    ngZone: NgZone
+    plt: Platform,
+    zone: NgZone
   ) {
-    super(showWhen, platform, ngZone);
+    super(showWhen, plt, zone);
   }
 
 }
@@ -152,7 +149,7 @@ export class ShowWhen extends DisplayWhen {
  * </div>
  * ```
  *
- * @demo /docs/v2/demos/hide-when/
+ * @demo /docs/v2/demos/src/hide-when/
  * @see {@link ../ShowWhen ShowWhen API Docs}
  * @see {@link ../../../platform/Platform Platform API Docs}
 */
@@ -166,10 +163,10 @@ export class HideWhen extends DisplayWhen {
 
   constructor(
     @Attribute('hideWhen') hideWhen: string,
-    platform: Platform,
-    ngZone: NgZone
+    plt: Platform,
+    zone: NgZone
   ) {
-    super(hideWhen, platform, ngZone);
+    super(hideWhen, plt, zone);
   }
 
 }

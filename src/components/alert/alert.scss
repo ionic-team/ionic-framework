@@ -1,13 +1,22 @@
-@import "../../globals.core";
+@import "../../themes/ionic.globals";
 
 // Alerts
 // --------------------------------------------------
 
+/// @prop - Minimum width of the alert
 $alert-min-width:                 250px !default;
+
+/// @prop - Maximum height of the alert
 $alert-max-height:                90% !default;
 
+/// @prop - Line height of the alert button
 $alert-button-line-height:        20px !default;
+
+/// @prop - Font size of the alert button
 $alert-button-font-size:          14px !default;
+
+/// @prop - Color of the alert input placeholder
+$alert-input-placeholder-color:   #999 !default;
 
 
 ion-alert {
@@ -23,9 +32,17 @@ ion-alert {
   align-items: center;
   justify-content: center;
 
-  input {
-    width: 100%;
-  }
+  contain: strict;
+}
+
+ion-alert.alert-top {
+  align-items: flex-start;
+
+  padding-top: 50px;
+}
+
+ion-alert input {
+  width: 100%;
 }
 
 .alert-wrapper {
@@ -38,6 +55,8 @@ ion-alert {
   max-height: $alert-max-height;
 
   opacity: 0;
+
+  contain: content;
 }
 
 .alert-title {
@@ -53,11 +72,13 @@ ion-alert {
 }
 
 .alert-message {
-  overflow: auto;
+  overflow-y: scroll;
+
+  -webkit-overflow-scrolling: touch;
 }
 
 .alert-input {
-  @include placeholder();
+  @include placeholder($alert-input-placeholder-color);
 
   padding: 10px 0;
 
@@ -69,11 +90,11 @@ ion-alert {
   display: flex;
 
   flex-direction: row;
+}
 
-  &.vertical {
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
+.alert-button-group-vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .alert-button {
@@ -87,6 +108,8 @@ ion-alert {
 }
 
 .alert-tappable {
+  @include appearance(none);
+
   margin: 0;
   padding: 0;
 
@@ -96,6 +119,4 @@ ion-alert {
   line-height: initial;
   text-align: left;
   background: transparent;
-
-  -webkit-appearance: none;
 }

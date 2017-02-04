@@ -1,46 +1,74 @@
 import { Directive, ElementRef, forwardRef, Inject, Renderer } from '@angular/core';
 
 import { App } from '../components/app/app';
-import { clearNativeTimeout, nativeTimeout } from './dom';
 import { Config } from '../config/config';
-
-const DEFAULT_EXPIRE = 330;
+import { Platform } from '../platform/platform';
 
 
 /**
  * @private
  */
 @Directive({
-  selector: 'click-block'
+  selector: '.click-block'
 })
 export class ClickBlock {
-  private _tmrId: number;
+  private _tmr: number;
   private _showing: boolean = false;
+  private _start: number;
+  private _minEnd: number;
   isEnabled: boolean;
 
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
+    private plt: Platform,
     private elementRef: ElementRef,
     private renderer: Renderer
   ) {
-    app.clickBlock = this;
-    this.isEnabled = config.getBoolean('clickBlock', true);
+    app._clickBlock = this;
+
+    const enabled = this.isEnabled = config.getBoolean('clickBlock', true);
+    if (enabled) {
+      this._setElementClass('click-block-enabled', true);
+    }
   }
 
-  activate(shouldShow: boolean, expire: number) {
+  activate(shouldShow: boolean, expire: number = 100, minDuration: number = 0) {
     if (this.isEnabled) {
-      clearNativeTimeout(this._tmrId);
-
+      this.plt.cancelTimeout(this._tmr);
       if (shouldShow) {
-        this._tmrId = nativeTimeout(this.activate.bind(this, false), expire || DEFAULT_EXPIRE);
+        // remember when we started the click block
+        this._start = Date.now();
+        // figure out the minimum time it should be showing until
+        // this is useful for transitions that are less than 300ms
+        this._minEnd = this._start + (minDuration || 0);
+        this._activate(true);
+      }
+      this._tmr = this.plt.timeout(this._activate.bind(this, false), expire);
+    }
+  }
+
+  /** @internal */
+  _activate(shouldShow: boolean) {
+    if (this._showing !== shouldShow) {
+
+      if (!shouldShow) {
+        // check if it was enabled before the minimum duration
+        // this is useful for transitions that are less than 300ms
+        var now = Date.now();
+        if (now < this._minEnd) {
+          this._tmr = this.plt.timeout(this._activate.bind(this, false), this._minEnd - now);
+          return;
+        }
       }
 
-      if (this._showing !== shouldShow) {
-        this.renderer.setElementClass(this.elementRef.nativeElement, 'click-block-active', shouldShow);
-        this._showing = shouldShow;
-      }
+      this._setElementClass('click-block-active', shouldShow);
+      this._showing = shouldShow;
     }
+  }
+
+  private _setElementClass(className: string, add: boolean) {
+    this.renderer.setElementClass(this.elementRef.nativeElement, className, add);
   }
 
 }

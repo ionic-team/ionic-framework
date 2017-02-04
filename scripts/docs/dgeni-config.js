@@ -11,7 +11,7 @@ var _ = require('lodash');
 var config = require('../config.json');
 
 // Define the dgeni package for generating the docs
-module.exports = function(currentVersion) {
+module.exports = function(currentVersion, initialVersionBuild) {
 
   return new Package('ionic-v2-docs',
                      [jsdocPackage, nunjucksPackage, typescriptPackage,
@@ -24,6 +24,8 @@ module.exports = function(currentVersion) {
 .processor(require('./processors/hide-private-api'))
 .processor(require('./processors/collect-inputs-outputs'))
 .processor(require('./processors/parse-returns-object'))
+.processor(require('./processors/parse-optional'))
+.processor(require('./processors/parse-sass'))
 
 // for debugging docs
 // .processor(function test(){
@@ -58,24 +60,24 @@ module.exports = function(currentVersion) {
   }
 
   // new version, add it to the versions list
-  if (currentVersion != 'nightly' && !_.contains(versions, currentVersion)){
+  if (currentVersion != 'nightly' && !_.includes(versions, currentVersion)){
     versions.unshift(currentVersion);
   }
 
   // sort by version so we can find latest
   versions.sort(semver.rcompare);
   // add nightly if it isn't in the list
-  !_.contains(versions, 'nightly') && versions.unshift('nightly');
+  !_.includes(versions, 'nightly') && versions.unshift('nightly');
 
   //First semver valid version is latest
   var latestVersion = _.find(versions, semver.valid);
   versions = versions.map(function(version) {
-    //Latest version is in docs root
-    //var folder = version == latestVersion ? '' : version;
-    // Instead set nightly as docs root
-    var folder = version == 'nightly' ? '' : version;
+    // Set nightly as docs root
+    //var folder = version == 'nightly' ? '' : version;
+    //Instead set latest version in docs root if not initial build
+    var folder = (version == latestVersion) && !initialVersionBuild ? '' : version;
     return {
-      href: path.join('/' + config.v2DocsDir, folder),
+      href: path.join('/' + config.v2DocsDir, folder).replace('/content',''),
       folder: folder,
       name: version
     };
@@ -84,7 +86,8 @@ module.exports = function(currentVersion) {
   var versionData = {
     list: versions,
     current: _.find(versions, { name: currentVersion }),
-    latest: _.find(versions, {name: latestVersion}) || _.first(versions)
+    latest: _.find(versions, {name: latestVersion}) || _.first(versions),
+    initialVersionBuild: initialVersionBuild
   };
 
   renderDocsProcessor.extraData.version = versionData;
@@ -134,6 +137,13 @@ module.exports = function(currentVersion) {
 //   });
 // })
 
+// Configure allowedDocTypes
+.config(function(extractAccessTransform) {
+  var allowedDocTypes = ['member'];
+  allowedDocTypes.forEach(function(docType) {
+    extractAccessTransform.allowedDocTypes.add(docType);
+  });
+})
 
 // Configure links
 .config(function(getLinkInfo) {
@@ -163,7 +173,8 @@ module.exports = function(currentVersion) {
   templateEngine.filters.push(
     require('./filters/capital'),
     require('./filters/code'),
-    require('./filters/dump')
+    require('./filters/dump'),
+    require('./filters/platform')
   );
 
   templateFinder.templateFolders.unshift(path.resolve(__dirname, 'templates'));

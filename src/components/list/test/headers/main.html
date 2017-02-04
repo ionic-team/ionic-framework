@@ -9,11 +9,20 @@
 
 <ion-content class="outer-content">
 
+  <div>
+    <ion-fab top center>
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </div>
+  <ion-fab bottom center>
+    <button ion-fab><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+
   <ion-list>
 
     <ion-list-header>
       List Header
-      <ion-icon item-right name="star" primary></ion-icon>
+      <ion-icon item-right name="star" color="primary"></ion-icon>
     </ion-list-header>
 
     <ion-item>
@@ -33,7 +42,7 @@
     <ion-item>
       <ion-icon name="home" item-left></ion-icon>
       Home
-      <ion-note item-right>
+      <ion-note item-right color="danger">
         Where the heart is
       </ion-note>
     </ion-item>
@@ -45,7 +54,7 @@
 
     <ion-list-header>
       List Header
-      <button item-right outline>Info</button>
+      <button ion-button item-right outline>Info</button>
     </ion-list-header>
 
     <ion-item>
