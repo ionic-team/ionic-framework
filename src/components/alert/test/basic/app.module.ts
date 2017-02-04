@@ -286,25 +286,46 @@ export class E2EPage {
   doAlertWithSearch() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Search!');
-    alert.setSubTitle('1st input named "from Name"');
+    alert.setSubTitle('1st input: "filter Name"');
     alert.setHasSearch(true);
 
     alert.addInput({
-      name: 'from Name',
+      name: 'filter Name',
     });
 
     alert.addInput({
-      value: 'from Value'
+      value: 'filter Value'
     });
 
     alert.addInput({
-      placeholder: 'from Placeholder',
+      placeholder: 'filter Placeholder',
+    });
+
+    alert.addButton('OK');
+
+    alert.present();
+  }
+
+ doAlertWithSearchRadios() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Search!');
+    alert.setSubTitle('values: value1, value2');
+    alert.setHasSearch(true);
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 1',
+      value: 'value1',
+      checked: true
     });
 
     alert.addInput({
       type: 'radio',
-      label: 'from Label'
+      label: 'Radio 2',
+      value: 'value2',
+      checked: true
     });
+
 
     alert.addButton('OK');
 

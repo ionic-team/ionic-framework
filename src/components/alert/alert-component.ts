@@ -26,6 +26,12 @@ import { ViewController } from '../../navigation/view-controller';
       '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
+       '<div *ngIf="d.hasSearch" class="alert-input-group">' +
+          '<div class="alert-input-wrapper">' +
+            '<input placeholder="Search" [ngModel]="searchModel" (ngModelChange)="filterOut($event)" class="alert-input">' +
+          '</div>' +
+        '</div>' +
+
         '<template ngSwitchCase="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
             '<template ngFor let-i [ngForOf]="d.inputs">' +
@@ -227,13 +233,13 @@ export class AlertCmp {
     this.enabled = true;
   }
 
-  private _filterOut(event: string) {
+  filterOut(ev: string) {
     for (let input of this.d.inputs)
-      input.filtered = event === '' && true || (
-        (isPresent(input.name) && typeof input.name === 'string' && input.name.toUpperCase().indexOf(event.toUpperCase()) > -1) ||
-        (isPresent(input.placeholder) && typeof input.placeholder === 'string' && input.placeholder.toUpperCase().indexOf(event.toUpperCase()) > -1) ||
-        (isPresent(input.value) && typeof input.value === 'string' && input.value.toUpperCase().indexOf(event.toUpperCase()) > -1) ||
-        (isPresent(input.label) && typeof input.label === 'string' && input.label.toUpperCase().indexOf(event.toUpperCase()) > -1) );
+      input.filtered = ev === '' && true || (
+        (isPresent(input.name) && typeof input.name === 'string' && input.name.toUpperCase().indexOf(ev.toUpperCase()) > -1) ||
+        (isPresent(input.placeholder) && typeof input.placeholder === 'string' && input.placeholder.toUpperCase().indexOf(ev.toUpperCase()) > -1) ||
+        (isPresent(input.value) && typeof input.value === 'string' && input.value.toUpperCase().indexOf(ev.toUpperCase()) > -1) ||
+        (isPresent(input.label) && typeof input.label === 'string' && input.label.toUpperCase().indexOf(ev.toUpperCase()) > -1) );
   };
 
   @HostListener('body:keyup', ['$event'])
