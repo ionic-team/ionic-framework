@@ -8,6 +8,7 @@ export interface AlertOptions {
   buttons?: Array<any>;
   enableBackdropDismiss?: boolean;
   hasSearch?: boolean;
+  searchPlaceholder?: string;
 }
 
 export interface AlertInputOptions {

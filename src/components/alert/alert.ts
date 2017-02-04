@@ -60,6 +60,10 @@ export class Alert extends ViewController {
     this.data.hasSearch = hasSearch;
   }
 
+  setSearchPlaceholder(placeholder: string) {
+    this.data.searchPlaceholder = placeholder;
+  }
+
   /**
    * @param {object} input Alert input
    */

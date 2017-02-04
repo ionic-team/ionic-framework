@@ -28,7 +28,7 @@ import { ViewController } from '../../navigation/view-controller';
 
        '<div *ngIf="d.hasSearch" class="alert-input-group">' +
           '<div class="alert-input-wrapper">' +
-            '<input placeholder="Search" [ngModel]="searchModel" (ngModelChange)="filterOut($event)" class="alert-input">' +
+            '<input placeholder="{{ d.searchPlaceholder }}" [ngModel]="searchModel" (ngModelChange)="filterOut($event)" class="alert-input">' +
           '</div>' +
         '</div>' +
 
@@ -94,6 +94,7 @@ export class AlertCmp {
     inputs?: any[];
     enableBackdropDismiss?: boolean;
     hasSearch?: boolean;
+    searchPlaceholder?: string;
   };
   enabled: boolean;
   hdrId: string;
@@ -146,6 +147,11 @@ export class AlertCmp {
     if (!this.d.message) {
       this.d.message = '';
     }
+
+    if (this.d.hasSearch && typeof this.d.searchPlaceholder === 'undefined') {
+      this.d.searchPlaceholder = 'Search';
+    }
+
   }
 
   ionViewDidLoad() {

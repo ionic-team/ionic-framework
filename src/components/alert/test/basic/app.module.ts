@@ -309,8 +309,8 @@ export class E2EPage {
  doAlertWithSearchRadios() {
     let alert = this.alertCtrl.create();
     alert.setTitle('Search!');
-    alert.setSubTitle('values: value1, value2');
     alert.setHasSearch(true);
+    alert.setSearchPlaceholder('Filter value1, value2, value3...');
 
     alert.addInput({
       type: 'radio',
@@ -326,6 +326,33 @@ export class E2EPage {
       checked: true
     });
 
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 3',
+      value: 'value3',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 4',
+      value: 'value4',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 5',
+      value: 'value5',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 6',
+      value: 'value6',
+      checked: true
+    });
 
     alert.addButton('OK');
 
