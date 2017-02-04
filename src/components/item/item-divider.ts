@@ -1,16 +1,19 @@
 import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { Form } from '../../util/form';
 import { Ion } from '../ion';
 
-
 /**
-  * @private
-  */
+ * @private
+ */
 @Directive({
-  selector: 'ion-card'
+  selector: 'ion-item-divider',
+  host: {
+    'class': 'item-divider'
+  }
 })
-export class Card extends Ion {
+export class ItemDivider extends Ion {
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -26,13 +29,13 @@ export class Card extends Ion {
    * @input {string} The mode determines which platform styles to use.
    * Possible values are: `"ios"`, `"md"`, or `"wp"`.
    * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
+  */
   @Input()
   set mode(val: string) {
     this._setMode(val);
   }
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer, 'card');
+  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
+    super(config, elementRef, renderer, 'item-divider');
   }
 }

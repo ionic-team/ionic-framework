@@ -803,7 +803,7 @@ export class Platform {
       this.registerListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
-        timerId = setTimeout(() => {
+        timerId = this._win.setTimeout(() => {
           // setting _isPortrait to null means the
           // dimensions will need to be looked up again
           if (this.hasFocusedTextInput() === false) {

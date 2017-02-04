@@ -1,6 +1,7 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer, Header } from '../components/toolbar/toolbar';
+import { Footer } from '../components/toolbar/toolbar-footer';
+import { Header } from '../components/toolbar/toolbar-header';
 import { isPresent } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';

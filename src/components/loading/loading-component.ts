@@ -32,6 +32,7 @@ export class LoadingCmp {
   showSpinner: boolean;
   durationTimeout: number;
   gestureBlocker: BlockerDelegate;
+  _win: Window;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -82,7 +83,7 @@ export class LoadingCmp {
 
     // If there is a duration, dismiss after that amount of time
     if ( this.d && this.d.duration ) {
-      this.durationTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration);
+      this.durationTimeout = this._win.setTimeout(() => this.dismiss('backdrop'), this.d.duration);
     }
 
   }
