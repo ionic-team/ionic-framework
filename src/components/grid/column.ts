@@ -2,13 +2,13 @@ import { Directive } from '@angular/core';
 
 /**
   * @private
-  * @name Grid
+  * @name Column
   * @module ionic
   * @description
  */
 @Directive({
-  selector: 'ion-grid'
+  selector: 'ion-col'
 })
-export class Grid {
+export class Col {
 
 }

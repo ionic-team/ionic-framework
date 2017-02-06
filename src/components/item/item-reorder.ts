@@ -1,9 +1,8 @@
-import { Component, Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
-import { findReorderItem } from './item-reorder-util';
 import { ItemReorderGestureDelegate, ItemReorderGesture } from '../item/item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
@@ -299,30 +298,5 @@ export class ItemReorder implements ItemReorderGestureDelegate {
    */
   getNativeElement(): HTMLElement {
     return this._element;
-  }
-}
-
-/**
- * @private
- */
-@Component({
-  selector: 'ion-reorder',
-  template: `<ion-icon name="reorder"></ion-icon>`
-})
-export class Reorder {
-  constructor(
-    private elementRef: ElementRef) {
-    elementRef.nativeElement['$ionComponent'] = this;
-  }
-
-  getReorderNode(): HTMLElement {
-    return findReorderItem(this.elementRef.nativeElement, null);
-  }
-
-  @HostListener('click', ['$event'])
-  onClick(ev: UIEvent) {
-    // Stop propagation if click event reaches ion-reorder
-    ev.preventDefault();
-    ev.stopPropagation();
   }
 }
