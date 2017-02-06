@@ -1,4 +1,4 @@
-import { ComponentRef, ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentRef, ComponentFactoryResolver, ComponentFactory, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
@@ -72,27 +72,33 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   push(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    return this._queueTrns({
-      insertStart: -1,
-      insertViews: [convertToView(this._linker, page, params)],
-      opts: opts,
-    }, done);
+    return convertToView(this._linker, page, params).then(viewController => {
+      return this._queueTrns({
+        insertStart: -1,
+        insertViews: [viewController],
+        opts: opts,
+      }, done);
+    });
   }
 
   insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    return this._queueTrns({
-      insertStart: insertIndex,
-      insertViews: [convertToView(this._linker, page, params)],
-      opts: opts,
-    }, done);
+    return convertToView(this._linker, page, params).then(viewController => {
+      return this._queueTrns({
+        insertStart: insertIndex,
+        insertViews: [viewController],
+        opts: opts,
+      }, done);
+    });
   }
 
   insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: Function): Promise<any> {
-    return this._queueTrns({
-      insertStart: insertIndex,
-      insertViews: convertToViews(this._linker, insertPages),
-      opts: opts,
-    }, done);
+    return convertToViews(this._linker, insertPages).then(viewControllers => {
+      return this._queueTrns({
+        insertStart: insertIndex,
+        insertViews: viewControllers,
+        opts: opts,
+      }, done);
+    });
   }
 
   pop(opts?: NavOptions, done?: Function): Promise<any> {
@@ -152,13 +158,15 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    const viewControllers = [convertToView(this._linker, pageOrViewCtrl, params)];
-    return this._setPages(viewControllers, opts, done);
+    return convertToView(this._linker, pageOrViewCtrl, params).then((viewController) => {
+      return this._setPages([viewController], opts, done);
+    });
   }
 
   setPages(pages: any[], opts?: NavOptions, done?: Function): Promise<any> {
-    const viewControllers = convertToViews(this._linker, pages);
-    return this._setPages(viewControllers, opts, done);
+    return convertToViews(this._linker, pages).then(viewControllers => {
+      return this._setPages(viewControllers, opts, done);
+    });
   }
 
   _setPages(viewControllers: ViewController[], opts?: NavOptions, done?: Function): Promise<any> {
@@ -472,7 +480,7 @@ export class NavControllerBase extends Ion implements NavController {
       { provide: ViewController, useValue: enteringView },
       { provide: NavParams, useValue: enteringView.getNavParams() }
     ]);
-    const componentFactory = this._cfr.resolveComponentFactory(enteringView.component);
+    const componentFactory = <ComponentFactory<any>>this._linker.resolveComponentFactory(enteringView.component);
     const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
 
     // create ComponentRef and set it to the entering view

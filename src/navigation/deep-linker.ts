@@ -1,7 +1,9 @@
+import { ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { convertToViews, DeepLinkConfig, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { LoadedModule, ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -130,7 +132,14 @@ export class DeepLinker {
    */
   indexAliasUrl: string;
 
-  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location) { }
+  /**
+   * @internal
+   */
+  cfrMap = new Map<any, ComponentFactoryResolver>();
+
+
+  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location, public _deepLinkConfig: DeepLinkConfig, public _moduleLoader: ModuleLoader, public _baseCfr: ComponentFactoryResolver) {
+  }
 
   /**
    * @internal
@@ -253,12 +262,49 @@ export class DeepLinker {
   /**
    * @internal
    */
-  getComponentFromName(componentName: any): any {
+  getComponentFromName(componentName: string): Promise<any> {
     const segment = this._serializer.createSegmentFromName(componentName);
-    if (segment && segment.component) {
-      return segment.component;
+    if (segment) {
+
+      if (segment.component) {
+        return Promise.resolve(segment.component);
+      }
+
+      if (segment.loadChildren) {
+        return this.loadModuleAndUpdateDeeplinkConfig(this._deepLinkConfig, componentName).then((loadedModule: LoadedModule) => {
+          this.registerCfr(loadedModule.component, loadedModule.componentFactoryResolver);
+          return loadedModule.component;
+        });
+      }
+
     }
-    return null;
+
+    return Promise.resolve(null);
+  }
+
+  loadModuleAndUpdateDeeplinkConfig(deepLinkConfig: DeepLinkConfig, componentName: string) {
+    return this._moduleLoader.loadModule(componentName).then((loadedModule: LoadedModule) => {
+      // update the existing deepLinkConfig entry with the component
+      this.registerComponent(loadedModule.component, componentName);
+      return loadedModule;
+    });
+  }
+
+  registerComponent(component: any, componentName: string) {
+    this._deepLinkConfig.links.filter(deepLinkMetadata => deepLinkMetadata.name === componentName)
+        .forEach(deepLinkMetadata => deepLinkMetadata.component = component);
+  }
+
+  registerCfr(component: any, cfr: ComponentFactoryResolver) {
+    this.cfrMap.set(component, cfr);
+  }
+
+  resolveComponentFactory(component: any): any {
+    let cfr = this.cfrMap.get(component);
+    if (!cfr) {
+      cfr = this._baseCfr;
+    }
+    return cfr.resolveComponentFactory(component);
   }
 
   /**
@@ -408,22 +454,18 @@ export class DeepLinker {
   /**
    * @internal
    */
-  initViews(segment: NavSegment): ViewController[] {
-    let views: ViewController[];
-
-    if (isArray(segment.defaultHistory)) {
-      views = convertToViews(this, segment.defaultHistory);
-
-    } else {
-      views = [];
-    }
-
+  initViews(segment: NavSegment) {
     const view = new ViewController(segment.component, segment.data);
     view.id = segment.id;
 
-    views.push(view);
+    if (isArray(segment.defaultHistory)) {
+      return convertToViews(this, segment.defaultHistory).then(views => {
+        views.push(view);
+        return views;
+      });
+    }
 
-    return views;
+    return Promise.resolve([view]);
   }
 
   /**
@@ -545,8 +587,8 @@ export class DeepLinker {
 }
 
 
-export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
-  const deepLinker = new DeepLinker(app, serializer, location);
+export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader, cfr: ComponentFactoryResolver) {
+  const deepLinker = new DeepLinker(app, serializer, location, deepLinkConfig, moduleLoader, cfr);
   deepLinker.init();
   return deepLinker;
 }

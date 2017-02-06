@@ -518,10 +518,14 @@ export class Tabs extends Ion implements AfterViewInit {
         // if we're a few pages deep, pop to root
         tab.popToRoot();
 
-      } else if (getComponent(this._linker, tab.root) !== active.component) {
-        // Otherwise, if the page we're on is not our real root, reset it to our
-        // default root type
-        tab.setRoot(tab.root);
+      } else {
+        getComponent(this._linker, tab.root).then(viewController => {
+          if (viewController !== active.component) {
+            // Otherwise, if the page we're on is not our real root
+            // reset it to our default root type
+            tab.setRoot(tab.root);
+          }
+        });
       }
     }
   }

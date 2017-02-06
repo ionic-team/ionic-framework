@@ -111,7 +111,9 @@ export class Nav extends NavControllerBase implements AfterViewInit {
     let navSegment = this._linker.initNav(this);
     if (navSegment && navSegment.component) {
       // there is a segment match in the linker
-      this.setPages(this._linker.initViews(navSegment), null, null);
+      this._linker.initViews(navSegment).then(views => {
+        this.setPages(views, null, null);
+      });
 
     } else if (this._root) {
       // no segment match, so use the root property

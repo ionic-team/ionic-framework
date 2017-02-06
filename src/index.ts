@@ -3,11 +3,17 @@
 /**
  * Import Angular
  */
-import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, Inject, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { DOCUMENT, BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
+
+/**
+ * Import Other
+ */
+import { DeepLinkConfig } from './navigation/nav-util';
 
 /**
  * Import Providers
@@ -28,10 +34,12 @@ import { Keyboard } from './platform/keyboard';
 import { LoadingController } from './components/loading/loading';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal';
+import { ModuleLoader, LAZY_LOADED_TOKEN } from './util/module-loader';
 import { PickerController } from './components/picker/picker';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
 import { PopoverController } from './components/popover/popover';
+import { SystemJsNgModuleLoader } from './util/system-js-ng-module-loader';
 import { TapClick, setupTapClick } from './tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
 import { registerModeConfigs } from './config/mode-registry';
@@ -339,12 +347,14 @@ export { Transition } from './transitions/transition';
  * ```
  */
 @NgModule({
-  imports: [BrowserModule, HttpModule, FormsModule, ReactiveFormsModule],
-  exports: [
-    BrowserModule,
+  imports: [
+    CommonModule,
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
+
+  ],
+  exports: [
 
     Avatar,
     Backdrop,
@@ -536,13 +546,23 @@ export { Transition } from './transitions/transition';
   ]
 })
 export class IonicModule {
+
+  static forChild(cls: any) {
+    return {
+      ngModule: LazyModule,
+      providers: [
+        { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
+      ]
+    };
+  }
+
     /**
      * Set the root app component for you IonicModule
      * @param {any} appRoot The root AppComponent for this app.
      * @param {any} config Config Options for the app. Accepts any config property.
      * @param {any} deepLinkConfig Any configuration needed for the Ionic Deeplinker.
      */
-  static forRoot(appRoot: any, config: any = null, deepLinkConfig: any = null): ModuleWithProviders {
+  static forRoot(appRoot: any, config: any = null, deepLinkConfig: DeepLinkConfig = null): ModuleWithProviders {
     return {
       ngModule: IonicModule,
       providers: [
@@ -565,7 +585,7 @@ export class IonicModule {
         { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
 
         // useClass
-        { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
+        // { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
 
         // useValue
         { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: appRoot, multi: true },
@@ -586,17 +606,49 @@ export class IonicModule {
         ModalController,
         PickerController,
         PopoverController,
+        SystemJsNgModuleLoader,
         TapClick,
         ToastController,
         TransitionController,
 
+        { provide: ModuleLoader, useFactory: provideModuleLoader, deps: [DeepLinkConfigToken, SystemJsNgModuleLoader, Injector]},
         { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [ new Inject(APP_BASE_HREF), new Optional()], Config ] },
         { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
-        { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location ] },
+        { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location,  DeepLinkConfigToken, ModuleLoader, ComponentFactoryResolver ] },
+      ]
+    };
+  }
+}
+
+@NgModule({
+  imports: [IonicModule],
+  exports: [
+    IonicModule
+  ],
+  declarations: [
+    // Badge
+  ],
+  entryComponents: []
+})
+export class LazyModule {
+
+  static forChild(cls: any) {
+    return {
+      ngModule: LazyModule,
+      providers: [
+        { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
       ]
     };
   }
 
+}
+
+
+/**
+ * @private
+ */
+export function provideModuleLoader(deepLinkConfig: DeepLinkConfig, systemJsNgModuleLoader: SystemJsNgModuleLoader, injector: Injector) {
+  return new ModuleLoader(deepLinkConfig, systemJsNgModuleLoader, injector);
 }
 
 /**

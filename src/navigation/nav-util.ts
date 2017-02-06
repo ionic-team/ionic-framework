@@ -7,33 +7,38 @@ import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 
 
-export function getComponent(linker: DeepLinker, nameOrPageOrView: any): any {
+export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?: any) {
   if (typeof nameOrPageOrView === 'function') {
-    return nameOrPageOrView;
+    return Promise.resolve(
+      new ViewController(nameOrPageOrView, params)
+    );
   }
+
   if (typeof nameOrPageOrView === 'string') {
-    return linker.getComponentFromName(nameOrPageOrView);
+    return linker.getComponentFromName(nameOrPageOrView).then((component) => {
+      return new ViewController(component, params);
+    });
   }
-  return null;
+
+  return Promise.resolve(null);
 }
 
-export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any): ViewController {
+export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any) {
   if (nameOrPageOrView) {
     if (isViewController(nameOrPageOrView)) {
       // is already a ViewController
-      return nameOrPageOrView;
+      return Promise.resolve(<ViewController>nameOrPageOrView);
     }
-    let component = getComponent(linker, nameOrPageOrView);
-    if (component) {
-      return new ViewController(component, params);
-    }
+
+    return getComponent(linker, nameOrPageOrView, params);
   }
+
   console.error(`invalid page component: ${nameOrPageOrView}`);
-  return null;
+  return Promise.resolve(null);
 }
 
-export function convertToViews(linker: DeepLinker, pages: any[]): ViewController[] {
-  const views: ViewController[] = [];
+export function convertToViews(linker: DeepLinker, pages: any[]) {
+  const views: Promise<ViewController>[] = [];
   if (isArray(pages)) {
     for (var i = 0; i < pages.length; i++) {
       var page = pages[i];
@@ -50,7 +55,7 @@ export function convertToViews(linker: DeepLinker, pages: any[]): ViewController
       }
     }
   }
-  return views;
+  return Promise.all(views);
 }
 
 let portalZindex = 9999;
@@ -107,7 +112,9 @@ export interface DeepLinkMetadataType {
  * @private
  */
 export class DeepLinkMetadata implements DeepLinkMetadataType {
-  component: any;
+  component?: any;
+  viewFactoryFunction?: string;
+  loadChildren?: string;
   name: string;
   segment?: string;
   defaultHistory?: any[];
@@ -134,7 +141,8 @@ export interface DeepLinkConfig {
 
 // internal link interface, not exposed publicly
 export interface NavLink {
-  component: any;
+  component?: any;
+  loadChildren?: string;
   name?: string;
   segment?: string;
   parts?: string[];
@@ -148,7 +156,8 @@ export interface NavLink {
 export interface NavSegment {
   id: string;
   name: string;
-  component: any;
+  component?: any;
+  loadChildren?: string;
   data: any;
   navId?: string;
   defaultHistory?: NavSegment[];
