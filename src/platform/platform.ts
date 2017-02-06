@@ -799,11 +799,11 @@ export class Platform {
 
     // add the window resize event listener XXms after
     this.timeout(() => {
-      var timerId: number;
+      var timerId: any;
       this.registerListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
-        timerId = this._win.setTimeout(() => {
+        timerId = setTimeout(() => {
           // setting _isPortrait to null means the
           // dimensions will need to be looked up again
           if (this.hasFocusedTextInput() === false) {
