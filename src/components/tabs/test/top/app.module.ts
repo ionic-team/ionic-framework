@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 
 //
@@ -127,6 +128,7 @@ export class E2EApp {
     TabsPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp, {
       tabsPlacement: 'top'
     })

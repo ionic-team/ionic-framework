@@ -1,4 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { Events, IonicApp, IonicModule, Nav } from '../../ionic-angular';
 
 
@@ -78,6 +79,7 @@ export class ApiDemoApp {
     Logout
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(ApiDemoApp)
   ],
   bootstrap: [IonicApp],

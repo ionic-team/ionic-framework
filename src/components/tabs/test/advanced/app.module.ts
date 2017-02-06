@@ -1,4 +1,5 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { AlertController, DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../ionic-angular';
 
 
@@ -404,6 +405,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     Tab3Page1
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp, {tabsHideOnSubPages: true}, deepLinkConfig)
   ],
   bootstrap: [IonicApp],

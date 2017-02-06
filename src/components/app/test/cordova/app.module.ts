@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, NavController, ModalController, ViewController } from '../../../../../ionic-angular';
 import { Injectable } from '@angular/core';
 
@@ -155,6 +156,7 @@ export class E2EApp {
     MyModal
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp, {
       statusbarPadding: true
     })

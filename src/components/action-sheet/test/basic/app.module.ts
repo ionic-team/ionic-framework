@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, ActionSheetController, AlertController, ModalController, ViewController, Platform } from '../../../../../ionic-angular';
 
 @Component({
@@ -193,6 +194,7 @@ export class E2EApp {
     ModalPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

@@ -1,4 +1,5 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule, NavController, NavParams, Tabs, Tab, ModalController, ViewController } from '../../../../../ionic-angular';
 
 @Component({
@@ -835,6 +836,7 @@ export const deepLinkConfig: DeepLinkConfig = {
     TabItemPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp, {
       swipeBackEnabled: true
     }, deepLinkConfig)

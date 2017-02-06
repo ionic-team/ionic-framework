@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../../../ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -180,6 +181,7 @@ export class E2EApp {
     AnotherPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

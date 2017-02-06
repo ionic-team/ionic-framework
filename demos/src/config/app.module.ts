@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { Config, IonicApp, IonicModule, Platform, NavController } from '../../ionic-angular';
 
 if (!window.localStorage) {
@@ -159,6 +160,7 @@ export class ApiDemoApp {
     TabPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(ApiDemoApp, CONFIG_DEMO)
   ],
   bootstrap: [IonicApp],

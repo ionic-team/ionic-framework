@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../ionic-angular';
 
 
@@ -25,6 +26,7 @@ export class ApiDemoApp {
     ApiDemoPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(ApiDemoApp)
   ],
   bootstrap: [IonicApp],

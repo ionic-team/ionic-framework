@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, NavController } from '../../ionic-angular';
 
 
@@ -52,6 +53,7 @@ export class ApiDemoApp {
     PushPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(ApiDemoApp)
   ],
   bootstrap: [IonicApp],

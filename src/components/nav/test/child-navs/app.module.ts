@@ -1,4 +1,5 @@
 import { NgModule, Component } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, NavController } from '../../../../../ionic-angular';
 
 @Component({
@@ -127,6 +128,7 @@ export class FourthPage {
     FourthPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

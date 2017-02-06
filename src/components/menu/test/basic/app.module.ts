@@ -1,4 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { AlertController, IonicApp, IonicModule, MenuController, ModalController, NavController, Nav, ViewController } from '../../../../../ionic-angular';
 
 
@@ -128,6 +129,7 @@ export class E2EApp {
     Modal
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

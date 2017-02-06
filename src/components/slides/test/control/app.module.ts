@@ -1,4 +1,5 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, Slides } from '../../../../../ionic-angular';
 
 
@@ -24,6 +25,7 @@ export class E2EApp {
     MyPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

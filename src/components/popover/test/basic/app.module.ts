@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, ViewEncapsulation, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, PopoverController, NavParams, ViewController } from '../../../../../ionic-angular';
 
 
@@ -241,6 +242,7 @@ export class E2EApp {
     PopoverLongListPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

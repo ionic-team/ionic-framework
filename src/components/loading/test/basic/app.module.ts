@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../../../ionic-angular';
 
 
@@ -324,6 +325,7 @@ export class E2EApp {
     Page3
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],
