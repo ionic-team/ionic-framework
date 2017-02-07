@@ -28,7 +28,7 @@ export function buildIonicAngularEsm(stripDebug: boolean, done: Function) {
   stream.on('end', () => {
     // the source files are copied, copy over a tsconfig from
     createTempTsConfig(['./**/*.ts'], ES_2015, ES_2015, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_BUILD_ESM_ROOT}/tsconfig.json`);
-    runNgc(`${DIST_BUILD_ESM_ROOT}/ES5.json`, (err) => {
+    runNgc(`${DIST_BUILD_ESM_ROOT}/tsconfig.json`, (err) => {
       if (err) {
         done(err);
         return;
