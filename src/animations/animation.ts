@@ -351,6 +351,17 @@ export class Animation {
     });
   }
 
+  syncPlay() {
+    // If the animation was already invalidated (it did finish), do nothing
+    if (!this.plt) {
+      return;
+    }
+    this._isAsync = false;
+    this._hasDur = false;
+    this._clearAsync();
+    this._playDomInspect({ duration: 0 });
+  }
+
   /**
    * @private
    * DOM WRITE

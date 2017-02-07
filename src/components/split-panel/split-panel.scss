@@ -1,0 +1,69 @@
+
+@import "../../themes/ionic.globals";
+
+// Split Panel
+// --------------------------------------------------
+
+ion-split-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+
+  flex-wrap: nowrap;
+
+  contain: strict;
+}
+
+.split-panel-side:not(ion-menu) {
+  display: none;
+}
+
+.split-panel-visible >.split-panel-side,
+.split-panel-visible >.split-panel-main {
+  // scss-lint:disable ImportantRule
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  display: block;
+
+  flex: 1;
+
+  box-shadow: none !important;
+}
+
+.split-panel-visible >ion-split-panel.split-panel-side,
+.split-panel-visible >ion-split-panel.split-panel-main {
+  display: flex;
+}
+
+.split-panel-visible >.split-panel-side {
+  flex: 1;
+  flex-shrink: 0;
+
+  order: -1;
+}
+
+.split-panel-visible >ion-menu {
+  >.menu-inner {
+    // scss-lint:disable ImportantRule
+    right: 0;
+    left: 0;
+
+    width: auto;
+
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  >.ion-backdrop {
+    // scss-lint:disable ImportantRule
+    display: hidden !important;
+  }
+}
