@@ -5,7 +5,7 @@
  */
 import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
-import { DOCUMENT, BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { DOCUMENT, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
@@ -43,7 +43,6 @@ import { SystemJsNgModuleLoader } from './util/system-js-ng-module-loader';
 import { TapClick, setupTapClick } from './tap-click/tap-click';
 import { ToastController } from './components/toast/toast';
 import { registerModeConfigs } from './config/mode-registry';
-import { registerTransitions } from './transitions/transition-registry';
 import { TransitionController } from './transitions/transition-controller';
 import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 
@@ -580,7 +579,6 @@ export class IonicModule {
 
         // useFactory: ionic app initializers
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
-        { provide: APP_INITIALIZER, useFactory: registerTransitions, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
 

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { PopoverCmp } from './popover-component';
 import { PopoverOptions } from './popover-options';
+import { PopoverPopIn, PopoverPopOut, PopoverMdPopIn, PopoverMdPopOut } from './popover-transitions';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -150,7 +152,12 @@ export class Popover extends ViewController {
 @Injectable()
 export class PopoverController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, config: Config) {
+    config.setTransition('popover-pop-in', PopoverPopIn);
+    config.setTransition('popover-pop-out', PopoverPopOut);
+    config.setTransition('popover-md-pop-in', PopoverMdPopIn);
+    config.setTransition('popover-md-pop-out', PopoverMdPopOut);
+  }
 
   /**
    * Present a popover. See below for options

@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { AppPortal } from '../app/app-root';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
+import { LoadingPopIn, LoadingPopOut, LoadingMdPopIn, LoadingMdPopOut, LoadingWpPopIn, LoadingWpPopOut } from './loading-transitions';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -169,7 +171,14 @@ export class Loading extends ViewController {
 @Injectable()
 export class LoadingController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, config: Config) {
+    config.setTransition('loading-pop-in', LoadingPopIn);
+    config.setTransition('loading-pop-out', LoadingPopOut);
+    config.setTransition('loading-md-pop-in', LoadingMdPopIn);
+    config.setTransition('loading-md-pop-out', LoadingMdPopOut);
+    config.setTransition('loading-wp-pop-in', LoadingWpPopIn);
+    config.setTransition('loading-wp-pop-out', LoadingWpPopOut);
+  }
   /**
    * Create a loading indicator. See below for options.
    * @param {LoadingOptions} opts Loading options

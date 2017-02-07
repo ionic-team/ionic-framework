@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { AppPortal } from '../app/app-root';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
+import { ModalSlideIn, ModalSlideOut, ModalMDSlideIn, ModalMDSlideOut } from './modal-transitions';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -176,7 +178,12 @@ export class Modal extends ViewController {
 @Injectable()
 export class ModalController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, config: Config) {
+    config.setTransition('modal-slide-in', ModalSlideIn);
+    config.setTransition('modal-slide-out', ModalSlideOut);
+    config.setTransition('modal-md-slide-in', ModalMDSlideIn);
+    config.setTransition('modal-md-slide-out', ModalMDSlideOut);
+  }
   /**
    * Create a modal to display. See below for options.
    *

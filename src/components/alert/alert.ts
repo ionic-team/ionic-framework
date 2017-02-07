@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
+import { AlertPopIn, AlertPopOut, AlertMdPopIn, AlertMdPopOut, AlertWpPopIn, AlertWpPopOut } from './alert-transitions';
 import { AlertCmp } from './alert-component';
 import { AlertOptions, AlertInputOptions } from './alert-options';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -303,7 +305,14 @@ export class Alert extends ViewController {
 @Injectable()
 export class AlertController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, config: Config) {
+    config.setTransition('alert-pop-in', AlertPopIn);
+    config.setTransition('alert-pop-out', AlertPopOut);
+    config.setTransition('alert-md-pop-in', AlertMdPopIn);
+    config.setTransition('alert-md-pop-out', AlertMdPopOut);
+    config.setTransition('alert-wp-pop-in', AlertWpPopIn);
+    config.setTransition('alert-wp-pop-out', AlertWpPopOut);
+  }
   /**
    * Display an alert with a title, inputs, and buttons
    * @param {AlertOptions} opts Alert. See the table below

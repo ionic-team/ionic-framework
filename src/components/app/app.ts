@@ -6,10 +6,13 @@ import { ClickBlock } from '../../util/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { MenuController } from '../menu/menu-controller';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-import { MenuController } from '../menu/menu-controller';
+import { IOSTransition } from '../../transitions/transition-ios';
+import { MDTransition } from '../../transitions/transition-md';
+import { WPTransition } from '../../transitions/transition-wp';
 
 
 /**
@@ -93,6 +96,10 @@ export class App {
         };
       }
     });
+
+    _config.setTransition('ios-transition', IOSTransition);
+    _config.setTransition('md-transition', MDTransition);
+    _config.setTransition('wp-transition', WPTransition);
   }
 
   /**

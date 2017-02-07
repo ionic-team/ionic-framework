@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 
+import { ActionSheetSlideIn, ActionSheetMdSlideIn, ActionSheetSlideOut, ActionSheetMdSlideOut, ActionSheetWpSlideIn, ActionSheetWpSlideOut } from './action-sheet-transitions';
 import { ActionSheetCmp } from './action-sheet-component';
 import { ActionSheetOptions } from './action-sheet-options';
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
+
 
 /**
  * @private
@@ -217,7 +220,14 @@ export class ActionSheet extends ViewController {
 @Injectable()
 export class ActionSheetController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, config: Config) {
+    config.setTransition('action-sheet-slide-in', ActionSheetSlideIn);
+    config.setTransition('action-sheet-slide-out', ActionSheetSlideOut);
+    config.setTransition('action-sheet-md-slide-in', ActionSheetMdSlideIn);
+    config.setTransition('action-sheet-md-slide-out', ActionSheetMdSlideOut);
+    config.setTransition('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
+    config.setTransition('action-sheet-wp-slide-out', ActionSheetWpSlideOut);
+  }
 
   /**
    * Open an action sheet with a title, subTitle, and an array of buttons

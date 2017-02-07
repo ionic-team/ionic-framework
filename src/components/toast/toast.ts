@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { AppPortal } from '../app/app-root';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ToastOptions } from './toast-options';
 import { ToastCmp } from './toast-component';
+import { ToastSlideIn, ToastSlideOut, ToastMdSlideIn, ToastMdSlideOut, ToastWpPopOut, ToastWpPopIn } from './toast-transitions';
 import { ViewController } from '../../navigation/view-controller';
+
 
 /**
  * @private
@@ -136,7 +139,14 @@ export class Toast extends ViewController {
 @Injectable()
 export class ToastController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, config: Config) {
+    config.setTransition('toast-slide-in', ToastSlideIn);
+    config.setTransition('toast-slide-out', ToastSlideOut);
+    config.setTransition('toast-md-slide-in', ToastMdSlideIn);
+    config.setTransition('toast-md-slide-out', ToastMdSlideOut);
+    config.setTransition('toast-wp-slide-out', ToastWpPopOut);
+    config.setTransition('toast-wp-slide-in', ToastWpPopIn);
+  }
 
   /**
    * Create a new toast component. See options below

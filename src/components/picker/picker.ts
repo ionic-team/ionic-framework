@@ -1,11 +1,14 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { PickerCmp } from './picker-component';
 import { PickerOptions, PickerColumn } from './picker-options';
+import { PickerSlideIn, PickerSlideOut } from './picker-transitions';
 import { ViewController } from '../../navigation/view-controller';
+
 
 /**
  * @private
@@ -87,7 +90,10 @@ export class Picker extends ViewController {
 @Injectable()
 export class PickerController {
 
-  constructor(private _app: App) {}
+  constructor(private _app: App, config: Config) {
+    config.setTransition('picker-slide-in', PickerSlideIn);
+    config.setTransition('picker-slide-out', PickerSlideOut);
+  }
 
   /**
    * Open a picker.
