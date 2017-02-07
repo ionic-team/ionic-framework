@@ -5,8 +5,10 @@ import { Config } from '../../config/config';
 import { DomController } from '../../platform/dom-controller';
 import { Img } from '../img/img';
 import { Ion } from '../ion';
+import { isTabs } from '../../navigation/nav-util';
 import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
+import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ScrollView, ScrollEvent } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
@@ -139,6 +141,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   _hdrHeight: number;
   /** @internal */
   _ftrHeight: number;
+  /** @internal */
+  _tabs: Tabs;
   /** @internal */
   _tabbarHeight: number;
   /** @internal */
@@ -324,7 +328,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
     public _keyboard: Keyboard,
     public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
-    @Optional() public _tabs: Tabs
+    @Optional() navCtrl: NavController
   ) {
     super(config, elementRef, renderer, 'content');
 
@@ -333,6 +337,14 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
     this._imgVelMax = config.getNumber('imgVelocityMax', 3);
     this._scroll = new ScrollView(_plt, _dom);
+
+    while (navCtrl) {
+      if (isTabs(<any>navCtrl)) {
+        this._tabs = <any>navCtrl;
+        break;
+      }
+      navCtrl = navCtrl.parent;
+    }
 
     if (viewCtrl) {
       // content has a view controller
