@@ -385,7 +385,7 @@ export class Tab extends NavControllerBase {
   /**
    * @private
    */
-  destroy() {
+  ngOnDestroy() {
     this.destroy();
   }
 

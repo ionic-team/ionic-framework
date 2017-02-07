@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -8,6 +8,7 @@ import { isBlank, assert } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { RootNode } from '../../navigation/root-node';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabHighlight } from './tab-highlight';
@@ -161,8 +162,9 @@ import { ViewController } from '../../navigation/view-controller';
     '<ng-content></ng-content>' +
     '<div #portal tab-portal></div>',
   encapsulation: ViewEncapsulation.None,
+  providers: [{provide: RootNode, useExisting: forwardRef(() => Tabs) }]
 })
-export class Tabs extends Ion implements AfterViewInit {
+export class Tabs extends Ion implements AfterViewInit, RootNode {
   /** @internal */
   _ids: number = -1;
   /** @internal */
@@ -555,6 +557,13 @@ export class Tabs extends Ion implements AfterViewInit {
     }
   }
 
+  _setIsPanel(isPanel: boolean): void {
+    // Conforms to RootNode abstract class
+  }
+
+  _isSideContent(): boolean {
+    return !this._elementRef.nativeElement.hasAttribute('main');
+  }
 }
 
 let tabIds = -1;

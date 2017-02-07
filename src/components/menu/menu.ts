@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -13,6 +13,7 @@ import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
+import { RootNode } from '../../navigation/root-node';
 
 /**
  * @name Menu
@@ -188,8 +189,9 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
-export class Menu {
+export class Menu implements RootNode {
 
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;
@@ -201,6 +203,7 @@ export class Menu {
   private _init: boolean = false;
   private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
+  private _isPanel: boolean = false;
 
   /**
    * @private
@@ -248,8 +251,8 @@ export class Menu {
   }
 
   set enabled(val: boolean) {
-    this._isEnabled = isTrueProperty(val);
-    this._setListeners();
+    const isEnabled = isTrueProperty(val);
+    this.enable(isEnabled);
   }
 
   /**
@@ -261,8 +264,8 @@ export class Menu {
   }
 
   set swipeEnabled(val: boolean) {
-    this._isSwipeEnabled = isTrueProperty(val);
-    this._setListeners();
+    const isEnabled = isTrueProperty(val);
+    this.swipeEnable(isEnabled);
   }
 
   /**
@@ -353,13 +356,12 @@ export class Menu {
       // auto-disable if another menu on the same side is already enabled
       this._isEnabled = false;
     }
-    this._setListeners();
-
     this._cntEle.classList.add('menu-content');
     this._cntEle.classList.add('menu-content-' + this.type);
 
     // register this menu with the app's menu controller
     this._menuCtrl._register(this);
+    this._updateState();
   }
 
   /**
@@ -369,27 +371,6 @@ export class Menu {
     ev.preventDefault();
     ev.stopPropagation();
     this._menuCtrl.close();
-  }
-
-  /**
-   * @private
-   */
-  private _setListeners() {
-    if (!this._init) {
-      return;
-    }
-    const gesture = this._gesture;
-    // only listen/unlisten if the menu has initialized
-    if (this._isEnabled && this._isSwipeEnabled && !gesture.isListening) {
-      // should listen, but is not currently listening
-      console.debug('menu, gesture listen', this.side);
-      gesture.listen();
-
-    } else if (gesture.isListening && (!this._isEnabled || !this._isSwipeEnabled)) {
-      // should not listen, but is currently listening
-      console.debug('menu, gesture unlisten', this.side);
-      gesture.unlisten();
-    }
   }
 
   /**
@@ -411,7 +392,7 @@ export class Menu {
    */
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
     // If the menu is disabled or it is currenly being animated, let's do nothing
-    if ((shouldOpen === this.isOpen) || !this._isEnabled || this._isAnimating) {
+    if ((shouldOpen === this.isOpen) || !this._canOpen() || this._isAnimating) {
       return Promise.resolve(this.isOpen);
     }
 
@@ -425,13 +406,24 @@ export class Menu {
     });
   }
 
+  _forceClosing() {
+    if (!this.isOpen) {
+      return;
+    }
+
+    this._isAnimating = true;
+    this._getType().setOpen(false, false, () => {
+      this._after(false);
+    });
+  }
+
   /**
    * @private
    */
   canSwipe(): boolean {
-    return this._isEnabled &&
-      this._isSwipeEnabled &&
+    return this._isSwipeEnabled &&
       !this._isAnimating &&
+      this._canOpen() &&
       this._app.isEnabled();
   }
 
@@ -441,6 +433,7 @@ export class Menu {
   isAnimating(): boolean {
     return this._isAnimating;
   }
+
 
   _swipeBeforeStart() {
     if (!this.canSwipe()) {
@@ -561,38 +554,77 @@ export class Menu {
     return this.setOpen(!this.isOpen);
   }
 
+  _canOpen(): boolean {
+    return this._isEnabled && !this._isPanel;
+  }
+
+  _isSideContent(): boolean {
+    return true;
+  }
+
+  /**
+   * @private
+   */
+  _updateState() {
+    const canOpen = this._canOpen();
+
+    // Close menu inmediately
+    if (!canOpen && this.isOpen) {
+      // close if this menu is open, and should not be enabled
+      this._forceClosing();
+    }
+
+    if (this._isEnabled && this._menuCtrl) {
+      this._menuCtrl._setActiveMenu(this);
+    }
+
+    if (!this._init) {
+      return;
+    }
+    const gesture = this._gesture;
+    // only listen/unlisten if the menu has initialized
+    if (canOpen && this._isSwipeEnabled && !gesture.isListening) {
+      // should listen, but is not currently listening
+      console.debug('menu, gesture listen', this.side);
+      gesture.listen();
+
+    } else if (gesture.isListening && (!canOpen || !this._isSwipeEnabled)) {
+      // should not listen, but is currently listening
+      console.debug('menu, gesture unlisten', this.side);
+      gesture.unlisten();
+    }
+
+    assert(!this._isAnimating, 'can not be animating');
+  }
+
   /**
    * @private
    */
   enable(shouldEnable: boolean): Menu {
-    this.enabled = shouldEnable;
-    if (!shouldEnable && this.isOpen) {
-      // close if this menu is open, and should not be enabled
-      this.close();
-    }
-
-    if (shouldEnable) {
-      // if this menu should be enabled
-      // then find all the other menus on this same side
-      // and automatically disable other same side menus
-      this._menuCtrl.getMenus()
-        .filter(m => m.side === this.side && m !== this)
-        .map(m => m.enabled = false);
-    }
-
-    // TODO
-    // what happens if menu is disabled while swipping?
-
+    this._isEnabled = shouldEnable;
+    this._updateState();
     return this;
   }
 
   /**
    * @private
    */
+  _setIsPanel(isPanel: boolean) {
+    this._isPanel = isPanel;
+    this._updateState();
+
+    // Trigger resize() if menu becomes a split panel
+    if (isPanel && this.menuContent) {
+      this.menuContent.resize();
+    }
+  }
+
+  /**
+   * @private
+   */
   swipeEnable(shouldEnable: boolean): Menu {
-    this.swipeEnabled = shouldEnable;
-    // TODO
-    // what happens if menu swipe is disabled while swipping?
+    this._isSwipeEnabled = shouldEnable;
+    this._updateState();
     return this;
   }
 
@@ -650,6 +682,13 @@ export class Menu {
    */
   setElementAttribute(attributeName: string, value: string) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, value);
+  }
+
+  /**
+   * @private
+   */
+  getElementRef(): ElementRef {
+    return this._elementRef;
   }
 
   /**

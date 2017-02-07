@@ -24,14 +24,14 @@ export class MenuType {
   }
 
   setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
-    let ani = this.ani
+    const ani = this.ani
       .onFinish(done, true)
       .reverse(!shouldOpen);
 
     if (animated) {
       ani.play();
     } else {
-      ani.play({ duration: 0 });
+      ani.syncPlay();
     }
   }
 

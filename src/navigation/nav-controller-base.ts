@@ -789,7 +789,7 @@ export class NavControllerBase extends Ion implements NavController {
   _cleanup(activeView: ViewController) {
     // ok, cleanup time!! Destroy all of the views that are
     // INACTIVE and come after the active view
-    const activeViewIndex = this.indexOf(activeView);
+    const activeViewIndex = this._views.indexOf(activeView);
     const views = this._views;
     let reorderZIndexes = false;
     let view: ViewController;
@@ -1008,7 +1008,8 @@ export class NavControllerBase extends Ion implements NavController {
     if (!view) {
       view = this.getActive();
     }
-    return this._views[this.indexOf(view) - 1];
+    const views = this._views;
+    return views[views.indexOf(view) - 1];
   }
 
   first(): ViewController {
@@ -1051,6 +1052,15 @@ export class NavControllerBase extends Ion implements NavController {
 
   setViewport(val: ViewContainerRef) {
     this._viewport = val;
+  }
+
+  resize() {
+    const active = this.getActive();
+    if (!active) {
+      return;
+    }
+    const content = active.getIONContent();
+    content && content.resize();
   }
 
 }
