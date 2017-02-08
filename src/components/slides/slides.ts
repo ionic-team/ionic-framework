@@ -353,7 +353,7 @@ export class Slides extends Ion {
     return this._slidesPerView;
   }
   set slidesPerView(val: any) {
-    this._slidesPerView = val === 'auto' ? 'auto' : parseInt(val, 10);
+    this._slidesPerView = val === 'auto' ? 'auto' : parseFloat(val);
   }
   private _slidesPerView: number|string = 1;
 
