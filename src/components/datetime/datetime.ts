@@ -2,7 +2,8 @@ import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, Host
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Picker, PickerController } from '../picker/picker';
+import { Picker } from '../picker/picker';
+import { PickerController } from '../picker/picker-controller';
 import { PickerColumn, PickerColumnOption } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
