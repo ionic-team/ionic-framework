@@ -59,16 +59,16 @@ export class MyCmpTest {
         <button ion-item (click)="pushRedirect()">Push to Redirect</button>
         <button ion-item (click)="pushTabsPage()">Push to Tabs Page</button>
         <button ion-item (click)="pushAnother()">Push to AnotherPage</button>
+        <button ion-item navPush="full-page">Push FullPage w/ navPush="full-page"</button>
+        <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
+        <button ion-item navPush="first-page">Push w/ navPush="first-page"</button>
+        <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
+        <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
+        <button ion-item (click)="pop()">Pop</button>
         <ion-item>
           <ion-label>Text Input</ion-label>
           <ion-textarea></ion-textarea>
         </ion-item>
-        <button ion-item [navPush]="pushPage">Push FullPage w/ [navPush]="pushPage"</button>
-        <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
-        <button ion-item [navPush]="firstPage">Push w/ [navPush] and firstPage</button>
-        <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
-        <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
-        <button ion-item (click)="pop()">Pop</button>
         <ion-item>
           <ion-label>Toggle Can Leave</ion-label>
           <ion-toggle (click)="canLeave = !canLeave"></ion-toggle>
@@ -811,7 +811,9 @@ export const deepLinkConfig: DeepLinkConfig = {
     { component: FirstPage, name: 'first-page' },
     { component: AnotherPage, name: 'another-page' },
     { component: MyCmpTest, name: 'tab1-page1' },
-    { component: FullPage, name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
+
+    { loadChildren: './pages/full-page/full-page.module', name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
+
     { component: PrimaryHeaderPage, name: 'primary-header-page', defaultHistory: ['first-page', 'full-page'] },
     { component: Tabs, name: 'tabs' },
     { component: Tab1, name: 'tab1' },
