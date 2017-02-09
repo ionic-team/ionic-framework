@@ -495,9 +495,11 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
-    this._dom.write(() => {
-      (<any>this._scrollEle.style)[prop] = val;
-    });
+    if (this._scrollEle) {
+      this._dom.write(() => {
+        (<any>this._scrollEle.style)[prop] = val;
+      });
+    }
   }
 
   /**
