@@ -36,7 +36,7 @@ export class Page1 {
   }
 
   navigate() {
-    this.nav.push(Page2);
+    this.nav.setRoot(Page2);
   }
 
 }
@@ -93,13 +93,7 @@ const data = [
   templateUrl: 'page2.html'
 })
 export class Page2 {
-  constructor(public nav: NavController) {}
-
-  ionViewDidEnter() {
-    setTimeout(() => {
-      this.nav.pop();
-    }, 3300);
-  }
+  constructor() {}
 }
 
 @Component({
