@@ -497,7 +497,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
   setScrollElementStyle(prop: string, val: any) {
     if (this._scrollEle) {
       this._dom.write(() => {
-        (<any>this._scrollEle.style)[prop] = val;
+        // double check here as the scroll element
+        // could have been destroyed in the 16ms it took
+        // for this dom write to happen
+        if (this._scrollEle) {
+          (<any>this._scrollEle.style)[prop] = val;
+        }
       });
     }
   }
