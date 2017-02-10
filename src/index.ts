@@ -252,7 +252,7 @@ export { Toast } from './components/toast/toast';
 export { ToastController } from './components/toast/toast-controller';
 export { ToastOptions } from './components/toast/toast-options';
 export { Toggle } from './components/toggle/toggle';
-export { ToolbarBase } from './components/toolbar/toolbar';
+export { ToolbarBase } from './components/toolbar/toolbar-base';
 export { Toolbar } from './components/toolbar/toolbar';
 export { Header } from './components/toolbar/toolbar-header';
 export { Footer } from './components/toolbar/toolbar-footer';

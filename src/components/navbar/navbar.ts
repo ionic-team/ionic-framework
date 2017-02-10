@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isTrueProperty } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
-import { ToolbarBase } from '../toolbar/toolbar';
+import { ToolbarBase } from '../toolbar/toolbar-base';
 import { ViewController } from '../../navigation/view-controller';
 
 
