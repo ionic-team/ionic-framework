@@ -111,7 +111,7 @@ import { Navbar } from './components/navbar/navbar';
 import { Note } from './components/note/note';
 import { Option } from './components/option/option';
 import { OverlayPortal } from './components/nav/overlay-portal';
-import { PickerColumnCmp } from './components/picker/picker-component';
+import { PickerColumnCmp } from './components/picker/picker-column';
 import { RadioButton } from './components/radio/radio-button';
 import { RadioGroup } from './components/radio/radio-group';
 import { Range } from './components/range/range';
@@ -281,7 +281,8 @@ export { ActionSheetCmp } from './components/action-sheet/action-sheet-component
 export { AlertCmp } from './components/alert/alert-component';
 export { LoadingCmp } from './components/loading/loading-component';
 export { ModalCmp } from './components/modal/modal-component';
-export { PickerCmp, PickerColumnCmp } from './components/picker/picker-component';
+export { PickerCmp } from './components/picker/picker-component';
+export { PickerColumnCmp } from './components/picker/picker-column';
 export { PopoverCmp } from './components/popover/popover-component';
 export { ToastCmp } from './components/toast/toast-component';
 
