@@ -121,7 +121,7 @@ $alert-ios-list-border-top:                     $alert-ios-button-border-width $
 $alert-ios-radio-label-padding:                 13px !default;
 
 /// @prop - Text color of the label for the radio alert
-$alert-ios-radio-label-text-color:              null !default;
+$alert-ios-radio-label-text-color:              initial !default;
 
 /// @prop - Text color of the label for the checked radio alert
 $alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color !default;
@@ -157,7 +157,7 @@ $alert-ios-radio-icon-transform:                rotate(45deg) !default;
 $alert-ios-checkbox-label-padding:              13px !default;
 
 /// @prop - Text color of the label for the checkbox in the alert
-$alert-ios-checkbox-label-text-color:           null !default;
+$alert-ios-checkbox-label-text-color:           initial !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-ios-checkbox-label-text-color-checked:   initial !default;

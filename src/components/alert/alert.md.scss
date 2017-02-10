@@ -125,7 +125,7 @@ $alert-md-list-border-bottom:                 $alert-md-list-border-top !default
 $alert-md-radio-label-padding:                13px 26px !default;
 
 /// @prop - Text color of the label for the radio alert
-$alert-md-radio-label-text-color:             null !default;
+$alert-md-radio-label-text-color:             initial !default;
 
 /// @prop - Text color of the label for the checked radio alert
 $alert-md-radio-label-text-color-checked:     $alert-md-button-text-color !default;
@@ -185,7 +185,7 @@ $alert-md-radio-icon-transition:              transform 280ms cubic-bezier(.4, 0
 $alert-md-checkbox-label-padding:             13px 26px !default;
 
 /// @prop - Text color of the label for the checkbox in the alert
-$alert-md-checkbox-label-text-color:          null !default;
+$alert-md-checkbox-label-text-color:          initial !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-md-checkbox-label-text-color-checked:  initial !default;
