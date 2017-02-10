@@ -124,6 +124,9 @@ $alert-md-list-border-bottom:                 $alert-md-list-border-top !default
 /// @prop - Padding on the label for the radio alert
 $alert-md-radio-label-padding:                13px 26px !default;
 
+/// @prop - Text color of the label for the radio alert
+$alert-md-radio-label-text-color:             initial !default;
+
 /// @prop - Text color of the label for the checked radio alert
 $alert-md-radio-label-text-color-checked:     $alert-md-button-text-color !default;
 
@@ -181,7 +184,10 @@ $alert-md-radio-icon-transition:              transform 280ms cubic-bezier(.4, 0
 /// @prop - Padding of the label for the checkbox in the alert
 $alert-md-checkbox-label-padding:             13px 26px !default;
 
-/// @prop - Text color of the label for the checked checkbox in the  alert
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-md-checkbox-label-text-color:          initial !default;
+
+/// @prop - Text color of the label for the checked checkbox in the alert
 $alert-md-checkbox-label-text-color-checked:  initial !default;
 
 
@@ -339,6 +345,8 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-md-radio-label-text-color;
 }
 
 // Material Design Alert Radio Unchecked Circle
@@ -405,6 +413,8 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-md-checkbox-label-text-color;
 }
 
 .alert-md [aria-checked=true] .alert-checkbox-label {
