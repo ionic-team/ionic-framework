@@ -321,7 +321,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  color: $alert-ios-radio-label-text;
+  color: $alert-ios-radio-label-text-color;
 }
 
 
@@ -378,7 +378,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  color: $alert-ios-checkbox-label-text;
+  color: $alert-ios-checkbox-label-text-color;
 }
 
 .alert-ios [aria-checked=true] .alert-checkbox-label {
