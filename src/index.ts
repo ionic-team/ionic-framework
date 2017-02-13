@@ -362,7 +362,6 @@ export { Transition } from './transitions/transition';
 
   ],
   exports: [
-
     Avatar,
     Backdrop,
     Badge,
@@ -628,13 +627,7 @@ export class IonicModule {
 
 @NgModule({
   imports: [IonicModule],
-  exports: [
-    IonicModule
-  ],
-  declarations: [
-    // Badge
-  ],
-  entryComponents: []
+  exports: [IonicModule]
 })
 export class LazyModule {
 
