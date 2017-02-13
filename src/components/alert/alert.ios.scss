@@ -120,6 +120,9 @@ $alert-ios-list-border-top:                     $alert-ios-button-border-width $
 /// @prop - Padding on the label for the radio alert
 $alert-ios-radio-label-padding:                 13px !default;
 
+/// @prop - Text color of the label for the radio alert
+$alert-ios-radio-label-text-color:              initial !default;
+
 /// @prop - Text color of the label for the checked radio alert
 $alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color !default;
 
@@ -152,6 +155,9 @@ $alert-ios-radio-icon-transform:                rotate(45deg) !default;
 
 /// @prop - Padding of the label for the checkbox in the alert
 $alert-ios-checkbox-label-padding:              13px !default;
+
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-ios-checkbox-label-text-color:           initial !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-ios-checkbox-label-text-color-checked:   initial !default;
@@ -314,6 +320,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-ios-radio-label-text-color;
 }
 
 
@@ -369,6 +377,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-ios-checkbox-label-text-color;
 }
 
 .alert-ios [aria-checked=true] .alert-checkbox-label {
