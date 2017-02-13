@@ -22,6 +22,22 @@ ion-datetime {
   white-space: nowrap;
 }
 
+.datetime-placeholder {
+  @include placeholder();
+  @include appearance(none);
+
+  display: inline-block;
+
+  flex: 1;
+
+  width: 92%;
+  width: calc(100% - 10px);
+
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
 .datetime-disabled,
 .item-datetime-disabled ion-label {
   opacity: .4;
