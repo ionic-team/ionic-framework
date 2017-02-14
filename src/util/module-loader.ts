@@ -16,6 +16,8 @@ export class ModuleLoader {
 
 
   loadModule(moduleUrl: string): Promise<LoadedModule> {
+    console.time(`ModuleLoader, load: ${moduleUrl}'`);
+
     const splitString = moduleUrl.split(SPLITTER);
 
     return this._systemJsNgModuleLoader.load({
@@ -23,6 +25,7 @@ export class ModuleLoader {
       ngModuleExport: splitString[1]
     })
     .then((loadedModule: SystemJsLoadedModule) => {
+      console.timeEnd(`ModuleLoader, load: ${moduleUrl}'`);
       const ref = loadedModule.ngModuleFactory.create(this._injector);
 
       return {
