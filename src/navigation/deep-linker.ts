@@ -274,7 +274,7 @@ export class DeepLinker {
     }
 
     // umm, idk
-    return Promise.reject('invalid nav link');
+    return Promise.reject(`invalid link: ${componentName}`);
   }
 
 
@@ -284,7 +284,6 @@ export class DeepLinker {
       return Promise.resolve(link.component);
     }
 
-    // ok, so no component yet, but at least we know this link exists
     if (link.loadChildren) {
       // awesome, looks like we'll lazy load this component
       // using loadChildren as the URL to request
@@ -297,7 +296,7 @@ export class DeepLinker {
       });
     }
 
-    return Promise.reject('invalid nav link component');
+    return Promise.reject(`invalid link component: ${link.name}`);
   }
 
 
