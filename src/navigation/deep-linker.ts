@@ -2,7 +2,7 @@ import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, DeepLinkConfig, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { convertToViews, DeepLinkConfig, isNav, isTab, isTabs, NavLink, NavSegment, DIRECTION_BACK } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
@@ -265,41 +265,46 @@ export class DeepLinker {
     }
   }
 
-  /**
-   * @internal
-   */
+
   getComponentFromName(componentName: string): Promise<any> {
     const link = this._serializer.getLinkFromName(componentName);
     if (link) {
-      // cool, we found the right segment for this component name
-
-      if (link.component) {
-        // sweet, we're already got a component loaded for this segment
-        return Promise.resolve(link.component);
-      }
-
-      // ok, so no component yet, but at least we know this segment exists
-      if (link.loadChildren) {
-        // awesome, looks like we'll lazy load this component
-        // using loadChildren as the URL to request
-        return this._moduleLoader.loadModule(link.loadChildren).then(loadedModule => {
-          // kerpow!! we just lazy loaded a component!!
-          // update the existing segment with the loaded component
-          link.component = loadedModule.component;
-          this._cfrMap.set(link.component, loadedModule.componentFactoryResolver);
-          return link.component;
-        });
-      }
+      // cool, we found the right link for this component name
+      return this.getNavLinkComponent(link);
     }
 
     // umm, idk
-    return Promise.resolve(null);
+    return Promise.reject('invalid nav link');
   }
+
+
+  getNavLinkComponent(link: NavLink) {
+    if (link.component) {
+      // sweet, we're already got a component loaded for this link
+      return Promise.resolve(link.component);
+    }
+
+    // ok, so no component yet, but at least we know this link exists
+    if (link.loadChildren) {
+      // awesome, looks like we'll lazy load this component
+      // using loadChildren as the URL to request
+      return this._moduleLoader.loadModule(link.loadChildren).then(loadedModule => {
+        // kerpow!! we just lazy loaded a component!!
+        // update the existing link with the loaded component
+        link.component = loadedModule.component;
+        this._cfrMap.set(link.component, loadedModule.componentFactoryResolver);
+        return link.component;
+      });
+    }
+
+    return Promise.reject('invalid nav link component');
+  }
+
 
   /**
    * @internal
    */
-  resolveComponentFactory(component: any): ComponentFactory<any> {
+  resolveComponent(component: any): ComponentFactory<any> {
     let cfr = this._cfrMap.get(component);
     if (!cfr) {
       cfr = this._baseCfr;

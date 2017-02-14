@@ -15,8 +15,8 @@ export class ModuleLoader {
     private _injector: Injector) {}
 
 
-  loadModule(loadChildren: string): Promise<LoadedModule> {
-    const splitString = loadChildren.split(SPLITTER);
+  loadModule(moduleUrl: string): Promise<LoadedModule> {
+    const splitString = moduleUrl.split(SPLITTER);
 
     return this._systemJsNgModuleLoader.load({
       modulePath: splitString[0],
