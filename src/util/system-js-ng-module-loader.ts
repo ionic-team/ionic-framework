@@ -37,72 +37,40 @@ export class SystemJsNgModuleLoader {
     this._config = config || DEFAULT_CONFIG;
   }
 
-  load(toLoad: DataToLoad): Promise<SystemJsLoadedModule> {
+  load(modulePath: string, ngModuleExport: string) {
     const offlineMode = this._compiler instanceof Compiler;
-    return offlineMode ? this.loadFactory(toLoad) : this.loadAndCompile(toLoad);
+    return offlineMode ? this._loadFactory(modulePath, ngModuleExport) : this._loadAndCompile(modulePath, ngModuleExport);
   }
 
-  private loadAndCompile(toLoad: DataToLoad) {
-    if (!toLoad.ngModuleExport) {
-      toLoad.ngModuleExport = 'default';
+  private _loadAndCompile(modulePath: string, ngModuleExport: string): Promise<NgModuleFactory<any>> {
+    if (!ngModuleExport) {
+      ngModuleExport = 'default';
     }
 
-    let _module: any;
-    return System.import(toLoad.modulePath)
-      .then((module: any) => {
-        _module = module;
-        return module[toLoad.ngModuleExport];
-      }).then((type: any) => {
-        if (!type) {
-          throw new Error(`Module ${toLoad.modulePath} does not export ${toLoad.ngModuleExport}`);
+    return System.import(modulePath)
+      .then((rawModule: any) => {
+        const module = rawModule[ngModuleExport];
+        if (!module) {
+          throw new Error(`Module ${modulePath} does not export ${ngModuleExport}`);
         }
-        return type;
-      }).then((type: any) => {
-        return this._compiler.compileModuleAsync(type);
-      }).then((ngModuleFactory: NgModuleFactory<any>) => {
-
-        return {
-          ngModuleFactory: ngModuleFactory,
-          rawModule: _module
-        };
+        return this._compiler.compileModuleAsync(module);
       });
   }
 
-  private loadFactory(toLoad: DataToLoad) {
+  private _loadFactory(modulePath: string, ngModuleExport: string): Promise<NgModuleFactory<any>> {
     let factoryClassSuffix = FACTORY_CLASS_SUFFIX;
-    if (toLoad.ngModuleExport === undefined) {
-      toLoad.ngModuleExport = 'default';
+    if (ngModuleExport === undefined) {
+      ngModuleExport = 'default';
       factoryClassSuffix = '';
     }
 
-    let _module: any = null;
-    return System.import(this._config.factoryPathPrefix + toLoad.modulePath + this._config.factoryPathSuffix)
-      .then((module: any) => {
-        _module = module;
-        return module[toLoad.ngModuleExport + factoryClassSuffix];
-      })
-      .then((ngModuleFactory: NgModuleFactory<any>) => {
+    return System.import(this._config.factoryPathPrefix + modulePath + this._config.factoryPathSuffix)
+      .then((rawModule: any) => {
+        const ngModuleFactory = rawModule[ngModuleExport + factoryClassSuffix];
         if (!ngModuleFactory) {
-          throw new Error(`Module ${toLoad.modulePath} does not export ${toLoad.ngModuleExport}`);
+          throw new Error(`Module ${modulePath} does not export ${ngModuleExport}`);
         }
         return ngModuleFactory;
-      }).then((ngModuleFactory: NgModuleFactory<any>) => {
-
-        return {
-          ngModuleFactory: ngModuleFactory,
-          rawModule: _module
-        };
-
       });
   }
-}
-
-export interface DataToLoad {
-  modulePath: string;
-  ngModuleExport: string;
-}
-
-export interface SystemJsLoadedModule {
-  rawModule: any;
-  ngModuleFactory: NgModuleFactory<any>;
 }
