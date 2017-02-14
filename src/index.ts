@@ -576,6 +576,7 @@ export class IonicModule {
         { provide: AppRootToken, useValue: appRoot },
         { provide: ConfigToken, useValue: config },
         { provide: DeepLinkConfigToken, useValue: deepLinkConfig },
+        { provide: APP_BASE_HREF, useValue: '/'},
 
         // useFactory: user values
         { provide: PlatformConfigToken, useFactory: providePlatformConfigs },
@@ -617,7 +618,7 @@ export class IonicModule {
         TransitionController,
 
         { provide: ModuleLoader, useFactory: provideModuleLoader, deps: [DeepLinkConfigToken, SystemJsNgModuleLoader, Injector]},
-        { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [ new Inject(APP_BASE_HREF), new Optional()], Config ] },
+        { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [new Inject(APP_BASE_HREF), new Optional()], Config ] },
         { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
         { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location,  DeepLinkConfigToken, ModuleLoader, ComponentFactoryResolver ] },
       ]

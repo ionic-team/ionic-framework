@@ -11,11 +11,15 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "types": ["jasmine", "systemjs"]
+    "types": ["jasmine", "systemjs"],
+    "baseUrl": ".",
+    "paths": {
+      "ionic-angular": ["src"]
+    }
   },
   "include": [
-    "./src/**/*.ts",
-    "./demos/src/**/*.ts"
+    "src/**/*.ts",
+    "demos/src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from '../../../../../../';
-import { FullPage } from './full-page';
+import { IonicModule } from 'ionic-angular';
+import { FullPage } from 'full-page';
 
 
 @NgModule({
-  declarations: [
-    FullPage
-  ],
   imports: [
     IonicModule.forChild(FullPage)
   ],
-  // bootstrap: [IonicApp],
+  declarations: [
+    FullPage
+  ],
   entryComponents: [
     FullPage,
   ]
 })
-export class LinkModule {}
+export default class LinkModule {}
