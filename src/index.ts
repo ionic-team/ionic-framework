@@ -301,7 +301,6 @@ export {
   GESTURE_ITEM_SWIPE,
   GESTURE_REFRESHER,
   GESTURE_TOGGLE,
-  GesturePriority,
   GestureOptions,
   GestureController,
   GestureDelegate,
