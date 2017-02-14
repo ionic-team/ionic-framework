@@ -8,6 +8,7 @@
 // available width, and the height of each .col with take
 // up the height of the tallest .col in the same .row.
 
+// TODO: Deprecated 2017/02/14: convert to new grid system
 
 $grid-padding-width:              10px !default;
 $grid-responsive-sm-break:        567px !default;  // smaller than landscape phone
@@ -50,71 +51,11 @@ ion-grid {
 
   flex-direction: column;
 
-  padding: ($grid-padding-width / 2);
-
   width: 100%;
-}
-
-ion-row {
-  display: flex;
-
-  width: 100%;
-
-  &[wrap] {
-    flex-wrap: wrap;
-  }
-
-  &[top] {
-    align-items: flex-start;
-  }
-
-  &[bottom] {
-    align-items: flex-end;
-  }
-
-  &[center] {
-    align-items: center;
-  }
-
-  &[stretch] {
-    align-items: stretch;
-  }
-
-  &[baseline] {
-    align-items: baseline;
-  }
 }
 
 ion-col {
-  display: block;
-
-  flex: 1;
-
   padding: ($grid-padding-width / 2);
-
-  width: 100%;
-
-  // Column Alignment
-
-  &[top] {
-    align-self: flex-start;
-  }
-
-  &[bottom] {
-    align-self: flex-end;
-  }
-
-  &[center] {
-    align-self: center;
-  }
-
-  &[stretch] {
-    align-self: stretch;
-  }
-
-  &[baseline] {
-    align-self: baseline;
-  }
 
   // Column Offsets
 
@@ -217,7 +158,6 @@ ion-col {
     max-width: 90%;
   }
 }
-
 
 // Responsive Grid Classes
 // Adding a class of responsive-X to a row
