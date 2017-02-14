@@ -7,85 +7,128 @@ describe('NavUtil', () => {
 
   describe('convertToViews', () => {
 
-    it('should convert all page components', () => {
+    it('should convert all page components', (done) => {
       let linker = mockDeepLinker();
       let pages = [{ page: MockView }, { page: MockView }, { page: MockView }];
-      let views = convertToViews(linker, pages);
-      expect(views.length).toEqual(3);
-      expect(views[0].component).toEqual(MockView);
-      expect(views[1].component).toEqual(MockView);
-      expect(views[2].component).toEqual(MockView);
+
+      convertToViews(linker, pages).then(views => {
+        expect(views.length).toEqual(3);
+        expect(views[0].component).toEqual(MockView);
+        expect(views[1].component).toEqual(MockView);
+        expect(views[2].component).toEqual(MockView);
+
+        done();
+      });
     });
 
-    it('should convert all string names', () => {
+    it('should convert all string names', (done) => {
       let linker = mockDeepLinker({
         links: [{ component: MockView, name: 'someName' }]
       });
       let pages = ['someName', 'someName', 'someName'];
-      let views = convertToViews(linker, pages);
-      expect(views.length).toEqual(3);
-      expect(views[0].component).toEqual(MockView);
-      expect(views[1].component).toEqual(MockView);
-      expect(views[2].component).toEqual(MockView);
+
+      convertToViews(linker, pages).then(views => {
+        expect(views.length).toEqual(3);
+        expect(views[0].component).toEqual(MockView);
+        expect(views[1].component).toEqual(MockView);
+        expect(views[2].component).toEqual(MockView);
+
+        done();
+      });
     });
 
-    it('should convert all page string names', () => {
+    it('should convert all page string names', (done) => {
       let linker = mockDeepLinker({
         links: [{ component: MockView, name: 'someName' }]
       });
       let pages = [{ page: 'someName' }, { page: 'someName' }, { page: 'someName' }];
-      let views = convertToViews(linker, pages);
-      expect(views.length).toEqual(3);
-      expect(views[0].component).toEqual(MockView);
-      expect(views[1].component).toEqual(MockView);
-      expect(views[2].component).toEqual(MockView);
+
+      convertToViews(linker, pages).then(views => {
+        expect(views.length).toEqual(3);
+        expect(views[0].component).toEqual(MockView);
+        expect(views[1].component).toEqual(MockView);
+        expect(views[2].component).toEqual(MockView);
+
+        done();
+      });
     });
 
-    it('should convert all ViewControllers', () => {
+    it('should convert all ViewControllers', (done) => {
       let pages = [mockView(MockView), mockView(MockView), mockView(MockView)];
       let linker = mockDeepLinker();
-      let views = convertToViews(linker, pages);
-      expect(views.length).toEqual(3);
-      expect(views[0].component).toEqual(MockView);
-      expect(views[1].component).toEqual(MockView);
-      expect(views[2].component).toEqual(MockView);
+
+      convertToViews(linker, pages).then(views => {
+        expect(views.length).toEqual(3);
+        expect(views[0].component).toEqual(MockView);
+        expect(views[1].component).toEqual(MockView);
+        expect(views[2].component).toEqual(MockView);
+
+        done();
+      });
     });
 
   });
 
   describe('convertToView', () => {
 
-    it('should return new ViewController instance from page component link config name', () => {
+    it('should return new ViewController instance from page component link config name', (done) => {
       let linker = mockDeepLinker({
         links: [{ component: MockView, name: 'someName' }]
       });
-      let outputView = convertToView(linker, 'someName', null);
-      expect(outputView.component).toEqual(MockView);
+
+      convertToView(linker, 'someName', null).then(view => {
+        expect(view.component).toEqual(MockView);
+
+        done();
+      });
     });
 
-    it('should return new ViewController instance from page component', () => {
+    it('should return new ViewController instance from page component', (done) => {
       let linker = mockDeepLinker();
-      let outputView = convertToView(linker, MockView, null);
-      expect(outputView.component).toEqual(MockView);
+
+      convertToView(linker, MockView, null).then(view => {
+        expect(view.component).toEqual(MockView);
+
+        done();
+      });
     });
 
-    it('should return existing ViewController instance', () => {
+    it('should return existing ViewController instance', (done) => {
       let linker = mockDeepLinker();
       let inputView = new ViewController(MockView);
-      let outputView = convertToView(linker, inputView, null);
-      expect(outputView).toEqual(inputView);
+
+      convertToView(linker, inputView, null).then(outputView => {
+        expect(outputView).toEqual(inputView);
+
+        done();
+      });
     });
 
-    it('should return null for null/undefined/number', () => {
+    it('should return null for null', (done) => {
       let linker = mockDeepLinker();
-      let outputView = convertToView(linker, null, null);
-      expect(outputView).toEqual(null);
+      convertToView(linker, null, null).then(view => {
+        expect(view).toEqual(null);
 
-      outputView = convertToView(linker, undefined, undefined);
-      expect(outputView).toEqual(null);
+        done();
+      });
+    });
 
-      outputView = convertToView(linker, 8675309, null);
-      expect(outputView).toEqual(null);
+    it('should return null for undefined', (done) => {
+      let linker = mockDeepLinker();
+      convertToView(linker, undefined, undefined).then(view => {
+        expect(view).toEqual(null);
+
+        done();
+      });
+    });
+
+    it('should return null for number', (done) => {
+      let linker = mockDeepLinker();
+      convertToView(linker, 8675309, null).then(view => {
+        expect(view).toEqual(null);
+
+        done();
+      });
     });
 
   });
