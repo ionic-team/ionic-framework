@@ -1,7 +1,7 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
 
 import { isPresent} from '../../util/util';
-import { ItemSideFlags, ItemSliding } from './item-sliding';
+import { ITEM_SIDE_FLAG_LEFT, ITEM_SIDE_FLAG_RIGHT, ItemSliding } from './item-sliding';
 
 /**
  * @name ItemOptions
@@ -44,12 +44,11 @@ export class ItemOptions {
   /**
    * @private
    */
-  getSides(): ItemSideFlags {
+  getSides(): number {
     if (isPresent(this.side) && this.side === 'left') {
-      return ItemSideFlags.Left;
-    } else {
-      return ItemSideFlags.Right;
+      return ITEM_SIDE_FLAG_LEFT;
     }
+    return ITEM_SIDE_FLAG_RIGHT;
   }
 
   /**

@@ -10,14 +10,13 @@ import { ItemOptions } from './item-options';
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
-export const enum ItemSideFlags {
-  None = 0,
-  Left = 1 << 0,
-  Right = 1 << 1,
-  Both = Left | Right
-}
+export const ITEM_SIDE_FLAG_NONE = 0;
+export const ITEM_SIDE_FLAG_LEFT = 1 << 0;
+export const ITEM_SIDE_FLAG_RIGHT = 1 << 1;
+export const ITEM_SIDE_FLAG_BOTH = ITEM_SIDE_FLAG_LEFT | ITEM_SIDE_FLAG_RIGHT;
 
-export const enum SlidingState {
+
+const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
@@ -126,7 +125,7 @@ export class ItemSliding {
   private _startX: number = 0;
   private _optsWidthRightSide: number = 0;
   private _optsWidthLeftSide: number = 0;
-  private _sides: ItemSideFlags;
+  private _sides: number;
   private _tmr: number = null;
   private _leftOptions: ItemOptions;
   private _rightOptions: ItemOptions;
@@ -182,7 +181,7 @@ export class ItemSliding {
 
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
-      if (side === ItemSideFlags.Left) {
+      if (side === ITEM_SIDE_FLAG_LEFT) {
         this._leftOptions = item;
       } else {
         this._rightOptions = item;
@@ -242,10 +241,10 @@ export class ItemSliding {
     let openAmount = (this._startX - x);
 
     switch (this._sides) {
-      case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
-      case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
-      case ItemSideFlags.Both: break;
-      case ItemSideFlags.None: return;
+      case ITEM_SIDE_FLAG_RIGHT: openAmount = Math.max(0, openAmount); break;
+      case ITEM_SIDE_FLAG_LEFT: openAmount = Math.min(0, openAmount); break;
+      case ITEM_SIDE_FLAG_BOTH: break;
+      case ITEM_SIDE_FLAG_NONE: return;
       default: assert(false, 'invalid ItemSideFlags value'); break;
     }
 

@@ -191,7 +191,6 @@ export { ItemGroup } from './components/item/item-group';
 export { ItemReorder } from './components/item/item-reorder';
 export { Reorder } from './components/item/reorder';
 export { ItemSliding } from './components/item/item-sliding';
-export { ItemSideFlags } from './components/item/item-sliding';
 export { ItemOptions } from './components/item/item-options';
 
 export { Label } from './components/label/label';
