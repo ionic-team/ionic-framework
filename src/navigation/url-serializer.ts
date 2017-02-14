@@ -35,11 +35,7 @@ export class UrlSerializer {
   }
 
   createSegmentFromName(nameOrComponent: any): NavSegment {
-    const configLink = this.links.find((link: NavLink) => {
-      return (link.component === nameOrComponent) ||
-             (link.name === nameOrComponent) ||
-             (link.component && link.component.name === nameOrComponent);
-    });
+    const configLink = this.getLinkFromName(nameOrComponent);
 
     return configLink ? {
       id: configLink.name,
@@ -49,6 +45,13 @@ export class UrlSerializer {
       data: null,
       defaultHistory: configLink.defaultHistory
     } : null;
+  }
+
+  getLinkFromName(nameOrComponent: any) {
+    return this.links.find(link => {
+      return (link.component === nameOrComponent) ||
+             (link.name === nameOrComponent);
+    });
   }
 
   /**

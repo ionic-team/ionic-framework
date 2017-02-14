@@ -1,9 +1,9 @@
-import { ComponentFactoryResolver } from '@angular/core';
+import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
 import { convertToViews, DeepLinkConfig, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
-import { LoadedModule, ModuleLoader } from '../util/module-loader';
+import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
 import { NavController } from './nav-controller';
@@ -135,11 +135,17 @@ export class DeepLinker {
   /**
    * @internal
    */
-  cfrMap = new Map<any, ComponentFactoryResolver>();
+  _cfrMap = new Map<any, ComponentFactoryResolver>();
 
 
-  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location, public _deepLinkConfig: DeepLinkConfig, public _moduleLoader: ModuleLoader, public _baseCfr: ComponentFactoryResolver) {
-  }
+  constructor(
+    public _app: App,
+    public _serializer: UrlSerializer,
+    public _location: Location,
+    public _deepLinkConfig: DeepLinkConfig,
+    public _moduleLoader: ModuleLoader,
+    public _baseCfr: ComponentFactoryResolver
+  ) {}
 
   /**
    * @internal
@@ -263,44 +269,38 @@ export class DeepLinker {
    * @internal
    */
   getComponentFromName(componentName: string): Promise<any> {
-    const segment = this._serializer.createSegmentFromName(componentName);
-    if (segment) {
+    const link = this._serializer.getLinkFromName(componentName);
+    if (link) {
+      // cool, we found the right segment for this component name
 
-      if (segment.component) {
-        return Promise.resolve(segment.component);
+      if (link.component) {
+        // sweet, we're already got a component loaded for this segment
+        return Promise.resolve(link.component);
       }
 
-      if (segment.loadChildren) {
-        return this.loadModuleAndUpdateDeeplinkConfig(this._deepLinkConfig, componentName).then((loadedModule: LoadedModule) => {
-          this.registerCfr(loadedModule.component, loadedModule.componentFactoryResolver);
-          return loadedModule.component;
+      // ok, so no component yet, but at least we know this segment exists
+      if (link.loadChildren) {
+        // awesome, looks like we'll lazy load this component
+        // using loadChildren as the URL to request
+        return this._moduleLoader.loadModule(link.loadChildren).then(loadedModule => {
+          // kerpow!! we just lazy loaded a component!!
+          // update the existing segment with the loaded component
+          link.component = loadedModule.component;
+          this._cfrMap.set(link.component, loadedModule.componentFactoryResolver);
+          return link.component;
         });
       }
-
     }
 
+    // umm, idk
     return Promise.resolve(null);
   }
 
-  loadModuleAndUpdateDeeplinkConfig(deepLinkConfig: DeepLinkConfig, componentName: string) {
-    return this._moduleLoader.loadModule(componentName).then((loadedModule: LoadedModule) => {
-      // update the existing deepLinkConfig entry with the component
-      this.registerComponent(loadedModule.component, componentName);
-      return loadedModule;
-    });
-  }
-
-  registerComponent(component: any, componentName: string) {
-    this._deepLinkConfig.links.filter(deepLinkMetadata => deepLinkMetadata.name === componentName)
-        .forEach(deepLinkMetadata => deepLinkMetadata.component = component);
-  }
-
-  registerCfr(component: any, cfr: ComponentFactoryResolver) {
-    this.cfrMap.set(component, cfr);
-  }
-
-  resolveComponentFactory(component: any): any {
-    let cfr = this.cfrMap.get(component);
+  /**
+   * @internal
+   */
+  resolveComponentFactory(component: any): ComponentFactory<any> {
+    let cfr = this._cfrMap.get(component);
     if (!cfr) {
       cfr = this._baseCfr;
     }

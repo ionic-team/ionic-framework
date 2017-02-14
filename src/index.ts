@@ -5,7 +5,7 @@
  */
 import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
-import { DOCUMENT, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
@@ -29,12 +29,11 @@ import { Events, setupProvideEvents } from './util/events';
 import { Form } from './util/form';
 import { GestureController } from './gestures/gesture-controller';
 import { Haptic } from './tap-click/haptic';
-import { IonicGestureConfig } from './gestures/gesture-config';
 import { Keyboard } from './platform/keyboard';
 import { LoadingController } from './components/loading/loading-controller';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal-controller';
-import { ModuleLoader, LAZY_LOADED_TOKEN } from './util/module-loader';
+import { ModuleLoader, provideModuleLoader, LAZY_LOADED_TOKEN } from './util/module-loader';
 import { PickerController } from './components/picker/picker-controller';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
@@ -617,7 +616,7 @@ export class IonicModule {
         ToastController,
         TransitionController,
 
-        { provide: ModuleLoader, useFactory: provideModuleLoader, deps: [DeepLinkConfigToken, SystemJsNgModuleLoader, Injector]},
+        { provide: ModuleLoader, useFactory: provideModuleLoader, deps: [SystemJsNgModuleLoader, Injector]},
         { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [new Inject(APP_BASE_HREF), new Optional()], Config ] },
         { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
         { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location,  DeepLinkConfigToken, ModuleLoader, ComponentFactoryResolver ] },
@@ -641,14 +640,6 @@ export class LazyModule {
     };
   }
 
-}
-
-
-/**
- * @private
- */
-export function provideModuleLoader(deepLinkConfig: DeepLinkConfig, systemJsNgModuleLoader: SystemJsNgModuleLoader, injector: Injector) {
-  return new ModuleLoader(deepLinkConfig, systemJsNgModuleLoader, injector);
 }
 
 /**
