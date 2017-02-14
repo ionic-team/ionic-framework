@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { FullPage } from 'full-page';
+import { FullPage } from './full-page';
 
 
 @NgModule({
