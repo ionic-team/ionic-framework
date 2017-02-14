@@ -95,16 +95,16 @@ export class IonicApp extends Ion implements OnInit {
   /**
    * @private
    */
-  _getPortal(portal?: AppPortal): OverlayPortal {
-    if (portal === AppPortal.LOADING) {
+  _getPortal(portal?: number): OverlayPortal {
+    if (portal === PORTAL_LOADING) {
       return this._loadingPortal;
     }
-    if (portal === AppPortal.TOAST) {
+    if (portal === PORTAL_TOAST) {
       return this._toastPortal;
     }
     // Modals need their own overlay becuase we don't want an ActionSheet
     // or Alert to trigger lifecycle events inside a modal
-    if (portal === AppPortal.MODAL) {
+    if (portal === PORTAL_MODAL) {
       return this._modalPortal;
     }
     return this._overlayPortal;
@@ -176,9 +176,8 @@ export class IonicApp extends Ion implements OnInit {
 
 }
 
-export const enum AppPortal {
-  DEFAULT,
-  MODAL,
-  LOADING,
-  TOAST
-};
+
+export const PORTAL_DEFAULT = 1;
+export const PORTAL_MODAL = 2;
+export const PORTAL_LOADING = 3;
+export const PORTAL_TOAST = 4;

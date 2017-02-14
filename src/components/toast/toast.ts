@@ -1,7 +1,7 @@
 import { App } from '../app/app';
-import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
+import { PORTAL_TOAST } from '../app/app-root';
 import { ToastOptions } from './toast-options';
 import { ToastCmp } from './toast-component';
 import { ViewController } from '../../navigation/view-controller';
@@ -56,7 +56,7 @@ export class Toast extends ViewController {
    */
   present(navOptions: NavOptions = {}) {
     navOptions.disableApp = false;
-    return this._app.present(this, navOptions, AppPortal.TOAST);
+    return this._app.present(this, navOptions, PORTAL_TOAST);
   }
 
   /**
