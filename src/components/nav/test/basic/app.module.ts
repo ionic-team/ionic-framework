@@ -1,7 +1,7 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule,
-         NavController, NavParams, Tabs, Tab, ModalController, ViewController } from 'ionic-angular';
+         NavController, Tabs, Tab, ModalController, ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'my-cmp2',
@@ -85,7 +85,7 @@ export class MyCmpTest {
     </ion-content>`
 })
 export class FirstPage {
-  pushPage = FullPage;
+  pushPage = AnotherPage;
   firstPage = FirstPage;
   title = 'First Page';
   pages: Array<number> = [];
@@ -200,7 +200,7 @@ export class FirstPage {
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] }, {
+    this.navCtrl.push('full-page', { id: 8675309, myData: [1, 2, 3, 4] }, {
       animate: true,
       animation: 'md-transition'
     }).catch(() => {
@@ -269,102 +269,7 @@ export class RedirectPage {
   }
 }
 
-@Component({
-  template: `
-    <ion-content padding>
-      <h1>Full page</h1>
-      <p>This page does not have a nav bar!</p>
-      <p><button ion-button (click)="navCtrl.pop()">Pop</button></p>
-      <p><button ion-button class="e2eFrom2To3" (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
-      <p><button ion-button (click)="pushAnother()">Push to AnotherPage</button></p>
-      <p><button ion-button (click)="pushFirstPage()">Push to FirstPage</button></p>
-      <p><button ion-button class="e2eFrom2To1" navPop>Pop with NavPop (Go back to 1st)</button></p>
-      <p><button ion-button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
-      <p><button ion-button (click)="presentAlert()">Present Alert</button></p>
-    </ion-content>
-  `
-})
-export class FullPage {
-  constructor(
-    public navCtrl: NavController,
-    public viewCtrl: ViewController,
-    public app: App,
-    public alertCtrl: AlertController,
-    public params: NavParams
-  ) {}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad, FullPage', this.viewCtrl.id);
-  }
-
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter, FullPage', this.viewCtrl.id);
-  }
-
-  ionViewDidEnter() {
-    console.log('ionViewDidEnter, FullPage', this.viewCtrl.id);
-  }
-
-  ionViewWillLeave() {
-    console.log('ionViewWillLeave, FullPage', this.viewCtrl.id);
-  }
-
-  ionViewDidLeave() {
-    console.log('ionViewDidLeave, FullPage', this.viewCtrl.id);
-  }
-
-  ionViewWillUnload() {
-    console.log('ionViewWillUnload, FullPage', this.viewCtrl.id);
-  }
-
-  setPages() {
-    let items = [
-      { page: FirstPage },
-      { page: PrimaryHeaderPage }
-    ];
-
-    this.navCtrl.setPages(items);
-  }
-
-  pushPrimaryHeaderPage() {
-    this.navCtrl.push(PrimaryHeaderPage);
-  }
-
-  pushAnother() {
-    this.navCtrl.push(AnotherPage);
-  }
-
-  pushFirstPage() {
-    this.navCtrl.push(FirstPage);
-  }
-
-  presentAlert() {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Hello Alert');
-    alert.setMessage('Dismiss this alert, then pop one page');
-    alert.addButton({
-      text: 'Dismiss',
-      role: 'cancel',
-      handler: () => {
-        // overlays are added and removed from the app root's portal
-        // in the example below, alert.dismiss() dismisses the alert
-        // from the app root portal, and once it's done transitioning out,
-        // this the active page is popped from the nav
-        alert.dismiss().then(() => {
-          this.navCtrl.pop();
-        });
-
-        // by default an alert will dismiss itself
-        // however, we don't want to use the default
-        // but rather fire off our own pop navigation
-        // return false so it doesn't pop automatically
-        return false;
-      }
-    });
-    alert.present();
-  }
-
-}
 
 
 @Component({
@@ -443,7 +348,7 @@ export class PrimaryHeaderPage {
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage, { id: 8675309, myData: [1, 2, 3, 4] });
+    this.navCtrl.push('full-page', { id: 8675309, myData: [1, 2, 3, 4] });
   }
 
   insert() {
@@ -541,7 +446,7 @@ export class AnotherPage {
   }
 
   pushFullPage() {
-    this.navCtrl.push(FullPage);
+    this.navCtrl.push('full-page');
   }
 
   pushPrimaryHeaderPage() {
@@ -830,7 +735,6 @@ export const deepLinkConfig: DeepLinkConfig = {
     AnotherPage,
     MyCmpTest,
     MyCmpTest2,
-    FullPage,
     PrimaryHeaderPage,
     TabsPage,
     Tab1,
@@ -850,7 +754,6 @@ export const deepLinkConfig: DeepLinkConfig = {
     FirstPage,
     RedirectPage,
     AnotherPage,
-    FullPage,
     PrimaryHeaderPage,
     TabsPage,
     Tab1,

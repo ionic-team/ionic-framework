@@ -4,7 +4,7 @@ import { App, AlertController, NavController, NavParams, ViewController } from '
 
 @Component({
   template: `
-    <div class="padding">
+    <ion-content class="padding">
       <h1>Full page</h1>
       <p>This page does not have a nav bar!</p>
       <p><button ion-button (click)="navCtrl.pop()">Pop</button></p>
@@ -14,7 +14,7 @@ import { App, AlertController, NavController, NavParams, ViewController } from '
       <p><button ion-button class="e2eFrom2To1" navPop>Pop with NavPop (Go back to 1st)</button></p>
       <p><button ion-button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
       <p><button ion-button (click)="presentAlert()">Present Alert</button></p>
-    </div>
+    </ion-content>
   `
 })
 export class FullPage {

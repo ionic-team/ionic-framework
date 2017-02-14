@@ -358,7 +358,6 @@ export { Transition } from './transitions/transition';
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-
   ],
   exports: [
     Avatar,
