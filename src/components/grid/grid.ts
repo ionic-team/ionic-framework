@@ -7,7 +7,10 @@ import { Directive } from '@angular/core';
   * @description
  */
 @Directive({
-  selector: 'ion-grid'
+  selector: 'ion-grid, [ion-grid]',
+  host: {
+    'class': 'grid'
+  }
 })
 export class Grid {
 
@@ -20,7 +23,10 @@ export class Grid {
   * @description
  */
 @Directive({
-  selector: 'ion-row'
+  selector: 'ion-row, [ion-row]',
+  host: {
+    'class': 'row'
+  }
 })
 export class Row {
 
@@ -33,7 +39,10 @@ export class Row {
   * @description
  */
 @Directive({
-  selector: 'ion-col'
+  selector: 'ion-col, [ion-col]',
+  host: {
+    'class': 'col'
+  }
 })
 export class Col {
 
