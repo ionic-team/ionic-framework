@@ -128,7 +128,8 @@
     "typescript": "~2.0.10",
     "vinyl": "1.2.0",
     "webpack": "^2.1.0-beta.27",
-    "yargs": "5.0.0"
+    "yargs": "5.0.0",
+    "sw-toolbox": "3.4.0"
   },
   "config": {
     "commitizen": {
