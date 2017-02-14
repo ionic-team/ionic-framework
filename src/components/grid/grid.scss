@@ -21,6 +21,8 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
       flex-direction: column;
 
       ion-col {
+        flex: 1;
+
         &[width-10],
         &[width-20],
         &[width-25],
@@ -32,8 +34,6 @@ $grid-responsive-lg-break:        1023px !default; // smaller than landscape tab
         &[width-75],
         &[width-80],
         &[width-90] {
-          flex: 1;
-
           margin-bottom: ($grid-padding-width * 3) / 2;
           margin-left: 0;
 
