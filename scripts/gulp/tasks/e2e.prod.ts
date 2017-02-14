@@ -1,4 +1,4 @@
-import { accessSync, constants, readFileSync, stat } from 'fs';
+import { accessSync, readFileSync, stat } from 'fs';
 import { dirname, join } from 'path';
 
 import { dest, src, start, task } from 'gulp';
@@ -164,7 +164,7 @@ task('e2e.watchProd', (done: Function) => {
   }
 
   try {
-    accessSync(e2eTestPath, constants.F_OK);
+    accessSync(e2eTestPath);
   } catch (e) {
     done(new Error(`Could not find e2e test: ${e2eTestPath}`));
     return;
@@ -228,7 +228,7 @@ function e2eComponentsExists(folderInfo: any): boolean {
   }
 
   try {
-    accessSync(componentPath, constants.F_OK);
+    accessSync(componentPath);
   } catch (e) {
     return false;
   }

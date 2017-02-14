@@ -1,4 +1,4 @@
-import { accessSync, constants, readFileSync, stat } from 'fs';
+import { accessSync, readFileSync, stat } from 'fs';
 import { dirname, join } from 'path';
 
 import { dest, src, start, task } from 'gulp';
@@ -120,7 +120,7 @@ task('demos.watchProd', (done: Function) => {
   }
 
   try {
-    accessSync(demoTestPath, constants.F_OK);
+    accessSync(demoTestPath);
   } catch (e) {
     done(new Error(`Could not find demos test: ${demoTestPath}`));
     return;
@@ -184,7 +184,7 @@ function demosComponentsExists(folderInfo: any): boolean {
   }
 
   try {
-    accessSync(componentPath, constants.F_OK);
+    accessSync(componentPath);
   } catch (e) {
     return false;
   }
