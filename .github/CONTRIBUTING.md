@@ -10,18 +10,24 @@ Please see our [Contributor Code of Conduct](https://github.com/driftyco/ionic/b
 
 ## Creating an Issue
 
-If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/) group.
+* If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/) group.
 
-If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
+* It is required that you clearly describe the steps necessary to reproduce the issue you are running into. Although we would love to help our users as much as possible, diagnosing issues without clear reproduction steps is extremely time-consuming and simply not sustainable.
 
-Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
+* The issue list of this repo is exclusively for bug reports and feature requests. Non-conforming issues will be closed immediately.
+
+* Issues with no clear repro steps will not be triaged. If an issue labeled "need reply" receives no further input from the issue author for more than 5 days, it will be closed.
+
+* If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
+
+* Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
 
 
 ## Creating a Pull Request
 
-We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
+* We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
 
-Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/driftyco/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
+* Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/driftyco/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
 ### Setup
 

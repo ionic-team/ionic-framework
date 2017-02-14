@@ -19,7 +19,10 @@ export { ScrollEvent } from '../../util/scroll-view';
  * @name Content
  * @description
  * The Content component provides an easy to use content area with
- * some useful methods to control the scrollable area.
+ * some useful methods to control the scrollable area. There should
+ * only be one content in a single view component. If additional scrollable
+ * elements are need, use [ionScroll](../../scroll/Scroll).
+ *
  *
  * The content area can also implement pull-to-refresh with the
  * [Refresher](../../refresher/Refresher) component.
@@ -495,9 +498,16 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
-    this._dom.write(() => {
-      (<any>this._scrollEle.style)[prop] = val;
-    });
+    if (this._scrollEle) {
+      this._dom.write(() => {
+        // double check here as the scroll element
+        // could have been destroyed in the 16ms it took
+        // for this dom write to happen
+        if (this._scrollEle) {
+          (<any>this._scrollEle.style)[prop] = val;
+        }
+      });
+    }
   }
 
   /**

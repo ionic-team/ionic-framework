@@ -15,6 +15,11 @@
   </ion-item>
 
   <ion-item>
+    <ion-label>MM DD YY</ion-label>
+    <ion-datetime displayFormat="MM DD YY" [(ngModel)]="placeholderDate" placeholder="Select Date"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
     <ion-label>YYYY</ion-label>
     <ion-datetime displayFormat="YYYY" min="1981" max="2002" [(ngModel)]="wwwInvented"></ion-datetime>
   </ion-item>

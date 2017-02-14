@@ -251,7 +251,8 @@ export const DATETIME_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ion-datetime',
   template:
-    '<div class="datetime-text">{{_text}}</div>' +
+    '<div *ngIf="!_text" class="datetime-text datetime-placeholder">{{placeholder}}</div>' +
+    '<div *ngIf="_text" class="datetime-text">{{_text}}</div>' +
     '<button aria-haspopup="true" ' +
             'type="button" ' +
             '[id]="id" ' +
@@ -406,6 +407,12 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    * See the [Picker API docs](../../picker/Picker) for the picker options.
    */
   @Input() pickerOptions: any = {};
+
+   /**
+   * @input {string} The text to display when there's no date selected yet.
+   * Using lowercase to match the input attribute
+   */
+  @Input() placeholder: string = '';
 
   /**
    * @input {string} The mode determines which platform styles to use.

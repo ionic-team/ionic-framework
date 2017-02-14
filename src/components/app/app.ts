@@ -189,7 +189,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
   getActiveNav(): NavController {
     const portal = this._appRoot._getPortal(MODAL);
