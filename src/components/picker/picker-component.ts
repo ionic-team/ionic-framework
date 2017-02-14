@@ -3,7 +3,7 @@ import { Component, ElementRef, HostListener, QueryList, Renderer, ViewChildren,
 import { isNumber, isPresent, isString, assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
-import { Key } from '../../platform/key';
+import { KEY_ENTER, KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
 import { PickerOptions, PickerColumnOption } from './picker-options';
@@ -139,7 +139,7 @@ export class PickerCmp {
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
-      if (ev.keyCode === Key.ENTER) {
+      if (ev.keyCode === KEY_ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
@@ -150,7 +150,7 @@ export class PickerCmp {
           this.btnClick(button);
         }
 
-      } else if (ev.keyCode === Key.ESCAPE) {
+      } else if (ev.keyCode === KEY_ESCAPE) {
         console.debug('picker, escape button');
         this.bdClick();
       }

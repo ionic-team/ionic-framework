@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { Key } from '../../platform/key';
+import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -90,7 +90,7 @@ export class ModalCmp {
 
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
-    if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {
+    if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === KEY_ESCAPE) {
       this._bdClick();
     }
   }
