@@ -1,0 +1,72 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Responsive</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div ion-grid>
+    <div ion-row>
+      <div ion-col col-12 col-md-4 col-lg-3>
+        <div style="background-color: blue">
+          Blue
+        </div>
+      </div>
+      <div ion-col col-12 col-md-4 col-lg-6>
+        <div style="background-color: yellow">
+          Yellow
+        </div>
+      </div>
+      <div ion-col col-12 col-md-4 col-lg-3>
+        <div style="background-color: green">
+          Green
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ion-grid>
+    <ion-list ion-row style="background-color: lightpink">
+      <ion-list-header col-12>
+        <span ion-text ion-color="primary">Responsive List</span>
+      </ion-list-header>
+      <ion-item *ngFor="let item of [0,1,2,3,4,5]" col-12 col-sm-6 col-md-4>
+        ion-item {{ item }} [col-12] [col-sm-6] [col-md-4]
+      </ion-item>
+    </ion-list>
+
+    <div ion-row style="background-color: lightblue">
+      <div ion-text ion-color="primary" col-12>
+        Responsive Divs
+      </div>
+      <div *ngFor="let item of [0,1,2,3,4,5]" col-12 col-sm-6 col-lg-4>
+        div {{ item }} [col-12] [col-sm-6] [col-lg-4]
+      </div>
+    </div>
+
+    <div ion-row style="background-color: lightgreen">
+      <div ion-text ion-color="primary" col-12>
+        Responsive Div w/ Cards
+      </div>
+      <div *ngFor="let item of [0,1,2,3,4,5]" col-12 col-sm-6 col-md-4>
+        <ion-card>
+          <ion-card-content>
+            ion-card-content {{ item }} [col-12] [col-sm-6] [col-md-4]
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+
+    <div ion-row style="background-color: lightcoral">
+      <div ion-text ion-color="primary" col-12>
+        Equal Width Divs
+      </div>
+      <div *ngFor="let item of [0,1,2,3,4,5]" ion-col>
+        div {{ item }} [col]
+      </div>
+    </div>
+  </div>
+</ion-content>
