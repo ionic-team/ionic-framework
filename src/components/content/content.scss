@@ -44,6 +44,10 @@ a {
   contain: size style layout;
 }
 
+.platform-core .scroll-content {
+  overflow-y: auto;
+}
+
 ion-content.js-scroll > .scroll-content {
   position: relative;
 
