@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../..';
 import { FormBuilder, Validators } from '@angular/forms';
 
 

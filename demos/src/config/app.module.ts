@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Config, IonicApp, IonicModule, Platform, NavController } from '../../ionic-angular';
+import { Config, IonicApp, IonicModule, Platform, NavController } from '..';
 
 if (!window.localStorage) {
   Object.defineProperty(window, 'localStorage', new (function () {
@@ -20,7 +20,7 @@ if (!window.localStorage) {
     Object.defineProperty(oStorage, 'setItem', {
       value: function (sKey: string, sValue: string) {
         if (!sKey) { return; }
-        document.cookie = encodeURI(sKey) + '=' + encodeURI(sValue) + '; expires=Tue, 19 Jan 2038 03:14:07 GMT; path=/';
+        document.cookie = encodeURI(sKey) + '=' + encodeURI(sValue) + '; expires=Tue, 19 Jan 2038 03:14:07 GMT; path=';
       },
       writable: false,
       configurable: false,
@@ -34,7 +34,7 @@ if (!window.localStorage) {
     Object.defineProperty(oStorage, 'removeItem', {
       value: function (sKey: string) {
         if (!sKey) { return; }
-        document.cookie = encodeURI(sKey) + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+        document.cookie = encodeURI(sKey) + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=';
       },
       writable: false,
       configurable: false,

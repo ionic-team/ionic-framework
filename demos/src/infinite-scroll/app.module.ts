@@ -1,6 +1,6 @@
 import { Component, Injectable, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { InfiniteScroll, IonicApp, IonicModule } from '../../ionic-angular';
+import { InfiniteScroll, IonicApp, IonicModule } from '..';
 
 
 /**

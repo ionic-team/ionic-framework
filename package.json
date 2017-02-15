@@ -40,10 +40,11 @@
     "zone.js": "~0.6.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.0.0",
+    "@ionic/app-scripts": "nightly",
     "@ionic/commit-hooks": "1.0.3",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
+    "@types/fs-extra": "0.0.37",
     "@types/glob": "5.0.30",
     "@types/gulp": "3.8.32",
     "@types/gulp-watch": "4.1.29",
@@ -53,6 +54,7 @@
     "@types/merge2": "0.3.29",
     "@types/mkdirp": "0.3.29",
     "@types/node": "^6.0.34",
+    "@types/protractor": "^4.0.0",
     "@types/run-sequence": "0.0.28",
     "@types/semver": "5.3.30",
     "@types/serve-static": "1.7.31",
@@ -70,6 +72,7 @@
     "dgeni-packages": "0.16.0",
     "event-stream": "3.3.4",
     "file-loader": "0.9.0",
+    "fs-extra": "^2.0.0",
     "github": "0.2.4",
     "glob": "7.0.6",
     "gulp": "3.9.1",
@@ -135,8 +138,7 @@
   "config": {
     "commitizen": {
       "path": "node_modules/ionic-cz-conventional-changelog"
-    },
-    "ionic_copy": "./scripts/demos/copy.config.js"
+    }
   },
   "pre-push#master": [
     "test"

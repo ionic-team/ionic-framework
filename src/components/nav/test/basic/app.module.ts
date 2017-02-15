@@ -1,7 +1,7 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule,
-         NavController, Tabs, Tab, ModalController, ViewController } from 'ionic-angular';
+         NavController, Tabs, Tab, ModalController, ViewController } from '../../../..';
 
 @Component({
   selector: 'my-cmp2',
@@ -35,7 +35,7 @@ export class MyCmpTest {
           <button ion-button icon-only><ion-icon name="star"></ion-icon></button>
         </ion-buttons>
         <ion-buttons end>
-          <button ion-button>S1g</button>
+          <button ion-button>S1gasdf</button>
         </ion-buttons>
       </ion-navbar>
     </ion-header>
@@ -87,7 +87,7 @@ export class MyCmpTest {
 export class FirstPage {
   pushPage = AnotherPage;
   firstPage = FirstPage;
-  title = 'First Page';
+  title = 'First Pageeee';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;
   @ViewChild(MyCmpTest) myCmp: MyCmpTest;

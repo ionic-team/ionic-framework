@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../ionic-angular';
+import { IonicApp, IonicModule } from '..';
 
 
 // Use the toolbar demo but pass in the demo name to change the title

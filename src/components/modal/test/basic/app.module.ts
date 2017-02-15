@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { ActionSheetController, AlertController, App, Config,
   IonicApp, IonicModule, ModalController, NavController,
-  NavParams, Platform, ToastController, ViewController } from '../../../../../ionic-angular';
+  NavParams, Platform, ToastController, ViewController } from '../../../..';
 
 
 @Injectable()

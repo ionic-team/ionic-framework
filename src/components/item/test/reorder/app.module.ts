@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, reorderArray } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, reorderArray } from '../../../..';
 
 
 @Component({
