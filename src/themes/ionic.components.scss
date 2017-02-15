@@ -72,7 +72,8 @@
 "../components/fab/fab.wp";
 
 @import
-"../components/grid/grid";
+"../components/grid/grid",
+"../components/grid/responsive";
 
 @import
 "../components/icon/icon",
@@ -161,9 +162,6 @@
 
 @import
 "../components/refresher/refresher";
-
-@import
-"../components/responsive/responsive";
 
 @import
 "../components/scroll/scroll";
