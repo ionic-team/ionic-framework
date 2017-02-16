@@ -594,9 +594,9 @@ export class Platform {
 
         } else {
           if (this._lW > win['innerWidth']) {
-            // Special case: keyboard is open and device is in portrait
-            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
-            this._isPortrait = true;
+            console.debug('setting _isPortrait to false');
+            this._isPortrait = false;
+            this._lW = win['innerWidth'];
           }
           // the device is in landscape
           if (this._lW <= win['innerWidth']) {
