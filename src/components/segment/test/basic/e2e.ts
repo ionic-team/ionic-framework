@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('friends and standard should be selected', function() {
   element(by.css('.e2eSegmentFriends')).click();

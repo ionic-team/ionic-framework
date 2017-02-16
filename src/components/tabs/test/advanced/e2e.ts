@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should go to Tab1 Page1', function() {
   element(by.css('.e2eSignIn')).click();
