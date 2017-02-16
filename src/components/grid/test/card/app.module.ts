@@ -6,7 +6,13 @@ import { IonicApp, IonicModule } from '../../../../../ionic-angular';
   templateUrl: 'main.html'
 })
 export class Page1 {
+  items: any = [];
 
+  constructor() {
+    for (let i = 0; i < 100; i++) {
+      this.items.push(i);
+    }
+  }
 }
 
 
