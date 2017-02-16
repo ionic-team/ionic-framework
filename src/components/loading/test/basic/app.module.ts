@@ -307,11 +307,11 @@ export class E2EApp {
   root = E2EPage;
 
   constructor(app: App) {
-    app.viewDidLeave.subscribe(ev => {
+    app.viewDidLeave.subscribe((ev: any) => {
       console.log('App didLeave');
     });
 
-    app.viewWillLeave.subscribe(ev => {
+    app.viewWillLeave.subscribe((ev: any) => {
       console.log('App willLeave');
     });
   }

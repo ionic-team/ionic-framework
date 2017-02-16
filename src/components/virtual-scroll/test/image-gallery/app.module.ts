@@ -9,7 +9,7 @@ import { IonicApp, IonicModule } from '../../../..';
 })
 export class E2EPage {
   lastMonth: number;
-  items = [];
+  items: any[] = [];
 
   constructor() {
     var utcSeconds = 787523438; // Dec 15, 1994

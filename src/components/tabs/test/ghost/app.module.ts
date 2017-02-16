@@ -114,7 +114,7 @@ export class TabsPage {
   }
 
   openPage(which: string) {
-    let pages = {
+    let pages: any = {
       'quesarito': QuesaritoPage
     };
 

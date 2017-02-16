@@ -8,7 +8,7 @@ import { IonicApp, IonicModule } from '../../../..';
 })
 export class E2EApp {
 
-  buttonClick(button) {
+  buttonClick(button: any) {
     console.log(button);
   }
 

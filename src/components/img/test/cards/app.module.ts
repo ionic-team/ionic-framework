@@ -6,7 +6,7 @@ import { IonicApp, IonicModule } from '../../../..';
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  items = [];
+  items: number[] = [];
 
   constructor() {
     for (var i = 0; i < 100; i++) {
