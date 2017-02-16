@@ -7,7 +7,7 @@ import './tasks/demos.prod';
 import './tasks/docs';
 // import './tasks/e2e';
 import './tasks/e2e.dev';
-// import './tasks/e2e.prod';
+import './tasks/e2e.prod';
 import './tasks/lint';
 import './tasks/release';
 import './tasks/snapshot';
