@@ -186,15 +186,17 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScriptsServe(folderInfo: any, appEntryPoint: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string) {
+export function runAppScriptsServe(folderInfo: any, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string) {
   console.log('Running ionic-app-scripts serve with', folderInfo.componentName, '/', folderInfo.componentTest);
   let scriptArgs = [
     'serve',
     '--appEntryPoint', appEntryPoint,
+    '--appNgModulePath', appNgModulePath,
     '--srcDir', srcDir,
     '--wwwDir', distDir,
     '--tsconfig', tsConfig,
     '--readConfigJson', 'false',
+    '--experimentalParseDeepLinks', 'true',
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath
