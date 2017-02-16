@@ -40,7 +40,7 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.1.1",
+    "@ionic/app-scripts": "nightly",
     "@ionic/commit-hooks": "1.0.3",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
@@ -112,8 +112,7 @@
     "merge2": "1.0.2",
     "mkdirp": "0.5.1",
     "node-html-encoder": "0.0.2",
-    "p-queue": "^1.0.0",
-    "promise-queue": "2.2.3",
+    "p-all": "^1.0.0",
     "remap-istanbul": "0.6.4",
     "request": "2.75.0",
     "resolve-bin": "0.4.0",

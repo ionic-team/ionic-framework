@@ -23,10 +23,12 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
 
     worker.on('error', (err: any) => {
       console.error(`worker error, entrypoint: ${appEntryPoint}, pid: ${worker.pid}, error: ${err}`);
+      reject(err);
     });
 
     worker.on('exit', (code: number) => {
       console.log(`worker exited, entrypoint: ${appEntryPoint}, pid: ${worker.pid}, code: ${code}`);
+      resolve(code);
     });
   });
 }
@@ -60,6 +62,8 @@ export function createWorker(msg: MessageToWorker): any {
       '--ionicAngularDir', msg.ionicAngularDir,
       '--sass', msg.sassConfigPath,
       '--copy', msg.copyConfigPath,
+      '--enableLint', 'false',
+      'disableLogging', 'true'
     ];
 
     if (msg.debug) {
