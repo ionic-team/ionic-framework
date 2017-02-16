@@ -27,7 +27,6 @@ $grid-breakpoints: (
 // Grid Containers
 // --------------------------------------------------
 
-// TODO use this
 /// @prop - Maximum width of the grid for different screen sizes
 $grid-max-widths: (
   sm: 540px,
@@ -70,6 +69,10 @@ $grid-padding-widths: (
 
 .grid {
   @include make-grid();
+
+  &[full] {
+    width: 100%;
+  }
 }
 
 // Row
