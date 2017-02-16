@@ -243,7 +243,9 @@ export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: strin
     '--experimentalParseDeepLinks', 'true',
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
-    '--copy', copyConfigPath
+    '--copy', copyConfigPath,
+    '--aotWriteToDisk', 'true',
+    '--printWebpackDependencyTree', 'true'
   ];
 
   const debug: boolean = argv.debug;

@@ -48,7 +48,7 @@ function buildTest(filePath: string) {
   const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), srcTestRoot);
   const distTestRoot = join(process.cwd(), 'dist', 'e2e', relativePathFromComponents);
 
-  const includeGlob = [ join(srcTestRoot, '**', '*.ts')];
+  const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
   const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
 
