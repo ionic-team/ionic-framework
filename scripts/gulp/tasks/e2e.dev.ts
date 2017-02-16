@@ -38,7 +38,7 @@ function buildTest(folderInfo: any) {
   const ionicAngularDir = join(process.cwd(), 'src');
   const srcTestRoot = join(process.cwd(), 'src', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
   const distTestRoot = join(process.cwd(), 'dist', 'e2e', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
-  const includeGlob = [ join(srcTestRoot, 'main.ts')];
+  const includeGlob = [ join(srcTestRoot, '**', '*.ts')];
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
   const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
 
@@ -47,10 +47,11 @@ function buildTest(folderInfo: any) {
   const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
   const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
 
-  const appEntryPoint = join(process.cwd(), 'src', 'components', folderInfo.componentName, 'test', folderInfo.componentTest, 'main.ts');
-  const distDir = join(process.cwd(), 'dist', 'e2e', 'components', folderInfo.componentName, 'test', folderInfo.componentTest, 'www');
+  const appEntryPoint = join(srcTestRoot, 'main.ts');
+  const appNgModulePath = join(srcTestRoot, 'app.module.ts');
+  const distDir = join(distTestRoot, 'www');
 
-  return runAppScriptsServe(folderInfo, appEntryPoint, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath);
+  return runAppScriptsServe(folderInfo, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath);
 }
 
 task('e2e.clean', (done: Function) => {
