@@ -8,11 +8,33 @@
 // available width, and the height of each .col with take
 // up the height of the tallest .col in the same .row.
 
-
+$grid-columns-width:              (10, 20, 25, 33.3333, 50, 66.6666, 75, 80, 90) !default;
 $grid-padding-width:              10px !default;
 $grid-responsive-sm-break:        567px !default;  // smaller than landscape phone
 $grid-responsive-md-break:        767px !default;  // smaller than portrait tablet
 $grid-responsive-lg-break:        1023px !default; // smaller than landscape tablet
+
+@mixin grid-column($width, $prefix: '') {
+  $width-rounded: round($width);
+  $width-percentage: percentage($width) / 100;
+
+  ion-col {
+
+    // Column Width
+
+    &[#{$prefix}offset-#{$width-rounded}] {
+      margin-left: $width-percentage;
+    }
+
+    // Column Offset
+
+    &[#{$prefix}width-#{$width-rounded}] {
+      width: $width-percentage;
+    }
+
+  }
+
+}
 
 @mixin responsive-grid-break($selector, $max-width) {
   @media (max-width: $max-width) {
@@ -115,107 +137,7 @@ ion-col {
   &[baseline] {
     align-self: baseline;
   }
-
-  // Column Offsets
-
-  &[offset-10] {
-    margin-left: 10%;
-  }
-
-  &[offset-20] {
-    margin-left: 20%;
-  }
-
-  &[offset-25] {
-    margin-left: 25%;
-  }
-
-  &[offset-33],
-  &[offset-34] {
-    margin-left: 33.3333%;
-  }
-
-  &[offset-50] {
-    margin-left: 50%;
-  }
-
-  &[offset-66],
-  &[offset-67] {
-    margin-left: 66.6666%;
-  }
-
-  &[offset-75] {
-    margin-left: 75%;
-  }
-
-  &[offset-80] {
-    margin-left: 80%;
-  }
-
-  &[offset-90] {
-    margin-left: 90%;
-  }
-
-  // Explicit Column Percent Sizes
-  // By default each grid column will evenly distribute
-  // across the grid. However, you can specify individual
-  // columns to take up a certain size of the available area
-
-  &[width-10] {
-    flex: 0 0 10%;
-
-    max-width: 10%;
-  }
-
-  &[width-20] {
-    flex: 0 0 20%;
-
-    max-width: 20%;
-  }
-
-  &[width-25] {
-    flex: 0 0 25%;
-
-    max-width: 25%;
-  }
-
-  &[width-33],
-  &[width-34] {
-    flex: 0 0 33.3333%;
-
-    max-width: 33.3333%;
-  }
-
-  &[width-50] {
-    flex: 0 0 50%;
-
-    max-width: 50%;
-  }
-
-  &[width-66],
-  &[width-67] {
-    flex: 0 0 66.6666%;
-
-    max-width: 66.6666%;
-  }
-
-  &[width-75] {
-    flex: 0 0 75%;
-
-    max-width: 75%;
-  }
-
-  &[width-80] {
-    flex: 0 0 80%;
-
-    max-width: 80%;
-  }
-
-  &[width-90] {
-    flex: 0 0 90%;
-
-    max-width: 90%;
-  }
+ 
 }
 
 
@@ -228,3 +150,39 @@ ion-col {
 @include responsive-grid-break('[responsive-sm]', $grid-responsive-sm-break);
 @include responsive-grid-break('[responsive-md]', $grid-responsive-md-break);
 @include responsive-grid-break('[responsive-lg]', $grid-responsive-lg-break);
+
+
+// Resposive Column Classes
+// Add an attribute of X-width-10 to a col
+// will trigger the width to be 10% for that breakpoint
+// Ex: <ion-col lg-width-25 sm-width-50 width-100></ion-col>
+
+@each $col in $grid-columns-width {
+  @include grid-column($col);
+}
+
+// Smaller than large devices
+
+@media (max-width: $grid-responsive-lg-break) {
+  @each $col in $grid-columns-width {
+    @include grid-column($col, 'lg-');
+  }
+}
+
+
+// Smaller than medium devices
+
+@media (max-width: $grid-responsive-md-break) {
+  @each $col in $grid-columns-width {
+    @include grid-column($col, 'md-');
+  }
+}
+
+
+// Smaller than small devices
+
+@media (max-width: $grid-responsive-sm-break) {
+  @each $col in $grid-columns-width {
+    @include grid-column($col, 'sm-');
+  }
+}
