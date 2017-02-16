@@ -1,6 +1,6 @@
 import { NgModule, Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { App, AlertController, Content, DeepLinkConfig, IonicApp, IonicModule,
+import { App, AlertController, Content, IonicApp, IonicModule,
          NavController, Tabs, Tab, ModalController, ViewController } from '../../../..';
 
 @Component({
@@ -711,22 +711,6 @@ export class E2EApp {
   root = FirstPage;
 }
 
-
-export const deepLinkConfig: DeepLinkConfig = {
-  links: [
-    { component: FirstPage, name: 'first-page' },
-    { component: AnotherPage, name: 'another-page' },
-    { component: MyCmpTest, name: 'tab1-page1' },
-
-    { loadChildren: './pages/full-page/full-page.module.js', name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
-
-    { component: PrimaryHeaderPage, name: 'primary-header-page', defaultHistory: ['first-page', 'full-page'] },
-    { component: Tabs, name: 'tabs' },
-    { component: Tab1, name: 'tab1' },
-    { component: TabItemPage, name: 'item' }
-  ]
-};
-
 @NgModule({
   declarations: [
     E2EApp,
@@ -746,7 +730,20 @@ export const deepLinkConfig: DeepLinkConfig = {
     BrowserModule,
     IonicModule.forRoot(E2EApp, {
       swipeBackEnabled: true
-    }, deepLinkConfig)
+    }, {
+      links: [
+        { component: FirstPage, name: 'first-page' },
+        { component: AnotherPage, name: 'another-page' },
+        { component: MyCmpTest, name: 'tab1-page1' },
+
+        { loadChildren: './pages/full-page/full-page.module#LinkModule', name: 'full-page', defaultHistory: ['first-page', 'another-page'] },
+
+        { component: PrimaryHeaderPage, name: 'primary-header-page', defaultHistory: ['first-page', 'full-page'] },
+        { component: Tabs, name: 'tabs' },
+        { component: Tab1, name: 'tab1' },
+        { component: TabItemPage, name: 'item' }
+      ]
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
