@@ -511,7 +511,7 @@ describe('DeepLinker', () => {
     let moduleLoader = mockModuleLoader();
     let baseCfr: any = null;
 
-    linker = new DeepLinker(mockApp(), serializer, mockLocation(), moduleLoader, baseCfr);
+    linker = new DeepLinker(mockApp(), serializer, mockLocation(), moduleLoader as any, baseCfr);
   });
 
 });
