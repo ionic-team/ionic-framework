@@ -177,6 +177,8 @@ export class Tabs extends Ion implements AfterViewInit {
   id: string;
   /** @internal */
   _selectHistory: string[] = [];
+  /** @internal */
+  _resizeObs: any;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -284,6 +286,7 @@ export class Tabs extends Ion implements AfterViewInit {
   }
 
   ngOnDestroy() {
+    this._resizeObs && this._resizeObs.unsubscribe();
     this.parent.unregisterChildNav(this);
   }
 
@@ -296,7 +299,7 @@ export class Tabs extends Ion implements AfterViewInit {
     this._setConfig('tabsHighlight', this.tabsHighlight);
 
     if (this.tabsHighlight) {
-      this._plt.onResize(() => {
+      this._resizeObs = this._plt.resize.subscribe(() => {
         this._highlight.select(this.getSelected());
       });
     }
@@ -364,7 +367,7 @@ export class Tabs extends Ion implements AfterViewInit {
   /**
    * @private
    */
-  add(tab: Tab) {
+  add(tab: Tab): string {
     this._tabs.push(tab);
     return this.id + '-' + (++this._ids);
   }

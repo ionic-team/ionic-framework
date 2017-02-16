@@ -84,9 +84,7 @@ export function initEvents(s: Slides, plt: Platform): Function {
   }
 
   // onresize
-  unregs.push(plt.onResize(() => {
-    onResize(s, plt, false);
-  }));
+  let resizeObs = plt.resize.subscribe(() => onResize(s, plt, false));
 
   // Next, Prev, Index
   if (s.nextButton) {
@@ -115,7 +113,8 @@ export function initEvents(s: Slides, plt: Platform): Function {
   }
 
   // return a function that removes all of the added listeners
-  return function() {
+  return function () {
+    resizeObs.unsubscribe();
     unregs.forEach(unreg => {
       unreg();
     });

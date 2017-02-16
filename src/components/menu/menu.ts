@@ -359,7 +359,7 @@ export class Menu {
     this._cntEle.classList.add('menu-content-' + this.type);
 
     // register this menu with the app's menu controller
-    this._menuCtrl.register(this);
+    this._menuCtrl._register(this);
   }
 
   /**
@@ -656,7 +656,7 @@ export class Menu {
    * @private
    */
   ngOnDestroy() {
-    this._menuCtrl.unregister(this);
+    this._menuCtrl._unregister(this);
     this._events.destroy();
     this._gesture && this._gesture.destroy();
     this._type && this._type.destroy();
