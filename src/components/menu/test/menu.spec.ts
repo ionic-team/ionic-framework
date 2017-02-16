@@ -13,7 +13,7 @@ describe('MenuController', () => {
 
     it('should get the only menu', () => {
       let someMenu = mockMenu();
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get();
       expect(menu).toEqual(someMenu);
@@ -21,7 +21,7 @@ describe('MenuController', () => {
 
     it('should get the only menu if menuId === ""', () => {
       let someMenu = mockMenu();
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get('');
       expect(menu).toEqual(someMenu);
@@ -30,11 +30,11 @@ describe('MenuController', () => {
     it('should get the enabled menu when multiple menus', () => {
       let someMenu1 = mockMenu();
       someMenu1.enabled = false;
-      menuCtrl.register(someMenu1);
+      menuCtrl._register(someMenu1);
 
       let someMenu2 = mockMenu();
       someMenu2.enabled = true;
-      menuCtrl.register(someMenu2);
+      menuCtrl._register(someMenu2);
 
       let menu = menuCtrl.get();
       expect(menu).toEqual(someMenu2);
@@ -52,7 +52,7 @@ describe('MenuController', () => {
     it('should be null if no matching menus with id', () => {
       let someMenu = mockMenu();
       someMenu.id = 'whatever';
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get('myMenu');
       expect(menu).toEqual(null);
@@ -61,7 +61,7 @@ describe('MenuController', () => {
     it('should get the menu by id with matching id', () => {
       let someMenu = mockMenu();
       someMenu.id = 'myMenu';
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get('myMenu');
       expect(menu).toEqual(someMenu);
@@ -71,7 +71,7 @@ describe('MenuController', () => {
       let someMenu = mockMenu();
       someMenu.id = 'myMenu';
       someMenu.side = 'left';
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get('myMenu');
       expect(menu).toEqual(someMenu);
@@ -80,11 +80,11 @@ describe('MenuController', () => {
     it('should get the menu by id with matching id when multiple menus', () => {
       let someMenu1 = mockMenu();
       someMenu1.id = 'myMenu1';
-      menuCtrl.register(someMenu1);
+      menuCtrl._register(someMenu1);
 
       let someMenu2 = mockMenu();
       someMenu2.id = 'myMenu2';
-      menuCtrl.register(someMenu2);
+      menuCtrl._register(someMenu2);
 
       let menu = menuCtrl.get('myMenu1');
       expect(menu).toEqual(someMenu1);
@@ -110,7 +110,7 @@ describe('MenuController', () => {
     it('should get the only left menu', () => {
       let someMenu = mockMenu();
       someMenu.side = 'left';
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get('left');
       expect(menu).toEqual(someMenu);
@@ -120,12 +120,12 @@ describe('MenuController', () => {
       let someMenu1 = mockMenu();
       someMenu1.side = 'left';
       someMenu1.enabled = false;
-      menuCtrl.register(someMenu1);
+      menuCtrl._register(someMenu1);
 
       let someMenu2 = mockMenu();
       someMenu2.side = 'left';
       someMenu2.enabled = true;
-      menuCtrl.register(someMenu2);
+      menuCtrl._register(someMenu2);
 
       let menu = menuCtrl.get('left');
       expect(menu).toEqual(someMenu2);
@@ -135,12 +135,12 @@ describe('MenuController', () => {
       let someMenu1 = mockMenu();
       someMenu1.side = 'left';
       someMenu1.enabled = false;
-      menuCtrl.register(someMenu1);
+      menuCtrl._register(someMenu1);
 
       let someMenu2 = mockMenu();
       someMenu2.side = 'left';
       someMenu2.enabled = false;
-      menuCtrl.register(someMenu2);
+      menuCtrl._register(someMenu2);
 
       let menu = menuCtrl.get('left');
       expect(menu).toEqual(someMenu1);
@@ -149,7 +149,7 @@ describe('MenuController', () => {
     it('should get the only right menu', () => {
       let someMenu = mockMenu();
       someMenu.side = 'right';
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get('right');
       expect(menu).toEqual(someMenu);
@@ -159,7 +159,7 @@ describe('MenuController', () => {
       let someMenu = mockMenu();
       someMenu.id = 'myMenu';
       someMenu.side = 'left';
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
 
       let menu = menuCtrl.get('left');
       expect(menu).toEqual(someMenu);
@@ -172,7 +172,7 @@ describe('MenuController', () => {
     it('should enable a menu', () => {
       let someMenu = mockMenu();
       someMenu.enabled = true;
-      menuCtrl.register(someMenu);
+      menuCtrl._register(someMenu);
       someMenu._menuCtrl = menuCtrl;
 
       let menu = menuCtrl.enable(true);
@@ -188,21 +188,21 @@ describe('MenuController', () => {
       someMenu1.side = 'left';
       someMenu1.id = 'menu1';
       someMenu1._menuCtrl = menuCtrl;
-      menuCtrl.register(someMenu1);
+      menuCtrl._register(someMenu1);
 
       let someMenu2 = mockMenu();
       someMenu2.enabled = false;
       someMenu2.side = 'left';
       someMenu2.id = 'menu2';
       someMenu2._menuCtrl = menuCtrl;
-      menuCtrl.register(someMenu2);
+      menuCtrl._register(someMenu2);
 
       let someMenu3 = mockMenu();
       someMenu3.enabled = true;
       someMenu3.side = 'right';
       someMenu3.id = 'menu2';
       someMenu3._menuCtrl = menuCtrl;
-      menuCtrl.register(someMenu3);
+      menuCtrl._register(someMenu3);
 
       menuCtrl.enable(true, 'menu1');
       expect(someMenu1.enabled).toEqual(true);
@@ -224,15 +224,15 @@ describe('MenuController', () => {
 
   it('should register a menu', () => {
     let menu = mockMenu();
-    menuCtrl.register(menu);
+    menuCtrl._register(menu);
     expect(menuCtrl.getMenus().length).toEqual(1);
 
     let menu2 = mockMenu();
-    menuCtrl.register(menu2);
+    menuCtrl._register(menu2);
     expect(menuCtrl.getMenus().length).toEqual(2);
 
-    menuCtrl.unregister(menu2);
-    menuCtrl.unregister(menu);
+    menuCtrl._unregister(menu2);
+    menuCtrl._unregister(menu);
 
     expect(menuCtrl.getMenus().length).toEqual(0);
   });

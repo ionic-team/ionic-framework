@@ -25,14 +25,11 @@ export const AppRootToken = new OpaqueToken('USERROOT');
 export class IonicApp extends Ion implements OnInit {
   private _stopScrollPlugin: any;
   private _tmr: number;
+
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
-
   @ViewChild('modalPortal', { read: OverlayPortal }) _modalPortal: OverlayPortal;
-
   @ViewChild('overlayPortal', { read: OverlayPortal }) _overlayPortal: OverlayPortal;
-
   @ViewChild('loadingPortal', { read: OverlayPortal }) _loadingPortal: OverlayPortal;
-
   @ViewChild('toastPortal', { read: OverlayPortal }) _toastPortal: OverlayPortal;
 
   constructor(
@@ -92,9 +89,6 @@ export class IonicApp extends Ion implements OnInit {
     this._plt.prepareReady();
   }
 
-  /**
-   * @private
-   */
   _getPortal(portal?: AppPortal): OverlayPortal {
     if (portal === AppPortal.LOADING) {
       return this._loadingPortal;
@@ -110,9 +104,6 @@ export class IonicApp extends Ion implements OnInit {
     return this._overlayPortal;
   }
 
-  /**
-   * @private
-   */
   _getActivePortal(): OverlayPortal {
     const defaultPortal = this._overlayPortal;
     const modalPortal = this._modalPortal;
@@ -139,12 +130,8 @@ export class IonicApp extends Ion implements OnInit {
     } else if (hasDefault) {
       return defaultPortal;
     }
-
   }
 
-  /**
-   * @private
-   */
   _disableScroll(shouldDisableScroll: boolean) {
     if (shouldDisableScroll) {
       this.stopScroll().then(() => {

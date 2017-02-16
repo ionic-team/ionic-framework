@@ -1,7 +1,7 @@
 import { Menu } from './menu';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
-import { removeArrayItem } from '../../util/util';
+import { removeArrayItem, assert } from '../../util/util';
 
 
 /**
@@ -296,14 +296,16 @@ export class MenuController {
   /**
    * @private
    */
-  register(menu: Menu) {
+  _register(menu: Menu) {
+    assert(this._menus.indexOf(menu) < 0, 'menu was already registered');
     this._menus.push(menu);
   }
 
   /**
    * @private
    */
-  unregister(menu: Menu) {
+  _unregister(menu: Menu) {
+    assert(this._menus.indexOf(menu) >= 0, 'menu is not registered');
     removeArrayItem(this._menus, menu);
   }
 
