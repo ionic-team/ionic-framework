@@ -4,9 +4,9 @@ import { Transition } from '../../transitions/transition';
 
 export class ActionSheetSlideIn extends Transition {
   init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
+    const ele = this.enteringView.pageRef().nativeElement;
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.4);
     wrapper.fromTo('translateY', '100%', '0%');
@@ -18,9 +18,9 @@ export class ActionSheetSlideIn extends Transition {
 
 export class ActionSheetSlideOut extends Transition {
   init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
+    const ele = this.leavingView.pageRef().nativeElement;
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.4, 0);
     wrapper.fromTo('translateY', '0%', '100%');
@@ -32,9 +32,9 @@ export class ActionSheetSlideOut extends Transition {
 
 export class ActionSheetMdSlideIn extends Transition {
   init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
+    const ele = this.enteringView.pageRef().nativeElement;
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.26);
     wrapper.fromTo('translateY', '100%', '0%');
@@ -46,9 +46,9 @@ export class ActionSheetMdSlideIn extends Transition {
 
 export class ActionSheetMdSlideOut extends Transition {
   init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
+    const ele = this.leavingView.pageRef().nativeElement;
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.26, 0);
     wrapper.fromTo('translateY', '0%', '100%');
@@ -60,9 +60,9 @@ export class ActionSheetMdSlideOut extends Transition {
 
 export class ActionSheetWpSlideIn extends Transition {
   init() {
-    let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
+    const ele = this.enteringView.pageRef().nativeElement;
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.16);
     wrapper.fromTo('translateY', '100%', '0%');
@@ -74,9 +74,9 @@ export class ActionSheetWpSlideIn extends Transition {
 
 export class ActionSheetWpSlideOut extends Transition {
   init() {
-    let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
+    const ele = this.leavingView.pageRef().nativeElement;
+    const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    const wrapper = new Animation(this.plt, ele.querySelector('.action-sheet-wrapper'));
 
     backdrop.fromTo('opacity', 0.1, 0);
     wrapper.fromTo('translateY', '0%', '100%');

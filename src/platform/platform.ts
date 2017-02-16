@@ -38,7 +38,6 @@ export class Platform {
   private _ua: string;
   private _qp = new QueryParams();
   private _nPlt: string;
-  private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _bbActions: BackButtonAction[] = [];
@@ -405,6 +404,13 @@ export class Platform {
   resume: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
+   * The resize event emits when the native platform pulls the application
+   * out from the background. This event would emit when a Cordova app comes
+   * out from the background, however, it would not fire on a standard web browser.
+   */
+  resize: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
    * The back button event is triggered when the user presses the native
    * platform's back button, also referred to as the "hardware" back button.
    * This event is only used within Cordova apps running on Android and
@@ -737,18 +743,6 @@ export class Platform {
   /**
    * @private
    */
-  onResize(cb: Function): Function {
-    const self = this;
-    self._onResizes.push(cb);
-
-    return function() {
-      removeArrayItem(self._onResizes, cb);
-    };
-  }
-
-  /**
-   * @private
-   */
   isActiveElement(ele: HTMLElement) {
     return !!(ele && (this.getActiveElement() === ele));
   }
@@ -809,14 +803,7 @@ export class Platform {
           if (this.hasFocusedTextInput() === false) {
             this._isPortrait = null;
           }
-
-          for (let i = 0; i < this._onResizes.length; i++) {
-            try {
-              this._onResizes[i]();
-            } catch (e) {
-              console.error(e);
-            }
-          }
+          this.resize.emit();
         }, 200);
       }, { passive: true, zone: true });
     }, 2000);
