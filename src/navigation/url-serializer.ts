@@ -69,13 +69,14 @@ export class UrlSerializer {
     if (component) {
       const link = findLinkByComponentData(this.links, component, data);
       if (link) {
-        return this.createSegment(link, data);
+        return this._createSegment(link, data);
       }
     }
     return null;
   }
 
-  createSegment(configLink: NavLink, data: any): NavSegment {
+  /** @internal */
+  _createSegment(configLink: NavLink, data: any): NavSegment {
     let urlParts = configLink.parts;
 
     if (isPresent(data)) {

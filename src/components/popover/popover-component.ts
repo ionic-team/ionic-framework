@@ -1,7 +1,7 @@
 import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { Key } from '../../platform/key';
+import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
@@ -105,7 +105,7 @@ export class PopoverCmp {
 
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
-    if (this._enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
+    if (this._enabled && ev.keyCode === KEY_ESCAPE && this._viewCtrl.isLast()) {
       this._bdClick();
     }
   }

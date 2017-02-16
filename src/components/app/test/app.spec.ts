@@ -1,9 +1,9 @@
 import { App } from '../app';
-import { AppPortal } from '../app-root';
 import { ClickBlock } from '../../../util/click-block';
 import { Config } from '../../../config/config';
 import { mockApp, mockConfig, mockElementRef, mockNavController, mockPlatform, MockPlatform, mockRenderer, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
 import { OverlayPortal } from '../../nav/overlay-portal';
+import { PORTAL_MODAL } from '../app-root';
 
 
 describe('App', () => {
@@ -471,7 +471,7 @@ describe('App', () => {
     config = mockConfig();
     plt = mockPlatform();
     app = mockApp(config, plt);
-    portal = app._appRoot._getPortal(AppPortal.MODAL);
+    portal = app._appRoot._getPortal(PORTAL_MODAL);
   });
 
 });

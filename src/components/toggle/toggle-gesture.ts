@@ -1,4 +1,4 @@
-import { GestureController, GesturePriority, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
+import { GestureController, GESTURE_PRIORITY_TOGGLE, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
 import { DomController } from '../../platform/dom-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
 import { Platform } from '../../platform/platform';
@@ -24,7 +24,7 @@ export class ToggleGesture extends PanGesture {
       domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_TOGGLE,
-        priority: GesturePriority.Toggle,
+        priority: GESTURE_PRIORITY_TOGGLE
       })
     });
   }

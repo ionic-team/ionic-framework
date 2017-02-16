@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { AppPortal, IonicApp } from './app-root';
+import { IonicApp } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
@@ -223,7 +223,7 @@ export class App {
   /**
    * @private
    */
-  present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
+  present(enteringView: ViewController, opts: NavOptions, appPortal?: number): Promise<any> {
     const portal = this._appRoot._getPortal(appPortal);
 
     enteringView._setNav(portal);

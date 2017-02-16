@@ -1,6 +1,6 @@
 import { App } from '../app/app';
-import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
+import { PORTAL_MODAL } from '../app/app-root';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
 import { NavOptions } from '../../navigation/nav-util';
@@ -57,7 +57,7 @@ export class Modal extends ViewController {
    */
   present(navOptions: NavOptions = {}) {
     navOptions.minClickBlockDuration = navOptions.minClickBlockDuration || 400;
-    return this._app.present(this, navOptions, AppPortal.MODAL);
+    return this._app.present(this, navOptions, PORTAL_MODAL);
   }
 
 }

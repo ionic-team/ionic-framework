@@ -1,6 +1,6 @@
 import { App } from '../app/app';
-import { AppPortal } from '../app/app-root';
 import { isPresent } from '../../util/util';
+import { PORTAL_LOADING } from '../app/app-root';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
 import { NavOptions } from '../../navigation/nav-util';
@@ -43,7 +43,7 @@ export class Loading extends ViewController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions, AppPortal.LOADING);
+    return this._app.present(this, navOptions, PORTAL_LOADING);
   }
 
   /**

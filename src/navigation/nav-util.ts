@@ -200,11 +200,10 @@ export interface TransitionInstruction {
   enteringRequiresTransition?: boolean;
 }
 
-export enum ViewState {
-  INITIALIZED,
-  PRE_RENDERED,
-  LOADED,
-}
+
+export const STATE_INITIALIZED = 1;
+export const STATE_PRE_RENDERED = 2;
+export const STATE_LOADED = 3;
 
 export const INIT_ZINDEX = 100;
 

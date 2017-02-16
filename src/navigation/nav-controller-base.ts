@@ -4,7 +4,7 @@ import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
 import { convertToView, convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, INIT_ZINDEX,
-         TransitionResolveFn, TransitionInstruction, ViewState } from './nav-util';
+         TransitionResolveFn, TransitionInstruction, STATE_INITIALIZED, STATE_LOADED, STATE_PRE_RENDERED } from './nav-util';
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { DomController } from '../platform/dom-controller';
@@ -221,7 +221,7 @@ export class NavControllerBase extends Ion implements NavController {
       this._queue.length = 0;
 
       while (trns) {
-        if (trns.enteringView && (trns.enteringView._state !== ViewState.LOADED)) {
+        if (trns.enteringView && (trns.enteringView._state !== STATE_LOADED)) {
           // destroy the entering views and all of their hopes and dreams
           this._destroyView(trns.enteringView);
         }
@@ -488,12 +488,12 @@ export class NavControllerBase extends Ion implements NavController {
 
     // create ComponentRef and set it to the entering view
     enteringView.init(componentFactory.create(childInjector, []));
-    enteringView._state = ViewState.INITIALIZED;
+    enteringView._state = STATE_INITIALIZED;
     this._preLoad(enteringView);
   }
 
   _viewAttachToDOM(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
-    assert(view._state === ViewState.INITIALIZED, 'view state must be INITIALIZED');
+    assert(view._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
 
     // fire willLoad before change detection runs
     this._willLoad(view);
@@ -501,7 +501,7 @@ export class NavControllerBase extends Ion implements NavController {
     // render the component ref instance to the DOM
     // ******** DOM WRITE ****************
     viewport.insert(componentRef.hostView, viewport.length);
-    view._state = ViewState.PRE_RENDERED;
+    view._state = STATE_PRE_RENDERED;
 
     if (view._cssClass) {
       // the ElementRef of the actual ion-page created
@@ -604,7 +604,7 @@ export class NavControllerBase extends Ion implements NavController {
       }
     });
 
-    if (enteringView && enteringView._state === ViewState.INITIALIZED) {
+    if (enteringView && enteringView._state === STATE_INITIALIZED) {
       // render the entering component in the DOM
       // this would also render new child navs/views
       // which may have their very own async canEnter/Leave tests

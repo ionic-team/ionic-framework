@@ -1,5 +1,5 @@
-import { mockApp } from '../../../util/mock-providers';
-import { ToastController } from '../../toast/toast';
+import { mockApp, mockConfig } from '../../../util/mock-providers';
+import { ToastController } from '../../toast/toast-controller';
 
 
 describe('Toast', () => {
@@ -56,7 +56,7 @@ describe('Toast', () => {
 
   let toastCtrl: ToastController;
   beforeEach(() => {
-    toastCtrl = new ToastController(mockApp());
+    toastCtrl = new ToastController(mockApp(), mockConfig());
   });
 
 });

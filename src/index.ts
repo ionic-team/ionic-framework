@@ -34,11 +34,11 @@ import { LoadingController } from './components/loading/loading-controller';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal-controller';
 import { ModuleLoader, provideModuleLoader, LAZY_LOADED_TOKEN } from './util/module-loader';
+import { NgModuleLoader } from './util/ng-module-loader';
 import { PickerController } from './components/picker/picker-controller';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
 import { PopoverController } from './components/popover/popover-controller';
-import { SystemJsNgModuleLoader } from './util/system-js-ng-module-loader';
 import { TapClick, setupTapClick } from './tap-click/tap-click';
 import { ToastController } from './components/toast/toast-controller';
 import { registerModeConfigs } from './config/mode-registry';
@@ -191,7 +191,6 @@ export { ItemGroup } from './components/item/item-group';
 export { ItemReorder } from './components/item/item-reorder';
 export { Reorder } from './components/item/reorder';
 export { ItemSliding } from './components/item/item-sliding';
-export { ItemSideFlags } from './components/item/item-sliding';
 export { ItemOptions } from './components/item/item-options';
 
 export { Label } from './components/label/label';
@@ -301,7 +300,6 @@ export {
   GESTURE_ITEM_SWIPE,
   GESTURE_REFRESHER,
   GESTURE_TOGGLE,
-  GesturePriority,
   GestureOptions,
   GestureController,
   GestureDelegate,
@@ -610,12 +608,12 @@ export class IonicModule {
         ModalController,
         PickerController,
         PopoverController,
-        SystemJsNgModuleLoader,
+        NgModuleLoader,
         TapClick,
         ToastController,
         TransitionController,
 
-        { provide: ModuleLoader, useFactory: provideModuleLoader, deps: [SystemJsNgModuleLoader, Injector]},
+        { provide: ModuleLoader, useFactory: provideModuleLoader, deps: [NgModuleLoader, Injector]},
         { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [new Inject(APP_BASE_HREF), new Optional()], Config ] },
         { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
         { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location,  DeepLinkConfigToken, ModuleLoader, ComponentFactoryResolver ] },
