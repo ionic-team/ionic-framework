@@ -12,6 +12,8 @@ import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
 import { argv } from 'yargs';
 
+import { runWorker } from './utils/app-scripts-worker-client';
+
 // These packages lack of types.
 const resolveBin = require('resolve-bin');
 
@@ -230,6 +232,12 @@ export function runAppScriptsServe(folderInfo: any, appEntryPoint: string, appNg
 }
 
 export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string) {
+  const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+  const debug: boolean = argv.debug;
+  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath);
+}
+
+/*export function runAppScriptsBuildImpl(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string) {
   console.log(`Running ionic-app-scripts build --prod for ${appEntryPoint}`);
   let scriptArgs = [
     'build',
@@ -244,8 +252,7 @@ export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: strin
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
-    '--aotWriteToDisk', 'true',
-    '--printWebpackDependencyTree', 'true'
+    '--aotWriteToDisk', 'true'
   ];
 
   const debug: boolean = argv.debug;
@@ -274,7 +281,7 @@ export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: strin
     });
   });
 }
-
+*/
 /** Resolves the path for a node package executable. */
 export function getBinaryPath(packageName: string, executable = packageName): string {
   return resolveBin.sync(packageName, {executable});

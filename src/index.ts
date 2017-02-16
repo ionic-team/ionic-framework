@@ -358,6 +358,12 @@ export { Transition } from './transitions/transition';
     ReactiveFormsModule,
   ],
   exports: [
+    CommonModule,
+    HttpModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+
     Avatar,
     Backdrop,
     Badge,
