@@ -237,51 +237,6 @@ export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: strin
   return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath);
 }
 
-/*export function runAppScriptsBuildImpl(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string) {
-  console.log(`Running ionic-app-scripts build --prod for ${appEntryPoint}`);
-  let scriptArgs = [
-    'build',
-    '--aot',
-    '--appEntryPoint', appEntryPoint,
-    '--appNgModulePath', appNgModulePath,
-    '--srcDir', srcDir,
-    '--wwwDir', distDir,
-    '--tsconfig', tsConfig,
-    '--readConfigJson', 'false',
-    '--experimentalParseDeepLinks', 'true',
-    '--ionicAngularDir', ionicAngularDir,
-    '--sass', sassConfigPath,
-    '--copy', copyConfigPath,
-    '--aotWriteToDisk', 'true'
-  ];
-
-  const debug: boolean = argv.debug;
-  if (debug) {
-    scriptArgs.push('--debug');
-  }
-
-  return new Promise((resolve, reject) => {
-    const args = ['./node_modules/.bin/ionic-app-scripts'].concat(scriptArgs);
-    console.log(`node ${args.join(' ')}`);
-    const spawnedCommand = spawn('node', args);
-
-    spawnedCommand.stdout.on('data', (buffer: Buffer) => {
-      console.log(buffer.toString());
-    });
-
-    spawnedCommand.stderr.on('data', (buffer: Buffer) => {
-      console.error(buffer.toString());
-    });
-
-    spawnedCommand.on('close', (code: number) => {
-      if (code === 0) {
-        return resolve();
-      }
-      reject(new Error('App-scripts failed with non-zero status code'));
-    });
-  });
-}
-*/
 /** Resolves the path for a node package executable. */
 export function getBinaryPath(packageName: string, executable = packageName): string {
   return resolveBin.sync(packageName, {executable});

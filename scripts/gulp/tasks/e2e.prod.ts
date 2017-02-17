@@ -35,7 +35,6 @@ function filterE2eTestfiles() {
       const directoryName = dirname(filePath);
       return join(directoryName, 'main.ts');
     });
-    console.log('entryPoints: ', entryPoints);
     return entryPoints;
   });
 }
@@ -58,9 +57,7 @@ function runTests(filePaths: string[]) {
     return buildTest(filePath);
   });
 
-  return pAll(functions, {concurrency: 12}).then(result => {
-    console.log('result: ', result);
-  });
+  return pAll(functions, {concurrency: 6});
 }
 
 function buildTest(filePath: string) {

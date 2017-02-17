@@ -63,7 +63,7 @@ export function createWorker(msg: MessageToWorker): any {
       '--sass', msg.sassConfigPath,
       '--copy', msg.copyConfigPath,
       '--enableLint', 'false',
-      'disableLogging', 'true'
+      '--disableLogging', 'true'
     ];
 
     if (msg.debug) {
