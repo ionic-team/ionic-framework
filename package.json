@@ -139,7 +139,8 @@
   "config": {
     "commitizen": {
       "path": "node_modules/ionic-cz-conventional-changelog"
-    }
+    },
+    "ionic_copy": "./scripts/demos/copy.config.js"
   },
   "pre-push#master": [
     "test"

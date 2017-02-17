@@ -10,7 +10,7 @@ console.warn = () => {};
 __karma__.loaded = function () {};
 
 
-var distPath = '/base/dist';
+var distPath = '/base/dist/';
 
 System.config({
   baseURL: distPath,

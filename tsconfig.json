@@ -11,7 +11,7 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "types": ["jasmine", "protractor", "systemjs"]
+    "types": ["jasmine", "systemjs"]
   },
   "include": [
     "src/**/*.ts",
