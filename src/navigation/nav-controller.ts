@@ -514,11 +514,11 @@ export abstract class NavController {
    * by passing options to the navigation controller.You can also pass any
    * navigation params to the individual pages in the array.
    *
-   * @param {array} pages An array of objects, each with a `page` and optionally `params` property to load in the stack.
-   * @param {object} [opts={}] Nav options to go with this transition.
+   * @param {Array<{page:any, params: any}>} pages An array of objects, each with a `page` and optionally `params` property to load in the stack.
+   * @param {Object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setPages(pages: any[], opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setPages(pages: {page: any, params: any}[], opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * @param {number} index  The index of the page to get.
