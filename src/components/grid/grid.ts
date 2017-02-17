@@ -325,7 +325,7 @@ import { Directive } from '@angular/core';
   *
   * ```
   * <ion-grid>
-  *   <ion-row top>
+  *   <ion-row align-items-start>
   *     <ion-col>
   *       1 of 4
   *     </ion-col>
@@ -340,7 +340,7 @@ import { Directive } from '@angular/core';
   *     </ion-col>
   *   </ion-row>
   *
-  *   <ion-row center>
+  *   <ion-row align-items-center>
   *     <ion-col>
   *       1 of 4
   *     </ion-col>
@@ -355,7 +355,7 @@ import { Directive } from '@angular/core';
   *     </ion-col>
   *   </ion-row>
   *
-  *   <ion-row bottom>
+  *   <ion-row align-items-end>
   *     <ion-col>
   *       1 of 4
   *     </ion-col>
@@ -379,17 +379,17 @@ import { Directive } from '@angular/core';
   * ```
   * <ion-grid>
   *   <ion-row>
-  *     <ion-col top>
+  *     <ion-col align-self-start>
   *       <div>
   *         1 of 4
   *       </div>
   *     </ion-col>
-  *     <ion-col center>
+  *     <ion-col align-self-center>
   *       <div>
   *         2 of 4
   *       </div>
   *     </ion-col>
-  *     <ion-col bottom>
+  *     <ion-col align-self-end>
   *       <div>
   *         3 of 4
   *       </div>
@@ -405,7 +405,58 @@ import { Directive } from '@angular/core';
   *
   * ### Horizontal alignment
   *
-  * TODO - we don't support this, should we?
+  * All columns can be horizontally aligned inside of a row by adding different
+  * attributes to the row. For a list of available attributes, see
+  * [row attributes](../Row#row-attributes).
+  *
+  * ```
+  * <ion-grid>
+  *   <ion-row justify-content-start>
+  *     <ion-col col-3>
+  *       1 of 2
+  *     </ion-col>
+  *     <ion-col col-3>
+  *       2 of 2
+  *     </ion-col>
+  *   </ion-row>
+  *
+  *   <ion-row justify-content-center>
+  *     <ion-col col-3>
+  *       1 of 2
+  *     </ion-col>
+  *     <ion-col col-3>
+  *       2 of 2
+  *     </ion-col>
+  *   </ion-row>
+  *
+  *   <ion-row justify-content-end>
+  *     <ion-col col-3>
+  *       1 of 2
+  *     </ion-col>
+  *     <ion-col col-3>
+  *       2 of 2
+  *     </ion-col>
+  *   </ion-row>
+  *
+  *   <ion-row justify-content-around>
+  *     <ion-col col-3>
+  *       1 of 2
+  *     </ion-col>
+  *     <ion-col col-3>
+  *       2 of 2
+  *     </ion-col>
+  *   </ion-row>
+  *
+  *   <ion-row justify-content-between>
+  *     <ion-col col-3>
+  *       1 of 2
+  *     </ion-col>
+  *     <ion-col col-3>
+  *       2 of 2
+  *     </ion-col>
+  *   </ion-row>
+  * </ion-grid>
+  * ```
   *
   *
   * ## Customizing the grid

@@ -29,7 +29,10 @@
         <a href="#responsive-attributes">Responsive attributes</a>
       </ion-col>
       <ion-col col-auto>
-        <a href="#alignment">Alignment</a>
+        <a href="#vertical-alignment">Vertical Alignment</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#horizontal-alignment">Horizontal Alignment</a>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -251,7 +254,7 @@
       </ion-row>
     </ion-grid>
 
-    <h1 id="alignment">Alignment</h1>
+    <h1 id="vertical-alignment">Vertical Alignment</h1>
     <p padding>
       The following grid has columns that align themselves vertically inside of the row based on the attribute.<br>
     </p>
@@ -271,7 +274,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row top>
+      <ion-row align-items-start>
         <ion-col>
           1 of 4
         </ion-col>
@@ -286,7 +289,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row center>
+      <ion-row align-items-center>
         <ion-col>
           1 of 4
         </ion-col>
@@ -301,7 +304,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row bottom>
+      <ion-row align-items-end>
         <ion-col>
           1 of 4
         </ion-col>
@@ -319,17 +322,68 @@
 
     <ion-grid>
       <ion-row>
-        <ion-col top>
+        <ion-col align-self-start>
           1 of 4
         </ion-col>
-        <ion-col center>
+        <ion-col align-self-center>
           2 of 4
         </ion-col>
-        <ion-col bottom>
+        <ion-col align-self-end>
           3 of 4
         </ion-col>
         <ion-col>
           4 of 4 <br>#<br>#<br>#
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="horizontal-alignment">Horizontal Alignment</h1>
+    <p padding>
+      The following grid has columns that align themselves horizontally inside of the row based on the attribute.<br>
+    </p>
+    <ion-grid>
+      <ion-row justify-content-start>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-center>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-end>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-around>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-between>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
         </ion-col>
       </ion-row>
     </ion-grid>

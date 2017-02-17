@@ -54,7 +54,51 @@ ion-grid {
   width: 100%;
 }
 
+ion-row {
+  &[top] {
+    align-items: flex-start;
+  }
+
+  &[bottom] {
+    align-items: flex-end;
+  }
+
+  &[center] {
+    align-items: center;
+  }
+
+  &[stretch] {
+    align-items: stretch;
+  }
+
+  &[baseline] {
+    align-items: baseline;
+  }
+}
+
 ion-col {
+  // Column Alignment
+
+  &[top] {
+    align-self: flex-start;
+  }
+
+  &[bottom] {
+    align-self: flex-end;
+  }
+
+  &[center] {
+    align-self: center;
+  }
+
+  &[stretch] {
+    align-self: stretch;
+  }
+
+  &[baseline] {
+    align-self: baseline;
+  }
+
   // Column Offsets
 
   &[offset-10] {
