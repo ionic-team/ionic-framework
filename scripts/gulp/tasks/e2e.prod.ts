@@ -1,13 +1,15 @@
 import { dirname, join, relative } from 'path';
-
-import { task } from 'gulp';
-import * as del from 'del';
-import * as runSequence from 'run-sequence';
+import { readFileSync } from 'fs';
 
 import * as glob from 'glob';
+import { task } from 'gulp';
+import * as del from 'del';
+import { template } from 'lodash';
+import * as runSequence from 'run-sequence';
 
-import { ES_2015, PROJECT_ROOT, SRC_COMPONENTS_ROOT } from '../constants';
-import { createTempTsConfig, runAppScriptsBuild, writePolyfills } from '../util';
+
+import { ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
+import { createTempTsConfig, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
 
 import * as pAll from 'p-all';
 
@@ -18,10 +20,9 @@ task('e2e.prepare', (done: Function) => {
 task('e2e.prod', ['e2e.prepare'], (done: Function) => {
 
   // okay, first find out all of the e2e tests to run by finding all of the 'main.ts' files
-
   filterE2eTestfiles().then((filePaths: string[]) => {
     console.log(`Compiling ${filePaths.length} E2E tests ...`);
-    return runTests(filePaths);
+    return buildTests(filePaths);
   }).then(() => {
     done();
   }).catch((err: Error) => {
@@ -52,17 +53,18 @@ function getE2eTestFiles() {
 }
 
 
-function runTests(filePaths: string[]) {
+function buildTests(filePaths: string[]) {
   const functions = filePaths.map(filePath => () => {
     return buildTest(filePath);
   });
-
-  return pAll(functions, {concurrency: 6});
+  return pAll(functions, {concurrency: 8}).then(() => {
+    // copy over all of the protractor tests to the correct location now
+    return copyProtractorTestContent(filePaths);
+  });
 }
 
 function buildTest(filePath: string) {
   const start = Date.now();
-  console.log(`Starting build for ${filePath}`);
   const ionicAngularDir = join(process.cwd(), 'src');
   const srcTestRoot = dirname(filePath);
   const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), srcTestRoot);
@@ -86,6 +88,79 @@ function buildTest(filePath: string) {
     console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
   });
 }
+
+function copyProtractorTestContent(filePaths: string[]): Promise<any> {
+  return readE2ETestFiles(filePaths)
+    .then((map: Map<string, string>) => {
+      return applyTemplate(map);
+    }).then((map: Map<string, string>) => {
+      writeE2EJsFiles(map);
+    });
+}
+
+function applyTemplate(filePathContent: Map<string, string>) {
+  const buildConfig = require('../../build/config');
+  const templateFileContent = readFileSync(join(SCRIPTS_ROOT, 'e2e', 'e2e.template.js'));
+  const templater = template(templateFileContent.toString());
+  const modifiedMap = new Map<string, string>();
+  const platforms = ['android', 'ios', 'windows'];
+  filePathContent.forEach((fileContent: string, filePath: string) => {
+    const srcRelativePath = relative(SRC_ROOT, dirname(filePath));
+    const wwwRelativePath = join(srcRelativePath, 'www');
+    platforms.forEach(platform => {
+      const platformContents = templater({
+        contents: fileContent,
+        buildConfig: buildConfig,
+        relativePath: wwwRelativePath,
+        platform: platform,
+        relativePathBackwardsCompatibility: dirname(wwwRelativePath)
+      });
+      const newFilePath = join(wwwRelativePath, `${platform}.e2e.js`);
+      modifiedMap.set(newFilePath, platformContents);
+    });
+  });
+  return modifiedMap;
+}
+
+function writeE2EJsFiles(map: Map<string, string>) {
+  const promises: Promise<any>[] = [];
+  map.forEach((fileContent: string, filePath: string) => {
+    const destination = join(process.cwd(), 'dist', 'e2e', filePath);
+    promises.push(writeFileAsync(destination, fileContent));
+  });
+  return Promise.all(promises);
+}
+
+
+function readE2ETestFiles(mainFilePaths: string[]): Promise<Map<string, string>> {
+  const e2eFiles = mainFilePaths.map(mainFilePath => {
+    return join(dirname(mainFilePath), 'e2e.ts');
+  });
+
+  const promises: Promise<any>[] = [];
+  const map = new Map<string, string>();
+  for (const e2eFile of e2eFiles) {
+    const promise = readE2EFile(e2eFile);
+    promises.push(promise);
+    promise.then((content: string) => {
+      map.set(e2eFile, content);
+    });
+  }
+
+  return Promise.all(promises).then(() => {
+    return map;
+  });
+}
+
+function readE2EFile(filePath: string) {
+  return readFileAsync(filePath).then((content: string) => {
+    // purge the import statement at the top
+    const purgeImportRegex = /.*?import.*?'protractor';/g;
+    return content.replace(purgeImportRegex, '');
+  });
+}
+
+
 
 task('e2e.clean', (done: Function) => {
   del(['dist/e2e/**']).then(() => {

@@ -27,7 +27,6 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
     });
 
     worker.on('exit', (code: number) => {
-      console.log(`worker exited, entrypoint: ${appEntryPoint}, pid: ${worker.pid}, code: ${code}`);
       resolve(code);
     });
   });
@@ -77,8 +76,6 @@ export function createWorker(msg: MessageToWorker): any {
         npm_config_argv: process.env.npm_config_argv
       }
     });
-
-    console.log(`worker created, pid: ${worker.pid}`);
 
     workers.push({
       appEntryPoint: msg.appEntryPoint,

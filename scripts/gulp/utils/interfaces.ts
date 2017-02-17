@@ -16,11 +16,3 @@ export interface MessageToWorker {
   sassConfigPath: string;
   copyConfigPath: string;
 };
-
-export interface MessageFromWorker {
-  appEntryPoint: string;
-  resolve?: any;
-  reject?: any;
-  error?: any;
-  pid?: number;
-};

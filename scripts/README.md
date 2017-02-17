@@ -28,20 +28,18 @@ Run `gulp build` or `gulp watch` to watch for changes.
 
 #### Development
 
-1. Run `gulp e2e` or `gulp e2e.watch` to watch for changes.
-2. Navigate to `http://localhost:8000/dist/e2e`
+1. Run `gulp e2e.watch --folder nav/basic` to watch for changes, where `nav` is the component, and `basic` is the test name
+2. The browser will launch just like when using `ionic serve`. Make changes to an app in the `src` directory and the app will rebuild.
 
 #### Validation
 
 The following commands take longer to run because they use AoT compilation. They should really only be used to validate that our components work with AoT, and fix them if not.
 
-1. Run `gulp e2e.prod` to bundle all e2e tests. Folder is optional, see the flags section below.
-2. Run `gulp e2e.watchProd` with a folder passed to watch a test. Folder is required, see the flags section below.
-3. Navigate to `http://localhost:8000/dist/e2e`
+1. Run `gulp e2e.prod` to bundle all e2e tests.
 
 ##### Flags
 
-- `--f | -folder` will run the command with a test folder. For example, `gulp e2e.watchProd --f=select/single-value` will watch the test in `src/components/select/test/single-value`.
+- `--f | -folder` will run the command with a test folder.
 - `--debug` will run the `ionic-app-scripts` command with debug output printed.
 
 
@@ -98,8 +96,6 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 - `gulp snapshot` will run the `gulp e2e.prod` task with AoT compilation.
 - `gulp snapshot.skipBuild` will skip the `gulp e2e.prod` task with AoT compilation.
-- `gulp snapshot.dev` will run a development build using the `gulp e2e` task.
-- `gulp snapshot.quick` will skip the build and run snapshot without uploading to the server.
 
 #### Flags
 

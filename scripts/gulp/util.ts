@@ -2,7 +2,7 @@ import { spawn } from 'child_process';
 import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { dirname, join } from 'path';
-import { ensureDirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs-extra';
+import { ensureDirSync, readdirSync, readFile, readFileSync, statSync, writeFile, writeFileSync } from 'fs-extra';
 import { rollup } from 'rollup';
 import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -357,4 +357,26 @@ export function getFolders(dir) {
     .filter(function(file) {
       return statSync(join(dir, file)).isDirectory();
     });
+}
+
+export function readFileAsync(filePath: string) {
+  return new Promise((resolve, reject) => {
+    readFile(filePath, (err: Error, buffer: Buffer) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(buffer.toString());
+    });
+  });
+}
+
+export function writeFileAsync(filePath: string, fileContent: string) {
+  return new Promise((resolve, reject) => {
+    writeFile(filePath, fileContent, (err: Error) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve();
+    });
+  });
 }
