@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicModule } from 'ionic-angular';
+import { IonicModule } from '../../../../../..';
 import { FullPage } from './full-page';
 
 
@@ -14,4 +14,4 @@ import { FullPage } from './full-page';
     FullPage,
   ]
 })
-export default class LinkModule {}
+export class LinkModule { }

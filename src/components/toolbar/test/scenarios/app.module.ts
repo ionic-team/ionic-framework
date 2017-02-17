@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 })
 export class E2EApp {
 
-  buttonClick(button) {
+  buttonClick(button: any) {
     console.log(button);
   }
 

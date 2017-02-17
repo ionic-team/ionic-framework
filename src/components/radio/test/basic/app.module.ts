@@ -1,7 +1,7 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IonicApp, IonicModule, RadioButton, RadioGroup } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, RadioButton, RadioGroup } from '../../../..';
 
 
 @Component({

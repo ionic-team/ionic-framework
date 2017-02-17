@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should navigate to page 2', function() {
   element(by.css('.e2eCordovaPage2')).click();

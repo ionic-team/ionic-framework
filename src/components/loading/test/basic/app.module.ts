@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../../../ionic-angular';
+import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../..';
 
 
 @Component({
@@ -307,11 +307,11 @@ export class E2EApp {
   root = E2EPage;
 
   constructor(app: App) {
-    app.viewDidLeave.subscribe(ev => {
+    app.viewDidLeave.subscribe((ev: any) => {
       console.log('App didLeave');
     });
 
-    app.viewWillLeave.subscribe(ev => {
+    app.viewWillLeave.subscribe((ev: any) => {
       console.log('App willLeave');
     });
   }

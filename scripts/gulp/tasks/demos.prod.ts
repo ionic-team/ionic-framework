@@ -9,7 +9,7 @@ import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 
 import { DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DIST_NAME, DEMOS_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, SCRIPTS_ROOT } from '../constants';
-import { createTempTsConfig, getFolderInfo, getFolders, runAppScripts } from '../util';
+import { createTempTsConfig, getFolderInfo, getFolders, runAppScriptsServe } from '../util';
 
 task('demos.prod', demosBuild);
 
@@ -84,7 +84,8 @@ function buildTest(folderInfo: any) {
   let appEntryPoint = `dist/demos/${folderInfo.componentName}/main.ts`;
   let distDir = `dist/demos/${folderInfo.componentName}/`;
 
-  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, distDir);
+  return Promise.resolve();
+  // return runAppScriptsServe(folderInfo, sassConfigPath, appEntryPoint, distDir);
 }
 
 function buildAllTests(done: Function) {

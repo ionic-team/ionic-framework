@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, NavController, NavParams } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, NavController, NavParams } from '../../../..';
 import { DomSanitizer } from '@angular/platform-browser';
 
 

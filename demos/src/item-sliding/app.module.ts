@@ -1,6 +1,6 @@
 import { Component, NgModule, ViewEncapsulation } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, ItemSliding, ToastController } from '../../ionic-angular';
+import { IonicApp, IonicModule, ItemSliding, ToastController } from '..';
 
 
 @Component({

@@ -11,11 +11,7 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    "types": ["jasmine", "systemjs"],
-    "baseUrl": ".",
-    "paths": {
-      "ionic-angular": ["src"]
-    }
+    "types": ["jasmine", "protractor", "systemjs"]
   },
   "include": [
     "src/**/*.ts",

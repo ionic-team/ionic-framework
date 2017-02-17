@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, FabContainer } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, FabContainer } from '../../../..';
 
 @Component({
   templateUrl: 'main.html'

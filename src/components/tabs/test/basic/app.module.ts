@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Config, IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../../../ionic-angular';
+import { Config, IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../..';
 
 //
 // Modal

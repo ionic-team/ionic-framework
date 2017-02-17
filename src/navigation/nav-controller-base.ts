@@ -78,6 +78,9 @@ export class NavControllerBase extends Ion implements NavController {
         insertViews: [viewController],
         opts: opts,
       }, done);
+    }).catch((err: Error) => {
+      console.error('Failed to navigate: ', err.message);
+      throw err;
     });
   }
 

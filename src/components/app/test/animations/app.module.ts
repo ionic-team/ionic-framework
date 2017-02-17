@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Animation, Config, IonicApp, IonicModule, Platform } from '../../../../../ionic-angular';
+import { Animation, Config, IonicApp, IonicModule, Platform } from '../../../..';
 
 
 @Component({

@@ -1,12 +1,12 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule } from '../../../..';
 
 @Component({
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  items = [];
+  items: number[] = [];
 
   constructor() {
     for (var i = 0; i < 100; i++) {
