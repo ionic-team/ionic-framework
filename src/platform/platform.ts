@@ -574,8 +574,8 @@ export class Platform {
     if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
       var win = this._win;
 
-      const innerWidth = win['innerWidth'];
-      const innerHeight = win['innerHeight'];
+      var innerWidth = win['innerWidth'];
+      var innerHeight = win['innerHeight'];
 
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
