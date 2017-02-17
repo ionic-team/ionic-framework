@@ -574,40 +574,43 @@ export class Platform {
     if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
       var win = this._win;
 
+      var innerWidth = win['innerWidth'];
+      var innerHeight = win['innerHeight'];
+
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
       // up accurate values when the keyboard is up
       if (win.screen.width > 0 && win.screen.height > 0) {
-        if (win['innerWidth'] < win['innerHeight']) {
+        if (innerWidth < innerHeight) {
 
           // the device is in portrait
-          if (this._pW <= win['innerWidth']) {
+          // we have to do fancier checking here
+          // because of the virtual keyboard resizing
+          // the window
+          if (this._pW <= innerWidth) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
-            this._pW = win['innerWidth'];
+            this._pW = innerWidth;
           }
-          if (this._pH <= win['innerHeight']) {
+
+          if (this._pH <= innerHeight) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
-            this._pH = win['innerHeight'];
+            this._pH = innerHeight;
           }
 
         } else {
-          if (this._lW > win['innerWidth']) {
-            // Special case: keyboard is open and device is in portrait
-            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
-            this._isPortrait = true;
-          }
           // the device is in landscape
-          if (this._lW <= win['innerWidth']) {
+          if (this._lW !== innerWidth) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
-            this._lW = win['innerWidth'];
+            this._lW = innerWidth;
           }
-          if (this._lH <= win['innerHeight']) {
+
+          if (this._lH !== innerHeight) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
-            this._lH = win['innerHeight'];
+            this._lH = innerHeight;
           }
         }
 

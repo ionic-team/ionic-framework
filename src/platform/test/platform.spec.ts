@@ -173,6 +173,56 @@ describe('Platform', () => {
     });
   });
 
+  describe('dimensions', () => {
+    it('should return the correct width of the window', () => {
+      expect(plt.width()).toEqual(window.innerWidth);
+    });
+
+    it('should return the correct height of the window', () => {
+      expect(plt.height()).toEqual(window.innerHeight);
+    });
+
+    it('should return the correct width of the window after resize', () => {
+
+      // start with default window
+      expect(plt.width()).toEqual(window.innerWidth);
+
+      let resizedWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+
+      // resize to smaller window
+      plt.setWindow(resizedWindow);
+
+      expect(plt.width()).toEqual(resizedWindow.innerWidth);
+    });
+
+    it('should return the correct height of the window after resize', () => {
+
+      // start with default window
+      expect(plt.height()).toEqual(window.innerHeight);
+
+      let resizedWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+
+      // resize to smaller window
+      plt.setWindow(resizedWindow);
+
+      expect(plt.height()).toEqual(resizedWindow.innerHeight);
+    });
+  });
+
   it('should set core as the fallback', () => {
     plt.setDefault('core');
     plt.setQueryParams('');
