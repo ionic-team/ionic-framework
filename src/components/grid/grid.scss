@@ -70,8 +70,8 @@ $grid-padding-widths: (
 .grid {
   @include make-grid();
 
-  &[full] {
-    width: 100%;
+  &[fixed] {
+    @include make-grid-max-widths();
   }
 }
 

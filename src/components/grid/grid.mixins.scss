@@ -10,8 +10,7 @@
   padding: $padding-width / 2;
   margin-left: auto;
   margin-right: auto;
-
-  @include make-grid-max-widths();
+  width: 100%;
 
   // Remove the padding from the grid and all immediate children columns
   &[no-padding] {

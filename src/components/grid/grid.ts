@@ -41,9 +41,10 @@ import { Directive } from '@angular/core';
   *
   * ## Grid size
   *
-  * The maximum width of the grid for each breakpoint is defined in the `$grid-max-widths` Sass
-  * variable. Adding the `full` attribute to the grid will make it take up all of the available
-  * width, regardless of screen size. For more information, see [customizing the grid](#customizing-the-grid).
+  * By default, the grid will take up 100% width. To set a maximum width based on the screen
+  * size add the `fixed` attribute. The maximum width of the grid for each breakpoint is defined
+  * in the `$grid-max-widths` Sass variable. For more information, see
+  * [customizing the grid](#customizing-the-grid).
   *
   * | Name     | Value    | Description                                         |
   * |----------|----------|-----------------------------------------------------|
@@ -56,13 +57,13 @@ import { Directive } from '@angular/core';
   *
   * ## Grid attributes
   *
-  * The grid has a maximum width and padding added to it based on the screen size. There are two
+  * The grid takes up full width and has padding added to it based on the screen size. There are two
   * attributes that can be used to adjust this behavior.
   *
   * | Property        | Description                                                                                                       |
   * |-----------------|-------------------------------------------------------------------------------------------------------------------|
   * | no-padding      | Removes padding from the grid and immediate children columns.                                                     |
-  * | full            | Take up all of the available width regardless of screen size.                                                     |
+  * | fixed           | Set a max width based on the screen size.                                                                         |
   *
   *
   * ## Default breakpoints
