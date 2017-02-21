@@ -120,9 +120,10 @@ function buildTest(folderInfo: any) {
   let sassConfigPath = 'scripts/e2e/sass.config.js';
 
   let appEntryPoint = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/main.ts`;
+  let appNgModule = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app.module.ts`;
   let distDir = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/`;
 
-  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, distDir);
+  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, appNgModule, distDir);
 }
 
 function buildAllTests(done: Function) {
