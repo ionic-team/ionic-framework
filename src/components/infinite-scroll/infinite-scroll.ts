@@ -155,7 +155,7 @@ export class InfiniteScroll {
   @Output() ionInfinite: EventEmitter<InfiniteScroll> = new EventEmitter<InfiniteScroll>();
 
   constructor(
-    @Host() private _content: Content,
+    private _content: Content,
     private _zone: NgZone,
     private _elementRef: ElementRef,
     private _dom: DomController
