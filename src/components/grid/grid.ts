@@ -21,12 +21,12 @@ import { Directive } from '@angular/core';
   *   - [Equal-width](#equal-width)
   *   - [Setting one column width](#setting-one-column-width)
   *   - [Variable-width](#variable-width)
-  * - [Reordering](#reordering)
-  *   - [Offsetting columns](#offsetting-columns)
-  *   - [Push and pull](#push-and-pull)
   * - [Responsive attributes](#responsive-attributes)
   *   - [All breakpoints](#all-breakpoints)
   *   - [Stacked to horizontal](#stacked-to-horizontal)
+  * - [Reordering](#reordering)
+  *   - [Offsetting columns](#offsetting-columns)
+  *   - [Push and pull](#push-and-pull)
   * - [Alignment](#alignment)
   *   - [Vertical Alignment](#vertical-alignment)
   *   - [Horizontal Alignment](#horizontal-alignment)
@@ -183,6 +183,58 @@ import { Directive } from '@angular/core';
   * ```
   *
   *
+  * ## Responsive attributes
+  *
+  * ### All breakpoints
+  *
+  * To customize a column's width for all devices and screens, add the `col-*`
+  * attribute. These attributes tell the column to take up `*` columns out
+  * of the available columns.
+  *
+  * ```
+  * <ion-grid>
+  *   <ion-row>
+  *     <ion-col col-4>
+  *       1 of 4
+  *     </ion-col>
+  *     <ion-col col-2>
+  *       2 of 4
+  *     </ion-col>
+  *     <ion-col col-2>
+  *       3 of 4
+  *     </ion-col>
+  *     <ion-col col-4>
+  *       4 of 4
+  *     </ion-col>
+  *   </ion-row>
+  * </ion-grid>
+  * ```
+  *
+  * ###  Stacked to horizontal
+  *
+  * Use a combination of width and breakpoint attributes to create a grid that starts out stacked
+  * on extra small screens before becoming horizontal on small screens.
+  *
+  * ```
+  * <ion-grid>
+  *   <ion-row>
+  *     <ion-col col-12 col-sm>
+  *       1 of 4
+  *     </ion-col>
+  *     <ion-col col-12 col-sm>
+  *       2 of 4
+  *     </ion-col>
+  *     <ion-col col-12 col-sm>
+  *       3 of 4
+  *     </ion-col>
+  *     <ion-col col-12 col-sm>
+  *       4 of 4
+  *     </ion-col>
+  *   </ion-row>
+  * </ion-grid>
+  * ```
+  *
+  *
   * ## Reordering
   *
   * ### Offseting columns
@@ -263,57 +315,6 @@ import { Directive } from '@angular/core';
   * </ion-grid>
   * ```
   *
-  *
-  * ## Responsive attributes
-  *
-  * ### All breakpoints
-  *
-  * To customize a column's width for all devices and screens, add the `col-*`
-  * attribute. These attributes tell the column to take up `*` columns out
-  * of the available columns.
-  *
-  * ```
-  * <ion-grid>
-  *   <ion-row>
-  *     <ion-col col-4>
-  *       1 of 4
-  *     </ion-col>
-  *     <ion-col col-2>
-  *       2 of 4
-  *     </ion-col>
-  *     <ion-col col-2>
-  *       3 of 4
-  *     </ion-col>
-  *     <ion-col col-4>
-  *       4 of 4
-  *     </ion-col>
-  *   </ion-row>
-  * </ion-grid>
-  * ```
-  *
-  * ###  Stacked to horizontal
-  *
-  * Use a combination of width and breakpoint attributes to create a grid that starts out stacked
-  * on extra small screens before becoming horizontal on small screens.
-  *
-  * ```
-  * <ion-grid>
-  *   <ion-row>
-  *     <ion-col col-12 col-sm>
-  *       1 of 4
-  *     </ion-col>
-  *     <ion-col col-12 col-sm>
-  *       2 of 4
-  *     </ion-col>
-  *     <ion-col col-12 col-sm>
-  *       3 of 4
-  *     </ion-col>
-  *     <ion-col col-12 col-sm>
-  *       4 of 4
-  *     </ion-col>
-  *   </ion-row>
-  * </ion-grid>
-  * ```
   *
   * ## Alignment
   *
