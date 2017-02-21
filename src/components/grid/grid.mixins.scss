@@ -1,0 +1,302 @@
+@import "../../themes/ionic.globals";
+
+// Responsive Mixins
+// --------------------------------------------------
+
+// Creates a grid with padding
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid($padding-width: $grid-padding-width) {
+  padding: $padding-width / 2;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+
+  // Remove the padding from the grid and all immediate children columns
+  &[no-padding] {
+    padding: 0;
+
+    > .row > .col {
+      padding: 0;
+    }
+  }
+}
+
+// Creates maximum widths for the grid based on screen size
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid-max-widths($max-widths: $grid-max-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      width: $container-max-width;
+      max-width: 100%;
+    }
+  }
+}
+
+// Creates a row used to align columns
+// ---------------------------------------------------------------------------------
+
+@mixin make-row() {
+  display: flex;
+  flex-wrap: wrap;
+
+  &[nowrap] {
+    flex-wrap: nowrap;
+  }
+
+  &[wrap-reverse] {
+    flex-wrap: wrap-reverse;
+  }
+
+  &[align-items-start] {
+    align-items: flex-start;
+  }
+
+  &[align-items-center] {
+    align-items: center;
+  }
+
+  &[align-items-end] {
+    align-items: flex-end;
+  }
+
+  &[align-items-stretch] {
+    align-items: stretch;
+  }
+
+  &[align-items-baseline] {
+    align-items: baseline;
+  }
+
+  &[justify-content-start] {
+    justify-content: flex-start;
+  }
+
+  &[justify-content-center] {
+    justify-content: center;
+  }
+
+  &[justify-content-end] {
+    justify-content: flex-end;
+  }
+
+  &[justify-content-around] {
+    justify-content: space-around;
+  }
+
+  &[justify-content-between] {
+    justify-content: space-between;
+  }
+}
+
+
+// Creates the base column which has shared styles among all columns
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-base($padding-width: $grid-padding-width) {
+  position: relative;
+
+  padding: $padding-width / 2;
+
+  width: 100%;
+  margin: 0;
+  min-height: 1px; // Prevent columns from collapsing when empty
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+
+  &[align-self-start] {
+    align-self: flex-start;
+  }
+
+  &[align-self-end] {
+    align-self: flex-end;
+  }
+
+  &[align-self-center] {
+    align-self: center;
+  }
+
+  &[align-self-stretch] {
+    align-self: stretch;
+  }
+
+  &[align-self-baseline] {
+    align-self: baseline;
+  }
+}
+
+
+// Create an individual column
+// ---------------------------------------------------------------------------------
+
+@mixin make-column($size, $columns: $grid-columns) {
+  flex: 0 0 percentage($size / $columns);
+  width: percentage($size / $columns);
+  // Add a `max-width` to ensure content within each column does not blow out
+  // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
+  // do not appear to require this.
+  max-width: percentage($size / $columns);
+}
+
+
+// Adds padding to the column
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-padding($padding-widths: $grid-padding-widths) {
+  @each $breakpoint in map-keys($padding-widths) {
+    @include media-breakpoint-up($breakpoint) {
+      $padding-width: map-get($padding-widths, $breakpoint);
+      padding: ($padding-width / 2);
+    }
+  }
+}
+
+
+// Offset the column using margin-left
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-offset($size, $columns: $grid-columns) {
+  margin-left: percentage($size / $columns);
+}
+
+
+// Push the column using left
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-push($size, $columns: $grid-columns) {
+  left: if($size > 0, percentage($size / $columns), auto);
+}
+
+
+// Pull the column using right
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-pull($size, $columns: $grid-columns) {
+  right: if($size > 0, percentage($size / $columns), auto);
+}
+
+
+// Determine which modifier to add
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-modifier($type, $size, $columns) {
+  // Work around the lack of dynamic mixin @include support (https://github.com/sass/sass/issues/626)
+  @if $type == push {
+    @include make-column-push($size, $columns);
+  } @else if $type == pull {
+    @include make-column-pull($size, $columns);
+  } @else if $type == offset {
+    @include make-column-offset($size, $columns);
+  }
+}
+
+
+// Create the responsive grid columns
+// --------------------------------------------------
+
+@mixin make-grid-columns($columns: $grid-columns, $padding-widths: $grid-padding-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    // Allow columns to stretch full width below their breakpoints
+    @for $i from 1 through $columns {
+      [col#{$infix}-#{$i}] {
+        @include make-column-padding($padding-widths);
+      }
+    }
+
+    [col#{$infix}] {
+      @include make-column-padding($padding-widths);
+    }
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      // Provide basic `[col-{bp}]` attributes for equal-width flexbox columns
+      [col#{$infix}] {
+        flex-basis: 0;
+        flex-grow: 1;
+
+        max-width: 100%;
+      }
+
+      [col#{$infix}-auto] {
+        flex: 0 0 auto;
+
+        width: auto;
+      }
+
+      @for $i from 1 through $columns {
+        [col#{$infix}-#{$i}] {
+          @include make-column($i, $columns);
+        }
+      }
+
+      @each $modifier in (pull, push) {
+        @for $i from 0 through $columns {
+          [#{$modifier}#{$infix}-#{$i}] {
+            @include make-column-modifier($modifier, $i, $columns)
+          }
+        }
+      }
+
+      // `$columns - 1` because offsetting by the width of an entire row isn't possible
+      @for $i from 0 through ($columns - 1) {
+        @if not ($infix == "" and $i == 0) { // Avoid emitting useless [offset-xs-0]
+          [offset#{$infix}-#{$i}] {
+            @include make-column-modifier(offset, $i, $columns)
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// Breakpoint Mixins
+// ---------------------------------------------------------------------------------
+
+// Breakpoint viewport sizes and media queries.
+//
+// Breakpoints are defined as a map of (name: minimum width), order from small to large:
+//
+//    (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)
+//
+// The map defined in the `$grid-breakpoints` global variable is used as the `$breakpoints` argument by default.
+
+// ---------------------------------------------------------------------------------
+
+// Minimum breakpoint width. Null for the smallest (first) breakpoint.
+//
+//    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    576px
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
+
+// Returns a blank string if smallest breakpoint, otherwise returns the name with a dash infront.
+// Useful for making responsive utilities.
+//
+//    >> breakpoint-infix(xs, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    ""  (Returns a blank string)
+//    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    "-sm"
+@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+}
+
+
+// Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
+// Makes the @content apply to the given breakpoint and wider.
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+  $min: breakpoint-min($name, $breakpoints);
+  @if $min {
+    @media (min-width: $min) {
+      @content;
+    }
+  } @else {
+    @content;
+  }
+}

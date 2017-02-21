@@ -1,0 +1,212 @@
+@import "../../themes/ionic.globals";
+
+// Grid
+// --------------------------------------------------
+// Using flexbox for the grid, inspired by Philip Walton:
+// http://philipwalton.github.io/solved-by-flexbox/demos/grids/
+// By default each .col within a .row will evenly take up
+// available width, and the height of each .col with take
+// up the height of the tallest .col in the same .row.
+
+// TODO: Deprecated 2017/02/14: convert to new grid system
+
+$grid-padding-width:              10px !default;
+$grid-responsive-sm-break:        567px !default;  // smaller than landscape phone
+$grid-responsive-md-break:        767px !default;  // smaller than portrait tablet
+$grid-responsive-lg-break:        1023px !default; // smaller than landscape tablet
+
+@mixin responsive-grid-break($selector, $max-width) {
+  @media (max-width: $max-width) {
+    #{$selector} {
+      flex-direction: column;
+
+      ion-col {
+        flex: 1;
+
+        &[width-10],
+        &[width-20],
+        &[width-25],
+        &[width-33],
+        &[width-34],
+        &[width-50],
+        &[width-66],
+        &[width-67],
+        &[width-75],
+        &[width-80],
+        &[width-90] {
+          margin-bottom: ($grid-padding-width * 3) / 2;
+          margin-left: 0;
+
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+
+    }
+  }
+}
+
+ion-grid {
+  display: flex;
+
+  flex-direction: column;
+
+  width: 100%;
+}
+
+ion-row {
+  &[top] {
+    align-items: flex-start;
+  }
+
+  &[bottom] {
+    align-items: flex-end;
+  }
+
+  &[center] {
+    align-items: center;
+  }
+
+  &[stretch] {
+    align-items: stretch;
+  }
+
+  &[baseline] {
+    align-items: baseline;
+  }
+}
+
+ion-col {
+  // Column Alignment
+
+  &[top] {
+    align-self: flex-start;
+  }
+
+  &[bottom] {
+    align-self: flex-end;
+  }
+
+  &[center] {
+    align-self: center;
+  }
+
+  &[stretch] {
+    align-self: stretch;
+  }
+
+  &[baseline] {
+    align-self: baseline;
+  }
+
+  // Column Offsets
+
+  &[offset-10] {
+    margin-left: 10%;
+  }
+
+  &[offset-20] {
+    margin-left: 20%;
+  }
+
+  &[offset-25] {
+    margin-left: 25%;
+  }
+
+  &[offset-33],
+  &[offset-34] {
+    margin-left: 33.3333%;
+  }
+
+  &[offset-50] {
+    margin-left: 50%;
+  }
+
+  &[offset-66],
+  &[offset-67] {
+    margin-left: 66.6666%;
+  }
+
+  &[offset-75] {
+    margin-left: 75%;
+  }
+
+  &[offset-80] {
+    margin-left: 80%;
+  }
+
+  &[offset-90] {
+    margin-left: 90%;
+  }
+
+  // Explicit Column Percent Sizes
+  // By default each grid column will evenly distribute
+  // across the grid. However, you can specify individual
+  // columns to take up a certain size of the available area
+
+  &[width-10] {
+    flex: 0 0 10%;
+
+    max-width: 10%;
+  }
+
+  &[width-20] {
+    flex: 0 0 20%;
+
+    max-width: 20%;
+  }
+
+  &[width-25] {
+    flex: 0 0 25%;
+
+    max-width: 25%;
+  }
+
+  &[width-33],
+  &[width-34] {
+    flex: 0 0 33.3333%;
+
+    max-width: 33.3333%;
+  }
+
+  &[width-50] {
+    flex: 0 0 50%;
+
+    max-width: 50%;
+  }
+
+  &[width-66],
+  &[width-67] {
+    flex: 0 0 66.6666%;
+
+    max-width: 66.6666%;
+  }
+
+  &[width-75] {
+    flex: 0 0 75%;
+
+    max-width: 75%;
+  }
+
+  &[width-80] {
+    flex: 0 0 80%;
+
+    max-width: 80%;
+  }
+
+  &[width-90] {
+    flex: 0 0 90%;
+
+    max-width: 90%;
+  }
+}
+
+// Responsive Grid Classes
+// Adding a class of responsive-X to a row
+// will trigger the width-direction to
+// change to column and add some margin
+// to any columns in the row for clearity
+
+@include responsive-grid-break('[responsive-sm]', $grid-responsive-sm-break);
+@include responsive-grid-break('[responsive-md]', $grid-responsive-md-break);
+@include responsive-grid-break('[responsive-lg]', $grid-responsive-lg-break);
