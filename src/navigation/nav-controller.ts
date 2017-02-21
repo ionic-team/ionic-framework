@@ -518,7 +518,7 @@ export abstract class NavController {
    * @param {Object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setPages(pages: {page: any, params: any}[], opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setPages(pages: {page: any, params?: any}[], opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * @param {number} index  The index of the page to get.
