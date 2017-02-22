@@ -34,10 +34,35 @@ import { Directive } from '@angular/core';
   *   - [Number of columns and padding](#number-of-columns-and-padding)
   *   - [Grid tiers](#grid-tiers)
   *
+  *
   * ## How it works
   *
-  * TODO
+  * The grid is a mobile-first system made up of any number of rows and columns.
+  * It is built with flexbox making it extremely responsive. The components that
+  * make up the grid can be written as an element (e.g., `<ion-grid>`) or added as
+  * an attribute to any element (e.g., `<div ion-row>`).
   *
+  * Here's how it works:
+  *
+  * - Grids act as a container for all rows and columns. Grids take up the full width of their container,
+  * but adding the `fixed` attribute will specify the width per screen size, see [grid size](#grid-size) below.
+  * - Rows are horizontal groups of columns that line the columns up properly.
+  * - Content should be placed within columns, and only columns may be immediate children of rows.
+  * - Grid columns without a specified width will automatically have equal widths.
+  * For example, four instances of `col-sm` will each automatically be 25% wide for small breakpoints.
+  * - Column attributes indicate the number of columns to use out of the default 12 per row.
+  * So, `col-4` can be added in order to have three equal-width columns.
+  * - Column widths are set as a percentage, so they’re always fluid and sized relative to their parent element.
+  * - Columns have padding between individual columns, however, the padding can be removed from the grid and
+  * columns by adding `no-padding` on the grid.
+  * - There are five grid tiers by default, one for each responsive breakpoint: all breakpoints (extra small),
+  * small, medium, large, and extra large.
+  * - Grid tiers are based on minimum widths, meaning they apply to their tier and all those larger than it
+  * (e.g., `col-sm-4` applies to small, medium, large, and extra large devices).
+  * - Grids can easily be customized via Sass variables. See [customizing the grid](#customizing-the-grid).
+  *
+  * There are some [known bugs with flexbox](https://github.com/philipwalton/flexbugs) that
+  * should be checked prior to creating issues with Ionic.
   *
   * ## Grid size
   *
@@ -237,7 +262,7 @@ import { Directive } from '@angular/core';
   *
   * ## Reordering
   *
-  * ### Offseting columns
+  * ### Offsetting columns
   *
   * Move columns to the right by adding the `offset-*` attributes. These attributes
   * increase the margin left of the column by `*` columns. For example, in the following
@@ -472,7 +497,7 @@ import { Directive } from '@angular/core';
   * `$grid-columns` is used to generate the widths (in percent) of each individual column.
   * `$grid-padding-width` is used for the padding on the grid, while `$grid-padding-widths`
   * allows breakpoint-specific widths that are divided evenly across `padding-left` and
-  * `padding-right` as well as `pdading-top` and `padding-bottom` of the grid and columns.
+  * `padding-right` as well as `padding-top` and `padding-bottom` of the grid and columns.
   *
   * ```
   * $grid-columns:               12 !default;
