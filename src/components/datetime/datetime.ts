@@ -513,7 +513,10 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     picker.present(pickerOptions);
 
     this._isOpen = true;
-    picker.onDidDismiss(() => {
+    picker.onDidDismiss((data: any, role: any) => {
+      if (role === 'backdrop') {
+        this.ionCancel.emit(null);
+      }
       this._isOpen = false;
     });
   }
