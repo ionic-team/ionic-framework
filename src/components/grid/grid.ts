@@ -398,7 +398,7 @@ import { Directive } from '@angular/core';
   * </ion-grid>
   * ```
   *
-  * Columns can be also align themselves differently than other columns by
+  * Columns can also align themselves differently than other columns by
   * adding the alignment attribute directly to the column. For a list of available
   * attributes, see [column attributes](../Col#column-attributes).
   *
