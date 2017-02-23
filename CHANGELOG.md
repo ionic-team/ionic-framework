@@ -5,6 +5,7 @@
 ### Bug Fixes
 
 * **content:** check for scroll element before modifying it ([#10374](https://github.com/driftyco/ionic/issues/10374)) ([6a0c92c](https://github.com/driftyco/ionic/commit/6a0c92c))
+* **platform:** resize platform correctly ([54e50f](https://github.com/driftyco/ionic/commit/54e50f))
 
 
 ### Features
