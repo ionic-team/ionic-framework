@@ -11,6 +11,7 @@ import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
+import { Nav } from '../nav/nav';
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 import { RootNode } from '../../navigation/root-node';
@@ -219,6 +220,11 @@ export class Menu implements RootNode {
    * @private
    */
   @ContentChild(Content) menuContent: Content;
+
+  /**
+   * @private
+   */
+  @ContentChild(Nav) menuNav: Nav;
 
   /**
    * @input {any} A reference to the content element the menu should use.
@@ -493,7 +499,7 @@ export class Menu implements RootNode {
     // this css class doesn't actually kick off any animations
     this.setElementClass('show-menu', true);
     this.backdrop.setElementClass('show-backdrop', true);
-    this.menuContent && this.menuContent.resize();
+    this.resize();
     this._keyboard.close();
     this._isAnimating = true;
   }
@@ -545,6 +551,16 @@ export class Menu implements RootNode {
    */
   close(): Promise<boolean> {
     return this.setOpen(false);
+  }
+
+  /**
+   * @private
+   */
+  resize() {
+    const content: Content | Nav = this.menuContent
+      ? this.menuContent
+      : this.menuNav;
+    content && content.resize();
   }
 
   /**
@@ -614,8 +630,8 @@ export class Menu implements RootNode {
     this._updateState();
 
     // Trigger resize() if menu becomes a split panel
-    if (isPanel && this.menuContent) {
-      this.menuContent.resize();
+    if (isPanel) {
+      this.resize();
     }
   }
 

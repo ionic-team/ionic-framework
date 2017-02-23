@@ -9,9 +9,9 @@ import { IonicApp, IonicModule, NavController, MenuController } from '../../../.
   </ion-header>
   <ion-content>
   <ion-list>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
+    <ion-item>Hola 1</ion-item>
+    <ion-item>Hola 2</ion-item>
+    <ion-item>Hola 3</ion-item>
     <button ion-item (click)="push()">Push</button>
     <ion-item>Hola</ion-item>
     <ion-item>Hola</ion-item>
