@@ -24,7 +24,7 @@ const QUERY: { [key: string]: string }  = {
 })
 export class SplitPanel extends Ion implements RootNode {
 
-  _rmListerner: any;
+  _rmListener: any;
   _visible: boolean = false;
   _init: boolean = false;
   _mediaQuery: string|boolean = QUERY['md'];
@@ -105,8 +105,8 @@ export class SplitPanel extends Ion implements RootNode {
       return;
     }
     // Unlisten
-    this._rmListerner && this._rmListerner();
-    this._rmListerner = null;
+    this._rmListener && this._rmListener();
+    this._rmListener = null;
 
     const query = this._mediaQuery;
     if (typeof query === 'boolean') {
@@ -119,7 +119,7 @@ export class SplitPanel extends Ion implements RootNode {
       const mediaList = this._plt.win().matchMedia(query);
       mediaList.addListener(callback);
       this.setVisible(mediaList.matches);
-      this._rmListerner = function () {
+      this._rmListener = function () {
         mediaList.removeListener(callback);
       };
     } else {
@@ -158,10 +158,10 @@ export class SplitPanel extends Ion implements RootNode {
   }
 
   ngOnDestroy() {
-    assert(this._rmListerner, 'at this point _rmListerner should be valid');
+    assert(this._rmListener, 'at this point _rmListerner should be valid');
 
-    this._rmListerner && this._rmListerner();
-    this._rmListerner = null;
+    this._rmListener && this._rmListener();
+    this._rmListener = null;
   }
 
   _setIsPanel(isPanel: boolean) {
