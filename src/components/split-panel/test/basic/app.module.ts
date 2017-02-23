@@ -28,6 +28,23 @@ export class SidePage {
   }
 }
 
+@Component({
+  template: `
+  <ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Page 2</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding>
+    <h1>Page 2</h1>
+  </ion-content>
+  `
+})
+export class E2EPage2 {}
+
 
 @Component({
   template: `
@@ -40,6 +57,7 @@ export class SidePage {
     </ion-navbar>
   </ion-header>
   <ion-content padding>
+    <h1>Page 1</h1>
     <button ion-button (click)="push()">Push</button>
     <button ion-button (click)="menu()">Open Menu</button>
     <div f></div>
@@ -57,7 +75,7 @@ export class E2EPage {
   ) { }
 
   push() {
-    this.navCtrl.push(E2EPage);
+    this.navCtrl.push(E2EPage2);
   }
 
   menu() {
@@ -78,6 +96,7 @@ export class E2EApp {
   declarations: [
     E2EApp,
     E2EPage,
+    E2EPage2,
     SidePage,
   ],
   imports: [
@@ -89,6 +108,7 @@ export class E2EApp {
   entryComponents: [
     E2EApp,
     E2EPage,
+    E2EPage2,
     SidePage,
   ]
 })
