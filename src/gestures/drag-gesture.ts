@@ -62,7 +62,7 @@ export class PanGesture {
   unlisten() {
     if (this.isListening) {
       this.gestute && this.gestute.release();
-      this.events.destroy();
+      this.events.unlistenAll();
       this.isListening = false;
     }
   }
@@ -71,7 +71,8 @@ export class PanGesture {
     this.gestute && this.gestute.destroy();
     this.gestute = null;
     this.unlisten();
-    this.element = null;
+    this.events.destroy();
+    this.events = this.element = this.gestute = null;
   }
 
   pointerDown(ev: any): boolean {

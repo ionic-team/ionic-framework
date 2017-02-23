@@ -503,6 +503,7 @@ export class Refresher {
    * @private
    */
   ngOnDestroy() {
+    this._events.destroy();
     this._gesture.destroy();
     this._setListeners(false);
   }

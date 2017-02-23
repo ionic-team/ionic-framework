@@ -183,6 +183,7 @@ export class ActionSheetCmp {
 
   ngOnDestroy() {
     assert(this.gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this.d = null;
     this.gestureBlocker.destroy();
   }
 }

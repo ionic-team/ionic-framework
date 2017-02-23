@@ -723,7 +723,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     if (transition.isRoot()) {
       // this is the root transition
-      // it's save to destroy this transition
+      // it's safe to destroy this transition
       this._trnsCtrl.destroy(transition.trnsId);
 
       // it's safe to enable the app again
@@ -909,13 +909,10 @@ export class NavControllerBase extends Ion implements NavController {
       view._destroy(this._renderer);
     }
 
-    // purge stack
-    this._views.length = 0;
-
     // release swipe back gesture and transition
     this._sbGesture && this._sbGesture.destroy();
     this._sbTrns && this._sbTrns.destroy();
-    this._sbGesture = this._sbTrns = null;
+    this._queue = this._views = this._sbGesture = this._sbTrns = null;
 
     // Unregister navcontroller
     if (this.parent && this.parent.unregisterChildNav) {

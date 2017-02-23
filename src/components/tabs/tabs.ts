@@ -411,6 +411,7 @@ export class Tabs extends Ion implements AfterViewInit {
         if (opts.updateUrl !== false) {
           this._linker.navChange(DIRECTION_SWITCH);
         }
+        assert(this.getSelected() === selectedTab, 'selected tab does not match');
         this._fireChangeEvent(selectedTab);
       });
     } else {
@@ -419,8 +420,6 @@ export class Tabs extends Ion implements AfterViewInit {
   }
 
   _fireChangeEvent(selectedTab: Tab) {
-    assert(this.getSelected() === selectedTab, 'selected tab does not match');
-
     selectedTab.ionSelect.emit(selectedTab);
     this.ionChange.emit(selectedTab);
   }
