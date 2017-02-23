@@ -516,7 +516,7 @@ export class Menu {
     this.isOpen = isOpen;
     this._isAnimating = false;
 
-    this._events.destroy();
+    this._events.unlistenAll();
     if (isOpen) {
       // Disable swipe to go back gesture
       this._gestureBlocker.block();

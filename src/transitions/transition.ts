@@ -45,7 +45,7 @@ export class Transition extends Animation {
 
   destroy() {
     super.destroy();
-    this.enteringView = this.leavingView = this._trnsStart = null;
+    this.parent = this.enteringView = this.leavingView = this._trnsStart = null;
   }
 
 }
