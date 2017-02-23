@@ -1,3 +1,20 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/driftyco/ionic/compare/v2.0.1...v2.1.0) (2017-02-23)
+
+
+### Bug Fixes
+
+* **content:** check for scroll element before modifying it ([#10374](https://github.com/driftyco/ionic/issues/10374)) ([6a0c92c](https://github.com/driftyco/ionic/commit/6a0c92c))
+
+
+### Features
+
+* **alert:** add sass variables for checkbox and radio button text color ([#10331](https://github.com/driftyco/ionic/issues/10331)) ([9cd42dd](https://github.com/driftyco/ionic/commit/9cd42dd))
+* **datetime:** add placeholder attribute ([52a6d41](https://github.com/driftyco/ionic/commit/52a6d41)), closes [#7966](https://github.com/driftyco/ionic/issues/7966)
+* **grid:** improve grid to a column layout with more flexibility ([#10485](https://github.com/driftyco/ionic/issues/10485)) ([6ceec7a](https://github.com/driftyco/ionic/commit/6ceec7a)), closes [#6050](https://github.com/driftyco/ionic/issues/6050) [#7508](https://github.com/driftyco/ionic/issues/7508)
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/driftyco/ionic/compare/v2.0.0...v2.0.1) (2017-02-08)
 
