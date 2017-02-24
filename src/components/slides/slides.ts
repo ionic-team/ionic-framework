@@ -65,6 +65,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```ts
  * import { ViewChild } from '@angular/core';
+ * import { Slides } from 'ionic-angular';
  *
  * class MyPage {
  *   @ViewChild(Slides) slides: Slides;
@@ -104,6 +105,9 @@ import { ViewController } from '../../navigation/view-controller';
  * should be used, where `freeMode` is the option to change:
  *
  * ```ts
+ * import { ViewChild } from '@angular/core';
+ * import { Slides } from 'ionic-angular';
+ 
  * class MyPage {
  *   @ViewChild(Slides) slides: Slides;
  *
