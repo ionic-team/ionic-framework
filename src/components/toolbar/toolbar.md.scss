@@ -33,6 +33,8 @@ $toolbar-md-button-border-radius:        2px !default;
 /// @prop - Height of the navigation bar
 $navbar-md-height:                       $toolbar-md-height !default;
 
+$toolbar-button-md-strong-font-weight:   bold !default;
+
 
 .toolbar-md {
   padding: $toolbar-md-padding;
@@ -396,5 +398,5 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // --------------------------------------------------
 
 .bar-button-strong-md {
-  font-weight: $button-md-strong-font-weight;
+  font-weight: $toolbar-button-md-strong-font-weight;
 }
