@@ -4,7 +4,7 @@ import { App, AlertController, NavController, NavParams, ViewController } from '
 
 @Component({
   template: `
-    <ion-content class="padding">
+    <ion-content padding>
       <h1>Full page</h1>
       <p>This page does not have a nav bar!</p>
       <p><button ion-button (click)="navCtrl.pop()">Pop</button></p>

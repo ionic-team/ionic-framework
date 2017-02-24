@@ -35,7 +35,7 @@ export class MyCmpTest {
           <button ion-button icon-only><ion-icon name="star"></ion-icon></button>
         </ion-buttons>
         <ion-buttons end>
-          <button ion-button>S1gasdf</button>
+          <button ion-button>S1g</button>
         </ion-buttons>
       </ion-navbar>
     </ion-header>
@@ -87,7 +87,7 @@ export class MyCmpTest {
 export class FirstPage {
   pushPage = AnotherPage;
   firstPage = FirstPage;
-  title = 'First Pageeee';
+  title = 'First Page';
   pages: Array<number> = [];
   @ViewChild(Content) content: Content;
   @ViewChild(MyCmpTest) myCmp: MyCmpTest;
