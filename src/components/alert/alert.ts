@@ -132,6 +132,9 @@ export class Alert extends ViewController {
  *
  * @usage
  * ```ts
+ *
+ * import { AlertController } from 'ionic-angular';
+ *
  * constructor(private alertCtrl: AlertController) {
  *
  * }
