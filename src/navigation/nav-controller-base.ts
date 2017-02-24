@@ -178,6 +178,16 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
+  // _queueTrns() adds a navigation stack change to the queue and schedules it to run:
+  // 1. _nextTrns(): consumes the next transition in the queue
+  // 2. _viewInit(): initializes enteringView if required
+  // 3. _viewTest(): ensures canLeave/canEnter returns true, so the operation can continue
+  // 4. _postViewInit(): add/remove the views from the navigation stack
+  // 5. _transitionInit(): initializes the visual transition if required and schedules it to run
+  // 6. _viewAttachToDOM(): attaches the enteringView to the DOM
+  // 7. _transitionStart(): called once the transition actually starts, it initializes the Animation underneath.
+  // 8. _transitionFinish(): called once the transition finishes
+  // 9. _cleanup(): syncs the navigation internal state with the DOM. For example it removes the pages from the DOM or hides/show them.
   _queueTrns(ti: TransitionInstruction, done: Function): Promise<any> {
     let promise: Promise<any>;
     let resolve: Function = done;
@@ -288,7 +298,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
 
     // Only test canLeave/canEnter if there is transition
-    const requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
+    const requiresTransition = ti.requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
     if (requiresTransition) {
       // views have been initialized, now let's test
       // to see if the transition is even allowed or not
@@ -440,25 +450,26 @@ export class NavControllerBase extends Ion implements NavController {
       }
     }
 
-    if (ti.enteringRequiresTransition || ti.leavingRequiresTransition && enteringView !== leavingView) {
-      // set which animation it should use if it wasn't set yet
-      if (!opts.animation) {
-        if (isPresent(ti.removeStart)) {
-          opts.animation = (leavingView || enteringView).getTransitionName(opts.direction);
-        } else {
-          opts.animation = (enteringView || leavingView).getTransitionName(opts.direction);
-        }
-      }
-
-      // huzzah! let us transition these views
-      this._transition(enteringView, leavingView, opts, ti.resolve);
-
-    } else {
+    if (!ti.requiresTransition) {
+      // transition is not required, so we are already done!
       // they're inserting/removing the views somewhere in the middle or
       // beginning, so visually nothing needs to animate/transition
       // resolve immediately because there's no animation that's happening
       ti.resolve(true, false);
+      return true;
     }
+
+    // set which animation it should use if it wasn't set yet
+    if (!opts.animation) {
+      if (isPresent(ti.removeStart)) {
+        opts.animation = (leavingView || enteringView).getTransitionName(opts.direction);
+      } else {
+        opts.animation = (enteringView || leavingView).getTransitionName(opts.direction);
+      }
+    }
+
+    // huzzah! let us transition these views
+    this._transitionInit(enteringView, leavingView, opts, ti.resolve);
     return true;
   }
 
@@ -552,7 +563,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  _transition(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn) {
+  _transitionInit(enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn) {
     // figure out if this transition is the root one or a
     // child of a parent nav that has the root transition
     this._trnsId = this._trnsCtrl.getRootTrnsId(this);
@@ -587,7 +598,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     // transition start has to be registered before attaching the view to the DOM!
     transition.registerStart(() => {
-      this._trnsStart(transition, enteringView, leavingView, opts, resolve);
+      this._transitionStart(transition, enteringView, leavingView, opts, resolve);
       if (transition.parent) {
         transition.parent.start();
       }
@@ -609,7 +620,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  _trnsStart(transition: Transition, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn) {
+  _transitionStart(transition: Transition, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, resolve: TransitionResolveFn) {
     assert(this.isTransitioning(), 'isTransitioning() has to be true');
 
     this._trnsId = null;
@@ -650,7 +661,7 @@ export class NavControllerBase extends Ion implements NavController {
     // create a callback for when the animation is done
     transition.onFinish(() => {
       // transition animation has ended
-      this._zone.run(this._trnsFinish.bind(this, transition, opts, resolve));
+      this._zone.run(this._transitionFinish.bind(this, transition, opts, resolve));
     });
 
     // get the set duration of this transition
@@ -683,17 +694,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  _viewsWillLifecycles(enteringView: ViewController, leavingView: ViewController) {
-    if (enteringView || leavingView) {
-      this._zone.run(() => {
-        // Here, the order is important. WillLeave must be called before WillEnter.
-        leavingView && this._willLeave(leavingView, !enteringView);
-        enteringView && this._willEnter(enteringView);
-      });
-    }
-  }
-
-  _trnsFinish(transition: Transition, opts: NavOptions, resolve: TransitionResolveFn) {
+  _transitionFinish(transition: Transition, opts: NavOptions, resolve: TransitionResolveFn) {
     const hasCompleted = transition.hasCompleted;
     const enteringView = transition.enteringView;
     const leavingView = transition.leavingView;
@@ -744,6 +745,16 @@ export class NavControllerBase extends Ion implements NavController {
 
     // congrats, we did it!
     resolve(hasCompleted, true, enteringName, leavingName, opts.direction);
+  }
+
+  _viewsWillLifecycles(enteringView: ViewController, leavingView: ViewController) {
+    if (enteringView || leavingView) {
+      this._zone.run(() => {
+        // Here, the order is important. WillLeave must be called before WillEnter.
+        leavingView && this._willLeave(leavingView, !enteringView);
+        enteringView && this._willEnter(enteringView);
+      });
+    }
   }
 
   _insertViewAt(view: ViewController, index: number) {
