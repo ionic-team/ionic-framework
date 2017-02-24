@@ -24,8 +24,7 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
 
     worker.on('error', (err: any) => {
       console.error(`worker error, entrypoint: ${appEntryPoint}, pid: ${worker.pid}, error: ${err}`);
-      // reject(err);
-      resolve();
+      reject(err);
     });
 
     worker.on('exit', (code: number) => {
@@ -33,9 +32,7 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
       if (code === 0) {
         resolve(code);
       } else {
-        //reject(new Error(`${appEntryPoint} exited with non-zero status code`));
-        console.log(`${appEntryPoint} exited with non-zero status code`);
-        resolve();
+        reject(new Error(`${appEntryPoint} exited with non-zero status code`));
       }
     });
   });
@@ -59,7 +56,7 @@ export function createWorker(msg: MessageToWorker): any {
   try {
       let scriptArgs = [
       'build',
-      '--aot',
+      '--prod',
       '--optimizejs',
       '--appEntryPoint', msg.appEntryPoint,
       '--appNgModulePath', msg.appNgModulePath,
@@ -68,8 +65,8 @@ export function createWorker(msg: MessageToWorker): any {
       '--tsconfig', msg.tsConfig,
       '--readConfigJson', 'false',
       '--experimentalParseDeepLinks', 'true',
-      '--experimentalManualTreeshaking', 'true',
-      '--experimentalPurgeDecorators', 'true',
+      '--experimentalManualTreeshaking', 'false',
+      '--experimentalPurgeDecorators', 'false',
       '--ionicAngularDir', msg.ionicAngularDir,
       '--sass', msg.sassConfigPath,
       '--copy', msg.copyConfigPath,

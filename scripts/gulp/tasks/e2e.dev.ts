@@ -44,19 +44,3 @@ function serveTest(folderInfo: any) {
 
   return runAppScriptsServe(folderInfo, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath);
 }
-
-task('e2e.clean', (done: Function) => {
-  del(['dist/e2e/**']).then(() => {
-    done();
-  }).catch(err => {
-    done(err);
-  });
-});
-
-task('e2e.polyfill', (done: Function) => {
-  writePolyfills('dist/e2e/polyfills').then(() => {
-    done();
-  }).catch(err => {
-    done(err);
-  });
-});

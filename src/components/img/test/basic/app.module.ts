@@ -21,17 +21,17 @@ export class E2EPage {
     {
       width: '100',
       height: '44',
-      src: '../img/img/batmobile.jpg'
+      src: 'assets/img/batmobile.jpg'
     },
     {
       width: '100',
       height: '75',
-      src: '../img/img/knight-rider.jpg'
+      src: 'assets/img/knight-rider.jpg'
     },
     {
       width: '100',
       height: '68',
-      src: '../img/img/general-lee.jpg'
+      src: 'assets/img/general-lee.jpg'
     }
   ];
 

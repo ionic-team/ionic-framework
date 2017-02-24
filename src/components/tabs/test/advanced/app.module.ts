@@ -1,6 +1,6 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AlertController, DeepLinkConfig, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../..';
+import { AlertController, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../..';
 
 
 // @DeepLink({ name: 'sign-in' })
@@ -375,21 +375,6 @@ export class E2EApp {
   rootPage = SignIn;
 }
 
-
-export const deepLinkConfig: DeepLinkConfig = {
-  links: [
-    { component: SignIn, name: 'sign-in' },
-    { component: TabsPage, name: 'tabs' },
-    { component: Tab1Page1, name: 'tab1-page1' },
-    { component: Tab1Page2, name: 'tab1-page2' },
-    { component: Tab1Page3, name: 'tab1-page3' },
-    { component: Tab2Page1, name: 'tab2-page1' },
-    { component: Tab2Page2, name: 'tab2-page2' },
-    { component: Tab2Page3, name: 'tab2-page3' },
-    { component: Tab3Page1, name: 'tab3-page1' },
-  ]
-};
-
 @NgModule({
   declarations: [
     E2EApp,
@@ -406,7 +391,19 @@ export const deepLinkConfig: DeepLinkConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {tabsHideOnSubPages: true}, deepLinkConfig)
+    IonicModule.forRoot(E2EApp, {tabsHideOnSubPages: true}, {
+      links: [
+        { component: SignIn, name: 'sign-in' },
+        { component: TabsPage, name: 'tabs' },
+        { component: Tab1Page1, name: 'tab1-page1' },
+        { component: Tab1Page2, name: 'tab1-page2' },
+        { component: Tab1Page3, name: 'tab1-page3' },
+        { component: Tab2Page1, name: 'tab2-page1' },
+        { component: Tab2Page2, name: 'tab2-page2' },
+        { component: Tab2Page3, name: 'tab2-page3' },
+        { component: Tab3Page1, name: 'tab3-page1' },
+      ]
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

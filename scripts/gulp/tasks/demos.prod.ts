@@ -1,4 +1,4 @@
-import { accessSync, F_OK, readFileSync, stat } from 'fs';
+import { accessSync, constants, readFileSync, stat } from 'fs';
 import { dirname, join } from 'path';
 
 import { dest, src, start, task } from 'gulp';
@@ -9,7 +9,7 @@ import { obj } from 'through2';
 import * as VinylFile from 'vinyl';
 
 import { DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DIST_NAME, DEMOS_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, SCRIPTS_ROOT } from '../constants';
-import { createTempTsConfig, getFolderInfo, getFolders, runAppScripts } from '../util';
+import { createTempTsConfig, getFolderInfo, getFolders, runAppScriptsBuild } from '../util';
 
 task('demos.prod', demosBuild);
 
@@ -85,7 +85,8 @@ function buildTest(folderInfo: any) {
   let appNgModule = `dist/demos/${folderInfo.componentName}/app.module.ts`;
   let distDir = `dist/demos/${folderInfo.componentName}/`;
 
-  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, appNgModule, distDir);
+  return Promise.reject(new Error('Revisit this'));
+  // return runAppScriptsBuild(folderInfo, sassConfigPath, appEntryPoint, appNgModule, distDir);
 }
 
 function buildAllTests(done: Function) {
@@ -121,7 +122,7 @@ task('demos.watchProd', (done: Function) => {
   }
 
   try {
-    accessSync(demoTestPath, F_OK);
+    accessSync(demoTestPath, constants.F_OK);
   } catch (e) {
     done(new Error(`Could not find demos test: ${demoTestPath}`));
     return;
@@ -185,7 +186,7 @@ function demosComponentsExists(folderInfo: any): boolean {
   }
 
   try {
-    accessSync(componentPath, F_OK);
+    accessSync(componentPath, constants.F_OK);
   } catch (e) {
     return false;
   }

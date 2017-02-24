@@ -2,7 +2,10 @@
 var path = require('path');
 
 module.exports = {
-  copyAssets: { },
+  copyAssets: {
+    src: [path.join(process.cwd(), 'scripts', 'e2e', 'assets', '**', '*')],
+    dest: '{{WWW}}/assets'
+  },
   copyIndexContent: {
     src: [path.join(process.cwd(), 'scripts', 'e2e', 'index.html')],
     dest: '{{WWW}}'

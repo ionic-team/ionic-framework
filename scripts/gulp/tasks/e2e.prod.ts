@@ -1,4 +1,4 @@
-import { dirname, join, relative, sep } from 'path';
+import { dirname, join, relative } from 'path';
 import { readFileSync } from 'fs';
 
 import * as glob from 'glob';
@@ -6,6 +6,7 @@ import { task } from 'gulp';
 import * as del from 'del';
 import { template } from 'lodash';
 import * as runSequence from 'run-sequence';
+import { argv } from 'yargs';
 
 
 import { ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
@@ -172,6 +173,11 @@ function readE2EFile(filePath: string) {
 
 
 task('e2e.clean', (done: Function) => {
+  // this is a super hack, but it works for now
+  if (argv.skipClean) {
+    return done();
+  }
+
   del(['dist/e2e/**']).then(() => {
     done();
   }).catch(err => {
@@ -180,6 +186,10 @@ task('e2e.clean', (done: Function) => {
 });
 
 task('e2e.polyfill', (done: Function) => {
+  if (argv.skipPolyfill) {
+    return done();
+  }
+
   writePolyfills('dist/e2e/polyfills').then(() => {
     done();
   }).catch(err => {
