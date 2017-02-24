@@ -189,6 +189,7 @@ export interface TransitionInstruction {
   reject?: TransitionRejectFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
+  requiresTransition?: boolean;
 }
 
 export enum ViewState {
