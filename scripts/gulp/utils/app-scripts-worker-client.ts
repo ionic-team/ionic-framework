@@ -20,14 +20,23 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
     };
 
     const worker = <ChildProcess>createWorker(msgToWorker);
+    console.log(`Starting to build test ${appEntryPoint}`);
 
     worker.on('error', (err: any) => {
       console.error(`worker error, entrypoint: ${appEntryPoint}, pid: ${worker.pid}, error: ${err}`);
-      reject(err);
+      // reject(err);
+      resolve();
     });
 
     worker.on('exit', (code: number) => {
-      resolve(code);
+      console.log(`Finished building test ${appEntryPoint}`);
+      if (code === 0) {
+        resolve(code);
+      } else {
+        //reject(new Error(`${appEntryPoint} exited with non-zero status code`));
+        console.log(`${appEntryPoint} exited with non-zero status code`);
+        resolve();
+      }
     });
   });
 }
@@ -51,6 +60,7 @@ export function createWorker(msg: MessageToWorker): any {
       let scriptArgs = [
       'build',
       '--aot',
+      '--optimizejs',
       '--appEntryPoint', msg.appEntryPoint,
       '--appNgModulePath', msg.appNgModulePath,
       '--srcDir', msg.srcDir,
@@ -58,11 +68,13 @@ export function createWorker(msg: MessageToWorker): any {
       '--tsconfig', msg.tsConfig,
       '--readConfigJson', 'false',
       '--experimentalParseDeepLinks', 'true',
+      '--experimentalManualTreeshaking', 'true',
+      '--experimentalPurgeDecorators', 'true',
       '--ionicAngularDir', msg.ionicAngularDir,
       '--sass', msg.sassConfigPath,
       '--copy', msg.copyConfigPath,
       '--enableLint', 'false',
-      '--disableLogging', 'true'
+      // '--disableLogging', 'true'
     ];
 
     if (msg.debug) {

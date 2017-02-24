@@ -1,4 +1,4 @@
-import { dirname, join, relative } from 'path';
+import { dirname, join, relative, sep } from 'path';
 import { readFileSync } from 'fs';
 
 import * as glob from 'glob';
@@ -9,7 +9,7 @@ import * as runSequence from 'run-sequence';
 
 
 import { ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
-import { createTempTsConfig, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
+import { createTempTsConfig, getFolderInfo, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
 
 import * as pAll from 'p-all';
 
@@ -36,6 +36,15 @@ function filterE2eTestfiles() {
       const directoryName = dirname(filePath);
       return join(directoryName, 'main.ts');
     });
+    return entryPoints;
+  }).then((entryPoints: string[]) => {
+    const folderInfo = getFolderInfo();
+    if (folderInfo && folderInfo.componentName && folderInfo.componentTest) {
+      const filtered = entryPoints.filter(entryPoint => {
+        return entryPoint.indexOf(folderInfo.componentName) >= 0 && entryPoint.indexOf(folderInfo.componentTest) >= 0;
+      });
+      return filtered;
+    }
     return entryPoints;
   });
 }
@@ -74,7 +83,7 @@ function buildTest(filePath: string) {
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
   const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
 
-  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
+  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile);
 
   const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
   const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
