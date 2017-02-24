@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
-import { isBlank } from '../../util/util';
+import { isBlank, assert } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
@@ -408,14 +408,24 @@ export class Tabs extends Ion implements AfterViewInit {
         if (opts.updateUrl !== false) {
           this._linker.navChange(DIRECTION_SWITCH);
         }
+        this._fireChangeEvent(selectedTab);
       });
+    } else {
+      this._fireChangeEvent(selectedTab);
     }
+  }
+
+  _fireChangeEvent(selectedTab: Tab) {
+    assert(this.getSelected() === selectedTab, 'selected tab does not match');
 
     selectedTab.ionSelect.emit(selectedTab);
     this.ionChange.emit(selectedTab);
   }
 
   _tabSwitchEnd(selectedTab: Tab, selectedPage: ViewController, currentPage: ViewController) {
+    assert(selectedTab, 'selectedTab must be valid');
+    assert(this._tabs.indexOf(selectedTab) >= 0, 'selectedTab must be one of the tabs');
+
     // Update tabs selection state
     const tabs = this._tabs;
     let tab: Tab;
@@ -473,9 +483,10 @@ export class Tabs extends Ion implements AfterViewInit {
    * @return {Tab} Returns the currently selected tab
    */
   getSelected(): Tab {
-    for (var i = 0; i < this._tabs.length; i++) {
-      if (this._tabs[i].isSelected) {
-        return this._tabs[i];
+    const tabs = this._tabs;
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].isSelected) {
+        return tabs[i];
       }
     }
     return null;
