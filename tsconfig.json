@@ -10,7 +10,7 @@
     "noImplicitAny": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
+    "target": "es2015",
     "types": ["jasmine", "systemjs"]
   },
   "include": [
