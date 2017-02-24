@@ -5,7 +5,8 @@ import { Directive } from '@angular/core';
   * @module ionic
   * @description
   *
-  * Column description
+  * Columns are cellular components of the [grid](../Grid) system and go inside of a [row](../Row).
+  * They will expand to fill their row. All content within a grid should go inside of a column.
   *
   * ## Column attributes
   *
