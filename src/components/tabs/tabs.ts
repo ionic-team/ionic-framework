@@ -529,12 +529,16 @@ export class Tabs extends Ion implements AfterViewInit {
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot();
+        tab.popToRoot().catch(() => {
+          console.debug('Tabs: pop to root was cancelled');
+        });
 
       } else if (getComponent(this._linker, tab.root) !== active.component) {
         // Otherwise, if the page we're on is not our real root, reset it to our
         // default root type
-        tab.setRoot(tab.root);
+        tab.setRoot(tab.root).catch(() => {
+          console.debug('Tabs: reset root was cancelled');
+        });
       }
     }
   }
@@ -545,7 +549,7 @@ export class Tabs extends Ion implements AfterViewInit {
    */
   setTabbarPosition(top: number, bottom: number) {
     if (this._top !== top || this._bottom !== bottom) {
-      const tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+      var tabbarEle = <HTMLElement>this._tabbar.nativeElement;
       tabbarEle.style.top = (top > -1 ? top + 'px' : '');
       tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
       tabbarEle.classList.add('show-tabbar');
