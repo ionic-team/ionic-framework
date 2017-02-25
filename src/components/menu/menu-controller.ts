@@ -313,7 +313,7 @@ export class MenuController {
    * @private
    */
   _setActiveMenu(menu: Menu) {
-    assert(menu.enabled);
+    assert(menu.enabled, 'menu must be enabled');
     assert(this._menus.indexOf(menu) >= 0, 'menu is not registered');
 
     // if this menu should be enabled

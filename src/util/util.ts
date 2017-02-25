@@ -170,7 +170,7 @@ function _runInDev(fn: Function) {
 
 
 /** @private */
-function _assert(actual: any, reason?: string) {
+function _assert(actual: any, reason: string) {
   if (!actual && ASSERT_ENABLED === true) {
     let message = 'IONIC ASSERT: ' + reason;
     console.error(message);
