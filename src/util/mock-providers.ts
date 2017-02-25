@@ -348,7 +348,9 @@ export function mockView(component?: any, data?: any) {
 
 export function mockViews(nav: NavControllerBase, views: ViewController[]) {
   nav._views = views;
-  views.forEach(v => v._setNav(nav));
+  views.forEach(v => {
+    v._setNav(nav);
+  });
 }
 
 export function mockComponentRef(): ComponentRef<any> {

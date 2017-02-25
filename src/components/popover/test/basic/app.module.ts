@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, PopoverController, NavParams, ViewController } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, PopoverController, NavParams, ToastController, ViewController } from '../../../../../ionic-angular';
 
 
 @Component({
@@ -188,7 +188,10 @@ export class E2EPage {
   @ViewChild('popoverContent', {read: ElementRef}) content: ElementRef;
   @ViewChild('popoverText', {read: ElementRef}) text: ElementRef;
 
-  constructor(private popoverCtrl: PopoverController) {}
+  constructor(
+    private popoverCtrl: PopoverController,
+    private toastCtrl: ToastController,
+  ) { }
 
   presentListPopover(ev: UIEvent) {
     let popover = this.popoverCtrl.create(PopoverListPage);
@@ -219,6 +222,13 @@ export class E2EPage {
 
   presentNoEventPopover() {
     this.popoverCtrl.create(PopoverListPage).present();
+  }
+
+  presentToast() {
+    this.toastCtrl.create({
+      message: 'Toast example',
+      duration: 1000
+    }).present();
   }
 
 }

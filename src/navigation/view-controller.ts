@@ -1,7 +1,7 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
 import { Footer, Header } from '../components/toolbar/toolbar';
-import { isPresent } from '../util/util';
+import { isPresent, assert } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
 import { NavOptions, ViewState } from './nav-util';
@@ -46,7 +46,7 @@ export class ViewController {
   _cmp: ComponentRef<any>;
   _nav: NavController;
   _zIndex: number;
-  _state: ViewState;
+  _state: ViewState = ViewState.NEW;
   _cssClass: string;
 
   /**
@@ -227,7 +227,7 @@ export class ViewController {
    * @private
    */
   get name(): string {
-    return this.component ? this.component.name : '';
+    return (this.component ? this.component.name : '');
   }
 
   /**
@@ -261,14 +261,12 @@ export class ViewController {
     // _hidden value of '' means the hidden attribute will be added
     // _hidden value of null means the hidden attribute will be removed
     // doing checks to make sure we only update the DOM when actually needed
-    if (this._cmp) {
-      // if it should render, then the hidden attribute should not be on the element
-      if (shouldShow === this._isHidden) {
-        this._isHidden = !shouldShow;
-        let value = (shouldShow ? null : '');
-        // ******** DOM WRITE ****************
-        renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', value);
-      }
+    // if it should render, then the hidden attribute should not be on the element
+    if (this._cmp && shouldShow === this._isHidden) {
+      this._isHidden = !shouldShow;
+      let value = (shouldShow ? null : '');
+      // ******** DOM WRITE ****************
+      renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', value);
     }
   }
 
@@ -411,6 +409,7 @@ export class ViewController {
   }
 
   _preLoad() {
+    assert(this._state === ViewState.INITIALIZED, 'view state must be INITIALIZED');
     this._lifecycle('PreLoad');
   }
 
@@ -420,6 +419,7 @@ export class ViewController {
    * This event is fired before the component and his children have been initialized.
    */
   _willLoad() {
+    assert(this._state === ViewState.INITIALIZED, 'view state must be INITIALIZED');
     this._lifecycle('WillLoad');
   }
 
@@ -432,6 +432,7 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   _didLoad() {
+    assert(this._state === ViewState.ATTACHED, 'view state must be ATTACHED');
     this._lifecycle('DidLoad');
   }
 
@@ -440,6 +441,8 @@ export class ViewController {
    * The view is about to enter and become the active view.
    */
   _willEnter() {
+    assert(this._state === ViewState.ATTACHED, 'view state must be ATTACHED');
+
     if (this._detached && this._cmp) {
       // ensure this has been re-attached to the change detector
       this._cmp.changeDetectorRef.reattach();
@@ -456,6 +459,8 @@ export class ViewController {
    * will fire, whether it was the first load or loaded from the cache.
    */
   _didEnter() {
+    assert(this._state === ViewState.ATTACHED, 'view state must be ATTACHED');
+
     this._nb && this._nb.didEnter();
     this.didEnter.emit(null);
     this._lifecycle('DidEnter');
@@ -510,6 +515,8 @@ export class ViewController {
    * DOM WRITE
    */
   _destroy(renderer: Renderer) {
+    assert(this._state !== ViewState.DESTROYED, 'view state must be ATTACHED');
+
     if (this._cmp) {
       if (renderer) {
         // ensure the element is cleaned up for when the view pool reuses this element
@@ -524,6 +531,7 @@ export class ViewController {
     }
 
     this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._leavingOpts = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
+    this._state = ViewState.DESTROYED;
   }
 
   /**
@@ -534,7 +542,7 @@ export class ViewController {
     const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
-        let result = instance[methodName]();
+        var result = instance[methodName]();
         if (result === false) {
           return false;
         } else if (result instanceof Promise) {

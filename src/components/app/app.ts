@@ -220,8 +220,6 @@ export class App {
   present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
     const portal = this._appRoot._getPortal(appPortal);
 
-    enteringView._setNav(portal);
-
     opts.keyboardClose = false;
     opts.direction = DIRECTION_FORWARD;
 
