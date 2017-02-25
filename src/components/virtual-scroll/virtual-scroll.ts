@@ -107,7 +107,7 @@ import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
  * to manage HTTP requests and image rendering. While scrolling through items
  * quickly, `<ion-img>` knows when and when not to make requests, when and
  * when not to render images, and only loads the images that are viewable
- * after scrolling. [Read more about `ion-img`.](../img/Img/)
+ * after scrolling. [Read more about `ion-img`.](../../img/Img/)
  *
  * It's also important for app developers to ensure image sizes are locked in,
  * and after images have fully loaded they do not change size and affect any
