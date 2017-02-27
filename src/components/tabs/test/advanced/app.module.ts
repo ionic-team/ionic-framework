@@ -301,6 +301,11 @@ export class Tab2Page2 {
   ionViewWillUnload() {
     console.log('Tab2Page2, ionViewWillUnload');
   }
+
+  ionViewCanLeave() {
+    console.log('Tab2Page2, ionViewCanLeave', false);
+    return false;
+  }
 }
 
 
@@ -334,6 +339,11 @@ export class Tab2Page3 {
   ionViewWillUnload() {
     console.log('Tab2Page3, ionViewWillUnload');
   }
+
+  ionViewCanLeave() {
+    console.log('Tab2Page3, ionViewCanLeave', false);
+    return false;
+  }
 }
 
 
@@ -345,6 +355,8 @@ export class Tab2Page3 {
   templateUrl: './tab3page1.html'
 })
 export class Tab3Page1 {
+
+  constructor(public navCtrl: NavController) {}
 
   ionViewWillEnter() {
     console.log('Tab3Page1, ionViewWillEnter');
@@ -364,6 +376,14 @@ export class Tab3Page1 {
 
   ionViewWillUnload() {
     console.log('Tab3Page1, ionViewWillUnload');
+  }
+
+  navigateTab2Page2() {
+    this.navCtrl.push(Tab2Page2);
+  }
+
+  navigateTab2Page3() {
+    this.navCtrl.push(Tab2Page3);
   }
 }
 
