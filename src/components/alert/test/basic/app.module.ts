@@ -283,6 +283,82 @@ export class E2EPage {
     alert.present();
   }
 
+  doAlertWithSearch() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Search!');
+    alert.setSubTitle('1st input: "filter Name"');
+    alert.setHasSearch(true);
+
+    alert.addInput({
+      name: 'filter Name',
+    });
+
+    alert.addInput({
+      value: 'filter Value'
+    });
+
+    alert.addInput({
+      placeholder: 'filter Placeholder',
+    });
+
+    alert.addButton('OK');
+
+    alert.present();
+  }
+
+ doAlertWithSearchRadios() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Search!');
+    alert.setHasSearch(true);
+    alert.setSearchPlaceholder('Filter value1, value2, value3...');
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 1',
+      value: 'value1',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 2',
+      value: 'value2',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 3',
+      value: 'value3',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 4',
+      value: 'value4',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 5',
+      value: 'value5',
+      checked: true
+    });
+
+    alert.addInput({
+      type: 'radio',
+      label: 'Radio 6',
+      value: 'value6',
+      checked: true
+    });
+
+    alert.addButton('OK');
+
+    alert.present();
+  }
+
   ionViewDidLeave() {
     console.log('E2EPage, ionViewDidLeave');
   }

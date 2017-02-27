@@ -54,6 +54,17 @@ export class Alert extends ViewController {
   }
 
   /**
+   * @param {boolean} hasSearch  Alert has search
+   */
+  setHasSearch(hasSearch: boolean) {
+    this.data.hasSearch = hasSearch;
+  }
+
+  setSearchPlaceholder(placeholder: string) {
+    this.data.searchPlaceholder = placeholder;
+  }
+
+  /**
    * @param {object} input Alert input
    */
   addInput(input: AlertInputOptions) {

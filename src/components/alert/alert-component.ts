@@ -26,33 +26,45 @@ import { ViewController } from '../../navigation/view-controller';
       '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
+       '<div *ngIf="d.hasSearch" class="alert-input-group">' +
+          '<div class="alert-input-wrapper">' +
+            '<input placeholder="{{ d.searchPlaceholder }}" [ngModel]="searchModel" (ngModelChange)="filterOut($event)" class="alert-input">' +
+          '</div>' +
+        '</div>' +
+
         '<template ngSwitchCase="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
-              '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
-              '<div class="alert-radio-label">' +
-                '{{i.label}}' +
-              '</div>' +
-            '</button>' +
+            '<template ngFor let-i [ngForOf]="d.inputs">' +
+              '<button ion-button="alert-radio-button" *ngIf="i && i.filtered" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+                '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
+                '<div class="alert-radio-label">' +
+                  '{{i.label}}' +
+                '</div>' +
+              '</button>' +
+            '</template>' +
           '</div>' +
         '</template>' +
 
         '<template ngSwitchCase="checkbox">' +
           '<div class="alert-checkbox-group">' +
-            '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
-              '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
-              '<div class="alert-checkbox-label">' +
-                '{{i.label}}' +
-              '</div>' +
-            '</button>' +
+            '<template ngFor let-i [ngForOf]="d.inputs">' +
+              '<button ion-button="alert-checkbox-button" *ngIf="i && i.filtered" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
+                '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
+                '<div class="alert-checkbox-label">' +
+                  '{{i.label}}' +
+                '</div>' +
+              '</button>' +
+            '</template>' +
           '</div>' +
         '</template>' +
 
         '<template ngSwitchDefault>' +
           '<div class="alert-input-group">' +
-            '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
-            '</div>' +
+            '<template ngFor let-i [ngForOf]="d.inputs">' +
+              '<div *ngIf="i && i.filtered" class="alert-input-wrapper">' +
+                '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
+              '</div>' +
+            '</template>' +
           '</div>' +
         '</template>' +
 
@@ -81,6 +93,8 @@ export class AlertCmp {
     buttons?: any[];
     inputs?: any[];
     enableBackdropDismiss?: boolean;
+    hasSearch?: boolean;
+    searchPlaceholder?: string;
   };
   enabled: boolean;
   hdrId: string;
@@ -91,6 +105,7 @@ export class AlertCmp {
   subHdrId: string;
   mode: string;
   gestureBlocker: BlockerDelegate;
+  searchModel: string;
 
   constructor(
     public _viewCtrl: ViewController,
@@ -132,6 +147,11 @@ export class AlertCmp {
     if (!this.d.message) {
       this.d.message = '';
     }
+
+    if (this.d.hasSearch && typeof this.d.searchPlaceholder === 'undefined') {
+      this.d.searchPlaceholder = 'Search';
+    }
+
   }
 
   ionViewDidLoad() {
@@ -156,6 +176,7 @@ export class AlertCmp {
         disabled: !!input.disabled,
         id: isPresent(input.id) ? input.id : `alert-input-${this.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
+        filtered: true,
       };
     });
 
@@ -217,6 +238,15 @@ export class AlertCmp {
     }
     this.enabled = true;
   }
+
+  filterOut(ev: string) {
+    for (let input of this.d.inputs)
+      input.filtered = ev === '' && true || (
+        (isPresent(input.name) && typeof input.name === 'string' && input.name.toUpperCase().indexOf(ev.toUpperCase()) > -1) ||
+        (isPresent(input.placeholder) && typeof input.placeholder === 'string' && input.placeholder.toUpperCase().indexOf(ev.toUpperCase()) > -1) ||
+        (isPresent(input.value) && typeof input.value === 'string' && input.value.toUpperCase().indexOf(ev.toUpperCase()) > -1) ||
+        (isPresent(input.label) && typeof input.label === 'string' && input.label.toUpperCase().indexOf(ev.toUpperCase()) > -1) );
+  };
 
   @HostListener('body:keyup', ['$event'])
   keyUp(ev: KeyboardEvent) {
