@@ -413,9 +413,7 @@ export class Menu implements RootNode {
   }
 
   _forceClosing() {
-    if (!this.isOpen) {
-      return;
-    }
+    assert(this.isOpen, 'menu cannot be closed');
 
     this._isAnimating = true;
     this._getType().setOpen(false, false, () => {

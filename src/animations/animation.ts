@@ -356,10 +356,11 @@ export class Animation {
     if (!this.plt) {
       return;
     }
+    const opts = { duration: 0 };
     this._isAsync = false;
-    this._hasDur = false;
     this._clearAsync();
-    this._playDomInspect({ duration: 0 });
+    this._playInit(opts);
+    this._playDomInspect(opts);
   }
 
   /**
@@ -580,7 +581,6 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 
@@ -600,7 +600,6 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 

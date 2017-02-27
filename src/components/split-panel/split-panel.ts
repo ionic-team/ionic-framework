@@ -76,7 +76,6 @@ export class SplitPanel extends Ion implements RootNode {
         ? defaultQuery
         : query;
     }
-
     this._update();
   }
   get when(): string | boolean {
