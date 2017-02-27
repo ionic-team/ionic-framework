@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { IonicApp } from './app-root';
+import { IonicApp, PORTAL_DEFAULT, PORTAL_MODAL } from './app-root';
 import { ClickBlock } from '../../util/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
@@ -199,7 +199,7 @@ export class App {
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
   getActiveNav(): NavController {
-    const portal = this._appRoot._getPortal(MODAL);
+    const portal = this._appRoot._getPortal(PORTAL_MODAL);
     if (portal.length() > 0) {
       return findTopNav(portal);
     }
@@ -274,7 +274,7 @@ export class App {
     }
 
     // If there are any alert/actionsheet open, let's do nothing
-    const portal = this._appRoot._getPortal(DEFAULT);
+    const portal = this._appRoot._getPortal(PORTAL_DEFAULT);
     if (portal.length() > 0) {
       return Promise.resolve();
     }
@@ -316,7 +316,5 @@ function findTopNav(nav: NavController) {
   return nav;
 }
 
-const DEFAULT = 0; // AppPortal.DEFAULT
-const MODAL = 1; // AppPortal.MODAL
 const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;
