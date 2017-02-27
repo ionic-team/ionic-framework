@@ -1,11 +1,11 @@
 **Ionic version:**  (check one with "x")
-[ ] **1.x**
-[ ] **2.x**
+- [ ] **1.x**
+- [ ] **2.x**
 
 **I'm submitting a ...**  (check one with "x")
-[ ] bug report
-[ ] feature request
-[ ] support request => Please do not submit support requests here, use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/
+- [ ] bug report
+- [ ] feature request
+- [ ] support request => Please do not submit support requests here, use one of these channels: https://forum.ionicframework.com/ or http://ionicworldwide.herokuapp.com/
 
 **Current behavior:**
 <!-- Describe how the bug manifests. -->
