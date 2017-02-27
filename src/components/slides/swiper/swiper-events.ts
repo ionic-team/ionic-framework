@@ -69,7 +69,6 @@ export function initEvents(s: Slides, plt: Platform): Function {
   if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouch && !s._supportTouch && plt.is('ios')) || plt.getQueryParam('ionicPlatform')) {
     // mousedown
     plt.registerListener(touchEventsTarget, 'mousedown', (ev: SlideUIEvent) => {
-      console.log('mousedown')
       onTouchStart(s, plt, ev);
     }, { zone: false }, unregs);
 
