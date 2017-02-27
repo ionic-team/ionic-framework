@@ -4,7 +4,6 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Modal } from './modal';
 import { ModalOptions } from './modal-options';
-import { ModalSlideIn, ModalSlideOut, ModalMDSlideIn, ModalMDSlideOut } from './modal-transitions';
 
 /**
  * @name ModalController
@@ -117,12 +116,8 @@ import { ModalSlideIn, ModalSlideOut, ModalMDSlideIn, ModalMDSlideOut } from './
 @Injectable()
 export class ModalController {
 
-  constructor(private _app: App, config: Config) {
-    config.setTransition('modal-slide-in', ModalSlideIn);
-    config.setTransition('modal-slide-out', ModalSlideOut);
-    config.setTransition('modal-md-slide-in', ModalMDSlideIn);
-    config.setTransition('modal-md-slide-out', ModalMDSlideOut);
-  }
+  constructor(private _app: App, public config: Config) { }
+
   /**
    * Create a modal to display. See below for options.
    *
@@ -131,6 +126,6 @@ export class ModalController {
    * @param {object} opts Modal options
    */
   create(component: any, data: any = {}, opts: ModalOptions = {}) {
-    return new Modal(this._app, component, data, opts);
+    return new Modal(this._app, component, data, opts, this.config);
   }
 }

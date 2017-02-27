@@ -4,7 +4,6 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Popover } from './popover';
 import { PopoverOptions } from './popover-options';
-import { PopoverPopIn, PopoverPopOut, PopoverMdPopIn, PopoverMdPopOut } from './popover-transitions';
 
 /**
  * @name PopoverController
@@ -110,12 +109,7 @@ import { PopoverPopIn, PopoverPopOut, PopoverMdPopIn, PopoverMdPopOut } from './
 @Injectable()
 export class PopoverController {
 
-  constructor(private _app: App, config: Config) {
-    config.setTransition('popover-pop-in', PopoverPopIn);
-    config.setTransition('popover-pop-out', PopoverPopOut);
-    config.setTransition('popover-md-pop-in', PopoverMdPopIn);
-    config.setTransition('popover-md-pop-out', PopoverMdPopOut);
-  }
+  constructor(private _app: App, public config: Config) { }
 
   /**
    * Present a popover. See below for options
@@ -124,7 +118,7 @@ export class PopoverController {
    * @param {PopoverOptions} opts Popover options
    */
   create(component: any, data = {}, opts: PopoverOptions = {}): Popover {
-    return new Popover(this._app, component, data, opts);
+    return new Popover(this._app, component, data, opts, this.config);
   }
 
 }

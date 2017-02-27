@@ -1,6 +1,8 @@
 import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
 import { AlertOptions, AlertInputOptions } from './alert-options';
+import { AlertPopIn, AlertPopOut, AlertMdPopIn, AlertMdPopOut, AlertWpPopIn, AlertWpPopOut } from './alert-transitions';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -12,7 +14,7 @@ import { ViewController } from '../../navigation/view-controller';
 export class Alert extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: AlertOptions = {}) {
+  constructor(app: App, opts: AlertOptions = {}, config: Config) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
@@ -20,6 +22,13 @@ export class Alert extends ViewController {
     super(AlertCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
+
+    config.setTransition('alert-pop-in', AlertPopIn);
+    config.setTransition('alert-pop-out', AlertPopOut);
+    config.setTransition('alert-md-pop-in', AlertMdPopIn);
+    config.setTransition('alert-md-pop-out', AlertMdPopOut);
+    config.setTransition('alert-wp-pop-in', AlertWpPopIn);
+    config.setTransition('alert-wp-pop-out', AlertWpPopOut);
   }
 
   /**

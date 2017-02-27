@@ -213,7 +213,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   constructor(
     private _app: App,
     private _form: Form,
-    config: Config,
+    public config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() public _item: Item,
@@ -306,7 +306,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
       selectOptions.cssClass = selectCssClass;
-      overlay = new ActionSheet(this._app, selectOptions);
+      overlay = new ActionSheet(this._app, selectOptions, this.config);
 
     } else {
       // default to use the alert interface
@@ -334,7 +334,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       var selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions
-      overlay = new Alert(this._app, selectOptions);
+      overlay = new Alert(this._app, selectOptions, this.config);
 
       if (this._multi) {
         // use checkboxes

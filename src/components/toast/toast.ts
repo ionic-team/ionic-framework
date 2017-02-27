@@ -1,9 +1,11 @@
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { PORTAL_TOAST } from '../app/app-root';
-import { ToastOptions } from './toast-options';
 import { ToastCmp } from './toast-component';
+import { ToastOptions } from './toast-options';
+import { ToastSlideIn, ToastSlideOut, ToastMdSlideIn, ToastMdSlideOut, ToastWpPopOut, ToastWpPopIn } from './toast-transitions';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -13,7 +15,7 @@ import { ViewController } from '../../navigation/view-controller';
 export class Toast extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: ToastOptions = {}) {
+  constructor(app: App, opts: ToastOptions = {}, config: Config) {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
     super(ToastCmp, opts, null);
     this._app = app;
@@ -24,6 +26,13 @@ export class Toast extends ViewController {
     }
 
     this.isOverlay = true;
+
+    config.setTransition('toast-slide-in', ToastSlideIn);
+    config.setTransition('toast-slide-out', ToastSlideOut);
+    config.setTransition('toast-md-slide-in', ToastMdSlideIn);
+    config.setTransition('toast-md-slide-out', ToastMdSlideOut);
+    config.setTransition('toast-wp-slide-out', ToastWpPopOut);
+    config.setTransition('toast-wp-slide-in', ToastWpPopIn);
   }
 
   /**

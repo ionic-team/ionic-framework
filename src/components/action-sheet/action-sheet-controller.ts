@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { ActionSheet } from './action-sheet';
-import { ActionSheetSlideIn, ActionSheetMdSlideIn, ActionSheetSlideOut, ActionSheetMdSlideOut, ActionSheetWpSlideIn, ActionSheetWpSlideOut } from './action-sheet-transitions';
 import { ActionSheetOptions } from './action-sheet-options';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -158,21 +157,14 @@ import { Config } from '../../config/config';
 @Injectable()
 export class ActionSheetController {
 
-  constructor(private _app: App, config: Config) {
-    config.setTransition('action-sheet-slide-in', ActionSheetSlideIn);
-    config.setTransition('action-sheet-slide-out', ActionSheetSlideOut);
-    config.setTransition('action-sheet-md-slide-in', ActionSheetMdSlideIn);
-    config.setTransition('action-sheet-md-slide-out', ActionSheetMdSlideOut);
-    config.setTransition('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
-    config.setTransition('action-sheet-wp-slide-out', ActionSheetWpSlideOut);
-  }
+  constructor(private _app: App, public config: Config) { }
 
   /**
    * Open an action sheet with a title, subTitle, and an array of buttons
    * @param {ActionSheetOptions} opts Action sheet options
    */
   create(opts: ActionSheetOptions = {}): ActionSheet {
-    return new ActionSheet(this._app, opts);
+    return new ActionSheet(this._app, opts, this.config);
   }
 
 }

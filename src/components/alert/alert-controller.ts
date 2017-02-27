@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { Alert } from './alert';
 import { App } from '../app/app';
-import { AlertPopIn, AlertPopOut, AlertMdPopIn, AlertMdPopOut, AlertWpPopIn, AlertWpPopOut } from './alert-transitions';
 import { AlertOptions } from './alert-options';
 import { Config } from '../../config/config';
 
@@ -221,20 +220,14 @@ import { Config } from '../../config/config';
 @Injectable()
 export class AlertController {
 
-  constructor(private _app: App, config: Config) {
-    config.setTransition('alert-pop-in', AlertPopIn);
-    config.setTransition('alert-pop-out', AlertPopOut);
-    config.setTransition('alert-md-pop-in', AlertMdPopIn);
-    config.setTransition('alert-md-pop-out', AlertMdPopOut);
-    config.setTransition('alert-wp-pop-in', AlertWpPopIn);
-    config.setTransition('alert-wp-pop-out', AlertWpPopOut);
-  }
+  constructor(private _app: App, public config: Config) { }
+
   /**
    * Display an alert with a title, inputs, and buttons
    * @param {AlertOptions} opts Alert. See the table below
    */
   create(opts: AlertOptions = {}): Alert {
-    return new Alert(this._app, opts);
+    return new Alert(this._app, opts, this.config);
   }
 
 }

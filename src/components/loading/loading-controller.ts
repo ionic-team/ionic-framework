@@ -4,7 +4,6 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Loading } from './loading';
 import { LoadingOptions } from './loading-options';
-import { LoadingPopIn, LoadingPopOut, LoadingMdPopIn, LoadingMdPopOut, LoadingWpPopIn, LoadingWpPopOut } from './loading-transitions';
 
 /**
  * @name LoadingController
@@ -117,21 +116,15 @@ import { LoadingPopIn, LoadingPopOut, LoadingMdPopIn, LoadingMdPopOut, LoadingWp
 @Injectable()
 export class LoadingController {
 
-  constructor(private _app: App, config: Config) {
-    config.setTransition('loading-pop-in', LoadingPopIn);
-    config.setTransition('loading-pop-out', LoadingPopOut);
-    config.setTransition('loading-md-pop-in', LoadingMdPopIn);
-    config.setTransition('loading-md-pop-out', LoadingMdPopOut);
-    config.setTransition('loading-wp-pop-in', LoadingWpPopIn);
-    config.setTransition('loading-wp-pop-out', LoadingWpPopOut);
-  }
+  constructor(private _app: App, public config: Config) { }
+
   /**
    * Create a loading indicator. See below for options.
    * @param {LoadingOptions} opts Loading options
    * @returns {Loading} Returns a Loading Instance
    */
   create(opts: LoadingOptions = {}) {
-    return new Loading(this._app, opts);
+    return new Loading(this._app, opts, this.config);
   }
 
 }

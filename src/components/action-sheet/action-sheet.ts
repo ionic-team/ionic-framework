@@ -1,6 +1,8 @@
 import { ActionSheetCmp } from './action-sheet-component';
 import { ActionSheetOptions } from './action-sheet-options';
+import { ActionSheetSlideIn, ActionSheetMdSlideIn, ActionSheetSlideOut, ActionSheetMdSlideOut, ActionSheetWpSlideIn, ActionSheetWpSlideOut } from './action-sheet-transitions';
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -12,13 +14,20 @@ import { ViewController } from '../../navigation/view-controller';
 export class ActionSheet extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: ActionSheetOptions) {
+  constructor(app: App, opts: ActionSheetOptions, config: Config) {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(ActionSheetCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
+
+    config.setTransition('action-sheet-slide-in', ActionSheetSlideIn);
+    config.setTransition('action-sheet-slide-out', ActionSheetSlideOut);
+    config.setTransition('action-sheet-md-slide-in', ActionSheetMdSlideIn);
+    config.setTransition('action-sheet-md-slide-out', ActionSheetMdSlideOut);
+    config.setTransition('action-sheet-wp-slide-in', ActionSheetWpSlideIn);
+    config.setTransition('action-sheet-wp-slide-out', ActionSheetWpSlideOut);
   }
 
   /**

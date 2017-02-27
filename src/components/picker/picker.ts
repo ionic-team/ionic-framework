@@ -1,10 +1,12 @@
 import { EventEmitter, Output } from '@angular/core';
 
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { PickerCmp } from './picker-component';
 import { PickerOptions, PickerColumn } from './picker-options';
+import { PickerSlideIn, PickerSlideOut } from './picker-transitions';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -16,7 +18,7 @@ export class Picker extends ViewController {
 
   @Output() ionChange: EventEmitter<any>;
 
-  constructor(app: App, opts: PickerOptions = {}) {
+  constructor(app: App, opts: PickerOptions = {}, config: Config) {
     opts.columns = opts.columns || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
@@ -26,6 +28,9 @@ export class Picker extends ViewController {
     this.isOverlay = true;
 
     this.ionChange = new EventEmitter<any>();
+
+    config.setTransition('picker-slide-in', PickerSlideIn);
+    config.setTransition('picker-slide-out', PickerSlideOut);
   }
 
   /**

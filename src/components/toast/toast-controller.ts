@@ -4,7 +4,6 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Toast } from './toast';
 import { ToastOptions } from './toast-options';
-import { ToastSlideIn, ToastSlideOut, ToastMdSlideIn, ToastMdSlideOut, ToastWpPopOut, ToastWpPopIn } from './toast-transitions';
 
 /**
  * @name ToastController
@@ -72,21 +71,14 @@ import { ToastSlideIn, ToastSlideOut, ToastMdSlideIn, ToastMdSlideOut, ToastWpPo
 @Injectable()
 export class ToastController {
 
-  constructor(private _app: App, config: Config) {
-    config.setTransition('toast-slide-in', ToastSlideIn);
-    config.setTransition('toast-slide-out', ToastSlideOut);
-    config.setTransition('toast-md-slide-in', ToastMdSlideIn);
-    config.setTransition('toast-md-slide-out', ToastMdSlideOut);
-    config.setTransition('toast-wp-slide-out', ToastWpPopOut);
-    config.setTransition('toast-wp-slide-in', ToastWpPopIn);
-  }
+  constructor(private _app: App, public config: Config) { }
 
   /**
    * Create a new toast component. See options below
    * @param {ToastOptions} opts Toast options. See the below table for available options.
    */
   create(opts: ToastOptions = {}) {
-    return new Toast(this._app, opts);
+    return new Toast(this._app, opts, this.config);
   }
 
 }

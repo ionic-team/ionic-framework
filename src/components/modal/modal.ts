@@ -1,8 +1,10 @@
 import { App } from '../app/app';
+import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { PORTAL_MODAL } from '../app/app-root';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
+import { ModalSlideIn, ModalSlideOut, ModalMDSlideIn, ModalMDSlideOut } from './modal-transitions';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -15,7 +17,7 @@ export class Modal extends ViewController {
   private _enterAnimation: string;
   private _leaveAnimation: string;
 
-  constructor(app: App, component: any, data: any, opts: ModalOptions = {}) {
+  constructor(app: App, component: any, data: any, opts: ModalOptions = {}, config: Config) {
     data = data || {};
     data.component = component;
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
@@ -28,6 +30,11 @@ export class Modal extends ViewController {
     this._leaveAnimation = opts.leaveAnimation;
 
     this.isOverlay = true;
+
+    config.setTransition('modal-slide-in', ModalSlideIn);
+    config.setTransition('modal-slide-out', ModalSlideOut);
+    config.setTransition('modal-md-slide-in', ModalMDSlideIn);
+    config.setTransition('modal-md-slide-out', ModalMDSlideOut);
   }
 
   /**
