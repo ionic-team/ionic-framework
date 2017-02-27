@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, NavController } from '..';
+import { IonicApp, IonicModule, NavController } from '../../../src';
 
 
 let pageNum = 2;

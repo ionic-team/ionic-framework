@@ -1,6 +1,6 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Events, IonicApp, IonicModule, Nav } from '..';
+import { Events, IonicApp, IonicModule, Nav } from '../../../src';
 
 
 @Component({

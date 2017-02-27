@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AlertController, IonicApp, IonicModule } from '..';
+import { AlertController, IonicApp, IonicModule } from '../../../src';
 
 
 @Component({

@@ -1,6 +1,5 @@
-import { Component, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { ActionSheetController, IonicApp, IonicModule, Platform } from '..';
+import { Component } from '@angular/core';
+import { ActionSheetController, Platform } from '../../../../src';
 
 
 @Component({
@@ -56,27 +55,3 @@ export class ApiDemoPage {
     actionSheet.present();
   }
 }
-
-
-@Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
-})
-export class ApiDemoApp {
-  root = ApiDemoPage;
-}
-
-@NgModule({
-  declarations: [
-    ApiDemoApp,
-    ApiDemoPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(ApiDemoApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    ApiDemoPage
-  ]
-})
-export class AppModule {}

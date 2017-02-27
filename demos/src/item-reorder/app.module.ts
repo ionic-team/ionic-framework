@@ -1,6 +1,6 @@
 import { Component, NgModule, ViewEncapsulation } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, NavController, reorderArray } from '..';
+import { IonicApp, IonicModule, NavController, reorderArray } from '../../../src';
 
 
 @Component({
