@@ -53,7 +53,12 @@ export class E2ENested2 {
 @Component({
   template: `
   <ion-header>
-    <ion-navbar><ion-title>Nested 3</ion-title></ion-navbar>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Nested 3</ion-title>
+    </ion-navbar>
   </ion-header>
   <ion-content padding>
     <button ion-button (click)="push()">Push</button>

@@ -561,8 +561,18 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
     }
   }
 
+  /**
+   * @internal
+   */
+  resize() {
+    const tab = this.getSelected();
+    tab && tab.resize();
+  }
+
   _setIsPanel(isPanel: boolean): void {
-    // Conforms to RootNode abstract class
+    if (isPanel) {
+      this.resize();
+    }
   }
 
   _isSideContent(): boolean {
