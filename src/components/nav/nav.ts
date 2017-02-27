@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, forwardRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -10,6 +10,7 @@ import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
+import { RootNode } from '../../navigation/root-node';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
@@ -52,8 +53,9 @@ import { ViewController } from '../../navigation/view-controller';
     '<div #viewport nav-viewport></div>' +
     '<div class="nav-decor"></div>',
   encapsulation: ViewEncapsulation.None,
+  providers: [{provide: RootNode, useExisting: forwardRef(() => Nav) }]
 })
-export class Nav extends NavControllerBase implements AfterViewInit {
+export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   private _root: any;
   private _hasInit: boolean = false;
 
@@ -160,8 +162,24 @@ export class Nav extends NavControllerBase implements AfterViewInit {
   /**
    * @private
    */
-  destroy() {
+  ngOnDestroy() {
     this.destroy();
+  }
+
+  /**
+   * @private
+   */
+  _setIsPanel(isPanel: boolean) {
+    if (isPanel) {
+      this.resize();
+    }
+  }
+
+  /**
+   * @private
+   */
+  _isSideContent(): boolean {
+    return !this._elementRef.nativeElement.hasAttribute('main');
   }
 
 }

@@ -609,4 +609,9 @@ export abstract class NavController {
    * @private
    */
   abstract registerChildNav(nav: any): void;
+
+  /**
+   * @private
+   */
+  abstract resize(): void;
 }

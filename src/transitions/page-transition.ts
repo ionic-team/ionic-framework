@@ -25,6 +25,7 @@ export class PageTransition extends Transition {
 
   destroy() {
     super.destroy();
+    this.enteringPage && this.enteringPage.destroy();
     this.enteringPage = null;
   }
 

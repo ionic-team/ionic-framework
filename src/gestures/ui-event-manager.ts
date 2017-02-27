@@ -43,10 +43,15 @@ export class UIEventManager {
     }
   }
 
-  destroy() {
+  unlistenAll() {
     this.evts.forEach(unRegEvent => {
       unRegEvent();
     });
     this.evts.length = 0;
+  }
+
+  destroy() {
+    this.unlistenAll();
+    this.evts = null;
   }
 }

@@ -10,8 +10,6 @@ import { DomController } from '../platform/dom-controller';
  * @private
  */
 export class RippleActivator implements ActivatorBase {
-  protected _queue: HTMLElement[] = [];
-  protected _active: HTMLElement[] = [];
   protected highlight: Activator;
 
   constructor(app: App, config: Config, private dom: DomController) {
@@ -51,8 +49,6 @@ export class RippleActivator implements ActivatorBase {
     if (isActivatedDisabled(ev, activatableEle)) {
       return;
     }
-
-    this._active.push(activatableEle);
 
     var j = activatableEle.childElementCount;
     while (j--) {

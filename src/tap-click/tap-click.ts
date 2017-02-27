@@ -221,11 +221,13 @@ export class TapClick {
 }
 
 
-function getActivatableTarget(ele: HTMLElement) {
+function getActivatableTarget(ele: HTMLElement): any {
   let targetEle = ele;
   for (let x = 0; x < 10; x++) {
     if (!targetEle) break;
-    if (isActivatable(targetEle)) return targetEle;
+    if (isActivatable(targetEle)) {
+      return targetEle;
+    }
     targetEle = targetEle.parentElement;
   }
   return null;
