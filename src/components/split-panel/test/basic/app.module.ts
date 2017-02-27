@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, MenuController } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, NavController, MenuController, SplitPanel } from '../../../../../ionic-angular';
 
 
 @Component({
@@ -90,6 +90,10 @@ export class E2EPage {
 export class E2EApp {
   root = E2EPage;
   root2 = SidePage;
+
+  splitPanelChanged(splitPanel: SplitPanel) {
+    console.log('Split panel changed, visible: ', splitPanel.isVisible());
+  }
 }
 
 @NgModule({

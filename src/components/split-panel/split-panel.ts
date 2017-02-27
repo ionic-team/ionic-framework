@@ -1,4 +1,4 @@
-import { ContentChildren, Component, ElementRef, EventEmitter, forwardRef, Input, QueryList, NgZone, Renderer } from '@angular/core';
+import { ContentChildren, Component, ElementRef, EventEmitter, forwardRef, Input, Output, QueryList, NgZone, Renderer } from '@angular/core';
 import { Ion } from '../ion';
 import { assert } from '../../util/util';
 import { Config } from '../../config/config';
@@ -83,7 +83,7 @@ export class SplitPanel extends Ion implements RootNode {
     return this._mediaQuery;
   }
 
-  ionChange: EventEmitter<SplitPanel> = new EventEmitter<SplitPanel>();
+  @Output() ionChange: EventEmitter<SplitPanel> = new EventEmitter<SplitPanel>();
 
   constructor(
     private _zone: NgZone,
