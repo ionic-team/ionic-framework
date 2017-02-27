@@ -194,7 +194,7 @@ export class NavControllerBase extends Ion implements NavController {
     let resolve: Function = done;
     let reject: Function = done;
 
-    if (!done) {
+    if (done === undefined) {
       // only create a promise if a done callback wasn't provided
       // done can be a null, which avoids any functions
       promise = new Promise((res, rej) => {

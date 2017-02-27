@@ -2,7 +2,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
-import { PORTAL_TOAST } from '../app/app-root';
+import { PORTAL_TOAST } from '../app/app-constants';
 import { ToastCmp } from './toast-component';
 import { ToastOptions } from './toast-options';
 import { ToastSlideIn, ToastSlideOut, ToastMdSlideIn, ToastMdSlideOut, ToastWpPopOut, ToastWpPopIn } from './toast-transitions';

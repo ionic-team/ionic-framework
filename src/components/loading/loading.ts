@@ -1,7 +1,7 @@
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
-import { PORTAL_LOADING } from '../app/app-root';
+import { PORTAL_LOADING } from '../app/app-constants';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
 import { LoadingPopIn, LoadingPopOut, LoadingMdPopIn, LoadingMdPopOut, LoadingWpPopIn, LoadingWpPopOut } from './loading-transitions';

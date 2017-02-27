@@ -1,7 +1,7 @@
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
-import { PORTAL_MODAL } from '../app/app-root';
+import { PORTAL_MODAL } from '../app/app-constants';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
 import { ModalSlideIn, ModalSlideOut, ModalMDSlideIn, ModalMDSlideOut } from './modal-transitions';
