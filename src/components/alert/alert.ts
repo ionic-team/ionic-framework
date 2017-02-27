@@ -75,6 +75,13 @@ export class Alert extends ViewController {
   }
 
   /**
+   * @param {string} mode Set the mode of the alert (ios, md, wp).
+   */
+  setMode(mode: string) {
+    this.data.mode = mode;
+  }
+
+  /**
    * Present the alert instance.
    *
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
@@ -220,6 +227,7 @@ export class Alert extends ViewController {
  *  | subTitle              | `string`  | The subtitle for the alert.                                               |
  *  | message               | `string`  | The message for the alert.                                                |
  *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                |
+ *  | mode                  | `string`  | Set alert mode (ios, md, wp).                                             |
  *  | inputs                | `array`   | An array of inputs for the alert. See input options.                      |
  *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                   |
  *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop.            |
