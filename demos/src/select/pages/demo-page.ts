@@ -7,8 +7,8 @@ export class ApiDemoPage {
   gender: string;
   gaming: string;
   toppings: Array<string>;
-  petAlertOpts;
-  petData;
+  petAlertOpts: any;
+  petData: any;
   pets: Array<string>;
   notifications: string = 'mute_1';
   rating: number = 2;
@@ -34,11 +34,11 @@ export class ApiDemoPage {
     this.pets = ['cat', 'dog'];
   }
 
-  monthChange(val) {
+  monthChange(val: any) {
     console.log('Month Change:', val);
   }
 
-  yearChange(val) {
+  yearChange(val: any) {
     console.log('Year Change:', val);
   }
 }

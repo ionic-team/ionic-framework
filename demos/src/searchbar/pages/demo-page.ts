@@ -14,7 +14,7 @@ export class ApiDemoPage {
     this.items = ['Orange', 'Banana', 'Pear', 'Tomato', 'Grape', 'Apple', 'Cherries', 'Cranberries', 'Raspberries', 'Strawberries', 'Watermelon'];
   }
 
-  filterItems(ev) {
+  filterItems(ev: any) {
     this.setItems();
     let val = ev.target.value;
 

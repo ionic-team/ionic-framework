@@ -5,7 +5,7 @@ export class MockProvider {
 
   getData(): any[] {
     // return mock data synchronously
-    let data = [];
+    let data: any[] = [];
     for (var i = 0; i < 20; i++) {
       data.push( this._getRandomData() );
     }

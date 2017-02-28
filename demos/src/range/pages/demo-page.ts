@@ -9,7 +9,7 @@ export class ApiDemoPage {
   warmth: number = 1300;
   structure: any = {lower: 33, upper: 60};
 
-  onChange(ev) {
+  onChange(ev: any) {
     console.log('Changed', ev);
   }
 }

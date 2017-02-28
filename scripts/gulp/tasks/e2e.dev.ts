@@ -1,14 +1,9 @@
 import { join } from 'path';
 
 import { task } from 'gulp';
-import * as runSequence from 'run-sequence';
 
 import { ES_2015, PROJECT_ROOT } from '../constants';
 import { createTempTsConfig, getFolderInfo, runAppScriptsServe } from '../util';
-
-task('e2e.prepare', (done: Function) => {
-  runSequence('e2e.clean', 'e2e.polyfill', (err: any) => done(err));
-});
 
 task('e2e.watch', ['e2e.prepare'], (done: Function) => {
   const folderInfo = getFolderInfo();

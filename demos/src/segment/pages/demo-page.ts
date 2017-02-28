@@ -8,7 +8,7 @@ export class ApiDemoPage {
   safari = 'Shared Links';
   weather = 'sunny';
 
-  apps = {
+  apps: any = {
     'Paid': [
       {
         name: 'Monopoly',
@@ -41,7 +41,7 @@ export class ApiDemoPage {
     ]
   };
 
-  items = {
+  items: any = {
     'Bookmarks': [
       {
         name: 'Favorites',
@@ -74,11 +74,11 @@ export class ApiDemoPage {
     ]
   };
 
-  getItems(type) {
+  getItems(type: any) {
     return this.apps[type];
   }
 
-  getSafariItems(type) {
+  getSafariItems(type: any) {
     return this.items[type];
   }
 }

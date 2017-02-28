@@ -1,14 +1,9 @@
 import { join } from 'path';
 
 import { task } from 'gulp';
-import * as runSequence from 'run-sequence';
 
 import { DEMOS_ROOT, DIST_DEMOS_ROOT, ES_2015, PROJECT_ROOT } from '../constants';
 import { createTempTsConfig, getFolderInfo, runAppScriptsServe } from '../util';
-
-task('demos.prepare', (done: Function) => {
-  runSequence('demos.clean', 'demos.polyfill', (err: any) => done(err));
-});
 
 task('demos.watch', ['demos.prepare'], (done: Function) => {
   const folderInfo = getFolderInfo();

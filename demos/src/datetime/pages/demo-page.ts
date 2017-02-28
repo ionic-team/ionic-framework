@@ -38,7 +38,7 @@ export class ApiDemoPage {
     }
   }
 
-  calculateTime(offset) {
+  calculateTime(offset: any) {
     // create Date object for current location
     let d = new Date();
 
@@ -50,13 +50,13 @@ export class ApiDemoPage {
   }
 
   // Determine if the client uses DST
-  stdTimezoneOffset(today) {
+  stdTimezoneOffset(today: any) {
     let jan = new Date(today.getFullYear(), 0, 1);
     let jul = new Date(today.getFullYear(), 6, 1);
     return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
   }
 
-  dst(today) {
+  dst(today: any) {
     return today.getTimezoneOffset() < this.stdTimezoneOffset(today);
   }
 }
