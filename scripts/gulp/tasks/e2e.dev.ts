@@ -41,5 +41,5 @@ function serveTest(folderInfo: any) {
   const appNgModulePath = join(srcTestRoot, 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
-  return runAppScriptsServe(folderInfo.componentName + '/' + folderInfo.componentTest, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath);
+  return runAppScriptsServe(folderInfo.componentName + '/' + folderInfo.componentTest, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, null);
 }

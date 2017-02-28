@@ -39,10 +39,11 @@ function serveDemo(folderName: any) {
 
   const sassConfigPath = join('scripts', 'demos', 'sass.config.js');
   const copyConfigPath = join('scripts', 'demos', 'copy.config.js');
+  const watchConfigPath = join('scripts', 'demos', 'watch.config.js');
 
   const appEntryPoint = join(srcTestRoot, 'app', 'main.ts');
   const appNgModulePath = join(srcTestRoot, 'app', 'app.module.ts');
   const distDir = join(distDemoRoot, 'www');
 
-  return runAppScriptsServe(folderName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath);
+  return runAppScriptsServe(folderName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, watchConfigPath);
 }

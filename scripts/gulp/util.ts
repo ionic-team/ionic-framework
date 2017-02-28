@@ -188,7 +188,7 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string) {
+export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string) {
   console.log('Running ionic-app-scripts serve with', testOrDemoName);
   let scriptArgs = [
     'serve',
@@ -203,6 +203,11 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--sass', sassConfigPath,
     '--copy', copyConfigPath
   ];
+
+  if (watchConfigPath) {
+    scriptArgs.push('--watch');
+    scriptArgs.push(watchConfigPath);
+  }
 
   const debug: boolean = argv.debug;
   if (debug) {
