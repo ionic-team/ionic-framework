@@ -1,27 +1,20 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../..';
+import { IonicApp, IonicModule } from '../../../../..';
 
-
-@Component({
-  templateUrl: 'main.html'
-})
-export class PageOne {
-  gender = '';
-}
-
+import { RootPage } from '../pages/root-page/root-page';
 
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
 export class E2EApp {
-  root = PageOne;
+  root = RootPage;
 }
 
 @NgModule({
   declarations: [
     E2EApp,
-    PageOne
+    RootPage
   ],
   imports: [
     BrowserModule,
@@ -29,8 +22,7 @@ export class E2EApp {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
-    PageOne
+    RootPage
   ]
 })
 export class AppModule {}

@@ -1,12 +1,9 @@
-import { Component, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../..';
-
+import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'root-page.html'
 })
-export class E2EPage {
+export class RootPage {
   reload() {
     window.location.reload();
   }
@@ -33,29 +30,3 @@ document.addEventListener('focusout', (ev: any) => {
   console.log(`CLICK, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
   console.log(`FOCUS OUT, ${ev.target.localName}.${ev.target.className}, time: ${Date.now()}`);
 });
-
-@Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
-})
-export class E2EApp {
-  rootPage = E2EPage;
-}
-
-@NgModule({
-  declarations: [
-    E2EApp,
-    E2EPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(E2EApp, {
-      inputCloning: true,
-      scrollAssist: true
-    })
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EPage
-  ]
-})
-export class AppModule {}
