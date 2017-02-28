@@ -1,15 +1,9 @@
 import { join } from 'path';
 
 import { task } from 'gulp';
-import * as del from 'del';
-import * as runSequence from 'run-sequence';
 
 import { ES_2015, PROJECT_ROOT } from '../constants';
-import { createTempTsConfig, getFolderInfo, runAppScriptsServe, writePolyfills } from '../util';
-
-task('e2e.prepare', (done: Function) => {
-  runSequence('e2e.clean', 'e2e.polyfill', (err: any) => done(err));
-});
+import { createTempTsConfig, getFolderInfo, runAppScriptsServe } from '../util';
 
 task('e2e.watch', ['e2e.prepare'], (done: Function) => {
   const folderInfo = getFolderInfo();
@@ -42,5 +36,5 @@ function serveTest(folderInfo: any) {
   const appNgModulePath = join(srcTestRoot, 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
-  return runAppScriptsServe(folderInfo, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath);
+  return runAppScriptsServe(folderInfo.componentName + '/' + folderInfo.componentTest, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, null);
 }

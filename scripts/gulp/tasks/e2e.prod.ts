@@ -84,7 +84,7 @@ function buildTest(filePath: string) {
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
   const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
 
-  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile);
+  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
 
   const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
   const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
