@@ -578,6 +578,10 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   _isSideContent(): boolean {
     return !this._elementRef.nativeElement.hasAttribute('main');
   }
+
+  get enabled(): boolean {
+    return true;
+  }
 }
 
 let tabIds = -1;

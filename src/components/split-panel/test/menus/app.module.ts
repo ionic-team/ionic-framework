@@ -1,33 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { IonicApp, IonicModule, NavController, MenuController, SplitPanel } from '../../../../../ionic-angular';
 
-
-@Component({
-  template: `
-  <ion-header>
-  <ion-navbar><ion-title>Navigation</ion-title></ion-navbar>
-  </ion-header>
-  <ion-content>
-  <ion-list>
-    <ion-item>Hola 1</ion-item>
-    <ion-item>Hola 2</ion-item>
-    <ion-item>Hola 3</ion-item>
-    <button ion-item (click)="push()">Push</button>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
-
-  </ion-list>
-  </ion-content>
-  `
-})
-export class SidePage {
-  constructor(public navCtrl: NavController) { }
-  push() {
-    this.navCtrl.push(SidePage);
-  }
-}
-
 @Component({
   template: `
   <ion-header>
@@ -59,7 +32,11 @@ export class E2EPage2 {}
   <ion-content padding>
     <h1>Page 1</h1>
     <button ion-button (click)="push()">Push</button>
-    <button ion-button (click)="menu()">Disable/enable menu</button>
+    <button ion-button (click)="menu1Active()">Enable menu 1</button>
+    <button ion-button (click)="menu2Active()">Enable menu 2</button>
+    <button ion-button (click)="menu3Active()">Enable menu 3</button>
+    <button ion-button (click)="disableAll()">Disable all</button>
+
     <div f></div>
     <div f></div>
     <div f></div>
@@ -77,9 +54,17 @@ export class E2EPage {
   push() {
     this.navCtrl.push(E2EPage2);
   }
-
-  menu() {
-    this.menuCtrl.enable(!this.menuCtrl.isEnabled());
+  menu1Active() {
+    this.menuCtrl.enable(true, 'menu1');
+  }
+  menu2Active() {
+    this.menuCtrl.enable(true, 'menu2');
+  }
+  menu3Active() {
+    this.menuCtrl.enable(true, 'menu3');
+  }
+  disableAll() {
+    this.menuCtrl.enable(false);
   }
 }
 
@@ -89,7 +74,6 @@ export class E2EPage {
 })
 export class E2EApp {
   root = E2EPage;
-  root2 = SidePage;
 
   splitPanelChanged(splitPanel: SplitPanel) {
     console.log('Split panel changed, visible: ', splitPanel.isVisible());
@@ -101,7 +85,6 @@ export class E2EApp {
     E2EApp,
     E2EPage,
     E2EPage2,
-    SidePage,
   ],
   imports: [
     IonicModule.forRoot(E2EApp, {
@@ -113,7 +96,6 @@ export class E2EApp {
     E2EApp,
     E2EPage,
     E2EPage2,
-    SidePage,
   ]
 })
 export class AppModule {}

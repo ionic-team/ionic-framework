@@ -197,7 +197,7 @@ export class Menu implements RootNode {
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;
   private _type: MenuType;
-  private _isEnabled: boolean = true;
+  private _isEnabled: boolean = false;
   private _isSwipeEnabled: boolean = true;
   private _isAnimating: boolean = false;
   private _isPersistent: boolean = false;
@@ -353,21 +353,20 @@ export class Menu implements RootNode {
     // add the gestures
     this._gesture = new MenuContentGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
 
-    // register listeners if this menu is enabled
-    // check if more than one menu is on the same side
-    let hasEnabledSameSideMenu = this._menuCtrl.getMenus().some(m => {
-      return m.side === this.side && m.enabled;
-    });
-    if (hasEnabledSameSideMenu) {
-      // auto-disable if another menu on the same side is already enabled
-      this._isEnabled = false;
-    }
+    // add menu's content classes
     this._cntEle.classList.add('menu-content');
     this._cntEle.classList.add('menu-content-' + this.type);
 
+    // check if more than one menu is on the same side
+    let shouldEnable = !this._menuCtrl.getMenus().some(m => {
+      return m.side === this.side && m.enabled;
+    });
+
     // register this menu with the app's menu controller
     this._menuCtrl._register(this);
-    this._updateState();
+
+    // mask it as enabled / disabled
+    this.enable(shouldEnable);
   }
 
   /**
@@ -401,10 +400,8 @@ export class Menu implements RootNode {
     if ((shouldOpen === this.isOpen) || !this._canOpen() || this._isAnimating) {
       return Promise.resolve(this.isOpen);
     }
-
-    this._before();
-
     return new Promise(resolve => {
+      this._before();
       this._getType().setOpen(shouldOpen, animated, () => {
         this._after(shouldOpen);
         resolve(this.isOpen);
@@ -414,7 +411,6 @@ export class Menu implements RootNode {
 
   _forceClosing() {
     assert(this.isOpen, 'menu cannot be closed');
-
     this._isAnimating = true;
     this._getType().setOpen(false, false, () => {
       this._after(false);
@@ -607,7 +603,9 @@ export class Menu implements RootNode {
       console.debug('menu, gesture unlisten', this.side);
       gesture.unlisten();
     }
-
+    if (this.isOpen || (this._isPanel && this._isEnabled)) {
+      this.resize();
+    }
     assert(!this._isAnimating, 'can not be animating');
   }
 
@@ -616,6 +614,7 @@ export class Menu implements RootNode {
    */
   enable(shouldEnable: boolean): Menu {
     this._isEnabled = shouldEnable;
+    this.setElementClass('menu-enabled', shouldEnable);
     this._updateState();
     return this;
   }
@@ -626,11 +625,6 @@ export class Menu implements RootNode {
   _setIsPanel(isPanel: boolean) {
     this._isPanel = isPanel;
     this._updateState();
-
-    // Trigger resize() if menu becomes a split panel
-    if (isPanel) {
-      this.resize();
-    }
   }
 
   /**

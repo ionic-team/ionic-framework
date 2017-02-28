@@ -182,4 +182,8 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
     return !this._elementRef.nativeElement.hasAttribute('main');
   }
 
+  get enabled(): boolean {
+    return true;
+  }
+
 }

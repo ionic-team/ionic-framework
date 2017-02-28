@@ -31,11 +31,23 @@ ion-split-panel {
   bottom: 0;
   left: 0;
   z-index: 0;
-  display: block;
 
   flex: 1;
 
   box-shadow: none !important;
+}
+
+.split-panel-visible >.split-panel-side {
+  flex-shrink: 0;
+
+  order: -1;
+}
+
+.split-panel-visible >.split-panel-main,
+.split-panel-visible >ion-nav.split-panel-side,
+.split-panel-visible >ion-tabs.split-panel-side,
+.split-panel-visible >ion-menu.menu-enabled {
+  display: block;
 }
 
 .split-panel-visible >ion-split-panel.split-panel-side,
@@ -43,14 +55,7 @@ ion-split-panel {
   display: flex;
 }
 
-.split-panel-visible >.split-panel-side {
-  flex: 1;
-  flex-shrink: 0;
-
-  order: -1;
-}
-
-.split-panel-visible >ion-menu {
+.split-panel-visible >ion-menu.menu-enabled {
   >.menu-inner {
     // scss-lint:disable ImportantRule
     right: 0;

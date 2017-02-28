@@ -25,7 +25,7 @@ export class MenuType {
 
   setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
     const ani = this.ani
-      .onFinish(done, true)
+      .onFinish(done, true, true)
       .reverse(!shouldOpen);
 
     if (animated) {

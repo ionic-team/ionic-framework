@@ -27,44 +27,45 @@ export class SplitPanel extends Ion implements RootNode {
   _rmListener: any;
   _visible: boolean = false;
   _init: boolean = false;
-  _mediaQuery: string|boolean = QUERY['md'];
+  _mediaQuery: string | boolean = QUERY['md'];
 
   sideContent: RootNode;
   mainContent: RootNode;
 
-  @ContentChildren(RootNode, {descendants: false})
-  set _setChildren(query: QueryList<RootNode>) {
+  @ContentChildren(RootNode, { descendants: false }) children: QueryList<RootNode>;
+
+  updateChildren() {
     this.mainContent = null;
     this.sideContent = null;
 
-    if (query.length === 1) {
-      var node = query.first;
-      this.setPanelCSSClass(node.getElementRef(), false);
-      this.mainContent = node;
-
-    } else if (query.length >= 2) {
-      query.forEach(child => {
-        if (child !== this) {
-          var isSide = child._isSideContent();
+    this.children.forEach(child => {
+      if (child !== this) {
+        var isSide = child._isSideContent();
+        this.setPanelCSSClass(child.getElementRef(), isSide);
+        if (child.enabled) {
           if (isSide) {
+            if (this.sideContent) {
+              console.error('split panel: side content was already set');
+            }
             this.sideContent = child;
           } else {
+            if (this.mainContent) {
+              console.error('split panel: main content was already set');
+            }
             this.mainContent = child;
           }
-          this.setPanelCSSClass(child.getElementRef(), isSide);
         }
-      });
-      if (!this.mainContent) {
-        console.error('split panel: one of the elements needs the "main" attribute');
+        child._setIsPanel(this._visible);
       }
-      if (!this.sideContent) {
-        console.error('split panel: missing side content node');
-      }
-      if (this.mainContent === this.sideContent) {
-        console.error('split panel: main and side content are the same');
-      }
+    });
+    if (!this.mainContent) {
+      console.error('split panel: one of the elements needs the "main" attribute');
+    }
+    if (this.mainContent === this.sideContent) {
+      console.error('split panel: main and side content are the same');
     }
   }
+
 
   @Input()
   set when(query: string | boolean) {
@@ -130,12 +131,9 @@ export class SplitPanel extends Ion implements RootNode {
     if (this._visible === visible) {
       return;
     }
-    this.setElementClass('split-panel-visible', visible);
-
-    this.sideContent && this.sideContent._setIsPanel(visible);
-    this.mainContent && this.mainContent._setIsPanel(visible);
-
     this._visible = visible;
+    this.setElementClass('split-panel-visible', visible);
+    this.updateChildren();
 
     this._zone.run(() => {
       this.ionChange.emit(this);
@@ -169,6 +167,10 @@ export class SplitPanel extends Ion implements RootNode {
 
   _isSideContent(): boolean {
     return false;
+  }
+
+  get enabled(): boolean {
+    return true;
   }
 
 }
