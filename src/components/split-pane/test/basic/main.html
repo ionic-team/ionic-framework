@@ -1,7 +1,7 @@
 
-<ion-split-panel (ionChange)="splitPanelChanged($event)">
+<ion-split-pane (ionChange)="splitPaneChanged($event)">
   <ion-menu [content]="content">
     <ion-nav [root]="root2"></ion-nav>
   </ion-menu>
   <ion-nav [root]="root" main #content></ion-nav>
-</ion-split-panel>
+</ion-split-pane>

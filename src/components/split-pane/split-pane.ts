@@ -15,14 +15,14 @@ const QUERY: { [key: string]: string }  = {
 };
 
 /**
- * @name SplitPanel
+ * @name SplitPane
  */
 @Component({
-  selector: 'ion-split-panel',
+  selector: 'ion-split-pane',
   template: '<ng-content></ng-content>',
-  providers: [{provide: RootNode, useExisting: forwardRef(() => SplitPanel) }]
+  providers: [{provide: RootNode, useExisting: forwardRef(() => SplitPane) }]
 })
-export class SplitPanel extends Ion implements RootNode {
+export class SplitPane extends Ion implements RootNode {
 
   _rmListener: any;
   _visible: boolean = false;
@@ -41,28 +41,28 @@ export class SplitPanel extends Ion implements RootNode {
     this.children.forEach(child => {
       if (child !== this) {
         var isSide = child._isSideContent();
-        this.setPanelCSSClass(child.getElementRef(), isSide);
+        this.setPaneCSSClass(child.getElementRef(), isSide);
         if (child.enabled) {
           if (isSide) {
             if (this.sideContent) {
-              console.error('split panel: side content was already set');
+              console.error('split pane: side content was already set');
             }
             this.sideContent = child;
           } else {
             if (this.mainContent) {
-              console.error('split panel: main content was already set');
+              console.error('split pane: main content was already set');
             }
             this.mainContent = child;
           }
         }
-        child._setIsPanel(this._visible);
+        child._setIsPane(this._visible);
       }
     });
     if (!this.mainContent) {
-      console.error('split panel: one of the elements needs the "main" attribute');
+      console.error('split pane: one of the elements needs the "main" attribute');
     }
     if (this.mainContent === this.sideContent) {
-      console.error('split panel: main and side content are the same');
+      console.error('split pane: main and side content are the same');
     }
   }
 
@@ -83,7 +83,7 @@ export class SplitPanel extends Ion implements RootNode {
     return this._mediaQuery;
   }
 
-  @Output() ionChange: EventEmitter<SplitPanel> = new EventEmitter<SplitPanel>();
+  @Output() ionChange: EventEmitter<SplitPane> = new EventEmitter<SplitPane>();
 
   constructor(
     private _zone: NgZone,
@@ -92,7 +92,7 @@ export class SplitPanel extends Ion implements RootNode {
     elementRef: ElementRef,
     renderer: Renderer,
   ) {
-    super(config, elementRef, renderer, 'split-panel');
+    super(config, elementRef, renderer, 'split-pane');
   }
 
   ngAfterViewInit() {
@@ -132,7 +132,7 @@ export class SplitPanel extends Ion implements RootNode {
       return;
     }
     this._visible = visible;
-    this.setElementClass('split-panel-visible', visible);
+    this.setElementClass('split-pane-visible', visible);
     this.updateChildren();
 
     this._zone.run(() => {
@@ -148,10 +148,10 @@ export class SplitPanel extends Ion implements RootNode {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
-  setPanelCSSClass(elementRef: ElementRef, isSide: boolean) {
+  setPaneCSSClass(elementRef: ElementRef, isSide: boolean) {
     const ele = elementRef.nativeElement;
-    this._renderer.setElementClass(ele, 'split-panel-side', isSide);
-    this._renderer.setElementClass(ele, 'split-panel-main', !isSide);
+    this._renderer.setElementClass(ele, 'split-pane-side', isSide);
+    this._renderer.setElementClass(ele, 'split-pane-main', !isSide);
   }
 
   ngOnDestroy() {
@@ -161,7 +161,7 @@ export class SplitPanel extends Ion implements RootNode {
     this._rmListener = null;
   }
 
-  _setIsPanel(isPanel: boolean) {
+  _setIsPane(isPane: boolean) {
     // Conforms to RootNode abstract class
   }
 

@@ -5,7 +5,7 @@ import { ElementRef } from '@angular/core';
  */
 export abstract class RootNode {
   abstract getElementRef(): ElementRef;
-  abstract _setIsPanel(isPanel: boolean): void;
+  abstract _setIsPane(isPane: boolean): void;
   abstract _isSideContent(): boolean;
   enabled: boolean;
 }

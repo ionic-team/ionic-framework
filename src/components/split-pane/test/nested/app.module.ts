@@ -108,15 +108,15 @@ export class SidePage {
 
 @Component({
   template: `
-<ion-split-panel>
+<ion-split-pane>
   <ion-nav [root]="root"></ion-nav>
 
-  <ion-split-panel when="lg" main >
+  <ion-split-pane when="lg" main >
     <ion-nav [root]="root2"></ion-nav>
     <ion-nav [root]="root3" main ></ion-nav>
-  </ion-split-panel>
+  </ion-split-pane>
 
-</ion-split-panel>
+</ion-split-pane>
   `
 })
 export class E2EPage {

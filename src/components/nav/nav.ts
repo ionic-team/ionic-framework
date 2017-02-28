@@ -169,8 +169,8 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   /**
    * @private
    */
-  _setIsPanel(isPanel: boolean) {
-    if (isPanel) {
+  _setIsPane(isPane: boolean) {
+    if (isPane) {
       this.resize();
     }
   }

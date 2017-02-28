@@ -569,8 +569,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
     tab && tab.resize();
   }
 
-  _setIsPanel(isPanel: boolean): void {
-    if (isPanel) {
+  _setIsPane(isPane: boolean): void {
+    if (isPane) {
       this.resize();
     }
   }

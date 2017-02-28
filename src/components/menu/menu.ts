@@ -204,7 +204,7 @@ export class Menu implements RootNode {
   private _init: boolean = false;
   private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
-  private _isPanel: boolean = false;
+  private _isPane: boolean = false;
 
   /**
    * @private
@@ -565,7 +565,7 @@ export class Menu implements RootNode {
   }
 
   _canOpen(): boolean {
-    return this._isEnabled && !this._isPanel;
+    return this._isEnabled && !this._isPane;
   }
 
   _isSideContent(): boolean {
@@ -603,7 +603,7 @@ export class Menu implements RootNode {
       console.debug('menu, gesture unlisten', this.side);
       gesture.unlisten();
     }
-    if (this.isOpen || (this._isPanel && this._isEnabled)) {
+    if (this.isOpen || (this._isPane && this._isEnabled)) {
       this.resize();
     }
     assert(!this._isAnimating, 'can not be animating');
@@ -622,8 +622,8 @@ export class Menu implements RootNode {
   /**
    * @private
    */
-  _setIsPanel(isPanel: boolean) {
-    this._isPanel = isPanel;
+  _setIsPane(isPane: boolean) {
+    this._isPane = isPane;
     this._updateState();
   }
 

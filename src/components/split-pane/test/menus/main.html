@@ -1,5 +1,5 @@
 
-<ion-split-panel (ionChange)="splitPanelChanged($event)">
+<ion-split-pane (ionChange)="splitPaneChanged($event)">
   <ion-menu [content]="content" id="menu1">
 
     <ion-header>
@@ -49,4 +49,4 @@
   </ion-menu>
 
   <ion-nav [root]="root" main #content></ion-nav>
-</ion-split-panel>
+</ion-split-pane>
