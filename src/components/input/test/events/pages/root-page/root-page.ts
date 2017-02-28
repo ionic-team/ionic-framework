@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { TextInput } from '../../../../../../';
 
-
 @Component({
   templateUrl: 'root-page.html'
 })
