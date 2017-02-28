@@ -1,12 +1,11 @@
-import { Component, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, TextInput } from '../../../..';
+import { Component } from '@angular/core';
+import { TextInput } from '../../../../../../';
 
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'root-page.html'
 })
-export class E2EPage {
+export class RootPage {
   ngvalue1: any;
   ngvalue2: any;
   value2: any;
@@ -40,26 +39,3 @@ export class E2EPage {
     console.log('value6', this.value6);
   }
 }
-
-@Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
-})
-export class E2EApp {
-  rootPage = E2EPage;
-}
-
-@NgModule({
-  declarations: [
-    E2EApp,
-    E2EPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(E2EApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EPage
-  ]
-})
-export class AppModule {}

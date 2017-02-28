@@ -1,31 +1,20 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../..';
+import { IonicApp, IonicModule } from '../../../../..';
 
-
-@Component({
-  templateUrl: 'main.html'
-})
-export class PageOne {
-  url: string;
-  input1: string = 'Text 1';
-
-  onEvent(event: any) {
-    console.log('Did Event:', event.type);
-  }
-}
+import { RootPage } from '../pages/root-page/root-page';
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
 export class E2EApp {
-  root = PageOne;
+  rootPage = RootPage;
 }
 
 @NgModule({
   declarations: [
     E2EApp,
-    PageOne
+    RootPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +22,7 @@ export class E2EApp {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    PageOne
+    RootPage
   ]
 })
 export class AppModule {}
