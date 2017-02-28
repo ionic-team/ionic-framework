@@ -557,7 +557,7 @@ export class IonicModule {
 
   static forChild(cls: any) {
     return {
-      ngModule: LazyModule,
+      ngModule: DeepLinkedModule,
       providers: [
         { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
       ]
@@ -632,11 +632,11 @@ export class IonicModule {
   imports: [IonicModule],
   exports: [IonicModule]
 })
-export class LazyModule {
+export class DeepLinkedModule {
 
   static forChild(cls: any) {
     return {
-      ngModule: LazyModule,
+      ngModule: DeepLinkedModule,
       providers: [
         { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
       ]

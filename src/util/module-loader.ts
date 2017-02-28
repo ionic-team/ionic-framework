@@ -3,7 +3,6 @@ import { NgModuleLoader } from './ng-module-loader';
 
 export const LAZY_LOADED_TOKEN = new OpaqueToken('LZYCMP');
 
-
 /**
  * @private
  */
