@@ -36,7 +36,7 @@ const images = [
 
 function getRandomImg(): string {
   let imgString = images[Math.floor(Math.random() * images.length)];
-  let src = '../img/' + imgString;
+  let src = 'assets/img/' + imgString;
   return src;
 }
 

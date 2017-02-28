@@ -2,7 +2,10 @@
 var path = require('path');
 
 module.exports = {
-  copyAssets: { },
+  copyAssets: {
+    src: [path.join(path.dirname(process.env.IONIC_APP_ENTRY_POINT), 'assets', '**', '*')],
+    dest: '{{WWW}}/assets'
+  },
   copyIndexContent: {
     src: [path.join(process.cwd(), 'scripts', 'demos', 'index.html')],
     dest: '{{WWW}}'
