@@ -1,4 +1,5 @@
-import { join } from 'path';
+import { dirname, join } from 'path';
+import { readFileSync } from 'fs';
 
 import { task } from 'gulp';
 
@@ -32,8 +33,17 @@ function serveTest(folderInfo: any) {
   const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
   const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
 
-  const appEntryPoint = join(srcTestRoot, 'app', 'main.ts');
-  const appNgModulePath = join(srcTestRoot, 'app', 'app.module.ts');
+  let appEntryPoint = join(srcTestRoot, 'app', 'main.ts');
+  try {
+    // check if the entry point exists, otherwise fall back to the legacy entry point without 'app' folder
+    readFileSync(appEntryPoint);
+  } catch (ex) {
+    // the file doesn't exist, so use the legacy entry point
+    appEntryPoint = join(srcTestRoot, 'main.ts');
+  }
+
+  // this assume that app.module.ts and main.ts are peers, which they should be no matter what
+  const appNgModulePath = join(dirname(appEntryPoint), 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
   return runAppScriptsServe(folderInfo.componentName + '/' + folderInfo.componentTest, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, null);

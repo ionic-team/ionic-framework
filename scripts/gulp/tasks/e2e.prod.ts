@@ -82,8 +82,19 @@ function buildTests(filePaths: string[]) {
 function buildTest(filePath: string) {
   const start = Date.now();
   const ionicAngularDir = join(process.cwd(), 'src');
-  const srcTestRoot = dirname(filePath);
-  const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), dirname(srcTestRoot));
+
+  let appEntryPoint = filePath;
+  let srcTestRoot = dirname(dirname(appEntryPoint));
+  try {
+    // check if the entry point exists, otherwise fall back to the legacy entry point without 'app' folder
+    readFileSync(appEntryPoint);
+  } catch (ex) {
+    // the file doesn't exist, so use the legacy entry point
+    appEntryPoint = join(dirname(dirname(appEntryPoint)), 'main.ts');
+    srcTestRoot = dirname(appEntryPoint);
+  }
+
+  const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), srcTestRoot);
   const distTestRoot = join(process.cwd(), 'dist', 'e2e', relativePathFromComponents);
 
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
@@ -95,8 +106,10 @@ function buildTest(filePath: string) {
   const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
   const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
 
-  const appEntryPoint = filePath;
-  const appNgModulePath = join(srcTestRoot, 'app.module.ts');
+
+
+
+  const appNgModulePath = join(dirname(appEntryPoint), 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
   return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath).then(() => {
