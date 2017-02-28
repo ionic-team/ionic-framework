@@ -56,7 +56,7 @@ export function createWorker(msg: MessageToWorker): any {
   try {
       let scriptArgs = [
       'build',
-      '--prod',
+      '--aot',
       '--optimizejs',
       '--appEntryPoint', msg.appEntryPoint,
       '--appNgModulePath', msg.appNgModulePath,

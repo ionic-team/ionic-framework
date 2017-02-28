@@ -1,5 +1,5 @@
 import { dirname, join, relative } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 import * as glob from 'glob';
 import { task } from 'gulp';
@@ -10,12 +10,18 @@ import { argv } from 'yargs';
 
 
 import { ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
-import { createTempTsConfig, getFolderInfo, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
+import { createTempTsConfig, createTimestamp, getFolderInfo, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
 
 import * as pAll from 'p-all';
 
 task('e2e.prepare', (done: Function) => {
-  runSequence('e2e.clean', 'e2e.polyfill', (err: any) => done(err));
+  runSequence('e2e.clean', 'e2e.polyfill', 'e2e.prepareSass', (err: any) => done(err));
+});
+
+task('e2e.prepareSass', (done: Function) => {
+  const version = `E2E-${createTimestamp()}`;
+  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  done();
 });
 
 task('e2e.prod', ['e2e.prepare'], (done: Function) => {
@@ -77,7 +83,7 @@ function buildTest(filePath: string) {
   const start = Date.now();
   const ionicAngularDir = join(process.cwd(), 'src');
   const srcTestRoot = dirname(filePath);
-  const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), srcTestRoot);
+  const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), dirname(srcTestRoot));
   const distTestRoot = join(process.cwd(), 'dist', 'e2e', relativePathFromComponents);
 
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
@@ -100,7 +106,10 @@ function buildTest(filePath: string) {
 }
 
 function copyProtractorTestContent(filePaths: string[]): Promise<any> {
-  return readE2ETestFiles(filePaths)
+  const e2eTestPaths = filePaths.map(filePath => {
+    return join(dirname(dirname(filePath)), 'e2e.ts');
+  });
+  return readE2ETestFiles(e2eTestPaths)
     .then((map: Map<string, string>) => {
       return applyTemplate(map);
     }).then((map: Map<string, string>) => {
