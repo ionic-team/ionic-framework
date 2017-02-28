@@ -35,7 +35,7 @@ function filterE2eTestfiles() {
   return getE2eTestFiles().then((filePaths: string[]) => {
     const entryPoints = filePaths.map(filePath => {
       const directoryName = dirname(filePath);
-      return join(directoryName, 'main.ts');
+      return join(directoryName, 'app', 'main.ts');
     });
     return entryPoints;
   }).then((entryPoints: string[]) => {

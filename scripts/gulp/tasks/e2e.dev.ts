@@ -32,8 +32,8 @@ function serveTest(folderInfo: any) {
   const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
   const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
 
-  const appEntryPoint = join(srcTestRoot, 'main.ts');
-  const appNgModulePath = join(srcTestRoot, 'app.module.ts');
+  const appEntryPoint = join(srcTestRoot, 'app', 'main.ts');
+  const appNgModulePath = join(srcTestRoot, 'app', 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
   return runAppScriptsServe(folderInfo.componentName + '/' + folderInfo.componentTest, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, null);

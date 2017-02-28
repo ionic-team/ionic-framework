@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { DeepLinkModule } from '../../../../../..';
-import { FullPage } from './full-page';
+import { RedirectPage } from './redirect-page';
 
 
 @NgModule({
   imports: [
-    DeepLinkModule.forChild(FullPage)
+    DeepLinkModule.forChild(RedirectPage)
   ],
   declarations: [
-    FullPage
+    RedirectPage
   ],
   entryComponents: [
-    FullPage,
+    RedirectPage,
   ]
 })
-export class FullPageModule { }
+export class RedirectPageModule { }

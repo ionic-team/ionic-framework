@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { DeepLinkModule } from '../../../../../..';
-import { FullPage } from './full-page';
+import { TabsPage } from './tabs';
 
 
 @NgModule({
   imports: [
-    DeepLinkModule.forChild(FullPage)
+    DeepLinkModule.forChild(TabsPage)
   ],
   declarations: [
-    FullPage
+    TabsPage
   ],
   entryComponents: [
-    FullPage,
+    TabsPage,
   ]
 })
-export class FullPageModule { }
+export class TabsPageModule { }
