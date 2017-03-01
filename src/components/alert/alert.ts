@@ -244,6 +244,8 @@ export class Alert extends ViewController {
  *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
  *  | checked     | `boolean` | Whether or not the input is checked.                            |
  *  | id          | `string`  | The input's id.                                                 |
+ *  | min         | `string`  | The input's minimum authorized value (only for date inputs)     |
+ *  | max         | `string`  | The input's maximum authorized value (only for date inputs)     |
  *
  *  Button options
  *
