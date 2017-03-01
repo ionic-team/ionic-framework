@@ -1,12 +1,12 @@
-import { Component, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, AlertController, ModalController, ViewController } from '../../../..';
+import { Component } from '@angular/core';
+import { AlertController, ModalController } from '../../../../../..';
 
+import { ModalPage } from '../modal-page/modal-page';
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'root-page.html'
 })
-export class E2EPage {
+export class RootPage {
   testConfirmOpen: boolean = false;
   testPromptOpen: boolean = false;
   testConfirmResult: string = '';
@@ -292,53 +292,3 @@ export class E2EPage {
     console.log('E2EPage, ionViewDidEnter');
   }
 }
-
-@Component({
-  template: `
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons>
-          <button ion-button (click)="dismiss()" strong>Close</button>
-        </ion-buttons>
-        <ion-title>Modal</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content padding>
-      Hi, I'm Bob, and I'm a modal.
-      <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
-    </ion-content>
-  `
-})
-export class ModalPage {
-  constructor(private viewCtrl: ViewController) {}
-
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-}
-
-
-@Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
-})
-export class E2EApp {
-  root = E2EPage;
-}
-
-@NgModule({
-  declarations: [
-    E2EApp,
-    E2EPage,
-    ModalPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(E2EApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EPage,
-    ModalPage
-  ]
-})
-export class AppModule {}
