@@ -73,7 +73,7 @@ export class PrimaryHeaderPage {
   }
 
   pushAnother() {
-    this.navCtrl.push('AnotherPage');
+    this.navCtrl.push('another-page');
   }
 
   pushFullPage() {
@@ -81,7 +81,7 @@ export class PrimaryHeaderPage {
   }
 
   insert() {
-    this.navCtrl.insert(2, 'FirstPage');
+    this.navCtrl.insert(2, 'first-page');
   }
 
   removeSecond() {
@@ -89,7 +89,7 @@ export class PrimaryHeaderPage {
   }
 
   setRoot() {
-    this.navCtrl.setRoot('AnotherPage');
+    this.navCtrl.setRoot('another-page');
   }
 
   presentAlert() {

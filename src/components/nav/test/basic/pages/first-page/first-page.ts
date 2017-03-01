@@ -63,7 +63,7 @@ import { MyCmpTest } from './my-component';
 })
 export class FirstPage {
 
-  pushPage = 'AnotherPage';
+  pushPage = 'another-page';
   firstPage = FirstPage;
 
   title = 'First Page';
@@ -157,18 +157,18 @@ export class FirstPage {
 
   setPages() {
     let items = [
-      { page: 'PrimaryHeaderPage' }
+      { page: 'primary-header-page' }
     ];
 
     this.navCtrl.setPages(items);
   }
 
   setRoot() {
-    this.navCtrl.setRoot('PrimaryHeaderPage');
+    this.navCtrl.setRoot('primary-header-page');
   }
 
   pushPrimaryHeaderPage() {
-    this.navCtrl.push('PrimaryHeaderPage', null, {
+    this.navCtrl.push('primary-header-page', null, {
       animate: true,
       animation: 'ios-transition'
     }).then(() => { }, (rejectReason: string) => {
@@ -176,7 +176,7 @@ export class FirstPage {
   }
 
   pushRedirect() {
-    this.navCtrl.push('RedirectPage').then(() => { }, (rejectReason: string) => {
+    this.navCtrl.push('redirect-page').then(() => { }, (rejectReason: string) => {
     });
   }
 
@@ -189,7 +189,7 @@ export class FirstPage {
   }
 
   pushAnother() {
-    this.navCtrl.push('AnotherPage', null, {
+    this.navCtrl.push('another-page', null, {
       animate: true,
       animation: 'wp-transition'
     }).catch(() => {
@@ -197,22 +197,22 @@ export class FirstPage {
   }
 
   pushTabsPage() {
-    this.navCtrl.push('TabsPage').catch(() => {
+    this.navCtrl.push('tabs').catch(() => {
     });
   }
 
 
   quickPush() {
-    this.navCtrl.push('AnotherPage').catch(() => {
+    this.navCtrl.push('another-page').catch(() => {
     });
     setTimeout(() => {
-      this.navCtrl.push('PrimaryHeaderPage').catch(() => {
+      this.navCtrl.push('primary-header-page').catch(() => {
       });
     }, 150);
   }
 
   quickPop() {
-    this.navCtrl.push('AnotherPage').catch(() => {
+    this.navCtrl.push('another-page').catch(() => {
     });
     setTimeout(() => {
       this.navCtrl.remove(1, 1).catch(() => {

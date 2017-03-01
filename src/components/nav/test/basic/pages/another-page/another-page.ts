@@ -80,15 +80,15 @@ export class AnotherPage {
   }
 
   pushPrimaryHeaderPage() {
-    this.navCtrl.push('PrimaryHeaderPage');
+    this.navCtrl.push('primary-header-page');
   }
 
   pushFirstPage() {
-    this.navCtrl.push('FirstPage');
+    this.navCtrl.push('first-page');
   }
 
   setRoot() {
-    this.navCtrl.setRoot('FirstPage');
+    this.navCtrl.setRoot('first-page');
   }
 
   toggleBackButton() {

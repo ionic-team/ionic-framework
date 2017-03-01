@@ -42,7 +42,7 @@ export class Tab1 {
   }
 
   goTo() {
-    this.nav.push('TabItemPage');
+    this.nav.push('tab-item-page');
   }
 
   selectPrevious() {

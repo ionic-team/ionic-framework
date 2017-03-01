@@ -7,6 +7,6 @@ import { NavController } from '../../../../../..';
 export class RedirectPage {
   constructor(public navCtrl: NavController) { }
   ionViewDidEnter() {
-    this.navCtrl.push('PrimaryHeaderPage');
+    this.navCtrl.push('primary-header-page');
   }
 }
