@@ -1,29 +1,22 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
-import { RootPage } from '../pages/root-page/root-page';
-
-@Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
-})
-export class E2EApp {
-  rootPage = RootPage;
-}
+import { E2EApp } from './app.component';
+import { RootPageModule } from '../pages/root-page/root-page.module';
 
 @NgModule({
   declarations: [
-    E2EApp,
-    RootPage
+    E2EApp
   ],
   imports: [
     BrowserModule,
+    RootPageModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
-    RootPage
+    E2EApp
   ]
 })
 export class AppModule {}
