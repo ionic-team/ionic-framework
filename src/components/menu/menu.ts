@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
+import { Animation } from '../../animations/animation';
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
@@ -9,10 +10,330 @@ import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../..
 import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
-import { MenuController } from './menu-controller';
-import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
+import { removeArrayItem } from '../../util/util';
+
+/**
+ * @name MenuController
+ * @description
+ * The MenuController is a provider which makes it easy to control a [Menu](../Menu).
+ * Its methods can be used to display the menu, enable the menu, toggle the menu, and more.
+ * The controller will grab a reference to the menu by the `side`, `id`, or, if neither
+ * of these are passed to it, it will grab the first menu it finds.
+ *
+ *
+ * @usage
+ *
+ * Add a basic menu component to start with. See the [Menu](../Menu) API docs
+ * for more information on adding menu components.
+ *
+ * ```html
+ * <ion-menu [content]="mycontent">
+ *   <ion-content>
+ *     <ion-list>
+ *     ...
+ *     </ion-list>
+ *   </ion-content>
+ * </ion-menu>
+ *
+ * <ion-nav #mycontent [root]="rootPage"></ion-nav>
+ * ```
+ *
+ * To call the controller methods, inject the `MenuController` provider
+ * into the page. Then, create some methods for opening, closing, and
+ * toggling the menu.
+ *
+ * ```ts
+ * import { Component } from '@angular/core';
+ * import { MenuController } from 'ionic-angular';
+ *
+ * @Component({...})
+ * export class MyPage {
+ *
+ *  constructor(public menuCtrl: MenuController) {
+ *
+ *  }
+ *
+ *  openMenu() {
+ *    this.menuCtrl.open();
+ *  }
+ *
+ *  closeMenu() {
+ *    this.menuCtrl.close();
+ *  }
+ *
+ *  toggleMenu() {
+ *    this.menuCtrl.toggle();
+ *  }
+ *
+ * }
+ * ```
+ *
+ * Since only one menu exists, the `MenuController` will grab the
+ * correct menu and call the correct method for each.
+ *
+ *
+ * ### Multiple Menus on Different Sides
+ *
+ * For applications with both a left and right menu, the desired menu can be
+ * grabbed by passing the `side` of the menu. If nothing is passed, it will
+ * default to the `"left"` menu.
+ *
+ * ```html
+ * <ion-menu side="left" [content]="mycontent">...</ion-menu>
+ * <ion-menu side="right" [content]="mycontent">...</ion-menu>
+ * <ion-nav #mycontent [root]="rootPage"></ion-nav>
+ * ```
+ *
+ * ```ts
+ *  toggleLeftMenu() {
+ *    this.menuCtrl.toggle();
+ *  }
+ *
+ *  toggleRightMenu() {
+ *    this.menuCtrl.toggle('right');
+ *  }
+ * ```
+ *
+ *
+ * ### Multiple Menus on the Same Side
+ *
+ * An application can have multiple menus on the same side. In order to determine
+ * the menu to control, an `id` should be passed. In the example below, the menu
+ * with the `authenticated` id will be enabled, and the menu with the `unauthenticated`
+ * id will be disabled.
+ *
+ * ```html
+ * <ion-menu id="authenticated" side="left" [content]="mycontent">...</ion-menu>
+ * <ion-menu id="unauthenticated" side="left" [content]="mycontent">...</ion-menu>
+ * <ion-nav #mycontent [root]="rootPage"></ion-nav>
+ * ```
+ *
+ * ```ts
+ *  enableAuthenticatedMenu() {
+ *    this.menuCtrl.enable(true, 'authenticated');
+ *    this.menuCtrl.enable(false, 'unauthenticated');
+ *  }
+ * ```
+ *
+ * Note: if an app only has one menu, there is no reason to pass an `id`.
+ *
+ *
+ * @demo /docs/v2/demos/src/menu/
+ *
+ * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @see {@link ../Menu Menu API Docs}
+ *
+ */
+export class MenuController {
+  private _menus: Array<Menu> = [];
+
+  /**
+   * Programatically open the Menu.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
+   * @return {Promise} returns a promise when the menu is fully opened
+   */
+  open(menuId?: string): Promise<boolean> {
+    const menu = this.get(menuId);
+    if (menu && !this.isAnimating()) {
+      let openedMenu = this.getOpen();
+      if (openedMenu && menu !== openedMenu) {
+        openedMenu.setOpen(false, false);
+      }
+      return menu.open();
+    }
+    return Promise.resolve(false);
+  }
+
+  /**
+   * Programatically close the Menu. If no `menuId` is given as the first
+   * argument then it'll close any menu which is open. If a `menuId`
+   * is given then it'll close that exact menu.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
+   * @return {Promise} returns a promise when the menu is fully closed
+   */
+  close(menuId?: string): Promise<boolean> {
+    let menu: Menu;
+
+    if (menuId) {
+      // find the menu by its id
+      menu = this.get(menuId);
+
+    } else {
+      // find the menu that is open
+      menu = this.getOpen();
+    }
+
+    if (menu) {
+      // close the menu
+      return menu.close();
+    }
+
+    return Promise.resolve(false);
+  }
+
+
+  /**
+   * Toggle the menu. If it's closed, it will open, and if opened, it
+   * will close.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
+   * @return {Promise} returns a promise when the menu has been toggled
+   */
+  toggle(menuId?: string): Promise<boolean> {
+    const menu = this.get(menuId);
+    if (menu && !this.isAnimating()) {
+      var openedMenu = this.getOpen();
+      if (openedMenu && menu !== openedMenu) {
+        openedMenu.setOpen(false, false);
+      }
+      return menu.toggle();
+    }
+    return Promise.resolve(false);
+  }
+
+  /**
+   * Used to enable or disable a menu. For example, there could be multiple
+   * left menus, but only one of them should be able to be opened at the same
+   * time. If there are multiple menus on the same side, then enabling one menu
+   * will also automatically disable all the others that are on the same side.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
+   * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
+   */
+  enable(shouldEnable: boolean, menuId?: string): Menu {
+    const menu = this.get(menuId);
+    if (menu) {
+      return menu.enable(shouldEnable);
+    }
+  }
+
+  /**
+   * Used to enable or disable the ability to swipe open the menu.
+   * @param {boolean} shouldEnable  True if it should be swipe-able, false if not.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
+   * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
+   */
+  swipeEnable(shouldEnable: boolean, menuId?: string): Menu {
+    const menu = this.get(menuId);
+    if (menu) {
+      return menu.swipeEnable(shouldEnable);
+    }
+  }
+
+  /**
+   * @param {string} [menuId] Optionally get the menu by its id, or side.
+   * @return {boolean} Returns true if the specified menu is currently open, otherwise false.
+   * If the menuId is not specified, it returns true if ANY menu is currenly open.
+   */
+  isOpen(menuId?: string): boolean {
+    if (menuId) {
+      var menu = this.get(menuId);
+      return menu && menu.isOpen || false;
+    } else {
+      return !!this.getOpen();
+    }
+  }
+
+  /**
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
+   * @return {boolean} Returns true if the menu is currently enabled, otherwise false.
+   */
+  isEnabled(menuId?: string): boolean {
+    const menu = this.get(menuId);
+    return menu && menu.enabled || false;
+  }
+
+  /**
+   * Used to get a menu instance. If a `menuId` is not provided then it'll
+   * return the first menu found. If a `menuId` is `left` or `right`, then
+   * it'll return the enabled menu on that side. Otherwise, if a `menuId` is
+   * provided, then it'll try to find the menu using the menu's `id`
+   * property. If a menu is not found then it'll return `null`.
+   * @param {string} [menuId]  Optionally get the menu by its id, or side.
+   * @return {Menu} Returns the instance of the menu if found, otherwise `null`.
+   */
+  get(menuId?: string): Menu {
+    var menu: Menu;
+
+    if (menuId === 'left' || menuId === 'right') {
+      // there could be more than one menu on the same side
+      // so first try to get the enabled one
+      menu = this._menus.find(m => m.side === menuId && m.enabled);
+      if (menu) return menu;
+
+      // didn't find a menu side that is enabled
+      // so try to get the first menu side found
+      return this._menus.find(m => m.side === menuId) || null;
+
+    } else if (menuId) {
+      // the menuId was not left or right
+      // so try to get the menu by its "id"
+      return this._menus.find(m => m.id === menuId) || null;
+    }
+
+    // return the first enabled menu
+    menu = this._menus.find(m => m.enabled);
+    if (menu) {
+      return menu;
+    }
+
+    // get the first menu in the array, if one exists
+    return (this._menus.length ? this._menus[0] : null);
+  }
+
+  /**
+   * @return {Menu} Returns the instance of the menu already opened, otherwise `null`.
+   */
+  getOpen(): Menu {
+    return this._menus.find(m => m.isOpen);
+  }
+
+  /**
+   * @return {Array<Menu>}  Returns an array of all menu instances.
+   */
+  getMenus(): Array<Menu> {
+    return this._menus;
+  }
+
+  /**
+   * @private
+   * @return {boolean} if any menu is currently animating
+   */
+  isAnimating(): boolean {
+    return this._menus.some(menu => menu.isAnimating());
+  }
+
+  /**
+   * @private
+   */
+  register(menu: Menu) {
+    this._menus.push(menu);
+  }
+
+  /**
+   * @private
+   */
+  unregister(menu: Menu) {
+    removeArrayItem(this._menus, menu);
+  }
+
+  /**
+   * @private
+   */
+  static registerType(name: string, cls: new(...args: any[]) => MenuType) {
+    menuTypes[name] = cls;
+  }
+
+  /**
+   * @private
+   */
+  static create(type: string, menuCmp: Menu, plt: Platform) {
+    return new menuTypes[type](menuCmp, plt);
+  }
+
+}
+
+let menuTypes: { [name: string]: new(...args: any[]) => MenuType } = {};
 
 /**
  * @name Menu
@@ -667,3 +988,158 @@ export class Menu {
   }
 
 }
+
+/**
+ * @private
+ * Menu Type
+ * Base class which is extended by the various types. Each
+ * type will provide their own animations for open and close
+ * and registers itself with Menu.
+ */
+export class MenuType {
+  ani: Animation;
+  isOpening: boolean;
+
+  constructor(plt: Platform) {
+    this.ani = new Animation(plt);
+    this.ani
+      .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
+      .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)')
+      .duration(280);
+  }
+
+  setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
+    let ani = this.ani
+      .onFinish(done, true)
+      .reverse(!shouldOpen);
+
+    if (animated) {
+      ani.play();
+    } else {
+      ani.play({ duration: 0 });
+    }
+  }
+
+  setProgressStart(isOpen: boolean) {
+    this.isOpening = !isOpen;
+
+    // the cloned animation should not use an easing curve during seek
+    this.ani
+        .reverse(isOpen)
+        .progressStart();
+  }
+
+  setProgessStep(stepValue: number) {
+    // adjust progress value depending if it opening or closing
+    this.ani.progressStep(stepValue);
+  }
+
+  setProgressEnd(shouldComplete: boolean, currentStepValue: number, velocity: number, done: Function) {
+    let isOpen = (this.isOpening && shouldComplete);
+    if (!this.isOpening && !shouldComplete) {
+      isOpen = true;
+    }
+
+    this.ani.onFinish(() => {
+      this.isOpening = false;
+      done(isOpen);
+    }, true);
+
+    let factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
+    let dur = this.ani.getDuration() * factor;
+
+    this.ani.progressEnd(shouldComplete, currentStepValue, dur);
+  }
+
+  destroy() {
+    this.ani && this.ani.destroy();
+  }
+
+}
+
+/**
+ * @private
+ * Menu Reveal Type
+ * The content slides over to reveal the menu underneath.
+ * The menu itself, which is under the content, does not move.
+ */
+class MenuRevealType extends MenuType {
+  constructor(menu: Menu, plt: Platform) {
+    super(plt);
+
+    let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
+    let contentOpen = new Animation(plt, menu.getContentElement());
+    contentOpen.fromTo('translateX', '0px', openedX);
+    this.ani.add(contentOpen);
+  }
+}
+
+/**
+ * @private
+ * Menu Push Type
+ * The content slides over to reveal the menu underneath.
+ * The menu itself also slides over to reveal its bad self.
+ */
+class MenuPushType extends MenuType {
+  constructor(menu: Menu, plt: Platform) {
+    super(plt);
+
+    let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
+
+    if (menu.side === 'right') {
+      // right side
+      contentOpenedX = -menu.width() + 'px';
+      menuClosedX = menu.width() + 'px';
+      menuOpenedX = '0px';
+
+    } else {
+      contentOpenedX = menu.width() + 'px';
+      menuOpenedX = '0px';
+      menuClosedX = -menu.width() + 'px';
+    }
+
+    let menuAni = new Animation(plt, menu.getMenuElement());
+    menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
+    this.ani.add(menuAni);
+
+    let contentApi = new Animation(plt, menu.getContentElement());
+    contentApi.fromTo('translateX', '0px', contentOpenedX);
+    this.ani.add(contentApi);
+  }
+}
+
+/**
+ * @private
+ * Menu Overlay Type
+ * The menu slides over the content. The content
+ * itself, which is under the menu, does not move.
+ */
+class MenuOverlayType extends MenuType {
+  constructor(menu: Menu, plt: Platform) {
+    super(plt);
+
+    let closedX: string, openedX: string;
+    if (menu.side === 'right') {
+      // right side
+      closedX = 8 + menu.width() + 'px';
+      openedX = '0px';
+
+    } else {
+      // left side
+      closedX = -(8 + menu.width()) + 'px';
+      openedX = '0px';
+    }
+
+    let menuAni = new Animation(plt, menu.getMenuElement());
+    menuAni.fromTo('translateX', closedX, openedX);
+    this.ani.add(menuAni);
+
+    let backdropApi = new Animation(plt, menu.getBackdropElement());
+    backdropApi.fromTo('opacity', 0.01, 0.35);
+    this.ani.add(backdropApi);
+  }
+}
+
+MenuController.registerType('reveal', MenuRevealType);
+MenuController.registerType('push', MenuPushType);
+MenuController.registerType('overlay', MenuOverlayType);

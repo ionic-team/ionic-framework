@@ -1,4 +1,4 @@
-import { MenuController } from '../menu-controller';
+import { MenuController } from '../menu';
 import { mockMenu } from '../../../util/mock-providers';
 
 
