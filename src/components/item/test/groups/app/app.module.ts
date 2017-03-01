@@ -20,10 +20,10 @@ export class E2EApp {
   imports: [
     BrowserModule,
     IonicModule.forRoot(E2EApp, {}, {
-			links: [
-				{ loadChildren: '../pages/session-detail/session-detail.module#SessionDetailModule', name: 'SessionDetail'}
-			]
-		})
+      links: [
+        { loadChildren: '../pages/session-detail/session-detail.module#SessionDetailModule', name: 'SessionDetail'}
+      ]
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
