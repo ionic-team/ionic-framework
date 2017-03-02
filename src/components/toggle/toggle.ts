@@ -9,7 +9,7 @@ import { Haptic } from '../../tap-click/haptic';
 import { Ion } from '../ion';
 import { isTrueProperty, assert } from '../../util/util';
 import { Item } from '../item/item';
-import { Key } from '../../platform/key';
+import { KEY_ENTER, KEY_SPACE } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { ToggleGesture } from './toggle-gesture';
 
@@ -293,7 +293,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
    * @private
    */
   @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
-    if (ev.keyCode === Key.SPACE || ev.keyCode === Key.ENTER) {
+    if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
       console.debug(`toggle, keyup: ${ev.keyCode}`);
       ev.preventDefault();
       ev.stopPropagation();
