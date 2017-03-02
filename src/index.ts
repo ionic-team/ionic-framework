@@ -31,7 +31,7 @@ import { GestureController } from './gestures/gesture-controller';
 import { Haptic } from './tap-click/haptic';
 import { Keyboard } from './platform/keyboard';
 import { LoadingController } from './components/loading/loading-controller';
-import { MenuController } from './components/menu/menu';
+import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal-controller';
 import { ModuleLoader, provideModuleLoader, LAZY_LOADED_TOKEN } from './util/module-loader';
 import { NgModuleLoader } from './util/ng-module-loader';
@@ -199,9 +199,11 @@ export { ListHeader } from './components/list/list-header';
 export { Loading } from './components/loading/loading';
 export { LoadingController } from './components/loading/loading-controller';
 export { LoadingOptions } from './components/loading/loading-options';
-export { Menu, MenuController, MenuType } from './components/menu/menu';
+export { Menu } from './components/menu/menu';
 export { MenuClose } from './components/menu/menu-close';
+export { MenuController } from './components/menu/menu-controller';
 export { MenuToggle } from './components/menu/menu-toggle';
+export { MenuType } from './components/menu/menu-types';
 export { Modal } from './components/modal/modal';
 export { ModalController } from './components/modal/modal-controller';
 export { ModalOptions } from './components/modal/modal-options';
@@ -632,11 +634,12 @@ export class IonicModule {
 })
 export class DeepLinkModule {
 
-  static forChild(cls: any) {
+  static forChild(page: any): ModuleWithProviders {
     return {
       ngModule: DeepLinkModule,
       providers: [
-        { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
+        { provide: <any>LAZY_LOADED_TOKEN, useValue: page },
+        { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: page, multi: true },
       ]
     };
   }

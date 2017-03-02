@@ -7,7 +7,7 @@ import { ClickBlock } from '../../util/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
-import { MenuController } from '../menu/menu';
+import { MenuController } from '../menu/menu-controller';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';

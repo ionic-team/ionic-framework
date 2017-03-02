@@ -1,6 +1,6 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
-import { MenuController } from './menu';
+import { MenuController } from './menu-controller';
 
 
 /**
