@@ -8,7 +8,9 @@ import { isBlank, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
-import { VirtualFooter, VirtualHeader, VirtualItem } from './virtual-item';
+import { VirtualItem } from './virtual-item';
+import { VirtualFooter } from './virtual-footer';
+import { VirtualHeader } from './virtual-header';
 
 
 /**
