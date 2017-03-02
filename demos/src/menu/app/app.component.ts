@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ApiDemoPage } from '../pages/demo-page';
+import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
   templateUrl: 'app.component.html'
 })
-export class ApiDemoApp {
-  root = ApiDemoPage;
+export class AppComponent {
+  root = PageOne;
 }

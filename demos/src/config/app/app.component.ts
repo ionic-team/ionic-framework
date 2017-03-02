@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { Config, Platform } from '../../../../src';
-
-import { TabPage } from '../pages/tabs';
+import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
-  template: '<ion-nav [root]="root" #content></ion-nav>'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class ApiDemoApp {
+export class AppComponent {
   config: any;
-  root = TabPage;
+  root = PageOne;
   constructor(public _config: Config, public platform: Platform) {
 
     if (window.localStorage.getItem('configDemo') !== null) {

@@ -1,24 +1,25 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events, Nav } from '../../../../src';
 
-import { Login } from '../pages/login';
-import { Logout } from '../pages/logout';
+import { PageOne } from '../pages/page-one/page-one';
+import { PageTwo } from '../pages/page-two/page-two';
 
 @Component({
   templateUrl: 'app.component.html'
 })
-export class ApiDemoApp {
+export class AppComponent {
+
   @ViewChild(Nav) nav: Nav;
 
-  root = Login;
+  root = PageOne;
   loggedIn = false;
 
   loggedInPages = [
-    { title: 'Logout', component: Logout }
+    { title: 'Logout', component: PageTwo }
   ];
 
   loggedOutPages = [
-    { title: 'Login', component: Login }
+    { title: 'Login', component: PageOne }
   ];
 
   constructor(private events: Events) {

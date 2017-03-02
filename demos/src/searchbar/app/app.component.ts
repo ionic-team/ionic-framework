@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ApiDemoPage } from '../pages/demo-page';
+import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class ApiDemoApp {
-  root = ApiDemoPage;
+export class AppComponent {
+  root = PageOne;
 }

@@ -2,24 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../src';
 
-import { ApiDemoApp } from './app.component';
-import { ModalFirstPage } from '../pages/page-one';
-import { ModalContentPage } from '../pages/modal-content';
+import { AppComponent } from './app.component';
+import { PageOneModule } from '../pages/page-one/page-one.module';
+import { ModalPageModule } from '../pages/modal-page/modal-page.module';
 
 @NgModule({
   declarations: [
-    ApiDemoApp,
-    ModalFirstPage,
-    ModalContentPage
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(ApiDemoApp)
+    IonicModule.forRoot(AppComponent),
+    PageOneModule,
+    ModalPageModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    ModalFirstPage,
-    ModalContentPage
-  ]
+  bootstrap: [IonicApp]
 })
 export class AppModule {}

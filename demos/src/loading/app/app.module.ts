@@ -2,24 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../src';
 
-import { ApiDemoApp } from './app.component';
-import { Page1 } from '../pages/page-one';
-import { Page2 } from '../pages/page-two';
+import { AppComponent } from './app.component';
+import { PageOneModule } from '../pages/page-one/page-one.module';
+import { PageTwoModule } from '../pages/page-two/page-two.module';
 
 @NgModule({
   declarations: [
-    ApiDemoApp,
-    Page1,
-    Page2
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(ApiDemoApp)
+    IonicModule.forRoot(AppComponent),
+    PageOneModule,
+    PageTwoModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    Page1,
-    Page2
-  ]
+  bootstrap: [IonicApp]
 })
 export class AppModule {}

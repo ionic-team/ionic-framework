@@ -2,24 +2,20 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../src';
 
-import { ApiDemoApp } from './app.component';
-import { ApiDemoPage } from '../pages/demo-page';
-import { PopoverRadioPage } from '../pages/page-two';
+import { AppComponent } from './app.component';
+import { PageOneModule } from '../pages/page-one/page-one.module';
+import { PageTwoModule } from '../pages/page-two/page-two.module';
 
 @NgModule({
   declarations: [
-    ApiDemoApp,
-    ApiDemoPage,
-    PopoverRadioPage
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(ApiDemoApp)
+    IonicModule.forRoot(AppComponent),
+    PageOneModule,
+    PageTwoModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    ApiDemoPage,
-    PopoverRadioPage
-  ]
+  bootstrap: [IonicApp]
 })
 export class AppModule {}
