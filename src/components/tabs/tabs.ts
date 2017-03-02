@@ -532,11 +532,14 @@ export class Tabs extends Ion implements AfterViewInit {
         tab.popToRoot().catch(() => {
           console.debug('Tabs: pop to root was cancelled');
         });
-
-      } else if (getComponent(this._linker, tab.root) !== active.component) {
-        // Otherwise, if the page we're on is not our real root, reset it to our
-        // default root type
-        tab.setRoot(tab.root).catch(() => {
+      } else {
+        getComponent(this._linker, tab.root).then(viewController => {
+          if (viewController !== active.component) {
+            // Otherwise, if the page we're on is not our real root
+            // reset it to our default root type
+            return tab.setRoot(tab.root);
+          }
+        }).catch(() => {
           console.debug('Tabs: reset root was cancelled');
         });
       }
