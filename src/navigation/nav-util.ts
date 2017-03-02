@@ -103,9 +103,9 @@ export function isNav(nav: any): boolean {
 
 // public link interface
 export interface DeepLinkMetadataType {
-  name: string;
+  name?: string;
   segment?: string;
-  defaultHistory?: any[];
+  defaultHistory?: string[];
 }
 
 /**
@@ -115,9 +115,9 @@ export class DeepLinkMetadata implements DeepLinkMetadataType {
   component?: any;
   viewFactoryFunction?: string;
   loadChildren?: string;
-  name: string;
+  name?: string;
   segment?: string;
-  defaultHistory?: any[];
+  defaultHistory?: string[];
 }
 
 export interface DeepLinkDecorator extends TypeDecorator {}

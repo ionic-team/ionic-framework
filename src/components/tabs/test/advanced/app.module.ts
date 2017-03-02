@@ -1,9 +1,9 @@
 import { Component, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AlertController, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../..';
+import { AlertController, DeepLink, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../..';
 
 
-// @DeepLink({ name: 'sign-in' })
+@DeepLink({ name: 'sign-in' })
 @Component({
   templateUrl: './signIn.html'
 })
