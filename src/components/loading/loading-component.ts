@@ -30,7 +30,7 @@ export class LoadingCmp {
   d: LoadingOptions;
   id: number;
   showSpinner: boolean;
-  durationTimeout: number;
+  durationTimeout: any;
   gestureBlocker: BlockerDelegate;
 
   constructor(
