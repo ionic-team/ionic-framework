@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormBuilder, Validators } from '@angular/forms';
-import { IonicApp, IonicModule, SegmentButton } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, SegmentButton } from '../../../..';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

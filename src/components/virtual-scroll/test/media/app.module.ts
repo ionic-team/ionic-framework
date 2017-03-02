@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Platform } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, Platform } from '../../../..';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class E2EPage {
       if (plt.testUserAgent('Safari')) {
         this.webview = ': iOS Safari';
 
-      } else if (!!window['webkit']) {
+      } else if (!!(window as any)['webkit']) {
         this.webview = ': iOS WKWebView';
 
       } else {
@@ -70,6 +71,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should open basic alert', function() {
   element(by.css('.e2eOpenAlert')).click();

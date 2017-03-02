@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-
-import { IonicApp, IonicModule, NavParams } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, NavParams } from '../../../..';
 
 
 
@@ -52,6 +52,7 @@ export class E2EApp {
     SecondPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

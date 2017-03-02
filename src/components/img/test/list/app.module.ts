@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
@@ -35,7 +36,7 @@ const images = [
 
 function getRandomImg(): string {
   let imgString = images[Math.floor(Math.random() * images.length)];
-  let src = '../img/' + imgString;
+  let src = 'assets/img/' + imgString;
   return src;
 }
 
@@ -54,6 +55,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

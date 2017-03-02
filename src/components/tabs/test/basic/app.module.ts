@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { Config, IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { Config, IonicApp, IonicModule, App, AlertController, ModalController, ViewController, Tab, Tabs } from '../../../..';
 
 //
 // Modal
@@ -291,6 +292,7 @@ export class E2EApp {
     TabsPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp, {
       tabsHighlight: true,
     })

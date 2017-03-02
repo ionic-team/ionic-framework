@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { IonicApp, IonicModule } from '../../../../../ionic-angular';
 })
 export class E2EPage {
   lastMonth: number;
-  items = [];
+  items: any[] = [];
 
   constructor() {
     var utcSeconds = 787523438; // Dec 15, 1994
@@ -87,6 +88,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],

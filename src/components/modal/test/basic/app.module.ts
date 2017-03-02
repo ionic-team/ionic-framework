@@ -1,8 +1,9 @@
 import { Component, Injectable, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { ActionSheetController, AlertController, App, Config,
   IonicApp, IonicModule, ModalController, NavController,
-  NavParams, Platform, ToastController, ViewController } from '../../../../../ionic-angular';
+  NavParams, Platform, ToastController, ViewController } from '../../../..';
 
 
 @Injectable()
@@ -657,6 +658,7 @@ export class E2EApp {
     ToolbarModal
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp, {
       statusbarPadding: true,
       swipeBackEnabled: true

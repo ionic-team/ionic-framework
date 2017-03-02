@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Events } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, Events } from '../../../..';
 
 //
 // Tab 1
@@ -87,6 +88,7 @@ export class E2EApp {
     TabsPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp, {
       tabsHighlight: true,
     })
