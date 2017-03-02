@@ -4,13 +4,11 @@ import { IonicApp, IonicModule } from '../../../../..';
 
 import { E2EApp } from './app.component';
 import { PageOne } from '../pages/page-one/page-one';
-import { SomeData } from '../pages/page-one/provider-one';
-import { OtherData } from '../pages/page-one/provider-two';
+import { PageOneModule } from '../pages/page-one/page-one.module';
 
 @NgModule({
   declarations: [
     E2EApp,
-    PageOne
   ],
   imports: [
     BrowserModule,
@@ -22,12 +20,9 @@ import { OtherData } from '../pages/page-one/provider-two';
         { name: 'tabs-page', loadChildren: '../pages/tabs/tabs-page.module#TabsPageModule'},
         { name: 'tabs-page-one', loadChildren: '../pages/tabs-page-one/tabs-page-one.module#TabsPageOneModule'},
       ]
-    })
+    }),
+    PageOneModule
   ],
   bootstrap: [IonicApp],
-  providers: [SomeData, OtherData],
-  entryComponents: [
-    PageOne
-  ]
 })
 export class AppModule {}

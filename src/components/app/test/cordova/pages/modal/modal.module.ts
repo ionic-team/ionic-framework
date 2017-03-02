@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { DeepLinkModule } from '../../../../../..';
 
-import { MyModal } from './modal';
+import { ModalPage } from './modal-page';
 
 @NgModule({
   declarations: [
-    MyModal
+    ModalPage
   ],
   imports: [
-    DeepLinkModule.forChild(MyModal)
+    DeepLinkModule.forChild(ModalPage)
   ],
   entryComponents: [
-    MyModal
+    ModalPage
   ]
 })
-export class MyModalModule {}
+export class ModalPageModule {}

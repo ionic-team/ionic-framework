@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { DeepLinkModule } from '../../../../../..';
 
 import { PageTwo } from './page-two';
-import { MyModalModule } from '../modal/modal.module';
+import { ModalPageModule } from '../modal/modal.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { MyModalModule } from '../modal/modal.module';
   ],
   imports: [
     DeepLinkModule.forChild(PageTwo),
-    MyModalModule
+    ModalPageModule
   ],
   entryComponents: [
     PageTwo,

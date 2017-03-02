@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '../../../../../..';
 
-import { MyModal } from '../modal/modal';
+import { ModalPage } from '../modal/modal-page';
 
 @Component({
   templateUrl: 'page-two.html'
@@ -13,7 +13,7 @@ export class PageTwo {
   constructor(public modalCtrl: ModalController) {}
 
   openModal() {
-    const modal = this.modalCtrl.create(MyModal);
+    const modal = this.modalCtrl.create(ModalPage);
     modal.present();
   }
 }
