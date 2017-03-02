@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+
 import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  templateUrl: `./app.component.html`
 })
-export class AppComponent {
+export class E2EApp {
   root = PageOne;
 }

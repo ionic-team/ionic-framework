@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+
 import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
 export class AppComponent {
-  root = PageOne;
+  rootPage = PageOne;
 }
