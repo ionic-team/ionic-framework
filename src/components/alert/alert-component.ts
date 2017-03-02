@@ -4,7 +4,7 @@ import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isPresent, assert } from '../../util/util';
-import { Key } from '../../platform/key';
+import { KEY_ENTER, KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
@@ -222,7 +222,7 @@ export class AlertCmp {
   @HostListener('body:keyup', ['$event'])
   keyUp(ev: KeyboardEvent) {
     if (this.enabled && this._viewCtrl.isLast()) {
-      if (ev.keyCode === Key.ENTER) {
+      if (ev.keyCode === KEY_ENTER) {
         if (this.lastClick + 1000 < Date.now()) {
           // do not fire this click if there recently was already a click
           // this can happen when the button has focus and used the enter
@@ -233,7 +233,7 @@ export class AlertCmp {
           this.btnClick(button);
         }
 
-      } else if (ev.keyCode === Key.ESCAPE) {
+      } else if (ev.keyCode === KEY_ESCAPE) {
         console.debug(`alert, escape button`);
         this.bdClick();
       }
