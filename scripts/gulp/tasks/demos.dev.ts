@@ -1,183 +1,44 @@
-import { readFileSync } from 'fs';
-import { dirname, join } from 'path';
+import { join } from 'path';
 
-import { dest, src, start, task } from 'gulp';
-import * as babel from 'gulp-babel';
-import * as cache from 'gulp-cached';
-import * as concat from 'gulp-concat';
-import * as connect from 'gulp-connect';
-import * as gulpif from 'gulp-if';
-import * as remember from 'gulp-remember';
-import * as tsc from 'gulp-typescript';
-import * as watch from 'gulp-watch';
-import { template } from 'lodash';
-import * as merge from 'merge2';
-import * as runSequence from 'run-sequence';
-import { obj } from 'through2';
-import * as VinylFile from 'vinyl';
+import { task } from 'gulp';
 
-import { DEMOS_NAME, DIST_DEMOS_ROOT, DIST_NAME, ES5, ES_2015, SCRIPTS_ROOT } from '../constants';
+import { DEMOS_ROOT, DIST_DEMOS_ROOT, ES_2015, PROJECT_ROOT } from '../constants';
+import { createTempTsConfig, getFolderInfo, runAppScriptsServe } from '../util';
 
-const buildConfig = require('../../build/config');
-
-/**
- * Builds Ionic demos tests to dist/demos and creates the necessary files for tests
- * to run.
- */
-task('demos', demosBuild);
-
-function demosBuild(done: (err: any) => void) {
-  runSequence(
-    'demos.clean',
-    'demos.build',
-    'demos.polyfill',
-    'demos.copyExternalDependencies',
-    'demos.sass',
-    'demos.fonts',
-    'demos.bundle',
-    done);
-}
-
-/**
- * Builds Ionic demos tests to dist/demos.
- */
-task('demos.build', function () {
-  var indexTemplate = template(
-    readFileSync(`${SCRIPTS_ROOT}/${DEMOS_NAME}/demos.template.dev.html`).toString()
-  )({
-    buildConfig: buildConfig
-  });
-
-  // Get each test folder with src
-  var tsResult = src([
-    'demos/src/*/**/*.ts'
-  ])
-    .pipe(cache('demos.ts'))
-    .pipe(tsc(getTscOptions(), undefined, tscReporter))
-    .on('error', function (error) {
-      console.log(error.message);
-    })
-    .pipe(gulpif(/app.module.js$/, createIndexHTML()));
-
-  var testFiles = src([
-    'demos/src/*/**/*',
-    '!demos/src/*/**/*.ts'
-  ])
-    .pipe(cache('demos.files'));
-
-  return merge([
-    tsResult,
-    testFiles
-  ])
-    .pipe(dest(DIST_DEMOS_ROOT))
-    .pipe(connect.reload());
-
-  function createIndexHTML() {
-    return obj(function (file, enc, next) {
-      this.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexTemplate),
-        path: join(dirname(file.path), 'index.html'),
-      }));
-      next(null, file);
-    });
+task('demos.watch', ['demos.prepare'], (done: Function) => {
+  const folderInfo = getFolderInfo();
+  if (!folderInfo || !folderInfo.componentName ) {
+    done(new Error(`Usage: gulp e2e.watch --folder modal`));
   }
-});
 
-/**
- * Creates SystemJS bundle from Ionic source files.
- */
-task('demos.bundle', function () {
-  return tsCompile(getTscOptions('es6'), 'system')
-    .pipe(babel(babelOptions))
-    .pipe(remember('system'))
-    .pipe(concat('ionic.system.js'))
-    .pipe(dest(`${DIST_NAME}/bundles`))
-    .pipe(connect.reload());
-});
-
-function tsCompile(options, cacheName) {
-  return src([
-    'typings/main.d.ts',
-    'src/**/*.ts',
-    '!src/**/*.d.ts',
-    '!src/components/*/test/**/*',
-    '!src/util/test/*',
-    '!src/config/test/*',
-    '!src/platform/test/*',
-    '!src/**/*.spec.ts'
-  ])
-    .pipe(cache(cacheName, { optimizeMemory: true }))
-    .pipe(tsc(options, undefined, tscReporter));
-}
-
-function getTscOptions(name?: string) {
-  var opts = {
-    emitDecoratorMetadata: true,
-    experimentalDecorators: true,
-    target: ES5,
-    module: 'commonjs',
-    isolatedModules: true,
-    typescript: require('typescript'),
-    declaration: false
-  };
-
-  if (name === 'typecheck') {
-    opts.declaration = true;
-    delete opts.isolatedModules;
-  } else if (name === 'es6') {
-    opts.target = 'es6';
-    delete opts.module;
-  }
-  return opts;
-}
-
-var tscReporter = {
-  error: function (error) {
-    console.error(error.message);
-  }
-};
-
-// We use Babel to easily create named System.register modules
-// See: https://github.com/Microsoft/TypeScript/issues/4801
-// and https://github.com/ivogabe/gulp-typescript/issues/211
-const babelOptions = {
-  moduleIds: true,
-  getModuleId: function (name) {
-    return 'ionic-angular/' + name;
-  },
-  plugins: ['transform-es2015-modules-systemjs'],
-  presets: [ES_2015]
-};
-
-/**
- * Builds demos tests to dist/demos and watches for changes.  Runs 'demos.bundle' or
- * 'sass' on Ionic source changes and 'demos.build' for demos test changes.
- */
-task('demos.watch', ['demos'], function () {
-  watchTask('demos.bundle');
-
-  watch('demos/src/**/*', function (file) {
-    start('demos.build');
+  serveDemo(folderInfo.componentName).then(() => {
+    done();
+  }).catch((err: Error) => {
+    done(err);
   });
 });
 
-function watchTask(task) {
-  watch([
-    'src/**/*.ts',
-    '!src/components/*/test/**/*',
-    '!src/util/test/*'
-  ],
-    function (file) {
-      if (file.event !== 'unlink') {
-        start(task);
-      }
-    }
-  );
+function serveDemo(folderName: any) {
 
-  watch('src/**/*.scss', function () {
-    start('demos.sass');
-  });
+  const ionicAngularDir = join(PROJECT_ROOT, 'src');
+  const srcTestRoot = join(DEMOS_ROOT, 'src', folderName);
+  const distDemoRoot = join(DIST_DEMOS_ROOT, folderName);
+  const includeGlob = [ join(ionicAngularDir, '**', '*.ts'),
+                        join(srcTestRoot, '**', '*.ts')];
 
-  start('demos.serve');
+
+  const pathToWriteFile = join(distDemoRoot, 'tsconfig.json');
+  const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
+
+  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
+
+  const sassConfigPath = join('scripts', 'demos', 'sass.config.js');
+  const copyConfigPath = join('scripts', 'demos', 'copy.config.js');
+  const watchConfigPath = join('scripts', 'demos', 'watch.config.js');
+
+  const appEntryPoint = join(srcTestRoot, 'app', 'main.ts');
+  const appNgModulePath = join(srcTestRoot, 'app', 'app.module.ts');
+  const distDir = join(distDemoRoot, 'www');
+
+  return runAppScriptsServe(folderName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, watchConfigPath);
 }

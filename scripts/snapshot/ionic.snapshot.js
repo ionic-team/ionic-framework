@@ -115,10 +115,13 @@ var IonicSnapshot = function(options) {
             var specIdString = '[' + (spec.id+1) + '/' + self.testData.total_specs + ']';
 
             self.testData.spec_index = spec.id;
+            // console.log('spec.id: ', spec.id);
             self.testData.highest_mismatch = self.highestMismatch;
             self.testData.png_base64 = pngBase64;
-            self.testData.description = spec.getFullName().replace('components/', '').replace('test/', '');
-            self.testData.url = currentUrl.replace('dist', '').replace('components/', '').replace('test/', '').replace('&ionicanimate=false', '');
+            self.testData.description = spec.getFullName().replace('components/', '').replace('test/', '').replace('www', '');
+            self.testData.url = currentUrl.replace('dist', '').replace('components/', '').replace('test/', '').replace('&ionicanimate=false', '').replace('www/', '');
+            //console.log('self.testData.description: ', self.testData.description);
+            //console.log('self.testData.url: ', self.testData.url);
             pngBase64 = null;
 
             var requestDeferred = q.defer();

@@ -1,193 +1,193 @@
-import { accessSync, F_OK, readFileSync, stat } from 'fs';
-import { dirname, join } from 'path';
+import { dirname, join, relative } from 'path';
+import { readFileSync } from 'fs';
 
-import { dest, src, start, task } from 'gulp';
-import * as gulpif from 'gulp-if';
-import * as watch from 'gulp-watch';
+import * as glob from 'glob';
+import { task } from 'gulp';
+import * as del from 'del';
+import { template } from 'lodash';
 import * as runSequence from 'run-sequence';
-import { obj } from 'through2';
-import * as VinylFile from 'vinyl';
+import { argv } from 'yargs';
 
-import { DEMOS_SRC_ROOT, DIST_DEMOS_ROOT, DIST_NAME, DEMOS_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, SCRIPTS_ROOT } from '../constants';
-import { createTempTsConfig, getFolderInfo, getFolders, runAppScripts } from '../util';
 
-task('demos.prod', demosBuild);
+import { DEMOS_SRC_ROOT, ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
+import { createTempTsConfig, getFolderInfo, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
 
-function demosBuild(done: (err: any) => void) {
-  runSequence(
-    'demos.copyIonic',
-    'demos.clean',
-    'demos.polyfill',
-    'demos.copySource',
-    'demos.copyExternalDependencies',
-    'demos.sass',
-    'demos.fonts',
-    'demos.compileTests',
-    done);
+import * as pAll from 'p-all';
+
+task('demos.prepare', (done: Function) => {
+  runSequence('demos.clean', 'demos.polyfill', (err: any) => done(err));
+});
+
+task('demos.prod', ['demos.prepare'], (done: Function) => {
+
+  // okay, first find out all of the demos tests to run by finding all of the 'main.ts' files
+  filterDemosEntryPoints().then((filePaths: string[]) => {
+    console.log(`Compiling ${filePaths.length} Demos ...`);
+    console.log('filePaths: ', filePaths);
+    return buildDemos(filePaths);
+  }).then(() => {
+    done();
+  }).catch((err: Error) => {
+    done(err);
+  });
+});
+
+function filterDemosEntryPoints() {
+  return getDemosEntryPoints().then((entryPoints: string[]) => {
+    const folderInfo = getFolderInfo();
+    if (folderInfo && folderInfo.componentName) {
+      const filtered = entryPoints.filter(entryPoint => {
+        return entryPoint.indexOf(folderInfo.componentName) >= 0;
+      });
+      return filtered;
+    }
+    return entryPoints;
+  });
 }
 
-task('demos.copyIonic', (done: (err: any) => void) => {
-  runSequence(
-    'compile.release',
-    'release.compileSass',
-    'release.fonts',
-    'release.sass',
-    'release.createUmdBundle',
-    done);
-});
-
-task('demos.copySource', (done: Function) => {
-  const stream = src([`${DEMOS_SRC_ROOT}/**/*`])
-    .pipe(gulpif(/app.module.ts$/, createIndexHTML()))
-    .pipe(dest(DIST_DEMOS_ROOT));
-
-  stream.on('end', done);
-
-  function createIndexHTML() {
-    const indexTemplate = readFileSync(`${SCRIPTS_ROOT}/${DEMOS_NAME}/demos.template.prod.html`);
-    const indexTs = readFileSync(`${SCRIPTS_ROOT}/${DEMOS_NAME}/main.ts`);
-
-    return obj(function (file, enc, next) {
-      this.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexTemplate),
-        path: join(dirname(file.path), 'index.html'),
-      }));
-      this.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexTs),
-        path: join(dirname(file.path), 'main.ts'),
-      }));
-      next(null, file);
-    });
-  }
-});
-
-task('demos.compileTests', (done: Function) => {
-  let folderInfo = getFolderInfo();
-
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    buildTest(folderInfo);
-  } else {
-    buildAllTests(done);
-  }
-});
-
-function buildTest(folderInfo: any) {
-  let includeGlob = [`./dist/demos/${folderInfo.componentName}/*.ts`];
-  let pathToWriteFile = `${DIST_DEMOS_ROOT}/${folderInfo.componentName}/tsconfig.json`;
-
-  createTempTsConfig(includeGlob, ES5, ES_2015, `${DEMOS_SRC_ROOT}/tsconfig.json`, pathToWriteFile);
-
-  let sassConfigPath = 'scripts/demos/sass.config.js';
-
-  let appEntryPoint = `dist/demos/${folderInfo.componentName}/main.ts`;
-  let appNgModule = `dist/demos/${folderInfo.componentName}/app.module.ts`;
-  let distDir = `dist/demos/${folderInfo.componentName}/`;
-
-  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, appNgModule, distDir);
-}
-
-function buildAllTests(done: Function) {
-  let folders = getFolders('./dist/demos/');
-  let promises: Promise<any>[] = [];
-
-  folders.forEach(folder => {
-    stat(`./dist/demos/${folder}/app.module.ts`, function(err, stat) {
-      if (err == null) {
-        let folderInfo = {
-          componentName: folder,
-          componentTest: 'basic'
-        };
-        const promise = buildTest(folderInfo);
-        promises.push(promise);
+function getDemosEntryPoints() {
+  return new Promise((resolve, reject) => {
+    const mainGlob = join(DEMOS_SRC_ROOT, '**', 'main.ts');
+    glob(mainGlob, (err: Error, matches: string[]) => {
+      if (err) {
+        return reject(err);
       }
+      resolve(matches);
     });
   });
+}
 
-  Promise.all(promises).then(() => {
+
+function buildDemos(filePaths: string[]) {
+  const functions = filePaths.map(filePath => () => {
+    return buildDemo(filePath);
+  });
+  return pAll(functions, {concurrency: 8});
+}
+
+function buildDemo(filePath: string) {
+  const start = Date.now();
+  const ionicAngularDir = join(process.cwd(), 'src');
+
+  const componentDir = dirname(dirname(filePath));
+  const relativePathFromComponents = relative(dirname(DEMOS_SRC_ROOT), componentDir);
+  console.log('relativePathFromComponents: ', relativePathFromComponents);
+
+  const distTestRoot = join(process.cwd(), 'dist', 'demos', relativePathFromComponents);
+
+  const includeGlob = [ join(ionicAngularDir, '**', '*.ts'), join(componentDir, '**', '*.ts')];
+  const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
+  const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
+
+  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
+
+  const sassConfigPath = join('scripts', 'demos', 'sass.config.js');
+  const copyConfigPath = join('scripts', 'demos', 'copy.config.js');
+
+  const appEntryPoint = filePath;
+  const appNgModulePath = join(dirname(filePath), 'app.module.ts');
+  const distDir = join(distTestRoot, 'www');
+
+  return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath).then(() => {
+    const end = Date.now();
+    console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
+  });
+}
+
+function copyProtractorTestContent(filePaths: string[]): Promise<any> {
+  return readDemosTestFiles(filePaths)
+    .then((map: Map<string, string>) => {
+      return applyTemplate(map);
+    }).then((map: Map<string, string>) => {
+      writeDemosJsFiles(map);
+    });
+}
+
+function applyTemplate(filePathContent: Map<string, string>) {
+  const buildConfig = require('../../build/config');
+  const templateFileContent = readFileSync(join(SCRIPTS_ROOT, 'demos', 'demos.template.js'));
+  const templater = template(templateFileContent.toString());
+  const modifiedMap = new Map<string, string>();
+  const platforms = ['android', 'ios', 'windows'];
+  filePathContent.forEach((fileContent: string, filePath: string) => {
+    const srcRelativePath = relative(SRC_ROOT, dirname(filePath));
+    const wwwRelativePath = join(srcRelativePath, 'www');
+    platforms.forEach(platform => {
+      const platformContents = templater({
+        contents: fileContent,
+        buildConfig: buildConfig,
+        relativePath: wwwRelativePath,
+        platform: platform,
+        relativePathBackwardsCompatibility: dirname(wwwRelativePath)
+      });
+      const newFilePath = join(wwwRelativePath, `${platform}.demos.js`);
+      modifiedMap.set(newFilePath, platformContents);
+    });
+  });
+  return modifiedMap;
+}
+
+function writeDemosJsFiles(map: Map<string, string>) {
+  const promises: Promise<any>[] = [];
+  map.forEach((fileContent: string, filePath: string) => {
+    const destination = join(process.cwd(), 'dist', 'demos', filePath);
+    promises.push(writeFileAsync(destination, fileContent));
+  });
+  return Promise.all(promises);
+}
+
+
+function readDemosTestFiles(mainFilePaths: string[]): Promise<Map<string, string>> {
+  const demosFiles = mainFilePaths.map(mainFilePath => {
+    return join(dirname(mainFilePath), 'demos.ts');
+  });
+
+  const promises: Promise<any>[] = [];
+  const map = new Map<string, string>();
+  for (const demosFile of demosFiles) {
+    const promise = readDemosFile(demosFile);
+    promises.push(promise);
+    promise.then((content: string) => {
+      map.set(demosFile, content);
+    });
+  }
+
+  return Promise.all(promises).then(() => {
+    return map;
+  });
+}
+
+function readDemosFile(filePath: string) {
+  return readFileAsync(filePath).then((content: string) => {
+    // purge the import statement at the top
+    const purgeImportRegex = /.*?import.*?'protractor';/g;
+    return content.replace(purgeImportRegex, '');
+  });
+}
+
+
+
+task('demos.clean', (done: Function) => {
+  // this is a super hack, but it works for now
+  if (argv.skipClean) {
+    return done();
+  }
+
+  del(['dist/demos/**']).then(() => {
     done();
   }).catch(err => {
     done(err);
   });
-}
-
-task('demos.watchProd', (done: Function) => {
-  const folderInfo = getFolderInfo();
-  let demoTestPath = DEMOS_SRC_ROOT;
-
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    demoTestPath = join(DEMOS_SRC_ROOT, folderInfo.componentName, 'app.module.ts');
-  }
-
-  try {
-    accessSync(demoTestPath, F_OK);
-  } catch (e) {
-    done(new Error(`Could not find demos test: ${demoTestPath}`));
-    return;
-  }
-
-  if (demosComponentsExists(folderInfo)) {
-    // already generated the demos directory
-    demosWatch(folderInfo.componentName, folderInfo.componentTest);
-
-  } else {
-    // generate the demos directory
-    console.log('Generate demo builds first...');
-    demosBuild(() => {
-      demosWatch(folderInfo.componentName, folderInfo.componentTest);
-    });
-  }
 });
 
-function demosWatch(componentName: string, componentTest: string) {
-  // If any tests change within components then run demos.resources.
-  watch([
-    'demos/src/**/*'
-  ],
-    function (file) {
-      console.log('start demos.resources - ' + JSON.stringify(file.history, null, 2));
-      start('demos.copyAndCompile');
-    });
+task('demos.polyfill', (done: Function) => {
+  if (argv.skipPolyfill) {
+    return done();
+  }
 
-  // If any src files change except for tests then transpile only the source ionic files
-  watch([
-    'src/**/*.ts',
-    '!src/components/*/test/**/*',
-    '!src/util/test/*'
-  ],
-    function (file) {
-      console.log('start demos.ngcSource - ' + JSON.stringify(file.history, null, 2));
-      start('demos.copyAndCompile');
-    });
-
-  // If any scss files change then recompile all sass
-  watch(['src/**/*.scss'], (file) => {
-    console.log('start sass - ' + JSON.stringify(file.history, null, 2));
-    start('demos.sass');
+  writePolyfills('dist/demos/polyfills').then(() => {
+    done();
+  }).catch(err => {
+    done(err);
   });
-
-  let serverUrl = `http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${DEMOS_NAME}`;
-  if (componentName) {
-    serverUrl += `/${componentName}`;
-  }
-
-  console.log(serverUrl);
-
-  start('demos.serve');
-}
-
-function demosComponentsExists(folderInfo: any): boolean {
-  let componentPath = DIST_DEMOS_ROOT;
-
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    componentPath += `/${folderInfo.componentName}/build`;
-  }
-
-  try {
-    accessSync(componentPath, F_OK);
-  } catch (e) {
-    return false;
-  }
-  return true;
-}
+});
