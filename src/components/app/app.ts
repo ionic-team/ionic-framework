@@ -1,15 +1,19 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { AppPortal, IonicApp } from './app-root';
+import { IonicApp } from './app-root';
+import * as Constants from './app-constants';
 import { ClickBlock } from '../../util/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { MenuController } from '../menu/menu-controller';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-import { MenuController } from '../menu/menu-controller';
+import { IOSTransition } from '../../transitions/transition-ios';
+import { MDTransition } from '../../transitions/transition-md';
+import { WPTransition } from '../../transitions/transition-wp';
 
 
 /**
@@ -93,6 +97,10 @@ export class App {
         };
       }
     });
+
+    _config.setTransition('ios-transition', IOSTransition);
+    _config.setTransition('md-transition', MDTransition);
+    _config.setTransition('wp-transition', WPTransition);
   }
 
   /**
@@ -192,7 +200,7 @@ export class App {
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
   getActiveNav(): NavController {
-    const portal = this._appRoot._getPortal(MODAL);
+    const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
       return findTopNav(portal);
     }
@@ -216,7 +224,7 @@ export class App {
   /**
    * @private
    */
-  present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
+  present(enteringView: ViewController, opts: NavOptions, appPortal?: number): Promise<any> {
     const portal = this._appRoot._getPortal(appPortal);
 
     enteringView._setNav(portal);
@@ -267,7 +275,7 @@ export class App {
     }
 
     // If there are any alert/actionsheet open, let's do nothing
-    const portal = this._appRoot._getPortal(DEFAULT);
+    const portal = this._appRoot._getPortal(Constants.PORTAL_DEFAULT);
     if (portal.length() > 0) {
       return Promise.resolve();
     }
@@ -309,7 +317,5 @@ function findTopNav(nav: NavController) {
   return nav;
 }
 
-const DEFAULT = 0; // AppPortal.DEFAULT
-const MODAL = 1; // AppPortal.MODAL
 const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;
