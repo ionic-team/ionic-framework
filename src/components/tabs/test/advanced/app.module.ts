@@ -29,7 +29,7 @@ export class ChatPage {
 }
 
 
-// @DeepLink({ name: 'tabs' })
+@DeepLink({ name: 'tabs' })
 @Component({
   templateUrl: './tabs.html'
 })
@@ -126,7 +126,7 @@ export class TabsPage {
 //
 // tab 1
 //
-// @DeepLink({ name: 'tab1-page1' })
+@DeepLink({ name: 'tab1-page1' })
 @Component({
   templateUrl: './tab1page1.html'
 })
@@ -178,7 +178,7 @@ export class Tab1Page1 {
 }
 
 
-// @DeepLink({ name: 'tab1-page2' })
+@DeepLink({ name: 'tab1-page2' })
 @Component({
   templateUrl: './tab1page2.html'
 })
@@ -214,7 +214,7 @@ export class Tab1Page2 {
 }
 
 
-// @DeepLink({ name: 'tab1-page3' })
+@DeepLink({ name: 'tab1-page3' })
 @Component({
   templateUrl: './tab1page3.html'
 })
@@ -247,7 +247,7 @@ export class Tab1Page3 {
 //
 // tab 2
 //
-// @DeepLink({ name: 'tab2-page1' })
+@DeepLink({ name: 'tab2-page1' })
 @Component({
   templateUrl: './tab2page1.html'
 })
@@ -276,7 +276,7 @@ export class Tab2Page1 {
 }
 
 
-// @DeepLink({ name: 'tab2-page2' })
+@DeepLink({ name: 'tab2-page2' })
 @Component({
   templateUrl: './tab2page2.html'
 })
@@ -305,10 +305,10 @@ export class Tab2Page2 {
 }
 
 
-// @DeepLink({
-//   name: 'tab2-page3',
-//   defaultHistory: []
-// })
+@DeepLink({
+  name: 'tab2-page3',
+  defaultHistory: []
+})
 @Component({
   templateUrl: './tab2page3.html'
 })
@@ -341,7 +341,7 @@ export class Tab2Page3 {
 //
 // tab 3
 //
-// @DeepLink({ name: 'tab3-page1' })
+@DeepLink({ name: 'tab3-page1' })
 @Component({
   templateUrl: './tab3page1.html'
 })
