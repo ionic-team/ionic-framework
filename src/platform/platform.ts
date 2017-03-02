@@ -796,7 +796,7 @@ export class Platform {
 
     // add the window resize event listener XXms after
     this.timeout(() => {
-      var timerId: number;
+      var timerId: any;
       this.registerListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
