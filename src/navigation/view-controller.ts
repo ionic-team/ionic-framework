@@ -1,10 +1,11 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer, Header } from '../components/toolbar/toolbar';
+import { Footer } from '../components/toolbar/toolbar-footer';
+import { Header } from '../components/toolbar/toolbar-header';
 import { isPresent } from '../util/util';
 import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
-import { NavOptions, ViewState } from './nav-util';
+import { NavOptions } from './nav-util';
 import { NavParams } from './nav-params';
 import { Content } from '../components/content/content';
 
@@ -46,7 +47,7 @@ export class ViewController {
   _cmp: ComponentRef<any>;
   _nav: NavController;
   _zIndex: number;
-  _state: ViewState;
+  _state: number;
   _cssClass: string;
 
   /**
