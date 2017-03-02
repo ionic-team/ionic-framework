@@ -17,24 +17,22 @@ export const GESTURE_REFRESHER = 'refresher';
 /** @private */
 export const GESTURE_TOGGLE = 'toggle';
 
-/**
-* @private
-*/
-export const enum GesturePriority {
-  Minimun = -10000,
-  VeryLow = -20,
-  Low = -10,
-  Normal = 0,
-  High = 10,
-  VeryHigh = 20,
-  VeryVeryHigh = 30,
 
-  SlidingItem = Low,
-  MenuSwipe = High,
-  GoBackSwipe = VeryHigh,
-  Refresher = Normal,
-  Toggle = VeryVeryHigh
-}
+/** @private */
+export const GESTURE_PRIORITY_SLIDING_ITEM = -10;
+
+/** @private */
+export const GESTURE_PRIORITY_REFRESHER = 0;
+
+/** @private */
+export const GESTURE_PRIORITY_MENU_SWIPE = 10;
+
+/** @private */
+export const GESTURE_PRIORITY_GO_BACK_SWIPE = 20;
+
+/** @private */
+export const GESTURE_PRIORITY_TOGGLE = 30;
+
 
 /**
 * @private
@@ -112,7 +110,7 @@ export class GestureController {
       return false;
     }
     let requestedStart = this.requestedStart;
-    let maxPriority = GesturePriority.Minimun;
+    let maxPriority = -10000;
     for (let gestureID in requestedStart) {
       maxPriority = Math.max(maxPriority, requestedStart[gestureID]);
     }
