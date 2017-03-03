@@ -4,11 +4,16 @@ import { NgModuleLoader } from './ng-module-loader';
 
 export const LAZY_LOADED_TOKEN = new OpaqueToken('LZYCMP');
 
+
+
 /**
  * @private
  */
 @Injectable()
 export class ModuleLoader {
+
+  /** @internal */
+  _cfrMap = new Map<any, ComponentFactoryResolver>();
 
   constructor(
     private _ngModuleLoader: NgModuleLoader,
@@ -20,16 +25,23 @@ export class ModuleLoader {
 
     const splitString = modulePath.split(SPLITTER);
 
-    return this._ngModuleLoader.load(splitString[0], splitString[1])
-      .then(loadedModule => {
-        console.timeEnd(`ModuleLoader, load: ${modulePath}'`);
-        const ref = loadedModule.create(this._injector);
+    return this._ngModuleLoader.load(splitString[0], splitString[1]).then(loadedModule => {
+      console.timeEnd(`ModuleLoader, load: ${modulePath}'`);
+      const ref = loadedModule.create(this._injector);
 
-        return {
-          componentFactoryResolver: ref.componentFactoryResolver,
-          component: ref.injector.get(LAZY_LOADED_TOKEN)
-        };
-      });
+      const component = ref.injector.get(LAZY_LOADED_TOKEN);
+
+      this._cfrMap.set(component, ref.componentFactoryResolver);
+
+      return {
+        componentFactoryResolver: ref.componentFactoryResolver,
+        component: component
+      };
+    });
+  }
+
+  getComponentFactoryResolver(component: Type<any>) {
+    return this._cfrMap.get(component);
   }
 }
 

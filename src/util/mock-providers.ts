@@ -12,6 +12,7 @@ import { Haptic } from '../tap-click/haptic';
 import { IonicApp } from '../components/app/app-root';
 import { Keyboard } from '../platform/keyboard';
 import { Menu } from '../components/menu/menu';
+import { NavOptions } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
 import { OverlayPortal } from '../components/nav/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
@@ -527,4 +528,13 @@ export function noop(): any { return 'noop'; };
 
 export function mockModuleLoader() {
   return { };
+}
+
+export function mockOverlay() {
+  return {
+    present: (opts?: NavOptions) => { return Promise.resolve(); },
+    dismiss: (data?: any, role?: any, navOptions?: NavOptions) => { return Promise.resolve(); },
+    onDidDismiss: (callback: Function) => { },
+    onWillDismiss: (callback: Function) => { }
+  };
 }

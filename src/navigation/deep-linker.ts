@@ -125,8 +125,6 @@ export class DeepLinker {
   _history: string[] = [];
   /** @internal */
   _indexAliasUrl: string;
-  /** @internal */
-  _cfrMap = new Map<any, ComponentFactoryResolver>();
 
 
   constructor(
@@ -277,12 +275,9 @@ export class DeepLinker {
     if (link.loadChildren) {
       // awesome, looks like we'll lazy load this component
       // using loadChildren as the URL to request
-      return this._moduleLoader.load(link.loadChildren).then(loadedModule => {
-        // kerpow!! we just lazy loaded a component!!
-        // update the existing link with the loaded component
-        link.component = loadedModule.component;
-        this._cfrMap.set(link.component, loadedModule.componentFactoryResolver);
-        return link.component;
+      return this._moduleLoader.load(link.loadChildren).then((response) => {
+        link.component = response.component;
+        return response.component;
       });
     }
 
@@ -294,7 +289,8 @@ export class DeepLinker {
    * @internal
    */
   resolveComponent(component: any): ComponentFactory<any> {
-    let cfr = this._cfrMap.get(component);
+
+    let cfr = this._moduleLoader.getComponentFactoryResolver(component);
     if (!cfr) {
       cfr = this._baseCfr;
     }

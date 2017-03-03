@@ -5,6 +5,7 @@ import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';
+import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
 /**
@@ -31,7 +32,9 @@ export class ModalCmp {
     public _renderer: Renderer,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
-    gestureCtrl: GestureController
+    gestureCtrl: GestureController,
+    public moduleLoader: ModuleLoader
+
   ) {
     let opts = _navParams.get('opts');
     assert(opts, 'modal data must be valid');
@@ -49,7 +52,12 @@ export class ModalCmp {
   /** @private */
   _load(component: any) {
     if (component) {
-      const componentFactory = this._cfr.resolveComponentFactory(component);
+
+      let cfr = this.moduleLoader.getComponentFactoryResolver(component);
+      if (!cfr) {
+        cfr = this._cfr;
+      }
+      const componentFactory = cfr.resolveComponentFactory(component);
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
