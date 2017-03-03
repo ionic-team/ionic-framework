@@ -197,7 +197,7 @@ export class Menu implements RootNode {
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;
   private _type: MenuType;
-  private _isEnabled: boolean = false;
+  private _isEnabled: boolean;
   private _isSwipeEnabled: boolean = true;
   private _isAnimating: boolean = false;
   private _isPersistent: boolean = false;
@@ -357,16 +357,18 @@ export class Menu implements RootNode {
     this._cntEle.classList.add('menu-content');
     this._cntEle.classList.add('menu-content-' + this.type);
 
-    // check if more than one menu is on the same side
-    let shouldEnable = !this._menuCtrl.getMenus().some(m => {
-      return m.side === this.side && m.enabled;
-    });
-
+    let isEnabled = this._isEnabled;
+    if (isEnabled === true || typeof isEnabled === 'undefined') {
+      // check if more than one menu is on the same side
+      isEnabled = !this._menuCtrl.getMenus().some(m => {
+        return m.side === this.side && m.enabled;
+      });
+    }
     // register this menu with the app's menu controller
     this._menuCtrl._register(this);
 
     // mask it as enabled / disabled
-    this.enable(shouldEnable);
+    this.enable(isEnabled);
   }
 
   /**
@@ -580,6 +582,7 @@ export class Menu implements RootNode {
 
     // Close menu inmediately
     if (!canOpen && this.isOpen) {
+      assert(this._init, 'menu must be initialized');
       // close if this menu is open, and should not be enabled
       this._forceClosing();
     }
@@ -591,6 +594,7 @@ export class Menu implements RootNode {
     if (!this._init) {
       return;
     }
+
     const gesture = this._gesture;
     // only listen/unlisten if the menu has initialized
     if (canOpen && this._isSwipeEnabled && !gesture.isListening) {
@@ -603,6 +607,7 @@ export class Menu implements RootNode {
       console.debug('menu, gesture unlisten', this.side);
       gesture.unlisten();
     }
+
     if (this.isOpen || (this._isPane && this._isEnabled)) {
       this.resize();
     }

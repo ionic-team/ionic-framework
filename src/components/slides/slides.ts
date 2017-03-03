@@ -107,7 +107,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```ts
  * import { ViewChild } from '@angular/core';
  * import { Slides } from 'ionic-angular';
- 
+
  * class MyPage {
  *   @ViewChild(Slides) slides: Slides;
  *
@@ -968,6 +968,12 @@ export class Slides extends Ion {
           this.paginationType = undefined;
         }
       }, debounce);
+    }
+  }
+
+  resize() {
+    if (this._init) {
+
     }
   }
 
