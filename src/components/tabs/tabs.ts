@@ -8,7 +8,7 @@ import { isBlank, assert } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
-import { SplitPane, RootNode } from '../split-pane/split-pane';
+import { RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabHighlight } from './tab-highlight';
@@ -574,7 +574,6 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
    */
   initPane(): boolean {
     const isMain = this._elementRef.nativeElement.hasAttribute('main');
-    this._isSecondary = !isMain;
     return isMain;
   }
 

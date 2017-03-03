@@ -13,7 +13,7 @@ import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
-import { RootNode, SplitPane } from '../split-pane/split-pane';
+import { RootNode } from '../split-pane/split-pane';
 
 /**
  * @name Nav
@@ -167,9 +167,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   }
 
   initPane(): boolean {
-    debugger;
     const isMain = this._elementRef.nativeElement.hasAttribute('main');
-    this._isSecondary = !isMain;
     return isMain;
   }
 

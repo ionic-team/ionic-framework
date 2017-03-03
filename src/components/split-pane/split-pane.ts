@@ -1,4 +1,4 @@
-import { ContentChildren, Directive, ElementRef, EventEmitter, forwardRef, Input, Optional, Output, QueryList, NgZone, Renderer } from '@angular/core';
+import { ContentChildren, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, QueryList, NgZone, Renderer } from '@angular/core';
 import { Ion } from '../ion';
 import { assert } from '../../util/util';
 import { Config } from '../../config/config';
@@ -42,7 +42,7 @@ export class SplitPane extends Ion implements RootNode {
 
   @ContentChildren(RootNode, { descendants: false })
   set _setchildren(query: QueryList<RootNode>) {
-    const children = this._children = query.filter((child => child !== this))
+    const children = this._children = query.filter((child => child !== this));
     children.forEach(child => {
       var isMain = child.initPane();
       this._setPaneCSSClass(child.getElementRef(), isMain);
