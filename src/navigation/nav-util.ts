@@ -101,9 +101,9 @@ export function isNav(nav: any): boolean {
   return !!nav && !!nav.push;
 }
 
-export function DeepLink(config: DeepLinkMetadataType) {
-  return function(cls: any) {
-    return cls;
+export function DeepLink(config?: DeepLinkMetadataType): ClassDecorator {
+  return function(clazz: any) {
+    return clazz;
   };
 }
 
