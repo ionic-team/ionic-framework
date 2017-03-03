@@ -192,7 +192,7 @@ export { ShowWhen, HideWhen, DisplayWhen } from './components/show-hide-when/sho
 export { Slide } from './components/slides/slide';
 export { Slides } from './components/slides/slides';
 export { Spinner } from './components/spinner/spinner';
-export { SplitPane } from './components/split-pane/split-pane';
+export { SplitPane, RootNode } from './components/split-pane/split-pane';
 export { Tab } from './components/tabs/tab';
 export { TabButton } from './components/tabs/tab-button';
 export { TabHighlight } from './components/tabs/tab-highlight';
@@ -221,7 +221,6 @@ export { NavController } from './navigation/nav-controller';
 export { NavControllerBase } from './navigation/nav-controller-base';
 export { NavParams } from './navigation/nav-params';
 export { NavLink, NavOptions, DeepLink, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataType } from './navigation/nav-util';
-export { RootNode } from './navigation/root-node';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';

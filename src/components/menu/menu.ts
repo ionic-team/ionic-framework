@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, Optional, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -14,7 +14,7 @@ import { MenuType } from './menu-types';
 import { Nav } from '../nav/nav';
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
-import { RootNode } from '../../navigation/root-node';
+import { SplitPane, RootNode } from '../split-pane/split-pane';
 
 /**
  * @name Menu
@@ -620,9 +620,16 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @internal
    */
-  _setIsPane(isPane: boolean) {
+  initPane(): boolean {
+    return false;
+  }
+
+  /**
+   * @internal
+   */
+  paneChanged(isPane: boolean) {
     this._isPane = isPane;
     this._updateState();
   }

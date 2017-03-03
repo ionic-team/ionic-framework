@@ -10,10 +10,10 @@ import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
-import { RootNode } from '../../navigation/root-node';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
+import { RootNode, SplitPane } from '../split-pane/split-pane';
 
 /**
  * @name Nav
@@ -166,24 +166,17 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
     this.destroy();
   }
 
-  /**
-   * @private
-   */
-  _setIsPane(isPane: boolean) {
+  initPane(): boolean {
+    debugger;
+    const isMain = this._elementRef.nativeElement.hasAttribute('main');
+    this._isSecondary = !isMain;
+    return isMain;
+  }
+
+  paneChanged(isPane: boolean) {
     if (isPane) {
       this.resize();
     }
-  }
-
-  /**
-   * @private
-   */
-  _isSideContent(): boolean {
-    return !this._elementRef.nativeElement.hasAttribute('main');
-  }
-
-  get enabled(): boolean {
-    return true;
   }
 
 }

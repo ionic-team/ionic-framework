@@ -8,7 +8,7 @@ import { isBlank, assert } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
-import { RootNode } from '../../navigation/root-node';
+import { SplitPane, RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabHighlight } from './tab-highlight';
@@ -569,19 +569,24 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
     tab && tab.resize();
   }
 
-  _setIsPane(isPane: boolean): void {
+  /**
+   * @internal
+   */
+  initPane(): boolean {
+    const isMain = this._elementRef.nativeElement.hasAttribute('main');
+    this._isSecondary = !isMain;
+    return isMain;
+  }
+
+  /**
+   * @internal
+   */
+  paneChanged(isPane: boolean) {
     if (isPane) {
       this.resize();
     }
   }
 
-  _isSideContent(): boolean {
-    return !this._elementRef.nativeElement.hasAttribute('main');
-  }
-
-  get enabled(): boolean {
-    return true;
-  }
 }
 
 let tabIds = -1;

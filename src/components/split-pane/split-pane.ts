@@ -1,9 +1,8 @@
-import { ContentChildren, Component, ElementRef, EventEmitter, forwardRef, Input, Output, QueryList, NgZone, Renderer } from '@angular/core';
+import { ContentChildren, Component, ElementRef, EventEmitter, forwardRef, Input, Optional, Output, QueryList, NgZone, Renderer } from '@angular/core';
 import { Ion } from '../ion';
 import { assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Platform } from '../../platform/platform';
-import { RootNode } from '../../navigation/root-node';
 
 const QUERY: { [key: string]: string }  = {
   xs: '(min-width: 0px)',
@@ -13,6 +12,15 @@ const QUERY: { [key: string]: string }  = {
   xl: '(min-width: 1200px)',
   never: ''
 };
+
+/**
+ * @private
+ */
+export abstract class RootNode {
+  abstract getElementRef(): ElementRef;
+  abstract initPane(): boolean;
+  abstract paneChanged?(visible: boolean): void;
+}
 
 /**
  * @name SplitPane
@@ -28,44 +36,19 @@ export class SplitPane extends Ion implements RootNode {
   _visible: boolean = false;
   _init: boolean = false;
   _mediaQuery: string | boolean = QUERY['md'];
+  _children: RootNode[];
 
-  sideContent: RootNode;
-  mainContent: RootNode;
+  sideContent: RootNode = null;
+  mainContent: RootNode = null;
 
-  @ContentChildren(RootNode, { descendants: false }) children: QueryList<RootNode>;
-
-  updateChildren() {
-    this.mainContent = null;
-    this.sideContent = null;
-
-    this.children.forEach(child => {
-      if (child !== this) {
-        var isSide = child._isSideContent();
-        this.setPaneCSSClass(child.getElementRef(), isSide);
-        if (child.enabled) {
-          if (isSide) {
-            if (this.sideContent) {
-              console.error('split pane: side content was already set');
-            }
-            this.sideContent = child;
-          } else {
-            if (this.mainContent) {
-              console.error('split pane: main content was already set');
-            }
-            this.mainContent = child;
-          }
-        }
-        child._setIsPane(this._visible);
-      }
+  @ContentChildren(RootNode, { descendants: false })
+  set _setchildren(query: QueryList<RootNode>) {
+    const children = this._children = query.filter((child => child !== this))
+    children.forEach(child => {
+      var isMain = child.initPane();
+      this._setPaneCSSClass(child.getElementRef(), isMain);
     });
-    if (!this.mainContent) {
-      console.error('split pane: one of the elements needs the "main" attribute');
-    }
-    if (this.mainContent === this.sideContent) {
-      console.error('split pane: main and side content are the same');
-    }
   }
-
 
   @Input()
   set when(query: string | boolean) {
@@ -95,6 +78,23 @@ export class SplitPane extends Ion implements RootNode {
     super(config, elementRef, renderer, 'split-pane');
   }
 
+  _register(node: RootNode, isMain: boolean, callback: Function): boolean {
+    if (this.getElementRef().nativeElement !== node.getElementRef().nativeElement.parentNode) {
+      return false;
+    }
+    this._setPaneCSSClass(node.getElementRef(), isMain);
+    if (callback) {
+      this.ionChange.subscribe(callback);
+    }
+    if (isMain) {
+      if (this.mainContent) {
+        console.error('split pane: main content was already set');
+      }
+      this.mainContent = node;
+    }
+    return true;
+  }
+
   ngAfterViewInit() {
     this._init = true;
     this._update();
@@ -110,31 +110,37 @@ export class SplitPane extends Ion implements RootNode {
 
     const query = this._mediaQuery;
     if (typeof query === 'boolean') {
-      this.setVisible(query);
+      this._setVisible(query);
       return;
     }
     if (query && query.length > 0) {
       // Listen
-      const callback = (query: MediaQueryList) => this.setVisible(query.matches);
+      const callback = (query: MediaQueryList) => this._setVisible(query.matches);
       const mediaList = this._plt.win().matchMedia(query);
       mediaList.addListener(callback);
-      this.setVisible(mediaList.matches);
+      this._setVisible(mediaList.matches);
       this._rmListener = function () {
         mediaList.removeListener(callback);
       };
     } else {
-      this.setVisible(false);
+      this._setVisible(false);
     }
   }
 
-  setVisible(visible: boolean) {
+  _updateChildren() {
+    this.mainContent = null;
+    this.sideContent = null;
+    const visible = this._visible;
+    this._children.forEach(child => child.paneChanged && child.paneChanged(visible));
+  }
+
+  _setVisible(visible: boolean) {
     if (this._visible === visible) {
       return;
     }
     this._visible = visible;
     this.setElementClass('split-pane-visible', visible);
-    this.updateChildren();
-
+    this._updateChildren();
     this._zone.run(() => {
       this.ionChange.emit(this);
     });
@@ -148,10 +154,10 @@ export class SplitPane extends Ion implements RootNode {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
-  setPaneCSSClass(elementRef: ElementRef, isSide: boolean) {
+  _setPaneCSSClass(elementRef: ElementRef, isMain: boolean) {
     const ele = elementRef.nativeElement;
-    this._renderer.setElementClass(ele, 'split-pane-side', isSide);
-    this._renderer.setElementClass(ele, 'split-pane-main', !isSide);
+    this._renderer.setElementClass(ele, 'split-pane-main', isMain);
+    this._renderer.setElementClass(ele, 'split-pane-side', !isMain);
   }
 
   ngOnDestroy() {
@@ -161,15 +167,7 @@ export class SplitPane extends Ion implements RootNode {
     this._rmListener = null;
   }
 
-  _setIsPane(isPane: boolean) {
-    // Conforms to RootNode abstract class
-  }
-
-  _isSideContent(): boolean {
-    return false;
-  }
-
-  get enabled(): boolean {
+  initPane(): boolean {
     return true;
   }
 
