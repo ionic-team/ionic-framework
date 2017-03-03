@@ -1,22 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Toast, ToastController, NavController } from '../../../..';
-
-
-@Component({
-  template: `
-    <ion-header>
-      <ion-navbar>
-        <ion-title>Another Page</ion-title>
-      </ion-navbar>
-    </ion-header>
-    <ion-content padding>
-      <p>This is another page to show that the toast stays.</p>
-    </ion-content>
-  `
-})
-export class AnotherPage {}
-
+import { IonicApp, IonicModule, Toast, ToastController, NavController } from '../../../../..';
 
 @Component({
   templateUrl: 'main.html'
@@ -37,7 +21,7 @@ export class E2EPage {
     toast.present();
 
     setTimeout(() => {
-      this.navCtrl.push(AnotherPage);
+      this.navCtrl.push('RootPage');
     }, 1000);
 
     setTimeout(() => {
@@ -85,7 +69,7 @@ export class E2EPage {
     toast.present();
 
     setTimeout(() => {
-      this.navCtrl.push(AnotherPage);
+      this.navCtrl.push('RootPage');
     }, 1000);
   }
 
@@ -105,18 +89,20 @@ export class E2EApp {
 @NgModule({
   declarations: [
     E2EApp,
-    E2EPage,
-    AnotherPage
+    E2EPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(E2EApp, {}, {
+      links: [
+        { loadChildren: '../pages/root-page/root-page.module#RootPageModule', name: 'RootPage' }
+      ]
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
-    E2EPage,
-    AnotherPage
+    E2EPage
   ]
 })
 export class AppModule {}

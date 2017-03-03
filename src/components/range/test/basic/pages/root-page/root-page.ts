@@ -1,13 +1,11 @@
-import { Component, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IonicApp, IonicModule, Range } from '../../../..';
-
+import { Range } from '../../../../../..';
 
 @Component({
-  templateUrl: 'page1.html'
+  templateUrl: 'root-page.html'
 })
-export class Page1 {
+export class RootPage {
   singleValue: number;
   singleValue2: number = 150;
   singleValue3: number = 64;
@@ -28,27 +26,3 @@ export class Page1 {
   }
 
 }
-
-@Component({
-  templateUrl: 'main.html'
-})
-export class E2EApp {
-  rootPage = Page1;
-}
-
-@NgModule({
-  declarations: [
-    E2EApp,
-    Page1
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(E2EApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-    Page1
-  ]
-})
-export class AppModule {}
