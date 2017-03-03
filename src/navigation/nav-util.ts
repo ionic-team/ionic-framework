@@ -112,6 +112,7 @@ export interface DeepLinkMetadataType {
   name?: string;
   segment?: string;
   defaultHistory?: string[];
+  priority?: string;
 }
 
 /**
