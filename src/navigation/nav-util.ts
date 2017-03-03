@@ -101,11 +101,18 @@ export function isNav(nav: any): boolean {
   return !!nav && !!nav.push;
 }
 
+export function DeepLink(config: DeepLinkMetadataType) {
+  return function(cls: any) {
+    return cls;
+  };
+}
+
 // public link interface
 export interface DeepLinkMetadataType {
   name?: string;
   segment?: string;
   defaultHistory?: string[];
+  priority?: string;
 }
 
 /**
@@ -130,7 +137,7 @@ export interface DeepLinkMetadataFactory {
 /**
  * @private
  */
-export var DeepLink: DeepLinkMetadataFactory;
+export var DeepLinkMetadataFactory: DeepLinkMetadataFactory;
 
 /**
  * @private
