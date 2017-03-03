@@ -259,6 +259,10 @@ export { reorderArray } from './util/util';
 export { Animation, AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animations/animation';
 export { PageTransition } from './transitions/page-transition';
 export { Transition } from './transitions/transition';
+export { PlatformConfigToken } from './platform/platform-registry';
+export { registerModeConfigs } from './config/mode-registry';
+export { registerTransitions } from './transitions/transition-registry';
+export { IonicGestureConfig } from './gestures/gesture-config';
 
 
 
