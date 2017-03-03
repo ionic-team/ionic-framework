@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, ModalController } from '../../../../../..';
 
-import { ModalPage } from '../modal-page/modal-page';
-
 @Component({
   templateUrl: 'page-one.html'
 })
@@ -83,7 +81,7 @@ export class PageOne {
     alert.addButton({
       text: 'Open Modal',
       handler: () => {
-        this.modalCtrl.create(ModalPage).present();
+        this.modalCtrl.create('modal-page').present();
 
         // do not close the alert when this button is pressed
         return false;

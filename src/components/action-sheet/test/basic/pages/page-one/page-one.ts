@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController, Platform } from '../../../../../..';
 
-import { ModalPage } from '../modal-page/modal-page';
-
 @Component({
   templateUrl: 'page-one.html'
 })
@@ -39,7 +37,7 @@ export class PageOne {
           icon: 'arrow-dropright-circle',
           handler: () => {
             this.result = 'Play (open modal)';
-            let modal = this.modalCtrl.create(ModalPage);
+            let modal = this.modalCtrl.create('modal-page');
             modal.present();
 
             // returning false does not allow the actionsheet to be closed

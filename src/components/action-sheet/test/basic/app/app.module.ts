@@ -12,7 +12,11 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(AppComponent),
+    IonicModule.forRoot(AppComponent, {}, {
+      links: [
+        { loadChildren: '../pages/modal-page/modal-page.module#ModalPageModule', name: 'modal-page' }
+      ]
+    }),
     ModalPageModule,
     PageOneModule
   ],

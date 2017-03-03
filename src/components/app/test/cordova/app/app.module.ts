@@ -19,6 +19,7 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
         { name: 'page-three', loadChildren: '../pages/page-three/page-three.module#PageThreeModule'},
         { name: 'tabs-page', loadChildren: '../pages/tabs/tabs-page.module#TabsPageModule'},
         { name: 'tabs-page-one', loadChildren: '../pages/tabs-page-one/tabs-page-one.module#TabsPageOneModule'},
+        { name: 'modal-page', loadChildren: '../pages/modal/modal.module#ModalPageModule'}
       ]
     }),
     PageOneModule
