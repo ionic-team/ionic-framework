@@ -6,6 +6,7 @@ import { NavParams } from '../../navigation/nav-params';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
 /**
@@ -48,6 +49,7 @@ export class PopoverCmp {
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController,
+    public moduleLoader: ModuleLoader
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = _navParams.data.opts;
@@ -71,7 +73,11 @@ export class PopoverCmp {
 
   _load(component: any) {
     if (component) {
-      const componentFactory = this._cfr.resolveComponentFactory(component);
+      let cfr = this.moduleLoader.getComponentFactoryResolver(component);
+      if (!cfr) {
+        cfr = this._cfr;
+      }
+      const componentFactory = cfr.resolveComponentFactory(component);
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);

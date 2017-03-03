@@ -4,6 +4,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Popover } from './popover';
 import { PopoverOptions } from './popover-options';
+import { DeepLinker } from '../../navigation/deep-linker';
 
 /**
  * @name PopoverController
@@ -109,7 +110,7 @@ import { PopoverOptions } from './popover-options';
 @Injectable()
 export class PopoverController {
 
-  constructor(private _app: App, public config: Config) { }
+  constructor(private _app: App, public config: Config, private _deepLinker: DeepLinker) { }
 
   /**
    * Present a popover. See below for options
@@ -118,7 +119,7 @@ export class PopoverController {
    * @param {PopoverOptions} opts Popover options
    */
   create(component: any, data = {}, opts: PopoverOptions = {}): Popover {
-    return new Popover(this._app, component, data, opts, this.config);
+    return new Popover(this._app, component, data, opts, this.config, this._deepLinker);
   }
 
 }

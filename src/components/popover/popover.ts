@@ -1,51 +1,25 @@
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { isPresent } from '../../util/util';
-import { NavOptions } from '../../navigation/nav-util';
-import { PopoverCmp } from './popover-component';
-import { PopoverOptions } from './popover-options';
-import { PopoverPopIn, PopoverPopOut, PopoverMdPopIn, PopoverMdPopOut } from './popover-transitions';
-import { ViewController } from '../../navigation/view-controller';
 
+import { PopoverOptions } from './popover-options';
+import { DeepLinker } from '../../navigation/deep-linker';
+
+import { Overlay } from '../../navigation/overlay';
+import { OverlayProxy } from '../../navigation/overlay-proxy';
+import { PopoverImpl } from './popover-impl';
 
 /**
  * @private
  */
-export class Popover extends ViewController {
-  private _app: App;
+export class Popover extends OverlayProxy {
 
-  constructor(app: App, component: any, data: any = {}, opts: PopoverOptions = {}, config: Config) {
-    opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+  public isOverlay: boolean = true;
 
-    data.component = component;
-    data.opts = opts;
-    super(PopoverCmp, data, null);
-    this._app = app;
-    this.isOverlay = true;
-
-    config.setTransition('popover-pop-in', PopoverPopIn);
-    config.setTransition('popover-pop-out', PopoverPopOut);
-    config.setTransition('popover-md-pop-in', PopoverMdPopIn);
-    config.setTransition('popover-md-pop-out', PopoverMdPopOut);
+  constructor(app: App, component: any, private data: any, private opts: PopoverOptions = {}, config: Config, deepLinker: DeepLinker) {
+    super(app, component, config, deepLinker);
   }
 
-  /**
-   * @private
-   */
-  getTransitionName(direction: string) {
-    let key = (direction === 'back' ? 'popoverLeave' : 'popoverEnter');
-    return this._nav && this._nav.config.get(key);
+  getImplementation(): Overlay {
+    return new PopoverImpl(this._app, this._component, this.data, this.opts, this._config);
   }
-
-  /**
-   * Present the popover instance.
-   *
-   * @param {NavOptions} [opts={}] Nav options to go with this transition.
-   * @returns {Promise} Returns a promise which is resolved when the transition has completed.
-   */
-  present(navOptions: NavOptions = {}) {
-    return this._app.present(this, navOptions);
-  }
-
 }
