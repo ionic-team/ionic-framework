@@ -368,7 +368,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
     // figure out which knob they started closer to
     const ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
-    this._activeB = (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
+    this._activeB = this._dual && (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
 
     // update the active knob's position
     this._update(current, rect, true);
