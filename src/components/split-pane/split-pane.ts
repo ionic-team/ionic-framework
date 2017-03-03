@@ -1,4 +1,4 @@
-import { ContentChildren, Component, ElementRef, EventEmitter, forwardRef, Input, Optional, Output, QueryList, NgZone, Renderer } from '@angular/core';
+import { ContentChildren, Directive, ElementRef, EventEmitter, forwardRef, Input, Optional, Output, QueryList, NgZone, Renderer } from '@angular/core';
 import { Ion } from '../ion';
 import { assert } from '../../util/util';
 import { Config } from '../../config/config';
@@ -25,9 +25,8 @@ export abstract class RootNode {
 /**
  * @name SplitPane
  */
-@Component({
+@Directive({
   selector: 'ion-split-pane',
-  template: '<ng-content></ng-content>',
   providers: [{provide: RootNode, useExisting: forwardRef(() => SplitPane) }]
 })
 export class SplitPane extends Ion implements RootNode {
