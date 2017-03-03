@@ -1,8 +1,5 @@
-import { Component, ViewEncapsulation, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { App, IonicApp, IonicModule, LoadingController, NavController } from '../../../..';
-
-
+import { Component } from '@angular/core';
+import { LoadingController, NavController } from '../../../../../..';
 @Component({
   templateUrl: 'main.html',
   styles: [
@@ -81,7 +78,10 @@ import { App, IonicApp, IonicModule, LoadingController, NavController } from '..
   ]
 })
 export class E2EPage {
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController) {}
+  constructor(
+    public loadingCtrl: LoadingController,
+    public navCtrl: NavController
+  ) { }
 
   presentLoadingIos() {
     let loading = this.loadingCtrl.create({
@@ -91,7 +91,7 @@ export class E2EPage {
     });
 
     loading.onDidDismiss(() => {
-     console.log('Dismissed loading');
+      console.log('Dismissed loading');
     });
 
     loading.present();
@@ -179,7 +179,7 @@ export class E2EPage {
     loading.present();
 
     setTimeout(() => {
-      this.navCtrl.push(Page2);
+      this.navCtrl.push('page2');
     }, 1000);
 
     setTimeout(() => {
@@ -188,7 +188,7 @@ export class E2EPage {
   }
 
   goToPage2() {
-    this.navCtrl.push(Page2);
+    this.navCtrl.push('page2');
   }
 
   presentLoadingMultiple() {
@@ -214,12 +214,12 @@ export class E2EPage {
     });
 
     setTimeout(() => {
+
       loading3.present();
 
       loading3.dismiss();
       loading2.dismiss();
       loading.dismiss();
-
     }, 2000);
 
   }
@@ -239,7 +239,7 @@ export class E2EPage {
         dismissOnPageChange: true
       }).present();
 
-      this.navCtrl.push(Page2);
+      this.navCtrl.push('page2');
 
     }, 500);
   }
@@ -252,88 +252,7 @@ export class E2EPage {
     }).present();
 
     setTimeout(() => {
-      this.navCtrl.push(Page2);
+      this.navCtrl.push('page2');
     }, 500);
   }
 }
-
-@Component({
-  template: `
-    <ion-header>
-      <ion-navbar>
-        <ion-title>Page 2</ion-title>
-      </ion-navbar>
-    </ion-header>
-    <ion-content padding>Some content</ion-content>
-    <ion-footer>
-      <ion-toolbar>
-        <ion-buttons end>
-          <button ion-button icon-right (click)="goToPage3()">
-            Navigate
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-footer>
-  `
-})
-export class Page2 {
-  constructor(public navCtrl: NavController) {}
-
-  goToPage3() {
-    this.navCtrl.push(Page3);
-  }
-}
-
-@Component({
-  template: `
-    <ion-header>
-      <ion-navbar>
-        <ion-title>Page 3</ion-title>
-      </ion-navbar>
-    </ion-header>
-    <ion-content padding>Some content</ion-content>
-  `
-})
-export class Page3 {}
-
-@Component({
-  template: `
-    <ion-nav [root]="root"></ion-nav>
-  `,
-  encapsulation: ViewEncapsulation.None
-})
-export class E2EApp {
-  root = E2EPage;
-
-  constructor(app: App) {
-    app.viewDidLeave.subscribe((ev: any) => {
-      console.log('App didLeave');
-    });
-
-    app.viewWillLeave.subscribe((ev: any) => {
-      console.log('App willLeave');
-    });
-  }
-}
-
-@NgModule({
-  declarations: [
-    E2EApp,
-    E2EPage,
-    Page2,
-    Page3
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(E2EApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-    E2EPage,
-    Page2,
-    Page3
-  ]
-})
-export class AppModule {}
