@@ -43,4 +43,4 @@ export class E2EApp {
     E2EPage
   ]
 })
-export class AppModule {}
+export class AppModule { }
