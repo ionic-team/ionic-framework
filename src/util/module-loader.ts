@@ -1,4 +1,5 @@
 import { ComponentFactoryResolver, Injectable, Injector, OpaqueToken, Type } from '@angular/core';
+import { DeepLinkConfig } from '../navigation/nav-util';
 import { NgModuleLoader } from './ng-module-loader';
 
 export const LAZY_LOADED_TOKEN = new OpaqueToken('LZYCMP');
@@ -47,3 +48,16 @@ export interface LoadedModule {
   componentFactoryResolver: ComponentFactoryResolver;
   component: Type<any>;
 };
+
+
+/**
+ * @private
+ */
+export function setupPreloading(deeplinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
+  return function() {
+    const linksToLoad = deeplinkConfig.links.filter(link => !!link.loadChildren);
+    for (const link of linksToLoad) {
+      moduleLoader.load(link.loadChildren);
+    }
+  };
+}

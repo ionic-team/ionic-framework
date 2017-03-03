@@ -33,7 +33,7 @@ import { Keyboard } from './platform/keyboard';
 import { LoadingController } from './components/loading/loading-controller';
 import { MenuController } from './components/menu/menu-controller';
 import { ModalController } from './components/modal/modal-controller';
-import { ModuleLoader, provideModuleLoader, LAZY_LOADED_TOKEN } from './util/module-loader';
+import { ModuleLoader, provideModuleLoader, setupPreloading, LAZY_LOADED_TOKEN } from './util/module-loader';
 import { NgModuleLoader } from './util/ng-module-loader';
 import { PickerController } from './components/picker/picker-controller';
 import { Platform, setupPlatform } from './platform/platform';
@@ -591,6 +591,7 @@ export class IonicModule {
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupPreloading, deps: [ DeepLinkConfigToken, ModuleLoader ], multi: true },
 
         // useClass
         // { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
