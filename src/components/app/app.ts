@@ -85,8 +85,9 @@ export class App {
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
-      if (!(<any>_plt.win())['HWBackButton']) {
-        (<any>_plt.win())['HWBackButton'] = () => {
+      const win = <any>_plt.win();
+      if (!win['HWBackButton']) {
+        win['HWBackButton'] = () => {
           let p = this.goBack();
           p && p.catch(() => console.debug('hardware go back cancelled'));
           return p;

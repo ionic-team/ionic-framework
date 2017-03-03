@@ -1,0 +1,12 @@
+
+@import "../../themes/ionic.globals.ios";
+
+// Split Pane
+// --------------------------------------------------
+
+.split-pane-ios.split-pane-visible >.split-pane-side {
+  min-width: 270px;
+  max-width: 28%;
+
+  border-right: $hairlines-width solid $list-ios-border-color;
+}

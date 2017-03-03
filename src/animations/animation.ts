@@ -351,6 +351,18 @@ export class Animation {
     });
   }
 
+  syncPlay() {
+    // If the animation was already invalidated (it did finish), do nothing
+    if (!this.plt) {
+      return;
+    }
+    const opts = { duration: 0 };
+    this._isAsync = false;
+    this._clearAsync();
+    this._playInit(opts);
+    this._playDomInspect(opts);
+  }
+
   /**
    * @private
    * DOM WRITE
@@ -569,7 +581,6 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 
@@ -589,7 +600,6 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 

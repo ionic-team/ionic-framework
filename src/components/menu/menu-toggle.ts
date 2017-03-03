@@ -129,7 +129,7 @@ export class MenuToggle {
   */
   @HostListener('click')
   toggle() {
-    let menu = this._menu.get(this.menuToggle);
+    const menu = this._menu.get(this.menuToggle);
     menu && menu.toggle();
   }
 
@@ -137,13 +137,16 @@ export class MenuToggle {
   * @private
   */
   get isHidden() {
+    const menu = this._menu.get(this.menuToggle);
+    if (!menu || !menu._canOpen()) {
+      return true;
+    }
     if (this._inNavbar && this._viewCtrl) {
       if (this._viewCtrl.isFirst()) {
         // this is the first view, so it should always show
         return false;
       }
 
-      let menu = this._menu.get(this.menuToggle);
       if (menu) {
         // this is not the root view, so see if this menu
         // is configured to still be enabled if it's not the root view

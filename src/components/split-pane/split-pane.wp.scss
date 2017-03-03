@@ -1,0 +1,12 @@
+
+@import "../../themes/ionic.globals.wp";
+
+// Split Pane
+// --------------------------------------------------
+
+.split-pane-wp.split-pane-visible >.split-pane-side {
+  min-width: 270px;
+  max-width: 28%;
+
+  border-right: 1px solid $list-wp-border-color;
+}

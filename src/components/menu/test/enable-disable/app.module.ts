@@ -37,17 +37,11 @@ export class E2EApp {
 
   menu1Active() {
     this.menuCtrl.enable(true, 'menu1');
-    this.menuCtrl.enable(false, 'menu2');
-    this.menuCtrl.enable(false, 'menu3');
   }
   menu2Active() {
-    this.menuCtrl.enable(false, 'menu1');
     this.menuCtrl.enable(true, 'menu2');
-    this.menuCtrl.enable(false, 'menu3');
   }
   menu3Active() {
-    this.menuCtrl.enable(false, 'menu1');
-    this.menuCtrl.enable(false, 'menu2');
     this.menuCtrl.enable(true, 'menu3');
   }
 }
