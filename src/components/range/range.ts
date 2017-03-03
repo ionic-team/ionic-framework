@@ -428,18 +428,14 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
     // update which knob is pressed
     this._pressed = isPressed;
-
+    let valChanged = false;
     if (this._activeB) {
       // when the pointer down started it was determined
       // that knob B was the one they were interacting with
       this._pressedB = isPressed;
       this._pressedA = false;
       this._ratioB = ratio;
-
-      if (val === this._valB) {
-        // hasn't changed
-        return false;
-      }
+      valChanged = val === this._valB;
       this._valB = val;
 
     } else {
@@ -447,12 +443,12 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       this._pressedA = isPressed;
       this._pressedB = false;
       this._ratioA = ratio;
-
-      if (val === this._valA) {
-        // hasn't changed
-        return false;
-      }
+      valChanged = val === this._valA;
       this._valA = val;
+    }
+    this._updateBar();
+    if (valChanged) {
+      return false;
     }
 
     // value has been updated
@@ -477,8 +473,6 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       this.onChange(this.value);
       this.ionChange.emit(this);
     });
-
-    this._updateBar();
 
     return true;
   }
