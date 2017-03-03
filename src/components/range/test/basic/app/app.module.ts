@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Range } from '../../../../..';
+import { IonicApp, IonicModule } from '../../../../..';
 
 import { RootPage } from '../pages/root-page/root-page';
 
