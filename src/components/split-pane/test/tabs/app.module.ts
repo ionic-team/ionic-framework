@@ -8,16 +8,23 @@ import { IonicApp, IonicModule, NavController, MenuController } from '../../../.
   <ion-navbar><ion-title>Navigation</ion-title></ion-navbar>
   </ion-header>
   <ion-content>
-  <ion-list>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
-    <button ion-item (click)="push()">Push</button>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
-    <ion-item>Hola</ion-item>
+    <ion-slides style="background: black"
+                pager="true"
+                effect="flip">
 
-  </ion-list>
+      <ion-slide style="background: red; color: white;">
+        <h1>Slide 1</h1>
+      </ion-slide>
+
+      <ion-slide style="background: white; color: blue;">
+        <h1>Slide 2</h1>
+      </ion-slide>
+
+      <ion-slide style="background: blue; color: white;">
+        <h1>Slide 3</h1>
+      </ion-slide>
+
+    </ion-slides>
   </ion-content>
   `
 })

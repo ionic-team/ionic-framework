@@ -890,7 +890,14 @@ export class Slides extends Ion {
 
 
 
-  constructor(config: Config, private _plt: Platform, zone: NgZone, @Optional() viewCtrl: ViewController, elementRef: ElementRef, renderer: Renderer) {
+  constructor(
+    config: Config,
+    private _plt: Platform,
+    zone: NgZone,
+    @Optional() viewCtrl: ViewController,
+    elementRef: ElementRef,
+    renderer: Renderer,
+  ) {
     super(config, elementRef, renderer, 'slides');
 
     this._zone = zone;
