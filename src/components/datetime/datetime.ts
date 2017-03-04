@@ -623,6 +623,23 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       }
     }
 
+    // create sort values for the min/max datetimes
+    let minCompareVal = dateDataSortValue(this._min);
+    let maxCompareVal = dateDataSortValue(this._max);
+
+    if (monthCol) {
+      // enable/disable which months are valid
+      // to show within the min/max date range
+      for (let i = 0; i < monthCol.options.length; i++) {
+        monthOpt = monthCol.options[i];
+
+        // loop through each month and see if it
+        // is within the min/max date range
+        monthOpt.disabled = (dateSortValue(selectedYear, monthOpt.value, 31) < minCompareVal ||
+          dateSortValue(selectedYear, monthOpt.value, 1) > maxCompareVal);
+      }
+    }
+
     // default to assuming this month has 31 days
     let numDaysInMonth = 31;
     let selectedMonth: number;
@@ -637,28 +654,11 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       }
     }
 
-    // create sort values for the min/max datetimes
-    let minCompareVal = dateDataSortValue(this._min);
-    let maxCompareVal = dateDataSortValue(this._max);
-
-    if (monthCol) {
-      // enable/disable which months are valid
-      // to show within the min/max date range
-      for (i = 0; i < monthCol.options.length; i++) {
-        monthOpt = monthCol.options[i];
-
-        // loop through each month and see if it
-        // is within the min/max date range
-        monthOpt.disabled = (dateSortValue(selectedYear, monthOpt.value, 31) < minCompareVal ||
-          dateSortValue(selectedYear, monthOpt.value, 1) > maxCompareVal);
-      }
-    }
-
     if (dayCol) {
       if (isPresent(selectedMonth)) {
         // enable/disable which days are valid
         // to show within the min/max date range
-        for (i = 0; i < dayCol.options.length; i++) {
+        for (let i = 0; i < dayCol.options.length; i++) {
           dayOpt = dayCol.options[i];
 
           // loop through each day and see if it
@@ -667,13 +667,14 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
           dayOpt.disabled = (compareVal < minCompareVal ||
             compareVal > maxCompareVal ||
-            numDaysInMonth <= i);
+            numDaysInMonth < dayOpt.value);
         }
 
       } else {
         // enable/disable which numbers of days to show in this month
-        for (i = 0; i < dayCol.options.length; i++) {
-          dayCol.options[i].disabled = (numDaysInMonth <= i);
+        for (let i = 0; i < dayCol.options.length; i++) {
+          dayOpt = dayCol.options[i];
+          dayOpt.disabled = (numDaysInMonth < dayOpt.value);
         }
       }
     }
