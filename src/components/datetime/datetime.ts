@@ -508,6 +508,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
     picker.ionChange.subscribe(() => {
       this.validate(picker);
+      picker.refresh();
     });
 
     picker.present(pickerOptions);
@@ -516,6 +517,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     picker.onDidDismiss(() => {
       this._isOpen = false;
     });
+
+    picker.refresh();
   }
 
   /**
@@ -673,8 +676,6 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
         }
       }
     }
-
-    picker.refresh();
   }
 
   /**
