@@ -590,7 +590,6 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    * @private
    */
   validate(picker: Picker) {
-    let i: number;
     let today = new Date();
     let columns = picker.getColumns();
 
@@ -626,7 +625,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     if (monthCol) {
       // enable/disable which months are valid
       // to show within the min/max date range
-      for (let i = 0; i < monthCol.options.length; i++) {
+      for (var i = 0; i < monthCol.options.length; i++) {
         monthOpt = monthCol.options[i];
 
         // loop through each month and see if it
@@ -654,7 +653,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       if (isPresent(selectedMonth)) {
         // enable/disable which days are valid
         // to show within the min/max date range
-        for (let i = 0; i < dayCol.options.length; i++) {
+        for (var i = 0; i < dayCol.options.length; i++) {
           dayOpt = dayCol.options[i];
 
           // loop through each day and see if it
@@ -668,7 +667,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
       } else {
         // enable/disable which numbers of days to show in this month
-        for (let i = 0; i < dayCol.options.length; i++) {
+        for (var i = 0; i < dayCol.options.length; i++) {
           dayOpt = dayCol.options[i];
           dayOpt.disabled = (numDaysInMonth < dayOpt.value);
         }
