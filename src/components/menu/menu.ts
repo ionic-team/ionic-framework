@@ -570,10 +570,6 @@ export class Menu implements RootNode {
     return this._isEnabled && !this._isPane;
   }
 
-  _isSideContent(): boolean {
-    return true;
-  }
-
   /**
    * @private
    */
