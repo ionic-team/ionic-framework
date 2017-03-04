@@ -107,7 +107,7 @@ describe('DateTime', () => {
 
     it('should enable all of the values given', () => {
       datetime.monthValues = '6,7,8';
-      datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 14';
+      datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 31';
       datetime.yearValues = '2014,2015';
 
       datetime.pickerFormat = 'MM DD YYYY';
@@ -121,6 +121,7 @@ describe('DateTime', () => {
       expect(columns[1].options.length).toEqual(13); // days
       expect(columns[2].options.length).toEqual(2); // years
 
+      columns[0].selectedIndex = 1; // July
       datetime.validate(picker);
 
       // Months
@@ -132,6 +133,11 @@ describe('DateTime', () => {
       for (var i = 0; i < columns[1].options.length; i++) {
         expect(columns[1].options[i].disabled).toEqual(false);
       }
+
+      columns[0].selectedIndex = 0; // June
+      datetime.validate(picker);
+
+      expect(columns[1].options[12].disabled).toEqual(true);
     });
   });
 
