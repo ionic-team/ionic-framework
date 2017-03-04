@@ -6,6 +6,95 @@ import { ViewController } from './view-controller';
 
 
 /**
+ * @name OnWillLoad
+ * @description
+ * Lifecycle hook that is called when the page is about to be loaded.
+ * At this point, the page's children have not been initialized.
+ */
+export interface OnWillLoad {
+  ionViewWillLoad(): void;
+}
+
+/**
+ * @name OnDidLoad
+ * @description
+ * Lifecycle hook that is called when the page has loaded.
+ * This event only happens once per page being created.
+ * At this point, the page's children have been initialized.
+ * If a page leaves but is cached, then this event will not fire again on a subsequent viewing.
+ * The `ionViewDidLoad` event is good place to put your setup code for the page.
+ */
+export interface OnDidLoad {
+  ionViewDidLoad(): void;
+}
+
+/**
+ * @name OnWillLoad
+ * @description
+ * Lifecycle hook that is called when the page is about to enter and become the active page.
+ */
+export interface OnWillEnter {
+  ionViewWillEnter(): void;
+}
+
+/**
+ * @name OnDidEnter
+ * @description
+ * Lifecycle hook that is called when the page has fully entered and is now the active page.
+ * This event will fire, whether it was the first load or a cached page.
+ */
+export interface OnDidEnter {
+  ionViewDidEnter(): void;
+}
+
+/**
+ * @name OnWillLeave
+ * @description
+ * Lifecycle hook that is called when the page is about to leave and no longer be the active page.
+ */
+export interface OnWillLeave {
+  ionViewWillLeave(): void;
+}
+
+/**
+ * @name OnDidLeave
+ * @description
+ * Lifecycle hook that is called when the page has finished leaving and is no longer the active page.
+ */
+export interface OnDidLeave {
+  ionViewDidLeave(): void;
+}
+
+/**
+ * @name OnWillUnload
+ * @description
+ * Lifecycle hook that is called when the page is about to be destroyed and have its elements removed.
+ */
+export interface OnWillUnload {
+  ionViewWillUnload(): void;
+}
+
+/**
+ * @name OnCanEnter
+ * @description
+ * Lifecycle hook that is called before the view can enter.
+ * This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter.
+ */
+export interface OnCanEnter {
+  ionViewCanEnter(): Promise<boolean>|boolean;
+}
+
+/**
+ * @name OnCanLeave
+ * @description
+ * Lifecycle hook that is called before the view can leave.
+ * This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave.
+ */
+export interface OnCanLeave {
+  ionViewCanLeave(): Promise<boolean>|boolean;
+}
+
+/**
  * @name NavController
  * @description
  *

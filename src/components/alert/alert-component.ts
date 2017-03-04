@@ -5,6 +5,7 @@ import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isPresent, assert } from '../../util/util';
 import { Key } from '../../platform/key';
+import { OnDidLoad, OnWillEnter, OnDidEnter, OnDidLeave, OnWillLeave } from '../../navigation/nav-controller';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
@@ -70,7 +71,7 @@ import { ViewController } from '../../navigation/view-controller';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class AlertCmp {
+export class AlertCmp implements OnDidLoad, OnWillEnter, OnDidEnter, OnDidLeave, OnWillLeave {
   activeId: string;
   descId: string;
   d: {

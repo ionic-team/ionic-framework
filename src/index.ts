@@ -217,7 +217,7 @@ export { DomController, DomCallback } from './platform/dom-controller';
 export { Platform, setupPlatform } from './platform/platform';
 export { Haptic } from './tap-click/haptic';
 export { DeepLinker } from './navigation/deep-linker';
-export { NavController } from './navigation/nav-controller';
+export { NavController, OnCanEnter, OnCanLeave, OnDidEnter, OnDidLeave, OnDidLoad, OnWillEnter, OnWillLeave, OnWillLoad, OnWillUnload } from './navigation/nav-controller';
 export { NavControllerBase } from './navigation/nav-controller-base';
 export { NavParams } from './navigation/nav-params';
 export { NavLink, NavOptions, DeepLink, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataType } from './navigation/nav-util';

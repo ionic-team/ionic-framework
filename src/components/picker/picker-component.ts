@@ -12,6 +12,7 @@ import { PickerOptions, PickerColumn, PickerColumnOption } from './picker-option
 import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';
+import { OnWillEnter, OnDidEnter, OnDidLeave } from '../../navigation/nav-controller';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
@@ -460,7 +461,7 @@ export class PickerColumnCmp {
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class PickerCmp {
+export class PickerCmp implements OnWillEnter, OnDidEnter, OnDidLeave {
   @ViewChildren(PickerColumnCmp) _cols: QueryList<PickerColumnCmp>;
   d: PickerOptions;
   enabled: boolean;
