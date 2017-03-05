@@ -165,6 +165,7 @@ export class ViewController {
    */
   dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
+      assert(this._state === ViewState.DESTROYED, 'ViewController does not have a valid _nav');
       return Promise.resolve(false);
     }
     if (this.isOverlay && !navOptions.minClickBlockDuration) {

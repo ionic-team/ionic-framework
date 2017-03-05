@@ -775,7 +775,7 @@ export class NavControllerBase extends Ion implements NavController {
       assert(view._nav === this, 'view is not part of the nav');
       this._views.splice(index, 0, this._views.splice(existingIndex, 1)[0]);
     } else {
-      assert(!view._nav, 'nav is used');
+      assert(!view._nav || (this._isPortal && view._nav === this), 'nav is used');
       // this is a new view to add to the stack
       // create the new entering view
       view._setNav(this);

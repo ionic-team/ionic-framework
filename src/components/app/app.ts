@@ -220,6 +220,10 @@ export class App {
   present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
     const portal = this._appRoot._getPortal(appPortal);
 
+    // Set Nav must be set here in order to dimiss() work synchnously.
+    // TODO: move _setNav() to the earlier stages of NavController. _queueTrns()
+    enteringView._setNav(portal);
+
     opts.keyboardClose = false;
     opts.direction = DIRECTION_FORWARD;
 
