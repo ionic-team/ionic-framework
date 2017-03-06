@@ -121,6 +121,16 @@ export class E2EPage {
       name: 'name5',
       type: 'date'
     });
+    alert.addInput({
+      name: 'name6',
+      type: 'number',
+      min: -5,
+      max: 10
+    });
+    alert.addInput({
+      name: 'name7',
+      type: 'number'
+    });
     alert.addButton({
       text: 'Cancel',
       handler: (data: any) => {
