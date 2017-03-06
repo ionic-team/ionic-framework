@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, ModalController, NavController } from '../../../../../..';
 
-import { Modal } from '../modal/modal';
-
 @Component({
   templateUrl: 'page1.html'
 })
@@ -25,7 +23,7 @@ export class Page1 {
   }
 
   presentModal() {
-    let modal = this.modalCtrl.create(Modal);
+    let modal = this.modalCtrl.create('Modal');
     modal.present();
   }
 
