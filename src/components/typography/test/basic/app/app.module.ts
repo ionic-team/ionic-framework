@@ -1,27 +1,20 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../..';
+import { IonicApp, IonicModule } from '../../../../..';
 
-
-@Component({
-  templateUrl: 'main.html'
-})
-export class E2EPage {
-
-}
-
+import { RootPage } from '../pages/root-page/root-page';
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: '<ion-nav [root]="root"></ion-nav>'
 })
 export class E2EApp {
-  rootPage = E2EPage;
+  root = RootPage;
 }
 
 @NgModule({
   declarations: [
     E2EApp,
-    E2EPage
+    RootPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +23,7 @@ export class E2EApp {
   bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
-    E2EPage
+    RootPage
   ]
 })
-export class AppModule { }
+export class AppModule {}

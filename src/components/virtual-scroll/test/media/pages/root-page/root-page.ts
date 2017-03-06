@@ -1,12 +1,10 @@
-import { Component, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Platform } from '../../../..';
-
+import { Component } from '@angular/core';
+import { Platform } from '../../../../../../';
 
 @Component({
-  templateUrl: 'main.html'
+  templateUrl: 'root-page.html'
 })
-export class E2EPage {
+export class RootPage {
   items: any[] = [];
   webview: string = '';
   type: string = 'range';
@@ -55,29 +53,3 @@ export class E2EPage {
   }
 
 }
-
-
-@Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
-})
-export class E2EApp {
-  root = E2EPage;
-}
-
-
-@NgModule({
-  declarations: [
-    E2EApp,
-    E2EPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(E2EApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-    E2EPage
-  ]
-})
-export class AppModule {}
