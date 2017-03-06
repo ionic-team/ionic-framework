@@ -1,12 +1,11 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Slides, SegmentButton } from '../../../..';
+import { Component, ViewChild } from '@angular/core';
+import { Slides, SegmentButton } from '../../../../../..';
 
 
 @Component({
   templateUrl: 'main.html',
 })
-export class SegmentPage {
+export class E2EPage {
   @ViewChild('loopSlider') sliderComponent: Slides;
 
   selectedSegment = 'first';
@@ -25,9 +24,7 @@ export class SegmentPage {
     }
   ];
 
-  constructor() {
-
-  }
+  constructor() {}
 
   onSegmentChanged(segmentButton: SegmentButton) {
     console.log('Segment changed to', segmentButton.value);
@@ -45,28 +42,3 @@ export class SegmentPage {
     this.selectedSegment = currentSlide.id;
   }
 }
-
-
-@Component({
-  template: `<ion-nav [root]="root"></ion-nav>`
-})
-export class E2EApp {
-  root = SegmentPage;
-}
-
-@NgModule({
-  declarations: [
-    E2EApp,
-    SegmentPage
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(E2EApp)
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-    SegmentPage
-  ]
-})
-export class AppModule {}
