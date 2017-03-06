@@ -23,6 +23,8 @@ import { Tabs }  from '../components/tabs/tabs';
 import { TransitionController } from '../transitions/transition-controller';
 import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
+import { ModuleLoader } from './module-loader';
+import { NgModuleLoader } from './ng-module-loader';
 import { DeepLinkConfig, STATE_INITIALIZED } from '../navigation/nav-util';
 
 
@@ -526,8 +528,13 @@ export class MockView5 {}
 
 export function noop(): any { return 'noop'; };
 
-export function mockModuleLoader() {
-  return { };
+export function mockModuleLoader(ngModuleLoader?: NgModuleLoader): ModuleLoader {
+  ngModuleLoader = ngModuleLoader || mockNgModuleLoader();
+  return new ModuleLoader(ngModuleLoader, null);
+}
+
+export function mockNgModuleLoader(): NgModuleLoader {
+  return new NgModuleLoader(null);
 }
 
 export function mockOverlay() {

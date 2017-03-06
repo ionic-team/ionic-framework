@@ -65,9 +65,9 @@ export interface LoadedModule {
 /**
  * @private
  */
-export function setupPreloading(deeplinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
+export function setupPreloading(deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
   return function() {
-    const linksToLoad = deeplinkConfig.links.filter(link => !!link.loadChildren);
+    const linksToLoad = deepLinkConfig.links.filter(link => !!link.loadChildren);
     for (const link of linksToLoad) {
       moduleLoader.load(link.loadChildren);
     }
