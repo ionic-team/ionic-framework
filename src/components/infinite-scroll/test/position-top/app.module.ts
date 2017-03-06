@@ -93,7 +93,7 @@ function getAsyncData(): Promise<any[]> {
       }
 
       resolve(data);
-    }, 500);
+    }, 2000);
 
   });
 }

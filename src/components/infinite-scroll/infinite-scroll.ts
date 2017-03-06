@@ -240,7 +240,25 @@ export class InfiniteScroll {
    * to `enabled`.
    */
   complete() {
-    this.state = STATE_ENABLED;
+    if (this._position === POSITION_TOP) {
+      // ******** DOM READ ****************
+      const prevDim = this._content.getContentDimensions();
+
+      // ******** DOM READ ****************
+      this._dom.read(() => {
+        const newDim = this._content.getContentDimensions();
+
+        const newScrollTop = newDim.scrollHeight - (prevDim.scrollHeight - prevDim.scrollTop);
+
+        // ******** DOM WRITE ****************
+        this._dom.write(() => {
+          this._content.scrollTop = newScrollTop;
+          this.state = STATE_ENABLED;
+        });
+      });
+    } else {
+      this.state = STATE_ENABLED;
+    }
   }
 
   /**
