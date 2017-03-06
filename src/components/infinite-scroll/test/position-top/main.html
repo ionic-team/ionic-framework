@@ -14,10 +14,6 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
-  <button ion-button (click)="scrollDown()" block>
-    Scroll down
-  </button>
-
   <ion-list>
     <button ion-item (click)="goToPage2()" *ngFor="let item of items">
       {{ item }}

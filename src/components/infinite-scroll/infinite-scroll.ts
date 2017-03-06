@@ -299,6 +299,10 @@ export class InfiniteScroll {
   ngAfterContentInit() {
     this._init = true;
     this._setListeners(this.state !== STATE_DISABLED);
+
+    if (this._position === POSITION_TOP) {
+      this._content.scrollDownOnLoad = true;
+    }
   }
 
   /**

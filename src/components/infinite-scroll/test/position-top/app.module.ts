@@ -9,7 +9,7 @@ export class E2EPage1 {
   @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
   @ViewChild(Content) content: Content;
   items: number[] = [];
-  enabled: boolean = false;
+  enabled: boolean = true;
 
   constructor(public navCtrl: NavController) {
     for (var i = 0; i < 30; i++) {
@@ -32,10 +32,6 @@ export class E2EPage1 {
         this.enabled = false;
       }
     });
-  }
-
-  scrollDown() {
-    this.content.scrollToBottom();
   }
 
   goToPage2() {
