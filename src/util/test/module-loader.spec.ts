@@ -1,7 +1,5 @@
-import { DeepLinkConfig } from '../../navigation/nav-util';
-import { DeepLinker } from '../../navigation/deep-linker';
 import { ModuleLoader } from '../module-loader';
-import { mockDeepLinkConfig, mockDeepLinker, mockModuleLoader, mockNgModuleLoader } from '../mock-providers';
+import { mockModuleLoader, mockNgModuleLoader } from '../mock-providers';
 import { NgModuleLoader } from '../ng-module-loader';
 
 
@@ -47,22 +45,16 @@ describe('module-loader', () => {
         // we would expect the same promise to be returned both times
         expect(promise).toEqual(secondPromise);
 
-        // TODO enable this with caching
-        // expect(ngModuleLoader.load).toHaveBeenCalledTimes(1);
+        expect(ngModuleLoader.load).toHaveBeenCalledTimes(1);
     });
 
   });
 
-  var deepLinker: DeepLinker;
-  var deepLinkConfig: DeepLinkConfig;
   var moduleLoader: ModuleLoader;
   var ngModuleLoader: NgModuleLoader;
 
   beforeEach(() => {
-    deepLinkConfig = mockDeepLinkConfig();
-    deepLinker = mockDeepLinker(deepLinkConfig);
     ngModuleLoader = mockNgModuleLoader();
-
     moduleLoader = mockModuleLoader(ngModuleLoader);
   });
 

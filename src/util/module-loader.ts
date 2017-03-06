@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Injectable, Injector, OpaqueToken, Type } from '@angular/core';
+import { ComponentFactoryResolver, Injectable, Injector, NgModuleFactory, OpaqueToken, Type } from '@angular/core';
 import { DeepLinkConfig } from '../navigation/nav-util';
 import { NgModuleLoader } from './ng-module-loader';
 
@@ -15,6 +15,8 @@ export class ModuleLoader {
   /** @internal */
   _cfrMap = new Map<any, ComponentFactoryResolver>();
 
+  _promiseMap = new Map<string, Promise<NgModuleFactory<any>>>();
+
   constructor(
     private _ngModuleLoader: NgModuleLoader,
     private _injector: Injector) {}
@@ -25,7 +27,15 @@ export class ModuleLoader {
 
     const splitString = modulePath.split(SPLITTER);
 
-    return this._ngModuleLoader.load(splitString[0], splitString[1]).then(loadedModule => {
+    let promise = this._promiseMap.get(modulePath);
+    if (!promise) {
+      promise = this._ngModuleLoader.load(splitString[0], splitString[1]);
+      this._promiseMap.set(modulePath, promise);
+    }
+
+    return promise.then(loadedModule => {
+      // clear it from the cache
+      this._promiseMap.delete(modulePath);
       console.timeEnd(`ModuleLoader, load: ${modulePath}'`);
       const ref = loadedModule.create(this._injector);
 
