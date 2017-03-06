@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { AlertController, IonicApp, IonicModule, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../..';
+import { Component } from '@angular/core';
+import { Tabs } from '../../../../../..';
 
 @Component({
   templateUrl: './tab1page2.html'

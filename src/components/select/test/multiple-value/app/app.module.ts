@@ -10,7 +10,7 @@ import {E2EPage} from '../pages/e2e-page/e2e-page';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp,{}, {
+    IonicModule.forRoot(E2EApp, {}, {
       links: [
         {component: E2EPage, name: 'e2e-page'}
       ]

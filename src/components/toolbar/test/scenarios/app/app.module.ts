@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
-import { RootPage } from '../pages/root-page/root-page'
+import { RootPage } from '../pages/root-page/root-page';
 
 @NgModule({
   declarations: [

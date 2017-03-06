@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, App, NavController, NavParams, ModalController, ViewController, Tabs, Tab } from '../../../../../..';
+import { App, NavController, NavParams, Tabs } from '../../../../../..';
 
 @Component({
   templateUrl: './tab1page1.html'
