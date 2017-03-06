@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { DeepLinkModule } from '../../../../../..';
 
-import { ModalSecondPage } from './modal-second-page';
+import { ModalSecondPage } from './modal-second';
 
 @NgModule({
   declarations: [

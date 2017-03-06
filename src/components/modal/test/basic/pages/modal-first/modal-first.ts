@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, App, ActionSheetController, ToastController, AlertController, ModalController } from '../../../../../..';
 
-import { ContactUs } from '../contact-us/contact-us';
-
 @Component({
   template: `
     <ion-header>
@@ -143,7 +141,7 @@ export class ModalFirstPage {
   }
 
   openModal() {
-    this.modalCtrl.create(ContactUs).present();
+    this.modalCtrl.create('ContactUs').present();
   }
 
   openActionSheet() {

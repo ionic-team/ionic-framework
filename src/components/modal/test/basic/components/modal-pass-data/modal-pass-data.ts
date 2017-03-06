@@ -1,7 +1,7 @@
 import { Injectable, Component } from '@angular/core';
 import { ViewController, ToastController, AlertController, NavParams, Config } from '../../../../../..';
 
-import { SomeAppProvider } from '../../components/some-app-provider';
+import { SomeAppProvider } from '../../services/some-app-provider';
 
 @Injectable()
 export class SomeComponentProvider {

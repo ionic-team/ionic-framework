@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class ContactUs {
+export class ContactUsModal {
   root = 'ModalFirstPage';
 
   constructor() {

@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, ToastController, Config, Platform } from '../../../../../..';
 
-import { ModalPassData } from '../modal-pass-data/modal-pass-data';
-import { ContactUs } from '../contact-us/contact-us';
-import { ToolbarModal } from '../toolbar-modal/toolbar-modal';
-import { ModalWithInputs } from '../modal-with-inputs/modal-with-inputs';
-
 @Component({
   templateUrl: 'main.html'
 })
@@ -45,7 +40,7 @@ export class E2EPage {
   }
 
   presentModal() {
-    let modal = this.modalCtrl.create(ModalPassData, { userId: 8675309 }, {
+    let modal = this.modalCtrl.create('ModalPassData', { userId: 8675309 }, {
       enterAnimation: 'modal-slide-in',
       leaveAnimation: 'modal-slide-out'
     });
@@ -62,20 +57,20 @@ export class E2EPage {
   }
 
   presentModalChildNav() {
-    this.modalCtrl.create(ContactUs, null, {
+    this.modalCtrl.create('ContactUsModal', null, {
       enableBackdropDismiss: false
     }).present();
   }
 
   presentToolbarModal() {
-    this.modalCtrl.create(ToolbarModal, null, {
+    this.modalCtrl.create('ToolbarModal', null, {
       enterAnimation: 'modal-md-slide-in',
       leaveAnimation: 'modal-md-slide-out'
     }).present();
   }
 
   presentModalWithInputs() {
-    let modal = this.modalCtrl.create(ModalWithInputs);
+    let modal = this.modalCtrl.create('ModalWithInputs');
     modal.onDidDismiss((data: any) => {
       console.log('Modal with inputs data:', data);
     });
@@ -89,7 +84,7 @@ export class E2EPage {
     }).present();
 
     setTimeout(() => {
-      this.modalCtrl.create(ContactUs).present();
+      this.modalCtrl.create('ContactUsModal').present();
     }, 500);
   }
 
@@ -100,7 +95,7 @@ export class E2EPage {
     }).present();
 
     setTimeout(() => {
-      this.modalCtrl.create(ToolbarModal).present();
+      this.modalCtrl.create('ToolbarModal').present();
     }, 500);
   }
 
