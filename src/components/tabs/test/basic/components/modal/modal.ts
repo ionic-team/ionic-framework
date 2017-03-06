@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, AlertController, ViewController } from '../../../../../..';
+import { App, ViewController } from '../../../../../..';
 
 @Component({
   template: `
