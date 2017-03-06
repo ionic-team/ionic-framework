@@ -1,11 +1,8 @@
 import { Component, ViewEncapsulation, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../..';
+import { IonicApp, IonicModule } from '../../../../..';
 
-
-@Component({template: 'hi'})
-export class E2EPage {}
-
+import { RootPage } from '../pages/root-page/root-page';
 
 @Component({
   templateUrl: 'main.html',
@@ -30,13 +27,13 @@ export class E2EPage {}
   ]
 })
 export class E2EApp {
-  root = E2EPage;
+  root = RootPage;
 }
 
 @NgModule({
   declarations: [
     E2EApp,
-    E2EPage
+    RootPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +42,7 @@ export class E2EApp {
   bootstrap: [IonicApp],
   entryComponents: [
     E2EApp,
-    E2EPage
+    RootPage
   ]
 })
 export class AppModule {}
