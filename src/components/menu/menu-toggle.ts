@@ -138,10 +138,11 @@ export class MenuToggle {
   */
   get isHidden() {
     const menu = this._menu.get(this.menuToggle);
-    if (!menu || !menu._canOpen()) {
-      return true;
-    }
     if (this._inNavbar && this._viewCtrl) {
+      if (!menu || !menu._canOpen()) {
+        return true;
+      }
+
       if (this._viewCtrl.isFirst()) {
         // this is the first view, so it should always show
         return false;
