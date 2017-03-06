@@ -53,8 +53,9 @@ export class TransitionController {
   }
 
   destroy(trnsId: number) {
-    if (this._trns[trnsId]) {
-      this._trns[trnsId].destroy();
+    const trans = this._trns[trnsId];
+    if (trans) {
+      trans.destroy();
       delete this._trns[trnsId];
     }
   }

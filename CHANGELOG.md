@@ -1,3 +1,37 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/driftyco/ionic/compare/v2.0.1...v2.1.0) (2017-02-23)
+
+
+### Bug Fixes
+
+* **content:** check for scroll element before modifying it ([#10374](https://github.com/driftyco/ionic/issues/10374)) ([6a0c92c](https://github.com/driftyco/ionic/commit/6a0c92c))
+* **platform:** resize platform correctly ([54e50f](https://github.com/driftyco/ionic/commit/54e50f))
+
+
+### Features
+
+* **alert:** add sass variables for checkbox and radio button text color ([#10331](https://github.com/driftyco/ionic/issues/10331)) ([9cd42dd](https://github.com/driftyco/ionic/commit/9cd42dd))
+* **datetime:** add placeholder attribute ([52a6d41](https://github.com/driftyco/ionic/commit/52a6d41)), closes [#7966](https://github.com/driftyco/ionic/issues/7966)
+* **grid:** improve grid to a column layout with more flexibility ([#10485](https://github.com/driftyco/ionic/issues/10485)) ([6ceec7a](https://github.com/driftyco/ionic/commit/6ceec7a)), closes [#6050](https://github.com/driftyco/ionic/issues/6050) [#7508](https://github.com/driftyco/ionic/issues/7508)
+
+
+
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/driftyco/ionic/compare/v2.0.0...v2.0.1) (2017-02-08)
+
+
+### Bug Fixes
+
+* **chip:** align icon in the center ([ace727e](https://github.com/driftyco/ionic/commit/ace727e)), closes [#5386](https://github.com/driftyco/ionic/issues/5386)
+* **content:** check for this._scroll when reading dimensions ([#10216](https://github.com/driftyco/ionic/issues/10216)) ([96f550c](https://github.com/driftyco/ionic/commit/96f550c))
+* **datetime:** set input-has-value class without formControlName ([#8947](https://github.com/driftyco/ionic/issues/8947)) ([81c3394](https://github.com/driftyco/ionic/commit/81c3394))
+* **input:** add variables for alert and input placeholder color ([4ca9f2c](https://github.com/driftyco/ionic/commit/4ca9f2c)), closes [#10153](https://github.com/driftyco/ionic/issues/10153)
+* **input:** add max, min, step as inputs and pass to native ([803782a](https://github.com/driftyco/ionic/commit/803782a)), closes [#10189](https://github.com/driftyco/ionic/issues/10189)
+* **input:** don't allow focus when disabled is set ([#10214](https://github.com/driftyco/ionic/issues/10214)) ([eba0866](https://github.com/driftyco/ionic/commit/eba0866)), closes [#10155](https://github.com/driftyco/ionic/issues/10155)
+* **platform:** detect iPad Pro correctly ([#10292](https://github.com/driftyco/ionic/issues/10292)) ([f12fc61](https://github.com/driftyco/ionic/commit/f12fc61))
+* **toggle/checkbox:** allow value to be programmatically updated while disabled ([#10304](https://github.com/driftyco/ionic/issues/10304)) ([b8ee301](https://github.com/driftyco/ionic/commit/b8ee301)), closes [#9730](https://github.com/driftyco/ionic/issues/9730)
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/driftyco/ionic/compare/v2.0.0-rc.6...v2.0.0) (2017-01-25)
 

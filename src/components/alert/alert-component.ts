@@ -78,6 +78,7 @@ export class AlertCmp {
     message?: string;
     title?: string;
     subTitle?: string;
+    mode?: string;
     buttons?: any[];
     inputs?: any[];
     enableBackdropDismiss?: boolean;
@@ -104,7 +105,7 @@ export class AlertCmp {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = config.get('mode');
+    this.mode = this.d.mode || config.get('mode');
     _renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {

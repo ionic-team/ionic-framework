@@ -24,14 +24,14 @@ export class MenuType {
   }
 
   setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
-    let ani = this.ani
-      .onFinish(done, true)
+    const ani = this.ani
+      .onFinish(done, true, true)
       .reverse(!shouldOpen);
 
     if (animated) {
       ani.play();
     } else {
-      ani.play({ duration: 0 });
+      ani.syncPlay();
     }
   }
 
@@ -54,20 +54,21 @@ export class MenuType {
     if (!this.isOpening && !shouldComplete) {
       isOpen = true;
     }
-
-    this.ani.onFinish(() => {
+    const ani = this.ani;
+    ani.onFinish(() => {
       this.isOpening = false;
       done(isOpen);
     }, true);
 
-    let factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
-    let dur = this.ani.getDuration() * factor;
+    const factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
+    const dur = ani.getDuration() * factor;
 
-    this.ani.progressEnd(shouldComplete, currentStepValue, dur);
+    ani.progressEnd(shouldComplete, currentStepValue, dur);
   }
 
   destroy() {
     this.ani && this.ani.destroy();
+    this.ani = null;
   }
 
 }

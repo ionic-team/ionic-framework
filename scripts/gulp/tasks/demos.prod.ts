@@ -82,9 +82,10 @@ function buildTest(folderInfo: any) {
   let sassConfigPath = 'scripts/demos/sass.config.js';
 
   let appEntryPoint = `dist/demos/${folderInfo.componentName}/main.ts`;
+  let appNgModule = `dist/demos/${folderInfo.componentName}/app.module.ts`;
   let distDir = `dist/demos/${folderInfo.componentName}/`;
 
-  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, distDir);
+  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, appNgModule, distDir);
 }
 
 function buildAllTests(done: Function) {

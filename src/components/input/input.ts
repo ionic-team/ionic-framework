@@ -24,14 +24,17 @@ import { Platform } from '../../platform/platform';
  * `password`, `email`, `number`, `search`, `tel`, and `url`. Ionic
  * still uses an actual `<input type="text">` HTML element within the
  * component, however, with Ionic wrapping the native HTML input
- * element it's able to better handle the user experience and
+ * element it's better able to handle the user experience and
  * interactivity.
  *
- * Similarily, `<ion-textarea>` should be used in place of `<textarea>`.
+ * Similarly, `<ion-textarea>` should be used in place of `<textarea>`.
  *
  * An `ion-input` is **not** used for non-text type inputs, such as a
  * `checkbox`, `radio`, `toggle`, `range`, `select`, etc.
  *
+ * Along with the blur/focus events, `input` support all standard text input
+ * events like `keyup`, `keydown`, `keypress`, `input`,etc. Any standard event
+ * can be attached and will function as expected.
  *
  * @usage
  * ```html

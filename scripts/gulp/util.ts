@@ -178,14 +178,14 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryPoint: string, distDir: string) {
+export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryPoint: string, appNgModulePath: string, distDir: string) {
   console.log('Running ionic-app-scripts build with', folderInfo.componentName, '/', folderInfo.componentTest);
   let tsConfig = distDir + 'tsconfig.json';
   let scriptArgs = [
     'build',
-    '--prod',
     '--sass', sassConfigPath,
     '--appEntryPoint', appEntryPoint,
+    '--appNgModulePath', appNgModulePath,
     '--srcDir', distDir,
     '--wwwDir', distDir,
     '--tsconfig', tsConfig
@@ -194,6 +194,9 @@ export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryP
   const debug: boolean = argv.debug;
   if (debug) {
     scriptArgs.push('--debug');
+    scriptArgs.push('--aot');
+  } else {
+    scriptArgs.push('--prod');
   }
 
   try {

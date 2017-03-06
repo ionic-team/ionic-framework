@@ -348,7 +348,9 @@ export function mockView(component?: any, data?: any) {
 
 export function mockViews(nav: NavControllerBase, views: ViewController[]) {
   nav._views = views;
-  views.forEach(v => v._setNav(nav));
+  views.forEach(v => {
+    v._setNav(nav);
+  });
 }
 
 export function mockComponentRef(): ComponentRef<any> {
@@ -496,7 +498,9 @@ export function mockMenu(): Menu {
   let app = mockApp();
   let gestureCtrl = new GestureController(app);
   let dom = mockDomController();
-  return new Menu(null, null, null, null, null, null, null, gestureCtrl, dom, app);
+  let elementRef = mockElementRef();
+  let renderer = mockRenderer();
+  return new Menu(null, elementRef, null, null, renderer, null, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {

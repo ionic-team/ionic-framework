@@ -173,6 +173,56 @@ describe('Platform', () => {
     });
   });
 
+  describe('dimensions', () => {
+    it('should return the correct width of the window', () => {
+      expect(plt.width()).toEqual(window.innerWidth);
+    });
+
+    it('should return the correct height of the window', () => {
+      expect(plt.height()).toEqual(window.innerHeight);
+    });
+
+    it('should return the correct width of the window after resize', () => {
+
+      // start with default window
+      expect(plt.width()).toEqual(window.innerWidth);
+
+      let resizedWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+
+      // resize to smaller window
+      plt.setWindow(resizedWindow);
+
+      expect(plt.width()).toEqual(resizedWindow.innerWidth);
+    });
+
+    it('should return the correct height of the window after resize', () => {
+
+      // start with default window
+      expect(plt.height()).toEqual(window.innerHeight);
+
+      let resizedWindow: any = {
+        innerWidth: 200,
+        innerHeight: 300,
+        screen: {
+          width: 200,
+          height: 300
+        }
+      };
+
+      // resize to smaller window
+      plt.setWindow(resizedWindow);
+
+      expect(plt.height()).toEqual(resizedWindow.innerHeight);
+    });
+  });
+
   it('should set core as the fallback', () => {
     plt.setDefault('core');
     plt.setQueryParams('');
@@ -351,6 +401,37 @@ describe('Platform', () => {
 
     plt.setQueryParams('');
     plt.setUserAgent(IPAD_10_2_UA);
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(true);
+  });
+
+  // for https://forums.developer.apple.com/thread/25948
+  it('should set ipad when user agent is iphone but navigator.platform is iPad', () => {
+    plt.setQueryParams('');
+    plt.setUserAgent(IPHONE_UA);
+    plt.setNavigatorPlatform('iPad');
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(true);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(true);
+    expect(plt.is('ipad')).toEqual(true);
+    expect(plt.is('iphone')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(true);
+
+    plt.setQueryParams('');
+    plt.setUserAgent(IPHONE_10_2_UA);
+    plt.setNavigatorPlatform('iPad');
     plt.init();
 
     expect(plt.is('core')).toEqual(false);

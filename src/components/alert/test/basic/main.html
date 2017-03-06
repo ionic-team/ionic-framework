@@ -19,6 +19,9 @@
   <button ion-button block class="e2eOpenCheckbox" (click)="doCheckbox()">Checkbox</button>
   <button ion-button block class="e2eFastClose" (click)="doFastClose()">Fast Close</button>
   <button ion-button block class="e2eDisabledBackdrop" (click)="doDisabledBackdropAlert()">Disabled Backdrop Click</button>
+  <button ion-button block class="e2eAlertMode" (click)="doAlertWithMode('md')">md Mode</button>
+  <button ion-button block class="e2eAlertMode" (click)="doAlertWithMode('ios')">ios Mode</button>
+  <button ion-button block class="e2eAlertMode" (click)="doAlertWithMode('wp')">wp Mode</button>
 
   <pre>
     Confirm Opened: {{testConfirmOpen}}

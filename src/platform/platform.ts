@@ -38,7 +38,6 @@ export class Platform {
   private _ua: string;
   private _qp = new QueryParams();
   private _nPlt: string;
-  private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _bbActions: BackButtonAction[] = [];
@@ -405,6 +404,13 @@ export class Platform {
   resume: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
+   * The resize event emits when the native platform pulls the application
+   * out from the background. This event would emit when a Cordova app comes
+   * out from the background, however, it would not fire on a standard web browser.
+   */
+  resize: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
    * The back button event is triggered when the user presses the native
    * platform's back button, also referred to as the "hardware" back button.
    * This event is only used within Cordova apps running on Android and
@@ -574,40 +580,43 @@ export class Platform {
     if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
       var win = this._win;
 
+      var innerWidth = win['innerWidth'];
+      var innerHeight = win['innerHeight'];
+
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
       // up accurate values when the keyboard is up
       if (win.screen.width > 0 && win.screen.height > 0) {
-        if (win['innerWidth'] < win['innerHeight']) {
+        if (innerWidth < innerHeight) {
 
           // the device is in portrait
-          if (this._pW <= win['innerWidth']) {
+          // we have to do fancier checking here
+          // because of the virtual keyboard resizing
+          // the window
+          if (this._pW <= innerWidth) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
-            this._pW = win['innerWidth'];
+            this._pW = innerWidth;
           }
-          if (this._pH <= win['innerHeight']) {
+
+          if (this._pH <= innerHeight) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
-            this._pH = win['innerHeight'];
+            this._pH = innerHeight;
           }
 
         } else {
-          if (this._lW > win['innerWidth']) {
-            // Special case: keyboard is open and device is in portrait
-            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
-            this._isPortrait = true;
-          }
           // the device is in landscape
-          if (this._lW <= win['innerWidth']) {
+          if (this._lW !== innerWidth) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
-            this._lW = win['innerWidth'];
+            this._lW = innerWidth;
           }
-          if (this._lH <= win['innerHeight']) {
+
+          if (this._lH !== innerHeight) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
-            this._lH = win['innerHeight'];
+            this._lH = innerHeight;
           }
         }
 
@@ -737,18 +746,6 @@ export class Platform {
   /**
    * @private
    */
-  onResize(cb: Function): Function {
-    const self = this;
-    self._onResizes.push(cb);
-
-    return function() {
-      removeArrayItem(self._onResizes, cb);
-    };
-  }
-
-  /**
-   * @private
-   */
   isActiveElement(ele: HTMLElement) {
     return !!(ele && (this.getActiveElement() === ele));
   }
@@ -809,14 +806,7 @@ export class Platform {
           if (this.hasFocusedTextInput() === false) {
             this._isPortrait = null;
           }
-
-          for (let i = 0; i < this._onResizes.length; i++) {
-            try {
-              this._onResizes[i]();
-            } catch (e) {
-              console.error(e);
-            }
-          }
+          this.resize.emit();
         }, 200);
       }, { passive: true, zone: true });
     }, 2000);
@@ -985,6 +975,16 @@ export class Platform {
       platformNode = rootPlatformNode;
       while (platformNode) {
         platformNode.initialize(this);
+
+        // extra check for ipad pro issue
+        // https://forums.developer.apple.com/thread/25948
+        if (platformNode.name === 'iphone' && this.navigatorPlatform() === 'iPad') {
+          // this is an ipad pro so push ipad and tablet to platforms
+          // and then return as we are done
+          this._platforms.push('tablet');
+          this._platforms.push('ipad');
+          return;
+        }
 
         // set the array of active platforms with
         // the last one in the array the most important

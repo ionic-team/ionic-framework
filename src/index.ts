@@ -67,7 +67,9 @@ import { ClickBlock } from './util/click-block';
 import { Content } from './components/content/content';
 import { DateTime } from './components/datetime/datetime';
 import { FabContainer, FabButton, FabList } from './components/fab/fab';
-import { Grid, Row, Col } from './components/grid/grid';
+import { Col } from './components/grid/col';
+import { Grid } from './components/grid/grid';
+import { Row } from './components/grid/row';
 import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
@@ -104,6 +106,7 @@ import { ShowWhen, HideWhen } from './components/show-hide-when/show-hide-when';
 import { Slide } from './components/slides/slide';
 import { Slides } from './components/slides/slides';
 import { Spinner } from './components/spinner/spinner';
+import { SplitPane } from './components/split-pane/split-pane';
 import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
 import { TabButton } from './components/tabs/tab-button';
@@ -138,7 +141,9 @@ export { ClickBlock } from './util/click-block';
 export { Content, ScrollEvent } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { FabContainer, FabButton, FabList } from './components/fab/fab';
-export { Grid, Row, Col } from './components/grid/grid';
+export { Col } from './components/grid/col';
+export { Grid } from './components/grid/grid';
+export { Row } from './components/grid/row';
 export { Ion } from './components/ion';
 export { Icon } from './components/icon/icon';
 export { Img } from './components/img/img';
@@ -187,6 +192,7 @@ export { ShowWhen, HideWhen, DisplayWhen } from './components/show-hide-when/sho
 export { Slide } from './components/slides/slide';
 export { Slides } from './components/slides/slides';
 export { Spinner } from './components/spinner/spinner';
+export { SplitPane, RootNode } from './components/split-pane/split-pane';
 export { Tab } from './components/tabs/tab';
 export { TabButton } from './components/tabs/tab-button';
 export { TabHighlight } from './components/tabs/tab-highlight';
@@ -255,6 +261,10 @@ export { reorderArray } from './util/util';
 export { Animation, AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animations/animation';
 export { PageTransition } from './transitions/page-transition';
 export { Transition } from './transitions/transition';
+export { PlatformConfigToken } from './platform/platform-registry';
+export { registerModeConfigs } from './config/mode-registry';
+export { registerTransitions } from './transitions/transition-registry';
+export { IonicGestureConfig } from './gestures/gesture-config';
 
 
 
@@ -368,6 +378,7 @@ export { Transition } from './transitions/transition';
     Slide,
     Slides,
     Spinner,
+    SplitPane,
     Tab,
     Tabs,
     TabButton,
@@ -462,6 +473,7 @@ export { Transition } from './transitions/transition';
     Slide,
     Slides,
     Spinner,
+    SplitPane,
     Tab,
     Tabs,
     TabButton,

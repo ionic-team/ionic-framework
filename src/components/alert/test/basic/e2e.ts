@@ -74,3 +74,11 @@ it('should open disabled backdrop alert', function() {
 it('should close with button click', function() {
   element(by.css('.alert-button:last-child')).click();
 });
+
+it('should open alert with mode', function() {
+  element(by.css('.e2eAlertMode')).click();
+});
+
+it('should close with button click', function() {
+  element(by.css('.alert-button:last-child')).click();
+});

@@ -189,12 +189,14 @@ export interface TransitionInstruction {
   reject?: TransitionRejectFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
+  requiresTransition?: boolean;
 }
 
 export enum ViewState {
-  INITIALIZED,
-  PRE_RENDERED,
-  LOADED,
+  NEW, // New created ViewController
+  INITIALIZED, // Initialized by the NavController
+  ATTACHED, // Loaded to the DOM
+  DESTROYED // Destroyed by the NavController
 }
 
 export const INIT_ZINDEX = 100;

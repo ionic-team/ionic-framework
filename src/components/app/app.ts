@@ -85,8 +85,9 @@ export class App {
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
-      if (!(<any>_plt.win())['HWBackButton']) {
-        (<any>_plt.win())['HWBackButton'] = () => {
+      const win = <any>_plt.win();
+      if (!win['HWBackButton']) {
+        win['HWBackButton'] = () => {
           let p = this.goBack();
           p && p.catch(() => console.debug('hardware go back cancelled'));
           return p;
@@ -189,7 +190,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
   getActiveNav(): NavController {
     const portal = this._appRoot._getPortal(MODAL);
@@ -219,6 +220,8 @@ export class App {
   present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
     const portal = this._appRoot._getPortal(appPortal);
 
+    // Set Nav must be set here in order to dimiss() work synchnously.
+    // TODO: move _setNav() to the earlier stages of NavController. _queueTrns()
     enteringView._setNav(portal);
 
     opts.keyboardClose = false;
