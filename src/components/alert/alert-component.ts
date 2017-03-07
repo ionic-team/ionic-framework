@@ -26,7 +26,7 @@ import { ViewController } from '../../navigation/view-controller';
       '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
-        '<template ngSwitchCase="radio">' +
+        '<ng-template ngSwitchCase="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
             '<button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
               '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
@@ -35,9 +35,9 @@ import { ViewController } from '../../navigation/view-controller';
               '</div>' +
             '</button>' +
           '</div>' +
-        '</template>' +
+        '</ng-template>' +
 
-        '<template ngSwitchCase="checkbox">' +
+        '<ng-template ngSwitchCase="checkbox">' +
           '<div class="alert-checkbox-group">' +
             '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
@@ -46,15 +46,15 @@ import { ViewController } from '../../navigation/view-controller';
               '</div>' +
             '</button>' +
           '</div>' +
-        '</template>' +
+        '</ng-template>' +
 
-        '<template ngSwitchDefault>' +
+        '<ng-template ngSwitchDefault>' +
           '<div class="alert-input-group">' +
             '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
               '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
             '</div>' +
           '</div>' +
-        '</template>' +
+        '</ng-template>' +
 
       '</div>' +
       '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +

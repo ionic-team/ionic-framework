@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title, DOCUMENT } from '@angular/platform-browser';
 
 import { IonicApp } from './app-root';
 import * as Constants from './app-constants';
@@ -27,7 +27,7 @@ export class App {
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
-  private _titleSrv: Title = new Title();
+  private _titleSrv: Title = new Title(DOCUMENT);
   private _rootNav: NavController = null;
   private _disableScrollAssist: boolean;
 
