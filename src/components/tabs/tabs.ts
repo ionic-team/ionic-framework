@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -8,6 +8,7 @@ import { isBlank, assert } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabHighlight } from './tab-highlight';
@@ -150,19 +151,15 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-tabs',
   template:
     '<div class="tabbar" role="tablist" #tabbar>' +
-      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
-        '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
-        '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
-        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [color]="t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
-        '<div class="button-effect"></div>' +
-      '</a>' +
+      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" role="tab" href="#" (ionSelect)="select(t)"></a>' +
       '<div class="tab-highlight"></div>' +
     '</div>' +
     '<ng-content></ng-content>' +
     '<div #portal tab-portal></div>',
   encapsulation: ViewEncapsulation.None,
+  providers: [{provide: RootNode, useExisting: forwardRef(() => Tabs) }]
 })
-export class Tabs extends Ion implements AfterViewInit {
+export class Tabs extends Ion implements AfterViewInit, RootNode {
   /** @internal */
   _ids: number = -1;
   /** @internal */
@@ -559,6 +556,31 @@ export class Tabs extends Ion implements AfterViewInit {
 
       this._top = top;
       this._bottom = bottom;
+    }
+  }
+
+  /**
+   * @internal
+   */
+  resize() {
+    const tab = this.getSelected();
+    tab && tab.resize();
+  }
+
+  /**
+   * @internal
+   */
+  initPane(): boolean {
+    const isMain = this._elementRef.nativeElement.hasAttribute('main');
+    return isMain;
+  }
+
+  /**
+   * @internal
+   */
+  paneChanged(isPane: boolean) {
+    if (isPane) {
+      this.resize();
     }
   }
 

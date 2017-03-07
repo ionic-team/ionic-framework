@@ -312,6 +312,23 @@ export class MenuController {
   /**
    * @private
    */
+  _setActiveMenu(menu: Menu) {
+    assert(menu.enabled, 'menu must be enabled');
+    assert(this._menus.indexOf(menu) >= 0, 'menu is not registered');
+
+    // if this menu should be enabled
+    // then find all the other menus on this same side
+    // and automatically disable other same side menus
+    const side = menu.side;
+    this._menus
+      .filter(m => m.side === side && m !== menu)
+      .map(m => m.enable(false));
+  }
+
+
+  /**
+   * @private
+   */
   static registerType(name: string, cls: new(...args: any[]) => MenuType) {
     menuTypes[name] = cls;
   }

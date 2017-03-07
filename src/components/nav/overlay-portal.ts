@@ -49,5 +49,9 @@ export class OverlayPortal extends NavControllerBase {
     this._zIndexOffset = (val || 0);
   }
 
+  ngOnDestroy() {
+    this.destroy();
+  }
+
 }
 

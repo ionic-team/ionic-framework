@@ -208,10 +208,10 @@ export interface TransitionInstruction {
   requiresTransition?: boolean;
 }
 
-
-export const STATE_INITIALIZED = 1;
-export const STATE_PRE_RENDERED = 2;
-export const STATE_LOADED = 3;
+export const STATE_NEW = 1;
+export const STATE_INITIALIZED = 2;
+export const STATE_ATTACHED = 3;
+export const STATE_DESTROYED = 4;
 
 export const INIT_ZINDEX = 100;
 

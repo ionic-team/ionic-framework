@@ -255,4 +255,19 @@ export class E2EPage {
       this.navCtrl.push('page2');
     }, 500);
   }
+
+  presentLoadingOpenDismiss() {
+    // debugger;
+    const loading = this.loadingCtrl.create({
+      content: 'Loading 1'
+    });
+    loading.present();
+    loading.dismiss();
+
+    const loading2 = this.loadingCtrl.create({
+      content: 'Loading 2'
+    });
+    loading2.present();
+    loading2.dismiss();
+  }
 }

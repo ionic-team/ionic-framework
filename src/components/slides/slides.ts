@@ -107,7 +107,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```ts
  * import { ViewChild } from '@angular/core';
  * import { Slides } from 'ionic-angular';
- 
+
  * class MyPage {
  *   @ViewChild(Slides) slides: Slides;
  *
@@ -890,7 +890,14 @@ export class Slides extends Ion {
 
 
 
-  constructor(config: Config, private _plt: Platform, zone: NgZone, @Optional() viewCtrl: ViewController, elementRef: ElementRef, renderer: Renderer) {
+  constructor(
+    config: Config,
+    private _plt: Platform,
+    zone: NgZone,
+    @Optional() viewCtrl: ViewController,
+    elementRef: ElementRef,
+    renderer: Renderer,
+  ) {
     super(config, elementRef, renderer, 'slides');
 
     this._zone = zone;
@@ -961,6 +968,12 @@ export class Slides extends Ion {
           this.paginationType = undefined;
         }
       }, debounce);
+    }
+  }
+
+  resize() {
+    if (this._init) {
+
     }
   }
 
