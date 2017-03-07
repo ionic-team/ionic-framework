@@ -125,6 +125,7 @@ export class DeepLinkMetadata implements DeepLinkMetadataType {
   name?: string;
   segment?: string;
   defaultHistory?: string[];
+  priority?: string;
 }
 
 export interface DeepLinkDecorator extends TypeDecorator {}
