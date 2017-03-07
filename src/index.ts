@@ -7,7 +7,6 @@ import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { DOCUMENT } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
 /**
@@ -353,16 +352,13 @@ export { Transition } from './transitions/transition';
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule,
     FormsModule,
     ReactiveFormsModule,
   ],
   exports: [
     CommonModule,
-    HttpModule,
     FormsModule,
     ReactiveFormsModule,
-
 
     Avatar,
     Backdrop,
