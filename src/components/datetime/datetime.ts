@@ -563,6 +563,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
         let column: PickerColumn = {
           name: key,
+          selectedIndex: 0,
           options: values.map(val => {
             return {
               value: val,
