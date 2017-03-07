@@ -17,7 +17,7 @@ import { MyCmpTest2 } from '../pages/first-page/my-component-two';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, { swipeBackEnabled: true }, {
+    IonicModule.forRoot(E2EApp, { swipeBackEnabled: true, preloadModules: true }, {
       links: [
         { name: 'first-page', component: FirstPage },
         { name: 'another-page', loadChildren: '../pages/another-page/another-page.module#AnotherPageModule' },

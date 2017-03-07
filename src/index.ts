@@ -591,7 +591,7 @@ export class IonicModule {
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
-        { provide: APP_INITIALIZER, useFactory: setupPreloading, deps: [ DeepLinkConfigToken, ModuleLoader ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupPreloading, deps: [ Config, DeepLinkConfigToken, ModuleLoader ], multi: true },
 
         // useClass
         // { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },

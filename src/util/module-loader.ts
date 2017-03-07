@@ -1,4 +1,5 @@
 import { ComponentFactoryResolver, Injectable, Injector, NgModuleFactory, OpaqueToken, Type } from '@angular/core';
+import { Config } from '../config/config';
 import { DeepLinkConfig } from '../navigation/nav-util';
 import { NgModuleLoader } from './ng-module-loader';
 
@@ -75,11 +76,13 @@ export interface LoadedModule {
 /**
  * @private
  */
-export function setupPreloading(deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
+export function setupPreloading(config: Config, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
   return function() {
-    const linksToLoad = deepLinkConfig.links.filter(link => !!link.loadChildren);
-    for (const link of linksToLoad) {
-      moduleLoader.load(link.loadChildren);
+    if (config.getBoolean('preloadModules')) {
+      const linksToLoad = deepLinkConfig.links.filter(link => !!link.loadChildren);
+      for (const link of linksToLoad) {
+        moduleLoader.load(link.loadChildren);
+      }
     }
   };
 }
