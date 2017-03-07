@@ -180,6 +180,15 @@ function _assert(actual: any, reason: string) {
 }
 
 /** @private */
+export function requestIonicCallback(functionToLazy: any) {
+  if ('requestIdleCallback' in window) {
+    return (window as any).requestIdleCallback(functionToLazy);
+  } else {
+    return setTimeout(functionToLazy, 500);
+  }
+}
+
+/** @private */
 export { _assert as assert};
 
 /** @private */
