@@ -1,0 +1,21 @@
+<ion-slides style="background: black"
+            (ionSlideWillChange)="onSlideWillChange($event)"
+            (ionSlideDidChange)="onSlideDidChange($event)"
+            (ionSlideDrag)="onSlideDrag($event)"
+            pager="true"
+            dir="rtl"
+            effect="slide">
+
+  <ion-slide style="background: red; color: white;">
+    <h1>شريحة ١</h1>
+  </ion-slide>
+
+  <ion-slide style="background: white; color: blue;">
+    <h1>شريحة ٢</h1>
+  </ion-slide>
+
+  <ion-slide style="background: blue; color: white;">
+    <h1>شريحة ٣</h1>
+  </ion-slide>
+
+</ion-slides>
