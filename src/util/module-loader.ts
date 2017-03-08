@@ -1,7 +1,8 @@
-import { ComponentFactoryResolver, Injectable, Injector, NgModuleFactory, OpaqueToken, Type } from '@angular/core';
+import { ComponentFactoryResolver, Injectable, Injector, NgModuleFactory, NgZone, OpaqueToken, Type } from '@angular/core';
 import { Config } from '../config/config';
 import { DeepLinkConfig } from '../navigation/nav-util';
 import { NgModuleLoader } from './ng-module-loader';
+import { requestIonicCallback } from './util';
 
 export const LAZY_LOADED_TOKEN = new OpaqueToken('LZYCMP');
 
@@ -76,9 +77,8 @@ export interface LoadedModule {
 /**
  * @private
  */
-export function setupPreloading(config: Config, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
-  return function() {
-    if (config.getBoolean('preloadModules')) {
+export function setupPreloadingImplementation(config: Config, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
+  if (config.getBoolean('preloadModules')) {
       const linksToLoad = deepLinkConfig.links.filter(link => !!link.loadChildren && link.priority !== 'off');
 
       // Load the high priority modules first
@@ -100,5 +100,17 @@ export function setupPreloading(config: Config, deepLinkConfig: DeepLinkConfig, 
         console.error(err.message);
       });
     }
+}
+
+/**
+ * @private
+ */
+export function setupPreloading(config: Config, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader, ngZone: NgZone) {
+  return function() {
+    requestIonicCallback(() => {
+      ngZone.runOutsideAngular(() => {
+        setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
+      });
+    });
   };
 }
