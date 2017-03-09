@@ -1,44 +1,17 @@
-import { Compiler, Injectable, NgModuleFactory, Optional } from '@angular/core';
-
-const FACTORY_CLASS_SUFFIX = 'NgFactory';
-
-/**
- * Configuration for NgModuleLoader.
- * token.
- *
- * @experimental
- */
-export abstract class NgModuleLoaderConfig {
-  /**
-   * Prefix to add when computing the name of the factory module for a given module name.
-   */
-  factoryPathPrefix: string;
-
-  /**
-   * Suffix to add when computing the name of the factory module for a given module name.
-   */
-  factoryPathSuffix: string;
-}
-
-const DEFAULT_CONFIG: NgModuleLoaderConfig = {
-  factoryPathPrefix: '',
-  factoryPathSuffix: '.ngfactory',
-};
+import { Compiler, Injectable, NgModuleFactory } from '@angular/core';
 
 /**
  * NgModuleFactoryLoader that uses SystemJS to load NgModuleFactory
  */
 @Injectable()
 export class NgModuleLoader {
-  private _config: NgModuleLoaderConfig;
 
-  constructor(private _compiler: Compiler, @Optional() config?: NgModuleLoaderConfig) {
-    this._config = config || DEFAULT_CONFIG;
+  constructor(private _compiler: Compiler) {
   }
 
   load(modulePath: string, ngModuleExport: string) {
     const offlineMode = this._compiler instanceof Compiler;
-    return offlineMode ? loadPrecompiledFactory(this._config, modulePath, ngModuleExport) : loadAndCompile(this._compiler, modulePath, ngModuleExport);
+    return offlineMode ? loadPrecompiledFactory(modulePath, ngModuleExport) : loadAndCompile(this._compiler, modulePath, ngModuleExport);
   }
 }
 
@@ -59,16 +32,10 @@ function loadAndCompile(compiler: Compiler, modulePath: string, ngModuleExport: 
 }
 
 
-function loadPrecompiledFactory(config: NgModuleLoaderConfig, modulePath: string, ngModuleExport: string): Promise<NgModuleFactory<any>> {
-  let factoryClassSuffix = FACTORY_CLASS_SUFFIX;
-  if (ngModuleExport === undefined) {
-    ngModuleExport = 'default';
-    factoryClassSuffix = '';
-  }
-
-  return System.import(config.factoryPathPrefix + modulePath + config.factoryPathSuffix)
+function loadPrecompiledFactory(modulePath: string, ngModuleExport: string): Promise<NgModuleFactory<any>> {
+  return System.import(modulePath)
     .then((rawModule: any) => {
-      const ngModuleFactory = rawModule[ngModuleExport + factoryClassSuffix];
+      const ngModuleFactory = rawModule[ngModuleExport];
       if (!ngModuleFactory) {
         throw new Error(`Module ${modulePath} does not export ${ngModuleExport}`);
       }
