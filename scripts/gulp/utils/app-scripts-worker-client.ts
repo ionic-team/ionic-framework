@@ -3,7 +3,7 @@ import { join } from 'path';
 
 import { MessageToWorker, WorkerProcess } from './interfaces';
 
-export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string) {
+export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean) {
   return new Promise((resolve, reject) => {
 
     const msgToWorker: MessageToWorker = {
@@ -16,11 +16,13 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
       tsConfig: tsConfig,
       ionicAngularDir: ionicAngularDir,
       sassConfigPath: sassConfigPath,
-      copyConfigPath: copyConfigPath
+      copyConfigPath: copyConfigPath,
+      isDev: isDev
     };
 
     const worker = <ChildProcess>createWorker(msgToWorker);
-    console.log(`Starting to build test ${appEntryPoint}`);
+
+    console.log(`Starting to do a ${isDev ? 'dev' : 'prod'} build test ${appEntryPoint}`);
 
     worker.on('error', (err: any) => {
       console.error(`worker error, entrypoint: ${appEntryPoint}, pid: ${worker.pid}, error: ${err}`);
@@ -56,8 +58,6 @@ export function createWorker(msg: MessageToWorker): any {
   try {
       let scriptArgs = [
       'build',
-      '--aot',
-      '--optimizejs',
       '--appEntryPoint', msg.appEntryPoint,
       '--appNgModulePath', msg.appNgModulePath,
       '--srcDir', msg.srcDir,
@@ -71,8 +71,12 @@ export function createWorker(msg: MessageToWorker): any {
       '--sass', msg.sassConfigPath,
       '--copy', msg.copyConfigPath,
       '--enableLint', 'false',
-      // '--disableLogging', 'true'
     ];
+
+    // TODO, use prod once we're a little more settled
+    if (!msg.isDev) {
+      scriptArgs.push('--aot');
+    }
 
     if (msg.debug) {
       scriptArgs.push('--debug');

@@ -15,4 +15,5 @@ export interface MessageToWorker {
   ionicAngularDir: string;
   sassConfigPath: string;
   copyConfigPath: string;
+  isDev: boolean;
 };

@@ -34,6 +34,7 @@ task('e2e.prod', ['e2e.prepare'], (done: Function) => {
     done();
   }).catch((err: Error) => {
     done(err);
+    process.exit(1);
   });
 });
 
@@ -106,13 +107,10 @@ function buildTest(filePath: string) {
   const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
   const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
 
-
-
-
   const appNgModulePath = join(dirname(appEntryPoint), 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
-  return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath).then(() => {
+  return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, argv.dev).then(() => {
     const end = Date.now();
     console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
   });
