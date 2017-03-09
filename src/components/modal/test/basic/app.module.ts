@@ -229,11 +229,11 @@ export class ModalPassData {
     this.called.ionViewCanLeave++;
 
     return new Promise((resolve: any, reject: any) => {
-      let alert = this.alertCtrl.create();
-      alert.setTitle('Do you want to submit?');
-      alert.addButton({ text: 'Submit', handler: resolve });
-      alert.addButton({ text: 'Cancel', role: 'cancel', handler: reject });
-      alert.present();
+      this.alertCtrl.create()
+        .setTitle('Do you want to submit?')
+        .addButton({ text: 'Submit', handler: resolve })
+        .addButton({ text: 'Cancel', role: 'cancel', handler: reject })
+        .present();
     });
   }
 

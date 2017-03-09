@@ -25,7 +25,7 @@ export class ActionSheet extends ViewController {
   /**
    * @private
    */
-  getTransitionName(direction: string) {
+  getTransitionName(direction: string): string {
     let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
     return this._nav && this._nav.config.get(key);
   }
@@ -33,22 +33,25 @@ export class ActionSheet extends ViewController {
   /**
    * @param {string} title Action sheet title
    */
-  setTitle(title: string) {
+  setTitle(title: string): ActionSheet {
     this.data.title = title;
+    return this;
   }
 
   /**
    * @param {string} subTitle Action sheet subtitle
    */
-  setSubTitle(subTitle: string) {
+  setSubTitle(subTitle: string): ActionSheet {
     this.data.subTitle = subTitle;
+    return this;
   }
 
   /**
    * @param {object} button Action sheet button
    */
-  addButton(button: any) {
+  addButton(button: any): ActionSheet {
     this.data.buttons.push(button);
+    return this;
   }
 
   /**
@@ -57,7 +60,7 @@ export class ActionSheet extends ViewController {
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  present(navOptions: NavOptions = {}) {
+  present(navOptions: NavOptions = {}): Promise<any> {
     navOptions.minClickBlockDuration = navOptions.minClickBlockDuration || 400;
     return this._app.present(this, navOptions);
   }
