@@ -186,6 +186,10 @@ export interface NavOptions {
   isNavRoot?: boolean;
 }
 
+export interface Page extends Function {
+  new (...args: any[]): any;
+}
+
 export interface TransitionResolveFn {
   (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string): void;
 }

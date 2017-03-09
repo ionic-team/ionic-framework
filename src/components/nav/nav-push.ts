@@ -1,6 +1,7 @@
 import { Directive, HostListener, Input, Optional } from '@angular/core';
 
 import { NavController } from '../../navigation/nav-controller';
+import { Page } from '../../navigation/nav-util';
 
 /**
  * @name NavPush
@@ -49,12 +50,12 @@ import { NavController } from '../../navigation/nav-controller';
 export class NavPush {
 
   /**
-   * @input {Page} The Page to push onto the Nav.
+   * @input {Page | string} The component class or deeplink name you want to push onto the navigation stack.
    */
-  @Input() navPush: any[]|string;
+  @Input() navPush: Page | string;
 
   /**
-   * @input {any} Parameters to pass to the page.
+   * @input {any} Any NavParams you want to pass along to the next view.
    */
   @Input() navParams: {[k: string]: any};
 
