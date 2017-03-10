@@ -36,6 +36,9 @@ $toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar
 /// @prop - Border radius of the toolbar button
 $toolbar-ios-button-border-radius:          4px !default;
 
+/// @prop - Font weight of the strong toolbar button
+$toolbar-ios-button-strong-font-weight:     600 !default;
+
 /// @prop - Height of the navigation bar
 $navbar-ios-height:                         $toolbar-ios-height !default;
 
@@ -378,5 +381,5 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // --------------------------------------------------
 
 .bar-button-strong-ios {
-  font-weight: $button-ios-strong-font-weight;
+  font-weight: $toolbar-ios-button-strong-font-weight;
 }

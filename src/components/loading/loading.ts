@@ -26,16 +26,49 @@ export class Loading extends ViewController {
   /**
    * @private
    */
-  getTransitionName(direction: string) {
+  getTransitionName(direction: string): string {
     let key = (direction === 'back' ? 'loadingLeave' : 'loadingEnter');
     return this._nav && this._nav.config.get(key);
   }
 
   /**
-   * @param {string} content  loading message content
+   * @param {string} sets the html content for the loading indicator.
    */
-  setContent(content: string) {
+  setContent(content: string): Loading {
     this.data.content = content;
+    return this;
+  }
+
+  /**
+   * @param {string} sets the name of the SVG spinner for the loading indicator.
+   */
+  setSpinner(spinner: string): Loading {
+    this.data.spinner = spinner;
+    return this;
+  }
+
+  /**
+   * @param {string} sets additional classes for custom styles, separated by spaces.
+   */
+  setCssClass(cssClass: string): Loading {
+    this.data.cssClass = cssClass;
+    return this;
+  }
+
+  /**
+   * @param {string} sets whether to show the backdrop.
+   */
+  setShowBackdrop(showBackdrop: boolean): Loading {
+    this.data.showBackdrop = showBackdrop;
+    return this;
+  }
+
+  /**
+   * @param {string} how many milliseconds to wait before hiding the indicator.
+   */
+  setDuration(dur: number): Loading {
+    this.data.duration = dur;
+    return this;
   }
 
   /**
@@ -44,7 +77,7 @@ export class Loading extends ViewController {
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  present(navOptions: NavOptions = {}) {
+  present(navOptions: NavOptions = {}): Promise<any> {
     return this._app.present(this, navOptions, AppPortal.LOADING);
   }
 
@@ -175,7 +208,7 @@ export class LoadingController {
    * @param {LoadingOptions} opts Loading options
    * @returns {Loading} Returns a Loading Instance
    */
-  create(opts: LoadingOptions = {}) {
+  create(opts: LoadingOptions = {}): Loading {
     return new Loading(this._app, opts);
   }
 

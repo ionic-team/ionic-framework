@@ -139,7 +139,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-slides',
   template:
-    '<div class="swiper-container">' +
+    '<div class="swiper-container" [attr.dir]="_rtl? \'rtl\' : null">' +
       '<div class="swiper-wrapper">' +
         '<ng-content></ng-content>' +
       '</div>' +
@@ -248,6 +248,14 @@ export class Slides extends Ion {
     this._pager = isTrueProperty(val);
   }
   private _pager = false;
+
+/**
+ * @input {string} If dir attribute is equal to rtl, set interal _rtl to true;
+ */
+  @Input()
+  set dir(val: string) {
+    this._rtl = (val.toLowerCase() === 'rtl');
+  }
 
   /**
    * @input {string}  Type of pagination. Possible values are:

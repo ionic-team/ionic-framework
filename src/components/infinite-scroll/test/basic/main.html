@@ -23,7 +23,7 @@
     </button>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="enabled" threshold="100px">
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" [enabled]="enabled" threshold="100px">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Loading more data...">

@@ -30,6 +30,9 @@ $toolbar-md-button-color:                $toolbar-md-title-text-color !default;
 /// @prop - Border radius of the toolbar button
 $toolbar-md-button-border-radius:        2px !default;
 
+/// @prop - Font weight of the strong toolbar button
+$toolbar-md-button-strong-font-weight:   bold !default;
+
 /// @prop - Height of the navigation bar
 $navbar-md-height:                       $toolbar-md-height !default;
 
@@ -396,5 +399,5 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // --------------------------------------------------
 
 .bar-button-strong-md {
-  font-weight: $button-md-strong-font-weight;
+  font-weight: $toolbar-md-button-strong-font-weight;
 }
