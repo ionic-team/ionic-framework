@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, Refresher } from '../../../../../..';
+import { AlertController, DeepLink, NavController, Refresher } from '../../../../../..';
 
+@DeepLink({
+  name: 'page-two'
+})
 @Component({
   templateUrl: 'page-two.html'
 })

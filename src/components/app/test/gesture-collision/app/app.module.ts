@@ -11,12 +11,7 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(AppComponent, {}, {
-      links: [
-        { name: 'page-one', loadChildren: '../pages/page-one/page-one.module#PageOneModule'},
-        { name: 'page-two', loadChildren: '../pages/page-two/page-two.module#PageTwoModule'},
-      ]
-    }),
+    IonicModule.forRoot(AppComponent, {}),
     PageOneModule
   ],
   bootstrap: [IonicApp],

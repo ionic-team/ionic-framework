@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuController, Nav } from '../../../../../..';
+import { DeepLink, MenuController, Nav } from '../../../../../..';
 
-
+@DeepLink({
+  name: 'page-one'
+})
 @Component({
   templateUrl: 'page-one.html'
 })

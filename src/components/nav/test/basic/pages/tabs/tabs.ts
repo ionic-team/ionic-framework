@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { Tab } from '../../../../../..';
+import { DeepLink, Tab } from '../../../../../..';
 
+@DeepLink({
+  name: 'tabs'
+})
 @Component({
   template: `
     <ion-menu [content]="content">

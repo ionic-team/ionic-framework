@@ -1,8 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, Content, NavController, ViewController } from '../../../../../..';
+import { AlertController, Content, DeepLink, NavController, ViewController } from '../../../../../..';
 
 import { MyCmpTest } from './my-component';
 
+@DeepLink({
+  name: 'first-page'
+})
 @Component({
   templateUrl: 'first-page.html'
 })

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { DeepLink } from '../../../../../..';
 
+@DeepLink()
 @Component({
   template: `
   <ion-content>

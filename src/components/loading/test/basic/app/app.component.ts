@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { App } from '../../../../..';
-import { E2EPage } from '../pages/e2e-page/e2e-page';
+import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
   template: `
@@ -8,8 +8,8 @@ import { E2EPage } from '../pages/e2e-page/e2e-page';
   `,
   encapsulation: ViewEncapsulation.None
 })
-export class E2EApp {
-  root = E2EPage;
+export class AppComponent {
+  root = PageOne;
 
   constructor(app: App) {
     app.viewDidLeave.subscribe((ev: any) => {

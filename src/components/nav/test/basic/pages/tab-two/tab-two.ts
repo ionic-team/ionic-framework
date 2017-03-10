@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { App, Tabs } from '../../../../../..';
+import { App, DeepLink, Tabs } from '../../../../../..';
 
+@DeepLink({
+  name: 'tab-two'
+})
 @Component({
   template: `
     <ion-header>

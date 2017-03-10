@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, ViewController } from '../../../../../..';
+import { AlertController, DeepLink, NavController, ViewController } from '../../../../../..';
 
+@DeepLink({
+  name: 'primary-header-page'
+})
 @Component({
   template: `
     <ion-header>

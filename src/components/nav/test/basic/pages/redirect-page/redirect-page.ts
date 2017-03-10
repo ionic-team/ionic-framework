@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from '../../../../../..';
+import { DeepLink, NavController } from '../../../../../..';
 
+@DeepLink({
+  name: 'redirect-page'
+})
 @Component({
   template: '<ion-content></ion-content>'
 })

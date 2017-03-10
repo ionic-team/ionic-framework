@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '../../../../../..';
+import { DeepLink, NavController, NavParams } from '../../../../../..';
 
+@DeepLink()
 @Component({
   templateUrl: 'session-detail.html'
 })

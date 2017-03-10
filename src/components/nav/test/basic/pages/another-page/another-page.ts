@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ViewController } from '../../../../../..';
+import { DeepLink, NavController, ViewController } from '../../../../../..';
 
-
+@DeepLink({
+  name: 'another-page'
+})
 @Component({
   template: `
     <ion-header>

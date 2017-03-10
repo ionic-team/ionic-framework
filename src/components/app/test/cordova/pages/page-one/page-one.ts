@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController } from '../../../../../..';
+import { DeepLink, NavController } from '../../../../../..';
 
 import { SomeData } from './provider-one';
 import { OtherData } from './provider-two';
 
+@DeepLink({
+  name: 'page-one'
+})
 @Component({
   templateUrl: 'page-one.html'
 })

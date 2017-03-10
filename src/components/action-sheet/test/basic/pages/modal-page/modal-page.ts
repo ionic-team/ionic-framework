@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { ViewController } from '../../../../../..';
+import { DeepLink, ViewController } from '../../../../../..';
 
+@DeepLink({
+  name: 'modal-page'
+})
 @Component({
   template: `
     <ion-header>

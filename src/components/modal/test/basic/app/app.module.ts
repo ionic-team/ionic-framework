@@ -2,35 +2,25 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule, IonicApp } from '../../../../..';
 
-import { E2EApp } from './app.component';
+import { AppComponent } from './app.component';
+import { PageOneModule } from '../pages/page-one/page-one.module';
+
 import { SomeAppProvider } from '../services/some-app-provider';
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {
+    IonicModule.forRoot(AppComponent, {
       statusbarPadding: true,
       swipeBackEnabled: true
-    }, {
-      links: [
-        { loadChildren: '../pages/main/main.module#E2EPageModule', name: 'E2EPage' },
-        { loadChildren: '../pages/modal-first/modal-first.module#ModalFirstPageModule', name: 'ModalFirstPage' },
-        { loadChildren: '../pages/modal-second/modal-second.module#ModalSecondPageModule', name: 'ModalSecondPage' },
-        { loadChildren: '../components/contact-us/contact-us.module#ContactUsModalModule', name: 'ContactUsModal' },
-        { loadChildren: '../components/modal-pass-data/modal-pass-data.module#ModalPassDataModule', name: 'ModalPassData' },
-        { loadChildren: '../components/modal-with-inputs/modal-with-inputs.module#ModalWithInputsModule', name: 'ModalWithInputs' },
-        { loadChildren: '../components/toolbar/toolbar.module#ToolbarModalModule', name: 'ToolbarModal' },
-      ]
-    })
+    }),
+    PageOneModule
   ],
   bootstrap: [IonicApp],
   providers: [SomeAppProvider],
-  entryComponents: [
-    E2EApp,
-  ]
 })
 export class AppModule {}
 
