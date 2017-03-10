@@ -172,7 +172,7 @@ export class SplitPane extends Ion implements RootNode {
   /**
    * @input {string | boolean} When the split-pane should be shown.
    * Can be a CSS media query expression, or a shortcut expression.
-   * Can aslo be a boolean expression.
+   * Can also be a boolean expression.
    */
   @Input()
   set when(query: string | boolean) {
