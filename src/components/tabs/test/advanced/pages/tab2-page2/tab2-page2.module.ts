@@ -9,9 +9,6 @@ import { Tab2Page2 } from './tab2-page2';
   ],
   declarations: [
     Tab2Page2
-  ],
-  entryComponents: [
-    Tab2Page2,
   ]
 })
 export class Tab2Page2Module { }

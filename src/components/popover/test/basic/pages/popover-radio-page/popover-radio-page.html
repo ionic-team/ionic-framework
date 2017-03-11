@@ -1,0 +1,57 @@
+<ion-content>
+  <ion-list radio-group [(ngModel)]="fontFamily" (ionChange)="changeFontFamily()">
+    <ion-row>
+      <ion-col>
+        <button (click)="changeFontSize('smaller')" ion-item detail-none class="text-button text-smaller">A</button>
+      </ion-col>
+      <ion-col>
+        <button (click)="changeFontSize('larger')" ion-item detail-none class="text-button text-larger">A</button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row-dots">
+      <ion-col>
+        <button ion-button="dot" (click)="changeBackground('white')" class="dot-white" [class.selected]="background == 'white'"></button>
+      </ion-col>
+      <ion-col>
+        <button ion-button="dot" (click)="changeBackground('tan')" class="dot-tan" [class.selected]="background == 'tan'"></button>
+      </ion-col>
+      <ion-col>
+        <button ion-button="dot" (click)="changeBackground('grey')" class="dot-grey" [class.selected]="background == 'grey'"></button>
+      </ion-col>
+      <ion-col>
+        <button ion-button="dot" (click)="changeBackground('black')" class="dot-black" [class.selected]="background == 'black'"></button>
+      </ion-col>
+    </ion-row>
+    <ion-item-divider color="dark">
+      <ion-label>Font Family</ion-label>
+    </ion-item-divider>
+    <ion-item class="text-athelas">
+      <ion-label>Athelas</ion-label>
+      <ion-radio value="Athelas"></ion-radio>
+    </ion-item>
+    <ion-item class="text-charter">
+      <ion-label>Charter</ion-label>
+      <ion-radio value="Charter"></ion-radio>
+    </ion-item>
+    <ion-item class="text-iowan">
+      <ion-label>Iowan</ion-label>
+      <ion-radio value="Iowan"></ion-radio>
+    </ion-item>
+    <ion-item class="text-palatino">
+      <ion-label>Palatino</ion-label>
+      <ion-radio value="Palatino"></ion-radio>
+    </ion-item>
+    <ion-item class="text-san-francisco">
+      <ion-label>San Francisco</ion-label>
+      <ion-radio value="San Francisco"></ion-radio>
+    </ion-item>
+    <ion-item class="text-seravek">
+      <ion-label>Seravek</ion-label>
+      <ion-radio value="Seravek"></ion-radio>
+    </ion-item>
+    <ion-item class="text-times-new-roman">
+      <ion-label>Times New Roman</ion-label>
+      <ion-radio value="Times New Roman"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>

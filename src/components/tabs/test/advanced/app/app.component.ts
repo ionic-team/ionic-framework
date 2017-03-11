@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { SignIn } from '../pages/signin-page/signIn';
+import { SignInPage } from '../pages/signin-page/sign-in-page';
+
 @Component({
   template: '<ion-nav [root]="rootPage" swipeBackEnabled="false"></ion-nav>'
 })
-export class E2EApp {
-  rootPage = SignIn;
+export class AppComponent {
+  rootPage = SignInPage;
 }

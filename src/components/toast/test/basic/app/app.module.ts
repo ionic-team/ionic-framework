@@ -1,108 +1,19 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Toast, ToastController, NavController } from '../../../../..';
+import { IonicApp, IonicModule } from '../../../../..';
 
-@Component({
-  templateUrl: 'main.html'
-})
-export class E2EPage {
-
-  constructor(public toastCtrl: ToastController, public navCtrl: NavController) { }
-
-  showToast() {
-    const toast = this.toastCtrl.create({
-      message: 'User was created successfully'
-    });
-
-    toast.onDidDismiss(() => {
-      console.log('Dismissed toast');
-    });
-
-    toast.present();
-
-    setTimeout(() => {
-      this.navCtrl.push('RootPage');
-    }, 1000);
-
-    setTimeout(() => {
-      toast.dismiss();
-    }, 2000);
-  }
-
-  showLongToast() {
-    const toast = this.toastCtrl.create({
-      message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.',
-      duration: 5000,
-      cssClass: 'custom-class my-toast'
-    });
-
-    toast.onDidDismiss(this.dismissHandler);
-    toast.present();
-  }
-
-  showDismissDurationToast() {
-    const toast = this.toastCtrl.create({
-      message: 'I am dismissed after 1.5 seconds',
-      duration: 1500
-    });
-    toast.onDidDismiss(this.dismissHandler);
-    toast.present();
-  }
-
-  showToastWithCloseButton(positionString: string) {
-    const toast = this.toastCtrl.create({
-      message: 'Your internet connection appears to be offline. Data integrity is not gauranteed.',
-      showCloseButton: true,
-      closeButtonText: 'Ok',
-      position: positionString
-    });
-    toast.onDidDismiss(this.dismissHandler);
-    toast.present();
-  }
-
-  showDismissPageChangeToast() {
-    const toast = this.toastCtrl.create({
-      message: 'I am dismissed on page change',
-      dismissOnPageChange: true
-    });
-    toast.onDidDismiss(this.dismissHandler);
-    toast.present();
-
-    setTimeout(() => {
-      this.navCtrl.push('RootPage');
-    }, 1000);
-  }
-
-  private dismissHandler(toast: Toast) {
-    console.info('Toast onDidDismiss()');
-  }
-
-}
-
-@Component({
-  template: '<ion-nav [root]="root"></ion-nav>'
-})
-export class E2EApp {
-  root = E2EPage;
-}
+import { AppComponent } from './app.component';
+import { PageOneModule } from '../pages/page-one/page-one.module';
 
 @NgModule({
   declarations: [
-    E2EApp,
-    E2EPage
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {}, {
-      links: [
-        { loadChildren: '../pages/root-page/root-page.module#RootPageModule', name: 'RootPage' }
-      ]
-    })
+    IonicModule.forRoot(AppComponent, {}),
+    PageOneModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-    E2EPage
-  ]
+  bootstrap: [IonicApp]
 })
 export class AppModule {}

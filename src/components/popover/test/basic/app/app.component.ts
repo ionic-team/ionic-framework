@@ -1,9 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>',
   encapsulation: ViewEncapsulation.None
 })
-export class E2EApp {
-  root = 'E2EPage';
+export class AppComponent {
+  root = PageOne;
 }

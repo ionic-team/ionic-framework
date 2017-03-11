@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, NavController, NavParams, ModalController, Tabs, Tab } from '../../../../../..';
-import { ModalChat } from '../modalChat/modalChat';
+import { AlertController, DeepLink, NavController, NavParams, ModalController, Tabs, Tab } from '../../../../../..';
 
+@DeepLink({
+  name: 'tabs-page'
+})
 @Component({
   templateUrl: './tabs.html'
 })
@@ -70,7 +72,7 @@ export class TabsPage {
 
   chat() {
     console.log('Chat clicked!');
-    this.modalCtrl.create(ModalChat).present();
+    this.modalCtrl.create('modal-chat-page').present();
   }
 
   ionViewWillEnter() {

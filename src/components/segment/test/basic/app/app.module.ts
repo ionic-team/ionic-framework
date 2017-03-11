@@ -2,25 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
-import { E2EApp } from './app.component';
-import { HomePage } from '../pages/home-page/home-page';
+import { AppComponent } from './app.component';
+import { HomePageModule } from '../pages/home-page/home-page.module';
+
 @NgModule({
   declarations: [
-    E2EApp,
-    HomePage
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {}, {
-      links: [
-        { component: HomePage, name: 'home-page' }
-      ]
-    })
+    IonicModule.forRoot(AppComponent, {}),
+    HomePageModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-    HomePage
-  ]
 })
 export class AppModule { }

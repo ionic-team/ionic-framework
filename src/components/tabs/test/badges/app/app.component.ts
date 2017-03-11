@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { PageOne } from '../pages/page-one/page-one';
 
 @Component({
-  templateUrl: 'app.html',
+  templateUrl: 'app.component.html',
   encapsulation: ViewEncapsulation.None,
   styles: [
     `
@@ -22,7 +23,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
     `
   ]
 })
-export class E2EApp {
-  root = 'E2EPage';
+export class AppComponent {
+  root = PageOne;
   myBadge: number = 55;
 }
