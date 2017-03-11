@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from '../../../../../..';
+import { DeepLink, NavController } from '../../../../../..';
 
+@DeepLink({
+  name: 'tabs-page'
+})
 @Component({
   templateUrl: 'tabs-page.html'
 })

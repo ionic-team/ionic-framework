@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { App, AlertController, NavController, NavParams, ViewController } from '../../../../../..';
+import { App, AlertController, DeepLink, NavController, NavParams, ViewController } from '../../../../../..';
 
-
+@DeepLink({
+  name: 'full-page'
+})
 @Component({
   template: `
     <ion-content padding>

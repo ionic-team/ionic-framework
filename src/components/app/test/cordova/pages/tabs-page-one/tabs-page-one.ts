@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { DeepLink } from '../../../../../..';
 
+@DeepLink({
+  name: 'tabs-page-one'
+})
 @Component({
   template: `
   <ion-header>

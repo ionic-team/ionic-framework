@@ -2,26 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
-import { E2EApp } from './app.component';
-import { E2EPage } from '../pages/e2e-page/e2e-page';
+import { AppComponent } from './app.component';
+import { PageOneModule } from '../pages/page-one/page-one.module';
 
 @NgModule({
   declarations: [
-    E2EApp,
-    E2EPage
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {}, {
-      links: [
-        { component: E2EPage, name: 'e2e-page' }
-      ]
-    })
+    IonicModule.forRoot(AppComponent, {}),
+    PageOneModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-    E2EPage
-  ]
+  bootstrap: [IonicApp]
 })
 export class AppModule { }

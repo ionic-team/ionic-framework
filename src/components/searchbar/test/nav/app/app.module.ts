@@ -2,27 +2,18 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
-import { E2EApp } from './app.component';
+import { AppComponent } from './app.component';
+import { TabsPageModule } from '../pages/tabs-page/tabs-page.module';
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {}, {
-      links: [
-        { loadChildren: '../pages/detail-page/detail.module#DetailPageModule', name: 'DetailPage' },
-        { loadChildren: '../pages/main-page/main.module#MainPageModule', name: 'MainPage' },
-        { loadChildren: '../pages/modal-page/modal.module#ModalPageModule', name: 'ModalPage' },
-        { loadChildren: '../pages/search-page/search.module#SearchPageModule', name: 'SearchPage' },
-        { loadChildren: '../pages/tabs-page/tabs.module#TabsPageModule', name: 'TabsPage' },
-      ]
-    })
+    IonicModule.forRoot(AppComponent, {}),
+    TabsPageModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    E2EApp,
-  ]
+  bootstrap: [IonicApp]
 })
 export class AppModule {}

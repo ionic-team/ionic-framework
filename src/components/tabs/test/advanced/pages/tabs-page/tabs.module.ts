@@ -9,9 +9,6 @@ import { TabsPage } from './tabs';
   ],
   declarations: [
     TabsPage
-  ],
-  entryComponents: [
-    TabsPage,
   ]
 })
 export class TabsPageModule { }

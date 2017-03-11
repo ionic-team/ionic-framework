@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
+import { DeepLink } from '../../../../../..';
+
+@DeepLink({
+  name: 'tab1-page3'
+})
 @Component({
-  templateUrl: './tab1page3.html'
+  templateUrl: './tab1-page3.html'
 })
 export class Tab1Page3 {
 

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { ModalController } from '../../../../../..';
+import { DeepLink, ModalController } from '../../../../../..';
 
+@DeepLink({
+  name: 'page-two'
+})
 @Component({
   templateUrl: 'page-two.html'
 })

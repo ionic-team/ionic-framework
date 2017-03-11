@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>First Page Header</ion-title>
+    <ion-buttons start>
+      <button ion-button class="e2eCloseMenu" (click)="dismiss()" strong>Close</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+  <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+  <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
+  <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+  <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+  <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+  <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+  <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+  <p>
+    <button ion-button (click)="push()">Push (Go to 2nd)</button>
+  </p>
+  <p>
+    <button ion-button (click)="openActionSheet()">Open Action Sheet</button>
+  </p>
+  <p>
+    <button ion-button (click)="openModal()">Open same modal</button>
+  </p>
+  <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
+  <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
+  <ion-list>
+    <ion-item *ngFor="let item of items">
+      Item Number: {{item.value}}
+    </ion-item>
+  </ion-list>
+</ion-content>

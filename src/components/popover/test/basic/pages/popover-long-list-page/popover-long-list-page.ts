@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
+import { DeepLink } from '../../../../../..';
 
+@DeepLink()
 @Component({
-  template: `
-    <ion-content>
-      <ion-list>
-        <ion-list-header>Ionic</ion-list-header>
-        <button ion-item *ngFor="let item of items">Item {{item}}</button>
-      </ion-list>
-    </ion-content>
-  `
+  templateUrl: 'popover-long-list-page.html'
 })
 export class PopoverLongListPage {
   items: number[] = [];

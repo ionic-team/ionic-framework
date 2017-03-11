@@ -1,5 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
+import { DeepLink } from '../../../../../..';
 
+@DeepLink()
 @Component({
   templateUrl: 'root-page.html'
 })

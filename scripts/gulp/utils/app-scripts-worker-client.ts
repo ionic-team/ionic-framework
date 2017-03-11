@@ -1,5 +1,5 @@
 import { fork, ChildProcess } from 'child_process';
-import { join } from 'path';
+import { dirname, join } from 'path';
 
 import { MessageToWorker, WorkerProcess } from './interfaces';
 
@@ -55,11 +55,15 @@ export function createWorker(msg: MessageToWorker): any {
     }
   }
 
+  // default it to use the test/basic, or test/xyz directory
+  const deepLinksDir = dirname(dirname(msg.appNgModulePath));
+
   try {
       let scriptArgs = [
       'build',
       '--appEntryPoint', msg.appEntryPoint,
       '--appNgModulePath', msg.appNgModulePath,
+      '--deepLinksDir', deepLinksDir,
       '--srcDir', msg.srcDir,
       '--wwwDir', msg.distDir,
       '--tsconfig', msg.tsConfig,

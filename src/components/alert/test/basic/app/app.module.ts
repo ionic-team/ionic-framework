@@ -11,11 +11,7 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {}, {
-      links: [
-        { loadChildren: '../pages/modal-page/modal-page.module#ModalPageModule', name: 'modal-page'}
-      ]
-    }),
+    IonicModule.forRoot(E2EApp, {}),
     PageOneModule
   ],
   bootstrap: [IonicApp]
