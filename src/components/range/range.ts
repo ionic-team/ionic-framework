@@ -308,9 +308,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   @Output() ionChange: EventEmitter<Range> = new EventEmitter<Range>();
 
   /**
-   * @output {Range} Emitted when the range selector is being left (pointer up).
+   * @output {Range} Emitted when the range selector drag ends.
    */
-  @Output() ionLeave: EventEmitter<Range> = new EventEmitter<Range>();
+  @Output() ionDragEnd: EventEmitter<Range> = new EventEmitter<Range>();
 
   constructor(
     private _form: Form,
@@ -416,8 +416,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       // trigger a haptic end
       this._haptic.gestureSelectionEnd();
 	  
-      // trigger ionLeave event
-      this.ionLeave.emit(this);
+      // trigger ionDragEnd event
+      this.ionDragEnd.emit(this);
     }
   }
 
