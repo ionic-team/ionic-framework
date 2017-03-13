@@ -189,7 +189,8 @@ import { ViewController } from './view-controller';
  * ### Default History
  *
  * Pages can be navigated to using deep links from anywhere in the app, but sometimes the app is
- * launched from a URL and the page needs to have the same history as if it were navigated to.
+ * launched from a URL and the page needs to have the same history as if it were navigated to from
+ * inside of the app.
  *
  * By default, the page would be navigated to as the first page in the stack with no prior history.
  * A good example is the App Store on iOS. Clicking on a URL to an application in the App Store will
