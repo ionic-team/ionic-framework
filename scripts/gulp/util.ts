@@ -85,7 +85,7 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean,
     glob.push(`${SRC_ROOT}/**/*.spec.ts`);
   }
   if (excludeE2e) {
-    glob.push(`!${SRC_ROOT}/components/*/test/**/*.ts`);
+    glob.push(`!${SRC_ROOT}/components/*/test/*/**/*.ts`);
   }
   let stream = src(glob);
   if (stripDebug) {
