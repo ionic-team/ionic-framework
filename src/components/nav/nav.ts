@@ -111,15 +111,15 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
     this._hasInit = true;
 
     let navSegment = this._linker.initNav(this);
-    if (navSegment && navSegment.component) {
+    if (navSegment && (navSegment.component || navSegment.loadChildren)) {
       // there is a segment match in the linker
-      this._linker.initViews(navSegment).then(views => {
+      return this._linker.initViews(navSegment).then(views => {
         this.setPages(views, null, null);
       });
 
     } else if (this._root) {
       // no segment match, so use the root property
-      this.push(this._root, this.rootParams, {
+      return this.push(this._root, this.rootParams, {
         isNavRoot: (<any>this._app.getRootNav() === this)
       }, null);
     }

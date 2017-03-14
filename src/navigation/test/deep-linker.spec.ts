@@ -271,14 +271,22 @@ describe('DeepLinker', () => {
 
   describe('initViews', () => {
 
-    it('should create the ViewController for just the segment', () => {
-      // let segment = serializer.parse('/viewone')[0];
+    it('should return an array with one view controller when there isnt default history', (done: Function) => {
+      const knownSegment = {
+        id: 'idk',
+        name: 'viewone',
+        data: {}
+      };
+      const promise = linker.initViews(knownSegment);
 
-      // let views = linker.initViews(segment);
-      // expect(views[0].component).toEqual(segment.component);
-      // expect(views[0].id).toEqual('VIEWID');
+      promise.then((result: any[]) => {
+        expect(Array.isArray(result)).toBeTruthy();
+        expect(result.length).toEqual(1);
+        done();
+      }).catch((err: Error) => {
+        done(err);
+      });
     });
-
   });
 
   describe('initNav', () => {

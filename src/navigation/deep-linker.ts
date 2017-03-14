@@ -2,7 +2,7 @@ import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, isNav, isTab, isTabs, NavLink, NavSegment, DIRECTION_BACK } from './nav-util';
+import { convertToViews, DIRECTION_BACK, isNav, isTab, isTabs, NavLink, NavSegment } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav } from '../components/nav/nav';
@@ -594,17 +594,21 @@ export class DeepLinker {
    * @internal
    */
   initViews(segment: NavSegment) {
-    const view = new ViewController(segment.component, segment.data);
-    view.id = segment.id;
+    const link = this._serializer.getLinkFromName(segment.name);
+    return this.getNavLinkComponent(link).then((component: any) => {
+      segment.component = component;
+      const view = new ViewController(component, segment.data);
+      view.id = segment.id;
 
-    if (isArray(segment.defaultHistory)) {
-      return convertToViews(this, segment.defaultHistory).then(views => {
-        views.push(view);
-        return views;
-      });
-    }
+      if (isArray(segment.defaultHistory)) {
+        return convertToViews(this, segment.defaultHistory).then(views => {
+          views.push(view);
+          return views;
+        });
+      }
 
-    return Promise.resolve([view]);
+      return [view];
+    });
   }
 
   /**
