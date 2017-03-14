@@ -229,7 +229,10 @@ export function mockChangeDetectorRef(): ChangeDetectorRef {
 }
 
 export class MockElementRef implements ElementRef {
-  nativeElement: any = new MockElement();
+  nativeElement: any;
+  constructor(ele: any) {
+    this.nativeElement = ele;
+  }
 }
 
 export class MockElement {
@@ -299,7 +302,11 @@ export class ClassList {
 }
 
 export function mockElementRef(): ElementRef {
-  return new MockElementRef();
+  return new MockElementRef(new MockElement());
+}
+
+export function mockElementRefEle(ele: any): ElementRef {
+  return new MockElementRef(ele);
 }
 
 export class MockRenderer {

@@ -756,7 +756,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
     const scrollEle = this.getScrollElement();
     if (!scrollEle) {
-      assert(false, 'this._scrollEle should be valid');
+      assert(false, 'this.getScrollElement() should be valid');
       return;
     }
 
