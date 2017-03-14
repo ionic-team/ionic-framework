@@ -4,9 +4,17 @@
 // Split Pane
 // --------------------------------------------------
 
+$split-pane-wp-border: 1px solid $list-wp-border-color;
+
 .split-pane-wp.split-pane-visible >.split-pane-side {
   min-width: 270px;
   max-width: 28%;
 
-  border-right: 1px solid $list-wp-border-color;
+  border-right: $split-pane-wp-border;
+  border-left: 0;
+}
+
+.split-pane-wp.split-pane-visible > .split-pane-side[side=right] {
+  border-right: 0;
+  border-left: $split-pane-wp-border;
 }

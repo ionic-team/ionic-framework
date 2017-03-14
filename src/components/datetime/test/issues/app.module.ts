@@ -21,7 +21,6 @@ export class E2EPage {
   }
 }
 
-
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
