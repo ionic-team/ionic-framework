@@ -19,6 +19,9 @@ export class Picker extends ViewController {
   @Output() ionChange: EventEmitter<any>;
 
   constructor(app: App, opts: PickerOptions = {}, config: Config) {
+    if (!opts) {
+      opts = {};
+    }
     opts.columns = opts.columns || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
