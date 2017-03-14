@@ -10,7 +10,7 @@ import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-action-sheet',

@@ -8,22 +8,22 @@ import { Config } from '../config/config';
  * sending/receiving app-level events.
  */
 export class Ion {
-  /** @private */
+  /** @hidden */
   _config: Config;
 
-  /** @private */
+  /** @hidden */
   _elementRef: ElementRef;
 
-  /** @private */
+  /** @hidden */
   _renderer: Renderer;
 
-  /** @private */
+  /** @hidden */
   _color: string;
 
-  /** @private */
+  /** @hidden */
   _mode: string;
 
-  /** @private */
+  /** @hidden */
   _componentName: string;
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, componentName?: string) {
@@ -38,22 +38,22 @@ export class Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   setElementClass(className: string, isAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, isAdd);
   }
 
-  /** @private */
+  /** @hidden */
   setElementAttribute(attributeName: string, attributeValue: any) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, attributeValue);
   }
 
-  /** @private */
+  /** @hidden */
   setElementStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 
-  /** @private */
+  /** @hidden */
   _setColor(newColor: string, componentName?: string) {
     if (componentName) {
       // This is needed for the item-radio
@@ -68,7 +68,7 @@ export class Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   _setMode(newMode: string) {
     if (this._mode) {
       this.setElementClass(`${this._componentName}-${this._mode}`, false);
@@ -84,17 +84,17 @@ export class Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   _setComponentName() {
     this.setElementClass(this._componentName, true);
   }
 
-  /** @private */
+  /** @hidden */
   getElementRef(): ElementRef {
     return this._elementRef;
   }
 
-  /** @private */
+  /** @hidden */
   getNativeElement(): any {
     return this._elementRef.nativeElement;
   }

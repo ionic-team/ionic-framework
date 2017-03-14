@@ -5,7 +5,7 @@ import { Ion } from '../ion';
 
 
 /**
-  * @private TODO remove this line when we remove the other selectors in order to document it
+  * @hidden TODO remove this line when we remove the other selectors in order to document it
   * @name Typography
   * @module ionic
   * @description

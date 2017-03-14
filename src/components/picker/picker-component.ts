@@ -13,7 +13,7 @@ import { ViewController } from '../../navigation/view-controller';
 import { PickerColumnCmp } from './picker-column';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-picker-cmp',

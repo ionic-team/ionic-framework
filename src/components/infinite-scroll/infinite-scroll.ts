@@ -239,7 +239,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setListeners(shouldListen: boolean) {
     if (this._init) {
@@ -257,7 +257,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._init = true;
@@ -265,7 +265,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._setListeners(false);

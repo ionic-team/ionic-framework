@@ -7,7 +7,7 @@ import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
 
 /**
- * @private
+ * @hidden
  */
 export class ItemSlidingGesture extends PanGesture {
 

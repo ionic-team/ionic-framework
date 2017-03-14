@@ -3,7 +3,7 @@ import { Platform, EventListenerOptions } from '../platform/platform';
 
 
 /**
- * @private
+ * @hidden
  */
 export class UIEventManager {
   private evts: Function[] = [];

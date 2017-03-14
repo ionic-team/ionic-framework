@@ -2,7 +2,7 @@ import { Directive, TemplateRef, ViewContainerRef } from '@angular/core';
 import { VirtualContext } from './virtual-util';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({selector: '[virtualItem]'})
 export class VirtualItem {

@@ -79,14 +79,14 @@ export class SegmentButton {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
   }
 
   /**
-   * @private
+   * @hidden
    * On click of a SegmentButton
    */
   @HostListener('click')
@@ -96,7 +96,7 @@ export class SegmentButton {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     if (!isPresent(this.value)) {
@@ -105,7 +105,7 @@ export class SegmentButton {
   }
 
   /**
-   * @private
+   * @hidden
    */
   set isActive(isActive: any) {
     this._renderer.setElementClass(this._elementRef.nativeElement, 'segment-activated', isActive);

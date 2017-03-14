@@ -93,22 +93,22 @@ import { FabList } from './fab-list';
 export class FabContainer {
 
   /**
-   * @private
+   * @hidden
    */
   _events: UIEventManager;
 
   /**
-   * @private
+   * @hidden
    */
   _listsActive: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(FabButton) _mainButton: FabButton;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(FabList) _fabLists: QueryList<FabList>;
 
@@ -117,7 +117,7 @@ export class FabContainer {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     const mainButton = this._mainButton;
@@ -129,7 +129,7 @@ export class FabContainer {
   }
 
   /**
-   * @private
+   * @hidden
    */
   clickHandler(ev: any) {
     if (this.canActivateList(ev)) {
@@ -138,7 +138,7 @@ export class FabContainer {
   }
 
   /**
-   * @private
+   * @hidden
    */
   canActivateList(ev: any): boolean {
     if (this._fabLists.length > 0 && this._mainButton && ev.target) {
@@ -149,14 +149,14 @@ export class FabContainer {
   }
 
   /**
-   * @private
+   * @hidden
    */
   toggleList() {
     this.setActiveLists(!this._listsActive);
   }
 
   /**
-   * @private
+   * @hidden
    */
   setActiveLists(isActive: boolean) {
     if (isActive === this._listsActive) {
@@ -178,7 +178,7 @@ export class FabContainer {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._events.destroy();

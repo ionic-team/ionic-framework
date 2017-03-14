@@ -185,7 +185,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     this._elementRef.nativeElement.querySelector('button').focus();

@@ -6,7 +6,7 @@ import { Platform } from '../platform/platform';
 
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: '.click-block'

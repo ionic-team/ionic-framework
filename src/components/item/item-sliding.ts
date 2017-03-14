@@ -133,7 +133,7 @@ export class ItemSliding {
   private _state: SlidingState = SlidingState.Disabled;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(Item) item: Item;
 
@@ -193,14 +193,14 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getOpenAmount(): number {
     return this._openAmount;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getSlidingPercent(): number {
     let openAmount = this._openAmount;
@@ -214,7 +214,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   startSliding(startX: number) {
     if (this._tmr) {
@@ -230,7 +230,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   moveSliding(x: number): number {
     if (this._optsDirty) {
@@ -263,7 +263,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   endSliding(velocity: number): number {
     let restingPoint = (this._openAmount > 0)
@@ -285,7 +285,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private fireSwipeEvent() {
     if (this._state & SlidingState.SwipeRight) {
@@ -296,7 +296,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private calculateOptsWidth() {
     if (!this._optsDirty) {
@@ -412,7 +412,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);

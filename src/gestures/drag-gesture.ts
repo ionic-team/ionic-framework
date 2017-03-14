@@ -9,7 +9,7 @@ import { UIEventManager } from './ui-event-manager';
 
 
 /**
- * @private
+ * @hidden
  */
 export class PanGesture {
   private debouncer: DomDebouncer;
@@ -177,7 +177,7 @@ export class PanGesture {
 
 
 /**
- * @private
+ * @hidden
  */
 export interface PanGestureConfig {
   threshold?: number;

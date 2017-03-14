@@ -1,7 +1,7 @@
 import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: '[next-input]'

@@ -23,7 +23,7 @@
 export class NavParams {
 
   /**
-   * @private
+   * @hidden
    * @param {TODO} data  TODO
    */
   constructor(public data: any = {}) {}

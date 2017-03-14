@@ -10,7 +10,7 @@ import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-popover',

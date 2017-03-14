@@ -170,7 +170,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._element = null;
@@ -178,7 +178,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @Input()
   get reorder(): boolean {
@@ -287,14 +287,14 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(classname: string, add: boolean) {
     this._rendered.setElementClass(this._element, classname, add);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNativeElement(): HTMLElement {
     return this._element;

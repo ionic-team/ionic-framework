@@ -147,7 +147,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   @ViewChild('slider') public _slider: ElementRef;
 
   /**
-   * @private
+   * @hidden
    */
   value: any;
 
@@ -172,7 +172,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
@@ -331,7 +331,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterViewInit() {
     // add touchstart/mousedown listeners
@@ -539,7 +539,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     }
   }
 
-  /** @private */
+  /** @hidden */
   _keyChg(isIncrease: boolean, isKnobB: boolean) {
     const step = this._step;
     if (isKnobB) {
@@ -578,7 +578,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     if (isPresent(val)) {
@@ -600,7 +600,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -611,12 +611,12 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(val: any) {
     // used when this input does not have an ngModel or formControlName
@@ -625,19 +625,19 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() { }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form.deregister(this);

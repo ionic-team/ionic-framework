@@ -10,7 +10,7 @@ import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: '.picker-col',

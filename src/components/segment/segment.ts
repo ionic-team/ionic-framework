@@ -70,7 +70,7 @@ export class Segment extends Ion {
   _disabled: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   value: string;
 
@@ -101,7 +101,7 @@ export class Segment extends Ion {
 
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(SegmentButton) _buttons: QueryList<SegmentButton>;
 
@@ -137,7 +137,7 @@ export class Segment extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Write a new value to the element.
    */
   writeValue(value: any) {
@@ -151,7 +151,7 @@ export class Segment extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterViewInit() {
    this._buttons.forEach(button => {
@@ -172,22 +172,22 @@ export class Segment extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange = (_: any) => {};
   /**
-   * @private
+   * @hidden
    */
   onTouched = (_: any) => {};
 
   /**
-   * @private
+   * @hidden
    * Set the function to be called when the control receives a change event.
    */
   registerOnChange(fn: any) { this.onChange = fn; }
 
   /**
-   * @private
+   * @hidden
    * Set the function to be called when the control receives a touch event.
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }

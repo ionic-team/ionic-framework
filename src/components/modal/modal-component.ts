@@ -9,7 +9,7 @@ import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-modal',
@@ -49,7 +49,7 @@ export class ModalCmp {
     this._load(this._navParams.data.component);
   }
 
-  /** @private */
+  /** @hidden */
   _load(component: any) {
     if (component) {
 
@@ -80,7 +80,7 @@ export class ModalCmp {
     this._gestureBlocker.unblock();
   }
 
-  /** @private */
+  /** @hidden */
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }

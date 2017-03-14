@@ -67,7 +67,7 @@ export class NavPush {
   }
 
 /**
- * @private
+ * @hidden
  */
   @HostListener('click')
   onClick(): boolean {

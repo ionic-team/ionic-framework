@@ -91,7 +91,7 @@ export class FabButton extends Ion {
 
 
   /**
-   * @private
+   * @hidden
    */
   setActiveClose(closeVisible: boolean) {
     this.setElementClass('fab-close-active', closeVisible);

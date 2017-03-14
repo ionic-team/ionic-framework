@@ -66,23 +66,23 @@ import { ViewController } from '../../navigation/view-controller';
 })
 export class Navbar extends ToolbarBase {
   /**
-   * @private
+   * @hidden
    */
   _backText: string;
   /**
-   * @private
+   * @hidden
    */
   _bbIcon: string;
   /**
-   * @private
+   * @hidden
    */
   _hidden: boolean = false;
   /**
-   * @private
+   * @hidden
    */
   _hideBb: boolean = false;
   /**
-   * @private
+   * @hidden
    */
   _sbPadding: boolean;
 
@@ -150,7 +150,7 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   didEnter() {
     try {
@@ -161,7 +161,7 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setHidden(isHidden: boolean) {
     // used to display none/block the navbar

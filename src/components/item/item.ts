@@ -302,12 +302,12 @@ export class Item extends Ion {
   _hasReorder: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
   /**
-   * @private
+   * @hidden
    */
   labelId: string = null;
 
@@ -357,7 +357,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerInput(type: string) {
     this._inputs.push(type);
@@ -365,7 +365,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     if (this._viewLabel && this._inputs.length) {
@@ -379,7 +379,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateColor(newColor: string, componentName?: string) {
     componentName = componentName || 'item'; // item-radio
@@ -387,7 +387,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setName(elementRef: ElementRef) {
     let nodeName = elementRef.nativeElement.nodeName.replace('ION-', '');
@@ -398,14 +398,14 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getLabelText(): string {
     return this._label ? this._label.text : '';
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(Label)
   set contentLabel(label: Label) {
@@ -420,7 +420,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild(Label)
   set viewLabel(label: Label) {
@@ -430,7 +430,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(Button)
   set _buttons(buttons: QueryList<Button>) {
@@ -442,7 +442,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(Icon)
   set _icons(icons: QueryList<Icon>) {

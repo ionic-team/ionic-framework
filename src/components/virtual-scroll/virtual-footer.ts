@@ -2,7 +2,7 @@ import { Directive, TemplateRef } from '@angular/core';
 import { VirtualContext } from './virtual-util';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({selector: '[virtualFooter]'})
 export class VirtualFooter {

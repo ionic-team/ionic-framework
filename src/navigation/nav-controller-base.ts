@@ -21,7 +21,7 @@ import { Transition } from '../transitions/transition';
 import { TransitionController } from '../transitions/transition-controller';
 
 /**
- * @private
+ * @hidden
  * This class is for internal use only. It is not exported publicly.
  */
 export class NavControllerBase extends Ion implements NavController {

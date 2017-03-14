@@ -3,7 +3,7 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 import { findReorderItem } from './item-reorder-util';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-reorder',

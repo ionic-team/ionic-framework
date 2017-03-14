@@ -491,7 +491,7 @@ export class Refresher {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     // bind event listeners
@@ -500,7 +500,7 @@ export class Refresher {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._setListeners(false);

@@ -10,7 +10,7 @@ import { ViewController } from '../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class TransitionController {

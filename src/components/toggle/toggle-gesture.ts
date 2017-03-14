@@ -6,7 +6,7 @@ import { pointerCoord } from '../../util/dom';
 import { Toggle } from './toggle';
 
 /**
- * @private
+ * @hidden
  */
 export class ToggleGesture extends PanGesture {
 

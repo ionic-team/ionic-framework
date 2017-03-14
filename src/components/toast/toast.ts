@@ -10,7 +10,7 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 export class Toast extends ViewController {
   private _app: App;
@@ -36,7 +36,7 @@ export class Toast extends ViewController {
   }
 
   /**
-  * @private
+  * @hidden
   */
   getTransitionName(direction: string) {
     let key = 'toast' + (direction === 'back' ? 'Leave' : 'Enter');
@@ -44,7 +44,7 @@ export class Toast extends ViewController {
   }
 
   /**
-  * @private
+  * @hidden
   */
   isValidPosition(position: string) {
     return position === TOAST_POSITION_TOP || position === TOAST_POSITION_MIDDLE || position === TOAST_POSITION_BOTTOM;

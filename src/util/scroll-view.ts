@@ -169,7 +169,7 @@ export class ScrollView {
 
 
   /**
-   * @private
+   * @hidden
    * JS Scrolling has been provided only as a temporary solution
    * until iOS apps can take advantage of scroll events at all times.
    * The goal is to eventually remove JS scrolling entirely. When we
@@ -508,7 +508,7 @@ export class ScrollView {
   }
 
   /**
-   * @private
+   * @hidden
    */
   destroy() {
     this.stop();

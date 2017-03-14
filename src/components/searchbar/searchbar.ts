@@ -184,7 +184,7 @@ export class Searchbar extends Ion {
   @Output() ionClear: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
   /**
-   * @private
+   * @hidden
    */
   @HostBinding('class.searchbar-has-focus') _sbHasFocus: boolean;
 
@@ -228,7 +228,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * On Initialization check for attributes
    */
   ngOnInit() {
@@ -239,7 +239,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * After View Checked position the elements
    */
   ngAfterContentInit() {
@@ -247,7 +247,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Positions the input search icon, placeholder, and the cancel button
    * based on the input value and if it is focused. (ios only)
    */
@@ -302,7 +302,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   positionCancelButton() {
@@ -327,7 +327,7 @@ export class Searchbar extends Ion {
 
 
   /**
-   * @private
+   * @hidden
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
@@ -339,7 +339,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Sets the Searchbar to focused and active on input focus.
    */
   inputFocused(ev: UIEvent) {
@@ -351,7 +351,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
@@ -370,7 +370,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Clears the input field and triggers the control change.
    */
   clearInput(ev: UIEvent) {
@@ -390,7 +390,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Clears the input field and tells the input to blur since
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
@@ -404,7 +404,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Write a new value to the element.
    */
   writeValue(val: any) {
@@ -413,17 +413,17 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange = (_: any) => {};
 
   /**
-   * @private
+   * @hidden
    */
   onTouched = () => {};
 
   /**
-   * @private
+   * @hidden
    * Set the function to be called when the control receives a change event.
    */
   registerOnChange(fn: (_: any) => {}): void {
@@ -431,7 +431,7 @@ export class Searchbar extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * Set the function to be called when the control receives a touch event.
    */
   registerOnTouched(fn: () => {}): void {

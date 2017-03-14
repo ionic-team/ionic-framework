@@ -90,7 +90,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   _fn: Function = null;
   _gesture: ToggleGesture;
 
-  /** @private */
+  /** @hidden */
   id: string;
 
   /**
@@ -141,7 +141,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._init = true;
@@ -150,7 +150,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragStart(startX: number) {
     assert(startX, 'startX must be valid');
@@ -161,7 +161,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragMove(currentX: number) {
     if (!this._startX) {
@@ -188,7 +188,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragEnd(endX: number) {
     if (!this._startX) {
@@ -226,7 +226,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
@@ -239,21 +239,21 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     this._setChecked( isTrueProperty(val) );
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) {
     this.onTouched = fn;
@@ -273,7 +273,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(isChecked: boolean) {
     // used when this input does not have an ngModel or formControlName
@@ -285,12 +285,12 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() {}
 
   /**
-   * @private
+   * @hidden
    */
   @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
     if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
@@ -302,21 +302,21 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form && this._form.deregister(this);

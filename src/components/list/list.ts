@@ -85,7 +85,7 @@ export class List extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   containsSlidingItem(contains: boolean) {
     this._containsSlidingItems = contains;
@@ -114,7 +114,7 @@ export class List extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   destroy() {
     this._slidingGesture && this._slidingGesture.destroy();

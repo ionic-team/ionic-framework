@@ -107,7 +107,7 @@ export class Events {
 }
 
 /**
- * @private
+ * @hidden
  */
 export function setupEvents(plt: Platform, dom: DomController): Events {
   const events = new Events();
@@ -170,7 +170,7 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
 }
 
 /**
- * @private
+ * @hidden
  */
 export function setupProvideEvents(plt: Platform, dom: DomController) {
   return function() {

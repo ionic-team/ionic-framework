@@ -81,7 +81,7 @@ export class Label extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   type: string;
 
@@ -99,7 +99,7 @@ export class Label extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @Input()
   get id(): string {
@@ -114,7 +114,7 @@ export class Label extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get text(): string {
     return this.getNativeElement().textContent || '';

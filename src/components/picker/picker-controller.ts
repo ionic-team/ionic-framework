@@ -6,7 +6,7 @@ import { Picker } from './picker';
 import { PickerOptions } from './picker-options';
 
 /**
- * @private
+ * @hidden
  * @name PickerController
  * @description
  *

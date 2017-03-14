@@ -3,7 +3,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 import { KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN } from '../../platform/key';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: '.range-knob-handle',

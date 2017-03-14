@@ -32,12 +32,12 @@ export class App {
   private _disableScrollAssist: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   _clickBlock: ClickBlock;
 
   /**
-   * @private
+   * @hidden
    */
   _appRoot: IonicApp;
 
@@ -116,14 +116,14 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(className: string, isAdd: boolean) {
     this._appRoot.setElementClass(className, isAdd);
   }
 
   /**
-   * @private
+   * @hidden
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
@@ -150,7 +150,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    * Toggles whether an application can be scrolled
    * @param {boolean} disableScroll when set to `false`, the application's
    * scrolling is enabled. When set to `true`, scrolling is disabled.
@@ -162,7 +162,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    * Boolean if the app is actively enabled or not.
    * @return {boolean}
    */
@@ -175,7 +175,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setScrolling() {
     this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
@@ -216,14 +216,14 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setRootNav(nav: any) {
     this._rootNav = nav;
   }
 
   /**
-   * @private
+   * @hidden
    */
   present(enteringView: ViewController, opts: NavOptions, appPortal?: number): Promise<any> {
     const portal = this._appRoot._getPortal(appPortal);
@@ -250,7 +250,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   goBack(): Promise<any> {
     if (this._menuCtrl && this._menuCtrl.isOpen()) {
@@ -270,7 +270,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   navPop(): Promise<any> {
     if (!this._rootNav || !this.isEnabled()) {

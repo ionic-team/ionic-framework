@@ -9,7 +9,7 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 export class ActionSheet extends ViewController {
   private _app: App;
@@ -31,7 +31,7 @@ export class ActionSheet extends ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTransitionName(direction: string) {
     let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');

@@ -137,7 +137,7 @@ export class Keyboard {
   }
 
   /**
-   * @private
+   * @hidden
    */
   focusOutline(setting: any) {
     /* Focus Outline

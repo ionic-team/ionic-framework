@@ -404,7 +404,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngDoCheck() {
     if (this._init && this._hasChanges()) {
@@ -450,7 +450,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   renderVirtual() {
@@ -524,7 +524,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   scrollUpdate(ev: ScrollEvent) {
     // there is a queue system so that we can
@@ -614,7 +614,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   scrollEnd(ev: ScrollEvent) {
@@ -689,7 +689,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     if (!this._itmTmp) {
@@ -703,7 +703,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._scrollSub && this._scrollSub.unsubscribe();

@@ -115,7 +115,7 @@ export class TextInput extends Ion implements IonicFormInput {
   _usePadding: boolean;
   _value: any = '';
 
-  /** @private */
+  /** @hidden */
   inputControl: NgControl;
 
   constructor(
@@ -227,7 +227,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabled(val: boolean) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', val ? '' : null);
@@ -236,7 +236,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
@@ -286,7 +286,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setMin(val: any) {
     this._native && this._native.setMin(val);
@@ -304,7 +304,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setMax(val: any) {
     this._native && this._native.setMax(val);
@@ -322,14 +322,14 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setStep(val: any) {
     this._native && this._native.setStep(val);
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild('input', { read: NativeInput })
   set _nativeInput(nativeInput: NativeInput) {
@@ -339,7 +339,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild('textarea', { read: NativeInput })
   set _nativeTextarea(nativeInput: NativeInput) {
@@ -349,7 +349,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild(NextInput)
   set _nextInput(nextInput: NextInput) {
@@ -371,7 +371,7 @@ export class TextInput extends Ion implements IonicFormInput {
   @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * @private
+   * @hidden
    */
   setNativeInput(nativeInput: NativeInput) {
     this._native = nativeInput;
@@ -446,7 +446,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     // begin the process of setting focus to the inner input element
@@ -523,7 +523,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setFocus() {
     // immediately set focus
@@ -540,7 +540,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   scrollHideFocus(ev: ScrollEvent, shouldHideFocus: boolean) {
     // do not continue if there's no nav, or it's transitioning
@@ -553,21 +553,21 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   inputBlurred(ev: UIEvent) {
     this.blur.emit(ev);
   }
 
   /**
-   * @private
+   * @hidden
    */
   inputFocused(ev: UIEvent) {
     this.focus.emit(ev);
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     this._value = val;
@@ -575,14 +575,14 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(val: any) {
     this.checkHasValue(val);
   }
 
   /**
-   * @private
+   * @hidden
    */
   onKeydown(val: any) {
     if (this._clearOnEdit) {
@@ -591,12 +591,12 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched(val: any) {}
 
   /**
-   * @private
+   * @hidden
    */
   hasFocus(): boolean {
     // check if an input has focus or not
@@ -604,7 +604,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   hasValue(): boolean {
     const inputValue = this._value;
@@ -612,7 +612,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
@@ -622,7 +622,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   focusChange(inputHasFocus: boolean) {
     if (this._item) {
@@ -637,7 +637,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   pointerStart(ev: UIEvent) {
     // input cover touchstart
@@ -654,7 +654,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   pointerEnd(ev: UIEvent) {
     // input cover touchend/mouseup
@@ -684,7 +684,7 @@ export class TextInput extends Ion implements IonicFormInput {
     this._coord = null;
   }
   /**
-   * @private
+   * @hidden
    */
   setItemInputControlCss() {
     let item = this._item;
@@ -703,7 +703,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     const item = this._item;
@@ -722,14 +722,14 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentChecked() {
     this.setItemInputControlCss();
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form.deregister(this);
@@ -742,7 +742,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    */
   clearTextInput() {
     console.debug('Should clear input');
@@ -753,7 +753,7 @@ export class TextInput extends Ion implements IonicFormInput {
 
   /**
   * Check if we need to clear the text input if clearOnEdit is enabled
-  * @private
+  * @hidden
   */
   checkClearOnEdit(inputValue: string) {
     if (!this._clearOnEdit) {
@@ -771,7 +771,7 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @private
+   * @hidden
    * Angular2 Forms API method called by the view (formControlName) to register the
    * onChange event handler that updates the model (Control).
    * @param {Function} fn  the onChange event handler.
@@ -779,7 +779,7 @@ export class TextInput extends Ion implements IonicFormInput {
   registerOnChange(fn: any) { this.onChange = fn; }
 
   /**
-   * @private
+   * @hidden
    * Angular2 Forms API method called by the view (formControlName) to register
    * the onTouched event handler that marks model (Control) as touched.
    * @param {Function} fn  onTouched event handler.
@@ -788,7 +788,7 @@ export class TextInput extends Ion implements IonicFormInput {
 
 
   /**
-   * @private
+   * @hidden
    */
   focusNext() {
     this._form.tabFocus(this);
@@ -848,7 +848,7 @@ const TEXT_TYPE_REGEX = /password|email|number|search|tel|url|date|month|time|we
 
 
 /**
- * @private
+ * @hidden
  */
 export function getScrollData(inputOffsetTop: number, inputOffsetHeight: number, scrollViewDimensions: ContentDimensions, keyboardHeight: number, plaformHeight: number) {
   // compute input's Y values relative to the body

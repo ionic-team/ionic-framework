@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'ion-item,[ion-item]',

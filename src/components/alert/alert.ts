@@ -9,7 +9,7 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 export class Alert extends ViewController {
   private _app: App;
@@ -32,7 +32,7 @@ export class Alert extends ViewController {
   }
 
   /**
-  * @private
+  * @hidden
   */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');

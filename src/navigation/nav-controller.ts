@@ -387,7 +387,7 @@ export abstract class NavController {
   viewWillUnload: EventEmitter<any>;
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
@@ -399,7 +399,7 @@ export abstract class NavController {
   parent: any;
 
   /**
-   * @private
+   * @hidden
    */
   config: Config;
 
@@ -457,7 +457,7 @@ export abstract class NavController {
   abstract popToRoot(opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
-   * @private
+   * @hidden
    * Pop to a specific view in the history stack. If an already created
    * instance of the page is not found in the stack, then it'll `setRoot`
    * to the nav stack by removing all current pages and pushing on a
@@ -474,7 +474,7 @@ export abstract class NavController {
   abstract popTo(page: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
-   * @private
+   * @hidden
    * Pop sequently all the pages in the stack.
    *
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
@@ -607,12 +607,12 @@ export abstract class NavController {
   abstract canGoBack(): boolean;
 
   /**
-   * @private
+   * @hidden
    */
   abstract registerChildNav(nav: any): void;
 
   /**
-   * @private
+   * @hidden
    */
   abstract resize(): void;
 }

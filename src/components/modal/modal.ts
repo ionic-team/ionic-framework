@@ -9,7 +9,7 @@ import { OverlayProxy } from '../../navigation/overlay-proxy';
 import { ModalImpl } from './modal-impl';
 
 /**
- * @private
+ * @hidden
  */
 export class Modal extends OverlayProxy {
 

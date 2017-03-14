@@ -5,7 +5,7 @@ import { Ion } from '../ion';
 import { ToolbarTitle } from './toolbar-title';
 
 /**
- * @private
+ * @hidden
  */
 export class ToolbarBase extends Ion {
   private _title: ToolbarTitle;
@@ -15,14 +15,14 @@ export class ToolbarBase extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setTitle(titleCmp: ToolbarTitle) {
     this._title = titleCmp;
   }
 
   /**
-   * @private
+   * @hidden
    * Returns the toolbar title text if it exists or an empty string
    */
   getTitleText() {

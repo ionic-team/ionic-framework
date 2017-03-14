@@ -1,6 +1,6 @@
 
 /**
- * @private
+ * @hidden
  * Given a min and max, restrict the given number
  * to the range.
  * @param min the minimum
@@ -11,12 +11,12 @@ export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }
 
-/** @private */
+/** @hidden */
 export function deepCopy(obj: any) {
   return JSON.parse(JSON.stringify(obj));
 }
 
-/** @private */
+/** @hidden */
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
  var timeout: number, args: any, context: any, timestamp: number, result: any;
  return function() {
@@ -42,7 +42,7 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
 }
 
 /**
- * @private
+ * @hidden
  * Apply default arguments if they don't exist in
  * the first object.
  * @param the destination to apply defaults to.
@@ -62,35 +62,35 @@ export function defaults(dest: any, ...args: any[]) {
 }
 
 
-/** @private */
+/** @hidden */
 export function isBoolean(val: any) { return typeof val === 'boolean'; }
-/** @private */
+/** @hidden */
 export function isString(val: any) { return typeof val === 'string'; }
-/** @private */
+/** @hidden */
 export function isNumber(val: any) { return typeof val === 'number'; }
-/** @private */
+/** @hidden */
 export function isFunction(val: any) { return typeof val === 'function'; }
-/** @private */
+/** @hidden */
 export function isDefined(val: any) { return typeof val !== 'undefined'; }
-/** @private */
+/** @hidden */
 export function isUndefined(val: any) { return typeof val === 'undefined'; }
-/** @private */
+/** @hidden */
 export function isPresent(val: any) { return val !== undefined && val !== null; }
-/** @private */
+/** @hidden */
 export function isBlank(val: any) { return val === undefined || val === null; }
-/** @private */
+/** @hidden */
 export function isObject(val: any) { return typeof val === 'object'; }
-/** @private */
+/** @hidden */
 export function isArray(val: any) { return Array.isArray(val); };
 
 
-/** @private */
+/** @hidden */
 export function isPrimitive(val: any) {
   return isString(val) || isBoolean(val) || (isNumber(val) && !isNaN(val));
 };
 
 
-/** @private */
+/** @hidden */
 export function isTrueProperty(val: any): boolean {
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
@@ -100,7 +100,7 @@ export function isTrueProperty(val: any): boolean {
 };
 
 
-/** @private */
+/** @hidden */
 export function isCheckedProperty(a: any, b: any): boolean {
   if (a === undefined || a === null || a === '') {
     return (b === undefined || b === null || b === '');
@@ -120,7 +120,7 @@ export function isCheckedProperty(a: any, b: any): boolean {
 };
 
 
-/** @private */
+/** @hidden */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
   const element = array[indexes.from];
   array.splice(indexes.from, 1);
@@ -129,14 +129,14 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
 }
 
 
-/** @private */
+/** @hidden */
 export function removeArrayItem(array: any[], item: any) {
   const index = array.indexOf(item);
   return !!~index && !!array.splice(index, 1);
 }
 
 
-/** @private */
+/** @hidden */
 export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
@@ -157,11 +157,11 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
 }
 
 
-/** @private */
+/** @hidden */
 const ASSERT_ENABLED = true;
 
 
-/** @private */
+/** @hidden */
 function _runInDev(fn: Function) {
   if (ASSERT_ENABLED === true) {
     return fn();
@@ -169,7 +169,7 @@ function _runInDev(fn: Function) {
 }
 
 
-/** @private */
+/** @hidden */
 function _assert(actual: any, reason: string) {
   if (!actual && ASSERT_ENABLED === true) {
     let message = 'IONIC ASSERT: ' + reason;
@@ -179,7 +179,7 @@ function _assert(actual: any, reason: string) {
   }
 }
 
-/** @private */
+/** @hidden */
 export function requestIonicCallback(functionToLazy: any) {
   if ('requestIdleCallback' in window) {
     return (window as any).requestIdleCallback(functionToLazy);
@@ -188,8 +188,8 @@ export function requestIonicCallback(functionToLazy: any) {
   }
 }
 
-/** @private */
+/** @hidden */
 export { _assert as assert};
 
-/** @private */
+/** @hidden */
 export { _runInDev as runInDev};

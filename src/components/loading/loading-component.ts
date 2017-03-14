@@ -9,7 +9,7 @@ import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
-* @private
+* @hidden
 */
 @Component({
   selector: 'ion-loading',

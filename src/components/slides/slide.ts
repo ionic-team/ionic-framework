@@ -35,7 +35,7 @@ export class Slide {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._slides.update(10);

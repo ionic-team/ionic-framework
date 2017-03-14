@@ -9,7 +9,7 @@ import { removeArrayItem } from '../util/util';
 
 
 /**
- * @private
+ * @hidden
  */
 export class DomDebouncer {
 
@@ -51,7 +51,7 @@ export class DomDebouncer {
 
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class DomController {
@@ -150,6 +150,6 @@ function dispatch(timeStamp: number, r: Function[], w: Function[]) {
 
 
 /**
- * @private
+ * @hidden
  */
 export type DomCallback = { (timeStamp?: number): void };

@@ -9,7 +9,7 @@ import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
- * @private
+ * @hidden
  */
 export class ModalImpl extends ViewController {
   private _app: App;
@@ -37,7 +37,7 @@ export class ModalImpl extends ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTransitionName(direction: string): string {
     let key: string;

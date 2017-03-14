@@ -116,7 +116,7 @@ export interface DeepLinkMetadataType {
 }
 
 /**
- * @private
+ * @hidden
  */
 export class DeepLinkMetadata implements DeepLinkMetadataType {
   component?: any;
@@ -135,12 +135,12 @@ export interface DeepLinkMetadataFactory {
 }
 
 /**
- * @private
+ * @hidden
  */
 export var DeepLinkMetadataFactory: DeepLinkMetadataFactory;
 
 /**
- * @private
+ * @hidden
  */
 export interface DeepLinkConfig {
   links: DeepLinkMetadata[];

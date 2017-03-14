@@ -9,7 +9,7 @@ export const LAZY_LOADED_TOKEN = new OpaqueToken('LZYCMP');
 
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class ModuleLoader {
@@ -61,7 +61,7 @@ const SPLITTER = '#';
 
 
 /**
- * @private
+ * @hidden
  */
 export function provideModuleLoader(ngModuleLoader: NgModuleLoader, injector: Injector) {
   return new ModuleLoader(ngModuleLoader, injector);
@@ -75,7 +75,7 @@ export interface LoadedModule {
 
 
 /**
- * @private
+ * @hidden
  */
 export function setupPreloadingImplementation(config: Config, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
   if (config.getBoolean('preloadModules')) {
@@ -103,7 +103,7 @@ export function setupPreloadingImplementation(config: Config, deepLinkConfig: De
 }
 
 /**
- * @private
+ * @hidden
  */
 export function setupPreloading(config: Config, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader, ngZone: NgZone) {
   return function() {

@@ -33,14 +33,14 @@ import { MenuController } from './menu-controller';
 export class MenuClose {
 
   /**
-   * @private
+   * @hidden
    */
   @Input() menuClose: string;
 
   constructor(private _menu: MenuController) {}
 
   /**
-  * @private
+  * @hidden
   */
   @HostListener('click')
   close() {

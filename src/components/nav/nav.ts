@@ -100,7 +100,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -162,7 +162,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this.destroy();

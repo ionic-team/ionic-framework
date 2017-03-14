@@ -132,12 +132,12 @@ export class Config {
   private _trns: any = {};
 
   /**
-   * @private
+   * @hidden
    */
   plt: Platform;
 
   /**
-   * @private
+   * @hidden
    */
   init(config: any, plt: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
@@ -336,7 +336,7 @@ export class Config {
   }
 
   /**
-   * @private
+   * @hidden
    * @name settings()
    * @description
    */
@@ -364,28 +364,28 @@ export class Config {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setModeConfig(modeName: string, modeConfig: any) {
     this._modes[modeName] = modeConfig;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getModeConfig(modeName: string): any {
     return this._modes[modeName] || null;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setTransition(trnsName: string, trnsClass: any) {
     this._trns[trnsName] = trnsClass;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTransition(trnsName: string): any {
     return this._trns[trnsName] || null;
@@ -394,7 +394,7 @@ export class Config {
 }
 
 /**
- * @private
+ * @hidden
  */
 export function setupConfig(userConfig: any, plt: Platform): Config {
   const config = new Config();
@@ -409,6 +409,6 @@ export function setupConfig(userConfig: any, plt: Platform): Config {
 }
 
 /**
- * @private
+ * @hidden
  */
 export const ConfigToken = new OpaqueToken('USERCONFIG');

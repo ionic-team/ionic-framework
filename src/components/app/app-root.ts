@@ -11,7 +11,7 @@ import * as Constants from './app-constants';
 export const AppRootToken = new OpaqueToken('USERROOT');
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-app',
@@ -91,7 +91,7 @@ export class IonicApp extends Ion implements OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _getPortal(portal?: number): OverlayPortal {
     if (portal === Constants.PORTAL_LOADING) {

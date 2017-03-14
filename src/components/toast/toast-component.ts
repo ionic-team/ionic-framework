@@ -6,7 +6,7 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-toast',

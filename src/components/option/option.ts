@@ -64,7 +64,7 @@ export class Option {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get text() {
     return this._elementRef.nativeElement.textContent;

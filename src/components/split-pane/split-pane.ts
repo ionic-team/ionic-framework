@@ -14,7 +14,7 @@ const QUERY: { [key: string]: string }  = {
 };
 
 /**
- * @private
+ * @hidden
  */
 export abstract class RootNode {
   abstract getElementRef(): ElementRef;
@@ -149,16 +149,16 @@ export class SplitPane extends Ion implements RootNode {
   _children: RootNode[];
 
   /**
-   * @private
+   * @hidden
    */
   sideContent: RootNode = null;
   /**
-   * @private
+   * @hidden
    */
   mainContent: RootNode = null;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(RootNode, { descendants: false })
   set _setchildren(query: QueryList<RootNode>) {
@@ -207,7 +207,7 @@ export class SplitPane extends Ion implements RootNode {
 
 
   /**
-   * @private
+   * @hidden
    */
   _register(node: RootNode, isMain: boolean, callback: Function): boolean {
     if (this.getElementRef().nativeElement !== node.getElementRef().nativeElement.parentNode) {
@@ -227,7 +227,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterViewInit() {
     this._init = true;
@@ -235,7 +235,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _update() {
     if (!this._init) {
@@ -265,7 +265,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateChildren() {
     this.mainContent = null;
@@ -275,7 +275,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setVisible(visible: boolean) {
     if (this._visible === visible) {
@@ -290,21 +290,21 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isVisible(): boolean {
     return this._visible;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(className: string, add: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setPaneCSSClass(elementRef: ElementRef, isMain: boolean) {
     const ele = elementRef.nativeElement;
@@ -313,7 +313,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     assert(this._rmListener, 'at this point _rmListerner should be valid');
@@ -323,7 +323,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   initPane(): boolean {
     return true;

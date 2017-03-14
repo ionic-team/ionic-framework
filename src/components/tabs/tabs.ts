@@ -238,7 +238,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
 
   /**
-   * @private
+   * @hidden
    */
   parent: NavControllerBase;
 
@@ -362,7 +362,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   add(tab: Tab): string {
     this._tabs.push(tab);

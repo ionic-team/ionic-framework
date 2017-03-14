@@ -4,7 +4,7 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'ion-card-title'

@@ -651,7 +651,7 @@ export class DeepLinkModule {
 }
 
 /**
- * @private
+ * @hidden
  */
 export function provideLocationStrategy(platformLocationStrategy: PlatformLocation,
                                         baseHref: string, config: Config) {

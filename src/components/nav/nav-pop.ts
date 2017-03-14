@@ -35,7 +35,7 @@ export class NavPop {
   }
 
 /**
- * @private
+ * @hidden
  */
   @HostListener('click')
   onClick(): boolean {

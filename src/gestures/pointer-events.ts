@@ -2,7 +2,7 @@ import { assert } from '../util/util';
 import { Platform, EventListenerOptions } from '../platform/platform';
 
 /**
- * @private
+ * @hidden
  */
 export class PointerEvents {
   private rmTouchStart: Function = null;

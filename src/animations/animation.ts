@@ -3,7 +3,7 @@ import { Platform } from '../platform/platform';
 
 
 /**
- * @private
+ * @hidden
  */
 export class Animation {
   private _c: Animation[];
@@ -169,7 +169,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    */
 
@@ -364,7 +364,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -396,7 +396,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -428,7 +428,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -461,7 +461,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -482,7 +482,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -533,7 +533,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -566,7 +566,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -585,7 +585,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -614,7 +614,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * NO RECURSION
    */
@@ -625,7 +625,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -707,7 +707,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -746,7 +746,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    * DOM WRITE
    * RECURSION
@@ -770,7 +770,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -823,7 +823,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    * RECURSION
    */
@@ -844,7 +844,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -865,7 +865,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _setAfterStyles() {
@@ -939,7 +939,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -983,7 +983,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1063,7 +1063,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1114,7 +1114,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -1130,7 +1130,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
@@ -1190,7 +1190,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    */
   _transEl(): HTMLElement {

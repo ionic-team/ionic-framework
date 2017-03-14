@@ -14,7 +14,7 @@ import { RippleActivator } from './ripple';
 import { UIEventManager } from '../gestures/ui-event-manager';
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class TapClick {
@@ -234,7 +234,7 @@ function getActivatableTarget(ele: HTMLElement): any {
 }
 
 /**
- * @private
+ * @hidden
  */
 export const isActivatable = function (ele: HTMLElement) {
   if (ACTIVATABLE_ELEMENTS.indexOf(ele.tagName) > -1) {
@@ -256,7 +256,7 @@ const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
 
 
 /**
- * @private
+ * @hidden
  */
 export function setupTapClick(config: Config, plt: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
   return function() {

@@ -183,7 +183,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   private _imgRndBfr: number;
   private _imgVelMax: number;
 
-  /** @private */
+  /** @hidden */
   statusbarPadding: boolean;
 
   /**
@@ -372,7 +372,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     if (this._scrollEle) return;
@@ -410,7 +410,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._scLsn && this._scLsn();
@@ -422,14 +422,14 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getScrollElement(): HTMLElement {
     return this._scrollEle;
   }
 
   /**
-   * @private
+   * @hidden
    */
   onScrollElementTransitionEnd(callback: {(ev: TransitionEvent): void}) {
     this._plt.transitionEnd(this._scrollEle, callback);
@@ -471,7 +471,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   enableJsScroll() {
     this._scroll.enableJsScroll(this._cTop, this._cBottom);
@@ -492,21 +492,21 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   addImg(img: Img) {
     this._imgs.push(img);
   }
 
   /**
-   * @private
+   * @hidden
    */
   removeImg(img: Img) {
     removeArrayItem(this._imgs, img);
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
@@ -559,7 +559,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
@@ -581,7 +581,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   clearScrollPaddingFocusOut() {
@@ -608,7 +608,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    */
   private _readDimensions() {
@@ -754,7 +754,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   private _writeDimensions() {
@@ -842,7 +842,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   imgsUpdate() {
     if (this._scroll.initialized && this._imgs.length && this.isImgsUpdatable()) {
@@ -851,7 +851,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isImgsUpdatable() {
     // an image is only "updatable" if the content isn't scrolling too fast

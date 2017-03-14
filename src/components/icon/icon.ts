@@ -43,17 +43,17 @@ import { Ion } from '../ion';
   }
 })
 export class Icon extends Ion {
-  /** @private */
+  /** @hidden */
   _iconMode: string;
-  /** @private */
+  /** @hidden */
   _isActive: boolean = true;
-  /** @private */
+  /** @hidden */
   _name: string = '';
-  /** @private */
+  /** @hidden */
   _ios: string = '';
-  /** @private */
+  /** @hidden */
   _md: string = '';
-  /** @private */
+  /** @hidden */
   _css: string = '';
 
   /**
@@ -89,7 +89,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     if (this._css) {
@@ -160,12 +160,12 @@ export class Icon extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @HostBinding('class.hide') _hidden: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   update() {
     let iconName: string;

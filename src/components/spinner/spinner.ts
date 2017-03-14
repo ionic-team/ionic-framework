@@ -183,7 +183,7 @@ export class Spinner extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     this._init = true;
@@ -191,7 +191,7 @@ export class Spinner extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   load() {
     if (this._init) {

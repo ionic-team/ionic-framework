@@ -5,7 +5,7 @@ import { Form } from '../../util/form';
 import { Ion } from '../ion';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'ion-item-divider',

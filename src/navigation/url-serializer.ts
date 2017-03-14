@@ -5,7 +5,7 @@ import { isArray, isBlank, isPresent } from '../util/util';
 
 
 /**
- * @private
+ * @hidden
  */
 export class UrlSerializer {
   links: NavLink[];
@@ -318,7 +318,7 @@ function sortConfigLinks(a: NavLink, b: NavLink) {
 const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;
 
 /**
- * @private
+ * @hidden
  */
 export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
 

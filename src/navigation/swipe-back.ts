@@ -7,7 +7,7 @@ import { SlideData } from '../gestures/slide-gesture';
 import { SlideEdgeGesture } from '../gestures/slide-edge-gesture';
 
 /**
- * @private
+ * @hidden
  */
 export class SwipeBackGesture extends SlideEdgeGesture {
 

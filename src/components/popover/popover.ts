@@ -9,7 +9,7 @@ import { OverlayProxy } from '../../navigation/overlay-proxy';
 import { PopoverImpl } from './popover-impl';
 
 /**
- * @private
+ * @hidden
  */
 export class Popover extends OverlayProxy {
 

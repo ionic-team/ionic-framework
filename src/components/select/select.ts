@@ -153,7 +153,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   _isOpen: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
@@ -381,14 +381,14 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
 
 
   /**
-   * @private
+   * @hidden
    */
   get text() {
     return (this._multi ? this._texts : this._texts.join());
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(Option)
   set options(val: QueryList<Option>) {
@@ -404,7 +404,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updOpts() {
     this._texts = [];
@@ -439,7 +439,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     console.debug('select, writeValue', val);
@@ -448,14 +448,14 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._updOpts();
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -469,12 +469,12 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -485,19 +485,19 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() { }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form.deregister(this);

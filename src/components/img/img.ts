@@ -123,9 +123,9 @@ export class Img implements OnDestroy {
   /** @internal */
   _unreg: Function;
 
-  /** @private */
+  /** @hidden */
   canRequest: boolean;
-  /** @private */
+  /** @hidden */
   canRender: boolean;
 
 
@@ -178,7 +178,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   reset() {
     if (this._requestingSrc) {
@@ -196,7 +196,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   update() {
     // only attempt an update if there is an active src
@@ -255,7 +255,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get top(): number {
     const bounds = this._getBounds();
@@ -263,7 +263,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get bottom(): number {
     const bounds = this._getBounds();
@@ -360,7 +360,7 @@ export class Img implements OnDestroy {
   @Input() alt: string = '';
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._img = this._elementRef.nativeElement.firstChild;
@@ -372,7 +372,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._unreg && this._unreg();

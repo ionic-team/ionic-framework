@@ -6,7 +6,7 @@ import { ViewController } from '../../navigation/view-controller';
 import { NavPop } from './nav-pop';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'a[navPop]',

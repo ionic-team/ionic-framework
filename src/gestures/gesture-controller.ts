@@ -2,40 +2,40 @@ import { forwardRef, Inject, Injectable } from '@angular/core';
 import { App } from '../components/app/app';
 import { assert } from '../util/util';
 
-/** @private */
+/** @hidden */
 export const GESTURE_GO_BACK_SWIPE = 'goback-swipe';
 
-/** @private */
+/** @hidden */
 export const GESTURE_MENU_SWIPE = 'menu-swipe';
 
-/** @private */
+/** @hidden */
 export const GESTURE_ITEM_SWIPE = 'item-swipe';
 
-/** @private */
+/** @hidden */
 export const GESTURE_REFRESHER = 'refresher';
 
-/** @private */
+/** @hidden */
 export const GESTURE_TOGGLE = 'toggle';
 
 
-/** @private */
+/** @hidden */
 export const GESTURE_PRIORITY_SLIDING_ITEM = -10;
 
-/** @private */
+/** @hidden */
 export const GESTURE_PRIORITY_REFRESHER = 0;
 
-/** @private */
+/** @hidden */
 export const GESTURE_PRIORITY_MENU_SWIPE = 10;
 
-/** @private */
+/** @hidden */
 export const GESTURE_PRIORITY_GO_BACK_SWIPE = 20;
 
-/** @private */
+/** @hidden */
 export const GESTURE_PRIORITY_TOGGLE = 30;
 
 
 /**
-* @private
+* @hidden
 */
 export interface GestureOptions {
   name: string;
@@ -44,7 +44,7 @@ export interface GestureOptions {
 }
 
 /**
-* @private
+* @hidden
 */
 export interface BlockerOptions {
   disableScroll?: boolean;
@@ -52,7 +52,7 @@ export interface BlockerOptions {
 }
 
 /**
-* @private
+* @hidden
 */
 export const BLOCK_ALL: BlockerOptions = {
   disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE],
@@ -60,7 +60,7 @@ export const BLOCK_ALL: BlockerOptions = {
 };
 
 /**
-* @private
+* @hidden
 */
 @Injectable()
 export class GestureController {
@@ -200,7 +200,7 @@ export class GestureController {
 }
 
 /**
-* @private
+* @hidden
 */
 export class GestureDelegate {
 
@@ -258,7 +258,7 @@ export class GestureDelegate {
 }
 
 /**
-* @private
+* @hidden
 */
 export class BlockerDelegate {
 

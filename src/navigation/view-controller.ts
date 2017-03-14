@@ -81,28 +81,28 @@ export class ViewController {
   willUnload: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @private
+   * @hidden
    */
   readReady: EventEmitter<any> = new EventEmitter<any>();
 
   /**
-   * @private
+   * @hidden
    */
   writeReady: EventEmitter<any> = new EventEmitter<any>();
 
-  /** @private */
+  /** @hidden */
   data: any;
 
-  /** @private */
+  /** @hidden */
   instance: any;
 
-  /** @private */
+  /** @hidden */
   id: string;
 
-  /** @private */
+  /** @hidden */
   isOverlay: boolean = false;
 
-  /** @private */
+  /** @hidden */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
@@ -113,7 +113,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   init(componentRef: ComponentRef<any>) {
     this._cmp = componentRef;
@@ -130,14 +130,14 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   subscribe(generatorOrNext?: any): any {
     return this._emitter.subscribe(generatorOrNext);
   }
 
   /**
-   * @private
+   * @hidden
    */
   emit(data?: any) {
     this._emitter.emit(data);
@@ -183,28 +183,28 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNav(): NavController {
     return this._nav;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTransitionName(direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNavParams(): NavParams {
     return new NavParams(this.data);
   }
 
   /**
-   * @private
+   * @hidden
    */
   setLeavingOpts(opts: NavOptions) {
     this._leavingOpts = opts;
@@ -226,7 +226,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get name(): string {
     return (this.component ? this.component.name : '');
@@ -255,7 +255,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _domShow(shouldShow: boolean, renderer: Renderer) {
@@ -273,14 +273,14 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getZIndex(): number {
     return this._zIndex;
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
@@ -329,7 +329,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getIONContent(): Content {
     return this._ionCntDir;
@@ -341,7 +341,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getIONContentRef(): ElementRef {
     return this._ionCntRef;
@@ -352,7 +352,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getHeader(): Header {
     return this._hdrDir;
@@ -363,7 +363,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getFooter(): Footer {
     return this._ftrDir;
@@ -374,7 +374,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNavbar(): Navbar {
     return this._nb;
@@ -416,7 +416,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * The view has loaded. This event only happens once per view will be created.
    * This event is fired before the component and his children have been initialized.
    */
@@ -426,7 +426,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
    * fire again on a subsequent viewing. This method is a good place
@@ -439,7 +439,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * The view is about to enter and become the active view.
    */
   _willEnter() {
@@ -456,7 +456,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
@@ -469,7 +469,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * The view is about to leave and no longer be the active view.
    */
   _willLeave(willUnload: boolean) {
@@ -483,7 +483,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
@@ -500,7 +500,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _willUnload() {
     this.willUnload.emit(null);
@@ -513,7 +513,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _destroy(renderer: Renderer) {
@@ -537,7 +537,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _lifecycleTest(lifecycle: string): boolean | Promise<any> {
     const instance = this.instance;

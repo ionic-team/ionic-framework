@@ -5,7 +5,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { NavPush } from './nav-push';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'a[navPush]',

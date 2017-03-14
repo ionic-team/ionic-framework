@@ -42,7 +42,7 @@ export class ItemOptions {
   constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
 
   /**
-   * @private
+   * @hidden
    */
   getSides(): number {
     if (isPresent(this.side) && this.side === 'left') {
@@ -52,7 +52,7 @@ export class ItemOptions {
   }
 
   /**
-   * @private
+   * @hidden
    */
   width() {
     return this._elementRef.nativeElement.offsetWidth;

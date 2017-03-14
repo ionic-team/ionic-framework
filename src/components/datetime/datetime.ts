@@ -280,7 +280,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   _locale: LocaleData = {};
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
@@ -473,7 +473,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   open() {
     if (this._disabled) {
@@ -520,7 +520,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   generate(picker: Picker) {
     // if a picker format wasn't provided, then fallback
@@ -588,7 +588,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   validate(picker: Picker) {
     let i: number;
@@ -679,7 +679,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   divyColumns(picker: Picker) {
     let pickerColumns = picker.getColumns();
@@ -712,21 +712,21 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   setValue(newData: any) {
     updateDate(this._value, newData);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getValue(): DateTimeData {
     return this._value;
   }
 
   /**
-   * @private
+   * @hidden
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
@@ -735,7 +735,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   updateText() {
     // create the text of the formatted data
@@ -744,7 +744,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   calcMinMax(now?: Date) {
     const todaysYear = (now || new Date()).getFullYear();
@@ -807,7 +807,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     console.debug('datetime, writeValue', val);
@@ -817,7 +817,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     // first see if locale names were provided in the inputs
@@ -832,7 +832,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -850,12 +850,12 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -867,19 +867,19 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() { }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form.deregister(this);
@@ -887,7 +887,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 }
 
 /**
- * @private
+ * @hidden
  * Use to convert a string of comma separated numbers or
  * an array of numbers, and clean up any user input
  */
@@ -918,7 +918,7 @@ function convertToArrayOfNumbers(input: any, type: string): number[] {
 }
 
 /**
- * @private
+ * @hidden
  * Use to convert a string of comma separated strings or
  * an array of strings, and clean up any user input
  */

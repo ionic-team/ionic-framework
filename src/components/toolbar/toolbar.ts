@@ -110,7 +110,7 @@ import { ToolbarBase } from './toolbar-base';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
-  /** @private */
+  /** @hidden */
   _sbPadding: boolean;
 
   /**

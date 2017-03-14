@@ -9,7 +9,7 @@ import { ViewController } from '../../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 export class PopoverImpl extends ViewController {
   private _app: App;
@@ -31,7 +31,7 @@ export class PopoverImpl extends ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'popoverLeave' : 'popoverEnter');

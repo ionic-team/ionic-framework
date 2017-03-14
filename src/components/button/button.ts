@@ -131,25 +131,25 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button extends Ion {
-  /** @private */
+  /** @hidden */
   _role: string = 'button'; // bar-button
 
-  /** @private */
+  /** @hidden */
   _size: string; // large/small/default
 
-  /** @private */
+  /** @hidden */
   _style: string = 'default'; // outline/clear/solid
 
-  /** @private */
+  /** @hidden */
   _shape: string; // round/fab
 
-  /** @private */
+  /** @hidden */
   _display: string; // block/full
 
-  /** @private */
+  /** @hidden */
   _decorator: string; // strong
 
-  /** @private */
+  /** @hidden */
   _init: boolean;
 
   /**
@@ -245,7 +245,7 @@ export class Button extends Ion {
     this._assignCss(true);
   }
 
-  /** @private */
+  /** @hidden */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
       this._updateColor(this._color, false);
@@ -297,14 +297,14 @@ export class Button extends Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   ngAfterContentInit() {
     this._init = true;
     this._assignCss(true);
   }
 
   /**
-   * @private
+   * @hidden
    */
   setRole(val: string) {
     this._assignCss(false);
@@ -313,7 +313,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _assignCss(assignCssClass: boolean) {
     let role = this._role;
@@ -331,7 +331,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
@@ -342,7 +342,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateColor(color: string, isAdd: boolean) {
     if (color && this._init) {

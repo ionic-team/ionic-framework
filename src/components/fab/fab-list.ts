@@ -58,7 +58,7 @@ export class FabList {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setVisible(val: boolean) {
     let visible = isTrueProperty(val);
