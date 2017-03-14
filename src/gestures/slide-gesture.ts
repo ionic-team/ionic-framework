@@ -43,7 +43,7 @@ export class SlideGesture extends PanGesture {
       max: 0,
       pointerStartPos: pos,
       pos: pos,
-      timestamp: Date.now(),
+      timestamp: performance.now(),
       elementStartPos: 0,
       started: true,
       delta: 0,
@@ -65,7 +65,7 @@ export class SlideGesture extends PanGesture {
 
     let coord = <any>pointerCoord(ev);
     let newPos = coord[this.direction];
-    let newTimestamp = Date.now();
+    let newTimestamp = performance.now();
     let velocity = (newPos - slide.pos) / (newTimestamp - slide.timestamp);
 
     slide.pos = newPos;

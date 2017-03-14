@@ -22,9 +22,9 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  return function() {
    context = this;
    args = arguments;
-   timestamp = Date.now();
+   timestamp = performance.now();
    var later: any = function() {
-     var last: any = Date.now() - timestamp;
+     var last: any = performance.now() - timestamp;
      if (last < wait) {
        timeout = setTimeout(later, wait - last);
      } else {

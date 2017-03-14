@@ -127,12 +127,12 @@ export class App {
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
   setEnabled(isEnabled: boolean, duration: number = 700, minDuration: number = 0) {
-    this._disTime = (isEnabled ? 0 : Date.now() + duration);
+    this._disTime = (isEnabled ? 0 : performance.now() + duration);
 
     if (this._clickBlock) {
       if (isEnabled) {
         // disable the click block if it's enabled, or the duration is tiny
-        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
+        this._clickBlock.activate(false, CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
 
       } else {
         // show the click block for duration + some number
@@ -163,14 +163,14 @@ export class App {
     if (disTime === 0) {
       return true;
     }
-    return (disTime < Date.now());
+    return (disTime < performance.now());
   }
 
   /**
    * @private
    */
   setScrolling() {
-    this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
+    this._scrollTime = performance.now() + ACTIVE_SCROLLING_TIME;
   }
 
   /**
@@ -182,7 +182,7 @@ export class App {
     if (scrollTime === 0) {
       return false;
     }
-    if (scrollTime < Date.now()) {
+    if (scrollTime < performance.now()) {
       this._scrollTime = 0;
       return false;
     }

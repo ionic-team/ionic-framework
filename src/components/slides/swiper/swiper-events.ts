@@ -271,7 +271,7 @@ var startTranslate: any;
 var allowThresholdMove: any;
 
 // Last click time
-var lastClickTime = Date.now();
+var lastClickTime = performance.now();
 var clickTimeout: any;
 
 // Velocities
@@ -324,7 +324,7 @@ function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
   s._touches.startX = startX;
   s._touches.startY = startY;
 
-  touchStartTime = Date.now();
+  touchStartTime = performance.now();
   s._allowClick = true;
 
   updateContainerSize(s, plt);
@@ -371,7 +371,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
     if (isTouched) {
       s._touches.startX = s._touches.currentX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
       s._touches.startY = s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
-      touchStartTime = Date.now();
+      touchStartTime = performance.now();
     }
     return;
   }
@@ -551,7 +551,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
   if (!isTouched) return;
 
   // Time diff
-  var touchEndTime = Date.now();
+  var touchEndTime = performance.now();
   var timeDiff = touchEndTime - touchStartTime;
 
   // Tap, doubleTap, Click
@@ -581,7 +581,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
     });
   }
 
-  lastClickTime = Date.now();
+  lastClickTime = performance.now();
   plt.timeout(() => {
     if (s) {
       s._allowClick = true;
