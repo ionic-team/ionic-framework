@@ -1,6 +1,8 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, enableProdMode } from '@angular/core';
 import { IonicApp, IonicModule, NavController, Platform } from '../../../../../ionic-angular';
 
+
+enableProdMode();
 
 @Component({
   templateUrl: 'main.html'
@@ -8,15 +10,11 @@ import { IonicApp, IonicModule, NavController, Platform } from '../../../../../i
 export class E2EPage {
   items: any[] = [];
   webview: string = '';
+  counter: number = 0;
 
   constructor(plt: Platform, public navCtrl: NavController) {
     for (var i = 0; i < 200; i++) {
-      this.items.push({
-        value: i,
-        someMethod: function() {
-          return '!!';
-        }
-      });
+      this.addItem();
     }
 
     if (plt.is('ios')) {
@@ -41,6 +39,16 @@ export class E2EPage {
 
   pushPage() {
     this.navCtrl.push(E2EPage);
+  }
+
+  addItem() {
+    this.items.push({
+      value: this.counter,
+      someMethod: function() {
+        return '!!';
+      }
+    });
+    this.counter++;
   }
 
   reload() {

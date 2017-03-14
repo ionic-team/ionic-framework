@@ -253,7 +253,6 @@ export class E2EPage {
   }
 
   presentLoadingOpenDismiss() {
-    // debugger;
     const loading = this.loadingCtrl.create({
       content: 'Loading 1'
     });

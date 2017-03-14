@@ -248,7 +248,7 @@ export class Img implements OnDestroy {
     const imgEle = this._img;
     const renderer = this._renderer;
 
-    if (imgEle.src !== srcAttr) {
+    if (imgEle && imgEle.src !== srcAttr) {
       renderer.setElementAttribute(this._img, 'src', srcAttr);
       renderer.setElementAttribute(this._img, 'alt', this.alt);
     }
