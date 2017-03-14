@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -110,10 +110,10 @@ export { ScrollEvent } from '../../util/scroll-view';
 @Component({
   selector: 'ion-content',
   template:
-    '<div class="fixed-content">' +
+    '<div class="fixed-content" #fixedContent>' +
       '<ng-content select="[ion-fixed],ion-fab"></ng-content>' +
     '</div>' +
-    '<div class="scroll-content">' +
+    '<div class="scroll-content" #scrollContent>' +
       '<ng-content></ng-content>' +
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
@@ -165,10 +165,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /** @internal */
   _dirty: boolean;
   /** @internal */
-  _scrollEle: HTMLElement;
-  /** @internal */
-  _fixedEle: HTMLElement;
-  /** @internal */
   _imgs: Img[] = [];
   /** @internal */
   _viewCtrlReadSub: any;
@@ -181,6 +177,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
   /** @private */
   statusbarPadding: boolean;
+
+  /** @internal */
+  @ViewChild('fixedContent', { read: ElementRef }) _fixedContent: ElementRef;
+
+  /** @internal */
+  @ViewChild('scrollContent', { read: ElementRef }) _scrollContent: ElementRef;
 
   /**
    * Content height of the viewable area. This does not include content
@@ -363,15 +365,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * @private
    */
   ngOnInit() {
-    if (this._scrollEle) return;
-
-    const children = this._elementRef.nativeElement.children;
-    assert(children && children.length >= 2, 'content needs at least two children');
+    assert(this.getFixedElement(), 'fixed element was not found');
+    assert(this.getScrollElement(), 'scroll element was not found');
 
     const scroll = this._scroll;
-
-    scroll.ev.fixedElement = this._fixedEle = children[0];
-    scroll.ev.scrollElement = this._scrollEle = children[1];
+    scroll.ev.fixedElement = this.getFixedElement();
+    scroll.ev.scrollElement = this.getScrollElement();
 
     // subscribe to the scroll start
     scroll.scrollStart.subscribe(ev => {
@@ -406,21 +405,28 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._viewCtrlWriteSub && this._viewCtrlWriteSub.unsubscribe();
     this._viewCtrlReadSub = this._viewCtrlWriteSub = null;
     this._scroll && this._scroll.destroy();
-    this._scrollEle = this._fixedEle = this._footerEle = this._scLsn = this._scroll = null;
+    this._footerEle = this._scLsn = this._scroll = null;
   }
 
   /**
    * @private
    */
   getScrollElement(): HTMLElement {
-    return this._scrollEle;
+    return this._scrollContent.nativeElement;
+  }
+
+  /**
+   * @private
+   */
+  getFixedElement(): HTMLElement {
+    return this._fixedContent.nativeElement;
   }
 
   /**
    * @private
    */
   onScrollElementTransitionEnd(callback: {(ev: TransitionEvent): void}) {
-    this._plt.transitionEnd(this._scrollEle, callback);
+    this._plt.transitionEnd(this.getScrollElement(), callback);
   }
 
   /**
@@ -498,14 +504,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
-    if (this._scrollEle) {
+    const scrollEle = this.getScrollElement();
+    if (scrollEle) {
       this._dom.write(() => {
-        // double check here as the scroll element
-        // could have been destroyed in the 16ms it took
-        // for this dom write to happen
-        if (this._scrollEle) {
-          (<any>this._scrollEle.style)[prop] = val;
-        }
+        (<any>scrollEle.style)[prop] = val;
       });
     }
   }
@@ -527,7 +529,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * {number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
   getContentDimensions(): ContentDimensions {
-    const scrollEle = this._scrollEle;
+    const scrollEle = this.getScrollElement();
     const parentElement = scrollEle.parentElement;
 
     return {
@@ -558,11 +560,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
       console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
       this._scrollPadding = newPadding;
-      if (this._scrollEle) {
+      var scrollEle = this.getScrollElement();
+      if (scrollEle) {
         this._dom.write(() => {
-          if (this._scrollEle) {
-            this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
-          }
+          scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
         });
       }
     }
@@ -600,15 +601,15 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * DOM READ
    */
   private _readDimensions() {
-    let cachePaddingTop = this._pTop;
-    let cachePaddingRight = this._pRight;
-    let cachePaddingBottom = this._pBottom;
-    let cachePaddingLeft = this._pLeft;
-    let cacheHeaderHeight = this._hdrHeight;
-    let cacheFooterHeight = this._ftrHeight;
-    let cacheTabsPlacement = this._tabsPlacement;
-    let scrollEvent: ScrollEvent;
+    const cachePaddingTop = this._pTop;
+    const cachePaddingRight = this._pRight;
+    const cachePaddingBottom = this._pBottom;
+    const cachePaddingLeft = this._pLeft;
+    const cacheHeaderHeight = this._hdrHeight;
+    const cacheFooterHeight = this._ftrHeight;
+    const cacheTabsPlacement = this._tabsPlacement;
     let tabsTop = 0;
+    let scrollEvent: ScrollEvent;
     this._pTop = 0;
     this._pRight = 0;
     this._pBottom = 0;
@@ -622,11 +623,13 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
     // In certain cases this._scroll is undefined
     // if that is the case then we should just return
-    if (!this._scroll) return;
+    if (!this._scroll) {
+      return;
+    }
 
     scrollEvent = this._scroll.ev;
 
-    let ele: HTMLElement = this._elementRef.nativeElement;
+    let ele: HTMLElement = this.getNativeElement();
     if (!ele) {
       assert(false, 'ele should be valid');
       return;
@@ -735,7 +738,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
       this._cBottom !== this.contentBottom
     );
 
-    this._scroll.init(this._scrollEle, this._cTop, this._cBottom);
+    this._scroll.init(this.getScrollElement(), this._cTop, this._cBottom);
 
     // initial imgs refresh
     this.imgsUpdate();
@@ -751,13 +754,13 @@ export class Content extends Ion implements OnDestroy, OnInit {
       return;
     }
 
-    const scrollEle = this._scrollEle;
+    const scrollEle = this.getScrollElement();
     if (!scrollEle) {
       assert(false, 'this._scrollEle should be valid');
       return;
     }
 
-    const fixedEle = this._fixedEle;
+    const fixedEle = this.getFixedElement();
     if (!fixedEle) {
       assert(false, 'this._fixedEle should be valid');
       return;
