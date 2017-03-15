@@ -432,7 +432,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   writeUpdate() {
     console.debug(`virtual-scroll, writeUpdate`);
 
-    processRecords(this._data.renderHeight,
+    const stopAtHeight = ((this._data.scrollTop || 0) + this._data.renderHeight);
+    processRecords(stopAtHeight,
                    this._records,
                    this._cells,
                    this._hdrFn,
@@ -458,16 +459,17 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     const records = this._records;
 
     // initialize nodes with the correct cell data
-    data.topCell = 0;
+    adjustRendered(cells, data);
     data.bottomCell = (cells.length - 1);
 
-    populateNodeData(0, data.bottomCell,
-                      data.viewWidth, true,
-                      cells, records, nodes,
-                      this._itmTmp.viewContainer,
-                      this._itmTmp.templateRef,
-                      this._hdrTmp && this._hdrTmp.templateRef,
-                      this._ftrTmp && this._ftrTmp.templateRef, true);
+    populateNodeData(data.topCell || 0,
+      data.bottomCell,
+      data.viewWidth, true,
+      cells, records, nodes,
+      this._itmTmp.viewContainer,
+      this._itmTmp.templateRef,
+      this._hdrTmp && this._hdrTmp.templateRef,
+      this._ftrTmp && this._ftrTmp.templateRef, true);
 
     // ******** DOM WRITE ****************
     this._cd.detectChanges();
