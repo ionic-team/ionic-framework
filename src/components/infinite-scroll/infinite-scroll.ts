@@ -2,7 +2,7 @@ import { Directive, ElementRef, EventEmitter, Host, Input, NgZone, Output } from
 
 import { Content, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-
+import { assert } from '../../util/util';
 
 /**
  * @name InfiniteScroll
@@ -257,7 +257,8 @@ export class InfiniteScroll {
 
     if (this._position === POSITION_BOTTOM) {
       distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - height - threshold;
-    } else if (this._position === POSITION_TOP) {
+    } else {
+      assert(this._position === POSITION_TOP, '_position should be top');
       distanceFromInfinite = d.scrollTop - infiniteHeight - threshold;
     }
 
@@ -288,28 +289,51 @@ export class InfiniteScroll {
    * to `enabled`.
    */
   complete() {
-    if (this._position === POSITION_TOP) {
-      // ******** DOM READ ****************
-      // Save the current content dimensions before the UI updates
-      const prevDim = this._content.getContentDimensions();
-
-      // ******** DOM READ ****************
-      this._dom.read(() => {
-        // UI has updated, save the new content dimensions
-        const newDim = this._content.getContentDimensions();
-
-        // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
-        const newScrollTop = newDim.scrollHeight - (prevDim.scrollHeight - prevDim.scrollTop);
-
-        // ******** DOM WRITE ****************
-        this._dom.write(() => {
-          this._content.scrollTop = newScrollTop;
-          this.state = STATE_ENABLED;
-        });
-      });
-    } else {
+    if (this._position === POSITION_BOTTOM) {
       this.state = STATE_ENABLED;
+      return;
     }
+
+    assert(this._position === POSITION_TOP, 'position should be top');
+    /* New content is being added at the top, but the scrollTop position stays the same,
+      which causes a scroll jump visually. This algorithm makes sure to prevent this.
+
+      (Frame 1)
+        complete() is called, but the UI hasn't had time to update yet.
+        Save the current content dimensions.
+        Wait for the next frame using _dom.read, so the UI will be updated.
+
+      (Frame 2)
+        Read the new content dimensions.
+        Calculate the height difference and the new scroll position.
+        Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
+
+      (Still frame 2, if I'm correct)
+        Change the scroll position (= visually maintain the scroll position).
+        Change the state to re-enable the InfiniteScroll. This should be after changing the scroll position, or it could cause the InfiniteScroll to be triggered again immediately.
+
+      (Frame 3)
+        Done.
+    */
+
+    // ******** DOM READ ****************
+    // Save the current content dimensions before the UI updates
+    const prevDim = this._content.getContentDimensions();
+
+    // ******** DOM READ ****************
+    this._dom.read(() => {
+      // UI has updated, save the new content dimensions
+      const newDim = this._content.getContentDimensions();
+
+      // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
+      const newScrollTop = newDim.scrollHeight - (prevDim.scrollHeight - prevDim.scrollTop);
+
+      // ******** DOM WRITE ****************
+      this._dom.write(() => {
+        this._content.scrollTop = newScrollTop;
+        this.state = STATE_ENABLED;
+      });
+    });
   }
 
   /**
