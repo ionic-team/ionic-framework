@@ -474,7 +474,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   @Input()
   get fullscreen(): boolean {
-    return !!this._fullscreen;
+    return this._fullscreen;
   }
 
   set fullscreen(val: boolean) {
@@ -486,7 +486,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   @Input()
   get scrollDownOnLoad(): boolean {
-    return !!this._scrollDownOnLoad;
+    return this._scrollDownOnLoad;
   }
 
   set scrollDownOnLoad(val: boolean) {

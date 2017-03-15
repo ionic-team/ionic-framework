@@ -205,6 +205,8 @@ export class InfiniteScroll {
   set position(val: string) {
     if (val === POSITION_TOP || val === POSITION_BOTTOM) {
       this._position = val;
+    } else {
+      console.error(`Invalid value for ion-infinite-scroll's position input. Its value should be '${POSITION_BOTTOM}' or '${POSITION_TOP}'.`);
     }
   }
 
@@ -288,12 +290,15 @@ export class InfiniteScroll {
   complete() {
     if (this._position === POSITION_TOP) {
       // ******** DOM READ ****************
+      // Save the current content dimensions before the UI updates
       const prevDim = this._content.getContentDimensions();
 
       // ******** DOM READ ****************
       this._dom.read(() => {
+        // UI has updated, save the new content dimensions
         const newDim = this._content.getContentDimensions();
 
+        // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
         const newScrollTop = newDim.scrollHeight - (prevDim.scrollHeight - prevDim.scrollTop);
 
         // ******** DOM WRITE ****************
