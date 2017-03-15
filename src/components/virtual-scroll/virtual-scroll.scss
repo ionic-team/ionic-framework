@@ -21,7 +21,7 @@
 
   transition-duration: 0ms;
 
-  contain: content;
+  contain: strict;
 }
 
 .virtual-scroll .virtual-last {

@@ -216,7 +216,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _differ: any;
   _scrollSub: any;
   _scrollEndSub: any;
-  _init: boolean;
+  _init: boolean = false;
   _lastEle: boolean;
   _hdrFn: Function;
   _ftrFn: Function;
@@ -229,6 +229,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     scrollTop: 0,
   };
   _queue: number;
+  _recordSize: number = 0;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
@@ -386,14 +387,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // wait for the content to be rendered and has readable dimensions
     _ctrl.readReady.subscribe(() => {
       this._init = true;
-
-      if (this._hasChanges()) {
-        this.readUpdate();
+      if (isPresent(this._changes())) {
+        this.readUpdate(true);
 
         // wait for the content to be writable
         var subscription = _ctrl.writeReady.subscribe(() => {
           subscription.unsubscribe();
-          this.writeUpdate();
+          this.writeUpdate(true);
         });
       }
 
@@ -405,34 +405,56 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @private
    */
   ngDoCheck() {
-    if (this._init && this._hasChanges()) {
-      // only continue if we've already initialized
-      // and if there actually are changes
-      this.readUpdate();
-      this.writeUpdate();
+    // only continue if we've already initialized
+    if (!this._init) {
+      return;
+    }
+
+    // and if there actually are changes
+    const changes = this._changes();
+    if (!isPresent(changes)) {
+      return;
+    }
+
+    let needClean = false;
+    if (changes) {
+      changes.forEachOperation((item: any, _: number, cindex: number) => {
+        if (item.previousIndex != null || (cindex < this._recordSize)) {
+            needClean = true;
+        }
+      });
+    } else {
+      needClean = true;
+    }
+
+    this.readUpdate(needClean);
+    this.writeUpdate(needClean);
+  }
+
+  readUpdate(needClean: boolean) {
+    // reset everything
+    if (needClean) {
+      console.debug(`virtual-scroll, readUpdate: slow path`);
+      this._cells.length = 0;
+      this._nodes.length = 0;
+      this._itmTmp.viewContainer.clear();
+
+      // ******** DOM READ ****************
+      calcDimensions(this._data, this._elementRef.nativeElement,
+                    this.approxItemWidth, this.approxItemHeight,
+                    this.approxHeaderWidth, this.approxHeaderHeight,
+                    this.approxFooterWidth, this.approxFooterHeight,
+                    this.bufferRatio);
     }
   }
 
-  readUpdate() {
-    console.debug(`virtual-scroll, readUpdate`);
-
-    // reset everything
-    this._cells.length = 0;
-    this._nodes.length = 0;
-    this._itmTmp.viewContainer.clear();
-
-    // ******** DOM READ ****************
-    calcDimensions(this._data, this._elementRef.nativeElement,
-                   this.approxItemWidth, this.approxItemHeight,
-                   this.approxHeaderWidth, this.approxHeaderHeight,
-                   this.approxFooterWidth, this.approxFooterHeight,
-                   this.bufferRatio);
-  }
-
-  writeUpdate() {
+  writeUpdate(needClean: boolean) {
     console.debug(`virtual-scroll, writeUpdate`);
+    const data = this._data;
+    const stopAtHeight = (data.scrollTop + data.renderHeight);
+    data.scrollDiff = SCROLL_DIFFERENCE_MINIMUM + 1;
 
-    processRecords(this._data.renderHeight,
+    processRecords(stopAtHeight,
                    this._records,
                    this._cells,
                    this._hdrFn,
@@ -440,85 +462,97 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
                    this._data);
 
     // ******** DOM WRITE ****************
-    this.renderVirtual();
+    this.renderVirtual(needClean);
+    this._recordSize = this._records.length;
   }
 
-  private _hasChanges() {
-    return (isPresent(this._records) && isPresent(this._differ) && isPresent(this._differ.diff(this._records)));
+  private _changes() {
+    if (isPresent(this._records) && isPresent(this._differ)) {
+      return this._differ.diff(this._records);
+    }
+    return null;
   }
 
   /**
    * @private
    * DOM WRITE
    */
-  renderVirtual() {
+  renderVirtual(needClean: boolean) {
     const nodes = this._nodes;
     const cells = this._cells;
     const data = this._data;
     const records = this._records;
 
-    // initialize nodes with the correct cell data
-    data.topCell = 0;
-    data.bottomCell = (cells.length - 1);
+    adjustRendered(cells, data);
 
-    populateNodeData(0, data.bottomCell,
-                      data.viewWidth, true,
-                      cells, records, nodes,
-                      this._itmTmp.viewContainer,
-                      this._itmTmp.templateRef,
-                      this._hdrTmp && this._hdrTmp.templateRef,
-                      this._ftrTmp && this._ftrTmp.templateRef, true);
-
-    // ******** DOM WRITE ****************
-    this._cd.detectChanges();
-
-
-    // at this point, this fn was called from within another
-    // requestAnimationFrame, so the next dom reads/writes within the next frame
-    // wait a frame before trying to read and calculate the dimensions
-    this._dom.read(() => {
-      // ******** DOM READ ****************
-      initReadNodes(this._plt, nodes, cells, data);
-    });
-
-    this._dom.write(() => {
-      const ele = this._elementRef.nativeElement;
-      const recordsLength = records.length;
-      const renderer = this._renderer;
-
-      // update the bound context for each node
-      updateNodeContext(nodes, cells, data);
-
+    if (needClean) {
       // ******** DOM WRITE ****************
-      for (var i = 0; i < nodes.length; i++) {
-        (<any>nodes[i].view).detectChanges();
-      }
+      updateDimensions(this._plt, nodes, cells, data, true);
+      data.topCell = 0;
+      data.bottomCell = (cells.length - 1);
+    }
 
-      if (!this._lastEle) {
-        // add an element at the end so :last-child css doesn't get messed up
+    adjustRendered(cells, data);
+
+    populateNodeData(data.topCell, data.bottomCell,
+                  data.viewWidth, true,
+                  cells, records, nodes,
+                  this._itmTmp.viewContainer,
+                  this._itmTmp.templateRef,
+                  this._hdrTmp && this._hdrTmp.templateRef,
+                  this._ftrTmp && this._ftrTmp.templateRef, needClean);
+
+    if (needClean) {
+      this._cd.detectChanges();
+    }
+
+    this._plt.raf(() => {
+      // at this point, this fn was called from within another
+      // requestAnimationFrame, so the next dom reads/writes within the next frame
+      // wait a frame before trying to read and calculate the dimensions
+      this._dom.read(() => {
+        // ******** DOM READ ****************
+        initReadNodes(this._plt, nodes, cells, data);
+      });
+
+      this._dom.write(() => {
+        const ele = this._elementRef.nativeElement;
+        const recordsLength = records.length;
+        const renderer = this._renderer;
+
+        // update the bound context for each node
+        updateNodeContext(nodes, cells, data);
+
         // ******** DOM WRITE ****************
-        var lastEle: HTMLElement = renderer.createElement(ele, 'div');
-        lastEle.className = 'virtual-last';
-        this._lastEle = true;
-      }
+        for (var i = 0; i < nodes.length; i++) {
+          (<any>nodes[i].view).detectChanges();
+        }
 
-      // ******** DOM WRITE ****************
-      renderer.setElementClass(ele, 'virtual-scroll', true);
+        if (!this._lastEle) {
+          // add an element at the end so :last-child css doesn't get messed up
+          // ******** DOM WRITE ****************
+          var lastEle: HTMLElement = renderer.createElement(ele, 'div');
+          lastEle.className = 'virtual-last';
+          this._lastEle = true;
+        }
 
-      // ******** DOM WRITE ****************
-      renderer.setElementClass(ele, 'virtual-loading', false);
+        // ******** DOM WRITE ****************
+        renderer.setElementClass(ele, 'virtual-scroll', true);
 
-      // ******** DOM WRITE ****************
-      writeToNodes(this._plt, nodes, cells, recordsLength);
+        // ******** DOM WRITE ****************
+        renderer.setElementClass(ele, 'virtual-loading', false);
 
-      // ******** DOM WRITE ****************
-      this._setHeight(
-        estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
-      );
+        // ******** DOM WRITE ****************
+        writeToNodes(this._plt, nodes, cells, recordsLength);
 
-      this._content.imgsUpdate();
+        // ******** DOM WRITE ****************
+        this._setHeight(
+          estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
+        );
+
+        this._content.imgsUpdate();
+      });
     });
-
   }
 
   /**
