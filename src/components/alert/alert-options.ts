@@ -20,6 +20,8 @@ export interface AlertInputOptions {
   disabled?: boolean;
   id?: string;
   handler?: Function;
+  min?: string | number;
+  max?: string | number;
 }
 
 export interface AlertButton {

@@ -52,7 +52,7 @@ import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
         '<template ngSwitchDefault>' +
           '<div class="alert-input-group">' +
             '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" [attr.id]="i.id" class="alert-input">' +
+              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" [min]="i.min" [max]="i.max" [attr.id]="i.id" class="alert-input">' +
             '</div>' +
           '</div>' +
         '</template>' +
@@ -149,6 +149,8 @@ export class AlertCmp {
         disabled: !!input.disabled,
         id: isPresent(input.id) ? input.id : `alert-input-${this.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
+        min: isPresent(input.min) ? input.min : null,
+        max: isPresent(input.max) ? input.max : null
       };
       return r;
     });

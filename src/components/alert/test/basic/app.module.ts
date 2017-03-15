@@ -108,6 +108,28 @@ export class E2EPage {
       type: 'url',
       placeholder: 'Favorite site ever'
     });
+    // input date with min & max
+    alert.addInput({
+      name: 'name4',
+      type: 'date',
+      min: '2017-03-01',
+      max: '2018-01-12'
+    });
+    // input date without min nor max
+    alert.addInput({
+      name: 'name5',
+      type: 'date'
+    });
+    alert.addInput({
+      name: 'name6',
+      type: 'number',
+      min: -5,
+      max: 10
+    });
+    alert.addInput({
+      name: 'name7',
+      type: 'number'
+    });
     alert.addButton({
       text: 'Cancel',
       handler: (data: any) => {
