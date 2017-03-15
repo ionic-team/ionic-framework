@@ -1,8 +1,8 @@
 import { Directive, ElementRef, forwardRef, Inject, Renderer } from '@angular/core';
 
-import { App } from '../components/app/app';
-import { Config } from '../config/config';
-import { Platform } from '../platform/platform';
+import { App } from '../app/app';
+import { Config } from '../../config/config';
+import { Platform } from '../../platform/platform';
 
 
 /**

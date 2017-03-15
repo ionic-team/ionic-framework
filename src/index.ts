@@ -46,106 +46,111 @@ import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './naviga
 
 
 /**
- * Import Overlay Entry Components
+ * Import Modules
  */
-import { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
-import { AlertCmp } from './components/alert/alert-component';
-import { IonicApp } from './components/app/app-root';
-import { LoadingCmp } from './components/loading/loading-component';
-import { ModalCmp } from './components/modal/modal-component';
-import { PickerCmp } from './components/picker/picker-component';
-import { PopoverCmp } from './components/popover/popover-component';
-import { ToastCmp } from './components/toast/toast-component';
+import { ActionSheetModule } from './components/action-sheet/action-sheet.module';
+import { AlertModule } from './components/alert/alert.module';
+import { AppModule } from './components/app/app.module';
+import { AvatarModule } from './components/avatar/avatar.module';
+import { BackdropModule } from './components/backdrop/backdrop.module';
+import { BadgeModule } from './components/badge/badge.module';
+import { ButtonModule } from './components/button/button.module';
+import { CardModule } from './components/card/card.module';
+import { CheckboxModule } from './components/checkbox/checkbox.module';
+import { ChipModule } from './components/chip/chip.module';
+import { ClickBlockModule } from './components/click-block/click-block.module';
+import { ContentModule } from './components/content/content.module';
+import { DateTimeModule } from './components/datetime/datetime.module';
+import { FabModule } from './components/fab/fab.module';
+import { GridModule } from './components/grid/grid.module';
+import { IconModule } from './components/icon/icon.module';
+import { ImgModule } from './components/img/img.module';
+import { InfiniteScrollModule } from './components/infinite-scroll/infinite-scroll.module';
+import { InputModule } from './components/input/input.module';
+import { ItemModule } from './components/item/item.module';
+import { LabelModule } from './components/label/label.module';
+import { ListModule } from './components/list/list.module';
+import { LoadingModule } from './components/loading/loading.module';
+import { MenuModule } from './components/menu/menu.module';
+import { ModalModule } from './components/modal/modal.module';
+import { NavModule } from './components/nav/nav.module';
+import { NavbarModule } from './components/navbar/navbar.module';
+import { NoteModule } from './components/note/note.module';
+import { OptionModule } from './components/option/option.module';
+import { PickerModule } from './components/picker/picker.module';
+import { PopoverModule } from './components/popover/popover.module';
+import { RadioModule } from './components/radio/radio.module';
+import { RangeModule } from './components/range/range.module';
+import { RefresherModule } from './components/refresher/refresher.module';
+import { ScrollModule } from './components/scroll/scroll.module';
+import { SearchbarModule } from './components/searchbar/searchbar.module';
+import { SegmentModule } from './components/segment/segment.module';
+import { SelectModule } from './components/select/select.module';
+import { ShowHideWhenModule } from './components/show-hide-when/show-hide-when.module';
+import { SlidesModule } from './components/slides/slides.module';
+import { SpinnerModule } from './components/spinner/spinner.module';
+import { SplitPaneModule } from './components/split-pane/split-pane.module';
+import { TabsModule } from './components/tabs/tabs.module';
+import { ThumbnailModule } from './components/thumbnail/thumbnail.module';
+import { ToastModule } from './components/toast/toast.module';
+import { ToggleModule } from './components/toggle/toggle.module';
+import { ToolbarModule } from './components/toolbar/toolbar.module';
+import { TypographyModule } from './components/typography/typography.module';
+import { VirtualScrollModule } from './components/virtual-scroll/virtual-scroll.module';
 
 
 /**
- * Import Components
+ * Export Modules
  */
-import { Avatar } from './components/avatar/avatar';
-import { Backdrop } from './components/backdrop/backdrop';
-import { Badge } from './components/badge/badge';
-import { Button } from './components/button/button';
-import { Card } from './components/card/card';
-import { CardContent } from './components/card/card-content';
-import { CardHeader } from './components/card/card-header';
-import { CardTitle } from './components/card/card-title';
-import { Checkbox } from './components/checkbox/checkbox';
-import { Chip } from './components/chip/chip';
-import { ClickBlock } from './util/click-block';
-import { Content } from './components/content/content';
-import { DateTime } from './components/datetime/datetime';
-import { FabButton } from './components/fab/fab';
-import { FabContainer } from './components/fab/fab-container';
-import { FabList } from './components/fab/fab-list';
-import { Col } from './components/grid/col';
-import { Grid } from './components/grid/grid';
-import { Row } from './components/grid/row';
-import { Icon } from './components/icon/icon';
-import { Img } from './components/img/img';
-import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
-import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
-import { Item } from './components/item/item';
-import { ItemContent } from './components/item/item-content';
-import { ItemDivider } from './components/item/item-divider';
-import { ItemGroup } from './components/item/item-group';
-import { ItemReorder } from './components/item/item-reorder';
-import { Reorder } from './components/item/reorder';
-import { ItemSliding } from './components/item/item-sliding';
-import { ItemOptions } from './components/item/item-options';
-import { Label } from './components/label/label';
-import { List } from './components/list/list';
-import { ListHeader } from './components/list/list-header';
-import { Menu } from './components/menu/menu';
-import { MenuClose } from './components/menu/menu-close';
-import { MenuToggle } from './components/menu/menu-toggle';
-import { NativeInput } from './components/input/native-input';
-import { NextInput } from './components/input/next-input';
-import { Nav } from './components/nav/nav';
-import { NavPop } from './components/nav/nav-pop';
-import { NavPopAnchor } from './components/nav/nav-pop-anchor';
-import { NavPush } from './components/nav/nav-push';
-import { NavPushAnchor } from './components/nav/nav-push-anchor';
-import { Navbar } from './components/navbar/navbar';
-import { Note } from './components/note/note';
-import { Option } from './components/option/option';
-import { OverlayPortal } from './components/nav/overlay-portal';
-import { PickerColumnCmp } from './components/picker/picker-column';
-import { RadioButton } from './components/radio/radio-button';
-import { RadioGroup } from './components/radio/radio-group';
-import { Range } from './components/range/range';
-import { RangeKnob } from './components/range/range-knob';
-import { Refresher } from './components/refresher/refresher';
-import { RefresherContent } from './components/refresher/refresher-content';
-import { Scroll } from './components/scroll/scroll';
-import { Searchbar } from './components/searchbar/searchbar';
-import { Segment } from './components/segment/segment';
-import { SegmentButton } from './components/segment/segment-button';
-import { Select } from './components/select/select';
-import { ShowWhen } from './components/show-hide-when/show-hide-when';
-import { HideWhen } from './components/show-hide-when/hide-when';
-import { Slide } from './components/slides/slide';
-import { Slides } from './components/slides/slides';
-import { Spinner } from './components/spinner/spinner';
-import { SplitPane } from './components/split-pane/split-pane';
-import { Tab } from './components/tabs/tab';
-import { Tabs } from './components/tabs/tabs';
-import { TabButton } from './components/tabs/tab-button';
-import { TabHighlight } from './components/tabs/tab-highlight';
-import { TextInput } from './components/input/input';
-import { Thumbnail } from './components/thumbnail/thumbnail';
-import { Toggle } from './components/toggle/toggle';
-import { Toolbar } from './components/toolbar/toolbar';
-import { Header } from './components/toolbar/toolbar-header';
-import { Footer } from './components/toolbar/toolbar-footer';
-import { ToolbarItem } from './components/toolbar/toolbar-item';
-import { ToolbarTitle } from './components/toolbar/toolbar-title';
-import { Typography } from './components/typography/typography';
-import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
-
-import { VirtualItem } from './components/virtual-scroll/virtual-item';
-import { VirtualHeader } from './components/virtual-scroll/virtual-header';
-import { VirtualFooter } from './components/virtual-scroll/virtual-footer';
-
+export { ActionSheetModule } from './components/action-sheet/action-sheet.module';
+export { AlertModule } from './components/alert/alert.module';
+export { AppModule } from './components/app/app.module';
+export { AvatarModule } from './components/avatar/avatar.module';
+export { BackdropModule } from './components/backdrop/backdrop.module';
+export { BadgeModule } from './components/badge/badge.module';
+export { ButtonModule } from './components/button/button.module';
+export { CardModule } from './components/card/card.module';
+export { CheckboxModule } from './components/checkbox/checkbox.module';
+export { ChipModule } from './components/chip/chip.module';
+export { ClickBlockModule } from './components/click-block/click-block.module';
+export { ContentModule } from './components/content/content.module';
+export { DateTimeModule } from './components/datetime/datetime.module';
+export { FabModule } from './components/fab/fab.module';
+export { GridModule } from './components/grid/grid.module';
+export { IconModule } from './components/icon/icon.module';
+export { ImgModule } from './components/img/img.module';
+export { InfiniteScrollModule } from './components/infinite-scroll/infinite-scroll.module';
+export { InputModule } from './components/input/input.module';
+export { ItemModule } from './components/item/item.module';
+export { LabelModule } from './components/label/label.module';
+export { ListModule } from './components/list/list.module';
+export { LoadingModule } from './components/loading/loading.module';
+export { MenuModule } from './components/menu/menu.module';
+export { ModalModule } from './components/modal/modal.module';
+export { NavModule } from './components/nav/nav.module';
+export { NavbarModule } from './components/navbar/navbar.module';
+export { NoteModule } from './components/note/note.module';
+export { OptionModule } from './components/option/option.module';
+export { PickerModule } from './components/picker/picker.module';
+export { PopoverModule } from './components/popover/popover.module';
+export { RadioModule } from './components/radio/radio.module';
+export { RangeModule } from './components/range/range.module';
+export { RefresherModule } from './components/refresher/refresher.module';
+export { ScrollModule } from './components/scroll/scroll.module';
+export { SearchbarModule } from './components/searchbar/searchbar.module';
+export { SegmentModule } from './components/segment/segment.module';
+export { SelectModule } from './components/select/select.module';
+export { ShowHideWhenModule } from './components/show-hide-when/show-hide-when.module';
+export { SlidesModule } from './components/slides/slides.module';
+export { SpinnerModule } from './components/spinner/spinner.module';
+export { SplitPaneModule } from './components/split-pane/split-pane.module';
+export { TabsModule } from './components/tabs/tabs.module';
+export { ThumbnailModule } from './components/thumbnail/thumbnail.module';
+export { ToastModule } from './components/toast/toast.module';
+export { ToggleModule } from './components/toggle/toggle.module';
+export { ToolbarModule } from './components/toolbar/toolbar.module';
+export { TypographyModule } from './components/typography/typography.module';
+export { VirtualScrollModule } from './components/virtual-scroll/virtual-scroll.module';
 
 /**
  * Export Components/Directives
@@ -167,7 +172,7 @@ export { CardHeader } from './components/card/card-header';
 export { CardTitle } from './components/card/card-title';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
-export { ClickBlock } from './util/click-block';
+export { ClickBlock } from './components/click-block/click-block';
 export { Content, ScrollEvent } from './components/content/content';
 export { DateTime } from './components/datetime/datetime';
 export { FabButton } from './components/fab/fab';
@@ -235,8 +240,8 @@ export { Searchbar } from './components/searchbar/searchbar';
 export { Segment } from './components/segment/segment';
 export { SegmentButton } from './components/segment/segment-button';
 export { Select } from './components/select/select';
-export { ShowWhen } from './components/show-hide-when/show-hide-when';
-export { DisplayWhen } from './components/show-hide-when/show-hide-when';
+export { ShowWhen } from './components/show-hide-when/show-when';
+export { DisplayWhen } from './components/show-hide-when/display-when';
 export { HideWhen } from './components/show-hide-when/hide-when';
 export { Slide } from './components/slides/slide';
 export { Slides } from './components/slides/slides';
@@ -359,201 +364,111 @@ export { IonicGestureConfig } from './gestures/gesture-config';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
+    ActionSheetModule.forRoot(),
+    AlertModule.forRoot(),
+    AppModule.forRoot(),
+    AvatarModule.forRoot(),
+    BackdropModule.forRoot(),
+    BadgeModule.forRoot(),
+    ButtonModule.forRoot(),
+    CardModule.forRoot(),
+    CheckboxModule.forRoot(),
+    ChipModule.forRoot(),
+    ClickBlockModule.forRoot(),
+    ContentModule.forRoot(),
+    DateTimeModule.forRoot(),
+    FabModule.forRoot(),
+    GridModule.forRoot(),
+    IconModule.forRoot(),
+    ImgModule.forRoot(),
+    InfiniteScrollModule.forRoot(),
+    InputModule.forRoot(),
+    ItemModule.forRoot(),
+    LabelModule.forRoot(),
+    ListModule.forRoot(),
+    LoadingModule.forRoot(),
+    MenuModule.forRoot(),
+    ModalModule.forRoot(),
+    NavModule.forRoot(),
+    NavbarModule.forRoot(),
+    NoteModule.forRoot(),
+    OptionModule.forRoot(),
+    PickerModule.forRoot(),
+    PopoverModule.forRoot(),
+    RadioModule.forRoot(),
+    RangeModule.forRoot(),
+    RefresherModule.forRoot(),
+    ScrollModule.forRoot(),
+    SearchbarModule.forRoot(),
+    SegmentModule.forRoot(),
+    SelectModule.forRoot(),
+    ShowHideWhenModule.forRoot(),
+    SlidesModule.forRoot(),
+    SpinnerModule.forRoot(),
+    SplitPaneModule.forRoot(),
+    TabsModule.forRoot(),
+    ThumbnailModule.forRoot(),
+    ToastModule.forRoot(),
+    ToggleModule.forRoot(),
+    ToolbarModule.forRoot(),
+    TypographyModule.forRoot(),
+    VirtualScrollModule.forRoot()
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
 
-    Avatar,
-    Backdrop,
-    Badge,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    Checkbox,
-    Chip,
-    ClickBlock,
-    Col,
-    Content,
-    DateTime,
-    FabContainer,
-    FabButton,
-    FabList,
-    Footer,
-    Grid,
-    Header,
-    HideWhen,
-    Icon,
-    Img,
-    InfiniteScroll,
-    InfiniteScrollContent,
-    IonicApp,
-    Item,
-    ItemContent,
-    ItemDivider,
-    ItemGroup,
-    ItemOptions,
-    ItemReorder,
-    ItemSliding,
-    Label,
-    List,
-    ListHeader,
-    Menu,
-    MenuClose,
-    MenuToggle,
-    NativeInput,
-    Nav,
-    Navbar,
-    NavPop,
-    NavPopAnchor,
-    NavPush,
-    NavPushAnchor,
-    NextInput,
-    Note,
-    Option,
-    OverlayPortal,
-    PickerColumnCmp,
-    RadioButton,
-    RadioGroup,
-    Range,
-    RangeKnob,
-    Refresher,
-    RefresherContent,
-    Reorder,
-    Row,
-    Scroll,
-    Searchbar,
-    Segment,
-    SegmentButton,
-    Select,
-    ShowWhen,
-    Slide,
-    Slides,
-    Spinner,
-    SplitPane,
-    Tab,
-    Tabs,
-    TabButton,
-    TabHighlight,
-    TextInput,
-    Thumbnail,
-    Toggle,
-    Toolbar,
-    ToolbarItem,
-    ToolbarTitle,
-    Typography,
-    VirtualFooter,
-    VirtualHeader,
-    VirtualItem,
-    VirtualScroll,
-  ],
-  declarations: [
-    ActionSheetCmp,
-    AlertCmp,
-    ClickBlock,
-    LoadingCmp,
-    ModalCmp,
-    PickerCmp,
-    PopoverCmp,
-    ToastCmp,
-
-    Avatar,
-    Backdrop,
-    Badge,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    Checkbox,
-    Chip,
-    ClickBlock,
-    Col,
-    Content,
-    DateTime,
-    FabContainer,
-    FabButton,
-    FabList,
-    Footer,
-    Grid,
-    Header,
-    HideWhen,
-    Icon,
-    Img,
-    InfiniteScroll,
-    InfiniteScrollContent,
-    IonicApp,
-    Item,
-    ItemContent,
-    ItemDivider,
-    ItemGroup,
-    ItemOptions,
-    ItemReorder,
-    ItemSliding,
-    Label,
-    List,
-    ListHeader,
-    Menu,
-    MenuClose,
-    MenuToggle,
-    NativeInput,
-    Nav,
-    Navbar,
-    NavPop,
-    NavPopAnchor,
-    NavPush,
-    NavPushAnchor,
-    NextInput,
-    Note,
-    Option,
-    OverlayPortal,
-    PickerColumnCmp,
-    RadioButton,
-    RadioGroup,
-    Range,
-    RangeKnob,
-    Refresher,
-    RefresherContent,
-    Reorder,
-    Row,
-    Scroll,
-    Searchbar,
-    Segment,
-    SegmentButton,
-    Select,
-    ShowWhen,
-    Slide,
-    Slides,
-    Spinner,
-    SplitPane,
-    Tab,
-    Tabs,
-    TabButton,
-    TabHighlight,
-    TextInput,
-    Thumbnail,
-    Toggle,
-    Toolbar,
-    ToolbarItem,
-    ToolbarTitle,
-    Typography,
-    VirtualFooter,
-    VirtualHeader,
-    VirtualItem,
-    VirtualScroll,
-  ],
-  entryComponents: [
-    ActionSheetCmp,
-    AlertCmp,
-    IonicApp,
-    LoadingCmp,
-    ModalCmp,
-    PickerCmp,
-    PopoverCmp,
-    ToastCmp
+    ActionSheetModule,
+    AlertModule,
+    AppModule,
+    AvatarModule,
+    BackdropModule,
+    BadgeModule,
+    ButtonModule,
+    CardModule,
+    CheckboxModule,
+    ChipModule,
+    ClickBlockModule,
+    ContentModule,
+    DateTimeModule,
+    FabModule,
+    GridModule,
+    IconModule,
+    ImgModule,
+    InfiniteScrollModule,
+    InputModule,
+    ItemModule,
+    LabelModule,
+    ListModule,
+    LoadingModule,
+    MenuModule,
+    ModalModule,
+    NavModule,
+    NavbarModule,
+    NoteModule,
+    OptionModule,
+    PickerModule,
+    PopoverModule,
+    RadioModule,
+    RangeModule,
+    RefresherModule,
+    ScrollModule,
+    SearchbarModule,
+    SegmentModule,
+    SelectModule,
+    ShowHideWhenModule,
+    SlidesModule,
+    SpinnerModule,
+    SplitPaneModule,
+    TabsModule,
+    ThumbnailModule,
+    ToastModule,
+    ToggleModule,
+    ToolbarModule,
+    TypographyModule,
+    VirtualScrollModule
   ]
 })
 export class IonicModule {

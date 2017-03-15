@@ -2,7 +2,7 @@ import { Attribute, Directive, NgZone } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 
-import { DisplayWhen } from './show-hide-when';
+import { DisplayWhen } from './display-when';
 
 /**
  * @name HideWhen

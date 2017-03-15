@@ -3,7 +3,7 @@ import { Title, DOCUMENT } from '@angular/platform-browser';
 
 import { IonicApp } from './app-root';
 import * as Constants from './app-constants';
-import { ClickBlock } from '../../util/click-block';
+import { ClickBlock } from '../click-block/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
