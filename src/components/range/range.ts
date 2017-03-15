@@ -303,6 +303,11 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
+   * @output {Range} Emitted when the range selector drag starts.
+   */
+  @Output() ionFocus: EventEmitter<Range> = new EventEmitter<Range>();
+  
+  /**
    * @output {Range} Emitted when the range value changes.
    */
   @Output() ionChange: EventEmitter<Range> = new EventEmitter<Range>();
@@ -310,7 +315,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   /**
    * @output {Range} Emitted when the range selector drag ends.
    */
-  @Output() ionDragEnd: EventEmitter<Range> = new EventEmitter<Range>();
+  @Output() ionBlur: EventEmitter<Range> = new EventEmitter<Range>();
 
   constructor(
     private _form: Form,
@@ -360,6 +365,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       return false;
     }
 
+    // trigger ionFocus event
+    this.ionFocus.emit(this);
+	
     // prevent default so scrolling does not happen
     ev.preventDefault();
     ev.stopPropagation();
@@ -416,8 +424,8 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       // trigger a haptic end
       this._haptic.gestureSelectionEnd();
 	  
-      // trigger ionDragEnd event
-      this.ionDragEnd.emit(this);
+      // trigger ionBlur event
+      this.ionBlur.emit(this);
     }
   }
 
