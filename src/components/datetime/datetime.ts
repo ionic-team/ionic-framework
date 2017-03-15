@@ -774,9 +774,9 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     if (min.year > max.year) {
       min.year = max.year - 100;
     } else if (min.year === max.year) {
-      if (min.month > max.month) {
+      if (max.month && min.month > max.month) {
         min.month = 1;
-      } else if (min.month === max.month && min.day > max.day) {
+      } else if (min.month === max.month && max.day && min.day > max.day) {
         min.day = 1;
       }
     }
