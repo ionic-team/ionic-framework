@@ -150,13 +150,13 @@ export function dateValueRange(format: string, min: DateTimeData, max: DateTimeD
   return opts;
 }
 
-export function dateSortValue(year: number, month: number, day: number): number {
-  return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}`, 10);
+export function dateSortValue(year: number, month: number, day: number, hour: number = 0, minute: number = 0): number {
+  return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
 export function dateDataSortValue(data: DateTimeData): number {
   if (data) {
-    return dateSortValue(data.year, data.month, data.day);
+    return dateSortValue(data.year, data.month, data.day, data.hour, data.minute);
   }
   return -1;
 }

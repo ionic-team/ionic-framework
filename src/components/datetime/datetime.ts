@@ -3,11 +3,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { Picker, PickerController } from '../picker/picker';
-import { PickerColumn, PickerColumnOption } from '../picker/picker-options';
+import { PickerColumn } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
-import { deepCopy, isBlank, isPresent, isTrueProperty, isArray, isString } from '../../util/util';
+import { deepCopy, isBlank, isPresent, isTrueProperty, isArray, isString, assert } from '../../util/util';
 import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
 export const DATETIME_VALUE_ACCESSOR: any = {
@@ -277,6 +277,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   _max: DateTimeData;
   _value: DateTimeData = {};
   _locale: LocaleData = {};
+  _picker: Picker;
 
   /**
    * @private
@@ -475,39 +476,35 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    * @private
    */
   open() {
+    assert(!this._isOpen, 'datetime is already open');
     if (this._disabled) {
       return;
     }
-
     console.debug('datetime, open picker');
 
     // the user may have assigned some options specifically for the alert
     const pickerOptions = deepCopy(this.pickerOptions);
 
-    const picker = this._pickerCtrl.create(pickerOptions);
-    pickerOptions.buttons = [
-      {
-        text: this.cancelText,
-        role: 'cancel',
-        handler: () => {
-          this.ionCancel.emit(null);
-        }
-      },
-      {
-        text: this.doneText,
-        handler: (data: any) => {
-          console.debug('datetime, done', data);
-          this.onChange(data);
-          this.ionChange.emit(data);
-        }
+    const picker = this._picker = this._pickerCtrl.create(pickerOptions);
+    picker.addButton({
+      text: this.cancelText,
+      role: 'cancel',
+      handler: () => this.ionCancel.emit(null)
+    });
+    picker.addButton({
+      text: this.doneText,
+      handler: (data: any) => {
+        console.debug('datetime, done', data);
+        this.onChange(data);
+        this.ionChange.emit(data);
       }
-    ];
+    });
 
-    this.generate(picker);
-    this.validate(picker);
+    this.generate();
+    this.validate();
 
     picker.ionChange.subscribe(() => {
-      this.validate(picker);
+      this.validate();
       picker.refresh();
     });
 
@@ -524,7 +521,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   /**
    * @private
    */
-  generate(picker: Picker) {
+  generate() {
+    const picker = this._picker;
     // if a picker format wasn't provided, then fallback
     // to use the display format
     let template = this.pickerFormat || this.displayFormat || DEFAULT_FORMAT;
@@ -586,127 +584,152 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
         }
       });
 
-      this.divyColumns(picker);
+      const min = <any>this._min;
+      const max = <any>this._max;
+
+      // Normalize min/max
+      const columns = this._picker.getColumns();
+      ['month', 'day', 'hour', 'minute']
+        .filter(name => !columns.find(column => column.name === name))
+        .forEach(name => {
+          min[name] = 0;
+          max[name] = 0;
+        });
+
+      this.divyColumns();
     }
   }
 
   /**
    * @private
    */
-  validate(picker: Picker) {
-    let today = new Date();
-    let columns = picker.getColumns();
+  getColumn(name: string): PickerColumn {
+    const columns = this._picker.getColumns();
+    return columns.find(col => col.name === name);
+  }
 
-    // find the columns used
-    let yearCol = columns.find(col => col.name === 'year');
-    let monthCol = columns.find(col => col.name === 'month');
-    let dayCol = columns.find(col => col.name === 'day');
+  /**
+   * @private
+   */
+  validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
+    assert(lowerBounds.length === 5, 'lowerBounds length must be 5');
+    assert(upperBounds.length === 5, 'upperBounds length must be 5');
 
-    let yearOpt: PickerColumnOption;
-    let monthOpt: PickerColumnOption;
-    let dayOpt: PickerColumnOption;
+    const column = this.getColumn(name);
+    if (!column) {
+      return 0;
+    }
 
-    // default to the current year
+    const lb = lowerBounds.slice();
+    const ub = upperBounds.slice();
+    const options = column.options;
+
+    for (var i = 0; i < options.length; i++) {
+      var opt = options[i];
+      var value = opt.value;
+      lb[index] = opt.value;
+      ub[index] = opt.value;
+
+      opt.disabled = (
+        value < lowerBounds[index] ||
+        value > upperBounds[index] ||
+        dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4]) < min ||
+        dateSortValue(lb[0], lb[1], lb[2], lb[3], lb[4]) > max
+      );
+    }
+
+    opt = column.options[column.selectedIndex];
+    if (opt) {
+      return opt.value;
+    }
+    return 0;
+  }
+
+  /**
+   * @private
+   */
+  validate() {
+    const today = new Date();
+    const minCompareVal = dateDataSortValue(this._min);
+    const maxCompareVal = dateDataSortValue(this._max);
+    const yearCol = this.getColumn('year');
+
+    assert(minCompareVal <= maxCompareVal, 'invalid min/max value');
+
     let selectedYear: number = today.getFullYear();
-
     if (yearCol) {
       // default to the first value if the current year doesn't exist in the options
       if (!yearCol.options.find(col => col.value === today.getFullYear())) {
         selectedYear = yearCol.options[0].value;
       }
 
-      yearOpt = yearCol.options[yearCol.selectedIndex];
+      var yearOpt = yearCol.options[yearCol.selectedIndex];
       if (yearOpt) {
         // they have a selected year value
         selectedYear = yearOpt.value;
       }
     }
 
-    // create sort values for the min/max datetimes
-    let minCompareVal = dateDataSortValue(this._min);
-    let maxCompareVal = dateDataSortValue(this._max);
+    const selectedMonth = this.validateColumn(
+      'month', 1,
+      minCompareVal, maxCompareVal,
+      [selectedYear, 0, 0, 0, 0],
+      [selectedYear, 12, 31, 23, 59]
+    );
 
-    if (monthCol) {
-      // enable/disable which months are valid
-      // to show within the min/max date range
-      for (var i = 0; i < monthCol.options.length; i++) {
-        monthOpt = monthCol.options[i];
+    const numDaysInMonth = daysInMonth(selectedMonth, selectedYear);
+    const selectedDay = this.validateColumn(
+      'day', 2,
+      minCompareVal, maxCompareVal,
+      [selectedYear, selectedMonth, 0, 0, 0],
+      [selectedYear, selectedMonth, numDaysInMonth, 23, 59]
+    );
 
-        // loop through each month and see if it
-        // is within the min/max date range
-        monthOpt.disabled = (dateSortValue(selectedYear, monthOpt.value, 31) < minCompareVal ||
-          dateSortValue(selectedYear, monthOpt.value, 1) > maxCompareVal);
-      }
-    }
+    const selectedHour = this.validateColumn(
+      'hour', 3,
+      minCompareVal, maxCompareVal,
+      [selectedYear, selectedMonth, selectedDay, 0, 0],
+      [selectedYear, selectedMonth, selectedDay, 23, 59]
+    );
 
-    // default to assuming this month has 31 days
-    let numDaysInMonth = 31;
-    let selectedMonth: number;
-    if (monthCol) {
-      monthOpt = monthCol.options[monthCol.selectedIndex];
-      if (monthOpt) {
-        // they have a selected month value
-        selectedMonth = monthOpt.value;
-
-        // calculate how many days are in this month
-        numDaysInMonth = daysInMonth(selectedMonth, selectedYear);
-      }
-    }
-
-    if (dayCol) {
-      if (isPresent(selectedMonth)) {
-        // enable/disable which days are valid
-        // to show within the min/max date range
-        for (var i = 0; i < dayCol.options.length; i++) {
-          dayOpt = dayCol.options[i];
-
-          // loop through each day and see if it
-          // is within the min/max date range
-          var compareVal = dateSortValue(selectedYear, selectedMonth, dayOpt.value);
-
-          dayOpt.disabled = (compareVal < minCompareVal ||
-            compareVal > maxCompareVal ||
-            numDaysInMonth < dayOpt.value);
-        }
-
-      } else {
-        // enable/disable which numbers of days to show in this month
-        for (var i = 0; i < dayCol.options.length; i++) {
-          dayOpt = dayCol.options[i];
-          dayOpt.disabled = (numDaysInMonth < dayOpt.value);
-        }
-      }
-    }
+    this.validateColumn(
+      'minute', 4,
+      minCompareVal, maxCompareVal,
+      [selectedYear, selectedMonth, selectedDay, selectedHour, 0],
+      [selectedYear, selectedMonth, selectedDay, selectedHour, 59]
+    );
   }
 
   /**
    * @private
    */
-  divyColumns(picker: Picker) {
-    let pickerColumns = picker.getColumns();
-    let columns: number[] = [];
+  divyColumns() {
+    const pickerColumns = this._picker.getColumns();
+    let columnsWidth: number[] = [];
+    let col: PickerColumn;
+    let width: number;
+    for (var i = 0; i < pickerColumns.length; i++) {
+      col = pickerColumns[i];
+      columnsWidth.push(0);
 
-    pickerColumns.forEach((col, i) => {
-      columns.push(0);
-
-      col.options.forEach(opt => {
-        if (opt.text.length > columns[i]) {
-          columns[i] = opt.text.length;
+      for (var j = 0; j < col.options.length; j++) {
+        width = col.options[j].text.length;
+        if (width > columnsWidth[i]) {
+          columnsWidth[i] = width;
         }
-      });
+      }
+    }
 
-    });
-
-    if (columns.length === 2) {
-      var width = Math.max(columns[0], columns[1]);
+    if (columnsWidth.length === 2) {
+      width = Math.max(columnsWidth[0], columnsWidth[1]);
       pickerColumns[0].align = 'right';
       pickerColumns[1].align = 'left';
       pickerColumns[0].optionsWidth = pickerColumns[1].optionsWidth = `${width * 17}px`;
 
-    } else if (columns.length === 3) {
-      var width = Math.max(columns[0], columns[2]);
+    } else if (columnsWidth.length === 3) {
+      width = Math.max(columnsWidth[0], columnsWidth[2]);
       pickerColumns[0].align = 'right';
-      pickerColumns[1].columnWidth = `${columns[1] * 17}px`;
+      pickerColumns[1].columnWidth = `${columnsWidth[1] * 17}px`;
       pickerColumns[0].optionsWidth = pickerColumns[2].optionsWidth = `${width * 17}px`;
       pickerColumns[2].align = 'left';
     }
@@ -749,49 +772,53 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    */
   calcMinMax(now?: Date) {
     const todaysYear = (now || new Date()).getFullYear();
-
-    if (isBlank(this.min)) {
-      if (isPresent(this.yearValues)) {
-        this.min = Math.min.apply(Math, convertToArrayOfNumbers(this.yearValues, 'year'));
-
-      } else {
+    if (isPresent(this.yearValues)) {
+      var years = convertToArrayOfNumbers(this.yearValues, 'year');
+      if (isBlank(this.min)) {
+        this.min = Math.min.apply(Math, years);
+      }
+      if (isBlank(this.max)) {
+        this.max = Math.max.apply(Math, years);
+      }
+    } else {
+      if (isBlank(this.min)) {
         this.min = (todaysYear - 100).toString();
       }
-    }
-
-    if (isBlank(this.max)) {
-      if (isPresent(this.yearValues)) {
-        this.max = Math.max.apply(Math, convertToArrayOfNumbers(this.yearValues, 'year'));
-
-      } else {
+      if (isBlank(this.max)) {
         this.max = todaysYear.toString();
       }
     }
-
     const min = this._min = parseDate(this.min);
     const max = this._max = parseDate(this.max);
 
+    min.year = min.year || todaysYear;
+    max.year = max.year || todaysYear;
+
+    min.month = min.month || 1;
+    max.month = max.month || 12;
+    min.day = min.day || 1;
+    max.day = max.day || 31;
+    min.hour = min.hour || 0;
+    max.hour = max.hour || 23;
+    min.minute = min.minute || 0;
+    max.minute = max.minute || 59;
+    min.second = min.second || 0;
+    max.second = max.second || 59;
+
+    // Ensure min/max constraits
     if (min.year > max.year) {
+      console.error('min.year > max.year');
       min.year = max.year - 100;
-    } else if (min.year === max.year) {
+    }
+    if (min.year === max.year) {
       if (min.month > max.month) {
+        console.error('min.month > max.month');
         min.month = 1;
       } else if (min.month === max.month && min.day > max.day) {
+        console.error('min.day > max.day');
         min.day = 1;
       }
     }
-
-    min.month = min.month || 1;
-    min.day = min.day || 1;
-    min.hour = min.hour || 0;
-    min.minute = min.minute || 0;
-    min.second = min.second || 0;
-
-    max.month = max.month || 12;
-    max.day = max.day || 31;
-    max.hour = max.hour || 23;
-    max.minute = max.minute || 59;
-    max.second = max.second || 59;
   }
 
   /**
@@ -893,25 +920,21 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
  * an array of numbers, and clean up any user input
  */
 function convertToArrayOfNumbers(input: any, type: string): number[] {
-  var values: number[] = [];
-
   if (isString(input)) {
     // convert the string to an array of strings
     // auto remove any whitespace and [] characters
     input = input.replace(/\[|\]|\s/g, '').split(',');
   }
 
+  let values: number[];
   if (isArray(input)) {
     // ensure each value is an actual number in the returned array
-    input.forEach((num: any) => {
-      num = parseInt(num, 10);
-      if (!isNaN(num)) {
-        values.push(num);
-      }
-    });
+    values = input
+      .map((num: any) => parseInt(num, 10))
+      .filter(isFinite);
   }
 
-  if (!values.length) {
+  if (!values || !values.length) {
     console.warn(`Invalid "${type}Values". Must be an array of numbers, or a comma separated string of numbers.`);
   }
 
@@ -925,30 +948,25 @@ function convertToArrayOfNumbers(input: any, type: string): number[] {
  */
 function convertToArrayOfStrings(input: any, type: string): string[] {
   if (isPresent(input)) {
-    var values: string[] = [];
-
     if (isString(input)) {
       // convert the string to an array of strings
       // auto remove any [] characters
       input = input.replace(/\[|\]/g, '').split(',');
     }
 
+    var values: string[];
     if (isArray(input)) {
       // trim up each string value
-      input.forEach((val: any) => {
-        val = val.trim();
-        if (val) {
-          values.push(val);
-        }
-      });
+      values = input.map((val: string) => val.trim());
     }
 
-    if (!values.length) {
+    if (!values || !values.length) {
       console.warn(`Invalid "${type}Names". Must be an array of strings, or a comma separated string.`);
     }
 
     return values;
   }
 }
+
 
 const DEFAULT_FORMAT = 'MMM D, YYYY';
