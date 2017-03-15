@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Output } from '@angular/core';
 
 import { Content, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';

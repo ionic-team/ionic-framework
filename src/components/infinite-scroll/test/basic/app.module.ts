@@ -3,9 +3,10 @@ import { IonicApp, IonicModule, InfiniteScroll, NavController } from '../../../.
 
 
 @Component({
+  selector: 'my-content',
   templateUrl: 'main.html'
 })
-export class E2EPage1 {
+export class MyContent {
   @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
   items: number[] = [];
   enabled: boolean = true;
@@ -43,6 +44,22 @@ export class E2EPage1 {
 
 
 @Component({
+  template: `
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Infinite Scroll</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <my-content></my-content>
+  </ion-content>
+`
+})
+export class E2EPage1 {}
+
+
+@Component({
   template: '<ion-content><button ion-button (click)="navCtrl.pop()">Pop</button></ion-content>'
 })
 export class E2EPage2 {
@@ -61,7 +78,8 @@ export class E2EApp {
   declarations: [
     E2EApp,
     E2EPage1,
-    E2EPage2
+    E2EPage2,
+    MyContent
   ],
   imports: [
     IonicModule.forRoot(E2EApp)
@@ -70,7 +88,8 @@ export class E2EApp {
   entryComponents: [
     E2EApp,
     E2EPage1,
-    E2EPage2
+    E2EPage2,
+    MyContent
   ]
 })
 export class AppModule {}
