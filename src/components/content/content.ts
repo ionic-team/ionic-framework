@@ -170,6 +170,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   _viewCtrlReadSub: any;
   /** @internal */
   _viewCtrlWriteSub: any;
+  /** @internal */
+  _scrollDownOnLoad: boolean = false;
 
   private _imgReqBfr: number;
   private _imgRndBfr: number;
@@ -478,11 +480,23 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   @Input()
   get fullscreen(): boolean {
-    return !!this._fullscreen;
+    return this._fullscreen;
   }
 
   set fullscreen(val: boolean) {
     this._fullscreen = isTrueProperty(val);
+  }
+
+  /**
+   * @input {boolean} If true, the content will scroll down on load.
+   */
+  @Input()
+  get scrollDownOnLoad(): boolean {
+    return this._scrollDownOnLoad;
+  }
+
+  set scrollDownOnLoad(val: boolean) {
+    this._scrollDownOnLoad = isTrueProperty(val);
   }
 
   /**
@@ -829,6 +843,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
         // ******** DOM WRITE ****************
         this._tabs.setTabbarPosition(-1, 0);
       }
+    }
+
+    // Scroll the page all the way down after setting dimensions
+    if (this._scrollDownOnLoad) {
+      this.scrollToBottom(0);
+      this._scrollDownOnLoad = false;
     }
   }
 
