@@ -5,18 +5,25 @@ export interface AlertOptions {
   message?: string;
   cssClass?: string;
   mode?: string;
-  inputs?: Array<AlertInputOptions>;
-  buttons?: Array<any>;
+  inputs?: AlertInputOptions[];
+  buttons?: (AlertButton|string)[];
   enableBackdropDismiss?: boolean;
 }
 
 export interface AlertInputOptions {
   type?: string;
-  name?: string;
+  name?: string | number;
   placeholder?: string;
   value?: string;
   label?: string;
   checked?: boolean;
   disabled?: boolean;
   id?: string;
+  handler?: Function;
 }
+
+export interface AlertButton {
+  text?: string;
+  role?: string;
+  handler?: Function;
+};

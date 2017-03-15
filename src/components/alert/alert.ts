@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
-import { AlertOptions, AlertInputOptions } from './alert-options';
+import { AlertOptions, AlertInputOptions, AlertButton } from './alert-options';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -67,7 +67,7 @@ export class Alert extends ViewController {
   /**
    * @param {any} button Alert button
    */
-  addButton(button: any): Alert {
+  addButton(button: AlertButton|string): Alert {
     this.data.buttons.push(button);
     return this;
   }

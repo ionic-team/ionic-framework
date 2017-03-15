@@ -98,6 +98,7 @@ export class E2EPage {
     });
     alert.addInput({
       name: 'name2',
+      id: 'name2-id',
       value: 'hello',
       placeholder: 'Placeholder 2'
     });
