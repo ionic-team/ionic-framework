@@ -494,7 +494,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   /**
    * @internal
    */
-  getActiveChildNav() {
+  getActiveChildNav(): Tab {
     return this.getSelected();
   }
 
