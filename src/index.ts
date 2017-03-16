@@ -106,6 +106,7 @@ import { ShowWhen, HideWhen } from './components/show-hide-when/show-hide-when';
 import { Slide } from './components/slides/slide';
 import { Slides } from './components/slides/slides';
 import { Spinner } from './components/spinner/spinner';
+import { SplitPane } from './components/split-pane/split-pane';
 import { Tab } from './components/tabs/tab';
 import { Tabs } from './components/tabs/tabs';
 import { TabButton } from './components/tabs/tab-button';
@@ -191,6 +192,7 @@ export { ShowWhen, HideWhen, DisplayWhen } from './components/show-hide-when/sho
 export { Slide } from './components/slides/slide';
 export { Slides } from './components/slides/slides';
 export { Spinner } from './components/spinner/spinner';
+export { SplitPane, RootNode } from './components/split-pane/split-pane';
 export { Tab } from './components/tabs/tab';
 export { TabButton } from './components/tabs/tab-button';
 export { TabHighlight } from './components/tabs/tab-highlight';
@@ -259,6 +261,10 @@ export { reorderArray } from './util/util';
 export { Animation, AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animations/animation';
 export { PageTransition } from './transitions/page-transition';
 export { Transition } from './transitions/transition';
+export { PlatformConfigToken } from './platform/platform-registry';
+export { registerModeConfigs } from './config/mode-registry';
+export { registerTransitions } from './transitions/transition-registry';
+export { IonicGestureConfig } from './gestures/gesture-config';
 
 
 
@@ -372,6 +378,7 @@ export { Transition } from './transitions/transition';
     Slide,
     Slides,
     Spinner,
+    SplitPane,
     Tab,
     Tabs,
     TabButton,
@@ -466,6 +473,7 @@ export { Transition } from './transitions/transition';
     Slide,
     Slides,
     Spinner,
+    SplitPane,
     Tab,
     Tabs,
     TabButton,

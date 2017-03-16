@@ -63,25 +63,25 @@ export function defaults(dest: any, ...args: any[]) {
 
 
 /** @private */
-export function isBoolean(val: any) { return typeof val === 'boolean'; }
+export function isBoolean(val: any): val is boolean { return typeof val === 'boolean'; }
 /** @private */
-export function isString(val: any) { return typeof val === 'string'; }
+export function isString(val: any): val is string { return typeof val === 'string'; }
 /** @private */
-export function isNumber(val: any) { return typeof val === 'number'; }
+export function isNumber(val: any): val is number { return typeof val === 'number'; }
 /** @private */
-export function isFunction(val: any) { return typeof val === 'function'; }
+export function isFunction(val: any): val is Function { return typeof val === 'function'; }
 /** @private */
-export function isDefined(val: any) { return typeof val !== 'undefined'; }
+export function isDefined(val: any): boolean { return typeof val !== 'undefined'; }
 /** @private */
-export function isUndefined(val: any) { return typeof val === 'undefined'; }
+export function isUndefined(val: any): val is undefined { return typeof val === 'undefined'; }
 /** @private */
-export function isPresent(val: any) { return val !== undefined && val !== null; }
+export function isPresent(val: any): val is any { return val !== undefined && val !== null; }
 /** @private */
-export function isBlank(val: any) { return val === undefined || val === null; }
+export function isBlank(val: any): val is null { return val === undefined || val === null; }
 /** @private */
-export function isObject(val: any) { return typeof val === 'object'; }
+export function isObject(val: any): val is Object { return typeof val === 'object'; }
 /** @private */
-export function isArray(val: any) { return Array.isArray(val); };
+export function isArray(val: any): val is any[] { return Array.isArray(val); };
 
 
 /** @private */
@@ -170,7 +170,7 @@ function _runInDev(fn: Function) {
 
 
 /** @private */
-function _assert(actual: any, reason?: string) {
+function _assert(actual: any, reason: string) {
   if (!actual && ASSERT_ENABLED === true) {
     let message = 'IONIC ASSERT: ' + reason;
     console.error(message);

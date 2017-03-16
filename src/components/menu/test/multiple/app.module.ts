@@ -6,11 +6,10 @@ import { IonicApp, IonicModule, MenuController } from '../../../../../ionic-angu
   templateUrl: 'page1.html'
 })
 export class Page1 {
-  activeMenu: string;
+  activeMenu: string = 'none';
 
-  constructor(private menu: MenuController) {
-    this.menu1Active();
-  }
+  constructor(private menu: MenuController) { }
+
   menu1Active() {
     this.activeMenu = 'menu1';
     this.menu.enable(true, 'menu1');

@@ -53,6 +53,10 @@ export class Picker extends ViewController {
     return this.data.columns;
   }
 
+  getColumn(name: string): PickerColumn {
+    return this.getColumns().find(column => column.name === name);
+  }
+
   refresh() {
     this._cmp && this._cmp.instance.refresh && this._cmp.instance.refresh();
   }

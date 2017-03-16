@@ -1,0 +1,74 @@
+
+@import "../../themes/ionic.globals";
+
+// Split Pane
+// --------------------------------------------------
+
+ion-split-pane {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+
+  flex-wrap: nowrap;
+
+  contain: strict;
+}
+
+.split-pane-side:not(ion-menu) {
+  display: none;
+}
+
+.split-pane-visible >.split-pane-side,
+.split-pane-visible >.split-pane-main {
+  // scss-lint:disable ImportantRule
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+
+  flex: 1;
+
+  box-shadow: none !important;
+}
+
+.split-pane-visible >.split-pane-side {
+  flex-shrink: 0;
+
+  order: -1;
+}
+
+.split-pane-visible >.split-pane-main,
+.split-pane-visible >ion-nav.split-pane-side,
+.split-pane-visible >ion-tabs.split-pane-side,
+.split-pane-visible >ion-menu.menu-enabled {
+  display: block;
+}
+
+.split-pane-visible >ion-split-pane.split-pane-side,
+.split-pane-visible >ion-split-pane.split-pane-main {
+  display: flex;
+}
+
+.split-pane-visible >ion-menu.menu-enabled {
+  >.menu-inner {
+    // scss-lint:disable ImportantRule
+    right: 0;
+    left: 0;
+
+    width: auto;
+
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  >.ion-backdrop {
+    // scss-lint:disable ImportantRule
+    display: hidden !important;
+  }
+}

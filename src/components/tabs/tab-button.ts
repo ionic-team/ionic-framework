@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -7,8 +7,13 @@ import { Tab } from './tab';
 /**
  * @private
  */
-@Directive({
+@Component({
   selector: '.tab-button',
+  template:
+    '<ion-icon *ngIf="tab.tabIcon" [name]="tab.tabIcon" [isActive]="tab.isSelected" class="tab-button-icon"></ion-icon>' +
+    '<span *ngIf="tab.tabTitle" class="tab-button-text">{{tab.tabTitle}}</span>' +
+    '<ion-badge *ngIf="tab.tabBadge" class="tab-badge" [color]="tab.tabBadgeStyle">{{tab.tabBadge}}</ion-badge>' +
+    '<div class="button-effect"></div>',
   host: {
     '[attr.id]': 'tab._btnId',
     '[attr.aria-controls]': 'tab._tabId',
@@ -18,7 +23,9 @@ import { Tab } from './tab';
     '[class.has-title-only]': 'hasTitleOnly',
     '[class.icon-only]': 'hasIconOnly',
     '[class.has-badge]': 'hasBadge',
-    '[class.disable-hover]': 'disHover'
+    '[class.disable-hover]': 'disHover',
+    '[class.tab-disabled]': '!tab.enabled',
+    '[class.tab-hidden]': '!tab.show',
   }
 })
 export class TabButton extends Ion implements OnInit {

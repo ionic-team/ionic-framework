@@ -9,6 +9,7 @@ import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
+import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
 
 
 /**
@@ -39,7 +40,7 @@ import { ViewController } from '../../navigation/view-controller';
 
         '<template ngSwitchCase="checkbox">' +
           '<div class="alert-checkbox-group">' +
-            '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
+            '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
@@ -51,7 +52,7 @@ import { ViewController } from '../../navigation/view-controller';
         '<template ngSwitchDefault>' +
           '<div class="alert-input-group">' +
             '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" class="alert-input">' +
+              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" [min]="i.min" [max]="i.max" [attr.id]="i.id" class="alert-input">' +
             '</div>' +
           '</div>' +
         '</template>' +
@@ -73,15 +74,7 @@ import { ViewController } from '../../navigation/view-controller';
 export class AlertCmp {
   activeId: string;
   descId: string;
-  d: {
-    cssClass?: string;
-    message?: string;
-    title?: string;
-    subTitle?: string;
-    buttons?: any[];
-    inputs?: any[];
-    enableBackdropDismiss?: boolean;
-  };
+  d: AlertOptions;
   enabled: boolean;
   hdrId: string;
   id: number;
@@ -104,7 +97,7 @@ export class AlertCmp {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = config.get('mode');
+    this.mode = this.d.mode || config.get('mode');
     _renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
@@ -146,9 +139,9 @@ export class AlertCmp {
     });
 
     data.inputs = data.inputs.map((input, index) => {
-      return {
+      let r: AlertInputOptions = {
         type: input.type || 'text',
-        name: isPresent(input.name) ? input.name : index,
+        name: isPresent(input.name) ? input.name : index + '',
         placeholder: isPresent(input.placeholder) ? input.placeholder : '',
         value: isPresent(input.value) ? input.value : '',
         label: input.label,
@@ -156,7 +149,10 @@ export class AlertCmp {
         disabled: !!input.disabled,
         id: isPresent(input.id) ? input.id : `alert-input-${this.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
+        min: isPresent(input.min) ? input.min : null,
+        max: isPresent(input.max) ? input.max : null
       };
+      return r;
     });
 
 
@@ -290,7 +286,7 @@ export class AlertCmp {
 
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
-      let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
+      var cancelBtn = this.d.buttons.find(b => (<AlertButton>b).role === 'cancel');
       if (cancelBtn) {
         this.btnClick(cancelBtn);
 

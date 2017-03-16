@@ -75,8 +75,8 @@ $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-paddi
   top: $radio-md-icon-border-width;
   left: $radio-md-icon-border-width;
 
-  width: $radio-md-icon-width / 2;
-  height: $radio-md-icon-height / 2;
+  width: $radio-md-icon-width - $radio-md-icon-border-width * 4;
+  height: $radio-md-icon-height - $radio-md-icon-border-width * 4;
 
   border-radius: 50%;
   background-color: $radio-md-color-on;

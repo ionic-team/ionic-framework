@@ -83,6 +83,18 @@ ion-refresher-content {
   color: $refresher-text-color;
 }
 
+.refresher-refreshing .spinner-ios line,
+.refresher-refreshing .spinner-ios-small line,
+.refresher-refreshing .spinner-crescent circle {
+  stroke: $refresher-icon-color;
+}
+
+.refresher-refreshing .spinner-bubbles circle,
+.refresher-refreshing .spinner-circles circle,
+.refresher-refreshing .spinner-dots circle {
+  fill: $refresher-icon-color;
+}
+
 
 // Refresher Content States
 // --------------------------------------------------

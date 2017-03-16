@@ -390,6 +390,21 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   /**
    * @private
    */
+  checkHasValue(inputValue: any) {
+    if (this._item) {
+      let hasValue: boolean;
+      if (Array.isArray(inputValue)) {
+        hasValue = inputValue.length > 0;
+      } else {
+        hasValue = !isBlank(inputValue);
+      }
+      this._item.setElementClass('input-has-value', hasValue);
+    }
+  }
+
+  /**
+   * @private
+   */
   @ContentChildren(Option)
   set options(val: QueryList<Option>) {
     this._options = val;
@@ -445,6 +460,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     console.debug('select, writeValue', val);
     this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
     this._updOpts();
+    this.checkHasValue(val);
   }
 
   /**
@@ -464,6 +480,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       fn(val);
       this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
       this._updOpts();
+      this.checkHasValue(val);
       this.onTouched();
     };
   }
@@ -481,6 +498,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     console.debug('select, onChange w/out formControlName', val);
     this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
     this._updOpts();
+    this.checkHasValue(val);
     this.onTouched();
   }
 

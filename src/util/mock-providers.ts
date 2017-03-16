@@ -229,7 +229,10 @@ export function mockChangeDetectorRef(): ChangeDetectorRef {
 }
 
 export class MockElementRef implements ElementRef {
-  nativeElement: any = new MockElement();
+  nativeElement: any;
+  constructor(ele: any) {
+    this.nativeElement = ele;
+  }
 }
 
 export class MockElement {
@@ -299,7 +302,11 @@ export class ClassList {
 }
 
 export function mockElementRef(): ElementRef {
-  return new MockElementRef();
+  return new MockElementRef(new MockElement());
+}
+
+export function mockElementRefEle(ele: any): ElementRef {
+  return new MockElementRef(ele);
 }
 
 export class MockRenderer {
@@ -348,7 +355,9 @@ export function mockView(component?: any, data?: any) {
 
 export function mockViews(nav: NavControllerBase, views: ViewController[]) {
   nav._views = views;
-  views.forEach(v => v._setNav(nav));
+  views.forEach(v => {
+    v._setNav(nav);
+  });
 }
 
 export function mockComponentRef(): ComponentRef<any> {
@@ -496,7 +505,9 @@ export function mockMenu(): Menu {
   let app = mockApp();
   let gestureCtrl = new GestureController(app);
   let dom = mockDomController();
-  return new Menu(null, null, null, null, null, null, null, gestureCtrl, dom, app);
+  let elementRef = mockElementRef();
+  let renderer = mockRenderer();
+  return new Menu(null, elementRef, null, null, renderer, null, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {
