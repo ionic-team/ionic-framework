@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Icon } from './icon';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Icon
