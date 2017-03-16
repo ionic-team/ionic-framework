@@ -409,7 +409,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
    */
   @Input() pickerOptions: any = {};
 
-   /**
+  /**
    * @input {string} The text to display when there's no date selected yet.
    * Using lowercase to match the input attribute
    */
@@ -570,18 +570,17 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
           })
         };
 
-        if (column.options.length) {
-          // cool, we've loaded up the columns with options
-          // preselect the option for this column
-          var selected = column.options.find(opt => opt.value === getValueFromFormat(this._value, format));
-          if (selected) {
-            // set the select index for this column's options
-            column.selectedIndex = column.options.indexOf(selected);
-          }
-
-          // add our newly created column to the picker
-          picker.addColumn(column);
+        // cool, we've loaded up the columns with options
+        // preselect the option for this column
+        var optValue = getValueFromFormat(this._value, format);
+        var selectedIndex = column.options.findIndex(opt => opt.value === optValue);
+        if (selectedIndex >= 0) {
+          // set the select index for this column's options
+          column.selectedIndex = selectedIndex;
         }
+
+        // add our newly created column to the picker
+        picker.addColumn(column);
       });
 
       const min = <any>this._min;
@@ -603,19 +602,11 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   /**
    * @private
    */
-  getColumn(name: string): PickerColumn {
-    const columns = this._picker.getColumns();
-    return columns.find(col => col.name === name);
-  }
-
-  /**
-   * @private
-   */
   validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
     assert(lowerBounds.length === 5, 'lowerBounds length must be 5');
     assert(upperBounds.length === 5, 'upperBounds length must be 5');
 
-    const column = this.getColumn(name);
+    const column = this._picker.getColumn(name);
     if (!column) {
       return 0;
     }
@@ -652,7 +643,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     const today = new Date();
     const minCompareVal = dateDataSortValue(this._min);
     const maxCompareVal = dateDataSortValue(this._max);
-    const yearCol = this.getColumn('year');
+    const yearCol = this._picker.getColumn('year');
 
     assert(minCompareVal <= maxCompareVal, 'invalid min/max value');
 

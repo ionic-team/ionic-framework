@@ -422,7 +422,7 @@ export class PickerColumnCmp {
       }
     }
 
-    var selectedIndex = clamp(min, this.col.selectedIndex, max);
+    const selectedIndex = clamp(min, this.col.selectedIndex, max);
 
     if (selectedIndex !== this.col.selectedIndex) {
       var y = (selectedIndex * this.optHeight) * -1;
@@ -512,7 +512,7 @@ export class PickerCmp {
       if (!isPresent(column.options)) {
         column.options = [];
       }
-      column.selectedIndex = 0;
+      column.selectedIndex = column.selectedIndex || 0;
       column.options = column.options.map(inputOpt => {
         let opt: PickerColumnOption = {
           text: '',
