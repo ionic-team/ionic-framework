@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { BackdropModule } from '../backdrop/backdrop.module';
+import { ButtonModule } from '../button/button.module';
 
 import { PickerCmp } from './picker-component';
 import { PickerColumnCmp } from './picker-column';
@@ -9,6 +10,7 @@ import { PickerColumnCmp } from './picker-column';
 @NgModule({
   imports: [
     BackdropModule,
+    ButtonModule,
     CommonModule
   ],
   declarations: [
