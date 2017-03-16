@@ -126,7 +126,7 @@ export class ActionSheetCmp {
   ionViewDidEnter() {
     this._plt.focusOutActiveElement();
 
-    let focusableEle = this._elementRef.nativeElement.querySelector('button');
+    const focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {
       focusableEle.focus();
     }
@@ -144,7 +144,7 @@ export class ActionSheetCmp {
   }
 
   click(button: any) {
-    if (! this.enabled ) {
+    if (!this.enabled) {
       return;
     }
 
@@ -183,6 +183,7 @@ export class ActionSheetCmp {
 
   ngOnDestroy() {
     assert(this.gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this.d = null;
     this.gestureBlocker.destroy();
   }
 }

@@ -512,7 +512,7 @@ export class PickerCmp {
       if (!isPresent(column.options)) {
         column.options = [];
       }
-
+      column.selectedIndex = 0;
       column.options = column.options.map(inputOpt => {
         let opt: PickerColumnOption = {
           text: '',

@@ -314,15 +314,22 @@ export class Tab extends NavControllerBase {
       // to refresh the tabbar and content dimensions to be sure
       // they're lined up correctly
       this._dom.read(() => {
-        const active = this.getActive();
-        if (!active) {
-          return;
-        }
-        const content = active.getIONContent();
-        content && content.resize();
+        this.resize();
       });
       done(true);
     }
+  }
+
+  /**
+   * @private
+   */
+  resize() {
+    const active = this.getActive();
+    if (!active) {
+      return;
+    }
+    const content = active.getIONContent();
+    content && content.resize();
   }
 
   /**
@@ -385,7 +392,7 @@ export class Tab extends NavControllerBase {
   /**
    * @private
    */
-  destroy() {
+  ngOnDestroy() {
     this.destroy();
   }
 

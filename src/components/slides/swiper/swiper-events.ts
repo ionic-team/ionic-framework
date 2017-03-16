@@ -66,7 +66,7 @@ export function initEvents(s: Slides, plt: Platform): Function {
     }, { passive: true, zone: false }, unregs);
   }
 
-  if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouch && !s._supportTouch && plt.is('ios'))) {
+  if ((s.simulateTouch && !plt.is('ios') && !plt.is('android')) || (s.simulateTouch && !s._supportTouch && plt.is('ios')) || plt.getQueryParam('ionicPlatform')) {
     // mousedown
     plt.registerListener(touchEventsTarget, 'mousedown', (ev: SlideUIEvent) => {
       onTouchStart(s, plt, ev);
@@ -84,10 +84,7 @@ export function initEvents(s: Slides, plt: Platform): Function {
   }
 
   // onresize
-  unregs.push(plt.onResize(() => {
-    onResize(s, plt, false);
-  }));
-
+  let resizeObs = plt.resize.subscribe(() => onResize(s, plt, false));
   // Next, Prev, Index
   if (s.nextButton) {
     plt.registerListener(s.nextButton, 'click', (ev) => {
@@ -115,7 +112,8 @@ export function initEvents(s: Slides, plt: Platform): Function {
   }
 
   // return a function that removes all of the added listeners
-  return function() {
+  return function () {
+    resizeObs.unsubscribe();
     unregs.forEach(unreg => {
       unreg();
     });
@@ -818,7 +816,18 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
 /*=========================
   Resize Handler
   ===========================*/
+let resizeId: number;
 function onResize(s: Slides, plt: Platform, forceUpdatePagination: boolean) {
+  // TODO: hacky, we should use Resize Observer in the future
+  if (resizeId) {
+    plt.cancelTimeout(resizeId);
+    resizeId = null;
+  }
+  resizeId = plt.timeout(() => doResize(s, plt, forceUpdatePagination), 200);
+}
+
+function doResize(s: Slides, plt: Platform, forceUpdatePagination: boolean) {
+  resizeId = null;
   // Disable locks on resize
   var allowSwipeToPrev = s._allowSwipeToPrev;
   var allowSwipeToNext = s._allowSwipeToNext;

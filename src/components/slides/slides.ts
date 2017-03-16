@@ -107,7 +107,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```ts
  * import { ViewChild } from '@angular/core';
  * import { Slides } from 'ionic-angular';
- 
+
  * class MyPage {
  *   @ViewChild(Slides) slides: Slides;
  *
@@ -139,7 +139,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-slides',
   template:
-    '<div class="swiper-container">' +
+    '<div class="swiper-container" [attr.dir]="_rtl? \'rtl\' : null">' +
       '<div class="swiper-wrapper">' +
         '<ng-content></ng-content>' +
       '</div>' +
@@ -248,6 +248,14 @@ export class Slides extends Ion {
     this._pager = isTrueProperty(val);
   }
   private _pager = false;
+
+/**
+ * @input {string} If dir attribute is equal to rtl, set interal _rtl to true;
+ */
+  @Input()
+  set dir(val: string) {
+    this._rtl = (val.toLowerCase() === 'rtl');
+  }
 
   /**
    * @input {string}  Type of pagination. Possible values are:
@@ -890,7 +898,14 @@ export class Slides extends Ion {
 
 
 
-  constructor(config: Config, private _plt: Platform, zone: NgZone, @Optional() viewCtrl: ViewController, elementRef: ElementRef, renderer: Renderer) {
+  constructor(
+    config: Config,
+    private _plt: Platform,
+    zone: NgZone,
+    @Optional() viewCtrl: ViewController,
+    elementRef: ElementRef,
+    renderer: Renderer,
+  ) {
     super(config, elementRef, renderer, 'slides');
 
     this._zone = zone;
@@ -964,12 +979,18 @@ export class Slides extends Ion {
     }
   }
 
+  resize() {
+    if (this._init) {
+
+    }
+  }
+
   /**
    * Transition to the specified slide.
    *
    * @param {number} index  The index number of the slide.
    * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks] Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
+   * @param {boolean} [runCallbacks] Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
     slideTo(this, this._plt, index, speed, runCallbacks);
@@ -979,7 +1000,7 @@ export class Slides extends Ion {
    * Transition to the next slide.
    *
    * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   slideNext(speed?: number, runCallbacks?: boolean) {
     slideNext(this, this._plt, runCallbacks, speed, true);
@@ -989,7 +1010,7 @@ export class Slides extends Ion {
    * Transition to the previous slide.
    *
    * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   slidePrev(speed?: number, runCallbacks?: boolean) {
     slidePrev(this, this._plt, runCallbacks, speed, true);

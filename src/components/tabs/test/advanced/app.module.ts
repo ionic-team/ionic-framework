@@ -315,6 +315,11 @@ export class Tab2Page3 {
 
   constructor(public navCtrl: NavController) {}
 
+  ionViewCanLeave() {
+    console.log('Tab2Page3, ionViewCanLeave', false);
+    return false;
+  }
+
   ionViewWillEnter() {
     console.log('Tab2Page3, ionViewWillEnter');
   }

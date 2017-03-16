@@ -9,6 +9,7 @@ import { Platform } from '../../platform/platform';
 export class DisplayWhen {
   isMatch: boolean = false;
   conditions: string[];
+  resizeObs: any;
 
   constructor(conditions: string, public _plt: Platform, public zone: NgZone) {
     if (!conditions) return;
@@ -26,12 +27,7 @@ export class DisplayWhen {
 
     if (this.orientation()) {
       // add window resize listener
-      _plt.onResize(() => {
-        zone.run(() => {
-          this.orientation();
-        });
-      });
-      return;
+      this.resizeObs = _plt.resize.subscribe(this.orientation.bind(this));
     }
 
   }
@@ -49,8 +45,13 @@ export class DisplayWhen {
         return true;
       }
     }
+    return false;
   }
 
+  ngOnDestroy() {
+    this.resizeObs && this.resizeObs.unsubscribe();
+    this.resizeObs = null;
+  }
 }
 
 /**
@@ -110,6 +111,8 @@ export class ShowWhen extends DisplayWhen {
     super(showWhen, plt, zone);
   }
 
+  // ngOnDestroy is implemente in DisplayWhen
+
 }
 
 /**
@@ -168,5 +171,7 @@ export class HideWhen extends DisplayWhen {
   ) {
     super(hideWhen, plt, zone);
   }
+
+  // ngOnDestroy is implemente in DisplayWhen
 
 }

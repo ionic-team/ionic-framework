@@ -1,0 +1,13 @@
+
+@import "../../themes/ionic.globals.md";
+
+// Split Pane
+// --------------------------------------------------
+
+.split-pane-md.split-pane-visible >.split-pane-side {
+  min-width: 270px;
+  max-width: 28%;
+
+  border-right: 1px solid $list-md-border-color;
+}
+

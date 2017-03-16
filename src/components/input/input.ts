@@ -24,7 +24,7 @@ import { Platform } from '../../platform/platform';
  * `password`, `email`, `number`, `search`, `tel`, and `url`. Ionic
  * still uses an actual `<input type="text">` HTML element within the
  * component, however, with Ionic wrapping the native HTML input
- * element it's able to better handle the user experience and
+ * element it's better able to handle the user experience and
  * interactivity.
  *
  * Similarly, `<ion-textarea>` should be used in place of `<textarea>`.

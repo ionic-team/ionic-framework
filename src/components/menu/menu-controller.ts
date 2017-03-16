@@ -1,7 +1,7 @@
 import { Menu } from './menu';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
-import { removeArrayItem } from '../../util/util';
+import { removeArrayItem, assert } from '../../util/util';
 
 
 /**
@@ -296,16 +296,35 @@ export class MenuController {
   /**
    * @private
    */
-  register(menu: Menu) {
+  _register(menu: Menu) {
+    assert(this._menus.indexOf(menu) < 0, 'menu was already registered');
     this._menus.push(menu);
   }
 
   /**
    * @private
    */
-  unregister(menu: Menu) {
+  _unregister(menu: Menu) {
+    assert(this._menus.indexOf(menu) >= 0, 'menu is not registered');
     removeArrayItem(this._menus, menu);
   }
+
+  /**
+   * @private
+   */
+  _setActiveMenu(menu: Menu) {
+    assert(menu.enabled, 'menu must be enabled');
+    assert(this._menus.indexOf(menu) >= 0, 'menu is not registered');
+
+    // if this menu should be enabled
+    // then find all the other menus on this same side
+    // and automatically disable other same side menus
+    const side = menu.side;
+    this._menus
+      .filter(m => m.side === side && m !== menu)
+      .map(m => m.enable(false));
+  }
+
 
   /**
    * @private

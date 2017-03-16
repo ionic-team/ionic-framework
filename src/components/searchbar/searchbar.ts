@@ -289,7 +289,7 @@ export class Searchbar extends Ion {
 
       // Get the width of the span then remove it
       var textWidth = tempSpan.offsetWidth;
-      tempSpan.remove();
+      doc.body.removeChild(tempSpan);
 
       // Set the input padding left
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';

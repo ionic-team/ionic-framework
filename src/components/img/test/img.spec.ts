@@ -2,7 +2,7 @@ import { ElementRef, Renderer } from '@angular/core';
 import { Content } from '../../content/content';
 import { DomController } from '../../../platform/dom-controller';
 import { Img } from '../img';
-import { mockConfig, mockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockDomController, mockElementRef, mockElementRefEle, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 import { Platform } from '../../../platform/platform';
 
 
@@ -60,8 +60,9 @@ describe('Img', () => {
     contentElementRef = mockElementRef();
     dom = mockDomController();
     content = new Content(mockConfig(), mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
-    content._scrollEle = document.createElement('div');
-    content._scrollEle.className = 'scroll-content';
+    let ele = document.createElement('div');
+    ele.className = 'scroll-content';
+    content._scrollContent = mockElementRefEle(ele);
 
     elementRef = mockElementRef();
     renderer = mockRenderer();

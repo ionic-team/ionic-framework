@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
-import { AlertOptions, AlertInputOptions } from './alert-options';
+import { AlertOptions, AlertInputOptions, AlertButton } from './alert-options';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -27,7 +27,7 @@ export class Alert extends ViewController {
   /**
   * @private
   */
-  getTransitionName(direction: string) {
+  getTransitionName(direction: string): string {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
     return this._nav && this._nav.config.get(key);
   }
@@ -35,43 +35,56 @@ export class Alert extends ViewController {
   /**
    * @param {string} title Alert title
    */
-  setTitle(title: string) {
+  setTitle(title: string): Alert {
     this.data.title = title;
+    return this;
   }
 
   /**
    * @param {string} subTitle Alert subtitle
    */
-  setSubTitle(subTitle: string) {
+  setSubTitle(subTitle: string): Alert {
     this.data.subTitle = subTitle;
+    return this;
   }
 
   /**
    * @param {string} message  Alert message content
    */
-  setMessage(message: string) {
+  setMessage(message: string): Alert {
     this.data.message = message;
+    return this;
   }
 
   /**
    * @param {object} input Alert input
    */
-  addInput(input: AlertInputOptions) {
+  addInput(input: AlertInputOptions): Alert {
     this.data.inputs.push(input);
+    return this;
   }
 
   /**
    * @param {any} button Alert button
    */
-  addButton(button: any) {
+  addButton(button: AlertButton|string): Alert {
     this.data.buttons.push(button);
+    return this;
   }
 
   /**
    * @param {string} cssClass Set the CSS class names on the alert's outer wrapper.
    */
-  setCssClass(cssClass: string) {
+  setCssClass(cssClass: string): Alert {
     this.data.cssClass = cssClass;
+    return this;
+  }
+
+  /**
+   * @param {string} mode Set the mode of the alert (ios, md, wp).
+   */
+  setMode(mode: string) {
+    this.data.mode = mode;
   }
 
   /**
@@ -80,7 +93,7 @@ export class Alert extends ViewController {
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  present(navOptions: NavOptions = {}) {
+  present(navOptions: NavOptions = {}): Promise<any> {
     navOptions.minClickBlockDuration = navOptions.minClickBlockDuration || 400;
     return this._app.present(this, navOptions);
   }
@@ -220,6 +233,7 @@ export class Alert extends ViewController {
  *  | subTitle              | `string`  | The subtitle for the alert.                                               |
  *  | message               | `string`  | The message for the alert.                                                |
  *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                |
+ *  | mode                  | `string`  | Set alert mode (ios, md, wp).                                             |
  *  | inputs                | `array`   | An array of inputs for the alert. See input options.                      |
  *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                   |
  *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop.            |
@@ -236,6 +250,12 @@ export class Alert extends ViewController {
  *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
  *  | checked     | `boolean` | Whether or not the input is checked.                            |
  *  | id          | `string`  | The input's id.                                                 |
+ *  | min         | `string | number`  | The input's minimum authorized value (string only for date inputs, number
+ *  only for number inputs)
+ *  |
+ *  | max         | `string | number`  | The input's maximum authorized value (string only for date inputs, number
+ *  only for number inputs)
+ *  |
  *
  *  Button options
  *

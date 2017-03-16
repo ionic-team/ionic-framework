@@ -477,7 +477,7 @@ export class Refresher {
   }
 
   _setListeners(shouldListen: boolean) {
-    this._events.destroy();
+    this._events.unlistenAll();
     this._pointerEvents = null;
     if (shouldListen) {
       this._pointerEvents = this._events.pointerEvents({
@@ -503,8 +503,9 @@ export class Refresher {
    * @private
    */
   ngOnDestroy() {
-    this._gesture.destroy();
     this._setListeners(false);
+    this._events.destroy();
+    this._gesture.destroy();
   }
 
 }

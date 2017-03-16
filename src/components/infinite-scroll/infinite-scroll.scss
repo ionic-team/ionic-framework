@@ -10,6 +10,9 @@ $infinite-scroll-loading-margin:         0 0 32px 0 !default;
 /// @prop - Color of the infinite scroll loading indicator
 $infinite-scroll-loading-color:          #666 !default;
 
+/// @prop - Text color of the infinite scroll loading indicator
+$infinite-scroll-loading-text-color:     $infinite-scroll-loading-color !default;
+
 /// @prop - Margin of the infinite scroll loading text
 $infinite-scroll-loading-text-margin:    4px 32px 0 32px !default;
 
@@ -47,7 +50,19 @@ ion-infinite-scroll-content {
 .infinite-loading-text {
   margin: $infinite-scroll-loading-text-margin;
 
-  color: $infinite-scroll-loading-color;
+  color: $infinite-scroll-loading-text-color;
+}
+
+.infinite-loading-spinner .spinner-ios line,
+.infinite-loading-spinner .spinner-ios-small line,
+.infinite-loading-spinner .spinner-crescent circle {
+  stroke: $infinite-scroll-loading-color;
+}
+
+.infinite-loading-spinner .spinner-bubbles circle,
+.infinite-loading-spinner .spinner-circles circle,
+.infinite-loading-spinner .spinner-dots circle {
+  fill: $infinite-scroll-loading-color;
 }
 
 

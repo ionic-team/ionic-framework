@@ -22,11 +22,11 @@ import { Directive } from '@angular/core';
   * | align-items-end             | Adds `align-items: flex-end`. All columns will be vertically aligned at the bottom, unless they specify their own alignment.                     |
   * | align-items-stretch         | Adds `align-items: stretch`. All columns will be stretched to take up the entire height of the row, unless they specify their own alignment.     |
   * | align-items-baseline        | Adds `align-items: baseline`. All columns will be vertically aligned at their baselines, unless they specify their own alignment.                |
-  * | justify-content-start       | Adds `justify-content: start`. All columns will be horrizontally aligned at the start.                                                           |
-  * | justify-content-center      | Adds `justify-content: center`. All columns will be horrizontally aligned at the center.                                                         |
-  * | justify-content-end         | Adds `justify-content: end`. All columns will be horrizontally aligned at the end.                                                               |
-  * | justify-content-around      | Adds `justify-content: space-around`. All columns will be horrizontally aligned with equal space around them.                                    |
-  * | justify-content-between     | Adds `justify-content: space-between`. All columns will be horrizontally aligned with a half-size space on either end.                           |
+  * | justify-content-start       | Adds `justify-content: start`. All columns will be horizontally aligned at the start.                                                            |
+  * | justify-content-center      | Adds `justify-content: center`. All columns will be horizontally aligned at the center.                                                          |
+  * | justify-content-end         | Adds `justify-content: end`. All columns will be horizontally aligned at the end.                                                                |
+  * | justify-content-around      | Adds `justify-content: space-around`. All columns will be horizontally aligned with equal space around them.                                     |
+  * | justify-content-between     | Adds `justify-content: space-between`. All columns will be horizontally aligned with a half-size space on either end.                            |
   *
   *
  */

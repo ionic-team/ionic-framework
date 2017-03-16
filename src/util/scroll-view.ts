@@ -76,6 +76,10 @@ export class ScrollView {
 
     function scrollCallback(scrollEvent: UIEvent) {
       ev.timeStamp = scrollEvent.timeStamp;
+      // Event.timeStamp is 0 in firefox
+      if (!ev.timeStamp) {
+        ev.timeStamp = Date.now();
+      }
 
       // get the current scrollTop
       // ******** DOM READ ****************
