@@ -3,10 +3,12 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Navbar } from './navbar';
 
+import { ButtonModule } from '../button/button.module';
 import { IconModule } from '../icon/icon.module';
 
 @NgModule({
   imports: [
+    ButtonModule,
     CommonModule,
     IconModule
   ],
