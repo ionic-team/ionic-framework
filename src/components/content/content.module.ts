@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Content } from './content';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Content

@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RadioButton } from './radio-button';
 import { RadioGroup } from './radio-group';
 
+/** @hidden */
 @NgModule({
   declarations: [
     RadioButton,

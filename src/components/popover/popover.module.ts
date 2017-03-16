@@ -4,6 +4,7 @@ import { BackdropModule } from '../backdrop/backdrop.module';
 
 import { PopoverCmp } from './popover-component';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule

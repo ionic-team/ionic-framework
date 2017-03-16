@@ -6,6 +6,7 @@ import { SpinnerModule } from '../spinner/spinner.module';
 
 import { LoadingCmp } from './loading-component';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule,

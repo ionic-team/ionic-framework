@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Img } from './img';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Img

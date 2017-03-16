@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Typography } from './typography';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Typography

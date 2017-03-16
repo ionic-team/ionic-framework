@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Option } from './option';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Option

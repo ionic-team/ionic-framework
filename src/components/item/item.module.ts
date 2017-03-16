@@ -13,6 +13,7 @@ import { Reorder } from './reorder';
 import { IconModule } from '../icon/icon.module';
 import { LabelModule } from '../label/label.module';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule,

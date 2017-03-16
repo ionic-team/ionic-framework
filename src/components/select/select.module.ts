@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Select } from './select';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule

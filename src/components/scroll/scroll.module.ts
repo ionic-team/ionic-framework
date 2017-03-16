@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Scroll } from './scroll';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Scroll

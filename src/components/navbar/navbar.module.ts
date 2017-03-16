@@ -6,6 +6,7 @@ import { Navbar } from './navbar';
 import { ButtonModule } from '../button/button.module';
 import { IconModule } from '../icon/icon.module';
 
+/** @hidden */
 @NgModule({
   imports: [
     ButtonModule,

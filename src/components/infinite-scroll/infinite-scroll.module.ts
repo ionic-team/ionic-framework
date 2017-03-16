@@ -6,6 +6,7 @@ import { InfiniteScrollContent } from './infinite-scroll-content';
 
 import { SpinnerModule } from '../spinner/spinner.module';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule,

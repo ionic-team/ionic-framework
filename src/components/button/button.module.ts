@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Button } from './button';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Button

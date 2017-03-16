@@ -6,6 +6,7 @@ import { Menu } from './menu';
 import { MenuClose } from './menu-close';
 import { MenuToggle } from './menu-toggle';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule

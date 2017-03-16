@@ -9,6 +9,7 @@ import { TabButton } from './tab-button';
 import { TabHighlight } from './tab-highlight';
 import { Tabs } from './tabs';
 
+/** @hidden */
 @NgModule({
   imports: [
     BadgeModule,

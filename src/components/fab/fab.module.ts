@@ -6,6 +6,7 @@ import { FabButton } from './fab';
 import { FabContainer } from './fab-container';
 import { FabList } from './fab-list';
 
+/** @hidden */
 @NgModule({
   imports: [
     IconModule

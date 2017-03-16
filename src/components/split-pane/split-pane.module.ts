@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { SplitPane } from './split-pane';
 
+/** @hidden */
 @NgModule({
   declarations: [
     SplitPane

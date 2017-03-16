@@ -7,6 +7,7 @@ import { IconModule } from '../icon/icon.module';
 
 import { ActionSheetCmp } from './action-sheet-component';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule,

@@ -7,6 +7,7 @@ import { BackdropModule } from '../backdrop/backdrop.module';
 
 import { AlertCmp } from './alert-component';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule,

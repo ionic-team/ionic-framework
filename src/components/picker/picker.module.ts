@@ -7,6 +7,7 @@ import { ButtonModule } from '../button/button.module';
 import { PickerCmp } from './picker-component';
 import { PickerColumnCmp } from './picker-column';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule,

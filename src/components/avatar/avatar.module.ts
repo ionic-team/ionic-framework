@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Avatar } from './avatar';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Avatar

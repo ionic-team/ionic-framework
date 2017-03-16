@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Slide } from './slide';
 import { Slides } from './slides';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Slide,

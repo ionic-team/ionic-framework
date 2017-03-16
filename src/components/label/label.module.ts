@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Label } from './label';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Label

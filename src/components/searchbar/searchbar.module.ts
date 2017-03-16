@@ -5,6 +5,7 @@ import { IconModule } from '../icon/icon.module';
 
 import { Searchbar } from './searchbar';
 
+/** @hidden */
 @NgModule({
   imports: [
     ButtonModule,

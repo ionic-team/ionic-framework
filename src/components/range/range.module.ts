@@ -4,6 +4,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Range } from './range';
 import { RangeKnob } from './range-knob';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule

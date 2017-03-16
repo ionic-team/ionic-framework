@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { ShowWhen } from './show-when';
 import { HideWhen } from './hide-when';
 
+/** @hidden */
 @NgModule({
   declarations: [
     ShowWhen,

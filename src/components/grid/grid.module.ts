@@ -4,6 +4,7 @@ import { Grid } from './grid';
 import { Row } from './row';
 import { Col } from './col';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Grid,

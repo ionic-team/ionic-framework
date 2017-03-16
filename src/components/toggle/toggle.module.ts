@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Toggle } from './toggle';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Toggle

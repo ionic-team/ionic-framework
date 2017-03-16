@@ -6,6 +6,7 @@ import { NativeInput } from './native-input';
 import { NextInput } from './next-input';
 import { TextInput } from './input';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule,

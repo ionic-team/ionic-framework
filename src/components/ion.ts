@@ -7,6 +7,7 @@ import { Config } from '../config/config';
  * that all Ionic components need, such as accessing underlying native elements and
  * sending/receiving app-level events.
  */
+/** @hidden */
 export class Ion {
   /** @hidden */
   _config: Config;

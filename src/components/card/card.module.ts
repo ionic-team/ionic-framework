@@ -5,6 +5,7 @@ import { CardContent } from './card-content';
 import { CardHeader } from './card-header';
 import { CardTitle } from './card-title';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Card,

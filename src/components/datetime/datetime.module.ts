@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { DateTime } from './datetime';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule

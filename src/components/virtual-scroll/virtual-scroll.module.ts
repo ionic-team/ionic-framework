@@ -5,6 +5,7 @@ import { VirtualHeader } from './virtual-header';
 import { VirtualItem } from './virtual-item';
 import { VirtualScroll } from './virtual-scroll';
 
+/** @hidden */
 @NgModule({
   declarations: [
     VirtualFooter,

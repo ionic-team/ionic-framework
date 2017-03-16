@@ -7,6 +7,7 @@ import { NavPush } from './nav-push';
 import { NavPushAnchor } from './nav-push-anchor';
 import { OverlayPortal } from './overlay-portal';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Nav,

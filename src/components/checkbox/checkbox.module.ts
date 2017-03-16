@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Checkbox } from './checkbox';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Checkbox

@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Spinner } from './spinner';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule

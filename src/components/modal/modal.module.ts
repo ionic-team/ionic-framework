@@ -4,6 +4,7 @@ import { BackdropModule } from '../backdrop/backdrop.module';
 
 import { ModalCmp } from './modal-component';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule

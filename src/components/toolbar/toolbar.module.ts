@@ -7,6 +7,7 @@ import { Toolbar } from './toolbar';
 import { ToolbarItem } from './toolbar-item';
 import { ToolbarTitle } from './toolbar-title';
 
+/** @hidden */
 @NgModule({
   imports: [
     CommonModule

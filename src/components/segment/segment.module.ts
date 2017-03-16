@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Segment } from './segment';
 import { SegmentButton } from './segment-button';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Segment,

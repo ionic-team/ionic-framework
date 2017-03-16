@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Badge } from './badge';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Badge

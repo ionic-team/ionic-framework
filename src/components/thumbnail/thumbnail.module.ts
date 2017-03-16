@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Thumbnail } from './thumbnail';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Thumbnail

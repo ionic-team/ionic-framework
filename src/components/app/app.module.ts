@@ -4,6 +4,7 @@ import { IonicApp } from './app-root';
 
 import { NavModule } from '../nav/nav.module';
 
+/** @hidden */
 @NgModule({
   imports: [
     NavModule

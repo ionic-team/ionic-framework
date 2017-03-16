@@ -6,6 +6,7 @@ import { ButtonModule } from '../button/button.module';
 
 import { ToastCmp } from './toast-component';
 
+/** @hidden */
 @NgModule({
   imports: [
     BackdropModule,

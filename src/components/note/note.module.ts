@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { Note } from './note';
 
+/** @hidden */
 @NgModule({
   declarations: [
     Note
