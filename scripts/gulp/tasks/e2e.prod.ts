@@ -1,5 +1,5 @@
+import { accessSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join, relative } from 'path';
-import { readFileSync, writeFileSync } from 'fs';
 
 import * as glob from 'glob';
 import { task } from 'gulp';
@@ -25,11 +25,12 @@ task('e2e.prepareSass', (done: Function) => {
 });
 
 task('e2e.prod', ['e2e.prepare'], (done: Function) => {
-
   // okay, first find out all of the e2e tests to run by finding all of the 'main.ts' files
   filterE2eTestfiles().then((filePaths: string[]) => {
-    console.log(`Compiling ${filePaths.length} E2E tests ...`);
-    return buildTests(filePaths);
+    if (filePaths && filePaths.length > 0) {
+      console.log(`Compiling ${filePaths.length} E2E tests ...`);
+      return buildTests(filePaths);
+    }
   }).then(() => {
     done();
   }).catch((err: Error) => {
@@ -37,6 +38,17 @@ task('e2e.prod', ['e2e.prepare'], (done: Function) => {
     process.exit(1);
   });
 });
+
+function e2eComponentExists(folderInfo: any): boolean {
+  let componentPath = `${SRC_COMPONENTS_ROOT}/${folderInfo.componentName}/test/${folderInfo.componentTest}/app`;
+
+  try {
+    accessSync(componentPath);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
 
 function filterE2eTestfiles() {
   return getE2eTestFiles().then((filePaths: string[]) => {
@@ -48,8 +60,11 @@ function filterE2eTestfiles() {
   }).then((entryPoints: string[]) => {
     const folderInfo = getFolderInfo();
     if (folderInfo && folderInfo.componentName && folderInfo.componentTest) {
+      if (!e2eComponentExists(folderInfo)) {
+        console.log(`Can't find E2E test "${folderInfo.componentName}/test/${folderInfo.componentTest}". Make sure that the test exists and you are passing the correct folder.`);
+      }
       const filtered = entryPoints.filter(entryPoint => {
-        return entryPoint.indexOf(folderInfo.componentName) >= 0 && entryPoint.indexOf(folderInfo.componentTest) >= 0;
+        return entryPoint.indexOf(`${folderInfo.componentName}/test/${folderInfo.componentTest}`) >= 0;
       });
       return filtered;
     }
@@ -74,7 +89,13 @@ function buildTests(filePaths: string[]) {
   const functions = filePaths.map(filePath => () => {
     return buildTest(filePath);
   });
-  return pAll(functions, {concurrency: 8}).then(() => {
+
+  // Run 2 tests at a time unless the `concurrency` arg is passed
+  let concurrentNumber = 2;
+  if (argv.concurrency) {
+    concurrentNumber = argv.concurrency;
+  }
+  return pAll(functions, {concurrency: concurrentNumber}).then(() => {
     // copy over all of the protractor tests to the correct location now
     return copyProtractorTestContent(filePaths);
   });
