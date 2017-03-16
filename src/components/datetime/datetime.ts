@@ -607,9 +607,9 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
   /**
    * @private
    */
-  validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
-    assert(lowerBounds.length === 5, 'lowerBounds length must be 5');
-    assert(upperBounds.length === 5, 'upperBounds length must be 5');
+  validateColumn(name: string, index: number, min: number, max: number, lowerBounds: any[], upperBounds: any[]): number {
+    assert(lowerBounds.length === 6, 'lowerBounds length must be 6');
+    assert(upperBounds.length === 6, 'upperBounds length must be 6');
 
     const column = this._picker.getColumn(name);
     if (!column) {
@@ -629,8 +629,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       opt.disabled = (
         value < lowerBounds[index] ||
         value > upperBounds[index] ||
-        dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4]) < min ||
-        dateSortValue(lb[0], lb[1], lb[2], lb[3], lb[4]) > max
+        dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4], ub[5]) < min ||
+        dateSortValue(lb[0], lb[1], lb[2], lb[3], lb[4], lb[5]) > max
       );
     }
 
@@ -669,30 +669,37 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     const selectedMonth = this.validateColumn(
       'month', 1,
       minCompareVal, maxCompareVal,
-      [selectedYear, 0, 0, 0, 0],
-      [selectedYear, 12, 31, 23, 59]
+      [selectedYear, 0, 0, null, 0, 0],
+      [selectedYear, 12, 31, null, 23, 59]
     );
 
     const numDaysInMonth = daysInMonth(selectedMonth, selectedYear);
     const selectedDay = this.validateColumn(
       'day', 2,
       minCompareVal, maxCompareVal,
-      [selectedYear, selectedMonth, 0, 0, 0],
-      [selectedYear, selectedMonth, numDaysInMonth, 23, 59]
+      [selectedYear, selectedMonth, 0, null, 0, 0],
+      [selectedYear, selectedMonth, numDaysInMonth, null, 23, 59]
+    );
+
+    const selectedAmPm = this.validateColumn(
+      'ampm', 3,
+      minCompareVal, maxCompareVal,
+      [selectedYear, selectedMonth, selectedDay, null, 0, 0],
+      [selectedYear, selectedMonth, selectedDay, null, 23, 59]
     );
 
     const selectedHour = this.validateColumn(
-      'hour', 3,
+      'hour', 4,
       minCompareVal, maxCompareVal,
-      [selectedYear, selectedMonth, selectedDay, 0, 0],
-      [selectedYear, selectedMonth, selectedDay, 23, 59]
+      [selectedYear, selectedMonth, selectedDay, selectedAmPm, 0, 0],
+      [selectedYear, selectedMonth, selectedDay, selectedAmPm, 23, 59]
     );
 
     this.validateColumn(
-      'minute', 4,
+      'minute', 5,
       minCompareVal, maxCompareVal,
-      [selectedYear, selectedMonth, selectedDay, selectedHour, 0],
-      [selectedYear, selectedMonth, selectedDay, selectedHour, 59]
+      [selectedYear, selectedMonth, selectedDay, selectedAmPm, selectedHour, 0],
+      [selectedYear, selectedMonth, selectedDay, selectedAmPm, selectedHour, 59]
     );
   }
 

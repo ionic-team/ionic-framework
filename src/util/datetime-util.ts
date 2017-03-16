@@ -110,10 +110,16 @@ export function dateValueRange(format: string, min: DateTimeData, max: DateTimeD
     }
 
   } else if (format === FORMAT_MMMM || format === FORMAT_MMM ||
-             format === FORMAT_MM || format === FORMAT_M ||
-             format === FORMAT_hh || format === FORMAT_h) {
-    // month or 12-hour
+             format === FORMAT_MM || format === FORMAT_M) {
+    // month
     for (i = 1; i < 13; i++) {
+      opts.push(i);
+    }
+
+  } else if (format === FORMAT_hh || format === FORMAT_h) {
+    // 12-hour
+    opts.push(12);
+    for (i = 1; i < 12; i++) {
       opts.push(i);
     }
 
@@ -150,13 +156,19 @@ export function dateValueRange(format: string, min: DateTimeData, max: DateTimeD
   return opts;
 }
 
-export function dateSortValue(year: number, month: number, day: number, hour: number = 0, minute: number = 0): number {
+export function dateSortValue(year: number, month: number, day: number, ampm: string, hour: number = 0, minute: number = 0): number {
+  if (ampm) {
+    hour %= 12;
+    if (ampm === 'pm') {
+      hour += 12;
+    }
+  }
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
 export function dateDataSortValue(data: DateTimeData): number {
   if (data) {
-    return dateSortValue(data.year, data.month, data.day, data.hour, data.minute);
+    return dateSortValue(data.year, data.month, data.day, null, data.hour, data.minute);
   }
   return -1;
 }
