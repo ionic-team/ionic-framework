@@ -83,4 +83,26 @@
       ></ion-datetime>
   </ion-item>
 
+  <ion-item>
+    <ion-label>
+      displayFormat="DD-MM-YYYY"
+      pickerFormat="DD MM YYYY"
+      min="2017-03-20"
+    </ion-label>
+    <ion-datetime
+      displayFormat="DD-MM-YYYY"
+      pickerFormat="DD MM YYYY"
+      min="2017-03-20"
+      ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Tokyo</ion-label>
+    <ion-datetime
+      displayFormat="hh:mm A"
+      [(ngModel)]="tokyoTime"
+      ></ion-datetime>
+  </ion-item>
+
+
 </ion-content>
