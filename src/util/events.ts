@@ -134,22 +134,23 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
       let el = <HTMLElement>doc.elementFromPoint(plt.width() / 2, plt.height() / 2);
       if (!el) { return; }
 
-      let contentEle = <HTMLElement>el.closest('.scroll-content');
+      let contentEle = <any>el.closest('.scroll-content');
       if (contentEle) {
-        var scroll = new ScrollView(plt, dom);
+        var style = contentEle.style;
+        var scroll = new ScrollView(plt, dom, false);
         scroll.init(contentEle, 0, 0);
           // We need to stop scrolling if it's happening and scroll up
 
-        (<any>contentEle.style)['WebkitBackfaceVisibility'] = 'hidden';
-        (<any>contentEle.style)['WebkitTransform'] = 'translate3d(0,0,0)';
+        style['WebkitBackfaceVisibility'] = 'hidden';
+        style['WebkitTransform'] = 'translate3d(0,0,0)';
 
         dom.write(function() {
-          contentEle.style.overflow = 'hidden';
+          style.overflow = 'hidden';
 
           function finish() {
-            contentEle.style.overflow = '';
-            (<any>contentEle.style)['WebkitBackfaceVisibility'] = '';
-            (<any>contentEle.style)['WebkitTransform'] = '';
+            style.overflow = '';
+            style['WebkitBackfaceVisibility'] = '';
+            style['WebkitTransform'] = '';
           }
 
           let didScrollTimeout = plt.timeout(() => {
