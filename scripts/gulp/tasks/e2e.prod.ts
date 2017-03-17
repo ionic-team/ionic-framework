@@ -62,6 +62,7 @@ function filterE2eTestfiles() {
     if (folderInfo && folderInfo.componentName && folderInfo.componentTest) {
       if (!e2eComponentExists(folderInfo)) {
         console.log(`Can't find E2E test "${folderInfo.componentName}/test/${folderInfo.componentTest}". Make sure that the test exists and you are passing the correct folder.`);
+        return [];
       }
       const filtered = entryPoints.filter(entryPoint => {
         return entryPoint.indexOf(`${folderInfo.componentName}/test/${folderInfo.componentTest}`) >= 0;
@@ -134,6 +135,8 @@ function buildTest(filePath: string) {
   return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, argv.dev).then(() => {
     const end = Date.now();
     console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
+  }).catch((err) => {
+    console.log(`${err}`);
   });
 }
 
