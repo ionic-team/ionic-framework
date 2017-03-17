@@ -55,7 +55,6 @@ export class ScrollView {
   init(ele: HTMLElement, contentTop: number, contentBottom: number) {
     assert(ele, 'scroll-view, element can not be null');
     this._el = ele;
-    this.initialized = true;
     this.contentTop = contentTop;
     this.contentBottom = contentBottom;
 
