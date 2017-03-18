@@ -342,7 +342,7 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
-.bar-button-menutoggle-ios {
+.bar-button-ios[menuToggle] {
   order: map-get($toolbar-order-ios, menu-toggle-start);
 
   margin: 0 6px;
@@ -357,8 +357,8 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
   }
 }
 
-.bar-button-menutoggle-ios[end],
-.bar-button-menutoggle-ios[right] {
+.bar-button-ios[menuToggle][end],
+.bar-button-ios[menuToggle][right] {
   order: map-get($toolbar-order-ios, menu-toggle-end);
 }
 
