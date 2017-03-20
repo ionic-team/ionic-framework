@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../../../';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule } from '../../../../..';
 
-import { RootPage } from '../pages/root-page/root-page';
+import { AppComponent } from './app.component';
+import { RootPageModule } from '../pages/root-page/root-page.module';
 
 @NgModule({
   declarations: [
-    RootPage
+    AppComponent
   ],
   imports: [
-    IonicModule.forRoot(RootPage)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent),
+    RootPageModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    RootPage
-  ]
 })
 export class AppModule {}
