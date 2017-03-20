@@ -1,28 +1,19 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule } from '../../../../../';
+import { IonicApp, IonicModule } from '../../../../..';
 
-import { RootPage } from '../pages/root-page/root-page';
-
-@Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
-})
-export class AppComponent {
-  rootPage = RootPage;
-}
+import { AppComponent } from './app.component';
+import { RootPageModule } from '../pages/root-page/root-page.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RootPage
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(AppComponent)
+    IonicModule.forRoot(AppComponent),
+    RootPageModule
   ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    RootPage
-  ]
+  bootstrap: [IonicApp]
 })
 export class AppModule {}
