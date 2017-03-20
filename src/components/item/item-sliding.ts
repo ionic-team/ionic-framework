@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, ElementRef, EventEmitter, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, ElementRef, EventEmitter, forwardRef, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
 import { swipeShouldReset, assert } from '../../util/util';
 import { Item } from './item';
@@ -172,7 +172,7 @@ export class ItemSliding {
     this.setElementClass('item-wrapper', true);
   }
 
-  @ContentChildren(ItemOptions)
+  @ContentChildren(forwardRef(() => ItemOptions))
   set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
 
