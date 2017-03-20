@@ -16,14 +16,14 @@ describe('DateTime', () => {
       datetime.min = '2000-01-15';
       datetime.pickerFormat = 'MM DD YYYY';
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
 
       var columns = picker.getColumns();
       columns[0].selectedIndex = 0; // January
       columns[1].selectedIndex = 0; // January 1st
       columns[2].selectedIndex = 1; // January 1st, 2000
 
-      datetime.validate(picker);
+      datetime.validate();
 
       expect(columns[1].options[0].disabled).toEqual(true);
       expect(columns[1].options[13].disabled).toEqual(true);
@@ -32,7 +32,7 @@ describe('DateTime', () => {
       columns[0].selectedIndex = 11; // December
       columns[2].selectedIndex = 0; // December 1st, 2001
 
-      datetime.validate(picker);
+      datetime.validate();
 
       expect(columns[0].options[11].disabled).toEqual(false);
 
@@ -46,14 +46,14 @@ describe('DateTime', () => {
       datetime.min = '2000-02-15';
       datetime.pickerFormat = 'MM DD YYYY';
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
 
       var columns = picker.getColumns();
       columns[0].selectedIndex = 1; // February
       columns[1].selectedIndex = 0; // February 1st
       columns[2].selectedIndex = columns[2].options.length - 1; // February 1st, 2000
 
-      datetime.validate(picker);
+      datetime.validate();
 
       expect(columns[0].options[0].disabled).toEqual(true);
       expect(columns[0].options[1].disabled).toEqual(false);
@@ -61,7 +61,7 @@ describe('DateTime', () => {
 
       columns[2].selectedIndex = 0; // December 1st, 2010
 
-      datetime.validate(picker);
+      datetime.validate();
 
       expect(columns[0].options[0].disabled).toEqual(false);
       expect(columns[0].options[10].disabled).toEqual(false);
@@ -74,21 +74,21 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'MM DD YYYY';
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
 
       var columns = picker.getColumns();
       columns[0].selectedIndex = 0; // January
       columns[1].selectedIndex = 0; // January 1st
       columns[2].selectedIndex = 0; // January 1st, 2010
 
-      datetime.validate(picker);
+      datetime.validate();
 
       for (var i = 0; i < 31; i++) {
         expect(columns[1].options[i].disabled).toEqual(false);
       }
 
       columns[0].selectedIndex = 1; // February
-      datetime.validate(picker);
+      datetime.validate();
 
       for (var i = 0; i < 28; i++) {
         expect(columns[1].options[i].disabled).toEqual(false);
@@ -98,7 +98,7 @@ describe('DateTime', () => {
       expect(columns[1].options[30].disabled).toEqual(true);
 
       columns[0].selectedIndex = 3; // April
-      datetime.validate(picker);
+      datetime.validate();
 
       for (var i = 0; i < 30; i++) {
         expect(columns[1].options[i].disabled).toEqual(false);
@@ -114,7 +114,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'MM DD YYYY';
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
 
       var columns = picker.getColumns();
 
@@ -122,7 +122,7 @@ describe('DateTime', () => {
       expect(columns[1].options.length).toEqual(13); // days
       expect(columns[2].options.length).toEqual(2); // years
 
-      datetime.validate(picker);
+      datetime.validate();
 
       // Months
       for (var i = 0; i < columns[0].options.length; i++) {
@@ -171,7 +171,7 @@ describe('DateTime', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(3);
@@ -187,7 +187,7 @@ describe('DateTime', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(1);
@@ -201,7 +201,7 @@ describe('DateTime', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(1);
@@ -215,7 +215,7 @@ describe('DateTime', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(2);
@@ -231,7 +231,7 @@ describe('DateTime', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(2);
@@ -245,7 +245,7 @@ describe('DateTime', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(3);
@@ -259,7 +259,7 @@ describe('DateTime', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(3);
@@ -274,7 +274,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'MM DD YYYY';
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(3);
@@ -297,7 +297,7 @@ describe('DateTime', () => {
       datetime.pickerFormat = 'YYYY';
 
       var picker = new Picker(mockApp(), null, mockConfig());
-      datetime.generate(picker);
+      datetime.generate();
       var columns = picker.getColumns();
 
       expect(columns.length).toEqual(1);

@@ -30,11 +30,10 @@ export class PageOne {
   }
 
   showLongToast() {
-    const toast = this.toastCtrl.create({
-      message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.',
-      duration: 5000,
-      cssClass: 'custom-class my-toast'
-    });
+    const toast = this.toastCtrl.create()
+      .setMessage('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.')
+      .setDuration(5000)
+      .setCssClass('custom-class my-toast');
 
     toast.onDidDismiss(this.dismissHandler);
     toast.present();

@@ -130,13 +130,11 @@ export class PageOne {
   }
 
   presentLoadingCrescent() {
-    let loading = this.loadingCtrl.create({
-      spinner: 'crescent',
-      content: 'Please wait...',
-      duration: 1000
-    });
-
-    loading.present();
+    this.loadingCtrl.create()
+      .setSpinner('crescent')
+      .setContent('Please wait...')
+      .setDuration(1000)
+      .present();
   }
 
   // Pass the fixed-spinner class so we can turn off
@@ -210,10 +208,9 @@ export class PageOne {
       loading2.present();
     }, 1000);
 
-    let loading3 = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: 'Loading 3 Please Wait...'
-    });
+    let loading3 = this.loadingCtrl.create()
+      .setSpinner('hide')
+      .setContent('Loading 3 Please Wait...');
 
     setTimeout(() => {
 
@@ -259,7 +256,6 @@ export class PageOne {
   }
 
   presentLoadingOpenDismiss() {
-    // debugger;
     const loading = this.loadingCtrl.create({
       content: 'Loading 1'
     });

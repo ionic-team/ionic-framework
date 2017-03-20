@@ -1,3 +1,71 @@
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/driftyco/ionic/compare/v2.1.0...v2.2.0) (2017-03-08)
+
+### Updating to 2.2.0
+
+1. Update your `package.json` to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
+
+  ```
+    "dependencies": {
+      "@angular/common": "2.4.8",
+      "@angular/compiler": "2.4.8",
+      "@angular/compiler-cli": "2.4.8",
+      "@angular/core": "2.4.8",
+      "@angular/forms": "2.4.8",
+      "@angular/http": "2.4.8",
+      "@angular/platform-browser": "2.4.8",
+      "@angular/platform-browser-dynamic": "2.4.8",
+      "@angular/platform-server": "2.4.8",
+      "@ionic/storage": "2.0.0",
+      "ionic-angular": "2.2.0",
+      "ionic-native": "2.4.1",
+      "ionicons": "3.0.0",
+      "rxjs": "5.0.1",
+      "sw-toolbox": "3.4.0",
+      "zone.js": "0.7.2"
+    },
+    "devDependencies": {
+      "@ionic/app-scripts": "1.1.4",
+      "typescript": "2.0.9"
+    }
+  ```
+  Note: If you are using `ionic-storage`, you need to update it to `2.0.0` or you will run into an error similar to this: `Error: Can't resolve all parameters for Storage: (?, ?).`. For more information, see the [Storage Documentation](https://ionicframework.com/docs/v2/storage/).
+
+### What's new
+
+#### Split Pane
+As part of our initiative to improve desktop support we have introduced a new component called [Split Pane](http://ionicframework.com/docs/v2/api/components/split-pane/SplitPane/). Split Pane makes it possible to easily create multi-view layouts. It allows elements, such as a menu or another navigation pane, to be displayed on large viewports. Split Pane can be used to achieve a layout similar to the Gmail (Android) or Mail (Apple) applications.
+
+#### Angular 2.4.8
+Ionic has been updated to depend on Angular 2.4.8, which is the latest version that we have tested and confirmed to be compatible with Ionic. This means that updating to the 2.2.0 release of Ionic will automatically work with all of the performance updates, bug fixes and features in Angular 2.4.8!
+
+### Ionic Storage
+
+We recently released the 2.0.0 version of `ionic-storage`. If you are using Ionic Storage in your application, you need to update to this version of `ionic-storage`. Attempting to use an older version of `ionic-storage` with Ionic 2.2.0 will cause errors. You can read about how to update to `ionic-storage` 2.0.0 [here](https://github.com/driftyco/ionic-storage/releases/tag/v2.0.0).
+
+
+### Bug Fixes
+
+* **components:** clean up event listeners to stop memory leaks ([8d9f374](https://github.com/driftyco/ionic/commit/8d9f374)), closes [#10459](https://github.com/driftyco/ionic/issues/10459) [#10416](https://github.com/driftyco/ionic/issues/10416) [#10286](https://github.com/driftyco/ionic/issues/10286)
+* **infinite-scroll:** use icon color from Sass var and add var for text color ([7b97fb7](https://github.com/driftyco/ionic/commit/7b97fb7)), closes [#10574](https://github.com/driftyco/ionic/issues/10574)
+* **menu:** disable the menus when they should be ([dc53c8e](https://github.com/driftyco/ionic/commit/dc53c8e))
+* **menu:** don't hide menuToggle outside navbar ([e56bad9](https://github.com/driftyco/ionic/commit/e56bad9))
+* **radio:** calculate radio-inner width/height with border width ([#10495](https://github.com/driftyco/ionic/issues/10495)) ([176aa23](https://github.com/driftyco/ionic/commit/176aa23))
+* **refresher:** don't destroy events manager ([9308694](https://github.com/driftyco/ionic/commit/9308694)), ([1dd8883](https://github.com/driftyco/ionic/commit/1dd8883)), closes [#10652](https://github.com/driftyco/ionic/issues/10652)
+* **refresher:** use refresher icon color from Sass var ([116ae38](https://github.com/driftyco/ionic/commit/116ae38)), closes [#10479](https://github.com/driftyco/ionic/issues/10479)
+* **tabs:** emit ionChange after the tab is selected ([ac1a886](https://github.com/driftyco/ionic/commit/ac1a886)), closes [#10538](https://github.com/driftyco/ionic/issues/10538)
+* **tabs:** catch the rejected promise with popToRoot ([7385158](https://github.com/driftyco/ionic/commit/7385158))
+* **view-controller:** set navigation so dimiss() will work synchronously. ([61a5317](https://github.com/driftyco/ionic/commit/61a5317)), closes [#10654](https://github.com/driftyco/ionic/issues/10654)
+
+
+### Features
+
+* **alert:** add ability to set the mode on alert ([f577e54](https://github.com/driftyco/ionic/commit/f577e54))
+* **split-pane:** split pane support for ion-nav and ion-menu ([#10343](https://github.com/driftyco/ionic/issues/10343)) ([9e4c3a6](https://github.com/driftyco/ionic/commit/9e4c3a6))
+* **typography:** add text-wrap attribute for all elements ([2c2b87b](https://github.com/driftyco/ionic/commit/2c2b87b)), closes [#7051](https://github.com/driftyco/ionic/issues/7051)
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/driftyco/ionic/compare/v2.0.1...v2.1.0) (2017-02-23)
 

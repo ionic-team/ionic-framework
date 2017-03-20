@@ -18,14 +18,12 @@ export class PageOne {
   constructor(private alertCtrl: AlertController, private modalCtrl: ModalController) { }
 
   doAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Alert',
-      subTitle: 'Subtitle',
-      message: 'This is an alert message.',
-      buttons: ['OK']
-    });
-
-    alert.present();
+    this.alertCtrl.create()
+      .setTitle('Alert')
+      .setSubTitle('Subtitle')
+      .setMessage('This is an alert message.')
+      .addButton('OK')
+      .present();
   }
 
   doConfirm() {
@@ -100,6 +98,7 @@ export class PageOne {
     });
     alert.addInput({
       name: 'name2',
+      id: 'name2-id',
       value: 'hello',
       placeholder: 'Placeholder 2'
     });
@@ -108,6 +107,28 @@ export class PageOne {
       value: 'http://ionicframework.com',
       type: 'url',
       placeholder: 'Favorite site ever'
+    });
+    // input date with min & max
+    alert.addInput({
+      name: 'name4',
+      type: 'date',
+      min: '2017-03-01',
+      max: '2018-01-12'
+    });
+    // input date without min nor max
+    alert.addInput({
+      name: 'name5',
+      type: 'date'
+    });
+    alert.addInput({
+      name: 'name6',
+      type: 'number',
+      min: -5,
+      max: 10
+    });
+    alert.addInput({
+      name: 'name7',
+      type: 'number'
     });
     alert.addButton({
       text: 'Cancel',

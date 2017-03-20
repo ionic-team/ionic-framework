@@ -1,14 +1,14 @@
-import { Directive, ElementRef, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Output } from '@angular/core';
 
 import { Content, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-
+import { assert } from '../../util/util';
 
 /**
  * @name InfiniteScroll
  * @description
  * The Infinite Scroll allows you to perform an action when the user
- * scrolls a specified distance from the bottom of the page.
+ * scrolls a specified distance from the bottom or top of the page.
  *
  * The expression assigned to the `infinite` event is called when
  * the user scrolls to the specified distance. When this expression
@@ -57,6 +57,52 @@ import { DomController } from '../../platform/dom-controller';
  * }
  * ```
  *
+ * ## `waitFor` method of InfiniteScroll
+ *
+ * In case if your async operation returns promise you can utilize
+ * `waitFor` method inside your template.
+ *
+ * ```html
+ * <ion-content>
+ *
+ *  <ion-list>
+ *    <ion-item *ngFor="let item of items">{{item}}</ion-item>
+ *  </ion-list>
+ *
+ *  <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+ *    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ *  </ion-infinite-scroll>
+ *
+ * </ion-content>
+ * ```
+ *
+ * ```ts
+ * @Component({...})
+ * export class NewsFeedPage {
+ *   items = [];
+ *
+ *   constructor() {
+ *     for (var i = 0; i < 30; i++) {
+ *       this.items.push( this.items.length );
+ *     }
+ *   }
+ *
+ *   doInfinite(): Promise<any> {
+ *     console.log('Begin async operation');
+ *
+ *     return new Promise((resolve) => {
+ *       setTimeout(() => {
+ *         for (var i = 0; i < 30; i++) {
+ *           this.items.push( this.items.length );
+ *         }
+ *
+ *         console.log('Async operation has ended');
+ *         resolve();
+ *       }, 500);
+ *     })
+ *   }
+ * }
+ * ```
  *
  * ## Infinite Scroll Content
  *
@@ -102,6 +148,7 @@ export class InfiniteScroll {
   _thr: string = '15%';
   _thrPx: number = 0;
   _thrPc: number = 0.15;
+  _position: string = POSITION_BOTTOM;
   _init: boolean = false;
 
 
@@ -147,6 +194,23 @@ export class InfiniteScroll {
   }
 
   /**
+   * @input {string} The position of the infinite scroll element.
+   * The value can be either `top` or `bottom`.
+   * Default is `bottom`.
+   */
+  @Input()
+  get position(): string {
+    return this._position;
+  }
+  set position(val: string) {
+    if (val === POSITION_TOP || val === POSITION_BOTTOM) {
+      this._position = val;
+    } else {
+      console.error(`Invalid value for ion-infinite-scroll's position input. Its value should be '${POSITION_BOTTOM}' or '${POSITION_TOP}'.`);
+    }
+  }
+
+  /**
    * @output {event} Emitted when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
@@ -155,7 +219,7 @@ export class InfiniteScroll {
   @Output() ionInfinite: EventEmitter<InfiniteScroll> = new EventEmitter<InfiniteScroll>();
 
   constructor(
-    @Host() private _content: Content,
+    private _content: Content,
     private _zone: NgZone,
     private _elementRef: ElementRef,
     private _dom: DomController
@@ -183,17 +247,21 @@ export class InfiniteScroll {
 
     // ******** DOM READ ****************
     const d = this._content.getContentDimensions();
+    const height = d.contentHeight;
 
-    let reloadY = d.contentHeight;
-    if (this._thrPc) {
-      reloadY += (reloadY * this._thrPc);
-    } else {
-      reloadY += this._thrPx;
-    }
+    const threshold = this._thrPc ? (height * this._thrPc) : this._thrPx;
 
     // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
 
-    const distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - reloadY;
+    let distanceFromInfinite: number;
+
+    if (this._position === POSITION_BOTTOM) {
+      distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - height - threshold;
+    } else {
+      assert(this._position === POSITION_TOP, '_position should be top');
+      distanceFromInfinite = d.scrollTop - infiniteHeight - threshold;
+    }
+
     if (distanceFromInfinite < 0) {
       // ******** DOM WRITE ****************
       this._dom.write(() => {
@@ -221,7 +289,60 @@ export class InfiniteScroll {
    * to `enabled`.
    */
   complete() {
-    this.state = STATE_ENABLED;
+    if (this._position === POSITION_BOTTOM) {
+      this.state = STATE_ENABLED;
+      return;
+    }
+
+    assert(this._position === POSITION_TOP, 'position should be top');
+    /* New content is being added at the top, but the scrollTop position stays the same,
+      which causes a scroll jump visually. This algorithm makes sure to prevent this.
+
+      (Frame 1)
+        complete() is called, but the UI hasn't had time to update yet.
+        Save the current content dimensions.
+        Wait for the next frame using _dom.read, so the UI will be updated.
+
+      (Frame 2)
+        Read the new content dimensions.
+        Calculate the height difference and the new scroll position.
+        Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
+
+      (Still frame 2, if I'm correct)
+        Change the scroll position (= visually maintain the scroll position).
+        Change the state to re-enable the InfiniteScroll. This should be after changing the scroll position, or it could cause the InfiniteScroll to be triggered again immediately.
+
+      (Frame 3)
+        Done.
+    */
+
+    // ******** DOM READ ****************
+    // Save the current content dimensions before the UI updates
+    const prevDim = this._content.getContentDimensions();
+
+    // ******** DOM READ ****************
+    this._dom.read(() => {
+      // UI has updated, save the new content dimensions
+      const newDim = this._content.getContentDimensions();
+
+      // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
+      const newScrollTop = newDim.scrollHeight - (prevDim.scrollHeight - prevDim.scrollTop);
+
+      // ******** DOM WRITE ****************
+      this._dom.write(() => {
+        this._content.scrollTop = newScrollTop;
+        this.state = STATE_ENABLED;
+      });
+    });
+  }
+
+  /**
+  * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
+  * change state of infiniteScroll to "complete"
+  */
+  waitFor(action: Promise<any>) {
+    const enable = this.complete.bind(this);
+    action.then(enable, enable);
   }
 
   /**
@@ -245,9 +366,8 @@ export class InfiniteScroll {
     if (this._init) {
       if (shouldListen) {
         if (!this._scLsn) {
-          this._scLsn = this._content.ionScroll.subscribe((ev: ScrollEvent) => {
-            this._onScroll(ev);
-          });
+          this._scLsn = this._content.ionScroll.subscribe(this._onScroll.bind(this));
+          this._content.enableScrollListener();
         }
       } else {
         this._scLsn && this._scLsn.unsubscribe();
@@ -262,6 +382,10 @@ export class InfiniteScroll {
   ngAfterContentInit() {
     this._init = true;
     this._setListeners(this.state !== STATE_DISABLED);
+
+    if (this._position === POSITION_TOP) {
+      this._content.scrollDownOnLoad = true;
+    }
   }
 
   /**
@@ -276,3 +400,6 @@ export class InfiniteScroll {
 const STATE_ENABLED = 'enabled';
 const STATE_DISABLED = 'disabled';
 const STATE_LOADING = 'loading';
+
+const POSITION_TOP = 'top';
+const POSITION_BOTTOM = 'bottom';

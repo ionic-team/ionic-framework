@@ -1,6 +1,6 @@
 import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
-import { AlertOptions, AlertInputOptions } from './alert-options';
+import { AlertOptions, AlertInputOptions, AlertButton } from './alert-options';
 import { AlertPopIn, AlertPopOut, AlertMdPopIn, AlertMdPopOut, AlertWpPopIn, AlertWpPopOut } from './alert-transitions';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
@@ -34,7 +34,7 @@ export class Alert extends ViewController {
   /**
   * @hidden
   */
-  getTransitionName(direction: string) {
+  getTransitionName(direction: string): string {
     let key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
     return this._nav && this._nav.config.get(key);
   }
@@ -42,43 +42,49 @@ export class Alert extends ViewController {
   /**
    * @param {string} title Alert title
    */
-  setTitle(title: string) {
+  setTitle(title: string): Alert {
     this.data.title = title;
+    return this;
   }
 
   /**
    * @param {string} subTitle Alert subtitle
    */
-  setSubTitle(subTitle: string) {
+  setSubTitle(subTitle: string): Alert {
     this.data.subTitle = subTitle;
+    return this;
   }
 
   /**
    * @param {string} message  Alert message content
    */
-  setMessage(message: string) {
+  setMessage(message: string): Alert {
     this.data.message = message;
+    return this;
   }
 
   /**
    * @param {object} input Alert input
    */
-  addInput(input: AlertInputOptions) {
+  addInput(input: AlertInputOptions): Alert {
     this.data.inputs.push(input);
+    return this;
   }
 
   /**
    * @param {any} button Alert button
    */
-  addButton(button: any) {
+  addButton(button: AlertButton|string): Alert {
     this.data.buttons.push(button);
+    return this;
   }
 
   /**
    * @param {string} cssClass Set the CSS class names on the alert's outer wrapper.
    */
-  setCssClass(cssClass: string) {
+  setCssClass(cssClass: string): Alert {
     this.data.cssClass = cssClass;
+    return this;
   }
 
   /**
@@ -94,7 +100,7 @@ export class Alert extends ViewController {
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  present(navOptions: NavOptions = {}) {
+  present(navOptions: NavOptions = {}): Promise<any> {
     navOptions.minClickBlockDuration = navOptions.minClickBlockDuration || 400;
     return this._app.present(this, navOptions);
   }

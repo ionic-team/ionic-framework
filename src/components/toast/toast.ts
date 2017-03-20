@@ -38,7 +38,7 @@ export class Toast extends ViewController {
   /**
   * @hidden
   */
-  getTransitionName(direction: string) {
+  getTransitionName(direction: string): string {
     let key = 'toast' + (direction === 'back' ? 'Leave' : 'Enter');
     return this._nav && this._nav.config.get(key);
   }
@@ -46,15 +46,48 @@ export class Toast extends ViewController {
   /**
   * @hidden
   */
-  isValidPosition(position: string) {
+  isValidPosition(position: string): boolean {
     return position === TOAST_POSITION_TOP || position === TOAST_POSITION_MIDDLE || position === TOAST_POSITION_BOTTOM;
   }
 
   /**
    * @param {string} message  Toast message content
    */
-  setMessage(message: string) {
+  setMessage(message: string): Toast {
     this.data.message = message;
+    return this;
+  }
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setDuration(dur: number): Toast {
+    this.data.duration = dur;
+    return this;
+  }
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setPosition(pos: 'top' | 'middle' | 'bottom'): Toast {
+    this.data.position = pos;
+    return this;
+  }
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setCssClass(cssClass: string): Toast {
+    this.data.cssClass = cssClass;
+    return this;
+  }
+
+  /**
+   * @param {string} message  Toast message content
+   */
+  setShowCloseButton(closeButton: boolean): Toast {
+    this.data.showCloseButton = closeButton;
+    return this;
   }
 
   /**
@@ -63,7 +96,7 @@ export class Toast extends ViewController {
    * @param {NavOptions} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  present(navOptions: NavOptions = {}) {
+  present(navOptions: NavOptions = {}): Promise<any> {
     navOptions.disableApp = false;
     return this._app.present(this, navOptions, PORTAL_TOAST);
   }

@@ -4,9 +4,17 @@
 // Split Pane
 // --------------------------------------------------
 
+$split-pane-ios-border: $hairlines-width solid $list-ios-border-color;
+
 .split-pane-ios.split-pane-visible >.split-pane-side {
   min-width: 270px;
   max-width: 28%;
 
-  border-right: $hairlines-width solid $list-ios-border-color;
+  border-right: $split-pane-ios-border;
+  border-left: 0;
+}
+
+.split-pane-ios.split-pane-visible > .split-pane-side[side=right] {
+  border-right: 0;
+  border-left: $split-pane-ios-border;
 }

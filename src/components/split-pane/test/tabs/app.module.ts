@@ -8,6 +8,7 @@ import { IonicApp, IonicModule, NavController, MenuController } from '../../../.
   <ion-navbar><ion-title>Navigation</ion-title></ion-navbar>
   </ion-header>
   <ion-content>
+
     <ion-slides style="background: black"
                 pager="true"
                 effect="flip">
@@ -47,6 +48,7 @@ export class SidePage {
     </ion-navbar>
   </ion-header>
   <ion-content padding>
+
     <button ion-button (click)="push()">Push</button>
     <div f></div>
     <div f></div>
@@ -57,6 +59,7 @@ export class SidePage {
   `
 })
 export class E2EPage {
+
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
@@ -74,6 +77,7 @@ export class E2EPage {
 export class AppComponent {
   root = E2EPage;
   root2 = SidePage;
+  side = 'right';
 }
 
 @NgModule({

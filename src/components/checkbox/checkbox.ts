@@ -184,6 +184,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
       fn(isChecked);
       this._setChecked(isChecked);
       this.onTouched();
+      this._cd.detectChanges();
     };
   }
 

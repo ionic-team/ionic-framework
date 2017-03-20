@@ -29,7 +29,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  *       modalEnter: 'modal-slide-in',
  *       modalLeave: 'modal-slide-out',
  *       tabsPlacement: 'bottom',
- *       pageTransition: 'ios'
+ *       pageTransition: 'ios-transition'
  *     }, {}
  *   )],
  *   bootstrap: [IonicApp],
@@ -110,7 +110,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `modalEnter`             | `string`            | The name of the transition to use while a modal is presented.                                                                                    |
  * | `modalLeave`             | `string`            | The name of the transition to use while a modal is dismiss.                                                                                      |
  * | `mode`                   | `string`            | The mode to use throughout the application.                                                                                                      |
- * | `pageTransition`         | `string`            | The name of the transition to use while changing pages.                                                                                          |
+ * | `pageTransition`         | `string`            | The name of the transition to use while changing pages. Available options: `"ios-transition"`, `"md-transition"`, `"wp-transition"`.             |
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
  * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                  |

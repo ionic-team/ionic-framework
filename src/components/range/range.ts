@@ -303,10 +303,19 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
+   * @output {Range} Emitted when the range selector drag starts.
+   */
+  @Output() ionFocus: EventEmitter<Range> = new EventEmitter<Range>();
+
+  /**
    * @output {Range} Emitted when the range value changes.
    */
   @Output() ionChange: EventEmitter<Range> = new EventEmitter<Range>();
 
+  /**
+   * @output {Range} Emitted when the range selector drag ends.
+   */
+  @Output() ionBlur: EventEmitter<Range> = new EventEmitter<Range>();
 
   constructor(
     private _form: Form,
@@ -356,6 +365,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       return false;
     }
 
+    // trigger ionFocus event
+    this.ionFocus.emit(this);
+
     // prevent default so scrolling does not happen
     ev.preventDefault();
     ev.stopPropagation();
@@ -368,7 +380,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
     // figure out which knob they started closer to
     const ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
-    this._activeB = (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
+    this._activeB = this._dual && (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
 
     // update the active knob's position
     this._update(current, rect, true);
@@ -411,6 +423,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
       // trigger a haptic end
       this._haptic.gestureSelectionEnd();
+
+      // trigger ionBlur event
+      this.ionBlur.emit(this);
     }
   }
 
@@ -428,18 +443,14 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
     // update which knob is pressed
     this._pressed = isPressed;
-
+    let valChanged = false;
     if (this._activeB) {
       // when the pointer down started it was determined
       // that knob B was the one they were interacting with
       this._pressedB = isPressed;
       this._pressedA = false;
       this._ratioB = ratio;
-
-      if (val === this._valB) {
-        // hasn't changed
-        return false;
-      }
+      valChanged = val === this._valB;
       this._valB = val;
 
     } else {
@@ -447,12 +458,12 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       this._pressedA = isPressed;
       this._pressedB = false;
       this._ratioA = ratio;
-
-      if (val === this._valA) {
-        // hasn't changed
-        return false;
-      }
+      valChanged = val === this._valA;
       this._valA = val;
+    }
+    this._updateBar();
+    if (valChanged) {
+      return false;
     }
 
     // value has been updated
@@ -477,8 +488,6 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       this.onChange(this.value);
       this.ionChange.emit(this);
     });
-
-    this._updateBar();
 
     return true;
   }

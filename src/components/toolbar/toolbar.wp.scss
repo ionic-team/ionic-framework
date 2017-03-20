@@ -39,6 +39,9 @@ $toolbar-wp-button-color:                color-contrast($colors-wp, $toolbar-wp-
 /// @prop - Border radius of the toolbar button
 $toolbar-wp-button-border-radius:        2px !default;
 
+/// @prop - Font weight of the strong toolbar button
+$toolbar-wp-button-strong-font-weight:   bold !default;
+
 /// @prop - Height of the navigation bar
 $navbar-wp-height:                       $toolbar-wp-height !default;
 
@@ -352,5 +355,5 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-strong-wp {
-  font-weight: $toolbar-button-wp-strong-font-weight;
+  font-weight: $toolbar-wp-button-strong-font-weight;
 }

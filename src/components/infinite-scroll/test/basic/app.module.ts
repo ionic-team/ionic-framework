@@ -4,9 +4,10 @@ import { IonicApp, IonicModule, InfiniteScroll, NavController } from '../../../.
 
 
 @Component({
+  selector: 'my-content',
   templateUrl: 'main.html'
 })
-export class E2EPage1 {
+export class MyContent {
   @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
   items: number[] = [];
   enabled: boolean = true;
@@ -17,16 +18,15 @@ export class E2EPage1 {
     }
   }
 
-  doInfinite(infiniteScroll: InfiniteScroll) {
+  doInfinite(): Promise<any> {
     console.log('Begin async operation');
 
-    getAsyncData().then(newData => {
+    return getAsyncData().then(newData => {
       for (var i = 0; i < newData.length; i++) {
         this.items.push( this.items.length );
       }
 
       console.log('Finished receiving data, async operation complete');
-      infiniteScroll.complete();
 
       if (this.items.length > 90) {
         this.enabled = false;
@@ -42,6 +42,22 @@ export class E2EPage1 {
     this.enabled = !this.enabled;
   }
 }
+
+
+@Component({
+  template: `
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Infinite Scroll</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <my-content></my-content>
+  </ion-content>
+`
+})
+export class E2EPage1 {}
 
 
 @Component({
@@ -63,7 +79,8 @@ export class AppComponent {
   declarations: [
     AppComponent,
     E2EPage1,
-    E2EPage2
+    E2EPage2,
+    MyContent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +90,8 @@ export class AppComponent {
   entryComponents: [
     AppComponent,
     E2EPage1,
-    E2EPage2
+    E2EPage2,
+    MyContent
   ]
 })
 export class AppModule {}
