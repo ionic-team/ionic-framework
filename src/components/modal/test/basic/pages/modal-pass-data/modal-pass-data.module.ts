@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { ModalPassData } from './modal-pass-data';
 import { SomeComponentProvider } from './provider';
@@ -9,7 +9,7 @@ import { SomeComponentProvider } from './provider';
     ModalPassData,
   ],
   imports: [
-    DeepLinkModule.forChild(ModalPassData)
+    IonicPageModule.forChild(ModalPassData)
   ],
   providers: [
     SomeComponentProvider

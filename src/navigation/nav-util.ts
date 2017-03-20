@@ -101,14 +101,14 @@ export function isNav(nav: any): boolean {
   return !!nav && !!nav.push;
 }
 
-export function IonicPage(config?: DeepLinkMetadataType): ClassDecorator {
+export function IonicPage(config?: IonicPageMetadata): ClassDecorator {
   return function(clazz: any) {
     return clazz;
   };
 }
 
 // public link interface
-export interface DeepLinkMetadataType {
+export interface IonicPageMetadata {
   name?: string;
   segment?: string;
   defaultHistory?: string[];
@@ -118,7 +118,7 @@ export interface DeepLinkMetadataType {
 /**
  * @hidden
  */
-export class DeepLinkMetadata implements DeepLinkMetadataType {
+export class DeepLinkMetadata implements IonicPageMetadata {
   component?: any;
   loadChildren?: string;
   name?: string;
@@ -130,8 +130,8 @@ export class DeepLinkMetadata implements DeepLinkMetadataType {
 export interface DeepLinkDecorator extends TypeDecorator {}
 
 export interface DeepLinkMetadataFactory {
-  (obj: DeepLinkMetadataType): DeepLinkDecorator;
-  new (obj: DeepLinkMetadataType): DeepLinkMetadata;
+  (obj: IonicPageMetadata): DeepLinkDecorator;
+  new (obj: IonicPageMetadata): DeepLinkMetadata;
 }
 
 /**

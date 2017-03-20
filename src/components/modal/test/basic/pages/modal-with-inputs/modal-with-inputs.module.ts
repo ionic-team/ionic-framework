@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { ModalWithInputs } from './modal-with-inputs';
 
@@ -8,7 +8,7 @@ import { ModalWithInputs } from './modal-with-inputs';
     ModalWithInputs,
   ],
   imports: [
-    DeepLinkModule.forChild(ModalWithInputs)
+    IonicPageModule.forChild(ModalWithInputs)
   ]
 })
 export class ModalWithInputsModule {}

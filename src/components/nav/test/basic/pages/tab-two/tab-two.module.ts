@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 import { Tab2 } from './tab-two';
 
 
 @NgModule({
   imports: [
-    DeepLinkModule.forChild(Tab2)
+    IonicPageModule.forChild(Tab2)
   ],
   declarations: [
     Tab2

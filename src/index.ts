@@ -278,7 +278,7 @@ export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavControllerBase } from './navigation/nav-controller-base';
 export { NavParams } from './navigation/nav-params';
-export { NavLink, NavOptions, IonicPage, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory, DeepLinkMetadataType } from './navigation/nav-util';
+export { NavLink, NavOptions, IonicPage, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory, IonicPageMetadata } from './navigation/nav-util';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
@@ -473,15 +473,6 @@ export { IonicGestureConfig } from './gestures/gesture-config';
 })
 export class IonicModule {
 
-  static forChild(cls: any) {
-    return {
-      ngModule: DeepLinkModule,
-      providers: [
-        { provide: <any>LAZY_LOADED_TOKEN, useValue: cls }
-      ]
-    };
-  }
-
     /**
      * Set the root app component for you IonicModule
      * @param {any} appRoot The root AppComponent for this app.
@@ -551,11 +542,11 @@ export class IonicModule {
   imports: [IonicModule],
   exports: [IonicModule]
 })
-export class DeepLinkModule {
+export class IonicPageModule {
 
   static forChild(page: any): ModuleWithProviders {
     return {
-      ngModule: DeepLinkModule,
+      ngModule: IonicPageModule,
       providers: [
         { provide: <any>LAZY_LOADED_TOKEN, useValue: page },
         { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: page, multi: true },

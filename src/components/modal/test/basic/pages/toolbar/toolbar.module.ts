@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { ToolbarModal } from './toolbar';
 
@@ -8,7 +8,7 @@ import { ToolbarModal } from './toolbar';
     ToolbarModal,
   ],
   imports: [
-    DeepLinkModule.forChild(ToolbarModal)
+    IonicPageModule.forChild(ToolbarModal)
   ],
   entryComponents: [
     ToolbarModal,

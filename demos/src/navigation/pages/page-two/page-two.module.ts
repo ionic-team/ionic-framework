@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../src';
+import { IonicPageModule } from '../../../../../src';
 
 import { PageTwo } from './page-two';
 
@@ -8,7 +8,7 @@ import { PageTwo } from './page-two';
     PageTwo,
   ],
   imports: [
-    DeepLinkModule.forChild(PageTwo),
+    IonicPageModule.forChild(PageTwo),
   ],
   entryComponents: [
     PageTwo,

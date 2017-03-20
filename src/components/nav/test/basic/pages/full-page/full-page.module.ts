@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 import { FullPage } from './full-page';
 
 
 @NgModule({
   imports: [
-    DeepLinkModule.forChild(FullPage)
+    IonicPageModule.forChild(FullPage)
   ],
   declarations: [
     FullPage

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { SignInPage } from './sign-in-page';
 
@@ -8,7 +8,7 @@ import { SignInPage } from './sign-in-page';
     SignInPage,
   ],
   imports: [
-    DeepLinkModule.forChild(SignInPage)
+    IonicPageModule.forChild(SignInPage)
   ]
 })
 export class SignInPageModule {}

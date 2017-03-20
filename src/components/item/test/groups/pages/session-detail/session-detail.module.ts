@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { SessionDetail } from './session-detail';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 @NgModule({
   declarations: [
     SessionDetail
   ],
   imports: [
-    DeepLinkModule.forChild(SessionDetail)
+    IonicPageModule.forChild(SessionDetail)
   ],
   entryComponents: [
     SessionDetail

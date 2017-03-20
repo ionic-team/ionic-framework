@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { ModalPage } from './modal-page';
 
@@ -8,7 +8,7 @@ import { ModalPage } from './modal-page';
     ModalPage
   ],
   imports: [
-    DeepLinkModule.forChild(ModalPage)
+    IonicPageModule.forChild(ModalPage)
   ],
   entryComponents: [
     ModalPage

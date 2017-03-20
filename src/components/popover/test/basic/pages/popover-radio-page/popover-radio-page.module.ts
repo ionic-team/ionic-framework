@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { PopoverRadioPage } from './popover-radio-page';
 
@@ -8,7 +8,7 @@ import { PopoverRadioPage } from './popover-radio-page';
     PopoverRadioPage,
   ],
   imports: [
-    DeepLinkModule.forChild(PopoverRadioPage)
+    IonicPageModule.forChild(PopoverRadioPage)
   ],
   entryComponents: [
     PopoverRadioPage,

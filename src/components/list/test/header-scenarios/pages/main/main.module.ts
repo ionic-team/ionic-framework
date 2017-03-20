@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { E2EPage } from './main';
 
@@ -8,7 +8,7 @@ import { E2EPage } from './main';
     E2EPage,
   ],
   imports: [
-    DeepLinkModule.forChild(E2EPage)
+    IonicPageModule.forChild(E2EPage)
   ],
   entryComponents: [
     E2EPage,

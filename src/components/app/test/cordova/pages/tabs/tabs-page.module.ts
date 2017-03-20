@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { TabsPage } from './tabs-page';
 
@@ -8,7 +8,7 @@ import { TabsPage } from './tabs-page';
     TabsPage,
   ],
   imports: [
-    DeepLinkModule.forChild(TabsPage)
+    IonicPageModule.forChild(TabsPage)
   ],
   entryComponents: [
     TabsPage,

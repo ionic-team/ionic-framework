@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 import { RedirectPage } from './redirect-page';
 
 
 @NgModule({
   imports: [
-    DeepLinkModule.forChild(RedirectPage)
+    IonicPageModule.forChild(RedirectPage)
   ],
   declarations: [
     RedirectPage

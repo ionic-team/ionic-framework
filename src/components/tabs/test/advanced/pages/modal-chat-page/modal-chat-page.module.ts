@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { ModalChatPage } from './modal-chat-page';
 
@@ -8,7 +8,7 @@ import { ModalChatPage } from './modal-chat-page';
     ModalChatPage,
   ],
   imports: [
-    DeepLinkModule.forChild(ModalChatPage)
+    IonicPageModule.forChild(ModalChatPage)
   ]
 })
 export class ModalChatPageModule {}

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { LandingPage } from './landing-page';
 
@@ -8,7 +8,7 @@ import { LandingPage } from './landing-page';
     LandingPage,
   ],
   imports: [
-    DeepLinkModule.forChild(LandingPage)
+    IonicPageModule.forChild(LandingPage)
   ],
   entryComponents: [
     LandingPage,

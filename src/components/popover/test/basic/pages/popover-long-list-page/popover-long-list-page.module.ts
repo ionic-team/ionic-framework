@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { PopoverLongListPage } from './popover-long-list-page';
 
@@ -8,7 +8,7 @@ import { PopoverLongListPage } from './popover-long-list-page';
     PopoverLongListPage,
   ],
   imports: [
-    DeepLinkModule.forChild(PopoverLongListPage)
+    IonicPageModule.forChild(PopoverLongListPage)
   ],
   entryComponents: [
     PopoverLongListPage,

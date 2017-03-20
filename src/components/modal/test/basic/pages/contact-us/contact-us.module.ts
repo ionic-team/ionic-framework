@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 import { ContactUs } from './contact-us';
 
@@ -8,7 +8,7 @@ import { ContactUs } from './contact-us';
     ContactUs,
   ],
   imports: [
-    DeepLinkModule.forChild(ContactUs)
+    IonicPageModule.forChild(ContactUs)
   ]
 })
 export class ContactUsModule {}

@@ -34,7 +34,7 @@ import { ViewController } from './view-controller';
  * @usage
  *
  * The first step to setting up deep links is to add the page that should be
- * a deep link in the `DeepLinkModule.forChild` import of the page's module.
+ * a deep link in the `IonicPageModule.forChild` import of the page's module.
  * For our examples, this will be `MyPage`:
  *
  * ```ts
@@ -43,7 +43,7 @@ import { ViewController } from './view-controller';
  *     MyPage
  *   ],
  *   imports: [
- *     DeepLinkModule.forChild(MyPage)
+ *     IonicPageModule.forChild(MyPage)
  *   ],
  *   entryComponents: [
  *     MyPage
@@ -52,11 +52,11 @@ import { ViewController } from './view-controller';
  * export class MyPageModule {}
  * ```
  *
- * Then, add the `@DeepLink` decorator to the component. The most simple usage is adding an
+ * Then, add the `@IonicPage` decorator to the component. The most simple usage is adding an
  * empty decorator:
  *
  * ```ts
- * @DeepLink()
+ * @IonicPage()
  * @Component({
  *   templateUrl: 'main.html'
  * })
@@ -80,7 +80,7 @@ import { ViewController } from './view-controller';
  * }
  * ```
  *
- * The `@DeepLink` decorator accepts a `DeepLinkMetadataType` object. This object accepts
+ * The `@IonicPage` decorator accepts a `DeepLinkMetadataType` object. This object accepts
  * the following properties: `name`, `segment`, `defaultHistory`, and `priority`. All of them
  * are optional but can be used to create complex navigation links.
  *
@@ -92,7 +92,7 @@ import { ViewController } from './view-controller';
  * component, simply pass it in the decorator like so:
  *
  * ```ts
- * @DeepLink({
+ * @IonicPage({
  *   name: 'my-page'
  * })
  * ```
@@ -119,7 +119,7 @@ import { ViewController } from './view-controller';
  * a value for `name` and `segment`:
  *
  * ```ts
- * @DeepLink({
+ * @IonicPage({
  *   name: 'my-page',
  *   segment: 'some-path'
  * })
@@ -139,10 +139,10 @@ import { ViewController } from './view-controller';
  * of time, so it can be passed as a variable.
  *
  * Since passing data around is common practice in an app, it can be reflected in the app's URL by
- * using the `:param` syntax. For example, set the `segment` in the `@DeepLink` decorator:
+ * using the `:param` syntax. For example, set the `segment` in the `@IonicPage` decorator:
  *
  * ```ts
- * @DeepLink({
+ * @IonicPage({
  *   name: 'detail-page',
  *   segment: 'detail/:id'
  * })
@@ -158,7 +158,7 @@ import { ViewController } from './view-controller';
  * be used:
  *
  * ```ts
- * @DeepLink({
+ * @IonicPage({
  *   name: 'list'
  * })
  * export class ListPage {
@@ -204,7 +204,7 @@ import { ViewController } from './view-controller';
  * detail page to the list page where the `name` is `list`:
  *
  * ```ts
- * @DeepLink({
+ * @IonicPage({
  *   name: 'detail-page',
  *   segment: 'detail/:id',
  *   defaultHistory: ['list']
@@ -253,10 +253,10 @@ import { ViewController } from './view-controller';
  * All deep links with their priority set to `"high"` will be loaded first. Upon completion of loading the
  * `"high"` priority modules, all deep links with a priority of `"low"` (or no priority) will be loaded. If
  * the priority is set to `"off"` the link will not be preloaded. Setting the `priority` is as simple as
- * passing it to the `@DeepLink` decorator:
+ * passing it to the `@IonicPage` decorator:
  *
  * ```ts
- * @DeepLink({
+ * @IonicPage({
  *   name: 'my-page',
  *   priority: 'high'
  * })

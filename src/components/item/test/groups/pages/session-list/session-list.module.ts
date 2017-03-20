@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { SessionList } from './session-list';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 
 @NgModule({
   declarations: [
     SessionList
   ],
   imports: [
-    DeepLinkModule.forChild(SessionList)
+    IonicPageModule.forChild(SessionList)
   ]
 })
 export class SessionListModule {}

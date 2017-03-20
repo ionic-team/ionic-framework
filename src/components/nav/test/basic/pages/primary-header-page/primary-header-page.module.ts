@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { DeepLinkModule } from '../../../../../..';
+import { IonicPageModule } from '../../../../../..';
 import { PrimaryHeaderPage } from './primary-header-page';
 
 
 @NgModule({
   imports: [
-    DeepLinkModule.forChild(PrimaryHeaderPage)
+    IonicPageModule.forChild(PrimaryHeaderPage)
   ],
   declarations: [
     PrimaryHeaderPage
