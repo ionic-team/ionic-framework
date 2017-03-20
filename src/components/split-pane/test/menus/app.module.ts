@@ -72,7 +72,7 @@ export class E2EPage {
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage;
 
   splitPaneChanged(splitPane: SplitPane) {
@@ -82,18 +82,18 @@ export class E2EApp {
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     E2EPage,
     E2EPage2,
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, {
+    IonicModule.forRoot(AppComponent, {
       swipeBackEnabled: true
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     E2EPage,
     E2EPage2,
   ]

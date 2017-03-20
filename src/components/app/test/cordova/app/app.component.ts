@@ -5,6 +5,6 @@ import { PageOne } from '../pages/page-one/page-one';
 @Component({
   templateUrl: `./app.component.html`
 })
-export class E2EApp {
+export class AppComponent {
   root = PageOne;
 }

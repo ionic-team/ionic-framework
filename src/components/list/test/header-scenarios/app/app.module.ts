@@ -2,21 +2,21 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
-import { E2EApp } from './app.component';
+import { AppComponent } from './app.component';
 import { E2EPageModule } from '../pages/main/main.module';
 
 @NgModule({
   declarations: [
-    E2EApp
+    AppComponent
   ],
   imports: [
     BrowserModule,
     E2EPageModule,
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp
+    AppComponent
   ]
 })
 export class AppModule {}

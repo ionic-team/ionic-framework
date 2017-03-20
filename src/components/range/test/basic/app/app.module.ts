@@ -7,22 +7,22 @@ import { RootPage } from '../pages/root-page/root-page';
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   rootPage = RootPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     RootPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     RootPage
   ]
 })

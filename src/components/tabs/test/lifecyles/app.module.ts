@@ -105,25 +105,25 @@ export class TabsPage {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+export class AppComponent {
   root = TabsPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Tab1,
     TabsPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {
+    IonicModule.forRoot(AppComponent, {
       tabsHighlight: true,
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Tab1,
     TabsPage
   ]

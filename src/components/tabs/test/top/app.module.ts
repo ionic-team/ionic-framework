@@ -115,13 +115,13 @@ export class TabsPage {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+export class AppComponent {
   root = TabsPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Tab1,
     Tab2,
     Tab3,
@@ -129,13 +129,13 @@ export class E2EApp {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp, {
+    IonicModule.forRoot(AppComponent, {
       tabsPlacement: 'top'
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Tab1,
     Tab2,
     Tab3,

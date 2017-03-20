@@ -6,7 +6,7 @@ import { IonicApp, IonicModule, App } from '../../../..';
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   constructor(app: App) {
     app.setTitle('Basic Buttons');
   }
@@ -14,11 +14,11 @@ export class E2EApp {
 
 @NgModule({
   declarations: [
-    E2EApp
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp]
 })

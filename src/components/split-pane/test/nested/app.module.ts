@@ -129,14 +129,14 @@ export class E2EPage {
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage;
   root2 = SidePage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     E2EPage,
     SidePage,
     E2ENested,
@@ -144,13 +144,13 @@ export class E2EApp {
     E2ENested3
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, {
+    IonicModule.forRoot(AppComponent, {
       swipeBackEnabled: true
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     E2EPage,
     SidePage,
     E2ENested,

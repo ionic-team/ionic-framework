@@ -61,23 +61,23 @@ export class MainPage {}
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   root = IntroPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     IntroPage,
     MainPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     IntroPage,
     MainPage
   ]

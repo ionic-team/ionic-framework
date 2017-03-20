@@ -5,6 +5,6 @@ import { E2EPage } from '../pages/main/main';
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage;
 }

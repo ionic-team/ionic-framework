@@ -19,7 +19,7 @@ export class Page2 {
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
   activeMenu: string;
@@ -49,17 +49,17 @@ export class E2EApp {
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ]

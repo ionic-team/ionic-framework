@@ -284,7 +284,7 @@ export class Results {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+export class AppComponent {
   root: any = Page1;
   constructor() {
     setTimeout(() => this.root = Page2, 100);
@@ -293,7 +293,7 @@ export class E2EApp {
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2,
     Page3,
@@ -306,11 +306,11 @@ export class E2EApp {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2,
     Page3,
