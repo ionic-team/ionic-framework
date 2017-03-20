@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { App, DeepLink, ViewController } from '../../../../../..';
+import { App, IonicPage, ViewController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'modal-page.html'
 })

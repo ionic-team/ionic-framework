@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { DeepLink, NavController } from '../../../../../..';
+import { IonicPage, NavController } from '../../../../../..';
 
 import { SomeData } from './provider-one';
 import { OtherData } from './provider-two';
 
-@DeepLink({
+@IonicPage({
   name: 'page-one'
 })
 @Component({

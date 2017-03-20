@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, DeepLink, ViewController } from '../../../../../..';
+import { AlertController, IonicPage, ViewController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'toolbar.html'
 })

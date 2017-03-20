@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { App, DeepLink, NavController, Tabs } from '../../../../../..';
+import { App, IonicPage, NavController, Tabs } from '../../../../../..';
 
-@DeepLink({
+@IonicPage({
   name: 'tab-one'
 })
 @Component({

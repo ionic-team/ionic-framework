@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Config, DeepLink, NavController, ModalController, ToastController, Platform } from '../../../../../..';
+import { Config, IonicPage, NavController, ModalController, ToastController, Platform } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'page-one.html'
 })

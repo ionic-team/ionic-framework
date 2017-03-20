@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DeepLink } from '../../../../../..';
+import { IonicPage } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'second-page.html'
 })

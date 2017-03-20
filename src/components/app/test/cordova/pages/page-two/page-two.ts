@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DeepLink, ModalController } from '../../../../../..';
+import { IonicPage, ModalController } from '../../../../../..';
 
-@DeepLink({
+@IonicPage({
   name: 'page-two'
 })
 @Component({

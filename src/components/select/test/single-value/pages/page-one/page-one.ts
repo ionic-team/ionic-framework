@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { DeepLink } from '../../../../../..';
+import { IonicPage } from '../../../../../..';
 
 export interface Currency {
   symbol: string;
@@ -8,7 +8,7 @@ export interface Currency {
   name: string;
 }
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'page-one.html'
 })

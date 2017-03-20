@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { App, AlertController, DeepLink, NavController, NavParams, ViewController } from '../../../../../..';
+import { App, AlertController, IonicPage, NavController, NavParams, ViewController } from '../../../../../..';
 
-@DeepLink({
+@IonicPage({
   name: 'full-page'
 })
 @Component({

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { DeepLink, MenuController, Nav } from '../../../../../..';
+import { IonicPage, MenuController, Nav } from '../../../../../..';
 
-@DeepLink({
+@IonicPage({
   name: 'page-one'
 })
 @Component({

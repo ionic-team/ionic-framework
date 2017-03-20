@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, Content, DeepLink, NavController, ViewController } from '../../../../../..';
+import { AlertController, Content, IonicPage, NavController, ViewController } from '../../../../../..';
 
 import { MyCmpTest } from './my-component';
 
-@DeepLink({
+@IonicPage({
   name: 'first-page'
 })
 @Component({

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, DeepLink, NavController, Refresher } from '../../../../../..';
+import { AlertController, IonicPage, NavController, Refresher } from '../../../../../..';
 
-@DeepLink({
+@IonicPage({
   name: 'page-two'
 })
 @Component({

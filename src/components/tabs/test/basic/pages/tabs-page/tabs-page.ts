@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Config, DeepLink, Tab } from '../../../../../..';
+import { Config, IonicPage, Tab } from '../../../../../..';
 
 import { TabOne } from '../tab-one/tab-one';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'tabs-page.html'
 })

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { AlertController, DeepLink, NavParams, ToastController, ViewController } from '../../../../../..';
+import { AlertController, IonicPage, NavParams, ToastController, ViewController } from '../../../../../..';
 
 import { SomeAppProvider } from '../../services/some-app-provider';
 import { SomeComponentProvider } from './provider';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'modal-pass-data.html',
   providers: [

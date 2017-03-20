@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { DeepLink, SegmentButton } from '../../../../../..';
+import { IonicPage, SegmentButton } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'home-page.html'
 })

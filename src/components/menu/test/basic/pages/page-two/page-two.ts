@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, DeepLink, ModalController, NavController } from '../../../../../..';
+import { AlertController, IonicPage, ModalController, NavController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'page-two.html'
 })

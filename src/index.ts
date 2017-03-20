@@ -278,7 +278,7 @@ export { DeepLinker } from './navigation/deep-linker';
 export { NavController } from './navigation/nav-controller';
 export { NavControllerBase } from './navigation/nav-controller-base';
 export { NavParams } from './navigation/nav-params';
-export { NavLink, NavOptions, DeepLink, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory, DeepLinkMetadataType } from './navigation/nav-util';
+export { NavLink, NavOptions, IonicPage, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory, DeepLinkMetadataType } from './navigation/nav-util';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';

@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { DeepLink, MenuController, Nav } from '../../../../../..';
+import { IonicPage, MenuController, Nav } from '../../../../../..';
 
 import { PageTwo } from '../page-two/page-two';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'page-one.html'
 })

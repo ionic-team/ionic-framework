@@ -101,7 +101,7 @@ export function isNav(nav: any): boolean {
   return !!nav && !!nav.push;
 }
 
-export function DeepLink(config?: DeepLinkMetadataType): ClassDecorator {
+export function IonicPage(config?: DeepLinkMetadataType): ClassDecorator {
   return function(clazz: any) {
     return clazz;
   };

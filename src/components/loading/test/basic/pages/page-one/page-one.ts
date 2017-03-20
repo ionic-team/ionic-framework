@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DeepLink, LoadingController, NavController } from '../../../../../..';
+import { IonicPage, LoadingController, NavController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'page-one.html',
   styles: [

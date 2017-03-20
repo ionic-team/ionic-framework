@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 
-import { DeepLink, PopoverController } from '../../../../../..';
+import { IonicPage, PopoverController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'page-one.html',
   selector: 'e2e-popover-basic'

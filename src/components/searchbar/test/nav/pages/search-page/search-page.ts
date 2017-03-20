@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DeepLink, NavController, ModalController } from '../../../../../..';
+import { IonicPage, NavController, ModalController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'search-page.html'
 })

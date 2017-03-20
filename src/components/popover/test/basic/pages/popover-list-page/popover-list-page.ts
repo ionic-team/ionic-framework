@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DeepLink, ViewController } from '../../../../../..';
+import { IonicPage, ViewController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'popover-list-page.html'
 })

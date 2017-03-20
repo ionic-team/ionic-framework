@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AlertController, App, DeepLink, ModalController, Tabs } from '../../../../../..';
+import { AlertController, App, IonicPage, ModalController, Tabs } from '../../../../../..';
 
-@DeepLink({
+@IonicPage({
   name: 'tab-three'
 })
 @Component({

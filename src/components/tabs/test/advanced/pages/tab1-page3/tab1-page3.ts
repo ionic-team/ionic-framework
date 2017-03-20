@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DeepLink } from '../../../../../..';
+import { IonicPage } from '../../../../../..';
 
-@DeepLink({
+@IonicPage({
   name: 'tab1-page3'
 })
 @Component({

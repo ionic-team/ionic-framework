@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-import { DeepLink, NavController, PickerController } from '../../../../../..';
+import { IonicPage, NavController, PickerController } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'page-one.html',
   encapsulation: ViewEncapsulation.None,

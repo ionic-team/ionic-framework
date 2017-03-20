@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { DeepLink } from '../../../../../..';
+import { IonicPage } from '../../../../../..';
 
-@DeepLink()
+@IonicPage()
 @Component({
   templateUrl: 'root-page.html'
 })
