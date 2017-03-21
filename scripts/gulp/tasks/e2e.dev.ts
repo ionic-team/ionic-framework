@@ -10,6 +10,7 @@ task('e2e.watch', ['e2e.prepare'], (done: Function) => {
   const folderInfo = getFolderInfo();
   if (!folderInfo || !folderInfo.componentName || !folderInfo.componentTest) {
     done(new Error(`Usage: gulp e2e.watch --folder nav/basic`));
+    return;
   }
 
   serveTest(folderInfo).then(() => {
