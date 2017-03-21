@@ -96,10 +96,15 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 - `gulp snapshot` will run the `gulp e2e.prod` task with AoT compilation.
 - `gulp snapshot.skipBuild` will skip the `gulp e2e.prod` task with AoT compilation.
+- `gulp e2e.prod` followed by `gulp snapshot.skipBuild` is considered best practice
 
 #### Flags
 
 - `--f | -folder` will run the command with a test folder. For example, `gulp snapshot --f=action-sheet/basic` will run snapshot for the test at `src/components/action-sheet/test/basic`.
+
+- `--concurrency` determines the number of tests to build at a time. By default, 2 tests are built concurrently. If using a quad-core (or more) CPU, it is often beneficial to run with `--concurrency 8` for example.
+
+- `--dev` runs a dev build when building the e2e tests. This build takes much less time than a production build, so it is advisable to use this when doing quick validation.
 
 ### Running Tests
 
