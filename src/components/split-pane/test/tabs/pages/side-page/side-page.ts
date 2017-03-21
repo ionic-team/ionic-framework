@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '../../../../..';
+import { NavController } from '../../../../../..';
 
 @Component({
   templateUrl: 'side-page.html'

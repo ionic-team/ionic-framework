@@ -3,8 +3,8 @@ import { IonicPage } from '../../../../../..';
 
 @IonicPage()
 @Component({
-  templateUrl: 'page1.html'
+  templateUrl: 'page-two.html'
 })
-export class Page1 {
+export class PageTwo {
   page2 = 'PageThree';
 }
