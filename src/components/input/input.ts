@@ -7,7 +7,7 @@ import { Content, ContentDimensions, ScrollEvent } from '../content/content';
 import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { DomController } from '../../platform/dom-controller';
 import { Form, IonicFormInput } from '../../util/form';
-import { Ion } from '../ion';
+import { BaseInput } from '../../util/base-input';
 import { isString, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { NativeInput } from './native-input';
@@ -91,7 +91,8 @@ import { Platform } from '../../platform/platform';
     '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
   encapsulation: ViewEncapsulation.None,
 })
-export class TextInput extends Ion implements IonicFormInput {
+export class TextInput extends BaseInput<string> implements IonicFormInput {
+
   _autoComplete: string;
   _autoCorrect: string;
   _autoFocusAssist: string;
@@ -121,17 +122,17 @@ export class TextInput extends Ion implements IonicFormInput {
   constructor(
     config: Config,
     private _plt: Platform,
-    private _form: Form,
+    form: Form,
     private _app: App,
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() private _content: Content,
-    @Optional() private _item: Item,
+    @Optional() item: Item,
     @Optional() nav: NavController,
     @Optional() public ngControl: NgControl,
     private _dom: DomController
   ) {
-    super(config, elementRef, renderer, 'input');
+    super(config, elementRef, renderer, 'input', form, item, ngControl);
 
     this._nav = <NavControllerBase>nav;
 
@@ -147,11 +148,9 @@ export class TextInput extends Ion implements IonicFormInput {
     }
 
     if (ngControl) {
-      ngControl.valueAccessor = this;
+      // ngControl.valueAccessor = this;
       this.inputControl = ngControl;
     }
-
-    _form.register(this);
 
     // only listen to content scroll events if there is content
     if (_content) {
@@ -162,8 +161,6 @@ export class TextInput extends Ion implements IonicFormInput {
         this.scrollHideFocus(ev, false);
       });
     }
-
-    this.mode = config.get('mode');
   }
 
   /**
@@ -180,18 +177,6 @@ export class TextInput extends Ion implements IonicFormInput {
   }
   set clearInput(val: any) {
     this._clearInput = (this._type !== TEXTAREA && isTrueProperty(val));
-  }
-
-  /**
-   * @input {string} The text value of the input.
-   */
-  @Input()
-  get value() {
-    return this._value;
-  }
-  set value(val: any) {
-    this._value = val;
-    this.checkHasValue(val);
   }
 
   /**
@@ -216,30 +201,20 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {boolean} If true, the user cannot interact with this element.
-   */
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-  set disabled(val: boolean) {
-    this.setDisabled(this._disabled = isTrueProperty(val));
-  }
-
-  /**
    * @hidden
    */
   setDisabled(val: boolean) {
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', val ? '' : null);
-    this._item && this._item.setElementClass('item-input-disabled', val);
-    this._native && this._native.isDisabled(val);
+    this.setDisabledState(val);
   }
 
   /**
    * @hidden
    */
   setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
+    this._disabled = isDisabled;
+    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', isDisabled ? '' : null);
+    this._item && this._item.setElementClass('item-input-disabled', isDisabled);
+    this._native && this._native.isDisabled(isDisabled);
   }
 
   /**
@@ -376,8 +351,7 @@ export class TextInput extends Ion implements IonicFormInput {
     }
 
     nativeInput.valueChange.subscribe((inputValue: any) => {
-      this.onChange(inputValue);
-      this.checkHasValue(inputValue);
+      this.value = inputValue;
     });
 
     nativeInput.keydown.subscribe((inputValue: any) => {
@@ -387,13 +361,12 @@ export class TextInput extends Ion implements IonicFormInput {
     this.focusChange(this.hasFocus());
     nativeInput.focusChange.subscribe((textInputHasFocus: any) => {
       this.focusChange(textInputHasFocus);
-      this.checkHasValue(nativeInput.getValue());
+      // this.checkHasValue(nativeInput.getValue());
       if (!textInputHasFocus) {
         this.onTouched(textInputHasFocus);
       }
     });
-
-    this.checkHasValue(nativeInput.getValue());
+    this.value = nativeInput.getValue();
 
     var ionInputEle: HTMLElement = this._elementRef.nativeElement;
     var nativeInputEle: HTMLElement = nativeInput.element();
@@ -559,21 +532,6 @@ export class TextInput extends Ion implements IonicFormInput {
   /**
    * @hidden
    */
-  writeValue(val: any) {
-    this._value = val;
-    this.checkHasValue(val);
-  }
-
-  /**
-   * @hidden
-   */
-  onChange(val: any) {
-    this.checkHasValue(val);
-  }
-
-  /**
-   * @hidden
-   */
   onKeydown(val: any) {
     if (this._clearOnEdit) {
       this.checkClearOnEdit(val);
@@ -599,16 +557,6 @@ export class TextInput extends Ion implements IonicFormInput {
   hasValue(): boolean {
     const inputValue = this._value;
     return (inputValue !== null && inputValue !== undefined && inputValue !== '');
-  }
-
-  /**
-   * @hidden
-   */
-  checkHasValue(inputValue: any) {
-    if (this._item) {
-      var hasValue = (inputValue !== null && inputValue !== undefined && inputValue !== '');
-      this._item.setElementClass('input-has-value', hasValue);
-    }
   }
 
   /**
@@ -722,7 +670,7 @@ export class TextInput extends Ion implements IonicFormInput {
    * @hidden
    */
   ngOnDestroy() {
-    this._form.deregister(this);
+    super.ngOnDestroy();
 
     // only stop listening to content scroll events if there is content
     if (this._content) {
@@ -736,9 +684,7 @@ export class TextInput extends Ion implements IonicFormInput {
    */
   clearTextInput() {
     console.debug('Should clear input');
-    this._value = '';
-    this.onChange(this._value);
-    this.writeValue(this._value);
+    this.value = '';
   }
 
   /**
@@ -759,23 +705,6 @@ export class TextInput extends Ion implements IonicFormInput {
     // Reset the flag
     this._didBlurAfterEdit = false;
   }
-
-  /**
-   * @hidden
-   * Angular2 Forms API method called by the view (formControlName) to register the
-   * onChange event handler that updates the model (Control).
-   * @param {Function} fn  the onChange event handler.
-   */
-  registerOnChange(fn: any) { this.onChange = fn; }
-
-  /**
-   * @hidden
-   * Angular2 Forms API method called by the view (formControlName) to register
-   * the onTouched event handler that marks model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
-   */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
-
 
   /**
    * @hidden

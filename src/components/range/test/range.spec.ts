@@ -1,9 +1,20 @@
 import { Range } from '../range';
-import { mockChangeDetectorRef, mockConfig, mockDomController, mockElementRef, mockHaptic, mockPlatform, mockRenderer } from '../../../util/mock-providers';
+import { mockChangeDetectorRef, mockConfig, mockDomController, mockItem, mockElementRef, mockHaptic, mockPlatform, mockRenderer } from '../../../util/mock-providers';
 import { Form } from '../../../util/form';
+import { commonInputTest, NUMBER_CORPUS } from '../../../util/input-tester';
 
 
 describe('Range', () => {
+
+  it('should pass common test', () => {
+    const range = createRange();
+    range._slider = mockElementRef();
+    commonInputTest(range, {
+      defaultValue: 0,
+      corpus: NUMBER_CORPUS
+    });
+
+  });
 
   describe('valueToRatio', () => {
     it('step=1', () => {
@@ -68,5 +79,5 @@ describe('Range', () => {
 
 function createRange(): Range {
   let form = new Form();
-  return new Range(form, mockHaptic(), null, mockConfig(), mockPlatform(), mockElementRef(), mockRenderer(), mockDomController(), mockChangeDetectorRef());
+  return new Range(form, mockHaptic(), mockItem(), mockConfig(), mockPlatform(), mockElementRef(), mockRenderer(), mockDomController(), mockChangeDetectorRef());
 }
