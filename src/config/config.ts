@@ -117,6 +117,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
  * | `swipeBackEnabled`       | `boolean`           | Whether native iOS swipe to go back functionality is enabled.                                                                                    |
+ * | `swipeMenuEnabled`       | `boolean|string`    | Sets the default value for the sidemenu swipe. Available options: true, false, "open" and "close".                                               |
  * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
  * | `tabsLayout`             | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
  * | `tabsPlacement`          | `string`            | The position of the tabs relative to the content. Available options: `"top"`, `"bottom"`                                                         |

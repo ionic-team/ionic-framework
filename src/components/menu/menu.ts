@@ -198,7 +198,7 @@ export class Menu implements RootNode {
   private _gesture: MenuContentGesture;
   private _type: MenuType;
   private _isEnabled: boolean;
-  private _isSwipeEnabled: boolean = true;
+  private _isSwipeEnabled: boolean|string = true;
   private _isAnimating: boolean = false;
   private _isPersistent: boolean = false;
   private _init: boolean = false;
@@ -262,16 +262,20 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @input {boolean} If true, swiping the menu is enabled. Default `true`.
+   * @input {boolean|string} Whether or not swiping the menu should be enabled.
+   * It accepts `true`, `false`, `"open"` and `"close"`. Default `true`.
+   * - `true`: menu can be opened and closed with a finger swipe
+   * - `false`: swipe gesture is completely disabled. Menu can only be opened programatically or using a button.
+   * - `"open"`: menu can be opened with a swipe, but it can't be closed.
+   * - `"close": menu can be closed with a swipe, but it can't be opened, you would still need a button to open it.
    */
   @Input()
-  get swipeEnabled(): boolean {
+  get swipeEnabled(): boolean | string {
     return this._isSwipeEnabled;
   }
 
-  set swipeEnabled(val: boolean) {
-    const isEnabled = isTrueProperty(val);
-    this.swipeEnable(isEnabled);
+  set swipeEnabled(val: boolean | string) {
+    this.swipeEnable(val);
   }
 
   /**
@@ -318,6 +322,7 @@ export class Menu implements RootNode {
     private _domCtrl: DomController,
     private _app: App,
   ) {
+    this._isSwipeEnabled = _config.get('swipeMenuEnabled', true);
     this._events = new UIEventManager(_plt);
     this._gestureBlocker = _gestureCtrl.createBlocker({
       disable: [GESTURE_GO_BACK_SWIPE]
@@ -423,10 +428,25 @@ export class Menu implements RootNode {
    * @hidden
    */
   canSwipe(): boolean {
-    return this._isSwipeEnabled &&
-      !this._isAnimating &&
-      this._canOpen() &&
-      this._app.isEnabled();
+    if (!this._canOpen()) {
+      return false;
+    }
+    switch (this._isSwipeEnabled) {
+      case true: return true;
+      case false: return false;
+      case 'close': return this.isOpen;
+      case 'open': return !this.isOpen;
+      default:
+        assert(false, 'invalid isSwipeEnabled state');
+        return false;
+    }
+  }
+
+  /**
+   * @hidden
+   */
+  canStartSwipe(): boolean {
+    return !this._isAnimating && this.canSwipe() && this._app.isEnabled();
   }
 
   /**
@@ -438,27 +458,19 @@ export class Menu implements RootNode {
 
 
   _swipeBeforeStart() {
-    if (!this.canSwipe()) {
-      assert(false, 'canSwipe() has to be true');
-      return;
-    }
+    assert(this.canStartSwipe(), 'canStartSwipe() has to be true');
+
     this._before();
   }
 
   _swipeStart() {
-    if (!this._isAnimating) {
-      assert(false, '_isAnimating has to be true');
-      return;
-    }
+    assert(this._isAnimating, '_isAnimating has to be true');
 
     this._getType().setProgressStart(this.isOpen);
   }
 
   _swipeProgress(stepValue: number) {
-    if (!this._isAnimating) {
-      assert(false, '_isAnimating has to be true');
-      return;
-    }
+    assert(this._isAnimating, '_isAnimating has to be true');
 
     this._getType().setProgessStep(stepValue);
     const ionDrag = this.ionDrag;
@@ -468,18 +480,16 @@ export class Menu implements RootNode {
   }
 
   _swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number, velocity: number) {
-    if (!this._isAnimating) {
-      assert(false, '_isAnimating has to be true');
-      return;
-    }
+    assert(this._isAnimating, '_isAnimating has to be true');
 
     // user has finished dragging the menu
     const opening = !this.isOpen;
+    const isRightSide = this.side === 'right';
     let shouldComplete = false;
     if (opening) {
-      shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
+      shouldComplete = isRightSide ? shouldCompleteLeft : shouldCompleteRight;
     } else {
-      shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
+      shouldComplete = isRightSide ? shouldCompleteRight : shouldCompleteLeft;
     }
 
     this._getType().setProgressEnd(shouldComplete, stepValue, velocity, (isOpen: boolean) => {
@@ -533,6 +543,7 @@ export class Menu implements RootNode {
 
       this.ionClose.emit(true);
     }
+    this._updateState();
   }
 
   /**
@@ -592,13 +603,15 @@ export class Menu implements RootNode {
     }
 
     const gesture = this._gesture;
+    const canSwipe = this.canSwipe();
+
     // only listen/unlisten if the menu has initialized
-    if (canOpen && this._isSwipeEnabled && !gesture.isListening) {
+    if (canSwipe && !gesture.isListening) {
       // should listen, but is not currently listening
       console.debug('menu, gesture listen', this.side);
       gesture.listen();
 
-    } else if (gesture.isListening && (!canOpen || !this._isSwipeEnabled)) {
+    } else if (gesture.isListening && !canSwipe) {
       // should not listen, but is currently listening
       console.debug('menu, gesture unlisten', this.side);
       gesture.unlisten();
@@ -638,8 +651,12 @@ export class Menu implements RootNode {
   /**
    * @hidden
    */
-  swipeEnable(shouldEnable: boolean): Menu {
-    this._isSwipeEnabled = shouldEnable;
+  swipeEnable(shouldEnable: boolean | string): Menu {
+    if (shouldEnable === 'close' || shouldEnable === 'open') {
+      this._isSwipeEnabled = shouldEnable;
+    } else {
+      this._isSwipeEnabled = isTrueProperty(shouldEnable);
+    }
     this._updateState();
     return this;
   }

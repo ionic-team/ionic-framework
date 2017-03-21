@@ -72,6 +72,28 @@
     <button ion-button (click)="goToPage2()">Go to Page 2</button>
   </p>
 
+  <ion-list radio-group [(ngModel)]="swipeMenuMode">
+    <ion-list-header>
+      Menu Swipe Mode
+    </ion-list-header>
+    <ion-item>
+      <ion-label>True</ion-label>
+      <ion-radio value="true"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>False</ion-label>
+      <ion-radio value="false"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Open</ion-label>
+      <ion-radio value="open"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Close</ion-label>
+      <ion-radio value="close"></ion-radio>
+    </ion-item>
+  </ion-list>
+
   <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
 
 </ion-content>

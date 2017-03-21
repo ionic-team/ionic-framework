@@ -506,11 +506,12 @@ export function mockTabs(app?: App): Tabs {
 
 export function mockMenu(): Menu {
   let app = mockApp();
+  let config = mockConfig();
   let gestureCtrl = new GestureController(app);
   let dom = mockDomController();
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
-  return new Menu(null, elementRef, null, null, renderer, null, null, gestureCtrl, dom, app);
+  return new Menu(null, elementRef, config, null, renderer, null, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {
