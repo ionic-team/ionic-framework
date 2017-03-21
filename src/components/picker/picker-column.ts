@@ -78,9 +78,6 @@ export class PickerColumnCmp {
     // get the height of one option
     this.optHeight = (colEle.firstElementChild ? colEle.firstElementChild.clientHeight : 0);
 
-    // set the scroll position for the selected option
-    this.setSelected(this.col.selectedIndex, 0);
-
     // Listening for pointer events
     this.events.pointerEvents({
       element: this.elementRef.nativeElement,
@@ -384,6 +381,7 @@ export class PickerColumnCmp {
         }
       }
     }
+    this.col.prevSelected = selectedIndex;
 
     if (saveY) {
       this.y = y;
@@ -409,19 +407,20 @@ export class PickerColumnCmp {
   refresh() {
     let min = this.col.options.length - 1;
     let max = 0;
-
-    for (var i = 0; i < this.col.options.length; i++) {
-      if (!this.col.options[i].disabled) {
+    const options = this.col.options;
+    for (var i = 0; i < options.length; i++) {
+      if (!options[i].disabled) {
         min = Math.min(min, i);
         max = Math.max(max, i);
       }
     }
 
-    var selectedIndex = clamp(min, this.col.selectedIndex, max);
-
-    if (selectedIndex !== this.col.selectedIndex) {
+    const selectedIndex = clamp(min, this.col.selectedIndex, max);
+    if (this.col.prevSelected !== selectedIndex) {
       var y = (selectedIndex * this.optHeight) * -1;
-      this.update(y, 150, true, true);
+      this._plt.cancelRaf(this.rafId);
+      this.velocity = 0;
+      this.update(y, 150, true, false);
     }
   }
 

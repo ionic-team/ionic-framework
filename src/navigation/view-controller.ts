@@ -116,6 +116,8 @@ export class ViewController {
    * @hidden
    */
   init(componentRef: ComponentRef<any>) {
+    assert(componentRef, 'componentRef can not be null');
+
     this._cmp = componentRef;
     this.instance = this.instance || componentRef.instance;
     this._detached = false;

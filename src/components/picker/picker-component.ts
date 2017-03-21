@@ -40,6 +40,7 @@ import { PickerColumnCmp } from './picker-column';
   encapsulation: ViewEncapsulation.None,
 })
 export class PickerCmp {
+
   @ViewChildren(PickerColumnCmp) _cols: QueryList<PickerColumnCmp>;
   d: PickerOptions;
   enabled: boolean;
@@ -116,6 +117,10 @@ export class PickerCmp {
     });
   }
 
+  ionViewDidLoad() {
+    this.refresh();
+  }
+
   ionViewWillEnter() {
     this._gestureBlocker.block();
   }
@@ -125,9 +130,7 @@ export class PickerCmp {
   }
 
   refresh() {
-    this._cols.forEach(column => {
-      column.refresh();
-    });
+    this._cols.forEach(column => column.refresh());
   }
 
   _colChange(selectedOption: PickerColumnOption) {

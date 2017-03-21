@@ -2,7 +2,7 @@ import { EventEmitter, Output } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { isPresent } from '../../util/util';
+import { isPresent, assert } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { PickerCmp } from './picker-component';
 import { PickerOptions, PickerColumn } from './picker-options';
@@ -67,6 +67,9 @@ export class Picker extends ViewController {
   }
 
   refresh() {
+    assert(this._cmp, 'componentRef must be valid');
+    assert(this._cmp.instance.refresh, 'instance must implement refresh()');
+
     this._cmp && this._cmp.instance.refresh && this._cmp.instance.refresh();
   }
 

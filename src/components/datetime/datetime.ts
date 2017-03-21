@@ -8,7 +8,7 @@ import { PickerColumn } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { Ion } from '../ion';
 import { Item } from '../item/item';
-import { deepCopy, isBlank, isPresent, isTrueProperty, isArray, isString, assert } from '../../util/util';
+import { deepCopy, isBlank, isPresent, isTrueProperty, isArray, isString, assert, clamp } from '../../util/util';
 import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
 export const DATETIME_VALUE_ACCESSOR: any = {
@@ -514,14 +514,12 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       picker.refresh();
     });
 
-    picker.present(pickerOptions);
-
     this._isOpen = true;
     picker.onDidDismiss(() => {
       this._isOpen = false;
     });
 
-    picker.refresh();
+    picker.present(pickerOptions);
   }
 
   /**
@@ -565,7 +563,7 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
           values = dateValueRange(format, this._min, this._max);
         }
 
-        let column: PickerColumn = {
+        const column: PickerColumn = {
           name: key,
           selectedIndex: 0,
           options: values.map(val => {
@@ -578,8 +576,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
 
         // cool, we've loaded up the columns with options
         // preselect the option for this column
-        var optValue = getValueFromFormat(this._value, format);
-        var selectedIndex = column.options.findIndex(opt => opt.value === optValue);
+        const optValue = getValueFromFormat(this._value, format);
+        const selectedIndex = column.options.findIndex(opt => opt.value === optValue);
         if (selectedIndex >= 0) {
           // set the select index for this column's options
           column.selectedIndex = selectedIndex;
@@ -589,10 +587,10 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
         picker.addColumn(column);
       });
 
-      const min = <any>this._min;
-      const max = <any>this._max;
 
       // Normalize min/max
+      const min = <any>this._min;
+      const max = <any>this._max;
       const columns = this._picker.getColumns();
       ['month', 'day', 'hour', 'minute']
         .filter(name => !columns.find(column => column.name === name))
@@ -620,6 +618,8 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
     const lb = lowerBounds.slice();
     const ub = upperBounds.slice();
     const options = column.options;
+    let indexMin = options.length - 1;
+    let indexMax = 0;
 
     for (var i = 0; i < options.length; i++) {
       var opt = options[i];
@@ -627,15 +627,19 @@ export class DateTime extends Ion implements AfterContentInit, ControlValueAcces
       lb[index] = opt.value;
       ub[index] = opt.value;
 
-      opt.disabled = (
+      var disabled = opt.disabled = (
         value < lowerBounds[index] ||
         value > upperBounds[index] ||
         dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4]) < min ||
         dateSortValue(lb[0], lb[1], lb[2], lb[3], lb[4]) > max
       );
+      if (!disabled) {
+        indexMin = Math.min(indexMin, i);
+        indexMax = Math.max(indexMax, i);
+      }
     }
-
-    opt = column.options[column.selectedIndex];
+    let selectedIndex = column.selectedIndex = clamp(indexMin, column.selectedIndex, indexMax);
+    opt = column.options[selectedIndex];
     if (opt) {
       return opt.value;
     }

@@ -517,6 +517,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   _viewAttachToDOM(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     assert(view._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
+    assert(componentRef, 'componentRef can not be null');
 
     // fire willLoad before change detection runs
     this._willLoad(view);
