@@ -284,7 +284,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
 
   ngOnDestroy() {
     this._resizeObs && this._resizeObs.unsubscribe();
-    this.parent.unregisterChildNav(this);
+    if (this.parent) 
+      this.parent.unregisterChildNav(this);
   }
 
   /**
