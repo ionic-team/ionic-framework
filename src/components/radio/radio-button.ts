@@ -105,16 +105,6 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
    * @output {any} Emitted when the radio button is selected.
    */
   @Output() ionSelect: EventEmitter<any> = new EventEmitter();

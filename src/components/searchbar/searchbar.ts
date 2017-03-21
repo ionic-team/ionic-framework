@@ -54,6 +54,7 @@ import { TimeoutDebouncer } from '../../util/debouncer';
   encapsulation: ViewEncapsulation.None
 })
 export class Searchbar extends Ion {
+
   _value: string|number = '';
   _shouldBlur: boolean = true;
   _shouldAlignLeft: boolean = true;
@@ -65,26 +66,6 @@ export class Searchbar extends Ion {
   _debouncer: TimeoutDebouncer = new TimeoutDebouncer(250);
   _showCancelButton: boolean = false;
   _animated: boolean = false;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor( val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode( val);
-  }
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.

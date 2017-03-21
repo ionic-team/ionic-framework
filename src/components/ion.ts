@@ -1,4 +1,4 @@
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, Renderer, Input } from '@angular/core';
 
 import { Config } from '../config/config';
 
@@ -26,6 +26,32 @@ export class Ion {
 
   /** @hidden */
   _componentName: string;
+
+  /**
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor(val);
+  }
+  get color(): string {
+    return this._color;
+  }
+
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode(val);
+  }
+  get mode(): string {
+    return this._mode;
+  }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, componentName?: string) {
     this._config = config;
