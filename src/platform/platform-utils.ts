@@ -6,6 +6,10 @@ export function isCordova(plt: Platform): boolean {
   return !!(win['cordova'] || win['PhoneGap'] || win['phonegap']);
 }
 
+export function isElectron(plt: Platform): boolean {
+  return plt.testUserAgent('Electron');
+}
+
 export function isIos(plt: Platform): boolean {
   // shortcut function to be reused internally
   // checks navigator.platform to see if it's an actual iOS device
