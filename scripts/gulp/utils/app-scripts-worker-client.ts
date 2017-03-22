@@ -57,7 +57,6 @@ export function createWorker(msg: MessageToWorker): any {
 
   // default it to use the test/basic, or test/xyz directory
   const deepLinksDir = dirname(dirname(msg.appNgModulePath));
-
   try {
       let scriptArgs = [
       'build',
@@ -68,7 +67,6 @@ export function createWorker(msg: MessageToWorker): any {
       '--wwwDir', msg.distDir,
       '--tsconfig', msg.tsConfig,
       '--readConfigJson', 'false',
-      '--experimentalParseDeepLinks', 'true',
       '--experimentalManualTreeshaking', 'false',
       '--experimentalPurgeDecorators', 'false',
       '--ionicAngularDir', msg.ionicAngularDir,

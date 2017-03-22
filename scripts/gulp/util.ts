@@ -190,18 +190,20 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
 
 export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string) {
   console.log('Running ionic-app-scripts serve with', testOrDemoName);
+  const deepLinksDir = dirname(dirname(appNgModulePath));
   let scriptArgs = [
     'serve',
     '--appEntryPoint', appEntryPoint,
     '--appNgModulePath', appNgModulePath,
+    '--deepLinksDir', deepLinksDir,
     '--srcDir', srcDir,
     '--wwwDir', distDir,
     '--tsconfig', tsConfig,
     '--readConfigJson', 'false',
-    '--experimentalParseDeepLinks', 'true',
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
-    '--copy', copyConfigPath
+    '--copy', copyConfigPath,
+    '--enableLint', 'false',
   ];
 
   if (watchConfigPath) {
