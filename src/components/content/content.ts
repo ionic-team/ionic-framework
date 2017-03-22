@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -123,7 +123,7 @@ export { ScrollEvent } from '../../util/scroll-view';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion implements OnDestroy, OnInit {
+export class Content extends Ion implements OnDestroy {
   /** @internal */
   _cTop: number;
   /** @internal */
@@ -339,7 +339,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._imgReqBfr = config.getNumber('imgRequestBuffer', 1400);
     this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
     this._imgVelMax = config.getNumber('imgVelocityMax', 3);
-    this._scroll = new ScrollView(_plt, _dom);
+
+    // use JS scrolling for iOS UIWebView
+    // goal is to completely remove this when iOS
+    // fully supports scroll events
+    // listen to JS scroll events
+    this._scroll = new ScrollView(_plt, _dom, config.getBoolean('virtualScrollEventAssist'));
 
     if (viewCtrl) {
       // content has a view controller
@@ -366,7 +371,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /**
    * @private
    */
-  ngOnInit() {
+  enableScrollListener() {
     assert(this.getFixedElement(), 'fixed element was not found');
     assert(this.getScrollElement(), 'scroll element was not found');
 
@@ -375,12 +380,12 @@ export class Content extends Ion implements OnDestroy, OnInit {
     scroll.ev.scrollElement = this.getScrollElement();
 
     // subscribe to the scroll start
-    scroll.scrollStart.subscribe(ev => {
+    scroll.onScrollStart = (ev) => {
       this.ionScrollStart.emit(ev);
-    });
+    };
 
     // subscribe to every scroll move
-    scroll.scroll.subscribe(ev => {
+    scroll.onScroll = (ev) => {
       // remind the app that it's currently scrolling
       this._app.setScrolling();
 
@@ -388,14 +393,16 @@ export class Content extends Ion implements OnDestroy, OnInit {
       this.ionScroll.emit(ev);
 
       this.imgsUpdate();
-    });
+    };
 
     // subscribe to the scroll end
-    scroll.scrollEnd.subscribe(ev => {
+    scroll.onScrollEnd = (ev) => {
       this.ionScrollEnd.emit(ev);
 
       this.imgsUpdate();
-    });
+    };
+
+    scroll.setEnabled();
   }
 
   /**
@@ -464,13 +471,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
   scrollToBottom(duration: number = 300) {
     console.debug(`content, scrollToBottom, duration: ${duration}`);
     return this._scroll.scrollToBottom(duration);
-  }
-
-  /**
-   * @private
-   */
-  enableJsScroll() {
-    this._scroll.enableJsScroll(this._cTop, this._cBottom);
   }
 
   /**

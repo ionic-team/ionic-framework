@@ -366,9 +366,8 @@ export class InfiniteScroll {
     if (this._init) {
       if (shouldListen) {
         if (!this._scLsn) {
-          this._scLsn = this._content.ionScroll.subscribe((ev: ScrollEvent) => {
-            this._onScroll(ev);
-          });
+          this._scLsn = this._content.ionScroll.subscribe(this._onScroll.bind(this));
+          this._content.enableScrollListener();
         }
       } else {
         this._scLsn && this._scLsn.unsubscribe();

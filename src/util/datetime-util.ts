@@ -229,7 +229,7 @@ export function parseDate(val: any): DateTimeData {
 }
 
 
-export function updateDate(existingData: DateTimeData, newData: any) {
+export function updateDate(existingData: DateTimeData, newData: any): boolean {
   if (isPresent(newData) && newData !== '') {
 
     if (isString(newData)) {
@@ -239,7 +239,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       if (newData) {
         // successfully parsed the ISO string to our DateTimeData
         Object.assign(existingData, newData);
-        return;
+        return true;
       }
 
     } else if ((isPresent(newData.year) || isPresent(newData.hour) || isPresent(newData.month) || isPresent(newData.day) || isPresent(newData.minute) || isPresent(newData.second))) {
@@ -262,7 +262,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
         (<any>existingData)[k] = newData[k].value;
       }
 
-      return;
+      return true;
     }
 
     // eww, invalid data
@@ -274,6 +274,7 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       delete (<any>existingData)[k];
     }
   }
+  return false;
 }
 
 

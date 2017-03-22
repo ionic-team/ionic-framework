@@ -4,10 +4,17 @@
 // Split Pane
 // --------------------------------------------------
 
+$split-pane-md-border: 1px solid $list-md-border-color;
+
 .split-pane-md.split-pane-visible >.split-pane-side {
   min-width: 270px;
   max-width: 28%;
 
-  border-right: 1px solid $list-md-border-color;
+  border-right: $split-pane-md-border;
+  border-left: 0;
 }
 
+.split-pane-md.split-pane-visible > .split-pane-side[side=right] {
+  border-right: 0;
+  border-left: $split-pane-md-border;
+}

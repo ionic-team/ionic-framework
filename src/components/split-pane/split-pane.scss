@@ -72,3 +72,7 @@ ion-split-pane {
     display: hidden !important;
   }
 }
+
+.split-pane-visible >.split-pane-side[side=right] {
+  order: 1;
+}
