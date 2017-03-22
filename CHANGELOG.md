@@ -1,3 +1,45 @@
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/driftyco/ionic/compare/v2.2.0...v2.3.0) (2017-03-22)
+
+
+### Bug Fixes
+
+* **alert:** pass id to alert inputs ([46fe1ff](https://github.com/driftyco/ionic/commit/46fe1ff)), closes [#10603](https://github.com/driftyco/ionic/issues/10603)
+* **datetime:** don't always disable day values when dayValues is set ([eff420f](https://github.com/driftyco/ionic/commit/eff420f))
+* **datetime:** move the call to picker.refresh() in generate ([58beea3](https://github.com/driftyco/ionic/commit/58beea3))
+* **datetime:** respect time limits in hours and minutes ([afd99ba](https://github.com/driftyco/ionic/commit/afd99ba)), closes [#6850](https://github.com/driftyco/ionic/issues/6850)
+* **datetime:** update selectedIndex according to ngModel value ([74191c3](https://github.com/driftyco/ionic/commit/74191c3))
+* **infinite-scroll:** add event.timeStamp polyfill for firefox ([#10752](https://github.com/driftyco/ionic/issues/10752)) ([53feb3f](https://github.com/driftyco/ionic/commit/53feb3f))
+* **picker:** initialize the selectionIndex ([ba35306](https://github.com/driftyco/ionic/commit/ba35306))
+* **range:** update the bar width correctly ([b541832](https://github.com/driftyco/ionic/commit/b541832)), closes [#10150](https://github.com/driftyco/ionic/issues/10150)
+* **range:** only activate knob B if range is dual ([d538245](https://github.com/driftyco/ionic/commit/d538245))
+* **scroll-view:** do not set initialized until it is enabled ([#10817](https://github.com/driftyco/ionic/issues/10817)) ([56364a0](https://github.com/driftyco/ionic/commit/56364a0))
+* **searchbar:** add IE support ([05859db](https://github.com/driftyco/ionic/commit/05859db))
+* **select:** make floating labels work for ion-select ([8c483f2](https://github.com/driftyco/ionic/commit/8c483f2)), closes [#10751](https://github.com/driftyco/ionic/issues/10751)
+* **slides:** fix rtl support ([e90d692](https://github.com/driftyco/ionic/commit/e90d692))
+* **slides:** simulate touch events for query params ([#10579](https://github.com/driftyco/ionic/issues/10579)) ([e191321](https://github.com/driftyco/ionic/commit/e191321)), closes [#10577](https://github.com/driftyco/ionic/issues/10577)
+* **toggle/checkbox:** trigger ui update when using virtalScroll with Angular Reactive Forms ([30980b6](https://github.com/driftyco/ionic/commit/30980b6))
+* **virtual-list:** make virtual-scroll work with infinite-scroll ([999efac](https://github.com/driftyco/ionic/commit/999efac)), closes [#9350](https://github.com/driftyco/ionic/issues/9350) [#9722](https://github.com/driftyco/ionic/issues/9722) [#9247](https://github.com/driftyco/ionic/issues/9247) [#10778](https://github.com/driftyco/ionic/issues/10778)
+* **virtualscroll:** populate the nodes at the correct height ([51c398d](https://github.com/driftyco/ionic/commit/51c398d))
+
+
+### Features
+
+* **alert:** add attributes min & max to alert inputs ([d666e8b](https://github.com/driftyco/ionic/commit/d666e8b))
+* **alert:** add attributes min & max to alert inputs of type number ([b53219a](https://github.com/driftyco/ionic/commit/b53219a))
+* **infinite:** add scroll in opposite direction ([#8099](https://github.com/driftyco/ionic/issues/8099)) ([6918275](https://github.com/driftyco/ionic/commit/6918275))
+* **infinite-scroll:** add `waitFor` method to InfiniteScroll ([84e25a1](https://github.com/driftyco/ionic/commit/84e25a1))
+* **overlay:** add method chaining pattern to configure overlays ([bee75f7](https://github.com/driftyco/ionic/commit/bee75f7))
+* **range:** add ionFocus and ionBlur events ([#10761](https://github.com/driftyco/ionic/issues/10761)) ([8f310eb](https://github.com/driftyco/ionic/commit/8f310eb))
+* **split-pane:** support for side=right ([963cdcb](https://github.com/driftyco/ionic/commit/963cdcb))
+
+
+### Performance Improvements
+
+* **content:** scrollview magic activated on demand ([7e9bad5](https://github.com/driftyco/ionic/commit/7e9bad5))
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/driftyco/ionic/compare/v2.1.0...v2.2.0) (2017-03-08)
 
