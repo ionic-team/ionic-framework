@@ -134,6 +134,17 @@ export class Popover extends ViewController {
  *   }
  * }
  * ```
+ * > Note that if using a `NavController` method such as `push()` or `setRoot()` inside a popover
+ * you must first grab a reference to the root `NavController`. Below is an example of this.
+ * 
+ * ```ts
+ *  constructor(public app: App) {}
+ *  
+ *  setRootOnPage() {
+ *    this.app.getRootNav().push(SupportPage);
+ *  }
+ * ```
+ *
  * @advanced
  * Popover Options
  *
