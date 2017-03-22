@@ -5,5 +5,5 @@ import { RootPage } from '../pages/root-page/root-page';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  root = RootPage;
+  rootPage = RootPage;
 }
