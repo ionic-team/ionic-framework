@@ -738,48 +738,6 @@ export class Slides extends Ion {
   /** @hidden */
   ionSlideTouchEnd: EventEmitter<TouchEvent> = new EventEmitter();
 
-  /**
-   * @hidden
-   * Deprecated
-   */
-  @Input()
-  set options(val: any) {
-    // Deprecated warning added 2016-12-28
-    console.warn('ion-slides "options" has been deprecated. Please use ion-slide\'s input properties instead.');
-  }
-
-  /**
-   * @hidden
-   * Deprecated: Use "ionSlideWillChange" instead.
-   * Added 2016-12-29
-   */
-  @Output()
-  get ionWillChange() {
-    console.warn('ion-slides "ionWillChange" has been deprecated, please use "ionSlideWillChange" instead.');
-    return new EventEmitter();
-  }
-
-  /**
-   * @hidden
-   * Deprecated: Use "ionSlideDidChange" instead.
-   * Added 2016-12-29
-   */
-  @Output()
-  get ionDidChange() {
-    console.warn('ion-slides "ionDidChange" has been deprecated, please use "ionSlideDidChange" instead.');
-    return new EventEmitter();
-  }
-
-  /**
-   * @hidden
-   * Deprecated: Use "ionSlideDrag" instead.
-   * Added 2016-12-29
-   */
-  @Output()
-  get ionDrag() {
-    console.warn('ion-slides "ionDrag" has been deprecated, please use "ionSlideDrag" instead.');
-    return new EventEmitter();
-  }
 
   /**
    * Private properties only useful to this class.
@@ -1117,16 +1075,6 @@ export class Slides extends Ion {
     destroySwiper(this);
 
     this.enableKeyboardControl(false);
-  }
-
-
-  /**
-   * @hidden
-   * Deprecated, please use the instance of ion-slides.
-   */
-  getSlider(): void {
-    // deprecated 2016-12-29
-    console.warn(`ion-slides, getSlider() has been removed. Please use the properties and methods on the instance of ion-slides instead.`);
   }
 }
 
