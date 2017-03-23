@@ -5,6 +5,7 @@ import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/ge
 import { Config } from '../../config/config';
 import { Key } from '../../platform/key';
 import { Platform } from '../../platform/platform';
+import { OnDidLoad, OnWillEnter, OnDidEnter, OnDidLeave } from '../../navigation/nav-controller';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -41,7 +42,7 @@ import { ViewController } from '../../navigation/view-controller';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class ActionSheetCmp {
+export class ActionSheetCmp implements OnDidLoad, OnWillEnter, OnDidEnter, OnDidLeave {
   d: {
     title?: string;
     subTitle?: string;

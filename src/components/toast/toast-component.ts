@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { NavParams } from '../../navigation/nav-params';
+import { OnDidEnter } from '../../navigation/nav-controller';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -28,7 +29,7 @@ import { ViewController } from '../../navigation/view-controller';
     '[attr.aria-describedby]': 'descId',
   },
 })
-export class ToastCmp implements AfterViewInit {
+export class ToastCmp implements AfterViewInit, OnDidEnter {
   d: {
     message?: string;
     cssClass?: string;

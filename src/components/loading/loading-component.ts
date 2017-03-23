@@ -4,9 +4,10 @@ import { Config } from '../../config/config';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { isDefined, isUndefined, assert } from '../../util/util';
 import { LoadingOptions } from './loading-options';
-import { NavParams } from '../../navigation/nav-params';
 import { Platform } from '../../platform/platform';
+import { OnWillEnter, OnDidEnter, OnDidLeave } from '../../navigation/nav-controller';
 import { ViewController } from '../../navigation/view-controller';
+import { NavParams } from '../../navigation/nav-params';
 
 /**
 * @private
@@ -26,7 +27,7 @@ import { ViewController } from '../../navigation/view-controller';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class LoadingCmp {
+export class LoadingCmp implements OnWillEnter, OnDidEnter, OnDidLeave {
   d: LoadingOptions;
   id: number;
   showSpinner: boolean;
