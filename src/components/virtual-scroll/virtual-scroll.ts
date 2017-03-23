@@ -216,7 +216,7 @@ import { VirtualHeader } from './virtual-header';
 })
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
-  _differ: DefaultIterableDiffer;
+  _differ: DefaultIterableDiffer<any>;
   _scrollSub: any;
   _scrollEndSub: any;
   _resizeSub: any;
@@ -250,7 +250,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   set virtualScroll(val: any) {
     this._records = val;
     if (isBlank(this._differ) && isPresent(val)) {
-      this._differ = <DefaultIterableDiffer>this._iterableDiffers.find(val).create(this._cd, this.virtualTrackBy);
+      this._differ = <DefaultIterableDiffer<any>>this._iterableDiffers.find(val).create(this._cd, this.virtualTrackBy);
     }
   }
 
@@ -474,7 +474,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this.bufferRatio);
   }
 
-  private _changes(): DefaultIterableDiffer {
+  private _changes(): DefaultIterableDiffer<any> {
     if (isPresent(this._records) && isPresent(this._differ)) {
       return this._differ.diff(this._records);
     }
