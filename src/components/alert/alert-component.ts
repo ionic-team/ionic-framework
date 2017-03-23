@@ -72,6 +72,7 @@ import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
   encapsulation: ViewEncapsulation.None,
 })
 export class AlertCmp {
+
   activeId: string;
   descId: string;
   d: AlertOptions;
