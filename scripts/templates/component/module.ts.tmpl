@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { $CLASSNAME } from './$FILENAME';
 import { IonicModule } from 'ionic-angular';
+import { $CLASSNAME } from './$FILENAME';
 
 @NgModule({
   declarations: [
@@ -8,6 +8,9 @@ import { IonicModule } from 'ionic-angular';
   ],
   imports: [
     IonicModule.forChild($CLASSNAME),
+  ],
+  exports: [
+    $CLASSNAME
   ]
 })
 export class $CLASSNAMEModule {}
