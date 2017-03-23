@@ -234,17 +234,6 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @input {boolean} If true, swipe to go back is enabled.
-   */
-  @Input()
-  get swipeBackEnabled(): boolean {
-    return this._sbEnabled;
-  }
-  set swipeBackEnabled(val: boolean) {
-    this._sbEnabled = isTrueProperty(val);
-  }
-
-  /**
    * @input {boolean} If true, hide the tabs on child pages.
    */
   @Input()

@@ -1,4 +1,4 @@
-import { ComponentRef, ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Input, ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
@@ -9,7 +9,7 @@ import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
-import { isBlank, isNumber, isPresent, assert, removeArrayItem } from '../util/util';
+import { isBlank, isNumber, isPresent, isTrueProperty, assert, removeArrayItem } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
 import { Keyboard } from '../platform/keyboard';
@@ -48,6 +48,15 @@ export class NavControllerBase extends Ion implements NavController {
   viewWillUnload: EventEmitter<any> = new EventEmitter();
 
   id: string;
+
+  @Input()
+  get swipeBackEnabled(): boolean {
+    return this._sbEnabled;
+  }
+  set swipeBackEnabled(val: boolean) {
+    this._sbEnabled = isTrueProperty(val);
+    this._swipeBackCheck();
+  }
 
   constructor(
     public parent: any,
