@@ -13,7 +13,7 @@ import { createTempTsConfig, getFolderInfo, runAppScriptsBuild, writePolyfills }
 import * as pAll from 'p-all';
 
 task('demos.prepare', (done: Function) => {
-  runSequence('demos.clean', 'demos.polyfill', (err: any) => done(err));
+  runSequence('demos.clean', 'demos.polyfill', 'demos.sass', (err: any) => done(err));
 });
 
 task('demos.prod', ['demos.prepare'], (done: Function) => {
