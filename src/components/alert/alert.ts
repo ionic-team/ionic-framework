@@ -241,21 +241,17 @@ export class Alert extends ViewController {
  *
  *  Input options
  *
- *  | Property    | Type      | Description                                                     |
- *  |-------------|-----------|-----------------------------------------------------------------|
- *  | type        | `string`  | The type the input should be: text, tel, number, etc.           |
- *  | name        | `string`  | The name for the input.                                         |
- *  | placeholder | `string`  | The input's placeholder (for textual/numeric inputs)            |
- *  | value       | `string`  | The input's value.                                              |
- *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
- *  | checked     | `boolean` | Whether or not the input is checked.                            |
- *  | id          | `string`  | The input's id.                                                 |
- *  | min         | `string | number`  | The input's minimum authorized value (string only for date inputs, number
- *  only for number inputs)
- *  |
- *  | max         | `string | number`  | The input's maximum authorized value (string only for date inputs, number
- *  only for number inputs)
- *  |
+ *   | Property    | Type            | Description                                                                                       |
+ *   |-------------|-----------------|---------------------------------------------------------------------------------------------------|
+ *   | type        | `string`        | The type the input should be: text, tel, number, etc.                                             |
+ *   | name        | `string`        | The name for the input.                                                                           |
+ *   | placeholder | `string`        | The input's placeholder (for textual/numeric inputs)                                              |
+ *   | value       | `string`        | The input's value.                                                                                |
+ *   | label       | `string`        | The input's label (only for radio/checkbox inputs)                                                |
+ *   | checked     | `boolean`       | Whether or not the input is checked.                                                              |
+ *   | id          | `string`        | The input's id.                                                                                   |
+ *   | min         | `string/number` | The input's minimum authorized value (string only for date inputs, number only for number inputs) |
+ *   | max         | `string/number` | The input's maximum authorized value (string only for date inputs, number only for number inputs) |
  *
  *  Button options
  *
