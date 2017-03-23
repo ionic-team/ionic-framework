@@ -27,5 +27,6 @@ export interface AlertInputOptions {
 export interface AlertButton {
   text?: string;
   role?: string;
+  cssClass?: string;
   handler?: Function;
 };
