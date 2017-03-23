@@ -33,6 +33,7 @@ export class PageOne {
     alert.addButton({
       text: 'Cancel',
       role: 'cancel',
+      cssClass: 'secondary',
       handler: () => {
         console.log('Confirm Cancel');
         this.testConfirmResult = 'Cancel';
