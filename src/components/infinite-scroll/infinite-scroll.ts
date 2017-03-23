@@ -256,7 +256,7 @@ export class InfiniteScroll {
     let distanceFromInfinite: number;
 
     if (this._position === POSITION_BOTTOM) {
-      distanceFromInfinite = ((d.scrollHeight - infiniteHeight) - d.scrollTop) - height - threshold;
+      distanceFromInfinite = d.scrollHeight - infiniteHeight - d.scrollTop - height - threshold;
     } else {
       assert(this._position === POSITION_TOP, '_position should be top');
       distanceFromInfinite = d.scrollTop - infiniteHeight - threshold;
@@ -289,6 +289,10 @@ export class InfiniteScroll {
    * to `enabled`.
    */
   complete() {
+    if (this.state !== STATE_LOADING) {
+      return;
+    }
+
     if (this._position === POSITION_BOTTOM) {
       this.state = STATE_ENABLED;
       return;
