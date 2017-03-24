@@ -121,7 +121,7 @@
     "rollup-plugin-node-resolve": "2.0.0",
     "rollup-plugin-uglify": "1.0.1",
     "run-sequence": "1.2.2",
-    "sassdoc": "2.1.20",
+    "sassdoc": "2.2.1",
     "semver": "5.3.0",
     "serve-static": "1.11.1",
     "strip-function": "0.0.3",
