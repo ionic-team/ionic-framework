@@ -17,7 +17,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
   template:
     '<div *ngIf="col.prefix" class="picker-prefix" [style.width]="col.prefixWidth">{{col.prefix}}</div>' +
     '<div class="picker-opts" #colEle [style.max-width]="col.optionsWidth">' +
-      '<button *ngFor="let o of col.options; let i=index"' +
+      '<button type="button" *ngFor="let o of col.options; let i=index"' +
         '[class.picker-opt-disabled]="o.disabled" ' +
         'class="picker-opt" disable-activated (click)="optClick($event, i)">' +
         '{{o.text}}' +
