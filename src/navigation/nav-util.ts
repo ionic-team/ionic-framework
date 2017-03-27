@@ -1,6 +1,7 @@
 import { Renderer, TypeDecorator } from '@angular/core';
 
 import { DeepLinker } from './deep-linker';
+import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
@@ -99,20 +100,6 @@ export function isTab(nav: any): boolean {
 export function isNav(nav: any): boolean {
   // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
   return !!nav && !!nav.push;
-}
-
-export function IonicPage(config?: IonicPageMetadata): ClassDecorator {
-  return function(clazz: any) {
-    return clazz;
-  };
-}
-
-// public link interface
-export interface IonicPageMetadata {
-  name?: string;
-  segment?: string;
-  defaultHistory?: string[];
-  priority?: string;
 }
 
 /**

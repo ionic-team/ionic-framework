@@ -23,6 +23,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * @NgModule({
  *   declarations: [ MyApp ],
  *   imports: [
+ *     BrowserModule,
  *     IonicModule.forRoot(MyApp, {
  *       backButtonText: 'Go Back',
  *       iconMode: 'ios',
@@ -48,6 +49,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * @NgModule({
  *   ...
  *   imports: [
+ *     BrowserModule,
  *     IonicModule.forRoot(MyApp, {
  *       tabsPlacement: 'bottom',
  *       platforms: {

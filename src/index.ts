@@ -275,10 +275,11 @@ export { DomController, DomCallback } from './platform/dom-controller';
 export { Platform, setupPlatform } from './platform/platform';
 export { Haptic } from './tap-click/haptic';
 export { DeepLinker } from './navigation/deep-linker';
+export { IonicPage, IonicPageMetadata } from './navigation/ionic-page';
 export { NavController } from './navigation/nav-controller';
 export { NavControllerBase } from './navigation/nav-controller-base';
 export { NavParams } from './navigation/nav-params';
-export { NavLink, NavOptions, IonicPage, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory, IonicPageMetadata } from './navigation/nav-util';
+export { NavLink, NavOptions, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory } from './navigation/nav-util';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
 export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
@@ -328,26 +329,32 @@ export { IonicGestureConfig } from './gestures/gesture-config';
 /**
  * @name IonicModule
  * @description
- * IonicModule is an NgModule that helps bootstrap a whole Ionic App. By passing a root component, IonicModule will make sure that all the components and directives from the framework are provided. This includes components such as Tabs, Menus, and Slides, as well as classes like AlertController.
+ * IonicModule is an [NgModule](https://angular.io/docs/ts/latest/guide/ngmodule.html) that bootstraps
+ * an Ionic App. By passing a root component, IonicModule will make sure that all of the components,
+ * directives, and providers from the framework are imported.
  *
- *
- * We're also able to pass any configuration to our app as a second argument for `.forRoot`. This is any valid config property from [the Config Class](/docs/v2/api/config/Config/).
- *
- * The last functionality that IonicModule allows you to configure is optional routes for DeepLinker. For more information on DeepLinker, please see the [DeepLinker Docs](/docs/v2/api/navigation/DeepLinker/)
+ * Any configuration for the app can be passed as the second argument to `forRoot`. This can be any
+ * valid property from the [Config](/docs/v2/api/config/Config/).
  *
  * @usage
  * ```ts
  * import { NgModule } from '@angular/core';
+ *
  * import { IonicApp, IonicModule } from 'ionic-angular';
+ *
  * import { MyApp } from './app.component';
  * import { HomePage } from '../pages/home/home';
+ *
  * @NgModule({
  *   declarations: [
  *     MyApp,
  *     HomePage
  *   ],
  *   imports: [
- *     IonicModule.forRoot(MyApp)
+ *     BrowserModule,
+ *     IonicModule.forRoot(MyApp, {
+ *
+ *     })
  *   ],
  *   bootstrap: [IonicApp],
  *   entryComponents: [
@@ -538,6 +545,35 @@ export class IonicModule {
   }
 }
 
+
+/**
+ * @name IonicPageModule
+ * @description
+ * IonicPageModule is an [NgModule](https://angular.io/docs/ts/latest/guide/ngmodule.html) that
+ * bootstraps a child [IonicPage](../navigation/IonicPage/) in order to set up routing.
+ *
+ * @usage
+ * ```ts
+ * import { NgModule } from '@angular/core';
+ *
+ * import { IonicPageModule } from 'ionic-angular';
+ *
+ * import { HomePage } from './home';
+ *
+ * @NgModule({
+ * 	declarations: [
+ * 		HomePage
+ * 	],
+ * 	imports: [
+ * 		IonicPageModule.forChild(HomePage)
+ * 	],
+ * 	entryComponents: [
+ * 		HomePage
+ * 	]
+ * })
+ * export class HomePageModule { }
+ * ```
+ */
 @NgModule({
   imports: [IonicModule],
   exports: [IonicModule]
