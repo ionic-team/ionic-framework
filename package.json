@@ -25,6 +25,7 @@
     "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link"
   },
   "dependencies": {
+    "@angular/animations": "4.0.0",
     "@angular/common": "4.0.0",
     "@angular/compiler": "4.0.0",
     "@angular/compiler-cli": "4.0.0",
