@@ -126,7 +126,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     const normalized = this._inputNormalize(val);
     const shouldUpdate = this._inputShouldChange(normalized);
     if (shouldUpdate) {
-      console.debug('BaseInput: value has changed:', val);
+      console.debug('BaseInput: value changed:', normalized, this);
       this._value = normalized;
       this._inputCheckHasValue(normalized);
       this._inputUpdated();

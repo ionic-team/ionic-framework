@@ -82,8 +82,8 @@ export class PageOne {
     console.log('Notification select', selectedValue);
   }
 
-  statusChange(ev: string) {
-    this.status = ev;
+  statusChange(ev: any) {
+    this.status = ev.value;
   }
 
   resetGender() {

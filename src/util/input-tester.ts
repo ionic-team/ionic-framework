@@ -52,6 +52,7 @@ export interface TestConfig {
 export function commonInputTest<T>(input: BaseInput<T>, config: TestConfig) {
   // TODO test form register/deregister
   // TODO test item classes
+  // TODO test disable
 
   testInput(input, config, false);
   input.ngAfterViewInit();

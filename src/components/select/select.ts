@@ -145,7 +145,6 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
 
   _multi: boolean = false;
   _options: QueryList<Option>;
-  _values: string[] = [];
   _texts: string[] = [];
   _text: string = '';
 
@@ -185,7 +184,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   /**
    * @output {any} Emitted when the selection was cancelled.
    */
-  @Output() ionCancel: EventEmitter<any> = new EventEmitter();
+  @Output() ionCancel: EventEmitter<Select> = new EventEmitter();
 
   constructor(
     private _app: App,
@@ -197,13 +196,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     @Optional() private _nav: NavController
   ) {
     super(config, elementRef, renderer, 'select', form, item, null);
-  }
-
-  /**
-   * @hidden
-   */
-  ngAfterViewInit() {
-    this._initialize();
+    this._value = [];
   }
 
 
@@ -246,7 +239,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.ionCancel.emit(null);
+        this.ionCancel.emit(this);
       }
     }];
 
@@ -369,27 +362,43 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   set options(val: QueryList<Option>) {
     this._options = val;
 
-    if (this._values.length  === 0) {
+    if (this._value.length  === 0) {
       // there are no values set at this point
       // so check to see who should be selected
-      this._values = val.filter(o => o.selected).map(o => o.value);
+      // we use writeValue() because we don't want to update ngModel
+      this.writeValue(val.filter(o => o.selected).map(o => o.value));
     }
 
     this._inputUpdated();
+  }
+
+  _inputNormalize(val: any): string[] {
+    if (val === null) {
+      return [];
+    }
+    if (Array.isArray(val)) {
+      return val;
+    }
+    return isBlank(val) ? [] : [val];
+  }
+
+  _inputShouldChange(val: string[]): boolean {
+    if (val.length === 0 && this._value.length === 0) {
+      return false;
+    }
+    return super._inputShouldChange(val);
   }
 
   /**
    * @hidden
    */
   _inputUpdated() {
-    const val = this.value;
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this._texts = [];
+    this._texts.length = 0;
 
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.selected = this._values.some(selectValue => {
+        option.selected = this._value.some(selectValue => {
           return isCheckedProperty(selectValue, option.value);
         });
 
