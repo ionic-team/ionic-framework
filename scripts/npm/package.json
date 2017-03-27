@@ -8,8 +8,9 @@
     "url": "https://github.com/driftyco/ionic.git"
   },
   "license": "MIT",
-  "main": "esm/index.js",
+  "main": "umd/index.js",
   "module": "index.js",
+  "es2015": "es2015/index.js",
   "peerDependencies": {
     "@angular/common": "",
     "@angular/compiler": "",
