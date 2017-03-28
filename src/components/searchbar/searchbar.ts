@@ -5,8 +5,6 @@ import { Config } from '../../config/config';
 import { BaseInput } from '../../util/base-input';
 import { isPresent, isTrueProperty } from '../../util/util';
 import { Platform } from '../../platform/platform';
-import { TimeoutDebouncer } from '../../util/debouncer';
-
 
 /**
  * @name Searchbar
@@ -300,7 +298,7 @@ export class Searchbar extends BaseInput<string> {
    * Sets the Searchbar to focused and active on input focus.
    */
   inputFocused(ev: UIEvent) {
-    this._setFocus();
+    this._fireFocus();
     this._isActive = true;
   }
 
@@ -317,7 +315,7 @@ export class Searchbar extends BaseInput<string> {
       this._shouldBlur = true;
       return;
     }
-    this._setBlur();
+    this._fireBlur();
   }
 
   /**
@@ -352,8 +350,8 @@ export class Searchbar extends BaseInput<string> {
     this._isActive = false;
   }
 
-  _setFocus() {
+  _fireFocus() {
     this._renderer.invokeElementMethod(this._searchbarInput.nativeElement, 'focus');
-    super._setFocus();
+    super._fireFocus();
   }
 }

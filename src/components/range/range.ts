@@ -299,7 +299,7 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
     }
 
     // trigger ionFocus event
-    this._setFocus();
+    this._fireFocus();
 
     // prevent default so scrolling does not happen
     ev.preventDefault();
@@ -361,7 +361,7 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
     this._haptic.gestureSelectionEnd();
 
     // trigger ionBlur event
-    this._setBlur();
+    this._fireBlur();
   }
 
   /** @internal */

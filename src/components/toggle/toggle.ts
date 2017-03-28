@@ -144,7 +144,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
     console.debug('toggle, _onDragStart', startX);
 
     this._startX = startX;
-    this._setFocus();
+    this._fireFocus();
     this._activated = true;
   }
 
@@ -197,7 +197,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
     }
 
     this._activated = false;
-    this._setBlur();
+    this._fireBlur();
     this._startX = null;
   }
 

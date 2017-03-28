@@ -326,9 +326,9 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     }
 
     overlay.present(selectOptions);
-    this._setFocus();
+    this._fireFocus();
     overlay.onDidDismiss(() => {
-      this._setBlur();
+      this._fireBlur();
     });
   }
 

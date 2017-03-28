@@ -515,10 +515,10 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     this.validate();
 
     // Present picker
-    this._setFocus();
+    this._fireFocus();
     picker.present(pickerOptions);
     picker.onDidDismiss(() => {
-      this._setBlur();
+      this._fireBlur();
     });
   }
 

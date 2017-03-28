@@ -81,15 +81,15 @@ function testState<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) 
     assertEqual(ev, input, 'ionFocus argument is wrong');
     focusCount++;
   });
-  input._setFocus();
+  input._fireFocus();
   assertEqual(input._isFocus, true, 'should be focus');
   assertEqual(input.isFocus(), true, 'should be focus');
-  input._setFocus();
+  input._fireFocus();
 
-  input._setBlur();
+  input._fireBlur();
   assertEqual(input._isFocus, false, 'should be not focus');
   assertEqual(input.isFocus(), false, 'should be not focus');
-  input._setBlur(); // it should not crash
+  input._fireBlur(); // it should not crash
 
   assertEqual(focusCount, 1, 'ionFocus was not called correctly');
   assertEqual(blurCount, 1, 'ionBlur was not called correctly');

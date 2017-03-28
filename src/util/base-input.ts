@@ -1,4 +1,4 @@
-import { NgZone, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
+import { ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
@@ -174,11 +174,11 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  _inputFireFocus() {
+  _fireFocus() {
     if (this._isFocus) {
       return;
     }
-    assert(NgZone.isInAngularZone(), 'callback should be zoned');
+    // assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     this._isFocus = true;
     this.ionFocus.emit(this);
@@ -188,11 +188,11 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  _inputFireBlur() {
+  _fireBlur() {
     if (!this._isFocus) {
       return;
     }
-    assert(NgZone.isInAngularZone(), 'callback should be zoned');
+    // assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
     this._isFocus = false;
     this.ionBlur.emit(this);
