@@ -10,7 +10,6 @@ import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
 import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
-import { TimeoutDebouncer } from '../../util/debouncer';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
@@ -139,7 +138,6 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
   _barL: string;
   _barR: string;
 
-  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _events: UIEventManager;
 
   @ViewChild('slider') public _slider: ElementRef;
@@ -268,9 +266,8 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
     private _dom: DomController,
     private _cd: ChangeDetectorRef
   ) {
-    super(config, elementRef, renderer, 'range', form, item, null);
+    super(config, elementRef, renderer, 'range', 0, form, item, null);
     this._events = new UIEventManager(_plt);
-    this._value = 0;
   }
 
   /**

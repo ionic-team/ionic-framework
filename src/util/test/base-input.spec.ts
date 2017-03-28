@@ -51,5 +51,5 @@ function mockInput(form: any, item: any, ngControl: any): BaseInput<any> {
   config = mockConfig(null, '/', platform);
   elementRef = mockElementRef();
   renderer = mockRenderer();
-  return new BaseInput(config, elementRef, renderer, 'input', form, item, ngControl);
+  return new BaseInput(config, elementRef, renderer, 'input', null, form, item, ngControl);
 }

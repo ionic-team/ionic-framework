@@ -273,12 +273,11 @@ export const DATETIME_VALUE_ACCESSOR: any = {
   providers: [DATETIME_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime extends BaseInput<any> implements AfterContentInit, ControlValueAccessor, OnDestroy {
+export class DateTime extends BaseInput<DateTimeData> implements AfterContentInit, ControlValueAccessor, OnDestroy {
 
   _text: string = '';
   _min: DateTimeData;
   _max: DateTimeData;
-  _timeValue: DateTimeData = {};
   _locale: LocaleData = {};
   _picker: Picker;
 
@@ -426,7 +425,7 @@ export class DateTime extends BaseInput<any> implements AfterContentInit, Contro
     @Optional() item: Item,
     @Optional() private _pickerCtrl: PickerController
   ) {
-    super(config, elementRef, renderer, 'datetime', form, item, null);
+    super(config, elementRef, renderer, 'datetime', {}, form, item, null);
   }
 
   /**
@@ -448,8 +447,15 @@ export class DateTime extends BaseInput<any> implements AfterContentInit, Contro
    * @hidden
    */
   _inputUpdated() {
-    updateDate(this._timeValue, this.value);
     this.updateText();
+  }
+
+  /**
+   * @hidden
+   */
+  _inputNormalize(val: any): DateTimeData {
+    updateDate(this._value, val);
+    return this._value;
   }
 
   /**
@@ -743,7 +749,7 @@ export class DateTime extends BaseInput<any> implements AfterContentInit, Contro
    * @hidden
    */
   getValue(): DateTimeData {
-    return this._timeValue;
+    return this._value;
   }
 
   /**

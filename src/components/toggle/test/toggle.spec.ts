@@ -20,7 +20,7 @@ describe('Toggle', () => {
 
     commonInputTest(toggle, {
       defaultValue: false,
-      corpus: BOOLEAN_CORPUS
+      corpus: BOOLEAN_CORPUS,
     });
 
   });

@@ -11,9 +11,7 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(AppComponent, {
-      mode: 'ios'
-    }),
+    IonicModule.forRoot(AppComponent, {}),
     PageOneModule
   ],
   bootstrap: [IonicApp]

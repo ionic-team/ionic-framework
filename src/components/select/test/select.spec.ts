@@ -1,7 +1,7 @@
 
 import { Select } from '../select';
 import { mockApp, mockConfig, mockElementRef, mockRenderer, mockItem, mockForm } from '../../../util/mock-providers';
-import { commonInputTest, BOOLEAN_CORPUS } from '../../../util/input-tester';
+import { commonInputTest } from '../../../util/input-tester';
 
 describe('Select', () => {
 
@@ -16,8 +16,13 @@ describe('Select', () => {
     const select = new Select(app, form, config, elementRef, renderer, item, null);
 
     commonInputTest(select, {
-      defaultValue: false,
-      corpus: BOOLEAN_CORPUS
+      defaultValue: [],
+      corpus: [
+        [['hola'], ['hola']],
+        [null, []],
+        ['hola', ['hola']],
+        [['hola', 'adios'], ['hola', 'adios']]
+      ]
     });
 
   });

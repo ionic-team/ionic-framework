@@ -62,7 +62,6 @@ export class Searchbar extends BaseInput<string> {
   _autocomplete: string = 'off';
   _autocorrect: string = 'off';
   _isActive: boolean = false;
-  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(250);
   _showCancelButton: boolean = false;
   _animated: boolean = false;
 
@@ -165,7 +164,8 @@ export class Searchbar extends BaseInput<string> {
     renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
-    super(config, elementRef, renderer, 'searchbar', null, null, ngControl);
+    super(config, elementRef, renderer, 'searchbar', '', null, null, ngControl);
+    this.debounce = 250;
   }
 
   @ViewChild('searchbarInput') _searchbarInput: ElementRef;

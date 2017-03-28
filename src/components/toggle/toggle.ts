@@ -109,8 +109,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
     private _domCtrl: DomController,
     private _cd: ChangeDetectorRef
   ) {
-    super(config, elementRef, renderer, 'toggle', form, item, null);
-    this._value = false;
+    super(config, elementRef, renderer, 'toggle', false, form, item, null);
   }
 
   /**

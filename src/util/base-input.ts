@@ -2,7 +2,7 @@ import { ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
-import { isPresent, isArray, isTrueProperty, assert } from './util';
+import { isPresent, isUndefined, isArray, isTrueProperty, deepCopy, assert } from './util';
 import { Ion } from '../components/ion';
 import { Config } from '../config/config';
 import { Item } from '../components/item/item';
@@ -30,13 +30,13 @@ export interface CommonInput<T> extends ControlValueAccessor {
 
 export class BaseInput<T> extends Ion implements CommonInput<T> {
 
-  _value: T = null;
+  _value: T;
   _onChanged: Function;
   _onTouched: Function;
   _isFocus: boolean = false;
   _labelId: string;
   _disabled: boolean = false;
-  _debouncer: TimeoutDebouncer;
+  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _init: boolean = false;
   id: string;
 
@@ -66,18 +66,19 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     this.setDisabledState(val);
   }
 
-
   constructor(
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
     name: string,
+    private _defaultValue: T,
     public _form: Form,
     public _item: Item,
     ngControl: NgControl
   ) {
     super(config, elementRef, renderer, name);
     _form && _form.register(this);
+    this._value = deepCopy(this._defaultValue);
 
     if (_item) {
       this.id = name + '-' + _item.registerInput(name);
@@ -103,7 +104,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   // 1. Updates the value
   // 2. Calls _inputUpdated()
   // 3. Dispatch onChange events
-  setValue(val: T) {
+  setValue(val: any) {
     this.value = val;
   }
 
@@ -123,19 +124,26 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   }
 
   _writeValue(val: any): boolean {
-    const normalized = this._inputNormalize(val);
-    const shouldUpdate = this._inputShouldChange(normalized);
-    if (shouldUpdate) {
-      console.debug('BaseInput: value changed:', normalized, this);
-      this._value = normalized;
-      this._inputCheckHasValue(normalized);
-      this._inputUpdated();
-      if (this._init) {
-        this.ionChange.emit(this);
-      }
-      return true;
+    if (isUndefined(val)) {
+      return false;
     }
-    return false;
+    const normalized = (val === null)
+      ? deepCopy(this._defaultValue)
+      : this._inputNormalize(val);
+
+    const notUpdate = isUndefined(normalized) || !this._inputShouldChange(normalized);
+    if (notUpdate) {
+      return false;
+    }
+
+    console.debug('BaseInput: value changed:', normalized, this);
+    this._value = normalized;
+    this._inputCheckHasValue(normalized);
+    this._inputUpdated();
+    if (this._init) {
+      this._debouncer.debounce(() => this.ionChange.emit(this));
+    }
+    return true;
   }
 
   /**
@@ -224,12 +232,11 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._item) {
       return;
     }
-    let hasValue: boolean;
-    if (isArray(val)) {
-      hasValue = val.length > 0;
-    } else {
-      hasValue = isPresent(val);
-    }
+
+    const hasValue = isArray(val)
+      ? val.length > 0
+      : isPresent(val);
+
     this._item.setElementClass('input-has-value', hasValue);
   }
 
@@ -249,7 +256,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   _inputShouldChange(val: T): boolean {
-    return (typeof val !== 'undefined') && this._value !== val;
+    return this._value !== val;
   }
 
   /**

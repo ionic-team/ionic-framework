@@ -77,7 +77,7 @@ export class Segment extends BaseInput<string> {
     renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
-    super(config, elementRef, renderer, 'segment', null, null, ngControl);
+    super(config, elementRef, renderer, 'segment', null, null, null, ngControl);
   }
 
   /**

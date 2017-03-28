@@ -132,7 +132,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     @Optional() public ngControl: NgControl,
     private _dom: DomController
   ) {
-    super(config, elementRef, renderer, 'input', form, item, ngControl);
+    super(config, elementRef, renderer, 'input', '', form, item, ngControl);
 
     this._nav = <NavControllerBase>nav;
 

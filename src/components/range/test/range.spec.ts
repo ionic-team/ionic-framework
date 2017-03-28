@@ -7,6 +7,7 @@ import { commonInputTest, NUMBER_CORPUS } from '../../../util/input-tester';
 describe('Range', () => {
 
   it('should pass common test', () => {
+    // TODO, validate range inside bounds
     const range = createRange();
     range._slider = mockElementRef();
     commonInputTest(range, {

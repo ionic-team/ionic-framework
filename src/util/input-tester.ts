@@ -21,7 +21,7 @@ export const NUMBER_CORPUS: any[] = [
   [123456789, 123456789],
   ['1.1234', 1.1234],
   ['123456789', 123456789],
-  ['-123456789', -123456789],
+  ['-123456789', -123456789]
 ];
 
 export const BOOLEAN_CORPUS: any[] = [
@@ -30,13 +30,11 @@ export const BOOLEAN_CORPUS: any[] = [
   ['', true],
   ['false', false],
   ['true', true],
-  ['hola', false]
 ];
 
 export const ANY_CORPUS: any[] = [
   [true, true],
   [false, false],
-  [null, null],
   [0, 0],
   ['', ''],
   [' ', ' '],
@@ -68,16 +66,36 @@ function testInput<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) 
 }
 
 function testState<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) {
-  assert(input._init === isInit, 'input must be init');
-  assert(!input._isFocus && !input.isFocus(), 'should not be focus');
-  assert(input.value === config.defaultValue, 'default value is wrong');
+  assertEqual(input._init, isInit, 'input must be init');
+  assertEqual(input._isFocus, false, 'should not be focus');
+  assertEqual(input.isFocus(), false, 'should not be focus');
+  assertEqual(input.value, config.defaultValue, 'default value is wrong');
 
+  let blurCount = 0;
+  let focusCount = 0;
+  const subBlur = input.ionBlur.subscribe((ev: any) => {
+    assertEqual(ev, input, 'ionBlur argument is wrong');
+    blurCount++;
+  });
+  const subFocus = input.ionFocus.subscribe((ev: any) => {
+    assertEqual(ev, input, 'ionFocus argument is wrong');
+    focusCount++;
+  });
   input._setFocus();
-  assert(input._isFocus && input.isFocus(), 'should be focus');
-  input._setFocus(); // it should not crash
+  assertEqual(input._isFocus, true, 'should be focus');
+  assertEqual(input.isFocus(), true, 'should be focus');
+  input._setFocus();
+
   input._setBlur();
-  assert(!input._isFocus && !input.isFocus(), 'should not be focus');
+  assertEqual(input._isFocus, false, 'should be not focus');
+  assertEqual(input.isFocus(), false, 'should be not focus');
   input._setBlur(); // it should not crash
+
+  assertEqual(focusCount, 1, 'ionFocus was not called correctly');
+  assertEqual(blurCount, 1, 'ionBlur was not called correctly');
+
+  subBlur.unsubscribe();
+  subFocus.unsubscribe();
 }
 
 function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) {
@@ -87,27 +105,28 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
   let OnChangeCalled = 0;
   let OnTouchedCalled = 0;
 
-  input.value = config.defaultValue;
-
   // Test ionChange
   let sub = input.ionChange.subscribe((ev: any) => {
-    assert(ionChangeCalled === 0, 'internal error');
-    assert(ev === input, 'ev is not the input');
-    assert(test[1] === ev.value, 'value does not match');
+    assertEqual(ionChangeCalled, 0, 'ionChange: internal error');
+    assertEqual(ev, input, 'ionChange: ev is not the input');
+    assertEqual(ev.value, test[1], 'ionChange: value does not match');
+
     ionChangeCalled++;
   });
 
   // Test registerOnChange
   input.registerOnChange((ev: any) => {
-    assert(OnChangeCalled === 0, 'internal error');
-    assert(ev === input.value, 'ev output does not match');
-    assert(test[1] === input.value, 'value does not match');
+    assertEqual(OnChangeCalled, 0, 'registerOnChange: internal error');
+    assertEqual(input.value, ev, 'registerOnChange: ev output does not match');
+    assertEqual(input.value, test[1], 'registerOnChange: value does not match');
+
     OnChangeCalled++;
   });
 
   // Test registerOnChange
   input.registerOnTouched(() => {
-    assert(OnTouchedCalled === 0, 'internal error');
+    assertEqual(OnTouchedCalled, 0, 'registerOnTouched: internal error');
+
     OnTouchedCalled++;
   });
 
@@ -115,28 +134,45 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
   for (i = 0; i < config.corpus.length; i++) {
     test = config.corpus[i];
     input.value = test[0];
-    assert(input.value === test[1], 'input/output does not match');
+    assertEqual(input.value, test[1], 'loop: input/output does not match');
     if (isInit) {
-      assert(ionChangeCalled === 1, 'ionChange error');
+      assertEqual(ionChangeCalled, 1, 'loop: ionChange error');
     } else {
-      assert(ionChangeCalled === 0, 'ionChange error');
+      assertEqual(ionChangeCalled, 0, 'loop: ionChange error');
     }
-    assert(OnChangeCalled === 1, 'OnChangeCalled was not called');
-    assert(OnTouchedCalled === 1, 'OnTouchedCalled was not called');
+    assertEqual(OnChangeCalled, 1, 'loop: OnChangeCalled was not called');
+    assertEqual(OnTouchedCalled, 1, 'loop: OnTouchedCalled was not called');
+    
     OnTouchedCalled = OnChangeCalled = ionChangeCalled = 0;
 
+    console.log(test[0], input.value);
     // Set same value (it should not redispatch)
     input.value = test[0];
-    assert(ionChangeCalled === 0, 'ionChange should not be called');
-    assert(OnChangeCalled === 0, 'OnChangeCalled should not be called');
+    assertEqual(ionChangeCalled, 0, 'loop: ionChange should not be called');
+    assertEqual(OnChangeCalled, 0, 'loop: OnChangeCalled should not be called');
     // TODO OnTouchedCalled?
     OnTouchedCalled = OnChangeCalled = ionChangeCalled = 0;
   }
 
+  // Test undefined
+  input.value = undefined;
+  assertEqual(input.value, test[1], 'undefined should not change the value');
+  assertEqual(ionChangeCalled, 0, 'undefined: ionChange should not be called');
+  assertEqual(OnChangeCalled, 0, 'undefined: OnChangeCalled should not be called');
+  assertEqual(OnTouchedCalled, 0, 'undefined: OnTouchedCalled should not be called');
+
+
+  // Test null (reset)
+  test = [null, config.defaultValue];
+  input.value = null;
+  assertEqual(input.value, config.defaultValue, 'null: wrong default value');
+  assertEqual(OnChangeCalled, 1, 'null: OnChangeCalled was not called');
+  assertEqual(OnTouchedCalled, 1, 'null: OnTouchedCalled was not called');
+
+
   input.registerOnChange(null);
   input.registerOnTouched(null);
   sub.unsubscribe();
-  input.value = config.defaultValue;
 }
 
 function testNgModelChange<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) {
@@ -148,9 +184,10 @@ function testNgModelChange<T>(input: BaseInput<T>, config: TestConfig, isInit: b
 
   // Test ionChange
   let sub = input.ionChange.subscribe((ev: any) => {
-    assert(ionChangeCalled === 0, 'internal error');
-    assert(ev === input, 'ev output does not match');
-    assert(test[1] === ev.value, 'value does not match');
+    assertEqual(ionChangeCalled, 0, 'internal error');
+    assertEqual(ev, input, 'ev output does not match');
+    assertEqual(test[1], ev.value, 'value does not match');
+
     ionChangeCalled++;
   });
 
@@ -169,21 +206,21 @@ function testNgModelChange<T>(input: BaseInput<T>, config: TestConfig, isInit: b
     test = config.corpus[i];
     input.writeValue(test[0]);
 
-    assert(input.value === test[1], 'input/output does not match');
+    assertEqual(input.value, test[1], 'input/output does not match');
     if (isInit) {
-      assert(ionChangeCalled === 1, 'ionChange error');
+      assertEqual(ionChangeCalled, 1, 'ionChange error');
     } else {
-      assert(ionChangeCalled === 0, 'ionChange error');
+      assertEqual(ionChangeCalled, 0, 'ionChange error');
     }
-    assert(OnChangeCalled === 0, 'OnChangeCalled should not be called');
-    assert(OnTouchedCalled === 0, 'OnTouchedCalled should not be called');
+    assertEqual(OnChangeCalled, 0, 'OnChangeCalled should not be called');
+    assertEqual(OnTouchedCalled, 0, 'OnTouchedCalled should not be called');
     OnTouchedCalled = OnChangeCalled = ionChangeCalled = 0;
 
     // Set same value (it should not redispatch)
     input.writeValue(test[0]);
     input.value = test[0];
-    assert(ionChangeCalled === 0, 'ionChange should not be called');
-    assert(OnChangeCalled === 0, 'OnChangeCalled should not be called');
+    assertEqual(ionChangeCalled, 0, 'ionChange should not be called');
+    assertEqual(OnChangeCalled, 0, 'OnChangeCalled should not be called');
 
     // TODO OnTouchedCalled?
     OnTouchedCalled = OnChangeCalled = ionChangeCalled = 0;
@@ -195,7 +232,19 @@ function testNgModelChange<T>(input: BaseInput<T>, config: TestConfig, isInit: b
   input.value = config.defaultValue;
 }
 
+function assertEqual(a: any, b: any, message: string) {
+  if (!equal(a, b)) {
+    assert(false, a + ' != ' + b + ' ' + message);
+  }
+}
 
 
+function equal(a: any, b: any): boolean {
+  if (a === b) {
+    return true;
+  }
+  // return false;
+  return JSON.stringify(a) === JSON.stringify(b);
+}
 
 

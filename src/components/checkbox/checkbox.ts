@@ -94,8 +94,7 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, After
     renderer: Renderer,
     private _cd: ChangeDetectorRef
   ) {
-    super(config, elementRef, renderer, 'checkbox', form, item, null);
-    this._value = false;
+    super(config, elementRef, renderer, 'checkbox', false, form, item, null);
   }
 
   /**
@@ -110,7 +109,6 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, After
    */
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
-    console.debug('checkbox, checked');
     ev.preventDefault();
     ev.stopPropagation();
     this.value = !this.value;
@@ -122,18 +120,12 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, After
   _inputNormalize(val: any): boolean {
     return isTrueProperty(val);
   }
+
   /**
    * @hidden
    */
   _inputCheckHasValue(val: boolean) {
     this._item && this._item.setElementClass('item-checkbox-checked', val);
-  }
-
-  /**
-   * @hidden
-   */
-  _inputUpdated() {
-    this._cd.detectChanges();
   }
 
 }

@@ -17,6 +17,14 @@ export function deepCopy(obj: any) {
 }
 
 /** @hidden */
+export function deepEqual(a: any, b: any) {
+  if (a === b) {
+    return true;
+  }
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/** @hidden */
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
  var timeout: number, args: any, context: any, timestamp: number, result: any;
  return function() {

@@ -7,7 +7,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isCheckedProperty, isTrueProperty, isBlank, deepCopy } from '../../util/util';
+import { isCheckedProperty, isTrueProperty, isBlank, deepCopy, deepEqual } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
@@ -195,8 +195,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     @Optional() item: Item,
     @Optional() private _nav: NavController
   ) {
-    super(config, elementRef, renderer, 'select', form, item, null);
-    this._value = [];
+    super(config, elementRef, renderer, 'select', [], form, item, null);
   }
 
 
@@ -259,7 +258,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       this.interface = 'alert';
     }
 
-    let overlay: any;
+    let overlay: ActionSheet | Alert;
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
         return {
@@ -321,7 +320,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
 
       overlay.addButton({
         text: this.okText,
-        handler: (selectedValues: any) => this.value = selectedValues
+        handler: (selectedValues) => this.value = selectedValues
       });
 
     }
@@ -373,20 +372,17 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   }
 
   _inputNormalize(val: any): string[] {
-    if (val === null) {
+    if (isBlank(val)) {
       return [];
     }
     if (Array.isArray(val)) {
       return val;
     }
-    return isBlank(val) ? [] : [val];
+    return [val + ''];
   }
 
   _inputShouldChange(val: string[]): boolean {
-    if (val.length === 0 && this._value.length === 0) {
-      return false;
-    }
-    return super._inputShouldChange(val);
+    return !deepEqual(this._value, val);
   }
 
   /**

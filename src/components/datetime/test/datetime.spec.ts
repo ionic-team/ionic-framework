@@ -605,10 +605,6 @@ describe('DateTime', () => {
       expect(datetime.getValue()).toEqual({});
 
       datetime.setValue('1994-12-15T13:47:20.789Z');
-      datetime.setValue(undefined);
-      expect(datetime.getValue()).toEqual({});
-
-      datetime.setValue('1994-12-15T13:47:20.789Z');
       datetime.setValue('');
       expect(datetime.getValue()).toEqual({});
     });

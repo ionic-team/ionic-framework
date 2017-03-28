@@ -58,13 +58,13 @@ export class PageOne {
       buttons: [
         {
           text: 'Cancel',
-          handler: (data: any) => {
+          handler: (data) => {
             console.log('Cancel clicked');
           }
         },
         {
           text: 'Save',
-          handler: (data: any) => {
+          handler: (data) => {
             console.log('Saved clicked');
           }
         }
