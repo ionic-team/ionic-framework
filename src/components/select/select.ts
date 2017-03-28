@@ -7,7 +7,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isCheckedProperty, isTrueProperty, isBlank, deepCopy, deepEqual } from '../../util/util';
+import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
@@ -223,7 +223,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
    * Open the select interface.
    */
   open() {
-    if (this._isFocus || this._disabled) {
+    if (this.isFocus() || this._disabled) {
       return;
     }
 
@@ -372,9 +372,6 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   }
 
   _inputNormalize(val: any): string[] {
-    if (isBlank(val)) {
-      return [];
-    }
     if (Array.isArray(val)) {
       return val;
     }

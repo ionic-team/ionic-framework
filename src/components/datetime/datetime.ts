@@ -485,7 +485,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
    * @hidden
    */
   open() {
-    if (this._isFocus || this._disabled) {
+    if (this.isFocus() || this._disabled) {
       return;
     }
     console.debug('datetime, open picker');
