@@ -5,9 +5,9 @@ import { assert } from './util';
 const lorem_ipsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi maximus nisl lobortis interdum condimentum. Cras volutpat, massa quis vehicula eleifend, turpis mauris sodales erat, ut varius ligula ipsum et turpis. Aliquam erat volutpat. Maecenas sodales pellentesque auctor. Suspendisse faucibus a erat sit amet pretium. Vestibulum nec tempus tellus. Mauris fringilla faucibus dui sed vestibulum. Curabitur porttitor consectetur nisl. Nulla porta, neque sed congue tempus, erat nunc rutrum diam, eu elementum sapien leo quis eros. Donec non convallis felis. Nam eu pharetra sapien.';
 
 export const TEXT_CORPUS: any = [
+  ['hola', 'hola'],
   ['', ''],
   ['   ', '   '],
-  ['hola', 'hola'],
   ['adiós', 'adiós'],
   ['hola y adiós', 'hola y adiós'],
   [lorem_ipsum, lorem_ipsum]
@@ -142,7 +142,7 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
     }
     assertEqual(OnChangeCalled, 1, 'loop: OnChangeCalled was not called');
     assertEqual(OnTouchedCalled, 1, 'loop: OnTouchedCalled was not called');
-    
+
     OnTouchedCalled = OnChangeCalled = ionChangeCalled = 0;
 
     console.log(test[0], input.value);

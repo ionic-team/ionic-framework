@@ -8,6 +8,8 @@ import { mockApp, mockConfig, mockElementRef, mockRenderer } from '../../../util
 
 
 describe('DateTime', () => {
+  // TODO
+  // pass commonInputTest()
 
   describe('validate', () => {
 
