@@ -63,7 +63,7 @@ export class SearchPage {
     this.initializeItems();
 
     // set q to the value of the searchbar
-    var q = ev.target.value;
+    var q = ev.value;
 
     // if the value is an empty string don't filter the items
     if (!q || q.trim() === '') {

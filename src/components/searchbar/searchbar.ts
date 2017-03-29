@@ -47,7 +47,8 @@ import { Platform } from '../../platform/platform';
     '[class.searchbar-has-value]': '_value',
     '[class.searchbar-active]': '_isActive',
     '[class.searchbar-show-cancel]': '_showCancelButton',
-    '[class.searchbar-left-aligned]': '_shouldAlignLeft'
+    '[class.searchbar-left-aligned]': '_shouldAlignLeft',
+    '[class.searchbar-has-focus]': '_isFocus'
   },
   encapsulation: ViewEncapsulation.None
 })
@@ -150,10 +151,6 @@ export class Searchbar extends BaseInput<string> {
    */
   @Output() ionClear: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
-  /**
-   * @hidden
-   */
-  @HostBinding('class.searchbar-has-focus') _sbHasFocus: boolean;
 
   constructor(
     config: Config,
@@ -213,7 +210,7 @@ export class Searchbar extends BaseInput<string> {
   positionElements() {
     const isAnimated = this._animated;
     const prevAlignLeft = this._shouldAlignLeft;
-    const shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true);
+    const shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._isFocus === true);
     this._shouldAlignLeft = shouldAlignLeft;
 
     if (this._mode !== 'ios') {
@@ -268,7 +265,7 @@ export class Searchbar extends BaseInput<string> {
     if (!this._cancelButton || !this._cancelButton.nativeElement) {
       return;
     }
-    const showShowCancel = this._sbHasFocus;
+    const showShowCancel = this._isFocus;
     if (showShowCancel !== this._isCancelVisible) {
       var cancelStyleEle = this._cancelButton.nativeElement;
       var cancelStyle = cancelStyleEle.style;
@@ -298,8 +295,9 @@ export class Searchbar extends BaseInput<string> {
    * Sets the Searchbar to focused and active on input focus.
    */
   inputFocused(ev: UIEvent) {
-    this._fireFocus();
     this._isActive = true;
+    this._fireFocus();
+    this.positionElements();
   }
 
   /**
@@ -316,6 +314,7 @@ export class Searchbar extends BaseInput<string> {
       return;
     }
     this._fireBlur();
+    this.positionElements();
   }
 
   /**
