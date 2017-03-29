@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-searchbar color="primary" autofocus (ionInput)="getItems($event)" placeholder="Filter Schedules">
+    <ion-searchbar color="primary" autofocus (ionChange)="getItems($event.value)" placeholder="Filter Schedules">
     </ion-searchbar>
   </ion-navbar>
 
@@ -15,9 +15,9 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-input [(ngModel)]="value"></ion-input>
   <form>
-    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-searchbar [(ngModel)]="value" (ionChange)="getItems($event.value)" name="search"></ion-searchbar>
   </form>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="showDetail(item)" class="e2eSearchbarNavItem">

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -287,6 +287,7 @@ export class Searchbar extends BaseInput<string> {
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
+    this.ionInput.emit(ev);
     this.value = ev.target.value;
   }
 
