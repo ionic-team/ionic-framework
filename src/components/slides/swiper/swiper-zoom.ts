@@ -509,7 +509,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
   for (var i = 0; i < slides.length; i++) {
     slide = slides[i];
     if (slide.querySelector('.' + CLS.zoomContainer)) {
-      plt.registerListener(slide, 's.touchEvents.move', (ev: TouchEvent) => {
+      plt.registerListener(slide, s._touchEvents.move, (ev: TouchEvent) => {
         onTouchMove(s, plt, ev);
       }, evtOpts, unRegs);
     }
