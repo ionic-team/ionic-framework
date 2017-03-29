@@ -34,5 +34,6 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ./scripts/ci/deploy.sh
             else
+              ./scripts/ci/deploy.sh
               echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
             fi
