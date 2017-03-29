@@ -30,6 +30,10 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * The select component takes child `ion-option` components. If `ion-option` is not
  * given a `value` attribute then it will use its text as the value.
  *
+ * If `ngModel` is bound to `ion-select`, the selected value will be based on the 
+ * bound value of the model. Otherwise, the `selected` attribute can be used on
+ * `ion-option` components.
+ *
  * ### Interfaces
  *
  * By default, the `ion-select` uses the {@link ../../alert/AlertController AlertController API}
@@ -51,7 +55,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * <ion-item>
  *   <ion-label>Gender</ion-label>
  *   <ion-select [(ngModel)]="gender">
- *     <ion-option value="f" selected="true">Female</ion-option>
+ *     <ion-option value="f">Female</ion-option>
  *     <ion-option value="m">Male</ion-option>
  *   </ion-select>
  * </ion-item>
