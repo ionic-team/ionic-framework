@@ -46,11 +46,16 @@ import { isPresent, isTrueProperty } from '../../util/util';
   host: {
     'tappable': '',
     'class': 'segment-button',
-    'role': 'button'
+    'role': 'button',
+    '[class.segment-button-disabled]': '_disabled',
+    '[class.segment-activated]': 'isActive',
+    '[attr.aria-pressed]': 'isActive'
   },
   encapsulation: ViewEncapsulation.None,
 })
 export class SegmentButton {
+
+  isActive: boolean = false;
   _disabled: boolean = false;
 
   /**
@@ -63,8 +68,6 @@ export class SegmentButton {
    */
   @Output() ionSelect: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
 
-  constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
-
   /**
    * @input {boolean} If true, the user cannot interact with this element.
    */
@@ -75,15 +78,9 @@ export class SegmentButton {
 
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
-    this._setElementClass('segment-button-disabled', this._disabled);
   }
 
-  /**
-   * @hidden
-   */
-  _setElementClass(cssClass: string, shouldAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
-  }
+  constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
   /**
    * @hidden
@@ -102,14 +99,6 @@ export class SegmentButton {
     if (!isPresent(this.value)) {
       console.warn('<ion-segment-button> requires a "value" attribute');
     }
-  }
-
-  /**
-   * @hidden
-   */
-  set isActive(isActive: any) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, 'segment-activated', isActive);
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-pressed', isActive);
   }
 
 }

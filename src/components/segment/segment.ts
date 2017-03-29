@@ -62,7 +62,10 @@ import { SegmentButton } from './segment-button';
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
 @Directive({
-  selector: 'ion-segment'
+  selector: 'ion-segment',
+  host: {
+    '[class.segment-disabled]': '_disabled'
+  }
 })
 export class Segment extends BaseInput<string> {
 
