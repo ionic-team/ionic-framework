@@ -45,8 +45,8 @@ import { Ion } from '../ion';
   * </ion-fab>
   * ```
   *
-  * @demo /docs/v2/demos/src/fab/
-  * @see {@link /docs/v2/components#fabs FAB Component Docs}
+  * @demo /docs/demos/src/fab/
+  * @see {@link /docs/components#fabs FAB Component Docs}
  */
 @Component({
   selector: '[ion-fab]',

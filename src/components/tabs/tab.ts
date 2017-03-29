@@ -115,8 +115,8 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/tabs/
- * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @demo /docs/demos/src/tabs/
+ * @see {@link /docs/components#tabs Tabs Component Docs}
  * @see {@link ../../tabs/Tabs Tabs API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
  * @see {@link ../../nav/NavController NavController API Docs}

@@ -59,8 +59,8 @@ import { SegmentButton } from './segment-button';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/segment/
- * @see {@link /docs/v2/components#segment Segment Component Docs}
+ * @demo /docs/demos/src/segment/
+ * @see {@link /docs/components#segment Segment Component Docs}
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
 @Directive({

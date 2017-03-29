@@ -39,7 +39,7 @@ import { Toolbar } from './toolbar';
  * </ion-header>
  * ```
  *
- * @demo /docs/v2/demos/src/title/
+ * @demo /docs/demos/src/title/
  */
 @Component({
   selector: 'ion-title',

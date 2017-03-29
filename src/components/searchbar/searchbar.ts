@@ -24,8 +24,8 @@ import { TimeoutDebouncer } from '../../util/debouncer';
  * </ion-searchbar>
  * ```
  *
- * @demo /docs/v2/demos/src/searchbar/
- * @see {@link /docs/v2/components#searchbar Searchbar Component Docs}
+ * @demo /docs/demos/src/searchbar/
+ * @see {@link /docs/components#searchbar Searchbar Component Docs}
  */
 @Component({
   selector: 'ion-searchbar',

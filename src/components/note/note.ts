@@ -25,7 +25,7 @@ import { Ion } from '../ion';
   *   </ion-list>
   * </ion-content>
   *```
- * {@link /docs/v2/api/components/api/components/item/item ion-item}
+ * {@link /docs/api/components/api/components/item/item ion-item}
   */
 @Directive({
   selector: 'ion-note'

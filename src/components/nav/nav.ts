@@ -44,8 +44,8 @@ import { RootNode } from '../split-pane/split-pane';
  * }
  * ```
  *
- * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @demo /docs/demos/src/navigation/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  */
 @Component({
   selector: 'ion-nav',

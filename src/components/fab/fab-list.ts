@@ -27,8 +27,8 @@ import { FabButton } from './fab';
   * ```
   * @module ionic
   *
-  * @demo /docs/v2/demos/src/fab/
-  * @see {@link /docs/v2/components#fab Fab Component Docs}
+  * @demo /docs/demos/src/fab/
+  * @see {@link /docs/components#fab Fab Component Docs}
  */
 @Directive({
   selector: 'ion-fab-list',

@@ -42,7 +42,7 @@ import { Platform } from '../../platform/platform';
  *  I am visible on Landscape!
  * </div>
  * ```
- * @demo /docs/v2/demos/src/show-when/
+ * @demo /docs/demos/src/show-when/
  * @see {@link ../HideWhen HideWhen API Docs}
  * @see {@link ../../../platform/Platform Platform API Docs}
  */

@@ -252,7 +252,7 @@ export const DATETIME_VALUE_ACCESSOR: any = {
  * ```
  *
  *
- * @demo /docs/v2/demos/src/datetime/
+ * @demo /docs/demos/src/datetime/
  */
 @Component({
   selector: 'ion-datetime',

@@ -151,8 +151,8 @@ import { Config } from '../../config/config';
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/src/action-sheet/
- * @see {@link /docs/v2/components#action-sheets ActionSheet Component Docs}
+ * @demo /docs/demos/src/action-sheet/
+ * @see {@link /docs/components#action-sheets ActionSheet Component Docs}
  */
 @Injectable()
 export class ActionSheetController {

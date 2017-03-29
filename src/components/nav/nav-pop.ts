@@ -18,9 +18,9 @@ import { NavController } from '../../navigation/nav-controller';
  * </ion-content>
  * ```
  *
- * Similar to {@link /docs/v2/api/components/nav/NavPush/ `NavPush` }
- * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * Similar to {@link /docs/api/components/nav/NavPush/ `NavPush` }
+ * @demo /docs/demos/src/navigation/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  * @see {@link ../NavPush NavPush API Docs}
  */
 @Directive({

@@ -27,7 +27,7 @@ import { removeArrayItem } from '../util/util';
  *   }
  * }
  * ```
- * @demo /docs/v2/demos/src/platform/
+ * @demo /docs/demos/src/platform/
  */
 export class Platform {
   private _win: Window;

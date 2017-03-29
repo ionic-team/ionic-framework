@@ -19,7 +19,7 @@ module.exports = function indexPage(renderDocsProcessor) {
         id: 'index-page',
         currentVersion: currentVersion,
         template: 'api_index.template.html',
-        outputPath: 'content/docs/v2/' + versionPath + '/api/index.md'
+        outputPath: 'content/docs/' + versionPath + '/api/index.md'
       });
     }
   }

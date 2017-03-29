@@ -20,8 +20,8 @@ import { Platform } from '../../platform/platform';
  * interaction modes such as swipe to edit, drag to reorder, and
  * removing items.
  *
- * @demo /docs/v2/demos/src/list/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/list/
+ * @see {@link /docs/components#lists List Component Docs}
  * @advanced
  *
  * Enable the sliding items.

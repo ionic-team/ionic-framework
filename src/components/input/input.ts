@@ -79,7 +79,7 @@ import { Platform } from '../../platform/platform';
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/input/
+ * @demo /docs/demos/src/input/
  */
 @Component({
   selector: 'ion-input,ion-textarea',
@@ -828,7 +828,7 @@ export class TextInput extends Ion implements IonicFormInput {
  *  </ion-item>
  * ```
  *
- * @demo /docs/v2/demos/src/textarea/
+ * @demo /docs/demos/src/textarea/
  */
 
 

@@ -28,7 +28,7 @@ import { Platform } from '../../platform/platform';
  * of images within a scrollable area, then `ion-img` would be better suited
  * for the job.
  *
- * > Note: `ion-img` is only meant to be used inside of [virtual-scroll](/docs/v2/api/components/virtual-scroll/VirtualScroll/)
+ * > Note: `ion-img` is only meant to be used inside of [virtual-scroll](/docs/api/components/virtual-scroll/VirtualScroll/)
  *
  *
  * ### Lazy Loading

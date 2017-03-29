@@ -48,7 +48,7 @@ import { Ion } from '../ion';
  *  </ion-item>
  * ```
  *
- * @demo /docs/v2/demos/src/label/
+ * @demo /docs/demos/src/label/
  * @see {@link ../../../../components#inputs Input Component Docs}
  * @see {@link ../../input/Input Input API Docs}
  *

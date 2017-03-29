@@ -39,8 +39,8 @@ import { RadioGroup } from './radio-group';
  *   </ion-item>
  * </ion-list>
  * ```
- * @demo /docs/v2/demos/src/radio/
- * @see {@link /docs/v2/components#radio Radio Component Docs}
+ * @demo /docs/demos/src/radio/
+ * @see {@link /docs/components#radio Radio Component Docs}
  * @see {@link ../RadioGroup RadioGroup API Docs}
  */
 @Component({
@@ -93,7 +93,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   /**
    * @input {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {

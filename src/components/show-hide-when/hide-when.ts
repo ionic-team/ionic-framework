@@ -41,7 +41,7 @@ import { DisplayWhen } from './display-when';
  * </div>
  * ```
  *
- * @demo /docs/v2/demos/src/hide-when/
+ * @demo /docs/demos/src/hide-when/
  * @see {@link ../ShowWhen ShowWhen API Docs}
  * @see {@link ../../../platform/Platform Platform API Docs}
 */

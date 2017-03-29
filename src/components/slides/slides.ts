@@ -121,8 +121,8 @@ import { ViewController } from '../../navigation/view-controller';
  * To see all of the available options, take a look at the
  * [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts).
  *
- * @demo /docs/v2/demos/src/slides/
- * @see {@link /docs/v2/components#slides Slides Component Docs}
+ * @demo /docs/demos/src/slides/
+ * @see {@link /docs/components#slides Slides Component Docs}
  *
  * Adopted from Swiper.js:
  * The most modern mobile touch slider and framework with

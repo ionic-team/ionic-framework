@@ -17,7 +17,7 @@ import { isTrueProperty } from '../../util/util';
  * <ion-scroll scrollX="true" scrollY="true">
  * </ion-scroll>
  * ```
- * @demo /docs/v2/demos/src/scroll/
+ * @demo /docs/demos/src/scroll/
  */
 @Component({
   selector: 'ion-scroll',

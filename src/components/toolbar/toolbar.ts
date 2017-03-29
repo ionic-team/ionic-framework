@@ -90,7 +90,7 @@ import { ToolbarBase } from './toolbar-base';
  * </ion-footer>
  *  ```
  *
- * @demo /docs/v2/demos/src/toolbar/
+ * @demo /docs/demos/src/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
 @Component({

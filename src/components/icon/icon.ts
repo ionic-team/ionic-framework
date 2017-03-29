@@ -32,8 +32,8 @@ import { Ion } from '../ion';
  * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
- * @demo /docs/v2/demos/src/icon/
- * @see {@link /docs/v2/components#icons Icon Component Docs}
+ * @demo /docs/demos/src/icon/
+ * @see {@link /docs/components#icons Icon Component Docs}
  *
  */
 @Directive({
@@ -76,7 +76,7 @@ export class Icon extends Ion {
 
   /**
    * @input {string} Specifies which icon to use. The appropriate icon will be used based on the mode.
-   * For more information, see [Ionicons](/docs/v2/ionicons/).
+   * For more information, see [Ionicons](/docs/ionicons/).
    */
   @Input()
   get name(): string {

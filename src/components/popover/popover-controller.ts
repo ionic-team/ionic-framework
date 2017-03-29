@@ -105,7 +105,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *
  *
  *
- * @demo /docs/v2/demos/src/popover/
+ * @demo /docs/demos/src/popover/
  */
 @Injectable()
 export class PopoverController {

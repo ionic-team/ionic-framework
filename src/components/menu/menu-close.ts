@@ -23,8 +23,8 @@ import { MenuController } from './menu-controller';
  * <button ion-button menuClose="left">Close Left Menu</button>
  * ```
  *
- * @demo /docs/v2/demos/src/menu/
- * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @demo /docs/demos/src/menu/
+ * @see {@link /docs/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
  */
 @Directive({

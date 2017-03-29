@@ -90,7 +90,7 @@ import { ItemReorder } from './item-reorder';
  * This feature is not enabled by default for `md` and `wp` modes, but it can be enabled by setting the
  * Sass variables `$item-md-detail-push-show` and `$item-wp-detail-push-show`, respectively, to `true`.
  * It can also be disabled for ios by setting `$item-ios-detail-push-show` to `false`. See the
- * [theming documentation](http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/) for
+ * [theming documentation](http://ionicframework.com/docs/theming/overriding-ionic-variables/) for
  * more information on overriding Sass variables.
  *
  *
@@ -266,8 +266,8 @@ import { ItemReorder } from './item-reorder';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/item/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/item/
+ * @see {@link /docs/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../ItemSliding ItemSliding API Docs}
  */

@@ -34,9 +34,9 @@ import { isPresent, isTrueProperty } from '../../util/util';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/segment/
- * @see {@link /docs/v2/components#segment Segment Component Docs}
- * @see {@link /docs/v2/api/components/segment/Segment/ Segment API Docs}
+ * @demo /docs/demos/src/segment/
+ * @see {@link /docs/components#segment Segment Component Docs}
+ * @see {@link /docs/api/components/segment/Segment/ Segment API Docs}
  */
 @Component({
   selector: 'ion-segment-button',

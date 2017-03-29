@@ -114,9 +114,9 @@ import { isTrueProperty } from '../../util/util';
   *
   * ```
   *
-  * @demo /docs/v2/demos/src/button/
-  * @see {@link /docs/v2/components#buttons Button Component Docs}
-  * @see {@link /docs/v2/components#fabs FabButton Docs}
+  * @demo /docs/demos/src/button/
+  * @see {@link /docs/components#buttons Button Component Docs}
+  * @see {@link /docs/components#fabs FabButton Docs}
   * @see {@link ../../fab/FabButton FabButton API Docs}
   * @see {@link ../../fab/FabContainer FabContainer API Docs}
  */
@@ -236,7 +236,7 @@ export class Button extends Ion {
   /**
    * @input {string} The mode determines which platform styles to use.
    * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -269,7 +269,7 @@ export class Button extends Ion {
   /**
    * @input {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {

@@ -334,7 +334,7 @@ export { IonicGestureConfig } from './gestures/gesture-config';
  * directives, and providers from the framework are imported.
  *
  * Any configuration for the app can be passed as the second argument to `forRoot`. This can be any
- * valid property from the [Config](/docs/v2/api/config/Config/).
+ * valid property from the [Config](/docs/api/config/Config/).
  *
  * @usage
  * ```ts

@@ -346,7 +346,7 @@ import { ViewController } from './view-controller';
  *
  * The property 'animation' understands the following values: `md-transition`, `ios-transition` and `wp-transition`.
  *
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  */
 export abstract class NavController {
 

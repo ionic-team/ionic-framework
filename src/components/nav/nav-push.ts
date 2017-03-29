@@ -39,8 +39,8 @@ import { Page } from '../../navigation/nav-util';
  * }
  * ```
  *
- * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @demo /docs/demos/src/navigation/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  * @see {@link ../NavPop NavPop API Docs}
  *
  */

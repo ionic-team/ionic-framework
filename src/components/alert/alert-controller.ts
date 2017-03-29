@@ -215,7 +215,7 @@ import { Config } from '../../config/config';
  * out before starting a new transition.
  *
  *
- * @demo /docs/v2/demos/src/alert/
+ * @demo /docs/demos/src/alert/
  */
 @Injectable()
 export class AlertController {

@@ -90,7 +90,7 @@ export const RANGE_VALUE_ACCESSOR: any = {
  * ```
  *
  *
- * @demo /docs/v2/demos/src/range/
+ * @demo /docs/demos/src/range/
  */
 @Component({
   selector: 'ion-range',

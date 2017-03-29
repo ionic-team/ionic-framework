@@ -140,9 +140,9 @@ import { ViewController } from '../../navigation/view-controller';
  *   this.navCtrl.parent.select(2);
  * }
  *```
- * @demo /docs/v2/demos/src/tabs/
+ * @demo /docs/demos/src/tabs/
  *
- * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @see {@link /docs/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
  * @see {@link ../../config/Config Config API Docs}
  *

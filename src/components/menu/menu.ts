@@ -173,9 +173,9 @@ import { RootNode } from '../split-pane/split-pane';
  * and usage information.
  *
  *
- * @demo /docs/v2/demos/src/menu/
+ * @demo /docs/demos/src/menu/
  *
- * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @see {@link /docs/components#menus Menu Component Docs}
  * @see {@link ../MenuController MenuController API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
  * @see {@link ../../nav/NavController NavController API Docs}
