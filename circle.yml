@@ -23,10 +23,10 @@ jobs:
       - save_cache:
          key: node_modules_{{ checksum "package.json" }}
          paths:
-         - ~/ionic-native/node_modules/
+         - ~/ionic/node_modules/
       - run:
           name: Run tslint
-          command: gulp lint.ts
+          command: ./node_modules/.bin/gulp lint.ts
       - add_ssh_keys
       - deploy:
           name: Update docs
