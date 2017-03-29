@@ -709,7 +709,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this._resizeSub = this._plt.resize.subscribe(this.resize.bind(this));
       this._scrollSub = this._content.ionScroll.subscribe(this.scrollUpdate.bind(this));
       this._scrollEndSub = this._content.ionScrollEnd.subscribe(this.scrollEnd.bind(this));
-      this._content.enableScrollListener();
     }
   }
 
