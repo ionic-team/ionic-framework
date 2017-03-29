@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -16,6 +16,14 @@ import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';
 
+
+export class EventEmitterProxy<T> extends EventEmitter<T> {
+  onSubscribe: Function;
+  subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
+    this.onSubscribe();
+    return super.subscribe(generatorOrNext, error, complete);
+  }
+}
 
 /**
  * @name Content
@@ -125,7 +133,7 @@ export { ScrollEvent } from '../../util/scroll-view';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion implements OnDestroy {
+export class Content extends Ion implements OnDestroy, AfterViewInit {
   /** @internal */
   _cTop: number;
   /** @internal */
@@ -312,17 +320,17 @@ export class Content extends Ion implements OnDestroy {
   /**
    * @output {ScrollEvent} Emitted when the scrolling first starts.
    */
-  @Output() ionScrollStart: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
+  @Output() ionScrollStart: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
 
   /**
    * @output {ScrollEvent} Emitted on every scroll event.
    */
-  @Output() ionScroll: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
+  @Output() ionScroll: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
 
   /**
    * @output {ScrollEvent} Emitted when scrolling ends.
    */
-  @Output() ionScrollEnd: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
+  @Output() ionScrollEnd: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
 
 
   constructor(
@@ -339,6 +347,11 @@ export class Content extends Ion implements OnDestroy {
   ) {
     super(config, elementRef, renderer, 'content');
 
+    let enableScrollListener = this.enableScrollListener.bind(this);
+    this.ionScroll.onSubscribe = enableScrollListener;
+    this.ionScrollStart.onSubscribe = enableScrollListener;
+    this.ionScrollEnd.onSubscribe = enableScrollListener;
+
     this.statusbarPadding = config.getBoolean('statusbarPadding', false);
     this._imgReqBfr = config.getNumber('imgRequestBuffer', 1400);
     this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
@@ -348,7 +361,8 @@ export class Content extends Ion implements OnDestroy {
     // goal is to completely remove this when iOS
     // fully supports scroll events
     // listen to JS scroll events
-    this._scroll = new ScrollView(_plt, _dom, config.getBoolean('virtualScrollEventAssist'));
+    const jsScroll = config.getBoolean('virtualScrollEventAssist');
+    this._scroll = new ScrollView(_app, _plt, _dom, jsScroll);
 
     while (navCtrl) {
       if (isTabs(<any>navCtrl)) {
@@ -383,7 +397,7 @@ export class Content extends Ion implements OnDestroy {
   /**
    * @hidden
    */
-  enableScrollListener() {
+  ngAfterViewInit() {
     assert(this.getFixedElement(), 'fixed element was not found');
     assert(this.getScrollElement(), 'scroll element was not found');
 
@@ -398,9 +412,6 @@ export class Content extends Ion implements OnDestroy {
 
     // subscribe to every scroll move
     scroll.onScroll = (ev) => {
-      // remind the app that it's currently scrolling
-      this._app.setScrolling();
-
       // emit to all of our other friends things be scrolling
       this.ionScroll.emit(ev);
 
@@ -413,8 +424,13 @@ export class Content extends Ion implements OnDestroy {
 
       this.imgsUpdate();
     };
+  }
 
-    scroll.setEnabled();
+  /**
+   * @hidden
+   */
+  enableScrollListener() {
+    this._scroll.eventsEnabled = true;
   }
 
   /**
