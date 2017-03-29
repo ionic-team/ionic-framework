@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, DefaultIterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
@@ -216,7 +216,7 @@ import { VirtualHeader } from './virtual-header';
 })
 export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
-  _differ: DefaultIterableDiffer<any>;
+  _differ: IterableDiffer<any>;
   _scrollSub: any;
   _scrollEndSub: any;
   _resizeSub: any;
@@ -250,7 +250,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   set virtualScroll(val: any) {
     this._records = val;
     if (isBlank(this._differ) && isPresent(val)) {
-      this._differ = <DefaultIterableDiffer<any>>this._iterableDiffers.find(val).create(this._cd, this.virtualTrackBy);
+      this._differ = this._iterableDiffers.find(val).create(this.virtualTrackBy);
     }
   }
 
@@ -474,7 +474,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this.bufferRatio);
   }
 
-  private _changes(): DefaultIterableDiffer<any> {
+  private _changes(): IterableChanges<any> {
     if (isPresent(this._records) && isPresent(this._differ)) {
       return this._differ.diff(this._records);
     }
