@@ -498,7 +498,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     picker.addButton({
       text: this.cancelText,
       role: 'cancel',
-      handler: () => this.ionCancel.emit(null)
+      handler: () => this.ionCancel.emit(this)
     });
     picker.addButton({
       text: this.doneText,

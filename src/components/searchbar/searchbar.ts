@@ -287,8 +287,8 @@ export class Searchbar extends BaseInput<string> {
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
-    this.ionInput.emit(ev);
     this.value = ev.target.value;
+    this.ionInput.emit(ev);
   }
 
   /**
@@ -331,6 +331,7 @@ export class Searchbar extends BaseInput<string> {
       let value = this._value;
       if (isPresent(value) && value !== '') {
         this.value = ''; // DOM WRITE
+        this.ionInput.emit(ev);
       }
     }, 16 * 4);
     this._shouldBlur = false;
