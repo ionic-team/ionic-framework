@@ -572,6 +572,7 @@ export class ViewController {
 
       } catch (e) {
         console.error(`${this.name} ${methodName} error: ${e.message}`);
+        console.error(e);
       }
     }
   }
