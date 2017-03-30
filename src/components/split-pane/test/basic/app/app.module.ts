@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
 import { AppComponent } from './app.component';
@@ -10,6 +11,7 @@ import { SidePageModule } from '../pages/side-page/side-page.module';
     AppComponent
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(AppComponent, {
       swipeBackEnabled: true
     }),
