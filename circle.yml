@@ -27,6 +27,12 @@ jobs:
       - run:
           name: Run tslint
           command: ./node_modules/.bin/gulp lint.ts
+      - run:
+          name: Build Demos
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./node_modules/.bin/gulp demos.prod --batch=$CIRCLE_NODE_INDEX --batches=$CIRCLE_NODE_TOTAL
+            fi
       - add_ssh_keys
       - deploy:
           name: Update docs
