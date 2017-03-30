@@ -56,14 +56,14 @@ function getDemosEntryPoints() {
 
 function buildDemos(filePaths: string[]) {
   var batches = chunkArrayInGroups(filePaths, argv.batches || 1);
-  var batch = argv.batch || 1;
-  if(batch > batches.length) {
-    throw new Error(`Batch number higher than total number of batches: ${batch} of ${batches.length}`);
+  var batch = argv.batch || 0;
+  if(batch >= batches.length) {
+    throw new Error(`Batch number higher than total number of batches.`);
   }
 
-  console.log(`Compiling ${batches[batch - 1].length} of ${filePaths.length} Demos ...`);
+  console.log(`Compiling ${batches[batch].length} of ${filePaths.length} Demos ...`);
 
-  const functions = batches[batch - 1].map(filePath => () => {
+  const functions = batches[batch].map(filePath => () => {
     return buildDemo(filePath);
   });
   let concurrentNumber = 2;
