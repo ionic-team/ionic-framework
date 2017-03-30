@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Build Demos
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ "${CIRCLE_BRANCH}" == "CI2" ]; then
               ./node_modules/.bin/gulp demos.prod --batch=$CIRCLE_NODE_INDEX --batches=$CIRCLE_NODE_TOTAL
             fi
       - add_ssh_keys
