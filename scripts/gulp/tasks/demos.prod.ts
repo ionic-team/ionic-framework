@@ -20,7 +20,6 @@ task('demos.prod', ['demos.prepare'], (done: Function) => {
 
   // okay, first find out all of the demos tests to run by finding all of the 'main.ts' files
   filterDemosEntryPoints().then((filePaths: string[]) => {
-    console.log(`Compiling ${filePaths.length} Demos ...`);
     return buildDemos(filePaths);
   }).then(() => {
     done();
@@ -56,7 +55,15 @@ function getDemosEntryPoints() {
 
 
 function buildDemos(filePaths: string[]) {
-  const functions = filePaths.map(filePath => () => {
+  var batches = chunkArrayInGroups(filePaths, argv.batches || 1);
+  var batch = argv.batch || 0;
+  if(batch >= batches.length) {
+    throw new Error(`Batch number higher than total number of batches.`);
+  }
+
+  console.log(`Compiling ${batches[batch].length} of ${filePaths.length} Demos ...`);
+
+  const functions = batches[batch].map(filePath => () => {
     return buildDemo(filePath);
   });
   let concurrentNumber = 2;
@@ -92,6 +99,17 @@ function buildDemo(filePath: string) {
     const end = Date.now();
     console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
   });
+}
+
+function chunkArrayInGroups(arr, size) {
+  var result = [];
+  for(var i = 0; i < arr.length; i++) {
+    if (!Array.isArray(result[i % size])) {
+      result[i % size] = [];
+    }
+    result[i % size].push(arr[i]);
+  }
+  return result;
 }
 
 task('demos.clean', (done: Function) => {
