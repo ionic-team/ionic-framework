@@ -196,7 +196,12 @@ export class PickerCmp {
 
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
-      this.dismiss('backdrop');
+      let cancelBtn = this.d.buttons.find(b => b.role === 'cancel');
+      if (cancelBtn) {
+        this.btnClick(cancelBtn);
+      } else {
+        this.dismiss('backdrop');
+      }
     }
   }
 
