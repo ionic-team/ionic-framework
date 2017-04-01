@@ -50,10 +50,14 @@ export class IonicErrorHandler extends ErrorHandler {
   handleError(err: any): void {
     super.handleError(err);
     try {
-      const devServer = (<any>window)['IonicDevServer'];
-      if (devServer) {
-        devServer.handleError(err);
-      }
+      const win: any = window;
+      let monitor: any;
+
+      monitor = win['IonicDevServer'];
+      monitor && monitor.handleError && monitor.handleError(err);
+
+      monitor = (win['Ionic'] = win['Ionic'] || {}).Monitor;
+      monitor && monitor.handleError && monitor.handleError(err);
     } catch (e) {}
   }
 }
