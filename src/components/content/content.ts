@@ -63,7 +63,9 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  *
  * @advanced
  *
- * Resizing the content
+ * Resizing the content. If the height of `ion-header`, `ion-footer` or `ion-tabbar`
+ * changes dynamically, `content.resize()` has to be called in order to update the
+ * layout of `Content`.
  *
  *
  * ```ts
@@ -631,7 +633,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit {
 
   /**
    * Tell the content to recalculate its dimensions. This should be called
-   * after dynamically adding headers, footers, or tabs.
+   * after dynamically adding/removing headers, footers, or tabs.
    */
   resize() {
     this._dom.read(this._readDimensions.bind(this));
