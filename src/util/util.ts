@@ -50,6 +50,17 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
 }
 
 /**
+ * Rewrites an absolute URL so it works across file and http based engines.
+ */
+export function normalizeURL(url: string): string {
+  const ionic = (<any>window)['Ionic'];
+  if (ionic && ionic.normalizeURL) {
+    return ionic.normalizeURL(url);
+  }
+  return url;
+}
+
+/**
  * @hidden
  * Apply default arguments if they don't exist in
  * the first object.
