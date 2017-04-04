@@ -658,6 +658,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit {
     this._pLeft = 0;
     this._hdrHeight = 0;
     this._ftrHeight = 0;
+    this._tabbarHeight = null;
     this._tabsPlacement = null;
     this._tTop = 0;
     this._fTop = 0;
@@ -719,7 +720,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit {
       if (ele.tagName === 'ION-TABS') {
         tabbarEle = <HTMLElement>ele.firstElementChild;
 
-        if (this._tabbarHeight === undefined) {
+        if (this._tabbarHeight === null) {
           // ******** DOM READ ****************
           this._tabbarHeight = tabbarEle.clientHeight;
         }
