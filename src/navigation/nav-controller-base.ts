@@ -752,7 +752,7 @@ export class NavControllerBase extends Ion implements NavController {
       // it's safe to enable the app again
       this._app.setEnabled(true);
 
-      if (opts.updateUrl !== false) {
+      if (!this.hasChildren() && opts.updateUrl !== false) {
         // notify deep linker of the nav change
         // if a direction was provided and should update url
         this._linker.navChange(opts.direction);
@@ -922,6 +922,10 @@ export class NavControllerBase extends Ion implements NavController {
     view._willUnload();
     this.viewWillUnload.emit(view);
     this._app.viewWillUnload.emit(view);
+  }
+
+  hasChildren(): boolean {
+    return this._children.length > 0;
   }
 
   getActiveChildNav(): any {
