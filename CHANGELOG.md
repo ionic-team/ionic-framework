@@ -1,3 +1,143 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/driftyco/ionic/compare/v2.3.0...v3.0.0) (2017-04-05)
+
+
+### Steps to Upgrade
+
+With this release comes a major update to Angular (Angular 4.0!), the latest version of TypeScript, and some optional structural changes to your application.
+
+1. Update your package.json to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
+
+  ```
+  "dependencies": {
+      "@angular/common": "4.0.0",
+      "@angular/compiler": "4.0.0",
+      "@angular/compiler-cli": "4.0.0",
+      "@angular/core": "4.0.0",
+      "@angular/forms": "4.0.0",
+      "@angular/http": "4.0.0",
+      "@angular/platform-browser": "4.0.0",
+      "@angular/platform-browser-dynamic": "4.0.0",
+      "@ionic-native/core": "3.4.2",
+      "@ionic-native/splash-screen": "3.4.2",
+      "@ionic-native/status-bar": "3.4.2",
+      "@ionic/storage": "2.0.1",
+      "ionic-angular": "3.0.0",
+      "ionicons": "3.0.0",
+      "rxjs": "5.1.1",
+      "sw-toolbox": "3.4.0",
+      "zone.js": "^0.8.4"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "1.3.0",
+    "typescript": "~2.2.1"
+  }
+  ```
+
+2. Import the `BrowserModule` in your `app/app.module.ts` file:
+
+  ```
+  import { BrowserModule } from '@angular/platform-browser';
+  ```
+
+  and then add it to the imports in the same file:
+
+  ```
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp)
+  ],
+  ```
+
+3. If you are using Http, Import the `HttpModule` in your `app/app.module.ts` file:
+
+  ```
+  imports: [
+    BrowserModule,
+    HttpModule,
+    IonicModule.forRoot(MyApp)
+  ],
+  ```
+
+4. Upgrading to Ionic Native 3.x will result in a smaller bundle size. With Ionic Native 3, native functionality was moved from static methods to using Angular injectables.
+  - Blog Post: http://blog.ionic.io/ionic-native-3-x/
+  - Example Upgrade Commit: https://github.com/driftyco/ionic-conference-app/commit/62088
+
+And that’s it! Your app should still function the same without any issues.
+
+
+### Bug Fixes
+
+* **alert:** add missing cssClass property for buttons ([4fbcda7](https://github.com/driftyco/ionic/commit/4fbcda7))
+* **content:** remove scroll bouncing from desktop ([7cee7b0](https://github.com/driftyco/ionic/commit/7cee7b0))
+* **content:** enable scroll listener automatically ([d9a7652](https://github.com/driftyco/ionic/commit/d9a7652)), closes [#10938](https://github.com/driftyco/ionic/issues/10938)
+* **datetime:** emit ionCancel event on backdrop click ([#10532](https://github.com/driftyco/ionic/issues/10532)) ([4ac8ffb](https://github.com/driftyco/ionic/commit/4ac8ffb))
+* **datetime:** remove unnecessary calls and performance improvements ([99142f8](https://github.com/driftyco/ionic/commit/99142f8))
+* **infinite-scroll:** don't call `complete` if the state isn't loading ([58b57c0](https://github.com/driftyco/ionic/commit/58b57c0))
+* **item-sliding:** add forwardRef for item options ([0ccd96e](https://github.com/driftyco/ionic/commit/0ccd96e))
+* **navigation:** update the URL if there are no children navs ([8586cc1](https://github.com/driftyco/ionic/commit/8586cc1))
+* **slides:** negative number indicates position starting at end ([#10997](https://github.com/driftyco/ionic/issues/10997)) ([33be36d](https://github.com/driftyco/ionic/commit/33be36d))
+* **split-pane:** add RTL support ([57f3f97](https://github.com/driftyco/ionic/commit/57f3f97)), closes [#10903](https://github.com/driftyco/ionic/issues/10903)
+* **virtual-list:** fix the rendering of the first item ([ccb49f3](https://github.com/driftyco/ionic/commit/ccb49f3))
+* **virtual-list:** update compatibility with angular ([682ce49](https://github.com/driftyco/ionic/commit/682ce49))
+
+
+### Code Refactoring
+
+* **grid:** remove the old grid system ([19c36de](https://github.com/driftyco/ionic/commit/19c36de))
+* **typography:** remove the native element selectors ([2827275](https://github.com/driftyco/ionic/commit/2827275))
+
+
+### Features
+
+* **module-loader:** add caching for ngModuleLoader on load ([17359b7](https://github.com/driftyco/ionic/commit/17359b7))
+* **module-loader:** add preloadModules config option, set to false ([bdbd521](https://github.com/driftyco/ionic/commit/bdbd521))
+* **module-loader:** preload modules based on priority ([5a4f8b9](https://github.com/driftyco/ionic/commit/5a4f8b9))
+* **module-loader:** run outside of angular and in requestIdleCallback ([c7ad3ce](https://github.com/driftyco/ionic/commit/c7ad3ce))
+* **navigation:** [@DeepLink](https://github.com/DeepLink) decorator ([3e70856](https://github.com/driftyco/ionic/commit/3e70856))
+* **navigation:** add optional priority to deep link config ([b47848c](https://github.com/driftyco/ionic/commit/b47848c))
+* **split-pane:** adds enabled input ([fa7ea0c](https://github.com/driftyco/ionic/commit/fa7ea0c)), closes [#10949](https://github.com/driftyco/ionic/issues/10949)
+* **split-pane:** sizing via scss variables ([979ca63](https://github.com/driftyco/ionic/commit/979ca63)), closes [#10893](https://github.com/driftyco/ionic/issues/10893)
+* **util:** system.js ng-module loader ([beabe32](https://github.com/driftyco/ionic/commit/beabe32))
+
+
+### BREAKING CHANGES
+
+#### Grid
+
+Removed the deprecated (old) grid. See the blog post for more information including steps to migrate:
+http://blog.ionic.io/build-awesome-desktop-apps-with-ionics-new-responsive-grid/
+
+#### Typography
+
+The following selectors to style the text color of the native text elements have been removed:
+
+```
+h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color]:not([ion-button]):not([ion-item]):not([ion-fab]), p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]
+```
+
+These have been throwing a deprecation warning since rc.3 but still working. They are officially gone and therefore these elements will not get the color unless the `ion-text` attribute is added. Please see the documentation for more information: http://ionicframework.com/docs/api/components/typography/Typography/
+
+#### Slides
+
+The following properties and functions have been printing console warnings and are officially removed:
+
+Slides input `options` has been removed. Please use the input
+properties instead.
+
+Slide event `ionWillChange` has been removed, please use
+`ionSlideWillChange` instead.
+
+Slide event `ionDidChange` has been removed, please use
+`ionSlideDidChange` instead.
+
+Slide event `ionDrag` has been removed, please use `ionSlideDrag`
+instead.
+
+Slides `getSlider()` method has been removed, please use the instance
+of ion-slides.
+
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.com/driftyco/ionic/compare/v2.2.0...v2.3.0) (2017-03-22)
 
