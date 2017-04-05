@@ -427,7 +427,7 @@ export class Platform {
    * if this registered action has the highest priority.
    * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
    * @returns {Function} A function that, when called, will unregister
-   * the its back button action.
+   * the back button action.
    */
   registerBackButtonAction(fn: Function, priority: number = 0): Function {
     const action: BackButtonAction = {fn, priority};
