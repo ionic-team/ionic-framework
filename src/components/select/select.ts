@@ -123,6 +123,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ion-select',
   template:
+    '<input type="hidden" [name]="name" [value]="v" *ngFor="let _v of values" />' +
     '<div *ngIf="!_text" class="select-placeholder select-text">{{placeholder}}</div>' +
     '<div *ngIf="_text" class="select-text">{{selectedText || _text}}</div>' +
     '<div class="select-icon">' +
@@ -156,7 +157,12 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
    * @hidden
    */
   id: string;
-
+  
+  /**
+   * @input {string} The name of select.
+   */
+  @Input() name: string = '';
+  
   /**
    * @input {string} The text to display on the cancel button. Default: `Cancel`.
    */
