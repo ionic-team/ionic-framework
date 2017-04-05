@@ -8,6 +8,8 @@ import { mockApp, mockConfig, mockElementRef, mockRenderer } from '../../../util
 
 
 describe('DateTime', () => {
+  // TODO
+  // pass commonInputTest()
 
   describe('validate', () => {
 
@@ -602,10 +604,6 @@ describe('DateTime', () => {
     it('should clear out existing value with blank value', () => {
       datetime.setValue('1994-12-15T13:47:20.789Z');
       datetime.setValue(null);
-      expect(datetime.getValue()).toEqual({});
-
-      datetime.setValue('1994-12-15T13:47:20.789Z');
-      datetime.setValue(undefined);
       expect(datetime.getValue()).toEqual({});
 
       datetime.setValue('1994-12-15T13:47:20.789Z');

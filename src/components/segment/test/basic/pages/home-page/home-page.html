@@ -33,7 +33,7 @@
       <ion-segment-button value="active" class="e2eSegmentStandard">
         Active
       </ion-segment-button>
-      <ion-segment-button value="disabled" [disabled]="isDisabled">
+      <ion-segment-button value="disabled" [disabled]="isDisabledB">
         Disabled
       </ion-segment-button>
       <ion-segment-button value="inactive" disabled="false">
@@ -44,20 +44,20 @@
   <p>
     Map mode: <b>{{myForm.controls.mapStyle.value}}</b> -
     <span [ngSwitch]="myForm.controls.mapStyle.value">
-      <span *ngSwitchCase="'standard'">
+      <span *ngSwitchCase="'active'">
         <b>Standard</b>
       </span>
-      <span *ngSwitchCase="'hybrid'">
+      <span *ngSwitchCase="'disabled'">
         <b>Hybrid</b>
       </span>
-      <span *ngSwitchCase="'sat'">
+      <span *ngSwitchCase="'inactive'">
         <b>Satellite</b>
       </span>
     </span>
   </p>
   <hr>
   <h4>Model style: NgModel</h4>
-  <ion-segment [(ngModel)]="modelStyle" color="dark">
+  <ion-segment [(ngModel)]="modelStyle" color="dark" [disabled]="isDisabledS">
     <ion-segment-button value="A">
       Model A
     </ion-segment-button>
@@ -67,12 +67,12 @@
     <ion-segment-button value="C" class="e2eSegmentModelC">
       Model C
     </ion-segment-button>
-    <ion-segment-button value="D" [disabled]="isDisabled">
+    <ion-segment-button value="D" [disabled]="isDisabledB">
       Model D
     </ion-segment-button>
   </ion-segment>
   <p>Model Style: <b>Model {{ modelStyle }}</b></p>
-  <ion-segment [(ngModel)]="icons">
+  <ion-segment [(ngModel)]="icons" >
     <ion-segment-button value="camera">
       <ion-icon name="camera"></ion-icon>
     </ion-segment-button>
@@ -80,7 +80,9 @@
       <ion-icon name="bookmark"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-  <button ion-button block color="dark" (click)="toggleDisabled()">Toggle Disabled</button>
+  <button ion-button color="dark" (click)="toggleBDisabled()">Toggle Button Disabled</button>
+  <button ion-button color="dark" (click)="toggleSDisabled()">Toggle Segment Disabled</button>
+
 </ion-content>
 
 
@@ -112,7 +114,7 @@
     </ion-segment>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-segment [(ngModel)]="appType" color="dark" [disabled]="isDisabled">
+    <ion-segment [(ngModel)]="appType" color="dark" [disabled]="isDisabledS">
       <ion-segment-button value="paid">
         Default
       </ion-segment-button>

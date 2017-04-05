@@ -1,13 +1,13 @@
-import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
-import { Ion } from '../ion';
-import { isBlank, isCheckedProperty, isTrueProperty, deepCopy } from '../../util/util';
+import { BaseInput } from '../../util/base-input';
+import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
@@ -141,21 +141,12 @@ export const SELECT_VALUE_ACCESSOR: any = {
   providers: [SELECT_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  _disabled: any = false;
-  _labelId: string;
+export class Select extends BaseInput<string[]> implements AfterViewInit, OnDestroy {
+
   _multi: boolean = false;
   _options: QueryList<Option>;
-  _values: string[] = [];
   _texts: string[] = [];
   _text: string = '';
-  _fn: Function;
-  _isOpen: boolean = false;
-
-  /**
-   * @hidden
-   */
-  id: string;
 
   /**
    * @input {string} The text to display on the cancel button. Default: `Cancel`.
@@ -191,33 +182,25 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectedText: string = '';
 
   /**
-   * @output {any} Emitted when the selection has changed.
-   */
-  @Output() ionChange: EventEmitter<any> = new EventEmitter();
-
-  /**
    * @output {any} Emitted when the selection was cancelled.
    */
-  @Output() ionCancel: EventEmitter<any> = new EventEmitter();
+  @Output() ionCancel: EventEmitter<Select> = new EventEmitter();
 
   constructor(
     private _app: App,
-    private _form: Form,
+    form: Form,
     public config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
-    @Optional() public _item: Item,
+    @Optional() item: Item,
     @Optional() private _nav: NavController
   ) {
-    super(config, elementRef, renderer, 'select');
+    super(config, elementRef, renderer, 'select', [], form, item, null);
+  }
 
-    _form.register(this);
 
-    if (_item) {
-      this.id = 'sel-' + _item.registerInput('select');
-      this._labelId = 'lbl-' + _item.id;
-      this._item.setElementClass('item-select', true);
-    }
+  ngAfterContentInit() {
+    this._inputUpdated();
   }
 
   @HostListener('click', ['$event'])
@@ -233,16 +216,14 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
 
   @HostListener('keyup.space')
   _keyup() {
-    if (!this._isOpen) {
-      this.open();
-    }
+    this.open();
   }
 
   /**
    * Open the select interface.
    */
   open() {
-    if (this._disabled) {
+    if (this.isFocus() || this._disabled) {
       return;
     }
 
@@ -257,7 +238,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.ionCancel.emit(null);
+        this.ionCancel.emit(this);
       }
     }];
 
@@ -277,15 +258,14 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       this.interface = 'alert';
     }
 
-    let overlay: any;
+    let overlay: ActionSheet | Alert;
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
         return {
           role: (input.selected ? 'selected' : ''),
           text: input.text,
           handler: () => {
-            this.onChange(input.value);
-            this.ionChange.emit(input.value);
+            this.value = input.value;
             input.ionSelect.emit(input.value);
           }
         };
@@ -340,19 +320,15 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
 
       overlay.addButton({
         text: this.okText,
-        handler: (selectedValues: any) => {
-          this.onChange(selectedValues);
-          this.ionChange.emit(selectedValues);
-        }
+        handler: (selectedValues) => this.value = selectedValues
       });
 
     }
 
     overlay.present(selectOptions);
-
-    this._isOpen = true;
+    this._fireFocus();
     overlay.onDidDismiss(() => {
-      this._isOpen = false;
+      this._fireBlur();
     });
   }
 
@@ -377,20 +353,6 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     return (this._multi ? this._texts : this._texts.join());
   }
 
-  /**
-   * @hidden
-   */
-  checkHasValue(inputValue: any) {
-    if (this._item) {
-      let hasValue: boolean;
-      if (Array.isArray(inputValue)) {
-        hasValue = inputValue.length > 0;
-      } else {
-        hasValue = !isBlank(inputValue);
-      }
-      this._item.setElementClass('input-has-value', hasValue);
-    }
-  }
 
   /**
    * @private
@@ -399,25 +361,37 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   set options(val: QueryList<Option>) {
     this._options = val;
 
-    if (!this._values.length) {
+    if (this._value.length  === 0) {
       // there are no values set at this point
       // so check to see who should be selected
-      this._values = val.filter(o => o.selected).map(o => o.value);
+      // we use writeValue() because we don't want to update ngModel
+      this.writeValue(val.filter(o => o.selected).map(o => o.value));
     }
 
-    this._updOpts();
+    this._inputUpdated();
+  }
+
+  _inputNormalize(val: any): string[] {
+    if (Array.isArray(val)) {
+      return val;
+    }
+    return [val + ''];
+  }
+
+  _inputShouldChange(val: string[]): boolean {
+    return !deepEqual(this._value, val);
   }
 
   /**
    * @hidden
    */
-  _updOpts() {
-    this._texts = [];
+  _inputUpdated() {
+    this._texts.length = 0;
 
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.selected = this._values.some(selectValue => {
+        option.selected = this._value.some(selectValue => {
           return isCheckedProperty(selectValue, option.value);
         });
 
@@ -430,84 +404,4 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     this._text = this._texts.join(', ');
   }
 
-  /**
-   * @input {boolean} If true, the user cannot interact with this element.
-   */
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(val: boolean) {
-    this._disabled = isTrueProperty(val);
-    this._item && this._item.setElementClass('item-select-disabled', this._disabled);
-  }
-
-  /**
-   * @hidden
-   */
-  writeValue(val: any) {
-    console.debug('select, writeValue', val);
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this._updOpts();
-    this.checkHasValue(val);
-  }
-
-  /**
-   * @hidden
-   */
-  ngAfterContentInit() {
-    this._updOpts();
-  }
-
-  /**
-   * @hidden
-   */
-  registerOnChange(fn: Function): void {
-    this._fn = fn;
-    this.onChange = (val: any) => {
-      console.debug('select, onChange', val);
-      fn(val);
-      this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-      this._updOpts();
-      this.checkHasValue(val);
-      this.onTouched();
-    };
-  }
-
-  /**
-   * @hidden
-   */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
-
-  /**
-   * @hidden
-   */
-  onChange(val: any) {
-    // onChange used when there is not an formControlName
-    console.debug('select, onChange w/out formControlName', val);
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this._updOpts();
-    this.checkHasValue(val);
-    this.onTouched();
-  }
-
-  /**
-   * @hidden
-   */
-  onTouched() { }
-
-  /**
-   * @hidden
-   */
-  setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
-  }
-
-  /**
-   * @hidden
-   */
-  ngOnDestroy() {
-    this._form.deregister(this);
-  }
 }

@@ -28,5 +28,5 @@ export interface AlertButton {
   text?: string;
   role?: string;
   cssClass?: string;
-  handler?: Function;
+  handler?: (value: any) => boolean|void;
 };

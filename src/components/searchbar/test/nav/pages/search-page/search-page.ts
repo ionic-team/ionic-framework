@@ -7,6 +7,7 @@ import { IonicPage, NavController, ModalController } from '../../../../../..';
 })
 export class SearchPage {
   items: string[];
+  value = '';
 
   constructor(public navCtrl: NavController, public modalCtrl: ModalController) {
     this.initializeItems();
@@ -58,12 +59,9 @@ export class SearchPage {
     ];
   }
 
-  getItems(ev: any) {
+  getItems(q: string) {
     // Reset items back to all of the items
     this.initializeItems();
-
-    // set q to the value of the searchbar
-    var q = ev.target.value;
 
     // if the value is an empty string don't filter the items
     if (!q || q.trim() === '') {

@@ -7,6 +7,7 @@ import { pointerCoord } from './dom';
 
 
 export class ScrollView {
+
   ev: ScrollEvent;
   isScrolling = false;
   onScrollStart: (ev: ScrollEvent) => void;
@@ -23,7 +24,6 @@ export class ScrollView {
   private _l: number = 0;
   private _lsn: Function;
   private _endTmr: Function;
-
 
   constructor(
     private _app: App,

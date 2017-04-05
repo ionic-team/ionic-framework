@@ -19,23 +19,27 @@ export class RootPage {
   }
 
   onClearSearchbar(ev: any) {
-    console.log('ionClear', ev.target.value);
+    console.log('ionClear', ev);
   }
 
   onCancelSearchbar(ev: any) {
-    console.log('ionCancel', ev.target.value);
+    console.log('ionCancel', ev);
   }
 
   triggerInput(ev: any) {
-    console.log('ionInput', ev.target.value);
+    console.log('ionInput', ev);
+  }
+
+  changedInput(ev: any) {
+    console.log('ionChange', ev);
   }
 
   inputBlurred(ev: any) {
-    console.log('ionBlur', ev.target.value);
+    console.log('ionBlur', ev);
   }
 
   inputFocused(ev: any) {
-    console.log('ionFocus', ev.target.value);
+    console.log('ionFocus', ev);
   }
 
   ngAfterViewInit() {
