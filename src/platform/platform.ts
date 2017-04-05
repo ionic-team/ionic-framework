@@ -27,7 +27,7 @@ import { removeArrayItem } from '../util/util';
  *   }
  * }
  * ```
- * @demo /docs/v2/demos/src/platform/
+ * @demo /docs/demos/src/platform/
  */
 export class Platform {
   private _win: Window;
@@ -38,7 +38,6 @@ export class Platform {
   private _ua: string;
   private _qp = new QueryParams();
   private _nPlt: string;
-  private _onResizes: Array<Function> = [];
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
   private _bbActions: BackButtonAction[] = [];
@@ -51,7 +50,7 @@ export class Platform {
   private _isPortrait: boolean = null;
   private _uiEvtOpts = false;
 
-  /** @private */
+  /** @hidden */
   zone: NgZone;
 
   /** @internal */
@@ -83,42 +82,42 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setWindow(win: Window) {
     this._win = win;
   }
 
   /**
-   * @private
+   * @hidden
    */
   win() {
     return this._win;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDocument(doc: HTMLDocument) {
     this._doc = doc;
   }
 
   /**
-   * @private
+   * @hidden
    */
   doc() {
     return this._doc;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setZone(zone: NgZone) {
     this.zone = zone;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setCssProps(docElement: HTMLElement) {
     this.Css = getCss(docElement);
@@ -223,7 +222,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   version(): PlatformVersion {
     for (var platformName in this._versions) {
@@ -269,7 +268,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This should be triggered by the engine when the platform is
    * ready. If there was no custom prepareReady method from the engine,
    * such as Cordova or Electron, then it uses the default DOM ready.
@@ -281,7 +280,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This is the default prepareReady if it's not replaced by an engine,
    * such as Cordova or Electron. If there was no custom prepareReady
    * method from an engine then it uses the method below, which triggers
@@ -377,7 +376,7 @@ export class Platform {
   // called by engines (the browser)that do not provide them
 
   /**
-   * @private
+   * @hidden
    */
   exitApp() {}
 
@@ -385,7 +384,7 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   backButton: EventEmitter<Event> = new EventEmitter<Event>();
 
@@ -405,6 +404,13 @@ export class Platform {
   resume: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
+   * The resize event emits when the native platform pulls the application
+   * out from the background. This event would emit when a Cordova app comes
+   * out from the background, however, it would not fire on a standard web browser.
+   */
+  resize: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
    * The back button event is triggered when the user presses the native
    * platform's back button, also referred to as the "hardware" back button.
    * This event is only used within Cordova apps running on Android and
@@ -421,7 +427,7 @@ export class Platform {
    * if this registered action has the highest priority.
    * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
    * @returns {Function} A function that, when called, will unregister
-   * the its back button action.
+   * the back button action.
    */
   registerBackButtonAction(fn: Function, priority: number = 0): Function {
     const action: BackButtonAction = {fn, priority};
@@ -435,7 +441,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   runBackButtonAction() {
     // decide which one back button action should run
@@ -455,14 +461,14 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   setUserAgent(userAgent: string) {
     this._ua = userAgent;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setQueryParams(url: string) {
     this._qp.parseUrl(url);
@@ -483,21 +489,21 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   userAgent(): string {
     return this._ua || '';
   }
 
   /**
-   * @private
+   * @hidden
    */
   setNavigatorPlatform(navigatorPlt: string) {
     this._nPlt = navigatorPlt;
   }
 
   /**
-   * @private
+   * @hidden
    */
   navigatorPlatform(): string {
     return this._nPlt || '';
@@ -524,21 +530,21 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getElementComputedStyle(ele: HTMLElement, pseudoEle?: string) {
     return this._win['getComputedStyle'](ele, pseudoEle);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getElementFromPoint(x: number, y: number) {
     return <HTMLElement>this._doc['elementFromPoint'](x, y);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getElementBoundingClientRect(ele: HTMLElement) {
     return ele['getBoundingClientRect']();
@@ -574,40 +580,43 @@ export class Platform {
     if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
       var win = this._win;
 
+      var innerWidth = win['innerWidth'];
+      var innerHeight = win['innerHeight'];
+
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
       // up accurate values when the keyboard is up
       if (win.screen.width > 0 && win.screen.height > 0) {
-        if (win['innerWidth'] < win['innerHeight']) {
+        if (innerWidth < innerHeight) {
 
           // the device is in portrait
-          if (this._pW <= win['innerWidth']) {
+          // we have to do fancier checking here
+          // because of the virtual keyboard resizing
+          // the window
+          if (this._pW <= innerWidth) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
-            this._pW = win['innerWidth'];
+            this._pW = innerWidth;
           }
-          if (this._pH <= win['innerHeight']) {
+
+          if (this._pH <= innerHeight) {
             console.debug('setting _isPortrait to true');
             this._isPortrait = true;
-            this._pH = win['innerHeight'];
+            this._pH = innerHeight;
           }
 
         } else {
-          if (this._lW > win['innerWidth']) {
-            // Special case: keyboard is open and device is in portrait
-            console.debug('setting _isPortrait to true while keyboard is open and device is portrait');
-            this._isPortrait = true;
-          }
           // the device is in landscape
-          if (this._lW <= win['innerWidth']) {
+          if (this._lW !== innerWidth) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
-            this._lW = win['innerWidth'];
+            this._lW = innerWidth;
           }
-          if (this._lH <= win['innerHeight']) {
+
+          if (this._lH !== innerHeight) {
             console.debug('setting _isPortrait to false');
             this._isPortrait = false;
-            this._lH = win['innerHeight'];
+            this._lH = innerHeight;
           }
         }
 
@@ -616,7 +625,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This requestAnimationFrame will NOT be wrapped by zone.
    */
   raf(callback: {(timeStamp?: number): void}|Function): number {
@@ -625,7 +634,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   cancelRaf(rafId: number) {
     const win: any = this._win;
@@ -633,7 +642,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This setTimeout will NOT be wrapped by zone.
    */
   timeout(callback: Function, timeout?: number): number {
@@ -642,7 +651,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This setTimeout will NOT be wrapped by zone.
    */
   cancelTimeout(timeoutId: number) {
@@ -651,7 +660,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * Built to use modern event listener options, like "passive".
    * If options are not supported, then just return a boolean which
    * represents "capture". Returns a method to remove the listener.
@@ -689,7 +698,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   transitionEnd(el: HTMLElement, callback: {(ev?: TransitionEvent): void}, zone = true) {
     const unRegs: Function[] = [];
@@ -716,7 +725,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   windowLoad(callback: Function) {
     const win = this._win;
@@ -735,40 +744,28 @@ export class Platform {
   }
 
   /**
-   * @private
-   */
-  onResize(cb: Function): Function {
-    const self = this;
-    self._onResizes.push(cb);
-
-    return function() {
-      removeArrayItem(self._onResizes, cb);
-    };
-  }
-
-  /**
-   * @private
+   * @hidden
    */
   isActiveElement(ele: HTMLElement) {
     return !!(ele && (this.getActiveElement() === ele));
   }
 
   /**
-   * @private
+   * @hidden
    */
   getActiveElement() {
     return this._doc['activeElement'];
   }
 
   /**
-   * @private
+   * @hidden
    */
   hasFocus(ele: HTMLElement) {
     return !!((ele && (this.getActiveElement() === ele)) && (ele.parentElement.querySelector(':focus') === ele));
   }
 
   /**
-   * @private
+   * @hidden
    */
   hasFocusedTextInput() {
     const ele = this.getActiveElement();
@@ -779,7 +776,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   focusOutActiveElement() {
     const activeElement: any = this.getActiveElement();
@@ -799,7 +796,7 @@ export class Platform {
 
     // add the window resize event listener XXms after
     this.timeout(() => {
-      var timerId: number;
+      var timerId: any;
       this.registerListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
@@ -809,14 +806,7 @@ export class Platform {
           if (this.hasFocusedTextInput() === false) {
             this._isPortrait = null;
           }
-
-          for (let i = 0; i < this._onResizes.length; i++) {
-            try {
-              this._onResizes[i]();
-            } catch (e) {
-              console.error(e);
-            }
-          }
+          this.resize.emit();
         }, 200);
       }, { passive: true, zone: true });
     }, 2000);
@@ -827,35 +817,35 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   setPlatformConfigs(platformConfigs: {[key: string]: PlatformConfig}) {
     this._registry = platformConfigs || {};
   }
 
   /**
-   * @private
+   * @hidden
    */
   getPlatformConfig(platformName: string): PlatformConfig {
     return this._registry[platformName] || {};
   }
 
   /**
-   * @private
+   * @hidden
    */
   registry() {
     return this._registry;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDefault(platformName: string) {
     this._default = platformName;
   }
 
   /**
-   * @private
+   * @hidden
    */
   testQuery(queryValue: string, queryTestValue: string): boolean {
     const valueSplit = queryValue.toLowerCase().split(';');
@@ -863,7 +853,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
     const rgx = new RegExp(navigatorPlatformExpression, 'i');
@@ -871,7 +861,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   matchUserAgentVersion(userAgentExpression: RegExp): any {
     if (this._ua && userAgentExpression) {
@@ -893,7 +883,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
     const queryValue = this._qp.get('ionicplatform');
@@ -919,7 +909,7 @@ export class Platform {
     return false;
   }
 
-  /** @private */
+  /** @hidden */
   init() {
     this._initEvents();
 
@@ -1014,7 +1004,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private matchPlatform(platformName: string): PlatformNode {
     // build a PlatformNode and assign config data to it
@@ -1052,7 +1042,7 @@ function insertSuperset(registry: any, platformNode: PlatformNode) {
 }
 
 /**
- * @private
+ * @hidden
  */
 class PlatformNode {
   private c: PlatformConfig;
@@ -1176,7 +1166,7 @@ export interface EventListenerOptions {
 
 
 /**
- * @private
+ * @hidden
  */
 export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]: PlatformConfig}, zone: NgZone): Platform {
   const plt = new Platform();

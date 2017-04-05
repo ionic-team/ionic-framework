@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer } from '@angular/core';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'ion-backdrop',

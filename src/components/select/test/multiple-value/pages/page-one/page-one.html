@@ -1,0 +1,102 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Select Item: Multiple Value</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-item>
+    <ion-label>Toppings</ion-label>
+    <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!" class="e2eSelectToppings">
+      <ion-option value="bacon">Bacon</ion-option>
+      <ion-option value="olives">Black Olives</ion-option>
+      <ion-option value="xcheese">Extra Cheese</ion-option>
+      <ion-option value="peppers">Green Peppers</ion-option>
+      <ion-option value="mushrooms">Mushrooms</ion-option>
+      <ion-option value="onions">Onions</ion-option>
+      <ion-option value="pepperoni">Pepperoni</ion-option>
+      <ion-option value="pineapple" (ionSelect)="toppingsSelect($event)">Pineapple</ion-option>
+      <ion-option value="sausage">Sausage</ion-option>
+      <ion-option value="Spinach">Spinach</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Car Features</ion-label>
+    <ion-select [(ngModel)]="carFeatures" [multiple]="true" (ionChange)="carChange($event)">
+      <ion-option value="backupcamera">Backup Camera</ion-option>
+      <ion-option value="heatedseats">Headted Seats</ion-option>
+      <ion-option value="keyless">Keyless Entry</ion-option>
+      <ion-option value="navigation">Navigation</ion-option>
+      <ion-option value="parkingassist">Parking Assist</ion-option>
+      <ion-option value="sunroof">Sun Roof</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Pets</ion-label>
+    <ion-select [(ngModel)]="pets" multiple>
+      <ion-option *ngFor="let o of petOptions" [value]="o.value">{{o.text}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Disabled</ion-label>
+    <ion-select multiple disabled>
+      <ion-option selected="true">Selected Text</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Statuses</ion-label>
+    <ion-select multiple [(ngModel)]="status">
+      <ion-option value="selected" selected="true">Selected</ion-option>
+      <ion-option value="default">Default</ion-option>
+      <ion-option value="disabled" disabled="true">Disabled</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <p aria-hidden="true" padding>
+    <code>toppings: {{toppings}}</code><br>
+    <code>carFeatures: {{carFeatures}}</code><br>
+    <code>pets: {{pets}}</code><br>
+  </p>
+
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+    <ion-list padding-vertical>
+      <ion-item>
+        <ion-input formControlName="name" type="text"></ion-input>
+      </ion-item>
+      <ion-item class="no-border">
+        <ion-label>Select</ion-label>
+        <ion-select multiple="true" formControlName="select">
+          <ion-option>1</ion-option>
+          <ion-option>2</ion-option>
+          <ion-option>3</ion-option>
+        </ion-select>
+      </ion-item>
+      <button ion-button full block class="no-margin" type="submit">Submit</button>
+    </ion-list>
+  </form>
+
+  <ion-item>
+    <ion-label floating>Floating label</ion-label>
+    <ion-select multiple="true">
+      <ion-option value="bacon">Bacon</ion-option>
+      <ion-option value="olives">Black Olives</ion-option>
+      <ion-option value="xcheese">Extra Cheese</ion-option>
+      <ion-option value="peppers">Green Peppers</ion-option>
+      <ion-option value="mushrooms">Mushrooms</ion-option>
+      <ion-option value="onions">Onions</ion-option>
+      <ion-option value="pepperoni">Pepperoni</ion-option>
+      <ion-option value="pineapple">Pineapple</ion-option>
+      <ion-option value="sausage">Sausage</ion-option>
+      <ion-option value="Spinach">Spinach</ion-option>
+    </ion-select>
+  </ion-item>
+
+</ion-content>

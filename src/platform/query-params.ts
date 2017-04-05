@@ -1,5 +1,5 @@
 /**
- * @private
+ * @hidden
  */
 export class QueryParams {
   data: {[key: string]: any} = {};

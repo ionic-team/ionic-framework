@@ -30,7 +30,8 @@ task('docs.dgeni', () => {
   }
 });
 
-task('docs.demos', ['demos.prod'], (done: Function) => {
+task('docs.demos', (done: Function) => {
+  // Copy demos already built from gulp demos.prod task to ionic-site
   const config = require('../../config.json');
   const outputDir = join(config.docsDest, 'demos');
   let promises = [];
@@ -75,7 +76,7 @@ function copyDemoPolyfills(outputDir: string) {
 function copyDemoContent(outputDir: string) {
   return new Promise((resolve, reject) => {
     const stream = src([
-      `${DIST_DEMOS_ROOT}/**/*`
+      `${DIST_DEMOS_ROOT}/src/**/*`
       ]).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();

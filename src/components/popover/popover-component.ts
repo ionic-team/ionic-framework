@@ -1,15 +1,16 @@
 import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { Key } from '../../platform/key';
+import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-popover',
@@ -48,6 +49,7 @@ export class PopoverCmp {
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController,
+    public moduleLoader: ModuleLoader
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = _navParams.data.opts;
@@ -71,7 +73,11 @@ export class PopoverCmp {
 
   _load(component: any) {
     if (component) {
-      const componentFactory = this._cfr.resolveComponentFactory(component);
+      let cfr = this.moduleLoader.getComponentFactoryResolver(component);
+      if (!cfr) {
+        cfr = this._cfr;
+      }
+      const componentFactory = cfr.resolveComponentFactory(component);
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
@@ -105,7 +111,7 @@ export class PopoverCmp {
 
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
-    if (this._enabled && ev.keyCode === Key.ESCAPE && this._viewCtrl.isLast()) {
+    if (this._enabled && ev.keyCode === KEY_ESCAPE && this._viewCtrl.isLast()) {
       this._bdClick();
     }
   }

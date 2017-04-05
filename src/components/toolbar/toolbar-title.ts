@@ -39,7 +39,7 @@ import { Toolbar } from './toolbar';
  * </ion-header>
  * ```
  *
- * @demo /docs/v2/demos/src/title/
+ * @demo /docs/demos/src/title/
  */
 @Component({
   selector: 'ion-title',
@@ -65,7 +65,7 @@ export class ToolbarTitle extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTitleText() {
     return this._elementRef.nativeElement.textContent;

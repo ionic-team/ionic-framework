@@ -4,7 +4,7 @@ import { ViewController } from '../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  *
  * - play
  * - Add before classes - DOM WRITE
@@ -45,7 +45,7 @@ export class Transition extends Animation {
 
   destroy() {
     super.destroy();
-    this.enteringView = this.leavingView = this._trnsStart = null;
+    this.parent = this.enteringView = this.leavingView = this._trnsStart = null;
   }
 
 }

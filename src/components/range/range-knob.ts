@@ -1,9 +1,9 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
-import { Key } from '../../platform/key';
+import { KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN } from '../../platform/key';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: '.range-knob-handle',
@@ -43,13 +43,13 @@ export class RangeKnob {
 
   @HostListener('keydown', ['$event']) _keyup(ev: KeyboardEvent) {
     const keyCode = ev.keyCode;
-    if (keyCode === Key.LEFT || keyCode === Key.DOWN) {
+    if (keyCode === KEY_LEFT || keyCode === KEY_DOWN) {
       console.debug(`range-knob, decrease, keyCode: ${keyCode}`);
       this.ionDecrease.emit();
       ev.preventDefault();
       ev.stopPropagation();
 
-    } else if (keyCode === Key.RIGHT || keyCode === Key.UP) {
+    } else if (keyCode === KEY_RIGHT || keyCode === KEY_UP) {
       console.debug(`range-knob, increase, keyCode: ${keyCode}`);
       this.ionIncrease.emit();
       ev.preventDefault();

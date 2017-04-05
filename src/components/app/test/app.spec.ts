@@ -1,9 +1,9 @@
 import { App } from '../app';
-import { AppPortal } from '../app-root';
-import { ClickBlock } from '../../../util/click-block';
+import { ClickBlock } from '../../click-block/click-block';
 import { Config } from '../../../config/config';
 import { mockApp, mockConfig, mockElementRef, mockNavController, mockPlatform, MockPlatform, mockRenderer, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
 import { OverlayPortal } from '../../nav/overlay-portal';
+import { PORTAL_MODAL } from '../app-constants';
 
 
 describe('App', () => {
@@ -146,13 +146,13 @@ describe('App', () => {
       expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
-    it('should pop the overlay in the portal of the root nav', () => {
+    it('should pop the overlay in the portal of the root nav', (done: Function) => {
       let nav = mockNavController();
       app._setRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
-      spyOn(portal, 'pop');
+      spyOn(portal, 'pop').and.returnValue(Promise.resolve());
 
       let view1 = mockView();
       let view2 = mockView();
@@ -161,11 +161,14 @@ describe('App', () => {
       let overlay1 = mockView();
       mockViews(portal, [overlay1]);
 
-      app.goBack();
-
-      expect(portal.pop).toHaveBeenCalled();
-      expect(nav.pop).not.toHaveBeenCalled();
-      expect(plt.exitApp).not.toHaveBeenCalled();
+      app.goBack().then(() => {
+        expect(portal.pop).toHaveBeenCalled();
+        expect(nav.pop).not.toHaveBeenCalled();
+        expect(plt.exitApp).not.toHaveBeenCalled();
+        done();
+      }).catch((err: Error) => {
+        done(err);
+      });
     });
 
     it('should pop the second view in the root nav', () => {
@@ -471,7 +474,7 @@ describe('App', () => {
     config = mockConfig();
     plt = mockPlatform();
     app = mockApp(config, plt);
-    portal = app._appRoot._getPortal(AppPortal.MODAL);
+    portal = app._appRoot._getPortal(PORTAL_MODAL);
   });
 
 });

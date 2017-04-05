@@ -3,7 +3,7 @@ import { Platform } from '../platform/platform';
 
 
 /**
- * @private
+ * @hidden
  */
 export class Animation {
   private _c: Animation[];
@@ -169,7 +169,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    */
 
@@ -351,8 +351,20 @@ export class Animation {
     });
   }
 
+  syncPlay() {
+    // If the animation was already invalidated (it did finish), do nothing
+    if (!this.plt) {
+      return;
+    }
+    const opts = { duration: 0 };
+    this._isAsync = false;
+    this._clearAsync();
+    this._playInit(opts);
+    this._playDomInspect(opts);
+  }
+
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -384,7 +396,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -416,7 +428,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -449,7 +461,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -470,7 +482,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -521,7 +533,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -554,7 +566,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -569,12 +581,11 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -589,7 +600,6 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 
@@ -604,7 +614,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * NO RECURSION
    */
@@ -615,7 +625,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -697,7 +707,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -736,7 +746,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    * DOM WRITE
    * RECURSION
@@ -760,7 +770,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -813,7 +823,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    * RECURSION
    */
@@ -834,7 +844,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -855,7 +865,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _setAfterStyles() {
@@ -929,7 +939,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -973,7 +983,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1053,7 +1063,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1104,7 +1114,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -1120,7 +1130,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
@@ -1180,7 +1190,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    */
   _transEl(): HTMLElement {

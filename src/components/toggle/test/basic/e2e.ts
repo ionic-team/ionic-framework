@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should check apple via switch element click', function() {
   element(by.css('[formControlName="apple"]')).click();

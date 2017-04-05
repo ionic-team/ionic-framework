@@ -12,7 +12,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
 
 /**
  * @name Config
- * @demo /docs/v2/demos/src/config/
+ * @demo /docs/demos/src/config/
  * @description
  * The Config lets you configure your entire app or specific platforms.
  * You can set the tab placement, icon mode, animations, and more here.
@@ -23,13 +23,14 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * @NgModule({
  *   declarations: [ MyApp ],
  *   imports: [
+ *     BrowserModule,
  *     IonicModule.forRoot(MyApp, {
  *       backButtonText: 'Go Back',
  *       iconMode: 'ios',
  *       modalEnter: 'modal-slide-in',
  *       modalLeave: 'modal-slide-out',
  *       tabsPlacement: 'bottom',
- *       pageTransition: 'ios'
+ *       pageTransition: 'ios-transition'
  *     }, {}
  *   )],
  *   bootstrap: [IonicApp],
@@ -48,6 +49,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * @NgModule({
  *   ...
  *   imports: [
+ *     BrowserModule,
  *     IonicModule.forRoot(MyApp, {
  *       tabsPlacement: 'bottom',
  *       platforms: {
@@ -110,7 +112,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `modalEnter`             | `string`            | The name of the transition to use while a modal is presented.                                                                                    |
  * | `modalLeave`             | `string`            | The name of the transition to use while a modal is dismiss.                                                                                      |
  * | `mode`                   | `string`            | The mode to use throughout the application.                                                                                                      |
- * | `pageTransition`         | `string`            | The name of the transition to use while changing pages.                                                                                          |
+ * | `pageTransition`         | `string`            | The name of the transition to use while changing pages. Available options: `"ios-transition"`, `"md-transition"`, `"wp-transition"`.             |
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
  * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                  |
@@ -132,12 +134,12 @@ export class Config {
   private _trns: any = {};
 
   /**
-   * @private
+   * @hidden
    */
   plt: Platform;
 
   /**
-   * @private
+   * @hidden
    */
   init(config: any, plt: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
@@ -336,7 +338,7 @@ export class Config {
   }
 
   /**
-   * @private
+   * @hidden
    * @name settings()
    * @description
    */
@@ -364,28 +366,28 @@ export class Config {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setModeConfig(modeName: string, modeConfig: any) {
     this._modes[modeName] = modeConfig;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getModeConfig(modeName: string): any {
     return this._modes[modeName] || null;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setTransition(trnsName: string, trnsClass: any) {
     this._trns[trnsName] = trnsClass;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTransition(trnsName: string): any {
     return this._trns[trnsName] || null;
@@ -394,7 +396,7 @@ export class Config {
 }
 
 /**
- * @private
+ * @hidden
  */
 export function setupConfig(userConfig: any, plt: Platform): Config {
   const config = new Config();
@@ -409,6 +411,6 @@ export function setupConfig(userConfig: any, plt: Platform): Config {
 }
 
 /**
- * @private
+ * @hidden
  */
 export const ConfigToken = new OpaqueToken('USERCONFIG');

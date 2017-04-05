@@ -7,27 +7,19 @@ import { task } from 'gulp';
 import * as serveStatic from 'serve-static';
 import { argv } from 'yargs';
 
-import { DIST_E2E_ROOT, DIST_E2E_COMPONENTS_ROOT, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
+import { DIST_E2E_COMPONENTS_ROOT, PROJECT_ROOT, SCRIPTS_ROOT } from '../constants';
 import { mergeObjects } from '../util';
 
 
 task('snapshot', ['e2e.prod'], (done: Function) => {
-  snapshot(false, false, done);
+  snapshot(false, done);
 });
 
-task('snapshot.skipBuild', ['e2e.sass'], (done: Function) => {
-  snapshot(false, false, done);
+task('snapshot.skipBuild', (done: Function) => {
+  snapshot(false, done);
 });
 
-task('snapshot.dev', ['e2e'], (done: Function) => {
-  snapshot(false, true, done);
-});
-
-task('snapshot.quick', ['e2e.sass'], (done: Function) => {
-  snapshot(true, true, done);
-});
-
-function snapshot(quickMode: boolean, devMode: boolean, callback: Function) {
+function snapshot(quickMode: boolean, callback: Function) {
   const snapshotConfig = require('../../snapshot/snapshot.config').config;
   const protractorConfigFile = resolve(SCRIPTS_ROOT, 'snapshot/protractor.config.js');
 
@@ -41,6 +33,7 @@ function snapshot(quickMode: boolean, devMode: boolean, callback: Function) {
 
   let component = '*';
   let e2eSpecs = '*';
+
   const folderArg: string = argv.folder || argv.f;
   if (folderArg && folderArg.length) {
     const folderArgPaths = folderArg.split('/');
@@ -49,10 +42,10 @@ function snapshot(quickMode: boolean, devMode: boolean, callback: Function) {
       e2eSpecs = folderArgPaths[1];
     }
   }
-  var specs = join(DIST_E2E_COMPONENTS_ROOT, component, 'test', e2eSpecs, '*e2e.js');
-  if (devMode) specs = join(DIST_E2E_ROOT, component, e2eSpecs, '*e2e.js');
 
-  console.log('[snapshot] Running with', devMode ? 'Development' : 'Production', 'build');
+  const specs = join(DIST_E2E_COMPONENTS_ROOT, component, 'test', e2eSpecs, 'www', '*e2e.js');
+
+  console.log('[snapshot] Running with', 'Production', 'build');
   console.log(`[snapshot] Specs: ${specs}`);
 
   const testId = generateTestId();
@@ -71,7 +64,6 @@ function snapshot(quickMode: boolean, devMode: boolean, callback: Function) {
     '--params.height=' +  snapshotValues.params.height,
     '--params.test_id=' +  snapshotValues.params.test_id,
     '--params.upload=' +  snapshotValues.params.upload,
-    '--params.dev=' + devMode,
     '--specs=' + specs
   ];
 

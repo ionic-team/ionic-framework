@@ -1,6 +1,6 @@
 import { Menu } from './menu';
 import { DomController } from '../../platform/dom-controller';
-import { GestureController, GesturePriority, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
+import { GestureController, GESTURE_PRIORITY_MENU_SWIPE, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
 import { Platform } from '../../platform/platform';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
@@ -26,7 +26,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
       domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_MENU_SWIPE,
-        priority: GesturePriority.MenuSwipe,
+        priority: GESTURE_PRIORITY_MENU_SWIPE,
         disableScroll: true
       })
     });

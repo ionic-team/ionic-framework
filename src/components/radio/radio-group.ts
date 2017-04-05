@@ -58,8 +58,8 @@ export const RADIO_VALUE_ACCESSOR: any = {
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/radio/
- * @see {@link /docs/v2/components#radio Radio Component Docs}
+ * @demo /docs/demos/src/radio/
+ * @see {@link /docs/components#radio Radio Component Docs}
  * @see {@link ../RadioButton RadioButton API Docs}
 */
 @Directive({
@@ -77,32 +77,32 @@ export class RadioGroup {
   _disabled: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   _btns: RadioButton[] = [];
 
   /**
-   * @private
+   * @hidden
    */
   _fn: Function;
 
   /**
-   * @private
+   * @hidden
    */
   _ids: number = -1;
 
   /**
-   * @private
+   * @hidden
    */
   _init: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   value: any;
 
   /**
-   * @private
+   * @hidden
    */
   id: number;
 
@@ -131,7 +131,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     let activeButton = this._btns.find(b => b.checked);
@@ -141,7 +141,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     console.debug('radio group, writeValue', val);
@@ -157,7 +157,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -173,12 +173,12 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @hidden
    */
   _update() {
     // loop through each of the radiobuttons
@@ -199,14 +199,14 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setActive(radioButton: RadioButton) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
   }
 
   /**
-   * @private
+   * @hidden
    */
   add(button: RadioButton): string {
     this._btns.push(button);
@@ -221,7 +221,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   remove(button: RadioButton) {
     let index = this._btns.indexOf(button);
@@ -234,7 +234,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(ListHeader)
   set _header(header: any) {
@@ -247,7 +247,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -260,12 +260,12 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() {}
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;

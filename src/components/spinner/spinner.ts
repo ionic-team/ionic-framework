@@ -113,35 +113,13 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Spinner extends Ion {
+
   _c: any[];
   _l: any[];
   _name: string;
   _dur: number = null;
   _init: boolean;
   _paused: boolean = false;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  get color(): string {
-    return this._color;
-  }
-  set color(value: string) {
-    this._setColor(value);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   /**
    * @input {string} SVG spinner name.
@@ -183,7 +161,7 @@ export class Spinner extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     this._init = true;
@@ -191,7 +169,7 @@ export class Spinner extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   load() {
     if (this._init) {

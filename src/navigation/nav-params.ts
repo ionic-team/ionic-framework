@@ -14,16 +14,16 @@
  *  }
  * }
  * ```
- * @demo /docs/v2/demos/src/nav-params/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @demo /docs/demos/src/nav-params/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  * @see {@link ../NavController/ NavController API Docs}
- * @see {@link /docs/v2/api/components/nav/Nav/ Nav API Docs}
- * @see {@link /docs/v2/api/components/nav/NavPush/ NavPush API Docs}
+ * @see {@link /docs/api/components/nav/Nav/ Nav API Docs}
+ * @see {@link /docs/api/components/nav/NavPush/ NavPush API Docs}
  */
 export class NavParams {
 
   /**
-   * @private
+   * @hidden
    * @param {TODO} data  TODO
    */
   constructor(public data: any = {}) {}

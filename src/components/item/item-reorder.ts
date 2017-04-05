@@ -1,9 +1,8 @@
-import { Component, Directive, ElementRef, EventEmitter, HostListener, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
-import { findReorderItem } from './item-reorder-util';
 import { ItemReorderGestureDelegate, ItemReorderGesture } from '../item/item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
@@ -133,8 +132,8 @@ export class ReorderIndexes {
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/item-reorder/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/item-reorder/
+ * @see {@link /docs/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../Item Item API Docs}
  */
@@ -171,7 +170,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._element = null;
@@ -179,7 +178,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @Input()
   get reorder(): boolean {
@@ -288,41 +287,16 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(classname: string, add: boolean) {
     this._rendered.setElementClass(this._element, classname, add);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNativeElement(): HTMLElement {
     return this._element;
-  }
-}
-
-/**
- * @private
- */
-@Component({
-  selector: 'ion-reorder',
-  template: `<ion-icon name="reorder"></ion-icon>`
-})
-export class Reorder {
-  constructor(
-    private elementRef: ElementRef) {
-    elementRef.nativeElement['$ionComponent'] = this;
-  }
-
-  getReorderNode(): HTMLElement {
-    return findReorderItem(this.elementRef.nativeElement, null);
-  }
-
-  @HostListener('click', ['$event'])
-  onClick(ev: UIEvent) {
-    // Stop propagation if click event reaches ion-reorder
-    ev.preventDefault();
-    ev.stopPropagation();
   }
 }

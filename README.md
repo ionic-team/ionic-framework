@@ -1,6 +1,4 @@
 [![npm version](https://badge.fury.io/js/ionic-angular.svg)](https://badge.fury.io/js/ionic-angular)
-[![Issue Stats](http://issuestats.com/github/driftyco/ionic/badge/pr?style=flat)](http://issuestats.com/github/driftyco/ionic)
-[![Issue Stats](http://issuestats.com/github/driftyco/ionic/badge/issue?style=flat)](http://issuestats.com/github/driftyco/ionic)
 [![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/driftyco/ionic)
 
 # Ionic

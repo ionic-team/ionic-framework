@@ -1,21 +1,27 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Output } from '@angular/core';
 
 import { App } from '../app/app';
-import { isPresent } from '../../util/util';
+import { Config } from '../../config/config';
+import { isPresent, assert } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { PickerCmp } from './picker-component';
 import { PickerOptions, PickerColumn } from './picker-options';
+import { PickerSlideIn, PickerSlideOut } from './picker-transitions';
 import { ViewController } from '../../navigation/view-controller';
 
+
 /**
- * @private
+ * @hidden
  */
 export class Picker extends ViewController {
   private _app: App;
 
   @Output() ionChange: EventEmitter<any>;
 
-  constructor(app: App, opts: PickerOptions = {}) {
+  constructor(app: App, opts: PickerOptions = {}, config: Config) {
+    if (!opts) {
+      opts = {};
+    }
     opts.columns = opts.columns || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
@@ -25,10 +31,13 @@ export class Picker extends ViewController {
     this.isOverlay = true;
 
     this.ionChange = new EventEmitter<any>();
+
+    config.setTransition('picker-slide-in', PickerSlideIn);
+    config.setTransition('picker-slide-out', PickerSlideOut);
   }
 
   /**
-  * @private
+  * @hidden
   */
   getTransitionName(direction: string) {
     let key = (direction === 'back' ? 'pickerLeave' : 'pickerEnter');
@@ -53,7 +62,14 @@ export class Picker extends ViewController {
     return this.data.columns;
   }
 
+  getColumn(name: string): PickerColumn {
+    return this.getColumns().find(column => column.name === name);
+  }
+
   refresh() {
+    assert(this._cmp, 'componentRef must be valid');
+    assert(this._cmp.instance.refresh, 'instance must implement refresh()');
+
     this._cmp && this._cmp.instance.refresh && this._cmp.instance.refresh();
   }
 
@@ -72,28 +88,6 @@ export class Picker extends ViewController {
    */
   present(navOptions: NavOptions = {}) {
     return this._app.present(this, navOptions);
-  }
-
-}
-
-
-
-/**
- * @private
- * @name PickerController
- * @description
- *
- */
-@Injectable()
-export class PickerController {
-
-  constructor(private _app: App) {}
-
-  /**
-   * Open a picker.
-   */
-  create(opts: PickerOptions = {}): Picker {
-    return new Picker(this._app, opts);
   }
 
 }

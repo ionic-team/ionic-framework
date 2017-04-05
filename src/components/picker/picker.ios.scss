@@ -48,6 +48,7 @@ $picker-ios-option-height:                     42px !default;
 /// @prop - Offset y of the picker option
 $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-ios-toolbar-height) / 2) - ($picker-ios-option-height / 2) - 10 !default;
 
+$picker-button-ios-strong-font-weight:         600 !default;
 
 .picker-ios .picker-wrapper {
   height: $picker-ios-height;
@@ -74,7 +75,7 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 }
 
 .picker-ios .picker-toolbar-button:last-child .picker-button {
-  font-weight: $button-ios-strong-font-weight;
+  font-weight: $picker-button-ios-strong-font-weight;
 }
 
 .picker-ios .picker-toolbar-cancel {

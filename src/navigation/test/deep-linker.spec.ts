@@ -1,7 +1,7 @@
 import { DeepLinker, normalizeUrl } from '../deep-linker';
 import { UrlSerializer } from '../url-serializer';
 import { mockApp, mockDeepLinkConfig, mockNavController, mockLocation,
-         mockTab, mockTabs, mockViews, mockView, noop,
+         mockModuleLoader, mockTab, mockTabs, mockViews, mockView, noop,
          MockView1, MockView2, MockView3 } from '../../util/mock-providers';
 
 
@@ -10,27 +10,27 @@ describe('DeepLinker', () => {
   describe('updateLocation', () => {
 
     it('should update the browserUrl to / when the passed in url matches indexAliasUrl', () => {
-      linker.indexAliasUrl = '/my-special/url';
-      linker.updateLocation('/my-special/url', 'forward');
-      expect(linker.history[0]).toEqual('/');
+      linker._indexAliasUrl = '/my-special/url';
+      linker._updateLocation('/my-special/url', 'forward');
+      expect(linker._history[0]).toEqual('/');
     });
 
     it('should update location.back when back direction and previous url is the same', () => {
       spyOn(linker._location, 'back');
       spyOn(linker._location, 'go');
-      spyOn(linker, 'historyPop');
-      linker.history = ['first-page', 'some-page', 'current-page'];
-      linker.updateLocation('some-page', 'back');
+      spyOn(linker, '_historyPop');
+      linker._history = ['first-page', 'some-page', 'current-page'];
+      linker._updateLocation('some-page', 'back');
       expect(linker._location.back).toHaveBeenCalled();
       expect(linker._location.go).not.toHaveBeenCalled();
-      expect(linker.historyPop).toHaveBeenCalled();
+      expect(linker._historyPop).toHaveBeenCalled();
     });
 
     it('should not update location.go when same as current page', () => {
       spyOn(linker._location, 'back');
       spyOn(linker._location, 'go');
-      linker.history = ['current-page'];
-      linker.updateLocation('current-page', 'forward');
+      linker._history = ['current-page'];
+      linker._updateLocation('current-page', 'forward');
       expect(linker._location.back).not.toHaveBeenCalled();
       expect(linker._location.go).not.toHaveBeenCalled();
     });
@@ -38,22 +38,22 @@ describe('DeepLinker', () => {
     it('should update location.go when back direction but not actually the previous url', () => {
       spyOn(linker._location, 'back');
       spyOn(linker._location, 'go');
-      spyOn(linker, 'historyPush');
-      linker.history = ['first-page', 'some-other-page'];
-      linker.updateLocation('some-page', 'forward');
+      spyOn(linker, '_historyPush');
+      linker._history = ['first-page', 'some-other-page'];
+      linker._updateLocation('some-page', 'forward');
       expect(linker._location.back).not.toHaveBeenCalled();
       expect(linker._location.go).toHaveBeenCalledWith('some-page');
-      expect(linker.historyPush).toHaveBeenCalledWith('some-page');
+      expect(linker._historyPush).toHaveBeenCalledWith('some-page');
     });
 
     it('should update location.go when forward direction', () => {
       spyOn(linker._location, 'back');
       spyOn(linker._location, 'go');
-      spyOn(linker, 'historyPush');
-      linker.updateLocation('new-url', 'forward');
+      spyOn(linker, '_historyPush');
+      linker._updateLocation('new-url', 'forward');
       expect(linker._location.back).not.toHaveBeenCalled();
       expect(linker._location.go).toHaveBeenCalledWith('new-url');
-      expect(linker.historyPush).toHaveBeenCalledWith('new-url');
+      expect(linker._historyPush).toHaveBeenCalledWith('new-url');
     });
 
   });
@@ -67,12 +67,12 @@ describe('DeepLinker', () => {
       let view2 = mockView(MockView2);
       view2.id = 'MockPage2';
       mockViews(nav, [view1, view2]);
-      linker.segments = serializer.parse('/MockPage2');
+      linker._segments = serializer.parse('/MockPage2');
 
       spyOn(nav, 'push');
       spyOn(nav, 'popTo');
 
-      linker.loadViewFromSegment(nav, noop);
+      linker._loadViewFromSegment(nav, noop);
 
       expect(nav.push).not.toHaveBeenCalled();
       expect(nav.popTo).not.toHaveBeenCalled();
@@ -85,12 +85,12 @@ describe('DeepLinker', () => {
       let view2 = mockView(MockView2);
       view2.id = 'MockPage2';
       mockViews(nav, [view1, view2]);
-      linker.segments = serializer.parse('/MockPage1');
+      linker._segments = serializer.parse('/MockPage1');
 
       spyOn(nav, 'push');
       spyOn(nav, 'popTo');
 
-      linker.loadViewFromSegment(nav, noop);
+      linker._loadViewFromSegment(nav, noop);
 
       expect(nav.push).not.toHaveBeenCalled();
       expect(nav.popTo).toHaveBeenCalled();
@@ -98,12 +98,12 @@ describe('DeepLinker', () => {
 
     it('should push a new page', () => {
       let nav = mockNavController();
-      linker.segments = serializer.parse('/MockPage1');
+      linker._segments = serializer.parse('/MockPage1');
 
       spyOn(nav, 'push');
       spyOn(nav, 'popTo');
 
-      linker.loadViewFromSegment(nav, noop);
+      linker._loadViewFromSegment(nav, noop);
 
       expect(nav.push).toHaveBeenCalled();
       expect(nav.popTo).not.toHaveBeenCalled();
@@ -113,11 +113,11 @@ describe('DeepLinker', () => {
       let tabs = mockTabs();
       mockTab(tabs);
       mockTab(tabs);
-      linker.segments = serializer.parse('/MockPage1');
+      linker._segments = serializer.parse('/MockPage1');
 
       spyOn(tabs, 'select');
 
-      linker.loadViewFromSegment(tabs, noop);
+      linker._loadViewFromSegment(tabs, noop);
 
       expect(tabs.select).toHaveBeenCalled();
     });
@@ -127,7 +127,7 @@ describe('DeepLinker', () => {
       let done = () => { calledDone = true; };
       let nav = mockNavController();
 
-      linker.loadViewFromSegment(nav, done);
+      linker._loadViewFromSegment(nav, done);
 
       expect(calledDone).toEqual(true);
     });
@@ -149,7 +149,7 @@ describe('DeepLinker', () => {
       mockTab(tabs);
       let tab3 = mockTab(tabs);
 
-      let path = linker.pathFromNavs(tab3, MockView3);
+      let path = linker._pathFromNavs(tab3, MockView3);
 
       expect(path.length).toEqual(3);
       expect(path[0].id).toEqual('viewtwo');
@@ -165,7 +165,7 @@ describe('DeepLinker', () => {
       let nav2 = mockNavController();
       nav2.parent = nav1;
 
-      let path = linker.pathFromNavs(nav2, MockView3);
+      let path = linker._pathFromNavs(nav2, MockView3);
 
       expect(path.length).toEqual(2);
       expect(path[0].id).toEqual('viewone');
@@ -177,7 +177,7 @@ describe('DeepLinker', () => {
     it('should get the path for view and nav', () => {
       let nav = mockNavController();
       let view = MockView1;
-      let path = linker.pathFromNavs(nav, view, null);
+      let path = linker._pathFromNavs(nav, view, null);
       expect(path.length).toEqual(1);
       expect(path[0].id).toEqual('viewone');
       expect(path[0].name).toEqual('viewone');
@@ -186,7 +186,7 @@ describe('DeepLinker', () => {
     });
 
     it('should do nothing if blank nav', () => {
-      let path = linker.pathFromNavs(null, null, null);
+      let path = linker._pathFromNavs(null, null, null);
       expect(path.length).toEqual(0);
     });
 
@@ -199,20 +199,20 @@ describe('DeepLinker', () => {
       let tab1 = mockTab(tabs);
       tab1.tabUrlPath = 'some-tab-url-path';
       tab1.tabTitle = 'My Tab Title';
-      expect(linker.getTabSelector(tab1)).toEqual('some-tab-url-path');
+      expect(linker._getTabSelector(tab1)).toEqual('some-tab-url-path');
     });
 
     it('should get tab title selector', () => {
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
       tab1.tabTitle = 'My Tab Title';
-      expect(linker.getTabSelector(tab1)).toEqual('my-tab-title');
+      expect(linker._getTabSelector(tab1)).toEqual('my-tab-title');
     });
 
     it('should get tab-0 selector', () => {
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
-      expect(linker.getTabSelector(tab1)).toEqual('tab-0');
+      expect(linker._getTabSelector(tab1)).toEqual('tab-0');
     });
 
   });
@@ -271,14 +271,22 @@ describe('DeepLinker', () => {
 
   describe('initViews', () => {
 
-    it('should create the ViewController for just the segment', () => {
-      // let segment = serializer.parse('/viewone')[0];
+    it('should return an array with one view controller when there isnt default history', (done: Function) => {
+      const knownSegment = {
+        id: 'idk',
+        name: 'viewone',
+        data: {}
+      };
+      const promise = linker.initViews(knownSegment);
 
-      // let views = linker.initViews(segment);
-      // expect(views[0].component).toEqual(segment.component);
-      // expect(views[0].id).toEqual('VIEWID');
+      promise.then((result: any[]) => {
+        expect(Array.isArray(result)).toBeTruthy();
+        expect(result.length).toEqual(1);
+        done();
+      }).catch((err: Error) => {
+        done(err);
+      });
     });
-
   });
 
   describe('initNav', () => {
@@ -297,7 +305,7 @@ describe('DeepLinker', () => {
       tab2.id = 'tab2';
       tab2.parent = tabs;
 
-      linker.segments = serializer.parse('/viewone/account/viewtwo');
+      linker._segments = serializer.parse('/viewone/account/viewtwo');
 
       let navSegment = linker.initNav(nav1);
       expect(navSegment.navId).toEqual('nav1');
@@ -323,7 +331,7 @@ describe('DeepLinker', () => {
       nav3.parent = nav2;
       nav3.id = 'nav3';
 
-      linker.segments = serializer.parse('/viewone/viewtwo/viewthree');
+      linker._segments = serializer.parse('/viewone/viewtwo/viewthree');
 
       let p1 = linker.initNav(nav1);
       expect(p1.navId).toEqual('nav1');
@@ -341,31 +349,26 @@ describe('DeepLinker', () => {
     it('should load root nav', () => {
       let nav = mockNavController();
       nav.id = 'myNavId';
-      linker.segments = serializer.parse('MockPage1');
+      linker._segments = serializer.parse('MockPage1');
       let p = linker.initNav(nav);
       expect(p.navId).toEqual('myNavId');
       expect(p.id).toEqual('MockPage1');
     });
 
     it('should return null when no nav', () => {
-      linker.segments = serializer.parse('MockPage1');
+      linker._segments = serializer.parse('MockPage1');
       expect(linker.initNav(null)).toEqual(null);
     });
 
     it('should return null when segments in path', () => {
       let nav = mockNavController();
-      linker.segments = [];
+      linker._segments = [];
       expect(linker.initNav(nav)).toEqual(null);
     });
 
   });
 
   describe('createSegmentFromName', () => {
-
-    it('should match by the component class name as a string', () => {
-      let segment = serializer.createSegmentFromName('MockView1');
-      expect(segment.component).toEqual(MockView1);
-    });
 
     it('should match by the links string name', () => {
       let segment = serializer.createSegmentFromName('viewone');
@@ -382,62 +385,62 @@ describe('DeepLinker', () => {
   describe('urlChange', () => {
 
     it('should use indexAliasUrl when set and browserUrl is /', () => {
-      linker.loadNavFromPath = (nav: any): any => {};
+      linker._loadNavFromPath = (nav: any): any => {};
       linker._app.getRootNav = () => {
         return mockNavController();
       };
       spyOn(serializer, 'parse');
 
-      linker.indexAliasUrl = '/tabs-page/recents/tab1-page1';
-      linker.urlChange('/');
+      linker._indexAliasUrl = '/tabs-page/recents/tab1-page1';
+      linker._urlChange('/');
 
       expect(serializer.parse).toHaveBeenCalledWith('/tabs-page/recents/tab1-page1');
     });
 
     it('should use indexAliasUrl when set and browserUrl is /', () => {
-      linker.loadNavFromPath = (nav: any): any => {};
+      linker._loadNavFromPath = (nav: any): any => {};
       linker._app.getRootNav = () => {
         return mockNavController();
       };
       spyOn(serializer, 'parse');
 
-      linker.indexAliasUrl = '/tabs-page/recents/tab1-page1';
-      linker.urlChange('/');
+      linker._indexAliasUrl = '/tabs-page/recents/tab1-page1';
+      linker._urlChange('/');
 
       expect(serializer.parse).toHaveBeenCalledWith('/tabs-page/recents/tab1-page1');
     });
 
     it('should historyPush if new url', () => {
-      spyOn(linker, 'historyPop');
-      spyOn(linker, 'historyPush');
+      spyOn(linker, '_historyPop');
+      spyOn(linker, '_historyPush');
 
-      linker.history = ['back-url', 'current-url'];
-      linker.urlChange('new-url');
+      linker._history = ['back-url', 'current-url'];
+      linker._urlChange('new-url');
 
-      expect(linker.historyPop).not.toHaveBeenCalled();
-      expect(linker.historyPush).toHaveBeenCalled();
+      expect(linker._historyPop).not.toHaveBeenCalled();
+      expect(linker._historyPush).toHaveBeenCalled();
     });
 
     it('should historyPop if back url', () => {
-      spyOn(linker, 'historyPop');
-      spyOn(linker, 'historyPush');
+      spyOn(linker, '_historyPop');
+      spyOn(linker, '_historyPush');
 
-      linker.history = ['back-url', 'current-url'];
-      linker.urlChange('back-url');
+      linker._history = ['back-url', 'current-url'];
+      linker._urlChange('back-url');
 
-      expect(linker.historyPop).toHaveBeenCalled();
-      expect(linker.historyPush).not.toHaveBeenCalled();
+      expect(linker._historyPop).toHaveBeenCalled();
+      expect(linker._historyPush).not.toHaveBeenCalled();
     });
 
     it('should do nothing if the url is the same', () => {
-      spyOn(linker, 'historyPop');
-      spyOn(linker, 'historyPush');
+      spyOn(linker, '_historyPop');
+      spyOn(linker, '_historyPush');
 
-      linker.history = ['current-url'];
-      linker.urlChange('current-url');
+      linker._history = ['current-url'];
+      linker._urlChange('current-url');
 
-      expect(linker.historyPop).not.toHaveBeenCalled();
-      expect(linker.historyPush).not.toHaveBeenCalled();
+      expect(linker._historyPop).not.toHaveBeenCalled();
+      expect(linker._historyPush).not.toHaveBeenCalled();
     });
 
   });
@@ -445,17 +448,17 @@ describe('DeepLinker', () => {
   describe('isBackUrl', () => {
 
     it('should not be the back path when no history', () => {
-      expect(linker.isBackUrl('some-page')).toEqual(false);
+      expect(linker._isBackUrl('some-page')).toEqual(false);
     });
 
     it('should not be the back when same as last path', () => {
-      linker.history = ['first-page', 'some-page'];
-      expect(linker.isBackUrl('some-page')).toEqual(false);
+      linker._history = ['first-page', 'some-page'];
+      expect(linker._isBackUrl('some-page')).toEqual(false);
     });
 
     it('should be the back when same as second to last path', () => {
-      linker.history = ['first-page', 'some-page', 'current-page'];
-      expect(linker.isBackUrl('some-page')).toEqual(true);
+      linker._history = ['first-page', 'some-page', 'current-page'];
+      expect(linker._isBackUrl('some-page')).toEqual(true);
     });
 
   });
@@ -463,17 +466,17 @@ describe('DeepLinker', () => {
   describe('isCurrentUrl', () => {
 
     it('should not be the current path when no history', () => {
-      expect(linker.isCurrentUrl('some-page')).toEqual(false);
+      expect(linker._isCurrentUrl('some-page')).toEqual(false);
     });
 
     it('should be the current when same as last path', () => {
-      linker.history = ['first-page', 'some-page'];
-      expect(linker.isCurrentUrl('some-page')).toEqual(true);
+      linker._history = ['first-page', 'some-page'];
+      expect(linker._isCurrentUrl('some-page')).toEqual(true);
     });
 
     it('should not be the current when not the last path', () => {
-      linker.history = ['first-page', 'some-page', 'current-page'];
-      expect(linker.isCurrentUrl('some-page')).toEqual(false);
+      linker._history = ['first-page', 'some-page', 'current-page'];
+      expect(linker._isCurrentUrl('some-page')).toEqual(false);
     });
 
   });
@@ -510,8 +513,13 @@ describe('DeepLinker', () => {
   var serializer: UrlSerializer;
 
   beforeEach(() => {
-    serializer = new UrlSerializer(mockDeepLinkConfig());
-    linker = new DeepLinker(mockApp(), serializer, mockLocation());
+    let linkConfig = mockDeepLinkConfig();
+    serializer = new UrlSerializer(linkConfig);
+
+    let moduleLoader = mockModuleLoader();
+    let baseCfr: any = null;
+
+    linker = new DeepLinker(mockApp(), serializer, mockLocation(), moduleLoader as any, baseCfr);
   });
 
 });

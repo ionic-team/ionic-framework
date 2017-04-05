@@ -1,5 +1,6 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, App, MenuController, Nav } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, App, MenuController, Nav } from '../../../..';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class Page2 {
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
   activeMenu: string;
@@ -37,33 +38,28 @@ export class E2EApp {
 
   menu1Active() {
     this.menuCtrl.enable(true, 'menu1');
-    this.menuCtrl.enable(false, 'menu2');
-    this.menuCtrl.enable(false, 'menu3');
   }
   menu2Active() {
-    this.menuCtrl.enable(false, 'menu1');
     this.menuCtrl.enable(true, 'menu2');
-    this.menuCtrl.enable(false, 'menu3');
   }
   menu3Active() {
-    this.menuCtrl.enable(false, 'menu1');
-    this.menuCtrl.enable(false, 'menu2');
     this.menuCtrl.enable(true, 'menu3');
   }
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ]

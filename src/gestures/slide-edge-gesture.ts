@@ -4,7 +4,7 @@ import { pointerCoord } from '../util/dom';
 import { Platform } from '../platform/platform';
 
 /**
- * @private
+ * @hidden
  */
 export class SlideEdgeGesture extends SlideGesture {
   public edges: Array<string>;

@@ -28,7 +28,7 @@ import { Platform } from '../../platform/platform';
  * of images within a scrollable area, then `ion-img` would be better suited
  * for the job.
  *
- * > Note: `ion-img` is only meant to be used inside of [virtual-scroll](/docs/v2/api/components/virtual-scroll/VirtualScroll/)
+ * > Note: `ion-img` is only meant to be used inside of [virtual-scroll](/docs/api/components/virtual-scroll/VirtualScroll/)
  *
  *
  * ### Lazy Loading
@@ -123,9 +123,9 @@ export class Img implements OnDestroy {
   /** @internal */
   _unreg: Function;
 
-  /** @private */
+  /** @hidden */
   canRequest: boolean;
-  /** @private */
+  /** @hidden */
   canRender: boolean;
 
 
@@ -178,7 +178,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   reset() {
     if (this._requestingSrc) {
@@ -196,7 +196,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   update() {
     // only attempt an update if there is an active src
@@ -248,14 +248,14 @@ export class Img implements OnDestroy {
     const imgEle = this._img;
     const renderer = this._renderer;
 
-    if (imgEle.src !== srcAttr) {
+    if (imgEle && imgEle.src !== srcAttr) {
       renderer.setElementAttribute(this._img, 'src', srcAttr);
       renderer.setElementAttribute(this._img, 'alt', this.alt);
     }
   }
 
   /**
-   * @private
+   * @hidden
    */
   get top(): number {
     const bounds = this._getBounds();
@@ -263,7 +263,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get bottom(): number {
     const bounds = this._getBounds();
@@ -360,7 +360,7 @@ export class Img implements OnDestroy {
   @Input() alt: string = '';
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._img = this._elementRef.nativeElement.firstChild;
@@ -372,7 +372,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._unreg && this._unreg();

@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should open modal', function() {
   element(by.css('.e2eOpenModal')).click();

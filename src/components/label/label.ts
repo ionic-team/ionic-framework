@@ -48,7 +48,7 @@ import { Ion } from '../ion';
  *  </ion-item>
  * ```
  *
- * @demo /docs/v2/demos/src/label/
+ * @demo /docs/demos/src/label/
  * @see {@link ../../../../components#inputs Input Component Docs}
  * @see {@link ../../input/Input Input API Docs}
  *
@@ -61,27 +61,7 @@ export class Label extends Ion {
   private _id: string;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
-   * @private
+   * @hidden
    */
   type: string;
 
@@ -99,7 +79,7 @@ export class Label extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @Input()
   get id(): string {
@@ -114,7 +94,7 @@ export class Label extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get text(): string {
     return this.getNativeElement().textContent || '';

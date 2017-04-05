@@ -1,13 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
-import { isBlank } from '../../util/util';
+import { isBlank, assert } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
 import { TabHighlight } from './tab-highlight';
@@ -139,9 +140,9 @@ import { ViewController } from '../../navigation/view-controller';
  *   this.navCtrl.parent.select(2);
  * }
  *```
- * @demo /docs/v2/demos/src/tabs/
+ * @demo /docs/demos/src/tabs/
  *
- * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @see {@link /docs/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
  * @see {@link ../../config/Config Config API Docs}
  *
@@ -150,19 +151,15 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-tabs',
   template:
     '<div class="tabbar" role="tablist" #tabbar>' +
-      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" [class.tab-disabled]="!t.enabled" [class.tab-hidden]="!t.show" role="tab" href="#" (ionSelect)="select($event)">' +
-        '<ion-icon *ngIf="t.tabIcon" [name]="t.tabIcon" [isActive]="t.isSelected" class="tab-button-icon"></ion-icon>' +
-        '<span *ngIf="t.tabTitle" class="tab-button-text">{{t.tabTitle}}</span>' +
-        '<ion-badge *ngIf="t.tabBadge" class="tab-badge" [color]="t.tabBadgeStyle">{{t.tabBadge}}</ion-badge>' +
-        '<div class="button-effect"></div>' +
-      '</a>' +
+      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" role="tab" href="#" (ionSelect)="select(t)"></a>' +
       '<div class="tab-highlight"></div>' +
     '</div>' +
     '<ng-content></ng-content>' +
     '<div #portal tab-portal></div>',
   encapsulation: ViewEncapsulation.None,
+  providers: [{provide: RootNode, useExisting: forwardRef(() => Tabs) }]
 })
-export class Tabs extends Ion implements AfterViewInit {
+export class Tabs extends Ion implements AfterViewInit, RootNode {
   /** @internal */
   _ids: number = -1;
   /** @internal */
@@ -177,26 +174,8 @@ export class Tabs extends Ion implements AfterViewInit {
   id: string;
   /** @internal */
   _selectHistory: string[] = [];
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(value: string) {
-    this._setColor( value);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode( val);
-  }
+  /** @internal */
+  _resizeObs: any;
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
@@ -239,7 +218,7 @@ export class Tabs extends Ion implements AfterViewInit {
   @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
 
   /**
-   * @private
+   * @hidden
    */
   parent: NavControllerBase;
 
@@ -284,6 +263,7 @@ export class Tabs extends Ion implements AfterViewInit {
   }
 
   ngOnDestroy() {
+    this._resizeObs && this._resizeObs.unsubscribe();
     this.parent.unregisterChildNav(this);
   }
 
@@ -296,7 +276,7 @@ export class Tabs extends Ion implements AfterViewInit {
     this._setConfig('tabsHighlight', this.tabsHighlight);
 
     if (this.tabsHighlight) {
-      this._plt.onResize(() => {
+      this._resizeObs = this._plt.resize.subscribe(() => {
         this._highlight.select(this.getSelected());
       });
     }
@@ -362,9 +342,9 @@ export class Tabs extends Ion implements AfterViewInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
-  add(tab: Tab) {
+  add(tab: Tab): string {
     this._tabs.push(tab);
     return this.id + '-' + (++this._ids);
   }
@@ -408,14 +388,23 @@ export class Tabs extends Ion implements AfterViewInit {
         if (opts.updateUrl !== false) {
           this._linker.navChange(DIRECTION_SWITCH);
         }
+        assert(this.getSelected() === selectedTab, 'selected tab does not match');
+        this._fireChangeEvent(selectedTab);
       });
+    } else {
+      this._fireChangeEvent(selectedTab);
     }
+  }
 
+  _fireChangeEvent(selectedTab: Tab) {
     selectedTab.ionSelect.emit(selectedTab);
     this.ionChange.emit(selectedTab);
   }
 
   _tabSwitchEnd(selectedTab: Tab, selectedPage: ViewController, currentPage: ViewController) {
+    assert(selectedTab, 'selectedTab must be valid');
+    assert(this._tabs.indexOf(selectedTab) >= 0, 'selectedTab must be one of the tabs');
+
     // Update tabs selection state
     const tabs = this._tabs;
     let tab: Tab;
@@ -473,9 +462,10 @@ export class Tabs extends Ion implements AfterViewInit {
    * @return {Tab} Returns the currently selected tab
    */
   getSelected(): Tab {
-    for (var i = 0; i < this._tabs.length; i++) {
-      if (this._tabs[i].isSelected) {
-        return this._tabs[i];
+    const tabs = this._tabs;
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].isSelected) {
+        return tabs[i];
       }
     }
     return null;
@@ -484,7 +474,7 @@ export class Tabs extends Ion implements AfterViewInit {
   /**
    * @internal
    */
-  getActiveChildNav() {
+  getActiveChildNav(): Tab {
     return this.getSelected();
   }
 
@@ -516,12 +506,19 @@ export class Tabs extends Ion implements AfterViewInit {
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot();
-
-      } else if (getComponent(this._linker, tab.root) !== active.component) {
-        // Otherwise, if the page we're on is not our real root, reset it to our
-        // default root type
-        tab.setRoot(tab.root);
+        tab.popToRoot().catch(() => {
+          console.debug('Tabs: pop to root was cancelled');
+        });
+      } else {
+        getComponent(this._linker, tab.root).then(viewController => {
+          if (viewController !== active.component) {
+            // Otherwise, if the page we're on is not our real root
+            // reset it to our default root type
+            return tab.setRoot(tab.root);
+          }
+        }).catch(() => {
+          console.debug('Tabs: reset root was cancelled');
+        });
       }
     }
   }
@@ -532,13 +529,38 @@ export class Tabs extends Ion implements AfterViewInit {
    */
   setTabbarPosition(top: number, bottom: number) {
     if (this._top !== top || this._bottom !== bottom) {
-      const tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+      var tabbarEle = <HTMLElement>this._tabbar.nativeElement;
       tabbarEle.style.top = (top > -1 ? top + 'px' : '');
       tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
       tabbarEle.classList.add('show-tabbar');
 
       this._top = top;
       this._bottom = bottom;
+    }
+  }
+
+  /**
+   * @internal
+   */
+  resize() {
+    const tab = this.getSelected();
+    tab && tab.resize();
+  }
+
+  /**
+   * @internal
+   */
+  initPane(): boolean {
+    const isMain = this._elementRef.nativeElement.hasAttribute('main');
+    return isMain;
+  }
+
+  /**
+   * @internal
+   */
+  paneChanged(isPane: boolean) {
+    if (isPane) {
+      this.resize();
     }
   }
 

@@ -1,7 +1,7 @@
-import { AfterContentInit, Directive, Host, HostListener, Input, Optional } from '@angular/core';
+import { Directive, HostListener, Input, Optional } from '@angular/core';
 
-import { DeepLinker } from '../../navigation/deep-linker';
 import { NavController } from '../../navigation/nav-controller';
+import { Page } from '../../navigation/nav-util';
 
 /**
  * @name NavPush
@@ -39,8 +39,8 @@ import { NavController } from '../../navigation/nav-controller';
  * }
  * ```
  *
- * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @demo /docs/demos/src/navigation/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  * @see {@link ../NavPop NavPop API Docs}
  *
  */
@@ -50,12 +50,12 @@ import { NavController } from '../../navigation/nav-controller';
 export class NavPush {
 
   /**
-   * @input {Page} The Page to push onto the Nav.
+   * @input {Page | string} The component class or deeplink name you want to push onto the navigation stack.
    */
-  @Input() navPush: any[]|string;
+  @Input() navPush: Page | string;
 
   /**
-   * @input {any} Parameters to pass to the page.
+   * @input {any} Any NavParams you want to pass along to the next view.
    */
   @Input() navParams: {[k: string]: any};
 
@@ -67,7 +67,7 @@ export class NavPush {
   }
 
 /**
- * @private
+ * @hidden
  */
   @HostListener('click')
   onClick(): boolean {
@@ -79,37 +79,4 @@ export class NavPush {
     }
     return true;
   }
-
-}
-
-/**
- * @private
- */
-@Directive({
-  selector: 'a[navPush]',
-  host: {
-    '[attr.href]': '_href'
-  }
-})
-export class NavPushAnchor implements AfterContentInit {
-
-  _href: string;
-
-  constructor(
-    @Host() public host: NavPush,
-    @Optional() public linker: DeepLinker) {}
-
-  updateHref() {
-    if (this.host && this.linker) {
-      this._href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams) || '#';
-
-    } else {
-      this._href = '#';
-    }
-  }
-
-  ngAfterContentInit() {
-    this.updateHref();
-  }
-
 }

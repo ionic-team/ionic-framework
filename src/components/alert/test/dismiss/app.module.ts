@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../..';
 import { FormBuilder, Validators } from '@angular/forms';
 
 
@@ -169,18 +170,19 @@ export class AnotherPage {
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     E2EPage,
     AnotherPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

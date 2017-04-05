@@ -1,15 +1,15 @@
-import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { DomController } from '../../platform/dom-controller';
 import { Form, IonicTapInput } from '../../util/form';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Haptic } from '../../tap-click/haptic';
-import { Ion } from '../ion';
-import { isTrueProperty, assert } from '../../util/util';
+import { assert, isTrueProperty } from '../../util/util';
+import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
-import { Key } from '../../platform/key';
+import { KEY_ENTER, KEY_SPACE } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { ToggleGesture } from './toggle-gesture';
 
@@ -54,20 +54,20 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
  *  </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/toggle/
- * @see {@link /docs/v2/components#toggle Toggle Component Docs}
+ * @demo /docs/demos/src/toggle/
+ * @see {@link /docs/components#toggle Toggle Component Docs}
  */
 @Component({
   selector: 'ion-toggle',
   template:
-    '<div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">' +
+    '<div class="toggle-icon" [class.toggle-checked]="_value" [class.toggle-activated]="_activated">' +
       '<div class="toggle-inner"></div>' +
     '</div>' +
     '<button role="checkbox" ' +
             'type="button" ' +
             'ion-button="item-cover" ' +
             '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
+            '[attr.aria-checked]="_value" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
             'class="item-cover">' +
@@ -78,90 +78,78 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
   providers: [TOGGLE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class Toggle extends Ion implements IonicTapInput, AfterContentInit, ControlValueAccessor, OnDestroy  {
+export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterViewInit, OnDestroy  {
 
-  _checked: boolean = false;
-  _init: boolean = false;
-  _disabled: boolean = false;
-  _labelId: string;
   _activated: boolean = false;
   _startX: number;
   _msPrv: number = 0;
-  _fn: Function = null;
   _gesture: ToggleGesture;
 
-  /** @private */
-  id: string;
-
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   * @input {boolean} If true, the element is selected.
    */
   @Input()
-  set color(val: string) {
-    this._setColor(val);
+  get checked(): boolean {
+    return this.value;
   }
 
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
+  set checked(val: boolean) {
+    this.value = val;
   }
-
-  /**
-   * @output {Toggle} Emitted when the toggle value changes.
-   */
-  @Output() ionChange: EventEmitter<Toggle> = new EventEmitter<Toggle>();
 
   constructor(
-    public _form: Form,
+    form: Form,
     config: Config,
     private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
     private _haptic: Haptic,
-    @Optional() public _item: Item,
+    @Optional() item: Item,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
     private _cd: ChangeDetectorRef
   ) {
-    super(config, elementRef, renderer, 'toggle');
-    _form.register(this);
-
-    if (_item) {
-      this.id = 'tgl-' + _item.registerInput('toggle');
-      this._labelId = 'lbl-' + _item.id;
-      this._item.setElementClass('item-toggle', true);
-    }
+    super(config, elementRef, renderer, 'toggle', false, form, item, null);
   }
 
   /**
-   * @private
+   * @hidden
    */
-  ngAfterContentInit() {
-    this._init = true;
+  ngAfterViewInit() {
+    this._initialize();
     this._gesture = new ToggleGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
     this._gesture.listen();
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  _inputNormalize(val: any): boolean {
+    return isTrueProperty(val);
+  }
+
+  /**
+   * @hidden
+   */
+  _inputUpdated() {
+    this._item && this._item.setElementClass('item-toggle-checked', this.value);
+    this._cd.detectChanges();
+  }
+
+  /**
+   * @hidden
    */
   _onDragStart(startX: number) {
     assert(startX, 'startX must be valid');
     console.debug('toggle, _onDragStart', startX);
 
     this._startX = startX;
+    this._fireFocus();
     this._activated = true;
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragMove(currentX: number) {
     if (!this._startX) {
@@ -171,16 +159,16 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
 
     console.debug('toggle, _onDragMove', currentX);
 
-    if (this._checked) {
+    if (this._value) {
       if (currentX + 15 < this._startX) {
-        this.onChange(false);
+        this.value = false;
         this._haptic.selection();
         this._startX = currentX;
         this._activated = true;
       }
 
     } else if (currentX - 15 > this._startX) {
-      this.onChange(true);
+      this.value = true;
       this._haptic.selection();
       this._startX = currentX;
       this._activated = (currentX < this._startX + 5);
@@ -188,7 +176,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragEnd(endX: number) {
     if (!this._startX) {
@@ -197,131 +185,47 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
     }
     console.debug('toggle, _onDragEnd', endX);
 
-    if (this.checked) {
+    if (this._value) {
       if (this._startX + 4 > endX) {
-        this.onChange(false);
+        this.value = false;
         this._haptic.selection();
       }
 
     } else if (this._startX - 4 < endX) {
-      this.onChange(true);
+      this.value = true;
       this._haptic.selection();
     }
 
     this._activated = false;
+    this._fireBlur();
     this._startX = null;
   }
 
   /**
-   * @input {boolean} If true, the element is selected.
-   */
-  @Input()
-  get checked(): boolean {
-    return this._checked;
-  }
-
-  set checked(val: boolean) {
-    this._setChecked(isTrueProperty(val));
-    this.onChange(this._checked);
-  }
-
-  /**
-   * @private
-   */
-  _setChecked(isChecked: boolean) {
-    if (isChecked !== this._checked) {
-      this._checked = isChecked;
-      if (this._init) {
-        this.ionChange.emit(this);
-      }
-      this._item && this._item.setElementClass('item-toggle-checked', isChecked);
-    }
-  }
-
-  /**
-   * @private
-   */
-  writeValue(val: any) {
-    this._setChecked( isTrueProperty(val) );
-  }
-
-  /**
-   * @private
-   */
-  registerOnChange(fn: Function): void {
-    this._fn = fn;
-  }
-
-  /**
-   * @private
-   */
-  registerOnTouched(fn: any) {
-    this.onTouched = fn;
-  }
-
-  /**
-   * @input {boolean} If true, the user cannot interact with this element.
-   */
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(val: boolean) {
-    this._disabled = isTrueProperty(val);
-    this._item && this._item.setElementClass('item-toggle-disabled', this._disabled);
-  }
-
-  /**
-   * @private
-   */
-  onChange(isChecked: boolean) {
-    // used when this input does not have an ngModel or formControlName
-    console.debug('toggle, onChange', isChecked);
-    this._fn && this._fn(isChecked);
-    this._setChecked(isChecked);
-    this.onTouched();
-    this._cd.detectChanges();
-  }
-
-  /**
-   * @private
-   */
-  onTouched() {}
-
-  /**
-   * @private
+   * @hidden
    */
   @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
-    if (ev.keyCode === Key.SPACE || ev.keyCode === Key.ENTER) {
+    if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
       console.debug(`toggle, keyup: ${ev.keyCode}`);
       ev.preventDefault();
       ev.stopPropagation();
-      this.onChange(!this._checked);
+      this.value = !this.value;
     }
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**
-   * @private
-   */
-  setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
-  }
-
-  /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
-    this._form && this._form.deregister(this);
+    super.ngOnDestroy();
     this._gesture && this._gesture.destroy();
-    this._fn = null;
   }
 
 }

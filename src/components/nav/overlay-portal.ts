@@ -11,7 +11,7 @@ import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: '[overlay-portal]',
@@ -47,6 +47,10 @@ export class OverlayPortal extends NavControllerBase {
   @Input('overlay-portal')
   set _overlayPortal(val: number) {
     this._zIndexOffset = (val || 0);
+  }
+
+  ngOnDestroy() {
+    this.destroy();
   }
 
 }

@@ -1,22 +1,45 @@
-general:
-  branches:
-    ignore:
-      - ins_n_outs
-machine:
-  node:
-    version: 4.1.0
-  post:
-    - npm install -g npm@3.x.x
-dependencies:
-  pre:
-    - ./scripts/docs/prepare.sh
-  cache_directories:
-    - "~/ionic-site" # cache ionic-site
-test:
-  override:
-    - gulp lint.ts
-deployment:
- tasks:
-   branch: "master"
-   commands:
-     - ./scripts/ci/deploy.sh
+version: 2
+jobs:
+  build:
+    working_directory: ~/ionic/
+    docker:
+      - image: node:7
+    steps:
+      - checkout
+      - restore_cache:
+         key: ionic-site
+      - run:
+         name: Prepare ionic-site repo
+         command: ./scripts/docs/prepare.sh
+      - save_cache:
+         key: ionic-site
+         paths:
+         - ~/ionic-site/
+      - restore_cache:
+         key: node_modules_{{ checksum "package.json" }}
+      - run:
+         name: Install node modules
+         command: npm i
+      - save_cache:
+         key: node_modules_{{ checksum "package.json" }}
+         paths:
+         - ~/ionic/node_modules/
+      - run:
+          name: Run tslint
+          command: ./node_modules/.bin/gulp lint.ts
+      - run:
+          name: Build Demos
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./node_modules/.bin/gulp demos.prod --production=true --batch=$CIRCLE_NODE_INDEX --batches=$CIRCLE_NODE_TOTAL
+            fi
+      - add_ssh_keys
+      - deploy:
+          name: Update docs
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./scripts/ci/deploy.sh
+            else
+              ./scripts/ci/deploy.sh
+              echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
+            fi

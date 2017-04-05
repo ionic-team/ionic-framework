@@ -15,6 +15,7 @@ declare module 'gulp-tslint';
 declare module 'gulp-typescript';
 declare module 'html-entities';
 declare module 'inquirer';
+declare module 'p-all';
 declare module 'path';
 declare module 'rollup';
 declare module 'rollup-plugin-commonjs';

@@ -1,5 +1,6 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Nav, AlertController } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, Nav, AlertController } from '../../../..';
 
 
 @Component({templateUrl: 'page1.html'})
@@ -9,7 +10,7 @@ export class Page1 {}
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   @ViewChild(Nav) nav: Nav;
 
   rootView = Page1;
@@ -36,15 +37,16 @@ export class E2EApp {
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1
   ]
 })

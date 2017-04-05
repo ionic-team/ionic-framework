@@ -1,15 +1,19 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title, DOCUMENT } from '@angular/platform-browser';
 
-import { AppPortal, IonicApp } from './app-root';
-import { ClickBlock } from '../../util/click-block';
+import { IonicApp } from './app-root';
+import * as Constants from './app-constants';
+import { ClickBlock } from '../click-block/click-block';
 import { runInDev } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { MenuController } from '../menu/menu-controller';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-import { MenuController } from '../menu/menu-controller';
+import { IOSTransition } from '../../transitions/transition-ios';
+import { MDTransition } from '../../transitions/transition-md';
+import { WPTransition } from '../../transitions/transition-wp';
 
 
 /**
@@ -23,17 +27,17 @@ export class App {
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
-  private _titleSrv: Title = new Title();
+  private _titleSrv: Title = new Title(DOCUMENT);
   private _rootNav: NavController = null;
   private _disableScrollAssist: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   _clickBlock: ClickBlock;
 
   /**
-   * @private
+   * @hidden
    */
   _appRoot: IonicApp;
 
@@ -85,14 +89,19 @@ export class App {
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
-      if (!(<any>_plt.win())['HWBackButton']) {
-        (<any>_plt.win())['HWBackButton'] = () => {
+      const win = <any>_plt.win();
+      if (!win['HWBackButton']) {
+        win['HWBackButton'] = () => {
           let p = this.goBack();
           p && p.catch(() => console.debug('hardware go back cancelled'));
           return p;
         };
       }
     });
+
+    _config.setTransition('ios-transition', IOSTransition);
+    _config.setTransition('md-transition', MDTransition);
+    _config.setTransition('wp-transition', WPTransition);
   }
 
   /**
@@ -107,14 +116,14 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(className: string, isAdd: boolean) {
     this._appRoot.setElementClass(className, isAdd);
   }
 
   /**
-   * @private
+   * @hidden
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
@@ -141,7 +150,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    * Toggles whether an application can be scrolled
    * @param {boolean} disableScroll when set to `false`, the application's
    * scrolling is enabled. When set to `true`, scrolling is disabled.
@@ -153,7 +162,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    * Boolean if the app is actively enabled or not.
    * @return {boolean}
    */
@@ -166,7 +175,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setScrolling() {
     this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
@@ -192,7 +201,7 @@ export class App {
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
   getActiveNav(): NavController {
-    const portal = this._appRoot._getPortal(MODAL);
+    const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
       return findTopNav(portal);
     }
@@ -207,18 +216,20 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setRootNav(nav: any) {
     this._rootNav = nav;
   }
 
   /**
-   * @private
+   * @hidden
    */
-  present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
+  present(enteringView: ViewController, opts: NavOptions, appPortal?: number): Promise<any> {
     const portal = this._appRoot._getPortal(appPortal);
 
+    // Set Nav must be set here in order to dimiss() work synchnously.
+    // TODO: move _setNav() to the earlier stages of NavController. _queueTrns()
     enteringView._setNav(portal);
 
     opts.keyboardClose = false;
@@ -239,7 +250,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   goBack(): Promise<any> {
     if (this._menuCtrl && this._menuCtrl.isOpen()) {
@@ -259,7 +270,7 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   navPop(): Promise<any> {
     if (!this._rootNav || !this.isEnabled()) {
@@ -267,7 +278,7 @@ export class App {
     }
 
     // If there are any alert/actionsheet open, let's do nothing
-    const portal = this._appRoot._getPortal(DEFAULT);
+    const portal = this._appRoot._getPortal(Constants.PORTAL_DEFAULT);
     if (portal.length() > 0) {
       return Promise.resolve();
     }
@@ -309,7 +320,5 @@ function findTopNav(nav: NavController) {
   return nav;
 }
 
-const DEFAULT = 0; // AppPortal.DEFAULT
-const MODAL = 1; // AppPortal.MODAL
 const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;

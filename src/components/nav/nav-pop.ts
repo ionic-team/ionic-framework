@@ -1,8 +1,6 @@
-import { AfterContentInit, Directive, HostListener, Optional } from '@angular/core';
+import { Directive, HostListener, Optional } from '@angular/core';
 
-import { DeepLinker } from '../../navigation/deep-linker';
 import { NavController } from '../../navigation/nav-controller';
-import { ViewController } from '../../navigation/view-controller';
 
 
 /**
@@ -20,9 +18,9 @@ import { ViewController } from '../../navigation/view-controller';
  * </ion-content>
  * ```
  *
- * Similar to {@link /docs/v2/api/components/nav/NavPush/ `NavPush` }
- * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * Similar to {@link /docs/api/components/nav/NavPush/ `NavPush` }
+ * @demo /docs/demos/src/navigation/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  * @see {@link ../NavPush NavPush API Docs}
  */
 @Directive({
@@ -37,7 +35,7 @@ export class NavPop {
   }
 
 /**
- * @private
+ * @hidden
  */
   @HostListener('click')
   onClick(): boolean {
@@ -50,41 +48,6 @@ export class NavPop {
     }
 
     return true;
-  }
-
-}
-
-
-/**
- * @private
- */
-@Directive({
-  selector: 'a[navPop]',
-  host: {
-    '[attr.href]': '_href'
-  }
-})
-export class NavPopAnchor implements AfterContentInit {
-
-  _href: string;
-
-  constructor(
-    @Optional() public host: NavPop,
-    public linker: DeepLinker,
-    @Optional() public viewCtrl: ViewController) {}
-
-  updateHref() {
-    if (this.host && this.viewCtrl) {
-      const previousView = this.host._nav.getPrevious(this.viewCtrl);
-      this._href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.component, this.viewCtrl.data)) || '#';
-
-    } else {
-      this._href = '#';
-    }
-  }
-
-  ngAfterContentInit() {
-    this.updateHref();
   }
 
 }

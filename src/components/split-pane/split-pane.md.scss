@@ -1,0 +1,27 @@
+
+@import "../../themes/ionic.globals.md";
+
+// Split Pane
+// --------------------------------------------------
+
+/// @prop - Minimum width of the split-pane's side pane
+$split-pane-md-side-min-width: $split-pane-side-min-width;
+
+/// @prop - Maximum width of the split-pane's side pane
+$split-pane-md-side-max-width: $split-pane-side-max-width;
+
+/// @prop - Border style of the side pane
+$split-pane-md-border: 1px solid $list-md-border-color;
+
+.split-pane-md.split-pane-visible >.split-pane-side {
+  min-width: $split-pane-md-side-min-width;
+  max-width: $split-pane-md-side-max-width;
+
+  border-right: $split-pane-md-border;
+  border-left: 0;
+}
+
+.split-pane-md.split-pane-visible > .split-pane-side[side=right] {
+  border-right: 0;
+  border-left: $split-pane-md-border;
+}

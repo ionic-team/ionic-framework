@@ -130,6 +130,9 @@ $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 /// @prop - Padding of the label for the radio alert
 $alert-wp-radio-label-padding:                 13px 26px !default;
 
+/// @prop - Text color of the label for the radio alert
+$alert-wp-radio-label-text-color:              initial !default;
+
 /// @prop - Text color of the label for the checked radio alert
 $alert-wp-radio-label-text-color-checked:      $alert-wp-button-text-color !default;
 
@@ -174,6 +177,9 @@ $alert-wp-radio-icon-border-radius:            $alert-wp-radio-border-radius !de
 
 /// @prop - Padding of the label for the checkbox in the alert
 $alert-wp-checkbox-label-padding:              13px 26px !default;
+
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-wp-checkbox-label-text-color:           initial !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-wp-checkbox-label-text-color-checked:   initial !default;
@@ -337,6 +343,8 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-wp-radio-label-text-color;
 }
 
 // Windows Alert Radio Unchecked Circle
@@ -403,6 +411,8 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-wp-checkbox-label-text-color;
 }
 
 .alert-wp [aria-checked=true] .alert-checkbox-label {

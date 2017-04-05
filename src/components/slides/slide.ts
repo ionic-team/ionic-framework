@@ -11,8 +11,8 @@ import { Slides } from './slides';
   *
   * See the [Slides API Docs](../Slides) for more usage information.
   *
-  * @demo /docs/v2/demos/src/slides/
-  * @see {@link /docs/v2/api/components/slides/Slides/ Slides API Docs}
+  * @demo /docs/demos/src/slides/
+  * @see {@link /docs/api/components/slides/Slides/ Slides API Docs}
   */
 @Component({
   selector: 'ion-slide',
@@ -35,7 +35,7 @@ export class Slide {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._slides.update(10);

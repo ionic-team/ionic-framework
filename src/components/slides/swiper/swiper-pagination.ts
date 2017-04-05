@@ -63,8 +63,9 @@ export function updatePaginationClasses(s: Slides) {
 
   // Types
   if (s.paginationType === 'bullets' && s._bullets) {
+    var selector = current + ( current < 0 ? s._bullets.length : 0 );
     for (var i = 0; i < s._bullets.length; i++) {
-      if (i === current) {
+      if (i === selector) {
         addClass(s._bullets[i], CLS.bulletActive);
       } else {
         removeClass(s._bullets[i], CLS.bulletActive);

@@ -32,8 +32,8 @@ import { Ion } from '../ion';
  * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
- * @demo /docs/v2/demos/src/icon/
- * @see {@link /docs/v2/components#icons Icon Component Docs}
+ * @demo /docs/demos/src/icon/
+ * @see {@link /docs/components#icons Icon Component Docs}
  *
  */
 @Directive({
@@ -43,41 +43,18 @@ import { Ion } from '../ion';
   }
 })
 export class Icon extends Ion {
-  /** @private */
+  /** @hidden */
   _iconMode: string;
-  /** @private */
+  /** @hidden */
   _isActive: boolean = true;
-  /** @private */
+  /** @hidden */
   _name: string = '';
-  /** @private */
+  /** @hidden */
   _ios: string = '';
-  /** @private */
+  /** @hidden */
   _md: string = '';
-  /** @private */
+  /** @hidden */
   _css: string = '';
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  get color(): string {
-    return this._color;
-  }
-  set color(value: string) {
-    this._setColor(value);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   constructor(
     config: Config,
@@ -89,7 +66,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     if (this._css) {
@@ -99,7 +76,7 @@ export class Icon extends Ion {
 
   /**
    * @input {string} Specifies which icon to use. The appropriate icon will be used based on the mode.
-   * For more information, see [Ionicons](/docs/v2/ionicons/).
+   * For more information, see [Ionicons](/docs/ionicons/).
    */
   @Input()
   get name(): string {
@@ -160,12 +137,12 @@ export class Icon extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @HostBinding('class.hide') _hidden: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   update() {
     let iconName: string;
