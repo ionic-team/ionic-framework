@@ -4,7 +4,7 @@ import { ViewController } from '../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  *
  * - play
  * - Add before classes - DOM WRITE

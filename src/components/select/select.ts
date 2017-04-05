@@ -118,7 +118,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * };
  * ```
  *
- * @demo /docs/v2/demos/src/select/
+ * @demo /docs/demos/src/select/
  */
 @Component({
   selector: 'ion-select',
@@ -153,7 +153,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   _isOpen: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
@@ -191,16 +191,6 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectedText: string = '';
 
   /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
    * @output {any} Emitted when the selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
@@ -213,7 +203,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   constructor(
     private _app: App,
     private _form: Form,
-    config: Config,
+    public config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() public _item: Item,
@@ -306,7 +296,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
       selectOptions.cssClass = selectCssClass;
-      overlay = new ActionSheet(this._app, selectOptions);
+      overlay = new ActionSheet(this._app, selectOptions, this.config);
 
     } else {
       // default to use the alert interface
@@ -334,7 +324,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       var selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions
-      overlay = new Alert(this._app, selectOptions);
+      overlay = new Alert(this._app, selectOptions, this.config);
 
       if (this._multi) {
         // use checkboxes
@@ -381,10 +371,25 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
 
 
   /**
-   * @private
+   * @hidden
    */
   get text() {
     return (this._multi ? this._texts : this._texts.join());
+  }
+
+  /**
+   * @hidden
+   */
+  checkHasValue(inputValue: any) {
+    if (this._item) {
+      let hasValue: boolean;
+      if (Array.isArray(inputValue)) {
+        hasValue = inputValue.length > 0;
+      } else {
+        hasValue = !isBlank(inputValue);
+      }
+      this._item.setElementClass('input-has-value', hasValue);
+    }
   }
 
   /**
@@ -404,7 +409,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updOpts() {
     this._texts = [];
@@ -439,23 +444,24 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     console.debug('select, writeValue', val);
     this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
     this._updOpts();
+    this.checkHasValue(val);
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._updOpts();
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -464,40 +470,42 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       fn(val);
       this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
       this._updOpts();
+      this.checkHasValue(val);
       this.onTouched();
     };
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
     console.debug('select, onChange w/out formControlName', val);
     this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
     this._updOpts();
+    this.checkHasValue(val);
     this.onTouched();
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() { }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form.deregister(this);

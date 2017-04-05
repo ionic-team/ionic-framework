@@ -44,8 +44,8 @@ import { RootNode } from '../split-pane/split-pane';
  * }
  * ```
  *
- * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @demo /docs/demos/src/navigation/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  */
 @Component({
   selector: 'ion-nav',
@@ -100,7 +100,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -111,13 +111,15 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
     this._hasInit = true;
 
     let navSegment = this._linker.initNav(this);
-    if (navSegment && navSegment.component) {
+    if (navSegment && (navSegment.component || navSegment.loadChildren)) {
       // there is a segment match in the linker
-      this.setPages(this._linker.initViews(navSegment), null, null);
+      return this._linker.initViews(navSegment).then(views => {
+        this.setPages(views, null, null);
+      });
 
     } else if (this._root) {
       // no segment match, so use the root property
-      this.push(this._root, this.rootParams, {
+      return this.push(this._root, this.rootParams, {
         isNavRoot: (<any>this._app.getRootNav() === this)
       }, null);
     }
@@ -160,7 +162,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this.destroy();

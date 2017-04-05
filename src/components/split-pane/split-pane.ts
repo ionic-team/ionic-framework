@@ -1,6 +1,6 @@
 import { ContentChildren, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, QueryList, NgZone, Renderer } from '@angular/core';
 import { Ion } from '../ion';
-import { assert } from '../../util/util';
+import { isTrueProperty, assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Platform } from '../../platform/platform';
 
@@ -14,7 +14,7 @@ const QUERY: { [key: string]: string }  = {
 };
 
 /**
- * @private
+ * @hidden
  */
 export abstract class RootNode {
   abstract getElementRef(): ElementRef;
@@ -142,23 +142,24 @@ export abstract class RootNode {
 })
 export class SplitPane extends Ion implements RootNode {
 
-  _rmListener: any;
-  _visible: boolean = false;
   _init: boolean = false;
+  _visible: boolean = false;
+  _isEnabled: boolean = true;
+  _rmListener: any;
   _mediaQuery: string | boolean = QUERY['md'];
   _children: RootNode[];
 
   /**
-   * @private
+   * @hidden
    */
   sideContent: RootNode = null;
   /**
-   * @private
+   * @hidden
    */
   mainContent: RootNode = null;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(RootNode, { descendants: false })
   set _setchildren(query: QueryList<RootNode>) {
@@ -191,6 +192,19 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
+   * @input {boolean} If `false`, the split-pane is disabled, ie. the side pane will
+   * never be displayed. Default `true`.
+   */
+  @Input()
+  set enabled(val: boolean) {
+    this._isEnabled = isTrueProperty(val);
+    this._update();
+  }
+  get enabled(): boolean {
+    return this._isEnabled;
+  }
+
+  /**
    * @output {any} Expression to be called when the split-pane visibility has changed
    */
   @Output() ionChange: EventEmitter<SplitPane> = new EventEmitter<SplitPane>();
@@ -200,14 +214,16 @@ export class SplitPane extends Ion implements RootNode {
     private _plt: Platform,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer
   ) {
     super(config, elementRef, renderer, 'split-pane');
+    if (_plt.isRTL()) {
+      this.setElementClass('split-pane-rtl', true);
+    }
   }
 
-
   /**
-   * @private
+   * @hidden
    */
   _register(node: RootNode, isMain: boolean, callback: Function): boolean {
     if (this.getElementRef().nativeElement !== node.getElementRef().nativeElement.parentNode) {
@@ -227,7 +243,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterViewInit() {
     this._init = true;
@@ -235,7 +251,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _update() {
     if (!this._init) {
@@ -244,6 +260,12 @@ export class SplitPane extends Ion implements RootNode {
     // Unlisten
     this._rmListener && this._rmListener();
     this._rmListener = null;
+
+    // Check if the split-pane is disabled
+    if (!this._isEnabled) {
+      this._setVisible(false);
+      return;
+    }
 
     const query = this._mediaQuery;
     if (typeof query === 'boolean') {
@@ -265,7 +287,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateChildren() {
     this.mainContent = null;
@@ -275,7 +297,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setVisible(visible: boolean) {
     if (this._visible === visible) {
@@ -290,21 +312,21 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isVisible(): boolean {
     return this._visible;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(className: string, add: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setPaneCSSClass(elementRef: ElementRef, isMain: boolean) {
     const ele = elementRef.nativeElement;
@@ -313,7 +335,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     assert(this._rmListener, 'at this point _rmListerner should be valid');
@@ -323,7 +345,7 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   initPane(): boolean {
     return true;

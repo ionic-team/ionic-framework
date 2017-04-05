@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Config } from '../config/config';
 import { DomController } from './dom-controller';
 import { isTextInput } from '../util/dom';
-import { Key } from './key';
+import { KEY_TAB } from './key';
 import { Platform } from './platform';
 
 
@@ -137,7 +137,7 @@ export class Keyboard {
   }
 
   /**
-   * @private
+   * @hidden
    */
   focusOutline(setting: any) {
     /* Focus Outline
@@ -176,7 +176,7 @@ export class Keyboard {
 
     // default is to add the focus-outline when the tab key is used
     function keyDown(ev: KeyboardEvent) {
-      if (!isKeyInputEnabled && ev.keyCode === Key.TAB) {
+      if (!isKeyInputEnabled && ev.keyCode === KEY_TAB) {
         isKeyInputEnabled = true;
         enableKeyInput();
       }

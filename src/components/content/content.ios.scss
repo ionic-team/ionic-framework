@@ -75,3 +75,14 @@ $content-ios-transition-background:     #000 !default;
 .content-ios:not([no-bounce]) > .scroll-content::after {
   top: -1px;
 }
+
+.platform-core .content-ios .scroll-content::after,
+.platform-core .content-ios .scroll-content::before {
+  position: initial;
+
+  top: initial;
+  bottom: initial;
+
+  width: initial;
+  height: initial;
+}

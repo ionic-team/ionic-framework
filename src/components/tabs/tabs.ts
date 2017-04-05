@@ -140,9 +140,9 @@ import { ViewController } from '../../navigation/view-controller';
  *   this.navCtrl.parent.select(2);
  * }
  *```
- * @demo /docs/v2/demos/src/tabs/
+ * @demo /docs/demos/src/tabs/
  *
- * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @see {@link /docs/components#tabs Tabs Component Docs}
  * @see {@link ../Tab Tab API Docs}
  * @see {@link ../../config/Config Config API Docs}
  *
@@ -176,26 +176,6 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   _selectHistory: string[] = [];
   /** @internal */
   _resizeObs: any;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(value: string) {
-    this._setColor( value);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode( val);
-  }
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
@@ -238,7 +218,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   @ViewChild('portal', {read: ViewContainerRef}) portal: ViewContainerRef;
 
   /**
-   * @private
+   * @hidden
    */
   parent: NavControllerBase;
 
@@ -362,7 +342,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   add(tab: Tab): string {
     this._tabs.push(tab);
@@ -494,7 +474,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
   /**
    * @internal
    */
-  getActiveChildNav() {
+  getActiveChildNav(): Tab {
     return this.getSelected();
   }
 
@@ -529,11 +509,14 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
         tab.popToRoot().catch(() => {
           console.debug('Tabs: pop to root was cancelled');
         });
-
-      } else if (getComponent(this._linker, tab.root) !== active.component) {
-        // Otherwise, if the page we're on is not our real root, reset it to our
-        // default root type
-        tab.setRoot(tab.root).catch(() => {
+      } else {
+        getComponent(this._linker, tab.root).then(viewController => {
+          if (viewController !== active.component) {
+            // Otherwise, if the page we're on is not our real root
+            // reset it to our default root type
+            return tab.setRoot(tab.root);
+          }
+        }).catch(() => {
           console.debug('Tabs: reset root was cancelled');
         });
       }

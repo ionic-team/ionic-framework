@@ -10,12 +10,12 @@
     "noImplicitAny": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
-    "types": ["jasmine"]
+    "target": "es2015",
+    "types": ["jasmine", "systemjs"]
   },
   "include": [
-    "./src/**/*.ts",
-    "./demos/src/**/*.ts"
+    "src/**/*.ts",
+    "demos/src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

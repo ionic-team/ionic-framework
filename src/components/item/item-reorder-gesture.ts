@@ -5,7 +5,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
 /**
- * @private
+ * @hidden
  */
 export class ItemReorderGesture {
   private selectedItemEle: HTMLElement = null;
@@ -150,7 +150,7 @@ export class ItemReorderGesture {
   }
 
   /**
-   * @private
+   * @hidden
    */
   destroy() {
     this.onDragEnd(null);

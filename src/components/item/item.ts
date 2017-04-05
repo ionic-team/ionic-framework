@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, Directive, ElementRef, Input, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Config } from '../../config/config';
@@ -90,7 +90,7 @@ import { ItemReorder } from './item-reorder';
  * This feature is not enabled by default for `md` and `wp` modes, but it can be enabled by setting the
  * Sass variables `$item-md-detail-push-show` and `$item-wp-detail-push-show`, respectively, to `true`.
  * It can also be disabled for ios by setting `$item-ios-detail-push-show` to `false`. See the
- * [theming documentation](http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/) for
+ * [theming documentation](http://ionicframework.com/docs/theming/overriding-ionic-variables/) for
  * more information on overriding Sass variables.
  *
  *
@@ -266,8 +266,8 @@ import { ItemReorder } from './item-reorder';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/item/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/item/
+ * @see {@link /docs/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../ItemSliding ItemSliding API Docs}
  */
@@ -302,34 +302,14 @@ export class Item extends Ion {
   _hasReorder: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
   /**
-   * @private
+   * @hidden
    */
   labelId: string = null;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._updateColor(val, this._name);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   constructor(
     form: Form,
@@ -357,7 +337,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerInput(type: string) {
     this._inputs.push(type);
@@ -365,7 +345,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     if (this._viewLabel && this._inputs.length) {
@@ -379,7 +359,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateColor(newColor: string, componentName?: string) {
     componentName = componentName || 'item'; // item-radio
@@ -387,7 +367,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setName(elementRef: ElementRef) {
     let nodeName = elementRef.nativeElement.nodeName.replace('ION-', '');
@@ -398,14 +378,14 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getLabelText(): string {
     return this._label ? this._label.text : '';
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(Label)
   set contentLabel(label: Label) {
@@ -420,7 +400,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild(Label)
   set viewLabel(label: Label) {
@@ -430,7 +410,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(Button)
   set _buttons(buttons: QueryList<Button>) {
@@ -442,7 +422,7 @@ export class Item extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChildren(Icon)
   set _icons(icons: QueryList<Icon>) {
@@ -451,60 +431,3 @@ export class Item extends Ion {
     });
   }
 }
-
-/**
- * @private
- */
-@Directive({
-  selector: 'ion-item-divider',
-  host: {
-    'class': 'item-divider'
-  }
-})
-export class ItemDivider extends Ion {
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-  */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  constructor(form: Form, config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer, 'item-divider');
-  }
-
-}
-
-/**
- * @private
- */
-@Directive({
-  selector: 'ion-item,[ion-item]',
-  host: {
-    'class': 'item-block'
-  }
-})
-export class ItemContent { }
-
-
-/**
-  * @private
-  */
-@Directive({
-  selector: 'ion-item-group'
-})
-export class ItemGroup { }

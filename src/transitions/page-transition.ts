@@ -3,7 +3,7 @@ import { Transition } from './transition';
 
 
 /**
- * @private
+ * @hidden
  */
 export class PageTransition extends Transition {
   enteringPage: Animation;

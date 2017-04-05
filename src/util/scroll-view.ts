@@ -1,6 +1,6 @@
-import { Subject } from 'rxjs/Subject';
 
 import { assert } from './util';
+import { App } from '../components/app/app';
 import { DomController, DomCallback } from '../platform/dom-controller';
 import { Platform, EventListenerOptions } from '../platform/platform';
 import { pointerCoord } from './dom';
@@ -9,12 +9,15 @@ import { pointerCoord } from './dom';
 export class ScrollView {
   ev: ScrollEvent;
   isScrolling = false;
-  scrollStart = new Subject<ScrollEvent>();
-  scroll = new Subject<ScrollEvent>();
-  scrollEnd = new Subject<ScrollEvent>();
-  initialized: boolean;
+  onScrollStart: (ev: ScrollEvent) => void;
+  onScroll: (ev: ScrollEvent) => void;
+  onScrollEnd: (ev: ScrollEvent) => void;
+  initialized: boolean = false;
+  eventsEnabled: boolean = false;
+  contentTop: number;
+  contentBottom: number;
 
-  private _el: HTMLElement;
+  _el: HTMLElement;
   private _js: boolean;
   private _t: number = 0;
   private _l: number = 0;
@@ -22,7 +25,13 @@ export class ScrollView {
   private _endTmr: Function;
 
 
-  constructor(private _plt: Platform, private _dom: DomController) {
+  constructor(
+    private _app: App,
+    private _plt: Platform,
+    private _dom: DomController,
+    virtualScrollEventAssist: boolean
+  ) {
+    this._js = virtualScrollEventAssist;
     this.ev = {
       timeStamp: 0,
       scrollTop: 0,
@@ -41,21 +50,20 @@ export class ScrollView {
       velocityX: 0,
       directionY: 'down',
       directionX: null,
-      domWrite: function(fn: DomCallback, ctx?: any): void {
-        _dom.write(fn, ctx);
-      }
+      domWrite: _dom.write.bind(_dom)
     };
   }
 
   init(ele: HTMLElement, contentTop: number, contentBottom: number) {
+    assert(ele, 'scroll-view, element can not be null');
+    this._el = ele;
+    this.contentTop = contentTop;
+    this.contentBottom = contentBottom;
+
     if (!this.initialized) {
       this.initialized = true;
-
-      assert(ele, 'scroll-view, element can not be null');
-      this._el = ele;
-
       if (this._js) {
-        this.enableJsScroll(contentTop, contentBottom);
+        this.enableJsScroll();
       } else {
         this.enableNativeScrolling();
       }
@@ -63,6 +71,10 @@ export class ScrollView {
   }
 
   private enableNativeScrolling() {
+    assert(this.onScrollStart, 'onScrollStart is not defined');
+    assert(this.onScroll, 'onScroll is not defined');
+    assert(this.onScrollEnd, 'onScrollEnd is not defined');
+
     this._js = false;
     if (!this._el) {
       return;
@@ -75,7 +87,19 @@ export class ScrollView {
     const positions: number[] = [];
 
     function scrollCallback(scrollEvent: UIEvent) {
+      // remind the app that it's currently scrolling
+      self._app.setScrolling();
+
+      // if events are disabled, we do nothing
+      if (!self.eventsEnabled) {
+        return;
+      }
+
       ev.timeStamp = scrollEvent.timeStamp;
+      // Event.timeStamp is 0 in firefox
+      if (!ev.timeStamp) {
+        ev.timeStamp = Date.now();
+      }
 
       // get the current scrollTop
       // ******** DOM READ ****************
@@ -99,7 +123,7 @@ export class ScrollView {
         positions.length = 0;
 
         // emit only on the first scroll event
-        self.scrollStart.next(ev);
+        self.onScrollStart(ev);
       }
 
       // actively scrolling
@@ -121,13 +145,12 @@ export class ScrollView {
 
         if (startPos !== endPos) {
           // compute relative movement between these two points
-          var timeOffset = (positions[endPos] - positions[startPos]);
           var movedTop = (positions[startPos - 2] - positions[endPos - 2]);
           var movedLeft = (positions[startPos - 1] - positions[endPos - 1]);
-
+          var factor = FRAME_MS / (positions[endPos] - positions[startPos]);
           // based on XXms compute the movement to apply for each render step
-          ev.velocityY = ((movedTop / timeOffset) * FRAME_MS);
-          ev.velocityX = ((movedLeft / timeOffset) * FRAME_MS);
+          ev.velocityY = movedTop * factor;
+          ev.velocityX = movedLeft * factor;
 
           // figure out which direction we're scrolling
           ev.directionY = (movedTop > 0 ? 'up' : 'down');
@@ -143,13 +166,13 @@ export class ScrollView {
         ev.velocityY = ev.velocityX = 0;
 
         // emit that the scroll has ended
-        self.scrollEnd && self.scrollEnd.next(ev);
+        self.onScrollEnd(ev);
 
         self._endTmr = null;
       }
 
       // emit on each scroll event
-      self.scroll.next(ev);
+      self.onScroll(ev);
 
       // debounce for a moment after the last scroll event
       self._dom.cancel(self._endTmr);
@@ -169,7 +192,7 @@ export class ScrollView {
 
 
   /**
-   * @private
+   * @hidden
    * JS Scrolling has been provided only as a temporary solution
    * until iOS apps can take advantage of scroll events at all times.
    * The goal is to eventually remove JS scrolling entirely. When we
@@ -177,7 +200,7 @@ export class ScrollView {
    * inertia then this can be burned to the ground. iOS's more modern
    * WKWebView does not have this issue, only UIWebView does.
    */
-  enableJsScroll(contentTop: number, contentBottom: number) {
+  enableJsScroll() {
     const self = this;
     self._js = true;
     const ele = self._el;
@@ -196,7 +219,7 @@ export class ScrollView {
     function setMax() {
       if (!max) {
         // ******** DOM READ ****************
-        max = ele.scrollHeight - ele.parentElement.offsetHeight + contentTop + contentBottom;
+        max = ele.scrollHeight - ele.parentElement.offsetHeight + self.contentTop + self.contentBottom;
       }
     };
 
@@ -217,7 +240,7 @@ export class ScrollView {
         ev.scrollTop = self._t;
 
         // emit on each scroll event
-        self.scroll.next(ev);
+        self.onScroll(ev);
 
         self._dom.write(() => {
           // ******** DOM WRITE ****************
@@ -236,7 +259,7 @@ export class ScrollView {
             ev.velocityY = ev.velocityX = 0;
 
             // emit that the scroll has ended
-            self.scrollEnd && self.scrollEnd.next(ev);
+            self.onScrollEnd(ev);
           }
         });
       }
@@ -275,7 +298,7 @@ export class ScrollView {
         self.isScrolling = true;
 
         // emit only on the first scroll event
-        self.scrollStart.next(ev);
+        self.onScrollStart(ev);
       }
 
       self._dom.write(() => {
@@ -291,7 +314,7 @@ export class ScrollView {
       if (!positions.length && self.isScrolling) {
         self.isScrolling = false;
         ev.velocityY = ev.velocityX = 0;
-        self.scrollEnd && self.scrollEnd.next(ev);
+        self.onScrollEnd(ev);
         return;
       }
 
@@ -329,7 +352,7 @@ export class ScrollView {
       } else {
         self.isScrolling = false;
         ev.velocityY = 0;
-        self.scrollEnd && self.scrollEnd.next(ev);
+        self.onScrollEnd(ev);
       }
 
       positions.length = 0;
@@ -508,7 +531,7 @@ export class ScrollView {
   }
 
   /**
-   * @private
+   * @hidden
    */
   destroy() {
     this.stop();
@@ -516,13 +539,10 @@ export class ScrollView {
     this._endTmr && this._dom.cancel(this._endTmr);
     this._lsn && this._lsn();
 
-    this.scrollStart && this.scrollStart.unsubscribe();
-    this.scroll && this.scroll.unsubscribe();
-    this.scrollEnd && this.scrollEnd.unsubscribe();
-
     let ev = this.ev;
     ev.domWrite = ev.contentElement = ev.fixedElement = ev.scrollElement = ev.headerElement = null;
     this._lsn = this._el = this._dom = this.ev = ev = null;
+    this.onScrollStart = this.onScroll = this.onScrollEnd = null;
   }
 
 }

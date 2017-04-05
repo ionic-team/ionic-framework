@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, NavParams } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, NavController, NavParams } from '../../../..';
 import { DomSanitizer } from '@angular/platform-browser';
 
 
@@ -283,7 +284,7 @@ export class Results {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+export class AppComponent {
   root: any = Page1;
   constructor() {
     setTimeout(() => this.root = Page2, 100);
@@ -292,7 +293,7 @@ export class E2EApp {
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2,
     Page3,
@@ -304,11 +305,12 @@ export class E2EApp {
     Results
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2,
     Page3,

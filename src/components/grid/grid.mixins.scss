@@ -12,6 +12,10 @@
   margin-right: auto;
   width: 100%;
 
+  display: flex;
+
+  flex-direction: column;
+
   // Remove the padding from the grid and all immediate children columns
   &[no-padding] {
     padding: 0;

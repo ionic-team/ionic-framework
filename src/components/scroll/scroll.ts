@@ -17,7 +17,7 @@ import { isTrueProperty } from '../../util/util';
  * <ion-scroll scrollX="true" scrollY="true">
  * </ion-scroll>
  * ```
- * @demo /docs/v2/demos/src/scroll/
+ * @demo /docs/demos/src/scroll/
  */
 @Component({
   selector: 'ion-scroll',
@@ -85,29 +85,29 @@ export class Scroll {
   }
 
   /**
-   * @private
+   * @hidden
    */
   maxScale: number = 3;
   /**
-   * @private
+   * @hidden
    */
   zoomDuration: number = 250;
   /**
-   * @private
+   * @hidden
    */
   scrollElement: HTMLElement;
 
   constructor(private _elementRef: ElementRef) {}
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     this.scrollElement = this._elementRef.nativeElement.children[0];
   }
 
   /**
-   * @private
+   * @hidden
    * Add a scroll event handler to the scroll element if it exists.
    * @param {Function} handler  The scroll handler to add to the scroll element.
    * @returns {?Function} a function to remove the specified handler, otherwise

@@ -1,5 +1,5 @@
 ---
-layout: "v2_fluid/docs_base"
+layout: "fluid/docs_base"
 version: "<$ version.current.name $>"
 versionHref: "<$ version.current.href $>"
 path: "<$ doc.path $>"
@@ -204,8 +204,8 @@ angular_controller: APIDemoCtrl <@ endif @>
 <$ doc.name | dashCase $>
 <@ else @>
 <$ doc.name $>
-<@- if doc.directiveInfo @>
-<h3><code><$ doc.directiveInfo.properties[0].values $></code></h3>
+<@- if doc.decorators[0].argumentInfo[0].selector @>
+<h3><code><$ doc.decorators[0].argumentInfo[0].selector $></code></h3>
 <@ endif -@>
 <@ endif @>
 
@@ -225,7 +225,7 @@ Delegate: <$ doc.delegate $>
 
 </h1>
 
-<a class="improve-v2-docs" href="http://github.com/driftyco/ionic/edit/master/<$ doc.fileInfo.relativePath|replace('/home/ubuntu/ionic', '')|replace('//','/') $>#L<$ doc.location.start.line $>">
+<a class="improve-v2-docs" href="http://github.com/driftyco/ionic/edit/master/<$ doc.fileInfo.projectRelativePath $>#L<$ doc.location.start.line $>">
 Improve this doc
 </a>
 

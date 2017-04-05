@@ -39,8 +39,8 @@ import { RadioGroup } from './radio-group';
  *   </ion-item>
  * </ion-list>
  * ```
- * @demo /docs/v2/demos/src/radio/
- * @see {@link /docs/v2/components#radio Radio Component Docs}
+ * @demo /docs/demos/src/radio/
+ * @see {@link /docs/components#radio Radio Component Docs}
  * @see {@link ../RadioGroup RadioGroup API Docs}
  */
 @Component({
@@ -93,7 +93,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   /**
    * @input {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -102,16 +102,6 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
     if (this._item) {
       this._item._updateColor(val, 'item-radio');
     }
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
   }
 
   /**
@@ -185,7 +175,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     this._elementRef.nativeElement.querySelector('button').focus();

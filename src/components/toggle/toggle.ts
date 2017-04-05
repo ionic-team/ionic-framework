@@ -9,7 +9,7 @@ import { Haptic } from '../../tap-click/haptic';
 import { Ion } from '../ion';
 import { isTrueProperty, assert } from '../../util/util';
 import { Item } from '../item/item';
-import { Key } from '../../platform/key';
+import { KEY_ENTER, KEY_SPACE } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { ToggleGesture } from './toggle-gesture';
 
@@ -54,8 +54,8 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
  *  </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/toggle/
- * @see {@link /docs/v2/components#toggle Toggle Component Docs}
+ * @demo /docs/demos/src/toggle/
+ * @see {@link /docs/components#toggle Toggle Component Docs}
  */
 @Component({
   selector: 'ion-toggle',
@@ -90,28 +90,8 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   _fn: Function = null;
   _gesture: ToggleGesture;
 
-  /** @private */
+  /** @hidden */
   id: string;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   /**
    * @output {Toggle} Emitted when the toggle value changes.
@@ -141,7 +121,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._init = true;
@@ -150,7 +130,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragStart(startX: number) {
     assert(startX, 'startX must be valid');
@@ -161,7 +141,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragMove(currentX: number) {
     if (!this._startX) {
@@ -188,7 +168,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragEnd(endX: number) {
     if (!this._startX) {
@@ -226,7 +206,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
@@ -239,21 +219,21 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     this._setChecked( isTrueProperty(val) );
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) {
     this.onTouched = fn;
@@ -273,7 +253,7 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(isChecked: boolean) {
     // used when this input does not have an ngModel or formControlName
@@ -285,15 +265,15 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() {}
 
   /**
-   * @private
+   * @hidden
    */
   @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
-    if (ev.keyCode === Key.SPACE || ev.keyCode === Key.ENTER) {
+    if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
       console.debug(`toggle, keyup: ${ev.keyCode}`);
       ev.preventDefault();
       ev.stopPropagation();
@@ -302,21 +282,21 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form && this._form.deregister(this);

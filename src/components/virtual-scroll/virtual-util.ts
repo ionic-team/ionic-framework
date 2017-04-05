@@ -2,6 +2,14 @@ import { ViewContainerRef, TemplateRef, EmbeddedViewRef } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 
+const PREVIOUS_CELL = {
+      row: 0,
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
+      tmpl: -1
+    };
 /**
  * NO DOM
  */
@@ -25,14 +33,7 @@ export function processRecords(stopAtHeight: number,
 
   } else {
     // no cells have been created yet
-    previousCell = {
-      row: 0,
-      width: 0,
-      height: 0,
-      top: 0,
-      left: 0,
-      tmpl: -1
-    };
+    previousCell = PREVIOUS_CELL;
     startRecordIndex = 0;
   }
 
@@ -317,9 +318,17 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
   data.bottomViewCell = 0;
 
   // completely realign position to ensure they're all accurately placed
-  for (var i = 1; i < totalCells; i++) {
+  cell = cells[0];
+  previousCell = {
+    row: 0,
+    width: 0,
+    height: 0,
+    top: cell.top,
+    left: 0,
+    tmpl: -1
+  };
+  for (var i = 0; i < totalCells; i++) {
     cell = cells[i];
-    previousCell = cells[i - 1];
 
     if (previousCell.left + previousCell.width + cell.width > data.viewWidth) {
       // new row
@@ -341,6 +350,7 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
     } else if (cell.top < viewableBottom && i > data.bottomViewCell) {
       data.bottomViewCell = i;
     }
+    previousCell = cell;
   }
 
 }

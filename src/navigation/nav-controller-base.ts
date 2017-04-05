@@ -4,7 +4,7 @@ import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
 import { convertToView, convertToViews, NavOptions, DIRECTION_BACK, DIRECTION_FORWARD, INIT_ZINDEX,
-         TransitionResolveFn, TransitionInstruction, ViewState } from './nav-util';
+         TransitionResolveFn, TransitionInstruction, STATE_NEW, STATE_INITIALIZED, STATE_ATTACHED, STATE_DESTROYED } from './nav-util';
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { DomController } from '../platform/dom-controller';
@@ -21,7 +21,7 @@ import { Transition } from '../transitions/transition';
 import { TransitionController } from '../transitions/transition-controller';
 
 /**
- * @private
+ * @hidden
  * This class is for internal use only. It is not exported publicly.
  */
 export class NavControllerBase extends Ion implements NavController {
@@ -72,27 +72,36 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   push(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    return this._queueTrns({
-      insertStart: -1,
-      insertViews: [convertToView(this._linker, page, params)],
-      opts: opts,
-    }, done);
+    return convertToView(this._linker, page, params).then(viewController => {
+      return this._queueTrns({
+        insertStart: -1,
+        insertViews: [viewController],
+        opts: opts,
+      }, done);
+    }).catch((err: Error) => {
+      console.error('Failed to navigate: ', err.message);
+      throw err;
+    });
   }
 
   insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    return this._queueTrns({
-      insertStart: insertIndex,
-      insertViews: [convertToView(this._linker, page, params)],
-      opts: opts,
-    }, done);
+    return convertToView(this._linker, page, params).then(viewController => {
+      return this._queueTrns({
+        insertStart: insertIndex,
+        insertViews: [viewController],
+        opts: opts,
+      }, done);
+    });
   }
 
   insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: Function): Promise<any> {
-    return this._queueTrns({
-      insertStart: insertIndex,
-      insertViews: convertToViews(this._linker, insertPages),
-      opts: opts,
-    }, done);
+    return convertToViews(this._linker, insertPages).then(viewControllers => {
+      return this._queueTrns({
+        insertStart: insertIndex,
+        insertViews: viewControllers,
+        opts: opts,
+      }, done);
+    });
   }
 
   pop(opts?: NavOptions, done?: Function): Promise<any> {
@@ -152,13 +161,15 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any> {
-    const viewControllers = [convertToView(this._linker, pageOrViewCtrl, params)];
-    return this._setPages(viewControllers, opts, done);
+    return convertToView(this._linker, pageOrViewCtrl, params).then((viewController) => {
+      return this._setPages([viewController], opts, done);
+    });
   }
 
   setPages(pages: any[], opts?: NavOptions, done?: Function): Promise<any> {
-    const viewControllers = convertToViews(this._linker, pages);
-    return this._setPages(viewControllers, opts, done);
+    return convertToViews(this._linker, pages).then(viewControllers => {
+      return this._setPages(viewControllers, opts, done);
+    });
   }
 
   _setPages(viewControllers: ViewController[], opts?: NavOptions, done?: Function): Promise<any> {
@@ -222,7 +233,7 @@ export class NavControllerBase extends Ion implements NavController {
       // walk through the transition views so they are destroyed
       while (transition) {
         var enteringView = transition.enteringView;
-        if (enteringView && (enteringView._state === ViewState.ATTACHED)) {
+        if (enteringView && (enteringView._state === STATE_ATTACHED)) {
           this._destroyView(enteringView);
         }
         if (transition.isRoot()) {
@@ -282,7 +293,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (insertViews) {
       for (var i = 0; i < insertViews.length; i++) {
         var nav = insertViews[i]._nav;
-        if (nav && nav !== this || insertViews[i]._state === ViewState.DESTROYED) {
+        if (nav && nav !== this || insertViews[i]._state === STATE_DESTROYED) {
           ti.reject('leavingView and enteringView are null. stack is already empty');
           return false;
         }
@@ -302,7 +313,7 @@ export class NavControllerBase extends Ion implements NavController {
     this.setTransitioning(true);
 
     // Initialize enteringView
-    if (enteringView && enteringView._state === ViewState.NEW) {
+    if (enteringView && enteringView._state === STATE_NEW) {
       // render the entering view, and all child navs and views
       // ******** DOM WRITE ****************
       this._viewInit(enteringView);
@@ -487,7 +498,7 @@ export class NavControllerBase extends Ion implements NavController {
    */
   _viewInit(enteringView: ViewController) {
     assert(enteringView, 'enteringView must be non null');
-    assert(enteringView._state === ViewState.NEW, 'enteringView state must be NEW');
+    assert(enteringView._state === STATE_NEW, 'enteringView state must be NEW');
 
     // entering view has not been initialized yet
     const componentProviders = ReflectiveInjector.resolve([
@@ -495,17 +506,18 @@ export class NavControllerBase extends Ion implements NavController {
       { provide: ViewController, useValue: enteringView },
       { provide: NavParams, useValue: enteringView.getNavParams() }
     ]);
-    const componentFactory = this._cfr.resolveComponentFactory(enteringView.component);
+    const componentFactory = this._linker.resolveComponent(enteringView.component);
     const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
 
     // create ComponentRef and set it to the entering view
     enteringView.init(componentFactory.create(childInjector, []));
-    enteringView._state = ViewState.INITIALIZED;
+    enteringView._state = STATE_INITIALIZED;
     this._preLoad(enteringView);
   }
 
   _viewAttachToDOM(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
-    assert(view._state === ViewState.INITIALIZED, 'view state must be INITIALIZED');
+    assert(view._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
+    assert(componentRef, 'componentRef can not be null');
 
     // fire willLoad before change detection runs
     this._willLoad(view);
@@ -513,7 +525,7 @@ export class NavControllerBase extends Ion implements NavController {
     // render the component ref instance to the DOM
     // ******** DOM WRITE ****************
     viewport.insert(componentRef.hostView, viewport.length);
-    view._state = ViewState.ATTACHED;
+    view._state = STATE_ATTACHED;
 
     if (view._cssClass) {
       // the ElementRef of the actual ion-page created
@@ -616,7 +628,7 @@ export class NavControllerBase extends Ion implements NavController {
       }
     });
 
-    if (enteringView && (enteringView._state === ViewState.INITIALIZED)) {
+    if (enteringView && (enteringView._state === STATE_INITIALIZED)) {
       // render the entering component in the DOM
       // this would also render new child navs/views
       // which may have their very own async canEnter/Leave tests
@@ -740,7 +752,7 @@ export class NavControllerBase extends Ion implements NavController {
       // it's safe to enable the app again
       this._app.setEnabled(true);
 
-      if (opts.updateUrl !== false) {
+      if (!this.hasChildren() && opts.updateUrl !== false) {
         // notify deep linker of the nav change
         // if a direction was provided and should update url
         this._linker.navChange(opts.direction);
@@ -792,7 +804,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _removeView(view: ViewController) {
-    assert(view._state === ViewState.ATTACHED || view._state === ViewState.DESTROYED, 'view state should be loaded or destroyed');
+    assert(view._state === STATE_ATTACHED || view._state === STATE_DESTROYED, 'view state should be loaded or destroyed');
 
     const views = this._views;
     const index = views.indexOf(view);
@@ -910,6 +922,10 @@ export class NavControllerBase extends Ion implements NavController {
     view._willUnload();
     this.viewWillUnload.emit(view);
     this._app.viewWillUnload.emit(view);
+  }
+
+  hasChildren(): boolean {
+    return this._children.length > 0;
   }
 
   getActiveChildNav(): any {

@@ -1,237 +1,242 @@
-import { accessSync, F_OK, readFileSync, stat } from 'fs';
-import { dirname, join } from 'path';
+import { accessSync, readFileSync, writeFileSync } from 'fs';
+import { dirname, join, relative } from 'path';
 
-import { dest, src, start, task } from 'gulp';
-import * as gulpif from 'gulp-if';
-import * as watch from 'gulp-watch';
+import * as glob from 'glob';
+import { task } from 'gulp';
+import * as del from 'del';
 import { template } from 'lodash';
 import * as runSequence from 'run-sequence';
-import { obj } from 'through2';
-import * as VinylFile from 'vinyl';
+import { argv } from 'yargs';
 
-import { DIST_E2E_ROOT, DIST_NAME, E2E_NAME, ES5, ES_2015, LOCAL_SERVER_PORT, DEMOS_SRC_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
-import { createTempTsConfig, getFolderInfo, getFolders, runAppScripts} from '../util';
 
-task('e2e.prod', e2eBuild);
+import { ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
+import { createTempTsConfig, createTimestamp, getFolderInfo, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
 
-function e2eBuild(done: (err: any) => void) {
-  runSequence(
-    'e2e.copyIonic',
-    'e2e.clean',
-    'e2e.polyfill',
-    'e2e.copySource',
-    'e2e.copyExternalDependencies',
-    'e2e.sass',
-    'e2e.fonts',
-    'e2e.compileTests',
-    done);
-}
+import * as pAll from 'p-all';
 
-task('e2e.copyIonic', (done: (err: any) => void) => {
-  runSequence(
-    'compile.release',
-    'release.compileSass',
-    'release.fonts',
-    'release.sass',
-    'release.createUmdBundle',
-    done);
+task('e2e.prepare', (done: Function) => {
+  runSequence('e2e.clean', 'e2e.polyfill', 'e2e.prepareSass', (err: any) => done(err));
 });
 
-task('e2e.copySource', (done: Function) => {
-
-  const buildConfig = require('../../build/config');
-
-  const stream = src([`${SRC_ROOT}/**/*`, `!${SRC_ROOT}/**/*.spec.ts`])
-    .pipe(gulpif(/app.module.ts$/, createIndexHTML()))
-    .pipe(gulpif(/e2e.ts$/, createPlatformTests()))
-    .pipe(dest(DIST_E2E_ROOT));
-
-  stream.on('end', done);
-
-  function createIndexHTML() {
-    const indexTemplate = readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.prod.html`);
-    const indexTs = readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/main.ts`);
-
-    return obj(function (file, enc, next) {
-      this.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexTemplate),
-        path: join(dirname(file.path), 'index.html'),
-      }));
-      this.push(new VinylFile({
-        base: file.base,
-        contents: new Buffer(indexTs),
-        path: join(dirname(file.path), 'main.ts'),
-      }));
-      next(null, file);
-    });
-  }
-
-  // TODO this is almost the same as dev, diff and combine
-  function createPlatformTests() {
-    let platforms = [
-      'android',
-      'ios',
-      'windows'
-    ];
-
-    let testTemplate = template(readFileSync(`${SCRIPTS_ROOT}/${E2E_NAME}/e2e.template.js`).toString());
-
-    return obj(function (file, enc, next) {
-      let self = this;
-
-      let relativePath = dirname(file.path.replace(/^.*?src(\/|\\)/, ''));
-
-      let contents = file.contents.toString();
-      platforms.forEach(function (platform) {
-        let platformContents = testTemplate({
-          contents: contents,
-          buildConfig: buildConfig,
-          relativePath: relativePath,
-          platform: platform
-        });
-        self.push(new VinylFile({
-          base: file.base,
-          contents: new Buffer(platformContents),
-          path: file.path.replace(/e2e.ts$/, platform + '.e2e.js')
-        }));
-      });
-      next();
-    });
-  }
+task('e2e.prepareSass', (done: Function) => {
+  const version = `E2E-${createTimestamp()}`;
+  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  done();
 });
 
-task('e2e.compileTests', (done: Function) => {
-  let folderInfo = getFolderInfo();
-
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    buildTest(folderInfo);
-  } else {
-    buildAllTests(done);
-  }
-});
-
-function buildTest(folderInfo: any) {
-  let includeGlob = [`./dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/*.ts`];
-  let pathToWriteFile = `${DIST_E2E_ROOT}/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/tsconfig.json`;
-
-  createTempTsConfig(includeGlob, ES5, ES_2015, `${DEMOS_SRC_ROOT}/tsconfig.json`, pathToWriteFile);
-
-  let sassConfigPath = 'scripts/e2e/sass.config.js';
-
-  let appEntryPoint = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/main.ts`;
-  let appNgModule = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app.module.ts`;
-  let distDir = `dist/e2e/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/`;
-
-  return runAppScripts(folderInfo, sassConfigPath, appEntryPoint, appNgModule, distDir);
-}
-
-function buildAllTests(done: Function) {
-  let folders = getFolders('./dist/e2e/components');
-  let promises: Promise<any>[] = [];
-
-  folders.forEach(folder => {
-    console.log(folder);
-    stat(`./dist/e2e/components/${folder}/test`, function(err, stat) {
-      if (err == null) {
-        let testFolders = getFolders(`./dist/e2e/components/${folder}/test`);
-
-        testFolders.forEach(test => {
-          console.log('build test for ', folder, test);
-          let folderInfo = {
-            componentName: folder,
-            componentTest: test
-          };
-          const promise = buildTest(folderInfo);
-          promises.push(promise);
-        });
-      }
-    });
-  });
-
-  Promise.all(promises).then(() => {
+task('e2e.prod', ['e2e.prepare'], (done: Function) => {
+  // okay, first find out all of the e2e tests to run by finding all of the 'main.ts' files
+  filterE2eTestfiles().then((filePaths: string[]) => {
+    if (filePaths && filePaths.length > 0) {
+      console.log(`Compiling ${filePaths.length} E2E tests ...`);
+      return buildTests(filePaths);
+    }
+  }).then(() => {
     done();
-  }).catch(err => {
+  }).catch((err: Error) => {
     done(err);
+    process.exit(1);
   });
-}
-
-task('e2e.watchProd', (done: Function) => {
-  const folderInfo = getFolderInfo();
-  let e2eTestPath = SRC_ROOT;
-
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    e2eTestPath = join(`${SRC_ROOT}/components/${folderInfo.componentName}/test/${folderInfo.componentTest}/app.module.ts`);
-  }
-
-  try {
-    accessSync(e2eTestPath, F_OK);
-  } catch (e) {
-    done(new Error(`Could not find e2e test: ${e2eTestPath}`));
-    return;
-  }
-
-  if (e2eComponentsExists(folderInfo)) {
-    // already generated the e2e directory
-    e2eWatch(folderInfo.componentName, folderInfo.componentTest);
-
-  } else {
-    // generate the e2e directory
-    console.log('Generate e2e builds first...');
-    e2eBuild(() => {
-      e2eWatch(folderInfo.componentName, folderInfo.componentTest);
-    });
-  }
 });
 
-function e2eWatch(componentName: string, componentTest: string) {
-  // If any tests change within components then run e2e.resources.
-  watch([
-    'e2e/src/**/*'
-  ],
-    function (file) {
-      console.log('start e2e.resources - ' + JSON.stringify(file.history, null, 2));
-      start('e2e.copyAndCompile');
-    });
-
-  // If any src files change except for tests then transpile only the source ionic files
-  watch([
-    'src/**/*.ts',
-    '!src/components/*/test/**/*',
-    '!src/util/test/*'
-  ],
-    function (file) {
-      console.log('start e2e.ngcSource - ' + JSON.stringify(file.history, null, 2));
-      start('e2e.copyAndCompile');
-    });
-
-  // If any scss files change then recompile all sass
-  watch(['src/**/*.scss'], (file) => {
-    console.log('start sass - ' + JSON.stringify(file.history, null, 2));
-    start('e2e.sass');
-  });
-
-  let serverUrl = `http://localhost:${LOCAL_SERVER_PORT}/${DIST_NAME}/${E2E_NAME}`;
-  if (componentName) {
-    serverUrl += `/${componentName}`;
-  }
-
-  console.log(serverUrl);
-
-  start('e2e.serve');
-}
-
-function e2eComponentsExists(folderInfo: any): boolean {
-  let componentPath = `${DIST_E2E_ROOT}/components`;
-
-  if (folderInfo.componentName && folderInfo.componentTest) {
-    componentPath += `/${folderInfo.componentName}/test/${folderInfo.componentTest}/build`;
-  }
+function e2eComponentExists(folderInfo: any): boolean {
+  let componentPath = `${SRC_COMPONENTS_ROOT}/${folderInfo.componentName}/test/${folderInfo.componentTest}/app`;
 
   try {
-    accessSync(componentPath, F_OK);
+    accessSync(componentPath);
   } catch (e) {
     return false;
   }
   return true;
 }
+
+function filterE2eTestfiles() {
+  return getE2eTestFiles().then((filePaths: string[]) => {
+    const entryPoints = filePaths.map(filePath => {
+      const directoryName = dirname(filePath);
+      return join(directoryName, 'app', 'main.ts');
+    });
+    return entryPoints;
+  }).then((entryPoints: string[]) => {
+    const folderInfo = getFolderInfo();
+    if (folderInfo && folderInfo.componentName && folderInfo.componentTest) {
+      if (!e2eComponentExists(folderInfo)) {
+        console.log(`Can't find E2E test "${folderInfo.componentName}/test/${folderInfo.componentTest}". Make sure that the test exists and you are passing the correct folder.`);
+        return [];
+      }
+      const filtered = entryPoints.filter(entryPoint => {
+        return entryPoint.indexOf(`${folderInfo.componentName}/test/${folderInfo.componentTest}`) >= 0;
+      });
+      return filtered;
+    }
+    return entryPoints;
+  });
+}
+
+function getE2eTestFiles() {
+  return new Promise((resolve, reject) => {
+    const mainGlob = join(SRC_COMPONENTS_ROOT, '*', 'test', '*', 'e2e.ts');
+    glob(mainGlob, (err: Error, matches: string[]) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(matches);
+    });
+  });
+}
+
+
+function buildTests(filePaths: string[]) {
+  const functions = filePaths.map(filePath => () => {
+    return buildTest(filePath);
+  });
+
+  // Run 2 tests at a time unless the `concurrency` arg is passed
+  let concurrentNumber = 2;
+  if (argv.concurrency) {
+    concurrentNumber = argv.concurrency;
+  }
+  return pAll(functions, {concurrency: concurrentNumber}).then(() => {
+    // copy over all of the protractor tests to the correct location now
+    return copyProtractorTestContent(filePaths);
+  });
+}
+
+function buildTest(filePath: string) {
+  const start = Date.now();
+  const ionicAngularDir = join(process.cwd(), 'src');
+
+  let appEntryPoint = filePath;
+  let srcTestRoot = dirname(dirname(appEntryPoint));
+  try {
+    // check if the entry point exists, otherwise fall back to the legacy entry point without 'app' folder
+    readFileSync(appEntryPoint);
+  } catch (ex) {
+    // the file doesn't exist, so use the legacy entry point
+    appEntryPoint = join(dirname(dirname(appEntryPoint)), 'main.ts');
+    srcTestRoot = dirname(appEntryPoint);
+  }
+
+  const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), srcTestRoot);
+  const distTestRoot = join(process.cwd(), 'dist', 'e2e', relativePathFromComponents);
+
+  const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
+  const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
+  const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
+
+  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
+
+  const sassConfigPath = join('scripts', 'e2e', 'sass.config.js');
+  const copyConfigPath = join('scripts', 'e2e', 'copy.config.js');
+
+  const appNgModulePath = join(dirname(appEntryPoint), 'app.module.ts');
+  const distDir = join(distTestRoot, 'www');
+
+  return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, argv.dev).then(() => {
+    const end = Date.now();
+    console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
+  }).catch((err) => {
+    console.log(`${err}`);
+  });
+}
+
+function copyProtractorTestContent(filePaths: string[]): Promise<any> {
+  const e2eTestPaths = filePaths.map(filePath => {
+    return join(dirname(dirname(filePath)), 'e2e.ts');
+  });
+  return readE2ETestFiles(e2eTestPaths)
+    .then((map: Map<string, string>) => {
+      return applyTemplate(map);
+    }).then((map: Map<string, string>) => {
+      writeE2EJsFiles(map);
+    });
+}
+
+function applyTemplate(filePathContent: Map<string, string>) {
+  const buildConfig = require('../../build/config');
+  const templateFileContent = readFileSync(join(SCRIPTS_ROOT, 'e2e', 'e2e.template.js'));
+  const templater = template(templateFileContent.toString());
+  const modifiedMap = new Map<string, string>();
+  const platforms = ['android', 'ios', 'windows'];
+  filePathContent.forEach((fileContent: string, filePath: string) => {
+    const srcRelativePath = relative(SRC_ROOT, dirname(filePath));
+    const wwwRelativePath = join(srcRelativePath, 'www');
+    platforms.forEach(platform => {
+      const platformContents = templater({
+        contents: fileContent,
+        buildConfig: buildConfig,
+        relativePath: wwwRelativePath,
+        platform: platform,
+        relativePathBackwardsCompatibility: dirname(wwwRelativePath)
+      });
+      const newFilePath = join(wwwRelativePath, `${platform}.e2e.js`);
+      modifiedMap.set(newFilePath, platformContents);
+    });
+  });
+  return modifiedMap;
+}
+
+function writeE2EJsFiles(map: Map<string, string>) {
+  const promises: Promise<any>[] = [];
+  map.forEach((fileContent: string, filePath: string) => {
+    const destination = join(process.cwd(), 'dist', 'e2e', filePath);
+    promises.push(writeFileAsync(destination, fileContent));
+  });
+  return Promise.all(promises);
+}
+
+
+function readE2ETestFiles(mainFilePaths: string[]): Promise<Map<string, string>> {
+  const e2eFiles = mainFilePaths.map(mainFilePath => {
+    return join(dirname(mainFilePath), 'e2e.ts');
+  });
+
+  const promises: Promise<any>[] = [];
+  const map = new Map<string, string>();
+  for (const e2eFile of e2eFiles) {
+    const promise = readE2EFile(e2eFile);
+    promises.push(promise);
+    promise.then((content: string) => {
+      map.set(e2eFile, content);
+    });
+  }
+
+  return Promise.all(promises).then(() => {
+    return map;
+  });
+}
+
+function readE2EFile(filePath: string) {
+  return readFileAsync(filePath).then((content: string) => {
+    // purge the import statement at the top
+    const purgeImportRegex = /.*?import.*?'protractor';/g;
+    return content.replace(purgeImportRegex, '');
+  });
+}
+
+
+
+task('e2e.clean', (done: Function) => {
+  // this is a super hack, but it works for now
+  if (argv.skipClean) {
+    return done();
+  }
+
+  del(['dist/e2e/**']).then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
+});
+
+task('e2e.polyfill', (done: Function) => {
+  if (argv.skipPolyfill) {
+    return done();
+  }
+
+  writePolyfills('dist/e2e/polyfills').then(() => {
+    done();
+  }).catch(err => {
+    done(err);
+  });
+});

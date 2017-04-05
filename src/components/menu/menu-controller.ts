@@ -110,9 +110,9 @@ import { removeArrayItem, assert } from '../../util/util';
  * Note: if an app only has one menu, there is no reason to pass an `id`.
  *
  *
- * @demo /docs/v2/demos/src/menu/
+ * @demo /docs/demos/src/menu/
  *
- * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @see {@link /docs/components#menus Menu Component Docs}
  * @see {@link ../Menu Menu API Docs}
  *
  */
@@ -286,7 +286,7 @@ export class MenuController {
   }
 
   /**
-   * @private
+   * @hidden
    * @return {boolean} if any menu is currently animating
    */
   isAnimating(): boolean {
@@ -294,7 +294,7 @@ export class MenuController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _register(menu: Menu) {
     assert(this._menus.indexOf(menu) < 0, 'menu was already registered');
@@ -302,7 +302,7 @@ export class MenuController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _unregister(menu: Menu) {
     assert(this._menus.indexOf(menu) >= 0, 'menu is not registered');
@@ -310,7 +310,7 @@ export class MenuController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setActiveMenu(menu: Menu) {
     assert(menu.enabled, 'menu must be enabled');
@@ -327,14 +327,14 @@ export class MenuController {
 
 
   /**
-   * @private
+   * @hidden
    */
   static registerType(name: string, cls: new(...args: any[]) => MenuType) {
     menuTypes[name] = cls;
   }
 
   /**
-   * @private
+   * @hidden
    */
   static create(type: string, menuCmp: Menu, plt: Platform) {
     return new menuTypes[type](menuCmp, plt);

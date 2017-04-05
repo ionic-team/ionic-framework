@@ -306,7 +306,7 @@ describe('VirtualScroll', () => {
   describe('initReadNodes', () => {
 
     it('should get all the row heights w/ 30% width rows', () => {
-      let firstTop = 3;
+      let firstTop = 13;
       nodes = [
         {cell: 0, tmpl: TEMPLATE_HEADER, view: getView(data.viewWidth, HEIGHT_HEADER, firstTop, 0)},
         {cell: 1, tmpl: TEMPLATE_ITEM, view: getView(90, HEIGHT_ITEM, HEIGHT_HEADER + firstTop, 0)},

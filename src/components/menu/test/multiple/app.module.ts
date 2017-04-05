@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, MenuController } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, MenuController } from '../../../..';
 
 
 @Component({
@@ -26,21 +27,22 @@ export class Page1 {
 @Component({
   templateUrl: 'main.html'
 })
-export class E2EApp {
+export class AppComponent {
   rootPage = Page1;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1
   ]
 })

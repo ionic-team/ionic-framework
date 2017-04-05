@@ -1,11 +1,13 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, InfiniteScroll, NavController } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, InfiniteScroll, NavController } from '../../../..';
 
 
 @Component({
+  selector: 'my-content',
   templateUrl: 'main.html'
 })
-export class E2EPage1 {
+export class MyContent {
   @ViewChild(InfiniteScroll) infiniteScroll: InfiniteScroll;
   items: number[] = [];
   enabled: boolean = true;
@@ -43,6 +45,22 @@ export class E2EPage1 {
 
 
 @Component({
+  template: `
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Infinite Scroll</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <my-content></my-content>
+  </ion-content>
+`
+})
+export class E2EPage1 {}
+
+
+@Component({
   template: '<ion-content><button ion-button (click)="navCtrl.pop()">Pop</button></ion-content>'
 })
 export class E2EPage2 {
@@ -53,24 +71,27 @@ export class E2EPage2 {
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage1;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     E2EPage1,
-    E2EPage2
+    E2EPage2,
+    MyContent
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     E2EPage1,
-    E2EPage2
+    E2EPage2,
+    MyContent
   ]
 })
 export class AppModule {}

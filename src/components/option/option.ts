@@ -7,7 +7,7 @@ import { isPresent, isTrueProperty } from '../../util/util';
  * @description
  * `ion-option` is a child component of `ion-select`. Similar to the native option element, `ion-option` can take a value and a selected property.
  *
- * @demo /docs/v2/demos/src/select/
+ * @demo /docs/demos/src/select/
  */
 @Directive({
   selector: 'ion-option'
@@ -64,7 +64,7 @@ export class Option {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get text() {
     return this._elementRef.nativeElement.textContent;

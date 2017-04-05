@@ -80,8 +80,8 @@ import { ViewController } from '../../navigation/view-controller';
  * See the [Toolbar API docs](../../toolbar/Toolbar) for more information
  * on the different positions.
  *
- * @demo /docs/v2/demos/src/menu/
- * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @demo /docs/demos/src/menu/
+ * @see {@link /docs/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
  */
 @Directive({
@@ -93,17 +93,17 @@ import { ViewController } from '../../navigation/view-controller';
 export class MenuToggle {
 
   /**
-   * @private
+   * @hidden
    */
   @Input() menuToggle: string;
 
   /**
-   * @private
+   * @hidden
    */
   private _isButton: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   private _inNavbar: boolean;
 
@@ -125,7 +125,7 @@ export class MenuToggle {
   }
 
   /**
-  * @private
+  * @hidden
   */
   @HostListener('click')
   toggle() {
@@ -134,7 +134,7 @@ export class MenuToggle {
   }
 
   /**
-  * @private
+  * @hidden
   */
   get isHidden() {
     const menu = this._menu.get(this.menuToggle);

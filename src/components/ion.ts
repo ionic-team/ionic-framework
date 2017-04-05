@@ -1,4 +1,4 @@
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, Renderer, Input } from '@angular/core';
 
 import { Config } from '../config/config';
 
@@ -7,24 +7,51 @@ import { Config } from '../config/config';
  * that all Ionic components need, such as accessing underlying native elements and
  * sending/receiving app-level events.
  */
+/** @hidden */
 export class Ion {
-  /** @private */
+  /** @hidden */
   _config: Config;
 
-  /** @private */
+  /** @hidden */
   _elementRef: ElementRef;
 
-  /** @private */
+  /** @hidden */
   _renderer: Renderer;
 
-  /** @private */
+  /** @hidden */
   _color: string;
 
-  /** @private */
+  /** @hidden */
   _mode: string;
 
-  /** @private */
+  /** @hidden */
   _componentName: string;
+
+  /**
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @Input()
+  set color(val: string) {
+    this._setColor(val);
+  }
+  get color(): string {
+    return this._color;
+  }
+
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @Input()
+  set mode(val: string) {
+    this._setMode(val);
+  }
+  get mode(): string {
+    return this._mode;
+  }
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, componentName?: string) {
     this._config = config;
@@ -38,22 +65,22 @@ export class Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   setElementClass(className: string, isAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, isAdd);
   }
 
-  /** @private */
+  /** @hidden */
   setElementAttribute(attributeName: string, attributeValue: any) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, attributeValue);
   }
 
-  /** @private */
+  /** @hidden */
   setElementStyle(property: string, value: string) {
     this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
   }
 
-  /** @private */
+  /** @hidden */
   _setColor(newColor: string, componentName?: string) {
     if (componentName) {
       // This is needed for the item-radio
@@ -68,7 +95,7 @@ export class Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   _setMode(newMode: string) {
     if (this._mode) {
       this.setElementClass(`${this._componentName}-${this._mode}`, false);
@@ -84,17 +111,17 @@ export class Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   _setComponentName() {
     this.setElementClass(this._componentName, true);
   }
 
-  /** @private */
+  /** @hidden */
   getElementRef(): ElementRef {
     return this._elementRef;
   }
 
-  /** @private */
+  /** @hidden */
   getNativeElement(): any {
     return this._elementRef.nativeElement;
   }

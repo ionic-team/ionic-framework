@@ -1,19 +1,19 @@
 /**
- * @private
+ * @hidden
  */
 export function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
 /**
- * @private
+ * @hidden
  */
 export function reorderListForItem(element: any): any {
   return element['$ionReorderList'];
 }
 
 /**
- * @private
+ * @hidden
  */
 export function findReorderItem(node: any, listNode: any): HTMLElement {
   let nested = 0;

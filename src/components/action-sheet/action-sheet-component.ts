@@ -3,14 +3,14 @@ import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from
 import { assert } from '../../util/util';
 import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { Config } from '../../config/config';
-import { Key } from '../../platform/key';
+import { KEY_ESCAPE } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-action-sheet',
@@ -135,11 +135,9 @@ export class ActionSheetCmp {
 
   @HostListener('body:keyup', ['$event'])
   keyUp(ev: KeyboardEvent) {
-    if (this.enabled && this._viewCtrl.isLast()) {
-      if (ev.keyCode === Key.ESCAPE) {
-        console.debug('actionsheet, escape button');
-        this.bdClick();
-      }
+    if (this.enabled && ev.keyCode === KEY_ESCAPE && this._viewCtrl.isLast()) {
+      console.debug('actionsheet, escape button');
+      this.bdClick();
     }
   }
 

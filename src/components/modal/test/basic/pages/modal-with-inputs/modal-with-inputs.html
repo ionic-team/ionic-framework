@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()" strong>Close</button>
+    </ion-buttons>
+    <ion-title>Modal w/ Inputs</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #addForm="ngForm" (submit)="save($event)" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Title <span [hidden]="data.title.valid">(Required)</span></ion-label>
+        <ion-input [(ngModel)]="data.title" name="title" #title="ngModel" type="text" required autofocus></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Note <span [hidden]="data.note.valid">(Required)</span></ion-label>
+        <ion-input [(ngModel)]="data.note" name="note" #note="ngModel" type="text" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Icon</ion-label>
+        <ion-input [(ngModel)]="data.icon" name="icon" #icon="ngModel" type="text" autocomplete="on" autocorrect="on"></ion-input>
+      </ion-item>
+    </ion-list>
+    <div padding>
+      <button ion-button block large type="submit" [disabled]="!addForm.valid">Save</button>
+    </div>
+  </form>
+</ion-content>

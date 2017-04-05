@@ -1,8 +1,8 @@
-import { spawnSync } from 'child_process';
+import { spawn } from 'child_process';
 import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
 import { src, dest } from 'gulp';
-import { join } from 'path';
-import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { ensureDirSync, readdirSync, readFile, readFileSync, statSync, writeFile, writeFileSync } from 'fs-extra';
 import { rollup } from 'rollup';
 import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -11,6 +11,8 @@ import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
 import { argv } from 'yargs';
+
+import { runWorker } from './utils/app-scripts-worker-client';
 
 // These packages lack of types.
 const resolveBin = require('resolve-bin');
@@ -39,7 +41,7 @@ function getRootTsConfig(pathToReadFile): any {
   return tsConfig;
 }
 
-export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToReadFile: string, pathToWriteFile: string): any {
+export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToReadFile: string, pathToWriteFile: string, overrideCompileOptions: any = null): any {
   let config = getRootTsConfig(pathToReadFile);
   if (!config.compilerOptions) {
     config.compilerOptions = {};
@@ -53,12 +55,20 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions.target = target;
   }
   config.include = includeGlob;
+
+  if (overrideCompileOptions) {
+    config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
+  }
+
   let json = JSON.stringify(config, null, 2);
+
+  const dirToCreate = dirname(pathToWriteFile);
+  ensureDirSync(dirToCreate);
   writeFileSync(pathToWriteFile, json);
 }
 
 function removeDebugStatements() {
-  let replacer = new Replacer(['console.debug', 'assert', 'runInDev']);
+  let replacer = new Replacer(['console.debug', 'console.time', 'console.timeEnd', 'assert', 'runInDev']);
   return through.obj(function (file, encoding, callback) {
     const content = file.contents.toString();
     const cleanedJs = replacer.replace(content);
@@ -75,7 +85,7 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean,
     glob.push(`${SRC_ROOT}/**/*.spec.ts`);
   }
   if (excludeE2e) {
-    glob.push(`!${SRC_ROOT}/components/*/test/*/*.ts`);
+    glob.push(`!${SRC_ROOT}/components/*/test/*/**/*.ts`);
   }
   let stream = src(glob);
   if (stripDebug) {
@@ -178,41 +188,60 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScripts(folderInfo: any, sassConfigPath: string, appEntryPoint: string, appNgModulePath: string, distDir: string) {
-  console.log('Running ionic-app-scripts build with', folderInfo.componentName, '/', folderInfo.componentTest);
-  let tsConfig = distDir + 'tsconfig.json';
+export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string) {
+  console.log('Running ionic-app-scripts serve with', testOrDemoName);
+  const deepLinksDir = dirname(dirname(appNgModulePath));
   let scriptArgs = [
-    'build',
-    '--sass', sassConfigPath,
+    'serve',
     '--appEntryPoint', appEntryPoint,
     '--appNgModulePath', appNgModulePath,
-    '--srcDir', distDir,
+    '--deepLinksDir', deepLinksDir,
+    '--srcDir', srcDir,
     '--wwwDir', distDir,
-    '--tsconfig', tsConfig
-    ];
+    '--tsconfig', tsConfig,
+    '--readConfigJson', 'false',
+    '--ionicAngularDir', ionicAngularDir,
+    '--sass', sassConfigPath,
+    '--copy', copyConfigPath,
+    '--enableLint', 'false',
+  ];
+
+  if (watchConfigPath) {
+    scriptArgs.push('--watch');
+    scriptArgs.push(watchConfigPath);
+  }
 
   const debug: boolean = argv.debug;
   if (debug) {
     scriptArgs.push('--debug');
-    scriptArgs.push('--aot');
-  } else {
-    scriptArgs.push('--prod');
   }
 
-  try {
-    console.log('$ node ./node_modules/.bin/ionic-app-scripts', scriptArgs.join(' '));
-    const scriptsCmd = spawnSync('node', ['./node_modules/.bin/ionic-app-scripts'].concat(scriptArgs));
+  return new Promise((resolve, reject) => {
+    const args = ['./node_modules/.bin/ionic-app-scripts'].concat(scriptArgs);
+    console.log(`node ${args.join(' ')}`);
+    const spawnedCommand = spawn('node', args);
 
-    if (scriptsCmd.status !== 0) {
-      console.log(scriptsCmd.stderr.toString());
-      return Promise.reject(scriptsCmd.stderr.toString());
-    }
+    spawnedCommand.stdout.on('data', (buffer: Buffer) => {
+      console.log(buffer.toString());
+    });
 
-    console.log(scriptsCmd.output.toString());
-    return Promise.resolve();
-  } catch (ex) {
-    return Promise.reject(ex);
-  }
+    spawnedCommand.stderr.on('data', (buffer: Buffer) => {
+      console.error(buffer.toString());
+    });
+
+    spawnedCommand.on('close', (code: number) => {
+      if (code === 0) {
+        return resolve();
+      }
+      reject(new Error('App-scripts failed with non-zero status code'));
+    });
+  });
+}
+
+export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false) {
+  const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+  const debug: boolean = argv.debug;
+  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath, isDev);
 }
 
 /** Resolves the path for a node package executable. */
@@ -302,7 +331,10 @@ function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) 
       }),
       commonjs(),
       uglifyPlugin()
-    ]
+    ],
+    onwarn: () => {
+      return () => {};
+    }
   }).then((bundle) => {
     return bundle.write({
       format: 'iife',
@@ -332,4 +364,26 @@ export function getFolders(dir) {
     .filter(function(file) {
       return statSync(join(dir, file)).isDirectory();
     });
+}
+
+export function readFileAsync(filePath: string) {
+  return new Promise((resolve, reject) => {
+    readFile(filePath, (err: Error, buffer: Buffer) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(buffer.toString());
+    });
+  });
+}
+
+export function writeFileAsync(filePath: string, fileContent: string) {
+  return new Promise((resolve, reject) => {
+    writeFile(filePath, fileContent, (err: Error) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve();
+    });
+  });
 }

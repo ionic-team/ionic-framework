@@ -1,5 +1,5 @@
 import { mockNavController, mockView, mockViews } from '../../util/mock-providers';
-import { ViewState } from '../nav-util';
+import { STATE_ATTACHED } from '../nav-util';
 
 describe('ViewController', () => {
 
@@ -16,7 +16,7 @@ describe('ViewController', () => {
       });
 
       // act
-      viewController._state = ViewState.ATTACHED;
+      viewController._state = STATE_ATTACHED;
       viewController._willEnter();
     }, 10000);
   });
@@ -34,7 +34,7 @@ describe('ViewController', () => {
       });
 
       // act
-      viewController._state = ViewState.ATTACHED;
+      viewController._state = STATE_ATTACHED;
       viewController._didEnter();
     }, 10000);
   });
@@ -52,7 +52,7 @@ describe('ViewController', () => {
       });
 
       // act
-      viewController._state = ViewState.ATTACHED;
+      viewController._state = STATE_ATTACHED;
       viewController._willLeave(false);
     }, 10000);
   });

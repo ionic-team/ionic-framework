@@ -1,0 +1,67 @@
+
+<ion-split-pane (ionChange)="splitPaneChanged($event)">
+  <ion-menu [content]="content" id="menu1">
+
+    <ion-header>
+      <ion-toolbar color="secondary">
+        <ion-title>Menu 1</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+
+
+  <ion-menu [content]="content" id="menu2">
+
+    <ion-header>
+      <ion-toolbar color="danger">
+        <ion-title>Menu 2</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+
+  <ion-menu [content]="content" id="menu3">
+
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menu 3</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-menu [content]="content" id="menu4" side="right">
+
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>Menu 4</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-nav [root]="root" main #content></ion-nav>
+</ion-split-pane>

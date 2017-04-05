@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { Config } from '../config/config';
-import { createTransition } from './transition-registry';
 import { isPresent } from '../util/util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
 import { Platform } from '../platform/platform';
@@ -11,7 +10,7 @@ import { ViewController } from '../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class TransitionController {
@@ -36,7 +35,13 @@ export class TransitionController {
   }
 
   get(trnsId: number, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
-    const trns = createTransition(this.plt, this._config, opts.animation, enteringView, leavingView, opts);
+    let TransitionClass: any = this._config.getTransition(opts.animation);
+    if (!TransitionClass) {
+      // didn't find a transition animation, default to ios-transition
+      TransitionClass = this._config.getTransition('ios-transition');
+    }
+
+    const trns = new TransitionClass(this.plt, enteringView, leavingView, opts);
     trns.trnsId = trnsId;
 
     if (!this._trns[trnsId]) {

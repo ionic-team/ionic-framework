@@ -1,9 +1,9 @@
 // Ionic Variables and Theming. For more info, please see:
-// http://ionicframework.com/docs/v2/theming/
+// http://ionicframework.com/docs/theming/
 
 // Font path is used to include ionicons,
 // roboto, and noto sans fonts
-$font-path: "../../../../../fonts";
+$font-path: "../assets/fonts";
 
 @import "ionic.globals";
 
@@ -13,7 +13,7 @@ $font-path: "../../../../../fonts";
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
 
 // Named Color Variables
@@ -65,7 +65,7 @@ $colors: (
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
-// http://ionicframework.com/docs/v2/ionicons/
+// http://ionicframework.com/docs/ionicons/
 
 @import "ionic.ionicons";
 

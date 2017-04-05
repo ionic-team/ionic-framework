@@ -48,8 +48,8 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
  *  </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/checkbox/
- * @see {@link /docs/v2/components#checkbox Checkbox Component Docs}
+ * @demo /docs/demos/src/checkbox/
+ * @see {@link /docs/components#checkbox Checkbox Component Docs}
  */
 @Component({
   selector: 'ion-checkbox',
@@ -73,38 +73,18 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
   encapsulation: ViewEncapsulation.None,
 })
 export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, ControlValueAccessor, OnDestroy {
-  /** @private */
+  /** @hidden */
   _checked: boolean = false;
-  /** @private */
+  /** @hidden */
   _init: boolean;
-  /** @private */
+  /** @hidden */
   _disabled: boolean = false;
-  /** @private */
+  /** @hidden */
   _labelId: string;
-  /** @private */
+  /** @hidden */
   _fn: Function;
-  /** @private */
+  /** @hidden */
   id: string;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   /**
    * @output {Checkbox} Emitted when the checkbox value changes.
@@ -131,7 +111,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @private
+   * @hidden
    */
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
@@ -155,7 +135,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setChecked(isChecked: boolean) {
     if (isChecked !== this._checked) {
@@ -168,14 +148,14 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     this._setChecked(isTrueProperty(val));
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -189,7 +169,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
@@ -207,7 +187,7 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(isChecked: boolean) {
     // used when this input does not have an ngModel or formControlName
@@ -218,33 +198,33 @@ export class Checkbox extends Ion implements IonicTapInput, AfterContentInit, Co
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() { }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._init = true;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDisabledState(isDisabled: boolean) {
     this.disabled = isDisabled;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._form.deregister(this);

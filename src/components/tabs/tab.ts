@@ -115,8 +115,8 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/tabs/
- * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @demo /docs/demos/src/tabs/
+ * @see {@link /docs/components#tabs Tabs Component Docs}
  * @see {@link ../../tabs/Tabs Tabs API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
  * @see {@link ../../nav/NavController NavController API Docs}
@@ -134,42 +134,42 @@ import { ViewController } from '../../navigation/view-controller';
 })
 export class Tab extends NavControllerBase {
   /**
-   * @private
+   * @hidden
    */
   _isInitial: boolean;
   /**
-   * @private
+   * @hidden
    */
   _isEnabled: boolean = true;
   /**
-   * @private
+   * @hidden
    */
   _isShown: boolean = true;
   /**
-   * @private
+   * @hidden
    */
   _tabId: string;
   /**
-   * @private
+   * @hidden
    */
   _btnId: string;
   /**
-   * @private
+   * @hidden
    */
   _loaded: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   isSelected: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   btn: TabButton;
 
   /**
-   * @private
+   * @hidden
    */
   _tabsHideOnSubPages: boolean;
 
@@ -286,7 +286,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -294,14 +294,14 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
   }
 
   /**
-   * @private
+   * @hidden
    */
   load(opts: NavOptions, done?: Function) {
     if (!this._loaded && this.root) {
@@ -321,7 +321,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   resize() {
     const active = this.getActive();
@@ -333,7 +333,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _viewAttachToDOM(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     const isTabSubPage = (this._tabsHideOnSubPages && viewCtrl.index > 0);
@@ -354,7 +354,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
@@ -373,14 +373,14 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get index(): number {
     return this.parent.getIndex(this);
   }
 
   /**
-   * @private
+   * @hidden
    */
   updateHref(component: any, data: any) {
     if (this.btn && this.linker) {
@@ -390,7 +390,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this.destroy();

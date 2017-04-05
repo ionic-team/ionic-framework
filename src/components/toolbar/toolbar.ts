@@ -1,105 +1,9 @@
-import { ChangeDetectionStrategy, Component, Directive, ElementRef, Input, Optional, Renderer } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Optional, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
-import { ToolbarTitle } from './toolbar-title';
 import { ViewController } from '../../navigation/view-controller';
+import { ToolbarBase } from './toolbar-base';
 
-
-/**
- * @name Header
- * @description
- * Header is a parent component that holds the navbar and toolbar component.
- * It's important to note that `ion-header` needs to be the one of the three root elements of a page
- *
- * @usage
- *
- * ```html
- * <ion-header>
- *   <ion-navbar>
- *     <ion-title>Page1</ion-title>
- *   </ion-navbar>
- *
- *   <ion-toolbar>
- *     <ion-title>Subheader</ion-title>
- *   </ion-toolbar>
- * </ion-header>
- *
- * <ion-content></ion-content>
- * ```
- *
- */
-@Directive({
-  selector: 'ion-header'
-})
-export class Header extends Ion {
-
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
-    super(config, elementRef, renderer, 'header');
-    viewCtrl && viewCtrl._setHeader(this);
-  }
-
-}
-
-
-/**
- * @name Footer
- * @description
- * Footer is a root component of a page that sits at the bottom of the page.
- * Footer can be a wrapper for `ion-toolbar` to make sure the content area is sized correctly.
- *
- * @usage
- *
- * ```html
- * <ion-content></ion-content>
- *
- * <ion-footer>
- *   <ion-toolbar>
- *     <ion-title>Footer</ion-title>
- *   </ion-toolbar>
- * </ion-footer>
- * ```
- *
- */
-@Directive({
-  selector: 'ion-footer'
-})
-export class Footer extends Ion {
-
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
-    super(config, elementRef, renderer, 'footer');
-    viewCtrl && viewCtrl._setFooter(this);
-  }
-
-}
-
-
-/**
- * @private
- */
-export class ToolbarBase extends Ion {
-  private _title: ToolbarTitle;
-
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer, 'toolbar');
-  }
-
-  /**
-   * @private
-   */
-  _setTitle(titleCmp: ToolbarTitle) {
-    this._title = titleCmp;
-  }
-
-  /**
-   * @private
-   * Returns the toolbar title text if it exists or an empty string
-   */
-  getTitleText() {
-    return (this._title && this._title.getTitleText()) || '';
-  }
-
-}
 
 /**
  * @name Toolbar
@@ -186,7 +90,7 @@ export class ToolbarBase extends Ion {
  * </ion-footer>
  *  ```
  *
- * @demo /docs/v2/demos/src/toolbar/
+ * @demo /docs/demos/src/toolbar/
  * @see {@link ../../navbar/Navbar/ Navbar API Docs}
  */
 @Component({
@@ -206,28 +110,8 @@ export class ToolbarBase extends Ion {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar extends ToolbarBase {
-  /** @private */
+  /** @hidden */
   _sbPadding: boolean;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   constructor(
     @Optional() viewCtrl: ViewController,

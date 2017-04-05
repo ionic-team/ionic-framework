@@ -2,6 +2,7 @@ import { EventEmitter } from '@angular/core';
 
 import { Config } from '../config/config';
 import { NavOptions } from './nav-util';
+import { Page } from './nav-util';
 import { ViewController } from './view-controller';
 
 
@@ -146,7 +147,7 @@ import { ViewController } from './view-controller';
  * [pop()](#pop) or [setRoot()](#setRoot)).
  *
  * ## Pushing a View
- * To push a new view on to the navigation stack, use the `push` method.
+ * To push a new view onto the navigation stack, use the `push` method.
  * If the page has an [`<ion-navbar>`](../../navbar/Navbar/),
  * a back button will automatically be added to the pushed view.
  *
@@ -178,7 +179,7 @@ import { ViewController } from './view-controller';
  *   }
  *
  *   pushPage(){
- *     // push another page on to the navigation stack
+ *     // push another page onto the navigation stack
  *     // causing the nav controller to transition to the new page
  *     // optional data can also be passed to the pushed page.
  *     this.navCtrl.push(OtherPage, {
@@ -345,7 +346,7 @@ import { ViewController } from './view-controller';
  *
  * The property 'animation' understands the following values: `md-transition`, `ios-transition` and `wp-transition`.
  *
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  */
 export abstract class NavController {
 
@@ -386,7 +387,7 @@ export abstract class NavController {
   viewWillUnload: EventEmitter<any>;
 
   /**
-   * @private
+   * @hidden
    */
   id: string;
 
@@ -398,7 +399,7 @@ export abstract class NavController {
   parent: any;
 
   /**
-   * @private
+   * @hidden
    */
   config: Config;
 
@@ -406,37 +407,37 @@ export abstract class NavController {
    * Push a new component onto the current navigation stack. Pass any aditional information
    * along as an object. This additional information is accessible through NavParams
    *
-   * @param {Page} page  The page component class you want to push on to the navigation stack
-   * @param {object} [params={}] Any nav-params you want to pass along to the next view
+   * @param {Page|string} page The component class or deeplink name you want to push onto the navigation stack.
+   * @param {object} [params={}] Any NavParams you want to pass along to the next view.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract push(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract push(page: Page | string, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * Inserts a component into the nav stack at the specified index. This is useful if
    * you need to add a component at any point in your navigation stack.
    *
    *
-   * @param {number} insertIndex  The index where to insert the page.
-   * @param {Page} page  The component you want to insert into the nav stack.
-   * @param {object} [params={}] Any nav-params you want to pass along to the next page.
+   * @param {number} insertIndex The index where to insert the page.
+   * @param {Page|string} page The component class or deeplink name you want to push onto the navigation stack.
+   * @param {object} [params={}] Any NavParams you want to pass along to the next view.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract insert(insertIndex: number, page: Page | string, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * Inserts an array of components into the nav stack at the specified index.
    * The last component in the array will become instantiated as a view,
    * and animate in to become the active view.
    *
-   * @param {number} insertIndex  The index where you want to insert the page.
-   * @param {array} insertPages  An array of objects, each with a `page` and optionally `params` property.
+   * @param {number} insertIndex The index where you want to insert the page.
+   * @param {array} insertPages An array of objects, each with a `page` and optionally `params` property.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract insertPages(insertIndex: number, insertPages: Array<{page: any, params?: any}>, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract insertPages(insertIndex: number, insertPages: Array<{page: Page | string, params?: any}>, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * Call to navigate back from a current component. Similar to `push()`, you
@@ -456,7 +457,7 @@ export abstract class NavController {
   abstract popToRoot(opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
-   * @private
+   * @hidden
    * Pop to a specific view in the history stack. If an already created
    * instance of the page is not found in the stack, then it'll `setRoot`
    * to the nav stack by removing all current pages and pushing on a
@@ -465,15 +466,15 @@ export abstract class NavController {
    * been found in the stack. Nav params are only used by this method
    * when a new instance needs to be created.
    *
-   * @param {any} page A page can be a ViewController instance or string.
-   * @param {object} [params={}] Any nav-params to be used when a new view instance is created at the root.
+   * @param {Page|string|ViewController} page The component class or deeplink name you want to push onto the navigation stack.
+   * @param {object} [params={}] Any NavParams to be used when a new view instance is created at the root.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popTo(page: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popTo(page: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
-   * @private
+   * @hidden
    * Pop sequently all the pages in the stack.
    *
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
@@ -483,8 +484,8 @@ export abstract class NavController {
   /**
    * Removes a page from the nav stack at the specified index.
    *
-   * @param {number} startIndex  The starting index to remove pages from the stack. Default is the index of the last page.
-   * @param {number} [removeCount]  The number of pages to remove, defaults to remove `1`.
+   * @param {number} startIndex The starting index to remove pages from the stack. Default is the index of the last page.
+   * @param {number} [removeCount] The number of pages to remove, defaults to remove `1`.
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
@@ -501,12 +502,12 @@ export abstract class NavController {
 
   /**
    * Set the root for the current navigation stack.
-   * @param {Page|ViewController} page  The name of the component you want to push on the navigation stack.
-   * @param {object} [params={}] Any nav-params you want to pass along to the next view.
+   * @param {Page|string|ViewController} page The name of the component you want to push on the navigation stack.
+   * @param {object} [params={}] Any NavParams you want to pass along to the next view.
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * Set the views of the current navigation stack and navigate to the
@@ -518,10 +519,10 @@ export abstract class NavController {
    * @param {Object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setPages(pages: {page: any, params?: any}[], opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setPages(pages: ({page: Page | string, params?: any} | ViewController)[], opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
-   * @param {number} index  The index of the page to get.
+   * @param {number} index The index of the page to get.
    * @returns {ViewController} Returns the view controller that matches the given index.
    */
   abstract getByIndex(index: number): ViewController;
@@ -606,12 +607,12 @@ export abstract class NavController {
   abstract canGoBack(): boolean;
 
   /**
-   * @private
+   * @hidden
    */
   abstract registerChildNav(nav: any): void;
 
   /**
-   * @private
+   * @hidden
    */
   abstract resize(): void;
 }

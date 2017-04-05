@@ -6,6 +6,10 @@ task('test', ['test.assembleVendorJs', 'compile.karma'], (done: Function) => {
   karmaTest(false, done);
 });
 
+task('test.fast', ['compile.karma'], (done: Function) => {
+  karmaTest(false, done);
+});
+
 task('test.watch', ['test.assembleVendorJs', 'compile.karma'], (done: Function) => {
   karmaTest(true, done);
 });
