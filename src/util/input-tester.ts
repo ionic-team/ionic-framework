@@ -104,12 +104,14 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
   let ionChangeCalled = 0;
   let OnChangeCalled = 0;
   let OnTouchedCalled = 0;
+  let ngModelValue: any;
 
   // Test ionChange
   let sub = input.ionChange.subscribe((ev: any) => {
     assertEqual(ionChangeCalled, 0, 'ionChange: internal error');
     assertEqual(ev, input, 'ionChange: ev is not the input');
     assertEqual(ev.value, test[1], 'ionChange: value does not match');
+    assertEqual(ngModelValue, test[1], 'ionChange: ngmodel was not updated');
 
     ionChangeCalled++;
   });
@@ -119,7 +121,7 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
     assertEqual(OnChangeCalled, 0, 'registerOnChange: internal error');
     assertEqual(input.value, ev, 'registerOnChange: ev output does not match');
     assertEqual(input.value, test[1], 'registerOnChange: value does not match');
-
+    ngModelValue = ev;
     OnChangeCalled++;
   });
 

@@ -98,6 +98,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   set value(val: T) {
     if (this._writeValue(val)) {
       this.onChange();
+      this._fireIonChange();
     }
   }
 
@@ -120,9 +121,14 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   writeValue(val: any) {
-    this._writeValue(val);
+    if (this._writeValue(val)) {
+      this._fireIonChange();
+    }
   }
 
+  /**
+   * @hidden
+   */
   _writeValue(val: any): boolean {
     if (isUndefined(val)) {
       return false;
@@ -140,10 +146,16 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     this._value = normalized;
     this._inputCheckHasValue(normalized);
     this._inputUpdated();
+    return true;
+  }
+
+  /**
+   * @hidden
+   */
+  _fireIonChange() {
     if (this._init) {
       this._debouncer.debounce(() => this.ionChange.emit(this));
     }
-    return true;
   }
 
   /**
@@ -192,8 +204,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._isFocus) {
       return;
     }
-    // assert(NgZone.isInAngularZone(), 'callback should be zoned');
-
     this._isFocus = false;
     this.ionBlur.emit(this);
     this._inputUpdated();
