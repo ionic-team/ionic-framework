@@ -60,7 +60,7 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'ion-toggle',
   template:
-    '<div class="toggle-icon" [class.toggle-checked]="_value" [class.toggle-activated]="_activated">' +
+    '<div class="toggle-icon">' +
       '<div class="toggle-inner"></div>' +
     '</div>' +
     '<button role="checkbox" ' +
@@ -73,7 +73,9 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
             'class="item-cover" disable-activated>' +
     '</button>',
   host: {
-    '[class.toggle-disabled]': '_disabled'
+    '[class.toggle-disabled]': '_disabled',
+    '[class.toggle-checked]': '_value',
+    '[class.toggle-activated]': '_activated',
   },
   providers: [TOGGLE_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
@@ -124,16 +126,13 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
   /**
    * @hidden
    */
-  _inputNormalize(val: any): boolean {
-    return isTrueProperty(val);
-  }
+  _inputCheckHasValue() {}
 
   /**
    * @hidden
    */
-  _inputUpdated() {
-    this._item && this._item.setElementClass('item-toggle-checked', this.value);
-    this._cd.detectChanges();
+  _inputNormalize(val: any): boolean {
+    return isTrueProperty(val);
   }
 
   /**

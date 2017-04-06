@@ -115,7 +115,7 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 // Windows Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-wp .toggle-checked {
+.toggle-wp.toggle-checked .toggle-icon {
   border-color: $toggle-wp-track-background-color-on;
   background-color: $toggle-wp-track-background-color-on;
 }
@@ -124,7 +124,7 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 // Windows Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-wp .toggle-checked .toggle-inner {
+.toggle-wp.toggle-checked .toggle-inner {
   background-color: $toggle-wp-handle-background-color-on;
   // transform: translate3d(23px, 0, 0);
   transform: translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ($toggle-wp-track-border-width * 2) - ($toggle-wp-handle-left * 2), 0, 0);
@@ -170,12 +170,12 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 
 @mixin toggle-theme-wp($color-name, $color-base, $color-contrast) {
 
-  .toggle-wp-#{$color-name} .toggle-checked {
+  .toggle-wp-#{$color-name}.toggle-checked .toggle-icon {
     border-color: $color-base;
     background-color: $color-base;
   }
 
-  .toggle-wp-#{$color-name} .toggle-checked .toggle-inner {
+  .toggle-wp-#{$color-name}.toggle-checked .toggle-inner {
     background-color: $color-contrast;
   }
 }
