@@ -14,11 +14,10 @@ export class ScrollView {
   onScroll: (ev: ScrollEvent) => void;
   onScrollEnd: (ev: ScrollEvent) => void;
   initialized: boolean = false;
-  eventsEnabled: boolean = false;
-  contentTop: number;
-  contentBottom: number;
-
   _el: HTMLElement;
+
+
+  private _eventsEnabled = false;
   private _js: boolean;
   private _t: number = 0;
   private _l: number = 0;
@@ -28,10 +27,8 @@ export class ScrollView {
   constructor(
     private _app: App,
     private _plt: Platform,
-    private _dom: DomController,
-    virtualScrollEventAssist: boolean
+    private _dom: DomController
   ) {
-    this._js = virtualScrollEventAssist;
     this.ev = {
       timeStamp: 0,
       scrollTop: 0,
@@ -57,17 +54,18 @@ export class ScrollView {
   init(ele: HTMLElement, contentTop: number, contentBottom: number) {
     assert(ele, 'scroll-view, element can not be null');
     this._el = ele;
-    this.contentTop = contentTop;
-    this.contentBottom = contentBottom;
-
     if (!this.initialized) {
       this.initialized = true;
       if (this._js) {
-        this.enableJsScroll();
+        this.enableJsScroll(contentTop, contentBottom);
       } else {
         this.enableNativeScrolling();
       }
     }
+  }
+
+  enableEvents() {
+    this._eventsEnabled = true;
   }
 
   private enableNativeScrolling() {
@@ -91,7 +89,7 @@ export class ScrollView {
       self._app.setScrolling();
 
       // if events are disabled, we do nothing
-      if (!self.eventsEnabled) {
+      if (!self._eventsEnabled) {
         return;
       }
 
@@ -200,7 +198,7 @@ export class ScrollView {
    * inertia then this can be burned to the ground. iOS's more modern
    * WKWebView does not have this issue, only UIWebView does.
    */
-  enableJsScroll() {
+  enableJsScroll(contentTop: number, contentBottom: number) {
     const self = this;
     self._js = true;
     const ele = self._el;
@@ -219,7 +217,7 @@ export class ScrollView {
     function setMax() {
       if (!max) {
         // ******** DOM READ ****************
-        max = ele.scrollHeight - ele.parentElement.offsetHeight + self.contentTop + self.contentBottom;
+        max = ele.scrollHeight - ele.parentElement.offsetHeight + contentTop + contentBottom;
       }
     };
 

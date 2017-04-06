@@ -349,7 +349,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit {
   ) {
     super(config, elementRef, renderer, 'content');
 
-    let enableScrollListener = this.enableScrollListener.bind(this);
+    const enableScrollListener = () => this._scroll.enableEvents();
     this.ionScroll.onSubscribe = enableScrollListener;
     this.ionScrollStart.onSubscribe = enableScrollListener;
     this.ionScrollEnd.onSubscribe = enableScrollListener;
@@ -359,12 +359,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit {
     this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
     this._imgVelMax = config.getNumber('imgVelocityMax', 3);
 
-    // use JS scrolling for iOS UIWebView
-    // goal is to completely remove this when iOS
-    // fully supports scroll events
-    // listen to JS scroll events
-    const jsScroll = config.getBoolean('virtualScrollEventAssist');
-    this._scroll = new ScrollView(_app, _plt, _dom, jsScroll);
+    this._scroll = new ScrollView(_app, _plt, _dom);
 
     while (navCtrl) {
       if (isTabs(<any>navCtrl)) {
@@ -431,8 +426,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit {
   /**
    * @hidden
    */
-  enableScrollListener() {
-    this._scroll.eventsEnabled = true;
+  enableJsScroll() {
+    this._scroll.enableJsScroll(this._cTop, this._cBottom);
   }
 
   /**
