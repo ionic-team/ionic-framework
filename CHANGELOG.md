@@ -34,7 +34,7 @@ With this release comes a major update to Angular (Angular 4.0!), the latest ver
       "@ionic-native/splash-screen": "3.4.2",
       "@ionic-native/status-bar": "3.4.2",
       "@ionic/storage": "2.0.1",
-      "ionic-angular": "3.0.0",
+      "ionic-angular": "3.0.1",
       "ionicons": "3.0.0",
       "rxjs": "5.1.1",
       "sw-toolbox": "3.4.0",
