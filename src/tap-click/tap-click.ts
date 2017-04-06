@@ -9,7 +9,7 @@ import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
 import { Platform } from '../platform/platform';
 import { pointerCoord, hasPointerMoved } from '../util/dom';
-import { PointerEvents, POINTER_EVENT_TYPE_MOUSE } from '../gestures/pointer-events';
+import { PointerEvents, POINTER_EVENT_TYPE_TOUCH } from '../gestures/pointer-events';
 import { RippleActivator } from './ripple';
 import { UIEventManager } from '../gestures/ui-event-manager';
 
@@ -108,7 +108,7 @@ export class TapClick {
         this.activator.upAction(ev, activatableEle, this.startCoord);
       }
     }
-    if (this.usePolyfill && pointerEventType === POINTER_EVENT_TYPE_MOUSE && this.app.isEnabled()) {
+    if (this.usePolyfill && pointerEventType === POINTER_EVENT_TYPE_TOUCH && this.app.isEnabled()) {
       this.handleTapPolyfill(ev);
     }
     this.startCoord = null;
