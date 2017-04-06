@@ -1,3 +1,15 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/driftyco/ionic/compare/v3.0.0...v3.0.1) (2017-04-06)
+
+
+### Bug Fixes
+
+* **scroll:** fix scroll issues in UIWebView ([26d10c4](https://github.com/driftyco/ionic/commit/26d10c4)), closes [#11081](https://github.com/driftyco/ionic/issues/11081) [#10976](https://github.com/driftyco/ionic/issues/10976) [#10966](https://github.com/driftyco/ionic/issues/10966) [#10936](https://github.com/driftyco/ionic/issues/10936) [#11051](https://github.com/driftyco/ionic/issues/11051) [#10889](https://github.com/driftyco/ionic/issues/10889)
+* **tap-click:** remove 300ms click delay ([36bbcd9](https://github.com/driftyco/ionic/commit/36bbcd9))
+* **virtual-list:** make it work with empty lists ([eb9de60](https://github.com/driftyco/ionic/commit/eb9de60)), closes [#11093](https://github.com/driftyco/ionic/issues/11093)
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/driftyco/ionic/compare/v2.3.0...v3.0.0) (2017-04-05)
 
