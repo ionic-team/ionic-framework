@@ -18,6 +18,7 @@ import { UIEventManager } from '../gestures/ui-event-manager';
  */
 @Injectable()
 export class TapClick {
+  
   private disableClick: number = 0;
   private usePolyfill: boolean;
   private activator: ActivatorBase;
@@ -236,7 +237,7 @@ function getActivatableTarget(ele: HTMLElement): any {
 /**
  * @hidden
  */
-export const isActivatable = function (ele: HTMLElement) {
+export function isActivatable(ele: HTMLElement) {
   if (ACTIVATABLE_ELEMENTS.indexOf(ele.tagName) > -1) {
     return true;
   }

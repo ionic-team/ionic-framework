@@ -70,7 +70,7 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
             '[attr.aria-checked]="_value" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
+            'class="item-cover" disable-activated>' +
     '</button>',
   host: {
     '[class.toggle-disabled]': '_disabled'
