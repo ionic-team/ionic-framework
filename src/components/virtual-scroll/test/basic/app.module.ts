@@ -12,10 +12,6 @@ export class E2EPage {
   counter: number = 0;
 
   constructor(plt: Platform, public navCtrl: NavController) {
-    for (var i = 0; i < 200; i++) {
-      this.addItem();
-    }
-
     if (plt.is('ios')) {
       if (plt.testUserAgent('Safari')) {
         this.webview = ': iOS Safari';
@@ -25,6 +21,14 @@ export class E2EPage {
 
       } else {
         this.webview = ': iOS UIWebView';
+      }
+    }
+  }
+
+  addItems() {
+    if (this.items.length === 0) {
+      for (var i = 0; i < 200; i++) {
+        this.addItem();
       }
     }
   }
