@@ -344,10 +344,18 @@ ion-footer {
 // Float
 // --------------------------------------------------
 
-[pull-left] {
+[pull-left], [dir="ltr"] [pull-left] {
   float: left;
 }
 
-[pull-right] {
+[pull-right], [dir="ltr"] [pull-right] {
   float: right;
+}
+
+[dir="rtl"] [pull-left] {
+  float: right;
+}
+
+[dir="rtl"] [pull-right] {
+  float: left;
 }
