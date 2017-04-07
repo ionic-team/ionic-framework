@@ -60,6 +60,13 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($i
 
 .toggle-ios {
   position: relative;
+
+  width: $toggle-ios-width;
+  height: $toggle-ios-height;
+
+  box-sizing: content-box;
+
+  contain: strict;
 }
 
 
@@ -70,8 +77,8 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($i
   position: relative;
   display: block;
 
-  width: $toggle-ios-width;
-  height: $toggle-ios-height;
+  width: 100%;
+  height: 100%;
 
   border-radius: $toggle-ios-border-radius;
 
@@ -117,6 +124,9 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($i
   box-shadow: $toggle-ios-handle-box-shadow;
 
   transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
+
+  will-change: transform;
+  contain: strict;
 }
 
 

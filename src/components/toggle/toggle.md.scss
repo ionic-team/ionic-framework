@@ -67,6 +67,8 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
   height: $toggle-md-track-height;
 
   box-sizing: content-box;
+
+  contain: strict;
 }
 
 
@@ -117,7 +119,7 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
 // Material Design Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-md .toggle-checked {
+.toggle-md.toggle-checked .toggle-icon {
   background-color: $toggle-md-track-background-color-on;
 }
 
