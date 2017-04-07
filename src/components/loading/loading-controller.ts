@@ -35,6 +35,11 @@ import { LoadingOptions } from './loading-options';
  * `onDidDismiss` function can be called to perform an action after the loading
  * indicator is dismissed.
  *
+ * Attempting to dismiss a loading indicator before it has been completely
+ * presented will result in errors, so make sure to enclose all code paths
+ * that may dismiss the loading indicator in a `then()` clause attached to
+ * the promise returned by `present` as shown in the examples below.
+ *
  * >Note that after the component is dismissed, it will not be usable anymore
  * and another one must be created. This can be avoided by wrapping the
  * creation and presentation of the component in a reusable function as shown
@@ -56,11 +61,11 @@ import { LoadingOptions } from './loading-options';
  *     content: 'Please wait...'
  *   });
  *
- *   loading.present();
- *
- *   setTimeout(() => {
- *     loading.dismiss();
- *   }, 5000);
+ *   loading.present().then(() => {
+ *     setTimeout(() => {
+ *       loading.dismiss();
+ *     }, 5000);
+ *   });
  * }
  *
  * presentLoadingCustom() {
@@ -77,7 +82,7 @@ import { LoadingOptions } from './loading-options';
  *     console.log('Dismissed loading');
  *   });
  *
- *   loading.present();
+ *   return loading.present();
  * }
  *
  * presentLoadingText() {
@@ -86,15 +91,15 @@ import { LoadingOptions } from './loading-options';
  *     content: 'Loading Please Wait...'
  *   });
  *
- *   loading.present();
+ *   loading.present().then(() => {
+ *     setTimeout(() => {
+ *       this.nav.push(Page2);
+ *     }, 1000);
  *
- *   setTimeout(() => {
- *     this.nav.push(Page2);
- *   }, 1000);
- *
- *   setTimeout(() => {
- *     loading.dismiss();
- *   }, 5000);
+ *     setTimeout(() => {
+ *       loading.dismiss();
+ *     }, 5000);
+ *   });
  * }
  * ```
  * @advanced
