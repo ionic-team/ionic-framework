@@ -2276,7 +2276,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
 * **loading:** include cssClass in the Loading options ([4c8ee95](https://github.com/driftyco/ionic/commit/4c8ee95)), closes [#6365](https://github.com/driftyco/ionic/issues/6365)
 * **nav:** transition toolbars on iOS ([daa4ccc](https://github.com/driftyco/ionic/commit/daa4ccc)), closes [#5692](https://github.com/driftyco/ionic/issues/5692)
 * **picker:** number of dom children != number of options (#6551) ([28cf16a](https://github.com/driftyco/ionic/commit/28cf16a))
-* **radio:** add styling for radio when item-left/item-right is added ([4c5dd0b](https://github.com/driftyco/ionic/commit/4c5dd0b))
+* **radio:** add styling for radio when item-start/item-end is added ([4c5dd0b](https://github.com/driftyco/ionic/commit/4c5dd0b))
 * **raf:** test for undefined raf ([1c16008](https://github.com/driftyco/ionic/commit/1c16008))
 * **segment:** add disabled property to segment and segment button ([4fca31e](https://github.com/driftyco/ionic/commit/4fca31e))
 * **select:** add min height to select text for windows since it shows border ([e9c1442](https://github.com/driftyco/ionic/commit/e9c1442))
@@ -2495,4 +2495,4 @@ to set the default button color.
 
 Renamed Sass variables in toggle, checkbox, and
 radio. Changed the word `media` in `component-mode-media-padding` (for example)
-to `item-left`.
+to `item-start`.
