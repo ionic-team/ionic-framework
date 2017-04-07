@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
+import { ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
@@ -130,6 +130,8 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   _writeValue(val: any): boolean {
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
+
     if (isUndefined(val)) {
       return false;
     }
@@ -154,7 +156,10 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   _fireIonChange() {
     if (this._init) {
-      this._debouncer.debounce(() => this.ionChange.emit(this));
+      this._debouncer.debounce(() => {
+        assert(NgZone.isInAngularZone(), 'callback should be zoned');
+        this.ionChange.emit(this);
+      });
     }
   }
 

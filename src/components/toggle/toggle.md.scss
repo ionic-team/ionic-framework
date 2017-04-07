@@ -61,10 +61,10 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
 .toggle-md {
   position: relative;
 
+  padding: $toggle-md-padding;
+
   width: $toggle-md-track-width;
   height: $toggle-md-track-height;
-
-  padding: $toggle-md-padding;
 
   box-sizing: content-box;
 }
@@ -107,6 +107,10 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
 
   transition-duration: $toggle-md-transition-duration;
   transition-property: transform, background-color;
+
+  will-change: transform, background-color;
+
+  contain: strict;
 }
 
 

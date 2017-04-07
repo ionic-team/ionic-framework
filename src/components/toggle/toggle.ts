@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { NgZone, AfterViewInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -12,7 +12,6 @@ import { Item } from '../item/item';
 import { KEY_ENTER, KEY_SPACE } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { ToggleGesture } from './toggle-gesture';
-
 
 export const TOGGLE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -109,7 +108,8 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
     @Optional() item: Item,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
-    private _cd: ChangeDetectorRef
+    private _cd: ChangeDetectorRef,
+    private _zone: NgZone,
   ) {
     super(config, elementRef, renderer, 'toggle', false, form, item, null);
   }
@@ -142,9 +142,11 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
     assert(startX, 'startX must be valid');
     console.debug('toggle, _onDragStart', startX);
 
-    this._startX = startX;
-    this._fireFocus();
-    this._activated = true;
+    this._zone.run(() => {
+      this._startX = startX;
+      this._fireFocus();
+      this._activated = true;
+    });
   }
 
   /**
@@ -156,22 +158,32 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
       return;
     }
 
-    console.debug('toggle, _onDragMove', currentX);
+    let dirty = false;
+    let value: boolean;
+    let activated: boolean;
 
     if (this._value) {
       if (currentX + 15 < this._startX) {
-        this.value = false;
-        this._haptic.selection();
-        this._startX = currentX;
-        this._activated = true;
+        dirty = true;
+        value = false;
+        activated = true;
       }
 
     } else if (currentX - 15 > this._startX) {
-      this.value = true;
-      this._haptic.selection();
-      this._startX = currentX;
-      this._activated = (currentX < this._startX + 5);
+      dirty = true;
+      value = true;
+      activated = (currentX < this._startX + 5);
     }
+
+    if (dirty) {
+      this._zone.run(() => {
+        this.value = value;
+        this._startX = currentX;
+        this._activated = activated;
+        this._haptic.selection();
+      });
+    }
+
   }
 
   /**
@@ -184,20 +196,22 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
     }
     console.debug('toggle, _onDragEnd', endX);
 
-    if (this._value) {
-      if (this._startX + 4 > endX) {
-        this.value = false;
+    this._zone.run(() => {
+      if (this._value) {
+        if (this._startX + 4 > endX) {
+          this.value = false;
+          this._haptic.selection();
+        }
+
+      } else if (this._startX - 4 < endX) {
+        this.value = true;
         this._haptic.selection();
       }
 
-    } else if (this._startX - 4 < endX) {
-      this.value = true;
-      this._haptic.selection();
-    }
-
-    this._activated = false;
-    this._fireBlur();
-    this._startX = null;
+      this._activated = false;
+      this._fireBlur();
+      this._startX = null;
+    });
   }
 
   /**
