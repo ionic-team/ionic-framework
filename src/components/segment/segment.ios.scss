@@ -73,7 +73,8 @@ $segment-button-ios-toolbar-icon-size:          2.2rem !default;
 $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
 
-.segment-ios .segment-button {
+.segment-ios .segment-button,
+[dir="ltr"] .segment-ios .segment-button {
   flex: 1;
 
   width: 0;
@@ -127,6 +128,21 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
     border-left-width: 0;
     border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
+  }
+}
+
+[dir="rtl"] .segment-ios .segment-button {
+  &:first-of-type {
+    margin-left: 0;
+
+    border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+
+    border-left-width: $segment-button-ios-border-width;
+    border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
   }
 }
 
