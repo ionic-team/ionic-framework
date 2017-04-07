@@ -7,6 +7,7 @@ import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
+import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
@@ -132,7 +133,7 @@ import { ViewController } from '../../navigation/view-controller';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class Tab extends NavControllerBase {
+export class Tab extends NavControllerBase implements ITab {
   /**
    * @hidden
    */

@@ -14,7 +14,7 @@ import { Keyboard } from '../platform/keyboard';
 import { Menu } from '../components/menu/menu';
 import { NavOptions } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
-import { OverlayPortal } from '../components/nav/overlay-portal';
+import { OverlayPortal } from '../components/app/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
 import { Platform } from '../platform/platform';
 import { QueryParams } from '../platform/query-params';

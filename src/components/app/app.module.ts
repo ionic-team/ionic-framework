@@ -1,19 +1,20 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
+import { ClickBlock } from './click-block';
 import { IonicApp } from './app-root';
-
-import { NavModule } from '../nav/nav.module';
+import { OverlayPortal } from './overlay-portal';
 
 /** @hidden */
 @NgModule({
-  imports: [
-    NavModule
-  ],
   declarations: [
-    IonicApp
+    ClickBlock,
+    IonicApp,
+    OverlayPortal
   ],
   exports: [
-    IonicApp
+    ClickBlock,
+    IonicApp,
+    OverlayPortal
   ],
   entryComponents: [
     IonicApp

@@ -1,5 +1,5 @@
 import { Animation } from '../../animations/animation';
-import { Menu } from './menu';
+import { Menu } from './menu-interface';
 import { MenuController } from './menu-controller';
 import { Platform } from '../../platform/platform';
 

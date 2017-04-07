@@ -5,7 +5,6 @@ import { NavPop, } from './nav-pop';
 import { NavPopAnchor } from './nav-pop-anchor';
 import { NavPush } from './nav-push';
 import { NavPushAnchor } from './nav-push-anchor';
-import { OverlayPortal } from './overlay-portal';
 
 /** @hidden */
 @NgModule({
@@ -15,7 +14,6 @@ import { OverlayPortal } from './overlay-portal';
     NavPopAnchor,
     NavPush,
     NavPushAnchor,
-    OverlayPortal
   ],
   exports: [
     Nav,
@@ -23,7 +21,6 @@ import { OverlayPortal } from './overlay-portal';
     NavPopAnchor,
     NavPush,
     NavPushAnchor,
-    OverlayPortal
   ]
 })
 export class NavModule {

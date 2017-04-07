@@ -1,4 +1,4 @@
-import { Menu } from './menu';
+import { Menu } from './menu-interface';
 import { MenuType } from './menu-types';
 import { Platform } from '../../platform/platform';
 import { removeArrayItem, assert } from '../../util/util';

@@ -4,7 +4,7 @@ import { App } from './app';
 import { assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { OverlayPortal } from '../nav/overlay-portal';
+import { OverlayPortal } from './overlay-portal';
 import { Platform } from '../../platform/platform';
 import * as Constants from './app-constants';
 

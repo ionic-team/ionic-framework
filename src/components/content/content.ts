@@ -9,6 +9,7 @@ import { isTabs } from '../../navigation/nav-util';
 import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
+import { Content as IContent } from '../../navigation/nav-interfaces';
 import { Platform } from '../../platform/platform';
 import { ScrollView, ScrollEvent } from '../../util/scroll-view';
 import { Tabs } from '../tabs/tabs';
@@ -135,7 +136,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion implements OnDestroy, AfterViewInit {
+export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   /** @internal */
   _cTop: number;
   /** @internal */

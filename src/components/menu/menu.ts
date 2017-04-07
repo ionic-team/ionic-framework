@@ -9,6 +9,7 @@ import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../..
 import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
+import { Menu as MenuInterface } from './menu-interface';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 import { Nav } from '../nav/nav';
@@ -192,7 +193,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
-export class Menu implements RootNode {
+export class Menu implements RootNode, MenuInterface {
 
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;

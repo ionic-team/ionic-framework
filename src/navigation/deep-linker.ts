@@ -5,10 +5,8 @@ import { App } from '../components/app/app';
 import { convertToViews, DIRECTION_BACK, isNav, isTab, isTabs, NavLink, NavSegment } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
-import { Nav } from '../components/nav/nav';
+import { Nav, Tab, Tabs } from './nav-interfaces';
 import { NavController } from './nav-controller';
-import { Tab } from '../components/tabs/tab';
-import { Tabs } from '../components/tabs/tabs';
 import { UrlSerializer } from './url-serializer';
 import { ViewController } from './view-controller';
 
@@ -77,7 +75,7 @@ export class DeepLinker {
       }
 
       // get the app's root nav
-      const appRootNav = <Nav>this._app.getRootNav();
+      const appRootNav = <Nav> (this._app.getRootNav() as any);
       if (appRootNav) {
         if (browserUrl === '/') {
           // a url change to the index url
@@ -90,17 +88,17 @@ export class DeepLinker {
             // the url change is to the root but we don't
             // already know the url used. So let's just
             // reset the root nav to its root page
-            appRootNav.goToRoot({
+            return appRootNav.goToRoot({
               updateUrl: false,
               isNavRoot: true
             });
-            return;
           }
         }
 
         // normal url
         this._segments = this._serializer.parse(browserUrl);
-        this._loadNavFromPath(appRootNav);
+        // this is so dirty I need a shower
+        this._loadNavFromPath(((appRootNav as any) as NavController));
       }
     }
   }
