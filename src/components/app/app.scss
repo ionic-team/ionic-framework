@@ -293,7 +293,8 @@ ion-footer {
 // Text Alignment
 // --------------------------------------------------
 
-[text-left], [dir="ltr"] [text-left] {
+[text-left],
+[dir="ltr"] [text-left] {
   text-align: left;
 }
 
@@ -301,7 +302,8 @@ ion-footer {
   text-align: center;
 }
 
-[text-right], [dir="ltr"] [text-right] {
+[text-right],
+[dir="ltr"] [text-right] {
   text-align: right;
 }
 
@@ -344,11 +346,13 @@ ion-footer {
 // Float
 // --------------------------------------------------
 
-[pull-left], [dir="ltr"] [pull-left] {
+[pull-left],
+[dir="ltr"] [pull-left] {
   float: left;
 }
 
-[pull-right], [dir="ltr"] [pull-right] {
+[pull-right],
+[dir="ltr"] [pull-right] {
   float: right;
 }
 
