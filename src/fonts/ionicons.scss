@@ -33,3 +33,68 @@ ion-icon {
   text-transform: none;
   speak: none;
 }
+
+// RTL Support
+// --------------------------
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+@mixin notIn($attribute, $operator, $ignoreList...) {
+  // If only a single value given
+  @if (length($ignoreList) == 1) {
+    // It is probably a list variable so set ignore list to the variable
+    $ignoreList: nth($ignoreList, 1);
+  }
+
+  // Set up an empty $notOutput variable
+  $notOutput: '';
+  // For each item in the list
+  @each $not in $ignoreList {
+    // Generate a :not([attribute='ignored_item']) segment for each item in the ignore list and put them back to back
+    $notOutput: $notOutput + ":not([#{$attribute}#{$operator}='#{str-replace($not, '-', ' ')}'])";
+  }
+  //output the full :not() rule including all ignored items
+  &#{$notOutput} {
+    @content;
+  }
+}
+
+[flip] {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+$ltr-begin: "logo";
+
+$ltr-icons: "at", "attach",
+"bluetooth",
+"checkbox", "checkbox-outline", "checkmark", "checkmark-circle", "checkmark-circle-outline", "chrome",
+"closed-captioning",
+  // Adding cloud because of "cloud-done" & "thunderstorm"
+"cloud", "cloud-circle", "cloud-done", "cloud-download", "cloud-outline", "cloud-upload", "thunderstorm",
+"done-all",
+"help", "help-circle",
+"information", "information-circle", "ionic",
+"musical-note", "musical-notes",
+"no-smoking",
+"play",
+"timer", "trending-down", "trending-up",
+"volume-down", "volume-mute", "volume-off", "volume-up";
+
+[dir="rtl"] ion-icon {
+  @include notIn("aria-label", "^", $ltr-begin) { // Does not start with
+    @include notIn("aria-label", "", $ltr-icons) { // Does not equal
+      @extend [flip];
+    }
+  }
+}
