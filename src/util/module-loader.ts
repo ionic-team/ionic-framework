@@ -78,23 +78,17 @@ export interface LoadedModule {
  * @hidden
  */
 export function setupPreloadingImplementation(config: Config, deepLinkConfig: DeepLinkConfig, moduleLoader: ModuleLoader) {
-  if (config.getBoolean('preloadModules')) {
+  if (config.getBoolean('preloadModules') && deepLinkConfig && deepLinkConfig.links) {
       const linksToLoad = deepLinkConfig.links.filter(link => !!link.loadChildren && link.priority !== 'off');
 
       // Load the high priority modules first
-      const highPriorityPromises = linksToLoad.map(link => {
-        if (link.priority === 'high') {
-          return moduleLoader.load(link.loadChildren);
-        }
-      });
+      const highPriorityPromises = linksToLoad.filter(link => link.priority === 'high')
+        .map(link => moduleLoader.load(link.loadChildren));
 
       Promise.all(highPriorityPromises).then(() => {
         // Load the low priority modules after the high priority are done
-        const lowPriorityPromises = linksToLoad.map(link => {
-          if (link.priority === 'low') {
-            return moduleLoader.load(link.loadChildren);
-          }
-        });
+        const lowPriorityPromises = linksToLoad.filter(link => link.priority === 'low')
+          .map(link => moduleLoader.load(link.loadChildren));
         return Promise.all(lowPriorityPromises);
       }).catch(err => {
         console.error(err.message);
