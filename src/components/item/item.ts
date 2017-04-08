@@ -105,8 +105,8 @@ import { ItemReorder } from './item-reorder';
  *
  *  | Attribute      | Description                                                                                          |
  *  |----------------|----------------------------------------------------------------------------------------------------- |
- *  | `item-start`    | Placed to the left of all other elements, outside of the inner item.                                 |
- *  | `item-end`   | Placed to the right of all other elements, inside of the inner item, outside of the input wrapper.   |
+ *  | `item-start`   | Placed to the left of all other elements, outside of the inner item.                                 |
+ *  | `item-end`     | Placed to the right of all other elements, inside of the inner item, outside of the input wrapper.   |
  *  | `item-content` | Placed to the right of any `ion-label`, inside of the input wrapper.                                 |
  *
  * ### Checkboxes, Radios and Toggles
