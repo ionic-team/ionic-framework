@@ -292,7 +292,7 @@ export class Tab extends NavControllerBase {
   /**
    * @hidden
    */
-  load(opts: NavOptions, done?: Function) {
+  load(opts: NavOptions, done?: () => void) {
     if (!this._loaded && this.root) {
       this.setElementClass('show-tab', true);
       this.push(this.root, this.rootParams, opts, done);
@@ -305,7 +305,7 @@ export class Tab extends NavControllerBase {
       this._dom.read(() => {
         this.resize();
       });
-      done(true);
+      done();
     }
   }
 

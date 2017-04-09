@@ -19,7 +19,8 @@ describe('module-loader', () => {
         promise.then((response) => {
           expect(ngModuleLoader.load).toHaveBeenCalledWith(pathPrefix, exportSuffix);
         }).catch((err: Error) => {
-          done(err);
+            fail(err);
+            done(err);
         });
     });
 
