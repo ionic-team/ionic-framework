@@ -7,6 +7,8 @@ export interface Nav {
 export interface Tabs {
   _tabs: Tab[];
   select(tabOrIndex: number | Tab, opts: NavOptions): void;
+  _top: number;
+  setTabbarPosition(top: number, bottom: number): void;
 };
 
 export interface Tab {
