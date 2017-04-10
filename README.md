@@ -9,7 +9,7 @@ build top quality native and progressive web apps with web technologies.
 Ionic is based on [Angular](https://angular.io/) and comes with many significant performance, usability, and
 feature improvements over the past versions.
 
-See the [Building Apps with Ionic 2](http://adamdbradley.github.io/building-with-ionic2) slides for a quick
+See the [Building Apps with Ionic](http://adamdbradley.github.io/building-with-ionic2) slides for a quick
 overview or watch our [Crash Course](https://youtu.be/O2WiI9QrS5s) video for a quick walkthrough on how to get
 started using Ionic.
 
