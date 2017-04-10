@@ -37,7 +37,7 @@ import { registerModeConfigs } from './config/mode-registry';
 import { TransitionController } from './transitions/transition-controller';
 import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 
-import { MenuController } from './components/menu/menu-controller';
+import { MenuController } from './components/app/menu-controller';
 
 
 /**
@@ -45,9 +45,9 @@ import { MenuController } from './components/menu/menu-controller';
  */
 import { AppModule } from './components/app/app.module';
 
-//import { AvatarModule } from './components/avatar/avatar.module';
-//import { BackdropModule } from './components/backdrop/backdrop.module';
-//import { BadgeModule } from './components/badge/badge.module';
+import { Avatar } from './components/avatar/avatar';
+import { Backdrop } from './components/backdrop/backdrop';
+import { Badge } from './components/badge/badge';
 //import { ButtonModule } from './components/button/button.module';
 //import { CardModule } from './components/card/card.module';
 //import { CheckboxModule } from './components/checkbox/checkbox.module';
@@ -89,10 +89,6 @@ import { AppModule } from './components/app/app.module';
  * Export Modules
  */
 export { AppModule } from './components/app/app.module';
-
-//export { AvatarModule } from './components/avatar/avatar.module';
-//export { BackdropModule } from './components/backdrop/backdrop.module';
-//export { BadgeModule } from './components/badge/badge.module';
 //export { ButtonModule } from './components/button/button.module';
 //export { CardModule } from './components/card/card.module';
 //export { CheckboxModule } from './components/checkbox/checkbox.module';
@@ -136,9 +132,9 @@ export { AppModule } from './components/app/app.module';
 
 export { IonicApp } from './components/app/app-root';
 export { App } from './components/app/app';
-//export { Avatar } from './components/avatar/avatar';
-//export { Backdrop } from './components/backdrop/backdrop';
-//export { Badge } from './components/badge/badge';
+export { Avatar } from './components/avatar/avatar';
+export { Backdrop } from './components/backdrop/backdrop';
+export { Badge } from './components/badge/badge';
 //export { Button } from './components/button/button';
 //export { Card } from './components/card/card';
 //export { CardContent } from './components/card/card-content';
@@ -309,15 +305,17 @@ export { IonicGestureConfig } from './gestures/gesture-config';
  * ```
  */
 @NgModule({
+  declarations: [
+    Avatar,
+    Backdrop,
+    Badge
+  ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
 
     AppModule.forRoot(),
-
-    //AvatarModule.forRoot(),
-    //BackdropModule.forRoot(),
     //BadgeModule.forRoot(),
     //ButtonModule.forRoot(),
     //CardModule.forRoot(),
@@ -360,8 +358,9 @@ export { IonicGestureConfig } from './gestures/gesture-config';
     ReactiveFormsModule,
 
     AppModule,
-    //AvatarModule,
-    //BackdropModule,
+    Avatar,
+    Backdrop,
+    Badge
     //BadgeModule,
     //ButtonModule,
     //CardModule,

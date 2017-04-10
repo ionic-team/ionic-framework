@@ -9,8 +9,8 @@ import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../..
 import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
-import { Menu as MenuInterface } from './menu-interface';
-import { MenuController } from './menu-controller';
+import { Menu as MenuInterface } from '../app/menu-interface';
+import { MenuController } from '../app/menu-controller';
 import { MenuType } from './menu-types';
 import { Nav } from '../nav/nav';
 import { Platform } from '../../platform/platform';
