@@ -55,9 +55,6 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 .item-md {
   position: relative;
 
-  padding-right: 0;
-  padding-left: ($item-md-padding-left);
-
   font-size: $item-md-font-size;
   font-weight: normal;
   text-transform: none;
@@ -66,6 +63,15 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   background-color: $list-md-background-color;
   box-shadow: none;
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+}
+[dir="ltr"] .item-md {
+  padding-right: 0;
+  padding-left: ($item-md-padding-left);
+}
+
+[dir="rtl"] .item-md {
+  padding-right: ($item-md-padding-right);
+  padding-left: 0;
 }
 
 .item-md.activated {
