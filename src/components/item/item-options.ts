@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
 
+import { Platform } from '../../platform/platform';
 import { isPresent} from '../../util/util';
 import { ITEM_SIDE_FLAG_LEFT, ITEM_SIDE_FLAG_RIGHT, ItemSliding } from './item-sliding';
 
@@ -39,13 +40,19 @@ export class ItemOptions {
    */
   @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer, private _plt: Platform) {}
 
   /**
    * @hidden
    */
   getSides(): number {
-    if (isPresent(this.side) && this.side === 'left') {
+    if (isPresent(this.side) && this.side === 'left' && !_plt.isRTL()) {
+      return ITEM_SIDE_FLAG_LEFT;
+    }
+    else if (isPresent(this.side) && this.side === 'left' && _plt.isRTL()) {
+      return ITEM_SIDE_FLAG_RIGHT;
+    }
+    else if (isPresent(this.side) && this.side === 'right' && _plt.isRTL()) {
       return ITEM_SIDE_FLAG_LEFT;
     }
     return ITEM_SIDE_FLAG_RIGHT;
