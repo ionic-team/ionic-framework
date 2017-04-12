@@ -8,6 +8,7 @@ $ionicons-font-path: $font-path !default;
 
 @import "ionicons-icons";
 @import "ionicons-variables";
+@import "~hail2u-scss-functions/string/_str-replace";
 
 
 @font-face {
@@ -36,16 +37,6 @@ ion-icon {
 
 // RTL Support
 // --------------------------
-
-@function str-replace($string, $search, $replace: '') {
-  $index: str-index($string, $search);
-
-  @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
-  }
-
-  @return $string;
-}
 
 @mixin notIn($attribute, $operator, $ignoreList...) {
   // If only a single value given
