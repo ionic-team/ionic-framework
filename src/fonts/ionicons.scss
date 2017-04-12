@@ -50,7 +50,7 @@ ion-icon {
   // For each item in the list
   @each $not in $ignoreList {
     // Generate a :not([attribute='ignored_item']) segment for each item in the ignore list and put them back to back
-    $notOutput: $notOutput + ":not([#{$attribute}#{$operator}='#{str-replace($not, '-', ' ')}'])";
+    $notOutput: #{"#{$notOutput}:not([#{$attribute}#{$operator}='#{str-replace($not, '-', ' ')}'])"};
   }
   //output the full :not() rule including all ignored items
   &#{$notOutput} {
