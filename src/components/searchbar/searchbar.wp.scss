@@ -96,10 +96,6 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   background-size: $searchbar-wp-input-search-icon-size;
 }
 
-.searchbar-wp .searchbar-search-icon.activated {
-  background-color: transparent;
-}
-
 [dir="ltr"] .searchbar-wp .searchbar-search-icon {
   right: $searchbar-wp-input-padding-horizontal;
 }
@@ -108,6 +104,9 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   left: $searchbar-wp-input-padding-horizontal;
 }
 
+.searchbar-wp .searchbar-search-icon.activated {
+  background-color: transparent;
+}
 
 // Searchbar Input Field
 // -----------------------------------------
@@ -139,7 +138,6 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 
   position: absolute;
   top: 0;
-  right: $searchbar-wp-input-padding-horizontal;
 
   padding: 0;
 
@@ -149,6 +147,14 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   background-repeat: no-repeat;
   background-position: center;
   background-size: $searchbar-wp-input-clear-icon-size;
+}
+
+[dir="ltr"] .searchbar-wp .searchbar-clear-icon {
+  right: $searchbar-wp-input-padding-horizontal;
+}
+
+[dir="rtl"] .searchbar-wp .searchbar-clear-icon {
+  left: $searchbar-wp-input-padding-horizontal;
 }
 
 .searchbar-wp .searchbar-clear-icon.activated {
