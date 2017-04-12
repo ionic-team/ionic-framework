@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewEncapsulation, ViewChild, ViewContainerRef, ReflectiveInjector } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
@@ -58,6 +58,9 @@ import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
         '</ng-template>' +
 
       '</div>' +
+
+      '<div #viewport nav-viewport></div>' +
+
       '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
         '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
@@ -75,7 +78,12 @@ export class AlertCmp {
 
   activeId: string;
   descId: string;
-  d: AlertOptions;
+  d: AlertOptions & {
+    subview?: {
+      component?: any;
+      args?: any
+    }
+  };
   enabled: boolean;
   hdrId: string;
   id: number;
@@ -86,6 +94,9 @@ export class AlertCmp {
   mode: string;
   gestureBlocker: BlockerDelegate;
 
+  @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
+  createdComponent: any;
+
   constructor(
     public _viewCtrl: ViewController,
     public _elementRef: ElementRef,
@@ -93,6 +104,7 @@ export class AlertCmp {
     gestureCtrl: GestureController,
     params: NavParams,
     private _renderer: Renderer,
+    public _cfr: ComponentFactoryResolver,
     private _plt: Platform
   ) {
     // gesture blocker is used to disable gestures dynamically
@@ -125,6 +137,22 @@ export class AlertCmp {
 
     if (!this.d.message) {
       this.d.message = '';
+    }
+  }
+
+  ionViewPreLoad() {
+    if (this.d.subview && this.d.subview.component) {
+
+      const componentFactory = this._cfr.resolveComponentFactory(this.d.subview.component);
+
+      const componentProviders = ReflectiveInjector.resolve([
+        { provide: NavParams, useValue: new NavParams(this.d.subview.args) }
+      ]);
+      const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
+
+      // ******** DOM WRITE ****************
+      const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, childInjector, []);
+      this.createdComponent = componentRef.instance;
     }
   }
 
@@ -305,6 +333,14 @@ export class AlertCmp {
   }
 
   getValues(): any {
+    if (this.createdComponent) {
+
+      if (typeof this.createdComponent.getValues === 'function')
+        return this.createdComponent.getValues();
+
+      return this.createdComponent;
+    }
+
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
