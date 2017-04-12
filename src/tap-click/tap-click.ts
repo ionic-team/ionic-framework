@@ -9,7 +9,7 @@ import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
 import { Platform } from '../platform/platform';
 import { pointerCoord, hasPointerMoved } from '../util/dom';
-import { PointerEvents, POINTER_EVENT_TYPE_MOUSE } from '../gestures/pointer-events';
+import { PointerEvents, POINTER_EVENT_TYPE_TOUCH } from '../gestures/pointer-events';
 import { RippleActivator } from './ripple';
 import { UIEventManager } from '../gestures/ui-event-manager';
 
@@ -18,6 +18,7 @@ import { UIEventManager } from '../gestures/ui-event-manager';
  */
 @Injectable()
 export class TapClick {
+
   private disableClick: number = 0;
   private usePolyfill: boolean;
   private activator: ActivatorBase;
@@ -108,7 +109,7 @@ export class TapClick {
         this.activator.upAction(ev, activatableEle, this.startCoord);
       }
     }
-    if (this.usePolyfill && pointerEventType === POINTER_EVENT_TYPE_MOUSE && this.app.isEnabled()) {
+    if (this.usePolyfill && pointerEventType === POINTER_EVENT_TYPE_TOUCH && this.app.isEnabled()) {
       this.handleTapPolyfill(ev);
     }
     this.startCoord = null;
@@ -236,7 +237,7 @@ function getActivatableTarget(ele: HTMLElement): any {
 /**
  * @hidden
  */
-export const isActivatable = function (ele: HTMLElement) {
+export function isActivatable(ele: HTMLElement) {
   if (ACTIVATABLE_ELEMENTS.indexOf(ele.tagName) > -1) {
     return true;
   }

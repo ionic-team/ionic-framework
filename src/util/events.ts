@@ -137,7 +137,7 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
       let contentEle = <any>el.closest('.scroll-content');
       if (contentEle) {
         var style = contentEle.style;
-        var scroll = new ScrollView(null, plt, dom, false);
+        var scroll = new ScrollView(null, plt, dom);
         scroll._el = contentEle;
           // We need to stop scrolling if it's happening and scroll up
 

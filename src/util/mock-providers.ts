@@ -26,6 +26,9 @@ import { ViewController } from '../navigation/view-controller';
 import { ModuleLoader } from './module-loader';
 import { NgModuleLoader } from './ng-module-loader';
 import { DeepLinkConfig, STATE_INITIALIZED } from '../navigation/nav-util';
+import { Ion } from '../components/ion';
+import { Item } from '../components/item/item';
+import { Form } from './form';
 
 
 export function mockConfig(config?: any, url: string = '/', platform?: Platform) {
@@ -231,6 +234,14 @@ export function mockChangeDetectorRef(): ChangeDetectorRef {
   return cd;
 }
 
+export function mockGestureController(app?: App): GestureController {
+  if (!app) {
+    app = mockApp();
+  }
+  return new GestureController(app);
+
+}
+
 export class MockElementRef implements ElementRef {
   nativeElement: any;
   constructor(ele: any) {
@@ -242,7 +253,8 @@ export class MockElement {
   children: any[] = [];
   classList = new ClassList();
   attributes: { [name: string]: any } = {};
-  style: {[property: string]: any} = {};
+  style: { [property: string]: any } = {};
+  nodeName: string = 'ION-MOCK';
 
   clientWidth = 0;
   clientHeight = 0;
@@ -258,6 +270,7 @@ export class MockElement {
   get className() {
     return this.classList.classes.join(' ');
   }
+
   set className(val: string) {
     this.classList.classes = val.split(' ');
   }
@@ -273,6 +286,10 @@ export class MockElement {
   setAttribute(name: string, val: any) {
     this.attributes[name] = val;
   }
+
+  addEventListener(type: string, listener: Function, options?: any) { }
+
+  removeEventListener(type: string, listener: Function, options?: any) { }
 
   removeAttribute(name: string) {
     delete this.attributes[name];
@@ -491,6 +508,25 @@ export function mockTab(parentTabs: Tabs): Tab {
   };
 
   return tab;
+}
+
+export function mockForm(): Form {
+  return new Form();
+}
+
+export function mockIon(): Ion {
+  const config = mockConfig();
+  const elementRef = mockElementRef();
+  const renderer = mockRenderer();
+  return new Ion(config, elementRef, renderer, 'ion');
+}
+
+export function mockItem(): Item {
+  const form = mockForm();
+  const config = mockConfig();
+  const elementRef = mockElementRef();
+  const renderer = mockRenderer();
+  return new Item(form, config, elementRef, renderer, null);
 }
 
 export function mockTabs(app?: App): Tabs {

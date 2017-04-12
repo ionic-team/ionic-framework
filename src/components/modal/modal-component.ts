@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
@@ -30,6 +30,7 @@ export class ModalCmp {
   constructor(
     public _cfr: ComponentFactoryResolver,
     public _renderer: Renderer,
+    public _elementRef: ElementRef,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController,
@@ -43,6 +44,13 @@ export class ModalCmp {
       disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE]
     });
     this._bdDismiss = opts.enableBackdropDismiss;
+
+    if (opts.cssClass) {
+      opts.cssClass.split(' ').forEach((cssClass: string) => {
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') _renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
+    }
   }
 
   ionViewPreLoad() {

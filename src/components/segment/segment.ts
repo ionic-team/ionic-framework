@@ -1,10 +1,8 @@
-import { ContentChildren, Directive, ElementRef, EventEmitter, Input, Output, Optional, QueryList, Renderer } from '@angular/core';
+import { ContentChildren, Directive, ElementRef, Optional, QueryList, Renderer } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
-import { isPresent, isTrueProperty } from '../../util/util';
-
+import { BaseInput } from '../../util/base-input';
 import { SegmentButton } from './segment-button';
 
 /**
@@ -64,21 +62,12 @@ import { SegmentButton } from './segment-button';
  * @see [Angular 2 Forms](http://learnangular2.com/forms/)
  */
 @Directive({
-  selector: 'ion-segment'
+  selector: 'ion-segment',
+  host: {
+    '[class.segment-disabled]': '_disabled'
+  }
 })
-export class Segment extends Ion {
-  _disabled: boolean = false;
-
-  /**
-   * @hidden
-   */
-  value: string;
-
-  /**
-   * @output {Any} Emitted when a segment button has been changed.
-   */
-  @Output() ionChange: EventEmitter<SegmentButton> = new EventEmitter<SegmentButton>();
-
+export class Segment extends BaseInput<string> {
 
   /**
    * @hidden
@@ -91,85 +80,32 @@ export class Segment extends Ion {
     renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
-    super(config, elementRef, renderer, 'segment');
-
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-    }
-  }
-
-  /**
-   * @input {boolean} If true, the user cannot interact with any of the buttons in the segment.
-   */
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(val: boolean) {
-    this._disabled = isTrueProperty(val);
-
-    if (this._buttons) {
-      this._buttons.forEach(button => {
-        button._setElementClass('segment-button-disabled', this._disabled);
-      });
-    }
-  }
-
-  /**
-   * @hidden
-   * Write a new value to the element.
-   */
-  writeValue(value: any) {
-    this.value = isPresent(value) ? value : '';
-    if (this._buttons) {
-      let buttons = this._buttons.toArray();
-      for (let button of buttons) {
-        button.isActive = (button.value === this.value);
-      }
-    }
+    super(config, elementRef, renderer, 'segment', null, null, null, ngControl);
   }
 
   /**
    * @hidden
    */
   ngAfterViewInit() {
-   this._buttons.forEach(button => {
-     button.ionSelect.subscribe((selectedButton: any) => {
-       this.writeValue(selectedButton.value);
-       this.onChange(selectedButton.value);
-       this.ionChange.emit(selectedButton);
-     });
-
-     if (isPresent(this.value)) {
-       button.isActive = (button.value === this.value);
-     }
-
-     if (isTrueProperty(this._disabled)) {
-       button._setElementClass('segment-button-disabled', this._disabled);
-     }
-   });
+    this._initialize();
+    this._buttons.forEach(button => {
+      button.ionSelect.subscribe((selectedButton: any) => this.value = selectedButton.value);
+    });
   }
 
   /**
    * @hidden
+   * Write a new value to the element.
    */
-  onChange = (_: any) => {};
-  /**
-   * @hidden
-   */
-  onTouched = (_: any) => {};
+  _inputUpdated() {
+    if (this._buttons) {
+      var buttons = this._buttons.toArray();
+      var value = this.value;
+      for (var button of buttons) {
+        button.isActive = (button.value === value);
+      }
+    }
+  }
 
-  /**
-   * @hidden
-   * Set the function to be called when the control receives a change event.
-   */
-  registerOnChange(fn: any) { this.onChange = fn; }
-
-  /**
-   * @hidden
-   * Set the function to be called when the control receives a touch event.
-   */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
 
 }

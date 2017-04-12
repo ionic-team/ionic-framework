@@ -43,7 +43,8 @@ export class PageOne {
   presentModal() {
     let modal = this.modalCtrl.create('ModalPassData', { userId: 8675309 }, {
       enterAnimation: 'modal-slide-in',
-      leaveAnimation: 'modal-slide-out'
+      leaveAnimation: 'modal-slide-out',
+      cssClass: 'my-modal my-blue-modal'
     });
     modal.present();
 

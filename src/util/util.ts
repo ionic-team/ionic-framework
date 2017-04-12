@@ -17,6 +17,14 @@ export function deepCopy(obj: any) {
 }
 
 /** @hidden */
+export function deepEqual(a: any, b: any) {
+  if (a === b) {
+    return true;
+  }
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/** @hidden */
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
  var timeout: number, args: any, context: any, timestamp: number, result: any;
  return function() {
@@ -63,25 +71,26 @@ export function defaults(dest: any, ...args: any[]) {
 
 
 /** @hidden */
-export function isBoolean(val: any) { return typeof val === 'boolean'; }
+export function isBoolean(val: any): val is boolean { return typeof val === 'boolean'; }
 /** @hidden */
-export function isString(val: any) { return typeof val === 'string'; }
+export function isString(val: any): val is string { return typeof val === 'string'; }
 /** @hidden */
-export function isNumber(val: any) { return typeof val === 'number'; }
+export function isNumber(val: any): val is number { return typeof val === 'number'; }
 /** @hidden */
-export function isFunction(val: any) { return typeof val === 'function'; }
+export function isFunction(val: any): val is Function { return typeof val === 'function'; }
 /** @hidden */
-export function isDefined(val: any) { return typeof val !== 'undefined'; }
+export function isDefined(val: any): boolean { return typeof val !== 'undefined'; }
 /** @hidden */
-export function isUndefined(val: any) { return typeof val === 'undefined'; }
+export function isUndefined(val: any): val is undefined { return typeof val === 'undefined'; }
 /** @hidden */
-export function isPresent(val: any) { return val !== undefined && val !== null; }
+export function isPresent(val: any): val is any { return val !== undefined && val !== null; }
 /** @hidden */
-export function isBlank(val: any) { return val === undefined || val === null; }
+export function isBlank(val: any): val is null { return val === undefined || val === null; }
 /** @hidden */
-export function isObject(val: any) { return typeof val === 'object'; }
+export function isObject(val: any): val is Object { return typeof val === 'object'; }
 /** @hidden */
-export function isArray(val: any) { return Array.isArray(val); };
+export function isArray(val: any): val is any[] { return Array.isArray(val); };
+
 
 
 /** @hidden */

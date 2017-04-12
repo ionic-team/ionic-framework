@@ -1,12 +1,10 @@
-import { Component, ElementRef, EventEmitter, HostBinding, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgControl }  from '@angular/forms';
+import { Component, ElementRef, EventEmitter, Input, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
+import { BaseInput } from '../../util/base-input';
 import { isPresent, isTrueProperty } from '../../util/util';
 import { Platform } from '../../platform/platform';
-import { TimeoutDebouncer } from '../../util/debouncer';
-
 
 /**
  * @name Searchbar
@@ -49,13 +47,13 @@ import { TimeoutDebouncer } from '../../util/debouncer';
     '[class.searchbar-has-value]': '_value',
     '[class.searchbar-active]': '_isActive',
     '[class.searchbar-show-cancel]': '_showCancelButton',
-    '[class.searchbar-left-aligned]': '_shouldAlignLeft'
+    '[class.searchbar-left-aligned]': '_shouldAlignLeft',
+    '[class.searchbar-has-focus]': '_isFocus'
   },
   encapsulation: ViewEncapsulation.None
 })
-export class Searchbar extends Ion {
+export class Searchbar extends BaseInput<string> {
 
-  _value: string|number = '';
   _shouldBlur: boolean = true;
   _shouldAlignLeft: boolean = true;
   _isCancelVisible: boolean = false;
@@ -63,7 +61,6 @@ export class Searchbar extends Ion {
   _autocomplete: string = 'off';
   _autocorrect: string = 'off';
   _isActive: boolean = false;
-  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(250);
   _showCancelButton: boolean = false;
   _animated: boolean = false;
 
@@ -145,16 +142,6 @@ export class Searchbar extends Ion {
   @Output() ionInput: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
   /**
-   * @output {event} Emitted when the Searchbar input has blurred.
-   */
-  @Output() ionBlur: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
-
-  /**
-   * @output {event} Emitted when the Searchbar input has focused.
-   */
-  @Output() ionFocus: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
-
-  /**
    * @output {event} Emitted when the cancel button is clicked.
    */
   @Output() ionCancel: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
@@ -164,10 +151,6 @@ export class Searchbar extends Ion {
    */
   @Output() ionClear: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
-  /**
-   * @hidden
-   */
-  @HostBinding('class.searchbar-has-focus') _sbHasFocus: boolean;
 
   constructor(
     config: Config,
@@ -176,12 +159,8 @@ export class Searchbar extends Ion {
     renderer: Renderer,
     @Optional() ngControl: NgControl
   ) {
-    super(config, elementRef, renderer, 'searchbar');
-
-    // If the user passed a ngControl we need to set the valueAccessor
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-    }
+    super(config, elementRef, renderer, 'searchbar', '', null, null, ngControl);
+    this.debounce = 250;
   }
 
   @ViewChild('searchbarInput') _searchbarInput: ElementRef;
@@ -191,21 +170,12 @@ export class Searchbar extends Ion {
   @ViewChild('cancelButton', {read: ElementRef}) _cancelButton: ElementRef;
 
   /**
-   * @input {string} Set the input value.
+   * @hidden
+   * After View Checked position the elements
    */
-  @Input()
-  get value() {
-    return this._value;
-  }
-
-  set value(val) {
-    this._value = val;
-    if (this._searchbarInput) {
-      let ele = this._searchbarInput.nativeElement;
-      if (ele) {
-        ele.value = val;
-      }
-    }
+  ngAfterViewInit() {
+    this._initialize();
+    this.positionElements();
   }
 
   /**
@@ -213,7 +183,7 @@ export class Searchbar extends Ion {
    * On Initialization check for attributes
    */
   ngOnInit() {
-    let showCancelButton = this.showCancelButton;
+    const showCancelButton = this.showCancelButton;
     if (typeof showCancelButton === 'string') {
       this.showCancelButton = (showCancelButton === '' || showCancelButton === 'true');
     }
@@ -221,9 +191,14 @@ export class Searchbar extends Ion {
 
   /**
    * @hidden
-   * After View Checked position the elements
    */
-  ngAfterContentInit() {
+  _inputUpdated() {
+    if (this._searchbarInput) {
+      var ele = this._searchbarInput.nativeElement;
+      if (ele) {
+        ele.value = this.value;
+      }
+    }
     this.positionElements();
   }
 
@@ -233,9 +208,9 @@ export class Searchbar extends Ion {
    * based on the input value and if it is focused. (ios only)
    */
   positionElements() {
-    let isAnimated = this._animated;
-    let prevAlignLeft = this._shouldAlignLeft;
-    let shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._sbHasFocus === true);
+    const isAnimated = this._animated;
+    const prevAlignLeft = this._shouldAlignLeft;
+    const shouldAlignLeft = (!isAnimated || (this._value && this._value.toString().trim() !== '') || this._isFocus === true);
     this._shouldAlignLeft = shouldAlignLeft;
 
     if (this._mode !== 'ios') {
@@ -254,8 +229,8 @@ export class Searchbar extends Ion {
     if (!this._searchbarInput || !this._searchbarIcon) {
       return;
     }
-    let inputEle = this._searchbarInput.nativeElement;
-    let iconEle = this._searchbarIcon.nativeElement;
+    const inputEle = this._searchbarInput.nativeElement;
+    const iconEle = this._searchbarIcon.nativeElement;
 
     if (this._shouldAlignLeft) {
       inputEle.removeAttribute('style');
@@ -290,15 +265,15 @@ export class Searchbar extends Ion {
     if (!this._cancelButton || !this._cancelButton.nativeElement) {
       return;
     }
-    let showShowCancel = this._sbHasFocus;
+    const showShowCancel = this._isFocus;
     if (showShowCancel !== this._isCancelVisible) {
-      let cancelStyleEle = this._cancelButton.nativeElement;
-      let cancelStyle = cancelStyleEle.style;
+      var cancelStyleEle = this._cancelButton.nativeElement;
+      var cancelStyle = cancelStyleEle.style;
       this._isCancelVisible = showShowCancel;
       if (showShowCancel) {
         cancelStyle.marginRight = '0';
       } else {
-        let offset = cancelStyleEle.offsetWidth;
+        var offset = cancelStyleEle.offsetWidth;
         if (offset > 0) {
           cancelStyle.marginRight = -offset + 'px';
         }
@@ -312,11 +287,8 @@ export class Searchbar extends Ion {
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
-    this._value = ev.target.value;
-    this._debouncer.debounce(() => {
-      this.onChange(this._value);
-      this.ionInput.emit(ev);
-    });
+    this.value = ev.target.value;
+    this.ionInput.emit(ev);
   }
 
   /**
@@ -324,10 +296,8 @@ export class Searchbar extends Ion {
    * Sets the Searchbar to focused and active on input focus.
    */
   inputFocused(ev: UIEvent) {
-    this.ionFocus.emit(ev);
-
-    this._sbHasFocus = true;
     this._isActive = true;
+    this._fireFocus();
     this.positionElements();
   }
 
@@ -344,9 +314,7 @@ export class Searchbar extends Ion {
       this._shouldBlur = true;
       return;
     }
-    this.ionBlur.emit(ev);
-
-    this._sbHasFocus = false;
+    this._fireBlur();
     this.positionElements();
   }
 
@@ -363,7 +331,6 @@ export class Searchbar extends Ion {
       let value = this._value;
       if (isPresent(value) && value !== '') {
         this.value = ''; // DOM WRITE
-        this.onChange(this._value);
         this.ionInput.emit(ev);
       }
     }, 16 * 4);
@@ -384,42 +351,8 @@ export class Searchbar extends Ion {
     this._isActive = false;
   }
 
-  /**
-   * @hidden
-   * Write a new value to the element.
-   */
-  writeValue(val: any) {
-    this.value = val;
-    this.positionElements();
-  }
-
-  /**
-   * @hidden
-   */
-  onChange = (_: any) => {};
-
-  /**
-   * @hidden
-   */
-  onTouched = () => {};
-
-  /**
-   * @hidden
-   * Set the function to be called when the control receives a change event.
-   */
-  registerOnChange(fn: (_: any) => {}): void {
-    this.onChange = fn;
-  }
-
-  /**
-   * @hidden
-   * Set the function to be called when the control receives a touch event.
-   */
-  registerOnTouched(fn: () => {}): void {
-    this.onTouched = fn;
-  }
-
-  setFocus() {
+  _fireFocus() {
     this._renderer.invokeElementMethod(this._searchbarInput.nativeElement, 'focus');
+    super._fireFocus();
   }
 }

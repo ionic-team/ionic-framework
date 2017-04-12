@@ -404,6 +404,11 @@ export abstract class NavController {
   config: Config;
 
   /**
+   * @input {boolean} If true, swipe to go back is enabled.
+   */
+  swipeBackEnabled: boolean;
+
+  /**
    * Push a new component onto the current navigation stack. Pass any aditional information
    * along as an object. This additional information is accessible through NavParams
    *

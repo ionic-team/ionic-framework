@@ -158,8 +158,8 @@ export function runNgc(pathToConfigFile: string, done: Function) {
   let shellCommand = `node --max_old_space_size=8096 ${ngcPath} -p ${pathToConfigFile}`;
 
   exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
     done(err);
   });
 }
@@ -169,9 +169,9 @@ export function runTsc(pathToConfigFile: string, done: Function) {
   let tscPath = getBinaryPath('typescript', 'tsc');
   let shellCommand = `node --max_old_space_size=8096 ${tscPath} -p ${pathToConfigFile}`;
 
-  exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
+  exec(shellCommand, function (err, stdout, stderr) {
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
     done(err);
   });
 }
@@ -182,8 +182,8 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   let shellCommand = `node --max_old_space_size=8096 ${webpackPath} --config ${pathToWebpackConfig} --display-error-details`;
 
   exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
     done(err);
   });
 }
@@ -219,15 +219,7 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   return new Promise((resolve, reject) => {
     const args = ['./node_modules/.bin/ionic-app-scripts'].concat(scriptArgs);
     console.log(`node ${args.join(' ')}`);
-    const spawnedCommand = spawn('node', args);
-
-    spawnedCommand.stdout.on('data', (buffer: Buffer) => {
-      console.log(buffer.toString());
-    });
-
-    spawnedCommand.stderr.on('data', (buffer: Buffer) => {
-      console.error(buffer.toString());
-    });
+    const spawnedCommand = spawn('node', args, {stdio: 'inherit'});
 
     spawnedCommand.on('close', (code: number) => {
       if (code === 0) {

@@ -317,40 +317,43 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
   data.topViewCell = totalCells;
   data.bottomViewCell = 0;
 
-  // completely realign position to ensure they're all accurately placed
-  cell = cells[0];
-  previousCell = {
-    row: 0,
-    width: 0,
-    height: 0,
-    top: cell.top,
-    left: 0,
-    tmpl: -1
-  };
-  for (var i = 0; i < totalCells; i++) {
-    cell = cells[i];
+  if (totalCells > 0) {
+    // completely realign position to ensure they're all accurately placed
+    cell = cells[0];
+    previousCell = {
+      row: 0,
+      width: 0,
+      height: 0,
+      top: cell.top,
+      left: 0,
+      tmpl: -1
+    };
 
-    if (previousCell.left + previousCell.width + cell.width > data.viewWidth) {
-      // new row
-      cell.row++;
-      cell.top = (previousCell.top + previousCell.height);
-      cell.left = 0;
+    for (var i = 0; i < totalCells; i++) {
+      cell = cells[i];
 
-    } else {
-      // same row
-      cell.row = previousCell.row;
-      cell.top = previousCell.top;
-      cell.left = (previousCell.left + previousCell.width);
+      if (previousCell.left + previousCell.width + cell.width > data.viewWidth) {
+        // new row
+        cell.row++;
+        cell.top = (previousCell.top + previousCell.height);
+        cell.left = 0;
+
+      } else {
+        // same row
+        cell.row = previousCell.row;
+        cell.top = previousCell.top;
+        cell.left = (previousCell.left + previousCell.width);
+      }
+
+      // figure out which cells are viewable within the viewport
+      if (cell.top + cell.height > data.scrollTop && i < data.topViewCell) {
+        data.topViewCell = i;
+
+      } else if (cell.top < viewableBottom && i > data.bottomViewCell) {
+        data.bottomViewCell = i;
+      }
+      previousCell = cell;
     }
-
-    // figure out which cells are viewable within the viewport
-    if (cell.top + cell.height > data.scrollTop && i < data.topViewCell) {
-      data.topViewCell = i;
-
-    } else if (cell.top < viewableBottom && i > data.bottomViewCell) {
-      data.bottomViewCell = i;
-    }
-    previousCell = cell;
   }
 
 }

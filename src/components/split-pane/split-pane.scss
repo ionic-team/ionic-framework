@@ -4,7 +4,10 @@
 // Split Pane
 // --------------------------------------------------
 
-ion-split-pane {
+$split-pane-side-min-width: 270px !default;
+$split-pane-side-max-width: 28% !default;
+
+.split-pane {
   position: absolute;
   top: 0;
   right: 0;
@@ -13,9 +16,14 @@ ion-split-pane {
 
   display: flex;
 
+  flex-direction: row;
   flex-wrap: nowrap;
 
   contain: strict;
+}
+
+.split-pane.split-pane-rtl {
+  flex-direction: row-reverse;
 }
 
 .split-pane-side:not(ion-menu) {

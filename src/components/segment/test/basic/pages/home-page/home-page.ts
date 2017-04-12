@@ -11,7 +11,9 @@ export class HomePage {
   modelStyle: string = 'B';
   appType: string = 'free';
   icons: string = 'camera';
-  isDisabled: boolean = true;
+  isDisabledB: boolean = true;
+  isDisabledS: boolean = false;
+
   myForm: any;
 
   constructor(fb: FormBuilder) {
@@ -20,8 +22,12 @@ export class HomePage {
     });
   }
 
-  toggleDisabled() {
-    this.isDisabled = !this.isDisabled;
+  toggleBDisabled() {
+    this.isDisabledB = !this.isDisabledB;
+  }
+
+  toggleSDisabled() {
+    this.isDisabledS = !this.isDisabledS;
   }
 
   onSegmentChanged(segmentButton: SegmentButton) {

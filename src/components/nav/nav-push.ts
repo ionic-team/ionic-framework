@@ -32,6 +32,8 @@ import { Page } from '../../navigation/nav-util';
  *   template: `<button ion-button [navPush]="pushPage" [navParams]="params">Go</button>`
  * })
  * class MyPage {
+ *   params: Object;
+ *   pushPage: any;
  *   constructor(){
  *     this.pushPage = LoginPage;
  *     this.params = { id: 42 };

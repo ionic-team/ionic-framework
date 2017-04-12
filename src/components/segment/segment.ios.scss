@@ -130,6 +130,12 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   }
 }
 
+.segment-ios.segment-disabled {
+  opacity: .4;
+
+  pointer-events: none;
+}
+
 .segment-ios .segment-button-disabled {
   color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-opacity-disabled);
 

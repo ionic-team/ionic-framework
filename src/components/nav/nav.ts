@@ -5,7 +5,6 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
-import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
@@ -56,6 +55,7 @@ import { RootNode } from '../split-pane/split-pane';
   providers: [{provide: RootNode, useExisting: forwardRef(() => Nav) }]
 })
 export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
+
   private _root: any;
   private _hasInit: boolean = false;
 
@@ -148,18 +148,6 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
    * @input {object} Any nav-params to pass to the root page of this nav.
    */
   @Input() rootParams: any;
-
-  /**
-   * @input {boolean} If true, swipe to go back is enabled.
-   */
-  @Input()
-  get swipeBackEnabled(): boolean {
-    return this._sbEnabled;
-  }
-  set swipeBackEnabled(val: boolean) {
-    this._sbEnabled = isTrueProperty(val);
-    this._swipeBackCheck();
-  }
 
   /**
    * @hidden

@@ -706,6 +706,14 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   private _listeners() {
     assert(!this._scrollSub, '_listeners was already called');
     if (!this._scrollSub) {
+      if (this._config.getBoolean('virtualScrollEventAssist')) {
+        // use JS scrolling for iOS UIWebView
+        // goal is to completely remove this when iOS
+        // fully supports scroll events
+        // listen to JS scroll events
+        this._content.enableJsScroll();
+      }
+
       this._resizeSub = this._plt.resize.subscribe(this.resize.bind(this));
       this._scrollSub = this._content.ionScroll.subscribe(this.scrollUpdate.bind(this));
       this._scrollEndSub = this._content.ionScrollEnd.subscribe(this.scrollEnd.bind(this));

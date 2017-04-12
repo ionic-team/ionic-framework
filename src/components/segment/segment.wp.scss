@@ -75,6 +75,7 @@ $segment-button-wp-buttons-justify-content:    flex-start !default;
   }
 }
 
+.segment-wp.segment-disabled,
 .segment-wp .segment-button-disabled {
   opacity: $segment-button-wp-opacity-disabled;
 

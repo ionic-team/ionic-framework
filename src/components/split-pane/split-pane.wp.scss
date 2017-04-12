@@ -4,11 +4,18 @@
 // Split Pane
 // --------------------------------------------------
 
+/// @prop - Minimum width of the split-pane's side pane
+$split-pane-wp-side-min-width: $split-pane-side-min-width;
+
+/// @prop - Maximum width of the split-pane's side pane
+$split-pane-wp-side-max-width: $split-pane-side-max-width;
+
+/// @prop - Border style of the side pane
 $split-pane-wp-border: 1px solid $list-wp-border-color;
 
 .split-pane-wp.split-pane-visible >.split-pane-side {
-  min-width: 270px;
-  max-width: 28%;
+  min-width: $split-pane-wp-side-min-width;
+  max-width: $split-pane-wp-side-max-width;
 
   border-right: $split-pane-wp-border;
   border-left: 0;

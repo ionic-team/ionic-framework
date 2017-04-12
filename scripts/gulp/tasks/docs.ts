@@ -76,7 +76,7 @@ function copyDemoPolyfills(outputDir: string) {
 function copyDemoContent(outputDir: string) {
   return new Promise((resolve, reject) => {
     const stream = src([
-      `${DIST_DEMOS_ROOT}/**/*`
+      `${DIST_DEMOS_ROOT}/src/**/*`
       ]).pipe(dest(outputDir));
     stream.on('end', () => {
       resolve();

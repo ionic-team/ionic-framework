@@ -1,6 +1,6 @@
 import { ContentChildren, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, QueryList, NgZone, Renderer } from '@angular/core';
 import { Ion } from '../ion';
-import { assert } from '../../util/util';
+import { isTrueProperty, assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Platform } from '../../platform/platform';
 
@@ -142,9 +142,10 @@ export abstract class RootNode {
 })
 export class SplitPane extends Ion implements RootNode {
 
-  _rmListener: any;
-  _visible: boolean = false;
   _init: boolean = false;
+  _visible: boolean = false;
+  _isEnabled: boolean = true;
+  _rmListener: any;
   _mediaQuery: string | boolean = QUERY['md'];
   _children: RootNode[];
 
@@ -191,6 +192,19 @@ export class SplitPane extends Ion implements RootNode {
   }
 
   /**
+   * @input {boolean} If `false`, the split-pane is disabled, ie. the side pane will
+   * never be displayed. Default `true`.
+   */
+  @Input()
+  set enabled(val: boolean) {
+    this._isEnabled = isTrueProperty(val);
+    this._update();
+  }
+  get enabled(): boolean {
+    return this._isEnabled;
+  }
+
+  /**
    * @output {any} Expression to be called when the split-pane visibility has changed
    */
   @Output() ionChange: EventEmitter<SplitPane> = new EventEmitter<SplitPane>();
@@ -200,11 +214,13 @@ export class SplitPane extends Ion implements RootNode {
     private _plt: Platform,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer
   ) {
     super(config, elementRef, renderer, 'split-pane');
+    if (_plt.isRTL()) {
+      this.setElementClass('split-pane-rtl', true);
+    }
   }
-
 
   /**
    * @hidden
@@ -244,6 +260,12 @@ export class SplitPane extends Ion implements RootNode {
     // Unlisten
     this._rmListener && this._rmListener();
     this._rmListener = null;
+
+    // Check if the split-pane is disabled
+    if (!this._isEnabled) {
+      this._setVisible(false);
+      return;
+    }
 
     const query = this._mediaQuery;
     if (typeof query === 'boolean') {

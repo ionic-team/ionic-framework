@@ -18,6 +18,9 @@ $item-md-font-size:                  1.6rem !default;
 /// @prop - Size of the avatar in the item
 $item-md-avatar-size:                40px !default;
 
+/// @prop - Border radius of the avatar in the item
+$item-md-avatar-border-radius:       50% !default;
+
 /// @prop - Size of the thumbnail in the item
 $item-md-thumbnail-size:             80px !default;
 
@@ -192,7 +195,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   width: $item-md-avatar-size;
   height: $item-md-avatar-size;
 
-  border-radius: 50%;
+  border-radius: $item-md-avatar-border-radius;
 
   overflow: hidden;
 }
