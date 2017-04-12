@@ -7,7 +7,7 @@ import { DomController } from '../platform/dom-controller';
 
 
 /**
- * @private
+ * @hidden
  */
 export class RippleActivator implements ActivatorBase {
   protected highlight: Activator;

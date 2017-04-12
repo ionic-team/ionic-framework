@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Data in/out</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>UserId</ion-label>
+      <ion-input type="number" [(ngModel)]="data.userId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input [(ngModel)]="data.name"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button full (click)="submit()">Submit</button>
+  <div padding>
+    <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+    <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+    <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
+    <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+    <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+    <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+    <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+    <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+  </div>
+</ion-content>

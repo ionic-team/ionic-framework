@@ -27,7 +27,7 @@ import { removeArrayItem } from '../util/util';
  *   }
  * }
  * ```
- * @demo /docs/v2/demos/src/platform/
+ * @demo /docs/demos/src/platform/
  */
 export class Platform {
   private _win: Window;
@@ -50,7 +50,7 @@ export class Platform {
   private _isPortrait: boolean = null;
   private _uiEvtOpts = false;
 
-  /** @private */
+  /** @hidden */
   zone: NgZone;
 
   /** @internal */
@@ -82,42 +82,42 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setWindow(win: Window) {
     this._win = win;
   }
 
   /**
-   * @private
+   * @hidden
    */
   win() {
     return this._win;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDocument(doc: HTMLDocument) {
     this._doc = doc;
   }
 
   /**
-   * @private
+   * @hidden
    */
   doc() {
     return this._doc;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setZone(zone: NgZone) {
     this.zone = zone;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setCssProps(docElement: HTMLElement) {
     this.Css = getCss(docElement);
@@ -222,7 +222,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   version(): PlatformVersion {
     for (var platformName in this._versions) {
@@ -268,7 +268,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This should be triggered by the engine when the platform is
    * ready. If there was no custom prepareReady method from the engine,
    * such as Cordova or Electron, then it uses the default DOM ready.
@@ -280,7 +280,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This is the default prepareReady if it's not replaced by an engine,
    * such as Cordova or Electron. If there was no custom prepareReady
    * method from an engine then it uses the method below, which triggers
@@ -351,6 +351,7 @@ export class Platform {
    * the language needs to be dynamically changed per user/session.
    * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
    * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
+   * @param {boolean} updateDocument  Specifies whether the `lang` attribute of `<html>` should be updated
    */
   setLang(language: string, updateDocument: boolean) {
     this._lang = language;
@@ -376,7 +377,7 @@ export class Platform {
   // called by engines (the browser)that do not provide them
 
   /**
-   * @private
+   * @hidden
    */
   exitApp() {}
 
@@ -384,7 +385,7 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   backButton: EventEmitter<Event> = new EventEmitter<Event>();
 
@@ -427,7 +428,7 @@ export class Platform {
    * if this registered action has the highest priority.
    * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
    * @returns {Function} A function that, when called, will unregister
-   * the its back button action.
+   * the back button action.
    */
   registerBackButtonAction(fn: Function, priority: number = 0): Function {
     const action: BackButtonAction = {fn, priority};
@@ -441,7 +442,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   runBackButtonAction() {
     // decide which one back button action should run
@@ -461,14 +462,14 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   setUserAgent(userAgent: string) {
     this._ua = userAgent;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setQueryParams(url: string) {
     this._qp.parseUrl(url);
@@ -489,21 +490,21 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   userAgent(): string {
     return this._ua || '';
   }
 
   /**
-   * @private
+   * @hidden
    */
   setNavigatorPlatform(navigatorPlt: string) {
     this._nPlt = navigatorPlt;
   }
 
   /**
-   * @private
+   * @hidden
    */
   navigatorPlatform(): string {
     return this._nPlt || '';
@@ -530,21 +531,21 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getElementComputedStyle(ele: HTMLElement, pseudoEle?: string) {
     return this._win['getComputedStyle'](ele, pseudoEle);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getElementFromPoint(x: number, y: number) {
     return <HTMLElement>this._doc['elementFromPoint'](x, y);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getElementBoundingClientRect(ele: HTMLElement) {
     return ele['getBoundingClientRect']();
@@ -625,7 +626,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This requestAnimationFrame will NOT be wrapped by zone.
    */
   raf(callback: {(timeStamp?: number): void}|Function): number {
@@ -634,7 +635,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   cancelRaf(rafId: number) {
     const win: any = this._win;
@@ -642,7 +643,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This setTimeout will NOT be wrapped by zone.
    */
   timeout(callback: Function, timeout?: number): number {
@@ -651,7 +652,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This setTimeout will NOT be wrapped by zone.
    */
   cancelTimeout(timeoutId: number) {
@@ -660,7 +661,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * Built to use modern event listener options, like "passive".
    * If options are not supported, then just return a boolean which
    * represents "capture". Returns a method to remove the listener.
@@ -698,7 +699,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   transitionEnd(el: HTMLElement, callback: {(ev?: TransitionEvent): void}, zone = true) {
     const unRegs: Function[] = [];
@@ -725,7 +726,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   windowLoad(callback: Function) {
     const win = this._win;
@@ -744,28 +745,28 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isActiveElement(ele: HTMLElement) {
     return !!(ele && (this.getActiveElement() === ele));
   }
 
   /**
-   * @private
+   * @hidden
    */
   getActiveElement() {
     return this._doc['activeElement'];
   }
 
   /**
-   * @private
+   * @hidden
    */
   hasFocus(ele: HTMLElement) {
     return !!((ele && (this.getActiveElement() === ele)) && (ele.parentElement.querySelector(':focus') === ele));
   }
 
   /**
-   * @private
+   * @hidden
    */
   hasFocusedTextInput() {
     const ele = this.getActiveElement();
@@ -776,7 +777,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   focusOutActiveElement() {
     const activeElement: any = this.getActiveElement();
@@ -796,7 +797,7 @@ export class Platform {
 
     // add the window resize event listener XXms after
     this.timeout(() => {
-      var timerId: number;
+      var timerId: any;
       this.registerListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
@@ -817,35 +818,35 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   setPlatformConfigs(platformConfigs: {[key: string]: PlatformConfig}) {
     this._registry = platformConfigs || {};
   }
 
   /**
-   * @private
+   * @hidden
    */
   getPlatformConfig(platformName: string): PlatformConfig {
     return this._registry[platformName] || {};
   }
 
   /**
-   * @private
+   * @hidden
    */
   registry() {
     return this._registry;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDefault(platformName: string) {
     this._default = platformName;
   }
 
   /**
-   * @private
+   * @hidden
    */
   testQuery(queryValue: string, queryTestValue: string): boolean {
     const valueSplit = queryValue.toLowerCase().split(';');
@@ -853,7 +854,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
     const rgx = new RegExp(navigatorPlatformExpression, 'i');
@@ -861,7 +862,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   matchUserAgentVersion(userAgentExpression: RegExp): any {
     if (this._ua && userAgentExpression) {
@@ -883,7 +884,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
     const queryValue = this._qp.get('ionicplatform');
@@ -909,7 +910,7 @@ export class Platform {
     return false;
   }
 
-  /** @private */
+  /** @hidden */
   init() {
     this._initEvents();
 
@@ -1004,7 +1005,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private matchPlatform(platformName: string): PlatformNode {
     // build a PlatformNode and assign config data to it
@@ -1042,7 +1043,7 @@ function insertSuperset(registry: any, platformNode: PlatformNode) {
 }
 
 /**
- * @private
+ * @hidden
  */
 class PlatformNode {
   private c: PlatformConfig;
@@ -1166,7 +1167,7 @@ export interface EventListenerOptions {
 
 
 /**
- * @private
+ * @hidden
  */
 export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]: PlatformConfig}, zone: NgZone): Platform {
   const plt = new Platform();

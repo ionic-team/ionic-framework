@@ -18,6 +18,9 @@ $item-ios-paragraph-text-color:           #8e9093 !default;
 /// @prop - Size of the avatar in the item
 $item-ios-avatar-size:                    36px !default;
 
+/// @prop - Border radius of the avatar in the item
+$item-ios-avatar-border-radius:           50% !default;
+
 /// @prop - Size of the thumbnail in the item
 $item-ios-thumbnail-size:                 56px !default;
 
@@ -170,7 +173,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   width: $item-ios-avatar-size;
   height: $item-ios-avatar-size;
 
-  border-radius: 50%;
+  border-radius: $item-ios-avatar-border-radius;
 
   overflow: hidden;
 }

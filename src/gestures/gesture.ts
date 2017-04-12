@@ -2,7 +2,7 @@ import { defaults } from '../util/util';
 import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
 
 /**
- * @private
+ * @hidden
  * A gesture recognizer class.
  *
  * TODO(mlynch): Re-enable the DOM event simulation that was causing issues (or verify hammer does this already, it might);

@@ -2,7 +2,7 @@
 
 The official npm package for [Ionic](http://ionicframework.com/), complete with pre-built ES5 bundles, TypeScript definitions, Sass files, CommonJS ES5 files, and more.
 
-To get started with Ionic, please read the [Installation Guide](http://ionicframework.com/docs/v2/intro/installation/).
+To get started with Ionic, please read the [Installation Guide](http://ionicframework.com/docs/intro/installation/).
 
 [Ionic Documentation](http://ionicframework.com/docs/)
 
@@ -22,6 +22,6 @@ Minified and unminified CommonJS and System.register module format bundles, as w
 
 ### Installation and More
 
-To use Ionic, we recommend installing and utilizing the [Ionic CLI](http://ionicframework.com/docs/v2/intro/installation/) which will help you create pre-configured Ionic apps.
+To use Ionic, we recommend installing and utilizing the [Ionic CLI](http://ionicframework.com/docs/intro/installation/) which will help you create pre-configured Ionic apps.
 
 For full instructions on using Ionic, please visit the [Ionic Documentation](http://ionicframework.com/docs/)

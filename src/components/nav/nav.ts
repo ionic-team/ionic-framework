@@ -5,7 +5,6 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
-import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
@@ -44,8 +43,8 @@ import { RootNode } from '../split-pane/split-pane';
  * }
  * ```
  *
- * @demo /docs/v2/demos/src/navigation/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @demo /docs/demos/src/navigation/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  */
 @Component({
   selector: 'ion-nav',
@@ -57,6 +56,7 @@ import { RootNode } from '../split-pane/split-pane';
   providers: [{provide: RootNode, useExisting: forwardRef(() => Nav) }]
 })
 export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
+
   private _root: any;
   private _hasInit: boolean = false;
 
@@ -101,7 +101,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -112,13 +112,15 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
     this._hasInit = true;
 
     let navSegment = this._linker.initNav(this);
-    if (navSegment && navSegment.component) {
+    if (navSegment && (navSegment.component || navSegment.loadChildren)) {
       // there is a segment match in the linker
-      this.setPages(this._linker.initViews(navSegment), null, null);
+      return this._linker.initViews(navSegment).then(views => {
+        this.setPages(views, null, null);
+      });
 
     } else if (this._root) {
       // no segment match, so use the root property
-      this.push(this._root, this.rootParams, {
+      return this.push(this._root, this.rootParams, {
         isNavRoot: (<any>this._app.getRootNav() === this)
       }, null);
     }
@@ -149,19 +151,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   @Input() rootParams: any;
 
   /**
-   * @input {boolean} If true, swipe to go back is enabled.
-   */
-  @Input()
-  get swipeBackEnabled(): boolean {
-    return this._sbEnabled;
-  }
-  set swipeBackEnabled(val: boolean) {
-    this._sbEnabled = isTrueProperty(val);
-    this._swipeBackCheck();
-  }
-
-  /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this.destroy();

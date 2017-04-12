@@ -4,7 +4,7 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isTrueProperty } from '../../util/util';
 import { NavController } from '../../navigation/nav-controller';
-import { ToolbarBase } from '../toolbar/toolbar';
+import { ToolbarBase } from '../toolbar/toolbar-base';
 import { ViewController } from '../../navigation/view-controller';
 
 
@@ -41,7 +41,7 @@ import { ViewController } from '../../navigation/view-controller';
  * </ion-header>
  * ```
  *
- * @demo /docs/v2/demos/src/navbar/
+ * @demo /docs/demos/src/navbar/
  * @see {@link ../../toolbar/Toolbar/ Toolbar API Docs}
  */
 @Component({
@@ -66,45 +66,25 @@ import { ViewController } from '../../navigation/view-controller';
 })
 export class Navbar extends ToolbarBase {
   /**
-   * @private
+   * @hidden
    */
   _backText: string;
   /**
-   * @private
+   * @hidden
    */
   _bbIcon: string;
   /**
-   * @private
+   * @hidden
    */
   _hidden: boolean = false;
   /**
-   * @private
+   * @hidden
    */
   _hideBb: boolean = false;
   /**
-   * @private
+   * @hidden
    */
   _sbPadding: boolean;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   /**
    * @input {boolean} If true, the back button will be hidden.
@@ -150,7 +130,7 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   didEnter() {
     try {
@@ -161,7 +141,7 @@ export class Navbar extends ToolbarBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setHidden(isHidden: boolean) {
     // used to display none/block the navbar

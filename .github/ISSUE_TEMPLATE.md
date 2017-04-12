@@ -1,6 +1,7 @@
 **Ionic version:**  (check one with "x")
 [ ] **1.x**
 [ ] **2.x**
+[ ] **3.x**
 
 **I'm submitting a ...**  (check one with "x")
 [ ] bug report

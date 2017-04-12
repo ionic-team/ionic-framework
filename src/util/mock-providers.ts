@@ -12,6 +12,7 @@ import { Haptic } from '../tap-click/haptic';
 import { IonicApp } from '../components/app/app-root';
 import { Keyboard } from '../platform/keyboard';
 import { Menu } from '../components/menu/menu';
+import { NavOptions } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
 import { OverlayPortal } from '../components/nav/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
@@ -22,7 +23,12 @@ import { Tabs }  from '../components/tabs/tabs';
 import { TransitionController } from '../transitions/transition-controller';
 import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
-import { ViewState, DeepLinkConfig } from '../navigation/nav-util';
+import { ModuleLoader } from './module-loader';
+import { NgModuleLoader } from './ng-module-loader';
+import { DeepLinkConfig, STATE_INITIALIZED } from '../navigation/nav-util';
+import { Ion } from '../components/ion';
+import { Item } from '../components/item/item';
+import { Form } from './form';
 
 
 export function mockConfig(config?: any, url: string = '/', platform?: Platform) {
@@ -228,15 +234,27 @@ export function mockChangeDetectorRef(): ChangeDetectorRef {
   return cd;
 }
 
+export function mockGestureController(app?: App): GestureController {
+  if (!app) {
+    app = mockApp();
+  }
+  return new GestureController(app);
+
+}
+
 export class MockElementRef implements ElementRef {
-  nativeElement: any = new MockElement();
+  nativeElement: any;
+  constructor(ele: any) {
+    this.nativeElement = ele;
+  }
 }
 
 export class MockElement {
   children: any[] = [];
   classList = new ClassList();
   attributes: { [name: string]: any } = {};
-  style: {[property: string]: any} = {};
+  style: { [property: string]: any } = {};
+  nodeName: string = 'ION-MOCK';
 
   clientWidth = 0;
   clientHeight = 0;
@@ -252,6 +270,7 @@ export class MockElement {
   get className() {
     return this.classList.classes.join(' ');
   }
+
   set className(val: string) {
     this.classList.classes = val.split(' ');
   }
@@ -267,6 +286,10 @@ export class MockElement {
   setAttribute(name: string, val: any) {
     this.attributes[name] = val;
   }
+
+  addEventListener(type: string, listener: Function, options?: any) { }
+
+  removeEventListener(type: string, listener: Function, options?: any) { }
 
   removeAttribute(name: string) {
     delete this.attributes[name];
@@ -299,7 +322,11 @@ export class ClassList {
 }
 
 export function mockElementRef(): ElementRef {
-  return new MockElementRef();
+  return new MockElementRef(new MockElement());
+}
+
+export function mockElementRefEle(ele: any): ElementRef {
+  return new MockElementRef(ele);
 }
 
 export class MockRenderer {
@@ -367,7 +394,7 @@ export function mockDeepLinker(linkConfig: DeepLinkConfig = null, app?: App) {
 
   let location = mockLocation();
 
-  return new DeepLinker(app || mockApp(), serializer, location);
+  return new DeepLinker(app || mockApp(), serializer, location, null, null);
 }
 
 export function mockNavController(): NavControllerBase {
@@ -401,7 +428,7 @@ export function mockNavController(): NavControllerBase {
 
   nav._viewInit = function(enteringView: ViewController) {
     enteringView.init(mockComponentRef());
-    enteringView._state = ViewState.INITIALIZED;
+    enteringView._state = STATE_INITIALIZED;
   };
 
   (<any>nav)._orgViewInsert = nav._viewAttachToDOM;
@@ -426,7 +453,7 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   let gestureCtrl = new GestureController(app);
   let serializer = new UrlSerializer(null);
   let location = mockLocation();
-  let deepLinker = new DeepLinker(app, serializer, location);
+  let deepLinker = new DeepLinker(app, serializer, location, null, null);
 
   return new OverlayPortal(
     app,
@@ -483,6 +510,25 @@ export function mockTab(parentTabs: Tabs): Tab {
   return tab;
 }
 
+export function mockForm(): Form {
+  return new Form();
+}
+
+export function mockIon(): Ion {
+  const config = mockConfig();
+  const elementRef = mockElementRef();
+  const renderer = mockRenderer();
+  return new Ion(config, elementRef, renderer, 'ion');
+}
+
+export function mockItem(): Item {
+  const form = mockForm();
+  const config = mockConfig();
+  const elementRef = mockElementRef();
+  const renderer = mockRenderer();
+  return new Item(form, config, elementRef, renderer, null);
+}
+
 export function mockTabs(app?: App): Tabs {
   let platform = mockPlatform();
   let config = mockConfig(null, '/', platform);
@@ -528,3 +574,21 @@ export class MockView4 {}
 export class MockView5 {}
 
 export function noop(): any { return 'noop'; };
+
+export function mockModuleLoader(ngModuleLoader?: NgModuleLoader): ModuleLoader {
+  ngModuleLoader = ngModuleLoader || mockNgModuleLoader();
+  return new ModuleLoader(ngModuleLoader, null);
+}
+
+export function mockNgModuleLoader(): NgModuleLoader {
+  return new NgModuleLoader(null);
+}
+
+export function mockOverlay() {
+  return {
+    present: (opts?: NavOptions) => { return Promise.resolve(); },
+    dismiss: (data?: any, role?: any, navOptions?: NavOptions) => { return Promise.resolve(); },
+    onDidDismiss: (callback: Function) => { },
+    onWillDismiss: (callback: Function) => { }
+  };
+}

@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-searchbar color="primary" autofocus (ionChange)="getItems($event.value)" placeholder="Filter Schedules">
+    </ion-searchbar>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-title>Searchbar</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openModal()">Open modal</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-input [(ngModel)]="value"></ion-input>
+  <form>
+    <ion-searchbar [(ngModel)]="value" (ionChange)="getItems($event.value)" name="search"></ion-searchbar>
+  </form>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="showDetail(item)" class="e2eSearchbarNavItem">
+      {{ item }}
+    </button>
+  </ion-list>
+
+</ion-content>

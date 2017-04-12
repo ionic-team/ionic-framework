@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule } from '../../../..';
 
 //
 // Tab 1
@@ -114,26 +115,27 @@ export class TabsPage {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+export class AppComponent {
   root = TabsPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Tab1,
     Tab2,
     Tab3,
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, {
+    BrowserModule,
+    IonicModule.forRoot(AppComponent, {
       tabsPlacement: 'top'
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Tab1,
     Tab2,
     Tab3,

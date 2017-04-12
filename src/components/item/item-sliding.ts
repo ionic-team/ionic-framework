@@ -1,80 +1,22 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, Directive, ElementRef, EventEmitter, Input, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, ElementRef, EventEmitter, forwardRef, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
 
-import { isPresent, swipeShouldReset, assert } from '../../util/util';
+import { swipeShouldReset, assert } from '../../util/util';
 import { Item } from './item';
 import { List } from '../list/list';
 import { Platform } from '../../platform/platform';
 import { DomController } from '../../platform/dom-controller';
+import { ItemOptions } from './item-options';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
-export const enum ItemSideFlags {
-  None = 0,
-  Left = 1 << 0,
-  Right = 1 << 1,
-  Both = Left | Right
-}
+export const ITEM_SIDE_FLAG_NONE = 0;
+export const ITEM_SIDE_FLAG_LEFT = 1 << 0;
+export const ITEM_SIDE_FLAG_RIGHT = 1 << 1;
+export const ITEM_SIDE_FLAG_BOTH = ITEM_SIDE_FLAG_LEFT | ITEM_SIDE_FLAG_RIGHT;
 
-/**
- * @name ItemOptions
- * @description
- * The option buttons for an `ion-item-sliding`. These buttons can be placed either on the left or right side.
- * You can combine the `(ionSwipe)` event plus the `expandable` directive to create a full swipe action for the item.
- *
- * @usage
- *
- * ```html
- * <ion-item-sliding>
- *   <ion-item>
- *     Item 1
- *   </ion-item>
- *   <ion-item-options side="right" (ionSwipe)="saveItem(item)">
- *     <button ion-button expandable (click)="saveItem(item)">
- *       <ion-icon name="star"></ion-icon>
- *     </button>
- *   </ion-item-options>
- * </ion-item-sliding>
- *```
- */
-@Directive({
-  selector: 'ion-item-options',
-})
-export class ItemOptions {
-  /**
-   * @input {string} The side the option button should be on. Defaults to `"right"`.
-   * If you have multiple `ion-item-options`, a side must be provided for each.
-   */
-  @Input() side: string;
 
-  /**
-   * @output {event} Emitted when the item has been fully swiped.
-   */
-  @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
-
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
-
-  /**
-   * @private
-   */
-  getSides(): ItemSideFlags {
-    if (isPresent(this.side) && this.side === 'left') {
-      return ItemSideFlags.Left;
-    } else {
-      return ItemSideFlags.Right;
-    }
-  }
-
-  /**
-   * @private
-   */
-  width() {
-    return this._elementRef.nativeElement.offsetWidth;
-  }
-
-}
-
-export const enum SlidingState {
+const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
@@ -164,8 +106,8 @@ export const enum SlidingState {
  * ```
  *
  *
- * @demo /docs/v2/demos/src/item-sliding/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/item-sliding/
+ * @see {@link /docs/components#lists List Component Docs}
  * @see {@link ../Item Item API Docs}
  * @see {@link ../../list/List List API Docs}
  */
@@ -183,7 +125,7 @@ export class ItemSliding {
   private _startX: number = 0;
   private _optsWidthRightSide: number = 0;
   private _optsWidthLeftSide: number = 0;
-  private _sides: ItemSideFlags;
+  private _sides: number;
   private _tmr: number = null;
   private _leftOptions: ItemOptions;
   private _rightOptions: ItemOptions;
@@ -191,7 +133,7 @@ export class ItemSliding {
   private _state: SlidingState = SlidingState.Disabled;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(Item) item: Item;
 
@@ -230,7 +172,7 @@ export class ItemSliding {
     this.setElementClass('item-wrapper', true);
   }
 
-  @ContentChildren(ItemOptions)
+  @ContentChildren(forwardRef(() => ItemOptions))
   set _itemOptions(itemOptions: QueryList<ItemOptions>) {
     let sides = 0;
 
@@ -239,7 +181,7 @@ export class ItemSliding {
 
     for (var item of itemOptions.toArray()) {
       var side = item.getSides();
-      if (side === ItemSideFlags.Left) {
+      if (side === ITEM_SIDE_FLAG_LEFT) {
         this._leftOptions = item;
       } else {
         this._rightOptions = item;
@@ -251,14 +193,14 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getOpenAmount(): number {
     return this._openAmount;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getSlidingPercent(): number {
     let openAmount = this._openAmount;
@@ -272,7 +214,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   startSliding(startX: number) {
     if (this._tmr) {
@@ -288,7 +230,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   moveSliding(x: number): number {
     if (this._optsDirty) {
@@ -299,10 +241,10 @@ export class ItemSliding {
     let openAmount = (this._startX - x);
 
     switch (this._sides) {
-      case ItemSideFlags.Right: openAmount = Math.max(0, openAmount); break;
-      case ItemSideFlags.Left: openAmount = Math.min(0, openAmount); break;
-      case ItemSideFlags.Both: break;
-      case ItemSideFlags.None: return;
+      case ITEM_SIDE_FLAG_RIGHT: openAmount = Math.max(0, openAmount); break;
+      case ITEM_SIDE_FLAG_LEFT: openAmount = Math.min(0, openAmount); break;
+      case ITEM_SIDE_FLAG_BOTH: break;
+      case ITEM_SIDE_FLAG_NONE: return;
       default: assert(false, 'invalid ItemSideFlags value'); break;
     }
 
@@ -321,7 +263,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   endSliding(velocity: number): number {
     let restingPoint = (this._openAmount > 0)
@@ -343,7 +285,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private fireSwipeEvent() {
     if (this._state & SlidingState.SwipeRight) {
@@ -354,7 +296,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private calculateOptsWidth() {
     if (!this._optsDirty) {
@@ -470,7 +412,7 @@ export class ItemSliding {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(cssClass: string, shouldAdd: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);

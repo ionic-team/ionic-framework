@@ -5,7 +5,7 @@ import { Refresher } from './refresher';
 
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-refresher-content',
@@ -53,7 +53,7 @@ export class RefresherContent {
   constructor(public r: Refresher, private _config: Config) {}
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     if (!this.pullingIcon) {

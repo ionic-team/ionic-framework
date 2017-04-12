@@ -1,13 +1,13 @@
 import { swipeShouldReset } from '../util/util';
 import { DomController } from '../platform/dom-controller';
-import { GestureController, GesturePriority, GESTURE_GO_BACK_SWIPE } from '../gestures/gesture-controller';
+import { GestureController, GESTURE_PRIORITY_GO_BACK_SWIPE, GESTURE_GO_BACK_SWIPE } from '../gestures/gesture-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Platform } from '../platform/platform';
 import { SlideData } from '../gestures/slide-gesture';
 import { SlideEdgeGesture } from '../gestures/slide-edge-gesture';
 
 /**
- * @private
+ * @hidden
  */
 export class SwipeBackGesture extends SlideEdgeGesture {
 
@@ -26,7 +26,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
       domController: domCtrl,
       gesture: gestureCtlr.createGesture({
         name: GESTURE_GO_BACK_SWIPE,
-        priority: GesturePriority.GoBackSwipe,
+        priority: GESTURE_PRIORITY_GO_BACK_SWIPE,
         disableScroll: true
       })
     });

@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, NavController } from '../../../..';
 
 
 let delay = 100;
@@ -77,22 +78,23 @@ export class Page2 {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+export class AppComponent {
   root = Page1;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ]

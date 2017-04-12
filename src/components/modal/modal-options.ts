@@ -4,4 +4,5 @@ export interface ModalOptions {
   enableBackdropDismiss?: boolean;
   enterAnimation?: string;
   leaveAnimation?: string;
+  cssClass?: string;
 }

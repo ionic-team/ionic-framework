@@ -2,7 +2,7 @@ import { assert } from '../util/util';
 import { Platform, EventListenerOptions } from '../platform/platform';
 
 /**
- * @private
+ * @hidden
  */
 export class PointerEvents {
   private rmTouchStart: Function = null;
@@ -20,7 +20,7 @@ export class PointerEvents {
   private lastTouchEvent: number = 0;
 
   mouseWait: number = 2 * 1000;
-  lastEventType: PointerEventType = PointerEventType.UNDEFINED;
+  lastEventType: number;
 
   constructor(
     private plt: Platform,
@@ -45,8 +45,8 @@ export class PointerEvents {
     assert(this.pointerDown, 'pointerDown can not be null');
 
     this.lastTouchEvent = Date.now() + this.mouseWait;
-    this.lastEventType = PointerEventType.TOUCH;
-    if (!this.pointerDown(ev, PointerEventType.TOUCH)) {
+    this.lastEventType = POINTER_EVENT_TYPE_TOUCH;
+    if (!this.pointerDown(ev, POINTER_EVENT_TYPE_TOUCH)) {
       return;
     }
     if (!this.rmTouchMove && this.pointerMove) {
@@ -68,8 +68,8 @@ export class PointerEvents {
       console.debug('mousedown event dropped because of previous touch');
       return;
     }
-    this.lastEventType = PointerEventType.MOUSE;
-    if (!this.pointerDown(ev, PointerEventType.MOUSE)) {
+    this.lastEventType = POINTER_EVENT_TYPE_MOUSE;
+    if (!this.pointerDown(ev, POINTER_EVENT_TYPE_MOUSE)) {
       return;
     }
     if (!this.rmMouseMove && this.pointerMove) {
@@ -82,12 +82,12 @@ export class PointerEvents {
 
   private handleTouchEnd(ev: any) {
     this.stopTouch();
-    this.pointerUp && this.pointerUp(ev, PointerEventType.TOUCH);
+    this.pointerUp && this.pointerUp(ev, POINTER_EVENT_TYPE_TOUCH);
   }
 
   private handleMouseUp(ev: any) {
     this.stopMouse();
-    this.pointerUp && this.pointerUp(ev, PointerEventType.MOUSE);
+    this.pointerUp && this.pointerUp(ev, POINTER_EVENT_TYPE_MOUSE);
   }
 
   private stopTouch() {
@@ -120,11 +120,9 @@ export class PointerEvents {
 }
 
 
-export const enum PointerEventType {
-  UNDEFINED,
-  MOUSE,
-  TOUCH
-}
+export const POINTER_EVENT_TYPE_MOUSE = 1;
+export const POINTER_EVENT_TYPE_TOUCH = 2;
+
 
 export interface PointerEventsConfig {
   element?: HTMLElement;

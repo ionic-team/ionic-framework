@@ -17,7 +17,7 @@ module.exports = function jekyll(renderDocsProcessor) {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
       docs.forEach(function(doc, i) {
-        docs[i].URL = doc.outputPath.replace('docs/v2//', 'docs/v2/')
+        docs[i].URL = doc.outputPath.replace('docs//', 'docs/')
                                     .replace('/index.md', '')
                                     .replace('//home/ubuntu/ionic/src', '')
                                     .replace('//', '/')
@@ -35,20 +35,20 @@ module.exports = function jekyll(renderDocsProcessor) {
         docType: 'api-menu',
         id: 'api-menu',
         template: 'api_menu.template.html',
-        outputPath: 'content/_includes/v2_fluid/api_menu.html'
+        outputPath: 'content/_includes/fluid/api_menu.html'
       });
       docs.push({
         docType: 'api-menu-flat-version',
         id: 'api-menu-flat-version',
         template: 'api_menu_flat_version.template.html',
-        outputPath: 'content/_includes/v2_fluid/api_menu_flat_' + currentVersion +
+        outputPath: 'content/_includes/fluid/api_menu_flat_' + currentVersion +
                     '.html'
       });
       docs.push({
         docType: 'api-version-select',
         id: 'api-version-select',
         template: 'api_version_select.template.html',
-        outputPath: 'content/_includes/v2_fluid/api_version_select.html'
+        outputPath: 'content/_includes/fluid/api_version_select.html'
       });
 
       // returning docs will replace docs object in the next process

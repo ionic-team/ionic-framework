@@ -1,5 +1,6 @@
 import { Component, QueryList, ViewChildren, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Tab } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, Tab } from '../../../..';
 
 
 //
@@ -113,7 +114,7 @@ export class TabsPage {
   }
 
   openPage(which: string) {
-    let pages = {
+    let pages: any = {
       'quesarito': QuesaritoPage
     };
 
@@ -131,6 +132,7 @@ export class TabsPage {
     TabsPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(TabsPage)
   ],
   bootstrap: [IonicApp],

@@ -1,4 +1,4 @@
-module.exports = function removePrivateApi() {
+module.exports = function parseReturnsObject() {
 
   /*
    * This processor assumes the format:

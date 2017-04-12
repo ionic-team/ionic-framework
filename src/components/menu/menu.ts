@@ -173,9 +173,9 @@ import { RootNode } from '../split-pane/split-pane';
  * and usage information.
  *
  *
- * @demo /docs/v2/demos/src/menu/
+ * @demo /docs/demos/src/menu/
  *
- * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @see {@link /docs/components#menus Menu Component Docs}
  * @see {@link ../MenuController MenuController API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
  * @see {@link ../../nav/NavController NavController API Docs}
@@ -207,22 +207,22 @@ export class Menu implements RootNode {
   private _isPane: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   isOpen: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild(Backdrop) backdrop: Backdrop;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(Content) menuContent: Content;
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(Nav) menuNav: Nav;
 
@@ -287,7 +287,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @Input() maxEdgeStart: number;
 
@@ -325,7 +325,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     this._init = true;
@@ -372,7 +372,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onBackdropClick(ev: UIEvent) {
     ev.preventDefault();
@@ -381,7 +381,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private _getType(): MenuType {
     if (!this._type) {
@@ -395,7 +395,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
     // If the menu is disabled or it is currenly being animated, let's do nothing
@@ -420,7 +420,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   canSwipe(): boolean {
     return this._isSwipeEnabled &&
@@ -430,7 +430,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isAnimating(): boolean {
     return this._isAnimating;
@@ -536,21 +536,21 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   open(): Promise<boolean> {
     return this.setOpen(true);
   }
 
   /**
-   * @private
+   * @hidden
    */
   close(): Promise<boolean> {
     return this.setOpen(false);
   }
 
   /**
-   * @private
+   * @hidden
    */
   resize() {
     const content: Content | Nav = this.menuContent
@@ -560,7 +560,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   toggle(): Promise<boolean> {
     return this.setOpen(!this.isOpen);
@@ -571,7 +571,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateState() {
     const canOpen = this._canOpen();
@@ -611,7 +611,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   enable(shouldEnable: boolean): Menu {
     this._isEnabled = shouldEnable;
@@ -636,7 +636,7 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   swipeEnable(shouldEnable: boolean): Menu {
     this._isSwipeEnabled = shouldEnable;
@@ -645,70 +645,70 @@ export class Menu implements RootNode {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNativeElement(): HTMLElement {
     return this._elementRef.nativeElement;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getMenuElement(): HTMLElement {
     return <HTMLElement>this.getNativeElement().querySelector('.menu-inner');
   }
 
   /**
-   * @private
+   * @hidden
    */
   getContentElement(): HTMLElement {
     return this._cntEle;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getBackdropElement(): HTMLElement {
     return this.backdrop.getNativeElement();
   }
 
   /**
-   * @private
+   * @hidden
    */
   width(): number {
     return this.getMenuElement().offsetWidth;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getMenuController(): MenuController {
     return this._menuCtrl;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(className: string, add: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementAttribute(attributeName: string, value: string) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, value);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getElementRef(): ElementRef {
     return this._elementRef;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._menuCtrl._unregister(this);

@@ -1,13 +1,13 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
 import { DomController } from '../../platform/dom-controller';
-import { GestureController, GesturePriority, GESTURE_ITEM_SWIPE } from '../../gestures/gesture-controller';
+import { GestureController, GESTURE_PRIORITY_SLIDING_ITEM, GESTURE_ITEM_SWIPE } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/drag-gesture';
 import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
 
 /**
- * @private
+ * @hidden
  */
 export class ItemSlidingGesture extends PanGesture {
 
@@ -32,7 +32,7 @@ export class ItemSlidingGesture extends PanGesture {
       domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_ITEM_SWIPE,
-        priority: GesturePriority.SlidingItem,
+        priority: GESTURE_PRIORITY_SLIDING_ITEM,
         disableScroll: true
       })
     });

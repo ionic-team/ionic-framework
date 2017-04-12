@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Item Groups</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="reload()">Reload</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-list>
+    <ion-item-group *ngFor="let timeSlot of data">
+
+      <ion-item-divider sticky>
+        {{timeSlot.time}}
+      </ion-item-divider>
+
+      <ion-item-sliding *ngFor="let session of timeSlot.talks" [attr.category]="session.category" #slidingItem>
+        <button ion-item (click)="openSession(session)">
+          <h3>{{session.name}}</h3>
+          <p>
+            <span>{{session.timestart}}</span>
+            &mdash;
+            <span>{{session.timeend}}</span>
+            :
+            <span>{{session.location}}</span>
+          </p>
+        </button>
+        <ion-item-options>
+          <button ion-button (click)="addFavorite(timeSlot, session, slidingItem)">Add to<br>Favorites</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-item-group>
+
+  </ion-list>
+
+</ion-content>

@@ -1,14 +1,15 @@
-import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { Key } from '../../platform/key';
+import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';
+import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-modal',
@@ -29,9 +30,12 @@ export class ModalCmp {
   constructor(
     public _cfr: ComponentFactoryResolver,
     public _renderer: Renderer,
+    public _elementRef: ElementRef,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
-    gestureCtrl: GestureController
+    gestureCtrl: GestureController,
+    public moduleLoader: ModuleLoader
+
   ) {
     let opts = _navParams.get('opts');
     assert(opts, 'modal data must be valid');
@@ -40,16 +44,28 @@ export class ModalCmp {
       disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE]
     });
     this._bdDismiss = opts.enableBackdropDismiss;
+
+    if (opts.cssClass) {
+      opts.cssClass.split(' ').forEach((cssClass: string) => {
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') _renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
+    }
   }
 
   ionViewPreLoad() {
     this._load(this._navParams.data.component);
   }
 
-  /** @private */
+  /** @hidden */
   _load(component: any) {
     if (component) {
-      const componentFactory = this._cfr.resolveComponentFactory(component);
+
+      let cfr = this.moduleLoader.getComponentFactoryResolver(component);
+      if (!cfr) {
+        cfr = this._cfr;
+      }
+      const componentFactory = cfr.resolveComponentFactory(component);
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
@@ -72,7 +88,7 @@ export class ModalCmp {
     this._gestureBlocker.unblock();
   }
 
-  /** @private */
+  /** @hidden */
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
@@ -90,7 +106,7 @@ export class ModalCmp {
 
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
-    if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {
+    if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === KEY_ESCAPE) {
       this._bdClick();
     }
   }

@@ -6,11 +6,12 @@ import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { OverlayPortal } from '../nav/overlay-portal';
 import { Platform } from '../../platform/platform';
+import * as Constants from './app-constants';
 
 export const AppRootToken = new OpaqueToken('USERROOT');
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-app',
@@ -89,16 +90,19 @@ export class IonicApp extends Ion implements OnInit {
     this._plt.prepareReady();
   }
 
-  _getPortal(portal?: AppPortal): OverlayPortal {
-    if (portal === AppPortal.LOADING) {
+  /**
+   * @hidden
+   */
+  _getPortal(portal?: number): OverlayPortal {
+    if (portal === Constants.PORTAL_LOADING) {
       return this._loadingPortal;
     }
-    if (portal === AppPortal.TOAST) {
+    if (portal === Constants.PORTAL_TOAST) {
       return this._toastPortal;
     }
     // Modals need their own overlay becuase we don't want an ActionSheet
     // or Alert to trigger lifecycle events inside a modal
-    if (portal === AppPortal.MODAL) {
+    if (portal === Constants.PORTAL_MODAL) {
       return this._modalPortal;
     }
     return this._overlayPortal;
@@ -162,10 +166,3 @@ export class IonicApp extends Ion implements OnInit {
   }
 
 }
-
-export const enum AppPortal {
-  DEFAULT,
-  MODAL,
-  LOADING,
-  TOAST
-};

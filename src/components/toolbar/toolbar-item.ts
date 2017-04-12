@@ -8,7 +8,7 @@ import { Toolbar } from './toolbar';
 
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'ion-buttons,[menuToggle]'

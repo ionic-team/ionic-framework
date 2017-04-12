@@ -11,7 +11,7 @@ import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: '[overlay-portal]',

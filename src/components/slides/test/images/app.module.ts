@@ -1,6 +1,8 @@
 import { Component, ViewChild, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { Http } from '@angular/http';
-import { IonicApp, IonicModule, Slides } from '../../../../../ionic-angular';
+
+import { IonicApp, IonicModule, Slides } from '../../../..';
 
 
 @Component({
@@ -16,7 +18,7 @@ export class E2EPage {
     let tags = 'madison wisconsin';
     let FLICKR_API_KEY = '504fd7414f6275eb5b657ddbfba80a2c';
 
-    let baseUrl = 'https://api.flickr.com/services/rest/';
+    let baseUrl = 'https://api.flickr.com/services/rest';
 
     this.http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key='
                   + FLICKR_API_KEY + '&nojsoncallback=1&format=json&tags=' + tags)
@@ -41,21 +43,22 @@ export class E2EPage {
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     E2EPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     E2EPage
   ]
 })

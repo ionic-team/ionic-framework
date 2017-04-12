@@ -114,9 +114,9 @@ import { isTrueProperty } from '../../util/util';
   *
   * ```
   *
-  * @demo /docs/v2/demos/src/button/
-  * @see {@link /docs/v2/components#buttons Button Component Docs}
-  * @see {@link /docs/v2/components#fabs FabButton Docs}
+  * @demo /docs/demos/src/button/
+  * @see {@link /docs/components#buttons Button Component Docs}
+  * @see {@link /docs/components#fabs FabButton Docs}
   * @see {@link ../../fab/FabButton FabButton API Docs}
   * @see {@link ../../fab/FabContainer FabContainer API Docs}
  */
@@ -131,25 +131,25 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button extends Ion {
-  /** @private */
+  /** @hidden */
   _role: string = 'button'; // bar-button
 
-  /** @private */
+  /** @hidden */
   _size: string; // large/small/default
 
-  /** @private */
+  /** @hidden */
   _style: string = 'default'; // outline/clear/solid
 
-  /** @private */
+  /** @hidden */
   _shape: string; // round/fab
 
-  /** @private */
+  /** @hidden */
   _display: string; // block/full
 
-  /** @private */
+  /** @hidden */
   _decorator: string; // strong
 
-  /** @private */
+  /** @hidden */
   _init: boolean;
 
   /**
@@ -236,7 +236,7 @@ export class Button extends Ion {
   /**
    * @input {string} The mode determines which platform styles to use.
    * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -245,7 +245,7 @@ export class Button extends Ion {
     this._assignCss(true);
   }
 
-  /** @private */
+  /** @hidden */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
       this._updateColor(this._color, false);
@@ -269,7 +269,7 @@ export class Button extends Ion {
   /**
    * @input {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -297,14 +297,14 @@ export class Button extends Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   ngAfterContentInit() {
     this._init = true;
     this._assignCss(true);
   }
 
   /**
-   * @private
+   * @hidden
    */
   setRole(val: string) {
     this._assignCss(false);
@@ -313,7 +313,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _assignCss(assignCssClass: boolean) {
     let role = this._role;
@@ -331,7 +331,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
@@ -342,7 +342,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateColor(color: string, isAdd: boolean) {
     if (color && this._init) {

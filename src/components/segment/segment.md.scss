@@ -77,6 +77,7 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
   }
 }
 
+.segment-md.segment-disabled,
 .segment-md .segment-button-disabled {
   opacity: $segment-button-md-opacity-disabled;
 

@@ -1,0 +1,55 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Inline Label Text Input</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+
+    <ion-item>
+      <ion-label stacked>NgModel: {{ngvalue1}}</ion-label>
+      <ion-input [(ngModel)]="ngvalue1"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>#Reference.value: {{inputRef0.value}}</ion-label>
+      <ion-input #inputRef0></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>NgModel + (input): {{value2}}</ion-label>
+      <ion-input [(ngModel)]="ngvalue2" (input)="input2()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>#Reference + (input): {{value3}}</ion-label>
+      <ion-input #inputRef1 (input)="input3(inputRef1)"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>#Reference.value + (input): {{value4}}</ion-label>
+      <ion-input #inputRef2 (input)="input4(inputRef2.value)"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>(input) + event: {{value5}}</ion-label>
+      <ion-input (input)="input5($event)"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>(input) + event.target.value: {{value6}}</ion-label>
+      <ion-input (input)="input6($event.target.value)"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Date of Birth</ion-label>
+      <ion-datetime></ion-datetime>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

@@ -4,7 +4,7 @@ import { Platform } from '../platform/platform';
 import { pointerCoord } from '../util/dom';
 
 /**
- * @private
+ * @hidden
  */
 export class SlideGesture extends PanGesture {
   public slide: SlideData = null;
@@ -92,7 +92,7 @@ export class SlideGesture extends PanGesture {
 }
 
 /**
- * @private
+ * @hidden
  */
 export interface SlideData {
   min: number;

@@ -3,7 +3,7 @@ import { removeArrayItem } from './util';
 
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class Form {
@@ -56,7 +56,7 @@ export class Form {
 }
 
 /**
- * @private
+ * @hidden
  */
 export abstract class IonicTapInput implements IonicFormInput {
 
@@ -73,7 +73,7 @@ export abstract class IonicTapInput implements IonicFormInput {
 }
 
 /**
- * @private
+ * @hidden
  */
 export abstract class IonicFormInput {
 

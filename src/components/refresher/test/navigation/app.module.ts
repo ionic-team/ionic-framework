@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Refresher, NavController } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule, Refresher, NavController } from '../../../..';
 
 
 @Component({
@@ -99,22 +99,22 @@ export class Page2 {
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   rootPage = Page1;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Page1,
     Page2
   ]

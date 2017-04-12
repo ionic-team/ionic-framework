@@ -4,7 +4,7 @@ import { DomController } from '../../platform/dom-controller';
 import { Tab } from './tab';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: '.tab-highlight'
