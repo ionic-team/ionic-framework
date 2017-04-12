@@ -223,10 +223,20 @@ export class AlertController {
   constructor(private _app: App, public config: Config) { }
 
   /**
-   * Display an alert with a title, inputs, and buttons
+   * Display an alert with a title, inputs or a subcomponent, and buttons
    * @param {AlertOptions} opts Alert. See the table below
+   * @param {object} component The subcomponent
+   * @param {object} data Any data to pass to the subcomponent view
    */
-  create(opts: AlertOptions = {}): Alert {
+  create(opts: AlertOptions = {}, component?: any, data?: any): Alert {
+    if (component) {
+      if (opts && opts.inputs) {
+        console.warn(`Alert cannot mix inputs und subcomponent.`);
+      }
+
+      let extraOpts = {subview: {component: component, args: data} };
+      opts = Object.assign({}, opts, extraOpts);
+    }
     return new Alert(this._app, opts, this.config);
   }
 
