@@ -18,6 +18,12 @@ $searchbar-md-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg
 /// @prop - Size of the searchbar input search icon
 $searchbar-md-input-search-icon-size:    20px !default;
 
+/// @prop - Padding top/bottom of the searchbar input
+$searchbar-md-input-padding-vertical:    11px !default;
+
+/// @prop - Padding left/right of the searchbar input
+$searchbar-md-input-padding-horizontal:  16px !default;
+
 /// @prop - Height of the searchbar input
 $searchbar-md-input-height:              auto !default;
 
@@ -65,11 +71,18 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 .searchbar-md .searchbar-search-icon {
   @include svg-background-image($searchbar-md-input-search-icon-svg);
 
-  top: 11px;
-  left: 16px;
+  top: $searchbar-md-input-padding-vertical;
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
+}
+
+[dir="ltr"] .searchbar-md .searchbar-search-icon {
+  left: $searchbar-md-input-padding-horizontal;
+}
+
+[dir="rtl"] .searchbar-md .searchbar-search-icon {
+  right: $searchbar-md-input-padding-horizontal;
 }
 
 
@@ -78,13 +91,20 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
 .searchbar-md .searchbar-md-cancel {
   top: 0;
-  left: 10px;
   display: none;
 
   margin: 0;
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: 100%;
+}
+
+[dir="ltr"] .searchbar-md .searchbar-md-cancel {
+  left: ($searchbar-md-input-padding-horizontal - 6);
+}
+
+[dir="rtl"] .searchbar-md .searchbar-md-cancel {
+  right: ($searchbar-md-input-padding-horizontal - 6);
 }
 
 // Searchbar Search & Cancel Icon
@@ -136,7 +156,6 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
   position: absolute;
   top: 0;
-  right: 13px;
 
   padding: 0;
 
@@ -146,6 +165,14 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   background-repeat: no-repeat;
   background-position: center;
   background-size: $searchbar-md-input-clear-icon-size;
+}
+
+[dir="ltr"] .searchbar-md .searchbar-clear-icon {
+  right: ($searchbar-md-input-padding-horizontal - 3);
+}
+
+[dir="rtl"] .searchbar-md .searchbar-clear-icon {
+  left: ($searchbar-md-input-padding-horizontal - 3);
 }
 
 .searchbar-md .searchbar-clear-icon.activated {
