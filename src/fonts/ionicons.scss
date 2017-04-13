@@ -33,3 +33,10 @@ ion-icon {
   text-transform: none;
   speak: none;
 }
+
+[dir="rtl"] ion-icon[aria-label^="arrow"] {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
