@@ -295,7 +295,7 @@ import { ViewController } from './view-controller';
  * }
  * ```
  *
- * We need to make sure that or `navCtrl.push` has a catch in order to catch the and handle the error.
+ * We need to make sure that our `navCtrl.push` has a catch in order to catch the and handle the error.
  * If you need to prevent a view from entering, you can do the same thing
  *
  * ```ts

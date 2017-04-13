@@ -332,3 +332,30 @@ ion-footer {
 [text-capitalize] {
   text-transform: capitalize;
 }
+
+// Float
+// --------------------------------------------------
+
+[pull-left] {
+  float: left;
+}
+
+[pull-right] {
+  float: right;
+}
+
+[pull-start] {
+  float: left;
+}
+
+[pull-end] {
+  float: right;
+}
+
+[dir="rtl"] [pull-start] {
+  float: right;
+}
+
+[dir="rtl"] [pull-end] {
+  float: left;
+}

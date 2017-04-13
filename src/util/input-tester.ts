@@ -1,4 +1,5 @@
 
+import { NgZone } from '@angular/core';
 import { BaseInput } from './base-input';
 import { assert } from './util';
 
@@ -51,12 +52,14 @@ export function commonInputTest<T>(input: BaseInput<T>, config: TestConfig) {
   // TODO test form register/deregister
   // TODO test item classes
   // TODO test disable
-
-  testInput(input, config, false);
-  input.ngAfterViewInit();
-  testInput(input, config, true);
-  input.ngOnDestroy();
-  assert(!input._init, 'input was not destroyed correctly');
+  const zone = new NgZone(true);
+  zone.run(() => {
+    testInput(input, config, false);
+    input.ngAfterViewInit();
+    testInput(input, config, true);
+    input.ngOnDestroy();
+    assert(!input._init, 'input was not destroyed correctly');
+  });
 }
 
 function testInput<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) {

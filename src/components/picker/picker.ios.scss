@@ -72,6 +72,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
   flex: 1;
 
   text-align: right;
+  text-align: end;
 }
 
 .picker-ios .picker-toolbar-button:last-child .picker-button {
@@ -82,6 +83,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
   font-weight: normal;
 
   text-align: left;
+  text-align: start;
 }
 
 .picker-ios .picker-button,
