@@ -1035,7 +1035,8 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the next slides.
-   * @param {boolean} shouldLockSwipeToNext 
+   * @param {boolean} shouldLockSwipeToNext If set to true the user will not be able to swipe to the next slide. 
+   * Set to false to unlock this behaviour.
    */
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
     this._allowSwipeToNext = !shouldLockSwipeToNext;
@@ -1043,7 +1044,8 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the previous slides.
-   * @param {boolean} shouldLockSwipeToPrev 
+   * @param {boolean} shouldLockSwipeToPrev If set to true the user will not be able to swipe to the previous slide.
+   * Set to false to unlock this behaviour.
    */
   lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
     this._allowSwipeToPrev = !shouldLockSwipeToPrev;
@@ -1051,7 +1053,8 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to change slides.
-   * @param {boolean} shouldLockSwipes
+   * @param {boolean} shouldLockSwipes If set to true user can not swipe in either direction on slide. 
+   * False allows swiping in both directions.
    */
   lockSwipes(shouldLockSwipes: boolean) {
     this._allowSwipeToNext = this._allowSwipeToPrev = !shouldLockSwipes;
@@ -1059,7 +1062,7 @@ export class Slides extends Ion {
 
   /**
    * Enable or disable keyboard control.
-   * @param {boolean} shouldEnableKeyboard
+   * @param {boolean} shouldEnableKeyboard If set to true the slider can be controled by a keyboard.
    */
   enableKeyboardControl(shouldEnableKeyboard: boolean) {
     enableKeyboardControl(this, this._plt, shouldEnableKeyboard);
