@@ -110,7 +110,7 @@ export class DeepLinkMetadata implements IonicPageMetadata {
   loadChildren?: string;
   name?: string;
   segment?: string;
-  defaultHistory?: string[];
+  defaultHistory?: string[] | any[];
   priority?: string;
 }
 
