@@ -1035,7 +1035,7 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the next slides.
-   * @param shouldLockSwipeToNext {boolean}
+   * @param {boolean} shouldLockSwipeToNext 
    */
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
     this._allowSwipeToNext = !shouldLockSwipeToNext;
@@ -1043,7 +1043,7 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the previous slides.
-   * @param shouldLockSwipeToPrev {boolean}
+   * @param {boolean} shouldLockSwipeToPrev 
    */
   lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
     this._allowSwipeToPrev = !shouldLockSwipeToPrev;
@@ -1051,7 +1051,7 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to change slides.
-   * @param shouldLockSwipes {boolean}
+   * @param {boolean} shouldLockSwipes
    */
   lockSwipes(shouldLockSwipes: boolean) {
     this._allowSwipeToNext = this._allowSwipeToPrev = !shouldLockSwipes;
@@ -1059,7 +1059,7 @@ export class Slides extends Ion {
 
   /**
    * Enable or disable keyboard control.
-   * @param shouldEnableKeyboard {boolean}
+   * @param {boolean} shouldEnableKeyboard
    */
   enableKeyboardControl(shouldEnableKeyboard: boolean) {
     enableKeyboardControl(this, this._plt, shouldEnableKeyboard);
