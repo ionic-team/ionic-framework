@@ -11,16 +11,26 @@
   pointer-events: none;
 }
 
-[icon-left] ion-icon {
+[icon-left] ion-icon, [icon-start] ion-icon {
   @include button-icon;
 
   padding-right: .3em;
 }
 
-[icon-right] ion-icon {
+[icon-right] ion-icon, [icon-end] ion-icon {
   @include button-icon;
 
   padding-left: .4em;
+}
+
+[dir="rtl"] [icon-start] ion-icon {
+  padding-left: .4em;
+  padding-right: initial;
+}
+
+[dir="rtl"] [icon-end] ion-icon {
+  padding-right: .3em;
+  padding-left: initial;
 }
 
 .button[icon-only] {
