@@ -11,16 +11,32 @@
   pointer-events: none;
 }
 
-[icon-left] ion-icon {
+[icon-left] ion-icon,
+[dir="ltr"] [icon-left] ion-icon {
   @include button-icon;
 
   padding-right: .3em;
 }
 
-[icon-right] ion-icon {
+[icon-right] ion-icon,
+[dir="ltr"] [icon-right] ion-icon {
   @include button-icon;
 
   padding-left: .4em;
+}
+
+[dir="rtl"] [icon-left] ion-icon {
+  @include button-icon;
+
+  padding-left: .4em;
+  padding-right: initial;
+}
+
+[dir="rtl"] [icon-right] ion-icon {
+  @include button-icon;
+
+  padding-right: .3em;
+  padding-left: initial;
 }
 
 .button[icon-only] {

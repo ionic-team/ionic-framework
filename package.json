@@ -95,6 +95,7 @@
     "gulp-uglify": "2.0.0",
     "gulp-util": "3.0.7",
     "gulp-watch": "4.3.9",
+    "hail2u-scss-functions": "^1.2.2",
     "html-entities": "1.2.0",
     "inquirer": "3.0.1",
     "ionic-cz-conventional-changelog": "1.0.0",

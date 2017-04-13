@@ -305,6 +305,14 @@ ion-footer {
   text-align: right;
 }
 
+[text-start] {
+  text-align: start;
+}
+
+[text-end] {
+  text-align: end;
+}
+
 [text-justify] {
   text-align: justify;
 }
@@ -316,7 +324,6 @@ ion-footer {
 [text-wrap] {
   white-space: normal;
 }
-
 
 // Text Transformation
 // --------------------------------------------------
@@ -331,4 +338,25 @@ ion-footer {
 
 [text-capitalize] {
   text-transform: capitalize;
+}
+
+// Float
+// --------------------------------------------------
+
+[pull-left],
+[dir="ltr"] [pull-left] {
+  float: left;
+}
+
+[pull-right],
+[dir="ltr"] [pull-right] {
+  float: right;
+}
+
+[dir="rtl"] [pull-left] {
+  float: right;
+}
+
+[dir="rtl"] [pull-right] {
+  float: left;
 }
