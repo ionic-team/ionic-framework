@@ -415,34 +415,34 @@ ion-footer {
     $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
 
     @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
-      // Provide `[pull-{bp}]` attributes for floating the element based
+      // Provide `[float-{bp}]` attributes for floating the element based
       // on the breakpoint
-      [pull#{$infix}-left] {
+      [float#{$infix}-left] {
         // scss-lint:disable ImportantRule
         float: left !important;
       }
 
-      [pull#{$infix}-right] {
+      [float#{$infix}-right] {
         // scss-lint:disable ImportantRule
         float: right !important;
       }
 
-      [pull#{$infix}-start] {
+      [float#{$infix}-start] {
         // scss-lint:disable ImportantRule
         float: left !important;
       }
 
-      [pull#{$infix}-end] {
+      [float#{$infix}-end] {
         // scss-lint:disable ImportantRule
         float: right !important;
       }
 
-      [dir="rtl"] [pull#{$infix}-start] {
+      [dir="rtl"] [float#{$infix}-start] {
         // scss-lint:disable ImportantRule
         float: right !important;
       }
 
-      [dir="rtl"] [pull#{$infix}-end] {
+      [dir="rtl"] [float#{$infix}-end] {
         // scss-lint:disable ImportantRule
         float: left !important;
       }
