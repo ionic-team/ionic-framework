@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer } from '@angular/core';
+import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 /**
  * @hidden
@@ -15,7 +15,7 @@ export class Backdrop {
 
   constructor(
     private _elementRef: ElementRef,
-    private _renderer: Renderer
+    private _renderer: Renderer2
   ) { }
 
   getNativeElement(): HTMLElement {
@@ -23,7 +23,11 @@ export class Backdrop {
   }
 
   setElementClass(className: string, add: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
+    if (add) {
+      this._renderer.addClass(this._elementRef.nativeElement, className);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, className);
+    }
   }
 
 }

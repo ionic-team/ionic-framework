@@ -18,8 +18,12 @@ export class SlideEdgeGesture extends SlideGesture {
     });
     super(plt, element, opts);
     // Can check corners through use of eg 'left top'
-    this.edges = opts.edge.split(' ');
+    this.setEdges(opts.edge);
     this.maxEdgeStart = opts.maxEdgeStart;
+  }
+
+  setEdges(edges: string) {
+    this.edges = edges.split(' ');
   }
 
   canStart(ev: any): boolean {

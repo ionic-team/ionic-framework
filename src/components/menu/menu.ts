@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input,
+  OnInit, OnChanges, OnDestroy,
+  Output, Renderer2, SimpleChange, ViewChild, ViewEncapsulation
+} from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -192,7 +196,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
-export class Menu implements RootNode {
+export class Menu implements RootNode, OnInit, OnChanges, OnDestroy {
 
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;
@@ -311,9 +315,8 @@ export class Menu implements RootNode {
     private _elementRef: ElementRef,
     private _config: Config,
     private _plt: Platform,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     private _keyboard: Keyboard,
-    private _zone: NgZone,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
     private _app: App,
@@ -369,6 +372,17 @@ export class Menu implements RootNode {
 
     // mask it as enabled / disabled
     this.enable(isEnabled);
+  }
+
+  /**
+   * @hidden
+   */
+  ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
+    // If side updated in runtime
+    if (changes['side']) {
+      // Update gesture's side
+      this._gesture.setEdges(this.side);
+    }
   }
 
   /**
@@ -690,14 +704,18 @@ export class Menu implements RootNode {
    * @hidden
    */
   setElementClass(className: string, add: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
+    if (add) {
+      this._renderer.addClass(this._elementRef.nativeElement, className);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, className);
+    }
   }
 
   /**
    * @hidden
    */
   setElementAttribute(attributeName: string, value: string) {
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, value);
+    this._renderer.setAttribute(this._elementRef.nativeElement, attributeName, value);
   }
 
   /**
