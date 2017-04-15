@@ -51,7 +51,6 @@ $item-md-divider-padding:            5px 15px !default;
 /// @prop - Background for the sliding content
 $item-md-sliding-content-background: $list-md-background-color !default;
 
-
 .item-md {
   position: relative;
 
@@ -64,7 +63,8 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   box-shadow: none;
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
-[dir="ltr"] .item-md {
+
+.item-md {
   padding-right: 0;
   padding-left: ($item-md-padding-left);
 }
