@@ -50,6 +50,8 @@ export class Platform {
   private _isPortrait: boolean = null;
   private _uiEvtOpts = false;
 
+  static dirChanged: EventEmitter<any> = new EventEmitter();
+
   /** @hidden */
   zone: NgZone;
 
@@ -313,9 +315,12 @@ export class Platform {
    * direction needs to be dynamically changed per user/session.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @param {string} dir  Examples: `rtl`, `ltr`
+   * @param {boolean} updateDocument
    */
   setDir(dir: string, updateDocument: boolean) {
     this._dir = (dir || '').toLowerCase();
+    Platform.dirChanged.emit(this._dir);
+
     if (updateDocument !== false) {
       this._doc['documentElement'].setAttribute('dir', dir);
     }
