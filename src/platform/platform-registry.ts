@@ -225,6 +225,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
    * electron
    */
   'electron': {
+    superset: 'core',
     initialize: function(plt: Platform) {
       plt.prepareReady = function() {
         // 1) ionic bootstrapped
