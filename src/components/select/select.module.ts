@@ -1,18 +1,37 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Select } from './select';
+import { SelectPopover } from './select-popover-component';
+
+import { ItemModule } from '../item/item.module';
+import { LabelModule } from '../label/label.module';
+import { ListModule } from '../list/list.module';
+import { RadioModule } from '../radio/radio.module';
+
 
 /** @hidden */
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ItemModule,
+    LabelModule,
+    ListModule,
+    RadioModule
   ],
   declarations: [
-    Select
+    Select,
+    SelectPopover
   ],
   exports: [
-    Select
+    Select,
+    SelectPopover
+  ],
+  entryComponents: [
+    SelectPopover
   ]
 })
 export class SelectModule {

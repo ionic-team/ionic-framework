@@ -3,14 +3,17 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
+import { Popover } from '../popover/popover';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { DeepLinker } from '../../navigation/deep-linker';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
+import { SelectPopover, SelectPopoverOption } from './select-popover-component';
 
 export const SELECT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -30,7 +33,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * The select component takes child `ion-option` components. If `ion-option` is not
  * given a `value` attribute then it will use its text as the value.
  *
- * If `ngModel` is bound to `ion-select`, the selected value will be based on the 
+ * If `ngModel` is bound to `ion-select`, the selected value will be based on the
  * bound value of the model. Otherwise, the `selected` attribute can be used on
  * `ion-option` components.
  *
@@ -38,9 +41,10 @@ export const SELECT_VALUE_ACCESSOR: any = {
  *
  * By default, the `ion-select` uses the {@link ../../alert/AlertController AlertController API}
  * to open up the overlay of options in an alert. The interface can be changed to use the
- * {@link ../../action-sheet/ActionSheetController ActionSheetController API} by passing
- * `action-sheet` to the `interface` property. Read the other sections for the limitations of the
- * action sheet interface.
+ * {@link ../../action-sheet/ActionSheetController ActionSheetController API} or
+ * {@link ../../popover/PopoverController PopoverController API} by passing `action-sheet` or `popover`,
+ * respectively, to the `interface` property. Read on to the other sections for the limitations
+ * of the different interfaces.
  *
  * ### Single Value: Radio Buttons
  *
@@ -70,7 +74,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * selected option values. In the example below, because each option is not given
  * a `value`, then it'll use its text as the value instead.
  *
- * Note: the action sheet interface will not work with a multi-value select.
+ * Note: the `action-sheet` and `popover` interfaces will not work with a multi-value select.
  *
  * ```html
  * <ion-item>
@@ -96,18 +100,21 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * </ion-select>
  * ```
  *
- * The action sheet interface does not have an `OK` button, clicking
+ * The `action-sheet` and `popover` interfaces do not have an `OK` button, clicking
  * on any of the options will automatically close the overlay and select
  * that value.
  *
  * ### Select Options
  *
- * Since `ion-select` uses the `Alert` and `Action Sheet` interfaces, options can be
+ * Since `ion-select` uses the `Alert`, `Action Sheet` and `Popover` interfaces, options can be
  * passed to these components through the `selectOptions` property. This can be used
  * to pass a custom title, subtitle, css class, and more. See the
- * {@link ../../alert/AlertController/#create AlertController API docs} and
- * {@link ../../action-sheet/ActionSheetController/#create ActionSheetController API docs}
+ * {@link ../../alert/AlertController/#create AlertController API docs},
+ * {@link ../../action-sheet/ActionSheetController/#create ActionSheetController API docs}, and
+ * {@link ../../popover/PopoverController/#create PopoverController API docs}
  * for the properties that each interface accepts.
+ *
+ * For example, to change the `mode` of the overlay, pass it into `selectOptions`.
  *
  * ```html
  * <ion-select [selectOptions]="selectOptions">
@@ -118,7 +125,8 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * ```ts
  * this.selectOptions = {
  *   title: 'Pizza Toppings',
- *   subTitle: 'Select your toppings'
+ *   subTitle: 'Select your toppings',
+ *   mode: 'md'
  * };
  * ```
  *
@@ -176,7 +184,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   @Input() selectOptions: any = {};
 
   /**
-   * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
+   * @input {string} The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
 
@@ -197,7 +205,8 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() item: Item,
-    @Optional() private _nav: NavController
+    @Optional() private _nav: NavController,
+    public deepLinker: DeepLinker
   ) {
     super(config, elementRef, renderer, 'select', [], form, item, null);
   }
@@ -215,7 +224,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     }
     ev.preventDefault();
     ev.stopPropagation();
-    this.open();
+    this.open(ev);
   }
 
   @HostListener('keyup.space')
@@ -226,7 +235,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   /**
    * Open the select interface.
    */
-  open() {
+  open(ev?: UIEvent) {
     if (this.isFocus() || this._disabled) {
       return;
     }
@@ -257,12 +266,18 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       this.interface = 'alert';
     }
 
-    if (this.interface === 'action-sheet' && this._multi) {
-      console.warn('Interface cannot be "action-sheet" with a multi-value select. Using the "alert" interface.');
+    if ((this.interface === 'action-sheet' || this.interface === 'popover') && this._multi) {
+      console.warn('Interface cannot be "' + this.interface + '" with a multi-value select. Using the "alert" interface.');
       this.interface = 'alert';
     }
 
-    let overlay: ActionSheet | Alert;
+    if (this.interface === 'popover' && !ev) {
+      console.warn('Interface cannot be "popover" without UIEvent.');
+      this.interface = 'alert';
+    }
+
+    let overlay: ActionSheet | Alert | Popover;
+
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
         return {
@@ -281,6 +296,25 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
 
       selectOptions.cssClass = selectCssClass;
       overlay = new ActionSheet(this._app, selectOptions, this.config);
+
+    } else if (this.interface === 'popover') {
+      let popoverOptions: SelectPopoverOption[] = options.map(input => ({
+        text: input.text,
+        checked: input.selected,
+        disabled: input.disabled,
+        value: input.value
+      }));
+
+      overlay = new Popover(this._app, SelectPopover, {
+        options: popoverOptions
+      }, {
+        cssClass: 'select-popover'
+      }, this.config, this.deepLinker);
+
+      // ev.target is readonly.
+      // place popover regarding to ion-select instead of .button-inner
+      Object.defineProperty(ev, 'target', { value: ev.currentTarget });
+      selectOptions.ev = ev;
 
     } else {
       // default to use the alert interface
@@ -330,9 +364,15 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     }
 
     overlay.present(selectOptions);
+
     this._fireFocus();
-    overlay.onDidDismiss(() => {
+    overlay.onDidDismiss((value: any) => {
       this._fireBlur();
+
+      if (this.interface === 'popover' && value) {
+        this.value = value;
+        this.ionChange.emit(value);
+      }
     });
   }
 
