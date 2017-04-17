@@ -46,14 +46,17 @@ export class ItemOptions {
    * @hidden
    */
   getSides(): number {
-    if (isPresent(this.side) && this.side === 'left' && !_plt.isRTL()) {
-      return ITEM_SIDE_FLAG_LEFT;
-    }
-    else if (isPresent(this.side) && this.side === 'left' && _plt.isRTL()) {
-      return ITEM_SIDE_FLAG_RIGHT;
-    }
-    else if (isPresent(this.side) && this.side === 'right' && _plt.isRTL()) {
-      return ITEM_SIDE_FLAG_LEFT;
+    if (isPresent(this.side)) {
+      switch(this.side) {
+        case 'left':
+          return ITEM_SIDE_FLAG_LEFT;
+        case 'right':
+          return ITEM_SIDE_FLAG_RIGHT;
+        case 'start':
+          return _plt.isRTL() ? ITEM_SIDE_FLAG_RIGHT : ITEM_SIDE_FLAG_LEFT;
+        case 'end':
+          return _plt.isRTL() ? ITEM_SIDE_FLAG_LEFT : ITEM_SIDE_FLAG_RIGHT;
+      }
     }
     return ITEM_SIDE_FLAG_RIGHT;
   }
