@@ -246,3 +246,4 @@ export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');
 export function providePlatformConfigs() {
   return PLATFORM_CONFIGS;
 }
+

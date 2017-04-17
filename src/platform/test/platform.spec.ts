@@ -458,7 +458,7 @@ describe('Platform', () => {
     expect(plt.is('ipad')).toEqual(false);
     expect(plt.is('tablet')).toEqual(false);
     expect(plt.is('electron')).toEqual(true);
-  })
+  });
 
   it('should set core platform for osx desktop firefox', () => {
     plt.setQueryParams('');

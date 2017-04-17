@@ -30,3 +30,4 @@ export function isWKWebView(plt: Platform): boolean {
 export function isIosUIWebView(plt: Platform): boolean {
   return isIos(plt) && !isWKWebView(plt) && !isSafari(plt);
 }
+
