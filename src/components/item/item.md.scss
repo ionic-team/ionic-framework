@@ -68,6 +68,11 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
 
+[dir="rtl"] .item-md {
+  padding-right: ($item-md-padding-right);
+  padding-left: 0;
+}
+
 .item-md.activated {
   background-color: $list-md-activated-background-color;
 }

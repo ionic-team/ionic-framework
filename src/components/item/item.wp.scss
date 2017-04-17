@@ -73,6 +73,11 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   box-shadow: none;
 }
 
+[dir="rtl"] .item-wp {
+  padding-right: ($item-wp-padding-right);
+  padding-left: 0;
+}
+
 .item-wp.activated {
   background-color: $list-wp-activated-background-color;
 }

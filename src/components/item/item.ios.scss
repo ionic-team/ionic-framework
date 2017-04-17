@@ -52,6 +52,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios {
   position: relative;
 
+  padding-right: 0;
   padding-left: $item-ios-padding-left;
 
   border-radius: 0;
@@ -59,6 +60,11 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   color: $list-ios-text-color;
   background-color: $list-ios-background-color;
   transition: background-color 200ms linear;
+}
+
+[dir="rtl"] .item-ios {
+  padding-right: $item-ios-padding-right;
+  padding-left: 0;
 }
 
 .item-ios.activated {
