@@ -1,7 +1,7 @@
 import { OpaqueToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
-import { isCordova, isIos, isIosUIWebView } from './platform-utils';
+import { isCordova, isElectron, isIos, isIosUIWebView } from './platform-utils';
 
 
 export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
@@ -218,6 +218,24 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
     },
     isMatch(plt: Platform): boolean {
       return isCordova(plt);
+    }
+  },
+
+  /**
+   * electron
+   */
+  'electron': {
+    superset: 'core',
+    initialize: function(plt: Platform) {
+      plt.prepareReady = function() {
+        // 1) ionic bootstrapped
+        plt.windowLoad(function() {
+          plt.triggerReady('electron');
+        });
+      };
+    },
+    isMatch(plt: Platform): boolean {
+      return isElectron(plt);
     }
   }
 };

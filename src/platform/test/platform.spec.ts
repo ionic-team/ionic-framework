@@ -444,6 +444,22 @@ describe('Platform', () => {
     expect(plt.is('tablet')).toEqual(true);
   });
 
+  it('should set electron via user agent', () => {
+    plt.setQueryParams('');
+    plt.setDefault('core');
+    plt.setUserAgent(OSX_10_ELECTRON_1_4_15_UA);
+    plt.init();
+
+    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('mobile')).toEqual(false);
+    expect(plt.is('windows')).toEqual(false);
+    expect(plt.is('android')).toEqual(false);
+    expect(plt.is('ios')).toEqual(false);
+    expect(plt.is('ipad')).toEqual(false);
+    expect(plt.is('tablet')).toEqual(false);
+    expect(plt.is('electron')).toEqual(true);
+  })
+
   it('should set core platform for osx desktop firefox', () => {
     plt.setQueryParams('');
     plt.setDefault('core');
@@ -549,6 +565,7 @@ describe('Platform', () => {
 const OSX_10_FIREFOX_43_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0';
 const OSX_10_SAFARI_9_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/601.4.4 (KHTML, like Gecko) Version/9.0.3 Safari/601.4.4';
 const OSX_10_CHROME_49_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36';
+const OSX_10_ELECTRON_1_4_15_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) ionic-hello-world/1.4.15 Chrome/53.0.2785.143 Electron/1.4.15 Safari/537.36';
 
 const WINDOWS_10_CHROME_40_UA = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36';
 const WINDOWS_10_EDGE_12_UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
