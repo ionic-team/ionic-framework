@@ -450,7 +450,7 @@ describe('Platform', () => {
     plt.setUserAgent(OSX_10_ELECTRON_1_4_15_UA);
     plt.init();
 
-    expect(plt.is('core')).toEqual(false);
+    expect(plt.is('core')).toEqual(true);
     expect(plt.is('mobile')).toEqual(false);
     expect(plt.is('windows')).toEqual(false);
     expect(plt.is('android')).toEqual(false);
