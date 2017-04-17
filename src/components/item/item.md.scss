@@ -130,10 +130,21 @@ $item-md-sliding-content-background: $list-md-background-color !default;
     @include svg-background-image($item-md-detail-push-svg);
 
     padding-right: 32px;
+    padding-left: 0;
 
     background-repeat: no-repeat;
     background-position: right ($item-md-padding-right - 2) center;
     background-size: 14px 14px;
+  }
+  [dir="rtl"] {
+    .item-md[detail-push] .item-inner,
+    button.item-md:not([detail-none]) .item-inner,
+    a.item-md:not([detail-none]) .item-inner {
+      padding-right: 0;
+      padding-left: 32px;
+      
+      background-position: left ($item-md-padding-left - 2) center
+    }
   }
 }
 

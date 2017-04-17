@@ -203,12 +203,23 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   button.item-ios:not([detail-none]) .item-inner,
   a.item-ios:not([detail-none]) .item-inner {
     @include svg-background-image($item-ios-detail-push-svg);
-
+    
     padding-right: 32px;
+    padding-left: 0;
 
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
+  }
+  [dir="rtl"] {
+    .item-ios[detail-push] .item-inner,
+    button.item-ios:not([detail-none]) .item-inner,
+    a.item-ios:not([detail-none]) .item-inner {
+      padding-right: 0;
+      padding-left: 32px;
+      
+      background-position: left ($item-ios-padding-left - 2) center;
+    }
   }
 }
 

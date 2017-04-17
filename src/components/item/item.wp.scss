@@ -135,10 +135,21 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
     @include svg-background-image($item-wp-detail-push-svg);
 
     padding-right: 32px;
+    padding-left: 0;
 
     background-repeat: no-repeat;
     background-position: right ($item-wp-padding-right - 2) center;
     background-size: 14px 14px;
+  }
+  [dir="rtl"] {
+    .item-wp[detail-push] .item-inner,
+    button.item-wp:not([detail-none]) .item-inner,
+    a.item-wp:not([detail-none]) .item-inner {
+      padding-right: 0;
+      padding-left: 32px;
+      
+      background-position: left ($item-wp-padding-left -2) center;
+    }
   }
 }
 
