@@ -39,6 +39,9 @@ $item-wp-detail-push-color:          $input-wp-border-color !default;
 /// @prop - Icon for the detail arrow
 $item-wp-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-wp-detail-push-color}'/></svg>" !default;
 
+/// @prop - Icon for the detail arrow in rtl
+$item-wp-detail-push-svg-rtl:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-wp-detail-push-color}' transform='rotate(180 6 10)'/></svg>" !default;
+
 /// @prop - Color for the divider
 $item-wp-divider-color:              $list-wp-text-color !default;
 
@@ -145,9 +148,11 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
     .item-wp[detail-push] .item-inner,
     button.item-wp:not([detail-none]) .item-inner,
     a.item-wp:not([detail-none]) .item-inner {
+      @include svg-background-image($item-wp-detail-push-svg-rtl);
+
       padding-right: 0;
       padding-left: 32px;
-      
+
       background-position: left ($item-wp-padding-left -2) center;
     }
   }
