@@ -57,14 +57,28 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   onSlide(slide: SlideData, ev: any) {
-    let z = (this.menu.side === 'right' ? slide.min : slide.max);
+    if (this.menu.side === 'right' || (this.menu.side === 'start' && this.plt.isRTL()) || (this.menu.side === 'end' && !this.plt.isRTL())) {
+      let z = slide.min;
+    }
+
+    else if (this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+      let z = slide.max;
+    }
+
     let stepValue = (slide.distance / z);
 
     this.menu._swipeProgress(stepValue);
   }
 
   onSlideEnd(slide: SlideData, ev: any) {
-    let z = (this.menu.side === 'right' ? slide.min : slide.max);
+    if (this.menu.side === 'right' || (this.menu.side === 'start' && this.plt.isRTL()) || (this.menu.side === 'end' && !this.plt.isRTL())) {
+      let z = slide.min;
+    }
+
+    else if (this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+      let z = slide.max;
+    }
+    
     let currentStepValue = (slide.distance / z);
     let velocity = slide.velocity;
     z = Math.abs(z * 0.5);
@@ -88,24 +102,26 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   getElementStartPos(slide: SlideData, ev: any) {
-    if (this.menu.side === 'right') {
+    if (this.menu.side === 'right' || (this.menu.side === 'start' && this.plt.isRTL()) || (this.menu.side === 'end' && !this.plt.isRTL())) {
       return this.menu.isOpen ? slide.min : slide.max;
     }
-    // left menu
-    return this.menu.isOpen ? slide.max : slide.min;
+    else if (this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+      return this.menu.isOpen ? slide.max : slide.min;
+    }
   }
 
   getSlideBoundaries(): {min: number, max: number} {
-    if (this.menu.side === 'right') {
+    if (this.menu.side === 'right' || (this.menu.side === 'start' && this.plt.isRTL()) || (this.menu.side === 'end' && !this.plt.isRTL())) {
       return {
         min: -this.menu.width(),
         max: 0
       };
     }
-    // left menu
-    return {
-      min: 0,
-      max: this.menu.width()
-    };
+    this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+      return {
+        min: 0,
+        max: this.menu.width()
+      };
+    }
   }
 }
