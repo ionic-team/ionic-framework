@@ -34,9 +34,19 @@ ion-icon {
   speak: none;
 }
 
-[dir="rtl"] ion-icon[aria-label^="arrow"] {
-  -moz-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+@mixin scale-x($amount) {
+  -moz-transform: scaleX($amount);
+  -o-transform: scaleX($amount);
+  -webkit-transform: scaleX($amount);
+  transform: scaleX($amount);
+}
+
+[dir="rtl"] {
+  ion-icon[aria-label^="arrow"], ion-icon[flip-rtl] {
+    @include scale-x(-1)
+  }
+
+  ion-icon[unflip-rtl] {
+    @include scale-x(1)
+  }
 }
