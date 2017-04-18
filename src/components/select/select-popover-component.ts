@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
 
-/** @private */
+/** @hidden */
 export interface SelectPopoverOption {
   text: string;
   value: string;
@@ -10,7 +10,7 @@ export interface SelectPopoverOption {
   checked: boolean;
 }
 
-/** @private */
+/** @hidden */
 @Component({
   template: `
     <ion-list radio-group [(ngModel)]="value">
