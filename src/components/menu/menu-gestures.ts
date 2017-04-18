@@ -59,9 +59,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
   onSlide(slide: SlideData, ev: any) {
     if (this.menu.side === 'right' || (this.menu.side === 'start' && this.plt.isRTL()) || (this.menu.side === 'end' && !this.plt.isRTL())) {
       let z = slide.min;
-    }
-
-    else if (this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+    } else {
       let z = slide.max;
     }
 
@@ -73,9 +71,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
   onSlideEnd(slide: SlideData, ev: any) {
     if (this.menu.side === 'right' || (this.menu.side === 'start' && this.plt.isRTL()) || (this.menu.side === 'end' && !this.plt.isRTL())) {
       let z = slide.min;
-    }
-
-    else if (this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+    } else {
       let z = slide.max;
     }
     
@@ -104,8 +100,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
   getElementStartPos(slide: SlideData, ev: any) {
     if (this.menu.side === 'right' || (this.menu.side === 'start' && this.plt.isRTL()) || (this.menu.side === 'end' && !this.plt.isRTL())) {
       return this.menu.isOpen ? slide.min : slide.max;
-    }
-    else if (this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+    } else {
       return this.menu.isOpen ? slide.max : slide.min;
     }
   }
@@ -116,8 +111,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
         min: -this.menu.width(),
         max: 0
       };
-    }
-    this.menu.side === 'left' || (this.menu.side === 'end' && this.plt.isRTL()) || (this.menu.side === 'start' && !this.plt.isRTL())) {
+    } else {
       return {
         min: 0,
         max: this.menu.width()

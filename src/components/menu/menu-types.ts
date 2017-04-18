@@ -86,9 +86,7 @@ class MenuRevealType extends MenuType {
 
     if (menu.side === 'right' || (menu.side === 'start' && plt.isRTL()) || (menu.side === 'end' && !plt.isRTL())) {
       let openedX = (menu.width() * -1) + 'px';
-    }
-    
-    else if (menu.side === 'left' || (menu.side === 'end' && plt.isRTL()) || (menu.side === 'start' && !plt.isRTL())) {
+    } else {
       let openedX = (menu.width() * 1) + 'px';
     }
       
@@ -116,9 +114,7 @@ class MenuPushType extends MenuType {
       contentOpenedX = -menu.width() + 'px';
       menuOpenedX = '0px';
       menuClosedX = menu.width() + 'px';
-    }
-    
-    else if (menu.side === 'left' || (menu.side === 'end' && plt.isRTL()) || (menu.side === 'start' && !plt.isRTL())) {
+    } else {
       contentOpenedX = menu.width() + 'px';
       menuOpenedX = '0px';
       menuClosedX = -menu.width() + 'px';
@@ -150,8 +146,7 @@ class MenuOverlayType extends MenuType {
     if (menu.side === 'right' || (menu.side === 'start' && plt.isRTL()) || (menu.side === 'end' && !plt.isRTL())) {
       closedX = 8 + menu.width() + 'px';
       openedX = '0px';
-    }
-    else if (menu.side === 'left' || (menu.side === 'end' && plt.isRTL()) || (menu.side === 'start' && !plt.isRTL())) {
+    } else {
       closedX = -(8 + menu.width()) + 'px';
       openedX = '0px';
     }

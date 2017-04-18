@@ -341,8 +341,7 @@ export class Menu implements RootNode {
     // normalize the "side"
     if (this.side !== 'left' && this.side !== 'right' && this.side !== 'start' && this.side !== 'end' && !_plt.isRTL()) {
       this.side = 'left';
-    }
-    else if (this.side !== 'left' && this.side !== 'right' && this.side !== 'start' && this.side !== 'end' && _plt.isRTL()) {
+    } else {
       this.side = 'right';
     }
     this.setElementAttribute('side', this.side);
