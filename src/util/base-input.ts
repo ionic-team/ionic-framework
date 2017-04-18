@@ -147,7 +147,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     console.debug('BaseInput: value changed:', normalized, this);
     this._value = normalized;
     this._inputCheckHasValue(normalized);
-    this._inputUpdated();
+    if (this._init) {
+      this._inputUpdated();
+    }
     return true;
   }
 
@@ -186,6 +188,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
       return;
     }
     this._init = true;
+    if (isPresent(this._value)) {
+      this._inputUpdated();
+    }
   }
 
   /**
@@ -195,6 +200,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (this._isFocus) {
       return;
     }
+    assert(this._init, 'component was not initialized');
     assert(NgZone.isInAngularZone(), '_fireFocus: should be zoned');
 
     this._isFocus = true;
@@ -209,6 +215,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._isFocus) {
       return;
     }
+    assert(this._init, 'component was not initialized');
     assert(NgZone.isInAngularZone(), '_fireBlur: should be zoned');
 
     this._isFocus = false;
@@ -283,5 +290,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  _inputUpdated() {}
+  _inputUpdated() {
+    assert(this._init, 'component should be initialized');
+  }
 }

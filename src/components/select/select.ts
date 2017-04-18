@@ -211,11 +211,6 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     super(config, elementRef, renderer, 'select', [], form, item, null);
   }
 
-
-  ngAfterContentInit() {
-    this._inputUpdated();
-  }
-
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
     if (ev.detail === 0) {
@@ -405,14 +400,14 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   set options(val: QueryList<Option>) {
     this._options = val;
 
-    if (this._value.length  === 0) {
+    if (this._value.length === 0) {
       // there are no values set at this point
       // so check to see who should be selected
       // we use writeValue() because we don't want to update ngModel
       this.writeValue(val.filter(o => o.selected).map(o => o.value));
+    } else {
+      this._inputUpdated();
     }
-
-    this._inputUpdated();
   }
 
   _inputNormalize(val: any): string[] {

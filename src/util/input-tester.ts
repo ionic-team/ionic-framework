@@ -74,31 +74,33 @@ function testState<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) 
   assertEqual(input.isFocus(), false, 'should not be focus');
   assertEqual(input.value, config.defaultValue, 'default value is wrong');
 
-  let blurCount = 0;
-  let focusCount = 0;
-  const subBlur = input.ionBlur.subscribe((ev: any) => {
-    assertEqual(ev, input, 'ionBlur argument is wrong');
-    blurCount++;
-  });
-  const subFocus = input.ionFocus.subscribe((ev: any) => {
-    assertEqual(ev, input, 'ionFocus argument is wrong');
-    focusCount++;
-  });
-  input._fireFocus();
-  assertEqual(input._isFocus, true, 'should be focus');
-  assertEqual(input.isFocus(), true, 'should be focus');
-  input._fireFocus();
+  if (isInit) {
+    let blurCount = 0;
+    let focusCount = 0;
+    const subBlur = input.ionBlur.subscribe((ev: any) => {
+      assertEqual(ev, input, 'ionBlur argument is wrong');
+      blurCount++;
+    });
+    const subFocus = input.ionFocus.subscribe((ev: any) => {
+      assertEqual(ev, input, 'ionFocus argument is wrong');
+      focusCount++;
+    });
+    input._fireFocus();
+    assertEqual(input._isFocus, true, 'should be focus');
+    assertEqual(input.isFocus(), true, 'should be focus');
+    input._fireFocus();
 
-  input._fireBlur();
-  assertEqual(input._isFocus, false, 'should be not focus');
-  assertEqual(input.isFocus(), false, 'should be not focus');
-  input._fireBlur(); // it should not crash
+    input._fireBlur();
+    assertEqual(input._isFocus, false, 'should be not focus');
+    assertEqual(input.isFocus(), false, 'should be not focus');
+    input._fireBlur(); // it should not crash
 
-  assertEqual(focusCount, 1, 'ionFocus was not called correctly');
-  assertEqual(blurCount, 1, 'ionBlur was not called correctly');
+    assertEqual(focusCount, 1, 'ionFocus was not called correctly');
+    assertEqual(blurCount, 1, 'ionBlur was not called correctly');
 
-  subBlur.unsubscribe();
-  subFocus.unsubscribe();
+    subBlur.unsubscribe();
+    subFocus.unsubscribe();
+  }
 }
 
 function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) {
@@ -150,7 +152,6 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
 
     OnTouchedCalled = OnChangeCalled = ionChangeCalled = 0;
 
-    console.log(test[0], input.value);
     // Set same value (it should not redispatch)
     input.value = test[0];
     assertEqual(ionChangeCalled, 0, 'loop: ionChange should not be called');

@@ -144,7 +144,7 @@ describe('DateTime', () => {
   describe('writeValue', () => {
 
     it('should updateText with default MMM D, YYYY when no displayFormat or pickerFormat', zoned(() => {
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.writeValue('1994-12-15T13:47:20.789Z');
 
       expect(datetime._text).toEqual('Dec 15, 1994');
@@ -152,7 +152,7 @@ describe('DateTime', () => {
 
     it('should updateText with pickerFormat when no displayFormat', zoned(() => {
       datetime.pickerFormat = 'YYYY';
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.writeValue('1994-12-15T13:47:20.789Z');
 
       expect(datetime._text).toEqual('1994');
@@ -160,7 +160,7 @@ describe('DateTime', () => {
 
     it('should updateText with displayFormat when no pickerFormat', zoned(() => {
       datetime.displayFormat = 'YYYY';
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.writeValue('1994-12-15T13:47:20.789Z');
 
       expect(datetime._text).toEqual('1994');
@@ -172,7 +172,7 @@ describe('DateTime', () => {
 
     it('should generate with default MMM D, YYYY when no displayFormat or pickerFormat', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       datetime.generate();
@@ -186,7 +186,7 @@ describe('DateTime', () => {
 
     it('should generate with only displayFormat', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.displayFormat = 'YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
@@ -199,7 +199,7 @@ describe('DateTime', () => {
 
     it('should generate with only pickerFormat', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.pickerFormat = 'YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
@@ -212,7 +212,7 @@ describe('DateTime', () => {
 
     it('should generate with custom locale short month names from input property', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.pickerFormat = 'MMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
@@ -227,7 +227,7 @@ describe('DateTime', () => {
 
     it('should generate with custom locale full month names from input property', zoned(() => {
       datetime.monthNames = customLocale.monthNames;
-      datetime.ngAfterContentInit();
+      datetime.ngAfterViewInit();
       datetime.pickerFormat = 'MMMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
