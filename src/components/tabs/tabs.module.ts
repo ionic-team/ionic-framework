@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { BadgeModule } from '../badge/badge.module';
 import { IconModule } from '../icon/icon.module';
 
 import { Tab } from './tab';
@@ -12,7 +11,6 @@ import { Tabs } from './tabs';
 /** @hidden */
 @NgModule({
   imports: [
-    BadgeModule,
     CommonModule,
     IconModule
   ],
@@ -27,7 +25,8 @@ import { Tabs } from './tabs';
     TabButton,
     TabHighlight,
     Tabs
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TabsModule {
   public static forRoot(): ModuleWithProviders {

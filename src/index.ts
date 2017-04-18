@@ -3,7 +3,7 @@
 /**
  * Import Angular
  */
-import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, CUSTOM_ELEMENTS_SCHEMA, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { DOCUMENT } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +38,7 @@ import { PickerController } from './components/picker/picker-controller';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
 import { PopoverController } from './components/popover/popover-controller';
+import { setupCore } from './util/ionic-core';
 import { TapClick, setupTapClick } from './tap-click/tap-click';
 import { ToastController } from './components/toast/toast-controller';
 import { registerModeConfigs } from './config/mode-registry';
@@ -53,7 +54,6 @@ import { AlertModule } from './components/alert/alert.module';
 import { AppModule } from './components/app/app.module';
 import { AvatarModule } from './components/avatar/avatar.module';
 import { BackdropModule } from './components/backdrop/backdrop.module';
-import { BadgeModule } from './components/badge/badge.module';
 import { ButtonModule } from './components/button/button.module';
 import { CardModule } from './components/card/card.module';
 import { CheckboxModule } from './components/checkbox/checkbox.module';
@@ -107,7 +107,6 @@ export { AlertModule } from './components/alert/alert.module';
 export { AppModule } from './components/app/app.module';
 export { AvatarModule } from './components/avatar/avatar.module';
 export { BackdropModule } from './components/backdrop/backdrop.module';
-export { BadgeModule } from './components/badge/badge.module';
 export { ButtonModule } from './components/button/button.module';
 export { CardModule } from './components/card/card.module';
 export { CheckboxModule } from './components/checkbox/checkbox.module';
@@ -164,7 +163,6 @@ export { AlertOptions, AlertInputOptions } from './components/alert/alert-option
 export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';
 export { Backdrop } from './components/backdrop/backdrop';
-export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';
 export { Card } from './components/card/card';
 export { CardContent } from './components/card/card-content';
@@ -248,6 +246,7 @@ export { Slide } from './components/slides/slide';
 export { Slides } from './components/slides/slides';
 export { Spinner } from './components/spinner/spinner';
 export { SplitPane, RootNode } from './components/split-pane/split-pane';
+export { setupCore } from './util/ionic-core';
 export { Tab } from './components/tabs/tab';
 export { TabButton } from './components/tabs/tab-button';
 export { TabHighlight } from './components/tabs/tab-highlight';
@@ -378,7 +377,6 @@ export { IonicGestureConfig } from './gestures/gesture-config';
     AppModule.forRoot(),
     AvatarModule.forRoot(),
     BackdropModule.forRoot(),
-    BadgeModule.forRoot(),
     ButtonModule.forRoot(),
     CardModule.forRoot(),
     CheckboxModule.forRoot(),
@@ -433,7 +431,6 @@ export { IonicGestureConfig } from './gestures/gesture-config';
     AppModule,
     AvatarModule,
     BackdropModule,
-    BadgeModule,
     ButtonModule,
     CardModule,
     CheckboxModule,
@@ -477,6 +474,9 @@ export { IonicGestureConfig } from './gestures/gesture-config';
     ToolbarModule,
     TypographyModule,
     VirtualScrollModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class IonicModule {
@@ -509,6 +509,7 @@ export class IonicModule {
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupPreloading, deps: [ Config, DeepLinkConfigToken, ModuleLoader, NgZone ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupCore, deps: [ Config, Platform, DomController, NgZone ], multi: true },
 
         // useClass
         // { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
