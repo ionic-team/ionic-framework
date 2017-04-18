@@ -132,9 +132,11 @@ export class Page4 extends Base {
     setTimeout(() => {
       this.doSomethingSync();
       setTimeout(() => {
-        this.nav.push(Page5).catch(() => {
-          this.nav.push(Page6, { continue: false });
-          setTimeout(() => this.nav.push(Page6, { continue: true }), 510);
+        this.nav.push(Page5).then((hasCompleted) => {
+          if (!hasCompleted) {
+            this.nav.push(Page6, { continue: false });
+            setTimeout(() => this.nav.push(Page6, { continue: true }), 510);
+          }
         });
       }, 2000);
     }, 0);
@@ -202,10 +204,12 @@ export class Page6 extends Base {
   }
 
   pop() {
-    this.nav.pop().then(() => {
-      this.pushPage7();
-    }).catch(() => {
-      this.pop();
+    this.nav.pop().then((hasCompleted) => {
+      if (hasCompleted) {
+        this.pushPage7();
+      } else {
+        this.pop();
+      }
     });
   }
 

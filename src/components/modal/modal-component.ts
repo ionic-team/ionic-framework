@@ -98,9 +98,7 @@ export class ModalCmp {
       const opts: NavOptions = {
         minClickBlockDuration: 400
       };
-      return this._viewCtrl.dismiss(null, 'backdrop', opts).catch(() => {
-        console.debug('Dismiss modal by clicking backdrop was cancelled');
-      });
+      return this._viewCtrl.dismiss(null, 'backdrop', opts);
     }
   }
 

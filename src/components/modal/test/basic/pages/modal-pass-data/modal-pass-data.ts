@@ -42,9 +42,7 @@ export class ModalPassData {
 
   submit() {
     console.time('modal');
-    this.viewCtrl.dismiss(this.data).catch(() => {
-      console.log('submit was cancelled');
-    });
+    this.viewCtrl.dismiss(this.data);
   }
 
   ionViewCanEnter() {
