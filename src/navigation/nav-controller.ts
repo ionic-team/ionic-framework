@@ -279,8 +279,7 @@ import { ViewController } from './view-controller';
  *   ){}
  *
  *   pushPage(){
- *     this.navCtrl.push(DetailPage)
- *      .catch(()=> console.log('should I stay or should I go now'))
+ *     this.navCtrl.push(DetailPage);
  *   }
  *
  *   ionViewCanLeave(): boolean{
@@ -305,8 +304,7 @@ import { ViewController } from './view-controller';
  *   ){}
  *
  *   pushPage(){
- *     this.navCtrl.push(DetailPage)
- *      .catch(()=> console.log('should I stay or should I go now'))
+ *     this.navCtrl.push(DetailPage);
  *   }
  *
  * }

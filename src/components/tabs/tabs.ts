@@ -506,9 +506,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot().catch(() => {
-          console.debug('Tabs: pop to root was cancelled');
-        });
+        tab.popToRoot();
       } else {
         getComponent(this._linker, tab.root).then(viewController => {
           if (viewController.component !== active.component) {

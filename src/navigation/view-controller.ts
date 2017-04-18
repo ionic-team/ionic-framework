@@ -541,26 +541,24 @@ export class ViewController {
   /**
    * @hidden
    */
-  _lifecycleTest(lifecycle: string): boolean | Promise<any> {
+  _lifecycleTest(lifecycle: string): Promise<any> {
     const instance = this.instance;
     const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
         var result = instance[methodName]();
-        if (result === false) {
-          return false;
-        } else if (result instanceof Promise) {
+        if (result instanceof Promise) {
           return result;
         } else {
-          return true;
+          // Any value but explitic false, should be true
+          return Promise.resolve(result !== false);
         }
 
       } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-        return false;
+        return Promise.reject(`${this.name} ${methodName} error: ${e.message}`);
       }
     }
-    return true;
+    return Promise.resolve(true);
   }
 
   _lifecycle(lifecycle: string) {
