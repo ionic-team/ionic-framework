@@ -15,7 +15,7 @@ import { createTempTsConfig, createTimestamp, getFolderInfo, readFileAsync, runA
 import * as pAll from 'p-all';
 
 task('e2e.prepare', (done: Function) => {
-  runSequence('e2e.clean', 'e2e.polyfill', 'e2e.prepareSass', (err: any) => done(err));
+  runSequence('e2e.clean', 'core', 'e2e.polyfill', 'e2e.prepareSass', (err: any) => done(err));
 });
 
 task('e2e.prepareSass', (done: Function) => {

@@ -21,8 +21,10 @@ task('e2e.watch', ['e2e.prepare'], (done: Function) => {
 });
 
 function serveTest(folderInfo: any) {
-
+  const testOrDemoName = folderInfo.componentName + '/' + folderInfo.componentTest;
   const ionicAngularDir = join(PROJECT_ROOT, 'src');
+  const coreCompilerFilePath = join(PROJECT_ROOT, 'dist', 'ionic-angular', 'compiler');
+  const coreDir = join(PROJECT_ROOT, 'dist', 'ionic-angular');
   const srcTestRoot = join(PROJECT_ROOT, 'src', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
   const distTestRoot = join(PROJECT_ROOT, 'dist', 'e2e', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
@@ -47,5 +49,5 @@ function serveTest(folderInfo: any) {
   const appNgModulePath = join(dirname(appEntryPoint), 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
-  return runAppScriptsServe(folderInfo.componentName + '/' + folderInfo.componentTest, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, null);
+  return runAppScriptsServe(testOrDemoName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, coreCompilerFilePath, coreDir, sassConfigPath, copyConfigPath, null);
 }

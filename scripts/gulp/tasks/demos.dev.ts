@@ -19,8 +19,10 @@ task('demos.watch', ['demos.prepare'], (done: Function) => {
 });
 
 function serveDemo(folderName: any) {
-
+  const testOrDemoName = folderName;
   const ionicAngularDir = join(PROJECT_ROOT, 'src');
+  const coreCompilerFilePath = join(PROJECT_ROOT, 'dist', 'ionic-angular', 'compiler');
+  const coreDir = join(PROJECT_ROOT, 'dist', 'ionic-angular');
   const srcTestRoot = join(DEMOS_ROOT, 'src', folderName);
   const distDemoRoot = join(DIST_DEMOS_ROOT, folderName);
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts'),
@@ -40,5 +42,5 @@ function serveDemo(folderName: any) {
   const appNgModulePath = join(srcTestRoot, 'app', 'app.module.ts');
   const distDir = join(distDemoRoot, 'www');
 
-  return runAppScriptsServe(folderName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, watchConfigPath);
+  return runAppScriptsServe(testOrDemoName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, coreCompilerFilePath, coreDir, sassConfigPath, copyConfigPath, watchConfigPath);
 }

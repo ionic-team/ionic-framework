@@ -1,37 +1,44 @@
-[![npm version](https://badge.fury.io/js/ionic-angular.svg)](https://badge.fury.io/js/ionic-angular)
-[![Circle CI](https://circleci.com/gh/driftyco/ionic.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/driftyco/ionic)
+# Ionic Angular v4
 
-# Ionic
+Ionic components will be working toward embracing web components with the following goals:
 
-[Ionic](http://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
-build top quality native and progressive web apps with web technologies.
+- Users continue to use Angular to develop their apps and components
+- No changes to the development and build time experience
+- Minimal changes to the user’s markup
+- Reduce build times
+- Reduce startup times
+- Ionic components are loaded asynchronously by default and without added configuration
 
-Ionic is based on [Angular](https://angular.io/) and comes with many significant performance, usability, and
-feature improvements over the past versions.
+For the most part, `ionic-angular` will continue to work the same way, using the same API as previous versions. However, the implementation of some of the less complex components, such as `ion-badge`, will use the standardized web component v1 spec, which ships today in a majority of browsers. Additionally, for browsers that do not support web components, polyfills are added on-demand, which is already built into `ionic-angular` v4.
 
-See the [Building Apps with Ionic](http://adamdbradley.github.io/building-with-ionic2) slides for a quick
-overview or watch our [Crash Course](https://youtu.be/O2WiI9QrS5s) video for a quick walkthrough on how to get
-started using Ionic.
+We will continue to develop and support ionic-angular v3 in the master branch. Ultimately the differences between v3 and v4 are internal, but on the surface it's the same `ionic-angular` as v3. :beers:
 
-### Getting Started
 
-Start a new project by following our quick [Getting Started guide](http://ionicframework.com/getting-started/).
-We would love to hear from you! If you have any feedback or run into issues using our framework, please file
-an [issue](https://github.com/driftyco/ionic/issues/new) on this repository.
+### Changes
 
-### Contributing
+What's great is that Angular already supports and works with web components! In order to enable them simply add `CUSTOM_ELEMENTS_SCHEMA` to the `schemas` property of `@NgModule`, such as:
 
-Thanks for your interest in contributing! Read up on our guidelines for
-[contributing](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md)
-and then look through our issues with a [help wanted](https://github.com/driftyco/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)
-label.
+```
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-### Examples
+@NgModule({
+  ...
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule {}
+```
 
-The [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) is a full featured Ionic app.
-It is the perfect starting point for learning and building your own app.
 
-### Ionic 1.x
+### Testing
 
-The source code for Ionic 1.x has been moved to [driftyco/ionic-v1](https://github.com/driftyco/ionic-v1).
-Please open any issues and pull requests related to Ionic 1.x on that repository.
+Update your `package.json` to match the following dependencies, remove the existing node_modules directory, and then run npm install:
+
+```
+  "@ionic/app-scripts": "nightly"
+  "ionic-angular": "canary"
+```
+
+
+### Future Goals
+
+As Ionic components migrate to the web component standard, a goal of ours is to have Ionic components easily work within all of the popular frameworks.
