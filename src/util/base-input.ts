@@ -113,7 +113,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   setDisabledState(isDisabled: boolean) {
-    this._disabled = isTrueProperty(isDisabled);
+    this._disabled = isDisabled = isTrueProperty(isDisabled);
     this._item && this._item.setElementClass(`item-${this._componentName}-disabled`, isDisabled);
   }
 
