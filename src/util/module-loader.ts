@@ -36,11 +36,8 @@ export class ModuleLoader {
     }
 
     return promise.then(loadedModule => {
-      // clear it from the cache
-      this._promiseMap.delete(modulePath);
       console.timeEnd(`ModuleLoader, load: ${modulePath}'`);
       const ref = loadedModule.create(this._injector);
-
       const component = ref.injector.get(LAZY_LOADED_TOKEN);
 
       this._cfrMap.set(component, ref.componentFactoryResolver);
