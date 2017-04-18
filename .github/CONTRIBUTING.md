@@ -14,9 +14,9 @@ Please see our [Contributor Code of Conduct](https://github.com/driftyco/ionic/b
 
 * It is required that you clearly describe the steps necessary to reproduce the issue you are running into. Although we would love to help our users as much as possible, diagnosing issues without clear reproduction steps is extremely time-consuming and simply not sustainable.
 
-* The issue list of this repo is exclusively for bug reports and feature requests. Non-conforming issues will be closed immediately.
+* The issue list of this repository is exclusively for bug reports and feature requests. Non-conforming issues will be closed immediately.
 
-* Issues with no clear repro steps will not be triaged. If an issue labeled "need reply" receives no further input from the issue author for more than 5 days, it will be closed.
+* Issues with no clear steps to reproduce will not be triaged. If an issue is labeled with "needs reply" and receives no further replies from the author of the issue for more than 5 days, it will be closed.
 
 * If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
 
