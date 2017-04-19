@@ -69,14 +69,18 @@ export class ModalCmp {
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
-      this._viewCtrl._setInstance(componentRef.instance);
 
       this._setCssClass(componentRef, 'ion-page');
       this._setCssClass(componentRef, 'show-page');
-      this._enabled = true;
 
+      // Change the viewcontroller's instance to point the user provided page
+      // Lifecycle events will be sent to the new instance, instead of the modal's component
+      // we need to manually subscribe to them
+      this._viewCtrl._setInstance(componentRef.instance);
       this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
       this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
+
+      this._enabled = true;
     }
   }
 
