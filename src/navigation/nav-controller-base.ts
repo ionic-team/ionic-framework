@@ -1,4 +1,4 @@
-import { ComponentRef, Input, ComponentFactoryResolver, ElementRef, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Input, ComponentFactoryResolver, ElementRef, ErrorHandler, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
@@ -71,7 +71,8 @@ export class NavControllerBase extends Ion implements NavController {
     public _gestureCtrl: GestureController,
     public _trnsCtrl: TransitionController,
     public _linker: DeepLinker,
-    private _domCtrl: DomController
+    private _domCtrl: DomController,
+    private _errHandler: ErrorHandler
   ) {
     super(config, elementRef, renderer);
 
@@ -350,7 +351,7 @@ export class NavControllerBase extends Ion implements NavController {
           if (nav && nav !== this) {
             throw 'inserted view was already inserted';
           }
-          if (viewControllers[i]._state === STATE_DESTROYED) {
+          if (view._state === STATE_DESTROYED) {
             throw 'inserted view was already destroyed';
           }
         }
@@ -857,61 +858,89 @@ export class NavControllerBase extends Ion implements NavController {
   _willLoad(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
 
-    view._willLoad();
+    try {
+      view._willLoad();
+    } catch (e) {
+      this._errHandler && this._errHandler.handleError(e);
+    }
   }
 
   _didLoad(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
     assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
-    view._didLoad();
-    this.viewDidLoad.emit(view);
-    this._app.viewDidLoad.emit(view);
+    try {
+      view._didLoad();
+      this.viewDidLoad.emit(view);
+      this._app.viewDidLoad.emit(view);
+    } catch (e) {
+      this._errHandler && this._errHandler.handleError(e);
+    }
   }
 
   _willEnter(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
     assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
-    view._willEnter();
-    this.viewWillEnter.emit(view);
-    this._app.viewWillEnter.emit(view);
+    try {
+      view._willEnter();
+      this.viewWillEnter.emit(view);
+      this._app.viewWillEnter.emit(view);
+    } catch (e) {
+      this._errHandler && this._errHandler.handleError(e);
+    }
   }
 
   _didEnter(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
     assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
-    view._didEnter();
-    this.viewDidEnter.emit(view);
-    this._app.viewDidEnter.emit(view);
+    try {
+      view._didEnter();
+      this.viewDidEnter.emit(view);
+      this._app.viewDidEnter.emit(view);
+    } catch (e) {
+      this._errHandler && this._errHandler.handleError(e);
+    }
   }
 
   _willLeave(view: ViewController, willUnload: boolean) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
     assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
-    view._willLeave(willUnload);
-    this.viewWillLeave.emit(view);
-    this._app.viewWillLeave.emit(view);
+    try {
+      view._willLeave(willUnload);
+      this.viewWillLeave.emit(view);
+      this._app.viewWillLeave.emit(view);
+    } catch (e) {
+      this._errHandler && this._errHandler.handleError(e);
+    }
   }
 
   _didLeave(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
     assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
-    view._didLeave();
-    this.viewDidLeave.emit(view);
-    this._app.viewDidLeave.emit(view);
+    try {
+      view._didLeave();
+      this.viewDidLeave.emit(view);
+      this._app.viewDidLeave.emit(view);
+    } catch (e) {
+      this._errHandler && this._errHandler.handleError(e);
+    }
   }
 
   _willUnload(view: ViewController) {
     assert(this.isTransitioning(), 'nav controller should be transitioning');
     assert(NgZone.isInAngularZone(), 'callback should be zoned');
 
-    view._willUnload();
-    this.viewWillUnload.emit(view);
-    this._app.viewWillUnload.emit(view);
+    try {
+      view._willUnload();
+      this.viewWillUnload.emit(view);
+      this._app.viewWillUnload.emit(view);
+    } catch (e) {
+      this._errHandler && this._errHandler.handleError(e);
+    }
   }
 
   hasChildren(): boolean {

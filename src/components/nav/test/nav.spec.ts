@@ -109,7 +109,8 @@ function getNav() {
     gestureCtrl,
     trnsCtrl,
     linker,
-    dom
+    dom,
+    null
   );
   return nav;
 }

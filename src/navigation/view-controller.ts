@@ -105,7 +105,11 @@ export class ViewController {
   /** @hidden */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
+  constructor(
+    public component?: any,
+    data?: any,
+    rootCssClass: string = DEFAULT_CSS_CLASS
+  ) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
@@ -541,7 +545,7 @@ export class ViewController {
   /**
    * @hidden
    */
-  _lifecycleTest(lifecycle: string): Promise<any> {
+  _lifecycleTest(lifecycle: string): Promise<boolean> {
     const instance = this.instance;
     const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
@@ -561,16 +565,14 @@ export class ViewController {
     return Promise.resolve(true);
   }
 
+  /**
+   * @hidden
+   */
   _lifecycle(lifecycle: string) {
     const instance = this.instance;
     const methodName = 'ionView' + lifecycle;
     if (instance && instance[methodName]) {
-      try {
-        instance[methodName]();
-
-      } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-      }
+      instance[methodName]();
     }
   }
 
