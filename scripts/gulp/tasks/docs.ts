@@ -10,6 +10,8 @@ import { valid }from 'semver';
 import { argv } from 'yargs';
 
 import { DIST_DEMOS_ROOT } from '../constants';
+import { SITE_ROOT } from '../constants';
+import { PROJECT_ROOT } from '../constants';
 
 task('docs', ['docs.dgeni', 'docs.demos', 'docs.sassVariables']);
 
@@ -135,4 +137,17 @@ task('docs.sassVariables', () => {
       mkdirp.sync('tmp');
       writeFileSync(outputFile, JSON.stringify(variables));
     }));
+});
+
+task('docs.homepageVersionUpdate', () => {
+  // This assumes you're currently releasing
+  const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
+  let now = new Date();
+
+  const frameworkInfo = JSON.stringify({
+    version: sourcePackageJSON.version,
+    date: now.toISOString().split('T')[0]
+  }, null, 2);
+
+  writeFileSync(`${SITE_ROOT}/server/data/framework-info.json`, frameworkInfo);
 });
