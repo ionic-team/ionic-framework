@@ -292,8 +292,8 @@ export class PageOne {
     let alert = this.alertCtrl.create({
       enableBackdropDismiss: false
     });
-    alert.setTitle('Disabled Backdrop Click'),
-    alert.setMessage('Cannot dismiss alert from clickings the backdrop'),
+    alert.setTitle('Disabled Backdrop Click');
+    alert.setMessage('Cannot dismiss alert from clickings the backdrop');
     alert.addButton({
       text: 'Cancel',
       role: 'cancel',
