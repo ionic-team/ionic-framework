@@ -11,15 +11,15 @@ import { GestureController } from '../gestures/gesture-controller';
 import { Haptic } from '../tap-click/haptic';
 import { IonicApp } from '../components/app/app-root';
 import { Keyboard } from '../platform/keyboard';
-// import { Menu } from '../components/menu/menu';
+import { Menu } from '../components/menu/menu';
 import { NavOptions } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
 import { OverlayPortal } from '../components/app/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
 import { Platform } from '../platform/platform';
 import { QueryParams } from '../platform/query-params';
-//import { Tab }  from '../components/tabs/tab';
-//import { Tabs }  from '../components/tabs/tabs';
+import { Tab }  from '../components/tabs/tab';
+import { Tabs }  from '../components/tabs/tabs';
 import { TransitionController } from '../transitions/transition-controller';
 import { UrlSerializer } from '../navigation/url-serializer';
 import { ViewController } from '../navigation/view-controller';
@@ -472,7 +472,7 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   );
 }
 
-/*export function mockTab(parentTabs: Tabs): Tab {
+export function mockTab(parentTabs: Tabs): Tab {
   let platform = mockPlatform();
   let config = mockConfig(null, '/', platform);
   let app = (<any>parentTabs)._app || mockApp(config, platform);
@@ -508,7 +508,7 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   };
 
   return tab;
-}*/
+}
 
 export function mockForm(): Form {
   return new Form();
@@ -529,7 +529,7 @@ export function mockItem(): Item {
   return new Item(form, config, elementRef, renderer, null);
 }
 
-/*export function mockTabs(app?: App): Tabs {
+export function mockTabs(app?: App): Tabs {
   let platform = mockPlatform();
   let config = mockConfig(null, '/', platform);
   app = app || mockApp(config, platform);
@@ -539,9 +539,8 @@ export function mockItem(): Item {
 
   return new Tabs(null, null, app, config, elementRef, platform, renderer, linker);
 }
-*/
 
-/*export function mockMenu(): Menu {
+export function mockMenu(): Menu {
   let app = mockApp();
   let gestureCtrl = new GestureController(app);
   let dom = mockDomController();
@@ -549,7 +548,6 @@ export function mockItem(): Item {
   let renderer = mockRenderer();
   return new Menu(null, elementRef, null, null, renderer, null, null, gestureCtrl, dom, app);
 }
-*/
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {
   return {

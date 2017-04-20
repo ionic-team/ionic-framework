@@ -42,7 +42,7 @@ export class IonicApp extends Ion implements OnInit {
     private _plt: Platform,
     app: App
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'app');
     // register with App that this is Ionic's appRoot component. tada!
     app._appRoot = this;
     this._stopScrollPlugin = (<any>window)['IonicStopScroll'];

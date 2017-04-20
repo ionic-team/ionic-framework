@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmi
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DomController } from '../../platform/dom-controller';
-import { Img } from '../img/img';
+import { Img } from '../img/img-interface';
 import { Ion } from '../ion';
 import { isTabs } from '../../navigation/nav-util';
 import { isTrueProperty, assert, removeArrayItem } from '../../util/util';

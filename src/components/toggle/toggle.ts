@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -13,12 +13,6 @@ import { KEY_ENTER, KEY_SPACE } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { ToggleGesture } from './toggle-gesture';
 
-
-export const TOGGLE_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => Toggle),
-  multi: true
-};
 
 /**
  * @name Toggle
@@ -75,7 +69,7 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
   host: {
     '[class.toggle-disabled]': '_disabled'
   },
-  providers: [TOGGLE_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Toggle, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
 export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterViewInit, OnDestroy  {
