@@ -10,12 +10,12 @@ export class E2EPage {
   groups: any[] = [];
 
   constructor() {
-    const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    var letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
 
-    for (let i = 0; i < letters.length; i++) {
-      let group: any[] = [];
+    for (var i = 0; i < letters.length; i++) {
+      var group: any[] = [];
 
-      for (let j = 0; j < 10; j++) {
+      for (var j = 0; j < 10; j++) {
         group.push({
           title: letters[i] + j
         });

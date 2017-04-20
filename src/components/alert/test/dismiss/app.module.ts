@@ -21,7 +21,7 @@ export class E2EPage {
   }
 
   submit() {
-    const alert = this.alertCtrl.create({
+    var alert = this.alertCtrl.create({
       title: 'Not logged in',
       message: 'Sign in to continue.',
       buttons: [

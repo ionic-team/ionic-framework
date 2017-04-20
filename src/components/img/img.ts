@@ -331,8 +331,8 @@ export class Img implements OnDestroy {
     // only set the dimensions if we can render
     // and only if the dimensions have changed from when we last set it
     if (this.canRender && (this._w !== this._wQ || this._h !== this._hQ)) {
-      const wrapperEle: HTMLImageElement = this._elementRef.nativeElement;
-      const renderer = this._renderer;
+      var wrapperEle: HTMLImageElement = this._elementRef.nativeElement;
+      var renderer = this._renderer;
 
       this._dom.write(() => {
         if (this._w !== this._wQ) {

@@ -132,20 +132,20 @@ export class ScrollView {
         ev.deltaY = (ev.scrollTop - ev.startY);
         ev.deltaX = (ev.scrollLeft - ev.startX);
 
-        const endPos = (positions.length - 1);
-        let startPos = endPos;
-        const timeRange = (ev.timeStamp - 100);
+        var endPos = (positions.length - 1);
+        var startPos = endPos;
+        var timeRange = (ev.timeStamp - 100);
 
         // move pointer to position measured 100ms ago
-        for (let i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
+        for (var i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
           startPos = i;
         }
 
         if (startPos !== endPos) {
           // compute relative movement between these two points
-          const movedTop = (positions[startPos - 2] - positions[endPos - 2]);
-          const movedLeft = (positions[startPos - 1] - positions[endPos - 1]);
-          const factor = FRAME_MS / (positions[endPos] - positions[startPos]);
+          var movedTop = (positions[startPos - 2] - positions[endPos - 2]);
+          var movedLeft = (positions[startPos - 1] - positions[endPos - 1]);
+          var factor = FRAME_MS / (positions[endPos] - positions[startPos]);
           // based on XXms compute the movement to apply for each render step
           ev.velocityY = movedTop * factor;
           ev.velocityX = movedLeft * factor;
@@ -175,7 +175,7 @@ export class ScrollView {
       // debounce for a moment after the last scroll event
       self._dom.cancel(self._endTmr);
       self._endTmr = self._dom.read(scrollEnd, SCROLL_END_DEBOUNCE_MS);
-    }
+    };
 
     // clear out any existing listeners (just to be safe)
     self._lsn && self._lsn();
@@ -219,7 +219,7 @@ export class ScrollView {
         // ******** DOM READ ****************
         max = ele.scrollHeight - ele.parentElement.offsetHeight + contentTop + contentBottom;
       }
-    }
+    };
 
     function jsScrollDecelerate(timeStamp: number) {
       ev.timeStamp = timeStamp;
@@ -277,7 +277,7 @@ export class ScrollView {
 
       ev.timeStamp = touchEvent.timeStamp;
 
-      const y = pointerCoord(touchEvent).y;
+      var y = pointerCoord(touchEvent).y;
 
       // ******** DOM READ ****************
       setMax();
@@ -316,23 +316,23 @@ export class ScrollView {
         return;
       }
 
-      const y = pointerCoord(touchEvent).y;
+      var y = pointerCoord(touchEvent).y;
 
       positions.push(y, touchEvent.timeStamp);
 
-      const endPos = (positions.length - 1);
-      let startPos = endPos;
-      const timeRange = (touchEvent.timeStamp - 100);
+      var endPos = (positions.length - 1);
+      var startPos = endPos;
+      var timeRange = (touchEvent.timeStamp - 100);
 
       // move pointer to position measured 100ms ago
-      for (let i = endPos; i > 0 && positions[i] > timeRange; i -= 2) {
+      for (var i = endPos; i > 0 && positions[i] > timeRange; i -= 2) {
         startPos = i;
       }
 
       if (startPos !== endPos) {
         // compute relative movement between these two points
-        const timeOffset = (positions[endPos] - positions[startPos]);
-        const movedTop = (positions[startPos - 1] - positions[endPos - 1]);
+        var timeOffset = (positions[endPos] - positions[startPos]);
+        var movedTop = (positions[startPos - 1] - positions[endPos - 1]);
 
         // based on XXms compute the movement to apply for each render step
         ev.velocityY = ((movedTop / timeOffset) * FRAME_MS);

@@ -466,10 +466,10 @@ describe('App', () => {
     });
   });
 
-  let app: App;
-  let config: Config;
-  let plt: MockPlatform;
-  let portal: OverlayPortal;
+  var app: App;
+  var config: Config;
+  var plt: MockPlatform;
+  var portal: OverlayPortal;
 
   beforeEach(() => {
     config = mockConfig();

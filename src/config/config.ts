@@ -170,16 +170,16 @@ export class Config {
       // the user config's platforms, which already contains
       // settings from default platform configs
 
-      let userPlatformValue: any = undefined;
-      const userDefaultValue: any = this._s[key];
-      let userPlatformModeValue: any = undefined;
-      let userDefaultModeValue: any = undefined;
-      let platformValue: any = undefined;
-      let platformModeValue: any = undefined;
-      let configObj: any = null;
+      var userPlatformValue: any = undefined;
+      var userDefaultValue: any = this._s[key];
+      var userPlatformModeValue: any = undefined;
+      var userDefaultModeValue: any = undefined;
+      var platformValue: any = undefined;
+      var platformModeValue: any = undefined;
+      var configObj: any = null;
 
       if (platform) {
-        const queryStringValue = platform.getQueryParam('ionic' + key);
+        var queryStringValue = platform.getQueryParam('ionic' + key);
         if (isDefined(queryStringValue)) {
           return this._c[key] = (queryStringValue === 'true' ? true : queryStringValue === 'false' ? false : queryStringValue);
         }
@@ -189,10 +189,10 @@ export class Config {
 
         // array of active platforms, which also knows the hierarchy,
         // with the last one the most important
-        const activePlatformKeys = platform.platforms();
+        var activePlatformKeys = platform.platforms();
 
         // loop through all of the active platforms we're on
-        for (let i = 0, ilen = activePlatformKeys.length; i < ilen; i++) {
+        for (var i = 0, ilen = activePlatformKeys.length; i < ilen; i++) {
 
           // get user defined platform values
           if (this._s.platforms) {
@@ -249,7 +249,7 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
-    let rtnVal: any = this._c[key];
+    var rtnVal: any = this._c[key];
     if (isFunction(rtnVal)) {
       rtnVal = rtnVal(platform);
     }

@@ -38,7 +38,7 @@ export class Tab2 {
   sessions: any[] = [];
 
   constructor(private tabs: Tabs, private app: App) {
-    for (let i = 1; i <= 250; i++) {
+    for (var i = 1; i <= 250; i++) {
       this.sessions.push({
         name: 'Name ' + i,
         location: 'Location: ' + i

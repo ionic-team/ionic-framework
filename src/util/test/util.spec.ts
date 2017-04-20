@@ -317,7 +317,7 @@ describe('util', () => {
   describe('defaults', () => {
 
     it('should simple defaults', () => {
-      const obj = {a: '1'};
+      var obj = { a: '1' };
       expect(util.defaults(obj, { a: '2', b: '2' })).toBe(obj);
       expect(obj).toEqual({
         a: '1', b: '2'

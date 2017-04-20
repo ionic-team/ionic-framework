@@ -37,7 +37,7 @@ export class UIEventManager {
 
   listen(ele: any, eventName: string, callback: any, opts: EventListenerOptions): Function {
     if (ele) {
-      const removeFunc = this.plt.registerListener(ele, eventName, callback, opts);
+      var removeFunc = this.plt.registerListener(ele, eventName, callback, opts);
       this.evts.push(removeFunc);
       return removeFunc;
     }

@@ -51,7 +51,7 @@ export class FabList {
   set _setbuttons(query: QueryList<FabButton>) {
     const fabs = this._fabs = query.toArray();
     const className = `fab-${this._mode}-in-list`;
-    for (let fab of fabs) {
+    for (var fab of fabs) {
       fab.setElementClass('fab-in-list', true);
       fab.setElementClass(className, true);
     }

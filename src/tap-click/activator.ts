@@ -28,7 +28,7 @@ export class Activator implements ActivatorBase {
 
     this._queue.length = 0;
 
-    for (let i = 0; i < this._active.length; i++) {
+    for (var i = 0; i < this._active.length; i++) {
       this._active[i].classList.remove(this._css);
     }
     this._active.length = 0;
@@ -109,7 +109,7 @@ export class Activator implements ActivatorBase {
     this._queue.length = 0;
 
     let ele: HTMLElement;
-    for (let i = 0; i < this._active.length; i++) {
+    for (var i = 0; i < this._active.length; i++) {
       ele = this._active[i];
       (<any>ele.style)[this.dom.plt.Css.transition] = animated ? '' : 'none';
       ele.classList.remove(this._css);

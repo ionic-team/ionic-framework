@@ -9,7 +9,7 @@ export class TabOne {
   items: any[] = [];
 
   constructor(private tabs: Tabs, private app: App) {
-    for (let i = 1; i <= 250; i++) {
+    for (var i = 1; i <= 250; i++) {
       this.items.push(i);
     }
   }

@@ -225,7 +225,7 @@ export class Platform {
    * @hidden
    */
   version(): PlatformVersion {
-    for (let platformName in this._versions) {
+    for (var platformName in this._versions) {
       if (this._versions[platformName]) {
         return this._versions[platformName];
       }
@@ -579,10 +579,10 @@ export class Platform {
     // the second time it is measured it is correct.
     // Hopefully this check will not be needed in the future
     if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
-      const win = this._win;
+      var win = this._win;
 
-      const innerWidth = win['innerWidth'];
-      const innerHeight = win['innerHeight'];
+      var innerWidth = win['innerWidth'];
+      var innerHeight = win['innerHeight'];
 
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
@@ -787,7 +787,7 @@ export class Platform {
   private _initEvents() {
     // Test via a getter in the options object to see if the passive property is accessed
     try {
-      const opts = Object.defineProperty({}, 'passive', {
+      var opts = Object.defineProperty({}, 'passive', {
         get: () => {
           this._uiEvtOpts = true;
         }
@@ -797,7 +797,7 @@ export class Platform {
 
     // add the window resize event listener XXms after
     this.timeout(() => {
-      let timerId: any;
+      var timerId: any;
       this.registerListener(this._win, 'resize', () => {
         clearTimeout(timerId);
 
@@ -896,9 +896,9 @@ export class Platform {
 
     const userAgent = this._ua.toLowerCase();
 
-    for (let i = 0; i < userAgentAtLeastHas.length; i++) {
+    for (var i = 0; i < userAgentAtLeastHas.length; i++) {
       if (userAgent.indexOf(userAgentAtLeastHas[i]) > -1) {
-        for (let j = 0; j < userAgentMustNotHave.length; j++) {
+        for (var j = 0; j < userAgentMustNotHave.length; j++) {
           if (userAgent.indexOf(userAgentMustNotHave[j]) > -1) {
             return false;
           }

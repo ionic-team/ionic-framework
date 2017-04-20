@@ -7,9 +7,9 @@ describe('Tabs', () => {
   describe('initTabs', () => {
 
     it('should not select a hidden or disabled tab', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
@@ -24,9 +24,9 @@ describe('Tabs', () => {
     });
 
     it('should select the second tab from selectedIndex input', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
@@ -38,9 +38,9 @@ describe('Tabs', () => {
     });
 
     it('should select the first tab by default', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
@@ -55,10 +55,10 @@ describe('Tabs', () => {
   describe('previousTab', () => {
 
     it('should find the previous tab when there has been 3 selections', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
-      const tab2 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
+      var tab2 = mockTab(tabs);
       tab0.root = SomePage;
       tab1.root = SomePage;
       tab2.root = SomePage;
@@ -77,9 +77,9 @@ describe('Tabs', () => {
     });
 
     it('should not find a previous tab when there has only been one selection', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
@@ -89,15 +89,15 @@ describe('Tabs', () => {
     });
 
     it('should not find a previous tab when theres no history', () => {
-      const tabs = mockTabs();
+      var tabs = mockTabs();
       expect(tabs._selectHistory.length).toEqual(0);
       expect(tabs.previousTab(true)).toEqual(null);
     });
 
     it('should track tab selections', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
       tab0.root = SomePage;
       tab1.root = SomePage;
 
@@ -124,9 +124,9 @@ describe('Tabs', () => {
   describe('select', () => {
 
     it('should select tab by tab instance', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
 
       tab0.root = SomePage;
       tab1.root = SomePage;
@@ -138,9 +138,9 @@ describe('Tabs', () => {
     });
 
     it('should select tab by index', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
 
       tab0.root = SomePage;
       tab1.root = SomePage;
@@ -160,9 +160,9 @@ describe('Tabs', () => {
   describe('getByIndex', () => {
 
     it('should get the tab', () => {
-      const tabs = mockTabs();
-      const tab0 = mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tabs = mockTabs();
+      var tab0 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
 
       expect(tabs.getIndex(tab0)).toEqual(0);
       expect(tabs.getIndex(tab1)).toEqual(1);
@@ -173,9 +173,9 @@ describe('Tabs', () => {
   describe('getSelected', () => {
 
     it('should get the selected tab', () => {
-      const tabs = mockTabs();
+      var tabs = mockTabs();
       mockTab(tabs);
-      const tab1 = mockTab(tabs);
+      var tab1 = mockTab(tabs);
 
       tab1.setSelected(true);
 
@@ -183,7 +183,7 @@ describe('Tabs', () => {
     });
 
     it('should get null if no selected tab', () => {
-      const tabs = mockTabs();
+      var tabs = mockTabs();
       mockTab(tabs);
       mockTab(tabs);
 

@@ -9,7 +9,7 @@ export class TabThree {
   items: number[] = [];
 
   constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private tabs: Tabs, private app: App) {
-    for (let i = 0; i < 100; i++) {
+    for (var i = 0; i < 100; i++) {
       this.items.push(i);
     }
   }

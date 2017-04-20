@@ -44,7 +44,7 @@ export class MyModal {
   items: any[] = [];
 
   constructor(private viewCtrl: ViewController, private app: App) {
-    for (let i = 1; i <= 10; i++) {
+    for (var i = 1; i <= 10; i++) {
       this.items.push(i);
     }
   }

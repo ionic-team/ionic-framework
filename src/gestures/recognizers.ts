@@ -33,8 +33,8 @@ export class PanRecognizer {
     const distance = deltaX * deltaX + deltaY * deltaY;
 
     if (distance >= this.threshold) {
-      const angle = Math.atan2(deltaY, deltaX);
-      const cosine = (this.direction === 'y')
+      var angle = Math.atan2(deltaY, deltaX);
+      var cosine = (this.direction === 'y')
         ? Math.sin(angle)
         : Math.cos(angle);
 

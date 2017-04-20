@@ -93,7 +93,7 @@ export class Events {
    * @param {any} eventData the data to send as the event
    */
   publish(topic: string, ...args: any[]) {
-    const t = this._channels[topic];
+    var t = this._channels[topic];
     if (!t) {
       return null;
     }
@@ -136,8 +136,8 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
 
       let contentEle = <any>el.closest('.scroll-content');
       if (contentEle) {
-        const style = contentEle.style;
-        const scroll = new ScrollView(null, plt, dom);
+        var style = contentEle.style;
+        var scroll = new ScrollView(null, plt, dom);
         scroll._el = contentEle;
           // We need to stop scrolling if it's happening and scroll up
 

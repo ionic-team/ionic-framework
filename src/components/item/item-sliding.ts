@@ -177,8 +177,8 @@ export class ItemSliding {
     // Reset left and right options in case they were removed
     this._leftOptions = this._rightOptions = null;
 
-    for (let item of itemOptions.toArray()) {
-      const side = item.getSides();
+    for (var item of itemOptions.toArray()) {
+      var side = item.getSides();
       if (side === ITEM_SIDE_FLAG_LEFT) {
         this._leftOptions = item;
       } else {
@@ -247,11 +247,11 @@ export class ItemSliding {
     }
 
     if (openAmount > this._optsWidthRightSide) {
-      const optsWidth = this._optsWidthRightSide;
+      var optsWidth = this._optsWidthRightSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
 
     } else if (openAmount < -this._optsWidthLeftSide) {
-      const optsWidth = -this._optsWidthLeftSide;
+      var optsWidth = -this._optsWidthLeftSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
     }
 

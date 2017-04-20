@@ -35,7 +35,7 @@ export class Tab1 {
   items: any[] = [];
 
   constructor(private tabs: Tabs, private app: App, private nav: NavController) {
-    for (let i = 1; i <= 250; i++) {
+    for (var i = 1; i <= 250; i++) {
       this.items.push(i);
     }
   }
