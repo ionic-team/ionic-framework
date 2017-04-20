@@ -116,6 +116,42 @@ describe('MenuController', () => {
       expect(menu).toEqual(someMenu);
     });
 
+    it('should get the only left menu when is not rtl', () => {
+      let someMenu = mockMenu();
+      someMenu.side = 'start';
+      menuCtrl._register(someMenu);
+
+      let menu = menuCtrl.get('left');
+      expect(menu).toEqual(someMenu);
+    });
+
+    it('should get the only right menu when is rtl', () => {
+      let someMenu = mockMenu();
+      someMenu.side = 'start';
+      menuCtrl._register(someMenu);
+
+      let menu = menuCtrl.get('right');
+      expect(menu).toEqual(someMenu);
+    });
+
+    it('should get the only right menu when is not rtl', () => {
+      let someMenu = mockMenu();
+      someMenu.side = 'end';
+      menuCtrl._register(someMenu);
+
+      let menu = menuCtrl.get('right');
+      expect(menu).toEqual(someMenu);
+    });
+
+    it('should get the only left menu when is rtl', () => {
+      let someMenu = mockMenu();
+      someMenu.side = 'end';
+      menuCtrl._register(someMenu);
+
+      let menu = menuCtrl.get('left');
+      expect(menu).toEqual(someMenu);
+    });
+
     it('should get the enabled left menu', () => {
       let someMenu1 = mockMenu();
       someMenu1.side = 'left';

@@ -16,6 +16,8 @@ import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 import { RootNode } from '../split-pane/split-pane';
 
+type side = 'left' | 'right' | 'start' | 'end';
+
 /**
  * @name Menu
  * @description
@@ -192,6 +194,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
+
 export class Menu implements RootNode {
 
   private _cntEle: HTMLElement;
@@ -205,6 +208,8 @@ export class Menu implements RootNode {
   private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
   private _isPane: boolean = false;
+  private _side: side = 'start';
+  private _plt: Platform;
 
   /**
    * @hidden
@@ -239,7 +244,17 @@ export class Menu implements RootNode {
   /**
    * @input {string} Which side of the view the menu should be placed. Default `"left"`.
    */
-  @Input() side: string;
+  get side(): side {
+    if (val === 'right' || (val === 'start' && _plt.isRTL()) || (val === 'end' && !_plt.isRTL())) {
+      return 'right';
+    }
+    return 'left';
+  }
+
+  @Input('side')
+  set side(val: side) {
+    this._side = val;
+  }
 
   /**
    * @input {string} The display type of the menu. Default varies based on the mode,
@@ -338,10 +353,6 @@ export class Menu implements RootNode {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
-    // normalize the "side"
-    if (this.side !== 'left' && this.side !== 'right') {
-      this.side = 'left';
-    }
     this.setElementAttribute('side', this.side);
 
     // normalize the "type"

@@ -84,7 +84,12 @@ class MenuRevealType extends MenuType {
   constructor(menu: Menu, plt: Platform) {
     super(plt);
 
-    let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
+    if (menu.side === 'right' || (menu.side === 'start' && plt.isRTL()) || (menu.side === 'end' && !plt.isRTL())) {
+      let openedX = (menu.width() * -1) + 'px';
+    } else {
+      let openedX = (menu.width() * 1) + 'px';
+    }
+      
     let contentOpen = new Animation(plt, menu.getContentElement());
     contentOpen.fromTo('translateX', '0px', openedX);
     this.ani.add(contentOpen);
@@ -105,12 +110,10 @@ class MenuPushType extends MenuType {
 
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
 
-    if (menu.side === 'right') {
-      // right side
+    if (menu.side === 'right' || (menu.side === 'start' && plt.isRTL()) || (menu.side === 'end' && !plt.isRTL())) {
       contentOpenedX = -menu.width() + 'px';
-      menuClosedX = menu.width() + 'px';
       menuOpenedX = '0px';
-
+      menuClosedX = menu.width() + 'px';
     } else {
       contentOpenedX = menu.width() + 'px';
       menuOpenedX = '0px';
@@ -140,13 +143,10 @@ class MenuOverlayType extends MenuType {
     super(plt);
 
     let closedX: string, openedX: string;
-    if (menu.side === 'right') {
-      // right side
+    if (menu.side === 'right' || (menu.side === 'start' && plt.isRTL()) || (menu.side === 'end' && !plt.isRTL())) {
       closedX = 8 + menu.width() + 'px';
       openedX = '0px';
-
     } else {
-      // left side
       closedX = -(8 + menu.width()) + 'px';
       openedX = '0px';
     }
