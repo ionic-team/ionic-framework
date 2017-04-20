@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -313,7 +313,6 @@ export class Menu implements RootNode {
     private _plt: Platform,
     private _renderer: Renderer,
     private _keyboard: Keyboard,
-    private _zone: NgZone,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
     private _app: App,

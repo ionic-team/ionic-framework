@@ -20,7 +20,7 @@ export class Activator implements ActivatorBase {
     this._css = config.get('activatedClass', 'activated');
   }
 
-  clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  clickAction(ev: UIEvent, activatableEle: HTMLElement) {
     if (isActivatedDisabled(ev, activatableEle)) {
       return;
     }
@@ -41,7 +41,7 @@ export class Activator implements ActivatorBase {
     }
   }
 
-  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement) {
     // the user just pressed down
     if (isActivatedDisabled(ev, activatableEle)) {
       return;
@@ -66,7 +66,7 @@ export class Activator implements ActivatorBase {
   }
 
   // the user was pressing down, then just let up
-  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  upAction() {
     this._scheduleClear();
   }
 

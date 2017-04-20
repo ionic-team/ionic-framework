@@ -72,7 +72,7 @@ export class PageOne {
     }, 1000);
   }
 
-  private dismissHandler(toast: Toast) {
+  private dismissHandler() {
     console.info('Toast onDidDismiss()');
   }
 

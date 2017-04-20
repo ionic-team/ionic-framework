@@ -37,7 +37,7 @@ export class E2EPage {
     }
   }
 
-  headerFn(record: any, recordIndex: number, records: any[]) {
+  headerFn(record: any) {
     if (this.lastMonth !== record.date.getMonth()) {
       this.lastMonth = record.date.getMonth();
 

@@ -11,7 +11,7 @@ describe('ViewController', () => {
         // assert
         expect(event).toEqual(null);
         done();
-      }, (err: any) => {
+      }, () => {
         done();
       });
 
@@ -29,7 +29,7 @@ describe('ViewController', () => {
         // assert
         expect(event).toEqual(null);
         done();
-      }, (err: any) => {
+      }, () => {
         done();
       });
 
@@ -47,7 +47,7 @@ describe('ViewController', () => {
         // assert
         expect(event).toEqual(null);
         done();
-      }, (err: any) => {
+      }, () => {
         done();
       });
 
@@ -65,7 +65,7 @@ describe('ViewController', () => {
         // assert
         expect(event).toEqual(null);
         done();
-      }, (err: any) => {
+      }, () => {
         done();
       });
 
@@ -81,7 +81,7 @@ describe('ViewController', () => {
       subscription = viewController.willUnload.subscribe((event: any) => {
         expect(event).toEqual(null);
         done();
-      }, (err: any) => {
+      }, () => {
         done();
       });
 

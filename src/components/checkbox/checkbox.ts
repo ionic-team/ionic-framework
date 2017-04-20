@@ -91,8 +91,7 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, After
     form: Form,
     @Optional() item: Item,
     elementRef: ElementRef,
-    renderer: Renderer,
-    private _cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     super(config, elementRef, renderer, 'checkbox', false, form, item, null);
   }

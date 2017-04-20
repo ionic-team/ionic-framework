@@ -133,7 +133,7 @@ export class PickerCmp {
     this._cols.forEach(column => column.refresh());
   }
 
-  _colChange(selectedOption: PickerColumnOption) {
+  _colChange() {
     // one of the columns has changed its selected index
     var picker = <Picker>this._viewCtrl;
     picker.ionChange.emit(this.getSelected());

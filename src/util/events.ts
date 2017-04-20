@@ -129,7 +129,7 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
     });
 
     // When that status taps, we respond
-    win.addEventListener('statusTap', (ev) => {
+    win.addEventListener('statusTap', () => {
       // TODO: Make this more better
       let el = <HTMLElement>doc.elementFromPoint(plt.width() / 2, plt.height() / 2);
       if (!el) { return; }

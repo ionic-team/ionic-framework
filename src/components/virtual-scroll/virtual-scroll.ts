@@ -685,7 +685,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @hidden
    * DOM WRITE
    */
-  scrollEnd(ev: ScrollEvent) {
+  scrollEnd() {
     // ******** DOM READ ****************
     updateDimensions(this._plt, this._nodes, this._cells, this._data, false);
     adjustRendered(this._cells, this._data);

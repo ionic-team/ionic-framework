@@ -10,7 +10,7 @@ export class E2EPage {
   duration: string;
   easing: string;
 
-  constructor(config: Config, public plt: Platform) {
+  constructor(public plt: Platform) {
     this.duration = '1000';
     this.easing = 'ease-in-out';
   }

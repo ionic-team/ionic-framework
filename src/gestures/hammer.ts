@@ -2009,11 +2009,6 @@ function Hammer(element: any, options: any): any {
 }
 
 /**
- * @const {string}
- */
-var VERSION = '2.0.6';
-
-/**
  * default settings
  * @namespace
  */

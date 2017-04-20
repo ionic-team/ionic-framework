@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
@@ -133,7 +133,6 @@ export class Img implements OnDestroy {
     private _elementRef: ElementRef,
     private _renderer: Renderer,
     private _plt: Platform,
-    private _zone: NgZone,
     @Optional() private _content: Content,
     private _dom: DomController
   ) {

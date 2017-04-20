@@ -198,7 +198,7 @@ function testNgModelChange<T>(input: BaseInput<T>, config: TestConfig, isInit: b
   });
 
   // Test registerOnChange
-  input.registerOnChange((ev: any) => {
+  input.registerOnChange(() => {
     OnChangeCalled++;
   });
 

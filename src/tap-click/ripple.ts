@@ -18,23 +18,23 @@ export class RippleActivator implements ActivatorBase {
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     // Highlight
-    this.highlight && this.highlight.clickAction(ev, activatableEle, startCoord);
+    this.highlight && this.highlight.clickAction(ev, activatableEle);
 
     // Ripple
-    this._clickAction(ev, activatableEle, startCoord);
+    this._clickAction();
   }
 
   downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     // Highlight
-    this.highlight && this.highlight.downAction(ev, activatableEle, startCoord);
+    this.highlight && this.highlight.downAction(ev, activatableEle);
 
     // Ripple
-    this._downAction(ev, activatableEle, startCoord);
+    this._downAction(ev, activatableEle);
   }
 
   upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     // Highlight
-    this.highlight && this.highlight.upAction(ev, activatableEle, startCoord);
+    this.highlight && this.highlight.upAction();
 
     // Ripple
     this._upAction(ev, activatableEle, startCoord);
@@ -45,7 +45,7 @@ export class RippleActivator implements ActivatorBase {
     this.highlight && this.highlight.clearState(animated);
   }
 
-  _downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  _downAction(ev: UIEvent, activatableEle: HTMLElement) {
     if (isActivatedDisabled(ev, activatableEle)) {
       return;
     }
@@ -79,7 +79,7 @@ export class RippleActivator implements ActivatorBase {
     }
   }
 
-  _clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  _clickAction() {
     // NOTHING
   }
 

@@ -15,7 +15,7 @@ export class RootPage {
 
   showOptions: boolean = false;
 
-  constructor(private nav: NavController, private alertCtrl: AlertController, private toastCtrl: ToastController) {
+  constructor(private alertCtrl: AlertController, private toastCtrl: ToastController) {
     for (let x = 0; x < 5; x++) {
       this.items.push(x);
     }
