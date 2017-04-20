@@ -163,14 +163,9 @@ export class Img implements OnDestroy {
       // update to the new src
       this._src = newSrc;
 
-      if (newSrc.indexOf('data:') === 0) {
-        // they're using an actual datauri already
-        this._hasLoaded = true;
-
-      } else {
-        // reset any existing datauri we might be holding onto
-        this._hasLoaded = false;
-      }
+      // Are they using an actual datauri already,
+      // or reset any existing datauri we might be holding onto
+      this._hasLoaded = newSrc.indexOf('data:') === 0;
 
       // run update to kick off requests or render if everything is good
       this.update();
