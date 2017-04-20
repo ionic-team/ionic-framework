@@ -124,7 +124,7 @@ $range-ios-pin-padding:                       8px !default;
 .range-ios .range-knob-handle {
   position: absolute;
   top: ($range-ios-slider-height / 2);
-  left: 0%;
+  left: 0;
 
   margin-top: -($range-ios-hit-height / 2);
   margin-left: -($range-ios-hit-width / 2);
