@@ -16,7 +16,7 @@ import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 import { RootNode } from '../split-pane/split-pane';
 
-type Side = 'left' | 'right' | 'start' | 'end';
+export type Side = 'left' | 'right' | 'start' | 'end';
 
 /**
  * @name Menu
@@ -270,10 +270,11 @@ export class Menu implements RootNode, OnInit, OnDestroy {
     return 'left';
   }
 
-  set side(val) {
+  set side(val: Side) {
     this._side = val;
     // Update gesture edge
-    this._gesture.setEdges(this.side);
+    if (this._gesture)
+      this._gesture.setEdges(this.side);
   }
 
   /**
