@@ -1,4 +1,4 @@
-import { OnInit, OnChanges, OnDestroy, SimpleChange, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { OnInit, OnDestroy, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -15,6 +15,8 @@ import { Nav } from '../nav/nav';
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 import { RootNode } from '../split-pane/split-pane';
+
+type Side = 'left' | 'right' | 'start' | 'end';
 
 /**
  * @name Menu
@@ -192,7 +194,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
-export class Menu implements RootNode, OnInit, OnChanges, OnDestroy {
+export class Menu implements RootNode, OnInit, OnDestroy {
 
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;
@@ -205,6 +207,7 @@ export class Menu implements RootNode, OnInit, OnChanges, OnDestroy {
   private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
   private _isPane: boolean = false;
+  private _side: Side = 'start';
 
   /**
    * @hidden
@@ -237,11 +240,6 @@ export class Menu implements RootNode, OnInit, OnChanges, OnDestroy {
   @Input() id: string;
 
   /**
-   * @input {string} Which side of the view the menu should be placed. Default `"left"`.
-   */
-  @Input() side: string;
-
-  /**
    * @input {string} The display type of the menu. Default varies based on the mode,
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
@@ -259,6 +257,23 @@ export class Menu implements RootNode, OnInit, OnChanges, OnDestroy {
   set enabled(val: boolean) {
     const isEnabled = isTrueProperty(val);
     this.enable(isEnabled);
+  }
+
+  /**
+   * @input {string} Which side of the view the menu should be placed. Default `"left"`.
+   */
+  @Input()
+  get side() {
+    if (this._side === 'right' || (this._side === 'start' && this._plt.isRTL()) || (this._side === 'end' && !this._plt.isRTL())) {
+      return 'right';
+    }
+    return 'left';
+  }
+
+  set side(val) {
+    this._side = val;
+    // Update gesture edge
+    this._gesture.setEdges(this.side);
   }
 
   /**
@@ -338,11 +353,7 @@ export class Menu implements RootNode, OnInit, OnChanges, OnDestroy {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
-    // normalize the "side"
-    if (this.side !== 'left' && this.side !== 'right') {
-      this.side = 'left';
-    }
-    this.setElementAttribute('side', this.side);
+    this.setElementAttribute('side', this._side);
 
     // normalize the "type"
     if (!this.type) {
@@ -369,17 +380,6 @@ export class Menu implements RootNode, OnInit, OnChanges, OnDestroy {
 
     // mask it as enabled / disabled
     this.enable(isEnabled);
-  }
-
-  /**
-   * @hidden
-   */
-  ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
-    // If side updated in runtime
-    if (changes['side']) {
-      // Update gesture's side
-      this._gesture.setEdges(this.side);
-    }
   }
 
   /**
