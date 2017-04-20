@@ -15,8 +15,8 @@ export class PopoverImpl extends ViewController {
   private _app: App;
 
   constructor(app: App, component: any, data: any = {}, opts: PopoverOptions = {}, config: Config) {
-    opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+    opts.showBackdrop = isPresent(opts.showBackdrop) ? Boolean(opts.showBackdrop) : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? Boolean(opts.enableBackdropDismiss) : true;
 
     data.component = component;
     data.opts = opts;

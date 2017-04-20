@@ -15,8 +15,8 @@ export class Loading extends ViewController {
   private _app: App;
 
   constructor(app: App, opts: LoadingOptions = {}, config: Config) {
-    opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
-    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
+    opts.showBackdrop = isPresent(opts.showBackdrop) ? Boolean(opts.showBackdrop) : true;
+    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? Boolean(opts.dismissOnPageChange) : false;
 
     super(LoadingCmp, opts, null);
     this._app = app;

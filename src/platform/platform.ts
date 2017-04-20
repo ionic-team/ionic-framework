@@ -670,9 +670,9 @@ export class Platform {
     // use event listener options when supported
     // otherwise it's just a boolean for the "capture" arg
     const listenerOpts: any = this._uiEvtOpts ? {
-        'capture': !!opts.capture,
-        'passive': !!opts.passive,
-      } : !!opts.capture;
+        'capture': Boolean(opts.capture),
+        'passive': Boolean(opts.passive),
+      } : Boolean(opts.capture);
 
     let unReg: Function;
     if (!opts.zone && ele['__zone_symbol__addEventListener']) {
