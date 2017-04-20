@@ -14,7 +14,7 @@ describe('Select', () => {
     const renderer = mockRenderer();
     const item: any = mockItem();
     const form = mockForm();
-    const select = new Select(app, form, config, elementRef, renderer, item, null, deepLinker);
+    const select = new Select(app, form, config, elementRef, renderer, item, deepLinker);
 
     commonInputTest(select, {
       defaultValue: [],

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Toast, ToastController } from '../../../../../..';
+import { IonicPage, NavController, ToastController } from '../../../../../..';
 
 @IonicPage()
 @Component({

@@ -13,6 +13,7 @@ import { KEY_ENTER, KEY_SPACE } from '../../platform/key';
 import { Platform } from '../../platform/platform';
 import { ToggleGesture } from './toggle-gesture';
 
+
 export const TOGGLE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => Toggle),

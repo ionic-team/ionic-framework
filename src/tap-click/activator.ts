@@ -2,7 +2,6 @@ import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
 import { DomController } from '../platform/dom-controller';
-import { PointerCoordinates } from '../util/dom';
 
 
 export class Activator implements ActivatorBase {

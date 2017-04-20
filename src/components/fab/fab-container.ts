@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, ContentChild, ContentChildren, QueryList } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
