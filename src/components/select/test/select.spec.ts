@@ -1,6 +1,6 @@
 
 import { Select } from '../select';
-import { mockApp, mockConfig, mockElementRef, mockRenderer, mockItem, mockForm } from '../../../util/mock-providers';
+import { mockApp, mockConfig, mockDeepLinker, mockElementRef, mockRenderer, mockItem, mockForm } from '../../../util/mock-providers';
 import { commonInputTest } from '../../../util/input-tester';
 
 describe('Select', () => {
@@ -9,11 +9,12 @@ describe('Select', () => {
 
     const app = mockApp();
     const config = mockConfig();
+    const deepLinker = mockDeepLinker();
     const elementRef = mockElementRef();
     const renderer = mockRenderer();
     const item: any = mockItem();
     const form = mockForm();
-    const select = new Select(app, form, config, elementRef, renderer, item, null);
+    const select = new Select(app, form, config, elementRef, renderer, item, null, deepLinker);
 
     commonInputTest(select, {
       defaultValue: [],

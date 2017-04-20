@@ -32,6 +32,8 @@ import { Page } from '../../navigation/nav-util';
  *   template: `<button ion-button [navPush]="pushPage" [navParams]="params">Go</button>`
  * })
  * class MyPage {
+ *   params: Object;
+ *   pushPage: any;
  *   constructor(){
  *     this.pushPage = LoginPage;
  *     this.params = { id: 42 };
@@ -72,9 +74,7 @@ export class NavPush {
   @HostListener('click')
   onClick(): boolean {
     if (this._nav && this.navPush) {
-      this._nav.push(this.navPush, this.navParams).catch(() => {
-        console.debug('navPush was rejected');
-      });
+      this._nav.push(this.navPush, this.navParams);
       return false;
     }
     return true;

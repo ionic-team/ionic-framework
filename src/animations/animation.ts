@@ -104,6 +104,13 @@ export class Animation {
   }
 
   /**
+   * Returns if the animation is a root one.
+   */
+  isRoot(): boolean {
+    return !this.parent;
+  }
+
+  /**
    * Set the duration for this animation.
    */
   duration(milliseconds: number): Animation {

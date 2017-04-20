@@ -42,7 +42,7 @@
         </ion-item>
         <ion-item>
           <ion-label>Toggle Can Leave</ion-label>
-          <ion-toggle (click)="canLeave = !canLeave"></ion-toggle>
+          <ion-toggle [(ngModel)]="canLeave"></ion-toggle>
         </ion-item>
         <button ion-item (click)="viewDismiss()">View Dismiss</button>
         <button ion-item (click)="quickPush()">New push during transition</button>

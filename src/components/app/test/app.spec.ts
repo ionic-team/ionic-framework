@@ -167,8 +167,9 @@ describe('App', () => {
         expect(plt.exitApp).not.toHaveBeenCalled();
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
-      });
+        });
     });
 
     it('should pop the second view in the root nav', () => {

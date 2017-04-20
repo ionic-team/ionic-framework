@@ -240,6 +240,7 @@ export { Searchbar } from './components/searchbar/searchbar';
 export { Segment } from './components/segment/segment';
 export { SegmentButton } from './components/segment/segment-button';
 export { Select } from './components/select/select';
+export { SelectPopover } from './components/select/select-popover-component';
 export { ShowWhen } from './components/show-hide-when/show-when';
 export { DisplayWhen } from './components/show-hide-when/display-when';
 export { HideWhen } from './components/show-hide-when/hide-when';
