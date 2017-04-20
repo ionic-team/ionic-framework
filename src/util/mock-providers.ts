@@ -549,7 +549,7 @@ export function mockMenu(): Menu {
   let dom = mockDomController();
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
-  return new Menu(null, elementRef, null, null, renderer, null, null, gestureCtrl, dom, app);
+  return new Menu(null, elementRef, null, null, renderer, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {
