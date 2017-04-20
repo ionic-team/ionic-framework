@@ -52,7 +52,7 @@ export class Picker extends ViewController {
   }
 
   /**
-   * @param {any} button Picker toolbar button
+   * @param {PickerColumn} column Picker toolbar button
    */
   addColumn(column: PickerColumn) {
     this.data.columns.push(column);
@@ -83,7 +83,7 @@ export class Picker extends ViewController {
   /**
    * Present the picker instance.
    *
-   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @param {NavOptions} [navOptions={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
