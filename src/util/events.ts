@@ -1,6 +1,6 @@
 import { DomController } from '../platform/dom-controller';
 import { Platform } from '../platform/platform';
-import { ScrollView } from '../util/scroll-view';
+import { ScrollView } from './scroll-view';
 
 /**
  * @name Events
