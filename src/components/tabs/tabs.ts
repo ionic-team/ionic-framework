@@ -371,7 +371,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
     if (selectedTab.root) {
       // At this point we are going to perform a page switch
       // Let's fire willLeave in the current tab page
-      var currentPage: ViewController;
+      let currentPage: ViewController;
       if (currentTab) {
         currentPage = currentTab.getActive();
         currentPage && currentPage._willLeave(false);
@@ -408,7 +408,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
     // Update tabs selection state
     const tabs = this._tabs;
     let tab: Tab;
-    for (var i = 0; i < tabs.length; i++) {
+    for (let i = 0; i < tabs.length; i++) {
       tab = tabs[i];
       tab.setSelected(tab === selectedTab);
     }
@@ -437,8 +437,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
     // walk backwards through the tab selection history
     // and find the first previous tab that is enabled and shown
     console.debug('run previousTab', this._selectHistory);
-    for (var i = this._selectHistory.length - 2; i >= 0; i--) {
-      var tab = this._tabs.find(t => t.id === this._selectHistory[i]);
+    for (let i = this._selectHistory.length - 2; i >= 0; i--) {
+      const tab = this._tabs.find(t => t.id === this._selectHistory[i]);
       if (tab && tab.enabled && tab.show) {
         if (trimHistory) {
           this._selectHistory.splice(i + 1);
@@ -463,7 +463,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
    */
   getSelected(): Tab {
     const tabs = this._tabs;
-    for (var i = 0; i < tabs.length; i++) {
+    for (let i = 0; i < tabs.length; i++) {
       if (tabs[i].isSelected) {
         return tabs[i];
       }
@@ -527,7 +527,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
    */
   setTabbarPosition(top: number, bottom: number) {
     if (this._top !== top || this._bottom !== bottom) {
-      var tabbarEle = <HTMLElement>this._tabbar.nativeElement;
+      const tabbarEle = <HTMLElement>this._tabbar.nativeElement;
       tabbarEle.style.top = (top > -1 ? top + 'px' : '');
       tabbarEle.style.bottom = (bottom > -1 ? bottom + 'px' : '');
       tabbarEle.classList.add('show-tabbar');

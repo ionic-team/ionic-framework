@@ -118,8 +118,8 @@ export class IonicApp extends Ion implements OnInit {
       return null;
 
     } else if (hasModal && hasDefault) {
-      var defaultIndex = defaultPortal.getActive().getZIndex();
-      var modalIndex = modalPortal.getActive().getZIndex();
+      const defaultIndex = defaultPortal.getActive().getZIndex();
+      const modalIndex = modalPortal.getActive().getZIndex();
 
       if (defaultIndex > modalIndex) {
         return defaultPortal;

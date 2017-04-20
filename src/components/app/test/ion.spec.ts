@@ -39,7 +39,7 @@ describe('Ion', () => {
 
   });
 
-  var ion: Ion;
+  let ion: Ion;
 
   beforeEach(() => {
     ion = new Ion(mockConfig(), mockElementRef(), mockRenderer(), 'icon');

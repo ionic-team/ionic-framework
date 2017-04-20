@@ -50,12 +50,12 @@ export class RippleActivator implements ActivatorBase {
       return;
     }
 
-    var j = activatableEle.childElementCount;
+    let j = activatableEle.childElementCount;
     while (j--) {
-      var rippleEle: any = activatableEle.children[j];
+      const rippleEle: any = activatableEle.children[j];
       if (rippleEle.classList.contains('button-effect')) {
         // DOM READ
-        var clientRect = activatableEle.getBoundingClientRect();
+        const clientRect = activatableEle.getBoundingClientRect();
         rippleEle.$top = clientRect.top;
         rippleEle.$left = clientRect.left;
         rippleEle.$width = clientRect.width;
@@ -69,7 +69,7 @@ export class RippleActivator implements ActivatorBase {
     if (!hasPointerMoved(6, startCoord, pointerCoord(ev))) {
       let i = activatableEle.childElementCount;
       while (i--) {
-        var rippleEle: any = activatableEle.children[i];
+        const rippleEle: any = activatableEle.children[i];
         if (rippleEle.classList.contains('button-effect')) {
           // DOM WRITE
           this.startRippleEffect(rippleEle, activatableEle, startCoord);

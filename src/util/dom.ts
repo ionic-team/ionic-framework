@@ -13,8 +13,8 @@ export function getCss(docEle: HTMLElement) {
   } = {};
 
   // transform
-  var i: number;
-  var keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
+  let i: number;
+  let keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
 
   for (i = 0; i < keys.length; i++) {
     if ((<any>docEle.style)[keys[i]] !== undefined) {
@@ -33,7 +33,7 @@ export function getCss(docEle: HTMLElement) {
   }
 
   // The only prefix we care about is webkit for transitions.
-  var isWebkit = css.transition.indexOf('webkit') > -1;
+  const isWebkit = css.transition.indexOf('webkit') > -1;
 
   // transition duration
   css.transitionDuration = (isWebkit ? '-webkit-' : '') + 'transition-duration';
@@ -61,12 +61,12 @@ export function pointerCoord(ev: any): PointerCoordinates {
   // get coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    var changedTouches = ev.changedTouches;
+    const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
-      var touch = changedTouches[0];
+      const touch = changedTouches[0];
       return { x: touch.clientX, y: touch.clientY };
     }
-    var pageX = ev.pageX;
+    const pageX = ev.pageX;
     if (pageX !== undefined) {
       return { x: pageX, y: ev.pageY };
     }
@@ -99,9 +99,9 @@ export function copyInputAttributes(srcElement: HTMLElement, destElement: HTMLEl
   // copy attributes from one element to another
   // however, skip over a few of them as they're already
   // handled in the angular world
-  var attrs = srcElement.attributes;
-  for (var i = 0; i < attrs.length; i++) {
-    var attr = attrs[i];
+  const attrs = srcElement.attributes;
+  for (let i = 0; i < attrs.length; i++) {
+    const attr = attrs[i];
     if (!skipInputAttrsReg.test(attr.name)) {
       destElement.setAttribute(attr.name, attr.value);
     }

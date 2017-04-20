@@ -9,7 +9,7 @@ export class E2EPage {
   items: number[] = [];
 
   constructor() {
-    for (var i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i++) {
       this.items.push(i);
     }
   }

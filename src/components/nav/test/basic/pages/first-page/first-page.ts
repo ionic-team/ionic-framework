@@ -47,7 +47,7 @@ export class FirstPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad, FirstPage');
-    for (var i = 1; i <= 50; i++) {
+    for (let i = 1; i <= 50; i++) {
       this.pages.push(i);
     }
     if (!this.myCmp || !this.content || !this.myCmp.label) {

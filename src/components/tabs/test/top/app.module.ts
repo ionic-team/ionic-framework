@@ -27,7 +27,7 @@ export class Tab1 {
   items: any[] = [];
 
   constructor() {
-    for (var i = 1; i <= 250; i++) {
+    for (let i = 1; i <= 250; i++) {
       this.items.push(i);
     }
   }
@@ -67,7 +67,7 @@ export class Tab2 {
   sessions: any[] = [];
 
   constructor() {
-    for (var i = 1; i <= 250; i++) {
+    for (let i = 1; i <= 250; i++) {
       this.sessions.push({
         name: 'Name ' + i,
         location: 'Location: ' + i

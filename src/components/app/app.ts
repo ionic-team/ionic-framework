@@ -294,7 +294,7 @@ function recursivePop(nav: any): Promise<any> {
     return null;
   }
   if (isNav(nav)) {
-    var len = nav.length();
+    const len = nav.length();
     if (len > 1 || (nav._isPortal && len > 0)) {
       // this nav controller has more than one view
       // pop the current view on this nav and we're done here
@@ -307,7 +307,7 @@ function recursivePop(nav: any): Promise<any> {
 }
 
 function findTopNav(nav: NavController) {
-  var activeChildNav: any;
+  let activeChildNav: any;
 
   while (nav) {
     activeChildNav = nav.getActiveChildNav();

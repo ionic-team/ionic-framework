@@ -173,7 +173,7 @@ export class MenuController {
   toggle(menuId?: string): Promise<boolean> {
     const menu = this.get(menuId);
     if (menu && !this.isAnimating()) {
-      var openedMenu = this.getOpen();
+      const openedMenu = this.getOpen();
       if (openedMenu && menu !== openedMenu) {
         openedMenu.setOpen(false, false);
       }
@@ -217,7 +217,7 @@ export class MenuController {
    */
   isOpen(menuId?: string): boolean {
     if (menuId) {
-      var menu = this.get(menuId);
+      const menu = this.get(menuId);
       return menu && menu.isOpen || false;
     } else {
       return !!this.getOpen();
@@ -243,7 +243,7 @@ export class MenuController {
    * @return {Menu} Returns the instance of the menu if found, otherwise `null`.
    */
   get(menuId?: string): Menu {
-    var menu: Menu;
+    let menu: Menu;
 
     if (menuId === 'left' || menuId === 'right') {
       // there could be more than one menu on the same side

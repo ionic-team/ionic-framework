@@ -9,7 +9,7 @@ export class ModalPage {
   items: any[] = [];
 
   constructor(private viewCtrl: ViewController, private app: App) {
-    for (var i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 10; i++) {
       this.items.push(i);
     }
   }

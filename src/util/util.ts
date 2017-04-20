@@ -26,13 +26,13 @@ export function deepEqual(a: any, b: any) {
 
 /** @hidden */
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
- var timeout: number, args: any, context: any, timestamp: number, result: any;
+ let timeout: number, args: any, context: any, timestamp: number, result: any;
  return function() {
    context = this;
    args = arguments;
    timestamp = Date.now();
-   var later: any = function() {
-     var last: any = Date.now() - timestamp;
+   const later: any = function() {
+     const last: any = Date.now() - timestamp;
      if (last < wait) {
        timeout = setTimeout(later, wait - last);
      } else {
@@ -40,7 +40,7 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
        if (!immediate) result = fn.apply(context, args);
      }
    };
-   var callNow = immediate && !timeout;
+   const callNow = immediate && !timeout;
    if (!timeout) {
      timeout = setTimeout(later, wait);
    }
@@ -56,10 +56,10 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  * @param {any} dest the destination to apply defaults to.
  */
 export function defaults(dest: any, ...args: any[]) {
-  for (var i = arguments.length - 1; i >= 1; i--) {
-    var source = arguments[i];
+  for (let i = arguments.length - 1; i >= 1; i--) {
+    const source = arguments[i];
     if (source) {
-      for (var key in source) {
+      for (let key in source) {
         if (source.hasOwnProperty(key) && !dest.hasOwnProperty(key)) {
           dest[key] = source[key];
         }

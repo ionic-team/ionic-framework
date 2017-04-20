@@ -115,8 +115,8 @@ describe('module-loader', () => {
 
   });
 
-  var moduleLoader: ModuleLoader;
-  var ngModuleLoader: NgModuleLoader;
+  let moduleLoader: ModuleLoader;
+  let ngModuleLoader: NgModuleLoader;
 
   beforeEach(() => {
     ngModuleLoader = mockNgModuleLoader();

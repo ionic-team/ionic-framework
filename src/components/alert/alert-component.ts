@@ -285,7 +285,7 @@ export class AlertCmp {
 
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
-      var cancelBtn = this.d.buttons.find(b => (<AlertButton>b).role === 'cancel');
+      const cancelBtn = this.d.buttons.find(b => (<AlertButton>b).role === 'cancel');
       if (cancelBtn) {
         this.btnClick(cancelBtn);
 

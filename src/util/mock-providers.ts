@@ -77,7 +77,7 @@ export class MockPlatform extends Platform {
   }
 
   cancelTimeout(timeoutId: number) {
-    for (var i = 0; i < this.timeouts.length; i++) {
+    for (let i = 0; i < this.timeouts.length; i++) {
       if (timeoutId === this.timeouts[i].timeoutId) {
         this.timeouts.splice(i, 1);
         break;
@@ -131,7 +131,7 @@ export class MockPlatform extends Platform {
   }
 
   cancelRaf(rafId: number) {
-    for (var i = 0; i < this.rafs.length; i++) {
+    for (let i = 0; i < this.rafs.length; i++) {
       if (rafId === this.rafs[i].rafId) {
         this.rafs.splice(i, 1);
         break;

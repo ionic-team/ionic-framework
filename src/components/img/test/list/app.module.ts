@@ -10,7 +10,7 @@ export class E2EPage {
   items: {avatar: string, thumbnail: string, id: number}[] = [];
 
   constructor() {
-    for (var i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i++) {
       this.items.push({
         id: i,
         avatar: getRandomImg(),

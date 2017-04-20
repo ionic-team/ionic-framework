@@ -212,7 +212,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     let ele = this._element;
     let children: any = ele.children;
     for (let i = 0, ilen = children.length; i < ilen; i++) {
-      var child = children[i];
+      const child = children[i];
       child.$ionIndex = i;
       child.$ionReorderList = ele;
     }
@@ -268,7 +268,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     /********* DOM WRITE ********* */
     let transform = this._plt.Css.transform;
     if (toIndex >= lastToIndex) {
-      for (var i = lastToIndex; i <= toIndex; i++) {
+      for (let i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i > fromIndex)
             ? `translateY(${-itemHeight}px)` : '';
@@ -277,7 +277,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     }
 
     if (toIndex <= lastToIndex) {
-      for (var i = toIndex; i <= lastToIndex; i++) {
+      for (let i = toIndex; i <= lastToIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i < fromIndex)
             ? `translateY(${itemHeight}px)` : '';

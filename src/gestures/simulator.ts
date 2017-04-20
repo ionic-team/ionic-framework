@@ -100,12 +100,12 @@ export class Simulate {
     let len = points.length - 1;
     let i = 0;
     for (; i < len; i++) {
-      var p1 = points[i].coord;
-      var p2 = points[i + 1].coord;
-      var duration = points[i + 1].duration;
-      var vectorX = p2.x - p1.x;
-      var vectorY = p2.y - p1.y;
-      var nuSteps = Math.ceil(duration / this.timedelta);
+      const p1 = points[i].coord;
+      const p2 = points[i + 1].coord;
+      const duration = points[i + 1].duration;
+      let vectorX = p2.x - p1.x;
+      let vectorY = p2.y - p1.y;
+      const nuSteps = Math.ceil(duration / this.timedelta);
       vectorX /= nuSteps;
       vectorY /= nuSteps;
       for (let j = 0; j < nuSteps; j++) {

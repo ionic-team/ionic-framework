@@ -3,7 +3,7 @@ import * as datetime from '../datetime-util';
 describe('convertDataToISO', () => {
 
   it('should convert DateTimeData to datetime string, with blank timezone', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: 1994,
       month: 12,
       day: 15,
@@ -12,12 +12,12 @@ describe('convertDataToISO', () => {
       second: 20,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994-12-15T13:47:20Z');
   });
 
   it('should convert DateTimeData to datetime string, +330 tz offset', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: 1994,
       month: 12,
       day: 15,
@@ -28,12 +28,12 @@ describe('convertDataToISO', () => {
       tzOffset: 330,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994-12-15T13:47:20.789+05:30');
   });
 
   it('should convert DateTimeData to datetime string, -300 tz offset', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: 1994,
       month: 12,
       day: 15,
@@ -44,12 +44,12 @@ describe('convertDataToISO', () => {
       tzOffset: -300,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994-12-15T13:47:20.789-05:00');
   });
 
   it('should convert DateTimeData to datetime string, Z timezone', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: 1994,
       month: 12,
       day: 15,
@@ -60,12 +60,12 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994-12-15T13:00:00Z');
   });
 
   it('should convert DateTimeData to YYYY-MM-DD', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: 1994,
       month: 1,
       day: 1,
@@ -76,12 +76,12 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994-01-01');
   });
 
   it('should convert DateTimeData to YYYY-MM', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: 1994,
       month: 1,
       day: null,
@@ -92,12 +92,12 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994-01');
   });
 
   it('should convert DateTimeData to YYYY', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: 1994,
       month: null,
       day: null,
@@ -108,12 +108,12 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('1994');
   });
 
   it('should convert DateTimeData to HH:mm:SS.SSS', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: null,
       month: null,
       day: null,
@@ -124,12 +124,12 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('13:47:20.789');
   });
 
   it('should convert DateTimeData to HH:mm:ss string', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: null,
       month: null,
       day: null,
@@ -140,12 +140,12 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('13:47:20');
   });
 
   it('should convert DateTimeData to HH:mm string', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: null,
       month: null,
       day: null,
@@ -156,12 +156,12 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    const str = datetime.convertDataToISO(data);
     expect(str).toEqual('13:47');
   });
 
   it('should not convert DateTimeData with null data', () => {
-    var data: datetime.DateTimeData = {
+    const data: datetime.DateTimeData = {
       year: null,
       month: null,
       day: null,
@@ -172,7 +172,7 @@ describe('convertDataToISO', () => {
       tzOffset: 0,
     };
 
-    var str = datetime.convertDataToISO(data);
+    let str = datetime.convertDataToISO(data);
     expect(str).toEqual('');
 
     str = datetime.convertDataToISO({});
@@ -231,7 +231,7 @@ describe('convertFormatToKey', () => {
 describe('getValueFromFormat', () => {
 
   it('should convert 24 hour to am value', () => {
-    var d = datetime.parseDate('00:47');
+    let d = datetime.parseDate('00:47');
     expect(datetime.getValueFromFormat(d, 'hh')).toEqual(0);
     expect(datetime.getValueFromFormat(d, 'h')).toEqual(0);
 
@@ -241,7 +241,7 @@ describe('getValueFromFormat', () => {
   });
 
   it('should convert 24 hour to pm value', () => {
-    var d = datetime.parseDate('12:47');
+    let d = datetime.parseDate('12:47');
     expect(datetime.getValueFromFormat(d, 'hh')).toEqual(12);
     expect(datetime.getValueFromFormat(d, 'h')).toEqual(12);
 
@@ -251,7 +251,7 @@ describe('getValueFromFormat', () => {
   });
 
   it('should convert am hours to am value', () => {
-    var d = datetime.parseDate('00:47');
+    let d = datetime.parseDate('00:47');
     expect(datetime.getValueFromFormat(d, 'A')).toEqual('am');
     expect(datetime.getValueFromFormat(d, 'a')).toEqual('am');
 
@@ -261,7 +261,7 @@ describe('getValueFromFormat', () => {
   });
 
   it('should convert pm hours to pm value', () => {
-    var d = datetime.parseDate('12:47');
+    let d = datetime.parseDate('12:47');
     expect(datetime.getValueFromFormat(d, 'A')).toEqual('pm');
     expect(datetime.getValueFromFormat(d, 'a')).toEqual('pm');
 
@@ -271,7 +271,7 @@ describe('getValueFromFormat', () => {
   });
 
   it('should convert date formats to values', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.getValueFromFormat(d, 'YYYY')).toEqual(1994);
     expect(datetime.getValueFromFormat(d, 'M')).toEqual(12);
     expect(datetime.getValueFromFormat(d, 'DDDD')).toEqual(15);
@@ -283,38 +283,38 @@ describe('getValueFromFormat', () => {
 describe('parseTemplate', () => {
 
   it('should not parse D thats apart of a word', () => {
-    var formats = datetime.parseTemplate('D Days');
+    const formats = datetime.parseTemplate('D Days');
     expect(formats.length).toEqual(1);
     expect(formats[0]).toEqual('D');
   });
 
   it('should not parse D thats apart of a word', () => {
-    var formats = datetime.parseTemplate('DD Days');
+    const formats = datetime.parseTemplate('DD Days');
     expect(formats.length).toEqual(1);
     expect(formats[0]).toEqual('DD');
   });
 
   it('should not parse m thats apart of a word', () => {
-    var formats = datetime.parseTemplate('m mins');
+    const formats = datetime.parseTemplate('m mins');
     expect(formats.length).toEqual(1);
     expect(formats[0]).toEqual('m');
   });
 
   it('should not parse M thats apart of a word', () => {
-    var formats = datetime.parseTemplate('mm Minutes');
+    const formats = datetime.parseTemplate('mm Minutes');
     expect(formats.length).toEqual(1);
     expect(formats[0]).toEqual('mm');
   });
 
   it('should not pickup "a" within 12-hour, but its not the am/pm', () => {
-    var formats = datetime.parseTemplate('hh:mm is a time');
+    const formats = datetime.parseTemplate('hh:mm is a time');
     expect(formats.length).toEqual(2);
     expect(formats[0]).toEqual('hh');
     expect(formats[1]).toEqual('mm');
   });
 
   it('should allow am/pm when using 12-hour and no spaces', () => {
-    var formats = datetime.parseTemplate('hh:mma');
+    const formats = datetime.parseTemplate('hh:mma');
     expect(formats.length).toEqual(3);
     expect(formats[0]).toEqual('hh');
     expect(formats[1]).toEqual('mm');
@@ -322,14 +322,14 @@ describe('parseTemplate', () => {
   });
 
   it('should allow am/pm when using only 12-hour', () => {
-    var formats = datetime.parseTemplate('hh a');
+    const formats = datetime.parseTemplate('hh a');
     expect(formats.length).toEqual(2);
     expect(formats[0]).toEqual('hh');
     expect(formats[1]).toEqual('a');
   });
 
   it('should allow am/pm when using 12-hour', () => {
-    var formats = datetime.parseTemplate('hh:mm a');
+    const formats = datetime.parseTemplate('hh:mm a');
     expect(formats.length).toEqual(3);
     expect(formats[0]).toEqual('hh');
     expect(formats[1]).toEqual('mm');
@@ -337,14 +337,14 @@ describe('parseTemplate', () => {
   });
 
   it('should not add am/pm when using 24-hour', () => {
-    var formats = datetime.parseTemplate('HH:mm a');
+    const formats = datetime.parseTemplate('HH:mm a');
     expect(formats.length).toEqual(2);
     expect(formats[0]).toEqual('HH');
     expect(formats[1]).toEqual('mm');
   });
 
   it('should get formats from template "s ss m mm h hh H HH D DD DDD DDDD M MM MMM MMMM YY YYYY"', () => {
-    var formats = datetime.parseTemplate('s ss m mm h hh H HH D DD DDD DDDD M MM MMM MMMM YY YYYY');
+    const formats = datetime.parseTemplate('s ss m mm h hh H HH D DD DDD DDDD M MM MMM MMMM YY YYYY');
     expect(formats[0]).toEqual('s');
     expect(formats[1]).toEqual('ss');
     expect(formats[2]).toEqual('m');
@@ -366,7 +366,7 @@ describe('parseTemplate', () => {
   });
 
   it('should get formats from template YYMMMMDDHHmm', () => {
-    var formats = datetime.parseTemplate('YYMMMMDDHHmm');
+    const formats = datetime.parseTemplate('YYMMMMDDHHmm');
     expect(formats[0]).toEqual('YY');
     expect(formats[1]).toEqual('MMMM');
     expect(formats[2]).toEqual('DD');
@@ -375,7 +375,7 @@ describe('parseTemplate', () => {
   });
 
   it('should get formats from template MM/DD/YYYY', () => {
-    var formats = datetime.parseTemplate('MM/DD/YYYY');
+    const formats = datetime.parseTemplate('MM/DD/YYYY');
     expect(formats[0]).toEqual('MM');
     expect(formats[1]).toEqual('DD');
     expect(formats[2]).toEqual('YYYY');
@@ -386,21 +386,21 @@ describe('parseTemplate', () => {
 describe('renderDateTime', () => {
 
   it('should show correct month and day name defaults', () => {
-    var d = datetime.parseDate('2016-05-12');
-    var r = datetime.renderDateTime('DDDD MMM D YYYY', d, {});
+    const d = datetime.parseDate('2016-05-12');
+    const r = datetime.renderDateTime('DDDD MMM D YYYY', d, {});
     expect(r).toEqual('Thursday May 12 2016');
   });
 
   it('should format h:mm a, PM', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('h:mm a', d, {})).toEqual('1:47 pm');
   });
 
   it('should get empty text for format without data', () => {
-    var emptyObj = {};
+    const emptyObj = {};
     expect(datetime.renderDateTime('MMMM D, YYYY h:mm a', emptyObj, {})).toEqual('');
 
-    var dataWithNulls: datetime.DateTimeData = {
+    const dataWithNulls: datetime.DateTimeData = {
       year: null,
       month: null,
       day: null,
@@ -414,47 +414,47 @@ describe('renderDateTime', () => {
   });
 
   it('should format h:mm a, AM', () => {
-    var d = datetime.parseDate('1994-12-15T00:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T00:47:20.789Z');
     expect(datetime.renderDateTime('h:mm a', d, {})).toEqual('12:47 am');
   });
 
   it('should format HH:mm', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('HH:mm', d, {})).toEqual('13:47');
   });
 
   it('should format MMMM D, YYYY', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('MMMM D, YYYY', d, {})).toEqual('December 15, 1994');
   });
 
   it('should format MM/DD/YYYY', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('MM/DD/YYYY', d, {})).toEqual('12/15/1994');
   });
 
   it('should format DD-MM-YY', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('DD-MM-YY', d, {})).toEqual('15-12-94');
   });
 
   it('should format YYYY', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('DD-MM-YY', d, {})).toEqual('15-12-94');
   });
 
   it('should format YYYY$MM.DD*HH?mm', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('YYYY$MM.DD*HH?mm', d, {})).toEqual('1994$12.15*13?47');
   });
 
   it('should return empty when template invalid', () => {
-    var d = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const d = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(datetime.renderDateTime('', d, {})).toEqual('');
   });
 
   it('should return empty when date invalid', () => {
-    var d = datetime.parseDate(null);
+    const d = datetime.parseDate(null);
     expect(datetime.renderDateTime('YYYY', d, {})).toEqual('');
   });
 
@@ -463,7 +463,7 @@ describe('renderDateTime', () => {
 describe('renderTextFormat', () => {
 
   it('should return a', () => {
-    var d = datetime.parseDate('00:47');
+    let d = datetime.parseDate('00:47');
     expect(datetime.renderTextFormat('a', 'am', d, {})).toEqual('am');
     expect(datetime.renderTextFormat('a', 'am', null, {})).toEqual('am');
 
@@ -477,7 +477,7 @@ describe('renderTextFormat', () => {
   });
 
   it('should return A', () => {
-    var d = datetime.parseDate('00:47');
+    let d = datetime.parseDate('00:47');
     expect(datetime.renderTextFormat('A', 'am', d, {})).toEqual('AM');
     expect(datetime.renderTextFormat('A', 'am', null, {})).toEqual('AM');
 
@@ -546,7 +546,7 @@ describe('renderTextFormat', () => {
   });
 
   it('should return DDD', () => {
-    var d: datetime.DateTimeData = {
+    const d: datetime.DateTimeData = {
       year: 2016,
       month: 5,
       day: 12,
@@ -556,7 +556,7 @@ describe('renderTextFormat', () => {
   });
 
   it('should return DDD with custom locale', () => {
-    var d: datetime.DateTimeData = {
+    const d: datetime.DateTimeData = {
       year: 2016,
       month: 5,
       day: 12,
@@ -566,7 +566,7 @@ describe('renderTextFormat', () => {
   });
 
   it('should return DDDD', () => {
-    var d: datetime.DateTimeData = {
+    const d: datetime.DateTimeData = {
       year: 2016,
       month: 5,
       day: 12,
@@ -576,7 +576,7 @@ describe('renderTextFormat', () => {
   });
 
   it('should return DDDD with custom locale', () => {
-    var d: datetime.DateTimeData = {
+    const d: datetime.DateTimeData = {
       year: 2016,
       month: 5,
       day: 12,
@@ -633,7 +633,7 @@ describe('renderTextFormat', () => {
 describe('parseISODate', () => {
 
   it('should get HH:MM:SS.SSS+HH:MM', () => {
-    var parsed = datetime.parseDate('13:47:20.789+05:30');
+    const parsed = datetime.parseDate('13:47:20.789+05:30');
     expect(parsed.year).toEqual(null);
     expect(parsed.month).toEqual(null);
     expect(parsed.day).toEqual(null);
@@ -645,7 +645,7 @@ describe('parseISODate', () => {
   });
 
   it('should get HH:MM:SS.SSS', () => {
-    var parsed = datetime.parseDate('13:47:20.789');
+    const parsed = datetime.parseDate('13:47:20.789');
     expect(parsed.year).toEqual(null);
     expect(parsed.month).toEqual(null);
     expect(parsed.day).toEqual(null);
@@ -657,7 +657,7 @@ describe('parseISODate', () => {
   });
 
   it('should get HH:MM:SS', () => {
-    var parsed = datetime.parseDate('13:47:20');
+    const parsed = datetime.parseDate('13:47:20');
     expect(parsed.year).toEqual(null);
     expect(parsed.month).toEqual(null);
     expect(parsed.day).toEqual(null);
@@ -669,7 +669,7 @@ describe('parseISODate', () => {
   });
 
   it('should get HH:MM', () => {
-    var parsed = datetime.parseDate('13:47');
+    const parsed = datetime.parseDate('13:47');
     expect(parsed.year).toEqual(null);
     expect(parsed.month).toEqual(null);
     expect(parsed.day).toEqual(null);
@@ -681,7 +681,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY-MM-DDTHH:MM:SS.SSS+HH:MM', () => {
-    var parsed = datetime.parseDate('1994-12-15T13:47:20.789+05:30');
+    const parsed = datetime.parseDate('1994-12-15T13:47:20.789+05:30');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(15);
@@ -693,7 +693,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY-MM-DDTHH:MM:SS.SSS-HH:MM', () => {
-    var parsed = datetime.parseDate('1994-12-15T13:47:20.789-11:45');
+    const parsed = datetime.parseDate('1994-12-15T13:47:20.789-11:45');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(15);
@@ -705,7 +705,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY-MM-DDTHH:MM:SS.SSS-HH', () => {
-    var parsed = datetime.parseDate('1994-12-15T13:47:20.789-02');
+    const parsed = datetime.parseDate('1994-12-15T13:47:20.789-02');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(15);
@@ -717,7 +717,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY-MM-DDTHH:MM:SS.SSSZ and set UTC offset', () => {
-    var parsed = datetime.parseDate('1994-12-15T13:47:20.789Z');
+    const parsed = datetime.parseDate('1994-12-15T13:47:20.789Z');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(15);
@@ -729,7 +729,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY-MM-DDTHH:MM:SS', () => {
-    var parsed = datetime.parseDate('1994-12-15T13:47:20');
+    const parsed = datetime.parseDate('1994-12-15T13:47:20');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(15);
@@ -741,7 +741,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY-MM-DDTHH:MM', () => {
-    var parsed = datetime.parseDate('1994-12-15T13:47');
+    const parsed = datetime.parseDate('1994-12-15T13:47');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(15);
@@ -753,12 +753,12 @@ describe('parseISODate', () => {
   });
 
   it('should NOT work with YYYY-MM-DDTHH', () => {
-    var parsed = datetime.parseDate('1994-12-15T13');
+    const parsed = datetime.parseDate('1994-12-15T13');
     expect(parsed).toEqual(null);
   });
 
   it('should get YYYY-MM-DD', () => {
-    var parsed = datetime.parseDate('1994-12-15');
+    const parsed = datetime.parseDate('1994-12-15');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(15);
@@ -770,7 +770,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY-MM', () => {
-    var parsed = datetime.parseDate('1994-12');
+    const parsed = datetime.parseDate('1994-12');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(12);
     expect(parsed.day).toEqual(null);
@@ -782,7 +782,7 @@ describe('parseISODate', () => {
   });
 
   it('should get YYYY', () => {
-    var parsed = datetime.parseDate('1994');
+    const parsed = datetime.parseDate('1994');
     expect(parsed.year).toEqual(1994);
     expect(parsed.month).toEqual(null);
     expect(parsed.day).toEqual(null);
@@ -794,7 +794,7 @@ describe('parseISODate', () => {
   });
 
   it('should handle bad date formats', () => {
-    var parsed = datetime.parseDate('12/15/1994');
+    let parsed = datetime.parseDate('12/15/1994');
     expect(parsed).toEqual(null);
 
     parsed = datetime.parseDate('12-15-1994');
@@ -820,7 +820,7 @@ describe('parseISODate', () => {
   });
 
   it('should get nothing with null date', () => {
-    var parsed = datetime.parseDate(null);
+    let parsed = datetime.parseDate(null);
     expect(parsed).toEqual(null);
 
     parsed = datetime.parseDate(undefined);
@@ -835,43 +835,43 @@ describe('parseISODate', () => {
 describe('updateDate', () => {
 
   it('should update year in existing date', () => {
-    var existingDate = { year: 2016, month: 10, day: 1 };
+    const existingDate = { year: 2016, month: 10, day: 1 };
     datetime.updateDate(existingDate, { year: { value: 2017 } });
     expect(existingDate.year).toEqual(2017);
   });
 
   it('should update month in existing date', () => {
-    var existingDate = { year: 2016, month: 10, day: 1 };
+    const existingDate = { year: 2016, month: 10, day: 1 };
     datetime.updateDate(existingDate, { month: { value: 11 } });
     expect(existingDate.month).toEqual(11);
   });
 
   it('should update day in existing date', () => {
-    var existingDate = { year: 2016, month: 10, day: 1 };
+    const existingDate = { year: 2016, month: 10, day: 1 };
     datetime.updateDate(existingDate, { day: { value: 2 } });
     expect(existingDate.day).toEqual(2);
   });
 
   it('should update hour in existing time', () => {
-    var existingDate = { hour: 10, minute: 30, second: 0 };
+    const existingDate = { hour: 10, minute: 30, second: 0 };
     datetime.updateDate(existingDate, { hour: { value: 11 } });
     expect(existingDate.hour).toEqual(11);
   });
 
   it('should update minute in existing time', () => {
-    var existingDate = { hour: 10, minute: 30, second: 0 };
+    const existingDate = { hour: 10, minute: 30, second: 0 };
     datetime.updateDate(existingDate, { minute: { value: 45 } });
     expect(existingDate.minute).toEqual(45);
   });
 
   it('should update second in existing time', () => {
-    var existingDate = { hour: 10, minute: 30, second: 0 };
+    const existingDate = { hour: 10, minute: 30, second: 0 };
     datetime.updateDate(existingDate, { second: { value: 10 } });
     expect(existingDate.second).toEqual(10);
   });
 
   it('should update hour PM in existing time', () => {
-    var existingDate = { hour: 10, minute: 30, second: 0 };
+    let existingDate = { hour: 10, minute: 30, second: 0 };
     datetime.updateDate(existingDate, { hour: { value: 1 }, ampm: { value: 'pm' }});
     expect(existingDate.hour).toEqual(13);
 
@@ -885,7 +885,7 @@ describe('updateDate', () => {
   });
 
   it('should update hour AM in existing time', () => {
-    var existingDate = { hour: 10, minute: 30, second: 0 };
+    let existingDate = { hour: 10, minute: 30, second: 0 };
     datetime.updateDate(existingDate, { hour: { value: 1 }, ampm: { value: 'am' }});
     expect(existingDate.hour).toEqual(1);
 
@@ -901,7 +901,7 @@ describe('updateDate', () => {
 });
 
 // pt-br
-var customLocale: datetime.LocaleData = {
+const customLocale: datetime.LocaleData = {
   dayNames: [
     'domingo',
     'segunda-feira',
