@@ -12,12 +12,7 @@ import { Directive, ElementRef, Renderer } from '@angular/core';
   },
 })
 export class Backdrop {
-  test: any;
-  constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
-  ) {
-    this.test = 'Backdrop component';
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {
   }
 
   getNativeElement(): HTMLElement {
