@@ -341,12 +341,13 @@ export class NavControllerBase extends Ion implements NavController {
       return convertToViews(this._linker, insertViews).then((viewControllers) => {
         assert(insertViews.length === viewControllers.length, 'lengths does not match');
 
+        viewControllers = viewControllers.filter(v => v !== null);
+        if (viewControllers.length === 0) {
+          throw 'invalid views to insert';
+        }
         // Check all the inserted view are correct
         for (var i = 0; i < viewControllers.length; i++) {
           var view = viewControllers[i];
-          if (!view) {
-            throw 'invalid views to insert';
-          }
           var nav = view._nav;
           if (nav && nav !== this) {
             throw 'inserted view was already inserted';
