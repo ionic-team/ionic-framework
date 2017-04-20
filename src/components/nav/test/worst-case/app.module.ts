@@ -5,8 +5,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 
 let LOG = '';
+let SIMPLE_LOG = '';
 function log(page: string, message: string, color: string) {
   console.log(`${page}: ${message}`);
+  SIMPLE_LOG += `${page}:${message}`;
+  SIMPLE_LOG += '\n';
   LOG += `${page}:<span style="background:${color};">${message}</span>`;
   LOG += '\n';
 }
@@ -25,8 +28,16 @@ const TEMPLATE: string = `
   </ion-content>
   `;
 
+const baseCounter: any = {};
+
 export class Base {
-  constructor(public _name: string) { }
+  constructor(public _name: string) {
+    if (baseCounter[_name] === undefined) {
+      baseCounter[_name] = 0;
+    }
+    this._name = `${this._name}-${baseCounter[_name]}`;
+    baseCounter[_name]++;
+  }
   ionViewWillLoad() {
     log(this._name, 'willLoad', 'green');
   }
@@ -242,6 +253,8 @@ export class Page7 extends Base {
     });
     this.nav.push(Page8);
     this.nav.push(Page8);
+    this.nav.pop();
+    this.nav.push(Page8);
     setTimeout(() => {
       this.nav.pop({ animate: false });
     }, Math.random() * 100);
@@ -278,10 +291,14 @@ export class Page8 extends Base {
 })
 export class Results {
   result: any;
-  constructor(private nav: NavController, private sanitizer: DomSanitizer) {
-  }
+  constructor(private nav: NavController, private sanitizer: DomSanitizer) {}
   ionViewDidEnter() {
-    this.result = this.sanitizer.bypassSecurityTrustHtml(LOG);
+    setTimeout(() => {
+      if (SIMPLE_LOG !== EXPECTED) {
+        throw 'LOG DOES NOT MATCH';
+      }
+      this.result = this.sanitizer.bypassSecurityTrustHtml(LOG);
+    }, 100);
   }
 }
 
@@ -327,3 +344,207 @@ export class AppComponent {
   ]
 })
 export class AppModule {}
+
+
+const EXPECTED = `Page1-0:canEnter
+Page1-0:willLoad
+Page1-0:didLoad
+Page1-0:willEnter
+Page1-0:didEnter
+Page1-0:canLeave
+Page2-0:canEnter
+Page2-0:willLoad
+Page2-0:didLoad
+Page1-0:willLeave
+Page2-0:willEnter
+Page2-0:didEnter
+Page1-0:didLeave
+Page1-0:willUnload
+Page2-0:canLeave
+Page3-0:canEnter
+Page3-0:willLoad
+Page3-0:didLoad
+Page2-0:willLeave
+Page3-0:willEnter
+Page3-0:didEnter
+Page2-0:didLeave
+Page3-0:canLeave
+Page2-0:canEnter
+Page3-0:willLeave
+Page2-0:willEnter
+Page2-0:didEnter
+Page3-0:didLeave
+Page3-0:willUnload
+Page2-0:canLeave
+Page3-1:canEnter
+Page3-1:willLoad
+Page3-1:didLoad
+Page2-0:willLeave
+Page3-1:willEnter
+Page3-1:didEnter
+Page2-0:didLeave
+Page3-1:canLeave
+Page2-0:canEnter
+Page3-1:willLeave
+Page2-0:willEnter
+Page2-0:didEnter
+Page3-1:didLeave
+Page3-1:willUnload
+Page2-0:canLeave
+Page3-2:canEnter
+Page3-2:willLoad
+Page3-2:didLoad
+Page2-0:willLeave
+Page3-2:willEnter
+Page3-2:didEnter
+Page2-0:didLeave
+Page3-2:canLeave
+Page2-0:canEnter
+Page3-2:willLeave
+Page2-0:willEnter
+Page2-0:didEnter
+Page3-2:didLeave
+Page3-2:willUnload
+Page2-0:canLeave
+Page3-3:canEnter
+Page3-3:willLoad
+Page3-3:didLoad
+Page2-0:willLeave
+Page3-3:willEnter
+Page3-3:didEnter
+Page2-0:didLeave
+Page3-3:canLeave
+Page2-0:canEnter
+Page3-3:willLeave
+Page2-0:willEnter
+Page2-0:didEnter
+Page3-3:didLeave
+Page3-3:willUnload
+Page2-0:canLeave
+Page4-0:canEnter
+Page4-0:willLoad
+Page4-0:didLoad
+Page2-0:willLeave
+Page4-0:willEnter
+Page4-0:didEnter
+Page2-0:didLeave
+Page4-0:canLeave
+Page5-0:canEnter
+Page4-0:canLeave
+Page6-0:canEnter
+Page6-0:willLoad
+Page6-0:didLoad
+Page4-0:willLeave
+Page6-0:willEnter
+Page4-0:didLeave
+Page6-0:canLeave
+Page6-1:canEnter
+Page6-1:willLoad
+Page6-1:didLoad
+Page6-0:willLeave
+Page6-1:willEnter
+Page6-0:didLeave
+Page6-1:canLeave
+Page6-0:canEnter
+Page6-1:canLeave
+Page6-0:canEnter
+Page6-1:canLeave
+Page6-0:canEnter
+Page6-1:willLeave
+Page6-0:willEnter
+Page6-1:didLeave
+Page6-1:willUnload
+Page6-0:canLeave
+Page7-0:canEnter
+Page7-0:willLoad
+Page7-0:didLoad
+Page6-0:willLeave
+Page7-0:willEnter
+Page7-0:didEnter
+Page6-0:didLeave
+Page7-0:canLeave
+Page8-0:canEnter
+Page2-0:willLeave
+Page2-0:didLeave
+Page2-0:willUnload
+Page4-0:willLeave
+Page4-0:didLeave
+Page4-0:willUnload
+Page6-0:willLeave
+Page6-0:didLeave
+Page6-0:willUnload
+Page8-0:willLoad
+Page8-0:didLoad
+Page7-0:willLeave
+Page8-0:willEnter
+Page8-0:didEnter
+Page7-0:didLeave
+Page7-0:willUnload
+Page8-0:canLeave
+Page8-1:canEnter
+Page8-1:willLoad
+Page8-1:didLoad
+Page8-0:willLeave
+Page8-1:willEnter
+Page8-1:didEnter
+Page8-0:didLeave
+Page8-0:willUnload
+Page8-1:canLeave
+Page8-2:canEnter
+Page8-2:willLoad
+Page8-2:didLoad
+Page8-1:willLeave
+Page8-2:willEnter
+Page8-2:didEnter
+Page8-1:didLeave
+Page8-1:willUnload
+Page8-2:canLeave
+Page8-3:canEnter
+Page8-3:willLoad
+Page8-3:didLoad
+Page8-2:willLeave
+Page8-3:willEnter
+Page8-3:didEnter
+Page8-2:didLeave
+Page8-3:canLeave
+Page8-4:canEnter
+Page8-4:willLoad
+Page8-4:didLoad
+Page8-3:willLeave
+Page8-4:willEnter
+Page8-4:didEnter
+Page8-3:didLeave
+Page8-4:canLeave
+Page8-3:canEnter
+Page8-4:willLeave
+Page8-3:willEnter
+Page8-3:didEnter
+Page8-4:didLeave
+Page8-4:willUnload
+Page8-3:canLeave
+Page8-5:canEnter
+Page8-5:willLoad
+Page8-5:didLoad
+Page8-3:willLeave
+Page8-5:willEnter
+Page8-5:didEnter
+Page8-3:didLeave
+Page8-5:canLeave
+Page8-3:canEnter
+Page8-5:willLeave
+Page8-3:willEnter
+Page8-3:didEnter
+Page8-5:didLeave
+Page8-5:willUnload
+Page8-3:canLeave
+Page8-2:canEnter
+Page8-3:willLeave
+Page8-2:willEnter
+Page8-2:didEnter
+Page8-3:didLeave
+Page8-3:willUnload
+Page8-2:canLeave
+Page8-2:willLeave
+Page8-2:didLeave
+Page8-2:willUnload
+`;
