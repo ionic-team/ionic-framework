@@ -9,14 +9,13 @@ import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../..
 import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
-import { MenuController } from './menu-controller';
+import {Menu as MenuInterface, Side} from '../app/menu-interface';
+import { MenuController } from '../app/menu-controller';
 import { MenuType } from './menu-types';
 import { Nav } from '../nav/nav';
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
 import { RootNode } from '../split-pane/split-pane';
-
-export type Side = 'left' | 'right' | 'start' | 'end';
 
 /**
  * @name Menu
@@ -194,7 +193,7 @@ export type Side = 'left' | 'right' | 'start' | 'end';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
-export class Menu implements RootNode, OnInit, OnDestroy {
+export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
 
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;

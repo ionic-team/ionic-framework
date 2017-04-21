@@ -1,7 +1,6 @@
-import { MenuController } from '../menu-controller';
+import { MenuController } from '../../app/menu-controller';
 import {mockMenu, mockPlatform} from '../../../util/mock-providers';
-import {Side} from '../menu';
-
+import {Side} from '../../app/menu-interface';
 
 describe('MenuController', () => {
 

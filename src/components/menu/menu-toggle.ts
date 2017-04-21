@@ -1,8 +1,8 @@
 import { Directive, Input, HostListener, Optional } from '@angular/core';
 
 import { Button } from '../button/button';
-import { MenuController } from './menu-controller';
-import { Navbar } from '../navbar/navbar';
+import { MenuController } from '../app/menu-controller';
+import { Navbar } from '../toolbar/navbar';
 import { ViewController } from '../../navigation/view-controller';
 
 /**

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnDestroy, Optional, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isTrueProperty } from '../../util/util';
@@ -11,13 +11,6 @@ import { Item } from '../item/item';
 import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';
-
-
-export const RANGE_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => Range),
-  multi: true
-};
 
 
 /**
@@ -108,7 +101,7 @@ export const RANGE_VALUE_ACCESSOR: any = {
     '[class.range-pressed]': '_pressed',
     '[class.range-has-pin]': '_pin'
   },
-  providers: [RANGE_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Range, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
 export class Range extends BaseInput<any> implements AfterViewInit, ControlValueAccessor, OnDestroy {

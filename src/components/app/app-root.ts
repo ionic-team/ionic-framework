@@ -4,7 +4,7 @@ import { App } from './app';
 import { assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { OverlayPortal } from '../nav/overlay-portal';
+import { OverlayPortal } from './overlay-portal';
 import { Platform } from '../../platform/platform';
 import * as Constants from './app-constants';
 
@@ -42,7 +42,7 @@ export class IonicApp extends Ion implements OnInit {
     private _plt: Platform,
     app: App
   ) {
-    super(config, elementRef, renderer);
+    super(config, elementRef, renderer, 'app-root');
     // register with App that this is Ionic's appRoot component. tada!
     app._appRoot = this;
     this._stopScrollPlugin = (<any>window)['IonicStopScroll'];
