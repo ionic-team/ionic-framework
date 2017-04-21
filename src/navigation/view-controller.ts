@@ -1,13 +1,10 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer } from '../components/toolbar/toolbar-footer';
-import { Header } from '../components/toolbar/toolbar-header';
 import { isPresent, assert } from '../util/util';
-import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
 import { NavOptions, STATE_NEW, STATE_INITIALIZED, STATE_ATTACHED, STATE_DESTROYED } from './nav-util';
 import { NavParams } from './nav-params';
-import { Content } from '../components/content/content';
+import { Content, Footer, Header, Navbar } from './nav-interfaces';
 
 
 /**

@@ -2,6 +2,7 @@ import { Directive, ElementRef, Optional, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
+import { Header as IHeader } from '../../navigation/nav-interfaces';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
@@ -30,7 +31,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Directive({
   selector: 'ion-header'
 })
-export class Header extends Ion {
+export class Header extends Ion implements IHeader {
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
     super(config, elementRef, renderer, 'header');
