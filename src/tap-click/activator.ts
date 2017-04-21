@@ -2,6 +2,7 @@ import { ActivatorBase, isActivatedDisabled } from './activator-base';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
 import { DomController } from '../platform/dom-controller';
+import {PointerCoordinates} from '../util/dom';
 
 
 export class Activator implements ActivatorBase {
@@ -40,7 +41,7 @@ export class Activator implements ActivatorBase {
     }
   }
 
-  downAction(ev: UIEvent, activatableEle: HTMLElement) {
+  downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     // the user just pressed down
     if (isActivatedDisabled(ev, activatableEle)) {
       return;
