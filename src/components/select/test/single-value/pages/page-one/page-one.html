@@ -18,6 +18,15 @@
   </ion-item>
 
   <ion-item>
+    <ion-label>Popover</ion-label>
+    <ion-select [(ngModel)]="interfaces" interface="popover">
+      <ion-option value="select">Select</ion-option>
+      <ion-option value="action">Action Sheet</ion-option>
+      <ion-option value="popover">Popover</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
     <ion-label>Gaming</ion-label>
     <ion-select [(ngModel)]="gaming" (ionCancel)="gamingCancel()" (ionChange)="gamingChange($event)">
       <ion-option value="nes">NES</ion-option>

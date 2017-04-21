@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -265,9 +265,10 @@ export class Tab extends NavControllerBase implements ITab {
     transCtrl: TransitionController,
     @Optional() private linker: DeepLinker,
     private _dom: DomController,
+    errHandler: ErrorHandler
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom);
+    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');
@@ -293,7 +294,7 @@ export class Tab extends NavControllerBase implements ITab {
   /**
    * @hidden
    */
-  load(opts: NavOptions, done?: Function) {
+  load(opts: NavOptions, done?: () => void) {
     if (!this._loaded && this.root) {
       this.setElementClass('show-tab', true);
       this.push(this.root, this.rootParams, opts, done);
@@ -306,7 +307,7 @@ export class Tab extends NavControllerBase implements ITab {
       this._dom.read(() => {
         this.resize();
       });
-      done(true);
+      done();
     }
   }
 

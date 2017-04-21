@@ -351,6 +351,7 @@ export class Platform {
    * the language needs to be dynamically changed per user/session.
    * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
    * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
+   * @param {boolean} updateDocument  Specifies whether the `lang` attribute of `<html>` should be updated
    */
   setLang(language: string, updateDocument: boolean) {
     this._lang = language;
@@ -806,9 +807,9 @@ export class Platform {
           if (this.hasFocusedTextInput() === false) {
             this._isPortrait = null;
           }
-          this.resize.emit();
+          this.zone.run(() => this.resize.emit());
         }, 200);
-      }, { passive: true, zone: true });
+      }, { passive: true, zone: false });
     }, 2000);
   }
 

@@ -423,7 +423,8 @@ export function mockNavController(): NavControllerBase {
     gestureCtrl,
     trnsCtrl,
     linker,
-    dom
+    dom,
+    null
   );
 
   nav._viewInit = function(enteringView: ViewController) {
@@ -468,7 +469,8 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
     null,
     deepLinker,
     null,
-    dom
+    dom,
+    null
   );
 }
 
@@ -500,7 +502,8 @@ export function mockTab(parentTabs: Tabs): Tab {
     gestureCtrl,
     null,
     linker,
-    dom
+    dom,
+    null
   );
 
   tab.load = (opts: any, cb: Function) => {

@@ -34,6 +34,7 @@ describe('Nav', () => {
         expect(nav.setPages).toHaveBeenCalledWith(knownViews, null, null);
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });
@@ -56,6 +57,7 @@ describe('Nav', () => {
         expect(nav.setPages).toHaveBeenCalledWith(knownViews, null, null);
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });
@@ -72,7 +74,8 @@ describe('Nav', () => {
        promise.then(() => {
         expect(nav.push).toHaveBeenCalled();
         done();
-      }).catch((err: Error) => {
+       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });
@@ -106,7 +109,8 @@ function getNav() {
     gestureCtrl,
     trnsCtrl,
     linker,
-    dom
+    dom,
+    null
   );
   return nav;
 }

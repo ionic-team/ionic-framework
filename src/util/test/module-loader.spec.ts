@@ -1,4 +1,4 @@
-import { ModuleLoader } from '../module-loader';
+import { ModuleLoader, LAZY_LOADED_TOKEN } from '../module-loader';
 import { mockModuleLoader, mockNgModuleLoader } from '../mock-providers';
 import { NgModuleLoader } from '../ng-module-loader';
 
@@ -8,89 +8,109 @@ describe('module-loader', () => {
   describe('load', () => {
 
     it('should call ngModuleLoader and receive a promise back', (done: Function) => {
-        spyOn(ngModuleLoader, 'load').and.returnValue(Promise.resolve());
+      const mockLoadedModule = {
+        create: () => { }
+      };
+      const mockComponentFactoryResolver = {};
+      const mockInjector = {
+        get: () => { }
+      };
+      const mockNgModuleRef = {
+        injector: mockInjector,
+        componentFactoryResolver: mockComponentFactoryResolver
+      };
+      const mockComponent = {};
+      spyOn(mockInjector, mockInjector.get.name).and.returnValue(mockComponent);
+      spyOn(mockLoadedModule, mockLoadedModule.create.name).and.returnValue(mockNgModuleRef);
+      spyOn(ngModuleLoader, 'load').and.returnValue(Promise.resolve(mockLoadedModule));
 
-        let pathPrefix = '../some/known/path';
-        let exportSuffix = 'SomeModule';
-        let loadChildren = pathPrefix + '#' + exportSuffix;
+      let pathPrefix = '../some/known/path';
+      let exportSuffix = 'SomeModule';
+      let loadChildren = pathPrefix + '#' + exportSuffix;
 
-        let promise = moduleLoader.load(loadChildren);
+      let promise = moduleLoader.load(loadChildren);
 
-        promise.then((response) => {
-          expect(ngModuleLoader.load).toHaveBeenCalledWith(pathPrefix, exportSuffix);
-        }).catch((err: Error) => {
+      promise.then((response) => {
+        expect(ngModuleLoader.load).toHaveBeenCalledWith(pathPrefix, exportSuffix);
+        expect(mockLoadedModule.create).toHaveBeenCalledWith(null); // whatever the injector is
+        expect(mockInjector.get).toHaveBeenCalledWith(LAZY_LOADED_TOKEN);
+        expect(response.component).toEqual(mockComponent);
+        expect(response.componentFactoryResolver).toEqual(mockComponentFactoryResolver);
+        done();
+      }).catch((err: Error) => {
+          fail(err);
           done(err);
-        });
+      });
     });
 
     it('should only call the ngModuleLoader when there is not an active request', () => {
-        let resolve: any = null;
-        let reject: any = null;
-        let promise = new Promise((scopedResolved, scopedReject) => {
-            resolve = scopedResolved;
-            reject = scopedReject;
-        });
+      let resolve: any = null;
+      let reject: any = null;
+      let promise = new Promise((scopedResolved, scopedReject) => {
+          resolve = scopedResolved;
+          reject = scopedReject;
+      });
 
-        spyOn(ngModuleLoader, 'load').and.returnValue(promise);
+      spyOn(ngModuleLoader, 'load').and.returnValue(promise);
 
-        let pathPrefix = '../some/known/path';
-        let exportSuffix = 'SomeModule';
-        let loadChildren = pathPrefix + '#' + exportSuffix;
+      let pathPrefix = '../some/known/path';
+      let exportSuffix = 'SomeModule';
+      let loadChildren = pathPrefix + '#' + exportSuffix;
 
-        promise = moduleLoader.load(loadChildren);
+      promise = moduleLoader.load(loadChildren);
 
-        // the promise is not resolved
-        let secondPromise = moduleLoader.load(loadChildren);
+      // the promise is not resolved
+      let secondPromise = moduleLoader.load(loadChildren);
 
-        // The promise returned should be the cached promise
-        expect(promise).toEqual(secondPromise);
+      // The promise returned should be the cached promise
+      expect(promise).toEqual(secondPromise);
 
-        expect(ngModuleLoader.load).toHaveBeenCalledTimes(1);
+      expect(ngModuleLoader.load).toHaveBeenCalledTimes(1);
     });
 
     it('should call the ngModuleLoader twice and return the active request', () => {
-        let resolve: any = null;
-        let reject: any = null;
-        let promise = new Promise((scopedResolved, scopedReject) => {
-            resolve = scopedResolved;
-            reject = scopedReject;
-        });
-        let promise2 = new Promise((scopedResolved, scopedReject) => {
-            resolve = scopedResolved;
-            reject = scopedReject;
-        });
+      let resolve: any = null;
+      let reject: any = null;
+      let promise = new Promise((scopedResolved, scopedReject) => {
+          resolve = scopedResolved;
+          reject = scopedReject;
+      });
+      let promise2 = new Promise((scopedResolved, scopedReject) => {
+          resolve = scopedResolved;
+          reject = scopedReject;
+      });
 
-        spyOn(ngModuleLoader, 'load').and.returnValue(promise);
+      spyOn(ngModuleLoader, 'load').and.returnValue(promise);
 
-        // Load the first module
-        let pathPrefix = '../some/known/path';
-        let exportSuffix = 'SomeModule';
-        let loadChildren = pathPrefix + '#' + exportSuffix;
+      // Load the first module
+      let pathPrefix = '../some/known/path';
+      let exportSuffix = 'SomeModule';
+      let loadChildren = pathPrefix + '#' + exportSuffix;
 
-        promise = moduleLoader.load(loadChildren);
-        expect(ngModuleLoader.load).toHaveBeenCalledWith(pathPrefix, exportSuffix);
+      promise = moduleLoader.load(loadChildren);
+      expect(ngModuleLoader.load).toHaveBeenCalledWith(pathPrefix, exportSuffix);
 
-        // Load the second module
-        let pathPrefix2 = '../another/known/path';
-        let exportSuffix2 = 'AnotherModule';
-        let loadChildren2 = pathPrefix2 + '#' + exportSuffix2;
+      // Load the second module
+      let pathPrefix2 = '../another/known/path';
+      let exportSuffix2 = 'AnotherModule';
+      let loadChildren2 = pathPrefix2 + '#' + exportSuffix2;
 
-        promise2 = moduleLoader.load(loadChildren2);
-        expect(ngModuleLoader.load).toHaveBeenCalledWith(pathPrefix2, exportSuffix2);
+      promise2 = moduleLoader.load(loadChildren2);
+      expect(ngModuleLoader.load).toHaveBeenCalledWith(pathPrefix2, exportSuffix2);
 
-        // Load the first module before the promise has resolved
-        let secondPromise = moduleLoader.load(loadChildren);
+      // Load the first module before the promise has resolved
+      let secondPromise = moduleLoader.load(loadChildren);
 
-        // The promise returned from the first module should be the cached promise
-        expect(promise).toEqual(secondPromise);
+      // The promise returned from the first module should be the cached promise
+      expect(promise).toEqual(secondPromise);
 
-        // Load the second module before the promise has resolved
-        let thirdPromise = moduleLoader.load(loadChildren2);
+      // Load the second module before the promise has resolved
+      let thirdPromise = moduleLoader.load(loadChildren2);
 
-        // The promise returned from the second module should be the cached promise
-        expect(promise2).toEqual(thirdPromise);
+      // The promise returned from the second module should be the cached promise
+      expect(promise2).toEqual(thirdPromise);
 
-        expect(ngModuleLoader.load).toHaveBeenCalledTimes(2);
+      expect(ngModuleLoader.load).toHaveBeenCalledTimes(2);
     });
 
   });

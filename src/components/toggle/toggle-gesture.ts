@@ -20,7 +20,7 @@ export class ToggleGesture extends PanGesture {
       plt,
       toggle.getNativeElement(), {
       threshold: 0,
-      zone: true,
+      zone: false,
       domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_TOGGLE,

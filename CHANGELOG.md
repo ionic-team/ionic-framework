@@ -1,3 +1,15 @@
+<a name="3.0.1"></a>
+## [3.0.1](https://github.com/driftyco/ionic/compare/v3.0.0...v3.0.1) (2017-04-06)
+
+
+### Bug Fixes
+
+* **scroll:** fix scroll issues in UIWebView ([26d10c4](https://github.com/driftyco/ionic/commit/26d10c4)), closes [#11081](https://github.com/driftyco/ionic/issues/11081) [#10976](https://github.com/driftyco/ionic/issues/10976) [#10966](https://github.com/driftyco/ionic/issues/10966) [#10936](https://github.com/driftyco/ionic/issues/10936) [#11051](https://github.com/driftyco/ionic/issues/11051) [#10889](https://github.com/driftyco/ionic/issues/10889)
+* **tap-click:** remove 300ms click delay ([36bbcd9](https://github.com/driftyco/ionic/commit/36bbcd9))
+* **virtual-list:** make it work with empty lists ([eb9de60](https://github.com/driftyco/ionic/commit/eb9de60)), closes [#11093](https://github.com/driftyco/ionic/issues/11093)
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/driftyco/ionic/compare/v2.3.0...v3.0.0) (2017-04-05)
 
@@ -22,7 +34,7 @@ With this release comes a major update to Angular (Angular 4.0!), the latest ver
       "@ionic-native/splash-screen": "3.4.2",
       "@ionic-native/status-bar": "3.4.2",
       "@ionic/storage": "2.0.1",
-      "ionic-angular": "3.0.0",
+      "ionic-angular": "3.0.1",
       "ionicons": "3.0.0",
       "rxjs": "5.1.1",
       "sw-toolbox": "3.4.0",
@@ -49,7 +61,13 @@ With this release comes a major update to Angular (Angular 4.0!), the latest ver
   ],
   ```
 
-3. If you are using Http, Import the `HttpModule` in your `app/app.module.ts` file:
+3. If you are using `Http`, import the `HttpModule` in your `app/app.module.ts` file:
+
+  ```
+  import { HttpModule } from '@angular/http';
+  ```
+  
+  and then add it to the imports in the same file:
 
   ```
   imports: [

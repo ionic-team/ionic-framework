@@ -42,6 +42,7 @@ export class Tab3 {
   }
 
   presentModal() {
+    console.debug('modal was commented out');
     // this.modalCtrl.create(MyModal).present();
   }
 

@@ -8,7 +8,7 @@ import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 
 
-export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?: any) {
+export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?: any): Promise<ViewController> {
   if (typeof nameOrPageOrView === 'function') {
     return Promise.resolve(
       new ViewController(nameOrPageOrView, params)
@@ -24,7 +24,7 @@ export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?:
   return Promise.resolve(null);
 }
 
-export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any) {
+export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any): Promise<ViewController> {
   if (nameOrPageOrView) {
     if (isViewController(nameOrPageOrView)) {
       // is already a ViewController
@@ -34,11 +34,10 @@ export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params:
     return getComponent(linker, nameOrPageOrView, params);
   }
 
-  console.error(`invalid page component: ${nameOrPageOrView}`);
   return Promise.resolve(null);
 }
 
-export function convertToViews(linker: DeepLinker, pages: any[]) {
+export function convertToViews(linker: DeepLinker, pages: any[]): Promise<ViewController[]> {
   const views: Promise<ViewController>[] = [];
   if (isArray(pages)) {
     for (var i = 0; i < pages.length; i++) {
@@ -110,7 +109,7 @@ export class DeepLinkMetadata implements IonicPageMetadata {
   loadChildren?: string;
   name?: string;
   segment?: string;
-  defaultHistory?: string[];
+  defaultHistory?: string[] | any[];
   priority?: string;
 }
 
@@ -145,6 +144,14 @@ export interface NavLink {
   dataLen?: number;
   dataKeys?: {[key: string]: boolean};
   defaultHistory?: any[];
+}
+
+export interface NavResult {
+  hasCompleted: boolean;
+  requiresTransition: boolean;
+  enteringName?: string;
+  leavingName?: string;
+  direction?: string;
 }
 
 export interface NavSegment {
@@ -188,12 +195,13 @@ export interface TransitionRejectFn {
 export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
-  insertViews?: ViewController[];
+  insertViews?: any[];
   removeView?: ViewController;
   removeStart?: number;
   removeCount?: number;
-  resolve?: TransitionResolveFn;
-  reject?: TransitionRejectFn;
+  resolve?: (hasCompleted: boolean) => void;
+  reject?: (rejectReason: string) => void;
+  done?: Function;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
   requiresTransition?: boolean;
