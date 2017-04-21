@@ -6,6 +6,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../platform/keyboard';
+import { Nav as INav } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
@@ -54,7 +55,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Nav) }]
 })
-export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
+export class Nav extends NavControllerBase implements AfterViewInit, RootNode, INav {
 
   private _root: any;
   private _hasInit: boolean = false;
@@ -127,7 +128,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode {
   }
 
   goToRoot(opts: NavOptions) {
-    this.setRoot(this._root, this.rootParams, opts, null);
+    return this.setRoot(this._root, this.rootParams, opts, null);
   }
 
   /**

@@ -1,6 +1,6 @@
 import { Animation } from '../../animations/animation';
-import { Menu } from './menu';
-import { MenuController } from './menu-controller';
+import { Menu, MenuType as IMenuType } from '../app/menu-interface';
+import { MenuController } from '../app/menu-controller';
 import { Platform } from '../../platform/platform';
 
 
@@ -11,7 +11,7 @@ import { Platform } from '../../platform/platform';
  * type will provide their own animations for open and close
  * and registers itself with Menu.
  */
-export class MenuType {
+export class MenuType implements IMenuType {
   ani: Animation;
   isOpening: boolean;
 

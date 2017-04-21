@@ -1,5 +1,4 @@
-import { Menu } from './menu';
-import { MenuType } from './menu-types';
+import { Menu, MenuType } from './menu-interface';
 import { Platform } from '../../platform/platform';
 import { removeArrayItem, assert } from '../../util/util';
 
@@ -343,3 +342,5 @@ export class MenuController {
 }
 
 let menuTypes: { [name: string]: new(...args: any[]) => MenuType } = {};
+
+

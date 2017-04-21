@@ -1,15 +1,9 @@
-import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer } from '@angular/core';
+import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListHeader } from '../list/list-header';
 import { isCheckedProperty, isTrueProperty } from '../../util/util';
 import { RadioButton } from './radio-button';
-
-export const RADIO_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => RadioGroup),
-  multi: true
-};
 
 /**
  * @name RadioGroup
@@ -67,7 +61,7 @@ export const RADIO_VALUE_ACCESSOR: any = {
   host: {
     'role': 'radiogroup'
   },
-  providers: [RADIO_VALUE_ACCESSOR]
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: RadioGroup, multi: true } ],
 })
 export class RadioGroup {
 
