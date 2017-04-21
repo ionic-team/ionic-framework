@@ -4,6 +4,7 @@ import { GestureController, GESTURE_PRIORITY_MENU_SWIPE, GESTURE_MENU_SWIPE } fr
 import { Platform } from '../../platform/platform';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
+import { assert } from '../../util/util';
 
 /**
  * Gesture attached to the content which the menu is assigned to
@@ -33,8 +34,8 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   canStart(ev: any): boolean {
-    let menu = this.menu;
-    if (!menu.canSwipe()) {
+    const menu = this.menu;
+    if (!menu.canStartSwipe()) {
       return false;
     }
     if (menu.isOpen) {
@@ -57,21 +58,21 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   onSlide(slide: SlideData, ev: any) {
-    let z = (this.menu.side === 'right' ? slide.min : slide.max);
-    let stepValue = (slide.distance / z);
+    const z = (this.menu.side === 'right' ? slide.min : slide.max);
+    const stepValue = (slide.distance / z);
 
     this.menu._swipeProgress(stepValue);
   }
 
   onSlideEnd(slide: SlideData, ev: any) {
     let z = (this.menu.side === 'right' ? slide.min : slide.max);
-    let currentStepValue = (slide.distance / z);
-    let velocity = slide.velocity;
+    const currentStepValue = (slide.distance / z);
+    const velocity = slide.velocity;
     z = Math.abs(z * 0.5);
-    let shouldCompleteRight = (velocity >= 0)
+    const shouldCompleteRight = (velocity >= 0)
       && (velocity > 0.2 || slide.delta > z);
 
-    let shouldCompleteLeft = (velocity <= 0)
+    const shouldCompleteLeft = (velocity <= 0)
       && (velocity < -0.2 || slide.delta < -z);
 
     console.debug('menu gesture, onSlideEnd', this.menu.side,
@@ -87,11 +88,11 @@ export class MenuContentGesture extends SlideEdgeGesture {
     this.menu._swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
   }
 
-  getElementStartPos(slide: SlideData, ev: any) {
+  getElementStartPos(slide: SlideData, ev: any): number {
     if (this.menu.side === 'right') {
       return this.menu.isOpen ? slide.min : slide.max;
     }
-    // left menu
+    assert(this.menu.side === 'left', 'menu side should be left');
     return this.menu.isOpen ? slide.max : slide.min;
   }
 
@@ -102,7 +103,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
         max: 0
       };
     }
-    // left menu
+    assert(this.menu.side === 'left', 'menu side should be left');
     return {
       min: 0,
       max: this.menu.width()

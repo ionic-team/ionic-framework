@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import { AlertController, IonicPage, ModalController, NavController } from '../../../../../..';
+import { AlertController, IonicPage, MenuController, ModalController, NavController } from '../../../../../..';
 
 @IonicPage()
 @Component({
   templateUrl: 'page-two.html'
 })
 export class PageTwo {
+
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public modalCtrl: ModalController) { }
+    public modalCtrl: ModalController,
+    public menuCtrl: MenuController
+  ) { }
 
   myMenu: string = 'right';
 
@@ -30,5 +33,16 @@ export class PageTwo {
 
   goToPage2() {
     this.navCtrl.push('PageThree');
+  }
+
+  get swipeMenuMode() {
+    return this.menuCtrl.get().swipeEnabled;
+  }
+
+  set swipeMenuMode(value: any) {
+    console.log('swipeMenuMode', value);
+    this.menuCtrl.getMenus().forEach(menu => {
+      menu.swipeEnable(value);
+    });
   }
 }
