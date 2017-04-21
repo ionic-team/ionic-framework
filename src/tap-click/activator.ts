@@ -20,7 +20,7 @@ export class Activator implements ActivatorBase {
     this._css = config.get('activatedClass', 'activated');
   }
 
-  clickAction(ev: UIEvent, activatableEle: HTMLElement) {
+  clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     if (isActivatedDisabled(ev, activatableEle)) {
       return;
     }
