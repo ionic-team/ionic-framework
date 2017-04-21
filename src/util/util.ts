@@ -109,23 +109,24 @@ export function isTrueProperty(val: any): boolean {
 };
 
 
-/** @private */
-export function isCheckedProperty(a, b) {
+/** @hidden */
+export function isCheckedProperty(a: any, b: any): boolean {
   if (a === undefined || a === null || a === '') {
     return (b === undefined || b === null || b === '');
-  }
-  else if (a === true || a === 'true') {
+
+  } else if (a === true || a === 'true') {
     return (b === true || b === 'true');
-  }
-  else if (a === false || a === 'false') {
+
+  } else if (a === false || a === 'false') {
     return (b === false || b === 'false');
-  }
-  else if (a === 0 || a === '0') {
+
+  } else if (a === 0 || a === '0') {
     return (b === 0 || b === '0');
-  } 
-  // check if it's an object and then stringify the results
-  else if ((a === Object(a)) && (b === Object(b))) {
+    
+  } else if ((a === Object(a)) && (b === Object(b))) {
+    // if params are objects, stringify and compare
     return JSON.stringify(a) == JSON.stringify(b);// tslint:disable-line
+    
   }
   // not using strict comparison on purpose
   return (a == b); // tslint:disable-line
