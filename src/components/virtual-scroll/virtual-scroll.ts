@@ -501,15 +501,17 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
       adjustRendered(cells, data);
 
-      populateNodeData(
-        data.topCell, data.bottomCell,
-        data.viewWidth, true,
-        cells, records, nodes,
-        this._itmTmp.viewContainer,
-        this._itmTmp.templateRef,
-        this._hdrTmp && this._hdrTmp.templateRef,
-        this._ftrTmp && this._ftrTmp.templateRef, needClean
-      );
+      this._zone.run(() => {
+        populateNodeData(
+          data.topCell, data.bottomCell,
+          data.viewWidth, true,
+          cells, records, nodes,
+          this._itmTmp.viewContainer,
+          this._itmTmp.templateRef,
+          this._hdrTmp && this._hdrTmp.templateRef,
+          this._ftrTmp && this._ftrTmp.templateRef, needClean,
+        );
+      });
 
       if (needClean) {
         this._cd.detectChanges();

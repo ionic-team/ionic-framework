@@ -24,7 +24,12 @@ export class Transition extends Animation {
   parent: Transition;
   trnsId: number;
 
-  constructor(plt: Platform, public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions) {
+  constructor(
+    plt: Platform,
+    public enteringView: ViewController,
+    public leavingView: ViewController,
+    opts: AnimationOptions
+    ) {
     super(plt, null, opts);
   }
 
@@ -34,13 +39,12 @@ export class Transition extends Animation {
     this._trnsStart = trnsStart;
   }
 
-  isRoot(): boolean {
-    return !this.parent;
-  }
-
   start() {
     this._trnsStart && this._trnsStart();
     this._trnsStart = null;
+
+    // bubble up start
+    this.parent && this.parent.start();
   }
 
   destroy() {

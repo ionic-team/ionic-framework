@@ -5,6 +5,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { isBlank, assert } from '../../util/util';
+import { Tabs as ITabs } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
@@ -159,7 +160,7 @@ import { ViewController } from '../../navigation/view-controller';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Tabs) }]
 })
-export class Tabs extends Ion implements AfterViewInit, RootNode {
+export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
   /** @internal */
   _ids: number = -1;
   /** @internal */
@@ -506,9 +507,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode {
 
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot().catch(() => {
-          console.debug('Tabs: pop to root was cancelled');
-        });
+        tab.popToRoot();
       } else {
         getComponent(this._linker, tab.root).then(viewController => {
           if (viewController.component !== active.component) {

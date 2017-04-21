@@ -162,7 +162,6 @@ describe('Tabs', () => {
     it('should get the tab', () => {
       var tabs = mockTabs();
       var tab0 = mockTab(tabs);
-      tab0.setRoot(<any>{});
       var tab1 = mockTab(tabs);
 
       expect(tabs.getIndex(tab0)).toEqual(0);

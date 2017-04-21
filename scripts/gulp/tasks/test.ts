@@ -85,6 +85,7 @@ function karmaTest(watch: boolean, done: Function) {
 
   let karmaConfig = {
     configFile: join(SCRIPTS_ROOT, 'karma/karma.conf.js'),
+    singleRun: true,
   };
 
   if (watch) {
@@ -95,6 +96,9 @@ function karmaTest(watch: boolean, done: Function) {
     (<any>karmaConfig).client = {
       args: ['--grep', argv.testGrep]
     };
+  }
+  if (typeof argv.debug !== 'undefined') {
+    karmaConfig.singleRun = false;
   }
 
   new karma.Server(karmaConfig, done).start();

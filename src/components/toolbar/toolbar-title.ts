@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Optional, I
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { Navbar } from '../navbar/navbar';
+import { Navbar } from './navbar';
 import { Toolbar } from './toolbar';
 
 

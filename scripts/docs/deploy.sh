@@ -38,6 +38,8 @@ function run {
     ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME"
     ./node_modules/.bin/gulp docs.dgeni --doc-version="nightly"
 
+    ./node_modules/.bin/gulp docs.homepageVersionUpdate
+
   else
 
     if [ -d "$DOCS_DEST/nightly/api" ]; then

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -14,12 +14,6 @@ import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
 import { SelectPopover, SelectPopoverOption } from './select-popover-component';
-
-export const SELECT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => Select),
-  multi: true
-};
 
 /**
  * @name Select
@@ -150,7 +144,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
   host: {
     '[class.select-disabled]': '_disabled'
   },
-  providers: [SELECT_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Select, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
 export class Select extends BaseInput<string[]> implements AfterViewInit, OnDestroy {
