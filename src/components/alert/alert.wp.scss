@@ -163,8 +163,11 @@ $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 /// @prop - Top of the icon in the radio alert
 $alert-wp-radio-icon-top:                      2px !default;
 
+// deprecated
+$alert-wp-radio-icon-left:                     2px !default;
+
 /// @prop - Left of the icon in the radio alert
-$alert-wp-radio-icon-start:                    2px !default;
+$alert-wp-radio-icon-start:                    $alert-wp-radio-icon-left;
 
 /// @prop - Width of the icon in the radio alert
 $alert-wp-radio-icon-width:                    8px !default;
@@ -217,8 +220,11 @@ $alert-wp-checkbox-background-on:              color($colors-wp, primary) !defau
 /// @prop - Top of the icon in the checkbox alert
 $alert-wp-checkbox-icon-top:                   -2px !default;
 
+// deprecated
+$alert-wp-checkbox-icon-left:                  3px !default;
+
 /// @prop - Left of the icon in the checkbox alert
-$alert-wp-checkbox-icon-start:                 3px !default;
+$alert-wp-checkbox-icon-start:                 $alert-wp-checkbox-icon-left;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-wp-checkbox-icon-width:                 6px !default;

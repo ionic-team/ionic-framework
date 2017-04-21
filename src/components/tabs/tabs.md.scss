@@ -54,14 +54,20 @@ $tabs-md-tab-text-transition:                 transform .3s ease-in-out !default
 /// @prop - Transform for the active tab button icon when the layout is icon-top, icon-only, or title-only
 $tabs-md-tab-icon-transform-active:           translate3d(0, -2px, 0) !default;
 
+// deprecated
+$tabs-md-tab-icon-right-transform-active:     translate3d(2px, 0, 0) !default;
+
 /// @prop - Transform for the active tab button icon when the layout is icon-end
-$tabs-md-tab-icon-end-transform-active:       translate3d(2px, 0, 0) !default;
+$tabs-md-tab-icon-end-transform-active:       $tabs-md-tab-icon-right-transform-active;
 
 /// @prop - Transform for the active tab button icon when the layout is icon-bottom
 $tabs-md-tab-icon-bottom-transform-active:    translate3d(0, 2px, 0) !default;
 
+// deprecated
+$tabs-md-tab-icon-left-transform-active:      translate3d(-2px, 0, 0) !default;
+
 /// @prop - Transform for the active tab button icon when the layout is icon-start
-$tabs-md-tab-icon-start-transform-active:     translate3d(-2px, 0, 0) !default;
+$tabs-md-tab-icon-start-transform-active:     $tabs-md-tab-icon-left-transform-active;
 
 /// @prop - Transform origin for the tab button text
 $tabs-md-tab-icon-transform-origin:           50% 150% !default;
