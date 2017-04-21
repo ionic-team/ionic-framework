@@ -14,13 +14,13 @@ describe('Activator', () => {
   });
 
   it('should async down/up/click action (normal flow)', (done) => {
-    const {ev, ele} = testValues();
+    const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
     activator.activatedDelay = 80;
     activator.clearDelay = 80;
 
-    activator.downAction(ev, ele);
+    activator.downAction(ev, ele, pos);
     expect(ele.classList.contains('activated')).toBeFalsy();
 
     done();
@@ -45,17 +45,17 @@ describe('Activator', () => {
   });
 
   it('should async down then down', (done) => {
-    const {ev, ele} = testValues();
+    const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
     activator.activatedDelay = 80;
     activator.clearDelay = 80;
 
-    activator.downAction(ev, ele);
+    activator.downAction(ev, ele, pos);
 
     dom.flushUntil(100, () => {
       expect(ele.classList.contains('activated')).toBeTruthy();
-      activator.downAction(ev, ele);
+      activator.downAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeFalsy();
 
       dom.flushUntil(100, () => {
@@ -67,17 +67,17 @@ describe('Activator', () => {
   });
 
   it('should async down then click', (done) => {
-    const {ev, ele} = testValues();
+    const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
     activator.activatedDelay = 80;
     activator.clearDelay = 80;
 
-    activator.downAction(ev, ele);
+    activator.downAction(ev, ele, pos);
 
     dom.flushUntil(16, () => {
       expect(ele.classList.contains('activated')).toBeFalsy();
-      activator.clickAction(ev, ele);
+      activator.clickAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeTruthy();
 
       dom.flushUntil(100, () => {
@@ -94,22 +94,22 @@ describe('Activator', () => {
   });
 
   it('should async down then click then down (fast clicking)', (done) => {
-    const {ev, ele} = testValues();
+    const {ev, ele, pos} = testValues();
 
     let activator = mockActivator(true, null);
     activator.activatedDelay = 80;
     activator.clearDelay = 80;
 
-    activator.downAction(ev, ele);
+    activator.downAction(ev, ele, pos);
 
     dom.flushUntil(16, () => {
       expect(ele.classList.contains('activated')).toBeFalsy();
-      activator.clickAction(ev, ele);
+      activator.clickAction(ev, ele, pos);
       expect(ele.classList.contains('activated')).toBeTruthy();
 
       dom.flushUntil(32, () => {
         expect(ele.classList.contains('activated')).toBeTruthy();
-        activator.downAction(ev, ele);
+        activator.downAction(ev, ele, pos);
         expect(ele.classList.contains('activated')).toBeFalsy();
 
         done();

@@ -66,7 +66,7 @@ export class Activator implements ActivatorBase {
   }
 
   // the user was pressing down, then just let up
-  upAction() {
+  upAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
     this._scheduleClear();
   }
 
