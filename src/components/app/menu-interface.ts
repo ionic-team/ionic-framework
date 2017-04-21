@@ -1,5 +1,7 @@
 import { Animation } from '../../animations/animation';
 
+export type Side = 'left' | 'right' | 'start' | 'end';
+
 export interface Menu {
   setOpen(shouldOpen: boolean, animated: boolean): Promise<boolean>;
   open(): Promise<boolean>;
@@ -9,7 +11,7 @@ export interface Menu {
   swipeEnable(shouldEnable: boolean): Menu;
   isOpen: boolean;
   enabled: boolean;
-  side: string;
+  side: Side;
   id: string;
   isAnimating(): boolean;
   width(): number;

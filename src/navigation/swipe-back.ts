@@ -30,6 +30,14 @@ export class SwipeBackGesture extends SlideEdgeGesture {
         disableScroll: true
       })
     });
+
+    this.setSide(plt.dir());
+
+    Platform.dirChanged.subscribe(this.setSide.bind(this));
+  }
+
+  private setSide(dir: string) {
+    this.setEdges(dir === 'ltr' ? 'left' : 'right');
   }
 
   canStart(ev: any): boolean {

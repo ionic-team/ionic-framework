@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { OnInit, OnDestroy, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -9,7 +9,7 @@ import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../..
 import { isTrueProperty, assert } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
-import { Menu as MenuInterface } from '../app/menu-interface';
+import {Menu as MenuInterface, Side} from '../app/menu-interface';
 import { MenuController } from '../app/menu-controller';
 import { MenuType } from './menu-types';
 import { Nav } from '../nav/nav';
@@ -193,7 +193,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
-export class Menu implements RootNode, MenuInterface {
+export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
 
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;
@@ -206,6 +206,7 @@ export class Menu implements RootNode, MenuInterface {
   private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
   private _isPane: boolean = false;
+  private _side: Side = 'start';
 
   /**
    * @hidden
@@ -238,11 +239,6 @@ export class Menu implements RootNode, MenuInterface {
   @Input() id: string;
 
   /**
-   * @input {string} Which side of the view the menu should be placed. Default `"left"`.
-   */
-  @Input() side: string;
-
-  /**
    * @input {string} The display type of the menu. Default varies based on the mode,
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
@@ -260,6 +256,24 @@ export class Menu implements RootNode, MenuInterface {
   set enabled(val: boolean) {
     const isEnabled = isTrueProperty(val);
     this.enable(isEnabled);
+  }
+
+  /**
+   * @input {string} Which side of the view the menu should be placed. Default `"left"`.
+   */
+  @Input()
+  get side() {
+    if (this._side === 'right' || (this._side === 'start' && this._plt.isRTL()) || (this._side === 'end' && !this._plt.isRTL())) {
+      return 'right';
+    }
+    return 'left';
+  }
+
+  set side(val: Side) {
+    this._side = val;
+    // Update gesture edge
+    if (this._gesture)
+      this._gesture.setEdges(this.side);
   }
 
   /**
@@ -339,11 +353,7 @@ export class Menu implements RootNode, MenuInterface {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
-    // normalize the "side"
-    if (this.side !== 'left' && this.side !== 'right') {
-      this.side = 'left';
-    }
-    this.setElementAttribute('side', this.side);
+    this.setElementAttribute('side', this._side);
 
     // normalize the "type"
     if (!this.type) {
