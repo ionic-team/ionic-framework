@@ -1,6 +1,6 @@
 import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
 
-import { App } from '../app/app';
+import { App } from './app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
@@ -55,4 +55,3 @@ export class OverlayPortal extends NavControllerBase {
   }
 
 }
-
