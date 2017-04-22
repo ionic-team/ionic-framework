@@ -44,7 +44,7 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
   transition: transform 150ms ease-in-out;
 }
 
-html[dir="rtl"] .label-ios[floating] {
+[dir="rtl"] .label-ios[floating] {
   transform-origin: right top;
 }
 
