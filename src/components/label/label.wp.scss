@@ -61,11 +61,6 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
   transform: translate3d(0, 0, 0) scale(.8);
 }
 
-[dir="rtl"] .input-has-focus .label-wp[floating],
-[dir="rtl"] .input-has-value .label-wp[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
-}
-
 .item-wp.item-label-stacked [item-right],
 .item-wp.item-label-floating [item-right] {
   margin-top: $item-wp-padding-media-top + 4;
