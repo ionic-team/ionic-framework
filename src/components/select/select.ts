@@ -151,6 +151,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
 
   _multi: boolean = false;
   _options: QueryList<Option>;
+  private _overlay: ActionSheet | Alert | Popover;
   _texts: string[] = [];
   _text: string = '';
 
@@ -265,8 +266,6 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       this.interface = 'alert';
     }
 
-    let overlay: ActionSheet | Alert | Popover;
-
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
         return {
@@ -284,7 +283,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
       selectOptions.cssClass = selectCssClass;
-      overlay = new ActionSheet(this._app, selectOptions, this.config);
+      this._overlay = new ActionSheet(this._app, selectOptions, this.config);
 
     } else if (this.interface === 'popover') {
       let popoverOptions: SelectPopoverOption[] = options.map(input => ({
@@ -294,7 +293,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
         value: input.value
       }));
 
-      overlay = new Popover(this._app, SelectPopover, {
+      this._overlay = new Popover(this._app, SelectPopover, {
         options: popoverOptions
       }, {
         cssClass: 'select-popover'
@@ -331,7 +330,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       var selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions
-      overlay = new Alert(this._app, selectOptions, this.config);
+      this._overlay = new Alert(this._app, selectOptions, this.config);
 
       if (this._multi) {
         // use checkboxes
@@ -343,19 +342,19 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
 
       // If the user passed a cssClass for the select, add it
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-      overlay.setCssClass(selectCssClass);
+      this._overlay.setCssClass(selectCssClass);
 
-      overlay.addButton({
+      this._overlay.addButton({
         text: this.okText,
         handler: (selectedValues) => this.value = selectedValues
       });
 
     }
 
-    overlay.present(selectOptions);
+    this._overlay.present(selectOptions);
 
     this._fireFocus();
-    overlay.onDidDismiss((value: any) => {
+    this._overlay.onDidDismiss((value: any) => {
       this._fireBlur();
 
       if (this.interface === 'popover' && value) {
@@ -365,6 +364,17 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     });
   }
 
+  /**
+   * Close the select interface.
+   */
+  close() {
+    if (!(this._overlay && this.isFocus())) {
+      return;
+    }
+
+    this._overlay.dismiss();
+    this._overlay = undefined;
+  }
 
   /**
    * @input {boolean} If true, the element can accept multiple values.
