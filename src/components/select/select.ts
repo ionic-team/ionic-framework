@@ -266,6 +266,8 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       this.interface = 'alert';
     }
 
+    let overlay: ActionSheet | Alert | Popover;
+
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
         return {
@@ -283,7 +285,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
       selectOptions.cssClass = selectCssClass;
-      this._overlay = new ActionSheet(this._app, selectOptions, this.config);
+      overlay = new ActionSheet(this._app, selectOptions, this.config);
 
     } else if (this.interface === 'popover') {
       let popoverOptions: SelectPopoverOption[] = options.map(input => ({
@@ -293,7 +295,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
         value: input.value
       }));
 
-      this._overlay = new Popover(this._app, SelectPopover, {
+      overlay = new Popover(this._app, SelectPopover, {
         options: popoverOptions
       }, {
         cssClass: 'select-popover'
@@ -330,7 +332,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       var selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions
-      this._overlay = new Alert(this._app, selectOptions, this.config);
+      overlay = new Alert(this._app, selectOptions, this.config);
 
       if (this._multi) {
         // use checkboxes
@@ -342,16 +344,17 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
 
       // If the user passed a cssClass for the select, add it
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-      this._overlay.setCssClass(selectCssClass);
+      overlay.setCssClass(selectCssClass);
 
-      this._overlay.addButton({
+      overlay.addButton({
         text: this.okText,
         handler: (selectedValues) => this.value = selectedValues
       });
 
     }
 
-    this._overlay.present(selectOptions);
+    overlay.present(selectOptions);
+    this._overlay = overlay;
 
     this._fireFocus();
     this._overlay.onDidDismiss((value: any) => {
@@ -368,12 +371,15 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
    * Close the select interface.
    */
   close() {
-    if (!(this._overlay && this.isFocus())) {
+    if (!this._overlay || !this.isFocus()) {
       return;
     }
 
-    this._overlay.dismiss();
-    this._overlay = undefined;
+    let dismissPromise = this._overlay.dismiss();
+
+    dismissPromise.then(() => this._overlay = undefined);
+
+    return dismissPromise;
   }
 
   /**
