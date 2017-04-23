@@ -207,6 +207,7 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
   private _gestureBlocker: BlockerDelegate;
   private _isPane: boolean = false;
   private _side: Side;
+  private _dirChanged: EventEmitter<any>;
 
   /**
    * @hidden
@@ -272,6 +273,8 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
 
   set side(val: Side) {
     this._side = val;
+
+    this._updateType();
   }
 
   get isRightSide(): boolean {
@@ -340,6 +343,8 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
       disable: [GESTURE_GO_BACK_SWIPE]
     });
     this.side = 'start';
+
+    this._dirChanged = Platform.dirChanged.subscribe(this._updateType.bind(this));
   }
 
   /**
@@ -406,6 +411,15 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
       }
     }
     return this._type;
+  }
+
+  /**
+   * @hidden
+   */
+  private _updateType(): void {
+    // Update type's position if type exists
+    if (this._type)
+      this._getType().updatePosition();
   }
 
   /**
@@ -727,6 +741,7 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
     this._events.destroy();
     this._gesture && this._gesture.destroy();
     this._type && this._type.destroy();
+    this._dirChanged.unsubscribe();
 
     this._gesture = null;
     this._type = null;
