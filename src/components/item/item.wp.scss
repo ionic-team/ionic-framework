@@ -148,6 +148,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
     background-position: right ($item-wp-padding-right - 2) center;
     background-size: 14px 14px;
   }
+  
   [dir="rtl"] .item-wp[detail-push] .item-inner,
   [dir="rtl"] button.item-wp:not([detail-none]) .item-inner,
   [dir="rtl"] a.item-wp:not([detail-none]) .item-inner {

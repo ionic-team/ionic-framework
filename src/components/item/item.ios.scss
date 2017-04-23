@@ -238,6 +238,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
     background-position: right ($item-ios-padding-right - 2) center;
     background-size: 14px 14px;
   }
+  
   [dir="rtl"] .item-ios[detail-push] .item-inner,
   [dir="rtl"] button.item-ios:not([detail-none]) .item-inner,
   [dir="rtl"] a.item-ios:not([detail-none]) .item-inner {
