@@ -216,11 +216,6 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
   /**
    * @hidden
    */
-  isRightSide: boolean = false;
-
-  /**
-   * @hidden
-   */
   @ViewChild(Backdrop) backdrop: Backdrop;
 
   /**
@@ -268,16 +263,19 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
    */
   @Input()
   get side(): Side {
-    return this._side;
+    if (this.isRightSide) {
+      return 'right';
+    }
+
+    return 'left';
   }
 
   set side(val: Side) {
-    this.isRightSide = isRightSide(val, this._plt.isRTL);
-    if (this.isRightSide) {
-      this._side = 'right';
-    } else {
-      this._side = 'left';
-    }
+    this._side = val;
+  }
+
+  get isRightSide(): boolean {
+    return isRightSide(this._side, this._plt.isRTL);
   }
 
   /**
