@@ -36,6 +36,9 @@ $item-ios-detail-push-svg:                "<svg xmlns='http://www.w3.org/2000/sv
 /// @prop - Icon for the detail arrow RTL
 $item-ios-detail-push-svg-rtl:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,20l2-2l-8-8L8-8l-2-2l-10,10L10,10z' fill='#{$item-ios-detail-push-color}'/></svg>" !default;
 
+/// @prop - Right padding for the detail arrow
+$item-ios-detail-push-padding-right:      32px !default;
+
 /// @prop - Background for the divider
 $item-ios-divider-background:             #f7f7f7 !default;
 
@@ -232,7 +235,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   a.item-ios:not([detail-none]) .item-inner {
     @include svg-background-image($item-ios-detail-push-svg);
 
-    padding-right: 32px;
+    padding-right: $item-ios-detail-push-padding-right;
 
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-right - 2) center;
@@ -244,7 +247,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   [dir="rtl"] a.item-ios:not([detail-none]) .item-inner {
     @include svg-background-image($item-ios-detail-push-svg-rtl);
     padding-right: 0;
-    padding-left: 32px;
+    padding-left: $item-ios-detail-push-padding-right;
     background-position: left ($item-ios-padding-right - 2) center;
   }
 }
