@@ -33,6 +33,9 @@ $item-md-detail-push-color:          $list-md-border-color !default;
 /// @prop - Icon for the detail arrow
 $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
 
+/// @prop - Icon for the detail arrow RTL
+$item-md-detail-push-svg-rtl:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,20l2-2l-8-8L8-8l-2-2l-10,10L10,10z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
+
 /// @prop - Color for the divider
 $item-md-divider-color:              #858585 !default;
 
@@ -66,6 +69,11 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   background-color: $list-md-background-color;
   box-shadow: none;
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+}
+
+[dir="rtl"] .item-md {
+  padding-left: 0;
+  padding-right: ($item-md-padding-left);
 }
 
 .item-md.activated {
@@ -118,6 +126,11 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   border-bottom: 1px solid $list-md-border-color;
 }
 
+[dir="rtl"] .item-md.item-block .item-inner {
+  padding-right: 0;
+  padding-left: ($item-md-padding-right / 2);
+}
+
 
 // Material Design Item Detail Push
 // --------------------------------------------------
@@ -135,6 +148,14 @@ $item-md-sliding-content-background: $list-md-background-color !default;
     background-position: right ($item-md-padding-right - 2) center;
     background-size: 14px 14px;
   }
+  [dir="rtl"] .item-md[detail-push] .item-inner,
+  [dir="rtl"] button.item-md:not([detail-none]) .item-inner,
+  [dir="rtl"] a.item-md:not([detail-none]) .item-inner {
+    @include svg-background-image($item-md-detail-push-svg-rtl);
+    padding-right: 0;
+    padding-left: 32px;
+    background-position: left ($item-md-padding-right - 2) center;
+  }
 }
 
 
@@ -146,11 +167,21 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
 }
 
+[dir="rtl"] .item-md [item-left],
+[dir="rtl"] .item-md [item-right] {
+  margin: $item-md-padding-media-top 0 $item-md-padding-media-bottom ($item-md-padding-right / 2);
+}
+
 .item-md ion-icon[item-left],
 .item-md ion-icon[item-right] {
   margin-top: $item-md-padding-icon-top;
   margin-bottom: $item-md-padding-icon-bottom;
   margin-left: 0;
+}
+
+[dir="rtl"] .item-md ion-icon[item-left],
+[dir="rtl"] .item-md ion-icon[item-right] {
+  margin-right: 0;
 }
 
 .item-md .item-button {
@@ -171,9 +202,20 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
 }
 
+[dir="rtl"] .item-md ion-icon[item-left] + .item-inner,
+[dir="rtl"] .item-md ion-icon[item-left] + .item-input {
+  margin-right: $item-md-padding-left + ($item-md-padding-left / 2);
+  margin-left: 0;
+}
+
 .item-md ion-avatar[item-left],
 .item-md ion-thumbnail[item-left] {
   margin: ($item-md-padding-right / 2) $item-md-padding-right ($item-md-padding-right / 2) 0;
+}
+
+[dir="rtl"] .item-md ion-avatar[item-left],
+[dir="rtl"] .item-md ion-thumbnail[item-left] {
+  margin: ($item-md-padding-right / 2) 0 ($item-md-padding-right / 2) $item-md-padding-right;
 }
 
 .item-md ion-avatar[item-right],
@@ -240,6 +282,10 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 
   border-bottom: $item-md-divider-border-bottom;
   font-size: $item-md-divider-font-size;
+}
+
+[dir="rtl"] .item-divider-md {
+  padding-right: $item-md-padding-left;
 }
 
 
