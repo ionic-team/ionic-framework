@@ -36,6 +36,7 @@ $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' vi
 /// @prop - Icon for the detail arrow RTL
 $item-md-detail-push-svg-rtl:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,20l2-2l-8-8L8-8l-2-2l-10,10L10,10z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
 
+
 /// @prop - Color for the divider
 $item-md-divider-color:              #858585 !default;
 
@@ -142,7 +143,6 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   a.item-md:not([detail-none]) .item-inner {
     @include svg-background-image($item-md-detail-push-svg);
 
-    padding-right: 32px;
 
     background-repeat: no-repeat;
     background-position: right ($item-md-padding-right - 2) center;
@@ -154,7 +154,6 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   [dir="rtl"] a.item-md:not([detail-none]) .item-inner {
     @include svg-background-image($item-md-detail-push-svg-rtl);
     padding-right: 0;
-    padding-left: 32px;
     background-position: left ($item-md-padding-right - 2) center;
   }
 }
