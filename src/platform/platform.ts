@@ -30,6 +30,7 @@ import { removeArrayItem } from '../util/util';
  * @demo /docs/demos/src/platform/
  */
 export class Platform {
+
   private _win: Window;
   private _doc: HTMLDocument;
   private _versions: {[name: string]: PlatformVersion} = {};
@@ -49,8 +50,6 @@ export class Platform {
   private _lH = 0;
   private _isPortrait: boolean = null;
   private _uiEvtOpts = false;
-
-  static dirChanged: EventEmitter<any> = new EventEmitter();
 
   /** @hidden */
   zone: NgZone;
@@ -318,8 +317,8 @@ export class Platform {
    * @param {boolean} updateDocument
    */
   setDir(dir: string, updateDocument: boolean) {
-    this._dir = (dir || '').toLowerCase();
-    Platform.dirChanged.emit(this._dir);
+    this._dir = dir = (dir || '').toLowerCase();
+    this.isRTL = (dir === 'rtl');
 
     if (updateDocument !== false) {
       this._doc['documentElement'].setAttribute('dir', dir);
@@ -344,9 +343,7 @@ export class Platform {
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {boolean}
    */
-  isRTL(): boolean {
-    return (this._dir === 'rtl');
-  }
+  isRTL: boolean;
 
   /**
    * Set the app's language and optionally the country code, which will update

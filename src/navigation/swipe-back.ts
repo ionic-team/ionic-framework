@@ -19,7 +19,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
   ) {
     super(plt, plt.doc().body, {
       direction: 'x',
-      edge: 'left',
+      edge: 'start',
       maxEdgeStart: 75,
       threshold: 5,
       zone: false,
@@ -30,14 +30,6 @@ export class SwipeBackGesture extends SlideEdgeGesture {
         disableScroll: true
       })
     });
-
-    this.setSide(plt.dir());
-
-    Platform.dirChanged.subscribe(this.setSide.bind(this));
-  }
-
-  private setSide(dir: string) {
-    this.setEdges(dir === 'ltr' ? 'left' : 'right');
   }
 
   canStart(ev: any): boolean {
@@ -58,7 +50,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
     ev.preventDefault();
     ev.stopPropagation();
 
-    let stepValue = (slide.distance / slide.max);
+    const stepValue = (slide.distance / slide.max);
     this._nav.swipeBackProgress(stepValue);
   }
 

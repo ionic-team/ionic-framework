@@ -128,6 +128,18 @@ export function isCheckedProperty(a: any, b: any): boolean {
   return (a == b); // tslint:disable-line
 };
 
+export type Side = 'left' | 'right' | 'start' | 'end';
+
+export function isRightSide(side: Side, isRTL: boolean): boolean {
+  switch (side) {
+    case 'right': return true;
+    case 'left': return false;
+    case 'end': return !isRTL;
+    // 'start' by default
+    default: return isRTL;
+  }
+}
+
 
 /** @hidden */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {

@@ -1,6 +1,5 @@
 import { MenuController } from '../../app/menu-controller';
-import {mockMenu, mockPlatform} from '../../../util/mock-providers';
-import {Side} from '../../app/menu-interface';
+import { mockMenu, mockPlatform } from '../../../util/mock-providers';
 
 describe('MenuController', () => {
 
@@ -217,34 +216,13 @@ describe('MenuController', () => {
       let someMenu = mockMenu();
       menuCtrl._register(someMenu);
 
-      ['left', 'right'].forEach((side: Side) => {
+      ['left', 'right'].forEach((side: any) => {
         someMenu.side = side;
         expect(someMenu.side).toEqual(side);
 
         let menu = menuCtrl.get(side);
         expect(menu).toEqual(someMenu);
       });
-    });
-
-    it('should switch menu side in runtime by direction', () => {
-      let platform = mockPlatform();
-      platform.setDir('ltr', true);
-      expect(platform.dir()).toEqual('ltr');
-
-      let someMenu = mockMenu(platform);
-      menuCtrl._register(someMenu);
-
-      expect(someMenu.side).toEqual('left');
-
-      let menu = menuCtrl.get('left');
-      expect(menu).toEqual(someMenu);
-
-      platform.setDir('rtl', true);
-
-      expect(someMenu.side).toEqual('right');
-
-      let menu2 = menuCtrl.get('right');
-      expect(menu2).toEqual(someMenu);
     });
 
   });

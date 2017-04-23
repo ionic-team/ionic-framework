@@ -6,10 +6,10 @@ import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../../gestures/gesture-controller';
-import { isTrueProperty, assert } from '../../util/util';
+import { isTrueProperty, Side, isRightSide, assert } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
-import {Menu as MenuInterface, Side} from '../app/menu-interface';
+import { Menu as MenuInterface } from '../app/menu-interface';
 import { MenuController } from '../app/menu-controller';
 import { MenuType } from './menu-types';
 import { Nav } from '../nav/nav';
@@ -206,12 +206,17 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
   private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
   private _isPane: boolean = false;
-  private _side: Side = 'start';
+  private _side: Side;
 
   /**
    * @hidden
    */
   isOpen: boolean = false;
+
+  /**
+   * @hidden
+   */
+  isRightSide: boolean = false;
 
   /**
    * @hidden
@@ -262,18 +267,17 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
    * @input {string} Which side of the view the menu should be placed. Default `"left"`.
    */
   @Input()
-  get side() {
-    if (this._side === 'right' || (this._side === 'start' && this._plt.isRTL()) || (this._side === 'end' && !this._plt.isRTL())) {
-      return 'right';
-    }
-    return 'left';
+  get side(): Side {
+    return this._side;
   }
 
   set side(val: Side) {
-    this._side = val;
-    // Update gesture edge
-    if (this._gesture)
-      this._gesture.setEdges(this.side);
+    this.isRightSide = isRightSide(val, this._plt.isRTL);
+    if (this.isRightSide) {
+      this._side = 'right';
+    } else {
+      this._side = 'left';
+    }
   }
 
   /**
@@ -337,6 +341,7 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
     this._gestureBlocker = _gestureCtrl.createBlocker({
       disable: [GESTURE_GO_BACK_SWIPE]
     });
+    this.side = 'start';
   }
 
   /**
@@ -485,13 +490,11 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
     }
 
     // user has finished dragging the menu
+    const isRightSide = this.isRightSide;
     const opening = !this.isOpen;
-    let shouldComplete = false;
-    if (opening) {
-      shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
-    } else {
-      shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
-    }
+    const shouldComplete = (opening)
+    ? isRightSide ? shouldCompleteLeft : shouldCompleteRight
+    : isRightSide ? shouldCompleteRight : shouldCompleteLeft;
 
     this._getType().setProgressEnd(shouldComplete, stepValue, velocity, (isOpen: boolean) => {
       console.debug('menu, swipeEnd', this.side);

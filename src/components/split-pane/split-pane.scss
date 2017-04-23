@@ -22,7 +22,7 @@ $split-pane-side-max-width: 28% !default;
   contain: strict;
 }
 
-.split-pane.split-pane-rtl {
+[dir="rtl"] .split-pane {
   flex-direction: row-reverse;
 }
 
