@@ -20,14 +20,16 @@ export interface Menu {
   getBackdropElement(): HTMLElement;
   _canOpen(): boolean;
   persistent: boolean;
-};
+}
 
 export interface MenuType {
   ani: Animation;
   isOpening: boolean;
+  menu: Menu;
   setOpen(shouldOpen: boolean, animated: boolean, done: Function): void;
   setProgressStart(isOpen: boolean): void;
   setProgessStep(stepValue: number): void;
   setProgressEnd(shouldComplete: boolean, currentStepValue: number, velocity: number, done: Function): void;
+  updatePosition(): void;
   destroy(): void;
-};
+}
