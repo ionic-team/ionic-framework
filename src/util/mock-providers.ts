@@ -543,13 +543,14 @@ export function mockTabs(app?: App): Tabs {
   return new Tabs(null, null, app, config, elementRef, platform, renderer, linker);
 }
 
-export function mockMenu(): Menu {
+export function mockMenu(platform: MockPlatform = null): Menu {
   let app = mockApp();
   let gestureCtrl = new GestureController(app);
   let dom = mockDomController();
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
-  return new Menu(null, elementRef, null, null, renderer, null, null, gestureCtrl, dom, app);
+  let plt = platform === null ? mockPlatform() : platform;
+  return new Menu(null, elementRef, null, plt, renderer, null, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {
