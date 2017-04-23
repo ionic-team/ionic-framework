@@ -233,7 +233,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     scrollTop: 0,
   };
   _queue: number = SCROLL_QUEUE_NO_CHANGES;
-  _recordSize: number = 0;
+
+
   _virtualTrackBy: TrackByFn;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
@@ -416,10 +417,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   firstRecord(): number {
     const cells = this._cells;
-    if (cells.length > 0) {
-      return cells[0].record;
-    }
-    return 0;
+    return (cells.length > 0) ? cells[0].record : 0;
   }
 
   /**
@@ -427,10 +425,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   lastRecord(): number {
     const cells = this._cells;
-    if (cells.length > 0) {
-      return cells[cells.length - 1].record;
-    }
-    return 0;
+    return (cells.length > 0) ? cells[cells.length - 1].record : 0;
   }
 
   /**
@@ -451,15 +446,25 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     let needClean = false;
     if (changes) {
       var lastRecord = this.lastRecord() + 1;
-      changes.forEachOperation((item, _, cindex) => {
-        if (item.previousIndex != null || (cindex < lastRecord)) {
+
+      changes.forEachOperation((_, pindex, cindex) => {
+
+        // add new record after current position
+        if (pindex === null && (cindex < lastRecord)) {
+          console.debug('adding record before current position, slow path');
           needClean = true;
+          return;
+        }
+        // remove record after current position
+        if (pindex < lastRecord && cindex === null) {
+          console.debug('removing record before current position, slow path');
+          needClean = true;
+          return;
         }
       });
     } else {
       needClean = true;
     }
-    this._recordSize = this._records.length;
 
     this.readUpdate(needClean);
     this.writeUpdate(needClean);
@@ -555,7 +560,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
           this._itmTmp.viewContainer,
           this._itmTmp.templateRef,
           this._hdrTmp && this._hdrTmp.templateRef,
-          this._ftrTmp && this._ftrTmp.templateRef, needClean,
+          this._ftrTmp && this._ftrTmp.templateRef, needClean
         );
       });
 

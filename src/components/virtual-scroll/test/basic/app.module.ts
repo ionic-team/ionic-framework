@@ -44,18 +44,19 @@ export class E2EPage {
 
   addRandomItem() {
     const index = Math.floor(Math.random() * this.items.length);
+    console.log('Adding to index: ', index);
     this.items.splice( index, 0, {
       value: Math.floor(Math.random() * 10000),
       someMethod: function() {
         return '!!';
       }
-    }
-    );
+    });
   }
 
   changeItem() {
     const index = Math.floor(Math.random() * this.items.length);
-    this.items[index].value = Math.floor(Math.random() * 10000);
+    console.log('Change to index: ', index);
+    this.items[index] = { value: Math.floor(Math.random() * 10000), someMethod: () => '!!' };
   }
 
   trackByFn(index: number, item: any) {
