@@ -11,17 +11,12 @@
   pointer-events: none;
 }
 
-[icon-left] ion-icon {
+[icon-left] ion-icon, [icon-right] ion-icon {
   @include button-icon;
-
-  padding-right: .3em;
 }
 
-[icon-right] ion-icon {
-  @include button-icon;
-
-  padding-left: .4em;
-}
+@include padding-start("[icon-right] ion-icon", .4em);
+@include padding-end("[icon-left] ion-icon", .3em);
 
 .button[icon-only] {
   padding: 0;
