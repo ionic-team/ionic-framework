@@ -69,7 +69,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 
 [dir="rtl"] .item-ios {
   padding-left: 0;
-  padding-right: ($item-ios-padding-left);
+  padding-right: $item-ios-padding-left;
 }
 
 .item-ios.activated {
