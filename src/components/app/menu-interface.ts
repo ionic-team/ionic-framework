@@ -1,4 +1,5 @@
 import { Animation } from '../../animations/animation';
+import { Side } from '../../util/util';
 
 export interface Menu {
   setOpen(shouldOpen: boolean, animated: boolean): Promise<boolean>;
@@ -9,8 +10,9 @@ export interface Menu {
   swipeEnable(shouldEnable: boolean): Menu;
   isOpen: boolean;
   enabled: boolean;
-  side: string;
+  side: Side;
   id: string;
+  isRightSide: boolean;
   isAnimating(): boolean;
   width(): number;
   getContentElement(): HTMLElement;

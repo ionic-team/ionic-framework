@@ -587,7 +587,7 @@ export class NavControllerBase extends Ion implements NavController {
       direction: opts.direction,
       duration: (opts.animate === false ? 0 : opts.duration),
       easing: opts.easing,
-      isRTL: this._config.plt.isRTL(),
+      isRTL: this._config.plt.isRTL,
       ev: opts.ev,
     };
 

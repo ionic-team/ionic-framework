@@ -12,6 +12,7 @@ import { Platform } from '../../platform/platform';
  * and registers itself with Menu.
  */
 export class MenuType implements IMenuType {
+
   ani: Animation;
   isOpening: boolean;
 
@@ -67,7 +68,7 @@ export class MenuType implements IMenuType {
   }
 
   destroy() {
-    this.ani && this.ani.destroy();
+    this.ani.destroy();
     this.ani = null;
   }
 
@@ -84,8 +85,8 @@ class MenuRevealType extends MenuType {
   constructor(menu: Menu, plt: Platform) {
     super(plt);
 
-    let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
-    let contentOpen = new Animation(plt, menu.getContentElement());
+    const openedX = (menu.width() * (menu.isRightSide ? -1 : 1)) + 'px';
+    const contentOpen = new Animation(plt, menu.getContentElement());
     contentOpen.fromTo('translateX', '0px', openedX);
     this.ani.add(contentOpen);
   }
@@ -104,24 +105,24 @@ class MenuPushType extends MenuType {
     super(plt);
 
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
-
-    if (menu.side === 'right') {
+    const width = menu.width();
+    if (menu.isRightSide) {
       // right side
-      contentOpenedX = -menu.width() + 'px';
-      menuClosedX = menu.width() + 'px';
+      contentOpenedX = -width + 'px';
+      menuClosedX = width + 'px';
       menuOpenedX = '0px';
 
     } else {
-      contentOpenedX = menu.width() + 'px';
+      contentOpenedX = width + 'px';
       menuOpenedX = '0px';
-      menuClosedX = -menu.width() + 'px';
+      menuClosedX = -width + 'px';
     }
 
-    let menuAni = new Animation(plt, menu.getMenuElement());
+    const menuAni = new Animation(plt, menu.getMenuElement());
     menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
     this.ani.add(menuAni);
 
-    let contentApi = new Animation(plt, menu.getContentElement());
+    const contentApi = new Animation(plt, menu.getContentElement());
     contentApi.fromTo('translateX', '0px', contentOpenedX);
     this.ani.add(contentApi);
   }
@@ -140,22 +141,23 @@ class MenuOverlayType extends MenuType {
     super(plt);
 
     let closedX: string, openedX: string;
-    if (menu.side === 'right') {
+    const width = menu.width();
+    if (menu.isRightSide) {
       // right side
-      closedX = 8 + menu.width() + 'px';
+      closedX = 8 + width + 'px';
       openedX = '0px';
 
     } else {
       // left side
-      closedX = -(8 + menu.width()) + 'px';
+      closedX = -(8 + width) + 'px';
       openedX = '0px';
     }
 
-    let menuAni = new Animation(plt, menu.getMenuElement());
+    const menuAni = new Animation(plt, menu.getMenuElement());
     menuAni.fromTo('translateX', closedX, openedX);
     this.ani.add(menuAni);
 
-    let backdropApi = new Animation(plt, menu.getBackdropElement());
+    const backdropApi = new Animation(plt, menu.getBackdropElement());
     backdropApi.fromTo('opacity', 0.01, 0.35);
     this.ani.add(backdropApi);
   }

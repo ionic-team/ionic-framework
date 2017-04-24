@@ -248,7 +248,9 @@ export class MenuController {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
       menu = this._menus.find(m => m.side === menuId && m.enabled);
-      if (menu) return menu;
+      if (menu) {
+        return menu;
+      }
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
