@@ -291,3 +291,43 @@
 
   @return $colors-list;
 }
+
+$include-rtl: true !default;
+
+@mixin rtl() {
+  @if $include-rtl {
+    @at-root [dir="rtl"] #{&} {
+      @content;
+    }
+  }
+}
+
+// Add padding horizontal
+// @param {string} $start - amount to pad start
+// @param {string} $end - amount to pad left
+// ----------------------------------------------------------
+@mixin padding-horizontal($start, $end: null) {
+  @if $start != null {
+    padding-left: $start;
+  }
+
+  @if $end != null {
+    padding-right: $end;
+  }
+
+  @include rtl() {
+    @if $start != null {
+      padding-right: $start;
+    }
+    @else {
+      padding-right: initial;
+    }
+
+    @if $end != null {
+      padding-left: $end;
+    }
+    @else {
+      padding-left: initial;
+    }
+  }
+}
