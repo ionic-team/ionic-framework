@@ -45,11 +45,15 @@ $toggle-md-transition-duration:          300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-md-disabled-opacity:             .3 !default;
 
-/// @prop - Padding of the toggle positioned on the left in an item
-$toggle-md-item-start-padding:            12px 18px 12px 2px !default;
+// deprecated
+$toggle-md-item-left-padding:            12px 18px 12px 2px !default;
+/// @prop - Padding of the toggle positioned on the start in an item
+$toggle-md-item-start-padding:           $toggle-md-item-left-padding;
 
-/// @prop - Padding of the toggle positioned on the right in an item
-$toggle-md-item-end-padding:           12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
+// deprecated
+$toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
+/// @prop - Padding of the toggle positioned on the end in an item
+$toggle-md-item-end-padding:             $toggle-md-item-right-padding;
 
 
 // Material Design Toggle
