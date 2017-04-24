@@ -892,7 +892,7 @@ export function enableTouchControl(s: Slides) {
 // Cleanup dynamic styles
 function cleanupStyles(s: Slides) {
   if (!s.container || !s._wrapper) {
-    //fix #10830
+    // fix #10830
     return;
   }
 
