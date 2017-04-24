@@ -291,37 +291,3 @@
 
   @return $colors-list;
 }
-
-// Add padding on start
-// @param {string} $selector - selector
-// @param {string} $amount - amount to pad
-// @return {List} $color-name, $color-base, $color-contrast
-// ----------------------------------------------------------
-@mixin padding-start($selector, $amount) {
-  #{$selector} {
-    padding-left: $amount;
-  }
-
-  [dir="rtl"] {
-    #{$selector} {
-      padding-right: $amount;
-    }
-  }
-}
-
-// Add padding on end
-// @param {string} $selector - selector
-// @param {string} $amount - amount to pad
-// @return {List} $color-name, $color-base, $color-contrast
-// ----------------------------------------------------------
-@mixin padding-end($selector, $amount) {
-  #{$selector} {
-    padding-right: $amount;
-  }
-
-  [dir="rtl"] {
-    #{$selector} {
-      padding-left: $amount;
-    }
-  }
-}
