@@ -50,9 +50,9 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 // --------------------------------------------------
 
 .item-ios {
-  position: relative;
+  @include padding-horizontal($item-ios-padding-start, null);
 
-  padding-block-start: $item-ios-padding-start;
+  position: relative;
 
   border-radius: 0;
   font-size: $item-ios-body-text-font-size;
@@ -112,7 +112,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 }
 
 .item-ios.item-block .item-inner {
-  padding-block-end: ($item-ios-padding-end / 2);
+  @include padding-horizontal(null, $item-ios-padding-end / 2);
 
   border-bottom: $hairlines-width solid $list-ios-border-color;
 }
@@ -204,7 +204,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   a.item-ios:not([detail-none]) .item-inner {
     @include svg-background-image($item-ios-detail-push-svg);
 
-    padding-block-end: 32px;
+    @include padding-horizontal(null, 32px);
 
     background-repeat: no-repeat;
     background-position: right ($item-ios-padding-end - 2) center;
@@ -230,7 +230,7 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
 // --------------------------------------------------
 
 .item-divider-ios {
-  padding-block-start: $item-ios-padding-start;
+  @include padding-horizontal($item-ios-padding-start, null);
 
   color: $item-ios-divider-color;
   background-color: $item-ios-divider-background;

@@ -146,9 +146,10 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 .item-label-stacked .select-ios,
 .item-label-floating .select-ios {
+  @include padding-horizontal(0, null);
+
   padding-top: 8px;
   padding-bottom: 8px;
-  padding-block-start: 0;
 }
 
 
@@ -160,7 +161,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 }
 
 .input-ios[clearInput] .text-input {
-  padding-block-end: $text-input-ios-input-clear-icon-width;
+  @include padding-horizontal(null, $text-input-ios-input-clear-icon-width);
 }
 
 .input-ios .text-input-clear-icon {

@@ -143,13 +143,14 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .searchbar-ios .searchbar-ios-cancel {
+  @include padding-horizontal(8px);
+
   display: none;
 
   flex-shrink: 0;
 
   margin-left: 0;
   padding: 0;
-  padding-block-start: 8px;
 
   height: 30px;
 
@@ -164,7 +165,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 }
 
 .searchbar-ios.searchbar-left-aligned .searchbar-input {
-  padding-block-start: 30px;
+  @include padding-horizontal(30px);
 }
 
 
@@ -193,7 +194,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 }
 
 .toolbar .searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
-  padding-block-start: 8px;
+  @include padding-horizontal(8px, null);
 }
 
 

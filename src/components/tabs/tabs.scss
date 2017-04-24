@@ -98,15 +98,15 @@
 }
 
 [tabsLayout=icon-left] .tab-button .tab-button-icon {
-  padding-block-end: 8px;
+  @include padding-horizontal(null, 8px);
 
   text-align: right;
 }
 
 [tabsLayout=icon-right] .tab-button .tab-button-icon {
-  order: 10;
+  @include padding-horizontal(8px, null);
 
-  padding-block-start: 8px;
+  order: 10;
 
   text-align: left;
 }

@@ -86,7 +86,7 @@ $list-ios-header-background-color:    transparent !default;
 // the item itself (for last-child items)
 // the item-inner class (if it is not last)
 .list-ios .item[no-lines],
-.list-ios .item[no-lines] .item-inner, {
+.list-ios .item[no-lines] .item-inner {
   border-width: 0;
 }
 
@@ -171,9 +171,9 @@ $list-ios-header-background-color:    transparent !default;
 // --------------------------------------------------
 
 .list-header-ios {
-  position: relative;
+  @include padding-horizontal($list-ios-header-padding-start, null);
 
-  padding-block-start: $list-ios-header-padding-start;
+  position: relative;
 
   border-bottom: $list-ios-header-border-bottom;
   font-size: $list-ios-header-font-size;

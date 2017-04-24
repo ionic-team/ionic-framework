@@ -142,9 +142,10 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 .item-label-stacked .select-md,
 .item-label-floating .select-md {
+  @include padding-horizontal(0, null);
+
   padding-top: 8px;
   padding-bottom: 8px;
-  padding-block-start: 0;
 }
 
 
@@ -156,7 +157,7 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 }
 
 .input-md[clearInput] .text-input {
-  padding-block-end: $text-input-md-input-clear-icon-width;
+  @include padding-horizontal(null, $text-input-md-input-clear-icon-width);
 }
 
 .input-md .text-input-clear-icon {

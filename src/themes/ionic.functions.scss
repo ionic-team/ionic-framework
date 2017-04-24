@@ -304,9 +304,9 @@ $include-rtl: true !default;
 
 // Add padding horizontal
 // @param {string} $start - amount to pad start
-// @param {string} $end - amount to pad left
+// @param {string} $end - amount to pad left (if not supplied, use $start)
 // ----------------------------------------------------------
-@mixin padding-horizontal($start, $end: null) {
+@mixin padding-horizontal($start, $end: $start) {
   @if $start != null {
     padding-left: $start;
   }

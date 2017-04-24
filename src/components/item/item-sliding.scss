@@ -57,9 +57,8 @@ ion-item-options:not([icon-left]) .button:not([icon-only]) {
   }
 
   ion-icon {
-    padding-block-end: 0;
     padding-bottom: .3em;
-    padding-block-start: 0;
+    @include padding-horizontal(0, 0);
   }
 }
 
@@ -109,7 +108,7 @@ button[expandable] {
 ion-item-sliding.active-swipe-right button[expandable] {
   order: 1;
 
-  padding-block-start: 90%;
+  @include padding-horizontal(90%, null);
 
   transition-duration: .6s;
   transition-property: padding-left;
@@ -118,7 +117,7 @@ ion-item-sliding.active-swipe-right button[expandable] {
 ion-item-sliding.active-swipe-left button[expandable] {
   order: -1;
 
-  padding-block-end: 90%;
+  @include padding-horizontal(null, 90%);
 
   transition-duration: .6s;
   transition-property: padding-right;

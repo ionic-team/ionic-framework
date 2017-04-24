@@ -133,8 +133,7 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md[inset] .item-input {
-  padding-block-end: 0;
-  padding-block-start: 0;
+  @include padding-horizontal(0, 0);
 }
 
 .list-md[inset] + ion-list[inset] {
@@ -160,8 +159,9 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-header-md {
+  @include padding-horizontal($list-md-header-padding-start, null);
+
   margin-bottom: $list-md-header-margin-bottom;
-  padding-block-start: $list-md-header-padding-start;
 
   min-height: $list-md-header-min-height;
 

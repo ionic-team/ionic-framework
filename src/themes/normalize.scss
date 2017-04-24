@@ -1,4 +1,5 @@
 // ! normalize.css v3.0.2 | MIT License | github.com/necolas/normalize.css
+@import "ionic.globals.wp";
 
 
 // HTML5 display definitions
@@ -108,7 +109,8 @@ textarea {
 }
 
 textarea::placeholder {
-  padding-block-start: 2px;
+  @include padding-horizontal(2px, null);
+
 }
 
 form,

@@ -139,7 +139,7 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 }
 
 .input-wp[clearInput] .text-input {
-  padding-block-end: $text-input-wp-input-clear-icon-width;
+  @include padding-horizontal(null, $text-input-wp-input-clear-icon-width);
 }
 
 .input-wp .text-input-clear-icon {

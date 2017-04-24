@@ -103,12 +103,12 @@ ion-app [no-padding] .scroll-content {
 
   ion-app.#{$mode} [padding-left],
   ion-app.#{$mode} [padding-left] .scroll-content {
-    padding-block-start: $content-padding;
+    @include padding-horizontal($content-padding);
   }
 
   ion-app.#{$mode} [padding-right],
   ion-app.#{$mode} [padding-right] .scroll-content {
-    padding-block-end: $content-padding;
+    @include padding-horizontal(null, $content-padding);
   }
 
   ion-app.#{$mode} [padding-bottom],
@@ -124,8 +124,7 @@ ion-app [no-padding] .scroll-content {
 
   ion-app.#{$mode} [padding-horizontal],
   ion-app.#{$mode} [padding-horizontal] .scroll-content {
-    padding-block-end: $content-padding;
-    padding-block-start: $content-padding;
+    @include padding-horizontal($content-padding, $content-padding);
   }
 }
 

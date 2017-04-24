@@ -53,10 +53,9 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 
 .item-md {
-  position: relative;
+  @include padding-horizontal($item-md-padding-start, 0);
 
-  padding-block-end: 0;
-  padding-block-start: ($item-md-padding-start);
+  position: relative;
 
   font-size: $item-md-font-size;
   font-weight: normal;
@@ -113,7 +112,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 }
 
 .item-md.item-block .item-inner {
-  padding-block-end: ($item-md-padding-end / 2);
+  @include padding-horizontal(null, ($item-md-padding-end / 2));
 
   border-bottom: 1px solid $list-md-border-color;
 }
@@ -129,7 +128,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   a.item-md:not([detail-none]) .item-inner {
     @include svg-background-image($item-md-detail-push-svg);
 
-    padding-block-end: 32px;
+    @include padding-horizontal(null, 32px);
 
     background-repeat: no-repeat;
     background-position: right ($item-md-padding-end - 2) center;
@@ -233,7 +232,7 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 // --------------------------------------------------
 
 .item-divider-md {
-  padding-block-start: $item-md-padding-start;
+  @include padding-horizontal($item-md-padding-start, null);
 
   color: $item-md-divider-color;
   background-color: $item-md-divider-background;
