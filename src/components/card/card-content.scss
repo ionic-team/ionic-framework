@@ -3,16 +3,7 @@
 // Card
 // --------------------------------------------------
 
-
-ion-card,
+ion-card-content,
 :host {
   display: block;
-  overflow: hidden;
-}
-
-ion-card img,
-:host img {
-  display: block;
-
-  width: 100%;
 }

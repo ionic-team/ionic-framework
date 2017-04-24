@@ -1,18 +1,14 @@
 @import "../../themes/ionic.globals";
 
-// Card
+// Card Header
 // --------------------------------------------------
 
 
-ion-card,
+ion-card-header,
 :host {
   display: block;
   overflow: hidden;
-}
 
-ion-card img,
-:host img {
-  display: block;
-
-  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

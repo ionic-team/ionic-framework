@@ -1,18 +1,12 @@
-import { Directive, ElementRef, Renderer } from '@angular/core';
-
-import { Config } from '../../config/config';
-import { Ion } from '../ion';
+import { Component } from '../../index';
 
 
-/**
-  * @hidden
-  */
-@Directive({
-  selector: 'ion-card'
-})
-export class Card extends Ion {
-
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
-    super(config, elementRef, renderer, 'card');
+@Component({
+  tag: 'ion-card',
+  styleUrls: {
+    ios: 'card.ios.scss',
+    md: 'card.md.scss',
+    wp: 'card.wp.scss'
   }
-}
+})
+export class Card {}

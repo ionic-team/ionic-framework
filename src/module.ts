@@ -1,7 +1,7 @@
 /**
  * Import Angular
  */
-import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, CUSTOM_ELEMENTS_SCHEMA, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { DOCUMENT, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +31,7 @@ import { ModuleLoader, provideModuleLoader, setupPreloading, LAZY_LOADED_TOKEN }
 import { NgModuleLoader } from './util/ng-module-loader';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
+import { setupCore } from './bindings/angular/providers/ionic-core';
 import { TapClick, setupTapClick } from './tap-click/tap-click';
 import { registerModeConfigs } from './config/mode-registry';
 import { TransitionController } from './transitions/transition-controller';
@@ -49,12 +50,7 @@ import { IonicApp } from './components/app/app-root';
 import { OverlayPortal } from './components/app/overlay-portal';
 import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
-import { Badge } from './components/badge/badge';
 import { Button } from './components/button/button';
-import { Card } from './components/card/card';
-import { CardContent } from './components/card/card-content';
-import { CardHeader } from './components/card/card-header';
-import { CardTitle } from './components/card/card-title';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
@@ -128,7 +124,6 @@ import { Tabs } from './components/tabs/tabs';
 import { Thumbnail } from './components/thumbnail/thumbnail';
 import { ToastCmp } from './components/toast/toast-component';
 import { ToastController } from './components/toast/toast-controller';
-import { Toggle } from './components/toggle/toggle';
 import { Footer } from './components/toolbar/toolbar-footer';
 import { Header } from './components/toolbar/toolbar-header';
 import { Toolbar } from './components/toolbar/toolbar';
@@ -140,6 +135,7 @@ import { VirtualFooter } from './components/virtual-scroll/virtual-footer';
 import { VirtualHeader } from './components/virtual-scroll/virtual-header';
 import { VirtualItem } from './components/virtual-scroll/virtual-item';
 import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
+import { BooleanInput } from './bindings/angular/components/boolean-input';
 
 /**
  * @name IonicModule
@@ -190,12 +186,7 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     OverlayPortal,
     Avatar,
     Backdrop,
-    Badge,
     Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
     Checkbox,
     Chip,
     Col,
@@ -263,7 +254,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     TextInput,
     Thumbnail,
     ToastCmp,
-    Toggle,
     Footer,
     Header,
     Toolbar,
@@ -274,7 +264,8 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     VirtualFooter,
     VirtualHeader,
     VirtualItem,
-    VirtualScroll
+    VirtualScroll,
+    BooleanInput
   ],
   imports: [
     CommonModule,
@@ -293,12 +284,7 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     OverlayPortal,
     Avatar,
     Backdrop,
-    Badge,
     Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
     Checkbox,
     Chip,
     Col,
@@ -366,7 +352,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     TextInput,
     Thumbnail,
     ToastCmp,
-    Toggle,
     Footer,
     Header,
     Toolbar,
@@ -377,7 +362,8 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     VirtualFooter,
     VirtualHeader,
     VirtualItem,
-    VirtualScroll
+    VirtualScroll,
+    BooleanInput
   ],
   entryComponents: [
     ActionSheetCmp,
@@ -389,7 +375,8 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     PopoverCmp,
     SelectPopover,
     ToastCmp
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class IonicModule {
 
@@ -418,6 +405,7 @@ export class IonicModule {
 
         // useFactory: ionic app initializers
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupCore, deps: [ Config, Platform, DomController, NgZone ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupPreloading, deps: [ Config, DeepLinkConfigToken, ModuleLoader, NgZone ], multi: true },

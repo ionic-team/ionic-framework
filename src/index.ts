@@ -12,12 +12,7 @@ export { AlertCmp } from './components/alert/alert-component';
 export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';
 export { Backdrop } from './components/backdrop/backdrop';
-export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';
-export { Card } from './components/card/card';
-export { CardContent } from './components/card/card-content';
-export { CardHeader } from './components/card/card-header';
-export { CardTitle } from './components/card/card-title';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { Content, ScrollEvent } from './components/content/content';
@@ -102,7 +97,6 @@ export { Toast } from './components/toast/toast';
 export { ToastCmp } from './components/toast/toast-component';
 export { ToastController } from './components/toast/toast-controller';
 export { ToastOptions } from './components/toast/toast-options';
-export { Toggle } from './components/toggle/toggle';
 export { Footer } from './components/toolbar/toolbar-footer';
 export { Header } from './components/toolbar/toolbar-header';
 export { Toolbar } from './components/toolbar/toolbar';
@@ -115,6 +109,7 @@ export { VirtualFooter } from './components/virtual-scroll/virtual-footer';
 export { VirtualHeader } from './components/virtual-scroll/virtual-header';
 export { VirtualItem } from './components/virtual-scroll/virtual-item';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
+export { BooleanInput } from './bindings/angular/components/boolean-input';
 
 
 /**
@@ -130,6 +125,7 @@ export { NavController } from './navigation/nav-controller';
 export { NavControllerBase } from './navigation/nav-controller-base';
 export { NavParams } from './navigation/nav-params';
 export { NavLink, NavOptions, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory } from './navigation/nav-util';
+export { setupCore } from './bindings/angular/providers/ionic-core';
 export { TapClick, setupTapClick, isActivatable } from './tap-click/tap-click';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';
@@ -169,3 +165,22 @@ export { IonicGestureConfig } from './gestures/gesture-config';
 
 export { IonicModule, IonicPageModule, provideLocationStrategy } from './module';
 
+
+
+/**
+ * Core
+ */
+
+import * as interfaces from './util/interfaces';
+
+export declare const Component: interfaces.ComponentDecorator;
+
+export declare const h: interfaces.Hyperscript;
+
+export declare const Ionic: interfaces.Ionic;
+
+export declare const Listen: interfaces.ListenDecorator;
+
+export declare const Prop: interfaces.PropDecorator;
+
+export declare const Watch: interfaces.WatchDecorator;

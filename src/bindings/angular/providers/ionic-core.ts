@@ -1,7 +1,7 @@
-import { Config } from '../config/config';
-import { DomController } from '../platform/dom-controller';
+import { Config } from '../../../config/config';
+import { DomController } from '../../../platform/dom-controller';
 import { NgZone } from '@angular/core';
-import { Platform } from '../platform/platform';
+import { Platform } from '../../../platform/platform';
 
 
 /**
@@ -26,6 +26,9 @@ export function setupCore(config: Config, plt: Platform, domCtrl: DomController,
 
     // keep core and angular dom reads/writes *nsync
     ionic['domCtrl'] = domCtrl;
+
+    // keep core and angular dom reads/writes *nsync
+    ionic['eventNamePrefix'] = '$';
 
     // next tick controller created here so that it can
     // be created to run outside of angular

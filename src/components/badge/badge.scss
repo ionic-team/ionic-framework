@@ -15,7 +15,7 @@ ion-badge,
 :host {
   display: inline-block;
   visibility: inherit !important;
-  contain: layout content;
+  contain: content;
 }
 
 .badge {
