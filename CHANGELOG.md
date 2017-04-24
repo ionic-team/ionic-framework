@@ -61,7 +61,13 @@ With this release comes a major update to Angular (Angular 4.0!), the latest ver
   ],
   ```
 
-3. If you are using Http, Import the `HttpModule` in your `app/app.module.ts` file:
+3. If you are using `Http`, import the `HttpModule` in your `app/app.module.ts` file:
+
+  ```
+  import { HttpModule } from '@angular/http';
+  ```
+  
+  and then add it to the imports in the same file:
 
   ```
   imports: [

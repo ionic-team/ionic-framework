@@ -1,6 +1,6 @@
-import { ComponentFactoryResolver, Directive, ElementRef, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
 
-import { App } from '../app/app';
+import { App } from './app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
@@ -31,8 +31,9 @@ export class OverlayPortal extends NavControllerBase {
     @Optional() linker: DeepLinker,
     viewPort: ViewContainerRef,
     domCtrl: DomController,
+    errHandler: ErrorHandler
   ) {
-    super(null, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl);
+    super(null, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl, errHandler);
     this._isPortal = true;
     this._init = true;
     this.setViewport(viewPort);
@@ -54,4 +55,3 @@ export class OverlayPortal extends NavControllerBase {
   }
 
 }
-

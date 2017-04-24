@@ -284,6 +284,7 @@ describe('DeepLinker', () => {
         expect(result.length).toEqual(1);
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });

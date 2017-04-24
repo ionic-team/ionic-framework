@@ -1,13 +1,10 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer } from '../components/toolbar/toolbar-footer';
-import { Header } from '../components/toolbar/toolbar-header';
 import { isPresent, assert } from '../util/util';
-import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
 import { NavOptions, STATE_NEW, STATE_INITIALIZED, STATE_ATTACHED, STATE_DESTROYED } from './nav-util';
 import { NavParams } from './nav-params';
-import { Content } from '../components/content/content';
+import { Content, Footer, Header, Navbar } from './nav-interfaces';
 
 
 /**
@@ -105,7 +102,11 @@ export class ViewController {
   /** @hidden */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
+  constructor(
+    public component?: any,
+    data?: any,
+    rootCssClass: string = DEFAULT_CSS_CLASS
+  ) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
@@ -541,38 +542,34 @@ export class ViewController {
   /**
    * @hidden
    */
-  _lifecycleTest(lifecycle: string): boolean | Promise<any> {
+  _lifecycleTest(lifecycle: string): Promise<boolean> {
     const instance = this.instance;
     const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
         var result = instance[methodName]();
-        if (result === false) {
-          return false;
-        } else if (result instanceof Promise) {
+        if (result instanceof Promise) {
           return result;
         } else {
-          return true;
+          // Any value but explitic false, should be true
+          return Promise.resolve(result !== false);
         }
 
       } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-        return false;
+        return Promise.reject(`${this.name} ${methodName} error: ${e.message}`);
       }
     }
-    return true;
+    return Promise.resolve(true);
   }
 
+  /**
+   * @hidden
+   */
   _lifecycle(lifecycle: string) {
     const instance = this.instance;
     const methodName = 'ionView' + lifecycle;
     if (instance && instance[methodName]) {
-      try {
-        instance[methodName]();
-
-      } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-      }
+      instance[methodName]();
     }
   }
 

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
+import { Img as IImg } from './img-interface';
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isPresent, isTrueProperty } from '../../util/util';
@@ -95,7 +96,7 @@ import { Platform } from '../../platform/platform';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Img implements OnDestroy {
+export class Img implements OnDestroy, IImg {
   /** @internal */
   _src: string;
   /** @internal */

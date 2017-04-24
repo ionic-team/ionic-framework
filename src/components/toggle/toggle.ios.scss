@@ -64,6 +64,13 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 
 .toggle-ios {
   position: relative;
+
+  width: $toggle-ios-width;
+  height: $toggle-ios-height;
+
+  box-sizing: content-box;
+
+  contain: strict;
 }
 
 
@@ -74,8 +81,8 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
   position: relative;
   display: block;
 
-  width: $toggle-ios-width;
-  height: $toggle-ios-height;
+  width: 100%;
+  height: 100%;
 
   border-radius: $toggle-ios-border-radius;
 
@@ -121,13 +128,16 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
   box-shadow: $toggle-ios-handle-box-shadow;
 
   transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
+
+  will-change: transform;
+  contain: strict;
 }
 
 
 // iOS Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-ios .toggle-checked {
+.toggle-ios.toggle-checked .toggle-icon {
   background-color: $toggle-ios-background-color-on;
 }
 
@@ -135,8 +145,8 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 // iOS Toggle Background Oval: Activated or Checked
 // -----------------------------------------
 
-.toggle-ios .toggle-activated::before,
-.toggle-ios .toggle-checked::before {
+.toggle-ios.toggle-activated .toggle-icon::before,
+.toggle-ios.toggle-checked .toggle-icon::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -144,7 +154,7 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 // iOS Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-ios .toggle-checked .toggle-inner {
+.toggle-ios.toggle-checked .toggle-inner {
   transform: translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0);
 
 }
@@ -152,7 +162,7 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 // iOS Toggle Background Oval: Activated and Checked
 // -----------------------------------------
 
-.toggle-ios .toggle-activated.toggle-checked::before {
+.toggle-ios.toggle-activated.toggle-checked .toggle-inner::before {
   transform: scale3d(0, 0, 0);
 }
 
@@ -160,7 +170,7 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 // iOS Toggle Inner Knob: Activated and Unchecked
 // -----------------------------------------
 
-.toggle-ios .toggle-activated .toggle-inner {
+.toggle-ios.toggle-activated .toggle-inner {
   width: $toggle-ios-handle-width + 6;
 }
 
@@ -168,7 +178,7 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 // iOS Toggle Inner Knob: Activated and Checked
 // -----------------------------------------
 
-.toggle-ios .toggle-activated.toggle-checked .toggle-inner {
+.toggle-ios.toggle-activated.toggle-checked .toggle-inner {
   // when pressing down on the toggle and IS checked
   // make the knob wider and move it left a bit
   left: $toggle-ios-border-width - 6;
@@ -204,7 +214,7 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 
 @mixin ios-toggle-theme($color-name, $color-base) {
 
-  .toggle-ios-#{$color-name} .toggle-checked {
+  .toggle-ios-#{$color-name}.toggle-checked .toggle-icon {
     background-color: $color-base;
   }
 

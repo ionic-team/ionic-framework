@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
+import { ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
@@ -113,7 +113,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   setDisabledState(isDisabled: boolean) {
-    this._disabled = isTrueProperty(isDisabled);
+    this._disabled = isDisabled = isTrueProperty(isDisabled);
     this._item && this._item.setElementClass(`item-${this._componentName}-disabled`, isDisabled);
   }
 
@@ -130,6 +130,8 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   _writeValue(val: any): boolean {
+    assert(NgZone.isInAngularZone(), 'callback should be zoned');
+
     if (isUndefined(val)) {
       return false;
     }
@@ -145,7 +147,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     console.debug('BaseInput: value changed:', normalized, this);
     this._value = normalized;
     this._inputCheckHasValue(normalized);
-    this._inputUpdated();
+    if (this._init) {
+      this._inputUpdated();
+    }
     return true;
   }
 
@@ -154,7 +158,10 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   _fireIonChange() {
     if (this._init) {
-      this._debouncer.debounce(() => this.ionChange.emit(this));
+      this._debouncer.debounce(() => {
+        assert(NgZone.isInAngularZone(), 'IonChange: should be zoned');
+        this.ionChange.emit(this);
+      });
     }
   }
 
@@ -181,6 +188,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
       return;
     }
     this._init = true;
+    if (isPresent(this._value)) {
+      this._inputUpdated();
+    }
   }
 
   /**
@@ -190,7 +200,8 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (this._isFocus) {
       return;
     }
-    // assert(NgZone.isInAngularZone(), 'callback should be zoned');
+    assert(this._init, 'component was not initialized');
+    assert(NgZone.isInAngularZone(), '_fireFocus: should be zoned');
 
     this._isFocus = true;
     this.ionFocus.emit(this);
@@ -204,6 +215,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._isFocus) {
       return;
     }
+    assert(this._init, 'component was not initialized');
+    assert(NgZone.isInAngularZone(), '_fireBlur: should be zoned');
+
     this._isFocus = false;
     this.ionBlur.emit(this);
     this._inputUpdated();
@@ -276,5 +290,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  _inputUpdated() {}
+  _inputUpdated() {
+    assert(this._init, 'component should be initialized');
+  }
 }

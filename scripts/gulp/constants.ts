@@ -17,6 +17,7 @@ export const ES_2015 = 'es2015';
 export const ES5 = 'es5';
 export const INDEX_JS = 'index.js';
 export const BUNDLES = 'bundles';
+export const SITE_NAME = 'ionic-site';
 
 // File Paths
 export const PROJECT_ROOT = join(__dirname, '../..');
@@ -36,6 +37,7 @@ export const DIST_VENDOR_ROOT = join(DIST_ROOT, VENDOR_NAME);
 export const NODE_MODULES_ROOT = join(PROJECT_ROOT, NODE_MODULES);
 export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);
 export const SRC_ROOT = join(PROJECT_ROOT, SRC_NAME);
+export const SITE_ROOT = join(PROJECT_ROOT, '..', SITE_NAME);
 
 export const SRC_COMPONENTS_ROOT = join(SRC_ROOT, COMPONENTS_NAME);
 export const WORKERS_SRC = join(SCRIPTS_ROOT, 'workers');

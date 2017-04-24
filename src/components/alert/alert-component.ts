@@ -256,9 +256,7 @@ export class AlertCmp {
     }
 
     if (shouldDismiss) {
-      this.dismiss(button.role).catch(() => {
-        console.debug('alert can not be dismissed');
-      });
+      this.dismiss(button.role);
     }
   }
 

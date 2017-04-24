@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -10,12 +10,6 @@ import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
 import { deepCopy, isBlank, isPresent, isArray, isString, assert, clamp } from '../../util/util';
 import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
-
-export const DATETIME_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DateTime),
-  multi: true
-};
 
 /**
  * @name DateTime
@@ -270,10 +264,10 @@ export const DATETIME_VALUE_ACCESSOR: any = {
   host: {
     '[class.datetime-disabled]': '_disabled'
   },
-  providers: [DATETIME_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: DateTime, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime extends BaseInput<DateTimeData> implements AfterContentInit, ControlValueAccessor, OnDestroy {
+export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
   _text: string = '';
   _min: DateTimeData;
@@ -431,7 +425,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
   /**
    * @hidden
    */
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
@@ -439,8 +433,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
       (<any>this)._locale[type] = convertToArrayOfStrings(isPresent((<any>this)[type]) ? (<any>this)[type] : this._config.get(type), type);
     });
 
-    // update how the datetime value is displayed as formatted text
-    this.updateText();
+    this._initialize();
   }
 
   /**

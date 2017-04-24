@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { OnInit, OnDestroy, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -6,10 +6,11 @@ import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../../gestures/gesture-controller';
-import { isTrueProperty, assert } from '../../util/util';
+import { isTrueProperty, Side, isRightSide, assert } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
-import { MenuController } from './menu-controller';
+import { Menu as MenuInterface } from '../app/menu-interface';
+import { MenuController } from '../app/menu-controller';
 import { MenuType } from './menu-types';
 import { Nav } from '../nav/nav';
 import { Platform } from '../../platform/platform';
@@ -192,7 +193,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Menu) }]
 })
-export class Menu implements RootNode {
+export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
 
   private _cntEle: HTMLElement;
   private _gesture: MenuContentGesture;
@@ -205,11 +206,17 @@ export class Menu implements RootNode {
   private _events: UIEventManager;
   private _gestureBlocker: BlockerDelegate;
   private _isPane: boolean = false;
+  private _side: Side;
 
   /**
    * @hidden
    */
   isOpen: boolean = false;
+
+  /**
+   * @hidden
+   */
+  isRightSide: boolean = false;
 
   /**
    * @hidden
@@ -237,11 +244,6 @@ export class Menu implements RootNode {
   @Input() id: string;
 
   /**
-   * @input {string} Which side of the view the menu should be placed. Default `"left"`.
-   */
-  @Input() side: string;
-
-  /**
    * @input {string} The display type of the menu. Default varies based on the mode,
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
@@ -259,6 +261,23 @@ export class Menu implements RootNode {
   set enabled(val: boolean) {
     const isEnabled = isTrueProperty(val);
     this.enable(isEnabled);
+  }
+
+  /**
+   * @input {string} Which side of the view the menu should be placed. Default `"left"`.
+   */
+  @Input()
+  get side(): Side {
+    return this._side;
+  }
+
+  set side(val: Side) {
+    this.isRightSide = isRightSide(val, this._plt.isRTL);
+    if (this.isRightSide) {
+      this._side = 'right';
+    } else {
+      this._side = 'left';
+    }
   }
 
   /**
@@ -322,6 +341,7 @@ export class Menu implements RootNode {
     this._gestureBlocker = _gestureCtrl.createBlocker({
       disable: [GESTURE_GO_BACK_SWIPE]
     });
+    this.side = 'start';
   }
 
   /**
@@ -338,11 +358,7 @@ export class Menu implements RootNode {
       return console.error('Menu: must have a [content] element to listen for drag events on. Example:\n\n<ion-menu [content]="content"></ion-menu>\n\n<ion-nav #content></ion-nav>');
     }
 
-    // normalize the "side"
-    if (this.side !== 'left' && this.side !== 'right') {
-      this.side = 'left';
-    }
-    this.setElementAttribute('side', this.side);
+    this.setElementAttribute('side', this._side);
 
     // normalize the "type"
     if (!this.type) {
@@ -474,13 +490,11 @@ export class Menu implements RootNode {
     }
 
     // user has finished dragging the menu
+    const isRightSide = this.isRightSide;
     const opening = !this.isOpen;
-    let shouldComplete = false;
-    if (opening) {
-      shouldComplete = (this.side === 'right') ? shouldCompleteLeft : shouldCompleteRight;
-    } else {
-      shouldComplete = (this.side === 'right') ? shouldCompleteRight : shouldCompleteLeft;
-    }
+    const shouldComplete = (opening)
+    ? isRightSide ? shouldCompleteLeft : shouldCompleteRight
+    : isRightSide ? shouldCompleteRight : shouldCompleteLeft;
 
     this._getType().setProgressEnd(shouldComplete, stepValue, velocity, (isOpen: boolean) => {
       console.debug('menu, swipeEnd', this.side);
