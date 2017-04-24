@@ -44,6 +44,10 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
   transition: transform 150ms ease-in-out;
 }
 
+[dir="rtl"] .label-ios[floating] {
+  transform-origin: right top;
+}
+
 .input-has-focus .label-ios[floating],
 .input-has-value .label-ios[floating] {
   transform: translate3d(0, 0, 0) scale(.8);

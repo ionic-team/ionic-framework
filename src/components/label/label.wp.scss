@@ -40,6 +40,11 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
   transform-origin: left top;
 }
 
+[dir="rtl"] .label-wp[floating] {
+  transform: translate3d(-8px, 34px, 0);
+  transform-origin: right top;
+}
+
 .label-wp[stacked],
 .label-wp[floating] {
   margin-bottom: 0;

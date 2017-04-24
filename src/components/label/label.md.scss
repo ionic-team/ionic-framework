@@ -48,6 +48,10 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
   transition: transform 150ms ease-in-out;
 }
 
+[dir="rtl"] .label-md[floating] {
+  transform-origin: right top;
+}
+
 .label-md[stacked],
 .label-md[floating] {
   margin-bottom: 0;
