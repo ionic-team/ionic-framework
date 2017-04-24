@@ -30,8 +30,10 @@ $list-inset-ios-margin-left:          16px !default;
 /// @prop - Border radius of the inset list
 $list-inset-ios-border-radius:        4px !default;
 
-/// @prop - Padding left of the header in a list
-$list-ios-header-padding-left:        $item-ios-padding-left !default;
+// deprecated
+$list-ios-header-padding-left:        $item-ios-padding-start !default;
+/// @prop - Padding start of the header in a list
+$list-ios-header-padding-start:       $list-ios-header-padding-left;
 
 /// @prop - Border bottom of the header in a list
 $list-ios-header-border-bottom:       $hairlines-width solid $list-ios-border-color !default;
@@ -171,7 +173,7 @@ $list-ios-header-background-color:    transparent !default;
 .list-header-ios {
   position: relative;
 
-  padding-left: $list-ios-header-padding-left;
+  padding-left: $list-ios-header-padding-start;
 
   border-bottom: $list-ios-header-border-bottom;
   font-size: $list-ios-header-font-size;

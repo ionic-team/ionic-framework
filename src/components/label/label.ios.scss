@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Margin of the label
-$label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
+$label-ios-margin:             $item-ios-padding-top ($item-ios-padding-end / 2) $item-ios-padding-bottom 0 !default;
 
 
 // iOS Default Label
@@ -21,9 +21,9 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
 .label-ios + ion-input .text-input,
 .label-ios + ion-textarea .text-input,
 .label-ios + .input + .cloned-input {
-  margin-left: $item-ios-padding-left;
+  margin-left: $item-ios-padding-start;
 
-  width: calc(100% - (#{$item-ios-padding-right} / 2) - #{$item-ios-padding-left});
+  width: calc(100% - (#{$item-ios-padding-end} / 2) - #{$item-ios-padding-start});
 }
 
 

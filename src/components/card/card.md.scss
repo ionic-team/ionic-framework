@@ -19,14 +19,18 @@ $card-md-margin-left:                 10px !default;
 /// @prop - Padding top of the card
 $card-md-padding-top:                 13px !default;
 
-/// @prop - Padding right of the card
+// deprecated
 $card-md-padding-right:               16px !default;
+/// @prop - Padding right of the card
+$card-md-padding-end:                 $card-md-padding-right;
 
 /// @prop - Padding bottom of the card
 $card-md-padding-bottom:              13px !default;
 
-/// @prop - Padding left of the card
+// deprecated
 $card-md-padding-left:                16px !default;
+/// @prop - Padding start of the card
+$card-md-padding-start:               $card-md-padding-left;
 
 /// @prop - Padding top of the media on the card
 $card-md-padding-media-top:           10px !default;
@@ -108,7 +112,7 @@ $card-md-header-color:                #222 !default;
 }
 
 .card-content-md {
-  padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
+  padding: $card-md-padding-top $card-md-padding-end $card-md-padding-bottom $card-md-padding-start;
 
   font-size: $card-md-font-size;
   line-height: $card-md-line-height;

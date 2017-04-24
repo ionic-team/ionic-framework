@@ -33,8 +33,10 @@ $list-inset-md-border-radius:    2px !default;
 /// @prop - Margin bottom of the header in a list
 $list-md-header-margin-bottom:   13px !default;
 
-/// @prop - Padding left of the header in a list
-$list-md-header-padding-left:    $item-md-padding-left !default;
+// deprecated
+$list-md-header-padding-left:   $item-md-padding-start !default;
+/// @prop - Padding start of the header in a list
+$list-md-header-padding-start:   $list-md-header-padding-left;
 
 /// @prop - Minimum height of the header in a list
 $list-md-header-min-height:      4.5rem !default;
@@ -159,7 +161,7 @@ $list-md-header-color:           #757575 !default;
 
 .list-header-md {
   margin-bottom: $list-md-header-margin-bottom;
-  padding-left: $list-md-header-padding-left;
+  padding-left: $list-md-header-padding-start;
 
   min-height: $list-md-header-min-height;
 

@@ -10,7 +10,7 @@ $label-md-text-color:                 #999 !default;
 $label-md-text-color-focused:         color($colors-md, primary) !default;
 
 /// @prop - Margin of the label
-$label-md-margin:                     $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
+$label-md-margin:                     $item-md-padding-top ($item-md-padding-end / 2) $item-md-padding-bottom 0 !default;
 
 
 // Material Design Default Label

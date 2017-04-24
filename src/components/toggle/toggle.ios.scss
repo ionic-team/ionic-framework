@@ -52,7 +52,7 @@ $toggle-ios-disabled-opacity:          .3 !default;
 $toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
 
 /// @prop - Padding of the toggle positioned on the right in an item
-$toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
+$toggle-ios-item-right-padding:        6px ($item-ios-padding-end / 2) 5px ($item-ios-padding-start) !default;
 
 
 // iOS Toggle

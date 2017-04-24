@@ -10,7 +10,7 @@ $text-input-ios-background-color:          $list-ios-background-color !default;
 $text-input-ios-margin-top:                $item-ios-padding-top !default;
 
 /// @prop - Margin right of the input
-$text-input-ios-margin-right:              ($item-ios-padding-right / 2) !default;
+$text-input-ios-margin-right:              ($item-ios-padding-end / 2) !default;
 
 /// @prop - Margin bottom of the input
 $text-input-ios-margin-bottom:             $item-ios-padding-bottom !default;
@@ -64,8 +64,8 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 // --------------------------------------------------
 
 .input-ios .inset-input {
-  margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
-  padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
+  margin: ($item-ios-padding-top / 2) $item-ios-padding-end ($item-ios-padding-bottom / 2) 0;
+  padding: ($item-ios-padding-top / 2) ($item-ios-padding-end / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-start / 2);
 }
 
 
@@ -166,7 +166,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 .input-ios .text-input-clear-icon {
   @include svg-background-image($text-input-ios-input-clear-icon-svg);
 
-  right: ($item-ios-padding-right / 2);
+  right: ($item-ios-padding-end / 2);
 
   width: $text-input-ios-input-clear-icon-width;
 

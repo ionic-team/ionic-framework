@@ -62,7 +62,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   position: relative;
 
   padding-right: 0;
-  padding-left: ($item-wp-padding-left);
+  padding-left: ($item-wp-padding-start);
 
   font-size: $item-wp-font-size;
   font-weight: normal;
@@ -118,7 +118,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 }
 
 .item-wp.item-block .item-inner {
-  padding-right: ($item-wp-padding-right / 2);
+  padding-right: ($item-wp-padding-end / 2);
 
   border-bottom: 1px solid $list-wp-border-color;
 }
@@ -137,7 +137,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
     padding-right: 32px;
 
     background-repeat: no-repeat;
-    background-position: right ($item-wp-padding-right - 2) center;
+    background-position: right ($item-wp-padding-end - 2) center;
     background-size: 14px 14px;
   }
 }
@@ -148,7 +148,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp [item-left],
 .item-wp [item-right] {
-  margin: $item-wp-padding-media-top ($item-wp-padding-right / 2) $item-wp-padding-media-bottom 0;
+  margin: $item-wp-padding-media-top ($item-wp-padding-end / 2) $item-wp-padding-media-bottom 0;
 }
 
 .item-wp ion-icon[item-left],
@@ -178,17 +178,17 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp ion-icon[item-left] + .item-inner,
 .item-wp ion-icon[item-left] + .item-input {
-  margin-left: ($item-wp-padding-left / 2);
+  margin-left: ($item-wp-padding-start / 2);
 }
 
 .item-wp ion-avatar[item-left],
 .item-wp ion-thumbnail[item-left] {
-  margin: ($item-wp-padding-right / 2) $item-wp-padding-right ($item-wp-padding-right / 2) 0;
+  margin: ($item-wp-padding-end / 2) $item-wp-padding-end ($item-wp-padding-end / 2) 0;
 }
 
 .item-wp ion-avatar[item-right],
 .item-wp ion-thumbnail[item-right] {
-  margin: ($item-wp-padding-right / 2);
+  margin: ($item-wp-padding-end / 2);
 }
 
 
@@ -230,7 +230,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 // --------------------------------------------------
 
 .item-divider-wp {
-  padding-left: $item-wp-padding-left;
+  padding-left: $item-wp-padding-start;
 
   border-bottom: $item-wp-divider-border-bottom;
   font-size: $item-wp-divider-font-size;

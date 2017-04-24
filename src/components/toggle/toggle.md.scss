@@ -52,7 +52,7 @@ $toggle-md-padding:                      12px !default;
 $toggle-md-item-left-padding:            12px 18px 12px 2px !default;
 
 /// @prop - Padding of the toggle positioned on the right in an item
-$toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
+$toggle-md-item-right-padding:           12px ($item-md-padding-end / 2) 12px $item-md-padding-start !default;
 
 
 // Material Design Toggle

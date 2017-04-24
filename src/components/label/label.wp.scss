@@ -14,7 +14,7 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 // --------------------------------------------------
 
 .label-wp {
-  margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0;
+  margin: $item-wp-padding-top ($item-wp-padding-end / 2) $item-wp-padding-bottom 0;
 }
 
 

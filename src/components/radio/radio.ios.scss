@@ -25,7 +25,7 @@ $radio-ios-disabled-opacity:       .3 !default;
 $radio-ios-item-left-margin:       8px 21px 8px 3px !default;
 
 /// @prop - Margin of the item-right in a radio
-$radio-ios-item-right-margin:      $item-ios-padding-media-top 11px $item-ios-padding-media-bottom ($item-ios-padding-left / 2) !default;
+$radio-ios-item-right-margin:      $item-ios-padding-media-top 11px $item-ios-padding-media-bottom ($item-ios-padding-start / 2) !default;
 
 
 .radio-ios {

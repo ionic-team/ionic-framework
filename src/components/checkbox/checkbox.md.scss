@@ -13,7 +13,7 @@ $checkbox-md-border-bottom-style:        solid !default;
 $checkbox-md-border-bottom-color:        $list-md-border-color !default;
 
 /// @prop - Padding of the checkbox
-$checkbox-md-padding:                    $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
+$checkbox-md-padding:                    $item-md-padding-top ($item-md-padding-end / 2) $item-md-padding-bottom 0 !default;
 
 /// @prop - Margin of the checkbox
 $checkbox-md-margin:                     0 !default;
