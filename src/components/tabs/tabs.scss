@@ -98,7 +98,7 @@
 }
 
 [tabsLayout=icon-left] .tab-button .tab-button-icon {
-  padding-right: 8px;
+  padding-block-end: 8px;
 
   text-align: right;
 }
@@ -106,7 +106,7 @@
 [tabsLayout=icon-right] .tab-button .tab-button-icon {
   order: 10;
 
-  padding-left: 8px;
+  padding-block-start: 8px;
 
   text-align: left;
 }

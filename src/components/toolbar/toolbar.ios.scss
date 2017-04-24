@@ -276,7 +276,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .bar-button-ios.bar-button-icon-left ion-icon {
-  padding-right: .3em;
+  padding-block-end: .3em;
 
   font-size: 1.4em;
   line-height: .67;
@@ -285,7 +285,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .bar-button-ios.bar-button-icon-right ion-icon {
-  padding-left: .4em;
+  padding-block-start: .4em;
 
   font-size: 1.4em;
   line-height: .67;

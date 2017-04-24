@@ -14,13 +14,13 @@
 [icon-left] ion-icon {
   @include button-icon;
 
-  padding-right: .3em;
+  padding-block-end: .3em;
 }
 
 [icon-right] ion-icon {
   @include button-icon;
 
-  padding-left: .4em;
+  padding-block-start: .4em;
 }
 
 .button[icon-only] {

@@ -173,7 +173,7 @@ $list-ios-header-background-color:    transparent !default;
 .list-header-ios {
   position: relative;
 
-  padding-left: $list-ios-header-padding-start;
+  padding-block-start: $list-ios-header-padding-start;
 
   border-bottom: $list-ios-header-border-bottom;
   font-size: $list-ios-header-font-size;
