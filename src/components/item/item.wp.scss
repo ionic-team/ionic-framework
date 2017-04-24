@@ -39,9 +39,6 @@ $item-wp-detail-push-color:          $input-wp-border-color !default;
 /// @prop - Icon for the detail arrow
 $item-wp-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-wp-detail-push-color}'/></svg>" !default;
 
-/// @prop - Icon for the detail arrow RTL
-$item-wp-detail-push-svg-rtl:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,20l2-2l-8-8L8-8l-2-2l-10,10L10,10z' fill='#{$item-wp-detail-push-color}'/></svg>" !default;
-
 /// @prop - Right padding for the detail arrow
 $item-wp-detail-push-padding-right:  32px !default;
 
@@ -155,10 +152,11 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   [dir="rtl"] .item-wp[detail-push] .item-inner,
   [dir="rtl"] button.item-wp:not([detail-none]) .item-inner,
   [dir="rtl"] a.item-wp:not([detail-none]) .item-inner {
-    @include svg-background-image($item-wp-detail-push-svg-rtl);
-    padding-right: 0;
-    padding-left: $item-wp-detail-push-padding-right;
-    background-position: left ($item-wp-padding-right - 2) center;
+    transform: rotate(180deg);
+
+    & > * {
+      transform: rotate(-180deg);
+    }
   }
 }
 
