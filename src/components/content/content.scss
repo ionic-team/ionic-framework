@@ -103,7 +103,7 @@ ion-app [no-padding] .scroll-content {
 
   ion-app.#{$mode} [padding-left],
   ion-app.#{$mode} [padding-left] .scroll-content {
-    @include padding-horizontal($content-padding);
+    @include padding-horizontal($content-padding, null);
   }
 
   ion-app.#{$mode} [padding-right],

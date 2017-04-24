@@ -134,7 +134,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp[inset] .item-input {
-  @include padding-horizontal(0, 0);
+  @include padding-horizontal(0);
 }
 
 .list-wp[inset] + ion-list[inset] {

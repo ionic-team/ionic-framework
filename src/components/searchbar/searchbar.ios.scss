@@ -143,7 +143,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .searchbar-ios .searchbar-ios-cancel {
-  @include padding-horizontal(8px);
+  @include padding-horizontal(8px, null);
 
   display: none;
 

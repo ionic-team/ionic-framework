@@ -64,8 +64,11 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .input-md .inset-input {
+  @include padding-horizontal(($item-md-padding-start / 2), ($item-md-padding-end / 2));
+  padding-top: ($item-md-padding-top / 2);
+  padding-bottom: ($item-md-padding-bottom / 2);
+
   margin: ($item-md-padding-top / 2) $item-md-padding-end ($item-md-padding-bottom / 2) $item-md-padding-start;
-  padding: ($item-md-padding-top / 2) ($item-md-padding-end / 2) ($item-md-padding-bottom / 2) ($item-md-padding-start / 2);
 }
 
 

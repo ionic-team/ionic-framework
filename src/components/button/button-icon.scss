@@ -20,7 +20,7 @@
 [icon-right] ion-icon {
   @include button-icon;
 
-  @include padding-horizontal(.4em);
+  @include padding-horizontal(.4em, null);
 }
 
 .button[icon-only] {

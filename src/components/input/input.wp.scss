@@ -82,8 +82,11 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .item-wp .inset-input {
+  @include padding-horizontal(($item-wp-padding-start / 2), ($item-wp-padding-end / 2));
+  padding-top: ($item-wp-padding-top / 2);
+  padding-bottom: ($item-wp-padding-bottom / 2);
+
   margin: ($item-wp-padding-top / 2) $item-wp-padding-end ($item-wp-padding-bottom / 2) $item-wp-padding-start;
-  padding: ($item-wp-padding-top / 2) ($item-wp-padding-end / 2) ($item-wp-padding-bottom / 2) ($item-wp-padding-start / 2);
 }
 
 

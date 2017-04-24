@@ -63,9 +63,6 @@ $toggle-wp-disabled-opacity:             .3 !default;
 /// @prop - Padding of the toggle positioned on the left in an item
 $toggle-wp-item-left-padding:            12px 18px 12px 2px !default;
 
-/// @prop - Padding of the toggle positioned on the right in an item
-$toggle-wp-item-right-padding:           12px ($item-wp-padding-end / 2) 12px $item-wp-padding-start !default;
-
 
 // Windows Toggle
 // -----------------------------------------
@@ -160,8 +157,11 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-end / 2) 12px $i
 // -----------------------------------------
 
 .item-wp .toggle-wp {
+  @include padding-horizontal($item-wp-padding-start, ($item-wp-padding-end / 2));
+  padding-top: 12px;
+  padding-bottom: 12px;
+
   margin: $toggle-wp-media-margin;
-  padding: $toggle-wp-item-right-padding;
 
   cursor: pointer;
 }

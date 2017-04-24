@@ -27,7 +27,9 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
 
 
 .select-md {
-  padding: $select-md-padding-top $select-md-padding-end $select-md-padding-bottom $select-md-padding-start;
+  @include padding-horizontal($select-md-padding-start, $select-md-padding-end);
+  padding-top: $select-md-padding-top;
+  padding-bottom: $select-md-padding-bottom;
 }
 
 .select-md .select-placeholder {

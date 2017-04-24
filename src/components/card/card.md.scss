@@ -112,7 +112,9 @@ $card-md-header-color:                #222 !default;
 }
 
 .card-content-md {
-  padding: $card-md-padding-top $card-md-padding-end $card-md-padding-bottom $card-md-padding-start;
+  @include padding-horizontal($card-md-padding-start, $card-md-padding-end);
+  padding-top: $card-md-padding-top;
+  padding-bottom: $card-md-padding-bottom;
 
   font-size: $card-md-font-size;
   line-height: $card-md-line-height;

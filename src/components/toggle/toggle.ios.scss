@@ -51,10 +51,6 @@ $toggle-ios-disabled-opacity:          .3 !default;
 /// @prop - Padding of the toggle positioned on the left in an item
 $toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
 
-/// @prop - Padding of the toggle positioned on the right in an item
-$toggle-ios-item-right-padding:        6px ($item-ios-padding-end / 2) 5px ($item-ios-padding-start) !default;
-
-
 // iOS Toggle
 // -----------------------------------------
 
@@ -196,12 +192,17 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-end / 2) 5px ($ite
 // -----------------------------------------
 
 .item-ios .toggle-ios {
+  @include padding-horizontal($item-ios-padding-start, ($item-ios-padding-end / 2));
+  padding-top: 6px;
+  padding-bottom: 5px;
+
   margin: $toggle-ios-media-margin;
-  padding: $toggle-ios-item-right-padding;
 }
 
 .item-ios .toggle-ios[item-left] {
-  padding: $toggle-ios-item-left-padding;
+  @include padding-horizontal(16px, 0);
+  padding-top: 6px;
+  padding-bottom: 5px;
 }
 
 
