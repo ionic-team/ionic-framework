@@ -62,7 +62,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   position: relative;
 
   padding-right: 0;
-  padding-left: ($item-md-padding-left);
+  padding-left: $item-md-padding-left;
 
   font-size: $item-md-font-size;
   font-weight: normal;
@@ -76,7 +76,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 [dir="rtl"] .item-md {
   padding-left: 0;
-  padding-right: ($item-md-padding-left);
+  padding-right: $item-md-padding-left;
 }
 
 .item-md.activated {

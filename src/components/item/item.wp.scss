@@ -68,7 +68,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   position: relative;
 
   padding-right: 0;
-  padding-left: ($item-wp-padding-left);
+  padding-left: $item-wp-padding-left;
 
   font-size: $item-wp-font-size;
   font-weight: normal;
@@ -81,7 +81,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 [dir="rtl"] .item-wp {
   padding-left: 0;
-  padding-right: ($item-wp-padding-left);
+  padding-right: $item-wp-padding-left;
 }
 
 .item-wp.activated {
