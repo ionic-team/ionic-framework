@@ -63,7 +63,7 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-md {
-  margin: -1px $list-md-margin-end $list-md-margin-bottom $list-md-margin-start;
+  @include margin(-1px, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
 }
 
 .list-md .item-block .item-inner {
@@ -87,11 +87,11 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md ion-item-options .button {
+  @include margin(1px, 0);
+
   display: inline-flex;
 
   align-items: center;
-
-  margin: 1px 0;
 
   height: calc(100% - 2px);
 
@@ -103,7 +103,7 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md ion-item-options .button::before {
-  margin: 0 auto;
+  @include margin(0, auto);
 }
 
 // If the item has the no-lines attribute remove the bottom border from:
@@ -123,7 +123,7 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-md[inset] {
-  margin: $list-inset-md-margin-top $list-inset-md-margin-end $list-inset-md-margin-bottom $list-inset-md-margin-start;
+  @include margin($list-inset-md-margin-top, $list-inset-md-margin-end, $list-inset-md-margin-bottom, $list-inset-md-margin-start);
 
   border-radius: $list-inset-md-border-radius;
 }

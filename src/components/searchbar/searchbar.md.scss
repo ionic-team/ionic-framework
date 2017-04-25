@@ -77,11 +77,11 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .searchbar-md .searchbar-md-cancel {
+  @include margin(0);
+
   top: 0;
   left: 10px;
   display: none;
-
-  margin: 0;
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: 100%;
@@ -109,8 +109,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
 .searchbar-md .searchbar-input {
   @include placeholder($searchbar-md-input-placeholder-color);
-
-  padding: 6px 55px;
+  @include padding(6px, 55px);
 
   height: $searchbar-md-input-height;
 
@@ -133,12 +132,11 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
 .searchbar-md .searchbar-clear-icon {
   @include svg-background-image($searchbar-md-input-clear-icon-svg);
+  @include padding(0);
 
   position: absolute;
   top: 0;
   right: 13px;
-
-  padding: 0;
 
   width: $searchbar-md-input-clear-icon-size;
   height: 100%;
@@ -169,7 +167,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .toolbar .searchbar-md {
-  padding: 3px;
+  @include padding(3px);
 }
 
 .toolbar .searchbar-md .searchbar-md-cancel {

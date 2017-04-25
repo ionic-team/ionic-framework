@@ -71,11 +71,35 @@ $card-wp-text-color:                  #222 !default;
 /// @prop - Font size of card title
 $card-wp-title-font-size:             2.4rem !default;
 
-/// @prop - Padding of the card title
-$card-wp-title-padding:               8px 0 8px 0 !default;
+// deprecated
+$card-wp-title-padding:               null !default;
 
-/// @prop - Margin of the card title
-$card-wp-title-margin:                2px 0 !default;
+/// @prop - Padding top of the card title
+$card-wp-title-padding-top:           8px !default;
+
+/// @prop - Padding end of the card title
+$card-wp-title-padding-end:           0 !default;
+
+/// @prop - Padding bottom of the card title
+$card-wp-title-padding-bottom:        8px !default;
+
+/// @prop - Padding start of the card title
+$card-wp-title-padding-start:         0 !default;
+
+// deprecated
+$card-wp-title-margin:                null !default;
+
+/// @prop - Margin top of the card title
+$card-wp-title-margin-top:            2px !default;
+
+/// @prop - Margin end of the card title
+$card-wp-title-margin-end:            0 !default;
+
+/// @prop - Margin bottom of the card title
+$card-wp-title-margin-bottom:         $card-wp-title-margin-top !default;
+
+/// @prop - Margin start of the card title
+$card-wp-title-margin-start:          $card-wp-title-margin-end !default;
 
 /// @prop - Color of the card title
 $card-wp-title-text-color:            #222 !default;
@@ -91,7 +115,7 @@ $card-wp-header-color:                #222 !default;
 
 
 .card-wp {
-  margin: $card-wp-margin-top $card-wp-margin-end $card-wp-margin-bottom $card-wp-margin-start;
+  @include margin($card-wp-margin-top, $card-wp-margin-end, $card-wp-margin-bottom, $card-wp-margin-start);
 
   width: calc(100% - #{($card-wp-margin-end + $card-wp-margin-start)});
 
@@ -143,16 +167,21 @@ $card-wp-header-color:                #222 !default;
 .card-title-wp {
   display: block;
 
-  margin: $card-wp-title-margin;
-  padding: $card-wp-title-padding;
-
   font-size: $card-wp-title-font-size;
   line-height: 1.2;
   color: $card-wp-title-text-color;
+
+  @include deprecated-variable(margin, $card-wp-title-margin) {
+    @include margin($card-wp-title-margin-top, $card-wp-title-margin-end, $card-wp-title-margin-bottom, $card-wp-title-margin-start);
+  }
+
+  @include deprecated-variable(padding, $card-wp-title-padding) {
+    @include padding($card-wp-title-padding-top, $card-wp-title-padding-end, $card-wp-title-padding-bottom, $card-wp-title-padding-start);
+  }
 }
 
 .card-wp h1 {
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 2.4rem;
   font-weight: normal;
@@ -160,7 +189,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp h2 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.6rem;
   font-weight: normal;
@@ -171,7 +200,7 @@ $card-wp-header-color:                #222 !default;
 .card-wp h4,
 .card-wp h5,
 .card-wp h6 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.4rem;
   font-weight: normal;
@@ -179,7 +208,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp p {
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 1.4rem;
   font-weight: normal;

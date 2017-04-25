@@ -57,7 +57,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 // --------------------------------------------------
 
 .list-wp {
-  margin: 0 $list-wp-margin-end $list-wp-margin-bottom $list-wp-margin-start;
+  @include margin(0, $list-wp-margin-end, $list-wp-margin-bottom, $list-wp-margin-start);
 }
 
 .list-wp .item-block .item-inner {
@@ -87,11 +87,11 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp ion-item-options .button {
+  @include margin(1px, 0);
+
   display: inline-flex;
 
   align-items: center;
-
-  margin: 1px 0;
 
   height: calc(100% - 2px);
 
@@ -103,7 +103,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp ion-item-options .button::before {
-  margin: 0 auto;
+  @include margin(0, auto);
 }
 
 // If the item has the no-lines attribute remove the bottom border from:
@@ -124,7 +124,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 // --------------------------------------------------
 
 .list-wp[inset] {
-  margin: $list-inset-wp-margin-top $list-inset-wp-margin-end $list-inset-wp-margin-bottom $list-inset-wp-margin-start;
+  @include margin($list-inset-wp-margin-top, $list-inset-wp-margin-end, $list-inset-wp-margin-bottom, $list-inset-wp-margin-start);
 
   border-radius: $list-inset-wp-border-radius;
 }

@@ -4,22 +4,34 @@
 // --------------------------------------------------
 
 // deprecated
-$button-md-margin:                                 null !default;
+$button-md-margin:                         null !default;
 
 /// @prop - Margin top of the button
-$button-md-margin-top:                             .4rem !default;
+$button-md-margin-top:                     .4rem !default;
 
 /// @prop - Margin end of the button
-$button-md-margin-end:                             .2rem !default;
+$button-md-margin-end:                     .2rem !default;
 
 /// @prop - Margin bottom of the button
-$button-md-margin-bottom:                          .4rem !default;
+$button-md-margin-bottom:                  .4rem !default;
 
 /// @prop - Margin start of the button
-$button-md-margin-start:                           .2rem !default;
+$button-md-margin-start:                   .2rem !default;
 
-/// @prop - Padding of the button
-$button-md-padding:                        0 1.1em !default;
+// deprecated
+$button-md-padding:                        null !default;
+
+/// @prop - Padding top of the button
+$button-md-padding-top:                    0 !default;
+
+/// @prop - Padding end of the button
+$button-md-padding-end:                    1.1em !default;
+
+/// @prop - Padding bottom of the button
+$button-md-padding-bottom:                 $button-md-padding-top !default;
+
+/// @prop - Padding start of the button
+$button-md-padding-start:                  $button-md-padding-end !default;
 
 /// @prop - Height of the button
 $button-md-height:                         3.6rem !default;
@@ -187,8 +199,6 @@ $button-md-strong-font-weight:                  bold !default;
 .button-md {
   overflow: hidden;
 
-  padding: $button-md-padding;
-
   height: $button-md-height;
 
   border-radius: $button-md-border-radius;
@@ -207,6 +217,10 @@ $button-md-strong-font-weight:                  bold !default;
 
   @include deprecated-variable(margin, $button-md-margin) {
     @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
+  }
+
+  @include deprecated-variable(padding, $button-md-padding) {
+    @include padding($button-md-padding-top, $button-md-padding-end, $button-md-padding-bottom, $button-md-padding-start);
   }
 }
 
@@ -279,16 +293,14 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-block-md {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 }
 
 // Material Design Full Button
 // --------------------------------------------------
 
 .button-full-md {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 
   border-right-width: 0;
   border-left-width: 0;
@@ -406,7 +418,7 @@ $button-md-strong-font-weight:                  bold !default;
 }
 
 .button-md [icon-only] {
-  padding: 0;
+  @include padding(0);
 }
 
 

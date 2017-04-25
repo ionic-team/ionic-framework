@@ -32,6 +32,8 @@ ion-picker-cmp {
 }
 
 .picker-wrapper {
+  @include margin(auto);
+
   position: absolute;
   right: 0;
   bottom: 0;
@@ -42,8 +44,6 @@ ion-picker-cmp {
   overflow: hidden;
 
   flex-direction: column;
-
-  margin: auto;
 
   width: $picker-width;
   max-width: $picker-max-width;

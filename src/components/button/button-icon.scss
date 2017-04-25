@@ -24,13 +24,13 @@
 }
 
 .button[icon-only] {
-  padding: 0;
+  @include padding(0);
 
   min-width: .9em;
 }
 
 [icon-only] ion-icon {
-  padding: 0 .5em;
+  @include padding(0, .5em);
 
   font-size: 1.8em;
   line-height: .67;

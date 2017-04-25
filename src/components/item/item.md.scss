@@ -45,9 +45,6 @@ $item-md-divider-font-size:          $item-md-body-text-font-size !default;
 /// @prop - Border bottom for the divider
 $item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
 
-/// @prop - Padding for the divider
-$item-md-divider-padding:            5px 15px !default;
-
 /// @prop - Background for the sliding content
 $item-md-sliding-content-background: $list-md-background-color !default;
 
@@ -76,14 +73,14 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 }
 
 .item-md h1 {
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 2.4rem;
   font-weight: normal;
 }
 
 .item-md h2 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.6rem;
   font-weight: normal;
@@ -93,7 +90,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 .item-md h4,
 .item-md h5,
 .item-md h6 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.4rem;
   font-weight: normal;
@@ -103,7 +100,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 .item-md p {
   overflow: inherit;
 
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 1.4rem;
   line-height: normal;
@@ -142,18 +139,16 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 .item-md [item-left],
 .item-md [item-right] {
-  margin: $item-md-padding-media-top ($item-md-padding-end / 2) $item-md-padding-media-bottom 0;
+  @include margin($item-md-padding-media-top, ($item-md-padding-end / 2), $item-md-padding-media-bottom, 0);
 }
 
 .item-md ion-icon[item-left],
 .item-md ion-icon[item-right] {
-  margin-top: $item-md-padding-icon-top;
-  margin-bottom: $item-md-padding-icon-bottom;
-  margin-left: 0;
+  @include margin($item-md-padding-icon-top, null, $item-md-padding-icon-bottom, 0);
 }
 
 .item-md .item-button {
-  padding: 0 .6em;
+  @include padding(0, .6em);
 
   height: 25px;
 
@@ -162,22 +157,22 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 .item-md .item-button[icon-only] ion-icon,
 .item-md .item-button[icon-only] {
-  padding: 0 1px;
+  @include padding(0, 1px);
 }
 
 .item-md ion-icon[item-left] + .item-inner,
 .item-md ion-icon[item-left] + .item-input {
-  margin-left: $item-md-padding-start + ($item-md-padding-start / 2);
+  @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 
 .item-md ion-avatar[item-left],
 .item-md ion-thumbnail[item-left] {
-  margin: ($item-md-padding-end / 2) $item-md-padding-end ($item-md-padding-end / 2) 0;
+  @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
 }
 
 .item-md ion-avatar[item-right],
 .item-md ion-thumbnail[item-right] {
-  margin: ($item-md-padding-end / 2);
+  @include margin(($item-md-padding-end / 2));
 }
 
 

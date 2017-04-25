@@ -125,10 +125,10 @@ input.text-input:-webkit-autofill {
 // Next and Previous input tabbing
 
 [next-input] {
+  @include padding(0);
+
   position: absolute;
   bottom: 20px;
-
-  padding: 0;
 
   width: 1px;
   height: 1px;
@@ -144,12 +144,12 @@ input.text-input:-webkit-autofill {
 // --------------------------------------------------
 
 .text-input-clear-icon {
+  @include margin(0);
+  @include padding(0);
+
   position: absolute;
   top: 0;
   display: none;
-
-  margin: 0;
-  padding: 0;
 
   height: 100%;
 

@@ -72,8 +72,8 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .text-input-wp {
-  margin: $text-input-wp-margin-top $text-input-wp-margin-end $text-input-wp-margin-bottom $text-input-wp-margin-start;
-  padding: $text-input-wp-padding-vertical $text-input-wp-padding-horizontal;
+  @include margin($text-input-wp-margin-top, $text-input-wp-margin-end, $text-input-wp-margin-bottom, $text-input-wp-margin-start);
+  @include padding($text-input-wp-padding-vertical, $text-input-wp-padding-horizontal);
 
   width: calc(100% - #{$text-input-wp-margin-end} - #{$text-input-wp-margin-start});
 
@@ -87,8 +87,7 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 .item-wp .inset-input {
   @include padding(($item-wp-padding-top / 2), ($item-wp-padding-end / 2), ($item-wp-padding-bottom / 2), ($item-wp-padding-start / 2));
-
-  margin: ($item-wp-padding-top / 2) $item-wp-padding-end ($item-wp-padding-bottom / 2) $item-wp-padding-start;
+  @include margin(($item-wp-padding-top / 2), $item-wp-padding-end, ($item-wp-padding-bottom / 2), $item-wp-padding-start);
 }
 
 
@@ -124,9 +123,7 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 .item-label-floating .text-input-wp,
 .item-label-stacked .select-wp,
 .item-label-floating .select-wp {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-left: 0;
+  @include margin(8px, null, 8px, 0);
 
   width: calc(100% - #{$text-input-wp-margin-end});
 }

@@ -220,16 +220,14 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-block-ios {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 }
 
 // iOS Full Button
 // --------------------------------------------------
 
 .button-full-ios {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 
   border-right-width: 0;
   border-left-width: 0;

@@ -27,8 +27,20 @@ $picker-md-button-text-color:                 color($colors-md, primary) !defaul
 /// @prop - Background of the picker button
 $picker-md-button-background-color:           transparent !default;
 
-/// @prop - Padding of the picker column
-$picker-md-column-padding:                    0 8px !default;
+// deprecated
+$picker-md-column-padding:                    null !default;
+
+/// @prop - Padding top of the picker column
+$picker-md-column-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker column
+$picker-md-column-padding-end:                8px !default;
+
+/// @prop - Padding bottom of the picker column
+$picker-md-column-padding-bottom:             $picker-md-column-padding-top !default;
+
+/// @prop - Padding start of the picker column
+$picker-md-column-padding-start:              $picker-md-column-padding-end !default;
 
 /// @prop - Padding of the picker option
 $picker-md-option-padding:                    0 !default;
@@ -69,7 +81,7 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
 .picker-md .picker-button,
 .picker-md .picker-button.activated {
-  margin: 0;
+  @include margin(0);
 
   height: $picker-md-button-height;
 
@@ -86,9 +98,11 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 }
 
 .picker-md .picker-col {
-  padding: $picker-md-column-padding;
-
   transform-style: preserve-3d;
+
+  @include deprecated-variable(padding, $picker-md-column-padding) {
+    @include padding($picker-md-column-padding-top, $picker-md-column-padding-end, $picker-md-column-padding-bottom, $picker-md-column-padding-start);
+  }
 }
 
 .picker-md .picker-prefix,
@@ -107,7 +121,7 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
 
 .picker-md .picker-opt {
-  margin: 0;
+  @include margin(0);
   padding: $picker-md-option-padding;
 
   height: 4.3rem;

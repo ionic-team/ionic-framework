@@ -87,7 +87,7 @@ ion-content.js-scroll > .scroll-content {
 
 ion-app [no-padding],
 ion-app [no-padding] .scroll-content {
-  padding: 0;
+  @include padding(0);
 }
 
 @mixin content-padding($mode, $content-padding) {
@@ -134,7 +134,7 @@ ion-app [no-padding] .scroll-content {
 
 ion-app [no-margin],
 ion-app [no-margin] .scroll-content {
-  margin: 0;
+  @include margin(0);
 }
 
 @mixin content-margin($mode, $content-margin) {

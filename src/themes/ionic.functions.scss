@@ -304,10 +304,10 @@ $include-rtl: true !default;
 
 @mixin deprecated-variable($property, $variable) {
   @if $variable == null {
-    // TODO find variable name
-    @warn "you are using a deprecated variable";
     @content;
   } @else {
+    // TODO find variable name
+    @warn "you are using a deprecated variable";
     $property: $variable;
   }
 }
@@ -329,13 +329,13 @@ $include-rtl: true !default;
     @include rtl() {
       @if $start != null {
         padding-right: $start;
-      } @else {
+      } @else if $end != null {
         padding-right: initial;
       }
 
       @if $end != null {
         padding-left: $end;
-      } @else {
+      } @else if $start != null {
         padding-left: initial;
       }
     }
@@ -375,13 +375,13 @@ $include-rtl: true !default;
     @include rtl() {
       @if $start != null {
         margin-right: $start;
-      } @else {
+      } @else if $end != null {
         margin-right: initial;
       }
 
       @if $end != null {
         margin-left: $end;
-      } @else {
+      } @else if $start != null {
         margin-left: initial;
       }
     }

@@ -172,7 +172,7 @@ $checkbox-md-item-right-margin-start:    0 !default;
 }
 
 .checkbox-md + .item-inner ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 

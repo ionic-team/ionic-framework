@@ -15,8 +15,8 @@
  */
 
 .swiper-container {
-  margin-left: auto;
-  margin-right: auto;
+  @include margin-horizontal(auto);
+
   position: relative;
   overflow: hidden;
   /* Fix of Webkit flickering */
@@ -51,8 +51,9 @@
 }
 
 .swiper-container-free-mode > .swiper-wrapper {
+  @include margin(0, auto);
+
   transition-timing-function: ease-out;
-  margin: 0 auto;
 }
 
 .swiper-slide {
@@ -184,9 +185,10 @@
 }
 
 button.swiper-pagination-bullet {
+  @include margin(0);
+  @include padding(0);
+
   border: none;
-  margin: 0;
-  padding: 0;
   box-shadow: none;
   @include appearance(none);
 }
@@ -219,12 +221,12 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
-  margin: 5px 0;
+  @include margin(5px, 0);
   display: block;
 }
 
 .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
-  margin: 0 5px;
+  @include margin(0, 5px);
 }
 
 /* Progress */
@@ -473,13 +475,13 @@ button.swiper-pagination-bullet {
 
 /* Preloader */
 .swiper-lazy-preloader {
+  @include margin(-21px, null, null, -21px);
+
   width: 42px;
   height: 42px;
   position: absolute;
   left: 50%;
   top: 50%;
-  margin-left: -21px;
-  margin-top: -21px;
   z-index: 10;
   transform-origin: 50%;
   animation: swiper-preloader-spin 1s steps(12, end) infinite;
@@ -520,17 +522,19 @@ ion-slides {
 }
 
 .swiper-container {
+  @include padding(0);
+
   width: 100%;
   height: 100%;
-  padding: 0;
   display: flex;
   overflow: hidden;
 }
 
 .swiper-wrapper {
+  @include padding(0);
+
   width: 100%;
   height: 100%;
-  padding: 0;
   display: flex;
 }
 

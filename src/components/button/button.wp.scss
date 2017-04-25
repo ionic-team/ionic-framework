@@ -18,8 +18,20 @@ $button-wp-margin-bottom:                                 .4rem !default;
 /// @prop - Margin start of the button
 $button-wp-margin-start:                                  .2rem !default;
 
-/// @prop - Padding of the button
-$button-wp-padding:                                       0 1.1em !default;
+// deprecated
+$button-wp-padding:                                       null !default;
+
+/// @prop - Padding top of the button
+$button-wp-padding-top:                                   0 !default;
+
+/// @prop - Padding end of the button
+$button-wp-padding-end:                                   1.1em !default;
+
+/// @prop - Padding bottom of the button
+$button-wp-padding-bottom:                                $button-wp-padding-top !default;
+
+/// @prop - Padding start of the button
+$button-wp-padding-start:                                 $button-wp-padding-end !default;
 
 /// @prop - Height of the button
 $button-wp-height:                                        3.6rem !default;
@@ -52,8 +64,20 @@ $button-wp-background-color-activated:                    color-shade($button-wp
 // Windows Large Button
 // --------------------------------------------------
 
-/// @prop - Padding of the large button
-$button-wp-large-padding:                                 0 1em !default;
+// deprecated
+$button-wp-large-padding:                                 null !default;
+
+/// @prop - Padding top of the large button
+$button-wp-large-padding-top:                             0 !default;
+
+/// @prop - Padding end of the large button
+$button-wp-large-padding-end:                             1em !default;
+
+/// @prop - Padding bottom of the large button
+$button-wp-large-padding-bottom:                          $button-wp-large-padding-top !default;
+
+/// @prop - Padding start of the large button
+$button-wp-large-padding-start:                           $button-wp-large-padding-end !default;
 
 /// @prop - Height of the large button
 $button-wp-large-height:                                  2.8em !default;
@@ -140,8 +164,6 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-wp {
-  padding: $button-wp-padding;
-
   height: $button-wp-height;
 
   border: $button-wp-border-width $button-wp-border-style $button-wp-border-color;
@@ -154,6 +176,10 @@ $button-wp-strong-font-weight:                            bold !default;
 
   @include deprecated-variable(margin, $button-wp-margin) {
     @include margin($button-wp-margin-top, $button-wp-margin-end, $button-wp-margin-bottom, $button-wp-margin-start);
+  }
+
+  @include deprecated-variable(padding, $button-wp-padding) {
+    @include padding($button-wp-padding-top, $button-wp-padding-end, $button-wp-padding-bottom, $button-wp-padding-start);
   }
 }
 
@@ -195,11 +221,13 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-large-wp {
-  padding: $button-wp-large-padding;
-
   height: $button-wp-large-height;
 
   font-size: $button-wp-large-font-size;
+
+  @include deprecated-variable(padding, $button-wp-large-padding) {
+    @include padding($button-wp-large-padding-top, $button-wp-large-padding-end, $button-wp-large-padding-bottom, $button-wp-large-padding-start);
+  }
 }
 
 .button-small-wp {
@@ -218,16 +246,14 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-block-wp {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 }
 
 // Windows Full Button
 // --------------------------------------------------
 
 .button-full-wp {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 
   border-right-width: 0;
   border-left-width: 0;
@@ -325,7 +351,7 @@ $button-wp-strong-font-weight:                            bold !default;
 }
 
 .button-wp [icon-only] {
-  padding: 0;
+  @include padding(0);
 }
 
 

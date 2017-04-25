@@ -71,15 +71,15 @@ $range-ios-pin-padding:                       8px !default;
 
 
 .range-ios {
-  padding: $range-ios-padding-vertical $range-ios-padding-horizontal;
+  @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }
 
 .range-ios [range-left] {
-  margin: 0 20px 0 0;
+  @include margin(0, 20px, 0, 0);
 }
 
 .range-ios [range-right] {
-  margin: 0 0 0 20px;
+  @include margin(0, 0, 0, 20px);
 }
 
 .range-ios.range-has-pin {
@@ -122,12 +122,11 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-knob-handle {
+  @include margin(-($range-ios-hit-height / 2), null, null, -($range-ios-hit-width / 2));
+
   position: absolute;
   top: ($range-ios-slider-height / 2);
-  left: 0%;
-
-  margin-top: -($range-ios-hit-height / 2);
-  margin-left: -($range-ios-hit-width / 2);
+  left: 0;
 
   width: $range-ios-hit-width;
   height: $range-ios-hit-height;
@@ -153,10 +152,10 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-tick {
+  @include margin-horizontal(-($range-ios-tick-width / 2), null);
+
   position: absolute;
   top: ($range-ios-hit-height / 2) - ($range-ios-tick-height / 2) + ($range-ios-bar-height / 2);
-
-  margin-left: ($range-ios-tick-width / 2) * -1;
 
   width: $range-ios-tick-width;
   height: $range-ios-tick-height;
@@ -173,11 +172,11 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-pin {
+  @include padding($range-ios-pin-padding);
+
   position: relative;
   top: -20px;
   display: inline-block;
-
-  padding: $range-ios-pin-padding;
 
   min-width: 28px;
 

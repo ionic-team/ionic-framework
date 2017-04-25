@@ -45,10 +45,10 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
 
 
 .select-wp {
-  flex: 1;
+  @include margin($select-wp-margin-top, $select-wp-margin-end, $select-wp-margin-bottom, $select-wp-margin-start);
+  @include padding($select-wp-padding-vertical, $select-wp-padding-horizontal);
 
-  margin: $select-wp-margin-top $select-wp-margin-end $select-wp-margin-bottom $select-wp-margin-start;
-  padding: $select-wp-padding-vertical $select-wp-padding-horizontal;
+  flex: 1;
 
   max-width: 100%;
 
@@ -61,7 +61,7 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
 }
 
 .item-wp.item-select ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 .select-wp .select-icon {

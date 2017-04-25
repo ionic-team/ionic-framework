@@ -160,7 +160,7 @@ $checkbox-wp-item-right-margin-start:    0 !default;
 }
 
 .checkbox-wp + .item-inner ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 

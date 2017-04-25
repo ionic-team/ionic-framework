@@ -3,15 +3,28 @@
 // iOS Label
 // --------------------------------------------------
 
-/// @prop - Margin of the label
-$label-ios-margin:             $item-ios-padding-top ($item-ios-padding-end / 2) $item-ios-padding-bottom 0 !default;
+// deprecated
+$label-ios-margin:             null !default;
 
+/// @prop - Margin top of the label
+$label-ios-margin-top:         $item-ios-padding-top !default;
+
+/// @prop - Margin end of the label
+$label-ios-margin-end:         ($item-ios-padding-end / 2) !default;
+
+/// @prop - Margin bottom of the label
+$label-ios-margin-bottom:      $item-ios-padding-bottom !default;
+
+/// @prop - Margin start of the label
+$label-ios-margin-start:       0 !default;
 
 // iOS Default Label
 // --------------------------------------------------
 
 .label-ios {
-  margin: $label-ios-margin;
+  @include deprecated-variable(margin, $label-ios-margin) {
+    @include margin($label-ios-margin-top, $label-ios-margin-end, $label-ios-margin-bottom, $label-ios-margin-start);
+  }
 }
 
 
@@ -21,7 +34,7 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-end / 2)
 .label-ios + ion-input .text-input,
 .label-ios + ion-textarea .text-input,
 .label-ios + .input + .cloned-input {
-  margin-left: $item-ios-padding-start;
+  @include margin-horizontal($item-ios-padding-start, null);
 
   width: calc(100% - (#{$item-ios-padding-end} / 2) - #{$item-ios-padding-start});
 }

@@ -15,8 +15,20 @@ $alert-ios-background:                          #f8f8f8 !default;
 /// @prop - Box shadow of the alert
 $alert-ios-box-shadow:                          none !default;
 
-/// @prop - Padding of the alert head
-$alert-ios-head-padding:                        12px 16px 7px !default;
+// deprecated
+$alert-ios-head-padding:                        null !default;
+
+/// @prop - Padding top of the alert head
+$alert-ios-head-padding-top:                    12px !default;
+
+/// @prop - Padding end of the alert head
+$alert-ios-head-padding-end:                    16px !default;
+
+/// @prop - Padding bottom of the alert head
+$alert-ios-head-padding-bottom:                 7px !default;
+
+/// @prop - Padding start of the alert head
+$alert-ios-head-padding-start:                  $alert-ios-head-padding-end !default;
 
 /// @prop - Text align of the alert head
 $alert-ios-head-text-align:                     center !default;
@@ -36,8 +48,21 @@ $alert-ios-sub-title-font-size:                 14px !default;
 /// @prop - Text color of the alert sub title
 $alert-ios-sub-title-text-color:                #666 !default;
 
-/// @prop - Padding of the alert message
-$alert-ios-message-padding:                     0 16px 21px !default;
+// deprecated
+$alert-ios-message-padding:                     null !default;
+
+/// @prop - Padding top of the alert message
+$alert-ios-message-padding-top:                 0 !default;
+
+/// @prop - Padding end of the alert message
+$alert-ios-message-padding-end:                 16px !default;
+
+/// @prop - Padding bottom of the alert message
+$alert-ios-message-padding-bottom:              21px !default;
+
+/// @prop - Padding start of the alert message
+$alert-ios-message-padding-start:               $alert-ios-message-padding-end !default;
+
 
 /// @prop - Font size of the alert message
 $alert-ios-message-font-size:                   13px !default;
@@ -48,8 +73,20 @@ $alert-ios-message-text-align:                  center !default;
 /// @prop - Text color of the alert message
 $alert-ios-message-text-color:                  inherit !default;
 
-/// @prop - Padding of the alert empty message
-$alert-ios-message-padding-empty:               0 0 12px 0 !default;
+// deprecated
+$alert-ios-message-padding-empty:               null !default;
+
+/// @prop - Padding top of the alert empty message
+$alert-ios-message-empty-padding-top:           0 !default;
+
+/// @prop - Padding end of the alert empty message
+$alert-ios-message-empty-padding-end:           0 !default;
+
+/// @prop - Padding bottom of the alert empty message
+$alert-ios-message-empty-padding-bottom:        12px !default;
+
+/// @prop - Padding start of the alert empty message
+$alert-ios-message-empty-padding-start:         0 !default;
 
 /// @prop - Maximum height of the alert content
 $alert-ios-content-max-height:                  240px !default;
@@ -242,9 +279,11 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-head {
-  padding: $alert-ios-head-padding;
-
   text-align: $alert-ios-head-text-align;
+
+  @include deprecated-variable(padding, $alert-ios-head-padding) {
+    @include padding($alert-ios-head-padding-top, $alert-ios-head-padding-end, $alert-ios-head-padding-bottom, $alert-ios-head-padding-start);
+  }
 }
 
 .alert-ios .alert-title {
@@ -265,11 +304,13 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-message,
 .alert-ios .alert-input-group {
-  padding: $alert-ios-message-padding;
-
   font-size: $alert-ios-message-font-size;
   text-align: $alert-ios-message-text-align;
   color: $alert-ios-message-text-color;
+
+  @include deprecated-variable(padding, $alert-ios-message-padding) {
+    @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
+  }
 }
 
 .alert-ios .alert-message {
@@ -277,7 +318,9 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-ios .alert-message:empty {
-  padding: $alert-ios-message-padding-empty;
+  @include deprecated-variable(padding, $alert-ios-message-padding-empty) {
+    @include padding($alert-ios-message-empty-padding-top, $alert-ios-message-empty-padding-end, $alert-ios-message-empty-padding-bottom, $alert-ios-message-empty-padding-start);
+  }
 }
 
 
@@ -457,11 +500,11 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-ios .alert-button {
+  @include margin($alert-ios-button-margin);
+
   overflow: hidden;
 
   flex: $alert-ios-button-flex;
-
-  margin: $alert-ios-button-margin;
 
   min-width: $alert-ios-button-min-width;
   height: $alert-ios-button-min-height;

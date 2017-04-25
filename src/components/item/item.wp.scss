@@ -51,9 +51,6 @@ $item-wp-divider-border-bottom:      1px solid $list-wp-border-color !default;
 /// @prop - Font size for the divider
 $item-wp-divider-font-size:          2rem !default;
 
-/// @prop - Padding for the divider
-$item-wp-divider-padding:            5px 15px !default;
-
 /// @prop - Background for the sliding content
 $item-wp-sliding-content-background: $list-wp-background-color !default;
 
@@ -81,14 +78,14 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 }
 
 .item-wp h1 {
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 2.4rem;
   font-weight: normal;
 }
 
 .item-wp h2 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.6rem;
   font-weight: normal;
@@ -98,7 +95,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 .item-wp h4,
 .item-wp h5,
 .item-wp h6 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.4rem;
   font-weight: normal;
@@ -106,9 +103,9 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 }
 
 .item-wp p {
-  overflow: inherit;
+  @include margin(0, 0, 2px);
 
-  margin: 0 0 2px;
+  overflow: inherit;
 
   font-size: 1.4rem;
   line-height: normal;
@@ -147,18 +144,16 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp [item-left],
 .item-wp [item-right] {
-  margin: $item-wp-padding-media-top ($item-wp-padding-end / 2) $item-wp-padding-media-bottom 0;
+  @include margin($item-wp-padding-media-top, ($item-wp-padding-end / 2), $item-wp-padding-media-bottom, 0);
 }
 
 .item-wp ion-icon[item-left],
 .item-wp ion-icon[item-right] {
-  margin-top: $item-wp-padding-icon-top;
-  margin-bottom: $item-wp-padding-icon-bottom;
-  margin-left: 0;
+  @include margin($item-wp-padding-icon-top, null, $item-wp-padding-icon-bottom, 0);
 }
 
 .item-wp .item-button {
-  padding: 0 .6em;
+  @include padding(0, .6em);
 
   height: 25px;
 
@@ -167,7 +162,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp .item-button[icon-only] ion-icon,
 .item-wp .item-button[icon-only] {
-  padding: 0 1px;
+  @include padding(0, 1em);
 }
 
 .item-wp[text-wrap] ion-label {
@@ -177,17 +172,17 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp ion-icon[item-left] + .item-inner,
 .item-wp ion-icon[item-left] + .item-input {
-  margin-left: ($item-wp-padding-start / 2);
+  @include margin-horizontal(($item-wp-padding-start / 2), null);
 }
 
 .item-wp ion-avatar[item-left],
 .item-wp ion-thumbnail[item-left] {
-  margin: ($item-wp-padding-end / 2) $item-wp-padding-end ($item-wp-padding-end / 2) 0;
+  @include margin(($item-wp-padding-end / 2), $item-wp-padding-end, ($item-wp-padding-end / 2), 0);
 }
 
 .item-wp ion-avatar[item-right],
 .item-wp ion-thumbnail[item-right] {
-  margin: ($item-wp-padding-end / 2);
+  @include margin(($item-wp-padding-end / 2));
 }
 
 

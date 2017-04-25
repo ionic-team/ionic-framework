@@ -4,13 +4,12 @@
 // --------------------------------------------------
 
 .bar-button {
+  @include margin(0);
+  @include padding(0);
   @include appearance(none);
 
   position: relative;
   display: inline-block;
-
-  margin: 0;
-  padding: 0;
 
   line-height: 1;
   text-align: center;

@@ -106,11 +106,11 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .toolbar-ios ion-title {
+  @include padding(0, 90px, 1px);
+
   position: absolute;
   top: 0;
   left: 0;
-
-  padding: 0 90px 1px;
 
   width: 100%;
   height: 100%;
@@ -172,7 +172,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .bar-button-ios {
-  padding: 0 4px;
+  @include padding(0, 4px);
 
   height: 32px;
 
@@ -294,13 +294,13 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .bar-button-ios[icon-only] {
-  padding: 0;
+  @include padding(0);
 
   min-width: .9em;
 }
 
 .bar-button-ios[icon-only] ion-icon {
-  padding: 0 .1em;
+  @include padding(0, .1em);
 
   font-size: 1.8em;
   line-height: .67;
@@ -313,11 +313,11 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .back-button-ios {
+  @include margin(0);
+
   overflow: visible;
 
   order: map-get($toolbar-order-ios, back-button);
-
-  margin: 0;
 
   min-height: 3.2rem;
 
@@ -326,9 +326,10 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .back-button-icon-ios {
+  @include margin(0);
+
   display: inherit;
 
-  margin: 0;
   margin-top: -1px;
 
   min-width: 18px;
@@ -345,15 +346,15 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .bar-button-menutoggle-ios {
-  order: map-get($toolbar-order-ios, menu-toggle-start);
+  @include margin(0, 6px);
+  @include padding(0);
 
-  margin: 0 6px;
-  padding: 0;
+  order: map-get($toolbar-order-ios, menu-toggle-start);
 
   min-width: 36px;
 
   ion-icon {
-    padding: 0 6px;
+    @include padding(0, 6px);
 
     font-size: 2.8rem;
   }

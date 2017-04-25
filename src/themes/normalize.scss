@@ -1,5 +1,6 @@
 // ! normalize.css v3.0.2 | MIT License | github.com/necolas/normalize.css
 
+
 // HTML5 display definitions
 // ==========================================================================
 
@@ -107,7 +108,7 @@ textarea {
 }
 
 textarea::placeholder {
-  @include padding-horizontal(2px, null);
+  padding-left: 2px;
 }
 
 form,

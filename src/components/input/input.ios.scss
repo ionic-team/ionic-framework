@@ -57,8 +57,8 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 // --------------------------------------------------
 
 .text-input-ios {
-  margin: $text-input-ios-margin-top $text-input-ios-margin-end $text-input-ios-margin-bottom $text-input-ios-margin-start;
-  padding: 0;
+  @include margin($text-input-ios-margin-top, $text-input-ios-margin-end, $text-input-ios-margin-bottom, $text-input-ios-margin-start);
+  @include padding(0);
 
   width: calc(100% - #{($text-input-ios-margin-end + $text-input-ios-margin-start)});
 }
@@ -69,8 +69,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 .input-ios .inset-input {
   @include padding(($item-ios-padding-top / 2), ($item-ios-padding-end / 2), ($item-ios-padding-bottom / 2), ($item-ios-padding-start / 2));
-
-  margin: ($item-ios-padding-top / 2) $item-ios-padding-end ($item-ios-padding-bottom / 2) 0;
+  @include margin(($item-ios-padding-top / 2), $item-ios-padding-end, ($item-ios-padding-bottom / 2), 0);
 }
 
 
@@ -137,16 +136,14 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 .item-ios.item-label-stacked .text-input,
 .item-ios.item-label-floating .text-input {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-left: 0;
+  @include margin(8px, null, 8px, 0);
 
   width: calc(100% - #{$text-input-ios-margin-end});
 }
 
 .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
 .item-ios.item-label-floating .label-ios + .input + .cloned-input {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 .item-label-stacked .select-ios,

@@ -100,11 +100,11 @@ html {
 }
 
 body {
+  @include margin(0);
+  @include padding(0);
+
   position: fixed;
   overflow: hidden;
-
-  margin: 0;
-  padding: 0;
 
   width: 100%;
   max-width: 100%;

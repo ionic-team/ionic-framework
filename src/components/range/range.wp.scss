@@ -68,15 +68,15 @@ $range-wp-pin-padding:                       8px !default;
 
 
 .range-wp {
-  padding: $range-wp-padding-vertical $range-wp-padding-horizontal;
+  @include padding($range-wp-padding-vertical, $range-wp-padding-horizontal);
 }
 
 .range-wp [range-left] {
-  margin: 0 12px 0 0;
+  @include margin(0, 12px, 0, 0);
 }
 
 .range-wp [range-right] {
-  margin: 0 0 0 12px;
+  @include margin(0, 0, 0, 12px);
 }
 
 .range-wp.range-has-pin {
@@ -117,12 +117,11 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp .range-knob-handle {
+  @include margin(-($range-wp-hit-height / 2), null, null, -($range-wp-hit-width / 2));
+
   position: absolute;
   top: ($range-wp-slider-height / 2);
-  left: 0%;
-
-  margin-top: -($range-wp-hit-height / 2);
-  margin-left: -($range-wp-hit-width / 2);
+  left: 0;
 
   width: $range-wp-hit-width;
   height: $range-wp-hit-height;
@@ -146,10 +145,10 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp .range-tick {
+  @include margin-horizontal(-($range-wp-tick-width / 2), null);
+
   position: absolute;
   top: ($range-wp-hit-height / 2) - ($range-wp-tick-height / 2) + ($range-wp-bar-height / 2);
-
-  margin-left: ($range-wp-tick-width / 2) * -1;
 
   width: $range-wp-tick-width;
   height: $range-wp-tick-height;

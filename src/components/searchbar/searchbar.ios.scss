@@ -62,7 +62,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .searchbar-ios {
-  padding: $searchbar-ios-padding-vertical $searchbar-ios-padding-horizontal;
+  @include padding($searchbar-ios-padding-vertical, $searchbar-ios-padding-horizontal);
 
   min-height: $searchbar-ios-min-height;
 
@@ -86,12 +86,11 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .searchbar-ios .searchbar-search-icon {
   @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
+  @include margin-horizontal(calc(50% - 60px), null);
 
   position: absolute;
   top: 9px;
   left: 9px;
-
-  margin-left: calc(50% - 60px);
 
   width: $searchbar-ios-input-search-icon-size + 1;
   height: $searchbar-ios-input-search-icon-size + 1;
@@ -106,8 +105,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .searchbar-ios .searchbar-input {
   @include placeholder($searchbar-ios-input-placeholder-color);
-
-  padding: 0 28px;
+  @include padding(0, 28px);
 
   height: $searchbar-ios-input-height;
 
@@ -143,14 +141,12 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .searchbar-ios .searchbar-ios-cancel {
-  @include padding-horizontal(8px, null);
+  @include padding(0, 8px, 0, 0);
+  @include margin-horizontal(0, null);
 
   display: none;
 
   flex-shrink: 0;
-
-  margin-left: 0;
-  padding: 0;
 
   height: 30px;
 
@@ -161,7 +157,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .searchbar-ios.searchbar-left-aligned .searchbar-search-icon {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 .searchbar-ios.searchbar-left-aligned .searchbar-input {
@@ -190,7 +186,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 }
 
 .toolbar .searchbar-ios .searchbar-ios-cancel {
-  padding: 0;
+  @include padding(0);
 }
 
 .toolbar .searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {

@@ -38,7 +38,7 @@ ion-toast {
 }
 
 .toast-button {
-  padding: 19px 16px 17px;
+  @include padding(19px, 16px, 17px);
 
   font-size: 1.5rem;
 }

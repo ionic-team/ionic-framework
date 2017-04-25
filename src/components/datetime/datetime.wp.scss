@@ -39,7 +39,7 @@ $datetime-wp-placeholder-color:   $input-wp-border-color !default;
 }
 
 .datetime-wp .datetime-text {
-  padding: 0 8px;
+  @include padding(0, 8px);
 
   min-height: 3.4rem;
 

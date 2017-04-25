@@ -193,7 +193,7 @@ $toggle-md-item-right-padding-start:  $item-md-padding-start !default;
 }
 
 .item-md.item-toggle ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 

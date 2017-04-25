@@ -108,7 +108,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 }
 
 .toolbar-title-md {
-  padding: 0 12px;
+  @include padding(0, 12px);
 
   font-size: $toolbar-md-title-font-size;
   font-weight: 500;
@@ -165,7 +165,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 }
 
 .bar-button-md:first-child {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 .bar-buttons-md[end] {
@@ -185,11 +185,8 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-md {
-  margin-top: 0;
-  margin-right: .2rem;
-  margin-bottom: 0;
-  margin-left: .2rem;
-  padding: 0 5px;
+  @include margin(0, .2rem, 0, .2rem);
+  @include padding(0, 5px);
 
   height: 32px;
 
@@ -319,11 +316,11 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 }
 
 .bar-button-md[icon-only] {
-  padding: 0;
+  @include padding(0);
 }
 
 .bar-button-md[icon-only] ion-icon {
-  padding: 0 .1em;
+  @include padding(0, .1em);
 
   min-width: 28px;
 
@@ -338,7 +335,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .back-button-md {
-  margin: 0 6px;
+  @include margin(0, 6px);
 
   min-width: 44px;
 
@@ -346,8 +343,8 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 }
 
 .back-button-icon-md {
-  margin: 0;
-  padding: 0 6px;
+  @include margin(0);
+  @include padding(0, 6px);
 
   font-size: 2.4rem;
   font-weight: normal;
@@ -359,25 +356,25 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-menutoggle-md {
-  order: map-get($toolbar-order-md, menu-toggle-start);
+  @include margin(0, 6px);
+  @include padding(0, 2px);
 
-  margin: 0 6px;
-  padding: 0 2px;
+  order: map-get($toolbar-order-md, menu-toggle-start);
 
   min-width: 44px;
 }
 
 .bar-button-menutoggle-md ion-icon {
-  padding: 0 6px;
+  @include padding(0, 6px);
 
   font-size: 2.4rem;
 }
 
 .bar-button-menutoggle-md[end],
 .bar-button-menutoggle-md[right] {
-  order: map-get($toolbar-order-md, menu-toggle-end);
+  @include margin(0, 2px);
 
-  margin: 0 2px;
+  order: map-get($toolbar-order-md, menu-toggle-end);
 
   min-width: 28px;
 }

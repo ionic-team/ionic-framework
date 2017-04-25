@@ -69,7 +69,7 @@ $list-ios-header-background-color:    transparent !default;
 // --------------------------------------------------
 
 .list-ios {
-  margin: -1px $list-ios-margin-end $list-ios-margin-bottom $list-ios-margin-start;
+  @include margin(-1px, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
 }
 
 .list-ios > .item-block:first-child {
@@ -107,7 +107,7 @@ $list-ios-header-background-color:    transparent !default;
 
   align-items: center;
 
-  margin: 0;
+  @include margin(0);
 
   height: 100%;
   min-height: 100%;
@@ -119,7 +119,7 @@ $list-ios-header-background-color:    transparent !default;
 }
 
 .list-ios ion-item-options .button::before {
-  margin: 0 auto;
+  @include margin(0, auto);
 }
 
 .list-ios:not([inset]) + .list-ios:not([inset]) ion-list-header {
@@ -132,7 +132,7 @@ $list-ios-header-background-color:    transparent !default;
 // --------------------------------------------------
 
 .list-ios[inset] {
-  margin: $list-inset-ios-margin-top $list-inset-ios-margin-end $list-inset-ios-margin-bottom $list-inset-ios-margin-start;
+  @include margin($list-inset-ios-margin-top, $list-inset-ios-margin-end, $list-inset-ios-margin-bottom, $list-inset-ios-margin-start);
 
   border-radius: $list-inset-ios-border-radius;
 }

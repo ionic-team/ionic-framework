@@ -56,7 +56,7 @@ $loading-wp-spinner-dots-color:        $loading-wp-spinner-color !default;
 // -----------------------------------------
 
 .loading-wp .loading-spinner + .loading-content {
-  margin-left: 16px;
+  @include margin-horizontal(16px, null);
 }
 
 

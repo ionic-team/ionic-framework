@@ -22,14 +22,14 @@ ion-action-sheet {
 }
 
 .action-sheet-wrapper {
+  @include margin(auto);
+
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;
-
-  margin: auto;
 
   width: $action-sheet-width;
   max-width: $action-sheet-max-width;

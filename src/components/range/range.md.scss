@@ -77,15 +77,15 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
 
 .range-md {
-  padding: $range-md-padding-vertical $range-md-padding-horizontal;
+  @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
 .range-md [range-left] {
-  margin: 0 12px 0 0;
+  @include margin(0, 12px, 0, 0);
 }
 
 .range-md [range-right] {
-  margin: 0 0 0 12px;
+  @include margin(0, 0, 0, 12px);
 }
 
 .range-md.range-has-pin {
@@ -126,12 +126,11 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-knob-handle {
+  @include margin(-($range-md-hit-height / 2), null, null, -($range-md-hit-width / 2));
+
   position: absolute;
   top: ($range-md-slider-height / 2);
-  left: 0%;
-
-  margin-top: -($range-md-hit-height / 2);
-  margin-left: -($range-md-hit-width / 2);
+  left: 0;
 
   width: $range-md-hit-width;
   height: $range-md-hit-height;
@@ -163,13 +162,13 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-tick {
+  @include margin-horizontal(-($range-md-tick-width / 2), null);
+
   position: absolute;
 
   top: ($range-md-hit-height / 2) - ($range-md-tick-height / 2) + ($range-md-bar-height / 2);
 
   z-index: 1;
-
-  margin-left: ($range-md-tick-width / 2) * -1;
 
   width: $range-md-tick-width;
   height: $range-md-tick-height;
@@ -186,11 +185,11 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-pin {
+  @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
+
   position: relative;
   top: -20px;
   display: inline-block;
-
-  padding: $range-md-pin-padding-vertical $range-md-pin-padding-horizontal;
 
   min-width: 28px;
   height: 28px;
@@ -210,13 +209,12 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
   &::before {
     @include border-radius(50%, 50%, 50%, 0);
+    @include margin-horizontal(-13px, null);
 
     position: absolute;
     top: 3px;
     left: 50%;
     z-index: -1;
-
-    margin-left: -13px;
 
     width: 26px;
     height: 26px;

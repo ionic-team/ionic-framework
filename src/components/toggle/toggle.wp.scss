@@ -199,7 +199,7 @@ $toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
 }
 
 .item-wp.item-toggle ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 

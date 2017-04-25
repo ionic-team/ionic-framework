@@ -57,8 +57,8 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .text-input-md {
-  margin: $text-input-md-margin-top $text-input-md-margin-end $text-input-md-margin-bottom $text-input-md-margin-start;
-  padding: 0;
+  @include margin($text-input-md-margin-top, $text-input-md-margin-end, $text-input-md-margin-bottom, $text-input-md-margin-start);
+  @include padding(0);
 
   width: calc(100% - #{$text-input-md-margin-end} - #{$text-input-md-margin-start});
 }
@@ -69,8 +69,7 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 .input-md .inset-input {
   @include padding(($item-md-padding-top / 2), ($item-md-padding-end / 2), ($item-md-padding-bottom / 2), ($item-md-padding-start / 2));
-
-  margin: ($item-md-padding-top / 2) $item-md-padding-end ($item-md-padding-bottom / 2) $item-md-padding-start;
+  @include margin(($item-md-padding-top / 2), $item-md-padding-end, ($item-md-padding-bottom / 2), $item-md-padding-start);
 }
 
 
@@ -138,9 +137,7 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 .item-label-stacked .text-input-md,
 .item-label-floating .text-input-md {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-left: 0;
+  @include margin(8px, null, 8px, 0);
 
   width: calc(100% - #{$text-input-md-margin-end});
 }
