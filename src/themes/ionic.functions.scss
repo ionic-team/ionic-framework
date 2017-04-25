@@ -315,17 +315,19 @@ $include-rtl: true !default;
     padding-right: $end;
   }
 
-  @include rtl() {
-    @if $start != null {
-      padding-right: $start;
-    } @else {
-      padding-right: initial;
-    }
+  @if $start != $end {
+    @include rtl() {
+      @if $start != null {
+        padding-right: $start;
+      } @else {
+        padding-right: initial;
+      }
 
-    @if $end != null {
-      padding-left: $end;
-    } @else {
-      padding-left: initial;
+      @if $end != null {
+        padding-left: $end;
+      } @else {
+        padding-left: initial;
+      }
     }
   }
 }
