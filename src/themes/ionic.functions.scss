@@ -337,3 +337,54 @@ $include-rtl: true !default;
   padding-top: $top;
   padding-bottom: $bottom;
 }
+
+// Add correct border radius for ltr and rtl
+// @param {string} $top-start
+// @param {string} $top-end
+// @param {string} $bottom-end
+// @param {string} $bottom-start
+// ----------------------------------------------------------
+@mixin border-radius($top-start, $top-end, $bottom-end, $bottom-start) {
+  @if $top-start != null {
+    border-top-left-radius: $top-start;
+  }
+
+  @if $top-end != null {
+    border-top-right-radius: $top-end;
+  }
+
+  @if $bottom-end != null {
+    border-bottom-right-radius: $bottom-end;
+  }
+
+  @if $bottom-start != null {
+    border-bottom-left-radius: $bottom-start;
+  }
+
+  @include rtl() {
+    @if $top-start != null {
+      border-top-right-radius: $top-start;
+    } @else {
+      border-top-right-radius: 0;
+    }
+
+    @if $top-end != null {
+      border-top-left-radius: $top-end;
+    } @else {
+      border-top-left-radius: 0;
+    }
+
+    @if $bottom-end != null {
+      border-bottom-left-radius: $bottom-end;
+    } @else {
+      border-bottom-left-radius: 0;
+    }
+
+    @if $bottom-start != null {
+      border-bottom-right-radius: $bottom-start;
+    } @else {
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
