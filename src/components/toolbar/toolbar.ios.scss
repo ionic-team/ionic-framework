@@ -106,11 +106,10 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .toolbar-ios ion-title {
+  @include position(0, null, null, 0);
   @include padding(0, 90px, 1px);
 
   position: absolute;
-  top: 0;
-  left: 0;
 
   width: 100%;
   height: 100%;

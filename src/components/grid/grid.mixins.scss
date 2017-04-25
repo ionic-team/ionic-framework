@@ -171,7 +171,7 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-column-push($size, $columns: $grid-columns) {
-  left: if($size > 0, percentage($size / $columns), auto);
+  @include position(null, null, null, if($size > 0, percentage($size / $columns), auto));
 }
 
 

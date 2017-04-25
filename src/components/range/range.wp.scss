@@ -88,9 +88,9 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp .range-bar {
+  @include position(($range-wp-slider-height / 2), null, null, 0);
+
   position: absolute;
-  top: ($range-wp-slider-height / 2);
-  left: 0;
 
   width: 100%;
   height: $range-wp-bar-height;
@@ -117,11 +117,10 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp .range-knob-handle {
+  @include position(($range-wp-slider-height / 2), null, null, 0);
   @include margin(-($range-wp-hit-height / 2), null, null, -($range-wp-hit-width / 2));
 
   position: absolute;
-  top: ($range-wp-slider-height / 2);
-  left: 0;
 
   width: $range-wp-hit-width;
   height: $range-wp-hit-height;
@@ -130,9 +129,10 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp .range-knob {
+  @include position(($range-wp-hit-height / 2) - ($range-wp-knob-height / 2) + ($range-wp-bar-height / 2),
+          null, null, ($range-wp-hit-width / 2) - ($range-wp-knob-width / 2));
+
   position: absolute;
-  top: ($range-wp-hit-height / 2) - ($range-wp-knob-height / 2) + ($range-wp-bar-height / 2);
-  left: ($range-wp-hit-width / 2) - ($range-wp-knob-width / 2);
 
   width: $range-wp-knob-width;
   height: $range-wp-knob-height;

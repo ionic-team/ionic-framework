@@ -4,9 +4,9 @@
 // --------------------------------------------------
 
 ion-content {
+  @include position(0, null, null, 0);
+
   position: relative;
-  top: 0;
-  left: 0;
   display: block;
 
   width: 100%;
@@ -28,11 +28,9 @@ a {
 // --------------------------------------------------
 
 .scroll-content {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-scroll-content;
   display: block;
 
@@ -65,11 +63,9 @@ ion-content.js-scroll > .scroll-content {
 // --------------------------------------------------
 
 .fixed-content {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   display: block;
 }
 

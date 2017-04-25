@@ -106,9 +106,9 @@ $checkbox-ios-item-right-margin-start:          0 !default;
 // -----------------------------------------
 
 .checkbox-ios .checkbox-checked .checkbox-inner {
+  @include position(4px, null, null, 7px);
+
   position: absolute;
-  top: 4px;
-  left: 7px;
 
   width: 4px;
   height: 9px;

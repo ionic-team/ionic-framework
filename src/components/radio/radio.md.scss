@@ -74,11 +74,10 @@ $radio-md-item-right-margin-start:0 !default;
 // -----------------------------------------
 
 .radio-md .radio-icon {
+  @include position(0, null, null, 0);
   @include margin(0);
 
   position: relative;
-  top: 0;
-  left: 0;
   display: block;
 
   width: $radio-md-icon-width;
@@ -95,9 +94,9 @@ $radio-md-item-right-margin-start:0 !default;
 // -----------------------------------------
 
 .radio-md .radio-inner {
+  @include position($radio-md-icon-border-width, null, null, $radio-md-icon-border-width);
+
   position: absolute;
-  top: $radio-md-icon-border-width;
-  left: $radio-md-icon-border-width;
 
   width: $radio-md-icon-width - $radio-md-icon-border-width * 4;
   height: $radio-md-icon-height - $radio-md-icon-border-width * 4;

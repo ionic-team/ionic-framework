@@ -74,9 +74,10 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
 }
 
 .select-wp .select-icon .select-icon-inner {
+  @include position(3px, null, null, 5px);
+
   position: absolute;
-  top: 3px;
-  left: 5px;
+
   display: block;
 
   width: ($select-wp-icon-width / 2);

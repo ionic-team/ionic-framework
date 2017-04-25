@@ -79,7 +79,7 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md > ion-input:last-child::after {
-  left: 0;
+  @include position-horizontal(0, null);
 }
 
 .list-md ion-item-options {

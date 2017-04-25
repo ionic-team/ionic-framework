@@ -88,9 +88,9 @@ $radio-ios-item-right-margin-start:   ($item-ios-padding-start / 2) !default;
 // -----------------------------------------
 
 .radio-ios .radio-checked .radio-inner {
+  @include position(4px, null, null, 7px);
+
   position: absolute;
-  top: 4px;
-  left: 7px;
 
   width: 5px;
   height: 12px;

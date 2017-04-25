@@ -83,7 +83,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp > ion-input:last-child::after {
-  left: 0;
+  @include position-horizontal(0, null);
 }
 
 .list-wp ion-item-options .button {

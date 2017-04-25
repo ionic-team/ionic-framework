@@ -29,11 +29,11 @@ $toast-md-title-padding-start:                   $toast-md-title-padding-end !de
 
 
 .toast-md .toast-wrapper {
+  @include position-horizontal(0, 0);
   @include margin(auto);
 
   position: absolute;
-  right: 0;
-  left: 0;
+
   z-index: $z-index-overlay-wrapper;
   display: block;
 

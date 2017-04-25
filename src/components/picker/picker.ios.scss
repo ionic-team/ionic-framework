@@ -157,9 +157,9 @@ $picker-button-ios-strong-font-weight:         600 !default;
 }
 
 .picker-ios .picker-above-highlight {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: 10;
   display: block;
 
@@ -176,9 +176,10 @@ $picker-button-ios-strong-font-weight:         600 !default;
 }
 
 .picker-ios .picker-below-highlight {
+  @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
+
   position: absolute;
-  top: $picker-ios-option-offset-y + $picker-ios-option-height - 4;
-  left: 0;
+
   z-index: 11;
   display: block;
 

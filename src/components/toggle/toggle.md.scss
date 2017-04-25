@@ -119,9 +119,9 @@ $toggle-md-item-right-padding-start:  $item-md-padding-start !default;
 // -----------------------------------------
 
 .toggle-md .toggle-inner {
+  @include position(($toggle-md-handle-height - $toggle-md-track-height) / -2, null, null, 0);
+
   position: absolute;
-  top: ($toggle-md-handle-height - $toggle-md-track-height) / -2;
-  left: 0;
 
   width: $toggle-md-handle-width;
   height: $toggle-md-handle-height;

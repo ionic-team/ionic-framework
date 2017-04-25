@@ -33,15 +33,14 @@ ion-item-options {
 }
 
 ion-item-options[side=left] {
-  right: auto;
-  left: 0;
+  @include position-horizontal(0, auto);
 
   justify-content: flex-start;
 }
 
 ion-item-options .button {
   @include margin(0);
-  padding: 0 .7em;
+  @include padding(0, .7em);
 
   height: 100%;
 

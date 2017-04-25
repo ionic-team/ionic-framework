@@ -71,11 +71,12 @@ $radio-wp-item-right-margin-start:0 !default;
 // -----------------------------------------
 
 .radio-wp .radio-icon {
+  @include position(0, null, null, 0);
+
   @include margin(0);
 
   position: relative;
-  top: 0;
-  left: 0;
+
   display: block;
 
   width: $radio-wp-icon-width;
@@ -92,9 +93,10 @@ $radio-wp-item-right-margin-start:0 !default;
 // -----------------------------------------
 
 .radio-wp .radio-inner {
+  @include position($radio-wp-icon-border-width, null, null, $radio-wp-icon-border-width);
+
   position: absolute;
-  top: $radio-wp-icon-border-width;
-  left: $radio-wp-icon-border-width;
+
   display: none;
 
   width: $radio-wp-icon-width / 2;

@@ -20,6 +20,8 @@ $alert-input-placeholder-color:   #999 !default;
 
 
 ion-alert {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
   top: 0;
   right: 0;

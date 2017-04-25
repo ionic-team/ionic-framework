@@ -463,11 +463,11 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // ---------------------------------------------------
 
 .alert-wp .alert-radio-icon {
+  @include position($alert-wp-radio-top, null, null, $alert-wp-radio-left);
+
   @include margin(0);
 
   position: relative;
-  top: $alert-wp-radio-top;
-  left: $alert-wp-radio-left;
   display: block;
 
   width: $alert-wp-radio-width;
@@ -483,9 +483,9 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // ---------------------------------------------------
 
 .alert-wp .alert-radio-inner {
+  @include position($alert-wp-radio-icon-top, null, null, $alert-wp-radio-icon-left);
+
   position: absolute;
-  top: $alert-wp-radio-icon-top;
-  left: $alert-wp-radio-icon-left;
   display: none;
 
   width: $alert-wp-radio-icon-width;
@@ -537,9 +537,9 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp .alert-checkbox-icon {
+  @include position($alert-wp-checkbox-top, null, null, $alert-wp-checkbox-left);
+
   position: relative;
-  top: $alert-wp-checkbox-top;
-  left: $alert-wp-checkbox-left;
 
   width: $alert-wp-checkbox-width;
   height: $alert-wp-checkbox-height;
@@ -563,9 +563,9 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp [aria-checked=true] .alert-checkbox-inner {
+  @include position($alert-wp-checkbox-icon-top, null, null, $alert-wp-checkbox-icon-left);
+
   position: absolute;
-  top: $alert-wp-checkbox-icon-top;
-  left: $alert-wp-checkbox-icon-left;
 
   width: $alert-wp-checkbox-icon-width;
   height: $alert-wp-checkbox-icon-height;

@@ -4,9 +4,10 @@
 // --------------------------------------------------
 
 .tabbar {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  bottom: 0;
-  left: 0;
+
   z-index: $z-index-toolbar;
   display: flex;
 

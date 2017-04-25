@@ -78,9 +78,9 @@ ion-fab {
   z-index: $z-index-fixed-content;
 
   &[center] {
-    @include margin-horizontal(-$fab-size / 2, 0);
+    @include position(null, null, null, 50%);
 
-    left: 50%;
+    @include margin-horizontal(-$fab-size / 2, 0);
   }
 
   &[middle] {
@@ -102,7 +102,7 @@ ion-fab {
   }
 
   &[left] {
-    left: $fab-content-margin;
+    @include position(null, null, null, $fab-content-margin);
   }
 
   &[top][edge] {
@@ -171,8 +171,8 @@ ion-fab-list[side=left] {
 
 ion-fab-list[side=right] {
   @include margin(0, $fab-size + $fab-list-margin);
+  @include position(null, null, null, 0);
 
-  left: 0;
 
   flex-direction: row;
 }
@@ -186,10 +186,9 @@ ion-fab-list[side=right] {
 }
 
 .fab-close-icon {
+  @include position(0, 0 null, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
 
   line-height: $fab-size;
   opacity: 0;

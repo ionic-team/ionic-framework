@@ -162,11 +162,9 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 // --------------------------------------------------
 
 .toolbar-ios .segment-ios {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 }
 
 .toolbar-ios .segment-button {

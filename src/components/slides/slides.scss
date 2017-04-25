@@ -76,9 +76,10 @@
 
 /* a11y */
 .swiper-container .swiper-notification {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  left: 0;
-  top: 0;
+
   pointer-events: none;
   opacity: 0;
   z-index: -1000;
@@ -118,9 +119,9 @@
 
 .swiper-button-prev,
 .swiper-container-rtl .swiper-button-next {
+  @include position-horizontal(10px, auto);
+
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
-  left: 10px;
-  right: auto;
 }
 
 .swiper-button-prev.swiper-button-black,
@@ -135,9 +136,9 @@
 
 .swiper-button-next,
 .swiper-container-rtl .swiper-button-prev {
+  @include position-horizontal(auto, 10px);
+
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
-  right: 10px;
-  left: auto;
 }
 
 .swiper-button-next.swiper-button-black,
@@ -168,8 +169,8 @@
 .swiper-pagination-fraction,
 .swiper-pagination-custom,
 .swiper-container-horizontal > .swiper-pagination-bullets {
-  bottom: 10px;
-  left: 0;
+  @include position(null, null, 10px, 0);
+
   width: 100%;
 }
 
@@ -236,10 +237,11 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-pagination-progress .swiper-pagination-progressbar {
+  @include position(0, null, null, 0);
+
   background: #007aff;
   position: absolute;
-  left: 0;
-  top: 0;
+
   width: 100%;
   height: 100%;
   transform: scale(0);
@@ -251,17 +253,17 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-horizontal > .swiper-pagination-progress {
+  @include position(0, null, null, 0);
+
   width: 100%;
   height: 4px;
-  left: 0;
-  top: 0;
 }
 
 .swiper-container-vertical > .swiper-pagination-progress {
+  @include position(0, null, null, 0);
+
   width: 4px;
   height: 100%;
-  left: 0;
-  top: 0;
 }
 
 .swiper-pagination-progress.swiper-pagination-white {
@@ -295,9 +297,9 @@ button.swiper-pagination-bullet {
 .swiper-container-3d .swiper-slide-shadow-right,
 .swiper-container-3d .swiper-slide-shadow-top,
 .swiper-container-3d .swiper-slide-shadow-bottom {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -385,9 +387,10 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-cube .swiper-cube-shadow {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  left: 0;
-  bottom: 0px;
+
   width: 100%;
   height: 100%;
   background: #000;
@@ -442,8 +445,10 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-horizontal > .swiper-scrollbar {
+  @include position(null, null, null, 1%);
+
   position: absolute;
-  left: 1%;
+
   bottom: 3px;
   z-index: 50;
   height: 5px;
@@ -460,13 +465,13 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-scrollbar-drag {
+  @include position(0, null, null, 0);
+
   height: 100%;
   width: 100%;
   position: relative;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  left: 0;
-  top: 0;
 }
 
 .swiper-scrollbar-cursor-drag {
@@ -475,13 +480,12 @@ button.swiper-pagination-bullet {
 
 /* Preloader */
 .swiper-lazy-preloader {
+  @include position(50%, null, null, 50%);
   @include margin(-21px, null, null, -21px);
 
   width: 42px;
   height: 42px;
   position: absolute;
-  left: 50%;
-  top: 50%;
   z-index: 10;
   transform-origin: 50%;
   animation: swiper-preloader-spin 1s steps(12, end) infinite;

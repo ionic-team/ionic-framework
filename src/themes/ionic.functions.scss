@@ -302,6 +302,10 @@ $include-rtl: true !default;
   }
 }
 
+// If deprecated variable exists, use it, otherwise, use alternative
+// @param {string} $property - property to default
+// @param {string} $variable - the deprecated variable
+// ----------------------------------------------------------
 @mixin deprecated-variable($property, $variable) {
   @if $variable == null {
     @content;
@@ -401,6 +405,52 @@ $include-rtl: true !default;
     @include margin-horizontal($start, $end);
     margin-top: $top;
     margin-bottom: $bottom;
+  }
+}
+
+// Add position horizontal
+// @param {string} $start - amount to position start
+// @param {string} $end - amount to left: 0; end
+// ----------------------------------------------------------
+@mixin position-horizontal($start: null, $end: null) {
+  @if $start != null {
+    left: $start;
+  }
+
+  @if $end != null {
+    right: $end;
+  }
+
+  @if $start != $end {
+    @include rtl() {
+      @if $start != null {
+        right: $start;
+      } @else if $end != null {
+        right: auto;
+      }
+
+      @if $end != null {
+        left: $end;
+      } @else if $start != null {
+        left: auto;
+      }
+    }
+  }
+}
+
+// Add position for all sides
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin position($top: null, $end: null, $bottom: null, $start: null) {
+  @include position-horizontal($start, $end);
+  @if $top != null {
+    top: $top;
+  }
+  @if $bottom != null {
+    bottom: $bottom;
   }
 }
 

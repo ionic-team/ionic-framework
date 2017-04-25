@@ -114,9 +114,9 @@ $checkbox-wp-item-right-margin-start:    0 !default;
 // -----------------------------------------
 
 .checkbox-wp .checkbox-checked .checkbox-inner {
+  @include position(-2px, null, null, 3px);
+
   position: absolute;
-  top: -2px;
-  left: 3px;
 
   width: 6px;
   height: 12px;

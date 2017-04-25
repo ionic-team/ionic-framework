@@ -179,9 +179,10 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 // --------------------------------------------------
 
 .tabs-md[tabsHighlight=true] .tab-highlight {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  bottom: 0;
-  left: 0;
+
   display: block;
 
   width: 1px;

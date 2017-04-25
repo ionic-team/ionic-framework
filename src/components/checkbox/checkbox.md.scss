@@ -125,9 +125,9 @@ $checkbox-md-item-right-margin-start:    0 !default;
 // -----------------------------------------
 
 .checkbox-md .checkbox-checked .checkbox-inner {
+  @include position(0, null, null, 4px);
+
   position: absolute;
-  top: 0;
-  left: 4px;
 
   width: 5px;
   height: 10px;

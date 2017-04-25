@@ -161,9 +161,10 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 }
 
 .picker-wp .picker-above-highlight {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   z-index: 10;
 
   width: 100%;
@@ -179,9 +180,10 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 }
 
 .picker-wp .picker-below-highlight {
+  @include position($picker-wp-option-offset-y + $picker-wp-option-height - 4, null, null, 0);
+
   position: absolute;
-  top: $picker-wp-option-offset-y + $picker-wp-option-height - 4;
-  left: 0;
+
   z-index: 11;
 
   width: 100%;

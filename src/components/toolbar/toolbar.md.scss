@@ -65,9 +65,9 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   // using datauri png background image for improved scroll performance
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
+  @include position(null, null, -5px, 0);
+
   position: absolute;
-  bottom: -5px;
-  left: 0;
 
   width: 100%;
   height: 5px;

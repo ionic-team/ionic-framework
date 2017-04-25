@@ -23,11 +23,12 @@ $toast-wp-title-padding:                         1.5rem !default;
 
 
 .toast-wp .toast-wrapper {
+  @include position-horizontal(0, 0);
+
   @include margin(auto);
 
   position: absolute;
-  right: 0;
-  left: 0;
+
   z-index: $z-index-overlay-wrapper;
   display: block;
 

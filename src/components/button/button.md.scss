@@ -428,9 +428,9 @@ $button-md-strong-font-weight:                  bold !default;
 // it's display none, and .md sets to display block.
 
 .button-effect {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: 0;
   display: none;
 

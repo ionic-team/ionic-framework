@@ -20,12 +20,12 @@ $toast-ios-title-padding:                         1.5rem !default;
 
 
 .toast-ios .toast-wrapper {
+  @include position-horizontal(10px, 10px);
+
   @include margin(auto);
 
   position: absolute;
-  right: 10px;
 
-  left: 10px;
   z-index: $z-index-overlay-wrapper;
   display: block;
 

@@ -129,9 +129,9 @@ $toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
 // -----------------------------------------
 
 .toggle-wp .toggle-inner {
+  @include position($toggle-wp-handle-top, null, null, $toggle-wp-handle-left);
+
   position: absolute;
-  top: $toggle-wp-handle-top;
-  left: $toggle-wp-handle-left;
 
   width: $toggle-wp-handle-width;
   height: $toggle-wp-handle-height;

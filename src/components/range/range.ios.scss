@@ -91,9 +91,9 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-bar {
+  @include position(($range-ios-slider-height / 2), null, null, 0);
+
   position: absolute;
-  top: ($range-ios-slider-height / 2);
-  left: 0;
 
   width: 100%;
   height: $range-ios-bar-height;
@@ -122,11 +122,10 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-knob-handle {
+  @include position(($range-ios-slider-height / 2), null, null, 0);
   @include margin(-($range-ios-hit-height / 2), null, null, -($range-ios-hit-width / 2));
 
   position: absolute;
-  top: ($range-ios-slider-height / 2);
-  left: 0;
 
   width: $range-ios-hit-width;
   height: $range-ios-hit-height;
@@ -135,9 +134,10 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-knob {
+  @include position(($range-ios-hit-height / 2) - ($range-ios-knob-height / 2) + ($range-ios-bar-height / 2) - .5px,
+          null, null, ($range-ios-hit-width / 2) - ($range-ios-knob-width / 2));
+
   position: absolute;
-  top: ($range-ios-hit-height / 2) - ($range-ios-knob-height / 2) + ($range-ios-bar-height / 2) - .5px;
-  left: ($range-ios-hit-width / 2) - ($range-ios-knob-width / 2);
 
   width: $range-ios-knob-width;
   height: $range-ios-knob-height;

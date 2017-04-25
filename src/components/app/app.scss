@@ -229,9 +229,9 @@ ion-nav,
 ion-tab,
 ion-tabs,
 .app-root {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-page-container;
   display: block;
 
@@ -267,9 +267,9 @@ ion-tabs,
 // --------------------------------------------------
 
 .ion-page {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   display: block;
 
   width: 100%;
@@ -289,9 +289,9 @@ ion-tabs,
 // --------------------------------------------------
 
 ion-header {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-toolbar;
   display: block;
 
@@ -299,9 +299,9 @@ ion-header {
 }
 
 ion-footer {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-toolbar;
   display: block;
 
