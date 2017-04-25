@@ -94,6 +94,11 @@ input.text-input:-webkit-autofill {
   height: 100%;
 }
 
+[dir="rtl"] .input-cover {
+  right: 0;
+  left: auto;
+}
+
 .input[disabled] .input-cover {
   pointer-events: none;
 }

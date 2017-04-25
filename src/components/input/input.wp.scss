@@ -77,6 +77,10 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   line-height: $text-input-wp-line-height;
 }
 
+[dir="rtl"] .text-input-wp {
+  margin: $text-input-wp-margin-top $text-input-wp-margin-left $text-input-wp-margin-bottom $text-input-wp-margin-right;
+}
+
 
 // Windows Inset Input
 // --------------------------------------------------
@@ -84,6 +88,11 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 .item-wp .inset-input {
   margin: ($item-wp-padding-top / 2) $item-wp-padding-right ($item-wp-padding-bottom / 2) $item-wp-padding-left;
   padding: ($item-wp-padding-top / 2) ($item-wp-padding-right / 2) ($item-wp-padding-bottom / 2) ($item-wp-padding-left / 2);
+}
+
+[dir="rtl"] .item-wp .inset-input {
+  margin: ($item-wp-padding-top / 2) $item-wp-padding-left ($item-wp-padding-bottom / 2) $item-wp-padding-right;
+  padding: ($item-wp-padding-top / 2) ($item-wp-padding-left / 2) ($item-wp-padding-bottom / 2) ($item-wp-padding-right / 2);
 }
 
 
@@ -126,9 +135,22 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   width: calc(100% - #{$text-input-wp-margin-right});
 }
 
+[dir="rtl"] .item-label-stacked .text-input-wp,
+[dir="rtl"] .item-label-floating .text-input-wp,
+[dir="rtl"] .item-label-stacked .select-wp,
+[dir="rtl"] .item-label-floating .select-wp {
+  margin-right: 0;
+  margin-left: $text-input-wp-margin-right;
+}
+
 .item-wp.item-label-stacked [item-right],
 .item-wp.item-label-floating [item-right] {
   align-self: flex-end;
+}
+
+[dir="rtl"] .item-wp.item-label-stacked [item-right],
+[dir="rtl"] .item-wp.item-label-floating [item-right] {
+  align-self: flex-start;
 }
 
 // Windows Clear Input Icon
@@ -142,6 +164,11 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   padding-right: $text-input-wp-input-clear-icon-width;
 }
 
+[dir="rtl"] .input-wp[clearInput] .text-input {
+  padding-left: $text-input-wp-input-clear-icon-width;
+  padding-right: 0;
+}
+
 .input-wp .text-input-clear-icon {
   @include svg-background-image($text-input-wp-input-clear-icon-svg);
 
@@ -150,4 +177,9 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   width: $text-input-wp-input-clear-icon-width;
 
   background-size: $text-input-wp-input-clear-icon-size;
+}
+
+[dir="rtl"] .input-wp .text-input-clear-icon {
+  left: ($item-wp-padding-right / 2);
+  right: auto;
 }
