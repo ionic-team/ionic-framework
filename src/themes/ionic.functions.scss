@@ -304,7 +304,7 @@ $include-rtl: true !default;
 
 // Add padding horizontal
 // @param {string} $start - amount to pad start
-// @param {string} $end - amount to pad left (if not supplied)
+// @param {string} $end - amount to pad end
 // ----------------------------------------------------------
 @mixin padding-horizontal($start, $end: $start) {
   @if $start != null {
@@ -332,10 +332,58 @@ $include-rtl: true !default;
   }
 }
 
+// Add padding for all sides
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
 @mixin padding($top, $end, $bottom, $start) {
   @include padding-horizontal($start, $end);
   padding-top: $top;
   padding-bottom: $bottom;
+}
+
+// Add margin horizontal
+// @param {string} $start - amount to margin start
+// @param {string} $end - amount to margin end
+// ----------------------------------------------------------
+@mixin margin-horizontal($start, $end: $start) {
+  @if $start != null {
+    margin-left: $start;
+  }
+
+  @if $end != null {
+    margin-right: $end;
+  }
+
+  @if $start != $end {
+    @include rtl() {
+      @if $start != null {
+        margin-right: $start;
+      } @else {
+        margin-right: initial;
+      }
+
+      @if $end != null {
+        margin-left: $end;
+      } @else {
+        margin-left: initial;
+      }
+    }
+  }
+}
+
+// Add margin for all sides
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin margin($top, $end, $bottom, $start) {
+  @include margin-horizontal($start, $end);
+  margin-top: $top;
+  margin-bottom: $bottom;
 }
 
 // Add correct border radius for ltr and rtl
