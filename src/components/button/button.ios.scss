@@ -3,8 +3,20 @@
 // iOS Button
 // --------------------------------------------------
 
-/// @prop - Margin of the button
-$button-ios-margin:                                 .4rem .2rem !default;
+// deprecated
+$button-ios-margin:                                 null !default;
+
+/// @prop - Margin top of the button
+$button-ios-margin-top:                             .4rem !default;
+
+/// @prop - Margin end of the button
+$button-ios-margin-end:                             .2rem !default;
+
+/// @prop - Margin bottom of the button
+$button-ios-margin-bottom:                          .4rem !default;
+
+/// @prop - Margin start of the button
+$button-ios-margin-start:                           .2rem !default;
 
 /// @prop - Padding of the button
 $button-ios-padding:                                0 1em !default;
@@ -137,7 +149,6 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-ios {
-  margin: $button-ios-margin;
   padding: $button-ios-padding;
 
   height: $button-ios-height;
@@ -147,6 +158,10 @@ $button-ios-strong-font-weight:                     600 !default;
 
   color: $button-ios-text-color;
   background-color: $button-ios-background-color;
+
+  @include deprecated-variable(margin, $button-ios-margin) {
+    @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
+  }
 }
 
 .button-ios.activated {

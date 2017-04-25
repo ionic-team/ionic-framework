@@ -302,6 +302,16 @@ $include-rtl: true !default;
   }
 }
 
+@mixin deprecated-variable($property, $variable) {
+  @if $variable == null {
+    // TODO find variable name
+    @warn "you are using a deprecated variable";
+    @content;
+  } @else {
+    $property: $variable;
+  }
+}
+
 // Add padding horizontal
 // @param {string} $start - amount to pad start
 // @param {string} $end - amount to pad end
@@ -338,10 +348,14 @@ $include-rtl: true !default;
 // @param {string} $bottom
 // @param {string} $start
 // ----------------------------------------------------------
-@mixin padding($top, $end, $bottom: $top, $start: $end) {
-  @include padding-horizontal($start, $end);
-  padding-top: $top;
-  padding-bottom: $bottom;
+@mixin padding($top, $end: $top, $bottom: $top, $start: $end) {
+  @if ($top == $end && $top == $bottom && $top == $start) {
+    padding: $top;
+  } @else {
+    @include padding-horizontal($start, $end);
+    padding-top: $top;
+    padding-bottom: $bottom;
+  }
 }
 
 // Add margin horizontal
@@ -380,10 +394,14 @@ $include-rtl: true !default;
 // @param {string} $bottom
 // @param {string} $start
 // ----------------------------------------------------------
-@mixin margin($top, $end, $bottom: $top, $start: $end) {
-  @include margin-horizontal($start, $end);
-  margin-top: $top;
-  margin-bottom: $bottom;
+@mixin margin($top, $end: $top, $bottom: $top, $start: $end) {
+  @if ($top == $end && $top == $bottom && $top == $start) {
+    margin: $top;
+  } @else {
+    @include margin-horizontal($start, $end);
+    margin-top: $top;
+    margin-bottom: $bottom;
+  }
 }
 
 // Add correct border radius for ltr and rtl

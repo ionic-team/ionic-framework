@@ -57,10 +57,22 @@ $alert-wp-message-font-size:                   13px !default;
 /// @prop - Maximum height of the alert content
 $alert-wp-content-max-height:                  240px !default;
 
-/// @prop - Margin of the alert input
-$alert-wp-input-margin:                        5px 0 5px 0 !default;
+// deprecated
+$alert-wp-input-margin:                        null !default;
 
-/// @prop - Padding on the alert input
+/// @prop - Margin top of the alert input
+$alert-wp-input-margin-top:                    5px !default;
+
+/// @prop - Margin end of the alert input
+$alert-wp-input-margin-end:                    0 !default;
+
+/// @prop - Margin bottom of the alert input
+$alert-wp-input-margin-bottom:                 5px !default;
+
+/// @prop - Margin start of the alert input
+$alert-wp-input-margin-start:                  0 !default;
+
+  /// @prop - Padding on the alert input
 $alert-wp-input-padding:                       0 8px !default;
 
 /// @prop - Border width of the alert input
@@ -298,12 +310,15 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp .alert-input {
-  margin: $alert-wp-input-margin;
   padding: $alert-wp-input-padding;
 
   border: $alert-wp-input-border-width $alert-wp-input-border-style $alert-wp-input-border-color;
   line-height: $alert-wp-input-line-height;
   color: $alert-wp-input-text-color;
+
+  @include deprecated-variable(margin, $alert-wp-input-margin) {
+    @include margin($alert-wp-input-margin-top, $alert-wp-input-margin-end, $alert-wp-input-margin-bottom, $alert-wp-input-margin-start);
+  }
 }
 
 .alert-wp .alert-input:focus {

@@ -60,8 +60,23 @@ $action-sheet-wp-icon-text-align:                 center !default;
 /// @prop - Vertical align of the icon in the action sheet button
 $action-sheet-wp-icon-vertical-align:             middle !default;
 
-/// @prop - Margin of the icon in the action sheet button
-$action-sheet-wp-icon-margin:                     0 20px 0 0 !default;
+// deprecated
+$action-sheet-wp-icon-margin:                     null !default;
+
+/// @prop - Margin top of the icon in the action sheet button
+$action-sheet-wp-icon-margin-top:                 0 !default;
+
+
+/// @prop - Margin end of the icon in the action sheet button
+$action-sheet-wp-icon-margin-end:                 20px !default;
+
+
+/// @prop - Margin bottom of the icon in the action sheet button
+$action-sheet-wp-icon-margin-bottom:              0 !default;
+
+
+/// @prop - Margin start of the icon in the action sheet button
+$action-sheet-wp-icon-margin-start:               0 !default;
 
 
 .action-sheet-wp .action-sheet-wrapper {
@@ -92,7 +107,6 @@ $action-sheet-wp-icon-margin:                     0 20px 0 0 !default;
 }
 
 .action-sheet-wp .action-sheet-icon {
-  margin: $action-sheet-wp-icon-margin;
   padding: 0;
 
   width: $action-sheet-wp-icon-width;
@@ -100,6 +114,10 @@ $action-sheet-wp-icon-margin:                     0 20px 0 0 !default;
   font-size: $action-sheet-wp-icon-font-size;
   text-align: $action-sheet-wp-icon-text-align;
   vertical-align: $action-sheet-wp-icon-vertical-align;
+
+  @include deprecated-variable(margin, $action-sheet-wp-icon-margin) {
+    @include margin($action-sheet-wp-icon-margin-top, $action-sheet-wp-icon-margin-end, $action-sheet-wp-icon-margin-bottom, $action-sheet-wp-icon-margin-start);
+  }
 }
 
 .action-sheet-wp .action-sheet-container {

@@ -65,7 +65,8 @@ ion-alert input {
 }
 
 .alert-sub-title {
-  margin: 5px 0 0;
+  @include margin(5px, 0, 0);
+
   padding: 0;
 
   font-weight: normal;

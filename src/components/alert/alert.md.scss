@@ -94,8 +94,20 @@ $alert-md-button-group-justify-content:       flex-end !default;
 /// @prop - Padding of the alert button
 $alert-md-button-padding:                     10px !default;
 
-/// @prop - Margin of the alert button
-$alert-md-button-margin:                      0 8px 0 0 !default;
+// deprecated
+$alert-md-button-margin:                      null !default;
+
+/// @prop - Margin top of the alert button
+$alert-md-button-margin-top:                  0 !default;
+
+/// @prop - Margin end of the alert button
+$alert-md-button-margin-end:                  8px !default;
+
+/// @prop - Margin bottom of the alert button
+$alert-md-button-margin-bottom:               0 !default;
+
+/// @prop - Margin start of the alert button
+$alert-md-button-margin-start:                0 !default;
 
 /// @prop - Font weight of the alert button
 $alert-md-button-font-weight:                 500 !default;
@@ -482,7 +494,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   position: relative;
   overflow: hidden;
 
-  margin: $alert-md-button-margin;
   padding: $alert-md-button-padding;
 
   border-radius: $alert-md-button-border-radius;
@@ -491,6 +502,10 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
+
+  @include deprecated-variable(margin, $alert-md-button-margin) {
+    @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
+  }
 }
 
 .alert-md .alert-button.activated {

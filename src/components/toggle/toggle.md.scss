@@ -48,9 +48,36 @@ $toggle-md-disabled-opacity:             .3 !default;
 /// @prop - Padding of standalone toggle
 $toggle-md-padding:                      12px !default;
 
-/// @prop - Padding of the toggle positioned on the left in an item
-$toggle-md-item-left-padding:            12px 18px 12px 2px !default;
+// deprecated
+$toggle-md-item-left-padding:            null !default;
 
+/// @prop - Padding top of the toggle positioned on the right in an item
+$toggle-md-item-left-padding-top:        12px !default;
+
+/// @prop - Padding end of the toggle positioned on the right in an item
+$toggle-md-item-left-padding-end:        18px !default;
+
+/// @prop - Padding bottom of the toggle positioned on the right in an item
+$toggle-md-item-left-padding-bottom:     12px !default;
+
+/// @prop - Padding start the toggle positioned on the right in an item
+$toggle-md-item-left-padding-start:      2px !default;
+
+
+// deprecated
+$toggle-md-item-right-padding:        null !default;
+
+/// @prop - Padding top of the toggle positioned on the right in an item
+$toggle-md-item-right-padding-top:    6px !default;
+
+/// @prop - Padding end of the toggle positioned on the right in an item
+$toggle-md-item-right-padding-end:    ($item-md-padding-end / 2) !default;
+
+/// @prop - Padding bottom of the toggle positioned on the right in an item
+$toggle-md-item-right-padding-bottom: 5px !default;
+
+/// @prop - Padding start of the toggle positioned on the right in an item
+$toggle-md-item-right-padding-start:  $item-md-padding-start !default;
 
 // Material Design Toggle
 // -----------------------------------------
@@ -149,15 +176,20 @@ $toggle-md-item-left-padding:            12px 18px 12px 2px !default;
 // -----------------------------------------
 
 .item-md .toggle-md {
-  @include padding(12px, ($item-md-padding-end / 2), 12px, $item-md-padding-start);
-
   margin: $toggle-md-media-margin;
 
   cursor: pointer;
+
+  @include deprecated-variable(padding, $toggle-md-item-right-padding) {
+    @include padding($toggle-md-item-right-padding-top, $toggle-md-item-right-padding-end, $toggle-md-item-right-padding-bottom, $toggle-md-item-right-padding-start);
+  }
 }
 
 .item-md .toggle-md[item-left] {
-  padding: $toggle-md-item-left-padding;
+  @include deprecated-variable(padding, $toggle-md-item-left-padding) {
+    @include padding($toggle-md-item-left-padding-top, $toggle-md-item-left-padding-end, $toggle-md-item-left-padding-bottom, $toggle-md-item-left-padding-start);
+  }
+
 }
 
 .item-md.item-toggle ion-label {

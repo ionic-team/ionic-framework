@@ -162,8 +162,20 @@ $alert-ios-checkbox-label-text-color:           initial !default;
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-ios-checkbox-label-text-color-checked:   initial !default;
 
-/// @prop - Margin of the checkbox in the alert
-$alert-ios-checkbox-margin:                     10px 6px 10px 16px !default;
+// deprecated
+$alert-ios-checkbox-margin:                     null !default;
+
+/// @prop - Margin top of the checkbox in the alert
+$alert-ios-checkbox-margin-top:                 10px !default;
+
+/// @prop - Margin end of the checkbox in the alert
+$alert-ios-checkbox-margin-end:                 6px !default;
+
+/// @prop - Margin bottom of the checkbox in the alert
+$alert-ios-checkbox-margin-bottom:              10px !default;
+
+/// @prop - Margin start of the checkbox in the alert
+$alert-ios-checkbox-margin-start:               16px !default;
 
 /// @prop - Size of the checkbox in the alert
 $alert-ios-checkbox-size:                       21px !default;
@@ -391,8 +403,6 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 .alert-ios .alert-checkbox-icon {
   position: relative;
 
-  margin: $alert-ios-checkbox-margin;
-
   width: $alert-ios-checkbox-size;
   height: $alert-ios-checkbox-size;
 
@@ -401,6 +411,10 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   border-radius: $alert-ios-checkbox-border-radius;
   border-color: $alert-ios-checkbox-border-color-off;
   background-color: $alert-ios-checkbox-background-color-off;
+
+  @include deprecated-variable(margin, $alert-ios-checkbox-margin) {
+    @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
+  }
 }
 
 

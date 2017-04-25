@@ -48,8 +48,35 @@ $toggle-ios-transition-duration:       300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-ios-disabled-opacity:          .3 !default;
 
-/// @prop - Padding of the toggle positioned on the left in an item
-$toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
+// deprecated
+$toggle-ios-item-left-padding:         null !default;
+
+/// @prop - Padding top of the toggle positioned on the left in an item
+$toggle-ios-item-left-padding-top:     6px !default;
+
+/// @prop - Padding end of the toggle positioned on the left in an item
+$toggle-ios-item-left-padding-end:     16px !default;
+
+/// @prop - Padding bottom of the toggle positioned on the left in an item
+$toggle-ios-item-left-padding-bottom:   5px !default;
+
+/// @prop - Padding start of the toggle positioned on the left in an item
+$toggle-ios-item-left-padding-start:   0 !default;
+
+// deprecated
+$toggle-ios-item-right-padding:        null !default;
+
+/// @prop - Padding top of the toggle positioned on the right in an item
+$toggle-ios-item-right-padding-top:    6px !default;
+
+/// @prop - Padding end of the toggle positioned on the right in an item
+$toggle-ios-item-right-padding-end:    ($item-ios-padding-end / 2) !default;
+
+/// @prop - Padding bottom of the toggle positioned on the right in an item
+$toggle-ios-item-right-padding-bottom: 5px !default;
+
+/// @prop - Padding start of the toggle positioned on the right in an item
+$toggle-ios-item-right-padding-start:  $item-ios-padding-start !default;
 
 // iOS Toggle
 // -----------------------------------------
@@ -151,6 +178,7 @@ $toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
 
 }
 
+
 // iOS Toggle Background Oval: Activated and Checked
 // -----------------------------------------
 
@@ -192,13 +220,17 @@ $toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
 // -----------------------------------------
 
 .item-ios .toggle-ios {
-  @include padding(6px, ($item-ios-padding-end / 2), 5px, $item-ios-padding-start);
+  @include margin($toggle-ios-media-margin);
 
-  margin: $toggle-ios-media-margin;
+  @include deprecated-variable(padding, $toggle-ios-item-right-padding) {
+    @include padding($toggle-ios-item-right-padding-top, $toggle-ios-item-right-padding-end, $toggle-ios-item-right-padding-bottom, $toggle-ios-item-right-padding-start);
+  }
 }
 
 .item-ios .toggle-ios[item-left] {
-  @include padding(6px, 0, 5px, 16px);
+  @include deprecated-variable(padding, $toggle-ios-item-left-padding) {
+    @include padding($toggle-ios-item-left-padding-top, $toggle-ios-item-left-padding-end, $toggle-ios-item-left-padding-bottom, $toggle-ios-item-left-padding-start);
+  }
 }
 
 

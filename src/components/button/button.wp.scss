@@ -3,8 +3,20 @@
 // Windows Button
 // --------------------------------------------------
 
-/// @prop - Margin of the button
-$button-wp-margin:                                        .4rem .2rem !default;
+// deprecated
+$button-wp-margin:                                        null !default;
+
+/// @prop - Margin top of the button
+$button-wp-margin-top:                                    .4rem !default;
+
+/// @prop - Margin end of the button
+$button-wp-margin-end:                                    .2rem !default;
+
+/// @prop - Margin bottom of the button
+$button-wp-margin-bottom:                                 .4rem !default;
+
+/// @prop - Margin start of the button
+$button-wp-margin-start:                                  .2rem !default;
 
 /// @prop - Padding of the button
 $button-wp-padding:                                       0 1.1em !default;
@@ -128,7 +140,6 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-wp {
-  margin: $button-wp-margin;
   padding: $button-wp-padding;
 
   height: $button-wp-height;
@@ -140,6 +151,10 @@ $button-wp-strong-font-weight:                            bold !default;
 
   color: $button-wp-text-color;
   background-color: $button-wp-background-color;
+
+  @include deprecated-variable(margin, $button-wp-margin) {
+    @include margin($button-wp-margin-top, $button-wp-margin-end, $button-wp-margin-bottom, $button-wp-margin-start);
+  }
 }
 
 .button-wp:hover:not(.disable-hover) {
