@@ -6,26 +6,34 @@
 /// @prop - Margin top of the list
 $list-ios-margin-top:                 10px !default;
 
-/// @prop - Margin right of the list
+// deprecated
 $list-ios-margin-right:               0 !default;
+/// @prop - Margin end of the list
+$list-ios-margin-end:                 $list-ios-margin-right !default;
 
 /// @prop - Margin bottom of the list
 $list-ios-margin-bottom:              32px !default;
 
-/// @prop - Margin left of the list
+// deprecated
 $list-ios-margin-left:                0 !default;
+/// @prop - Margin start of the list
+$list-ios-margin-start:               $list-ios-margin-left !default;
 
 /// @prop - Margin top of the inset list
 $list-inset-ios-margin-top:           16px !default;
 
-/// @prop - Margin right of the inset list
+// deprecated
 $list-inset-ios-margin-right:         16px !default;
+/// @prop - Margin end of the inset list
+$list-inset-ios-margin-end:           $list-inset-ios-margin-right !default;
 
 /// @prop - Margin bottom of the inset list
 $list-inset-ios-margin-bottom:        16px !default;
 
-/// @prop - Margin left of the inset list
+// deprecated
 $list-inset-ios-margin-left:          16px !default;
+/// @prop - Margin start of the inset list
+$list-inset-ios-margin-start:         $list-inset-ios-margin-left !default;
 
 /// @prop - Border radius of the inset list
 $list-inset-ios-border-radius:        4px !default;
@@ -61,7 +69,7 @@ $list-ios-header-background-color:    transparent !default;
 // --------------------------------------------------
 
 .list-ios {
-  margin: -1px $list-ios-margin-right $list-ios-margin-bottom $list-ios-margin-left;
+  margin: -1px $list-ios-margin-end $list-ios-margin-bottom $list-ios-margin-start;
 }
 
 .list-ios > .item-block:first-child {
@@ -124,7 +132,7 @@ $list-ios-header-background-color:    transparent !default;
 // --------------------------------------------------
 
 .list-ios[inset] {
-  margin: $list-inset-ios-margin-top $list-inset-ios-margin-right $list-inset-ios-margin-bottom $list-inset-ios-margin-left;
+  margin: $list-inset-ios-margin-top $list-inset-ios-margin-end $list-inset-ios-margin-bottom $list-inset-ios-margin-start;
 
   border-radius: $list-inset-ios-border-radius;
 }

@@ -6,14 +6,18 @@
 /// @prop - Margin top of the card
 $card-md-margin-top:                  10px !default;
 
-/// @prop - Margin right of the card
+// deprecated
 $card-md-margin-right:                10px !default;
+/// @prop - Margin end of the card
+$card-md-margin-end:                  $card-md-margin-right !default;
 
 /// @prop - Margin bottom of the card
 $card-md-margin-bottom:               10px !default;
 
-/// @prop - Margin left of the card
+// deprecated
 $card-md-margin-left:                 10px !default;
+/// @prop - Margin start of the card
+$card-md-margin-start:                $card-md-margin-left;
 
 
 /// @prop - Padding top of the card
@@ -86,9 +90,9 @@ $card-md-header-color:                #222 !default;
 
 
 .card-md {
-  margin: $card-md-margin-top $card-md-margin-right $card-md-margin-bottom $card-md-margin-left;
+  margin: $card-md-margin-top $card-md-margin-end $card-md-margin-bottom $card-md-margin-start;
 
-  width: calc(100% - #{($card-md-margin-right + $card-md-margin-left)});
+  width: calc(100% - #{($card-md-margin-end + $card-md-margin-start)});
 
   border-radius: $card-md-border-radius;
   font-size: $card-md-font-size;

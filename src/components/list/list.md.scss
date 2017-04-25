@@ -6,26 +6,34 @@
 /// @prop - Margin top of the list
 $list-md-margin-top:             16px !default;
 
-/// @prop - Margin right of the list
+// deprecated
 $list-md-margin-right:           0 !default;
+/// @prop - Margin end of the list
+$list-md-margin-end:             $list-md-margin-right !default;
 
 /// @prop - Margin bottom of the list
 $list-md-margin-bottom:          16px !default;
 
-/// @prop - Margin left of the list
+// deprecated
 $list-md-margin-left:            0 !default;
+/// @prop - Margin start of the list
+$list-md-margin-start:           $list-md-margin-left !default;
 
 /// @prop - Margin top of the inset list
 $list-inset-md-margin-top:       16px !default;
 
-/// @prop - Margin right of the inset list
+// deprecated
 $list-inset-md-margin-right:     16px !default;
+/// @prop - Margin end of the inset list
+$list-inset-md-margin-end:       $list-inset-md-margin-right !default;
 
 /// @prop - Margin bottom of the inset list
 $list-inset-md-margin-bottom:    16px !default;
 
-/// @prop - Margin left of the inset list
+// deprecated
 $list-inset-md-margin-left:      16px !default;
+/// @prop - Margin start of the inset list
+$list-inset-md-margin-start:     $list-inset-md-margin-left !default;
 
 /// @prop - Border radius of the inset list
 $list-inset-md-border-radius:    2px !default;
@@ -55,7 +63,7 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-md {
-  margin: -1px $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
+  margin: -1px $list-md-margin-end $list-md-margin-bottom $list-md-margin-start;
 }
 
 .list-md .item-block .item-inner {
@@ -115,7 +123,7 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-md[inset] {
-  margin: $list-inset-md-margin-top $list-inset-md-margin-right $list-inset-md-margin-bottom $list-inset-md-margin-left;
+  margin: $list-inset-md-margin-top $list-inset-md-margin-end $list-inset-md-margin-bottom $list-inset-md-margin-start;
 
   border-radius: $list-inset-md-border-radius;
 }

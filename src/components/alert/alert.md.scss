@@ -69,14 +69,18 @@ $alert-md-input-border-color-focused:         color($colors-md, primary) !defaul
 /// @prop - Margin top of the alert input
 $alert-md-input-margin-top:                   5px !default;
 
-/// @prop - Margin right of the alert input
+// deprecated
 $alert-md-input-margin-right:                 0 !default;
+/// @prop - Margin end of the alert input
+$alert-md-input-margin-end:                   $alert-md-input-margin-right !default;
 
 /// @prop - Margin bottom of the alert input
 $alert-md-input-margin-bottom:                5px !default;
 
-/// @prop - Margin left of the alert input
+// deprecated
 $alert-md-input-margin-left:                  0 !default;
+/// @prop - Margin start of the alert input
+$alert-md-input-margin-start:                 $alert-md-input-margin-left;
 
 /// @prop - Flex wrap of the alert button group
 $alert-md-button-group-flex-wrap:             wrap-reverse !default;
@@ -295,7 +299,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-input {
-  margin: $alert-md-input-margin-top $alert-md-input-margin-right $alert-md-input-margin-bottom $alert-md-input-margin-left;
+  margin: $alert-md-input-margin-top $alert-md-input-margin-end $alert-md-input-margin-bottom $alert-md-input-margin-start;
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;

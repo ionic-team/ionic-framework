@@ -6,7 +6,7 @@
 /// @prop - Padding top/bottom of the range
 $range-md-padding-vertical:                  8px !default;
 
-/// @prop - Padding left/right of the range
+/// @prop - Padding start/end of the range
 $range-md-padding-horizontal:                8px !default;
 
 /// @prop - Height of the range slider
@@ -69,7 +69,7 @@ $range-md-pin-font-size:                     12px !default;
 /// @prop - Padding top/bottom of the range pin
 $range-md-pin-padding-vertical:              8px !default;
 
-/// @prop - Padding left/right of the range pin
+/// @prop - Padding start/end of the range pin
 $range-md-pin-padding-horizontal:            0 !default;
 
 /// @prop - Background of the range pin when the value is the minimum

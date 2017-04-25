@@ -102,8 +102,10 @@ $alert-wp-button-background:                   #b8b8b8 !default;
 /// @prop - Background color of the activated alert button
 $alert-wp-button-background-activated:         color-shade($alert-wp-button-background) !default;
 
-/// @prop - Margin right of the alert button
+// deprecated
 $alert-wp-button-margin-right:                 1% !default;
+/// @prop - Margin end of the alert button
+$alert-wp-button-margin-end:                   $alert-wp-button-margin-right !default;
 
 /// @prop - Padding of the alert button group
 $alert-wp-button-group-padding:                20px 22px 20px 22px !default;
@@ -498,7 +500,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-button:first-child:not(:only-child) {
-  margin-right: $alert-wp-button-margin-right;
+  margin-right: $alert-wp-button-margin-end;
 }
 
 .alert-wp .alert-button.activated {

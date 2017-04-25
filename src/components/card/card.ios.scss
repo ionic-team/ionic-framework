@@ -6,14 +6,18 @@
 /// @prop - Margin top of the card
 $card-ios-margin-top:                  12px !default;
 
-/// @prop - Margin right of the card
+// deprecated
 $card-ios-margin-right:                12px !default;
+/// @prop - Margin end of the card
+$card-ios-margin-end:                  $card-ios-margin-right !default;
 
 /// @prop - Margin bottom of the card
 $card-ios-margin-bottom:               12px !default;
 
-/// @prop - Margin left of the card
+// deprecated
 $card-ios-margin-left:                 12px !default;
+/// @prop - Margin start of the card
+$card-ios-margin-start:                $card-ios-margin-left;
 
 /// @prop - Padding top of the card
 $card-ios-padding-top:                 13px !default;
@@ -81,9 +85,9 @@ $card-ios-header-color:                #333 !default;
 
 
 .card-ios {
-  margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
+  margin: $card-ios-margin-top $card-ios-margin-end $card-ios-margin-bottom $card-ios-margin-start;
 
-  width: calc(100% - #{($card-ios-margin-right + $card-ios-margin-left)});
+  width: calc(100% - #{($card-ios-margin-end + $card-ios-margin-start)});
 
   border-radius: $card-ios-border-radius;
   font-size: $card-ios-font-size;

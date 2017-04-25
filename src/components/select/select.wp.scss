@@ -6,20 +6,24 @@
 /// @prop - Padding top and bottom of the select
 $select-wp-padding-vertical:    0 !default;
 
-/// @prop - Padding left and right of the select
+/// @prop - Padding start/end of the select
 $select-wp-padding-horizontal:  ($item-wp-padding-end / 2) !default;
 
 /// @prop - Margin top of the select
 $select-wp-margin-top:          $item-wp-padding-top !default;
 
-/// @prop - Margin right of the select
+// deprecated
 $select-wp-margin-right:        ($item-wp-padding-end / 2) !default;
+/// @prop - Margin end of the select
+$select-wp-margin-end:          $select-wp-margin-right !default;
 
 /// @prop - Margin bottom of the select
 $select-wp-margin-bottom:       $item-wp-padding-bottom !default;
 
-/// @prop - Margin left of the select
+// deprecated
 $select-wp-margin-left:         ($item-wp-padding-start / 2) !default;
+/// @prop - Margin start of the select
+$select-wp-margin-start:        $select-wp-margin-left !default;
 
 /// @prop - Border width of the select
 $select-wp-border-width:        2px !default;
@@ -43,7 +47,7 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
 .select-wp {
   flex: 1;
 
-  margin: $select-wp-margin-top $select-wp-margin-right $select-wp-margin-bottom $select-wp-margin-left;
+  margin: $select-wp-margin-top $select-wp-margin-end $select-wp-margin-bottom $select-wp-margin-start;
   padding: $select-wp-padding-vertical $select-wp-padding-horizontal;
 
   max-width: 100%;

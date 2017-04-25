@@ -9,14 +9,18 @@ $text-input-md-background-color:            $list-md-background-color !default;
 /// @prop - Margin top of the input
 $text-input-md-margin-top:                  $item-md-padding-top !default;
 
-/// @prop - Margin right of the input
+// deprecated
 $text-input-md-margin-right:                ($item-md-padding-end / 2) !default;
+/// @prop - Margin end of the input
+$text-input-md-margin-end:                  $text-input-md-margin-right !default;
 
 /// @prop - Margin bottom of the input
 $text-input-md-margin-bottom:               $item-md-padding-bottom !default;
 
-/// @prop - Margin left of the input
+// deprecated
 $text-input-md-margin-left:                 ($item-md-padding-start / 2) !default;
+/// @prop - Margin start of the input
+$text-input-md-margin-start:                $text-input-md-margin-left !default;
 
 /// @prop - Width of the icon used to clear the input
 $text-input-md-input-clear-icon-width:      30px !default;
@@ -53,10 +57,10 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .text-input-md {
-  margin: $text-input-md-margin-top $text-input-md-margin-right $text-input-md-margin-bottom $text-input-md-margin-left;
+  margin: $text-input-md-margin-top $text-input-md-margin-end $text-input-md-margin-bottom $text-input-md-margin-start;
   padding: 0;
 
-  width: calc(100% - #{$text-input-md-margin-right} - #{$text-input-md-margin-left});
+  width: calc(100% - #{$text-input-md-margin-end} - #{$text-input-md-margin-start});
 }
 
 
@@ -138,7 +142,7 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
   margin-bottom: 8px;
   margin-left: 0;
 
-  width: calc(100% - #{$text-input-md-margin-right});
+  width: calc(100% - #{$text-input-md-margin-end});
 }
 
 .item-label-stacked .select-md,
