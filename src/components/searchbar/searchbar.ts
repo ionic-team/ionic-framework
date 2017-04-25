@@ -250,7 +250,7 @@ export class Searchbar extends BaseInput<string> {
 
       // Set the input padding left
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
-	  if (_isRTL) {
+	  if (this._isRTL) {
         inputEle.style.paddingRight = inputLeft;
 	  } else {
         inputEle.style.paddingLeft = inputLeft;
@@ -258,7 +258,7 @@ export class Searchbar extends BaseInput<string> {
 
       // Set the icon margin left
       var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
-	  if (_isRTL) {
+	  if (this._isRTL) {
         iconEle.style.marginRight = iconLeft;
 	  } else {
         iconEle.style.marginLeft = iconLeft;
@@ -280,7 +280,7 @@ export class Searchbar extends BaseInput<string> {
       var cancelStyle = cancelStyleEle.style;
       this._isCancelVisible = showShowCancel;
       if (showShowCancel) {
-	    if (_isRTL) {
+	    if (this._isRTL) {
           cancelStyle.marginLeft = '0';
 	    } else {
           cancelStyle.marginRight = '0';
@@ -288,7 +288,7 @@ export class Searchbar extends BaseInput<string> {
       } else {
         var offset = cancelStyleEle.offsetWidth;
         if (offset > 0) {
-	      if (_isRTL) {
+	      if (this._isRTL) {
             cancelStyle.marginLeft = -offset + 'px';
 	      } else {
             cancelStyle.marginRight = -offset + 'px';
