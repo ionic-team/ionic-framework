@@ -209,6 +209,8 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
   transition: transform 120ms ease, background-color 120ms ease;
 
   &::before {
+    @include border-radius(50%, 50%, 50%, 0);
+
     position: absolute;
     top: 3px;
     left: 50%;
@@ -219,7 +221,6 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
     width: 26px;
     height: 26px;
 
-    border-radius: 50% 50% 50% 0;
     background: $range-md-pin-background-color;
 
     content: "";

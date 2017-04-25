@@ -122,15 +122,15 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp[inset] .item:first-child {
+  @include border-radius($list-inset-wp-border-radius, $list-inset-wp-border-radius, null, null);
+
   border-top-width: 0;
-  border-top-left-radius: $list-inset-wp-border-radius;
-  border-top-right-radius: $list-inset-wp-border-radius;
 }
 
 .list-wp[inset] .item:last-child {
+  @include border-radius(null, null, $list-inset-wp-border-radius, $list-inset-wp-border-radius);
+
   border-bottom-width: 0;
-  border-bottom-left-radius: $list-inset-wp-border-radius;
-  border-bottom-right-radius: $list-inset-wp-border-radius;
 }
 
 .list-wp[inset] .item-input {
