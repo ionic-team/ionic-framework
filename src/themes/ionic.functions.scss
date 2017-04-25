@@ -364,25 +364,25 @@ $include-rtl: true !default;
   @include rtl() {
     @if $top-start != null {
       border-top-right-radius: $top-start;
-    } @else {
+    } @else if $top-end != null {
       border-top-right-radius: 0;
     }
 
     @if $top-end != null {
       border-top-left-radius: $top-end;
-    } @else {
+    } @else if $top-start != null {
       border-top-left-radius: 0;
     }
 
     @if $bottom-end != null {
       border-bottom-left-radius: $bottom-end;
-    } @else {
+    } @else if $bottom-start != null {
       border-bottom-left-radius: 0;
     }
 
     @if $bottom-start != null {
       border-bottom-right-radius: $bottom-start;
-    } @else {
+    } @else if $bottom-end != null {
       border-bottom-right-radius: 0;
     }
   }
