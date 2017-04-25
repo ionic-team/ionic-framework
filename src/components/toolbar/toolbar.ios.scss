@@ -159,12 +159,14 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
   order: map-get($toolbar-order-ios, buttons-end);
 
   text-align: right;
+  text-align: end;
 }
 
 .bar-buttons-ios[right] {
   order: map-get($toolbar-order-ios, buttons-right);
 
   text-align: right;
+  text-align: end;
 }
 
 

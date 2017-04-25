@@ -132,12 +132,14 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
   order: map-get($toolbar-order-wp, buttons-end);
 
   text-align: right;
+  text-align: end;
 }
 
 .bar-buttons-wp[right] {
   order: map-get($toolbar-order-wp, buttons-right);
 
   text-align: right;
+  text-align: end;
 }
 
 
@@ -306,6 +308,7 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
   font-size: 2.4rem;
   font-weight: normal;
   text-align: left;
+  text-align: start;
 }
 
 

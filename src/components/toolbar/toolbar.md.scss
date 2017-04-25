@@ -172,12 +172,14 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   order: map-get($toolbar-order-md, buttons-end);
 
   text-align: right;
+  text-align: end;
 }
 
 .bar-buttons-md[right] {
   order: map-get($toolbar-order-md, buttons-right);
 
   text-align: right;
+  text-align: end;
 }
 
 
@@ -352,6 +354,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   font-size: 2.4rem;
   font-weight: normal;
   text-align: left;
+  text-align: start;
 }
 
 
