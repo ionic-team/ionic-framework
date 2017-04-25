@@ -338,7 +338,7 @@ $include-rtl: true !default;
 // @param {string} $bottom
 // @param {string} $start
 // ----------------------------------------------------------
-@mixin padding($top, $end, $bottom, $start) {
+@mixin padding($top, $end, $bottom: $top, $start: $end) {
   @include padding-horizontal($start, $end);
   padding-top: $top;
   padding-bottom: $bottom;
@@ -380,7 +380,7 @@ $include-rtl: true !default;
 // @param {string} $bottom
 // @param {string} $start
 // ----------------------------------------------------------
-@mixin margin($top, $end, $bottom, $start) {
+@mixin margin($top, $end, $bottom: $top, $start: $end) {
   @include margin-horizontal($start, $end);
   margin-top: $top;
   margin-bottom: $bottom;
