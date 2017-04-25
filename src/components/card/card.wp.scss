@@ -113,9 +113,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-content-wp {
-  @include padding-horizontal($card-wp-padding-start, $card-wp-padding-end);
-  padding-top: $card-wp-padding-top;
-  padding-bottom: $card-wp-padding-bottom;
+  @include padding($card-wp-padding-top, $card-wp-padding-end, $card-wp-padding-bottom, $card-wp-padding-start);
 
   font-size: $card-wp-font-size;
   line-height: $card-wp-line-height;

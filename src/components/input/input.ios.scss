@@ -64,12 +64,9 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 // --------------------------------------------------
 
 .input-ios .inset-input {
-  @include padding-horizontal(($item-ios-padding-start / 2), ($item-ios-padding-end / 2));
+  @include padding(($item-ios-padding-top / 2), ($item-ios-padding-end / 2), ($item-ios-padding-bottom / 2), ($item-ios-padding-start / 2));
 
   margin: ($item-ios-padding-top / 2) $item-ios-padding-end ($item-ios-padding-bottom / 2) 0;
-
-  padding-top: ($item-ios-padding-top / 2);
-  padding-bottom: ($item-ios-padding-bottom / 2);
 }
 
 
@@ -150,10 +147,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 .item-label-stacked .select-ios,
 .item-label-floating .select-ios {
-  @include padding-horizontal(0, null);
-
-  padding-top: 8px;
-  padding-bottom: 8px;
+  @include padding(8px, null, 8px, 0);
 }
 
 

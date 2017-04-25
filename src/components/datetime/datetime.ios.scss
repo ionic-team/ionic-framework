@@ -24,9 +24,7 @@ $datetime-ios-placeholder-color:   #999 !default;
 
 
 .datetime-ios {
-  @include padding-horizontal($datetime-ios-padding-start, $datetime-ios-padding-end);
-  padding-top: $datetime-ios-padding-top;
-  padding-bottom: $datetime-ios-padding-bottom;
+  @include padding($datetime-ios-padding-top, $datetime-ios-padding-end, $datetime-ios-padding-bottom, $datetime-ios-padding-start);
 }
 
 .datetime-ios .datetime-placeholder {

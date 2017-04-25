@@ -107,9 +107,7 @@ $card-ios-header-color:                #333 !default;
 }
 
 .card-content-ios {
-  @include padding-horizontal($card-ios-padding-start, $card-ios-padding-end);
-  padding-top: $card-ios-padding-top;
-  padding-bottom: $card-ios-padding-bottom;
+  @include padding($card-ios-padding-top, $card-ios-padding-end, $card-ios-padding-bottom, $card-ios-padding-start);
 
   font-size: $card-ios-font-size;
   line-height: 1.4;

@@ -27,9 +27,7 @@ $select-ios-placeholder-color:   $select-ios-icon-color !default;
 
 
 .select-ios {
-  @include padding-horizontal($select-ios-padding-start, $select-ios-padding-end);
-  padding-top: $select-ios-padding-top;
-  padding-bottom: $select-ios-padding-bottom;
+  @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);
 }
 
 .select-ios .select-placeholder {

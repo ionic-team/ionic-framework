@@ -331,3 +331,9 @@ $include-rtl: true !default;
     }
   }
 }
+
+@mixin padding($top, $end, $bottom, $start) {
+  @include padding-horizontal($start, $end);
+  padding-top: $top;
+  padding-bottom: $bottom;
+}

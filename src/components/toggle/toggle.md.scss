@@ -149,12 +149,9 @@ $toggle-md-item-left-padding:            12px 18px 12px 2px !default;
 // -----------------------------------------
 
 .item-md .toggle-md {
-  @include padding-horizontal($item-md-padding-start, ($item-md-padding-end / 2));
+  @include padding(12px, ($item-md-padding-end / 2), 12px, $item-md-padding-start);
 
   margin: $toggle-md-media-margin;
-
-  padding-top: 12px;
-  padding-bottom: 12px;
 
   cursor: pointer;
 }

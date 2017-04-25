@@ -64,12 +64,9 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .input-md .inset-input {
-  @include padding-horizontal(($item-md-padding-start / 2), ($item-md-padding-end / 2));
+  @include padding(($item-md-padding-top / 2), ($item-md-padding-end / 2), ($item-md-padding-bottom / 2), ($item-md-padding-start / 2));
 
   margin: ($item-md-padding-top / 2) $item-md-padding-end ($item-md-padding-bottom / 2) $item-md-padding-start;
-
-  padding-top: ($item-md-padding-top / 2);
-  padding-bottom: ($item-md-padding-bottom / 2);
 }
 
 
@@ -146,10 +143,7 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 .item-label-stacked .select-md,
 .item-label-floating .select-md {
-  @include padding-horizontal(0, null);
-
-  padding-top: 8px;
-  padding-bottom: 8px;
+  @include padding(8px, null, 8px, 0);
 }
 
 

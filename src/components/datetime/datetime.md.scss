@@ -24,9 +24,7 @@ $datetime-md-placeholder-color:   #999 !default;
 
 
 .datetime-md {
-  @include padding-horizontal($datetime-md-padding-start, $datetime-md-padding-end);
-  padding-top: $datetime-md-padding-top;
-  padding-bottom: $datetime-md-padding-bottom;
+  @include padding($datetime-md-padding-top, $datetime-md-padding-end, $datetime-md-padding-bottom, $datetime-md-padding-start);
 }
 
 .datetime-md .datetime-placeholder {

@@ -33,9 +33,7 @@ $datetime-wp-placeholder-color:   $input-wp-border-color !default;
 
 
 .datetime-wp {
-  @include padding-horizontal($datetime-wp-padding-start, $datetime-wp-padding-end);
-  padding-top: $datetime-wp-padding-top;
-  padding-bottom: $datetime-wp-padding-bottom;
+  @include padding($datetime-wp-padding-top, $datetime-wp-padding-end, $datetime-wp-padding-bottom, $datetime-wp-padding-start);
 
   min-width: $datetime-wp-min-width;
 }
