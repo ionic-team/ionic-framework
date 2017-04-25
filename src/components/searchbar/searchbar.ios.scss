@@ -100,6 +100,13 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   background-size: $searchbar-ios-input-search-icon-size;
 }
 
+[dir="rtl"] .searchbar-ios .searchbar-search-icon {
+  right: 9px;
+  left: auto;
+  margin-right: calc(50% - 60px);
+  margin-left: 0;
+}
+
 
 // Searchbar Input Field
 // -----------------------------------------
@@ -138,6 +145,11 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   background-size: $searchbar-ios-input-clear-icon-size;
 }
 
+[dir="rtl"] .searchbar-ios .searchbar-clear-icon {
+  left: 0;
+  right: auto;
+}
+
 
 // Searchbar Cancel (iOS only)
 // -----------------------------------------
@@ -156,6 +168,13 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   cursor: pointer;
 }
 
+[dir="rtl"] .searchbar-ios .searchbar-ios-cancel {
+  margin-right: 0;
+  margin-left: $button-ios-margin;
+  padding-right: 8px;
+  padding-left: 0;
+}
+
 // Searchbar Left Aligned (iOS only)
 // -----------------------------------------
 
@@ -163,8 +182,17 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   margin-left: 0;
 }
 
+[dir="rtl"] .searchbar-ios.searchbar-left-aligned .searchbar-search-icon {
+  margin-right: 0;
+}
+
 .searchbar-ios.searchbar-left-aligned .searchbar-input {
   padding-left: 30px;
+}
+
+[dir="rtl"] .searchbar-ios.searchbar-left-aligned .searchbar-input {
+  padding-right: 30px;
+  padding-left: $searchbar-ios-padding-horizontal;
 }
 
 
@@ -194,6 +222,11 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .toolbar .searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
   padding-left: 8px;
+}
+
+[dir="rtl"] .toolbar .searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
+  padding-right: 8px;
+  padding-left: 0;
 }
 
 
@@ -265,4 +298,9 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   transition: $searchbar-ios-cancel-transition;
 
   pointer-events: none;
+}
+
+[dir="rtl"] .searchbar-animated .searchbar-ios-cancel {
+  margin-left: -100%;
+  margin-right: 0;
 }

@@ -63,6 +63,7 @@ export class Searchbar extends BaseInput<string> {
   _isActive: boolean = false;
   _showCancelButton: boolean = false;
   _animated: boolean = false;
+  _isRTL: boolean = this._plt.isRTL();
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -249,11 +250,19 @@ export class Searchbar extends BaseInput<string> {
 
       // Set the input padding left
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
-      inputEle.style.paddingLeft = inputLeft;
+	  if (_isRTL) {
+        inputEle.style.paddingRight = inputLeft;
+	  } else {
+        inputEle.style.paddingLeft = inputLeft;
+	  }
 
       // Set the icon margin left
       var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
-      iconEle.style.marginLeft = iconLeft;
+	  if (_isRTL) {
+        iconEle.style.marginRight = iconLeft;
+	  } else {
+        iconEle.style.marginLeft = iconLeft;
+	  }
     }
   }
 
@@ -271,11 +280,19 @@ export class Searchbar extends BaseInput<string> {
       var cancelStyle = cancelStyleEle.style;
       this._isCancelVisible = showShowCancel;
       if (showShowCancel) {
-        cancelStyle.marginRight = '0';
+	    if (_isRTL) {
+          cancelStyle.marginLeft = '0';
+	    } else {
+          cancelStyle.marginRight = '0';
+	    }
       } else {
         var offset = cancelStyleEle.offsetWidth;
         if (offset > 0) {
-          cancelStyle.marginRight = -offset + 'px';
+	      if (_isRTL) {
+            cancelStyle.marginLeft = -offset + 'px';
+	      } else {
+            cancelStyle.marginRight = -offset + 'px';
+	      }
         }
       }
     }
