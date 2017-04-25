@@ -56,6 +56,12 @@ $label-wp-margin-rtl:                 $item-wp-padding-top 0 $item-wp-padding-bo
   margin-left: 0;
 }
 
+[dir="rtl"] .label-wp[stacked],
+[dir="rtl"] .label-wp[floating] {
+  margin-right: 0;
+  margin-left: ($item-wp-padding-right / 2);
+}
+
 .input-has-focus .label-wp[stacked],
 .input-has-focus .label-wp[floating] {
   color: $label-wp-text-color-focused;

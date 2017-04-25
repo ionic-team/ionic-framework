@@ -61,6 +61,12 @@ $label-md-margin-rtl:                 $item-md-padding-top 0 $item-md-padding-bo
   margin-left: 0;
 }
 
+[dir="rtl"] .label-md[stacked],
+[dir="rtl"] .label-md[floating] {
+  margin-right: 0;
+  margin-left: ($item-md-padding-right / 2);
+}
+
 .input-has-focus .label-md[stacked],
 .input-has-focus .label-md[floating] {
   color: $label-md-text-color-focused;
