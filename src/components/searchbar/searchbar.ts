@@ -249,19 +249,19 @@ export class Searchbar extends BaseInput<string> {
 
       // Set the input padding left
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
-	  if (this._plt.isRTL) {
+      if (this._plt.isRTL) {
         inputEle.style.paddingRight = inputLeft;
-	  } else {
+      } else {
         inputEle.style.paddingLeft = inputLeft;
-	  }
+      }
 
       // Set the icon margin left
       var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
-	  if (this._plt.isRTL) {
+      if (this._plt.isRTL) {
         iconEle.style.marginRight = iconLeft;
-	  } else {
+      } else {
         iconEle.style.marginLeft = iconLeft;
-	  }
+      }
     }
   }
 
@@ -279,19 +279,19 @@ export class Searchbar extends BaseInput<string> {
       var cancelStyle = cancelStyleEle.style;
       this._isCancelVisible = showShowCancel;
       if (showShowCancel) {
-	    if (this._plt.isRTL) {
+        if (this._plt.isRTL) {
           cancelStyle.marginLeft = '0';
-	    } else {
+        } else {
           cancelStyle.marginRight = '0';
-	    }
+        }
       } else {
         var offset = cancelStyleEle.offsetWidth;
         if (offset > 0) {
-	      if (this._plt.isRTL) {
+          if (this._plt.isRTL) {
             cancelStyle.marginLeft = -offset + 'px';
-	      } else {
+          } else {
             cancelStyle.marginRight = -offset + 'px';
-	      }
+          }
         }
       }
     }
