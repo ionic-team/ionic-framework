@@ -26,6 +26,10 @@ $select-ios-placeholder-color:   $select-ios-icon-color !default;
   padding: $select-ios-padding-top $select-ios-padding-right  $select-ios-padding-bottom $select-ios-padding-left;
 }
 
+[dir="rtl|] .select-ios {
+  padding: $select-ios-padding-top $select-ios-padding-left  $select-ios-padding-bottom $select-ios-padding-right;
+}
+
 .select-ios .select-placeholder {
   color: $select-ios-placeholder-color;
 }
@@ -53,4 +57,9 @@ $select-ios-placeholder-color:   $select-ios-icon-color !default;
   color: $select-ios-icon-color;
 
   pointer-events: none;
+}
+
+[dir="rtl"] .select-ios .select-icon .select-icon-inner {
+  right: 5px;
+  left: auto;
 }

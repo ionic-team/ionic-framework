@@ -49,3 +49,7 @@ ion-select {
 .select-popover ion-list {
   margin: $select-popover-list-margin-top $select-popover-list-margin-right $select-popover-list-margin-bottom $select-popover-list-margin-left;
 }
+
+[dir="rtl"] .select-popover ion-list {
+  margin: $select-popover-list-margin-top $select-popover-list-margin-left $select-popover-list-margin-bottom $select-popover-list-margin-right;
+}

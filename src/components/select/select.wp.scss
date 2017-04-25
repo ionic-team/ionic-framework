@@ -52,6 +52,10 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
   line-height: 3rem;
 }
 
+[dir="rtl"] .select-wp {
+  margin: $select-wp-margin-top $select-wp-margin-left $select-wp-margin-bottom $select-wp-margin-right;
+}
+
 .select-wp .select-placeholder {
   color: $select-wp-placeholder-color;
 }
@@ -84,6 +88,13 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
   transform: rotate(135deg);
 
   pointer-events: none;
+}
+
+[dir="rtl"] .select-wp .select-icon .select-icon-inner {
+  right: 5px;
+  left: auto;
+  border-left: $select-wp-icon-arrow-width solid $select-wp-icon-color;
+  border-right: none;
 }
 
 .select-wp .select-text {
