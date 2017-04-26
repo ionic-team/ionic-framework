@@ -17,9 +17,10 @@ ion-item-sliding .item {
 }
 
 ion-item-options {
+  @include position(0, 0, null, null);
+
   position: absolute;
-  top: 0;
-  right: 0;
+
   z-index: $z-index-item-options;
   display: none;
 

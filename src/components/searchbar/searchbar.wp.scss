@@ -84,11 +84,10 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .searchbar-wp .searchbar-search-icon {
+  @include position(5px, $searchbar-wp-input-padding-horizontal, null, null);
   @include svg-background-image($searchbar-wp-input-search-icon-svg);
 
   position: absolute;
-  top: 5px;
-  right: $searchbar-wp-input-padding-horizontal;
 
   width: $searchbar-wp-input-search-icon-size + 1;
   height: $searchbar-wp-input-search-icon-size + 1;
@@ -127,12 +126,11 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .searchbar-wp .searchbar-clear-icon {
+  @include position(0, $searchbar-wp-input-padding-horizontal, null, null);
   @include svg-background-image($searchbar-wp-input-clear-icon-svg);
   @include padding(0);
 
   position: absolute;
-  top: 0;
-  right: $searchbar-wp-input-padding-horizontal;
 
   width: $searchbar-wp-input-clear-icon-size;
   height: 100%;

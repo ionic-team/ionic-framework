@@ -123,12 +123,11 @@
 // --------------------------------------------------
 
 .tab-badge {
+  @include position(6%, 4%, null, null); // 4% fallback
+  @include position(null, calc(50% - 50px), null, null);
   @include padding(1px, 6px);
 
   position: absolute;
-  top: 6%;
-  right: 4%;
-  right: calc(50% - 50px);
 
   height: auto;
 
@@ -137,11 +136,11 @@
 }
 
 .has-icon .tab-badge {
-  right: calc(50% - 30px);
+  @include position(null, calc(50% - 30px), null, null);
 }
 
 [tabsLayout=icon-bottom] .tab-badge,
 [tabsLayout=icon-left] .tab-badge,
 [tabsLayout=icon-right] .tab-badge {
-  right: calc(50% - 50px);
+  @include position(null, calc(50% - 50px), null, null);
 }

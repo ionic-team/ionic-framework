@@ -145,9 +145,8 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 }
 
 .input-wp .text-input-clear-icon {
+  @include position-horizontal(null, ($item-wp-padding-end / 2));
   @include svg-background-image($text-input-wp-input-clear-icon-svg);
-
-  right: ($item-wp-padding-end / 2);
 
   width: $text-input-wp-input-clear-icon-width;
 

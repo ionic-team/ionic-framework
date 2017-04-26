@@ -97,12 +97,20 @@ ion-fab {
     right: $fab-content-margin;
   }
 
+  &[end] {
+    @include position-horizontal(null, $fab-content-margin);
+  }
+
   &[bottom] {
     bottom: $fab-content-margin;
   }
 
   &[left] {
-    @include position(null, null, null, $fab-content-margin);
+    left: $fab-content-margin;
+  }
+
+  &[start] {
+    @include position-horizontal($fab-content-margin, null);
   }
 
   &[top][edge] {

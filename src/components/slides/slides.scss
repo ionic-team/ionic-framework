@@ -216,8 +216,8 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-vertical > .swiper-pagination-bullets {
-  right: 10px;
-  top: 50%;
+  @include position(50%, 10px, null, null);
+
   transform: translate3d(0px, -50%, 0);
 }
 
@@ -456,9 +456,10 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-container-vertical > .swiper-scrollbar {
+  @include position(1%, 3px, null, null);
+
   position: absolute;
-  right: 3px;
-  top: 1%;
+
   z-index: 50;
   width: 5px;
   height: 98%;

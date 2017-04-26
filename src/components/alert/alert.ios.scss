@@ -494,9 +494,9 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-button-group {
-  flex-wrap: $alert-ios-button-group-flex-wrap;
+  @include margin-horizontal(null, -$alert-ios-button-border-width);
 
-  margin-right: -$alert-ios-button-border-width;
+  flex-wrap: $alert-ios-button-group-flex-wrap;
 }
 
 .alert-ios .alert-button {

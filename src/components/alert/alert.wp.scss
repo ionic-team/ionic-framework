@@ -598,8 +598,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-button-group-vertical .alert-button:first-child:not(:only-child) {
-  margin-top: 0;
-  margin-right: 0;
+  @include margin(0, 0, null, null);
 }
 
 .alert-wp .alert-button {
@@ -614,7 +613,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-button:first-child:not(:only-child) {
-  margin-right: $alert-wp-button-margin-end;
+  @include margin-horizontal(null, $alert-wp-button-margin-end);
 }
 
 .alert-wp .alert-button.activated {

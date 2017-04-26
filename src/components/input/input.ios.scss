@@ -164,9 +164,8 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 }
 
 .input-ios .text-input-clear-icon {
+  @include position-horizontal(null, ($item-ios-padding-end / 2));
   @include svg-background-image($text-input-ios-input-clear-icon-svg);
-
-  right: ($item-ios-padding-end / 2);
 
   width: $text-input-ios-input-clear-icon-width;
 

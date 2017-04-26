@@ -160,9 +160,8 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 }
 
 .input-md .text-input-clear-icon {
+  @include position-horizontal(null, ($item-md-padding-end / 2));
   @include svg-background-image($text-input-md-input-clear-icon-svg);
-
-  right: ($item-md-padding-end / 2);
 
   width: $text-input-md-input-clear-icon-width;
 

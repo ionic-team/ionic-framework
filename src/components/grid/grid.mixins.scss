@@ -159,7 +159,7 @@
 }
 
 
-// Offset the column using margin-left
+// Offset the column using margin-start
 // ---------------------------------------------------------------------------------
 
 @mixin make-column-offset($size, $columns: $grid-columns) {
@@ -179,7 +179,7 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-column-pull($size, $columns: $grid-columns) {
-  right: if($size > 0, percentage($size / $columns), auto);
+  @include position(null, if($size > 0, percentage($size / $columns), auto), null, null);
 }
 
 
