@@ -105,7 +105,6 @@ import { Range } from './components/range/range';
 import { RangeKnob } from './components/range/range-knob';
 import { Refresher } from './components/refresher/refresher';
 import { RefresherContent } from './components/refresher/refresher-content';
-import { Scroll } from './components/scroll/scroll';
 import { Searchbar } from './components/searchbar/searchbar';
 import { Segment } from './components/segment/segment';
 import { Select } from './components/select/select';
@@ -235,7 +234,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     Refresher,
     RefresherContent,
     Row,
-    Scroll,
     Searchbar,
     Segment,
     SegmentButton,
@@ -333,7 +331,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     Refresher,
     RefresherContent,
     Row,
-    Scroll,
     Searchbar,
     Segment,
     SegmentButton,

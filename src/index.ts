@@ -76,7 +76,6 @@ export { Range } from './components/range/range';
 export { RangeKnob } from './components/range/range-knob';
 export { Refresher } from './components/refresher/refresher';
 export { RefresherContent } from './components/refresher/refresher-content';
-export { Scroll } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
 export { Segment } from './components/segment/segment';
 export { SegmentButton } from './components/segment/segment-button';

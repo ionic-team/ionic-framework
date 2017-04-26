@@ -17,9 +17,6 @@
     "src/**/*.ts",
     "demos/src/**/*.ts"
   ],
-  "exclude": [
-    "src/badge/**/*"
-  ],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
