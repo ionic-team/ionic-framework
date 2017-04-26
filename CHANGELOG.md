@@ -27,7 +27,7 @@ Update your package.json to match the following dependencies, remove the existin
   "zone.js": "^0.8.9"
 },
 "devDependencies": {
-  "@ionic/app-scripts": "1.3.4",
+  "@ionic/app-scripts": "1.3.5",
   "typescript": "~2.2.1"
 },
 ```
