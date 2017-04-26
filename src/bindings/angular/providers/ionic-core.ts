@@ -22,17 +22,19 @@ export function setupCore(config: Config, plt: Platform, domCtrl: DomController,
     }
 
     // same controllers are used by ionic core
-    ionic['configCtrl'] = config;
+    ionic['ConfigCtrl'] = config;
 
     // keep core and angular dom reads/writes *nsync
-    ionic['domCtrl'] = domCtrl;
-
-    // keep core and angular dom reads/writes *nsync
-    ionic['eventNamePrefix'] = '$';
+    ionic['DomCtrl'] = domCtrl;
 
     // next tick controller created here so that it can
     // be created to run outside of angular
-    ionic['nextTickCtrl'] = getNextTickController(zone, plt.userAgent().toLowerCase());
+    ionic['NextTickCtrl'] = getNextTickController(zone, plt.userAgent().toLowerCase());
+
+    // keep core and angular dom reads/writes *nsync
+    ionic['eventNameFn'] = function(eventName: string) {
+      return '$' + eventName;
+    };
 
     // build up a path for the exact ionic core javascript file this browser needs
     var pathItems: string[] = ['core'];
