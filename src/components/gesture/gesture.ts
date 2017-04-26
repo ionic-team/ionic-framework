@@ -1,5 +1,5 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../util/dom';
-import { Component, Listen, Ionic, Prop } from '../../index';
+import { Component, Listen, Ionic, Prop } from '../index';
 import { GestureCallback, GestureDetail } from '../../util/interfaces';
 import { GestureController, GestureDelegate } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
@@ -20,6 +20,7 @@ export class Gesture {
   private hasPress = false;
   private hasStartedPan = false;
   private requiresMove = false;
+  private isMoveQueued = false;
 
   @Prop() direction: string = 'x';
   @Prop() gestureName: string = '';
@@ -153,15 +154,21 @@ export class Gesture {
 
     if (this.pan) {
       if (this.hasCapturedPan) {
-        Ionic.dom.write(() => {
-          detail.type = 'pan';
 
-          if (this.onMove) {
-            this.onMove(detail);
-          } else {
-            Ionic.emit(this, 'ionGestureMove', this.detail);
-          }
-        });
+        if (!this.isMoveQueued) {
+          this.isMoveQueued = true;
+
+          Ionic.dom.write(() => {
+            this.isMoveQueued = false;
+            detail.type = 'pan';
+
+            if (this.onMove) {
+              this.onMove(detail);
+            } else {
+              Ionic.emit(this, 'ionGestureMove', { detail: this.detail });
+            }
+          });
+        }
 
       } else if (this.pan.detect(detail.currentX, detail.currentY)) {
         if (this.pan.isGesture() !== 0) {
@@ -201,14 +208,14 @@ export class Gesture {
       // compute relative movement between these two points
       var movedX = (positions[startPos - 2] - positions[endPos - 2]);
       var movedY = (positions[startPos - 1] - positions[endPos - 1]);
-      var factor = 16 / (positions[endPos] - positions[startPos]);
+      var factor = 16.67 / (positions[endPos] - positions[startPos]);
 
       // based on XXms compute the movement to apply for each render step
       detail.velocityX = movedX * factor;
       detail.velocityY = movedY * factor;
 
-      detail.velocityDirectionX = (detail.velocityX > 0 ? 'left' : (detail.velocityX < 0 ? 'right' : null));
-      detail.velocityDirectionY = (detail.velocityY > 0 ? 'up' : (detail.velocityY < 0 ? 'down' : null));
+      detail.velocityDirectionX = (movedX > 0 ? 'left' : (movedX < 0 ? 'right' : null));
+      detail.velocityDirectionY = (movedY > 0 ? 'up' : (movedY < 0 ? 'down' : null));
     }
   }
 
@@ -222,7 +229,7 @@ export class Gesture {
     if (this.onStart) {
       this.onStart(this.detail);
     } else {
-      Ionic.emit(this, 'ionGestureStart', this.detail);
+      Ionic.emit(this, 'ionGestureStart', { detail: this.detail });
     }
 
     this.hasCapturedPan = true;
@@ -279,7 +286,7 @@ export class Gesture {
         if (this.onEnd) {
           this.onEnd(detail);
         } else {
-          Ionic.emit(this, 'ionGestureEnd', detail);
+          Ionic.emit(this, 'ionGestureEnd', { detail: detail });
         }
 
       } else if (this.hasPress) {
@@ -289,7 +296,7 @@ export class Gesture {
         if (this.notCaptured) {
           this.notCaptured(detail);
         } else {
-          Ionic.emit(this, 'ionGestureNotCaptured', detail);
+          Ionic.emit(this, 'ionGestureNotCaptured', { detail: detail });
         }
       }
 
@@ -311,7 +318,7 @@ export class Gesture {
       if (this.onPress) {
         this.onPress(detail);
       } else {
-        Ionic.emit(this, 'ionPress', detail);
+        Ionic.emit(this, 'ionPress', { detail: detail });
       }
     }
   }

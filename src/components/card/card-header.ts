@@ -1,4 +1,4 @@
-import { Component } from '../../index';
+import { Component } from '../index';
 
 
 @Component({

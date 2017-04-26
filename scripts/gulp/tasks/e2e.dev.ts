@@ -6,7 +6,7 @@ import { task } from 'gulp';
 import { ES_2015, PROJECT_ROOT } from '../constants';
 import { createTempTsConfig, getFolderInfo, runAppScriptsServe } from '../util';
 
-task('e2e.watch', ['e2e.prepare'], (done: Function) => {
+task('e2e.watch', ['e2e.prepare', 'core.watch'], (done: Function) => {
   const folderInfo = getFolderInfo();
   if (!folderInfo || !folderInfo.componentName || !folderInfo.componentTest) {
     done(new Error(`Usage: gulp e2e.watch --folder nav/basic`));

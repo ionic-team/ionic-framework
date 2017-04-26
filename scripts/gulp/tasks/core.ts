@@ -1,15 +1,26 @@
-import { DIST_BUILD_ROOT, PROJECT_ROOT } from '../constants';
+import { SRC_ROOT, DIST_BUILD_ROOT, PROJECT_ROOT } from '../constants';
 import { task } from 'gulp';
 import { accessSync } from 'fs';
 import { join } from 'path';
 
 
 task('core', (done) => {
+  buildAngularBinding(false, done);
+});
+
+task('core.watch', (done) => {
+  buildAngularBinding(true, done);
+});
+
+
+function buildAngularBinding(skipBuildingCore: boolean, done: Function) {
   const cwd = join(PROJECT_ROOT, '../ionic-core');
   const args = [
     'run',
     'build.angular',
-    DIST_BUILD_ROOT
+    SRC_ROOT,
+    DIST_BUILD_ROOT,
+    skipBuildingCore ? 'skip-core' : 'do-not-skip-core'
   ];
 
   try {
@@ -33,4 +44,4 @@ task('core', (done) => {
   ls.on('close', (code) => {
     done();
   });
-});
+}

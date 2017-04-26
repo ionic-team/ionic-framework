@@ -1,5 +1,6 @@
 @import "../../themes/ionic.globals";
 
+
 // Card Header
 // --------------------------------------------------
 
@@ -8,6 +9,7 @@ ion-card-header,
 :host {
   display: block;
   overflow: hidden;
+  visibility: inherit !important;
 
   text-overflow: ellipsis;
   white-space: nowrap;

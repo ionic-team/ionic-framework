@@ -9,11 +9,20 @@ export interface Ionic {
     gesture?: any;
   };
   dom: DomControllerApi;
+  config: ConfigApi;
 }
 
 
 export interface EventEmit {
-  (instance: any, eventName: string, data?: any): void;
+  (instance: any, eventName: string, data?: CustomEventOptions): void;
+}
+
+
+export interface CustomEventOptions {
+  bubbles?: boolean;
+  cancelable?: boolean;
+  composed?: boolean;
+  detail?: any;
 }
 
 
@@ -52,15 +61,54 @@ export interface GestureCallback {
 }
 
 
+export interface ScrollDetail extends GestureDetail {
+  scrollTop?: number;
+  scrollLeft?: number;
+  scrollHeight?: number;
+  scrollWidth?: number;
+  contentHeight?: number;
+  contentWidth?: number;
+  contentTop?: number;
+  contentBottom?: number;
+  domWrite?: RequestAnimationFrame;
+  contentElement?: HTMLElement;
+  fixedElement?: HTMLElement;
+  scrollElement?: HTMLElement;
+  headerElement?: HTMLElement;
+  footerElement?: HTMLElement;
+}
+
+
+export interface ScrollCallback {
+  (detail?: ScrollDetail): boolean|void;
+}
+
+
+export interface ContentDimensions {
+  contentHeight: number;
+  contentTop: number;
+  contentBottom: number;
+
+  contentWidth: number;
+  contentLeft: number;
+
+  scrollHeight: number;
+  scrollTop: number;
+
+  scrollWidth: number;
+  scrollLeft: number;
+}
+
+
 export interface IonicGlobal {
   staticDir?: string;
   components?: LoadComponents;
   loadComponents?: {(bundleId: string): void};
-  config?: Object;
-  configCtrl?: ConfigApi;
-  domCtrl?: DomControllerApi;
-  nextTickCtrl?: NextTickApi;
   eventNamePrefix?: string;
+  config?: Object;
+  ConfigCtrl?: ConfigApi;
+  DomCtrl?: DomControllerApi;
+  NextTickCtrl?: NextTickApi;
 }
 
 
@@ -74,21 +122,11 @@ export interface NextTick {
 }
 
 
-export interface DomRead {
-  (cb: Function): void;
-}
-
-
-export interface DomWrite {
-  (cb: Function): void;
-}
-
-
 export interface DomControllerApi {
-  read: DomRead;
-  write: DomWrite;
+  read: RequestAnimationFrame;
+  write: RequestAnimationFrame;
+  raf: RequestAnimationFrame;
 }
-
 
 export interface RafCallback {
   (timeStamp?: number): void;
@@ -251,7 +289,7 @@ export interface Watchers {
 
 
 export interface IonicTheme {
-  (instance: any, cssClassName: string, vnodeData: VNodeData): VNodeData;
+  (instance: any, cssClassName: string, vnodeData?: VNodeData): VNodeData;
 }
 
 
@@ -346,7 +384,7 @@ export interface ProxyElement extends HTMLElement {
 
 
 export interface RendererApi {
-  (oldVnode: VNode | Element, vnode: VNode): VNode;
+  (oldVnode: VNode | Element, vnode: VNode, manualSlotProjection?: boolean): VNode;
 }
 
 
@@ -394,8 +432,6 @@ export interface PlatformApi {
   getComponentMeta: (tag: string) => ComponentMeta;
   loadComponent: (bundleId: string, cb: Function) => void;
   nextTick: NextTick;
-  domRead: DomRead;
-  domWrite: DomWrite;
 
   isElement: (node: Node) => node is Element;
   isText: (node: Node) => node is Text;
@@ -414,7 +450,14 @@ export interface PlatformApi {
   $setTextContent: (node: Node, text: string | null) => void;
   $getTextContent: (node: Node) => string | null;
   $getAttribute: (elm: Element, attrName: string) => string;
-  $attachShadow: (elm: Element, cmpMode: ComponentMode, cmpModeId: string) => ShadowRoot;
+  $attachComponent: (elm: Element, cmpMeta: ComponentMeta, instance: Component) => void;
+}
+
+
+export interface PlatformConfig {
+  name: string;
+  isMatch?: {(url: string, userAgent: string): boolean};
+  settings?: any;
 }
 
 

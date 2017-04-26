@@ -1,5 +1,6 @@
 @import "../../themes/ionic.globals";
 
+
 // Card
 // --------------------------------------------------
 
@@ -8,6 +9,7 @@ ion-card,
 :host {
   display: block;
   overflow: hidden;
+  visibility: inherit !important;
 }
 
 ion-card img,

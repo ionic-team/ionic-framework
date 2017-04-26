@@ -15,7 +15,7 @@ import { createTempTsConfig, createTimestamp, getFolderInfo, readFileAsync, runA
 import * as pAll from 'p-all';
 
 task('e2e.prepare', (done: Function) => {
-  runSequence('e2e.clean', 'core', 'e2e.polyfill', 'e2e.prepareSass', (err: any) => done(err));
+  runSequence('e2e.clean', 'e2e.polyfill', 'e2e.prepareSass', (err: any) => done(err));
 });
 
 task('e2e.prepareSass', (done: Function) => {
@@ -24,7 +24,7 @@ task('e2e.prepareSass', (done: Function) => {
   done();
 });
 
-task('e2e.prod', ['e2e.prepare'], (done: Function) => {
+task('e2e.prod', ['e2e.prepare', 'core'], (done: Function) => {
   // okay, first find out all of the e2e tests to run by finding all of the 'main.ts' files
   filterE2eTestfiles().then((filePaths: string[]) => {
     if (filePaths && filePaths.length > 0) {
