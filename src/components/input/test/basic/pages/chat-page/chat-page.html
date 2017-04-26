@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Loading</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let message of messages">
+      {{message}}
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-input [(ngModel)]="draft"></ion-input>
+    <ion-buttons end>
+      <button ion-button (click)="addMessage()">Send</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

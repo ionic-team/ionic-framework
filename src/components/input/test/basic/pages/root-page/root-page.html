@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Loading</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content >
+  <ion-list style="margin-top: 300px">
+
+    <ion-item>
+      <ion-label floating>Username</ion-label>
+      <ion-input [(ngModel)]="user"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input [(ngModel)]="password" type="pasword"></ion-input>
+    </ion-item>
+
+    <button ion-item (click)="push()">
+      Login
+    </button>
+
+  </ion-list>
+  <p>{{user}}</p>
+  <p>{{password}}</p>
+</ion-content>

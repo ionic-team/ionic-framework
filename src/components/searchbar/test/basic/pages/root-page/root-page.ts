@@ -6,6 +6,7 @@ import { IonicPage } from '../../../../../..';
   templateUrl: 'root-page.html'
 })
 export class RootPage {
+
   defaultSearch: string = 'test';
   customPlaceholder: number = 2;
   defaultCancel: string = '';
@@ -15,9 +16,7 @@ export class RootPage {
   isSpellcheck: boolean = true;
   activeTab = '';
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
-
-  }
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   onClearSearchbar(ev: any) {
     console.log('ionClear', ev);

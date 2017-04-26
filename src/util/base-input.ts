@@ -2,7 +2,7 @@ import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Rend
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
-import { isPresent, isUndefined, isArray, isTrueProperty, deepCopy, assert } from './util';
+import { isPresent, isUndefined, isArray, isString, isTrueProperty, deepCopy, assert } from './util';
 import { Ion } from '../components/ion';
 import { Config } from '../config/config';
 import { Item } from '../components/item/item';
@@ -157,7 +157,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
 
     console.debug('BaseInput: value changed:', normalized, this);
     this._value = normalized;
-    this._inputCheckHasValue(normalized);
     if (this._init) {
       this._inputUpdated();
     }
@@ -255,9 +254,14 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   hasValue(): boolean {
     const val = this._value;
-    return isArray(val)
-      ? val.length > 0
-      : isPresent(val);
+    if (!isPresent(val)) {
+      return false;
+    }
+    if (isArray(val) || isString(val)) {
+      return val.length > 0;
+    }
+
+    return true;
   }
 
   /**
@@ -278,17 +282,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  _inputCheckHasValue(val: T) {
-    if (!this._item) {
-      return;
-    }
-    this._item.setElementClass('input-has-value', this.hasValue());
-  }
-
-  /**
-   * @hidden
-   */
-  initFocus() { }
+  initFocus() {}
 
   /**
    * @hidden
@@ -324,5 +318,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   _inputUpdated() {
     assert(this._init, 'component should be initialized');
+    this._item && this._item.setElementClass('input-has-value', this.isFocus() || this.hasValue());
   }
 }

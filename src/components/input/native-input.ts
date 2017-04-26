@@ -9,7 +9,7 @@ import { Platform } from '../../platform/platform';
  * @hidden
  */
 @Directive({
-  selector: '.text-input'
+  selector: '.text-input--OLD'
 })
 export class NativeInput {
   _relocated: boolean;
@@ -39,8 +39,8 @@ export class NativeInput {
 
   @HostListener('keydown', ['$event'])
   _keyDown(ev: any) {
-    if (ev) {
-      ev.target && this.keydown.emit(ev.target.value);
+    if (ev && ev.target) {
+      this.keydown.emit(ev.target.value);
     }
   }
 
