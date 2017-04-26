@@ -216,6 +216,10 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _success(result: NavResult, ti: TransitionInstruction) {
+    if (this._queue === null) {
+      this._fireError('nav controller was destroyed', ti);
+      return;
+    }
     this._init = true;
     this._trnsId = null;
 
@@ -237,6 +241,10 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _failed(rejectReason: any, ti: TransitionInstruction) {
+    if (this._queue === null) {
+      this._fireError('nav controller was destroyed', ti);
+      return;
+    }
     this._trnsId = null;
     this._queue.length = 0;
 
@@ -245,6 +253,10 @@ export class NavControllerBase extends Ion implements NavController {
     this._swipeBackCheck();
     this._nextTrns();
 
+    this._fireError(rejectReason, ti);
+  }
+
+  _fireError(rejectReason: any, ti: TransitionInstruction) {
     if (ti.done) {
       ti.done(false, false, rejectReason);
     }

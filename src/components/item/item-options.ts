@@ -51,7 +51,7 @@ export class ItemOptions {
    * @hidden
    */
   isRightSide(): boolean {
-    return isRightSide(this.side, this._plt.isRTL);
+    return isRightSide(this.side, this._plt.isRTL, true);
   }
 
   /**

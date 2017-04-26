@@ -147,12 +147,13 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Select, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select extends BaseInput<string[]> implements AfterViewInit, OnDestroy {
+export class Select extends BaseInput<string[]|string> implements AfterViewInit, OnDestroy {
 
   _multi: boolean = false;
   _options: QueryList<Option>;
   _texts: string[] = [];
   _text: string = '';
+  _values: string[] = [];
 
   /**
    * @input {string} The text to display on the cancel button. Default: `Cancel`.
@@ -394,7 +395,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   set options(val: QueryList<Option>) {
     this._options = val;
 
-    if (this._value.length === 0) {
+    if (this._values.length === 0) {
       // there are no values set at this point
       // so check to see who should be selected
       // we use writeValue() because we don't want to update ngModel
@@ -404,14 +405,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     }
   }
 
-  _inputNormalize(val: any): string[] {
-    if (Array.isArray(val)) {
-      return val;
-    }
-    return [val + ''];
-  }
-
-  _inputShouldChange(val: string[]): boolean {
+  _inputShouldChange(val: string[]|string): boolean {
     return !deepEqual(this._value, val);
   }
 
@@ -420,11 +414,12 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
    */
   _inputUpdated() {
     this._texts.length = 0;
+    this._values = Array.isArray(this._value) ? this._value : [this._value + ''];
 
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.selected = this._value.some(selectValue => {
+        option.selected = this._values.some(selectValue => {
           return isCheckedProperty(selectValue, option.value);
         });
 
