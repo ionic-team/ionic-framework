@@ -136,7 +136,7 @@ import { Config } from '../../config/config';
  *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                |
  *  | inputs                | `array`   | An array of inputs for the alert. See input options.                      |
  *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                   |
- *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop.            |
+ *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop. Default true. |
  *
  *
  *  Input options
