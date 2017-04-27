@@ -356,8 +356,8 @@ export class Searchbar extends BaseInput<string> {
     this._isActive = false;
   }
 
-  _fireFocus() {
+  setFocus() {
     this._renderer.invokeElementMethod(this._searchbarInput.nativeElement, 'focus');
-    super._fireFocus();
   }
+
 }
