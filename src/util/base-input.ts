@@ -143,9 +143,13 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (isUndefined(val)) {
       return false;
     }
-    const normalized = (val === null)
-      ? deepCopy(this._defaultValue)
-      : this._inputNormalize(val);
+    let normalized;
+    if (val === null) {
+      normalized = deepCopy(this._defaultValue);
+      this._inputReset();
+    } else {
+      normalized = this._inputNormalize(val);
+    }
 
     const notUpdate = isUndefined(normalized) || !this._inputShouldChange(normalized);
     if (notUpdate) {
@@ -285,7 +289,12 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  initFocus() {}
+  initFocus() { }
+
+  /**
+   * @hidden
+   */
+  _inputReset() { }
 
   /**
    * @hidden

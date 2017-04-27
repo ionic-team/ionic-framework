@@ -267,13 +267,14 @@ import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, g
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: DateTime, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class DateTime extends BaseInput<DateTimeData|string> implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
   _text: string = '';
   _min: DateTimeData;
   _max: DateTimeData;
   _locale: LocaleData = {};
   _picker: Picker;
+  _internalValue: DateTimeData = {};
 
   /**
    * @input {string} The minimum datetime allowed. Value must be a date string
@@ -439,6 +440,21 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, 
   /**
    * @hidden
    */
+  _inputReset() {
+    this._internalValue = {};
+  }
+
+  /**
+   * @hidden
+   */
+  _inputCheckHasValue(val: any) {
+    updateDate(this._internalValue, val);
+    super._inputCheckHasValue(val);
+  }
+
+  /**
+   * @hidden
+   */
   _inputUpdated() {
     this.updateText();
   }
@@ -446,16 +462,16 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, 
   /**
    * @hidden
    */
-  _inputNormalize(val: any): DateTimeData {
-    updateDate(this._value, val);
-    return this._value;
+  _inputShouldChange(): boolean {
+    return true;
   }
 
   /**
+   * TODO: REMOVE THIS
    * @hidden
    */
-  _inputShouldChange(): boolean {
-    return true;
+  _inputChangeEvent(): any {
+    return this.value;
   }
 
   @HostListener('click', ['$event'])
@@ -742,7 +758,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, 
    * @hidden
    */
   getValue(): DateTimeData {
-    return this._value;
+    return this._internalValue;
   }
 
   /**
