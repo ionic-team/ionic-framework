@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isTrueProperty } from '../../util/util';
@@ -104,7 +104,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Range, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Range extends BaseInput<any> implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class Range extends BaseInput<any> implements AfterContentInit, ControlValueAccessor, OnDestroy {
 
   _dual: boolean;
   _pin: boolean;
@@ -266,7 +266,7 @@ export class Range extends BaseInput<any> implements AfterViewInit, ControlValue
   /**
    * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this._initialize();
 
     // add touchstart/mousedown listeners

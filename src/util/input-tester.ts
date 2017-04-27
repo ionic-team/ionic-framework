@@ -55,7 +55,7 @@ export function commonInputTest<T>(input: BaseInput<T>, config: TestConfig) {
   const zone = new NgZone(true);
   zone.run(() => {
     testInput(input, config, false);
-    input.ngAfterViewInit();
+    input.ngAfterContentInit();
     testInput(input, config, true);
     input.ngOnDestroy();
     assert(!input._init, 'input was not destroyed correctly');

@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
+import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { Form } from './form';
 import { TimeoutDebouncer } from './debouncer';
 
 
-export interface CommonInput<T> extends ControlValueAccessor {
+export interface CommonInput<T> extends ControlValueAccessor, AfterContentInit {
 
   id: string;
   disabled: boolean;
@@ -271,7 +271,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this._initialize();
   }
 

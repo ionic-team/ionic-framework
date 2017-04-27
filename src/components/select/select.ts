@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -147,7 +147,7 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Select, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select extends BaseInput<any> implements AfterViewInit, OnDestroy {
+export class Select extends BaseInput<any> implements OnDestroy {
 
   _multi: boolean = false;
   _options: QueryList<Option>;

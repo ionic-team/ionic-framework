@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -267,7 +267,7 @@ import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, con
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: DateTime, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class DateTime extends BaseInput<DateTimeData> implements AfterContentInit, ControlValueAccessor, OnDestroy {
 
   _text: string = '';
   _min: DateTimeData;
@@ -425,7 +425,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, 
   /**
    * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
