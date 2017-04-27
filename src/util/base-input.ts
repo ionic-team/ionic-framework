@@ -38,6 +38,8 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   _disabled: boolean = false;
   _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _init: boolean = false;
+  _initModel: boolean = false;
+
   id: string;
 
   /**
@@ -122,8 +124,14 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   writeValue(val: any) {
     if (this._writeValue(val)) {
-      this._fireIonChange();
+      if (this._initModel) {
+        this._fireIonChange();
+      } else if (this._init) {
+        // ngModel fires the first time too late, we need to skip the first ngModel update
+        this._initModel = true;
+      }
     }
+
   }
 
   /**
@@ -161,6 +169,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
       this._debouncer.debounce(() => {
         assert(NgZone.isInAngularZone(), 'IonChange: should be zoned');
         this.ionChange.emit(this._inputChangeEvent());
+        this._initModel = true;
       });
     }
   }
