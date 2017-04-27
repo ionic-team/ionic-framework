@@ -139,6 +139,16 @@ describe('DateTime', () => {
 
       expect(columns[1].options[12].disabled).toEqual(true);
     });
+
+    it('should return a string', () => {
+      datetime.monthValues = '6,7,8';
+      datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 31';
+      datetime.yearValues = '2014,2015';
+
+      datetime.generate();
+
+      expect(datetime._value).toEqual(jasmine.any(String));
+    })
   });
 
   describe('writeValue', () => {
