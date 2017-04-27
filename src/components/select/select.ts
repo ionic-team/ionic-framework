@@ -410,6 +410,14 @@ export class Select extends BaseInput<string[]|string> implements AfterViewInit,
   }
 
   /**
+   * TODO: REMOVE THIS
+   * @hidden
+   */
+  _inputChangeEvent(): any {
+    return this.value;
+  }
+
+  /**
    * @hidden
    */
   _inputUpdated() {

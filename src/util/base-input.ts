@@ -160,7 +160,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (this._init) {
       this._debouncer.debounce(() => {
         assert(NgZone.isInAngularZone(), 'IonChange: should be zoned');
-        this.ionChange.emit(this);
+        this.ionChange.emit(this._inputChangeEvent());
       });
     }
   }
@@ -290,6 +290,13 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   _inputShouldChange(val: T): boolean {
     return this._value !== val;
+  }
+
+  /**
+   * @hidden
+   */
+  _inputChangeEvent(): any {
+    return this;
   }
 
   /**
