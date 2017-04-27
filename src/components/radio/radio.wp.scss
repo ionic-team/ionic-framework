@@ -124,6 +124,7 @@ $radio-wp-item-end-margin:        $radio-wp-item-right-margin;
 
   margin: $radio-wp-item-start-margin;
 
+  &[item-right], // deprecated
   &[item-end] {
     order: 0;
 

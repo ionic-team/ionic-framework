@@ -148,6 +148,7 @@ $checkbox-md-item-end-margin:            $checkbox-md-item-right-margin;
   margin: $checkbox-md-item-start-margin;
 }
 
+.item.item-md .checkbox-md[item-right], // deprecated
 .item.item-md .checkbox-md[item-end] {
   margin: $checkbox-md-item-end-margin;
 }

@@ -90,6 +90,7 @@ $radio-ios-item-end-margin:        $radio-ios-item-right-margin;
 
   margin: $radio-ios-item-end-margin;
 
+  &[item-left], // deprecated
   &[item-start] {
     margin: $radio-ios-item-start-margin;
   }

@@ -204,6 +204,7 @@ $toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
   padding: $toggle-ios-item-end-padding;
 }
 
+.item-ios .toggle-ios[item-left], // deprecated
 .item-ios .toggle-ios[item-start] {
   padding: $toggle-ios-item-start-padding;
 }

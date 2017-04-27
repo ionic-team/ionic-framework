@@ -162,6 +162,7 @@ $toggle-md-item-end-padding:             $toggle-md-item-right-padding;
   cursor: pointer;
 }
 
+.item-md .toggle-md[item-left], // deprecated
 .item-md .toggle-md[item-start] {
   padding: $toggle-md-item-start-padding;
 }

@@ -125,6 +125,7 @@ $radio-md-item-end-margin:        $radio-md-item-right-margin;
 
   margin: $radio-md-item-end-margin;
 
+  &[item-left], // deprecated
   &[item-start] {
     margin: $radio-md-item-start-margin;
   }

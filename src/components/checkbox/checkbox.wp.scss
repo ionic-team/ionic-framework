@@ -138,6 +138,7 @@ $checkbox-wp-item-end-margin:            $checkbox-wp-item-right-margin;
   margin: $checkbox-wp-item-start-margin;
 }
 
+.item.item-wp .checkbox-wp[item-right], // deprecated
 .item.item-wp .checkbox-wp[item-end] {
   margin: $checkbox-wp-item-end-margin;
 }

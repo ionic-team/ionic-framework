@@ -170,6 +170,7 @@ $toggle-wp-item-end-padding:             $toggle-wp-item-right-padding;
   cursor: pointer;
 }
 
+.item-wp .toggle-wp[item-left], // deprecated
 .item-wp .toggle-wp[item-start] {
   padding: $toggle-wp-item-start-padding;
 }

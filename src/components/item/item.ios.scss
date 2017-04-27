@@ -121,14 +121,18 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 // iOS Item Media
 // --------------------------------------------------
 
+.item-ios [item-left], // deprecated
 .item-ios [item-start] {
   margin: $item-ios-padding-media-top $item-ios-padding-left $item-ios-padding-media-bottom 0;
 }
 
+.item-ios [item-right], // deprecated
 .item-ios [item-end] {
   margin: $item-ios-padding-media-top ($item-ios-padding-left / 2) $item-ios-padding-media-bottom ($item-ios-padding-right / 2);
 }
 
+.item-ios ion-icon[item-left], // deprecated
+.item-ios ion-icon[item-right], // deprecated
 .item-ios ion-icon[item-start],
 .item-ios ion-icon[item-end] {
   margin-top: $item-ios-padding-icon-top;
@@ -149,11 +153,15 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   padding: 0 1px;
 }
 
+.item-ios ion-avatar[item-left], // deprecated
+.item-ios ion-thumbnail[item-left], // deprecated
 .item-ios ion-avatar[item-start],
 .item-ios ion-thumbnail[item-start] {
   margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
 }
 
+.item-ios ion-avatar[item-right], // deprecated
+.item-ios ion-thumbnail[item-right], // deprecated
 .item-ios ion-avatar[item-end],
 .item-ios ion-thumbnail[item-end] {
   margin: ($item-ios-padding-right / 2);
