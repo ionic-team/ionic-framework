@@ -9,7 +9,7 @@ import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
 import { deepCopy, isBlank, isPresent, isArray, isString, assert, clamp } from '../../util/util';
-import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
+import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
 /**
  * @name DateTime
@@ -267,14 +267,13 @@ import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, g
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: DateTime, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime extends BaseInput<DateTimeData|string> implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
   _text: string = '';
   _min: DateTimeData;
   _max: DateTimeData;
   _locale: LocaleData = {};
   _picker: Picker;
-  _internalValue: DateTimeData = {};
 
   /**
    * @input {string} The minimum datetime allowed. Value must be a date string
@@ -440,16 +439,9 @@ export class DateTime extends BaseInput<DateTimeData|string> implements AfterVie
   /**
    * @hidden
    */
-  _inputReset() {
-    this._internalValue = {};
-  }
-
-  /**
-   * @hidden
-   */
-  _inputCheckHasValue(val: any) {
-    updateDate(this._internalValue, val);
-    super._inputCheckHasValue(val);
+  _inputNormalize(val: any): DateTimeData {
+    updateDate(this._value, val);
+    return this._value;
   }
 
   /**
@@ -472,6 +464,13 @@ export class DateTime extends BaseInput<DateTimeData|string> implements AfterVie
    */
   _inputChangeEvent(): any {
     return this.value;
+  }
+
+  /**
+   * @hidden
+   */
+  _inputNgModelEvent(): any {
+    return convertDataToISO(this.value);
   }
 
   @HostListener('click', ['$event'])
@@ -758,7 +757,7 @@ export class DateTime extends BaseInput<DateTimeData|string> implements AfterVie
    * @hidden
    */
   getValue(): DateTimeData {
-    return this._internalValue;
+    return this._value;
   }
 
   /**

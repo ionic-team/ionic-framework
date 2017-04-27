@@ -146,7 +146,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     let normalized;
     if (val === null) {
       normalized = deepCopy(this._defaultValue);
-      this._inputReset();
     } else {
       normalized = this._inputNormalize(val);
     }
@@ -240,7 +239,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   private onChange() {
-    this._onChanged && this._onChanged(this._value);
+    this._onChanged && this._onChanged(this._inputNgModelEvent());
     this._onTouched && this._onTouched();
   }
 
@@ -294,11 +293,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  _inputReset() { }
-
-  /**
-   * @hidden
-   */
   _inputNormalize(val: any): T {
     return val;
   }
@@ -316,6 +310,14 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   _inputChangeEvent(): any {
     return this;
   }
+
+  /**
+   * @hidden
+   */
+  _inputNgModelEvent(): any {
+    return this._value;
+  }
+
 
   /**
    * @hidden
