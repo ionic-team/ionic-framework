@@ -4,6 +4,7 @@ import { NgControl } from '@angular/forms';
 import { Config } from '../../config/config';
 import { BaseInput } from '../../util/base-input';
 import { isPresent, isTrueProperty } from '../../util/util';
+import { TimeoutDebouncer } from '../../util/debouncer';
 import { Platform } from '../../platform/platform';
 
 /**
@@ -63,6 +64,7 @@ export class Searchbar extends BaseInput<string> {
   _isActive: boolean = false;
   _showCancelButton: boolean = false;
   _animated: boolean = false;
+  _inputDebouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -89,6 +91,7 @@ export class Searchbar extends BaseInput<string> {
   }
   set debounce(val: number) {
     this._debouncer.wait = val;
+    this._inputDebouncer.wait = val;
   }
 
   /**
@@ -288,7 +291,9 @@ export class Searchbar extends BaseInput<string> {
    */
   inputChanged(ev: any) {
     this.value = ev.target.value;
-    this.ionInput.emit(ev);
+    this._inputDebouncer.debounce(() => {
+      this.ionInput.emit(ev);
+    });
   }
 
   /**

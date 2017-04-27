@@ -14,7 +14,7 @@ export class SlideEdgeGesture extends SlideGesture {
 
   constructor(plt: Platform, element: HTMLElement, opts: any = {}) {
     defaults(opts, {
-      edge: 'left',
+      edge: 'start',
       maxEdgeStart: 50
     });
     super(plt, element, opts);
@@ -29,7 +29,7 @@ export class SlideEdgeGesture extends SlideGesture {
       switch (value) {
         case 'start': return isRTL ? 'right' : 'left';
         case 'end': return isRTL ? 'left' : 'right';
-        default: value;
+        default: return value;
       }
     });
   }

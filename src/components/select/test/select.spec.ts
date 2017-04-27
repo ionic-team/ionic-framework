@@ -21,7 +21,7 @@ describe('Select', () => {
       corpus: [
         [['hola'], ['hola']],
         [null, []],
-        ['hola', ['hola']],
+        ['hola', 'hola'],
         [['hola', 'adios'], ['hola', 'adios']]
       ]
     });

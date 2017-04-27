@@ -241,6 +241,16 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
+  hasValue(): boolean {
+    const val = this._value;
+    return isArray(val)
+      ? val.length > 0
+      : isPresent(val);
+  }
+
+  /**
+   * @hidden
+   */
   ngOnDestroy() {
     this._form && this._form.deregister(this);
     this._init = false;
@@ -260,12 +270,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._item) {
       return;
     }
-
-    const hasValue = isArray(val)
-      ? val.length > 0
-      : isPresent(val);
-
-    this._item.setElementClass('input-has-value', hasValue);
+    this._item.setElementClass('input-has-value', this.hasValue());
   }
 
   /**

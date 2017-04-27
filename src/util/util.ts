@@ -128,15 +128,24 @@ export function isCheckedProperty(a: any, b: any): boolean {
   return (a == b); // tslint:disable-line
 };
 
+/** @hidden */
 export type Side = 'left' | 'right' | 'start' | 'end';
 
-export function isRightSide(side: Side, isRTL: boolean): boolean {
+/**
+ * @hidden
+ * Given a side, return if it should be on the right
+ * based on the value of dir
+ * @param side the side
+ * @param isRTL whether the application dir is rtl
+ * @param defaultRight whether the default side is right
+ */
+export function isRightSide(side: Side, isRTL: boolean, defaultRight: boolean = false): boolean {
   switch (side) {
     case 'right': return true;
     case 'left': return false;
     case 'end': return !isRTL;
-    // 'start' by default
-    default: return isRTL;
+    case 'start': return isRTL;
+    default: return defaultRight ? !isRTL : isRTL;
   }
 }
 
