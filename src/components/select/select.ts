@@ -226,7 +226,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
    */
   getValues(): any[] {
     const values = Array.isArray(this._value) ? this._value : [this._value];
-    assert(!this._multi && values.length <= 1, 'single only can have one value');
+    assert(this._multi || values.length <= 1, 'single only can have one value');
     return values;
   }
 
