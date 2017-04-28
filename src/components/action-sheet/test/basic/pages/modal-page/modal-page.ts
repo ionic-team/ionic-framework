@@ -8,9 +8,9 @@ import { IonicPage, ViewController } from '../../../../../..';
   template: `
     <ion-header>
       <ion-toolbar>
-        <ion-buttons start>
+        <ion-button start>
           <button ion-button (click)="dismiss()" strong>Close</button>
-        </ion-buttons>
+        </ion-button>
         <ion-title>Modal</ion-title>
       </ion-toolbar>
     </ion-header>

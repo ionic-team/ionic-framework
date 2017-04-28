@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { Button } from '../button/button';
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
 import { Icon } from '../icon/icon';
@@ -412,8 +411,7 @@ export class Item extends Ion {
   /**
    * @hidden
    */
-  @ContentChildren(Button)
-  set _buttons(buttons: QueryList<Button>) {
+  set _buttons(buttons: QueryList<any>) {
     // buttons.forEach(button => {
     //   if (!button._size) {
     //     button.setElementClass('item-button', true);

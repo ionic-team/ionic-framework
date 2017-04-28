@@ -1,6 +1,5 @@
 import { Directive, Input, HostListener, Optional } from '@angular/core';
 
-import { Button } from '../button/button';
 import { MenuController } from '../app/menu-controller';
 import { Navbar } from '../toolbar/navbar';
 import { ViewController } from '../../navigation/view-controller';
@@ -110,10 +109,9 @@ export class MenuToggle {
   constructor(
     private _menu: MenuController,
     @Optional() private _viewCtrl: ViewController,
-    @Optional() private _button: Button,
     @Optional() private _navbar: Navbar
   ) {
-    this._isButton = !!_button;
+    this._isButton = false;
     this._inNavbar = !!_navbar;
   }
 

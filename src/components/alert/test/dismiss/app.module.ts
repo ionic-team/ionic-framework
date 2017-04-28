@@ -59,13 +59,13 @@ export class E2EPage {
           </ion-item>
         </ion-list>
         <div padding style="padding-top: 0 !important;">
-          <button ion-button list-item color="primary" block>
+          <ion-button list-item color="primary" block>
             Submit
-          </button>
+          </ion-button>
         </div>
       </form>
       <p>
-        <button ion-button block (click)="doFastPop()">Fast Loading Dismiss, Nav Pop</button>
+        <ion-button block (click)="doFastPop()">Fast Loading Dismiss, Nav Pop</ion-button>
       </p>
     </ion-content>
   `

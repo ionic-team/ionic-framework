@@ -1,6 +1,5 @@
-import { ContentChildren, Directive, ElementRef, forwardRef, Optional, Inject, Renderer } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Optional, Inject, Renderer } from '@angular/core';
 
-import { Button } from '../button/button';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { Navbar } from './navbar';
@@ -27,10 +26,9 @@ export class ToolbarItem extends Ion {
     this.inToolbar = !!(toolbar || navbar);
   }
 
-  @ContentChildren(Button)
   set _buttons(buttons: any) {
     if (this.inToolbar) {
-      buttons.forEach((button: Button) => {
+      buttons.forEach((button: any) => {
         // button.setRole('bar-button');
       });
     }
