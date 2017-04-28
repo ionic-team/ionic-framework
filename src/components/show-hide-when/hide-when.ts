@@ -1,5 +1,6 @@
-import { Attribute, Directive, NgZone } from '@angular/core';
+import { Attribute, Directive, Input, NgZone } from '@angular/core';
 
+import { Config } from '../../config/config';
 import { Platform } from '../../platform/platform';
 
 import { DisplayWhen } from './display-when';
@@ -52,13 +53,25 @@ import { DisplayWhen } from './display-when';
   }
 })
 export class HideWhen extends DisplayWhen {
+  /**
+   * @hidden
+   */
+  @Input()
+  set hideWhen(value: string) {
+    this.when = value;
+  }
+
+  get hideWhen(): string {
+    return this.when;
+  }
 
   constructor(
     @Attribute('hideWhen') hideWhen: string,
+    config: Config,
     plt: Platform,
     zone: NgZone
   ) {
-    super(hideWhen, plt, zone);
+    super(hideWhen, config, plt, zone);
   }
 
 }

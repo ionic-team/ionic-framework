@@ -1,0 +1,256 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title showWhen="ios">iOS Platform</ion-title>
+    <ion-title showWhen="windows">Windows Platform</ion-title>
+    <ion-title showWhen="android">Android Platform</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="toggle = !toggle">Toggle</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding class="show-when-demo">
+  <p>Checkmarks will show up when <code>showWhen</code> is a match.</p>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div padding-top>media: xs</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: xs" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: SM</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: SM" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>mEdia: md</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="mEdia: md" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: lg</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: lg" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: xl</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: xl" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>media: (min-width: 100px)</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: (min-width: 100px)" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: ( (min-width: 400px), print ), mode: ios</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: ( (min-width: 400px), print ), mode: ios" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: (min-width: 500px)</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: (min-width: 500px)" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: (min-width: 700px)</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: (min-width: 700px)" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: (min-width: 900px)</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: (min-width: 900px)" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>true</div>
+        <div class="icon-wrapper">
+          <ion-icon [showWhen]="true" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>false</div>
+        <div class="icon-wrapper">
+          <ion-icon [showWhen]="false" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>toggle</div>
+        <div class="icon-wrapper">
+          <ion-icon [showWhen]="toggle" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>core</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="core" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>ios</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="ios" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>android</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="android" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>windows</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="windows" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>portrait</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="portrait" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>landscape</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="landscape" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: (orientation: portrait)</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: (orientation: portrait)" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>media: (orientation: landscape)</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="media: (orientation: landscape)" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>mode: ios</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="mode: ios" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>mode: md</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="mode: md" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>mode: wp</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="mode: wp" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>mode:ios, mode: wp</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="mode:ios, mode: wp" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>mode: md,mode: ios</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="mode: md,mode: ios" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>mode: wp, mode: md</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="mode: wp, mode: md" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>platform: ios</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="platform: ios" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>platform: android</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="platform: android" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>platform: windows</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="platform: windows" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div padding-top>orientation: portrait</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="orientation: portrait" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div padding-top>orientation: landscape</div>
+        <div class="icon-wrapper">
+          <ion-icon showWhen="orientation: landscape" color="secondary" name="checkmark"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
+
+<style>
+  .show-when-demo .col {
+    background: #f6f6f6;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+
+  .show-when-demo ion-icon {
+    font-size: 44px;
+    line-height: 28px;
+  }
+
+  .show-when-demo .icon-wrapper {
+    min-height: 40px;
+  }
+</style>

@@ -1,7 +1,8 @@
-import { Attribute, Directive, NgZone } from '@angular/core';
+import { Attribute, Directive, Input, NgZone } from '@angular/core';
 
 import { DisplayWhen } from './display-when';
 
+import { Config } from '../../config/config';
 import { Platform } from '../../platform/platform';
 
 
@@ -54,12 +55,25 @@ import { Platform } from '../../platform/platform';
 })
 export class ShowWhen extends DisplayWhen {
 
+  /**
+   * @hidden
+   */
+  @Input()
+  set showWhen(value: any) {
+    this.when = value;
+  }
+
+  get showWhen(): any {
+    return this.when;
+  }
+
   constructor(
     @Attribute('showWhen') showWhen: string,
+    config: Config,
     plt: Platform,
     zone: NgZone
   ) {
-    super(showWhen, plt, zone);
+    super(showWhen, config, plt, zone);
   }
 
   // ngOnDestroy is implemented in DisplayWhen
