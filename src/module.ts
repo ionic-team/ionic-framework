@@ -50,7 +50,6 @@ import { IonicApp } from './components/app/app-root';
 import { OverlayPortal } from './components/app/overlay-portal';
 import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
-import { Button } from './components/button/button';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
@@ -112,8 +111,6 @@ import { SelectPopover } from './components/select/select-popover-component';
 import { SegmentButton } from './components/segment/segment-button';
 import { ShowWhen } from './components/show-hide-when/show-when';
 import { HideWhen } from './components/show-hide-when/hide-when';
-import { Slide } from './components/slides/slide';
-import { Slides } from './components/slides/slides';
 import { Spinner } from './components/spinner/spinner';
 import { SplitPane } from './components/split-pane/split-pane';
 import { Tab } from './components/tabs/tab';
@@ -185,7 +182,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     OverlayPortal,
     Avatar,
     Backdrop,
-    Button,
     Checkbox,
     Chip,
     Col,
@@ -241,8 +237,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     SelectPopover,
     ShowWhen,
     HideWhen,
-    Slide,
-    Slides,
     Spinner,
     SplitPane,
     Tab,
@@ -282,7 +276,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     OverlayPortal,
     Avatar,
     Backdrop,
-    Button,
     Checkbox,
     Chip,
     Col,
@@ -338,8 +331,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     SelectPopover,
     ShowWhen,
     HideWhen,
-    Slide,
-    Slides,
     Spinner,
     SplitPane,
     Tab,

@@ -31,7 +31,7 @@ export class ToolbarItem extends Ion {
   set _buttons(buttons: any) {
     if (this.inToolbar) {
       buttons.forEach((button: Button) => {
-        button.setRole('bar-button');
+        // button.setRole('bar-button');
       });
     }
   }

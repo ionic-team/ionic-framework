@@ -1,13 +1,13 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, NavController, Slides } from '../../../..';
+import { IonicApp, IonicModule, NavController } from '../../../..';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 export class IntroPage {
-  @ViewChild(Slides) slider: Slides;
+  slider: any;
 
   continueText: string = 'Skip';
   mySlideOptions: any;
@@ -17,7 +17,6 @@ export class IntroPage {
 
   ngOnInit() {
     this.slider.initialSlide = 1;
-    this.slider.paginationClickable = true;
   }
 
   onSlideChanged(slider: any) {

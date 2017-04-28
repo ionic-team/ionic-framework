@@ -1,23 +1,23 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Slides } from '../../../..';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 export class E2EPage {
-  @ViewChild(Slides) slider: Slides;
+  slider: any;
 
-  onSlideWillChange(s: Slides) {
+  onSlideWillChange(s: any) {
     console.log(`onSlideWillChange: ${s}`);
   }
 
-  onSlideDidChange(s: Slides) {
+  onSlideDidChange(s: any) {
     console.log(`onSlideDidChange: ${s}`);
   }
 
-  onSlideDrag(s: Slides) {
+  onSlideDrag(s: any) {
     console.log(`onSlideDrag: ${s}`);
   }
 

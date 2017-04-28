@@ -13,6 +13,9 @@
  *
  * Licensed under MIT
  */
+ion-slides {
+  visibility: inherit !important;
+}
 
 .swiper-container {
   margin-left: auto;
@@ -21,6 +24,10 @@
   overflow: hidden;
   /* Fix of Webkit flickering */
   z-index: 1;
+}
+
+.swiper-wrapper {
+  display: block;
 }
 
 .swiper-container-no-flexbox .swiper-slide {
@@ -279,6 +286,7 @@ button.swiper-pagination-bullet {
   perspective: 1200px;
 }
 
+
 .swiper-container-3d .swiper-wrapper,
 .swiper-container-3d .swiper-slide,
 .swiper-container-3d .swiper-slide-shadow-left,
@@ -506,19 +514,6 @@ button.swiper-pagination-bullet {
   }
 }
 
-
-ion-slides {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.slide-zoom {
-  display: block;
-  width: 100%;
-  text-align: center;
-}
-
 .swiper-container {
   width: 100%;
   height: 100%;
@@ -532,26 +527,4 @@ ion-slides {
   height: 100%;
   padding: 0;
   display: flex;
-}
-
-.swiper-slide {
-  width: 100%;
-  height: 100%;
-
-  box-sizing: border-box;
-
-  text-align: center;
-  font-size: 18px;
-
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
 }

@@ -1,14 +1,12 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Slides } from '../../../..';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
   templateUrl: 'main.html'
 })
 export class MyPage {
-  @ViewChild('firstSlider') slider1: Slides;
-  @ViewChild('secondSlider') slider2: Slides;
 }
 
 

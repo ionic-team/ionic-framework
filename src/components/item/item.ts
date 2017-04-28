@@ -414,11 +414,11 @@ export class Item extends Ion {
    */
   @ContentChildren(Button)
   set _buttons(buttons: QueryList<Button>) {
-    buttons.forEach(button => {
-      if (!button._size) {
-        button.setElementClass('item-button', true);
-      }
-    });
+    // buttons.forEach(button => {
+    //   if (!button._size) {
+    //     button.setElementClass('item-button', true);
+    //   }
+    // });
   }
 
   /**

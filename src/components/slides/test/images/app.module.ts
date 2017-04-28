@@ -1,8 +1,8 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 
-import { IonicApp, IonicModule, Slides } from '../../../..';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { IonicApp, IonicModule, Slides } from '../../../..';
 })
 export class E2EPage {
   images: string[] = [];
-  @ViewChild(Slides) slider: Slides;
+  slider: any;
 
   constructor(private http: Http) {}
 
