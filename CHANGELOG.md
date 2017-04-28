@@ -1,3 +1,24 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/driftyco/ionic/compare/v3.1.0...v3.1.1) (2017-04-28)
+
+
+### Bug Fixes
+
+* **datetime:** return the correct value ([af394b5](https://github.com/driftyco/ionic/commit/af394b5))
+* **datetime:** always returns a string ([6677d80](https://github.com/driftyco/ionic/commit/6677d80))
+* **input:** don't dispatch first ngModel update ([505d27a](https://github.com/driftyco/ionic/commit/505d27a))
+* **input:** initialize in ngAfterContentInit ([239b559](https://github.com/driftyco/ionic/commit/239b559))
+* **menu:** missing output events in interface ([7eb2f0b](https://github.com/driftyco/ionic/commit/7eb2f0b)), closes [#11383](https://github.com/driftyco/ionic/issues/11383)
+* **range:** fix label reference ([ee6c481](https://github.com/driftyco/ionic/commit/ee6c481))
+* **searchbar:** add setFocus() back ([9264a04](https://github.com/driftyco/ionic/commit/9264a04)), closes [#11397](https://github.com/driftyco/ionic/issues/11397)
+* **select:** use correct assert condition ([ec2a34d](https://github.com/driftyco/ionic/commit/ec2a34d))
+* **select:** return the value in ionChange instead of this ([d24c4f4](https://github.com/driftyco/ionic/commit/d24c4f4))
+* **select:** allow object as value ([4c8efc2](https://github.com/driftyco/ionic/commit/4c8efc2))
+* **select:** remove private reference ([c0276d5](https://github.com/driftyco/ionic/commit/c0276d5))
+* **toggle:** initialize in ngAfterContentInit ([539901d](https://github.com/driftyco/ionic/commit/539901d))
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/driftyco/ionic/compare/v3.0.1...v3.1.0) (2017-04-26)
 
@@ -20,7 +41,7 @@ Update your package.json to match the following dependencies, remove the existin
   "@ionic-native/splash-screen": "3.4.2",
   "@ionic-native/status-bar": "3.4.2",
   "@ionic/storage": "2.0.1",
-  "ionic-angular": "3.1.0",
+  "ionic-angular": "3.1.1",
   "ionicons": "3.0.0",
   "rxjs": "5.1.1",
   "sw-toolbox": "3.4.0",
