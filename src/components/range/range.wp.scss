@@ -117,6 +117,8 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp .range-knob-handle {
+  @include text-align(center);
+
   position: absolute;
   top: ($range-wp-slider-height / 2);
   left: 0%;
@@ -126,8 +128,6 @@ $range-wp-pin-padding:                       8px !default;
 
   width: $range-wp-hit-width;
   height: $range-wp-hit-height;
-
-  text-align: center;
 }
 
 .range-wp .range-knob {
@@ -166,6 +166,8 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp .range-pin {
+  @include text-align(center);
+
   position: relative;
   top: -24px;
   display: inline-block;
@@ -177,8 +179,6 @@ $range-wp-pin-padding:                       8px !default;
   border-radius: 50px;
 
   font-size: $range-wp-pin-font-size;
-
-  text-align: center;
 
   color: $range-wp-pin-color;
 
