@@ -151,7 +151,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
 
   _multi: boolean = false;
   _options: QueryList<Option>;
-  private _overlay: ActionSheet | Alert | Popover;
+  _overlay: ActionSheet | Alert | Popover;
   _texts: string[] = [];
   _text: string = '';
 
@@ -354,17 +354,21 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     }
 
     overlay.present(selectOptions);
-    this._overlay = overlay;
 
     this._fireFocus();
-    this._overlay.onDidDismiss((value: any) => {
+
+    overlay.onDidDismiss((value: any) => {
       this._fireBlur();
 
       if (this.interface === 'popover' && value) {
         this.value = value;
         this.ionChange.emit(value);
       }
+
+      this._overlay = undefined;
     });
+
+    this._overlay = overlay;
   }
 
   /**
@@ -375,11 +379,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
       return;
     }
 
-    let dismissPromise = this._overlay.dismiss();
-
-    dismissPromise.then(() => this._overlay = undefined);
-
-    return dismissPromise;
+    return this._overlay.dismiss();
   }
 
   /**
