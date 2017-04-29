@@ -1,146 +1,117 @@
-import { BooleanInputComponent, GestureDetail } from '../../util/interfaces';
-import { Component, h, Ionic, Listen, Prop, Watch } from '../index';
+import { Component, h, Ionic } from '../index';
 
 
+/**
+ * @name Toolbar
+ * @description
+ * A Toolbar is a generic bar that is positioned above or below content.
+ * Unlike a [Navbar](../../navbar/Navbar), a toolbar can be used as a subheader.
+ * When toolbars are placed within an `<ion-header>` or `<ion-footer>`,
+ * the toolbars stay fixed in their respective location. When placed within
+ * `<ion-content>`, toolbars will scroll with the content.
+ *
+ *
+ * ### Buttons in a Toolbar
+ * Buttons placed in a toolbar should be placed inside of the `<ion-buttons>`
+ * element. An exception to this is a [menuToggle](../../menu/MenuToggle) button.
+ * It should not be placed inside of the `<ion-buttons>` element. Both the
+ * `<ion-buttons>` element and the `menuToggle` can be positioned inside of the
+ * toolbar using different properties. The below chart has a description of each
+ * property.
+ *
+ * | Property    | Description                                                                                                           |
+ * |-------------|-----------------------------------------------------------------------------------------------------------------------|
+ * | `start`     | Positions element to the left of the content in `ios` mode, and directly to the right in `md` and `wp` mode.    |
+ * | `end`       | Positions element to the right of the content in `ios` mode, and to the far right in `md` and `wp` mode.        |
+ * | `left`      | Positions element to the left of all other elements.                                                            |
+ * | `right`     | Positions element to the right of all other elements.                                                           |
+ *
+ *
+ * ### Header / Footer Box Shadow and Border
+ * In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and the
+ * `<ion-footer>` will receive a box-shadow on the top.  In `ios` mode, the `<ion-header>`
+ * will receive a border on the bottom, and the `<ion-footer>` will receive a border on the
+ * top. Both the `md` box-shadow and the `ios` border can be removed by adding the `no-border`
+ * attribute to the element.
+ *
+ * ```html
+ * <ion-header no-border>
+ *   <ion-toolbar>
+ *     <ion-title>Header</ion-title>
+ *   </ion-toolbar>
+ * </ion-header>
+ *
+ * <ion-content>
+ * </ion-content>
+ *
+ * <ion-footer no-border>
+ *   <ion-toolbar>
+ *     <ion-title>Footer</ion-title>
+ *   </ion-toolbar>
+ * </ion-footer>
+ * ```
+ *
+ * @usage
+ *
+ * ```html
+ *
+ * <ion-header no-border>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>My Toolbar Title</ion-title>
+ *   </ion-toolbar>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>I'm a subheader</ion-title>
+ *   </ion-toolbar>
+ *
+ * <ion-header>
+ *
+ *
+ * <ion-content>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>Scrolls with the content</ion-title>
+ *   </ion-toolbar>
+ *
+ * </ion-content>
+ *
+ *
+ * <ion-footer no-border>
+ *
+ *   <ion-toolbar>
+ *     <ion-title>I'm a footer</ion-title>
+ *   </ion-toolbar>
+ *
+ * </ion-footer>
+ *  ```
+ *
+ * @demo /docs/demos/src/toolbar/
+ * @see {@link ../../navbar/Navbar/ Navbar API Docs}
+ */
 @Component({
-  tag: 'ion-toggle',
+  tag: 'ion-toolbar',
   styleUrls: {
-    ios: 'toggle.ios.scss',
-    md: 'toggle.md.scss',
-    wp: 'toggle.wp.scss'
+    ios: 'toolbar.ios.scss',
+    md: 'toolbar.md.scss',
+    wp: 'toolbar.wp.scss'
   }
 })
-export class Toggle implements BooleanInputComponent {
-  activated: boolean;
-  hasFocus: boolean;
-  id: string;
-  labelId: string;
-  startX: number;
+export class Toolbar {
+  private sbPadding: boolean;
 
-  @Prop() checked: boolean;
-  @Prop() disabled: boolean;
-  @Prop() value: string;
-
-
-  @Watch('checked')
-  changed(val: boolean) {
-    Ionic.emit(this, 'ionChange', { detail: { checked: val } });
+  constructor() {
+    this.sbPadding = Ionic.config.getBoolean('statusbarPadding');
   }
-
-
-  canStart() {
-    return !this.disabled;
-  }
-
-
-  onDragStart(detail: GestureDetail) {
-    this.startX = detail.startX;
-    this.fireFocus();
-  }
-
-
-  onDragMove(detail: GestureDetail) {
-    if (this.checked) {
-      if (detail.currentX + 15 < this.startX) {
-        this.checked = false;
-        this.activated = true;
-        this.startX = detail.currentX;
-      }
-
-    } else if (detail.currentX - 15 > this.startX) {
-      this.checked = true;
-      this.activated = (detail.currentX < this.startX + 5);
-      this.startX = detail.currentX;
-    }
-  }
-
-
-  onDragEnd(detail: GestureDetail) {
-    if (this.checked) {
-      if (detail.startX + 4 > detail.currentX) {
-        this.checked = false;
-      }
-
-    } else if (detail.startX - 4 < detail.currentX) {
-      this.checked = true;
-    }
-
-    this.activated = false;
-    this.fireBlur();
-    this.startX = null;
-  }
-
-
-  @Listen('keydown.space')
-  onSpace(ev: KeyboardEvent) {
-    this.toggle();
-    ev.stopPropagation();
-    ev.preventDefault();
-  }
-
-
-  toggle() {
-    if (!this.disabled) {
-      this.checked = !this.checked;
-      this.fireFocus();
-    }
-  }
-
-
-  fireFocus() {
-    if (!this.hasFocus) {
-      this.hasFocus = true;
-      Ionic.emit(this, 'ionFocus');
-    }
-  }
-
-
-  fireBlur() {
-    if (this.hasFocus) {
-      this.hasFocus = false;
-      Ionic.emit(this, 'ionBlur');
-    }
-  }
-
 
   render() {
-    return h(this,
-      h('ion-gesture', Ionic.theme(this, 'toggle', {
-        class: {
-          'toggle-activated': this.activated,
-          'toggle-checked': this.checked,
-          'toggle-disabled': this.disabled,
-        },
-        props: {
-          'canStart': this.canStart.bind(this),
-          'onStart': this.onDragStart.bind(this),
-          'onMove': this.onDragMove.bind(this),
-          'onEnd': this.onDragEnd.bind(this),
-          'onPress': this.toggle.bind(this),
-          'gestureName': 'toggle',
-          'gesturePriority': 30,
-          'type': 'pan,press',
-          'direction': 'x',
-          'threshold': 20,
-          'listenOn': 'parent'
-        }
-      }),
-        [
-          h('div.toggle-icon',
-            h('div.toggle-inner')
-          ),
-          h('div.toggle-cover', {
-            attrs: {
-              'id': this.id,
-              'aria-checked': this.checked ? 'true' : false,
-              'aria-disabled': this.disabled ? 'true' : false,
-              'aria-labelledby': this.labelId,
-              'role': 'checkbox',
-              'tabindex': 0
-            }
-          })
-        ]
-      )
+    return h(this, { class: { 'statusbar-padding': this.sbPadding } },
+      h('div', Ionic.theme(this, 'toolbar'), [
+        h('div', Ionic.theme(this, 'toolbar-background')),
+        h('div', Ionic.theme(this, 'toolbar-content'),
+          h('slot')
+        ),
+      ])
     );
   }
 

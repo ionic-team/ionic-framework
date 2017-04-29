@@ -174,15 +174,6 @@ export class Searchbar extends BaseInput<string> {
 
   /**
    * @hidden
-   * After View Checked position the elements
-   */
-  ngAfterViewInit() {
-    this._initialize();
-    this.positionElements();
-  }
-
-  /**
-   * @hidden
    * On Initialization check for attributes
    */
   ngOnInit() {
@@ -196,11 +187,9 @@ export class Searchbar extends BaseInput<string> {
    * @hidden
    */
   _inputUpdated() {
-    if (this._searchbarInput) {
-      var ele = this._searchbarInput.nativeElement;
-      if (ele) {
-        ele.value = this.value;
-      }
+    const ele = this._searchbarInput.nativeElement;
+    if (ele) {
+      ele.value = this.value;
     }
     this.positionElements();
   }
@@ -229,9 +218,6 @@ export class Searchbar extends BaseInput<string> {
   }
 
   positionPlaceholder() {
-    if (!this._searchbarInput || !this._searchbarIcon) {
-      return;
-    }
     const inputEle = this._searchbarInput.nativeElement;
     const iconEle = this._searchbarIcon.nativeElement;
 
@@ -265,9 +251,6 @@ export class Searchbar extends BaseInput<string> {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   positionCancelButton() {
-    if (!this._cancelButton || !this._cancelButton.nativeElement) {
-      return;
-    }
     const showShowCancel = this._isFocus;
     if (showShowCancel !== this._isCancelVisible) {
       var cancelStyleEle = this._cancelButton.nativeElement;

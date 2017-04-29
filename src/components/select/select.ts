@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -9,7 +9,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual } from '../../util/util';
+import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual, assert } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
@@ -147,13 +147,12 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Select, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select extends BaseInput<string[]|string> implements AfterViewInit, OnDestroy {
+export class Select extends BaseInput<any> implements OnDestroy {
 
   _multi: boolean = false;
   _options: QueryList<Option>;
   _texts: string[] = [];
   _text: string = '';
-  _values: string[] = [];
 
   /**
    * @input {string} The text to display on the cancel button. Default: `Cancel`.
@@ -220,6 +219,15 @@ export class Select extends BaseInput<string[]|string> implements AfterViewInit,
   @HostListener('keyup.space')
   _keyup() {
     this.open();
+  }
+
+  /**
+   * @hidden
+   */
+  getValues(): any[] {
+    const values = Array.isArray(this._value) ? this._value : [this._value];
+    assert(this._multi || values.length <= 1, 'single only can have one value');
+    return values;
   }
 
   /**
@@ -394,8 +402,8 @@ export class Select extends BaseInput<string[]|string> implements AfterViewInit,
   @ContentChildren(Option)
   set options(val: QueryList<Option>) {
     this._options = val;
-
-    if (this._values.length === 0) {
+    const values = this.getValues();
+    if (values.length === 0) {
       // there are no values set at this point
       // so check to see who should be selected
       // we use writeValue() because we don't want to update ngModel
@@ -410,16 +418,23 @@ export class Select extends BaseInput<string[]|string> implements AfterViewInit,
   }
 
   /**
+   * TODO: REMOVE THIS
+   * @hidden
+   */
+  _inputChangeEvent(): any {
+    return this.value;
+  }
+
+  /**
    * @hidden
    */
   _inputUpdated() {
     this._texts.length = 0;
-    this._values = Array.isArray(this._value) ? this._value : [this._value + ''];
 
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.selected = this._values.some(selectValue => {
+        option.selected = this.getValues().some(selectValue => {
           return isCheckedProperty(selectValue, option.value);
         });
 
