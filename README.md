@@ -16,6 +16,8 @@ We will continue to develop and support ionic-angular v3 in the master branch. U
 
 ### Changes
 
+#### `@NgModule` Updates
+
 What's great is that Angular already supports and works with web components! In order to enable them simply add `CUSTOM_ELEMENTS_SCHEMA` to the `schemas` property of `@NgModule`, such as:
 
 ```
@@ -26,6 +28,16 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
+```
+
+#### `ion-label` Required
+
+Previously an `ion-label` would automatically get added to `ion-item` if one wasn't provided. Now an `ion-label` must always be added if the item is used to display text.
+
+```
+  <ion-item>
+    <ion-label>Item's Text!</ion-label>
+  </ion-item>
 ```
 
 
