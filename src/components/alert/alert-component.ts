@@ -93,9 +93,9 @@ export class AlertCmp {
   subHdrId: string;
   mode: string;
   gestureBlocker: BlockerDelegate;
+  isCustomAlert: boolean;
 
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
-  instance: any;
 
   constructor(
     public _viewCtrl: ViewController,
@@ -127,6 +127,7 @@ export class AlertCmp {
     this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
     this.lastClick = 0;
+    this.isCustomAlert = false;
 
     if (this.d.message) {
       this.descId = this.msgId;
@@ -141,26 +142,29 @@ export class AlertCmp {
   }
 
   ionViewPreLoad() {
-    if (this.d.subview && this.d.subview.component) {
-
-      const componentFactory = this._cfr.resolveComponentFactory(this.d.subview.component);
-
-      const componentProviders = ReflectiveInjector.resolve([
-        { provide: NavParams, useValue: new NavParams(this.d.subview.args) }
-      ]);
-      const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
-
-      // ******** DOM WRITE ****************
-      const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, childInjector, []);
-      this.instance = componentRef.instance;
-      this._viewCtrl._setInstance(componentRef.instance);
-
-      this._viewCtrl.didLoad.subscribe(this.ionViewDidLoad.bind(this));
-      this._viewCtrl.willEnter.subscribe(this.ionViewWillEnter.bind(this));
-      this._viewCtrl.willLeave.subscribe(this.ionViewWillLeave.bind(this));
-      this._viewCtrl.didEnter.subscribe(this.ionViewDidEnter.bind(this));
-      this._viewCtrl.didLeave.subscribe(this.ionViewDidLeave.bind(this));
+    const data = this.d;
+    if (!data.subview || !data.subview.component) {
+      return;
     }
+
+    const componentFactory = this._cfr.resolveComponentFactory(data.subview.component);
+
+    const componentProviders = ReflectiveInjector.resolve([
+      { provide: NavParams, useValue: new NavParams(data.subview.args) }
+    ]);
+    const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
+
+    // ******** DOM WRITE ****************
+    const viewController = this._viewCtrl;
+    const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, childInjector, []);
+    viewController._setInstance(componentRef.instance);
+
+    viewController.didLoad.subscribe(this.ionViewDidLoad.bind(this));
+    viewController.willEnter.subscribe(this.ionViewWillEnter.bind(this));
+    viewController.didEnter.subscribe(this.ionViewDidEnter.bind(this));
+    viewController.willLeave.subscribe(this.ionViewWillLeave.bind(this));
+    viewController.didLeave.subscribe(this.ionViewDidLeave.bind(this));
+    this.isCustomAlert = true;
   }
 
   ionViewDidLoad() {
@@ -340,12 +344,8 @@ export class AlertCmp {
   }
 
   getValues(): any {
-    if (this.instance) {
-
-      if (typeof this.instance.getValues === 'function')
-        return this.instance.getValues();
-
-      return this.instance;
+    if (this.isCustomAlert) {
+      return this._viewCtrl.instance;
     }
 
     if (this.inputType === 'radio') {
