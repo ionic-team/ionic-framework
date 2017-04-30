@@ -1,8 +1,9 @@
-import { ContentChildren, Directive, ElementRef, Optional, QueryList, Renderer } from '@angular/core';
+import { AfterContentInit, ContentChildren, Directive, ElementRef, Optional, QueryList, Renderer } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { BaseInput } from '../../util/base-input';
+import { assert } from '../../util/util';
 import { SegmentButton } from './segment-button';
 
 /**
@@ -67,7 +68,7 @@ import { SegmentButton } from './segment-button';
     '[class.segment-disabled]': '_disabled'
   }
 })
-export class Segment extends BaseInput<string> {
+export class Segment extends BaseInput<string> implements AfterContentInit {
 
   /**
    * @hidden
@@ -86,7 +87,7 @@ export class Segment extends BaseInput<string> {
   /**
    * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this._initialize();
     this._buttons.forEach(button => {
       button.ionSelect.subscribe((selectedButton: any) => this.value = selectedButton.value);
@@ -98,12 +99,14 @@ export class Segment extends BaseInput<string> {
    * Write a new value to the element.
    */
   _inputUpdated() {
-    if (this._buttons) {
-      var buttons = this._buttons.toArray();
-      var value = this.value;
-      for (var button of buttons) {
-        button.isActive = (button.value === value);
-      }
+    if (!this._buttons) {
+      assert(false, 'buttons are undefined');
+      return;
+    }
+    const buttons = this._buttons.toArray();
+    const value = this.value;
+    for (var button of buttons) {
+      button.isActive = (button.value === value);
     }
   }
 

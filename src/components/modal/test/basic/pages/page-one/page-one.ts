@@ -16,7 +16,7 @@ export class PageOne {
     console.log('platforms', plt.platforms());
     console.log('mode', config.get('mode'));
 
-    console.log('isRTL', plt.isRTL());
+    console.log('isRTL', plt.isRTL);
     console.log('core', plt.is('core'));
     console.log('cordova', plt.is('cordova'));
     console.log('mobile', plt.is('mobile'));

@@ -2,6 +2,7 @@ import { Directive, ElementRef, Optional, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
+import { Footer as IFooter } from '../../navigation/nav-interfaces';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
@@ -26,7 +27,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Directive({
   selector: 'ion-footer'
 })
-export class Footer extends Ion {
+export class Footer extends Ion implements IFooter {
 
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
     super(config, elementRef, renderer, 'footer');

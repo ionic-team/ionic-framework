@@ -1,7 +1,8 @@
 import { Directive, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
 
-import { isPresent} from '../../util/util';
-import { ITEM_SIDE_FLAG_LEFT, ITEM_SIDE_FLAG_RIGHT, ItemSliding } from './item-sliding';
+import { Platform } from '../../platform/platform';
+import { Side, isRightSide } from '../../util/util';
+import { ItemSliding } from './item-sliding';
 
 /**
  * @name ItemOptions
@@ -28,27 +29,29 @@ import { ITEM_SIDE_FLAG_LEFT, ITEM_SIDE_FLAG_RIGHT, ItemSliding } from './item-s
   selector: 'ion-item-options',
 })
 export class ItemOptions {
+
   /**
    * @input {string} The side the option button should be on. Defaults to `"right"`.
    * If you have multiple `ion-item-options`, a side must be provided for each.
    */
-  @Input() side: string;
+  @Input() side: Side;
 
   /**
    * @output {event} Emitted when the item has been fully swiped.
    */
   @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
-  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {}
+  constructor(
+    private _elementRef: ElementRef,
+    private _renderer: Renderer,
+    private _plt: Platform
+  ) { }
 
   /**
    * @hidden
    */
-  getSides(): number {
-    if (isPresent(this.side) && this.side === 'left') {
-      return ITEM_SIDE_FLAG_LEFT;
-    }
-    return ITEM_SIDE_FLAG_RIGHT;
+  isRightSide(): boolean {
+    return isRightSide(this.side, this._plt.isRTL, true);
   }
 
   /**

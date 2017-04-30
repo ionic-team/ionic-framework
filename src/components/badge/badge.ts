@@ -19,5 +19,4 @@ export class Badge extends Ion {
   constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer, 'badge');
   }
-
 }

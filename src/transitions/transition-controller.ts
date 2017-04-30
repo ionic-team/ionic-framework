@@ -20,12 +20,12 @@ export class TransitionController {
   constructor(public plt: Platform, private _config: Config) {}
 
   getRootTrnsId(nav: NavControllerBase): number {
-    let parent = <NavControllerBase>nav.parent;
-    while (parent) {
-      if (isPresent(parent._trnsId)) {
-        return parent._trnsId;
+    nav = <NavControllerBase>nav.parent;
+    while (nav) {
+      if (isPresent(nav._trnsId)) {
+        return nav._trnsId;
       }
-      parent = parent.parent;
+      nav = nav.parent;
     }
     return null;
   }

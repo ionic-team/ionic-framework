@@ -3,15 +3,15 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmi
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DomController } from '../../platform/dom-controller';
-import { Img } from '../img/img';
+import { Img } from '../img/img-interface';
 import { Ion } from '../ion';
 import { isTabs } from '../../navigation/nav-util';
 import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
+import { Content as IContent, Tabs } from '../../navigation/nav-interfaces';
 import { Platform } from '../../platform/platform';
 import { ScrollView, ScrollEvent } from '../../util/scroll-view';
-import { Tabs } from '../tabs/tabs';
 import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';
@@ -135,7 +135,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion implements OnDestroy, AfterViewInit {
+export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   /** @internal */
   _cTop: number;
   /** @internal */

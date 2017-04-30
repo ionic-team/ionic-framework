@@ -14,7 +14,7 @@ import { Keyboard } from '../platform/keyboard';
 import { Menu } from '../components/menu/menu';
 import { NavOptions } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
-import { OverlayPortal } from '../components/nav/overlay-portal';
+import { OverlayPortal } from '../components/app/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
 import { Platform } from '../platform/platform';
 import { QueryParams } from '../platform/query-params';
@@ -423,7 +423,8 @@ export function mockNavController(): NavControllerBase {
     gestureCtrl,
     trnsCtrl,
     linker,
-    dom
+    dom,
+    null
   );
 
   nav._viewInit = function(enteringView: ViewController) {
@@ -468,7 +469,8 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
     null,
     deepLinker,
     null,
-    dom
+    dom,
+    null
   );
 }
 
@@ -500,7 +502,8 @@ export function mockTab(parentTabs: Tabs): Tab {
     gestureCtrl,
     null,
     linker,
-    dom
+    dom,
+    null
   );
 
   tab.load = (opts: any, cb: Function) => {
@@ -540,13 +543,14 @@ export function mockTabs(app?: App): Tabs {
   return new Tabs(null, null, app, config, elementRef, platform, renderer, linker);
 }
 
-export function mockMenu(): Menu {
+export function mockMenu(platform: MockPlatform = null): Menu {
   let app = mockApp();
   let gestureCtrl = new GestureController(app);
   let dom = mockDomController();
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
-  return new Menu(null, elementRef, null, null, renderer, null, null, gestureCtrl, dom, app);
+  let plt = platform === null ? mockPlatform() : platform;
+  return new Menu(null, elementRef, null, plt, renderer, null, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {

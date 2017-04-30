@@ -1,6 +1,5 @@
-import { MenuController } from '../menu-controller';
-import { mockMenu } from '../../../util/mock-providers';
-
+import { MenuController } from '../../app/menu-controller';
+import { mockMenu, mockPlatform } from '../../../util/mock-providers';
 
 describe('MenuController', () => {
 
@@ -116,6 +115,30 @@ describe('MenuController', () => {
       expect(menu).toEqual(someMenu);
     });
 
+    it('should get the only left menu on start ltr', () => {
+      let someMenu = mockMenu();
+      someMenu.side = 'start';
+      menuCtrl._register(someMenu);
+
+      let menu = menuCtrl.get('left');
+      expect(menu).toEqual(someMenu);
+    });
+
+    it('should get the only left menu on end rtl', () => {
+      let platform = mockPlatform();
+      platform.setDir('rtl', true);
+      expect(platform.dir()).toEqual('rtl');
+
+      let someMenu = mockMenu(platform);
+      someMenu.side = 'end';
+      menuCtrl._register(someMenu);
+
+      expect(someMenu.side).toEqual('left');
+
+      let menu = menuCtrl.get('left');
+      expect(menu).toEqual(someMenu);
+    });
+
     it('should get the enabled left menu', () => {
       let someMenu1 = mockMenu();
       someMenu1.side = 'left';
@@ -155,6 +178,30 @@ describe('MenuController', () => {
       expect(menu).toEqual(someMenu);
     });
 
+    it('should get the only right menu on end ltr', () => {
+      let someMenu = mockMenu();
+      someMenu.side = 'end';
+      menuCtrl._register(someMenu);
+
+      let menu = menuCtrl.get('right');
+      expect(menu).toEqual(someMenu);
+    });
+
+    it('should get the only right menu on start rtl', () => {
+      let platform = mockPlatform();
+      platform.setDir('rtl', true);
+      expect(platform.dir()).toEqual('rtl');
+
+      let someMenu = mockMenu(platform);
+      someMenu.side = 'start';
+      menuCtrl._register(someMenu);
+
+      expect(someMenu.side).toEqual('right');
+
+      let menu = menuCtrl.get('right');
+      expect(menu).toEqual(someMenu);
+    });
+
     it('should get the menu by left with id', () => {
       let someMenu = mockMenu();
       someMenu.id = 'myMenu';
@@ -163,6 +210,19 @@ describe('MenuController', () => {
 
       let menu = menuCtrl.get('left');
       expect(menu).toEqual(someMenu);
+    });
+
+    it('should switch menu side in runtime', () => {
+      let someMenu = mockMenu();
+      menuCtrl._register(someMenu);
+
+      ['left', 'right'].forEach((side: any) => {
+        someMenu.side = side;
+        expect(someMenu.side).toEqual(side);
+
+        let menu = menuCtrl.get(side);
+        expect(menu).toEqual(someMenu);
+      });
     });
 
   });

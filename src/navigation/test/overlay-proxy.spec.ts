@@ -16,6 +16,7 @@ describe('Overlay Proxy', () => {
         expect(instance.overlay.dismiss).toHaveBeenCalled();
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });
@@ -69,6 +70,7 @@ describe('Overlay Proxy', () => {
         expect(knownOverlay.onWillDismiss).toHaveBeenCalledWith(handler);
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });
@@ -91,6 +93,7 @@ describe('Overlay Proxy', () => {
         expect(deepLinker.getComponentFromName).not.toHaveBeenCalled();
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });
@@ -112,6 +115,7 @@ describe('Overlay Proxy', () => {
         expect(deepLinker.getComponentFromName).toHaveBeenCalledWith(componentName);
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
       });
     });

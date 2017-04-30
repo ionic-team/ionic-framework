@@ -37,9 +37,7 @@ export class TabsPage {
   }
 
   logout() {
-    this.navCtrl.pop().catch(() => {
-      console.log('Cannot go back.');
-    });
+    this.navCtrl.pop();
   }
 
   ionViewCanLeave() {

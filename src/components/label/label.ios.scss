@@ -3,8 +3,14 @@
 // iOS Label
 // --------------------------------------------------
 
+/// @prop - Text color of the label by an input, select, or datetime
+$label-ios-text-color:                 unset !default;
+
+/// @prop - Text color of the stacked/floating label when it is focused
+$label-ios-text-color-focused:         unset !default;
+
 /// @prop - Margin of the label
-$label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
+$label-ios-margin:                     $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
 
 
 // iOS Default Label
@@ -16,6 +22,16 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
 
 
 // iOS Default Label Inside An Input/Select Item
+// --------------------------------------------------
+
+.item-input .label-ios,
+.item-select .label-ios,
+.item-datetime .label-ios {
+  color: $label-ios-text-color;
+}
+
+
+// iOS Input By Label
 // --------------------------------------------------
 
 .label-ios + ion-input .text-input,
@@ -44,6 +60,10 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
   transition: transform 150ms ease-in-out;
 }
 
+[dir="rtl"] .label-ios[floating] {
+  transform-origin: right top;
+}
+
 .input-has-focus .label-ios[floating],
 .input-has-value .label-ios[floating] {
   transform: translate3d(0, 0, 0) scale(.8);
@@ -53,6 +73,11 @@ $label-ios-margin:             $item-ios-padding-top ($item-ios-padding-right / 
 .item-ios.item-label-floating [item-right] {
   margin-top: $item-ios-padding-media-top - 2;
   margin-bottom: $item-ios-padding-media-bottom - 2;
+}
+
+.input-has-focus .label-ios[stacked],
+.input-has-focus .label-ios[floating] {
+  color: $label-ios-text-color-focused;
 }
 
 

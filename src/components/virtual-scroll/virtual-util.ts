@@ -21,7 +21,7 @@ export function processRecords(stopAtHeight: number,
   let startRecordIndex: number;
   let previousCell: VirtualCell;
   let tmpData: any;
-  let lastRecordIndex = (records.length - 1);
+  let lastRecordIndex = records ? (records.length - 1) : -1;
 
   if (cells.length) {
     // we already have cells
@@ -131,11 +131,11 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
                                  cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
                                  itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>,
                                  initialLoad: boolean): boolean {
-  const recordsLength = records.length;
-  if (!recordsLength) {
+  if (!records || records.length === 0) {
     nodes.length = 0;
     return true;
   }
+  const recordsLength = records.length;
 
   let hasChanges = false;
   let node: VirtualNode;
@@ -233,9 +233,10 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
     availableNode.cell = cellIndex;
 
     // apply the cell's data to this node
-    availableNode.view.context.$implicit = cell.data || records[cell.record];
-    availableNode.view.context.index = cellIndex;
-    availableNode.view.context.count = recordsLength;
+    var context = availableNode.view.context;
+    context.$implicit = cell.data || records[cell.record];
+    context.index = cellIndex;
+    context.count = recordsLength;
     availableNode.hasChanges = true;
     availableNode.lastTransform = null;
     hasChanges = true;
