@@ -48,6 +48,12 @@ export class ViewController {
   _cssClass: string;
 
   /**
+   * Observable to be subscribed to when the current component has been loaded
+   * @returns {Observable} Returns an observable
+   */
+  didLoad: EventEmitter<any> = new EventEmitter();
+
+  /**
    * Observable to be subscribed to when the current component will become active
    * @returns {Observable} Returns an observable
    */
@@ -70,12 +76,6 @@ export class ViewController {
    * @returns {Observable} Returns an observable
    */
   didLeave: EventEmitter<any> = new EventEmitter();
-
-  /**
-   * Observable to be subscribed to when the current component has been created
-   * @returns {Observable} Returns an observable
-   */
-  didLoad: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component has been destroyed
