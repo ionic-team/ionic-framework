@@ -95,7 +95,7 @@ export class AlertCmp {
   gestureBlocker: BlockerDelegate;
 
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
-  createdComponent: any;
+  instance: any;
 
   constructor(
     public _viewCtrl: ViewController,
@@ -152,7 +152,14 @@ export class AlertCmp {
 
       // ******** DOM WRITE ****************
       const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, childInjector, []);
-      this.createdComponent = componentRef.instance;
+      this.instance = componentRef.instance;
+      this._viewCtrl._setInstance(componentRef.instance);
+
+      this._viewCtrl.didLoad.subscribe(this.ionViewDidLoad.bind(this));
+      this._viewCtrl.willEnter.subscribe(this.ionViewWillEnter.bind(this));
+      this._viewCtrl.willLeave.subscribe(this.ionViewWillLeave.bind(this));
+      this._viewCtrl.didEnter.subscribe(this.ionViewDidEnter.bind(this));
+      this._viewCtrl.didLeave.subscribe(this.ionViewDidLeave.bind(this));
     }
   }
 
@@ -333,12 +340,12 @@ export class AlertCmp {
   }
 
   getValues(): any {
-    if (this.createdComponent) {
+    if (this.instance) {
 
-      if (typeof this.createdComponent.getValues === 'function')
-        return this.createdComponent.getValues();
+      if (typeof this.instance.getValues === 'function')
+        return this.instance.getValues();
 
-      return this.createdComponent;
+      return this.instance;
     }
 
     if (this.inputType === 'radio') {

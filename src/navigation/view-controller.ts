@@ -75,6 +75,12 @@ export class ViewController {
   didLeave: EventEmitter<any> = new EventEmitter();
 
   /**
+   * Observable to be subscribed to when the current component has been created
+   * @returns {Observable} Returns an observable
+   */
+  didLoad: EventEmitter<any> = new EventEmitter();
+
+  /**
    * Observable to be subscribed to when the current component has been destroyed
    * @returns {Observable} Returns an observable
    */
@@ -437,6 +443,7 @@ export class ViewController {
    */
   _didLoad() {
     assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
+    this.didLoad.emit(null);
     this._lifecycle('DidLoad');
   }
 
