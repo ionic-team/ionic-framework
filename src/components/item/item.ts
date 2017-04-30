@@ -361,8 +361,7 @@ export class Item extends Ion {
   /**
    * @hidden
    */
-  _updateColor(newColor: string, componentName?: string) {
-    componentName = componentName || 'item'; // item-radio
+  _updateColor(newColor: string, componentName: string = 'item') {
     this._setColor(newColor, componentName);
   }
 
