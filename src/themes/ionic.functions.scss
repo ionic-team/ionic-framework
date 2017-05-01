@@ -296,7 +296,7 @@
 // @param {string} $direction - text direction
 // @param {string} $decorator - !default, !important
 // ----------------------------------------------------------
-@mixin text-align($direction, $decorator: "") {
+@mixin text-align($direction, $decorator: null) {
   @if $direction == start {
     text-align: left;
     text-align: start $decorator;
