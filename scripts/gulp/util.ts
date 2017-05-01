@@ -217,10 +217,11 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   }
 
   return new Promise((resolve, reject) => {
-    const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
-    const args = [pathToAppScripts].concat(scriptArgs);
-    console.log(`node ${args.join(' ')}`);
-    const spawnedCommand = spawn('node', args, {stdio: 'inherit'});
+    let pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+    pathToAppScripts = process.platform === 'win32' ? pathToAppScripts + '.cmd' : pathToAppScripts;
+
+    const spawnedCommand = spawn(pathToAppScripts, scriptArgs, {stdio: 'inherit'});
+    console.log(`${pathToAppScripts} ${scriptArgs.join(' ')}`);
 
     spawnedCommand.on('close', (code: number) => {
       if (code === 0) {
