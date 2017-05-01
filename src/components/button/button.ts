@@ -232,7 +232,7 @@ export class Button {
     console.log(this.disabled);
 
     return h(this,
-      h('div', {
+      h('button', {
         class: buttonClasses,
         props: {
           disabled: this.disabled
