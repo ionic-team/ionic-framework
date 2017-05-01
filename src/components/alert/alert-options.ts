@@ -8,6 +8,8 @@ export interface AlertOptions {
   inputs?: AlertInputOptions[];
   buttons?: (AlertButton|string)[];
   enableBackdropDismiss?: boolean;
+  component?: any,
+  navParams?: any,
 }
 
 export interface AlertInputOptions {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, ModalController } from '../../../../../..';
+import { CustomInnerComponent } from '../custom-component/custom-component';
 
 @IonicPage()
 @Component({
@@ -14,6 +15,8 @@ export class PageOne {
   testRadioResult: string = '';
   testCheckboxOpen: boolean = false;
   testCheckboxResult: string = '';
+  testCustomOpen: boolean = false;
+  testCustomResult: string = '';
 
   constructor(private alertCtrl: AlertController, private modalCtrl: ModalController) { }
 
@@ -272,6 +275,29 @@ export class PageOne {
 
     alert.present().then(() => {
       this.testCheckboxOpen = true;
+    });
+  }
+
+  doCustom() {
+    let alert = this.alertCtrl.create({
+      title: 'custom',
+      component: CustomInnerComponent,
+      navParams: {kind: "fruits", val: "Banana"},
+      buttons: [{
+          text: 'OK',
+          handler: (component: CustomInnerComponent) => {
+            console.log('Custom component data:', component.selectedValue);
+            this.testCustomResult = component.selectedValue;
+          }
+      }, {
+          text: 'Cancel',
+          role: 'cancel'
+      }]
+    });
+    alert.onDidDismiss( () => this.testCustomOpen = false )
+
+    alert.present().then(() => {
+      this.testCustomOpen = true
     });
   }
 
