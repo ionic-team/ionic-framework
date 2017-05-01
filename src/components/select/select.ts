@@ -151,6 +151,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
   _multi: boolean = false;
   _options: QueryList<Option>;
+  _overlay: ActionSheet | Alert | Popover;
   _texts: string[] = [];
   _text: string = '';
 
@@ -364,6 +365,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
     overlay.present(selectOptions);
 
     this._fireFocus();
+
     overlay.onDidDismiss((value: any) => {
       this._fireBlur();
 
@@ -371,9 +373,23 @@ export class Select extends BaseInput<any> implements OnDestroy {
         this.value = value;
         this.ionChange.emit(value);
       }
+
+      this._overlay = undefined;
     });
+
+    this._overlay = overlay;
   }
 
+  /**
+   * Close the select interface.
+   */
+  close() {
+    if (!this._overlay || !this.isFocus()) {
+      return;
+    }
+
+    return this._overlay.dismiss();
+  }
 
   /**
    * @input {boolean} If true, the element can accept multiple values.
