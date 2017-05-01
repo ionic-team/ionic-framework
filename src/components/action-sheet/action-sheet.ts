@@ -16,7 +16,7 @@ export class ActionSheet extends ViewController {
 
   constructor(app: App, opts: ActionSheetOptions, config: Config) {
     opts.buttons = opts.buttons || [];
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? Boolean(opts.enableBackdropDismiss) : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
     super(ActionSheetCmp, opts, null);
     this._app = app;

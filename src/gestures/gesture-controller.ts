@@ -79,14 +79,14 @@ export class GestureController {
     }
     return new GestureDelegate(opts.name, this.newID(), this,
       opts.priority || 0,
-      Boolean(opts.disableScroll)
+      !!opts.disableScroll
     );
   }
 
   createBlocker(opts: BlockerOptions = {}): BlockerDelegate {
     return new BlockerDelegate(this.newID(), this,
       opts.disable,
-      Boolean(opts.disableScroll)
+      !!opts.disableScroll
     );
   }
 
@@ -191,7 +191,7 @@ export class GestureController {
 
   isDisabled(gestureName: string): boolean {
     let disabled = this.disabledGestures[gestureName];
-    return Boolean(disabled && disabled.size > 0);
+    return !!(disabled && disabled.size > 0);
   }
 
 }
