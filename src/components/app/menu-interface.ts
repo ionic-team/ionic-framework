@@ -1,7 +1,9 @@
+import { EventEmitter } from '@angular/core';
 import { Animation } from '../../animations/animation';
 import { Side } from '../../util/util';
 
 export interface Menu {
+
   setOpen(shouldOpen: boolean, animated: boolean): Promise<boolean>;
   open(): Promise<boolean>;
   close(): Promise<boolean>;
@@ -13,6 +15,11 @@ export interface Menu {
   side: Side;
   id: string;
   isRightSide: boolean;
+
+  ionDrag: EventEmitter<number>;
+  ionOpen: EventEmitter<boolean>;
+  ionClose: EventEmitter<boolean>;
+
   isAnimating(): boolean;
   width(): number;
   getContentElement(): HTMLElement;
