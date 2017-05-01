@@ -344,13 +344,11 @@ ion-footer {
 
       [text#{$infix}-start] {
         // scss-lint:disable ImportantRule
-        text-align: left !important;
         text-align: start !important;
       }
 
       [text#{$infix}-end] {
         // scss-lint:disable ImportantRule
-        text-align: right !important;
         text-align: end !important;
       }
 
