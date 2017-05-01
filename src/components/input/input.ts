@@ -445,7 +445,7 @@ export class TextInput extends Ion implements IonicFormInput {
     const nav = this._nav;
     const nativeInput = this._native;
 
-    console.debug(`input-base, initFocus(), scrollView: ${!!content}`);
+    console.debug(`input-base, initFocus(), scrollView: ${Boolean(content)}`);
 
     if (content) {
       // this input is inside of a scroll view

@@ -1052,7 +1052,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   canGoBack(): boolean {
     const activeView = this.getActive();
-    return !!(activeView && activeView.enableBack());
+    return Boolean(activeView && activeView.enableBack());
   }
 
   isTransitioning(): boolean {

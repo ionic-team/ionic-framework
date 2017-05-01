@@ -24,7 +24,7 @@ export class Picker extends ViewController {
     }
     opts.columns = opts.columns || [];
     opts.buttons = opts.buttons || [];
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? Boolean(opts.enableBackdropDismiss) : true;
 
     super(PickerCmp, opts, null);
     this._app = app;

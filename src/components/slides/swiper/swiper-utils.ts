@@ -140,7 +140,7 @@ export function isHorizontal(s: Slides) {
 
 const formElements = ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'VIDEO'];
 export function isFormElement(el: any) {
-  return !!el && formElements.indexOf(el.tagName) > -1;
+  return Boolean(el) && formElements.indexOf(el.tagName) > -1;
 }
 
 

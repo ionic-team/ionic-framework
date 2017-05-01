@@ -20,7 +20,7 @@ export function initEvents(s: Slides, plt: Platform): Function {
   const doc: any = plt.doc();
 
   s._supportTouch = (() => {
-    return !!(('ontouchstart' in win) || win.DocumentTouch && doc instanceof win.DocumentTouch);
+    return Boolean(('ontouchstart' in win) || win.DocumentTouch && doc instanceof win.DocumentTouch);
   })();
 
   // Define Touch Events

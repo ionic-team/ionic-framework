@@ -3,7 +3,7 @@ import { Platform } from './platform';
 
 export function isCordova(plt: Platform): boolean {
   const win: any = plt.win();
-  return !!(win['cordova'] || win['PhoneGap'] || win['phonegap']);
+  return Boolean(win['cordova'] || win['PhoneGap'] || win['phonegap']);
 }
 
 export function isElectron(plt: Platform): boolean {
@@ -24,7 +24,7 @@ export function isSafari(plt: Platform): boolean {
 
 
 export function isWKWebView(plt: Platform): boolean {
-  return isIos(plt) && !!(<any>plt.win())['webkit'];
+  return isIos(plt) && Boolean((<any>plt.win())['webkit']);
 }
 
 export function isIosUIWebView(plt: Platform): boolean {

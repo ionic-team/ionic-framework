@@ -219,7 +219,7 @@ export class MenuController {
       var menu = this.get(menuId);
       return menu && menu.isOpen || false;
     } else {
-      return !!this.getOpen();
+      return Boolean(this.getOpen());
     }
   }
 

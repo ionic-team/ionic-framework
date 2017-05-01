@@ -367,10 +367,10 @@ export class ItemSliding {
       return;
     }
     this.setElementClass('active-slide', (state !== SlidingState.Disabled));
-    this.setElementClass('active-options-right', !!(state & SlidingState.Right));
-    this.setElementClass('active-options-left', !!(state & SlidingState.Left));
-    this.setElementClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
-    this.setElementClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
+    this.setElementClass('active-options-right', Boolean(state & SlidingState.Right));
+    this.setElementClass('active-options-left', Boolean(state & SlidingState.Left));
+    this.setElementClass('active-swipe-right', Boolean(state & SlidingState.SwipeRight));
+    this.setElementClass('active-swipe-left', Boolean(state & SlidingState.SwipeLeft));
     this._state = state;
   }
 

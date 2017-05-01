@@ -321,7 +321,7 @@ export class Item extends Ion {
     super(config, elementRef, renderer, 'item');
 
     this._setName(elementRef);
-    this._hasReorder = !!reorder;
+    this._hasReorder = Boolean(reorder);
     this.id = form.nextId().toString();
 
     // auto add "tappable" attribute to ion-item components that have a click listener
