@@ -20,11 +20,13 @@ import { ScrollView } from '../util/scroll-view';
  *   events.publish('user:created', user, Date.now());
  * }
  *
- * // second page (listen for the user created event)
- * events.subscribe('user:created', (user, time) => {
- *   // user and time are the same arguments passed in `events.publish(user, time)`
- *   console.log('Welcome', user, 'at', time);
- * });
+ * // second page (listen for the user created event after function is called)
+ * function listenForNewUsers() {
+ *   events.subscribe('user:created', (user, time) => {
+ *     // user and time are the same arguments passed in `events.publish(user, time)`
+ *     console.log('Welcome', user, 'at', time);
+ *   });
+ * }
  *
  * ```
  * @demo /docs/demos/src/events/
