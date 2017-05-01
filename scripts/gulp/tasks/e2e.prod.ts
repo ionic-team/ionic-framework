@@ -21,7 +21,7 @@ task('e2e.prepare', (done: Function) => {
 
 task('e2e.prepareSass', (done: Function) => {
   const version = `E2E-${createTimestamp()}`;
-  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  writeFileSync(join(SRC_ROOT, 'themes', 'version.scss'), `$ionic-version: "${version}";`);
   done();
 });
 
@@ -41,7 +41,7 @@ task('e2e.prod', ['e2e.prepare'], (done: Function) => {
 });
 
 function e2eComponentExists(folderInfo: any): boolean {
-  let componentPath = `${SRC_COMPONENTS_ROOT}/${folderInfo.componentName}/test/${folderInfo.componentTest}/app`;
+  let componentPath = join(SRC_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'app');
 
   try {
     accessSync(componentPath);
@@ -62,11 +62,11 @@ function filterE2eTestfiles() {
     const folderInfo = getFolderInfo();
     if (folderInfo && folderInfo.componentName && folderInfo.componentTest) {
       if (!e2eComponentExists(folderInfo)) {
-        console.log(`Can't find E2E test "${folderInfo.componentName}/test/${folderInfo.componentTest}". Make sure that the test exists and you are passing the correct folder.`);
+        console.log('Cannot find E2E test ', join(folderInfo.componentName, 'test', folderInfo.componentTest), '. Make sure that the test exists and you are passing the correct folder.');
         return [];
       }
       const filtered = entryPoints.filter(entryPoint => {
-        return entryPoint.indexOf(`${folderInfo.componentName}/test/${folderInfo.componentTest}`) >= 0;
+        return entryPoint.indexOf(join(folderInfo.componentName, 'test', folderInfo.componentTest)) >= 0;
       });
       return filtered;
     }
@@ -249,9 +249,8 @@ task('e2e.openProd', (done: Function) => {
 task('e2e.open', (done: Function) => {
   const folderInfo = getFolderInfo();
   if (folderInfo && folderInfo.componentName && folderInfo.componentTest) {
-    const filePath = `${folderInfo.componentName}/test/${folderInfo.componentTest}/www/index.html`;
-    const fullPath = join(DIST_E2E_COMPONENTS_ROOT, filePath);
-    const spawnedCommand = spawn('open', [fullPath]);
+    const filePath = join(DIST_E2E_COMPONENTS_ROOT, folderInfo.componentName, 'test', folderInfo.componentTest, 'www', 'index.html');
+    const spawnedCommand = spawn('open', [filePath]);
 
     spawnedCommand.on('close', (code: number) => {
       done();
