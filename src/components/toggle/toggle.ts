@@ -209,7 +209,8 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
   /**
    * @hidden
    */
-  @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
+  @HostListener('keyup', ['$event'])
+  _keyup(ev: KeyboardEvent) {
     if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
       console.debug(`toggle, keyup: ${ev.keyCode}`);
       ev.preventDefault();
