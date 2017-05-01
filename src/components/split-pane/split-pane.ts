@@ -217,9 +217,6 @@ export class SplitPane extends Ion implements RootNode {
     renderer: Renderer
   ) {
     super(config, elementRef, renderer, 'split-pane');
-    if (_plt.isRTL()) {
-      this.setElementClass('split-pane-rtl', true);
-    }
   }
 
   /**

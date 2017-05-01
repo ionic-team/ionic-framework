@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -9,7 +9,7 @@ import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
 import { deepCopy, isBlank, isPresent, isArray, isString, assert, clamp } from '../../util/util';
-import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
+import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
 /**
  * @name DateTime
@@ -267,7 +267,7 @@ import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, g
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: DateTime, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class DateTime extends BaseInput<DateTimeData> implements AfterContentInit, ControlValueAccessor, OnDestroy {
 
   _text: string = '';
   _min: DateTimeData;
@@ -425,7 +425,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, 
   /**
    * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
@@ -439,13 +439,6 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, 
   /**
    * @hidden
    */
-  _inputUpdated() {
-    this.updateText();
-  }
-
-  /**
-   * @hidden
-   */
   _inputNormalize(val: any): DateTimeData {
     updateDate(this._value, val);
     return this._value;
@@ -454,8 +447,30 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterViewInit, 
   /**
    * @hidden
    */
+  _inputUpdated() {
+    this.updateText();
+  }
+
+  /**
+   * @hidden
+   */
   _inputShouldChange(): boolean {
     return true;
+  }
+
+  /**
+   * TODO: REMOVE THIS
+   * @hidden
+   */
+  _inputChangeEvent(): any {
+    return this.value;
+  }
+
+  /**
+   * @hidden
+   */
+  _inputNgModelEvent(): any {
+    return convertDataToISO(this.value);
   }
 
   @HostListener('click', ['$event'])

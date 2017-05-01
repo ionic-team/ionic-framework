@@ -30,6 +30,7 @@ import { removeArrayItem } from '../util/util';
  * @demo /docs/demos/src/platform/
  */
 export class Platform {
+
   private _win: Window;
   private _doc: HTMLDocument;
   private _versions: {[name: string]: PlatformVersion} = {};
@@ -313,9 +314,12 @@ export class Platform {
    * direction needs to be dynamically changed per user/session.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @param {string} dir  Examples: `rtl`, `ltr`
+   * @param {boolean} updateDocument
    */
   setDir(dir: string, updateDocument: boolean) {
-    this._dir = (dir || '').toLowerCase();
+    this._dir = dir = (dir || '').toLowerCase();
+    this.isRTL = (dir === 'rtl');
+
     if (updateDocument !== false) {
       this._doc['documentElement'].setAttribute('dir', dir);
     }
@@ -339,9 +343,7 @@ export class Platform {
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {boolean}
    */
-  isRTL(): boolean {
-    return (this._dir === 'rtl');
-  }
+  isRTL: boolean;
 
   /**
    * Set the app's language and optionally the country code, which will update
