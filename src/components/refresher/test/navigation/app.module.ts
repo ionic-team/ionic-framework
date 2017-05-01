@@ -27,7 +27,7 @@ export class Page1 {
     });
   }
 
-  doStart() {
+  doStart(refresher: Refresher) {
     console.info('Refresher, start');
   }
 

@@ -12,11 +12,11 @@ export class AppComponent {
   root = PageOne;
 
   constructor(app: App) {
-    app.viewDidLeave.subscribe(() => {
+    app.viewDidLeave.subscribe((ev: any) => {
       console.log('App didLeave');
     });
 
-    app.viewWillLeave.subscribe(() => {
+    app.viewWillLeave.subscribe((ev: any) => {
       console.log('App willLeave');
     });
   }

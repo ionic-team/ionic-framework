@@ -32,7 +32,7 @@ export class E2EPage {
     }
   }
 
-  headerFn(record: any, index: number) {
+  headerFn(record: any, index: number, records: any[]) {
     if (index % 4 === 0) {
       return index + ' is divisible by 4';
     }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController } from '../../../../../..';
+import { IonicPage, NavController, Toast, ToastController } from '../../../../../..';
 
 @IonicPage()
 @Component({
@@ -72,7 +72,7 @@ export class PageOne {
     }, 1000);
   }
 
-  private dismissHandler() {
+  private dismissHandler(toast: Toast) {
     console.info('Toast onDidDismiss()');
   }
 

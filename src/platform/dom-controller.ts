@@ -28,7 +28,7 @@ export class DomDebouncer {
     });
   }
 
-  write(fn: DomCallback): Function {
+  write(fn: DomCallback, ctx?: any): Function {
     if (this.writeTask) {
       return;
     }
