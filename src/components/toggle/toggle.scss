@@ -4,12 +4,17 @@
 // Toggle
 // --------------------------------------------------
 
+ion-toggle,
 :host {
   display: inline-block;
   visibility: inherit !important;
   contain: content;
 }
 
+ion-gesture {
+  display: block;
+  visibility: inherit !important;
+}
 
 .toggle-cover {
   position: absolute;
