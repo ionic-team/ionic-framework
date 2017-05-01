@@ -9,6 +9,7 @@ import { Keyboard } from '../../platform/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @hidden
@@ -40,8 +41,10 @@ export class OverlayPortal extends NavControllerBase {
 
     // on every page change make sure the portal has
     // dismissed any views that should be auto dismissed on page change
-    app.viewDidLeave.subscribe((ev: any) => {
-      !ev.isOverlay && this.dismissPageChangeViews();
+    app.viewDidLeave.subscribe((view: ViewController) => {
+      if (!view.isOverlay) {
+        this.dismissPageChangeViews();
+      }
     });
   }
 
