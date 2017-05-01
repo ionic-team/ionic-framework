@@ -17,6 +17,7 @@
   <button ion-button block class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
   <button ion-button block class="e2eOpenRadio" (click)="doRadio()">Radio</button>
   <button ion-button block class="e2eOpenCheckbox" (click)="doCheckbox()">Checkbox</button>
+  <button ion-button block class="e2eOpenCustom" (click)="doCustom()">Custom</button>
   <button ion-button block class="e2eFastClose" (click)="doFastClose()">Fast Close</button>
   <button ion-button block class="e2eDisabledBackdrop" (click)="doDisabledBackdropAlert()">Disabled Backdrop Click</button>
   <button ion-button block class="e2eAlertMode" (click)="doAlertWithMode('md')">md Mode</button>
@@ -32,6 +33,8 @@
     Radio Result: {{testRadioResult}}
     Checkbox Opened: {{testCheckboxOpen}}
     Checkbox Result: {{testCheckboxResult}}
+    Custom Opened: {{testCustomOpen}}
+    Custom Result: {{testCustomResult}}
   </pre>
 
 </ion-content>
