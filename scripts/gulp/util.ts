@@ -1,4 +1,4 @@
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { dirname, join } from 'path';
@@ -217,7 +217,8 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   }
 
   return new Promise((resolve, reject) => {
-    const args = ['./node_modules/.bin/ionic-app-scripts'].concat(scriptArgs);
+    const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+    const args = [pathToAppScripts].concat(scriptArgs);
     console.log(`node ${args.join(' ')}`);
     const spawnedCommand = spawn('node', args, {stdio: 'inherit'});
 
