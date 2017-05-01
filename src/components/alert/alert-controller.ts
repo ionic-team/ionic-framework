@@ -85,7 +85,7 @@ import { Config } from '../../config/config';
  *   alert.present();
  * }
  *
- * doCustom() {
+ * presentCustom() {
  *  let alert = this.alertCtrl.create({
  *    title: 'Custom alert',
  *    component: CustomInnerComponent,
