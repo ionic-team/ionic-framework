@@ -294,7 +294,7 @@
 
 // Sets correct text align with support for old browsers
 // @param {string} $direction - text direction
-// @param {string} $decorator - !default, !important
+// @param {string} $decorator - !important
 // ----------------------------------------------------------
 @mixin text-align($direction, $decorator: null) {
   @if $direction == start {
