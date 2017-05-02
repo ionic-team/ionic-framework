@@ -182,10 +182,7 @@ export class Button {
   /**
    * @hidden
    */
-  getColorClassList(color: string, role: string, style: string, mode: string): string | null {
-    if (!color) {
-      return null;
-    }
+  getColorClassList(color: string, role: string, style: string, mode: string): string[] {
     style = (role !== 'bar-button' && style === 'solid') ? 'default' : style;
     let className =
       role +
@@ -193,16 +190,13 @@ export class Button {
         '-' + style.toLowerCase() :
         '');
 
-    console.log(role, style, className, mode, color);
-
-    return `${className}-${mode}-${color}`;
+    return [].concat(
+        `${className}-${mode}`,
+        color ? `${className}-${mode}-${color}` : []
+      );
   }
 
   getStyleClassList(role: string): string[] {
-    if (!this.color) {
-      return [];
-    }
-
     var classList = [].concat(
       this.outline ? this.getColorClassList(this.color, role, 'outline', this.mode) : [],
       this.clear ? this.getColorClassList(this.color, role, 'clear', this.mode) : [],
