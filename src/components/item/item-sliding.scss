@@ -57,9 +57,7 @@ ion-item-options:not([icon-left]) .button:not([icon-only]) {
   }
 
   ion-icon {
-    @include padding-horizontal(0);
-
-    padding-bottom: .3em;
+    @include padding(null, 0, .3em, 0);
   }
 }
 

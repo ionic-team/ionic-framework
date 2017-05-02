@@ -159,7 +159,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 }
 
 .searchbar-ios.searchbar-left-aligned .searchbar-input {
-  @include padding-horizontal(30px);
+  @include padding-horizontal(30px, null);
 }
 
 
