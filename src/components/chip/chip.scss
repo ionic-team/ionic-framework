@@ -56,7 +56,8 @@ ion-chip ion-icon {
   height: $chip-icon-size;
 
   border-radius: $chip-icon-border-radius;
-
+  
+  text-align: center;
   font-size: $chip-icon-font-size;
   line-height: $chip-icon-size;
   text-align: $chip-icon-text-align;
