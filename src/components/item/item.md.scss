@@ -34,7 +34,7 @@ $item-md-detail-push-color:          $list-md-border-color !default;
 $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
 
 /// @prop - Icon for the detail arrow RTL
-$item-md-detail-push-svg-rtl:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,20l2-2l-8-8L8-8l-2-2l-10,10L10,10z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
+$item-md-detail-push-svg-rtl:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,20l2-2l-8-8l8,-8l-2-2l-10,10l10,10z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
 
 /// @prop - Right padding for the detail arrow
 $item-md-detail-push-padding-right:  32px !default;
