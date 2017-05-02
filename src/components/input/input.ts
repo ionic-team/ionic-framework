@@ -814,12 +814,12 @@ export class TextInput extends Ion implements IonicFormInput {
  *
  *  <ion-item>
  *    <ion-label stacked>Message</ion-label>
- *    <ion-textarea [(ngModel)]="msg"></ion-textarea>
+ *    <ion-textarea rows="5" [(ngModel)]="msg"></ion-textarea>
  *  </ion-item>
  *
  *  <ion-item>
- *    <ion-label floating>Description</ion-label>
- *    <ion-textarea></ion-textarea>
+ *    <ion-label>Description</ion-label>
+ *    <ion-textarea rows="5" placeholder="key description here...></ion-textarea>
  *  </ion-item>
  *
  * <ion-item>
