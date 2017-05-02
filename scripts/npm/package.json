@@ -9,8 +9,11 @@
   },
   "license": "MIT",
   "main": "umd/index.js",
-  "module": "index.js",
+  "module": "es5/index.js",
+  "es5": "es5/index.js",
+  "es5-fesm": "es5-fesm/ionic-angular.js",
   "es2015": "es2015/index.js",
+  "types": "es5/index.d.ts",
   "peerDependencies": {
     "@angular/common": "",
     "@angular/compiler": "",

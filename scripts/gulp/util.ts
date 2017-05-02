@@ -41,7 +41,7 @@ function getRootTsConfig(pathToReadFile): any {
   return tsConfig;
 }
 
-export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToReadFile: string, pathToWriteFile: string, overrideCompileOptions: any = null): any {
+export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToReadFile: string, pathToWriteFile: string, overrideCompileOptions: any = null, overrideAngularCompilerOptions: any = null): any {
   let config = getRootTsConfig(pathToReadFile);
   if (!config.compilerOptions) {
     config.compilerOptions = {};
@@ -54,10 +54,16 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions.module = moduleType;
     config.compilerOptions.target = target;
   }
-  config.include = includeGlob;
+  if (includeGlob) {
+    config.include = includeGlob;
+  }
 
   if (overrideCompileOptions) {
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
+  }
+
+  if (overrideAngularCompilerOptions) {
+    config.angularCompilerOptions = Object.assign(config.angularCompilerOptions, overrideAngularCompilerOptions);
   }
 
   let json = JSON.stringify(config, null, 2);
