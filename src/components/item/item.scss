@@ -19,6 +19,8 @@
 }
 
 .item-block {
+  @include text-align(initial);
+
   display: flex;
   overflow: hidden;
 
@@ -35,7 +37,6 @@
 
   font-weight: normal;
   line-height: normal;
-  text-align: initial;
   text-decoration: none;
   color: inherit;
 }

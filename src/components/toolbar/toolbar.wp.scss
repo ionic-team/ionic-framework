@@ -129,15 +129,15 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 }
 
 .bar-buttons-wp[end] {
-  order: map-get($toolbar-order-wp, buttons-end);
+  @include text-align(end);
 
-  text-align: right;
+  order: map-get($toolbar-order-wp, buttons-end);
 }
 
 .bar-buttons-wp[right] {
-  order: map-get($toolbar-order-wp, buttons-right);
+  @include text-align(right);
 
-  text-align: right;
+  order: map-get($toolbar-order-wp, buttons-right);
 }
 
 
@@ -300,12 +300,13 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 }
 
 .back-button-icon-wp {
+  @include text-align(start);
+
   margin: 0;
   padding: 0 6px;
 
   font-size: 2.4rem;
   font-weight: normal;
-  text-align: left;
 }
 
 

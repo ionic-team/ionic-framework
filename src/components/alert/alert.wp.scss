@@ -31,7 +31,7 @@ $alert-wp-background:                          #e6e6e6 !default;
 $alert-wp-head-padding:                        20px 22px 5px 22px !default;
 
 /// @prop - Text align of the alert head
-$alert-wp-head-text-align:                     left !default;
+$alert-wp-head-text-align:                     start !default;
 
 /// @prop - Font size of the alert title
 $alert-wp-title-font-size:                     20px !default;
@@ -256,9 +256,9 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp .alert-head {
-  padding: $alert-wp-head-padding;
+  @include text-align($alert-wp-head-text-align);
 
-  text-align: $alert-wp-head-text-align;
+  padding: $alert-wp-head-padding;
 }
 
 .alert-wp .alert-title {

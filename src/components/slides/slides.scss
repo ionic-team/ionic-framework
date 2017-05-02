@@ -151,8 +151,9 @@
 
 /* Pagination Styles */
 .swiper-pagination {
+  @include text-align(center);
+
   position: absolute;
-  text-align: center;
   transition: 300ms;
   transform: translate3d(0, 0, 0);
   z-index: 10;
@@ -415,12 +416,13 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-zoom-container {
+  @include text-align(center);
+
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
 .swiper-zoom-container > img,
@@ -514,9 +516,10 @@ ion-slides {
 }
 
 .slide-zoom {
+  @include text-align(center);
+
   display: block;
   width: 100%;
-  text-align: center;
 }
 
 .swiper-container {
@@ -535,12 +538,13 @@ ion-slides {
 }
 
 .swiper-slide {
+  @include text-align(center);
+
   width: 100%;
   height: 100%;
 
   box-sizing: border-box;
 
-  text-align: center;
   font-size: 18px;
 
   /* Center slide text vertically */

@@ -122,6 +122,8 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-knob-handle {
+  @include text-align(center);
+
   position: absolute;
   top: ($range-ios-slider-height / 2);
   left: 0%;
@@ -131,8 +133,6 @@ $range-ios-pin-padding:                       8px !default;
 
   width: $range-ios-hit-width;
   height: $range-ios-hit-height;
-
-  text-align: center;
 }
 
 .range-ios .range-knob {
@@ -173,6 +173,8 @@ $range-ios-pin-padding:                       8px !default;
 }
 
 .range-ios .range-pin {
+  @include text-align(center);
+
   position: relative;
   top: -20px;
   display: inline-block;
@@ -184,8 +186,6 @@ $range-ios-pin-padding:                       8px !default;
   border-radius: 50px;
 
   font-size: $range-ios-pin-font-size;
-
-  text-align: center;
 
   color: $range-ios-pin-color;
 
