@@ -17,6 +17,7 @@ $button-round-border-radius:      64px !default;
 .button {
   @include text-align(center);
   @include appearance(none);
+  border: 0;
 
   position: relative;
   z-index: 0;

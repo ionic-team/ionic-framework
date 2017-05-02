@@ -72,76 +72,80 @@ type CssClassObject = { [className: string]: boolean };
 export class Button {
 
   /**
-   * @input {boolean} If true, activates the large button size.
+   * @Prop {boolean} If true, activates the large button size.
    * Type: size
    */
   @Prop() large: boolean = false;
 
   /**
-   * @input {boolean} If true, activates the small button size.
+   * @Prop {boolean} If true, activates the small button size.
    * Type: size
    */
   @Prop() small: boolean = false;
 
   /**
-   * @input {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
+   * @Prop {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
    * Type: size
    */
   @Prop() default: boolean = false;
 
-  @Prop() disabled: boolean = false;
   /**
-   * @input {boolean} If true, activates a transparent button style with a border.
+   * @Prop {boolean} If true, sets the button into a disabled state.
+   */
+  @Prop() disabled: boolean = false;
+
+  /**
+   * @Prop {boolean} If true, activates a transparent button style with a border.
    * Type: style
    */
   @Prop() outline: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a transparent button style without a border.
+   * @Prop {boolean} If true, activates a transparent button style without a border.
    * Type: style
    */
   @Prop() clear: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
+   * @Prop {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
    * Type: style
    */
   @Prop() solid: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a button with rounded corners.
+   * @Prop {boolean} If true, activates a button with rounded corners.
    * Type: shape
    */
   @Prop() round: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a button style that fills the available width.
+   * @Prop {boolean} If true, activates a button style that fills the available width.
    * Type: display
    */
   @Prop() block: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a button style that fills the available width without
+   * @Prop {boolean} If true, activates a button style that fills the available width without
    * a left and right border.
    * Type: display
    */
   @Prop() full: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a button with a heavier font weight.
+   * @Prop {boolean} If true, activates a button with a heavier font weight.
    * Type: decorator
    */
   @Prop() strong: boolean = false;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * @Prop {string} The mode determines which platform styles to use.
    * Possible values are: `"ios"`, `"md"`, or `"wp"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md' | 'wp';
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * @Prop {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
@@ -194,18 +198,31 @@ export class Button {
     return `${className}-${mode}-${color}`;
   }
 
+  getStyleClassList(role: string): string[] {
+    if (!this.color) {
+      return [];
+    }
+
+    var classList = [].concat(
+      this.outline ? this.getColorClassList(this.color, role, 'outline', this.mode) : [],
+      this.clear ? this.getColorClassList(this.color, role, 'clear', this.mode) : [],
+      this.solid ? this.getColorClassList(this.color, role, 'solid', this.mode) : []
+    );
+
+    if (classList.length === 0) {
+      classList = [this.getColorClassList(this.color, role, 'default', this.mode)];
+    }
+
+    return classList;
+  }
+
   render() {
     var role = 'button';
+
     var size =
       (this.large ? 'large' : null) ||
       (this.small ? 'small' : null) ||
       (this.default ? 'default' : null);
-
-    var style =
-      (this.outline ? 'outline' : null) ||
-      (this.clear ? 'clear' : null) ||
-      (this.solid ? 'solid' : null) ||
-      'default';
 
     var shape = (this.round ? 'round' : null);
 
@@ -216,20 +233,18 @@ export class Button {
     var decorator = (this.strong ? 'strong' : null);
 
     var buttonClasses: CssClassObject = []
-     .concat(
+      .concat(
         this.getElementClassList(role, this.mode),
         this.getClassList(role, shape, this.mode),
         this.getClassList(role, display, this.mode),
         this.getClassList(role, size, this.mode),
         this.getClassList(role, decorator, this.mode),
-        this.getColorClassList(this.color, role, style, this.mode)
+        this.getStyleClassList(role)
       )
       .reduce((prevValue, cssClass) => {
         prevValue[cssClass] = true;
         return prevValue;
       }, {});
-
-    console.log(this.disabled);
 
     return h(this,
       h('button', {
