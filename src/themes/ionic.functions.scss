@@ -353,7 +353,7 @@ $include-rtl: true !default;
 // @param {string} $start
 // ----------------------------------------------------------
 @mixin padding($top, $end: $top, $bottom: $top, $start: $end) {
-  @if ($top == $end && $top == $bottom && $top == $start) {
+  @if ($top == $end and $top == $bottom and $top == $start) {
     padding: $top;
   } @else {
     @include padding-horizontal($start, $end);
@@ -399,7 +399,7 @@ $include-rtl: true !default;
 // @param {string} $start
 // ----------------------------------------------------------
 @mixin margin($top, $end: $top, $bottom: $top, $start: $end) {
-  @if ($top == $end && $top == $bottom && $top == $start) {
+  @if ($top == $end and $top == $bottom and $top == $start) {
     margin: $top;
   } @else {
     @include margin-horizontal($start, $end);
