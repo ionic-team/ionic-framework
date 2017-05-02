@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Text align of the action sheet
-$action-sheet-md-text-align:                            left !default;
+$action-sheet-md-text-align:                            start !default;
 
 /// @prop - Background color of the action sheet
 $action-sheet-md-background:                            #fafafa !default;
@@ -61,14 +61,17 @@ $action-sheet-md-icon-margin:                           0 32px 0 0 !default;
 }
 
 .action-sheet-md .action-sheet-title {
+  @include text-align($action-sheet-md-text-align);
+
   padding: $action-sheet-md-title-padding;
 
   font-size: $action-sheet-md-title-font-size;
-  text-align: $action-sheet-md-text-align;
   color: $action-sheet-md-title-color;
 }
 
 .action-sheet-md .action-sheet-button {
+  @include text-align($action-sheet-md-text-align);
+
   position: relative;
   overflow: hidden;
 
@@ -77,7 +80,6 @@ $action-sheet-md-icon-margin:                           0 32px 0 0 !default;
   min-height: $action-sheet-md-button-min-height;
 
   font-size: $action-sheet-md-button-font-size;
-  text-align: $action-sheet-md-text-align;
   color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
 }
@@ -87,13 +89,14 @@ $action-sheet-md-icon-margin:                           0 32px 0 0 !default;
 }
 
 .action-sheet-md .action-sheet-icon {
+  @include text-align($action-sheet-md-icon-text-align);
+
   margin: $action-sheet-md-icon-margin;
   padding: 0;
 
   width: $action-sheet-md-icon-width;
 
   font-size: $action-sheet-md-icon-font-size;
-  text-align: $action-sheet-md-icon-text-align;
   vertical-align: $action-sheet-md-icon-vertical-align;
 }
 

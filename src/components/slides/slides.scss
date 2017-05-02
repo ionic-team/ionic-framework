@@ -158,8 +158,9 @@ ion-slides {
 
 /* Pagination Styles */
 .swiper-pagination {
+  @include text-align(center);
+
   position: absolute;
-  text-align: center;
   transition: 300ms;
   transform: translate3d(0, 0, 0);
   z-index: 10;
@@ -423,12 +424,13 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-zoom-container {
+  @include text-align(center);
+
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
 .swiper-zoom-container > img,
@@ -514,6 +516,20 @@ button.swiper-pagination-bullet {
   }
 }
 
+
+ion-slides {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slide-zoom {
+  @include text-align(center);
+
+  display: block;
+  width: 100%;
+}
+
 .swiper-container {
   width: 100%;
   height: 100%;
@@ -527,4 +543,27 @@ button.swiper-pagination-bullet {
   height: 100%;
   padding: 0;
   display: flex;
+}
+
+.swiper-slide {
+  @include text-align(center);
+
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  font-size: 18px;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
 }

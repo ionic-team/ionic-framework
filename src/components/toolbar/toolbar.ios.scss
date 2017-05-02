@@ -97,9 +97,10 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .toolbar-title-ios {
+  @include text-align($toolbar-ios-title-text-align);
+
   font-size: $toolbar-ios-title-font-size;
   font-weight: $toolbar-ios-title-font-weight;
-  text-align: $toolbar-ios-title-text-align;
   color: $toolbar-ios-title-text-color;
 
   pointer-events: auto;
@@ -156,15 +157,15 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .bar-buttons-ios[end] {
-  order: map-get($toolbar-order-ios, buttons-end);
+  @include text-align(end);
 
-  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-end);
 }
 
 .bar-buttons-ios[right] {
-  order: map-get($toolbar-order-ios, buttons-right);
+  @include text-align(right);
 
-  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-right);
 }
 
 
