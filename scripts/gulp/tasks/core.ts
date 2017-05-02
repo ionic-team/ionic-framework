@@ -1,4 +1,4 @@
-import { SRC_ROOT, DIST_BUILD_ROOT, PROJECT_ROOT } from '../constants';
+import { PROJECT_ROOT } from '../constants';
 import { task } from 'gulp';
 import { accessSync } from 'fs';
 import { join } from 'path';
@@ -13,15 +13,17 @@ task('core.watch', (done) => {
 });
 
 
-function buildAngularBinding(skipBuildingCore: boolean, done: Function) {
+function buildAngularBinding(isDevAndWatch: boolean, done: Function) {
+  let hasRunDone = false;
   const cwd = join(PROJECT_ROOT, '../ionic-core');
   const args = [
     'run',
-    'build.angular',
-    SRC_ROOT,
-    DIST_BUILD_ROOT,
-    skipBuildingCore ? 'skip-core' : 'do-not-skip-core'
+    'build.angular'
   ];
+
+  if (isDevAndWatch) {
+    args.push('--', 'dev', 'watch');
+  }
 
   try {
     accessSync(cwd);
@@ -35,6 +37,10 @@ function buildAngularBinding(skipBuildingCore: boolean, done: Function) {
 
   ls.stdout.on('data', (data) => {
     console.log(data.toString().trim());
+    if (!hasRunDone && data.toString().trim().indexOf('compile, done') > -1) {
+      hasRunDone = true;
+      done();
+    }
   });
 
   ls.stderr.on('data', (data) => {

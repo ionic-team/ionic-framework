@@ -23,8 +23,8 @@ task('e2e.watch', ['e2e.prepare', 'core.watch'], (done: Function) => {
 function serveTest(folderInfo: any) {
   const testOrDemoName = folderInfo.componentName + '/' + folderInfo.componentTest;
   const ionicAngularDir = join(PROJECT_ROOT, 'src');
-  const coreCompilerFilePath = join(PROJECT_ROOT, 'dist', 'ionic-angular', 'compiler');
-  const coreDir = join(PROJECT_ROOT, 'dist', 'ionic-angular');
+  const coreCompilerFilePath = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiler');
+  const coreDir = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiled-ionic-angular');
   const srcTestRoot = join(PROJECT_ROOT, 'src', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
   const distTestRoot = join(PROJECT_ROOT, 'dist', 'e2e', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
