@@ -1,3 +1,107 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/driftyco/ionic/compare/v3.1.0...v3.1.1) (2017-04-28)
+
+
+### Bug Fixes
+
+* **datetime:** return the correct value ([af394b5](https://github.com/driftyco/ionic/commit/af394b5))
+* **datetime:** always returns a string ([6677d80](https://github.com/driftyco/ionic/commit/6677d80))
+* **input:** don't dispatch first ngModel update ([505d27a](https://github.com/driftyco/ionic/commit/505d27a))
+* **input:** initialize in ngAfterContentInit ([239b559](https://github.com/driftyco/ionic/commit/239b559))
+* **menu:** missing output events in interface ([7eb2f0b](https://github.com/driftyco/ionic/commit/7eb2f0b)), closes [#11383](https://github.com/driftyco/ionic/issues/11383)
+* **range:** fix label reference ([ee6c481](https://github.com/driftyco/ionic/commit/ee6c481))
+* **searchbar:** add setFocus() back ([9264a04](https://github.com/driftyco/ionic/commit/9264a04)), closes [#11397](https://github.com/driftyco/ionic/issues/11397)
+* **select:** use correct assert condition ([ec2a34d](https://github.com/driftyco/ionic/commit/ec2a34d))
+* **select:** return the value in ionChange instead of this ([d24c4f4](https://github.com/driftyco/ionic/commit/d24c4f4))
+* **select:** allow object as value ([4c8efc2](https://github.com/driftyco/ionic/commit/4c8efc2))
+* **select:** remove private reference ([c0276d5](https://github.com/driftyco/ionic/commit/c0276d5))
+* **toggle:** initialize in ngAfterContentInit ([539901d](https://github.com/driftyco/ionic/commit/539901d))
+
+
+
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/driftyco/ionic/compare/v3.0.1...v3.1.0) (2017-04-26)
+
+
+### Steps to Upgrade
+
+Update your package.json to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
+
+```
+"dependencies": {
+  "@angular/common": "4.0.2",
+  "@angular/compiler": "4.0.2",
+  "@angular/compiler-cli": "4.0.2",
+  "@angular/core": "4.0.2",
+  "@angular/forms": "4.0.2",
+  "@angular/http": "4.0.2",
+  "@angular/platform-browser": "4.0.2",
+  "@angular/platform-browser-dynamic": "4.0.2",
+  "@ionic-native/core": "3.4.2",
+  "@ionic-native/splash-screen": "3.4.2",
+  "@ionic-native/status-bar": "3.4.2",
+  "@ionic/storage": "2.0.1",
+  "ionic-angular": "3.1.1",
+  "ionicons": "3.0.0",
+  "rxjs": "5.1.1",
+  "sw-toolbox": "3.4.0",
+  "zone.js": "^0.8.5"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "1.3.4",
+  "typescript": "~2.2.1"
+},
+```
+
+
+### Bug Fixes
+
+* **input:** trigger inputUpdated on initialize ([5776f76](https://github.com/driftyco/ionic/commit/5776f76))
+* **input:** make sure isDisabled gets set to a boolean ([bfa2362](https://github.com/driftyco/ionic/commit/bfa2362))
+* **item-options:** rtl support ([#11188](https://github.com/driftyco/ionic/issues/11188)) ([ea6450e](https://github.com/driftyco/ionic/commit/ea6450e))
+* **menu:** rtl support ([5311336](https://github.com/driftyco/ionic/commit/5311336))
+* **menu:** rtl support ([51d5079](https://github.com/driftyco/ionic/commit/51d5079))
+* **nav-controller:** print exceptions inside lifecycle events ([95c06a5](https://github.com/driftyco/ionic/commit/95c06a5)), closes [#10974](https://github.com/driftyco/ionic/issues/10974)
+* **nav-controller:** filter null view-controllers ([8605672](https://github.com/driftyco/ionic/commit/8605672))
+* **nav-controller:** queue lazy loading ([f88823a](https://github.com/driftyco/ionic/commit/f88823a))
+* **nav-controller:** fix crash when it is destroyed ([cc1eb02](https://github.com/driftyco/ionic/commit/cc1eb02)), closes [#11338](https://github.com/driftyco/ionic/issues/11338)
+* **navigation:** legacy deeplink config can have a defaultHistory entry that is a component ([35f3947](https://github.com/driftyco/ionic/commit/35f3947))
+* **platform:** resize events are dispatched inside zone ([83509db](https://github.com/driftyco/ionic/commit/83509db))
+* **scroll:** fix memory leak ([3c8edba](https://github.com/driftyco/ionic/commit/3c8edba))
+* **searchbar:** debounce input for ionInput ([11a1c70](https://github.com/driftyco/ionic/commit/11a1c70))
+* **select:** stores string | string[] ([ba44780](https://github.com/driftyco/ionic/commit/ba44780)), closes [#11337](https://github.com/driftyco/ionic/issues/11337)
+* **slides:** fix fast rerendering crash ([#11100](https://github.com/driftyco/ionic/issues/11100)) ([78d427d](https://github.com/driftyco/ionic/commit/78d427d)), closes [#10830](https://github.com/driftyco/ionic/issues/10830)
+* **sliding-gesture:** add missing return value ([3b32b8e](https://github.com/driftyco/ionic/commit/3b32b8e))
+* **tabs:** invalid component comparison ([#11084](https://github.com/driftyco/ionic/issues/11084)) ([e423e08](https://github.com/driftyco/ionic/commit/e423e08))
+* **toggle:** use correct toggle background color for iOS colors ([b3d68c9](https://github.com/driftyco/ionic/commit/b3d68c9))
+* **util:** pass an option to default to right side in isRightSide ([7bcf5a0](https://github.com/driftyco/ionic/commit/7bcf5a0))
+* **virtual-scroll:** create views inside zone ([fd3c6ba](https://github.com/driftyco/ionic/commit/fd3c6ba)), closes [#10451](https://github.com/driftyco/ionic/issues/10451)
+* **virtual-scroll:** supports null records ([67af71b](https://github.com/driftyco/ionic/commit/67af71b))
+
+
+### Features
+
+* **app:** add pull-left/right/start/end ([#11214](https://github.com/driftyco/ionic/issues/11214)) ([d9ac950](https://github.com/driftyco/ionic/commit/d9ac950))
+* **app:** add text-start and text-end ([#11213](https://github.com/driftyco/ionic/issues/11213)) ([6cd719f](https://github.com/driftyco/ionic/commit/6cd719f))
+* **app:** add responsive utility attributes by screen size ([#11228](https://github.com/driftyco/ionic/issues/11228)) ([cf24057](https://github.com/driftyco/ionic/commit/cf24057)), closes [#10567](https://github.com/driftyco/ionic/issues/10567)
+* **item:** add sass variable to override avatar border radius ([b0dc856](https://github.com/driftyco/ionic/commit/b0dc856)), closes [#10763](https://github.com/driftyco/ionic/issues/10763)
+* **label:** fix positioning of floating label for rtl ([#11324](https://github.com/driftyco/ionic/issues/11324)) ([0ec71cd](https://github.com/driftyco/ionic/commit/0ec71cd))
+* **list:** rtl support for list-header ([#11328](https://github.com/driftyco/ionic/issues/11328)) ([e31a4da](https://github.com/driftyco/ionic/commit/e31a4da))
+* **modal:** add cssClass to modal options ([5cb51ef](https://github.com/driftyco/ionic/commit/5cb51ef)), closes [#10020](https://github.com/driftyco/ionic/issues/10020)
+* **platform:** add electron as a platform ([#10868](https://github.com/driftyco/ionic/issues/10868)) ([c0df862](https://github.com/driftyco/ionic/commit/c0df862))
+* **rtl:** add start and end text-align for alert and picker ([cb5707d](https://github.com/driftyco/ionic/commit/cb5707d))
+* **segment:** add segment rtl support ([#11215](https://github.com/driftyco/ionic/issues/11215)) ([dd0b293](https://github.com/driftyco/ionic/commit/dd0b293))
+* **select:** add popover interface as an option ([745d808](https://github.com/driftyco/ionic/commit/745d808))
+
+
+### Performance Improvements
+
+* **toggle:** css containment ([93d1d02](https://github.com/driftyco/ionic/commit/93d1d02))
+* **toggle:** events are not zoned ([bda624f](https://github.com/driftyco/ionic/commit/bda624f))
+* **toggle:** toggle's button is not activated ([17c0543](https://github.com/driftyco/ionic/commit/17c0543))
+
+
+
 <a name="3.0.1"></a>
 ## [3.0.1](https://github.com/driftyco/ionic/compare/v3.0.0...v3.0.1) (2017-04-06)
 
@@ -14,7 +118,7 @@
 # [3.0.0](https://github.com/driftyco/ionic/compare/v2.3.0...v3.0.0) (2017-04-05)
 
 
-### Steps to Upgrade
+### Steps to Upgrade to 3.0
 
 With this release comes a major update to Angular (Angular 4.0!), the latest version of TypeScript, and some optional structural changes to your application.
 
@@ -66,7 +170,7 @@ With this release comes a major update to Angular (Angular 4.0!), the latest ver
   ```
   import { HttpModule } from '@angular/http';
   ```
-  
+
   and then add it to the imports in the same file:
 
   ```

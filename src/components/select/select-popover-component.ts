@@ -33,7 +33,7 @@ export class SelectPopover implements OnInit {
     this.viewController.dismiss(value);
   }
 
-  private options: SelectPopoverOption[];
+  options: SelectPopoverOption[];
 
   constructor(
     private navParams: NavParams,

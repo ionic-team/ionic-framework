@@ -4,7 +4,7 @@ import { Title, DOCUMENT } from '@angular/platform-browser';
 import { IonicApp } from './app-root';
 import * as Constants from './app-constants';
 import { ClickBlock } from './click-block';
-import { runInDev } from '../../util/util';
+import { runInDev, assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
@@ -226,6 +226,8 @@ export class App {
    * @hidden
    */
   present(enteringView: ViewController, opts: NavOptions, appPortal?: number): Promise<any> {
+    assert(enteringView.isOverlay, 'presented view controller needs to be an overlay');
+
     const portal = this._appRoot._getPortal(appPortal);
 
     // Set Nav must be set here in order to dimiss() work synchnously.
