@@ -20,6 +20,7 @@ $fab-list-button-background-color:      #f4f4f4 !default;
 
 
 .fab {
+  @include text-align(center);
   @include appearance(none);
 
   position: relative;
@@ -33,7 +34,6 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   border-radius: 50%;
   font-size: 14px;
   line-height: $fab-size;
-  text-align: center;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;

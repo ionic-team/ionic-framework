@@ -51,6 +51,8 @@ ion-infinite-scroll {
 // --------------------------------------------------
 
 ion-infinite-scroll-content {
+  @include text-align(center);
+
   display: flex;
 
   flex-direction: column;
@@ -58,8 +60,6 @@ ion-infinite-scroll-content {
 
   height: 100%;
   min-height: 84px;
-
-  text-align: center;
 }
 
 .infinite-loading {

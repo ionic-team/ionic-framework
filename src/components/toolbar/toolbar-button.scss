@@ -6,13 +6,13 @@
 .bar-button {
   @include margin(0);
   @include padding(0);
+  @include text-align(center);
   @include appearance(none);
 
   position: relative;
   display: inline-block;
 
   line-height: 1;
-  text-align: center;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;

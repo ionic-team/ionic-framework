@@ -35,7 +35,7 @@ $alert-md-head-padding-start:                 24px !default;
 
 
 /// @prop - Text align of the alert head
-$alert-md-head-text-align:                    left !default;
+$alert-md-head-text-align:                    start !default;
 
 /// @prop - Font size of the alert title
 $alert-md-title-font-size:                    22px !default;
@@ -189,7 +189,7 @@ $alert-md-button-border-radius:               2px !default;
 $alert-md-button-text-transform:              uppercase !default;
 
 /// @prop - Text align of the alert button
-$alert-md-button-text-align:                  right !default;
+$alert-md-button-text-align:                  end !default;
 
 
 /// @prop - Border top of the alert list
@@ -357,12 +357,11 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-head {
-  text-align: $alert-md-head-text-align;
+  @include text-align($alert-md-head-text-align);
 
   @include deprecated-variable(padding, $alert-md-head-padding) {
     @include padding($alert-md-head-padding-top, $alert-md-head-padding-end, $alert-md-head-padding-bottom, $alert-md-head-padding-start);
   }
-
 }
 
 .alert-md .alert-title {
@@ -588,13 +587,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 }
 
 .alert-md .alert-button {
+  @include text-align($alert-md-button-text-align);
+
   // necessary for ripple to work properly
   position: relative;
   overflow: hidden;
 
   border-radius: $alert-md-button-border-radius;
   font-weight: $alert-md-button-font-weight;
-  text-align: $alert-md-button-text-align;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;

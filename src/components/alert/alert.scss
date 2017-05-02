@@ -106,6 +106,7 @@ ion-alert input {
 }
 
 .alert-tappable {
+  @include text-align(start);
   @include appearance(none);
   @include margin(0);
   @include padding(0);
@@ -114,7 +115,5 @@ ion-alert input {
 
   font-size: inherit;
   line-height: initial;
-  text-align: left;
-  text-align: start;
   background: transparent;
 }
