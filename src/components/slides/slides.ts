@@ -77,10 +77,10 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * We can also add events to listen to on the `<ion-slides>` element.
- * Let's add the `ionSlideDidChange` event and call a method when the slide changes:
+ * Let's add the `ionDidChange` event and call a method when the slide changes:
  *
  * ```html
- * <ion-slides (ionSlideDidChange)="slideChanged()">
+ * <ion-slides (ionDidChange)="slideChanged()">
  * ```
  *
  * In our class, we add the `slideChanged()` method which gets the active
