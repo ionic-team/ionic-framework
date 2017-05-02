@@ -217,7 +217,6 @@ $toggle-md-item-right-padding-start:  $item-md-padding-start !default;
   @include deprecated-variable(padding, $toggle-md-item-left-padding) {
     @include padding($toggle-md-item-left-padding-top, $toggle-md-item-left-padding-end, $toggle-md-item-left-padding-bottom, $toggle-md-item-left-padding-start);
   }
-
 }
 
 .item-md.item-toggle ion-label {
