@@ -182,6 +182,10 @@ $list-ios-header-background-color:    transparent !default;
   background: $list-ios-header-background-color;
 }
 
+[dir="rtl"] .list-header-ios {
+  padding-right: $list-ios-header-padding-left;
+  padding-left: 0;
+}
 
 // Generate iOS List Header Colors
 // --------------------------------------------------

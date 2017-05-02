@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -9,7 +9,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual } from '../../util/util';
+import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual, assert } from '../../util/util';
 import { Item } from '../item/item';
 import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
@@ -147,10 +147,11 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Select, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select extends BaseInput<string[]> implements AfterViewInit, OnDestroy {
+export class Select extends BaseInput<any> implements OnDestroy {
 
   _multi: boolean = false;
   _options: QueryList<Option>;
+  _overlay: ActionSheet | Alert | Popover;
   _texts: string[] = [];
   _text: string = '';
 
@@ -219,6 +220,15 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   @HostListener('keyup.space')
   _keyup() {
     this.open();
+  }
+
+  /**
+   * @hidden
+   */
+  getValues(): any[] {
+    const values = Array.isArray(this._value) ? this._value : [this._value];
+    assert(this._multi || values.length <= 1, 'single only can have one value');
+    return values;
   }
 
   /**
@@ -355,6 +365,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     overlay.present(selectOptions);
 
     this._fireFocus();
+
     overlay.onDidDismiss((value: any) => {
       this._fireBlur();
 
@@ -362,9 +373,23 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
         this.value = value;
         this.ionChange.emit(value);
       }
+
+      this._overlay = undefined;
     });
+
+    this._overlay = overlay;
   }
 
+  /**
+   * Close the select interface.
+   */
+  close() {
+    if (!this._overlay || !this.isFocus()) {
+      return;
+    }
+
+    return this._overlay.dismiss();
+  }
 
   /**
    * @input {boolean} If true, the element can accept multiple values.
@@ -393,8 +418,8 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
   @ContentChildren(Option)
   set options(val: QueryList<Option>) {
     this._options = val;
-
-    if (this._value.length === 0) {
+    const values = this.getValues();
+    if (values.length === 0) {
       // there are no values set at this point
       // so check to see who should be selected
       // we use writeValue() because we don't want to update ngModel
@@ -404,15 +429,16 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     }
   }
 
-  _inputNormalize(val: any): string[] {
-    if (Array.isArray(val)) {
-      return val;
-    }
-    return [val + ''];
+  _inputShouldChange(val: string[]|string): boolean {
+    return !deepEqual(this._value, val);
   }
 
-  _inputShouldChange(val: string[]): boolean {
-    return !deepEqual(this._value, val);
+  /**
+   * TODO: REMOVE THIS
+   * @hidden
+   */
+  _inputChangeEvent(): any {
+    return this.value;
   }
 
   /**
@@ -424,7 +450,7 @@ export class Select extends BaseInput<string[]> implements AfterViewInit, OnDest
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.selected = this._value.some(selectValue => {
+        option.selected = this.getValues().some(selectValue => {
           return isCheckedProperty(selectValue, option.value);
         });
 

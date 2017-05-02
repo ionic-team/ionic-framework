@@ -37,7 +37,7 @@ export class Haptic {
 
   /**
    * Check to see if the Haptic Plugin is available
-   * @return {boolean} Retuns true or false if the plugin is available
+   * @return {boolean} Returns true or false if the plugin is available
    *
    */
   available() {
