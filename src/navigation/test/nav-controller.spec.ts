@@ -1068,6 +1068,23 @@ describe('NavController', () => {
 
   });
 
+  describe('destroy', () => {
+
+    it('should not crash when destroyed while transitioning', (done) => {
+      let view1 = mockView(MockView1);
+      nav.push(view1).then(() => {
+        fail('it should not succeed');
+        done();
+      }).catch((err: any) => {
+        expect(err).toEqual('nav controller was destroyed');
+        done();
+        });
+      nav.destroy();
+    }, 10000);
+
+  });
+
+
   let nav: NavControllerBase;
   let trnsDone: jasmine.Spy;
 
