@@ -133,8 +133,6 @@ $action-sheet-md-icon-margin-start:                     0 !default;
   @include padding(0);
   @include text-align($action-sheet-md-icon-text-align);
 
-  margin: $action-sheet-md-icon-margin;
-
   width: $action-sheet-md-icon-width;
 
   font-size: $action-sheet-md-icon-font-size;

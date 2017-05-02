@@ -42,8 +42,20 @@ $picker-wp-column-padding-bottom:             $picker-wp-column-padding-top !def
 /// @prop - Padding start of the picker column
 $picker-wp-column-padding-start:              $picker-wp-column-padding-end !default;
 
-/// @prop - Padding of the picker option
-$picker-wp-option-padding:                    0 !default;
+// deprecated
+$picker-wp-option-padding:                    null !default;
+
+/// @prop - Padding top of the picker option
+$picker-wp-option-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker option
+$picker-wp-option-padding-end:                $picker-wp-option-padding-top !default;
+
+/// @prop - Padding bottom of the picker option
+$picker-wp-option-padding-bottom:             $picker-wp-option-padding-top !default;
+
+/// @prop - Padding start of the picker option
+$picker-wp-option-padding-start:              $picker-wp-option-padding-end !default;
 
 /// @prop - Text color of the picker option
 $picker-wp-option-text-color:                 $list-wp-text-color !default;
@@ -135,7 +147,6 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 
 .picker-wp .picker-opt {
   @include margin(0);
-  padding: $picker-wp-option-padding;
 
   height: 4.2rem;
 
@@ -150,6 +161,10 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   backface-visibility: hidden;
 
   pointer-events: auto;
+
+  @include deprecated-variable(padding, $picker-wp-option-padding) {
+    @include padding($picker-wp-option-padding-top, $picker-wp-option-padding-end, $picker-wp-option-padding-bottom, $picker-wp-option-padding-start);
+  }
 }
 
 .picker-wp .picker-prefix,

@@ -89,8 +89,20 @@ $button-wp-large-font-size:                               2rem !default;
 // Windows Small Button
 // --------------------------------------------------
 
-/// @prop - Padding of the small button
-$button-wp-small-padding:                                 0 .9em !default;
+// deprecated
+$button-wp-small-padding:                                 null !default;
+
+/// @prop - Padding top of the small button
+$button-wp-small-padding-top:                             0 !default;
+
+/// @prop - Padding end of the small button
+$button-wp-small-padding-end:                             .9em !default;
+
+/// @prop - Padding bottom of the small button
+$button-wp-small-padding-bottom:                          $button-wp-small-padding-top !default;
+
+/// @prop - Padding start of the small button
+$button-wp-small-padding-start:                           $button-wp-small-padding-end !default;
 
 /// @prop - Height of the small button
 $button-wp-small-height:                                  2.1em !default;
@@ -146,8 +158,20 @@ $button-wp-clear-background-color-hover:                  rgba(158, 158, 158, .1
 // Windows Round Button
 // --------------------------------------------------
 
-/// @prop - Padding of the round button
-$button-wp-round-padding:                                 $button-round-padding !default;
+// deprecated
+$button-wp-round-padding:                                 null !default;
+
+/// @prop - Padding top of the round button
+$button-wp-round-padding-top:                             $button-round-padding-top !default;
+
+/// @prop - Padding end of the round button
+$button-wp-round-padding-end:                             $button-round-padding-end !default;
+
+/// @prop - Padding bottom of the round button
+$button-wp-round-padding-bottom:                          $button-round-padding-bottom !default;
+
+/// @prop - Padding start of the round button
+$button-wp-round-padding-start:                           $button-round-padding-start !default;
 
 /// @prop - Border radius of the round button
 $button-wp-round-border-radius:                           $button-round-border-radius !default;
@@ -231,11 +255,13 @@ $button-wp-strong-font-weight:                            bold !default;
 }
 
 .button-small-wp {
-  padding: $button-wp-small-padding;
-
   height: $button-wp-small-height;
 
   font-size: $button-wp-small-font-size;
+
+  @include deprecated-variable(padding, $button-wp-small-padding) {
+    @include padding($button-wp-small-padding-top, $button-wp-small-padding-end, $button-wp-small-padding-bottom, $button-wp-small-padding-start);
+  }
 }
 
 .button-small-wp[icon-only] ion-icon {
@@ -345,9 +371,11 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-round-wp {
-  padding: $button-wp-round-padding;
-
   border-radius: $button-wp-round-border-radius;
+
+  @include deprecated-variable(padding, $button-wp-round-padding) {
+    @include padding($button-wp-round-padding-top, $button-wp-round-padding-end, $button-wp-round-padding-bottom, $button-wp-round-padding-start);
+  }
 }
 
 .button-wp [icon-only] {

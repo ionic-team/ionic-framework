@@ -118,8 +118,6 @@ $action-sheet-wp-icon-margin-start:               0 !default;
 .action-sheet-wp .action-sheet-button {
   @include text-align($action-sheet-wp-button-text-align);
 
-  padding: $action-sheet-wp-button-padding;
-
   min-height: $action-sheet-wp-button-height;
 
   font-size: $action-sheet-wp-button-font-size;
@@ -138,8 +136,6 @@ $action-sheet-wp-icon-margin-start:               0 !default;
 .action-sheet-wp .action-sheet-icon {
   @include padding(0);
   @include text-align($action-sheet-wp-icon-text-align);
-
-  margin: $action-sheet-wp-icon-margin;
 
   width: $action-sheet-wp-icon-width;
 

@@ -40,7 +40,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
 
 .toolbar-md {
-  padding: $toolbar-md-padding;
+  @include padding($toolbar-md-padding);
 
   min-height: $toolbar-md-height;
 }
@@ -346,9 +346,6 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   @include margin(0);
   @include padding(0, 6px);
   @include text-align(start);
-
-  margin: 0;
-  padding: 0 6px;
 
   font-size: 2.4rem;
   font-weight: normal;

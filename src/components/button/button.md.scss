@@ -82,8 +82,20 @@ $button-md-ripple-background-color:       #555 !default;
 // Material Design Large Button
 // --------------------------------------------------
 
-/// @prop - Padding of the large button
-$button-md-large-padding:                  0 1em !default;
+// deprecated
+$button-md-large-padding:                  null !default;
+
+/// @prop - Padding top of the large button
+$button-md-large-padding-top:              0 !default;
+
+/// @prop - Padding end of the large button
+$button-md-large-padding-end:              1em !default;
+
+/// @prop - Padding bottom of the large button
+$button-md-large-padding-bottom:           $button-md-large-padding-top !default;
+
+/// @prop - Padding start of the large button
+$button-md-large-padding-start:            $button-md-large-padding-end !default;
 
 /// @prop - Height of the large button
 $button-md-large-height:                   2.8em !default;
@@ -95,8 +107,20 @@ $button-md-large-font-size:                2rem !default;
 // Material Design Small Button
 // --------------------------------------------------
 
-/// @prop - Padding of the small button
-$button-md-small-padding:                  0 .9em !default;
+// deprecated
+$button-md-small-padding:                  null !default;
+
+/// @prop - Padding top of the small button
+$button-md-small-padding-top:              0 !default;
+
+/// @prop - Padding end of the small button
+$button-md-small-padding-end:              .9em !default;
+
+/// @prop - Padding bottom of the small button
+$button-md-small-padding-bottom:           $button-md-small-padding-top !default;
+
+/// @prop - Padding start of the small button
+$button-md-small-padding-start:            $button-md-small-padding-end !default;
 
 /// @prop - Height of the small button
 $button-md-small-height:                   2.1em !default;
@@ -179,8 +203,20 @@ $button-md-clear-ripple-background-color:       #999 !default;
 // Material Design Round Button
 // --------------------------------------------------
 
-/// @prop - Padding of the round button
-$button-md-round-padding:                       $button-round-padding !default;
+// deprecated
+$button-md-round-padding:                       null !default;
+
+/// @prop - Padding top of the round button
+$button-md-round-padding-top:                   $button-round-padding-top !default;
+
+/// @prop - Padding end of the round button
+$button-md-round-padding-end:                   $button-round-padding-end !default;
+
+/// @prop - Padding bottom of the round button
+$button-md-round-padding-bottom:                $button-round-padding-bottom !default;
+
+/// @prop - Padding start of the round button
+$button-md-round-padding-start:                 $button-round-padding-start !default;
 
 /// @prop - Border radius of the round button
 $button-md-round-border-radius:                 $button-round-border-radius !default;
@@ -270,19 +306,23 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-large-md {
-  padding: $button-md-large-padding;
-
   height: $button-md-large-height;
 
   font-size: $button-md-large-font-size;
+
+  @include deprecated-variable(padding, $button-md-large-padding) {
+    @include padding($button-md-large-padding-top, $button-md-large-padding-end, $button-md-large-padding-bottom, $button-md-large-padding-start);
+  }
 }
 
 .button-small-md {
-  padding: $button-md-small-padding;
-
   height: $button-md-small-height;
 
   font-size: $button-md-small-font-size;
+
+  @include deprecated-variable(padding, $button-md-small-padding) {
+    @include padding($button-md-small-padding-top, $button-md-small-padding-end, $button-md-small-padding-bottom, $button-md-small-padding-start);
+  }
 }
 
 .button-small-md[icon-only] ion-icon {
@@ -412,9 +452,11 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-round-md {
-  padding: $button-md-round-padding;
-
   border-radius: $button-md-round-border-radius;
+
+  @include deprecated-variable(padding, $button-md-round-padding) {
+    @include padding($button-md-round-padding-top, $button-md-round-padding-end, $button-md-round-padding-bottom, $button-md-round-padding-start);
+  }
 }
 
 .button-md [icon-only] {

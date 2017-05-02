@@ -3,8 +3,20 @@
 // Windows Searchbar
 // --------------------------------------------------
 
-/// @prop - Padding of the searchbar
-$searchbar-wp-padding:                   8px !default;
+// deprecated
+$searchbar-wp-padding:                   null !default;
+
+/// @prop - Padding top of the searchbar
+$searchbar-wp-padding-top:               8px !default;
+
+/// @prop - Padding end of the searchbar
+$searchbar-wp-padding-end:               $searchbar-wp-padding-top !default;
+
+/// @prop - Padding bottom of the searchbar
+$searchbar-wp-padding-bottom:            $searchbar-wp-padding-top !default;
+
+/// @prop - Padding start of the searchbar
+$searchbar-wp-padding-start:             $searchbar-wp-padding-end !default;
 
 /// @prop - Background of the searchbar
 $searchbar-wp-background-color:          transparent !default;
@@ -71,9 +83,11 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .searchbar-wp {
-  padding: $searchbar-wp-padding;
-
   background: $searchbar-wp-background-color;
+
+  @include deprecated-variable(padding, $searchbar-wp-padding) {
+    @include padding($searchbar-wp-padding-top, $searchbar-wp-padding-end, $searchbar-wp-padding-bottom, $searchbar-wp-padding-start);
+  }
 }
 
 .searchbar-wp .searchbar-input-container {
@@ -180,7 +194,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .toolbar .searchbar-wp {
-  padding: 2px;
+  @include padding(2px);
 }
 
 

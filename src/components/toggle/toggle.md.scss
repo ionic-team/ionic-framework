@@ -36,8 +36,20 @@ $toggle-md-handle-background-color-off:  $background-md-color !default;
 /// @prop - Background color of the checked toggle handle
 $toggle-md-handle-background-color-on:   $toggle-md-active-color !default;
 
-/// @prop - Margin of the toggle
-$toggle-md-media-margin:                 0 !default;
+// deprecated
+$toggle-md-media-margin:                 null !default;
+
+/// @prop - Margin top of the toggle
+$toggle-md-media-margin-top:             0 !default;
+
+/// @prop - Margin end of the toggle
+$toggle-md-media-margin-end:             $toggle-md-media-margin-top !default;
+
+/// @prop - Margin bottom of the toggle
+$toggle-md-media-margin-bottom:          $toggle-md-media-margin-top !default;
+
+/// @prop - Margin start of the toggle
+$toggle-md-media-margin-start:           $toggle-md-media-margin-end !default;
 
 /// @prop - Transition duration of the toggle icon
 $toggle-md-transition-duration:          300ms !default;
@@ -45,8 +57,20 @@ $toggle-md-transition-duration:          300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-md-disabled-opacity:             .3 !default;
 
-/// @prop - Padding of standalone toggle
-$toggle-md-padding:                      12px !default;
+// deprecated
+$toggle-md-padding:                      null !default;
+
+/// @prop - Padding top of standalone toggle
+$toggle-md-padding-top:                  12px !default;
+
+/// @prop - Padding end of standalone toggle
+$toggle-md-padding-end:                  $toggle-md-padding-top !default;
+
+/// @prop - Padding bottom of standalone toggle
+$toggle-md-padding-bottom:               $toggle-md-padding-top !default;
+
+/// @prop - Padding start of standalone toggle
+$toggle-md-padding-start:                $toggle-md-padding-end !default;
 
 // deprecated
 $toggle-md-item-left-padding:            null !default;
@@ -85,14 +109,16 @@ $toggle-md-item-right-padding-start:  $item-md-padding-start !default;
 .toggle-md {
   position: relative;
 
-  padding: $toggle-md-padding;
-
   width: $toggle-md-track-width;
   height: $toggle-md-track-height;
 
   box-sizing: content-box;
 
   contain: strict;
+
+  @include deprecated-variable(padding, $toggle-md-padding) {
+    @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
+  }
 }
 
 
@@ -176,9 +202,11 @@ $toggle-md-item-right-padding-start:  $item-md-padding-start !default;
 // -----------------------------------------
 
 .item-md .toggle-md {
-  margin: $toggle-md-media-margin;
-
   cursor: pointer;
+
+  @include deprecated-variable(margin, $toggle-md-media-margin) {
+    @include margin($toggle-md-media-margin-top, $toggle-md-media-margin-end, $toggle-md-media-margin-bottom, $toggle-md-media-margin-start);
+  }
 
   @include deprecated-variable(padding, $toggle-md-item-right-padding) {
     @include padding($toggle-md-item-right-padding-top, $toggle-md-item-right-padding-end, $toggle-md-item-right-padding-bottom, $toggle-md-item-right-padding-start);

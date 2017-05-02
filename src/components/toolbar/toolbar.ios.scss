@@ -46,7 +46,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 
 
 .toolbar-ios {
-  padding: $toolbar-ios-padding;
+  @include padding($toolbar-ios-padding);
 
   min-height: $toolbar-ios-height;
 }

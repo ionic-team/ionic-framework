@@ -63,8 +63,20 @@ $range-wp-pin-color:                         color-contrast($colors-wp, $range-w
 /// @prop - Font size of the range pin
 $range-wp-pin-font-size:                     12px !default;
 
-/// @prop - Padding of the range pin
-$range-wp-pin-padding:                       8px !default;
+// deprecated
+$range-wp-pin-padding:                       null !default;
+
+/// @prop - Padding top of the range pin
+$range-wp-pin-padding-top:                   8px !default;
+
+/// @prop - Padding end of the range pin
+$range-wp-pin-padding-end:                   $range-wp-pin-padding-top !default;
+
+/// @prop - Padding bottom of the range pin
+$range-wp-pin-padding-bottom:                $range-wp-pin-padding-top !default;
+
+/// @prop - Padding start of the range pin
+$range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 
 
 .range-wp {
@@ -80,7 +92,7 @@ $range-wp-pin-padding:                       8px !default;
 }
 
 .range-wp.range-has-pin {
-  padding-top: $range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding;
+  padding-top: $range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding-top;
 }
 
 .range-wp .range-slider {
@@ -170,8 +182,6 @@ $range-wp-pin-padding:                       8px !default;
   top: -24px;
   display: inline-block;
 
-  padding: $range-wp-pin-padding;
-
   min-width: 28px;
 
   border-radius: 50px;
@@ -184,6 +194,10 @@ $range-wp-pin-padding:                       8px !default;
 
   transform: translate3d(0, 28px, 0) scale(.01);
   transition: transform 120ms ease;
+
+  @include deprecated-variable(padding, $range-wp-pin-padding) {
+    @include padding($range-wp-pin-padding-top, $range-wp-pin-padding-end, $range-wp-pin-padding-bottom, $range-wp-pin-padding-start);
+  }
 }
 
 .range-wp .range-knob-pressed .range-pin {

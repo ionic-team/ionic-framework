@@ -141,8 +141,20 @@ $alert-wp-input-line-height:                   3rem !default;
 /// @prop - Color of the text in the alert input
 $alert-wp-input-text-color:                    #000 !default;
 
-/// @prop - Padding of the alert button
-$alert-wp-button-padding:                      5px !default;
+// deprecated
+$alert-wp-button-padding:                      null !default;
+
+/// @prop - Padding top of the alert button
+$alert-wp-button-padding-top:                  5px !default;
+
+/// @prop - Padding end of the alert button
+$alert-wp-button-padding-end:                  $alert-wp-button-padding-top !default;
+
+/// @prop - Padding bottom of the alert button
+$alert-wp-button-padding-bottom:               $alert-wp-button-padding-top !default;
+
+/// @prop - Padding start of the alert button
+$alert-wp-button-padding-start:                $alert-wp-button-padding-end !default;
 
 /// @prop - Width of the alert button
 $alert-wp-button-width:                        49.5% !default;
@@ -602,14 +614,16 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-button {
-  padding: $alert-wp-button-padding;
-
   width: $alert-wp-button-width;
 
   border-radius: $alert-wp-button-border-radius;
   font-weight: $alert-wp-button-font-weight;
   color: $alert-wp-button-text-color;
   background: $alert-wp-button-background;
+
+  @include deprecated-variable(padding, $alert-wp-button-padding) {
+    @include padding($alert-wp-button-padding-top, $alert-wp-button-padding-end, $alert-wp-button-padding-bottom, $alert-wp-button-padding-start);
+  }
 }
 
 .alert-wp .alert-button:first-child:not(:only-child) {

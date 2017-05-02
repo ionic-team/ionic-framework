@@ -61,7 +61,7 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 
 
 .toolbar-wp {
-  padding: $toolbar-wp-padding;
+  @include padding($toolbar-wp-padding);
 
   min-height: $toolbar-wp-height;
 }
