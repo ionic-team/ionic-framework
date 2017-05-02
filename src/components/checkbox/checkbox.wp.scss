@@ -49,19 +49,19 @@ $checkbox-wp-icon-border-color-off:      #333 !default;
 $checkbox-wp-icon-border-color-on:       color($colors-wp, primary) !default;
 
 // deprecated
-$checkbox-wp-item-left-margin:                null !default;
+$checkbox-wp-item-left-margin:           null !default;
 
 /// @prop - Margin top of the left checkbox item
-$checkbox-wp-item-left-margin-top:            $item-wp-padding-media-top !default;
+$checkbox-wp-item-left-margin-top:       $item-wp-padding-media-top !default;
 
 /// @prop - Margin end of the left checkbox item
-$checkbox-wp-item-left-margin-end:            $item-wp-padding-end !default;
+$checkbox-wp-item-left-margin-end:       $item-wp-padding-end !default;
 
 /// @prop - Margin bottom of the left checkbox item
-$checkbox-wp-item-left-margin-bottom:         $item-wp-padding-media-bottom !default;
+$checkbox-wp-item-left-margin-bottom:    $item-wp-padding-media-bottom !default;
 
 /// @prop - Margin start of the left checkbox item
-$checkbox-wp-item-left-margin-start:          4px !default;
+$checkbox-wp-item-left-margin-start:     4px !default;
 
 // deprecated
 $checkbox-wp-item-right-margin:          null !default;
@@ -73,7 +73,7 @@ $checkbox-wp-item-right-margin-top:      11px !default;
 $checkbox-wp-item-right-margin-end:      10px !default;
 
 /// @prop - Margin bottom of the right checkbox item
-$checkbox-wp-item-right-margin-bottom:    10px !default;
+$checkbox-wp-item-right-margin-bottom:   10px !default;
 
 /// @prop - Margin start of the right checkbox item
 $checkbox-wp-item-right-margin-start:    0 !default;
