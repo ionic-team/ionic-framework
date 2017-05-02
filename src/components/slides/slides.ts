@@ -1,5 +1,5 @@
-import * as Swiper from 'swiper';
 import { Component, h, Ionic, Prop } from '../index';
+import Swiper from 'swiper';
 
 /**
  * @name Slides
@@ -32,7 +32,7 @@ import { Component, h, Ionic, Prop } from '../index';
   shadow: false
 })
 export class Slides {
-  swiper: Swiper;
+  swiper: any;
   $el: HTMLElement;
 
   /**

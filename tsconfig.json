@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
