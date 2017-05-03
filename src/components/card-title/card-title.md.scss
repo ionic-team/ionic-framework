@@ -1,0 +1,55 @@
+@import "../../themes/ionic.globals.md";
+@import "./card-title";
+
+
+// Material Design Card Title
+// --------------------------------------------------
+
+/// @prop - Font size of the card title
+$card-md-title-font-size:             2.4rem !default;
+
+/// @prop - Padding of the card title
+$card-md-title-padding:               8px 0 8px 0 !default;
+
+/// @prop - Margin of the card title
+$card-md-title-margin:                2px 0 2px !default;
+
+/// @prop - Color of the card title
+$card-md-title-text-color:            #222 !default;
+
+
+.card-title-md {
+  display: block;
+
+  margin: $card-md-title-margin;
+  padding: $card-md-title-padding;
+
+  font-size: $card-md-title-font-size;
+  line-height: 1.2;
+  color: $card-md-title-text-color;
+}
+
+
+// Generate Material Design Card Title Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .card-md-#{$color-name} {
+
+    .card-title-md {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+      .card-title-md-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-title-md-#{$color-name} {
+    color: $color-base;
+  }
+
+}

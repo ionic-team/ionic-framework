@@ -1,0 +1,57 @@
+@import "../../themes/ionic.globals.md";
+@import "./card-content";
+
+
+// Material Design Card Content
+// --------------------------------------------------
+
+/// @prop - Padding top of the card
+$card-md-padding-top:                 13px !default;
+
+/// @prop - Padding right of the card
+$card-md-padding-right:               16px !default;
+
+/// @prop - Padding bottom of the card
+$card-md-padding-bottom:              13px !default;
+
+/// @prop - Padding left of the card
+$card-md-padding-left:                16px !default;
+
+/// @prop - Font size of the card
+$card-md-font-size:                   1.4rem !default;
+
+/// @prop - Line height of the card
+$card-md-line-height:                 1.5 !default;
+
+
+.card-content-md {
+  padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
+
+  font-size: $card-md-font-size;
+  line-height: $card-md-line-height;
+}
+
+
+// Generate Material Design Card Content Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .card-md-#{$color-name} {
+
+    .card-content-md {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+      .card-content-md-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-content-md-#{$color-name} {
+    color: $color-base;
+  }
+
+}

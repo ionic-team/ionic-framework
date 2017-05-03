@@ -1,0 +1,55 @@
+@import "../../themes/ionic.globals.wp";
+@import "./card-title";
+
+
+// Windows Card Title
+// --------------------------------------------------
+
+/// @prop - Font size of card title
+$card-wp-title-font-size:             2.4rem !default;
+
+/// @prop - Padding of the card title
+$card-wp-title-padding:               8px 0 8px 0 !default;
+
+/// @prop - Margin of the card title
+$card-wp-title-margin:                2px 0 !default;
+
+/// @prop - Color of the card title
+$card-wp-title-text-color:            #222 !default;
+
+
+.card-title-wp {
+  display: block;
+
+  margin: $card-wp-title-margin;
+  padding: $card-wp-title-padding;
+
+  font-size: $card-wp-title-font-size;
+  line-height: 1.2;
+  color: $card-wp-title-text-color;
+}
+
+
+// Generate Windows Card Title Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .card-wp-#{$color-name} {
+
+    .card-title-wp {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+      .card-title-wp-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-title-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+}

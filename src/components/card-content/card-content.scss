@@ -1,0 +1,11 @@
+@import "../../themes/ionic.globals";
+
+
+// Card Content
+// --------------------------------------------------
+
+ion-card-content,
+:host {
+  display: block;
+  visibility: inherit !important;
+}

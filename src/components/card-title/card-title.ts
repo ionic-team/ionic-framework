@@ -4,9 +4,9 @@ import { Component } from '../index';
 @Component({
   tag: 'ion-card-title',
   styleUrls: {
-    ios: 'card.ios.scss',
-    md: 'card.md.scss',
-    wp: 'card.wp.scss'
+    ios: 'card-title.ios.scss',
+    md: 'card-title.md.scss',
+    wp: 'card-title.wp.scss'
   }
 })
 export class CardTitle {}

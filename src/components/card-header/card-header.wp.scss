@@ -1,0 +1,49 @@
+@import "../../themes/ionic.globals.wp";
+@import "./card-header";
+
+
+// Windows Card Header
+// --------------------------------------------------
+
+/// @prop - Font size of the card header
+$card-wp-header-font-size:            1.6rem !default;
+
+/// @prop - Padding of the card header
+$card-wp-header-padding:              16px !default;
+
+/// @prop - Color of the card header
+$card-wp-header-color:                #222 !default;
+
+
+.card-header-wp {
+  padding: $card-wp-header-padding;
+
+  font-size: $card-wp-header-font-size;
+
+  color: $card-wp-header-color;
+}
+
+
+// Generate Windows Card Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .card-wp-#{$color-name} {
+
+    .card-header-wp {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+      .card-header-wp-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-header-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+}

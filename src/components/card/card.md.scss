@@ -17,19 +17,6 @@ $card-md-margin-bottom:               10px !default;
 /// @prop - Margin left of the card
 $card-md-margin-left:                 10px !default;
 
-
-/// @prop - Padding top of the card
-$card-md-padding-top:                 13px !default;
-
-/// @prop - Padding right of the card
-$card-md-padding-right:               16px !default;
-
-/// @prop - Padding bottom of the card
-$card-md-padding-bottom:              13px !default;
-
-/// @prop - Padding left of the card
-$card-md-padding-left:                16px !default;
-
 /// @prop - Padding top of the media on the card
 $card-md-padding-media-top:           10px !default;
 
@@ -51,7 +38,6 @@ $card-md-box-shadow:                  0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px 
 /// @prop - Border radius of the card
 $card-md-border-radius:               2px !default;
 
-
 /// @prop - Font size of the card
 $card-md-font-size:                   1.4rem !default;
 
@@ -60,27 +46,6 @@ $card-md-line-height:                 1.5 !default;
 
 /// @prop - Color of the card text
 $card-md-text-color:                  #222 !default;
-
-/// @prop - Font size of the card title
-$card-md-title-font-size:             2.4rem !default;
-
-/// @prop - Padding of the card title
-$card-md-title-padding:               8px 0 8px 0 !default;
-
-/// @prop - Margin of the card title
-$card-md-title-margin:                2px 0 2px !default;
-
-/// @prop - Color of the card title
-$card-md-title-text-color:            #222 !default;
-
-/// @prop - Font size of the card header
-$card-md-header-font-size:            1.6rem !default;
-
-/// @prop - Padding of the card header
-$card-md-header-padding:              16px !default;
-
-/// @prop - Color of the card header
-$card-md-header-color:                #222 !default;
 
 
 .card-md {
@@ -109,20 +74,6 @@ $card-md-header-color:                #222 !default;
   border: 0;
 }
 
-.card-content-md {
-  padding: $card-md-padding-top $card-md-padding-right $card-md-padding-bottom $card-md-padding-left;
-
-  font-size: $card-md-font-size;
-  line-height: $card-md-line-height;
-}
-
-.card-header-md {
-  padding: $card-md-header-padding;
-
-  font-size: $card-md-header-font-size;
-  color: $card-md-header-color;
-}
-
 .card-header-md + .card-content-md,
 .card-md .item + .card-content-md {
   padding-top: 0;
@@ -130,17 +81,6 @@ $card-md-header-color:                #222 !default;
 
 .card .note-md {
   font-size: 1.3rem;
-}
-
-.card-title-md {
-  display: block;
-
-  margin: $card-md-title-margin;
-  padding: $card-md-title-padding;
-
-  font-size: $card-md-title-font-size;
-  line-height: 1.2;
-  color: $card-md-title-text-color;
 }
 
 .card-md h1 {
@@ -197,9 +137,6 @@ $card-md-header-color:                #222 !default;
     color: $color-contrast;
     background-color: $color-base;
 
-    .card-header-md,
-    .card-title-md,
-    .card-content-md,
     h1,
     h2,
     h3,
@@ -211,19 +148,10 @@ $card-md-header-color:                #222 !default;
     }
 
     @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-      .text-md-#{$color-name},
-      .card-header-md-#{$color-name},
-      .card-title-md-#{$color-name},
-      .card-content-md-#{$color-name} {
+      .text-md-#{$color-name} {
         color: $color-base;
       }
     }
-  }
-
-  .card-header-md-#{$color-name},
-  .card-title-md-#{$color-name},
-  .card-content-md-#{$color-name} {
-    color: $color-base;
   }
 
 }

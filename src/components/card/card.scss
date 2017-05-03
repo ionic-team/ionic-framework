@@ -1,6 +1,5 @@
 @import "../../themes/ionic.globals";
 
-
 // Card
 // --------------------------------------------------
 
@@ -12,8 +11,7 @@ ion-card,
   visibility: inherit !important;
 }
 
-ion-card img,
-:host img {
+ion-card img {
   display: block;
 
   width: 100%;
