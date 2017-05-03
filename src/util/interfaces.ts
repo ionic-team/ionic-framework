@@ -70,7 +70,7 @@ export interface ScrollDetail extends GestureDetail {
   contentWidth?: number;
   contentTop?: number;
   contentBottom?: number;
-  domWrite?: RequestAnimationFrame;
+  domWrite?: DomControllerCallback;
   contentElement?: HTMLElement;
   fixedElement?: HTMLElement;
   scrollElement?: HTMLElement;
@@ -103,8 +103,8 @@ export interface ContentDimensions {
 export interface IonicGlobal {
   staticDir?: string;
   components?: LoadComponents;
-  loadComponents?: {(bundleId: string): void};
-  eventNamePrefix?: string;
+  loadComponents?: {(bundleId: string, modulesImporterFn: ModulesImporterFn, cmp0?: ComponentModeData, cmp1?: ComponentModeData, cmp2?: ComponentModeData): void};
+  eventNameFn?: {(eventName: string): string};
   config?: Object;
   ConfigCtrl?: ConfigApi;
   DomCtrl?: DomControllerApi;
@@ -123,9 +123,9 @@ export interface NextTick {
 
 
 export interface DomControllerApi {
-  read: RequestAnimationFrame;
-  write: RequestAnimationFrame;
-  raf: RequestAnimationFrame;
+  read: DomControllerCallback;
+  write: DomControllerCallback;
+  raf: DomControllerCallback;
 }
 
 export interface RafCallback {
@@ -133,7 +133,7 @@ export interface RafCallback {
 }
 
 
-export interface RequestAnimationFrame {
+export interface DomControllerCallback {
   (cb: RafCallback): void;
 }
 
@@ -178,11 +178,6 @@ export interface ComponentModeData {
    * component mode styles
    */
   [6]: string;
-
-  /**
-   * import component function
-   */
-  [7]: ComponentModeImporterFn;
 }
 
 
@@ -219,7 +214,7 @@ export interface ComponentWatchersData {
 }
 
 
-export interface ComponentModeImporterFn {
+export interface ModulesImporterFn {
   (importer: any, h: Hyperscript, Ionic: Ionic): void;
 }
 
@@ -307,9 +302,9 @@ export interface ComponentMeta {
   watchers?: Watchers;
   shadow?: boolean;
   obsAttrs?: string[];
-  hostCss?: string;
   componentModule?: any;
   modes: {[modeName: string]: ComponentMode};
+  priority?: 'high'|'low';
 }
 
 
@@ -383,6 +378,9 @@ export interface ProxyElement extends HTMLElement {
 }
 
 
+export type Side = 'left' | 'right' | 'start' | 'end';
+
+
 export interface RendererApi {
   (oldVnode: VNode | Element, vnode: VNode, manualSlotProjection?: boolean): VNode;
 }
@@ -396,10 +394,10 @@ export interface Hyperscript {
   (sel: Node, data: VNodeData): VNode;
   (sel: any, data: VNodeData): VNode;
   (sel: any, text: string): VNode;
-  (sel: any, children: Array<any>): VNode;
+  (sel: any, children: Array<VNode | undefined | null>): VNode;
   (sel: any, data: VNodeData, text: string): VNode;
-  (sel: any, data: VNodeData, children: Array<any|string>): VNode;
-  (sel: any, data: VNodeData, children: any): VNode;
+  (sel: any, data: VNodeData, children: Array<VNode | undefined | null>): VNode;
+  (sel: any, data: VNodeData, children: VNode): VNode;
 }
 
 
@@ -430,7 +428,7 @@ export interface VNodeData {
 export interface PlatformApi {
   registerComponent: (tag: string, data: any[]) => ComponentMeta;
   getComponentMeta: (tag: string) => ComponentMeta;
-  loadComponent: (bundleId: string, cb: Function) => void;
+  loadComponent: (bundleId: string, priority: string, cb: Function) => void;
   nextTick: NextTick;
 
   isElement: (node: Node) => node is Element;

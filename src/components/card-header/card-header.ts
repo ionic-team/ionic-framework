@@ -1,4 +1,4 @@
-import { Component } from '../index';
+import { Component, h, Ionic } from '../index';
 
 
 @Component({
@@ -9,4 +9,10 @@ import { Component } from '../index';
     wp: 'card-header.wp.scss'
   }
 })
-export class CardHeader {}
+export class CardHeader {
+  render() {
+    return h(this, Ionic.theme(this, 'card-header'),
+      h('slot')
+    );
+  }
+}

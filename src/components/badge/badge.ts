@@ -1,4 +1,4 @@
-import { Component } from '../index';
+import { Component, h, Ionic } from '../index';
 
 
 @Component({
@@ -9,4 +9,10 @@ import { Component } from '../index';
     wp: 'badge.wp.scss'
   }
 })
-export class Badge {}
+export class Badge {
+  render() {
+    return h(this, Ionic.theme(this, 'badge'),
+      h('slot')
+    );
+  }
+}

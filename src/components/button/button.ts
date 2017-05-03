@@ -1,4 +1,4 @@
-import { Component, h, Ionic, Prop } from '../index';
+import { Component, h, Prop } from '../index';
 type CssClassObject = { [className: string]: boolean };
 
 /**
@@ -70,6 +70,13 @@ type CssClassObject = { [className: string]: boolean };
   }
 })
 export class Button {
+
+
+  /**
+   * @Prop {boolean} If true, activates the large button size.
+   * Type: size
+   */
+  @Prop() role: string = 'button';
 
   /**
    * @Prop {boolean} If true, activates the large button size.
@@ -211,8 +218,6 @@ export class Button {
   }
 
   render() {
-    var role = 'button';
-
     var size =
       (this.large ? 'large' : null) ||
       (this.small ? 'small' : null) ||
@@ -228,12 +233,12 @@ export class Button {
 
     var buttonClasses: CssClassObject = []
       .concat(
-        this.getElementClassList(role, this.mode),
-        this.getClassList(role, shape, this.mode),
-        this.getClassList(role, display, this.mode),
-        this.getClassList(role, size, this.mode),
-        this.getClassList(role, decorator, this.mode),
-        this.getStyleClassList(role)
+        this.getElementClassList(this.role, this.mode),
+        this.getClassList(this.role, shape, this.mode),
+        this.getClassList(this.role, display, this.mode),
+        this.getClassList(this.role, size, this.mode),
+        this.getClassList(this.role, decorator, this.mode),
+        this.getStyleClassList(this.role)
       )
       .reduce((prevValue, cssClass) => {
         prevValue[cssClass] = true;
