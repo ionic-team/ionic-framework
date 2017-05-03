@@ -45,17 +45,34 @@ export class E2EPage {
   }
 
   addItem() {
-    this.items.push({
-      value: this.counter,
-      someMethod: function() {
-        return '!!';
-      }
-    });
+    this.items.push({ value: this.counter, someMethod: () => '!!' });
     this.counter++;
   }
 
   reload() {
     window.location.reload(true);
+  }
+
+  addRandomItem() {
+    const index = Math.floor(Math.random() * this.items.length);
+    this.items.splice(index, 0, {
+      value: Math.floor(Math.random() * 10000),
+      someMethod: function () {
+        return '!!';
+      }
+    }
+    );
+  }
+
+  changeItem() {
+    const index = Math.floor(Math.random() * this.items.length);
+    this.items[index] = { value: Math.floor(Math.random() * 10000), someMethod: () => '!!' };
+    // this.items[index].value = Math.floor(Math.random() * 10000);
+  }
+
+  deleteRandomItem() {
+    const index = Math.floor(Math.random() * this.items.length);
+    this.items.splice(index, 1);
   }
 
 }
@@ -84,4 +101,4 @@ export class AppComponent {
     E2EPage
   ]
 })
-export class AppModule {}
+export class AppModule { }

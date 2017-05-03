@@ -406,6 +406,14 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @hidden
    */
+  lastRecord(): number {
+    const cells = this._cells;
+    return cells.length ? cells[cells.length - 1].record : 0;
+  }
+
+  /**
+   * @hidden
+   */
   ngDoCheck() {
     // only continue if we've already initialized
     if (!this._init) {
@@ -420,10 +428,15 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     let needClean = false;
     if (changes) {
-      changes.forEachOperation((item, _, cindex) => {
-        if (item.previousIndex != null || (cindex < this._recordSize)) {
-          needClean = true;
+      var lastRecord = this.lastRecord() + 1;
+      changes.forEachOperation((item, pindex, cindex) => {
+        if ((item.previousIndex === null && cindex > lastRecord) ||
+          (item.previousIndex > lastRecord && cindex == null)) {
+          console.debug('adding/removing/updating record after current position, no recalculation needed');
+          return;
         }
+
+        needClean = true;
       });
     } else {
       needClean = true;
@@ -632,7 +645,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       var stopAtHeight = (data.scrollTop + data.renderHeight);
 
       processRecords(stopAtHeight, records, cells,
-                      this._hdrFn, this._ftrFn, data);
+        this._hdrFn, this._ftrFn, data);
     }
 
     // ******** DOM READ ****************
