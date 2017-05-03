@@ -4,7 +4,8 @@ import { isPresent, assert } from '../util/util';
 import { NavController } from './nav-controller';
 import { NavOptions, STATE_NEW, STATE_INITIALIZED, STATE_ATTACHED, STATE_DESTROYED } from './nav-util';
 import { NavParams } from './nav-params';
-import { Content, Footer, Header, Navbar } from './nav-interfaces';
+import { Content } from '../components/content/content';
+import { Footer, Header, Navbar } from './nav-interfaces';
 
 
 /**
