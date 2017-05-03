@@ -19,15 +19,16 @@
     <button ion-button (click)="pushPage()">Push Virtual Scroll Page</button>
   </div>
 
-  <ion-list [virtualScroll]="items"
-            [headerFn]="headerFn">
+
+  <ion-list [virtualScroll]="items" [headerFn]="headerFn" [virtualTrackBy]="trackByFn"
+    approxItemHeight="46px">
 
     <ion-item-divider *virtualHeader="let header">
-      Header: {{header}}
+      Header: {{ header }}
     </ion-item-divider>
 
     <ion-item *virtualItem="let item">
-      Item: {{item.value}} {{item.someMethod()}}
+      Item: {{ item.value }} {{ item.someMethod() }}
     </ion-item>
 
   </ion-list>
