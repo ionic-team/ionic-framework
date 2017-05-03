@@ -76,7 +76,7 @@ export class Button {
    * @Prop {boolean} If true, activates the large button size.
    * Type: size
    */
-  @Prop() role: string = 'button';
+  @Prop() buttonType: string = 'button';
 
   /**
    * @Prop {boolean} If true, activates the large button size.
@@ -161,13 +161,13 @@ export class Button {
   /**
    * @hidden
    */
-  getElementClassList(role: string, mode: string): string[] {
-    if (!role) {
+  getElementClassList(buttonType: string, mode: string): string[] {
+    if (!buttonType) {
       return [];
     }
     return [
-      role,
-      `${role}-${mode}`
+      buttonType,
+      `${buttonType}-${mode}`
     ];
   }
 
@@ -175,24 +175,24 @@ export class Button {
   /**
    * @hidden
    */
-  getClassList(role: string, type: string, mode: string): string[] {
+  getClassList(buttonType: string, type: string, mode: string): string[] {
     if (!type) {
       return [];
     }
     type = type.toLocaleLowerCase();
     return [
-      `${role}-${type}`,
-      `${role}-${type}-${mode}`
+      `${buttonType}-${type}`,
+      `${buttonType}-${type}-${mode}`
     ];
   }
 
   /**
    * @hidden
    */
-  getColorClassList(color: string, role: string, style: string, mode: string): string[] {
-    style = (role !== 'bar-button' && style === 'solid') ? 'default' : style;
+  getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
+    style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
     let className =
-      role +
+      buttonType +
       ((style && style !== 'default') ?
         '-' + style.toLowerCase() :
         '');
@@ -203,15 +203,15 @@ export class Button {
       );
   }
 
-  getStyleClassList(role: string): string[] {
+  getStyleClassList(buttonType: string): string[] {
     var classList = [].concat(
-      this.outline ? this.getColorClassList(this.color, role, 'outline', this.mode) : [],
-      this.clear ? this.getColorClassList(this.color, role, 'clear', this.mode) : [],
-      this.solid ? this.getColorClassList(this.color, role, 'solid', this.mode) : []
+      this.outline ? this.getColorClassList(this.color, buttonType, 'outline', this.mode) : [],
+      this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : [],
+      this.solid ? this.getColorClassList(this.color, buttonType, 'solid', this.mode) : []
     );
 
     if (classList.length === 0) {
-      classList = [this.getColorClassList(this.color, role, 'default', this.mode)];
+      classList = [this.getColorClassList(this.color, buttonType, 'default', this.mode)];
     }
 
     return classList;
@@ -233,12 +233,12 @@ export class Button {
 
     var buttonClasses: CssClassObject = []
       .concat(
-        this.getElementClassList(this.role, this.mode),
-        this.getClassList(this.role, shape, this.mode),
-        this.getClassList(this.role, display, this.mode),
-        this.getClassList(this.role, size, this.mode),
-        this.getClassList(this.role, decorator, this.mode),
-        this.getStyleClassList(this.role)
+        this.getElementClassList(this.buttonType, this.mode),
+        this.getClassList(this.buttonType, shape, this.mode),
+        this.getClassList(this.buttonType, display, this.mode),
+        this.getClassList(this.buttonType, size, this.mode),
+        this.getClassList(this.buttonType, decorator, this.mode),
+        this.getStyleClassList(this.buttonType)
       )
       .reduce((prevValue, cssClass) => {
         prevValue[cssClass] = true;

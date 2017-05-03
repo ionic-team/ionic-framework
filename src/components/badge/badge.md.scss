@@ -16,9 +16,20 @@ $badge-md-text-color:               color-contrast($colors-md, $badge-md-backgro
 
 
 .badge-md {
-  border-radius: $badge-md-border-radius;
-  color: $badge-md-text-color;
-  background-color: $badge-md-background-color;
+  @include host-context() {
+    border-radius: $badge-md-border-radius;
+    color: $badge-md-text-color;
+    background-color: $badge-md-background-color;
+  }
+}
+
+
+.badge-md {
+  @include host-context() {
+    border-radius: $badge-md-border-radius;
+    color: $badge-md-text-color;
+    background-color: $badge-md-background-color;
+  }
 }
 
 
@@ -28,8 +39,10 @@ $badge-md-text-color:               color-contrast($colors-md, $badge-md-backgro
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   .badge-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
+    @include host-context() {
+      color: $color-contrast;
+      background-color: $color-base;
+    }
   }
 
 }

@@ -156,3 +156,33 @@
     @content;
   }
 }
+
+
+// Based on a selector, apply the content to that selector and the :host
+@mixin host($selector: null) {
+  @debug $selector;
+  @at-root {
+    @if ($selector) {
+      :host(#{$selector}),
+      #{&} {
+        @content;
+      }
+    } @else {
+      :host,
+      #{&} {
+        @content;
+      }
+    }
+  }
+}
+
+
+// Based on a selector, apply the content to that selector and the :host-context
+@mixin host-context() {
+  @at-root {
+    :host-context(#{&}),
+    #{&} {
+      @content;
+    }
+  }
+}

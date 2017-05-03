@@ -11,28 +11,32 @@ $badge-font-size:                 1.3rem !default;
 $badge-font-weight:               bold !default;
 
 
-ion-badge,
-:host {
-  display: inline-block;
-  visibility: inherit !important;
-  contain: content;
+ion-badge {
+  @include host() {
+    display: inline-block;
+    visibility: inherit !important;
+    contain: content;
+  }
 }
 
 .badge {
-  padding: 3px 8px;
+  @include host() {
+    padding: 3px 8px;
 
-  min-width: 10px;
+    min-width: 10px;
 
-  font-size: $badge-font-size;
-  font-weight: $badge-font-weight;
-  line-height: 1;
+    font-size: $badge-font-size;
+    font-weight: $badge-font-weight;
+    line-height: 1;
 
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+  }
 }
 
-ion-badge:empty,
-:host(:empty) {
-  display: none;
+ion-badge:empty {
+  @include host(':empty') {
+    display: none;
+  }
 }
