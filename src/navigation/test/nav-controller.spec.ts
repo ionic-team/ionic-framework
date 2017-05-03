@@ -622,6 +622,25 @@ describe('NavController', () => {
         });
     }, 10000);
 
+    it('should not pop first view if it\'s the only view', (done: Function) => {
+      let view1 = mockView(MockView1);
+      mockViews(nav, [view1]);
+
+      nav.popToRoot(null, trnsDone).then(() => {
+        let hasCompleted = true;
+        let requiresTransition = false;
+        expect(trnsDone).toHaveBeenCalledWith(
+          hasCompleted, requiresTransition, undefined, undefined, undefined
+        );
+        expect(nav.length()).toEqual(1);
+        expect(nav.getByIndex(0).component).toEqual(MockView1);
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    }, 10000);
+
   });
 
   describe('remove', () => {
