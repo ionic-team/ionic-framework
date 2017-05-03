@@ -1,4 +1,4 @@
-import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../util/dom';
+import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../util/helpers';
 import { Component, Listen, Ionic, Prop } from '../index';
 import { GestureCallback, GestureDetail } from '../../util/interfaces';
 import { GestureController, GestureDelegate } from './gesture-controller';
