@@ -11,9 +11,8 @@ $badge-font-size:                 1.3rem !default;
 $badge-font-weight:               bold !default;
 
 
-ion-badge {
-  @include text-align(center);
-
+ion-badge,
+:host {
   display: inline-block;
   visibility: inherit !important;
   contain: content;
@@ -28,6 +27,7 @@ ion-badge {
   font-weight: $badge-font-weight;
   line-height: 1;
 
+  text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
 }
