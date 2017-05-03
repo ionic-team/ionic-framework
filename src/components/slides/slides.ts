@@ -1,5 +1,4 @@
 import { Component, h, Ionic, Prop } from '../index';
-import Swiper from 'swiper';
 
 /**
  * @name Slides
@@ -25,9 +24,7 @@ import Swiper from 'swiper';
 @Component({
   tag: 'ion-slides',
   styleUrls: {
-    ios: 'slides.ios.scss',
-    md: 'slides.md.scss',
-    wp: 'slides.wp.scss'
+    default: 'slides.scss'
   },
   shadow: false
 })
@@ -41,10 +38,6 @@ export class Slides {
    * Default: `slide`.
    */
   @Prop() effect: string = 'slide';
-
-  @Prop() paginationBulletRender: Function = function() {
-
-  };
 
   /**
    * @input {number} Delay between transitions (in milliseconds). If this
@@ -360,7 +353,8 @@ export class Slides {
       };
 
       // init swiper core
-      this.swiper = new Swiper(this.container, swiperOptions);
+      swiperOptions;
+      // this.swiper = new window.Swiper(this.container, swiperOptions);
 
 
       if (this.keyboardControl) {
