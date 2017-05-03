@@ -18,7 +18,8 @@ function buildAngularBinding(isDevAndWatch: boolean, done: Function) {
   const cwd = join(PROJECT_ROOT, '../ionic-core');
   const args = [
     'run',
-    'build.angular'
+    'build.angular',
+    PROJECT_ROOT
   ];
 
   if (isDevAndWatch) {
