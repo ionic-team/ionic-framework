@@ -8,6 +8,7 @@ export interface SelectPopoverOption {
   value: string;
   disabled: boolean;
   checked: boolean;
+  handler?: Function;
 }
 
 /** @hidden */
@@ -30,6 +31,10 @@ export class SelectPopover implements OnInit {
   }
 
   public set value(value: any) {
+    let checkedOption = this.options.find(option => option.value === value);
+    if (checkedOption && checkedOption.handler) {
+      checkedOption.handler();
+    }
     this.viewController.dismiss(value);
   }
 

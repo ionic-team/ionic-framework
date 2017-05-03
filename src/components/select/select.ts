@@ -301,7 +301,11 @@ export class Select extends BaseInput<any> implements OnDestroy {
         text: input.text,
         checked: input.selected,
         disabled: input.disabled,
-        value: input.value
+        value: input.value,
+        handler: () => {
+          this.value = input.value;
+          input.ionSelect.emit(input.value);
+        }
       }));
 
       overlay = new Popover(this._app, SelectPopover, {
@@ -368,12 +372,6 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
     overlay.onDidDismiss((value: any) => {
       this._fireBlur();
-
-      if (this.interface === 'popover' && value) {
-        this.value = value;
-        this.ionChange.emit(value);
-      }
-
       this._overlay = undefined;
     });
 
