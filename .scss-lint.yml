@@ -121,7 +121,6 @@ linters:
       - letter-spacing
       - line-height
       - list-style
-      - text-align
       - text-decoration
       - text-indent
       - text-overflow
@@ -210,3 +209,5 @@ linters:
       - border-top-right-radius
       - border-bottom-right-radius
       - border-bottom-left-radius
+
+      - text-align
