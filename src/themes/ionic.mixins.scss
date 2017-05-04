@@ -325,46 +325,50 @@ $include-rtl: true !default;
 // @param {string} $bottom-end
 // @param {string} $bottom-start
 // ----------------------------------------------------------
-@mixin border-radius($top-start, $top-end, $bottom-end, $bottom-start) {
-  @if $top-start != null {
-    border-top-left-radius: $top-start;
-  }
-
-  @if $top-end != null {
-    border-top-right-radius: $top-end;
-  }
-
-  @if $bottom-end != null {
-    border-bottom-right-radius: $bottom-end;
-  }
-
-  @if $bottom-start != null {
-    border-bottom-left-radius: $bottom-start;
-  }
-
-  @include rtl() {
+@mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
+  @if ($top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start) {
+    border-radius: $top-start;
+  } @else {
     @if $top-start != null {
-      border-top-right-radius: $top-start;
-    } @else if $top-end != null {
-      border-top-right-radius: 0;
+      border-top-left-radius: $top-start;
     }
 
     @if $top-end != null {
-      border-top-left-radius: $top-end;
-    } @else if $top-start != null {
-      border-top-left-radius: 0;
+      border-top-right-radius: $top-end;
     }
 
     @if $bottom-end != null {
-      border-bottom-left-radius: $bottom-end;
-    } @else if $bottom-start != null {
-      border-bottom-left-radius: 0;
+      border-bottom-right-radius: $bottom-end;
     }
 
     @if $bottom-start != null {
-      border-bottom-right-radius: $bottom-start;
-    } @else if $bottom-end != null {
-      border-bottom-right-radius: 0;
+      border-bottom-left-radius: $bottom-start;
+    }
+
+    @include rtl() {
+      @if $top-start != null {
+        border-top-right-radius: $top-start;
+      } @else if $top-end != null {
+        border-top-right-radius: 0;
+      }
+
+      @if $top-end != null {
+        border-top-left-radius: $top-end;
+      } @else if $top-start != null {
+        border-top-left-radius: 0;
+      }
+
+      @if $bottom-end != null {
+        border-bottom-left-radius: $bottom-end;
+      } @else if $bottom-start != null {
+        border-bottom-left-radius: 0;
+      }
+
+      @if $bottom-start != null {
+        border-bottom-right-radius: $bottom-start;
+      } @else if $bottom-end != null {
+        border-bottom-right-radius: 0;
+      }
     }
   }
 }

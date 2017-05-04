@@ -37,9 +37,7 @@ linters:
 
       - position
       - top
-      - right
       - bottom
-      - left
       - z-index
       - display
       - overflow
@@ -59,16 +57,10 @@ linters:
       - justify-content
       - order
       -
-      - margin
       - margin-top
-      - margin-right
       - margin-bottom
-      - margin-left
-      - padding
       - padding-top
-      - padding-right
       - padding-bottom
-      - padding-left
       -
       - width
       - min-width
@@ -103,12 +95,6 @@ linters:
       - border-right-style
       - border-bottom-style
       - border-left-style
-
-      - border-radius
-      - border-top-left-radius
-      - border-top-right-radius
-      - border-bottom-left-radius
-      - border-bottom-right-radius
 
       - border-color
       - border-top-color
@@ -207,3 +193,20 @@ linters:
   PropertySpelling:
     extra_properties:
       - contain
+    disabled_properties:
+      - padding
+      - padding-left
+      - padding-right
+
+      - margin
+      - margin-left
+      - margin-right
+
+      - right
+      - left
+
+      - border-radius
+      - border-top-left-radius
+      - border-top-right-radius
+      - border-bottom-right-radius
+      - border-bottom-left-radius
