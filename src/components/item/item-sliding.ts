@@ -4,7 +4,6 @@ import { swipeShouldReset, assert } from '../../util/util';
 import { Item } from './item';
 import { List } from '../list/list';
 import { Platform } from '../../platform/platform';
-import { DomController } from '../../platform/dom-controller';
 import { ItemOptions } from './item-options';
 
 const SWIPE_MARGIN = 30;
@@ -164,7 +163,6 @@ export class ItemSliding {
   constructor(
     @Optional() list: List,
     private _plt: Platform,
-    private _dom: DomController,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
     private _zone: NgZone

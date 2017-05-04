@@ -164,7 +164,7 @@ export class ViewController {
    * Dismiss the current viewController
    * @param {any} [data] Data that you want to return when the viewController is dismissed.
    * @param {any} [role ]
-   * @param {NavOptions} NavOptions Options for the dismiss navigation.
+   * @param {NavOptions} navOptions Options for the dismiss navigation.
    * @returns {any} data Returns the data passed in, if any.
    */
   dismiss(data?: any, role?: string, navOptions: NavOptions = {}): Promise<any> {
@@ -396,7 +396,7 @@ export class ViewController {
   /**
    * Change the title of the back-button. Be sure to call this
    * after `ionViewWillEnter` to make sure the  DOM has been rendered.
-   * @param {string} backButtonText Set the back button text.
+   * @param {string} val Set the back button text.
    */
   setBackButtonText(val: string) {
     this._nb && this._nb.setBackButtonText(val);

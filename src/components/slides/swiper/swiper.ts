@@ -867,7 +867,7 @@ export function slidePrev(s: Slides, plt: Platform, runCallbacks?: boolean, spee
   return false;
 }
 
-export function slideReset(s: Slides, plt: Platform, runCallbacks?: boolean, speed?: number, internal?: boolean) {
+export function slideReset(s: Slides, plt: Platform, runCallbacks?: boolean, speed?: number) {
   return slideTo(s, plt, s._activeIndex, speed, runCallbacks, true);
 }
 

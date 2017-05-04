@@ -550,7 +550,7 @@ export function mockMenu(platform: MockPlatform = null): Menu {
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let plt = platform === null ? mockPlatform() : platform;
-  return new Menu(null, elementRef, null, plt, renderer, null, null, gestureCtrl, dom, app);
+  return new Menu(null, elementRef, null, plt, renderer, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {

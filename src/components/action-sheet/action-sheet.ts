@@ -65,7 +65,7 @@ export class ActionSheet extends ViewController {
   /**
    * Present the action sheet instance.
    *
-   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @param {NavOptions} [navOptions={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}): Promise<any> {

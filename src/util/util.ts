@@ -53,7 +53,7 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  * @hidden
  * Apply default arguments if they don't exist in
  * the first object.
- * @param the destination to apply defaults to.
+ * @param {any} dest the destination to apply defaults to.
  */
 export function defaults(dest: any, ...args: any[]) {
   for (var i = arguments.length - 1; i >= 1; i--) {

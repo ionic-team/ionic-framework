@@ -3,7 +3,7 @@ import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional,
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
-import { ItemReorderGestureDelegate, ItemReorderGesture } from '../item/item-reorder-gesture';
+import { ItemReorderGestureDelegate, ItemReorderGesture } from './item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
 
