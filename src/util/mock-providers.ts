@@ -591,7 +591,7 @@ export function mockNgModuleLoader(): NgModuleLoader {
 export function mockOverlay() {
   return {
     present: (opts?: NavOptions) => { return Promise.resolve(); },
-    dismiss: (data?: any, role?: any, navOptions?: NavOptions) => { return Promise.resolve(); },
+    dismiss: (data?: any, role?: string, navOptions?: NavOptions) => { return Promise.resolve(); },
     onDidDismiss: (callback: Function) => { },
     onWillDismiss: (callback: Function) => { }
   };

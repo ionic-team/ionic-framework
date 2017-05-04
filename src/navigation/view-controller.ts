@@ -167,7 +167,7 @@ export class ViewController {
    * @param {NavOptions} NavOptions Options for the dismiss navigation.
    * @returns {any} data Returns the data passed in, if any.
    */
-  dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
+  dismiss(data?: any, role?: string, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
       assert(this._state === STATE_DESTROYED, 'ViewController does not have a valid _nav');
       return Promise.resolve(false);

@@ -158,7 +158,7 @@ export class PageOne {
       this.testPromptOpen = true;
     });
 
-    alert.onDidDismiss((data: any, role: any) => {
+    alert.onDidDismiss((data, role) => {
       console.log('onDidDismiss, data:', data, 'role:', role);
     });
   }
