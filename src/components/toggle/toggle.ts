@@ -57,7 +57,6 @@ import { ToggleGesture } from './toggle-gesture';
       '<div class="toggle-inner"></div>' +
     '</div>' +
     '<button role="checkbox" ' +
-            'type="button" ' +
             'ion-button="item-cover" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_value" ' +
