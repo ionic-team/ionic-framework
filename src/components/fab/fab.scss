@@ -194,7 +194,7 @@ ion-fab-list[side=right] {
 }
 
 .fab-close-icon {
-  @include position(0, 0 null, 0);
+  @include position(0, 0, null, 0);
 
   position: absolute;
 
