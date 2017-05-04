@@ -240,7 +240,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
   @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
 
-
   /**
    * @input {array} The data that builds the templates within the virtual scroll.
    * This is the same data that you'd pass to `*ngFor`. It's important to note
@@ -345,7 +344,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * and what data to give to the header template. The function must return
    * `null` if a header cell shouldn't be created.
    */
-  @Input() set headerFn(val: Function) {
+  @Input()
+  set headerFn(val: Function) {
     if (isFunction(val)) {
       this._hdrFn = val.bind((this._ctrl._cmp) || this);
     }
@@ -358,7 +358,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * should be used, and what data to give to the footer template. The function
    * must return `null` if a footer cell shouldn't be created.
    */
-  @Input() set footerFn(val: Function) {
+  @Input()
+  set footerFn(val: Function) {
     if (isFunction(val)) {
       this._ftrFn = val.bind((this._ctrl._cmp) || this);
     }
@@ -369,10 +370,14 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    */
   @Input()
   set virtualTrackBy(val: TrackByFn) {
-    if (!isPresent(val)) return;
-    this._virtualTrackBy = val;
-    this._updateDiffer();
-  };
+    if (isPresent(val)) {
+      this._virtualTrackBy = val;
+      this._updateDiffer();
+    }
+  }
+  get virtualTrackBy(): TrackByFn {
+    return this._virtualTrackBy;
+  }
 
 
   constructor(
@@ -485,9 +490,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     return null;
   }
 
-  private _updateDiffer(): void {
+  private _updateDiffer() {
     if (isBlank(this._differ) && isPresent(this._records)) {
-      this._differ = this._iterableDiffers.find(this._records).create(this.virtualTrackBy);
+      this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
     }
   }
 
