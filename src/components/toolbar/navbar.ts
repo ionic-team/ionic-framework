@@ -48,7 +48,7 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-navbar',
   template:
     '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
-    '<button type="button" (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
+    '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
       '<ion-icon class="back-button-icon" [ngClass]="\'back-button-icon-\' + _mode" [name]="_bbIcon"></ion-icon>' +
       '<span class="back-button-text" [ngClass]="\'back-button-text-\' + _mode">{{_backText}}</span>' +
     '</button>' +
