@@ -87,7 +87,8 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 ### Running Snapshot
 
 #### Setup
-
+Snapshot compares to a base snapshot made on Mac OS with retina screen (2560x1600).
+It does not work for windows, linux, or non retina macs.
 1. Install Java JDK: `brew cask install java`
 2. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor@2.5.1`
 3. Run `webdriver-manager update`
