@@ -225,7 +225,7 @@ export class ViewController {
     // the previous view may exist, but if it's about to be destroyed
     // it shouldn't be able to go back to
     const previousItem = this._nav.getPrevious(this);
-    return !!(previousItem);
+    return Boolean(previousItem);
   }
 
   /**
@@ -390,7 +390,7 @@ export class ViewController {
    * @returns {boolean} Returns a boolean if this Page has a navbar or not.
    */
   hasNavbar(): boolean {
-    return !!this._nb;
+    return Boolean(this._nb);
   }
 
   /**
@@ -576,7 +576,7 @@ export class ViewController {
 }
 
 export function isViewController(viewCtrl: any): boolean {
-  return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
+  return Boolean(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
 }
 
 const DEFAULT_CSS_CLASS = 'ion-page';

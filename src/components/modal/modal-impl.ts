@@ -19,8 +19,8 @@ export class ModalImpl extends ViewController {
   constructor(app: App, component: any, data: any, opts: ModalOptions = {}, config: Config) {
     data = data || {};
     data.component = component;
-    opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
-    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+    opts.showBackdrop = isPresent(opts.showBackdrop) ? Boolean(opts.showBackdrop) : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? Boolean(opts.enableBackdropDismiss) : true;
     data.opts = opts;
 
     super(ModalCmp, data, null);

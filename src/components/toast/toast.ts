@@ -16,7 +16,7 @@ export class Toast extends ViewController {
   private _app: App;
 
   constructor(app: App, opts: ToastOptions = {}, config: Config) {
-    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
+    opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? Boolean(opts.dismissOnPageChange) : false;
     super(ToastCmp, opts, null);
     this._app = app;
 

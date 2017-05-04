@@ -278,7 +278,7 @@ export class Config {
     if (typeof val === 'string') {
       return val === 'true';
     }
-    return !!val;
+    return Boolean(val);
   }
 
 

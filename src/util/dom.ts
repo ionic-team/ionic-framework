@@ -85,7 +85,7 @@ export function hasPointerMoved(threshold: number, startCoord: PointerCoordinate
 }
 
 export function isTextInput(ele: any) {
-  return !!ele &&
+  return Boolean(ele) &&
          (ele.tagName === 'TEXTAREA' ||
           ele.contentEditable === 'true' ||
           (ele.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(ele.type))));

@@ -276,7 +276,7 @@ export class MockElement {
   }
 
   hasAttribute(name: string) {
-    return !!this.attributes[name];
+    return Boolean(this.attributes[name]);
   }
 
   getAttribute(name: string) {

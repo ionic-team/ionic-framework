@@ -52,11 +52,11 @@ export class TabButton extends Ion implements OnInit {
     this.tab.btn = this;
     this.layout = this.tab.parent.tabsLayout || this.layout;
 
-    this.hasTitle = !!this.tab.tabTitle;
-    this.hasIcon = !!this.tab.tabIcon && this.layout !== 'icon-hide';
+    this.hasTitle = Boolean(this.tab.tabTitle);
+    this.hasIcon = Boolean(this.tab.tabIcon) && this.layout !== 'icon-hide';
     this.hasTitleOnly = (this.hasTitle && !this.hasIcon);
     this.hasIconOnly = (this.hasIcon && !this.hasTitle);
-    this.hasBadge = !!this.tab.tabBadge;
+    this.hasBadge = Boolean(this.tab.tabBadge);
   }
 
   @HostListener('click')

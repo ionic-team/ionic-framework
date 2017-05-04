@@ -79,14 +79,14 @@ export class GestureController {
     }
     return new GestureDelegate(opts.name, this.newID(), this,
       opts.priority || 0,
-      !!opts.disableScroll
+      Boolean(opts.disableScroll)
     );
   }
 
   createBlocker(opts: BlockerOptions = {}): BlockerDelegate {
     return new BlockerDelegate(this.newID(), this,
       opts.disable,
-      !!opts.disableScroll
+      Boolean(opts.disableScroll)
     );
   }
 
@@ -182,7 +182,7 @@ export class GestureController {
   }
 
   isCaptured(): boolean {
-    return !!this.capturedID;
+    return Boolean(this.capturedID);
   }
 
   isScrollDisabled(): boolean {

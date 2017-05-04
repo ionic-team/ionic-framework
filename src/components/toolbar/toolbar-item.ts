@@ -24,7 +24,7 @@ export class ToolbarItem extends Ion {
     @Optional() @Inject(forwardRef(() => Navbar)) navbar: Navbar
   ) {
     super(config, elementRef, renderer, 'bar-buttons');
-    this.inToolbar = !!(toolbar || navbar);
+    this.inToolbar = Boolean(toolbar || navbar);
   }
 
   @ContentChildren(Button)

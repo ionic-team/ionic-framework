@@ -416,8 +416,8 @@ function inputHandler(manager: any, eventType: any, input: any) {
     var isFirst = (eventType & INPUT_START && (pointersLen - changedPointersLen === 0));
     var isFinal = (eventType & (INPUT_END | INPUT_CANCEL) && (pointersLen - changedPointersLen === 0));
 
-    input.isFirst = !!isFirst;
-    input.isFinal = !!isFinal;
+    input.isFirst = Boolean(isFirst);
+    input.isFinal = Boolean(isFinal);
 
     if (isFirst) {
         manager.session = {};
@@ -1377,7 +1377,7 @@ Recognizer.prototype = {
      * @returns {Boolean}
      */
     canRecognizeWith: function(otherRecognizer: any) {
-        return !!this.simultaneous[otherRecognizer.id];
+        return Boolean(this.simultaneous[otherRecognizer.id]);
     },
 
     /**

@@ -116,7 +116,7 @@ export function isTrueProperty(val: any): boolean {
     val = val.toLowerCase().trim();
     return (val === 'true' || val === 'on' || val === '');
   }
-  return !!val;
+  return Boolean(val);
 };
 
 
@@ -173,7 +173,7 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
 /** @hidden */
 export function removeArrayItem(array: any[], item: any) {
   const index = array.indexOf(item);
-  return !!~index && !!array.splice(index, 1);
+  return Boolean(~index) && !!array.splice(index, 1);
 }
 
 

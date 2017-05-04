@@ -41,7 +41,7 @@ export class Haptic {
    *
    */
   available() {
-    return !!this._p;
+    return Boolean(this._p);
   }
 
   /**

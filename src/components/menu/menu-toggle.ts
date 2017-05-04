@@ -113,8 +113,8 @@ export class MenuToggle {
     @Optional() private _button: Button,
     @Optional() private _navbar: Navbar
   ) {
-    this._isButton = !!_button;
-    this._inNavbar = !!_navbar;
+    this._isButton = Boolean(_button);
+    this._inNavbar = Boolean(_navbar);
   }
 
   ngAfterContentInit() {

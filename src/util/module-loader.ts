@@ -78,7 +78,7 @@ export function setupPreloadingImplementation(config: Config, deepLinkConfig: De
   if (!deepLinkConfig || !deepLinkConfig.links || !config.getBoolean('preloadModules')) {
     return Promise.resolve();
   }
-  const linksToLoad = deepLinkConfig.links.filter(link => !!link.loadChildren && link.priority !== 'off');
+  const linksToLoad = deepLinkConfig.links.filter(link => Boolean(link.loadChildren) && link.priority !== 'off');
 
   // Load the high priority modules first
   const highPriorityPromises = linksToLoad

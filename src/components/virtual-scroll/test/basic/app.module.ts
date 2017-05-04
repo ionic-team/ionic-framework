@@ -16,7 +16,7 @@ export class E2EPage {
       if (plt.testUserAgent('Safari')) {
         this.webview = ': iOS Safari';
 
-      } else if (!!(window as any)['webkit']) {
+      } else if (Boolean((window as any)['webkit'])) {
         this.webview = ': iOS WKWebView';
 
       } else {

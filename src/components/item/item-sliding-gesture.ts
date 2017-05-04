@@ -123,5 +123,5 @@ function getContainer(ev: any): ItemSliding {
 
 function clickedOptionButton(ev: any): boolean {
   let ele = ev.target.closest('ion-item-options>button');
-  return !!ele;
+  return Boolean(ele);
 }

@@ -88,17 +88,17 @@ export function setZIndex(nav: NavControllerBase, enteringView: ViewController, 
 
 export function isTabs(nav: any): boolean {
   // Tabs (ion-tabs)
-  return !!nav && !!nav.getSelected;
+  return Boolean(nav) && Boolean(nav.getSelected);
 }
 
 export function isTab(nav: any): boolean {
   // Tab (ion-tab)
-  return !!nav && isPresent(nav._tabId);
+  return Boolean(nav) && isPresent(nav._tabId);
 }
 
 export function isNav(nav: any): boolean {
   // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
-  return !!nav && !!nav.push;
+  return Boolean(nav) && Boolean(nav.push);
 }
 
 /**

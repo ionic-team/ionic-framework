@@ -350,7 +350,7 @@ describe('UrlSerializer', () => {
         let configLink: NavLink = { parts: ['e', 'c', 'd'], partsLen: 3, component: MockView1 };
         let segments: NavSegment[] = new Array(urlParts.length);
         fillMatchedUrlParts(segments, urlParts, configLink);
-        expect(segments.filter(f => !!f).length).toEqual(0);
+        expect(segments.filter(f => Boolean(f)).length).toEqual(0);
 
         expect(urlParts[0]).toEqual('a');
         expect(urlParts[1]).toEqual('b');
