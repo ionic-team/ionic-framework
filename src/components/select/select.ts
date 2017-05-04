@@ -370,7 +370,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
     this._fireFocus();
 
-    overlay.onDidDismiss((value: any) => {
+    overlay.onDidDismiss((value: any, role: string) => {
       this._fireBlur();
       this._overlay = undefined;
     });

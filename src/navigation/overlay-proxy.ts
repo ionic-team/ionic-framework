@@ -51,7 +51,7 @@ export class OverlayProxy {
   /**
    * Called when the current viewController has be successfully dismissed
    */
-  onDidDismiss(callback: Function) {
+  onDidDismiss(callback: (data: any, role: string) => void) {
     this._onDidDismiss = callback;
     if (this.overlay) {
       this.overlay.onDidDismiss(this._onDidDismiss);

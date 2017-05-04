@@ -35,8 +35,8 @@ export class ViewController {
   private _isHidden: boolean = false;
   private _leavingOpts: NavOptions;
   private _nb: Navbar;
-  private _onDidDismiss: Function;
-  private _onWillDismiss: Function;
+  private _onDidDismiss: (data: any, role: string) => void;
+  private _onWillDismiss: (data: any, role: string) => void;
   private _dismissData: any;
   private _dismissRole: any;
   private _detached: boolean;
@@ -149,14 +149,14 @@ export class ViewController {
   /**
    * Called when the current viewController has be successfully dismissed
    */
-  onDidDismiss(callback: Function) {
+  onDidDismiss(callback: (data: any, role: string) => void) {
     this._onDidDismiss = callback;
   }
 
   /**
    * Called when the current viewController will be dismissed
    */
-  onWillDismiss(callback: Function) {
+  onWillDismiss(callback: (data: any, role: string) => void) {
     this._onWillDismiss = callback;
   }
 
