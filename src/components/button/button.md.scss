@@ -233,11 +233,11 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-md {
+  @include border-radius($button-md-border-radius);
+
   overflow: hidden;
 
   height: $button-md-height;
-
-  border-radius: $button-md-border-radius;
 
   font-size: $button-md-font-size;
   font-weight: $button-md-font-weight;
@@ -341,10 +341,10 @@ $button-md-strong-font-weight:                  bold !default;
 
 .button-full-md {
   @include margin-horizontal(0);
+  @include border-radius(0);
 
   border-right-width: 0;
   border-left-width: 0;
-  border-radius: 0;
 }
 
 // Material Design Outline Button
@@ -452,7 +452,7 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-round-md {
-  border-radius: $button-md-round-border-radius;
+  @include border-radius($button-md-round-border-radius);
 
   @include deprecated-variable(padding, $button-md-round-padding) {
     @include padding($button-md-round-padding-top, $button-md-round-padding-end, $button-md-round-padding-bottom, $button-md-round-padding-start);
@@ -471,12 +471,11 @@ $button-md-strong-font-weight:                  bold !default;
 
 .button-effect {
   @include position(0, null, null, 0);
+  @include border-radius(50%);
 
   position: absolute;
   z-index: 0;
   display: none;
-
-  border-radius: 50%;
 
   background-color: $button-md-ripple-background-color;
   opacity: .2;

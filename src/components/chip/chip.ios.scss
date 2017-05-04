@@ -55,9 +55,10 @@ $chip-ios-icon-text-color:            color-contrast($colors-ios, $chip-ios-icon
 
 
 .chip-ios {
+  @include border-radius($chip-ios-border-radius);
+
   height: $chip-ios-height;
 
-  border-radius: $chip-ios-border-radius;
   font-size: $chip-ios-font-size;
   line-height: $chip-ios-height;
   color: $chip-ios-text-color;

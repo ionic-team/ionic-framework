@@ -173,11 +173,11 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 
 .bar-button-ios {
   @include padding(0, 4px);
+  @include border-radius($toolbar-ios-button-border-radius);
 
   height: 32px;
 
   border: 0;
-  border-radius: $toolbar-ios-button-border-radius;
   font-size: $toolbar-ios-button-font-size;
 }
 

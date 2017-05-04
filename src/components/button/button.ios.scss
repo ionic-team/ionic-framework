@@ -197,9 +197,10 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-ios {
+  @include border-radius($button-ios-border-radius);
+
   height: $button-ios-height;
 
-  border-radius: $button-ios-border-radius;
   font-size: $button-ios-font-size;
 
   color: $button-ios-text-color;
@@ -282,19 +283,20 @@ $button-ios-strong-font-weight:                     600 !default;
 
 .button-full-ios {
   @include margin-horizontal(0);
+  @include border-radius(0);
 
   border-right-width: 0;
   border-left-width: 0;
-  border-radius: 0;
 }
 
 // iOS Outline Button
 // --------------------------------------------------
 
 .button-outline-ios {
+  @include border-radius($button-ios-outline-border-radius);
+
   border-width: $button-ios-outline-border-width;
   border-style: $button-ios-outline-border-style;
-  border-radius: $button-ios-outline-border-radius;
   border-color: $button-ios-outline-border-color;
   color: $button-ios-outline-text-color;
   background-color: $button-ios-outline-background-color;
@@ -371,7 +373,7 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-round-ios {
-  border-radius: $button-ios-round-border-radius;
+  @include border-radius($button-ios-round-border-radius);
 
   @include deprecated-variable(padding, $button-ios-round-padding) {
     @include padding($button-ios-round-padding-top, $button-ios-round-padding-end, $button-ios-round-padding-bottom, $button-ios-round-padding-start);

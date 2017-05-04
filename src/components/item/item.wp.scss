@@ -196,12 +196,12 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp ion-avatar ion-img,
 .item-wp ion-avatar img {
+  @include border-radius($item-wp-avatar-border-radius);
+
   overflow: hidden;
 
   width: $item-wp-avatar-size;
   height: $item-wp-avatar-size;
-
-  border-radius: $item-wp-avatar-border-radius;
 }
 
 

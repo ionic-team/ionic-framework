@@ -80,6 +80,8 @@ $checkbox-ios-item-right-margin-start:    0 !default;
 // -----------------------------------------
 
 .checkbox-ios .checkbox-icon {
+  @include border-radius($checkbox-ios-icon-border-radius);
+
   position: relative;
 
   width: $checkbox-ios-icon-size;
@@ -87,7 +89,6 @@ $checkbox-ios-item-right-margin-start:    0 !default;
 
   border-width: $checkbox-ios-icon-border-width;
   border-style: $checkbox-ios-icon-border-style;
-  border-radius: $checkbox-ios-icon-border-radius;
   border-color: $checkbox-ios-icon-border-color-off;
   background-color: $checkbox-ios-background-color-off;
 }

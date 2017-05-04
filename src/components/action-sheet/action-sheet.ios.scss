@@ -96,11 +96,12 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 }
 
 .action-sheet-ios .action-sheet-group {
+  @include border-radius($action-sheet-ios-border-radius);
+
   overflow: hidden;
 
   margin-bottom: $action-sheet-ios-group-margin-bottom - 2;
 
-  border-radius: $action-sheet-ios-border-radius;
   background: $action-sheet-ios-background;
 }
 
@@ -111,9 +112,9 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 .action-sheet-ios .action-sheet-title {
   @include padding($action-sheet-ios-title-padding);
   @include text-align($action-sheet-ios-text-align);
+  @include border-radius($action-sheet-ios-title-border-radius);
 
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
-  border-radius: $action-sheet-ios-title-border-radius;
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
   color: $action-sheet-ios-title-color;

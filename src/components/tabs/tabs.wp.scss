@@ -60,10 +60,11 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 }
 
 .tabs-wp .tab-button {
+  @include border-radius(0);
+
   min-height: $tabs-wp-tab-min-height;
 
   border-bottom: $tabs-wp-tab-border;
-  border-radius: 0;
   font-size: $tabs-wp-tab-font-size;
   font-weight: $tabs-wp-tab-font-weight;
   color: $tabs-wp-tab-color;

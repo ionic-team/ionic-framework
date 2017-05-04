@@ -36,8 +36,8 @@ $toast-wp-title-padding-start:                   $toast-wp-title-padding-end !de
 
 .toast-wp .toast-wrapper {
   @include position-horizontal(0, 0);
-
   @include margin(auto);
+  @include border-radius($toast-wp-border-radius);
 
   position: absolute;
 
@@ -46,7 +46,6 @@ $toast-wp-title-padding-start:                   $toast-wp-title-padding-end !de
 
   max-width: $toast-max-width;
 
-  border-radius: $toast-wp-border-radius;
   background: $toast-wp-background;
 }
 

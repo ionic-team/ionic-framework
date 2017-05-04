@@ -122,10 +122,10 @@ $card-ios-header-color:                #333 !default;
 
 .card-ios {
   @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);
+  @include border-radius($card-ios);
 
   width: calc(100% - #{($card-ios-margin-end + $card-ios-margin-start)});
 
-  border-radius: $card-ios-border-radius;
   font-size: $card-ios-font-size;
 
   background: $card-ios-background-color;

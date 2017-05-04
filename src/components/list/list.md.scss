@@ -88,6 +88,7 @@ $list-md-header-color:           #757575 !default;
 
 .list-md ion-item-options .button {
   @include margin(1px, 0);
+  @include border-radius(0);
 
   display: inline-flex;
 
@@ -96,7 +97,7 @@ $list-md-header-color:           #757575 !default;
   height: calc(100% - 2px);
 
   border: 0;
-  border-radius: 0;
+
   box-shadow: none;
 
   box-sizing: border-box;
@@ -124,8 +125,7 @@ $list-md-header-color:           #757575 !default;
 
 .list-md[inset] {
   @include margin($list-inset-md-margin-top, $list-inset-md-margin-end, $list-inset-md-margin-bottom, $list-inset-md-margin-start);
-
-  border-radius: $list-inset-md-border-radius;
+  @include border-radius($list-inset-md-border-radius);
 }
 
 .list-md[inset] .item:first-child {
@@ -177,12 +177,6 @@ $list-md-header-color:           #757575 !default;
   font-size: $list-md-header-font-size;
   color: $list-md-header-color;
 }
-
-[dir="rtl"] .list-header-md {
-  padding-right: $list-md-header-padding-left;
-  padding-left: 0;
-}
-
 
 // Generate Material Design List Header Colors
 // --------------------------------------------------

@@ -59,10 +59,11 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 
 
 .loading-md .loading-wrapper {
+  @include border-radius($loading-md-border-radius);
+
   max-width: $loading-md-max-width;
   max-height: $loading-md-max-height;
 
-  border-radius: $loading-md-border-radius;
   color: $loading-md-text-color;
   background: $loading-md-background;
 

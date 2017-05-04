@@ -109,6 +109,8 @@ $toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
 // -----------------------------------------
 
 .toggle-wp .toggle-icon {
+  @include border-radius($toggle-wp-track-height);
+
   position: relative;
   display: block;
 
@@ -116,7 +118,6 @@ $toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
   height: 100%;
 
   border: $toggle-wp-track-border-width solid $toggle-wp-track-border-color-off;
-  border-radius: $toggle-wp-track-height;
   background-color: $toggle-wp-track-background-color-off;
 
   pointer-events: none;
@@ -130,13 +131,13 @@ $toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
 
 .toggle-wp .toggle-inner {
   @include position($toggle-wp-handle-top, null, null, $toggle-wp-handle-left);
+  @include border-radius($toggle-wp-handle-border-radius);
 
   position: absolute;
 
   width: $toggle-wp-handle-width;
   height: $toggle-wp-handle-height;
 
-  border-radius: $toggle-wp-handle-border-radius;
   background-color: $toggle-wp-handle-background-color-off;
 
   transition-duration: $toggle-wp-transition-duration;

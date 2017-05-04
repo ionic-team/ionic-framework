@@ -42,10 +42,10 @@ ion-item-options[side=left] {
 ion-item-options .button {
   @include margin(0);
   @include padding(0, .7em);
+  @include border-radius(0);
 
   height: 100%;
 
-  border-radius: 0;
   box-shadow: none;
 
   box-sizing: content-box;

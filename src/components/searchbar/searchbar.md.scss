@@ -121,10 +121,9 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 .searchbar-md .searchbar-input {
   @include placeholder($searchbar-md-input-placeholder-color);
   @include padding(6px, 55px);
+  @include border-radius($searchbar-md-input-border-radius);
 
   height: $searchbar-md-input-height;
-
-  border-radius: $searchbar-md-input-border-radius;
 
   font-size: 1.6rem;
   font-weight: 400;

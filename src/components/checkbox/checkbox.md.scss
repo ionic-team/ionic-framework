@@ -95,6 +95,8 @@ $checkbox-md-item-right-margin-start:    0 !default;
 // -----------------------------------------
 
 .checkbox-md .checkbox-icon {
+  @include border-radius($checkbox-md-icon-border-radius);
+
   position: relative;
 
   width: $checkbox-md-icon-size;
@@ -102,7 +104,6 @@ $checkbox-md-item-right-margin-start:    0 !default;
 
   border-width: $checkbox-md-icon-border-width;
   border-style: $checkbox-md-icon-border-style;
-  border-radius: $checkbox-md-icon-border-radius;
   border-color: $checkbox-md-icon-border-color-off;
   background-color: $checkbox-md-icon-background-color-off;
 

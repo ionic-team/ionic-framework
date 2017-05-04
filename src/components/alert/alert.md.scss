@@ -345,9 +345,10 @@ $alert-md-checkbox-icon-border-color:         color-contrast($colors-md, $alert-
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-wrapper {
+  @include border-radius($alert-md-border-radius);
+
   max-width: $alert-md-max-width;
 
-  border-radius: $alert-md-border-radius;
   background-color: $alert-md-background-color;
 
   box-shadow: $alert-md-box-shadow;
@@ -463,6 +464,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-radio-icon {
   @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
+  @include border-radius($alert-md-radio-border-radius);
 
   position: relative;
   display: block;
@@ -472,7 +474,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   border-width: $alert-md-radio-border-width;
   border-style: $alert-md-radio-border-style;
-  border-radius: $alert-md-radio-border-radius;
   border-color: $alert-md-radio-border-color-off;
 }
 
@@ -481,13 +482,13 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-radio-inner {
   @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-left);
+  @include border-radius($alert-md-radio-icon-border-radius);
 
   position: absolute;
 
   width: $alert-md-radio-icon-width;
   height: $alert-md-radio-icon-height;
 
-  border-radius: $alert-md-radio-icon-border-radius;
   background-color: $alert-md-radio-border-color-on;
   transform: $alert-md-radio-icon-transform-off;
   transition: $alert-md-radio-icon-transition;
@@ -537,6 +538,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-checkbox-icon {
   @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
+  @include border-radius($alert-md-checkbox-border-radius);
 
   position: relative;
 
@@ -545,7 +547,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   border-width: $alert-md-checkbox-border-width;
   border-style: $alert-md-checkbox-border-style;
-  border-radius: $alert-md-checkbox-border-radius;
   border-color: $alert-md-checkbox-border-color-off;
 }
 
@@ -588,12 +589,12 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-button {
   @include text-align($alert-md-button-text-align);
+  @include border-radius($alert-md-button-border-radius);
 
   // necessary for ripple to work properly
   position: relative;
   overflow: hidden;
 
-  border-radius: $alert-md-button-border-radius;
   font-weight: $alert-md-button-font-weight;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;

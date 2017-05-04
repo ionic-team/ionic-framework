@@ -55,9 +55,10 @@ $chip-md-icon-text-color:            color-contrast($colors-md, $chip-md-icon-ba
 
 
 .chip-md {
+  @include border-radius($chip-md-border-radius);
+
   height: $chip-md-height;
 
-  border-radius: $chip-md-border-radius;
   font-size: $chip-md-font-size;
   line-height: $chip-md-height;
   color: $chip-md-text-color;

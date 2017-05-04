@@ -22,6 +22,7 @@ $fab-list-button-background-color:      #f4f4f4 !default;
 .fab {
   @include text-align(center);
   @include appearance(none);
+  @include border-radius(50%);
 
   position: relative;
   z-index: 0;
@@ -31,7 +32,6 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   width: $fab-size;
   height: $fab-size;
 
-  border-radius: 50%;
   font-size: 14px;
   line-height: $fab-size;
   text-overflow: ellipsis;
@@ -94,6 +94,7 @@ ion-fab {
   }
 
   &[right] {
+    // scss-lint:disable PropertySpelling
     right: $fab-content-margin;
   }
 
@@ -106,6 +107,7 @@ ion-fab {
   }
 
   &[left] {
+    // scss-lint:disable PropertySpelling
     left: $fab-content-margin;
   }
 
@@ -171,8 +173,7 @@ ion-fab-list[side=top] {
 
 ion-fab-list[side=left] {
   @include margin(0, $fab-size + $fab-list-margin);
-
-  right: 0;
+  @include position-horizontal(null, 0);
 
   flex-direction: row-reverse;
 }
@@ -180,7 +181,6 @@ ion-fab-list[side=left] {
 ion-fab-list[side=right] {
   @include margin(0, $fab-size + $fab-list-margin);
   @include position(null, null, null, 0);
-
 
   flex-direction: row;
 }

@@ -104,13 +104,12 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
 
 .range-ios .range-bar {
   @include position(($range-ios-slider-height / 2), null, null, 0);
+  @include border-radius(1px);
 
   position: absolute;
 
   width: 100%;
   height: $range-ios-bar-height;
-
-  border-radius: 1px;
 
   background: $range-ios-bar-background-color;
 
@@ -147,13 +146,12 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
 .range-ios .range-knob {
   @include position(($range-ios-hit-height / 2) - ($range-ios-knob-height / 2) + ($range-ios-bar-height / 2) - .5px,
           null, null, ($range-ios-hit-width / 2) - ($range-ios-knob-width / 2));
+  @include border-radius($range-ios-knob-border-radius);
 
   position: absolute;
 
   width: $range-ios-knob-width;
   height: $range-ios-knob-height;
-
-  border-radius: $range-ios-knob-border-radius;
 
   background: $range-ios-knob-background-color;
 
@@ -164,14 +162,13 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
 
 .range-ios .range-tick {
   @include margin-horizontal(-($range-ios-tick-width / 2), null);
+  @include border-radius($range-ios-tick-border-radius);
 
   position: absolute;
   top: ($range-ios-hit-height / 2) - ($range-ios-tick-height / 2) + ($range-ios-bar-height / 2);
 
   width: $range-ios-tick-width;
   height: $range-ios-tick-height;
-
-  border-radius: $range-ios-tick-border-radius;
 
   background: $range-ios-tick-background-color;
 
@@ -184,14 +181,13 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
 
 .range-ios .range-pin {
   @include text-align(center);
+  @include border-radius(50px);
 
   position: relative;
   top: -20px;
   display: inline-block;
 
   min-width: 28px;
-
-  border-radius: 50px;
 
   font-size: $range-ios-pin-font-size;
 

@@ -55,9 +55,10 @@ $chip-wp-icon-text-color:            color-contrast($colors-wp, $chip-wp-icon-ba
 
 
 .chip-wp {
+  @include border-radius($chip-wp-border-radius);
+
   height: $chip-wp-height;
 
-  border-radius: $chip-wp-border-radius;
   font-size: $chip-wp-font-size;
   line-height: $chip-wp-height;
   color: $chip-wp-text-color;

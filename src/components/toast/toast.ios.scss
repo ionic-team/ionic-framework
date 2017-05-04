@@ -33,8 +33,8 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
 
 .toast-ios .toast-wrapper {
   @include position-horizontal(10px, 10px);
-
   @include margin(auto);
+  @include border-radius($toast-ios-border-radius);
 
   position: absolute;
 
@@ -42,8 +42,6 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
   display: block;
 
   max-width: $toast-max-width;
-
-  border-radius: $toast-ios-border-radius;
 
   background: $toast-ios-background;
 }

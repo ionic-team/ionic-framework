@@ -355,11 +355,12 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-wrapper {
+  @include border-radius($alert-wp-border-radius);
+
   width: $alert-wp-width;
   max-width: $alert-wp-max-width;
 
   border: $alert-wp-border-width $alert-wp-border-style $alert-wp-border-color;
-  border-radius: $alert-wp-border-radius;
   background: $alert-wp-background;
 }
 
@@ -476,8 +477,8 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-wp .alert-radio-icon {
   @include position($alert-wp-radio-top, null, null, $alert-wp-radio-left);
-
   @include margin(0);
+  @include border-radius($alert-wp-radio-border-radius);
 
   position: relative;
   display: block;
@@ -487,7 +488,6 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
   border-width: $alert-wp-radio-border-width;
   border-style: $alert-wp-radio-border-style;
-  border-radius: $alert-wp-radio-border-radius;
   border-color: $alert-wp-radio-border-color;
 }
 
@@ -496,6 +496,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-wp .alert-radio-inner {
   @include position($alert-wp-radio-icon-top, null, null, $alert-wp-radio-icon-left);
+  @include border-radius($alert-wp-radio-icon-border-radius);
 
   position: absolute;
   display: none;
@@ -503,7 +504,6 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   width: $alert-wp-radio-icon-width;
   height: $alert-wp-radio-icon-height;
 
-  border-radius: $alert-wp-radio-icon-border-radius;
   background: $alert-wp-radio-background;
 }
 
@@ -550,6 +550,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-wp .alert-checkbox-icon {
   @include position($alert-wp-checkbox-top, null, null, $alert-wp-checkbox-left);
+  @include border-radius($alert-wp-checkbox-border-radius);
 
   position: relative;
 
@@ -558,7 +559,6 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
   border-width: $alert-wp-checkbox-border-width;
   border-style: $alert-wp-checkbox-border-style;
-  border-radius: $alert-wp-checkbox-border-radius;
   border-color: $alert-wp-checkbox-border-color;
   background: $alert-wp-checkbox-background-off;
 }
@@ -614,9 +614,10 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-button {
+  @include border-radius($alert-wp-button-border-radius);
+
   width: $alert-wp-button-width;
 
-  border-radius: $alert-wp-button-border-radius;
   font-weight: $alert-wp-button-font-weight;
   color: $alert-wp-button-text-color;
   background: $alert-wp-button-background;

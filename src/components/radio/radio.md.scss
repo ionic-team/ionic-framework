@@ -76,6 +76,7 @@ $radio-md-item-right-margin-start:0 !default;
 .radio-md .radio-icon {
   @include position(0, null, null, 0);
   @include margin(0);
+  @include border-radius($radio-md-icon-border-radius);
 
   position: relative;
   display: block;
@@ -85,7 +86,6 @@ $radio-md-item-right-margin-start:0 !default;
 
   border-width: $radio-md-icon-border-width;
   border-style: $radio-md-icon-border-style;
-  border-radius: $radio-md-icon-border-radius;
   border-color: $radio-md-color-off;
 }
 
@@ -95,13 +95,13 @@ $radio-md-item-right-margin-start:0 !default;
 
 .radio-md .radio-inner {
   @include position($radio-md-icon-border-width, null, null, $radio-md-icon-border-width);
+  @include border-radius(50%);
 
   position: absolute;
 
   width: $radio-md-icon-width - $radio-md-icon-border-width * 4;
   height: $radio-md-icon-height - $radio-md-icon-border-width * 4;
 
-  border-radius: 50%;
   background-color: $radio-md-color-on;
   transform: scale3d(0, 0, 0);
   transition: transform $radio-md-transition-duration $radio-md-transition-easing;

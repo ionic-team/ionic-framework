@@ -97,13 +97,13 @@ $toggle-ios-item-right-padding-start:  $item-ios-padding-start !default;
 // -----------------------------------------
 
 .toggle-ios .toggle-icon {
+  @include border-radius($toggle-ios-border-radius);
+
   position: relative;
   display: block;
 
   width: 100%;
   height: 100%;
-
-  border-radius: $toggle-ios-border-radius;
 
   background-color: $toggle-ios-border-color-off;
   transition: background-color $toggle-ios-transition-duration;
@@ -117,10 +117,10 @@ $toggle-ios-item-right-padding-start:  $item-ios-padding-start !default;
 
 .toggle-ios .toggle-icon::before {
   @include position($toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width, $toggle-ios-border-width);
+  @include border-radius($toggle-ios-border-radius);
 
   position: absolute;
 
-  border-radius: $toggle-ios-border-radius;
   background-color: $toggle-ios-background-color-off;
 
   content: "";
@@ -134,13 +134,13 @@ $toggle-ios-item-right-padding-start:  $item-ios-padding-start !default;
 
 .toggle-ios .toggle-inner {
   @include position($toggle-ios-border-width, null, null, $toggle-ios-border-width);
+  @include border-radius($toggle-ios-handle-border-radius);
 
   position: absolute;
 
   width: $toggle-ios-handle-width;
   height: $toggle-ios-handle-height;
 
-  border-radius: $toggle-ios-handle-border-radius;
   background-color: $toggle-ios-handle-background-color;
   box-shadow: $toggle-ios-handle-box-shadow;
 

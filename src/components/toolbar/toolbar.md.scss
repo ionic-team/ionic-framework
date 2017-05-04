@@ -81,8 +81,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
 .footer-md::before,
 .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
-  top: -2px;
-  bottom: auto;
+  @include position(-2px, null, auto, null);
 
   height: 2px;
 
@@ -187,11 +186,11 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 .bar-button-md {
   @include margin(0, .2rem, 0, .2rem);
   @include padding(0, 5px);
+  @include border-radius($toolbar-md-button-border-radius);
 
   height: 32px;
 
   border: 0;
-  border-radius: $toolbar-md-button-border-radius;
   font-size: $toolbar-md-button-font-size;
   font-weight: 500;
   text-transform: uppercase;

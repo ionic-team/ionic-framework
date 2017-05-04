@@ -72,8 +72,8 @@ $radio-wp-item-right-margin-start:0 !default;
 
 .radio-wp .radio-icon {
   @include position(0, null, null, 0);
-
   @include margin(0);
+  @include border-radius($radio-wp-icon-border-radius);
 
   position: relative;
 
@@ -84,7 +84,6 @@ $radio-wp-item-right-margin-start:0 !default;
 
   border-width: $radio-wp-icon-border-width;
   border-style: $radio-wp-icon-border-style;
-  border-radius: $radio-wp-icon-border-radius;
   border-color: $radio-wp-color-off;
 }
 
@@ -94,6 +93,7 @@ $radio-wp-item-right-margin-start:0 !default;
 
 .radio-wp .radio-inner {
   @include position($radio-wp-icon-border-width, null, null, $radio-wp-icon-border-width);
+  @include border-radius(50%);
 
   position: absolute;
 
@@ -102,7 +102,6 @@ $radio-wp-item-right-margin-start:0 !default;
   width: $radio-wp-icon-width / 2;
   height: $radio-wp-icon-height / 2;
 
-  border-radius: 50%;
   background-color: $radio-wp-color-off;
 }
 

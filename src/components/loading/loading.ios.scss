@@ -56,10 +56,11 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 
 
 .loading-ios .loading-wrapper {
+  @include border-radius($loading-ios-border-radius);
+
   max-width: $loading-ios-max-width;
   max-height: $loading-ios-max-height;
 
-  border-radius: $loading-ios-border-radius;
   color: $loading-ios-text-color;
   background: $loading-ios-background;
 

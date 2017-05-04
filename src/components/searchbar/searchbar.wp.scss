@@ -121,10 +121,10 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 .searchbar-wp .searchbar-input {
   @include placeholder($searchbar-wp-input-placeholder-color);
   @include padding($searchbar-wp-input-padding-vertical, $searchbar-wp-input-padding-horizontal);
+  @include border-radius($searchbar-wp-input-border-radius);
 
   height: $searchbar-wp-input-height;
 
-  border-radius: $searchbar-wp-input-border-radius;
   font-size: $searchbar-wp-input-font-size;
   font-weight: $searchbar-wp-input-font-weight;
 

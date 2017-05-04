@@ -88,6 +88,8 @@ $checkbox-wp-item-right-margin-start:    0 !default;
 // -----------------------------------------
 
 .checkbox-wp .checkbox-icon {
+  @include border-radius($checkbox-wp-icon-border-radius);
+
   position: relative;
 
   width: $checkbox-wp-icon-size;
@@ -95,7 +97,6 @@ $checkbox-wp-item-right-margin-start:    0 !default;
 
   border-width: $checkbox-wp-icon-border-width;
   border-style: $checkbox-wp-icon-border-style;
-  border-radius: $checkbox-wp-icon-border-radius;
   border-color: $checkbox-wp-icon-border-color-off;
   background-color: $checkbox-wp-icon-background-color-off;
 }
