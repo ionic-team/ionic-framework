@@ -283,7 +283,7 @@ export class Searchbar extends BaseInput<string> {
    * @hidden
    * Sets the Searchbar to focused and active on input focus.
    */
-  inputFocused(ev: UIEvent) {
+  inputFocused() {
     this._isActive = true;
     this._fireFocus();
     this.positionElements();
@@ -294,7 +294,7 @@ export class Searchbar extends BaseInput<string> {
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  inputBlurred(ev: UIEvent) {
+  inputBlurred() {
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this._shouldBlur === false) {

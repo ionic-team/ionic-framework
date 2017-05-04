@@ -1,6 +1,6 @@
 import { assert, defaults } from '../util/util';
 import { DomDebouncer, DomController } from '../platform/dom-controller';
-import { GestureDelegate } from '../gestures/gesture-controller';
+import { GestureDelegate } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
 import { Platform } from '../platform/platform';
 import { pointerCoord } from '../util/dom';

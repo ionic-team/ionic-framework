@@ -1,4 +1,4 @@
-import { Component, ContentChild, ContentChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, ContentChild, ContentChildren, QueryList } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 import { UIEventManager } from '../../gestures/ui-event-manager';
@@ -112,7 +112,7 @@ export class FabContainer {
    */
   @ContentChildren(FabList) _fabLists: QueryList<FabList>;
 
-  constructor(private _elementRef: ElementRef, plt: Platform) {
+  constructor(plt: Platform) {
     this._events = new UIEventManager(plt);
   }
 

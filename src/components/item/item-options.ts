@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 import { Side, isRightSide } from '../../util/util';
@@ -43,7 +43,6 @@ export class ItemOptions {
 
   constructor(
     private _elementRef: ElementRef,
-    private _renderer: Renderer,
     private _plt: Platform
   ) { }
 

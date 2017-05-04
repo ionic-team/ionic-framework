@@ -205,7 +205,7 @@ export class PickerCmp {
     }
   }
 
-  dismiss(role: any): Promise<any> {
+  dismiss(role: string): Promise<any> {
     return this._viewCtrl.dismiss(this.getSelected(), role);
   }
 
