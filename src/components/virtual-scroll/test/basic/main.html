@@ -5,6 +5,15 @@
       <button ion-button (click)="reload()">
         Reload
       </button>
+      <button ion-button icon-only (click)="deleteRandomItem()">
+        Del random
+      </button>
+      <button ion-button icon-only (click)="changeItem()">
+        Change random
+      </button>
+      <button ion-button icon-only (click)="addRandomItem()">
+        Add random
+      </button>
       <button ion-button icon-only (click)="addItem()">
         <ion-icon name="add"></ion-icon>
       </button>
@@ -23,11 +32,11 @@
             [headerFn]="headerFn">
 
     <ion-item-divider *virtualHeader="let header">
-      Header: {{header}}
+      Header: {{ header }}
     </ion-item-divider>
 
     <ion-item *virtualItem="let item">
-      Item: {{item.value}} {{item.someMethod()}}
+      Item: {{ item.value }} {{ item.someMethod() }}
     </ion-item>
 
   </ion-list>
