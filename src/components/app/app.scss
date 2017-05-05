@@ -423,8 +423,9 @@ ion-footer {
 
       [float#{$infix}-start] {
         // scss-lint:disable ImportantRule, PropertySpelling
-        float: left !important;
-
+        @include ltr() {
+          float: left !important;
+        }
         @include rtl() {
           float: right !important;
         }
@@ -432,8 +433,9 @@ ion-footer {
 
       [float#{$infix}-end] {
         // scss-lint:disable ImportantRule, PropertySpelling
-        float: right !important;
-
+        @include ltr() {
+          float: right !important;
+        }
         @include rtl() {
           float: left !important;
         }
