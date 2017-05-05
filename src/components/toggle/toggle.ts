@@ -56,14 +56,13 @@ import { ToggleGesture } from './toggle-gesture';
     '<div class="toggle-icon">' +
       '<div class="toggle-inner"></div>' +
     '</div>' +
-    '<button role="checkbox" ' +
-            'type="button" ' +
-            'ion-button="item-cover" ' +
+    '<button class="item-cover" ' +
+            'role="checkbox" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_value" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover" disable-activated>' +
+            'disable-activated>' +
     '</button>',
   host: {
     '[class.toggle-disabled]': '_disabled',

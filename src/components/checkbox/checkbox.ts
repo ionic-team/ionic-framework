@@ -51,14 +51,11 @@ import { Item } from '../item/item';
     '<div class="checkbox-icon" [class.checkbox-checked]="_value">' +
       '<div class="checkbox-inner"></div>' +
     '</div>' +
-    '<button role="checkbox" ' +
-            'type="button" ' +
-            'ion-button="item-cover" ' +
+    '<button class="item-cover" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_value" ' +
             '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover"> ' +
+            '[attr.aria-disabled]="_disabled">' +
     '</button>',
   host: {
     '[class.checkbox-disabled]': '_disabled'

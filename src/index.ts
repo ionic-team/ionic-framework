@@ -13,7 +13,7 @@ export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';
 export { Backdrop } from './components/backdrop/backdrop';
 export { Badge } from './components/badge/badge';
-export { Button } from './components/button/button';
+export { Button, ButtonCover } from './components/button/button';
 export { Card } from './components/card/card';
 export { CardContent } from './components/card/card-content';
 export { CardHeader } from './components/card/card-header';

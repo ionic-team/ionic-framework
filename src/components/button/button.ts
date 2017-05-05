@@ -362,3 +362,18 @@ export class Button extends Ion {
     }
   }
 }
+
+/**
+ * @hidden
+ */
+@Component({
+  selector: '.item-cover',
+  template:
+    '<div class="button-effect"></div>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    'type': 'button'
+  }
+})
+export class ButtonCover { }
