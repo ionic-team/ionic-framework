@@ -1,4 +1,5 @@
 import { Component, h, Ionic, Prop } from '../index';
+import { Swiper } from '../../vendor/swiper';
 
 /**
  * @name Slides
@@ -353,9 +354,7 @@ export class Slides {
       };
 
       // init swiper core
-      swiperOptions;
-      // this.swiper = new window.Swiper(this.container, swiperOptions);
-
+      this.swiper = new Swiper(this.container, swiperOptions);
 
       if (this.keyboardControl) {
         // init keyboard event listeners
