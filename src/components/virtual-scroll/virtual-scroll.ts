@@ -190,7 +190,7 @@ import { VirtualHeader } from './virtual-header';
  * virtual scroll isn't aware of the dimensions until after they have been
  * rendered. For the initial render, virtual scroll still needs to set
  * how many items should be built. With "approx" property inputs, such as
- * `approxItemHeight`, we're able to give virtual sroll an approximate size,
+ * `approxItemHeight`, we're able to give virtual scroll an approximate size,
  * therefore allowing virtual scroll to decide how many items should be
  * created.
  *
