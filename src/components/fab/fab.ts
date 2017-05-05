@@ -67,6 +67,10 @@ export class FabButton extends Ion {
     renderer: Renderer,
   ) {
     super(config, elementRef, renderer, 'fab');
+
+    if (!elementRef.nativeElement.hasAttribute('type')) {
+      elementRef.nativeElement.setAttribute('type', 'button');
+    }
   }
 
   /**

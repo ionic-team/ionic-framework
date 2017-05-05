@@ -292,6 +292,10 @@ export class Button extends Ion {
       this.setElementClass('disable-hover', true);
     }
 
+    if (!elementRef.nativeElement.hasAttribute('type')) {
+      elementRef.nativeElement.setAttribute('type', 'button');
+    }
+
     if (ionButton.trim().length > 0) {
       this.setRole(ionButton);
     }
