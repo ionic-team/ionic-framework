@@ -63,7 +63,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @param {string} showBackdrop sets whether to show the backdrop.
+   * @param {boolean} showBackdrop sets whether to show the backdrop.
    */
   setShowBackdrop(showBackdrop: boolean): Loading {
     this.data.showBackdrop = showBackdrop;
@@ -71,7 +71,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @param {string} dur how many milliseconds to wait before hiding the indicator.
+   * @param {number} dur how many milliseconds to wait before hiding the indicator.
    */
   setDuration(dur: number): Loading {
     this.data.duration = dur;

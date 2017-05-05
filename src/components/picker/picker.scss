@@ -87,6 +87,8 @@ ion-picker-cmp {
 }
 
 .picker-prefix {
+  @include text-align(end);
+
   position: relative;
 
   flex: 2;
@@ -94,12 +96,12 @@ ion-picker-cmp {
   min-width: 45%;
   max-width: 50%;
 
-  text-align: right;
-  text-align: end;
   white-space: nowrap;
 }
 
 .picker-suffix {
+  @include text-align(start);
+
   position: relative;
 
   flex: 2;
@@ -107,13 +109,13 @@ ion-picker-cmp {
   min-width: 45%;
   max-width: 50%;
 
-  text-align: left;
-  text-align: start;
   white-space: nowrap;
 }
 
 // contain property is supported by Chrome
 .picker-opt {
+  @include text-align(center);
+
   position: absolute;
   top: 0;
   left: 0;
@@ -122,7 +124,6 @@ ion-picker-cmp {
 
   width: 100%;
 
-  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 

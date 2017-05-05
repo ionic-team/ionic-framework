@@ -1,6 +1,8 @@
-import { ModuleLoader, LAZY_LOADED_TOKEN } from '../module-loader';
-import { mockModuleLoader, mockNgModuleLoader } from '../mock-providers';
+import { ModuleLoader, LAZY_LOADED_TOKEN, setupPreloadingImplementation } from '../module-loader';
+import { mockModuleLoader, mockNgModuleLoader, mockConfig } from '../mock-providers';
 import { NgModuleLoader } from '../ng-module-loader';
+import { Config } from '../../config/config';
+import { DeepLinkConfig } from '../../navigation/nav-util';
 
 
 describe('module-loader', () => {
@@ -115,12 +117,119 @@ describe('module-loader', () => {
 
   });
 
+  describe('setupPreloadingImplementation', () => {
+
+    it('should return a promise', (done: Function) => {
+      let promise = setupPreloadingImplementation(config, null, moduleLoader);
+      promise.then((response) => {
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    });
+
+    it('should not call ModuleLoader when preloading disabled', (done: Function) => {
+      spyOn(moduleLoader, 'load').and.returnValue(Promise.resolve());
+
+      config.set('preloadModules', false);
+      const deepLinkConfig: DeepLinkConfig = {
+        links: []
+      };
+      let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
+      promise.then((response) => {
+        expect(moduleLoader.load).not.toHaveBeenCalled();
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    });
+
+    it('should not call ModuleLoader when deepLinkConfig missing', (done: Function) => {
+      spyOn(moduleLoader, 'load').and.returnValue(Promise.resolve());
+
+      config.set('preloadModules', true);
+      let promise = setupPreloadingImplementation(config, null, moduleLoader);
+      promise.then((response) => {
+        expect(moduleLoader.load).not.toHaveBeenCalled();
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    });
+
+    it('should not call ModuleLoader when no low or high priority links', (done: Function) => {
+      spyOn(moduleLoader, 'load').and.returnValue(Promise.resolve());
+
+      config.set('preloadModules', true);
+      const deepLinkConfig: DeepLinkConfig = {
+        links: [{
+          loadChildren: 'offString',
+          priority: 'off'
+        }]
+      };
+      let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
+      promise.then((response) => {
+        expect(moduleLoader.load).not.toHaveBeenCalled();
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    });
+
+    it('should call ModuleLoader when has low priority links', (done: Function) => {
+      spyOn(moduleLoader, 'load').and.returnValue(Promise.resolve());
+
+      config.set('preloadModules', true);
+      const deepLinkConfig: DeepLinkConfig = {
+        links: [{
+          loadChildren: 'lowString',
+          priority: 'low'
+        }]
+      };
+      let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
+      promise.then((response) => {
+        expect(moduleLoader.load).toHaveBeenCalledWith('lowString');
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    });
+
+    it('should call ModuleLoader when has high priority links', (done: Function) => {
+      spyOn(moduleLoader, 'load').and.returnValue(Promise.resolve());
+
+      config.set('preloadModules', true);
+      const deepLinkConfig: DeepLinkConfig = {
+        links: [{
+          loadChildren: 'highString',
+          priority: 'high'
+        }]
+      };
+      let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
+      promise.then((response) => {
+        expect(moduleLoader.load).toHaveBeenCalledWith('highString');
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    });
+
+  });
+
   var moduleLoader: ModuleLoader;
   var ngModuleLoader: NgModuleLoader;
+  var config: Config;
 
   beforeEach(() => {
     ngModuleLoader = mockNgModuleLoader();
     moduleLoader = mockModuleLoader(ngModuleLoader);
+    config = mockConfig();
   });
 
 });

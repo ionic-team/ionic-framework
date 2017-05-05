@@ -11,6 +11,8 @@ $badge-font-weight:               bold !default;
 
 
 ion-badge {
+  @include text-align(center);
+
   display: inline-block;
 
   padding: 3px 8px;
@@ -21,7 +23,6 @@ ion-badge {
   font-weight: $badge-font-weight;
   line-height: 1;
 
-  text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
 }

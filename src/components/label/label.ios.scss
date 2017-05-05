@@ -69,8 +69,10 @@ $label-ios-margin:                     $item-ios-padding-top ($item-ios-padding-
   transform: translate3d(0, 0, 0) scale(.8);
 }
 
-.item-ios.item-label-stacked [item-right],
-.item-ios.item-label-floating [item-right] {
+.item-ios.item-label-stacked [item-right], // deprecated
+.item-ios.item-label-floating [item-right], // deprecated
+.item-ios.item-label-stacked [item-end],
+.item-ios.item-label-floating [item-end] {
   margin-top: $item-ios-padding-media-top - 2;
   margin-bottom: $item-ios-padding-media-bottom - 2;
 }

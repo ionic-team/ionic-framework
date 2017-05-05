@@ -146,13 +146,17 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 // Windows Item Media
 // --------------------------------------------------
 
-.item-wp [item-left],
-.item-wp [item-right] {
+.item-wp [item-left], // deprecated
+.item-wp [item-right], // deprecated
+.item-wp [item-start],
+.item-wp [item-end] {
   margin: $item-wp-padding-media-top ($item-wp-padding-right / 2) $item-wp-padding-media-bottom 0;
 }
 
-.item-wp ion-icon[item-left],
-.item-wp ion-icon[item-right] {
+.item-wp ion-icon[item-left], // deprecated
+.item-wp ion-icon[item-right], // deprecated
+.item-wp ion-icon[item-start],
+.item-wp ion-icon[item-end] {
   margin-top: $item-wp-padding-icon-top;
   margin-bottom: $item-wp-padding-icon-bottom;
   margin-left: 0;
@@ -176,18 +180,24 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   line-height: $item-wp-body-text-line-height;
 }
 
-.item-wp ion-icon[item-left] + .item-inner,
-.item-wp ion-icon[item-left] + .item-input {
+.item-wp ion-icon[item-left] + .item-inner, // deprecated
+.item-wp ion-icon[item-left] + .item-input, // deprecated
+ .item-wp ion-icon[item-start] + .item-inner,
+.item-wp ion-icon[item-start] + .item-input {
   margin-left: ($item-wp-padding-left / 2);
 }
 
-.item-wp ion-avatar[item-left],
-.item-wp ion-thumbnail[item-left] {
+.item-wp ion-avatar[item-left], // deprecated
+.item-wp ion-thumbnail[item-left], // deprecated
+.item-wp ion-avatar[item-start],
+.item-wp ion-thumbnail[item-start] {
   margin: ($item-wp-padding-right / 2) $item-wp-padding-right ($item-wp-padding-right / 2) 0;
 }
 
-.item-wp ion-avatar[item-right],
-.item-wp ion-thumbnail[item-right] {
+.item-wp ion-avatar[item-right], // deprecated
+.item-wp ion-thumbnail[item-right], // deprecated
+.item-wp ion-avatar[item-end],
+.item-wp ion-thumbnail[item-end] {
   margin: ($item-wp-padding-right / 2);
 }
 

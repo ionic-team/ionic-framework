@@ -291,3 +291,19 @@
 
   @return $colors-list;
 }
+
+// Sets correct text align with support for old browsers
+// @param {string} $direction - text direction
+// @param {string} $decorator - !important
+// ----------------------------------------------------------
+@mixin text-align($direction, $decorator: null) {
+  @if $direction == start {
+    text-align: left;
+    text-align: start $decorator;
+  } @else if $direction == end {
+    text-align: right;
+    text-align: end $decorator;
+  } @else {
+    text-align: $direction $decorator;
+  }
+}

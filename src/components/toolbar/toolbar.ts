@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Optional, Renderer } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { ViewController } from '../../navigation/view-controller';
 import { ToolbarBase } from './toolbar-base';
 
 
@@ -114,7 +113,6 @@ export class Toolbar extends ToolbarBase {
   _sbPadding: boolean;
 
   constructor(
-    @Optional() viewCtrl: ViewController,
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer

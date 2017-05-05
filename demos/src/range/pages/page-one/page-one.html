@@ -12,7 +12,7 @@
   <ion-list>
     <ion-list-header>
       Brightness
-      <ion-badge item-right>{{brightness}}</ion-badge>
+      <ion-badge item-end>{{brightness}}</ion-badge>
     </ion-list-header>
     <ion-item>
       <ion-range [(ngModel)]="brightness">
@@ -25,7 +25,7 @@
   <ion-list>
     <ion-list-header>
       Saturation
-      <ion-badge item-right color="secondary">{{saturation}}</ion-badge>
+      <ion-badge item-end color="secondary">{{saturation}}</ion-badge>
     </ion-list-header>
     <ion-item>
       <ion-range min="-200" max="200" pin="true" [(ngModel)]="saturation" color="secondary">
@@ -38,7 +38,7 @@
   <ion-list>
     <ion-list-header>
       Warmth
-      <ion-badge item-right color="danger">{{warmth}}</ion-badge>
+      <ion-badge item-end color="danger">{{warmth}}</ion-badge>
     </ion-list-header>
     <ion-item>
       <ion-range min="1000" max="2000" step="100" snaps="true" [(ngModel)]="warmth" color="danger">
@@ -51,8 +51,8 @@
   <ion-list>
     <ion-list-header>
       Structure
-      <ion-badge item-right color="dark">{{structure.lower}}</ion-badge>
-      <ion-badge item-right color="dark">{{structure.upper}}</ion-badge>
+      <ion-badge item-end color="dark">{{structure.lower}}</ion-badge>
+      <ion-badge item-end color="dark">{{structure.upper}}</ion-badge>
     </ion-list-header>
     <ion-item>
       <ion-range dualKnobs="true" pin="true" [(ngModel)]="structure" (ionChange)="onChange($event)" color="dark">

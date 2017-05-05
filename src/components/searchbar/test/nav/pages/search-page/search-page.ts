@@ -68,12 +68,7 @@ export class SearchPage {
       return;
     }
 
-    this.items = this.items.filter((v) => {
-      if (v.toLowerCase().indexOf(q.toLowerCase()) > -1) {
-        return true;
-      }
-      return false;
-    });
+    this.items = this.items.filter((v) => v.toLowerCase().indexOf(q.toLowerCase()) > -1);
   }
 
   openModal() {

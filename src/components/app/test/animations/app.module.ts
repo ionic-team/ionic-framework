@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Animation, Config, IonicApp, IonicModule, Platform } from '../../../..';
+import { Animation, IonicApp, IonicModule, Platform } from '../../../..';
 
 
 @Component({
@@ -10,7 +10,7 @@ export class E2EPage {
   duration: string;
   easing: string;
 
-  constructor(config: Config, public plt: Platform) {
+  constructor(public plt: Platform) {
     this.duration = '1000';
     this.easing = 'ease-in-out';
   }
