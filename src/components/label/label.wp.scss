@@ -14,7 +14,7 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 // --------------------------------------------------
 
 .label-wp {
-  margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0;
+  @include margin($item-wp-padding-top, ($item-wp-padding-end / 2), $item-wp-padding-bottom, 0);
 }
 
 
@@ -47,8 +47,7 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 
 .label-wp[stacked],
 .label-wp[floating] {
-  margin-bottom: 0;
-  margin-left: 0;
+  @include margin(null, null, 0, 0);
 }
 
 .input-has-focus .label-wp[stacked],

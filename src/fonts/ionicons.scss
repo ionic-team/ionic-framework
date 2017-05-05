@@ -33,3 +33,13 @@ ion-icon {
   text-transform: none;
   speak: none;
 }
+
+@include rtl() {
+  ion-icon[aria-label^="arrow"], ion-icon[flip-rtl] {
+    transform: scaleX(-1);
+  }
+
+  ion-icon[unflip-rtl] {
+    transform: scaleX(1);
+  }
+}

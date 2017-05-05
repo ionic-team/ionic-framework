@@ -265,7 +265,7 @@ import { Directive } from '@angular/core';
   * ### Offsetting columns
   *
   * Move columns to the right by adding the `offset-*` attributes. These attributes
-  * increase the margin left of the column by `*` columns. For example, in the following
+  * increase the margin start of the column by `*` columns. For example, in the following
   * grid the last column will be offset by 3 columns and take up 3 columns:
   *
   * ```
