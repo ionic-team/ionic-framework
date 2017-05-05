@@ -97,11 +97,6 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   background-size: $searchbar-wp-input-search-icon-size;
 }
 
-[dir="rtl"] .searchbar-wp .searchbar-search-icon {
-  left: $searchbar-wp-input-padding-horizontal;
-  right: auto;
-}
-
 .searchbar-wp .searchbar-search-icon.activated {
   background-color: transparent;
 }
@@ -147,11 +142,6 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   background-repeat: no-repeat;
   background-position: center;
   background-size: $searchbar-wp-input-clear-icon-size;
-}
-
-[dir="rtl"] .searchbar-wp .searchbar-clear-icon {
-  left: $searchbar-wp-input-padding-horizontal;
-  right: auto;
 }
 
 .searchbar-wp .searchbar-clear-icon.activated {

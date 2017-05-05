@@ -72,11 +72,6 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   height: $searchbar-md-input-search-icon-size + 1;
 }
 
-[dir="rtl"] .searchbar-md .searchbar-search-icon {
-  right: 16px;
-  left: auto;
-}
-
 
 // Searchbar Cancel Icon (MD only)
 // -----------------------------------------
@@ -90,11 +85,6 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: 100%;
-}
-
-.searchbar-md .searchbar-md-cancel {
-  right: 10px;
-  left: auto;
 }
 
 // Searchbar Search & Cancel Icon
@@ -158,11 +148,6 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   background-size: $searchbar-md-input-clear-icon-size;
 }
 
-[dir="rtl"] .searchbar-md .searchbar-clear-icon {
-  left: 13px;
-  right: 0;
-}
-
 .searchbar-md .searchbar-clear-icon.activated {
   background-color: transparent;
 }
@@ -189,11 +174,6 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
 .toolbar .searchbar-md .searchbar-md-cancel {
   left: 14px;
-}
-
-[dir="rtl"] .toolbar .searchbar-md .searchbar-md-cancel {
-  right: 14px;
-  left: auto
 }
 
 
