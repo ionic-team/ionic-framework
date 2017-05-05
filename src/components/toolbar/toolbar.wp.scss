@@ -324,6 +324,9 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-menutoggle-wp {
+  @include margin(0, 6px);
+  @include padding(0, 2px);
+
   order: map-get($toolbar-order-wp, menu-toggle-start);
 
   min-width: 44px;
