@@ -333,33 +333,27 @@ ion-footer {
       // Provide `[text-{bp}]` attributes for aligning the text based
       // on the breakpoint
       [text#{$infix}-center] {
-        // scss-lint:disable ImportantRule
-        text-align: center !important;
+        @include text-align(center, !important);
       }
 
       [text#{$infix}-justify] {
-        // scss-lint:disable ImportantRule
-        text-align: justify !important;
+        @include text-align(justify, !important);
       }
 
       [text#{$infix}-start] {
-        // scss-lint:disable ImportantRule
-        text-align: start !important;
+        @include text-align(start, !important);
       }
 
       [text#{$infix}-end] {
-        // scss-lint:disable ImportantRule
-        text-align: end !important;
+        @include text-align(end, !important);
       }
 
       [text#{$infix}-left] {
-        // scss-lint:disable ImportantRule
-        text-align: left !important;
+        @include text-align(left, !important);
       }
 
       [text#{$infix}-right] {
-        // scss-lint:disable ImportantRule
-        text-align: right !important;
+        @include text-align(right, !important);
       }
 
       [text#{$infix}-nowrap] {

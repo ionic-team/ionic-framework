@@ -1,4 +1,4 @@
-import { ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
+import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
@@ -10,7 +10,7 @@ import { Form } from './form';
 import { TimeoutDebouncer } from './debouncer';
 
 
-export interface CommonInput<T> extends ControlValueAccessor {
+export interface CommonInput<T> extends ControlValueAccessor, AfterContentInit {
 
   id: string;
   disabled: boolean;
@@ -38,6 +38,8 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   _disabled: boolean = false;
   _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _init: boolean = false;
+  _initModel: boolean = false;
+
   id: string;
 
   /**
@@ -122,8 +124,14 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   writeValue(val: any) {
     if (this._writeValue(val)) {
-      this._fireIonChange();
+      if (this._initModel) {
+        this._fireIonChange();
+      } else if (this._init) {
+        // ngModel fires the first time too late, we need to skip the first ngModel update
+        this._initModel = true;
+      }
     }
+
   }
 
   /**
@@ -135,9 +143,12 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (isUndefined(val)) {
       return false;
     }
-    const normalized = (val === null)
-      ? deepCopy(this._defaultValue)
-      : this._inputNormalize(val);
+    let normalized;
+    if (val === null) {
+      normalized = deepCopy(this._defaultValue);
+    } else {
+      normalized = this._inputNormalize(val);
+    }
 
     const notUpdate = isUndefined(normalized) || !this._inputShouldChange(normalized);
     if (notUpdate) {
@@ -160,7 +171,8 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (this._init) {
       this._debouncer.debounce(() => {
         assert(NgZone.isInAngularZone(), 'IonChange: should be zoned');
-        this.ionChange.emit(this);
+        this.ionChange.emit(this._inputChangeEvent());
+        this._initModel = true;
       });
     }
   }
@@ -227,7 +239,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    * @hidden
    */
   private onChange() {
-    this._onChanged && this._onChanged(this._value);
+    this._onChanged && this._onChanged(this._inputNgModelEvent());
     this._onTouched && this._onTouched();
   }
 
@@ -241,6 +253,16 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
+  hasValue(): boolean {
+    const val = this._value;
+    return isArray(val)
+      ? val.length > 0
+      : isPresent(val);
+  }
+
+  /**
+   * @hidden
+   */
   ngOnDestroy() {
     this._form && this._form.deregister(this);
     this._init = false;
@@ -249,7 +271,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this._initialize();
   }
 
@@ -260,18 +282,13 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._item) {
       return;
     }
-
-    const hasValue = isArray(val)
-      ? val.length > 0
-      : isPresent(val);
-
-    this._item.setElementClass('input-has-value', hasValue);
+    this._item.setElementClass('input-has-value', this.hasValue());
   }
 
   /**
    * @hidden
    */
-  initFocus() {}
+  initFocus() { }
 
   /**
    * @hidden
@@ -286,6 +303,21 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   _inputShouldChange(val: T): boolean {
     return this._value !== val;
   }
+
+  /**
+   * @hidden
+   */
+  _inputChangeEvent(): any {
+    return this;
+  }
+
+  /**
+   * @hidden
+   */
+  _inputNgModelEvent(): any {
+    return this._value;
+  }
+
 
   /**
    * @hidden

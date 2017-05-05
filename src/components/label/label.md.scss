@@ -3,10 +3,10 @@
 // Material Design Label
 // --------------------------------------------------
 
-/// @prop - Text color of the label
+/// @prop - Text color of the label by an input, select, or datetime
 $label-md-text-color:                 #999 !default;
 
-/// @prop - Text color of the label when it has focused
+/// @prop - Text color of the stacked/floating label when it is focused
 $label-md-text-color-focused:         color($colors-md, primary) !default;
 
 /// @prop - Margin of the label
@@ -46,6 +46,10 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
   transform: translate3d(0, 27px, 0);
   transform-origin: left top;
   transition: transform 150ms ease-in-out;
+}
+
+[dir="rtl"] .label-md[floating] {
+  transform-origin: right top;
 }
 
 .label-md[stacked],

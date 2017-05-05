@@ -731,7 +731,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
 
         if (!s._animating) {
           s._animating = true;
-          plt.transitionEnd(s._wrapper, (ev) => {
+          plt.transitionEnd(s._wrapper, () => {
             if (!s) return;
             onTransitionEnd(s, plt);
           });

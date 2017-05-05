@@ -41,7 +41,7 @@ export class NavParams {
    * ```
    *
    *
-   * @param {string} parameter Which param you want to look up
+   * @param {string} param Which param you want to look up
    */
   get(param: string): any {
     return this.data[param];
