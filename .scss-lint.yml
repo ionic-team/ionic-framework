@@ -41,7 +41,6 @@ linters:
       - z-index
       - display
       - overflow
-      - float
       - clear
       -
       - flex
@@ -193,6 +192,11 @@ linters:
     extra_properties:
       - contain
     disabled_properties:
+      - right
+      - left
+
+      - float
+
       - padding
       - padding-left
       - padding-right
@@ -200,9 +204,6 @@ linters:
       - margin
       - margin-left
       - margin-right
-
-      - right
-      - left
 
       - border-radius
       - border-top-left-radius
