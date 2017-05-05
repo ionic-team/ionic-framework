@@ -182,7 +182,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp ion-avatar[item-right],
 .item-wp ion-thumbnail[item-right] {
-  @include margin(($item-wp-padding-end / 2));
+  @include margin($item-wp-padding-end / 2);
 }
 
 
