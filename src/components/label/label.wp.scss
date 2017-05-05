@@ -17,6 +17,10 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
   margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0;
 }
 
+[dir="rtl"] .label-wp {
+  margin: $item-wp-padding-top 0 $item-wp-padding-bottom ($item-wp-padding-right / 2);
+}
+
 
 // Windows Default Label Inside An Input/Select Item
 // --------------------------------------------------

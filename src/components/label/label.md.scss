@@ -12,12 +12,19 @@ $label-md-text-color-focused:         color($colors-md, primary) !default;
 /// @prop - Margin of the label
 $label-md-margin:                     $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
 
+/// @prop - Margin of the label for RTL
+$label-md-margin-rtl:                 $item-md-padding-top 0 $item-md-padding-bottom ($item-md-padding-right / 2) !default;
+
 
 // Material Design Default Label
 // --------------------------------------------------
 
 .label-md {
   margin: $label-md-margin;
+}
+
+[dir="rtl"] .label-md {
+  margin: $label-md-margin-rtl;
 }
 
 [text-wrap] .label-md {

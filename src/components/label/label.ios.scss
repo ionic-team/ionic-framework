@@ -12,12 +12,19 @@ $label-ios-text-color-focused:         unset !default;
 /// @prop - Margin of the label
 $label-ios-margin:                     $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
 
+/// @prop - Margin of the label for RTL
+$label-ios-margin-rtl:             $item-ios-padding-top 0 $item-ios-padding-bottom ($item-ios-padding-right / 2) !default;
+
 
 // iOS Default Label
 // --------------------------------------------------
 
 .label-ios {
   margin: $label-ios-margin;
+}
+
+[dir="rtl"] .label-ios {
+  margin: $label-ios-margin-rtl;
 }
 
 
@@ -58,6 +65,10 @@ $label-ios-margin:                     $item-ios-padding-top ($item-ios-padding-
   transform: translate3d(0, 27px, 0);
   transform-origin: left top;
   transition: transform 150ms ease-in-out;
+}
+  
+[dir="rtl"] .label-ios[floating] {
+  transform-origin: right top;
 }
 
 [dir="rtl"] .label-ios[floating] {
