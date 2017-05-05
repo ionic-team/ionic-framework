@@ -126,7 +126,8 @@ $radio-ios-item-right-margin-start:   ($item-ios-padding-start / 2) !default;
     @include margin($radio-ios-item-right-margin-top, $radio-ios-item-right-margin-end, $radio-ios-item-right-margin-bottom, $radio-ios-item-right-margin-start);
   }
 
-  &[item-left] {
+  &[item-left], // deprecated
+  &[item-start] {
     @include deprecated-variable(margin, $radio-ios-item-left-margin) {
       @include margin($radio-ios-item-left-margin-top, $radio-ios-item-left-margin-end, $radio-ios-item-left-margin-bottom, $radio-ios-item-left-margin-start);
     }

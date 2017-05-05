@@ -220,13 +220,14 @@ $toggle-ios-item-right-padding-start:  $item-ios-padding-start !default;
 .item-ios .toggle-ios {
   @include margin($toggle-ios-media-margin);
 
-  @include deprecated-variable(padding, $toggle-ios-item-right-padding) {
+  @include deprecated-variable(padding, $toggle-ios-item-end-padding) {
     @include padding($toggle-ios-item-right-padding-top, $toggle-ios-item-right-padding-end, $toggle-ios-item-right-padding-bottom, $toggle-ios-item-right-padding-start);
   }
 }
 
-.item-ios .toggle-ios[item-left] {
-  @include deprecated-variable(padding, $toggle-ios-item-left-padding) {
+.item-ios .toggle-ios[item-left], // deprecated
+.item-ios .toggle-ios[item-start] {
+  @include deprecated-variable(padding, $toggle-ios-item-start-padding) {
     @include padding($toggle-ios-item-left-padding-top, $toggle-ios-item-left-padding-end, $toggle-ios-item-left-padding-bottom, $toggle-ios-item-left-padding-start);
   }
 }

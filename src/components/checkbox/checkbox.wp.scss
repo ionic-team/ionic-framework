@@ -50,6 +50,8 @@ $checkbox-wp-icon-border-color-on:       color($colors-wp, primary) !default;
 
 // deprecated
 $checkbox-wp-item-left-margin:           null !default;
+/// @prop - Margin of the start checkbox item
+$checkbox-wp-item-start-margin:          $checkbox-wp-item-left-margin;
 
 /// @prop - Margin top of the left checkbox item
 $checkbox-wp-item-left-margin-top:       $item-wp-padding-media-top !default;
@@ -149,13 +151,14 @@ $checkbox-wp-item-right-margin-start:    0 !default;
   position: static;
   display: block;
 
-  @include deprecated-variable(margin, $checkbox-wp-item-left-margin) {
+  @include deprecated-variable(margin, $checkbox-wp-item-start-margin) {
     @include margin($checkbox-wp-item-left-margin-top, $checkbox-wp-item-left-margin-end, $checkbox-wp-item-left-margin-bottom, $checkbox-wp-item-left-margin-start);
   }
 }
 
-.item.item-wp .checkbox-wp[item-right] {
-  @include deprecated-variable(margin, $checkbox-wp-item-right-margin) {
+.item.item-wp .checkbox-wp[item-right], // deprecated
+.item.item-wp .checkbox-wp[item-end] {
+  @include deprecated-variable(margin, $checkbox-wp-item-end-margin) {
     @include margin($checkbox-wp-item-right-margin-top, $checkbox-wp-item-right-margin-end, $checkbox-wp-item-right-margin-bottom, $checkbox-wp-item-right-margin-start);
   }
 }

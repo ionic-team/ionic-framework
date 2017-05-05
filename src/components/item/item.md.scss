@@ -137,13 +137,17 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 // Material Design Item Media
 // --------------------------------------------------
 
-.item-md [item-left],
-.item-md [item-right] {
+.item-md [item-left], // deprecated
+.item-md [item-right], // deprecated
+.item-md [item-start],
+.item-md [item-end] {
   @include margin($item-md-padding-media-top, ($item-md-padding-end / 2), $item-md-padding-media-bottom, 0);
 }
 
-.item-md ion-icon[item-left],
-.item-md ion-icon[item-right] {
+.item-md ion-icon[item-left], // deprecated
+.item-md ion-icon[item-right], // deprecated
+.item-md ion-icon[item-start],
+.item-md ion-icon[item-end] {
   @include margin($item-md-padding-icon-top, null, $item-md-padding-icon-bottom, 0);
 }
 
@@ -160,18 +164,24 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   @include padding(0, 1px);
 }
 
-.item-md ion-icon[item-left] + .item-inner,
-.item-md ion-icon[item-left] + .item-input {
+.item-md ion-icon[item-left] + .item-inner, // deprecated
+.item-md ion-icon[item-left] + .item-input, // deprecated
+.item-md ion-icon[item-start] + .item-inner,
+.item-md ion-icon[item-start] + .item-input {
   @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 
-.item-md ion-avatar[item-left],
-.item-md ion-thumbnail[item-left] {
+.item-md ion-avatar[item-left], // deprecated
+.item-md ion-thumbnail[item-left], // deprecated
+.item-md ion-avatar[item-start],
+.item-md ion-thumbnail[item-start] {
   @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
 }
 
-.item-md ion-avatar[item-right],
-.item-md ion-thumbnail[item-right] {
+.item-md ion-avatar[item-right], // deprecated
+.item-md ion-thumbnail[item-right], // deprecated
+.item-md ion-avatar[item-end],
+.item-md ion-thumbnail[item-end] {
   @include margin(($item-md-padding-end / 2));
 }
 

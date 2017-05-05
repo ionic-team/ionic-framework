@@ -143,14 +143,15 @@ $radio-wp-item-right-margin-start:0 !default;
 
   order: $radio-wp-order;
 
-  @include deprecated-variable(margin, $radio-wp-item-left-margin) {
+  @include deprecated-variable(margin, $radio-wp-item-start-margin) {
     @include margin($radio-wp-item-left-margin-top, $radio-wp-item-left-margin-end, $radio-wp-item-left-margin-bottom, $radio-wp-item-left-margin-start);
   }
 
-  &[item-right] {
+  &[item-right], // deprecated
+  &[item-end] {
     order: 0;
 
-    @include deprecated-variable(margin, $radio-wp-item-right-margin) {
+    @include deprecated-variable(margin, $radio-wp-item-end-margin) {
       @include margin($radio-wp-item-right-margin-top, $radio-wp-item-right-margin-end, $radio-wp-item-right-margin-bottom, $radio-wp-item-right-margin-start);
     }
   }

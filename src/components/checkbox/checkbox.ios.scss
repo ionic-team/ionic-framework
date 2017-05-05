@@ -43,31 +43,31 @@ $checkbox-ios-disabled-opacity:           .3 !default;
 $checkbox-ios-item-left-margin:           null !default;
 
 /// @prop - Margin top of the left checkbox item
-$checkbox-ios-item-left-margin-top:       $item-ios-padding-media-top !default;
+$checkbox-ios-item-start-margin-top:      $item-ios-padding-media-top !default;
 
 /// @prop - Margin end of the left checkbox item
-$checkbox-ios-item-left-margin-end:       $item-ios-padding-end !default;
+$checkbox-ios-item-start-margin-end:      $item-ios-padding-end !default;
 
 /// @prop - Margin bottom of the left checkbox item
-$checkbox-ios-item-left-margin-bottom:    $item-ios-padding-media-bottom !default;
+$checkbox-ios-item-start-margin-bottom:   $item-ios-padding-media-bottom !default;
 
 /// @prop - Margin start of the left checkbox item
-$checkbox-ios-item-left-margin-start:     2px !default;
+$checkbox-ios-item-start-margin-start:    2px !default;
 
 // deprecated
 $checkbox-ios-item-right-margin:          null !default;
 
 /// @prop - Margin top of the right checkbox item
-$checkbox-ios-item-right-margin-top:      10px !default;
+$checkbox-ios-item-end-margin-top:        10px !default;
 
 /// @prop - Margin end of the right checkbox item
-$checkbox-ios-item-right-margin-end:      8px !default;
+$checkbox-ios-item-end-margin-end:        8px !default;
 
 /// @prop - Margin bottom of the right checkbox item
-$checkbox-ios-item-right-margin-bottom:   9px !default;
+$checkbox-ios-item-end-margin-bottom:     9px !default;
 
 /// @prop - Margin start of the right checkbox item
-$checkbox-ios-item-right-margin-start:    0 !default;
+$checkbox-ios-item-end-margin-start:      0 !default;
 
 
 .checkbox-ios {
@@ -142,13 +142,14 @@ $checkbox-ios-item-right-margin-start:    0 !default;
   display: block;
 
   @include deprecated-variable(margin, $checkbox-ios-item-left-margin) {
-    @include margin($checkbox-ios-item-left-margin-top, $checkbox-ios-item-left-margin-end, $checkbox-ios-item-left-margin-bottom, $checkbox-ios-item-left-margin-start);
+    @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
   }
 }
 
-.item.item-ios .checkbox-ios[item-right] {
+.item.item-ios .checkbox-ios[item-right], // deprecated
+.item.item-ios .checkbox-ios[item-end] {
   @include deprecated-variable(margin, $checkbox-ios-item-right-margin) {
-    @include margin($checkbox-ios-item-right-margin-top, $checkbox-ios-item-right-margin-end, $checkbox-ios-item-right-margin-bottom, $checkbox-ios-item-right-margin-start);
+    @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-right-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
   }
 }
 

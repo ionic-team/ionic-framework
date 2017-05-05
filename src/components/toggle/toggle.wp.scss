@@ -193,8 +193,9 @@ $toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
   }
 }
 
-.item-wp .toggle-wp[item-left] {
-  @include deprecated-variable(padding, $toggle-wp-item-left-padding) {
+.item-wp .toggle-wp[item-left], // deprecated
+.item-wp .toggle-wp[item-start] {
+  @include deprecated-variable(padding, $toggle-wp-item-start-padding) {
     @include padding($toggle-wp-item-left-padding-top, $toggle-wp-item-left-padding-end, $toggle-wp-item-left-padding-bottom, $toggle-wp-item-left-padding-start);
   }
 }
