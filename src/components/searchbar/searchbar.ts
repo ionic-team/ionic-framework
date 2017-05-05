@@ -236,11 +236,11 @@ export class Searchbar extends BaseInput<string> {
       var textWidth = tempSpan.offsetWidth;
       doc.body.removeChild(tempSpan);
 
-      // Set the input padding left
+      // Set the input padding start
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
       inputEle.style.paddingLeft = inputLeft;
 
-      // Set the icon margin left
+      // Set the icon margin start
       var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
       iconEle.style.marginLeft = iconLeft;
     }

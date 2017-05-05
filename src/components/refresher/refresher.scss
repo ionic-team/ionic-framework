@@ -23,10 +23,12 @@ $refresher-border-color:       #ddd !default;
 
 
 ion-refresher {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   z-index: $z-index-refresher;
+
   display: none;
 
   width: 100%;

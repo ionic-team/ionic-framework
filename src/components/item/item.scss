@@ -19,6 +19,8 @@
 }
 
 .item-block {
+  @include margin(0);
+  @include padding(0);
   @include text-align(initial);
 
   display: flex;
@@ -26,9 +28,6 @@
 
   align-items: center;
   justify-content: space-between;
-
-  margin: 0;
-  padding: 0;
 
   width: 100%;
   min-height: 4.4rem;
@@ -42,6 +41,9 @@
 }
 
 .item-inner {
+  @include margin(0);
+  @include padding(0);
+
   display: flex;
   overflow: hidden;
 
@@ -49,9 +51,6 @@
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
-
-  margin: 0;
-  padding: 0;
 
   min-height: inherit;
 
@@ -80,15 +79,15 @@ ion-item-group {
 }
 
 ion-item-divider {
+  @include margin(0);
+  @include padding(0);
+
   z-index: $z-index-item-divider;
   display: flex;
   overflow: hidden;
 
   align-items: center;
   justify-content: space-between;
-
-  margin: 0;
-  padding: 0;
 
   width: 100%;
 
