@@ -129,7 +129,7 @@ import { VirtualHeader } from './virtual-header';
  *
  *   <ion-item *virtualItem="let item">
  *     <ion-avatar item-left>
- *       <ion-img [src]="item.avatarUrl"></ion-img>
+ *       <ion-img src="{{ item.avatarUrl }}"></ion-img>
  *     </ion-avatar>
  *    {% raw %} {{ item.firstName }} {{ item.lastName }}{% endraw %}
  *   </ion-item>
