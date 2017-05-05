@@ -256,9 +256,7 @@ export class AlertCmp {
     }
 
     if (shouldDismiss) {
-      this.dismiss(button.role).catch(() => {
-        console.debug('alert can not be dismissed');
-      });
+      this.dismiss(button.role);
     }
   }
 
@@ -297,7 +295,7 @@ export class AlertCmp {
     }
   }
 
-  dismiss(role: any): Promise<any> {
+  dismiss(role: string): Promise<any> {
     const opts: NavOptions = {
       minClickBlockDuration: 400
     };

@@ -1,13 +1,10 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer } from '../components/toolbar/toolbar-footer';
-import { Header } from '../components/toolbar/toolbar-header';
 import { isPresent, assert } from '../util/util';
-import { Navbar } from '../components/navbar/navbar';
 import { NavController } from './nav-controller';
 import { NavOptions, STATE_NEW, STATE_INITIALIZED, STATE_ATTACHED, STATE_DESTROYED } from './nav-util';
 import { NavParams } from './nav-params';
-import { Content } from '../components/content/content';
+import { Content, Footer, Header, Navbar } from './nav-interfaces';
 
 
 /**
@@ -38,8 +35,8 @@ export class ViewController {
   private _isHidden: boolean = false;
   private _leavingOpts: NavOptions;
   private _nb: Navbar;
-  private _onDidDismiss: Function;
-  private _onWillDismiss: Function;
+  private _onDidDismiss: (data: any, role: string) => void;
+  private _onWillDismiss: (data: any, role: string) => void;
   private _dismissData: any;
   private _dismissRole: any;
   private _detached: boolean;
@@ -105,7 +102,11 @@ export class ViewController {
   /** @hidden */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
+  constructor(
+    public component?: any,
+    data?: any,
+    rootCssClass: string = DEFAULT_CSS_CLASS
+  ) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
@@ -148,14 +149,14 @@ export class ViewController {
   /**
    * Called when the current viewController has be successfully dismissed
    */
-  onDidDismiss(callback: Function) {
+  onDidDismiss(callback: (data: any, role: string) => void) {
     this._onDidDismiss = callback;
   }
 
   /**
    * Called when the current viewController will be dismissed
    */
-  onWillDismiss(callback: Function) {
+  onWillDismiss(callback: (data: any, role: string) => void) {
     this._onWillDismiss = callback;
   }
 
@@ -163,10 +164,10 @@ export class ViewController {
    * Dismiss the current viewController
    * @param {any} [data] Data that you want to return when the viewController is dismissed.
    * @param {any} [role ]
-   * @param {NavOptions} NavOptions Options for the dismiss navigation.
+   * @param {NavOptions} navOptions Options for the dismiss navigation.
    * @returns {any} data Returns the data passed in, if any.
    */
-  dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
+  dismiss(data?: any, role?: string, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
       assert(this._state === STATE_DESTROYED, 'ViewController does not have a valid _nav');
       return Promise.resolve(false);
@@ -395,7 +396,7 @@ export class ViewController {
   /**
    * Change the title of the back-button. Be sure to call this
    * after `ionViewWillEnter` to make sure the  DOM has been rendered.
-   * @param {string} backButtonText Set the back button text.
+   * @param {string} val Set the back button text.
    */
   setBackButtonText(val: string) {
     this._nb && this._nb.setBackButtonText(val);
@@ -541,38 +542,34 @@ export class ViewController {
   /**
    * @hidden
    */
-  _lifecycleTest(lifecycle: string): boolean | Promise<any> {
+  _lifecycleTest(lifecycle: string): Promise<boolean> {
     const instance = this.instance;
     const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
         var result = instance[methodName]();
-        if (result === false) {
-          return false;
-        } else if (result instanceof Promise) {
+        if (result instanceof Promise) {
           return result;
         } else {
-          return true;
+          // Any value but explitic false, should be true
+          return Promise.resolve(result !== false);
         }
 
       } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-        return false;
+        return Promise.reject(`${this.name} ${methodName} error: ${e.message}`);
       }
     }
-    return true;
+    return Promise.resolve(true);
   }
 
+  /**
+   * @hidden
+   */
   _lifecycle(lifecycle: string) {
     const instance = this.instance;
     const methodName = 'ionView' + lifecycle;
     if (instance && instance[methodName]) {
-      try {
-        instance[methodName]();
-
-      } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-      }
+      instance[methodName]();
     }
   }
 

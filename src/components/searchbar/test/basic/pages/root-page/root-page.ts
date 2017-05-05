@@ -13,6 +13,7 @@ export class RootPage {
   isAutocorrect: string = 'on';
   isAutocomplete: string = 'on';
   isSpellcheck: boolean = true;
+  activeTab = '';
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {
 

@@ -104,6 +104,13 @@ export class Animation {
   }
 
   /**
+   * Returns if the animation is a root one.
+   */
+  isRoot(): boolean {
+    return !this.parent;
+  }
+
+  /**
    * Set the duration for this animation.
    */
   duration(milliseconds: number): Animation {
@@ -494,7 +501,7 @@ export class Animation {
 
     const self = this;
 
-    function onTransitionEnd(ev: any) {
+    function onTransitionEnd() {
       // congrats! a successful transition completed!
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();

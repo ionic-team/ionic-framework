@@ -16,7 +16,7 @@ export class ModalWithInputs {
     };
   }
 
-  public save(ev: any) {
+  public save() {
     this.viewCtrl.dismiss(this.data);
   }
 

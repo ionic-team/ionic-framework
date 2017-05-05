@@ -17,9 +17,10 @@ ion-item-sliding .item {
 }
 
 ion-item-options {
+  @include position(0, 0, null, null);
+
   position: absolute;
-  top: 0;
-  right: 0;
+
   z-index: $z-index-item-options;
   display: none;
 
@@ -33,19 +34,18 @@ ion-item-options {
 }
 
 ion-item-options[side=left] {
-  right: auto;
-  left: 0;
+  @include position-horizontal(0, auto);
 
   justify-content: flex-start;
 }
 
 ion-item-options .button {
-  margin: 0;
-  padding: 0 .7em;
+  @include margin(0);
+  @include padding(0, .7em);
+  @include border-radius(0);
 
   height: 100%;
 
-  border-radius: 0;
   box-shadow: none;
 
   box-sizing: content-box;
@@ -57,9 +57,7 @@ ion-item-options:not([icon-left]) .button:not([icon-only]) {
   }
 
   ion-icon {
-    padding-right: 0;
-    padding-bottom: .3em;
-    padding-left: 0;
+    @include padding(null, 0, .3em, 0);
   }
 }
 
@@ -107,18 +105,18 @@ button[expandable] {
 }
 
 ion-item-sliding.active-swipe-right button[expandable] {
-  order: 1;
+  @include padding-horizontal(90%, null);
 
-  padding-left: 90%;
+  order: 1;
 
   transition-duration: .6s;
   transition-property: padding-left;
 }
 
 ion-item-sliding.active-swipe-left button[expandable] {
-  order: -1;
+  @include padding-horizontal(null, 90%);
 
-  padding-right: 90%;
+  order: -1;
 
   transition-duration: .6s;
   transition-property: padding-right;

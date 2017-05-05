@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, ViewEncapsulation } from '@angular/core';
 
 import { isPresent, isTrueProperty } from '../../util/util';
 
@@ -80,7 +80,7 @@ export class SegmentButton {
     this._disabled = isTrueProperty(val);
   }
 
-  constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
+  constructor() {}
 
   /**
    * @hidden

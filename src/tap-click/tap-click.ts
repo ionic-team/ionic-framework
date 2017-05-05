@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { assert, runInDev } from '../util/util';
 import { Activator } from './activator';
@@ -18,6 +18,7 @@ import { UIEventManager } from '../gestures/ui-event-manager';
  */
 @Injectable()
 export class TapClick {
+
   private disableClick: number = 0;
   private usePolyfill: boolean;
   private activator: ActivatorBase;
@@ -32,7 +33,6 @@ export class TapClick {
     private plt: Platform,
     dom: DomController,
     private app: App,
-    zone: NgZone,
     private gestureCtrl: GestureController
   ) {
     this.events = new UIEventManager(plt);
@@ -236,7 +236,7 @@ function getActivatableTarget(ele: HTMLElement): any {
 /**
  * @hidden
  */
-export const isActivatable = function (ele: HTMLElement) {
+export function isActivatable(ele: HTMLElement) {
   if (ACTIVATABLE_ELEMENTS.indexOf(ele.tagName) > -1) {
     return true;
   }
@@ -258,8 +258,8 @@ const DISABLE_NATIVE_CLICK_AMOUNT = 2500;
 /**
  * @hidden
  */
-export function setupTapClick(config: Config, plt: Platform, dom: DomController, app: App, zone: NgZone, gestureCtrl: GestureController) {
+export function setupTapClick(config: Config, plt: Platform, dom: DomController, app: App, gestureCtrl: GestureController) {
   return function() {
-    return new TapClick(config, plt, dom, app, zone, gestureCtrl);
+    return new TapClick(config, plt, dom, app, gestureCtrl);
   };
 }

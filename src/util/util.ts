@@ -53,7 +53,7 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  * @hidden
  * Apply default arguments if they don't exist in
  * the first object.
- * @param the destination to apply defaults to.
+ * @param {any} dest the destination to apply defaults to.
  */
 export function defaults(dest: any, ...args: any[]) {
   for (var i = arguments.length - 1; i >= 1; i--) {
@@ -127,6 +127,27 @@ export function isCheckedProperty(a: any, b: any): boolean {
   // not using strict comparison on purpose
   return (a == b); // tslint:disable-line
 };
+
+/** @hidden */
+export type Side = 'left' | 'right' | 'start' | 'end';
+
+/**
+ * @hidden
+ * Given a side, return if it should be on the right
+ * based on the value of dir
+ * @param side the side
+ * @param isRTL whether the application dir is rtl
+ * @param defaultRight whether the default side is right
+ */
+export function isRightSide(side: Side, isRTL: boolean, defaultRight: boolean = false): boolean {
+  switch (side) {
+    case 'right': return true;
+    case 'left': return false;
+    case 'end': return !isRTL;
+    case 'start': return isRTL;
+    default: return defaultRight ? !isRTL : isRTL;
+  }
+}
 
 
 /** @hidden */

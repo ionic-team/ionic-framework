@@ -87,7 +87,7 @@ export class LoadingCmp {
 
   }
 
-  dismiss(role: any): Promise<any> {
+  dismiss(role: string): Promise<any> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }

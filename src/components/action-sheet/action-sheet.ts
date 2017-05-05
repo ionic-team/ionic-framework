@@ -1,5 +1,5 @@
 import { ActionSheetCmp } from './action-sheet-component';
-import { ActionSheetOptions } from './action-sheet-options';
+import { ActionSheetOptions, ActionSheetButton } from './action-sheet-options';
 import { ActionSheetSlideIn, ActionSheetMdSlideIn, ActionSheetSlideOut, ActionSheetMdSlideOut, ActionSheetWpSlideIn, ActionSheetWpSlideOut } from './action-sheet-transitions';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -34,7 +34,7 @@ export class ActionSheet extends ViewController {
    * @hidden
    */
   getTransitionName(direction: string): string {
-    let key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
+    const key = 'actionSheet' + (direction === 'back' ? 'Leave' : 'Enter');
     return this._nav && this._nav.config.get(key);
   }
 
@@ -57,7 +57,7 @@ export class ActionSheet extends ViewController {
   /**
    * @param {object} button Action sheet button
    */
-  addButton(button: any): ActionSheet {
+  addButton(button: ActionSheetButton|string): ActionSheet {
     this.data.buttons.push(button);
     return this;
   }
@@ -65,7 +65,7 @@ export class ActionSheet extends ViewController {
   /**
    * Present the action sheet instance.
    *
-   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @param {NavOptions} [navOptions={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}): Promise<any> {

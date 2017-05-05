@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, Tabs} from '../../../../../..';
+import { IonicPage } from '../../../../../..';
 
 @IonicPage({
   name: 'tab-item-page'
@@ -20,7 +20,7 @@ import { App, IonicPage, Tabs} from '../../../../../..';
 export class TabItemPage {
   items: any[] = [];
 
-  constructor(private tabs: Tabs, private app: App) {
+  constructor() {
   }
 }
 

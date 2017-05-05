@@ -44,4 +44,10 @@
   <p padding>
     <button ion-button block (click)="changeValue()">Change Value</button>
   </p>
+
+  <button ion-button (click)="activeTab = 'a'">Error Please</button>
+  <div *ngIf="activeTab == 'a'">
+      <ion-searchbar animated="true" [showCancelButton]="true"></ion-searchbar>
+  </div>
+
 </ion-content>

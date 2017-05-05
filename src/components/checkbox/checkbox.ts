@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, forwardRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -6,12 +6,6 @@ import { isTrueProperty } from '../../util/util';
 import { Form, IonicTapInput } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
-
-export const CHECKBOX_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => Checkbox),
-  multi: true
-};
 
 /**
  * @name Checkbox
@@ -69,10 +63,10 @@ export const CHECKBOX_VALUE_ACCESSOR: any = {
   host: {
     '[class.checkbox-disabled]': '_disabled'
   },
-  providers: [CHECKBOX_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Checkbox, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Checkbox extends BaseInput<boolean> implements IonicTapInput, AfterViewInit, OnDestroy {
+export class Checkbox extends BaseInput<boolean> implements IonicTapInput, OnDestroy {
 
   /**
    * @input {boolean} If true, the element is selected.
@@ -91,8 +85,7 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, After
     form: Form,
     @Optional() item: Item,
     elementRef: ElementRef,
-    renderer: Renderer,
-    private _cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     super(config, elementRef, renderer, 'checkbox', false, form, item, null);
   }

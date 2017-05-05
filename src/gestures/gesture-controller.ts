@@ -191,10 +191,7 @@ export class GestureController {
 
   isDisabled(gestureName: string): boolean {
     let disabled = this.disabledGestures[gestureName];
-    if (disabled && disabled.size > 0) {
-      return true;
-    }
-    return false;
+    return !!(disabled && disabled.size > 0);
   }
 
 }
