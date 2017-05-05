@@ -70,17 +70,15 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 }
 
 .picker-wp .picker-toolbar-button {
-  flex: 1;
+  @include text-align(end);
 
-  text-align: right;
-  text-align: end;
+  flex: 1;
 }
 
 .picker-wp .picker-toolbar-cancel {
-  font-weight: normal;
+  @include text-align(start);
 
-  text-align: left;
-  text-align: start;
+  font-weight: normal;
 }
 
 .picker-wp .picker-button,

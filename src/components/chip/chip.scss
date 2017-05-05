@@ -52,6 +52,8 @@ ion-chip .button {
 }
 
 ion-chip ion-icon {
+  @include text-align($chip-icon-text-align);
+
   width: $chip-icon-size;
   height: $chip-icon-size;
 
@@ -59,7 +61,6 @@ ion-chip ion-icon {
 
   font-size: $chip-icon-font-size;
   line-height: $chip-icon-size;
-  text-align: $chip-icon-text-align;
 }
 
 ion-chip ion-avatar {

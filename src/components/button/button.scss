@@ -11,13 +11,13 @@ $button-round-border-radius:      64px !default;
 
 
 .button {
+  @include text-align(center);
   @include appearance(none);
 
   position: relative;
   z-index: 0;
   display: inline-block;
 
-  text-align: center;
   text-overflow: ellipsis;
   text-transform: none;
 

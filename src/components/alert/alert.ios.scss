@@ -230,9 +230,9 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-head {
-  padding: $alert-ios-head-padding;
+  @include text-align($alert-ios-head-text-align);
 
-  text-align: $alert-ios-head-text-align;
+  padding: $alert-ios-head-padding;
 }
 
 .alert-ios .alert-title {
@@ -253,10 +253,11 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-message,
 .alert-ios .alert-input-group {
+  @include text-align($alert-ios-message-text-align);
+
   padding: $alert-ios-message-padding;
 
   font-size: $alert-ios-message-font-size;
-  text-align: $alert-ios-message-text-align;
   color: $alert-ios-message-text-color;
 }
 
