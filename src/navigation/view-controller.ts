@@ -38,7 +38,7 @@ export class ViewController {
   private _onDidDismiss: (data: any, role: string) => void;
   private _onWillDismiss: (data: any, role: string) => void;
   private _dismissData: any;
-  private _dismissRole: any;
+  private _dismissRole: string;
   private _detached: boolean;
 
   _cmp: ComponentRef<any>;

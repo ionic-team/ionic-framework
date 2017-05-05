@@ -1,12 +1,14 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Virtual Scroll{{webview}}</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="reload()">
-        Reload
+      <button ion-button icon-only (click)="changeItem()">
+        Change random
+      </button>
+      <button ion-button icon-only (click)="addRandomItem()">
+        Add random
       </button>
       <button ion-button icon-only (click)="addItem()">
-        <ion-icon name="add"></ion-icon>
+        Append
       </button>
     </ion-buttons>
   </ion-navbar>
