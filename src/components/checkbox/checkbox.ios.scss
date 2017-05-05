@@ -149,7 +149,7 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 .item.item-ios .checkbox-ios[item-right], // deprecated
 .item.item-ios .checkbox-ios[item-end] {
   @include deprecated-variable(margin, $checkbox-ios-item-right-margin) {
-    @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-right-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
+    @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
   }
 }
 

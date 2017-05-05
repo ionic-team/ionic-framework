@@ -75,33 +75,32 @@ $toggle-md-padding-start:                $toggle-md-padding-end !default;
 // deprecated
 $toggle-md-item-left-padding:            null !default;
 
-/// @prop - Padding top of the toggle positioned on the right in an item
-$toggle-md-item-left-padding-top:        12px !default;
+/// @prop - Padding top of the toggle positioned on the start in an item
+$toggle-md-item-start-padding-top:       12px !default;
 
-/// @prop - Padding end of the toggle positioned on the right in an item
-$toggle-md-item-left-padding-end:        18px !default;
+/// @prop - Padding end of the toggle positioned on the start in an item
+$toggle-md-item-start-padding-end:       18px !default;
 
-/// @prop - Padding bottom of the toggle positioned on the right in an item
-$toggle-md-item-left-padding-bottom:     12px !default;
+/// @prop - Padding bottom of the toggle positioned on the start in an item
+$toggle-md-item-start-padding-bottom:    12px !default;
 
-/// @prop - Padding start the toggle positioned on the right in an item
-$toggle-md-item-left-padding-start:      2px !default;
-
+/// @prop - Padding start the toggle positioned on the start in an item
+$toggle-md-item-start-padding-start:     2px !default;
 
 // deprecated
-$toggle-md-item-right-padding:        null !default;
+$toggle-md-item-right-padding:           null !default;
 
-/// @prop - Padding top of the toggle positioned on the right in an item
-$toggle-md-item-right-padding-top:    12px !default;
+/// @prop - Padding top of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-top:         12px !default;
 
-/// @prop - Padding end of the toggle positioned on the right in an item
-$toggle-md-item-right-padding-end:    ($item-md-padding-end / 2) !default;
+/// @prop - Padding end of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-end:         ($item-md-padding-end / 2) !default;
 
-/// @prop - Padding bottom of the toggle positioned on the right in an item
-$toggle-md-item-right-padding-bottom: 12px !default;
+/// @prop - Padding bottom of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-bottom:      12px !default;
 
-/// @prop - Padding start of the toggle positioned on the right in an item
-$toggle-md-item-right-padding-start:  $item-md-padding-start !default;
+/// @prop - Padding start of the toggle positioned on the end in an item
+$toggle-md-item-end-padding-start:       $item-md-padding-start !default;
 
 // Material Design Toggle
 // -----------------------------------------
@@ -210,14 +209,14 @@ $toggle-md-item-right-padding-start:  $item-md-padding-start !default;
   }
 
   @include deprecated-variable(padding, $toggle-md-item-right-padding) {
-    @include padding($toggle-md-item-right-padding-top, $toggle-md-item-right-padding-end, $toggle-md-item-right-padding-bottom, $toggle-md-item-right-padding-start);
+    @include padding($toggle-md-item-end-padding-top, $toggle-md-item-end-padding-end, $toggle-md-item-end-padding-bottom, $toggle-md-item-end-padding-start);
   }
 }
 
 .item-md .toggle-md[item-left], // deprecated
 .item-md .toggle-md[item-start] {
-  @include deprecated-variable(padding, $toggle-md-item-start-padding) {
-    @include padding($toggle-md-item-left-padding-top, $toggle-md-item-left-padding-end, $toggle-md-item-left-padding-bottom, $toggle-md-item-left-padding-start);
+  @include deprecated-variable(padding, $toggle-md-item-left-padding) {
+    @include padding($toggle-md-item-start-padding-top, $toggle-md-item-start-padding-end, $toggle-md-item-start-padding-bottom, $toggle-md-item-start-padding-start);
   }
 }
 

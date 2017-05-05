@@ -63,32 +63,32 @@ $toggle-wp-disabled-opacity:             .3 !default;
 // deprecated
 $toggle-wp-item-left-padding:            null !default;
 
-/// @prop - Padding top of the toggle positioned on the right in an item
-$toggle-wp-item-left-padding-top:        12px !default;
+/// @prop - Padding top of the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-top:       12px !default;
 
-/// @prop - Padding end of the toggle positioned on the right in an item
-$toggle-wp-item-left-padding-end:        18px !default;
+/// @prop - Padding end of the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-end:       18px !default;
 
-/// @prop - Padding bottom of the toggle positioned on the right in an item
-$toggle-wp-item-left-padding-bottom:     12px !default;
+/// @prop - Padding bottom of the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-bottom:    12px !default;
 
-/// @prop - Padding start the toggle positioned on the right in an item
-$toggle-wp-item-left-padding-start:      2px !default;
+/// @prop - Padding start the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-start:     2px !default;
 
 // deprecated
-$toggle-wp-item-right-padding:        null !default;
+$toggle-wp-item-right-padding:           null !default;
 
-/// @prop - Padding top of the toggle positioned on the right in an item
-$toggle-wp-item-right-padding-top:    12px !default;
+/// @prop - Padding top of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-top:         12px !default;
 
-/// @prop - Padding end of the toggle positioned on the right in an item
-$toggle-wp-item-right-padding-end:    ($item-wp-padding-end / 2) !default;
+/// @prop - Padding end of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-end:         ($item-wp-padding-end / 2) !default;
 
-/// @prop - Padding bottom of the toggle positioned on the right in an item
-$toggle-wp-item-right-padding-bottom: 12px !default;
+/// @prop - Padding bottom of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-bottom:      12px !default;
 
-/// @prop - Padding start of the toggle positioned on the right in an item
-$toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
+/// @prop - Padding start of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 
 // Windows Toggle
 // -----------------------------------------
@@ -189,14 +189,14 @@ $toggle-wp-item-right-padding-start:  $item-wp-padding-start !default;
   cursor: pointer;
 
   @include deprecated-variable(padding, $toggle-wp-item-right-padding) {
-    @include padding($toggle-wp-item-right-padding-top, $toggle-wp-item-right-padding-end, $toggle-wp-item-right-padding-bottom, $toggle-wp-item-right-padding-start);
+    @include padding($toggle-wp-item-end-padding-top, $toggle-wp-item-end-padding-end, $toggle-wp-item-end-padding-bottom, $toggle-wp-item-end-padding-start);
   }
 }
 
 .item-wp .toggle-wp[item-left], // deprecated
 .item-wp .toggle-wp[item-start] {
-  @include deprecated-variable(padding, $toggle-wp-item-start-padding) {
-    @include padding($toggle-wp-item-left-padding-top, $toggle-wp-item-left-padding-end, $toggle-wp-item-left-padding-bottom, $toggle-wp-item-left-padding-start);
+  @include deprecated-variable(padding, $toggle-wp-item-left-padding) {
+    @include padding($toggle-wp-item-start-padding-top, $toggle-wp-item-start-padding-end, $toggle-wp-item-start-padding-bottom, $toggle-wp-item-start-padding-start);
   }
 }
 

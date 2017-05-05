@@ -51,32 +51,32 @@ $toggle-ios-disabled-opacity:          .3 !default;
 // deprecated
 $toggle-ios-item-left-padding:         null !default;
 
-/// @prop - Padding top of the toggle positioned on the left in an item
-$toggle-ios-item-left-padding-top:     6px !default;
+/// @prop - Padding top of the toggle positioned on the start in an item
+$toggle-ios-item-start-padding-top:    6px !default;
 
-/// @prop - Padding end of the toggle positioned on the left in an item
-$toggle-ios-item-left-padding-end:     16px !default;
+/// @prop - Padding end of the toggle positioned on the start in an item
+$toggle-ios-item-start-padding-end:    16px !default;
 
-/// @prop - Padding bottom of the toggle positioned on the left in an item
-$toggle-ios-item-left-padding-bottom:   5px !default;
+/// @prop - Padding bottom of the toggle positioned on the start in an item
+$toggle-ios-item-start-padding-bottom: 5px !default;
 
-/// @prop - Padding start of the toggle positioned on the left in an item
-$toggle-ios-item-left-padding-start:   0 !default;
+/// @prop - Padding start of the toggle positioned on the start in an item
+$toggle-ios-item-start-padding-start:  0 !default;
 
 // deprecated
 $toggle-ios-item-right-padding:        null !default;
 
-/// @prop - Padding top of the toggle positioned on the right in an item
-$toggle-ios-item-right-padding-top:    6px !default;
+/// @prop - Padding top of the toggle positioned on the end in an item
+$toggle-ios-item-end-padding-top:      6px !default;
 
-/// @prop - Padding end of the toggle positioned on the right in an item
-$toggle-ios-item-right-padding-end:    ($item-ios-padding-end / 2) !default;
+/// @prop - Padding end of the toggle positioned on the end in an item
+$toggle-ios-item-end-padding-end:      ($item-ios-padding-end / 2) !default;
 
-/// @prop - Padding bottom of the toggle positioned on the right in an item
-$toggle-ios-item-right-padding-bottom: 5px !default;
+/// @prop - Padding bottom of the toggle positioned on the end in an item
+$toggle-ios-item-end-padding-bottom:   5px !default;
 
-/// @prop - Padding start of the toggle positioned on the right in an item
-$toggle-ios-item-right-padding-start:  $item-ios-padding-start !default;
+/// @prop - Padding start of the toggle positioned on the end in an item
+$toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
 
 // iOS Toggle
 // -----------------------------------------
@@ -220,15 +220,15 @@ $toggle-ios-item-right-padding-start:  $item-ios-padding-start !default;
 .item-ios .toggle-ios {
   @include margin($toggle-ios-media-margin);
 
-  @include deprecated-variable(padding, $toggle-ios-item-end-padding) {
-    @include padding($toggle-ios-item-right-padding-top, $toggle-ios-item-right-padding-end, $toggle-ios-item-right-padding-bottom, $toggle-ios-item-right-padding-start);
+  @include deprecated-variable(padding, $toggle-ios-item-right-padding) {
+    @include padding($toggle-ios-item-end-padding-top, $toggle-ios-item-end-padding-end, $toggle-ios-item-end-padding-bottom, $toggle-ios-item-end-padding-start);
   }
 }
 
 .item-ios .toggle-ios[item-left], // deprecated
 .item-ios .toggle-ios[item-start] {
-  @include deprecated-variable(padding, $toggle-ios-item-start-padding) {
-    @include padding($toggle-ios-item-left-padding-top, $toggle-ios-item-left-padding-end, $toggle-ios-item-left-padding-bottom, $toggle-ios-item-left-padding-start);
+  @include deprecated-variable(padding, $toggle-ios-item-left-padding) {
+    @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
   }
 }
 
