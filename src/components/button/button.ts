@@ -126,7 +126,7 @@ import { isTrueProperty } from '../../util/util';
     '<span class="button-inner">' +
       '<ng-content></ng-content>' +
     '</span>' +
-    '<div class="button-effect"></div>',
+    '<div class="button-effect" *ngIf="_btEffect"></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -151,6 +151,9 @@ export class Button extends Ion {
 
   /** @hidden */
   _init: boolean;
+
+  /** @hidden */
+  _btEffect: boolean = false;
 
   /**
    * @input {boolean} If true, activates the large button size.
@@ -287,6 +290,7 @@ export class Button extends Ion {
   ) {
     super(config, elementRef, renderer);
     this._mode = config.get('mode');
+    this._btEffect = config.get('activator') === 'ripple';
 
     if (config.get('hoverCSS') === false) {
       this.setElementClass('disable-hover', true);
@@ -316,7 +320,7 @@ export class Button extends Ion {
    * @hidden
    */
   _assignCss(assignCssClass: boolean) {
-    let role = this._role;
+    const role = this._role;
     if (role) {
       this.setElementClass(role, assignCssClass); // button
       this.setElementClass(`${role}-${this._mode}`, assignCssClass); // button
@@ -369,11 +373,17 @@ export class Button extends Ion {
 @Component({
   selector: '.item-cover',
   template:
-    '<div class="button-effect"></div>',
+    '<div class="button-effect" *ngIf="_btEffect"></div>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
     'type': 'button'
   }
 })
-export class ButtonCover { }
+export class ButtonCover {
+  _btEffect: boolean;
+
+  constructor(config: Config) {
+    this._btEffect = config.get('activator') === 'ripple';
+  }
+}

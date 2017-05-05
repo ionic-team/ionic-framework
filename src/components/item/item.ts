@@ -286,7 +286,7 @@ import { ItemReorder } from './item-reorder';
       '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
       '<ion-reorder *ngIf="_hasReorder"></ion-reorder>' +
     '</div>' +
-    '<div class="button-effect"></div>',
+    '<div class="button-effect" *ngIf="_btEffect"></div>',
   host: {
     'class': 'item'
   },
@@ -300,6 +300,7 @@ export class Item extends Ion {
   _viewLabel: boolean = true;
   _name: string = 'item';
   _hasReorder: boolean;
+  _btEffect: boolean;
 
   /**
    * @hidden
@@ -320,7 +321,9 @@ export class Item extends Ion {
   ) {
     super(config, elementRef, renderer, 'item');
 
+    const isButton = this._elementRef.nativeElement.tagName === 'BUTTON';
     this._setName(elementRef);
+    this._btEffect = isButton && config.get('activator') === 'ripple';
     this._hasReorder = !!reorder;
     this.id = form.nextId().toString();
 
