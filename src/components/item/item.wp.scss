@@ -162,7 +162,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp .item-button[icon-only] ion-icon,
 .item-wp .item-button[icon-only] {
-  @include padding(0, 1em);
+  @include padding(0, 1px);
 }
 
 .item-wp[text-wrap] ion-label {
