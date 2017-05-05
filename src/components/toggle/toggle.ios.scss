@@ -48,11 +48,15 @@ $toggle-ios-transition-duration:       300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-ios-disabled-opacity:          .3 !default;
 
-/// @prop - Padding of the toggle positioned on the left in an item
+// deprecated
 $toggle-ios-item-left-padding:         6px 16px 5px 0 !default;
+/// @prop - Padding of the toggle positioned on the left in an item
+$toggle-ios-item-start-padding:        $toggle-ios-item-left-padding;
 
-/// @prop - Padding of the toggle positioned on the right in an item
+// deprecated
 $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($item-ios-padding-left) !default;
+/// @prop - Padding of the toggle positioned on the right in an item
+$toggle-ios-item-end-padding:          $toggle-ios-item-right-padding;
 
 
 // iOS Toggle
@@ -197,11 +201,12 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($i
 
 .item-ios .toggle-ios {
   margin: $toggle-ios-media-margin;
-  padding: $toggle-ios-item-right-padding;
+  padding: $toggle-ios-item-end-padding;
 }
 
-.item-ios .toggle-ios[item-left] {
-  padding: $toggle-ios-item-left-padding;
+.item-ios .toggle-ios[item-left], // deprecated
+.item-ios .toggle-ios[item-start] {
+  padding: $toggle-ios-item-start-padding;
 }
 
 

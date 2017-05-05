@@ -60,11 +60,15 @@ $toggle-wp-transition-duration:          300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-wp-disabled-opacity:             .3 !default;
 
-/// @prop - Padding of the toggle positioned on the left in an item
+// deprecated
 $toggle-wp-item-left-padding:            12px 18px 12px 2px !default;
+/// @prop - Padding of the toggle positioned on the start in an item
+$toggle-wp-item-start-padding:           $toggle-wp-item-left-padding;
 
-/// @prop - Padding of the toggle positioned on the right in an item
+// deprecated
 $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
+/// @prop - Padding of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding:             $toggle-wp-item-right-padding;
 
 
 // Windows Toggle
@@ -161,13 +165,14 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 
 .item-wp .toggle-wp {
   margin: $toggle-wp-media-margin;
-  padding: $toggle-wp-item-right-padding;
+  padding: $toggle-wp-item-end-padding;
 
   cursor: pointer;
 }
 
-.item-wp .toggle-wp[item-left] {
-  padding: $toggle-wp-item-left-padding;
+.item-wp .toggle-wp[item-left], // deprecated
+.item-wp .toggle-wp[item-start] {
+  padding: $toggle-wp-item-start-padding;
 }
 
 .item-wp.item-toggle ion-label {

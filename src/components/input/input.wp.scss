@@ -126,8 +126,10 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   width: calc(100% - #{$text-input-wp-margin-right});
 }
 
-.item-wp.item-label-stacked [item-right],
-.item-wp.item-label-floating [item-right] {
+.item-wp.item-label-stacked [item-right], // deprecated
+.item-wp.item-label-floating [item-right], // deprecated
+.item-wp.item-label-stacked [item-end],
+.item-wp.item-label-floating [item-end] {
   align-self: flex-end;
 }
 

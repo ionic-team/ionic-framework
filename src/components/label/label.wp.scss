@@ -61,8 +61,10 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
   transform: translate3d(0, 0, 0) scale(.8);
 }
 
-.item-wp.item-label-stacked [item-right],
-.item-wp.item-label-floating [item-right] {
+.item-wp.item-label-stacked [item-right], // deprecated
+.item-wp.item-label-floating [item-right], // deprecated
+.item-wp.item-label-stacked [item-end],
+.item-wp.item-label-floating [item-end] {
   margin-top: $item-wp-padding-media-top + 4;
   margin-bottom: $item-wp-padding-media-top + 4;
 }

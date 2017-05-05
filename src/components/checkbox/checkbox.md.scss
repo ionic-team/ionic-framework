@@ -60,11 +60,15 @@ $checkbox-md-transition-duration:        280ms !default;
 /// @prop - Transition easing of the checkbox
 $checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
 
-/// @prop - Margin of the left checkbox item
+// deprecated
 $checkbox-md-item-left-margin:           $item-md-padding-media-top 36px $item-md-padding-media-bottom 4px !default;
+/// @prop - Margin of the start checkbox item
+$checkbox-md-item-start-margin:          $checkbox-md-item-left-margin;
 
-/// @prop - Margin of the right checkbox item
+// deprecated
 $checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
+/// @prop - Margin of the end checkbox item
+$checkbox-md-item-end-margin:            $checkbox-md-item-right-margin;
 
 
 .checkbox-md {
@@ -141,11 +145,12 @@ $checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
   position: static;
   display: block;
 
-  margin: $checkbox-md-item-left-margin;
+  margin: $checkbox-md-item-start-margin;
 }
 
-.item.item-md .checkbox-md[item-right] {
-  margin: $checkbox-md-item-right-margin;
+.item.item-md .checkbox-md[item-right], // deprecated
+.item.item-md .checkbox-md[item-end] {
+  margin: $checkbox-md-item-end-margin;
 }
 
 .checkbox-md + .item-inner ion-label {

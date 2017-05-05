@@ -48,11 +48,15 @@ $toggle-md-disabled-opacity:             .3 !default;
 /// @prop - Padding of standalone toggle
 $toggle-md-padding:                      12px !default;
 
-/// @prop - Padding of the toggle positioned on the left in an item
+// deprecated
 $toggle-md-item-left-padding:            12px 18px 12px 2px !default;
+/// @prop - Padding of the toggle positioned on the start in an item
+$toggle-md-item-start-padding:           $toggle-md-item-left-padding;
 
-/// @prop - Padding of the toggle positioned on the right in an item
+// deprecated
 $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px $item-md-padding-left !default;
+/// @prop - Padding of the toggle positioned on the end in an item
+$toggle-md-item-end-padding:             $toggle-md-item-right-padding;
 
 
 // Material Design Toggle
@@ -153,13 +157,14 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
 
 .item-md .toggle-md {
   margin: $toggle-md-media-margin;
-  padding: $toggle-md-item-right-padding;
+  padding: $toggle-md-item-end-padding;
 
   cursor: pointer;
 }
 
-.item-md .toggle-md[item-left] {
-  padding: $toggle-md-item-left-padding;
+.item-md .toggle-md[item-left], // deprecated
+.item-md .toggle-md[item-start] {
+  padding: $toggle-md-item-start-padding;
 }
 
 .item-md.item-toggle ion-label {

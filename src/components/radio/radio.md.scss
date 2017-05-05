@@ -33,11 +33,15 @@ $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 /// @prop - Opacity of the disabled radio
 $radio-md-disabled-opacity:       .3 !default;
 
-/// @prop - Margin of the item-left in a radio
+// deprecated
 $radio-md-item-left-margin:       11px 36px 10px 4px !default;
+/// @prop - Margin of the item-start in a radio
+$radio-md-item-start-margin:      $radio-md-item-left-margin;
 
-/// @prop - Margin of the item-right in a radio
+// deprecated
 $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-padding-media-bottom 0 !default;
+/// @prop - Margin of the item-end in a radio
+$radio-md-item-end-margin:        $radio-md-item-right-margin;
 
 
 .radio-md {
@@ -119,10 +123,11 @@ $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-paddi
   position: static;
   display: block;
 
-  margin: $radio-md-item-right-margin;
+  margin: $radio-md-item-end-margin;
 
-  &[item-left] {
-    margin: $radio-md-item-left-margin;
+  &[item-left], // deprecated
+  &[item-start] {
+    margin: $radio-md-item-start-margin;
   }
 }
 
