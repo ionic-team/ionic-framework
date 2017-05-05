@@ -6,10 +6,12 @@ import { PointerCoordinates } from '../util/dom';
 
 
 export class Activator implements ActivatorBase {
+
   protected _queue: HTMLElement[] = [];
   protected _active: HTMLElement[] = [];
   protected _activeDefer: Function;
   protected _clearDefer: Function;
+
   _css: string;
   activatedDelay = ADD_ACTIVATED_DEFERS;
   clearDelay = CLEAR_STATE_DEFERS;
@@ -19,6 +21,9 @@ export class Activator implements ActivatorBase {
   }
 
   clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+    if (isActivatedDisabled(ev, activatableEle)) {
+      return;
+    }
     // a click happened, so immediately deactive all activated elements
     this._scheduleClear();
 

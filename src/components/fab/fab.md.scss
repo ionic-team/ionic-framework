@@ -36,6 +36,10 @@ $fab-md-list-button-transition-timing-function:   ease !default;
 /// @prop - Transition delay of the transform and opacity of the button in a list
 $fab-md-list-button-transition-delay:             10ms !default;
 
+$fab-button-md-transition-duration:               300ms !default;
+
+$fab-button-md-transition-timing-function:     cubic-bezier(.4, 0, .2, 1) !default;
+
 
 .fab-md {
   color: $fab-md-text-color;
@@ -43,9 +47,9 @@ $fab-md-list-button-transition-delay:             10ms !default;
 
   box-shadow: $fab-md-box-shadow;
 
-  transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-              background-color $button-md-transition-duration $button-md-transition-timing-function,
-              color $button-md-transition-duration $button-md-transition-timing-function;
+  transition: box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
+              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
+              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function;
 }
 
 .fab-md.activated {
@@ -59,9 +63,9 @@ $fab-md-list-button-transition-delay:             10ms !default;
 
   transition: transform $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
               opacity $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
-              box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-              background-color $button-md-transition-duration $button-md-transition-timing-function,
-              color $button-md-transition-duration $button-md-transition-timing-function;
+              box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
+              background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
+              color $fab-button-md-transition-duration $fab-button-md-transition-timing-function;
 }
 
 .fab-md-in-list.activated {

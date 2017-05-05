@@ -1,8 +1,8 @@
 import { App } from '../app';
-import { ClickBlock } from '../../click-block/click-block';
+import { ClickBlock } from '../click-block';
 import { Config } from '../../../config/config';
 import { mockApp, mockConfig, mockElementRef, mockNavController, mockPlatform, MockPlatform, mockRenderer, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
-import { OverlayPortal } from '../../nav/overlay-portal';
+import { OverlayPortal } from '../overlay-portal';
 import { PORTAL_MODAL } from '../app-constants';
 
 
@@ -167,8 +167,9 @@ describe('App', () => {
         expect(plt.exitApp).not.toHaveBeenCalled();
         done();
       }).catch((err: Error) => {
+        fail(err);
         done(err);
-      });
+        });
     });
 
     it('should pop the second view in the root nav', () => {

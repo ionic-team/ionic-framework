@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -7,6 +7,7 @@ import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
+import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
@@ -132,7 +133,7 @@ import { ViewController } from '../../navigation/view-controller';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class Tab extends NavControllerBase {
+export class Tab extends NavControllerBase implements ITab {
   /**
    * @hidden
    */
@@ -264,9 +265,10 @@ export class Tab extends NavControllerBase {
     transCtrl: TransitionController,
     @Optional() private linker: DeepLinker,
     private _dom: DomController,
+    errHandler: ErrorHandler
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom);
+    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');
@@ -292,7 +294,7 @@ export class Tab extends NavControllerBase {
   /**
    * @hidden
    */
-  load(opts: NavOptions, done?: Function) {
+  load(opts: NavOptions, done?: () => void) {
     if (!this._loaded && this.root) {
       this.setElementClass('show-tab', true);
       this.push(this.root, this.rootParams, opts, done);
@@ -305,7 +307,7 @@ export class Tab extends NavControllerBase {
       this._dom.read(() => {
         this.resize();
       });
-      done(true);
+      done();
     }
   }
 

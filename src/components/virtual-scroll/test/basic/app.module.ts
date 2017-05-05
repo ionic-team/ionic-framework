@@ -58,6 +58,10 @@ export class E2EPage {
     window.location.reload(true);
   }
 
+  trackByFn(index: number, item: any) {
+    return item.value;
+  }
+
 }
 
 

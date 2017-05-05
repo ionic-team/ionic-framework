@@ -12,5 +12,6 @@ import { Directive } from '@angular/core';
   selector: 'ion-avatar'
 })
 export class Avatar {
-
+  constructor() {
+  }
 }

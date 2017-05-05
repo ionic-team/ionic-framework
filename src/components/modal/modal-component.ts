@@ -54,30 +54,32 @@ export class ModalCmp {
   }
 
   ionViewPreLoad() {
-    this._load(this._navParams.data.component);
-  }
-
-  /** @hidden */
-  _load(component: any) {
-    if (component) {
-
-      let cfr = this.moduleLoader.getComponentFactoryResolver(component);
-      if (!cfr) {
-        cfr = this._cfr;
-      }
-      const componentFactory = cfr.resolveComponentFactory(component);
-
-      // ******** DOM WRITE ****************
-      const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
-      this._viewCtrl._setInstance(componentRef.instance);
-
-      this._setCssClass(componentRef, 'ion-page');
-      this._setCssClass(componentRef, 'show-page');
-      this._enabled = true;
-
-      this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
-      this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
+    const component = this._navParams.data.component;
+    if (!component) {
+      console.warn('modal\'s page was not defined');
+      return;
     }
+
+    let cfr = this.moduleLoader.getComponentFactoryResolver(component);
+    if (!cfr) {
+      cfr = this._cfr;
+    }
+    const componentFactory = cfr.resolveComponentFactory(component);
+
+    // ******** DOM WRITE ****************
+    const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
+
+    this._setCssClass(componentRef, 'ion-page');
+    this._setCssClass(componentRef, 'show-page');
+
+    // Change the viewcontroller's instance to point the user provided page
+    // Lifecycle events will be sent to the new instance, instead of the modal's component
+    // we need to manually subscribe to them
+    this._viewCtrl._setInstance(componentRef.instance);
+    this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
+    this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
+
+    this._enabled = true;
   }
 
   _viewWillEnter() {
@@ -88,7 +90,6 @@ export class ModalCmp {
     this._gestureBlocker.unblock();
   }
 
-  /** @hidden */
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
@@ -98,9 +99,7 @@ export class ModalCmp {
       const opts: NavOptions = {
         minClickBlockDuration: 400
       };
-      return this._viewCtrl.dismiss(null, 'backdrop', opts).catch(() => {
-        console.debug('Dismiss modal by clicking backdrop was cancelled');
-      });
+      return this._viewCtrl.dismiss(null, 'backdrop', opts);
     }
   }
 

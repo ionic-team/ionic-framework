@@ -2,6 +2,7 @@
 // Globals
 // --------------------------------------------------
 @import "../../themes/ionic.globals";
+@import "../../themes/ionic.mixins";
 
 
 // Normalize
@@ -49,6 +50,36 @@ $h5-font-size:                 1.8rem !default;
 $h6-font-size:                 1.6rem !default;
 
 
+// Responsive Utilities
+// --------------------------------------------------
+
+/// @prop - Whether to include all of the responsive utility attributes
+$include-responsive-utilities:          true !default;
+
+/// @prop - Whether to include all of the responsive text alignment attributes
+$include-text-alignment-utilities:      $include-responsive-utilities !default;
+
+/// @prop - Whether to include all of the responsive text transform attributes
+$include-text-transform-utilities:      $include-responsive-utilities !default;
+
+/// @prop - Whether to include all of the responsive float attributes
+$include-float-element-utilities:       $include-responsive-utilities !default;
+
+
+// Screen Breakpoints
+// --------------------------------------------------
+
+/// @prop - The minimum dimensions at which your layout will change,
+/// adapting to different screen sizes, for use in media queries
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+
 // App Structure
 // --------------------------------------------------
 
@@ -69,11 +100,11 @@ html {
 }
 
 body {
+  @include margin(0);
+  @include padding(0);
+
   position: fixed;
   overflow: hidden;
-
-  margin: 0;
-  padding: 0;
 
   width: 100%;
   max-width: 100%;
@@ -198,9 +229,9 @@ ion-nav,
 ion-tab,
 ion-tabs,
 .app-root {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-page-container;
   display: block;
 
@@ -236,9 +267,9 @@ ion-tabs,
 // --------------------------------------------------
 
 .ion-page {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   display: block;
 
   width: 100%;
@@ -258,9 +289,9 @@ ion-tabs,
 // --------------------------------------------------
 
 ion-header {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-toolbar;
   display: block;
 
@@ -268,9 +299,9 @@ ion-header {
 }
 
 ion-footer {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-toolbar;
   display: block;
 
@@ -293,42 +324,120 @@ ion-footer {
 // Text Alignment
 // --------------------------------------------------
 
-[text-left] {
-  text-align: left;
-}
+@if ($include-text-alignment-utilities == true) {
+  // Creates text alignment attributes based on screen size
+  @each $breakpoint in map-keys($screen-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
 
-[text-center] {
-  text-align: center;
-}
+    @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+      // Provide `[text-{bp}]` attributes for aligning the text based
+      // on the breakpoint
+      [text#{$infix}-center] {
+        @include text-align(center, !important);
+      }
 
-[text-right] {
-  text-align: right;
-}
+      [text#{$infix}-justify] {
+        @include text-align(justify, !important);
+      }
 
-[text-justify] {
-  text-align: justify;
-}
+      [text#{$infix}-start] {
+        @include text-align(start, !important);
+      }
 
-[text-nowrap] {
-  white-space: nowrap;
-}
+      [text#{$infix}-end] {
+        @include text-align(end, !important);
+      }
 
-[text-wrap] {
-  white-space: normal;
+      [text#{$infix}-left] {
+        @include text-align(left, !important);
+      }
+
+      [text#{$infix}-right] {
+        @include text-align(right, !important);
+      }
+
+      [text#{$infix}-nowrap] {
+        // scss-lint:disable ImportantRule
+        white-space: nowrap !important;
+      }
+
+      [text#{$infix}-wrap] {
+        // scss-lint:disable ImportantRule
+        white-space: normal !important;
+      }
+    }
+  }
 }
 
 
 // Text Transformation
 // --------------------------------------------------
 
-[text-uppercase] {
-  text-transform: uppercase;
+@if ($include-text-transform-utilities == true) {
+  // Creates text transform attributes based on screen size
+  @each $breakpoint in map-keys($screen-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+      // Provide `[text-{bp}]` attributes for transforming the text based
+      // on the breakpoint
+      [text#{$infix}-uppercase] {
+        // scss-lint:disable ImportantRule
+        text-transform: uppercase !important;
+      }
+
+      [text#{$infix}-lowercase] {
+        // scss-lint:disable ImportantRule
+        text-transform: lowercase !important;
+      }
+
+      [text#{$infix}-capitalize] {
+        // scss-lint:disable ImportantRule
+        text-transform: capitalize !important;
+      }
+    }
+  }
 }
 
-[text-lowercase] {
-  text-transform: lowercase;
-}
 
-[text-capitalize] {
-  text-transform: capitalize;
+// Float Elements
+// --------------------------------------------------
+
+@if ($include-float-element-utilities == true) {
+  // Creates text transform attributes based on screen size
+  @each $breakpoint in map-keys($screen-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+      // Provide `[float-{bp}]` attributes for floating the element based
+      // on the breakpoint
+      [float#{$infix}-left] {
+        // scss-lint:disable ImportantRule, PropertySpelling
+        float: left !important;
+      }
+
+      [float#{$infix}-right] {
+        // scss-lint:disable ImportantRule, PropertySpelling
+        float: right !important;
+      }
+
+      [float#{$infix}-start] {
+        // scss-lint:disable ImportantRule, PropertySpelling
+        float: left !important;
+
+        @include rtl() {
+          float: right !important;
+        }
+      }
+
+      [float#{$infix}-end] {
+        // scss-lint:disable ImportantRule, PropertySpelling
+        float: right !important;
+
+        @include rtl() {
+          float: left !important;
+        }
+      }
+    }
+  }
 }

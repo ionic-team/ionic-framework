@@ -52,7 +52,7 @@ export function parallaxSetTranslate(s: Slides) {
 
   for (var i = 0; i < s._slides.length; i++) {
     var slide = s._slides[i];
-    eachChild(slide, '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]', (el) => {
+    eachChild(slide, '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]', () => {
       var progress = Math.min(Math.max(slide.progress, -1), 1);
       setParallaxTransform(s, slide, progress);
     });

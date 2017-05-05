@@ -17,7 +17,8 @@ task('lint.sass', function() {
   return src([
       'src/**/*.scss',
       '!src/components/*/test/**/*',
-      '!src/util/test/*'
+      '!src/util/test/*',
+      '!src/themes/normalize.scss',
     ])
     .pipe(scsslint())
     .pipe(scsslint.failReporter());

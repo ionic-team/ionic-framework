@@ -279,8 +279,7 @@ import { ViewController } from './view-controller';
  *   ){}
  *
  *   pushPage(){
- *     this.navCtrl.push(DetailPage)
- *      .catch(()=> console.log('should I stay or should I go now'))
+ *     this.navCtrl.push(DetailPage);
  *   }
  *
  *   ionViewCanLeave(): boolean{
@@ -295,7 +294,7 @@ import { ViewController } from './view-controller';
  * }
  * ```
  *
- * We need to make sure that or `navCtrl.push` has a catch in order to catch the and handle the error.
+ * We need to make sure that our `navCtrl.push` has a catch in order to catch the and handle the error.
  * If you need to prevent a view from entering, you can do the same thing
  *
  * ```ts
@@ -305,8 +304,7 @@ import { ViewController } from './view-controller';
  *   ){}
  *
  *   pushPage(){
- *     this.navCtrl.push(DetailPage)
- *      .catch(()=> console.log('should I stay or should I go now'))
+ *     this.navCtrl.push(DetailPage);
  *   }
  *
  * }
@@ -507,9 +505,10 @@ export abstract class NavController {
 
   /**
    * Set the root for the current navigation stack.
-   * @param {Page|string|ViewController} page The name of the component you want to push on the navigation stack.
+   * @param {Page|string|ViewController} pageOrViewCtrl The name of the component you want to push on the navigation stack.
    * @param {object} [params={}] Any NavParams you want to pass along to the next view.
    * @param {object} [opts={}] Any options you want to use pass to transtion.
+   * @param {Function} done Callback function on done.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;

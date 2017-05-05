@@ -84,6 +84,7 @@ export class FirstPage {
   }
 
   ionViewCanLeave() {
+    this.called.ionViewCanLeave++;
     if (this.canLeave) {
       return true;
     }
@@ -92,8 +93,6 @@ export class FirstPage {
     alert.setMessage('You can check-out any time you like, but you can never leave.');
     alert.addButton({ text: 'Umm, ok', role: 'cancel', });
     alert.present();
-
-    this.called.ionViewCanLeave++;
 
     return false;
   }
@@ -119,20 +118,17 @@ export class FirstPage {
     this.navCtrl.push('primary-header-page', null, {
       animate: true,
       animation: 'ios-transition'
-    }).then(() => { }, (rejectReason: string) => {
-    });
+    }).then(() => { }, (rejectReason: string) => { });
   }
 
   pushRedirect() {
-    this.navCtrl.push('redirect-page').then(() => { }, (rejectReason: string) => {
-    });
+    this.navCtrl.push('redirect-page').then(() => { }, (rejectReason: string) => { });
   }
 
   pushFullPage() {
     this.navCtrl.push('full-page', { id: 8675309, myData: [1, 2, 3, 4] }, {
       animate: true,
       animation: 'md-transition'
-    }).catch(() => {
     });
   }
 
@@ -140,36 +136,30 @@ export class FirstPage {
     this.navCtrl.push('another-page', null, {
       animate: true,
       animation: 'wp-transition'
-    }).catch(() => {
     });
   }
 
   pushTabsPage() {
-    this.navCtrl.push('tabs').catch(() => {
-    });
+    this.navCtrl.push('tabs');
   }
 
 
   quickPush() {
-    this.navCtrl.push('another-page').catch(() => {
-    });
+    this.navCtrl.push('another-page');
     setTimeout(() => {
-      this.navCtrl.push('primary-header-page').catch(() => {
-      });
+      this.navCtrl.push('primary-header-page');
     }, 150);
   }
 
   quickPop() {
-    this.navCtrl.push('another-page').catch(() => {
-    });
+    this.navCtrl.push('another-page');
     setTimeout(() => {
-      this.navCtrl.remove(1, 1).catch(() => {
-      });
+      this.navCtrl.remove(1, 1);
     }, 250);
   }
 
   pop() {
-    this.navCtrl.pop().catch(() => {});
+    this.navCtrl.pop();
   }
 
   viewDismiss() {

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
+import { Img as IImg } from './img-interface';
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isPresent, isTrueProperty } from '../../util/util';
@@ -95,7 +96,7 @@ import { Platform } from '../../platform/platform';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Img implements OnDestroy {
+export class Img implements OnDestroy, IImg {
   /** @internal */
   _src: string;
   /** @internal */
@@ -133,7 +134,6 @@ export class Img implements OnDestroy {
     private _elementRef: ElementRef,
     private _renderer: Renderer,
     private _plt: Platform,
-    private _zone: NgZone,
     @Optional() private _content: Content,
     private _dom: DomController
   ) {
@@ -163,14 +163,9 @@ export class Img implements OnDestroy {
       // update to the new src
       this._src = newSrc;
 
-      if (newSrc.indexOf('data:') === 0) {
-        // they're using an actual datauri already
-        this._hasLoaded = true;
-
-      } else {
-        // reset any existing datauri we might be holding onto
-        this._hasLoaded = false;
-      }
+      // Are they using an actual datauri already,
+      // or reset any existing datauri we might be holding onto
+      this._hasLoaded = newSrc.indexOf('data:') === 0;
 
       // run update to kick off requests or render if everything is good
       this.update();

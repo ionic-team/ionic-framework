@@ -234,11 +234,11 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   };
   _queue: number = SCROLL_QUEUE_NO_CHANGES;
   _recordSize: number = 0;
+  _virtualTrackBy: TrackByFn;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
   @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
-
 
   /**
    * @input {array} The data that builds the templates within the virtual scroll.
@@ -249,9 +249,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input()
   set virtualScroll(val: any) {
     this._records = val;
-    if (isBlank(this._differ) && isPresent(val)) {
-      this._differ = this._iterableDiffers.find(val).create(this.virtualTrackBy);
-    }
+    this._updateDiffer();
   }
 
   /**
@@ -346,7 +344,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * and what data to give to the header template. The function must return
    * `null` if a header cell shouldn't be created.
    */
-  @Input() set headerFn(val: Function) {
+  @Input()
+  set headerFn(val: Function) {
     if (isFunction(val)) {
       this._hdrFn = val.bind((this._ctrl._cmp) || this);
     }
@@ -359,7 +358,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * should be used, and what data to give to the footer template. The function
    * must return `null` if a footer cell shouldn't be created.
    */
-  @Input() set footerFn(val: Function) {
+  @Input()
+  set footerFn(val: Function) {
     if (isFunction(val)) {
       this._ftrFn = val.bind((this._ctrl._cmp) || this);
     }
@@ -368,7 +368,16 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @input {function} Same as `ngForTrackBy` which can be used on `ngFor`.
    */
-  @Input() virtualTrackBy: TrackByFn;
+  @Input()
+  set virtualTrackBy(val: TrackByFn) {
+    if (isPresent(val)) {
+      this._virtualTrackBy = val;
+      this._updateDiffer();
+    }
+  }
+  get virtualTrackBy(): TrackByFn {
+    return this._virtualTrackBy;
+  }
 
 
   constructor(
@@ -481,6 +490,12 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     return null;
   }
 
+  private _updateDiffer() {
+    if (isBlank(this._differ) && isPresent(this._records)) {
+      this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
+    }
+  }
+
   /**
    * @hidden
    * DOM WRITE
@@ -501,15 +516,17 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
       adjustRendered(cells, data);
 
-      populateNodeData(
-        data.topCell, data.bottomCell,
-        data.viewWidth, true,
-        cells, records, nodes,
-        this._itmTmp.viewContainer,
-        this._itmTmp.templateRef,
-        this._hdrTmp && this._hdrTmp.templateRef,
-        this._ftrTmp && this._ftrTmp.templateRef, needClean
-      );
+      this._zone.run(() => {
+        populateNodeData(
+          data.topCell, data.bottomCell,
+          data.viewWidth, true,
+          cells, records, nodes,
+          this._itmTmp.viewContainer,
+          this._itmTmp.templateRef,
+          this._hdrTmp && this._hdrTmp.templateRef,
+          this._ftrTmp && this._ftrTmp.templateRef, needClean,
+        );
+      });
 
       if (needClean) {
         this._cd.detectChanges();
@@ -630,7 +647,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       var stopAtHeight = (data.scrollTop + data.renderHeight);
 
       processRecords(stopAtHeight, records, cells,
-                      this._hdrFn, this._ftrFn, data);
+        this._hdrFn, this._ftrFn, data);
     }
 
     // ******** DOM READ ****************
@@ -683,7 +700,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @hidden
    * DOM WRITE
    */
-  scrollEnd(ev: ScrollEvent) {
+  scrollEnd() {
     // ******** DOM READ ****************
     updateDimensions(this._plt, this._nodes, this._cells, this._data, false);
     adjustRendered(this._cells, this._data);
