@@ -195,7 +195,6 @@ $alert-ios-radio-icon-top:                      -7px !default;
 
 // deprecated
 $alert-ios-radio-icon-left:                     7px !default;
-
 /// @prop - Left of the icon in the radio alert
 $alert-ios-radio-icon-start:                    $alert-ios-radio-icon-left;
 
@@ -282,7 +281,6 @@ $alert-ios-checkbox-icon-top:                   4px !default;
 
 // deprecated
 $alert-ios-checkbox-icon-left:                  7px !default;
-
 /// @prop - Left of the icon in the checkbox alert
 $alert-ios-checkbox-icon-start:                 $alert-ios-checkbox-icon-left;
 
@@ -452,7 +450,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // -----------------------------------------
 
 .alert-ios [aria-checked=true] .alert-radio-inner {
-  @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-left);
+  @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-start);
 
   position: absolute;
 
@@ -525,7 +523,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // -----------------------------------------
 
 .alert-ios [aria-checked=true] .alert-checkbox-inner {
-  @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-left);
+  @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-start);
 
   position: absolute;
 
