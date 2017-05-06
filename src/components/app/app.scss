@@ -426,6 +426,7 @@ ion-footer {
         @include ltr() {
           float: left !important;
         }
+
         @include rtl() {
           float: right !important;
         }
@@ -436,6 +437,7 @@ ion-footer {
         @include ltr() {
           float: right !important;
         }
+
         @include rtl() {
           float: left !important;
         }
