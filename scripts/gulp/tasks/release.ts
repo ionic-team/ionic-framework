@@ -12,6 +12,8 @@ import * as runSequence from 'run-sequence';
 import * as semver from 'semver';
 import { obj } from 'through2';
 
+import { ionicRollupFesmPlugin } from '../utils/rollup-fesm-plugin';
+
 import { DIST_BUILD_ES2015_FESM_ROOT, DIST_BUILD_ES5_FESM_ROOT, DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, deleteFiles, setSassIonicVersion, writePolyfills } from '../util';
 
@@ -253,6 +255,7 @@ function createFesmBundle(fesmDirectoryPath: string) {
         jsnext: true,
         main: true
       }),
+      ionicRollupFesmPlugin(fesmDirectoryPath)
     ]
   }).then((bundle) => {
     return bundle.write({
