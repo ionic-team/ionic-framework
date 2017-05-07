@@ -24,6 +24,18 @@ ion-popover {
   opacity: 0;
 }
 
+.popover-dismiss {
+  position: absolute;
+  top: auto;
+  z-index: 99999999;
+  overflow: hidden;
+
+  width: 1px;
+  height: 1px;
+
+  background-color: transparent;
+}
+
 .popover-content {
   position: absolute;
   z-index: $z-index-overlay-wrapper;

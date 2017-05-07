@@ -5,4 +5,5 @@ export interface ModalOptions {
   enterAnimation?: string;
   leaveAnimation?: string;
   cssClass?: string;
+  ariaLabel?: string;
 }

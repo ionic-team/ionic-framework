@@ -18,6 +18,7 @@ export class Alert extends ViewController {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
+    opts.alertDialogRole = isPresent(opts.alertDialogRole) ? !!opts.alertDialogRole : true;
 
     super(AlertCmp, opts, null);
     this._app = app;

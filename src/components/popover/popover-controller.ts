@@ -97,11 +97,13 @@ import { DeepLinker } from '../../navigation/deep-linker';
  * @advanced
  * Popover Options
  *
- * | Option                | Type       | Description                                                                                                      |
- * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
- * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                       |
- * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
- * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
+ * | Option                | Type       | Description                                                                                                                  |
+ * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------------------|
+ * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                                   |
+ * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                                  |
+ * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                               |
+ * | ariaLabel             |`string`    | Optional label for screen readers.                                                                                           |
+ * | dismissLabel          |`string`    | Optional label for a dismiss button for screen readers (disabled if enableBackdropDismiss = false), default 'Tap to dismiss' |
  *
  *
  *

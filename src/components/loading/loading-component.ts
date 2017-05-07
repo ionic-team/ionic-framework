@@ -16,13 +16,14 @@ import { ViewController } from '../../navigation/view-controller';
   template:
     '<ion-backdrop [hidden]="!d.showBackdrop"></ion-backdrop>' +
     '<div class="loading-wrapper">' +
-      '<div *ngIf="showSpinner" class="loading-spinner">' +
+      '<div *ngIf="showSpinner" class="loading-spinner" aria-hidden="true">' +
         '<ion-spinner [name]="d.spinner"></ion-spinner>' +
       '</div>' +
       '<div *ngIf="d.content" [innerHTML]="d.content" class="loading-content"></div>' +
     '</div>',
   host: {
-    'role': 'dialog'
+    'role': 'alert',
+    'tabindex': '-1'
   },
   encapsulation: ViewEncapsulation.None,
 })
@@ -32,6 +33,7 @@ export class LoadingCmp {
   showSpinner: boolean;
   durationTimeout: any;
   gestureBlocker: BlockerDelegate;
+  activeElement: HTMLElement;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -74,17 +76,29 @@ export class LoadingCmp {
   }
 
   ionViewDidLeave() {
+    this._plt.untrapVirtualCursor(this._elementRef.nativeElement);
+    this.activeElement.focus();
     this.gestureBlocker.unblock();
   }
 
   ionViewDidEnter() {
-    this._plt.focusOutActiveElement();
-
     // If there is a duration, dismiss after that amount of time
     if ( this.d && this.d.duration ) {
       this.durationTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration);
     }
 
+    // remember the focused element so we can restore it later, the refocus also serves
+    // as indicator for screen readers that the load has completed.
+    this.activeElement = <HTMLElement>document.activeElement;
+    if (this.activeElement) {
+      this.activeElement.blur();
+    }
+    this._elementRef.nativeElement.focus();
+    // trap focus and virtual cursor within the loading box
+    // only the virtual cursor trap needs to be removed when the alert is dismissed
+    // as the focus trap is destroyed with the element
+    this._plt.trapFocus(this._elementRef.nativeElement);
+    this._plt.trapVirtualCursor(this._elementRef.nativeElement);
   }
 
   dismiss(role: string): Promise<any> {

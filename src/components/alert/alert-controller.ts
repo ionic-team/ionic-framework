@@ -128,15 +128,16 @@ import { Config } from '../../config/config';
  *
  *  Alert options
  *
- *  | Property              | Type      | Description                                                                  |
- *  |-----------------------|-----------|------------------------------------------------------------------------------|
- *  | title                 | `string`  | The title for the alert.                                                     |
- *  | subTitle              | `string`  | The subtitle for the alert.                                                  |
- *  | message               | `string`  | The message for the alert.                                                   |
- *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                   |
- *  | inputs                | `array`   | An array of inputs for the alert. See input options.                         |
- *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                      |
- *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop. Default true. |
+ *  | Property              | Type      | Description                                                                                                     |
+ *  |-----------------------|-----------|-----------------------------------------------------------------------------------------------------------------|
+ *  | title                 | `string`  | The title for the alert.                                                                                        |
+ *  | subTitle              | `string`  | The subtitle for the alert.                                                                                     |
+ *  | message               | `string`  | The message for the alert.                                                                                      |
+ *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                                                      |
+ *  | inputs                | `array`   | An array of inputs for the alert. See input options.                                                            |
+ *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                                                         |
+ *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop. Default true.                                    |
+ *  | alertDialogRole       | `boolean` | Whether the alert should have the "alertdialog" role (else "dialog"). Relevant for accessibility. Default true. |
  *
  *
  *  Input options

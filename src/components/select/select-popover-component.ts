@@ -16,7 +16,7 @@ export interface SelectPopoverOption {
   template: `
     <ion-list radio-group [(ngModel)]="value">
       <ion-item *ngFor="let option of options">
-        <ion-label>{{option.text}}</ion-label>
+        <ion-label aria-hidden="true">{{option.text}}</ion-label>
         <ion-radio [checked]="option.checked" [value]="option.value" [disabled]="option.disabled"></ion-radio>
       </ion-item>
     </ion-list>
