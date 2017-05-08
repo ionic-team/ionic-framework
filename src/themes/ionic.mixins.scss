@@ -180,7 +180,7 @@ $include-rtl: true !default;
   } @else {
     // TODO find variable name
     @warn "you are using a deprecated variable";
-    $property: $variable;
+    #{$property}: $variable;
   }
 }
 
