@@ -49,7 +49,7 @@ $button-md-background-color-activated:     color-shade($button-md-background-col
 $button-md-opacity-activated:              1 !default;
 
 /// @prop - Box shadow of the activated button
-$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21) !default;
+$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21), 0 0 0 0 transparent !default;
 
 /// @prop - Background color of the ripple on the button
 $button-md-ripple-background-color:       #555 !default;
