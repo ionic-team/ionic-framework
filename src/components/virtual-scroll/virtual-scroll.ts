@@ -229,11 +229,11 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _nodes: VirtualNode[] = [];
   _vHeight: number = 0;
   _lastCheck: number = 0;
+  _recordSize: number = 0;
   _data: VirtualData = {
     scrollTop: 0,
   };
   _queue: number = SCROLL_QUEUE_NO_CHANGES;
-
 
   _virtualTrackBy: TrackByFn;
 
@@ -445,7 +445,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     let needClean = false;
     if (changes) {
-      var lastRecord = this.lastRecord() + 1;
+      var lastRecord = this._recordSize;
 
       changes.forEachOperation((_, pindex, cindex) => {
 
@@ -465,6 +465,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     } else {
       needClean = true;
     }
+    this._recordSize = this._records.length;
 
     this.readUpdate(needClean);
     this.writeUpdate(needClean);
