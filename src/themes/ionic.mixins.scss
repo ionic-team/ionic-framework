@@ -29,6 +29,7 @@
   }
 }
 
+
 // SVG Background Image Mixin
 // --------------------------------------------------
 
@@ -66,6 +67,7 @@
     @warn "First value in `#{$map-name}` must start at 0, but starts at #{$first-value}.";
   }
 }
+
 
 // Breakpoint Mixins
 // ---------------------------------------------------------------------------------
@@ -186,8 +188,8 @@ $include-rtl: true !default;
     @content;
   } @else {
     // TODO find variable name
-    @warn "You are using a deprecated variable";
-    $property: $variable;
+    @warn "you are using a deprecated variable";
+    #{$property}: $variable;
   }
 }
 
@@ -322,8 +324,17 @@ $include-rtl: true !default;
   @include property(border-radius, $top-start, $top-end, $bottom-end, $bottom-start, true) {
     @include ltr() {
       border-top-left-radius: $top-start;
+    }
+
+    @if $top-end != null {
       border-top-right-radius: $top-end;
+    }
+
+    @if $bottom-end != null {
       border-bottom-right-radius: $bottom-end;
+    }
+
+    @if $bottom-start != null {
       border-bottom-left-radius: $bottom-start;
     }
 
@@ -335,6 +346,7 @@ $include-rtl: true !default;
     }
   }
 }
+
 
 // Sets correct text align with support for old browsers
 // @param {string} $direction - text direction
