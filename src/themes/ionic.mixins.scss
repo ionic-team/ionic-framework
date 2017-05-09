@@ -223,17 +223,17 @@ $include-rtl: true !default;
 // ----------------------------------------------------------
 @mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end, $content: false) {
   @if $top == $end and $top == $bottom and $top == $start {
-    $prop: $top;
+    #{$prop}: $top;
   } @else if $top == $bottom and $end == $start and $top != null and $end != null {
-    $prop: $top $end;
+    #{$prop}: $top $end;
   } @else if $end == $start and $top != null and $end != null and $bottom != null {
-    $prop: $top $end $bottom;
+    #{$prop}: $top $end $bottom;
   } @else if $top != null and $end != null and $bottom != null and $start != null {
     @include ltr() {
-      $prop: $top $end $bottom $start;
+      #{$prop}: $top $end $bottom $start;
     }
     @include rtl() {
-      $prop: $top $start $bottom $end;
+      #{$prop}: $top $start $bottom $end;
     }
   } @else {
     @if $content == true { // TODO check if @content exists instead
