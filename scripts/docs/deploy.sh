@@ -19,7 +19,8 @@ function run {
   cd ..
   VERSION=$(readJsonProp "package.json" "version")
 
-  #compile API Demos
+  # download and copy over API Demos
+  ./node_modules/.bin/gulp demos.download
   ./node_modules/.bin/gulp docs.demos --production=true
 
   # if release, copy old version to seperate folder and blow out docs root api
