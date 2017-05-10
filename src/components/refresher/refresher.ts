@@ -218,7 +218,7 @@ export class Refresher {
       return false;
     }
 
-    let scrollHostScrollTop = this._content.getContentDimensions().scrollTop;
+    let scrollHostScrollTop = this._content.getScrollTop();
     // if the scrollTop is greater than zero then it's
     // not possible to pull the content down yet
     if (scrollHostScrollTop > 0) {
