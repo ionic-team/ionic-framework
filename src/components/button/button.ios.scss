@@ -119,12 +119,18 @@ $button-ios-clear-opacity-hover:                    .6 !default;
 // iOS Round Button
 // --------------------------------------------------
 
-
 /// @prop - Padding of the round button
 $button-ios-round-padding:                          $button-round-padding !default;
 
 /// @prop - Border radius of the round button
 $button-ios-round-border-radius:                    $button-round-border-radius !default;
+
+
+// iOS Decorator Button
+// --------------------------------------------------
+
+/// @prop - Font weight of the strong button
+$button-ios-strong-font-weight:                     600 !default;
 
 
 // iOS Default Button
@@ -311,4 +317,12 @@ $button-ios-round-border-radius:                    $button-round-border-radius 
   @include ios-button-default($color-name, $color-base, $color-contrast);
   @include ios-button-outline($color-name, $color-base, $color-contrast);
   @include ios-button-clear($color-name, $color-base, $color-contrast);
+}
+
+
+// iOS strong Button
+// --------------------------------------------------
+
+.button-strong-ios {
+  font-weight: $button-ios-strong-font-weight;
 }

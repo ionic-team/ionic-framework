@@ -1,0 +1,144 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Form Inputs</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <form [formGroup]="loginForm" #mf="ngForm" novalidate>
+
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input clearInput [(ngModel)]="login.email" formControlName="email" type="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input clearInput [(ngModel)]="login.username" formControlName="username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Password</ion-label>
+        <ion-input clearInput [(ngModel)]="login.password" formControlName="password" type="password" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Comments</ion-label>
+        <ion-textarea clearInput [(ngModel)]="login.comments" formControlName="comments" required>Comment value</ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Gender</ion-label>
+        <ion-select [(ngModel)]="login.gender" formControlName="gender">
+          <ion-option value="f">Female</ion-option>
+          <ion-option value="m">Male</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <div padding-left padding-right>
+        <button ion-button block (click)="submit($event, login)">Login</button>
+      </div>
+      <div padding-left>
+        <b>Valid form?:</b> {{ mf.form.valid }}<br>
+        <b>Submitted form?:</b> {{ submitted }}<br>
+        <b>Email:</b> {{ login.email }}<br>
+        <b>Username:</b> {{ login.username }}<br>
+        <b>Password:</b> {{ login.password }}<br>
+        <b>Comments:</b> {{ login.comments }}
+      </div>
+    </ion-list>
+  </form>
+
+  <form [formGroup]="userForm" (ngSubmit)="submit($event, userForm)" #lf="ngForm">
+    <ion-list>
+      <ion-list-header>
+        Form w/ disabled inputs
+      </ion-list-header>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input formControlName="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Comments</ion-label>
+        <ion-textarea formControlName="comments"></ion-textarea>
+      </ion-item>
+      <div padding-left padding-right>
+        <button ion-button block type="submit">Login</button>
+        <button ion-button block type="button" color="secondary" (click)="toggleDisable()">Disable (toggle)</button>
+      </div>
+      <div padding-left>
+        <b>Valid form?:</b> {{ lf.form.valid }}<br>
+        <b>Submitted form?:</b> {{ submitted }}<br>
+        <b>Email:</b> {{ userForm.controls.email.value }}<br>
+        <b>Username:</b> {{ userForm.controls.username.value }}<br>
+        <b>Password:</b> {{ userForm.controls.password.value }}<br>
+        <b>Comments:</b> {{ userForm.controls.comments.value }}<br>
+      </div>
+    </ion-list>
+  </form>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input type="email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Comments</ion-label>
+      <ion-textarea required>Comment value</ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-input placeholder="Stand-alone ion-input"></ion-input>
+
+  <ion-input placeholder="Stand-alone textarea"></ion-input>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Custom Attrs</ion-label>
+      <ion-input autocomplete="off"
+                 spellcheck="false"
+                 required
+                 some-weird-attr="value"
+                 accept="sure"
+                 class="no-copy" id="no-copy" checked=checked
+                 value="copy custom attributes"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Disabled Input</ion-label>
+      <ion-input disabled value="Value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Disabled TextArea</ion-label>
+      <ion-textarea [disabled]="isTextAreaDisabled" value="Value"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button (click)="disable()">Disable</button>
+
+</ion-content>

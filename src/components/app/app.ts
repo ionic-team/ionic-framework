@@ -1,13 +1,19 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { EventEmitter, Injectable, Optional } from '@angular/core';
+import { Title, DOCUMENT } from '@angular/platform-browser';
 
-import { AppPortal, IonicApp } from './app-root';
-import { ClickBlock } from '../../util/click-block';
+import { IonicApp } from './app-root';
+import * as Constants from './app-constants';
+import { ClickBlock } from './click-block';
+import { runInDev, assert } from '../../util/util';
 import { Config } from '../../config/config';
-import { isNav, isTabs, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { MenuController } from './menu-controller';
 import { NavController } from '../../navigation/nav-controller';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
+import { IOSTransition } from '../../transitions/transition-ios';
+import { MDTransition } from '../../transitions/transition-md';
+import { WPTransition } from '../../transitions/transition-wp';
 
 
 /**
@@ -17,61 +23,85 @@ import { ViewController } from '../../navigation/view-controller';
  */
 @Injectable()
 export class App {
+
   private _disTime: number = 0;
   private _scrollTime: number = 0;
   private _title: string = '';
-  private _titleSrv: Title = new Title();
+  private _titleSrv: Title = new Title(DOCUMENT);
   private _rootNav: NavController = null;
   private _disableScrollAssist: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   _clickBlock: ClickBlock;
 
   /**
-   * @private
+   * @hidden
    */
   _appRoot: IonicApp;
 
   /**
-   * @private
+   * Observable that emits whenever a view loads in the app.
+   * @returns {Observable} Returns an observable
    */
-  viewDidLoad: EventEmitter<any> = new EventEmitter();
+  viewDidLoad: EventEmitter<ViewController> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits before any view is entered in the app.
+   * @returns {Observable} Returns an observable
    */
-  viewWillEnter: EventEmitter<any> = new EventEmitter();
+  viewWillEnter: EventEmitter<ViewController> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits after any view is entered in the app.
+   * @returns {Observable} Returns an observable
    */
-  viewDidEnter: EventEmitter<any> = new EventEmitter();
+  viewDidEnter: EventEmitter<ViewController> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits before any view is exited in the app.
+   * @returns {Observable} Returns an observable
    */
-  viewWillLeave: EventEmitter<any> = new EventEmitter();
+  viewWillLeave: EventEmitter<ViewController> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits after any view is exited in the app.
+   * @returns {Observable} Returns an observable
    */
-  viewDidLeave: EventEmitter<any> = new EventEmitter();
+  viewDidLeave: EventEmitter<ViewController> = new EventEmitter();
 
   /**
-   * @private
+   * Observable that emits before any view unloads in the app.
+   * @returns {Observable} Returns an observable
    */
-  viewWillUnload: EventEmitter<any> = new EventEmitter();
+  viewWillUnload: EventEmitter<ViewController> = new EventEmitter();
 
   constructor(
     private _config: Config,
-    private _platform: Platform
+    private _plt: Platform,
+    @Optional() private _menuCtrl?: MenuController
   ) {
     // listen for hardware back button events
     // register this back button action with a default priority
-    _platform.registerBackButtonAction(this.navPop.bind(this));
+    _plt.registerBackButtonAction(this.goBack.bind(this));
     this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
+
+    runInDev(() => {
+      // During developement, navPop can be triggered by calling
+      const win = <any>_plt.win();
+      if (!win['HWBackButton']) {
+        win['HWBackButton'] = () => {
+          let p = this.goBack();
+          p && p.catch(() => console.debug('hardware go back cancelled'));
+          return p;
+        };
+      }
+    });
+
+    _config.setTransition('ios-transition', IOSTransition);
+    _config.setTransition('md-transition', MDTransition);
+    _config.setTransition('wp-transition', WPTransition);
   }
 
   /**
@@ -86,13 +116,14 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(className: string, isAdd: boolean) {
     this._appRoot.setElementClass(className, isAdd);
   }
 
   /**
+   * @hidden
    * Sets if the app is currently enabled or not, meaning if it's
    * available to accept new user commands. For example, this is set to `false`
    * while views transition, a modal slides up, an action-sheet
@@ -103,46 +134,51 @@ export class App {
    * it will automatically enable the app again. It's basically a fallback incase
    * something goes wrong during a transition and the app wasn't re-enabled correctly.
    */
-  setEnabled(isEnabled: boolean, duration: number = 700) {
+  setEnabled(isEnabled: boolean, duration: number = 700, minDuration: number = 0) {
     this._disTime = (isEnabled ? 0 : Date.now() + duration);
 
     if (this._clickBlock) {
-      if (isEnabled || duration <= 32) {
+      if (isEnabled) {
         // disable the click block if it's enabled, or the duration is tiny
-        this._clickBlock.activate(false, 0);
+        this._clickBlock.activate(false,  CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
 
       } else {
         // show the click block for duration + some number
-        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS);
+        this._clickBlock.activate(true, duration + CLICK_BLOCK_BUFFER_IN_MILLIS, minDuration);
       }
     }
   }
 
   /**
+   * @hidden
    * Toggles whether an application can be scrolled
    * @param {boolean} disableScroll when set to `false`, the application's
    * scrolling is enabled. When set to `true`, scrolling is disabled.
    */
-  setScrollDisabled(disableScroll: boolean) {
+  _setDisableScroll(disableScroll: boolean) {
     if (this._disableScrollAssist) {
       this._appRoot._disableScroll(disableScroll);
     }
   }
 
   /**
-   * @private
+   * @hidden
    * Boolean if the app is actively enabled or not.
    * @return {boolean}
    */
   isEnabled(): boolean {
-    return (this._disTime < Date.now());
+    const disTime = this._disTime;
+    if (disTime === 0) {
+      return true;
+    }
+    return (disTime < Date.now());
   }
 
   /**
-   * @private
+   * @hidden
    */
   setScrolling() {
-    this._scrollTime = Date.now();
+    this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
   }
 
   /**
@@ -150,47 +186,52 @@ export class App {
    * @return {boolean} returns true or false
    */
   isScrolling(): boolean {
-    return ((this._scrollTime + ACTIVE_SCROLLING_TIME) > Date.now());
+    const scrollTime = this._scrollTime;
+    if (scrollTime === 0) {
+      return false;
+    }
+    if (scrollTime < Date.now()) {
+      this._scrollTime = 0;
+      return false;
+    }
+    return true;
   }
 
   /**
-   * @private
+   * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
   getActiveNav(): NavController {
-    var nav = this._rootNav || null;
-    var activeChildNav: any;
-
-    while (nav) {
-      activeChildNav = nav.getActiveChildNav();
-      if (!activeChildNav) {
-        break;
-      }
-      nav = activeChildNav;
+    const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
+    if (portal.length() > 0) {
+      return findTopNav(portal);
     }
-
-    return nav;
+    return findTopNav(this._rootNav || null);
   }
 
   /**
-   * @return {NavController} Retuns the root NavController
+   * @return {NavController} Returns the root NavController
    */
   getRootNav(): NavController {
     return this._rootNav;
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setRootNav(nav: any) {
     this._rootNav = nav;
   }
 
   /**
-   * @private
+   * @hidden
    */
-  present(enteringView: ViewController, opts: NavOptions, appPortal?: AppPortal): Promise<any> {
+  present(enteringView: ViewController, opts: NavOptions, appPortal?: number): Promise<any> {
+    assert(enteringView.isOverlay, 'presented view controller needs to be an overlay');
+
     const portal = this._appRoot._getPortal(appPortal);
 
+    // Set Nav must be set here in order to dimiss() work synchnously.
+    // TODO: move _setNav() to the earlier stages of NavController. _queueTrns()
     enteringView._setNav(portal);
 
     opts.keyboardClose = false;
@@ -211,70 +252,74 @@ export class App {
   }
 
   /**
-   * @private
+   * @hidden
    */
-  navPop(): Promise<any> {
-    // function used to climb up all parent nav controllers
-    function navPop(nav: any): Promise<any> {
-      if (nav) {
-        if (isTabs(nav)) {
-          // FYI, using "nav instanceof Tabs" throws a Promise runtime error for whatever reason, idk
-          // this is a Tabs container
-          // see if there is a valid previous tab to go to
-          let prevTab = nav.previousTab(true);
-          if (prevTab) {
-            console.debug('app, goBack previous tab');
-            nav.select(prevTab);
-            return Promise.resolve();
-          }
-
-        } else if (isNav(nav) && nav.length() > 1) {
-          // this nav controller has more than one view
-          // pop the current view on this nav and we're done here
-          console.debug('app, goBack pop nav');
-          return nav.pop();
-        }
-
-        // try again using the parent nav (if there is one)
-        return navPop(nav.parent);
-      }
-
-      // nerp, never found nav that could pop off a view
-      return null;
+  goBack(): Promise<any> {
+    if (this._menuCtrl && this._menuCtrl.isOpen()) {
+      return this._menuCtrl.close();
     }
 
-    // app must be enabled and there must be a
-    // root nav controller for go back to work
-    if (this._rootNav && this.isEnabled()) {
-      const portal = this._appRoot._getPortal();
-
-      // first check if the root navigation has any overlays
-      // opened in it's portal, like alert/actionsheet/popup
-      if (portal.length() > 0) {
-        // there is an overlay view in the portal
-        // let's pop this one off to go back
-        console.debug('app, goBack pop overlay');
-        return portal.pop();
+    const navPromise = this.navPop();
+    if (navPromise === null) {
+      // no views to go back to
+      // let's exit the app
+      if (this._config.getBoolean('navExitApp', true)) {
+        console.debug('app, goBack exitApp');
+        this._plt.exitApp();
       }
-
-      // next get the active nav, check itself and climb up all
-      // of its parent navs until it finds a nav that can pop
-      let navPromise = navPop(this.getActiveNav());
-      if (navPromise === null) {
-        // no views to go back to
-        // let's exit the app
-        if (this._config.getBoolean('navExitApp', true)) {
-          console.debug('app, goBack exitApp');
-          this._platform.exitApp();
-        }
-      }
-
-      return navPromise;
     }
-
-    return Promise.resolve();
+    return navPromise;
   }
 
+  /**
+   * @hidden
+   */
+  navPop(): Promise<any> {
+    if (!this._rootNav || !this.isEnabled()) {
+      return Promise.resolve();
+    }
+
+    // If there are any alert/actionsheet open, let's do nothing
+    const portal = this._appRoot._getPortal(Constants.PORTAL_DEFAULT);
+    if (portal.length() > 0) {
+      return Promise.resolve();
+    }
+    // next get the active nav, check itself and climb up all
+    // of its parent navs until it finds a nav that can pop
+    return recursivePop(this.getActiveNav());
+  }
+
+}
+
+function recursivePop(nav: any): Promise<any> {
+  if (!nav) {
+    return null;
+  }
+  if (isNav(nav)) {
+    var len = nav.length();
+    if (len > 1 || (nav._isPortal && len > 0)) {
+      // this nav controller has more than one view
+      // pop the current view on this nav and we're done here
+      console.debug('app, goBack pop nav');
+      return nav.pop();
+    }
+  }
+  // try again using the parent nav (if there is one)
+  return recursivePop(nav.parent);
+}
+
+function findTopNav(nav: NavController) {
+  var activeChildNav: any;
+
+  while (nav) {
+    activeChildNav = nav.getActiveChildNav();
+    if (!activeChildNav) {
+      break;
+    }
+    nav = activeChildNav;
+  }
+
+  return nav;
 }
 
 const ACTIVE_SCROLLING_TIME = 100;

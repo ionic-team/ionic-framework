@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should toggle left menu', function() {
   element(by.css('.e2eContentToggleLeftMenu')).click();

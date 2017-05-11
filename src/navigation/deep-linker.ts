@@ -1,122 +1,35 @@
+import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, isNav, isTab, isTabs, NavSegment, DIRECTION_BACK } from './nav-util';
+import { convertToViews, DIRECTION_BACK, isNav, isTab, isTabs, NavLink, NavSegment } from './nav-util';
+import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
-import { Nav } from '../components/nav/nav';
+import { Nav, Tab, Tabs } from './nav-interfaces';
 import { NavController } from './nav-controller';
-import { Tab } from '../components/tabs/tab';
-import { Tabs } from '../components/tabs/tabs';
 import { UrlSerializer } from './url-serializer';
 import { ViewController } from './view-controller';
 
 /**
- * @name DeepLinker
- * @description
- * DeepLinker handles registering and displaying specific views based on URLs. It's used
- * underneath NavController so you'll never have to interact with it directly. When a new
- * view is push'ed with NavController, the URL is updated to match the path back to this
- * page.
- *
- * Unlike traditional web apps, URLs don't dictate navigation in Ionic apps.
- * Instead, URLs help us link to specific pieces of content as a breadcrumb.
- * We keep the current URL updated as we navigate, but we use the NavController's
- * push and pop, or navPush to move around. This makes it much easier
- * to handle the kinds of complicated nested navigation native apps are known for.
- *
- * We refer to our URL system as a Deep Link system instead of a Router to encourage
- * Ionic developers to think of URLs as a breadcrumb rather than as the source of
- * truth in navigation. This encourages flexible navigation design and happy apps all
- * over the world.
- *
- *
- * @usage
- *
- * DeepLinker can be used in the `IonicModule.forRoot` method, as the third parameter
- *
- * ```ts
- *  imports: [
- *     IonicModule.forRoot(MyApp, {}, {
- *       links: []
- *    })
- *   ]
- * ```
- *
- * DeepLinker implements `DeepLinkerConfig`, which is an object with an array of links.
- * So for basic example based on the blank starer, a link setup like so:
- *
- * ```ts
- *  imports: [
- *     IonicModule.forRoot(MyApp, {}, {
- *       links: [
- *        { component: HomePage, name: 'Home', segment: 'home' }
- *      ]
- *    })
- *   ]
- * ```
- *
- * This Feels pretty familiar to how Angular sets up routes, but has some fundamental differences.
- * Since components could be loaded anywhere in the app, DeepLinker lets you define their URL segment.
- * So at any point, when a Component becomes the active view, we just append the URL segment.
- *
- * ### Dynamic Links
- *
- * Since passing data around is common practice in an app, we can reflect that in our app's URL in a similar manner to Angular's router.
- *
- * ```ts
- *  links: [
- *    { component: HomePage, name: 'Home', segment: 'home' },
- *    { component: DetailPage, name: 'Detail', segment: 'detail/:user' }
- *  ]
- *  ```
- * This approach of using `:param` has been around in previous routing solutions.
- * All this means is that when we push a new component on to the stack, in the navParams, there should be a property of `user`.
- * The property needs to be something that can be serialized by the DeepLinker. 
- * So setting its value to be that of a string or number is suggested.
- *
- * So in a typical `navCtrl.push()` scenario, we'd do something like this:
- *
- * ```ts
- * pushPage(userInfo) {
- *   this.navCtrl.push(DetailPage, {
- *   'user': userInfo
- *   })
- * }
- * ```
- *
- *
- *
- * ### Default History
- *
- *  In some cases when a page loads, you might be sent to a component that has it's own information, but not back view.
- *  This situation is common when loading a page from a Push Notification.
- *  If you want a component to have a default history when none is present, you can use the `defaultHistory` property
- *
- * The `defaultHistory` property takes an array of components to create the history stack if none exist.
- *
- * ```ts
- *  links: [
- *    { component: HomePage, name: 'Home', segment: 'home' },
- *    { component: DetailPage, name: 'Detail', segment: 'detail/:user', defaultHistory: [HomePage] }
- *  ]
- *  ```
+ * @hidden
  */
 export class DeepLinker {
 
-  /**
-   * @internal
-   */
-  segments: NavSegment[] = [];
-  /**
-   * @internal
-   */
-  history: string[] = [];
-  /**
-   * @internal
-   */
-  indexAliasUrl: string;
+  /** @internal */
+  _segments: NavSegment[] = [];
+  /** @internal */
+  _history: string[] = [];
+  /** @internal */
+  _indexAliasUrl: string;
 
-  constructor(public _app: App, public _serializer: UrlSerializer, public _location: Location) { }
+
+  constructor(
+    public _app: App,
+    public _serializer: UrlSerializer,
+    public _location: Location,
+    public _moduleLoader: ModuleLoader,
+    public _baseCfr: ComponentFactoryResolver
+  ) {}
 
   /**
    * @internal
@@ -127,14 +40,14 @@ export class DeepLinker {
     console.debug(`DeepLinker, init load: ${browserUrl}`);
 
     // update the Path from the browser URL
-    this.segments = this._serializer.parse(browserUrl);
+    this._segments = this._serializer.parse(browserUrl);
 
     // remember this URL in our internal history stack
-    this.historyPush(browserUrl);
+    this._historyPush(browserUrl);
 
     // listen for browser URL changes
     this._location.subscribe((locationChg: { url: string }) => {
-      this.urlChange(normalizeUrl(locationChg.url));
+      this._urlChange(normalizeUrl(locationChg.url));
     });
   }
 
@@ -142,50 +55,50 @@ export class DeepLinker {
    * The browser's location has been updated somehow.
    * @internal
    */
-  urlChange(browserUrl: string) {
+  _urlChange(browserUrl: string) {
     // do nothing if this url is the same as the current one
-    if (!this.isCurrentUrl(browserUrl)) {
+    if (!this._isCurrentUrl(browserUrl)) {
 
-      if (this.isBackUrl(browserUrl)) {
+      if (this._isBackUrl(browserUrl)) {
         // scenario 2: user clicked the browser back button
         // scenario 4: user changed the browser URL to what was the back url was
         // scenario 5: user clicked a link href that was the back url
         console.debug(`DeepLinker, browser urlChange, back to: ${browserUrl}`);
-        this.historyPop();
+        this._historyPop();
 
       } else {
         // scenario 3: user click forward button
         // scenario 4: user changed browser URL that wasn't the back url
         // scenario 5: user clicked a link href that wasn't the back url
         console.debug(`DeepLinker, browser urlChange, forward to: ${browserUrl}`);
-        this.historyPush(browserUrl);
+        this._historyPush(browserUrl);
       }
 
       // get the app's root nav
-      const appRootNav = <Nav>this._app.getRootNav();
+      const appRootNav = <Nav> (this._app.getRootNav() as any);
       if (appRootNav) {
         if (browserUrl === '/') {
           // a url change to the index url
-          if (isPresent(this.indexAliasUrl)) {
+          if (isPresent(this._indexAliasUrl)) {
             // we already know the indexAliasUrl
             // update the url to use the know alias
-            browserUrl = this.indexAliasUrl;
+            browserUrl = this._indexAliasUrl;
 
           } else {
             // the url change is to the root but we don't
             // already know the url used. So let's just
             // reset the root nav to its root page
-            appRootNav.goToRoot({
+            return appRootNav.goToRoot({
               updateUrl: false,
               isNavRoot: true
             });
-            return;
           }
         }
 
         // normal url
-        this.segments = this._serializer.parse(browserUrl);
-        this.loadNavFromPath(appRootNav);
+        this._segments = this._serializer.parse(browserUrl);
+        // this is so dirty I need a shower
+        this._loadNavFromPath(((appRootNav as any) as NavController));
       }
     }
   }
@@ -202,13 +115,13 @@ export class DeepLinker {
       if (activeNav) {
 
         // build up the segments of all the navs from the lowest level
-        this.segments = this.pathFromNavs(activeNav);
+        this._segments = this._pathFromNavs(activeNav);
 
         // build a string URL out of the Path
-        const browserUrl = this._serializer.serialize(this.segments);
+        const browserUrl = this._serializer.serialize(this._segments);
 
         // update the browser's location
-        this.updateLocation(browserUrl, direction);
+        this._updateLocation(browserUrl, direction);
       }
     }
   }
@@ -216,35 +129,68 @@ export class DeepLinker {
   /**
    * @internal
    */
-  updateLocation(browserUrl: string, direction: string) {
-    if (this.indexAliasUrl === browserUrl) {
+  _updateLocation(browserUrl: string, direction: string) {
+    if (this._indexAliasUrl === browserUrl) {
       browserUrl = '/';
     }
 
-    if (direction === DIRECTION_BACK && this.isBackUrl(browserUrl)) {
+    if (direction === DIRECTION_BACK && this._isBackUrl(browserUrl)) {
       // this URL is exactly the same as the back URL
       // it's safe to use the browser's location.back()
       console.debug(`DeepLinker, location.back(), url: '${browserUrl}'`);
-      this.historyPop();
+      this._historyPop();
       this._location.back();
 
-    } else if (!this.isCurrentUrl(browserUrl)) {
+    } else if (!this._isCurrentUrl(browserUrl)) {
       // probably navigating forward
       console.debug(`DeepLinker, location.go('${browserUrl}')`);
-      this.historyPush(browserUrl);
+      this._historyPush(browserUrl);
       this._location.go(browserUrl);
     }
   }
 
+
+  getComponentFromName(componentName: string): Promise<any> {
+    const link = this._serializer.getLinkFromName(componentName);
+    if (link) {
+      // cool, we found the right link for this component name
+      return this.getNavLinkComponent(link);
+    }
+
+    // umm, idk
+    return Promise.reject(`invalid link: ${componentName}`);
+  }
+
+
+  getNavLinkComponent(link: NavLink) {
+    if (link.component) {
+      // sweet, we're already got a component loaded for this link
+      return Promise.resolve(link.component);
+    }
+
+    if (link.loadChildren) {
+      // awesome, looks like we'll lazy load this component
+      // using loadChildren as the URL to request
+      return this._moduleLoader.load(link.loadChildren).then((response) => {
+        link.component = response.component;
+        return response.component;
+      });
+    }
+
+    return Promise.reject(`invalid link component: ${link.name}`);
+  }
+
+
   /**
    * @internal
    */
-  getComponentFromName(componentName: any): any {
-    const segment = this._serializer.createSegmentFromName(componentName);
-    if (segment && segment.component) {
-      return segment.component;
+  resolveComponent(component: any): ComponentFactory<any> {
+
+    let cfr = this._moduleLoader.getComponentFactoryResolver(component);
+    if (!cfr) {
+      cfr = this._baseCfr;
     }
-    return null;
+    return cfr.resolveComponentFactory(component);
   }
 
   /**
@@ -254,7 +200,7 @@ export class DeepLinker {
     // create a segment out of just the passed in name
     const segment = this._serializer.createSegmentFromName(nameOrComponent);
     if (segment) {
-      const path = this.pathFromNavs(nav, segment.component, data);
+      const path = this._pathFromNavs(nav, segment.component, data);
       // serialize the segments into a browser URL
       // and prepare the URL with the location and return
       const url = this._serializer.serialize(path);
@@ -270,7 +216,7 @@ export class DeepLinker {
    *
    * @internal
    */
-  pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
+  _pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
     const segments: NavSegment[] = [];
     let view: ViewController;
     let segment: NavSegment;
@@ -307,7 +253,7 @@ export class DeepLinker {
       if (isTab(nav)) {
         // this nav is a Tab, which is a child of Tabs
         // add a segment to represent which Tab is the selected one
-        tabSelector = this.getTabSelector(<any>nav);
+        tabSelector = this._getTabSelector(<any>nav);
         segments.push({
           id: tabSelector,
           name: tabSelector,
@@ -333,7 +279,7 @@ export class DeepLinker {
   /**
    * @internal
    */
-  getTabSelector(tab: Tab): string {
+  _getTabSelector(tab: Tab): string {
     if (isPresent(tab.tabUrlPath)) {
       return tab.tabUrlPath;
     }
@@ -371,7 +317,7 @@ export class DeepLinker {
    * @internal
    */
   initNav(nav: any): NavSegment {
-    const path = this.segments;
+    const path = this._segments;
 
     if (nav && path.length) {
       if (!nav.parent) {
@@ -394,22 +340,22 @@ export class DeepLinker {
   /**
    * @internal
    */
-  initViews(segment: NavSegment): ViewController[] {
-    let views: ViewController[];
+  initViews(segment: NavSegment) {
+    const link = this._serializer.getLinkFromName(segment.name);
+    return this.getNavLinkComponent(link).then((component: any) => {
+      segment.component = component;
+      const view = new ViewController(component, segment.data);
+      view.id = segment.id;
 
-    if (isArray(segment.defaultHistory)) {
-      views = convertToViews(this, segment.defaultHistory);
+      if (isArray(segment.defaultHistory)) {
+        return convertToViews(this, segment.defaultHistory).then(views => {
+          views.push(view);
+          return views;
+        });
+      }
 
-    } else {
-      views = [];
-    }
-
-    const view = new ViewController(segment.component, segment.data);
-    view.id = segment.id;
-
-    views.push(view);
-
-    return views;
+      return [view];
+    });
   }
 
   /**
@@ -422,13 +368,13 @@ export class DeepLinker {
    *
    * @internal
    */
-  loadNavFromPath(nav: NavController, done?: Function) {
+  _loadNavFromPath(nav: NavController, done?: Function) {
     if (!nav) {
       done && done();
 
     } else {
-      this.loadViewFromSegment(nav, () => {
-        this.loadNavFromPath(nav.getActiveChildNav(), done);
+      this._loadViewFromSegment(nav, () => {
+        this._loadNavFromPath(nav.getActiveChildNav(), done);
       });
     }
   }
@@ -436,7 +382,7 @@ export class DeepLinker {
   /**
    * @internal
    */
-  loadViewFromSegment(navInstance: any, done: Function) {
+  _loadViewFromSegment(navInstance: any, done: Function) {
     // load up which nav ids belong to its nav segment
     let segment = this.initNav(navInstance);
     if (!segment) {
@@ -495,25 +441,25 @@ export class DeepLinker {
   /**
    * @internal
    */
-  isBackUrl(browserUrl: string) {
-    return (browserUrl === this.history[this.history.length - 2]);
+  _isBackUrl(browserUrl: string) {
+    return (browserUrl === this._history[this._history.length - 2]);
   }
 
   /**
    * @internal
    */
-  isCurrentUrl(browserUrl: string) {
-    return (browserUrl === this.history[this.history.length - 1]);
+  _isCurrentUrl(browserUrl: string) {
+    return (browserUrl === this._history[this._history.length - 1]);
   }
 
   /**
    * @internal
    */
-  historyPush(browserUrl: string) {
-    if (!this.isCurrentUrl(browserUrl)) {
-      this.history.push(browserUrl);
-      if (this.history.length > 30) {
-        this.history.shift();
+  _historyPush(browserUrl: string) {
+    if (!this._isCurrentUrl(browserUrl)) {
+      this._history.push(browserUrl);
+      if (this._history.length > 30) {
+        this._history.shift();
       }
     }
   }
@@ -521,18 +467,18 @@ export class DeepLinker {
   /**
    * @internal
    */
-  historyPop() {
-    this.history.pop();
-    if (!this.history.length) {
-      this.historyPush(this._location.path());
+  _historyPop() {
+    this._history.pop();
+    if (!this._history.length) {
+      this._historyPush(this._location.path());
     }
   }
 
 }
 
 
-export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location) {
-  const deepLinker = new DeepLinker(app, serializer, location);
+export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, moduleLoader: ModuleLoader, cfr: ComponentFactoryResolver) {
+  const deepLinker = new DeepLinker(app, serializer, location, moduleLoader, cfr);
   deepLinker.init();
   return deepLinker;
 }

@@ -16,10 +16,13 @@ $item-ios-paragraph-font-size:            1.4rem !default;
 $item-ios-paragraph-text-color:           #8e9093 !default;
 
 /// @prop - Size of the avatar in the item
-$item-ios-avatar-size:                    3.6rem !default;
+$item-ios-avatar-size:                    36px !default;
+
+/// @prop - Border radius of the avatar in the item
+$item-ios-avatar-border-radius:           50% !default;
 
 /// @prop - Size of the thumbnail in the item
-$item-ios-thumbnail-size:                 5.6rem !default;
+$item-ios-thumbnail-size:                 56px !default;
 
 /// @prop - Shows the detail arrow icon on an item
 $item-ios-detail-push-show:               true !default;
@@ -118,29 +121,23 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 // iOS Item Media
 // --------------------------------------------------
 
-.item-ios [item-left] {
+.item-ios [item-left], // deprecated
+.item-ios [item-start] {
   margin: $item-ios-padding-media-top $item-ios-padding-left $item-ios-padding-media-bottom 0;
 }
 
-.item-ios [item-right] {
+.item-ios [item-right], // deprecated
+.item-ios [item-end] {
   margin: $item-ios-padding-media-top ($item-ios-padding-left / 2) $item-ios-padding-media-bottom ($item-ios-padding-right / 2);
 }
 
-.item-ios ion-icon[item-left],
-.item-ios ion-icon[item-right] {
+.item-ios ion-icon[item-left], // deprecated
+.item-ios ion-icon[item-right], // deprecated
+.item-ios ion-icon[item-start],
+.item-ios ion-icon[item-end] {
   margin-top: $item-ios-padding-icon-top;
   margin-bottom: $item-ios-padding-icon-bottom;
   margin-left: 0;
-}
-
-.item-ios ion-avatar[item-left],
-.item-ios ion-thumbnail[item-left] {
-  margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
-}
-
-.item-ios ion-avatar[item-right],
-.item-ios ion-thumbnail[item-right] {
-  margin: ($item-ios-padding-right / 2);
 }
 
 .item-ios .item-button {
@@ -156,26 +153,52 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   padding: 0 1px;
 }
 
+.item-ios ion-avatar[item-left], // deprecated
+.item-ios ion-thumbnail[item-left], // deprecated
+.item-ios ion-avatar[item-start],
+.item-ios ion-thumbnail[item-start] {
+  margin: ($item-ios-padding-right / 2) $item-ios-padding-right ($item-ios-padding-right / 2) 0;
+}
+
+.item-ios ion-avatar[item-right], // deprecated
+.item-ios ion-thumbnail[item-right], // deprecated
+.item-ios ion-avatar[item-end],
+.item-ios ion-thumbnail[item-end] {
+  margin: ($item-ios-padding-right / 2);
+}
+
+
+// iOS Item Avatar
+// --------------------------------------------------
+
 .item-ios ion-avatar {
   min-width: $item-ios-avatar-size;
   min-height: $item-ios-avatar-size;
 }
 
+.item-ios ion-avatar ion-img,
 .item-ios ion-avatar img {
-  max-width: $item-ios-avatar-size;
-  max-height: $item-ios-avatar-size;
+  width: $item-ios-avatar-size;
+  height: $item-ios-avatar-size;
 
-  border-radius: $item-ios-avatar-size / 2;
+  border-radius: $item-ios-avatar-border-radius;
+
+  overflow: hidden;
 }
+
+
+// iOS Item Thumbnail
+// --------------------------------------------------
 
 .item-ios ion-thumbnail {
   min-width: $item-ios-thumbnail-size;
   min-height: $item-ios-thumbnail-size;
 }
 
+.item-ios ion-thumbnail ion-img,
 .item-ios ion-thumbnail img {
-  max-width: $item-ios-thumbnail-size;
-  max-height: $item-ios-thumbnail-size;
+  width: $item-ios-thumbnail-size;
+  height: $item-ios-thumbnail-size;
 }
 
 

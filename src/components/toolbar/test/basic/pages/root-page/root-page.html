@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Toolbar</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only color="secondary">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Subheader</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <ion-card color="secondary">
+    <ion-card-header>
+      Card Header
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+      Some normal text in content.
+      <h3>h3 in content</h3>
+      <p>
+        Paragraph in content.
+      </p>
+      <p>
+        Another paragraph in content.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="primary" class="rainbow-content">
+    <ion-card-header>
+      Card Header
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+      Some normal text in content.
+      <h3>h3 in content</h3>
+      <p>
+        Paragraph in content.
+      </p>
+      <p>
+        Another paragraph in content.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card color="primary">
+    <ion-card-header>
+      Card Header
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-title>
+        Title
+      </ion-card-title>
+      Some normal text in content.
+      <h3>h3 in content</h3>
+      <p>
+        Paragraph in content.
+      </p>
+      <p>
+        Another paragraph in content.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-item *ngFor="let item of [0,1,2,3,4,5,6,7,8,9]">
+      {{ item }}
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons end>
+      <button ion-button icon-only #button2>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar>
+    </ion-searchbar>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-title>
+      Footer
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>

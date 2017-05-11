@@ -3,19 +3,40 @@
 // Windows Loading Indicator
 // --------------------------------------------------
 
+/// @prop - Padding of the loading wrapper
 $loading-wp-padding:                   20px !default;
+
+/// @prop - Max width of the loading wrapper
 $loading-wp-max-width:                 280px !default;
+
+/// @prop - Maximum height of the loading wrapper
 $loading-wp-max-height:                90% !default;
+
+/// @prop - Border radius of the loading wrapper
 $loading-wp-border-radius:             2px !default;
+
+/// @prop - Text color of the loading wrapper
 $loading-wp-text-color:                #fff !default;
+
+/// @prop - Background of the loading wrapper
 $loading-wp-background:                #000 !default;
 
+/// @prop - Color of the loading spinner
 $loading-wp-spinner-color:             $loading-wp-text-color !default;
 
+/// @prop - Color of the ios loading spinner
 $loading-wp-spinner-ios-color:         $loading-wp-spinner-color !default;
+
+/// @prop - Color of the bubbles loading spinner
 $loading-wp-spinner-bubbles-color:     $loading-wp-spinner-color !default;
+
+/// @prop - Color of the circles loading spinner
 $loading-wp-spinner-circles-color:     $loading-wp-spinner-color !default;
+
+/// @prop - Color of the crescent loading spinner
 $loading-wp-spinner-crescent-color:    $loading-wp-spinner-color !default;
+
+/// @prop - Color of the dots loading spinner
 $loading-wp-spinner-dots-color:        $loading-wp-spinner-color !default;
 
 

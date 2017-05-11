@@ -1,15 +1,16 @@
-import { PanGesture } from './drag-gesture';
+import { PanGesture } from './pan-gesture';
 import { clamp, assert } from '../util/util';
-import { nativeRaf, pointerCoord } from '../util/dom';
+import { Platform } from '../platform/platform';
+import { pointerCoord } from '../util/dom';
 
 /**
- * @private
+ * @hidden
  */
 export class SlideGesture extends PanGesture {
   public slide: SlideData = null;
 
-  constructor(element: HTMLElement, opts = {}) {
-    super(element, opts);
+  constructor(plt: Platform, element: HTMLElement, opts = {}) {
+    super(plt, element, opts);
   }
 
   /*
@@ -49,15 +50,13 @@ export class SlideGesture extends PanGesture {
       distance: 0,
       velocity: 0,
     };
-    this.started = false;
-    nativeRaf(() => {
-      let {min, max} = this.getSlideBoundaries(this.slide, ev);
-      this.slide.min = min;
-      this.slide.max = max;
-      this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
-      this.started = true;
-      this.onSlideStart(this.slide, ev);
-    });
+
+    // TODO: we should run this in the next frame
+    let {min, max} = this.getSlideBoundaries(this.slide, ev);
+    this.slide.min = min;
+    this.slide.max = max;
+    this.slide.elementStartPos = this.getElementStartPos(this.slide, ev);
+    this.onSlideStart(this.slide, ev);
   }
 
   onDragMove(ev: any) {
@@ -93,7 +92,7 @@ export class SlideGesture extends PanGesture {
 }
 
 /**
- * @private
+ * @hidden
  */
 export interface SlideData {
   min: number;

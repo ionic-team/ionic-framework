@@ -1,0 +1,52 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Default Buttons</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding style="text-align:center" no-bounce>
+
+  <p>
+    <button ion-button (click)="test($event)">Default</button>
+    <button ion-button (click)="test($event)" class="activated">Default.activated</button>
+  </p>
+
+  <p>
+    <button ion-button color="primary">Primary</button>
+    <button ion-button color="primary" class="activated">Primary.activated</button>
+  </p>
+
+  <p>
+    <button ion-button color="secondary">Secondary</button>
+    <button ion-button color="secondary" class="activated">Secondary.activated</button>
+  </p>
+
+  <p>
+    <button ion-button color="danger">Danger</button>
+    <button ion-button color="danger" class="activated">Danger.activated</button>
+  </p>
+
+  <p>
+    <button ion-button color="light">Light</button>
+    <button ion-button color="light" class="activated">Light.activated</button>
+  </p>
+
+  <p>
+    <button ion-button color="dark">Dark</button>
+    <button ion-button color="dark" class="activated">Dark.activated</button>
+  </p>
+
+  <p>
+    <button ion-button disabled>Button Disabled</button>
+    <button ion-button color="secondary" disabled>Secondary Disabled</button>
+  </p>
+
+  <p>
+    <button ion-button [color]="btnColor" (click)="chgColor()">Change Color</button>
+    <button ion-button outline [color]="btnColor" (click)="chgColor()">Change Color</button>
+  </p>
+
+</ion-content>

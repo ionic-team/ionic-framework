@@ -40,9 +40,22 @@ module.exports = function collectInputsOutputs() {
           }
 
           // update doc with pruned members list and add inputs and outputs
-          doc.members = members;
-          doc.inputs = inputs;
-          doc.outputs = outputs;
+          doc.members = members.sort(alphabetize);
+          doc.inputs = inputs.sort(alphabetize);
+          doc.outputs = outputs.sort(alphabetize);
+        }
+
+        function alphabetize(a, b) {
+          if (!a.name) {
+            return 1;
+          } else if (!b.name) {
+            return -1;
+          } else if (a.name < b.name) {
+            return -1;
+          } else if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
         }
 
         function parseMember(member) {

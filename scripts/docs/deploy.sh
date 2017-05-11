@@ -19,8 +19,9 @@ function run {
   cd ..
   VERSION=$(readJsonProp "package.json" "version")
 
-  #compile API Demos
-  #./node_modules/.bin/gulp docs.demos --production=true
+  # download and copy over API Demos
+  ./node_modules/.bin/gulp demos.download
+  ./node_modules/.bin/gulp docs.demos --production=true
 
   # if release, copy old version to seperate folder and blow out docs root api
   if $IS_RELEASE; then
@@ -37,6 +38,8 @@ function run {
     ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME" --initial-build true
     ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME"
     ./node_modules/.bin/gulp docs.dgeni --doc-version="nightly"
+
+    ./node_modules/.bin/gulp docs.homepageVersionUpdate
 
   else
 

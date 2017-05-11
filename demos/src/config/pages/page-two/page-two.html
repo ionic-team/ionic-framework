@@ -1,0 +1,83 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Config</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="config-demo">
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Back Button Icon</ion-label>
+      <ion-select [(ngModel)]="config.backButtonIcon">
+        <ion-option value="ios-arrow-back">ios-arrow-back</ion-option>
+        <ion-option value="md-arrow-back">md-arrow-back</ion-option>
+        <ion-option value="close">close</ion-option>
+        <ion-option value="heart">heart</ion-option>
+        <ion-option value="globe">globe</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Icon Mode</ion-label>
+      <ion-select [(ngModel)]="config.iconMode">
+        <ion-option value="ios">ios</ion-option>
+        <ion-option value="md">md</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Tab Placement</ion-label>
+      <ion-select [(ngModel)]="config.tabsPlacement">
+        <ion-option value="bottom">bottom</ion-option>
+        <ion-option value="top">top</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+  <p class="note">Note: the config will not be updated until you click the button below.</p>
+
+  <div padding>
+    <button ion-button block (click)="load()">
+      Update Config
+    </button>
+  </div>
+
+  <p class="note">Any config for your app should be passed as the second argument to <code>IonicModule.forRoot()</code>.</p>
+
+  <!-- this has to be formatted weird for pre -->
+  <pre margin>
+&#64;NgModule(&#123;
+  imports: [
+  BrowserModule,
+    IonicModule.forRoot(MyApp, &#123;
+      backButtonIcon: "{{initialConfig?.backButtonIcon}}"
+      iconMode: "{{initialConfig?.iconMode}}"
+      tabsPlacement: "{{initialConfig?.tabsPlacement}}"
+    &#125;)
+  ]
+&#125;)
+</pre>
+
+  <div padding>
+    <button ion-button block color="secondary" (click)="push()">
+      Go to Another Page
+    </button>
+  </div>
+
+</ion-content>
+
+<style>
+  .config-demo pre {
+    background-color: #f8f8f8;
+  }
+
+  .config-demo .note {
+    color: #444;
+    font-style: italic;
+    margin: 0 16px;
+  }
+</style>

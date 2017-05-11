@@ -3,13 +3,18 @@
 // Material Design Toast
 // --------------------------------------------------
 
-$toast-md-text-align:                            left !default;
+/// @prop - Background of the toast wrapper
 $toast-md-background:                            #333 !default;
-$toast-md-group-margin-bottom:                   8px !default;
 
+/// @prop - Color of the toast title
 $toast-md-title-color:                           #fff !default;
+
+/// @prop - Font size of the toast title
 $toast-md-title-font-size:                       1.5rem !default;
+
+/// @prop - Padding of the toast title
 $toast-md-title-padding:                         19px 16px 17px !default;
+
 
 .toast-md .toast-wrapper {
   position: absolute;

@@ -1,0 +1,474 @@
+<ion-header>
+
+  <ion-toolbar color="primary">
+    <ion-title>Responsive</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-auto>
+        <a href="#equal-width">Equal-width</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#setting-one-column-width">Setting one column width</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#variable-width">Variable-width</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#offsetting-columns">Offsetting columns</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#push-and-pull">Push and pull</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#responsive-attributes">Responsive attributes</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#vertical-alignment">Vertical Alignment</a>
+      </ion-col>
+      <ion-col col-auto>
+        <a href="#horizontal-alignment">Horizontal Alignment</a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="grid-demo">
+    <h1 id="equal-width">Equal-width</h1>
+    <p padding>
+      The following grid has equal width columns.
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          1 of 2
+        </ion-col>
+        <ion-col>
+          2 of 2
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          1 of 3
+        </ion-col>
+        <ion-col>
+          2 of 3
+        </ion-col>
+        <ion-col>
+          3 of 3
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="setting-one-column-width">Setting one column width</h1>
+    <p padding>
+      The following grid has a wider center column on each row.
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          1 of 3
+        </ion-col>
+        <ion-col col-8>
+          2 of 3 (wider)
+        </ion-col>
+        <ion-col>
+          3 of 3
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          1 of 3
+        </ion-col>
+        <ion-col col-6>
+          2 of 3 (wider)
+        </ion-col>
+        <ion-col>
+          3 of 3
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="variable-width">Variable-width</h1>
+    <p padding>
+      The following grid has columns that take up the width of their content.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          1 of 3
+        </ion-col>
+        <ion-col col-auto>
+          Variable width content
+        </ion-col>
+        <ion-col>
+          3 of 3
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          1 of 4
+        </ion-col>
+        <ion-col>
+          2 of 4
+        </ion-col>
+        <ion-col col-auto no-padding>
+          <ion-input placeholder="Variable width input"></ion-input>
+        </ion-col>
+        <ion-col>
+          4 of 4
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="offsetting-columns">Offseting Columns</h1>
+    <p padding>
+      The following grid has columns that are offset on each row.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3 offset-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-md-3>
+          1 of 3
+        </ion-col>
+        <ion-col col-md-3>
+          2 of 3
+        </ion-col>
+        <ion-col col-md-3 offset-md-3>
+          3 of 3
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="push-and-pull">Push and pull</h1>
+    <p padding>
+      The following grid has columns that are reordered using push and pull.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-9 push-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3 pull-9>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-md-6 push-md-3>
+          1 of 3
+        </ion-col>
+        <ion-col col-md-3 push-md-3>
+          2 of 3
+        </ion-col>
+        <ion-col col-md-3 pull-md-9>
+          3 of 3
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="responsive-attributes">Responsive attributes</h1>
+    <p padding>
+      The following grid adds custom widths for all screen sizes.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          1 of 4
+        </ion-col>
+        <ion-col col-2>
+          2 of 4
+        </ion-col>
+        <ion-col col-2>
+          3 of 4
+        </ion-col>
+        <ion-col col-4>
+          4 of 4
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <p padding>
+      The following grid will take up 12 columns until the sm breakpoint (576px) at which point it will take equal width.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 col-sm>
+          1 of 4
+        </ion-col>
+        <ion-col col-12 col-sm>
+          2 of 4
+        </ion-col>
+        <ion-col col-12 col-sm>
+          3 of 4
+        </ion-col>
+        <ion-col col-12 col-sm>
+          4 of 4
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <p padding>
+      The following grid will take up 12 columns until the md breakpoint (768px) at which point it will take equal width.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 col-md>
+          1 of 4
+        </ion-col>
+        <ion-col col-12 col-md>
+          2 of 4
+        </ion-col>
+        <ion-col col-12 col-md>
+          3 of 4
+        </ion-col>
+        <ion-col col-12 col-md>
+          4 of 4
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <p padding>
+      The following grid will take up 12 columns until the lg breakpoint (992px) at which point it will change to take up 6 and 3 columns.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 col-lg-6 offset-lg-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-12 col-lg-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="vertical-alignment">Vertical Alignment</h1>
+    <p padding>
+      The following grid has columns that align themselves vertically inside of the row based on the attribute.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          1 of 4
+        </ion-col>
+        <ion-col>
+          2 of 4 <br>#
+        </ion-col>
+        <ion-col>
+          3 of 4 <br>#<br>#
+        </ion-col>
+        <ion-col>
+          4 of 4 <br>#<br>#<br>#
+        </ion-col>
+      </ion-row>
+
+      <ion-row align-items-start>
+        <ion-col>
+          1 of 4
+        </ion-col>
+        <ion-col>
+          2 of 4
+        </ion-col>
+        <ion-col>
+          3 of 4
+        </ion-col>
+        <ion-col>
+          4 of 4 <br>#<br>#<br>#
+        </ion-col>
+      </ion-row>
+
+      <ion-row align-items-center>
+        <ion-col>
+          1 of 4
+        </ion-col>
+        <ion-col>
+          2 of 4
+        </ion-col>
+        <ion-col>
+          3 of 4
+        </ion-col>
+        <ion-col>
+          4 of 4 <br>#<br>#<br>#
+        </ion-col>
+      </ion-row>
+
+      <ion-row align-items-end>
+        <ion-col>
+          1 of 4
+        </ion-col>
+        <ion-col>
+          2 of 4
+        </ion-col>
+        <ion-col>
+          3 of 4
+        </ion-col>
+        <ion-col>
+          4 of 4 <br>#<br>#<br>#
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col align-self-start>
+          1 of 4
+        </ion-col>
+        <ion-col align-self-center>
+          2 of 4
+        </ion-col>
+        <ion-col align-self-end>
+          3 of 4
+        </ion-col>
+        <ion-col>
+          4 of 4 <br>#<br>#<br>#
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1 id="horizontal-alignment">Horizontal Alignment</h1>
+    <p padding>
+      The following grid has columns that align themselves horizontally inside of the row based on the attribute.<br>
+    </p>
+    <ion-grid>
+      <ion-row justify-content-start>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-center>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-end>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-around>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+
+      <ion-row justify-content-between>
+        <ion-col col-3>
+          1 of 2
+        </ion-col>
+        <ion-col col-3>
+          2 of 2
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1>Miscellaneous Features</h1>
+    <p padding>
+      The following grid has no padding.
+    </p>
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          1 of 3
+        </ion-col>
+        <ion-col>
+          2 of 3
+        </ion-col>
+        <ion-col>
+          3 of 3
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <p padding>
+      The following grid reverses the order of the columns when wrapping on small screens.
+    </p>
+    <ion-grid>
+      <ion-row wrap-reverse>
+        <ion-col col-12 col-md>
+          1 of 3
+        </ion-col>
+        <ion-col col-12 col-md>
+          2 of 3
+        </ion-col>
+        <ion-col col-12 col-md>
+          3 of 3
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h1>Columns Based on Screen Size</h1>
+    <p padding>
+      The following grid has columns that will change width based on the screen size.<br>
+      If <code>window size &gt; 0</code> it will take up 12 columns / 100% width.<br>
+      If <code>window size &gt; 768px</code> it will take up 4 columns / 33% width.<br>
+      If <code>window size &gt; 992px</code> it the middle column will take up 6 columns / 50% width, other two will take up 3 columns / 25% width.<br>
+    </p>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 col-md-4 col-lg-3>
+          1 of 3
+        </ion-col>
+        <ion-col col-12 col-md-4 col-lg-6>
+          2 of 3
+        </ion-col>
+        <ion-col col-12 col-md-4 col-lg-3>
+          3 of 3
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
+
+<style>
+  .grid-demo .grid:not([no-padding]) .col:not([no-padding]) {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .grid-demo .col {
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+  }
+
+  .grid-demo a {
+    text-decoration: none;
+  }
+
+  .grid-demo h1 {
+    padding-left: 10px;
+    font-size: 20px;
+  }
+
+  .grid-demo p {
+    padding: 10px;
+    margin: 0;
+  }
+
+</style>

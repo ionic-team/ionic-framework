@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { removeArrayItem } from './util';
 
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class Form {
@@ -15,10 +16,7 @@ export class Form {
   }
 
   deregister(input: any) {
-    let index = this._inputs.indexOf(input);
-    if (index > -1) {
-      this._inputs.splice(index, 1);
-    }
+    removeArrayItem(this._inputs, input);
     if (input === this._focused) {
       this._focused = null;
     }
@@ -57,10 +55,12 @@ export class Form {
 
 }
 
-
+/**
+ * @hidden
+ */
 export abstract class IonicTapInput implements IonicFormInput {
 
-  abstract initFocus();
+  abstract initFocus(): void;
 
   abstract get checked(): boolean;
 
@@ -72,8 +72,11 @@ export abstract class IonicTapInput implements IonicFormInput {
 
 }
 
+/**
+ * @hidden
+ */
 export abstract class IonicFormInput {
 
-  abstract initFocus();
+  abstract initFocus(): void;
 
 }

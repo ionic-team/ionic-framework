@@ -12,7 +12,8 @@ export function config(config) {
       require('karma-jasmine'),
       require('karma-coverage'),
       require('karma-sourcemap-loader'),
-      require('karma-chrome-launcher')
+      require('karma-chrome-launcher'),
+      require('karma-spec-reporter')
     ],
     files: [
       {pattern: 'dist/vendor/core-js/client/core.js', included: true, watched: false},
@@ -37,8 +38,7 @@ export function config(config) {
     customLaunchers: customLaunchers,
 
     exclude: [
-      'dist/e2e/**/*',
-      'dist/ionic-angular/components/slides/swiper-widget*'
+      'dist/e2e/**/*'
     ],
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
@@ -46,7 +46,15 @@ export function config(config) {
       'dist/ionic-angular/umd/**/!(*spec).js': ['coverage'],
       'dist/ionic-angular/**/*.js': ['sourcemap']
     },
-    reporters: ['dots', 'coverage'],
+    reporters: ['dots', 'coverage', 'spec'],
+    specReporter: {
+      maxLogLines: 5,         // limit number of lines logged per test
+      suppressErrorSummary: true,  // do not print error summary
+      suppressFailed: false,  // do not print information about failed tests
+      suppressPassed: false,  // do not print information about passed tests
+      suppressSkipped: true,  // do not print information about skipped tests
+      showSpecTiming: false // print the time elapsed for each spec
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

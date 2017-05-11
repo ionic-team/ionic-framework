@@ -3,12 +3,12 @@ import { ContentChildren, Directive, ElementRef, forwardRef, Optional, Inject, R
 import { Button } from '../button/button';
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { Navbar } from '../navbar/navbar';
+import { Navbar } from './navbar';
 import { Toolbar } from './toolbar';
 
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'ion-buttons,[menuToggle]'

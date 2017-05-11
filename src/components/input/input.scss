@@ -9,6 +9,9 @@ $text-input-highlight-color-valid:       #32db64 !default;
 /// @prop - Color of the input highlight when invalid
 $text-input-highlight-color-invalid:     #f53d3d !default;
 
+/// @prop - Color of the input placeholder
+$text-input-placeholder-color:           #999 !default;
+
 
 // Input/Textarea Wrapper
 // --------------------------------------------------
@@ -23,11 +26,11 @@ ion-textarea {
   width: 100%;
 }
 
-
 .item-input ion-input,
 .item-input ion-textarea {
   position: static;
 }
+
 
 // Textarea Within An Item
 // --------------------------------------------------
@@ -41,7 +44,7 @@ ion-textarea {
 // --------------------------------------------------
 
 .text-input {
-  @include placeholder();
+  @include placeholder($text-input-placeholder-color);
   @include appearance(none);
 
   display: inline-block;
@@ -64,7 +67,6 @@ textarea.text-input {
   opacity: .4;
 }
 
-
 input.text-input:-webkit-autofill {
   background-color: transparent;
 }
@@ -81,6 +83,7 @@ input.text-input:-webkit-autofill {
 // This make it so the native input element is not clickable.
 // This will only show when the scroll assist is configured
 // otherwise the .input-cover will not be rendered at all
+// The input cover is not clickable when the input is disabled
 
 .input-cover {
   position: absolute;
@@ -89,6 +92,10 @@ input.text-input:-webkit-autofill {
 
   width: 100%;
   height: 100%;
+}
+
+.input[disabled] .input-cover {
+  pointer-events: none;
 }
 
 

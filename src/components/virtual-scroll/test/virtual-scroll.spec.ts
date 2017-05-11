@@ -1,5 +1,6 @@
 import { VirtualCell, VirtualData, VirtualNode } from '../virtual-util';
 import { processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered, estimateHeight } from '../virtual-util';
+import { mockPlatform } from '../../../util/mock-providers';
 
 
 describe('VirtualScroll', () => {
@@ -289,7 +290,7 @@ describe('VirtualScroll', () => {
                        cells, records, nodes, viewContainer,
                        itmTmp, hdrTmp, ftrTmp, true);
 
-      expect(nodes.length).toBe(6);
+      expect(nodes.length).toBe(3);
 
       expect(nodes[0].cell).toBe(2);
       expect(nodes[1].cell).toBe(3);
@@ -305,7 +306,7 @@ describe('VirtualScroll', () => {
   describe('initReadNodes', () => {
 
     it('should get all the row heights w/ 30% width rows', () => {
-      let firstTop = 3;
+      let firstTop = 13;
       nodes = [
         {cell: 0, tmpl: TEMPLATE_HEADER, view: getView(data.viewWidth, HEIGHT_HEADER, firstTop, 0)},
         {cell: 1, tmpl: TEMPLATE_ITEM, view: getView(90, HEIGHT_ITEM, HEIGHT_HEADER + firstTop, 0)},
@@ -324,7 +325,7 @@ describe('VirtualScroll', () => {
         {row: 0, tmpl: TEMPLATE_FOOTER, reads: 0},
       ];
 
-      initReadNodes(nodes, cells, data);
+      initReadNodes(mockPlatform(), nodes, cells, data);
 
       expect(cells[0].top).toBe(firstTop);
       expect(cells[0].left).toBe(0);
@@ -374,7 +375,7 @@ describe('VirtualScroll', () => {
         {row: 4, tmpl: TEMPLATE_FOOTER, reads: 0},
       ];
 
-      initReadNodes(nodes, cells, data);
+      initReadNodes(mockPlatform(), nodes, cells, data);
 
       expect(cells[0].top).toBe(0);
       expect(cells[0].height).toBe(HEIGHT_HEADER);

@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer } from '@angular/core';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: 'ion-backdrop',
@@ -12,11 +12,8 @@ import { Directive, ElementRef, Renderer } from '@angular/core';
   },
 })
 export class Backdrop {
-
-  constructor(
-    private _elementRef: ElementRef,
-    private _renderer: Renderer
-  ) { }
+  constructor(private _elementRef: ElementRef, private _renderer: Renderer) {
+  }
 
   getNativeElement(): HTMLElement {
     return this._elementRef.nativeElement;

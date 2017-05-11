@@ -1,6 +1,7 @@
 **Ionic version:**  (check one with "x")
 [ ] **1.x**
 [ ] **2.x**
+[ ] **3.x**
 
 **I'm submitting a ...**  (check one with "x")
 [ ] bug report
@@ -18,7 +19,7 @@
 
 For Ionic 1 issues - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
 
-For Ionic 2 issues - http://plnkr.co/edit/GJte2b?p=preview
+For Ionic 2 issues - http://plnkr.co/edit/z0DzVL?p=preview
 -->
 
 **Related code:**

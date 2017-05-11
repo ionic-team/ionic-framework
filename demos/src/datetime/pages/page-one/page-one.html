@@ -1,0 +1,75 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>DateTime</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-list>
+    <ion-list-header>Web Release Dates</ion-list-header>
+
+    <ion-item>
+      <ion-label>World Wide Web</ion-label>
+      <ion-datetime displayFormat="YYYY" min="1981" max="2002" [(ngModel)]="wwwReleased"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Netscape</ion-label>
+      <ion-datetime displayFormat="MMMM YY" min="1989" max="2004" [(ngModel)]="netscapeReleased"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Opera</ion-label>
+      <ion-datetime displayFormat="DDD DD.MM.YY" min="1990" max="2000" [dayShortNames]="operaShortDay" [(ngModel)]="operaReleased"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Webkit</ion-label>
+      <ion-datetime displayFormat="D MMM YYYY" min="1990-02" max="2010-10" [(ngModel)]="webkitReleased"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Firefox</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY" min="1994-03-14" max="2012-12-09" [(ngModel)]="firefoxReleased"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Chrome</ion-label>
+      <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2005" max="2016" [(ngModel)]="chromeReleased"></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>World Times</ion-list-header>
+
+    <ion-item>
+      <ion-label>Tokyo</ion-label>
+      <ion-datetime displayFormat="hh:mm A" [(ngModel)]="tokyoTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Paris</ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="parisTime"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Madison</ion-label>
+      <ion-datetime displayFormat="h:mm a" [(ngModel)]="madisonTime"></ion-datetime>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Set Alarm</ion-list-header>
+
+    <ion-item>
+      <ion-label>Alert</ion-label>
+      <ion-datetime displayFormat="mm" minuteValues="0,15,30,45" [(ngModel)]="alertTime"></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -49,7 +49,7 @@ $button-md-background-color-activated:     color-shade($button-md-background-col
 $button-md-opacity-activated:              1 !default;
 
 /// @prop - Box shadow of the activated button
-$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21) !default;
+$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21), 0 0 0 0 transparent !default;
 
 /// @prop - Background color of the ripple on the button
 $button-md-ripple-background-color:       #555 !default;
@@ -160,6 +160,13 @@ $button-md-round-padding:                       $button-round-padding !default;
 
 /// @prop - Border radius of the round button
 $button-md-round-border-radius:                 $button-round-border-radius !default;
+
+
+// Material Design Decorator Button
+// --------------------------------------------------
+
+/// @prop - Font weight of the strong button
+$button-md-strong-font-weight:                  bold !default;
 
 
 // Material Design Default Button
@@ -423,4 +430,12 @@ $button-md-round-border-radius:                 $button-round-border-radius !def
   @include md-button-default($color-name, $color-base, $color-contrast);
   @include md-button-outline($color-name, $color-base, $color-contrast);
   @include md-button-clear($color-name, $color-base, $color-contrast);
+}
+
+
+// MD strong Button
+// --------------------------------------------------
+
+.button-strong-md {
+  font-weight: $button-md-strong-font-weight;
 }

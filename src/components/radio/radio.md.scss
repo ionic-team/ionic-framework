@@ -3,22 +3,46 @@
 // Material Design Radio
 // --------------------------------------------------
 
+/// @prop - Color of the checked radio
 $radio-md-color-on:               color($colors-md, primary) !default;
+
+/// @prop - Color of the unchecked radio
 $radio-md-color-off:              darken($list-md-border-color, 40%) !default;
 
+/// @prop - Width of the radio icon
 $radio-md-icon-width:             16px !default;
+
+/// @prop - Height of the radio icon
 $radio-md-icon-height:            16px !default;
+
+/// @prop - Border width of the radio icon
 $radio-md-icon-border-width:      2px !default;
+
+/// @prop - Border style of the radio icon
 $radio-md-icon-border-style:      solid !default;
+
+/// @prop - Border radius of the radio icon
 $radio-md-icon-border-radius:     50% !default;
 
+/// @prop - Transition duration of the radio
 $radio-md-transition-duration:    280ms !default;
+
+/// @prop - Transition easing of the radio
 $radio-md-transition-easing:      cubic-bezier(.4, 0, .2, 1) !default;
 
+/// @prop - Opacity of the disabled radio
 $radio-md-disabled-opacity:       .3 !default;
 
+// deprecated
 $radio-md-item-left-margin:       11px 36px 10px 4px !default;
+/// @prop - Margin of the item-start in a radio
+$radio-md-item-start-margin:      $radio-md-item-left-margin;
+
+// deprecated
 $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-padding-media-bottom 0 !default;
+/// @prop - Margin of the item-end in a radio
+$radio-md-item-end-margin:        $radio-md-item-right-margin;
+
 
 .radio-md {
   position: relative;
@@ -55,8 +79,8 @@ $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-paddi
   top: $radio-md-icon-border-width;
   left: $radio-md-icon-border-width;
 
-  width: $radio-md-icon-width / 2;
-  height: $radio-md-icon-height / 2;
+  width: $radio-md-icon-width - $radio-md-icon-border-width * 4;
+  height: $radio-md-icon-height - $radio-md-icon-border-width * 4;
 
   border-radius: 50%;
   background-color: $radio-md-color-on;
@@ -99,10 +123,11 @@ $radio-md-item-right-margin:      $item-md-padding-media-top 10px $item-md-paddi
   position: static;
   display: block;
 
-  margin: $radio-md-item-right-margin;
+  margin: $radio-md-item-end-margin;
 
-  &[item-left] {
-    margin: $radio-md-item-left-margin;
+  &[item-left], // deprecated
+  &[item-start] {
+    margin: $radio-md-item-start-margin;
   }
 }
 

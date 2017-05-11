@@ -1,9 +1,9 @@
-import { CSS, nativeRaf, transitionEnd, nativeTimeout } from '../util/dom';
 import { isDefined, assert } from '../util/util';
+import { Platform } from '../platform/platform';
 
 
 /**
- * @private
+ * @hidden
  */
 export class Animation {
   private _c: Animation[];
@@ -30,23 +30,24 @@ export class Animation {
   private _hasDur: boolean;
   private _isAsync: boolean;
   private _twn: boolean;
-  private _raf: Function;
 
+  plt: Platform;
   parent: Animation;
   opts: AnimationOptions;
   hasChildren: boolean = false;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
-  constructor(ele?: any, opts?: AnimationOptions, raf?: Function) {
-    this.element(ele).opts = opts;
-    this._raf = raf || nativeRaf;
+  constructor(plt: Platform, ele?: any, opts?: AnimationOptions) {
+    this.plt = plt;
+    this.element(ele);
+    this.opts = opts;
   }
 
   element(ele: any): Animation {
     if (ele) {
       if (typeof ele === 'string') {
-        ele = document.querySelectorAll(ele);
+        ele = this.plt.doc().querySelectorAll(ele);
         for (var i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
@@ -103,6 +104,13 @@ export class Animation {
   }
 
   /**
+   * Returns if the animation is a root one.
+   */
+  isRoot(): boolean {
+    return !this.parent;
+  }
+
+  /**
    * Set the duration for this animation.
    */
   duration(milliseconds: number): Animation {
@@ -154,7 +162,7 @@ export class Animation {
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
       // otherwise just clear the actual property
-      this.afterClearStyles([ fx.trans ? CSS.transform : prop]);
+      this.afterClearStyles([ fx.trans ? this.plt.Css.transform : prop]);
     }
 
     return this;
@@ -168,7 +176,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    */
 
@@ -182,17 +190,17 @@ export class Animation {
   }
 
   private _addProp(state: string, prop: string, val: any): EffectProperty {
-    let fxProp = this._getProp(prop);
+    let fxProp: any = this._getProp(prop);
 
     if (!fxProp) {
       // first time we've see this EffectProperty
-      var shouldTrans = (TRANSFORMS[prop] === 1);
+      var shouldTrans = (ANIMATION_TRANSFORMS[prop] === 1);
       fxProp = {
         name: prop,
         trans: shouldTrans,
 
         // add the will-change property for transforms or opacity
-        wc: (shouldTrans ? CSS.transform : prop)
+        wc: (shouldTrans ? this.plt.Css.transform : prop)
       };
       this._fx.push(fxProp);
     }
@@ -206,7 +214,7 @@ export class Animation {
     fxProp[state] = fxState;
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
-      let r = val.match(CSS_VALUE_REGEX);
+      let r = val.match(ANIMATION_CSS_VALUE_REGEX);
       let num = parseFloat(r[1]);
 
       if (!isNaN(num)) {
@@ -322,7 +330,7 @@ export class Animation {
    */
   play(opts?: PlayOptions) {
     // If the animation was already invalidated (it did finish), do nothing
-    if (!this._raf) {
+    if (!this.plt) {
       return;
     }
 
@@ -345,14 +353,25 @@ export class Animation {
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    this._raf(() => {
-      assert(this._raf, '_raf has to be valid');
-      this._raf(this._playDomInspect.bind(this, opts));
+    this.plt.raf(() => {
+      this.plt.raf(this._playDomInspect.bind(this, opts));
     });
   }
 
+  syncPlay() {
+    // If the animation was already invalidated (it did finish), do nothing
+    if (!this.plt) {
+      return;
+    }
+    const opts = { duration: 0 };
+    this._isAsync = false;
+    this._clearAsync();
+    this._playInit(opts);
+    this._playDomInspect(opts);
+  }
+
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -384,14 +403,12 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
    */
   _playDomInspect(opts: PlayOptions) {
-    assert(this._raf, '_raf has to be valid');
-
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
     // so we can read their dimensions if need be
@@ -410,15 +427,15 @@ export class Animation {
     // ******** DOM WRITE ****************
     this._playProgress(opts);
 
-    if (this._isAsync && this._raf) {
+    if (this._isAsync && this.plt) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf(this._playToStep.bind(this, 1));
+      this.plt.raf(this._playToStep.bind(this, 1));
     }
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -451,7 +468,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -472,7 +489,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -484,7 +501,7 @@ export class Animation {
 
     const self = this;
 
-    function onTransitionEnd(ev: any) {
+    function onTransitionEnd() {
       // congrats! a successful transition completed!
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();
@@ -515,15 +532,15 @@ export class Animation {
     }
 
     // set the TRANSITION END event on one of the transition elements
-    self._unrgTrns = transitionEnd(self._transEl(), onTransitionEnd);
+    self._unrgTrns = this.plt.transitionEnd(self._transEl(), onTransitionEnd, false);
 
     // set a fallback timeout if the transition end event never fires, or is too slow
     // transition end fallback: (animation duration + XXms)
-    self._tm = nativeTimeout(onTransitionFallback, (dur + TRANSITION_END_FALLBACK_PADDING_MS));
+    self._tm = self.plt.timeout(onTransitionFallback, (dur + ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS));
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -556,7 +573,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -571,12 +588,11 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -591,7 +607,6 @@ export class Animation {
         return true;
       }
     }
-
     return false;
   }
 
@@ -606,7 +621,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * NO RECURSION
    */
@@ -617,7 +632,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -635,7 +650,7 @@ export class Animation {
     if (this._rv) {
       stepValue = ((stepValue * -1) + 1);
     }
-    var i, j;
+    var i: number, j: number;
     var finalTransform: string = '';
     var elements = this._e;
     for (i = 0; i < effects.length; i++) {
@@ -677,7 +692,7 @@ export class Animation {
           } else {
             for (j = 0; j < nuElements; j++) {
               // ******** DOM WRITE ****************
-              elements[j].style[prop] = val;
+              (<any>elements[j].style)[prop] = val;
             }
           }
         }
@@ -690,16 +705,16 @@ export class Animation {
         finalTransform += 'translateZ(0px)';
       }
 
-      var cssTransform = CSS.transform;
+      var cssTransform = this.plt.Css.transform;
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
-        elements[i].style[cssTransform] = finalTransform;
+        (<any>elements[i].style)[cssTransform] = finalTransform;
       }
     }
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -713,11 +728,12 @@ export class Animation {
     const elements = this._e;
     const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
     const durString = dur + 'ms';
-    const cssTransform = CSS.transition;
-    const cssTransitionDuration = CSS.transitionDuration;
-    const cssTransitionTimingFn = CSS.transitionTimingFn;
+    const Css = this.plt.Css;
+    const cssTransform = Css.transition;
+    const cssTransitionDuration = Css.transitionDuration;
+    const cssTransitionTimingFn = Css.transitionTimingFn;
 
-    let eleStyle;
+    let eleStyle: any;
     for (var i = 0; i < this._eL; i++) {
       eleStyle = elements[i].style;
       if (dur > 0) {
@@ -737,7 +753,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    * DOM WRITE
    * RECURSION
@@ -761,7 +777,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -782,7 +798,7 @@ export class Animation {
 
     let ele: HTMLElement;
     let eleClassList: DOMTokenList;
-    let prop;
+    let prop: string;
     for (i = 0; i < this._eL; i++) {
       ele = this._e[i];
       eleClassList = ele.classList;
@@ -814,7 +830,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    * RECURSION
    */
@@ -835,7 +851,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -856,7 +872,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _setAfterStyles() {
@@ -870,7 +886,7 @@ export class Animation {
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      (<any>ele).style[CSS.transitionDuration] = (<any>ele).style[CSS.transitionTimingFn] = '';
+      (<any>ele).style[this.plt.Css.transitionDuration] = (<any>ele).style[this.plt.Css.transitionTimingFn] = '';
 
       if (this._rv) {
         // finished in reverse direction
@@ -930,7 +946,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -974,7 +990,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1049,12 +1065,12 @@ export class Animation {
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      this._raf && this._raf(this._playToStep.bind(this, stepValue));
+      this.plt && this.plt.raf(this._playToStep.bind(this, stepValue));
     }
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1105,7 +1121,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -1121,7 +1137,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
@@ -1167,7 +1183,7 @@ export class Animation {
 
     this._clearAsync();
 
-    this.parent = this._e = this._rdFn = this._wrFn = this._raf = null;
+    this.parent = this.plt = this._e = this._rdFn = this._wrFn = null;
 
     if (this._c) {
       this._c.length = this._cL = 0;
@@ -1181,7 +1197,7 @@ export class Animation {
   }
 
   /**
-   * @private
+   * @hidden
    * NO DOM
    */
   _transEl(): HTMLElement {
@@ -1227,7 +1243,7 @@ export interface EffectState {
   unit: string;
 }
 
-const TRANSFORMS: {[key: string]: number} = {
+const ANIMATION_TRANSFORMS: {[key: string]: number} = {
   'translateX': 1,
   'translateY': 1,
   'translateZ': 1,
@@ -1247,6 +1263,6 @@ const TRANSFORMS: {[key: string]: number} = {
   'perspective': 1
 };
 
-const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
+const ANIMATION_CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
 const ANIMATION_DURATION_MIN = 32;
-const TRANSITION_END_FALLBACK_PADDING_MS = 400;
+const ANIMATION_TRANSITION_END_FALLBACK_PADDING_MS = 400;

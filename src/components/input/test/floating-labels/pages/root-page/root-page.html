@@ -1,0 +1,91 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Floating Label Text Input</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Params: {{ myParam }}</ion-label>
+      <ion-input [(ngModel)]="myParam" type="text"></ion-input>
+      <button ion-button icon-only clear item-end>
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>ngModel 1: {{ myValues.value1 }}</ion-label>
+      <ion-input [(ngModel)]='myValues.value1'></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Value Input: {{ valueInput.value }} </ion-label>
+      <ion-input #valueInput value="Has Value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>value: {{ numberInput.value }} min: {{ minValue }} max: {{ maxValue }} step: {{ stepValue }} </ion-label>
+      <ion-input #numberInput [min]="minValue" [max]="maxValue" [step]="stepValue" type="number"></ion-input>
+      <button item-end outline ion-button (click)="toggleValues()">Toggle</button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating color="primary">ngModel 2: {{ myValues.value2 }}</ion-label>
+      <ion-textarea [(ngModel)]='myValues.value2'></ion-textarea>
+      <button ion-button outline item-end>
+        View
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating color="secondary">Url Input: {{ urlInput.value }}</ion-label>
+      <ion-input #urlInput type="url"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating color="danger">Email Input: {{ emailInput.value }}</ion-label>
+      <ion-input #emailInput type="email"></ion-input>
+      <ion-avatar item-end>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Textarea Input: {{ textareaInput.value }} </ion-label>
+      <ion-textarea #textareaInput></ion-textarea>
+      <ion-thumbnail item-end>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-thumbnail>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Random Input: {{ randomInput.value }} </ion-label>
+      <ion-input #randomInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Enter Number: {{ randomInput2.value }}</ion-label>
+      <ion-input #randomInput2 type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Another Textarea: {{ randomInput3.value }}</ion-label>
+      <ion-textarea #randomInput3></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
+
+
+<style>
+  img {
+    height: 100px;
+  }
+</style>

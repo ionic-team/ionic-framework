@@ -3,25 +3,49 @@
 // Material Design Picker
 // --------------------------------------------------
 
+/// @prop - Height of the picker wrapper
 $picker-md-height:                            260px !default;
+
+/// @prop - Border color of the picker wrapper
 $picker-md-border-color:                      $list-md-border-color !default;
+
+/// @prop - Background of the picker wrapper
 $picker-md-background-color:                  $list-md-background-color !default;
 
+/// @prop - Height of the picker toolbar
 $picker-md-toolbar-height:                    44px !default;
+
+/// @prop - Background of the picker toolbar
 $picker-md-toolbar-background-color:          $picker-md-background-color !default;
 
+/// @prop - Height of the picker button
 $picker-md-button-height:                     $picker-md-toolbar-height !default;
+
+/// @prop - Text color of the picker button
 $picker-md-button-text-color:                 color($colors-md, primary) !default;
+
+/// @prop - Background of the picker button
 $picker-md-button-background-color:           transparent !default;
 
+/// @prop - Padding of the picker column
 $picker-md-column-padding:                    0 8px !default;
 
+/// @prop - Padding of the picker option
 $picker-md-option-padding:                    0 !default;
+
+/// @prop - Text color of the picker option
 $picker-md-option-text-color:                 $list-md-text-color !default;
+
+/// @prop - Font size of the picker option
 $picker-md-option-font-size:                  22px !default;
+
+/// @prop - Height of the picker option
 $picker-md-option-height:                     42px !default;
+
+/// @prop - Offset y of the picker option
 $picker-md-option-offset-y:                   (($picker-md-height - $picker-md-toolbar-height) / 2) - ($picker-md-option-height / 2) - 10 !default;
 
+/// @prop - Text color of the selected picker option
 $picker-md-option-selected-color:             color($colors-md, primary) !default;
 
 
@@ -90,6 +114,7 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
   font-size: $picker-md-option-font-size;
   line-height: $picker-md-option-height;
+  color: $picker-md-option-text-color;
 
   background: transparent;
 

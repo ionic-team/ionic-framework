@@ -10,6 +10,7 @@
   "license": "MIT",
   "main": "umd/index.js",
   "module": "index.js",
+  "es2015": "es2015/index.js",
   "peerDependencies": {
     "@angular/common": "",
     "@angular/compiler": "",
@@ -19,7 +20,6 @@
     "@angular/http": "",
     "@angular/platform-browser": "",
     "@angular/platform-browser-dynamic": "",
-    "@angular/platform-server": "",
     "rxjs": "",
     "zone.js": ""
   }

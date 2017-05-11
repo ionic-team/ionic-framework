@@ -1,21 +1,23 @@
 import { Animation } from '../../animations/animation';
-import { Menu } from './menu';
-import { MenuController } from './menu-controller';
+import { Menu, MenuType as IMenuType } from '../app/menu-interface';
+import { MenuController } from '../app/menu-controller';
 import { Platform } from '../../platform/platform';
 
 
 /**
- * @private
+ * @hidden
  * Menu Type
  * Base class which is extended by the various types. Each
  * type will provide their own animations for open and close
  * and registers itself with Menu.
  */
-export class MenuType {
-  ani: Animation = new Animation();
+export class MenuType implements IMenuType {
+
+  ani: Animation;
   isOpening: boolean;
 
-  constructor() {
+  constructor(plt: Platform) {
+    this.ani = new Animation(plt);
     this.ani
       .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
       .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)')
@@ -23,14 +25,14 @@ export class MenuType {
   }
 
   setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
-    let ani = this.ani
-      .onFinish(done, true)
+    const ani = this.ani
+      .onFinish(done, true, true)
       .reverse(!shouldOpen);
 
     if (animated) {
       ani.play();
     } else {
-      ani.play({ duration: 0 });
+      ani.syncPlay();
     }
   }
 
@@ -53,37 +55,38 @@ export class MenuType {
     if (!this.isOpening && !shouldComplete) {
       isOpen = true;
     }
-
-    this.ani.onFinish(() => {
+    const ani = this.ani;
+    ani.onFinish(() => {
       this.isOpening = false;
       done(isOpen);
     }, true);
 
-    let factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
-    let dur = this.ani.getDuration() * factor;
+    const factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
+    const dur = ani.getDuration() * factor;
 
-    this.ani.progressEnd(shouldComplete, currentStepValue, dur);
+    ani.progressEnd(shouldComplete, currentStepValue, dur);
   }
 
   destroy() {
-    this.ani && this.ani.destroy();
+    this.ani.destroy();
+    this.ani = null;
   }
 
 }
 
 
 /**
- * @private
+ * @hidden
  * Menu Reveal Type
  * The content slides over to reveal the menu underneath.
  * The menu itself, which is under the content, does not move.
  */
 class MenuRevealType extends MenuType {
-  constructor(menu: Menu, platform: Platform) {
-    super();
+  constructor(menu: Menu, plt: Platform) {
+    super(plt);
 
-    let openedX = (menu.width() * (menu.side === 'right' ? -1 : 1)) + 'px';
-    let contentOpen = new Animation(menu.getContentElement());
+    const openedX = (menu.width() * (menu.isRightSide ? -1 : 1)) + 'px';
+    const contentOpen = new Animation(plt, menu.getContentElement());
     contentOpen.fromTo('translateX', '0px', openedX);
     this.ani.add(contentOpen);
   }
@@ -92,34 +95,34 @@ MenuController.registerType('reveal', MenuRevealType);
 
 
 /**
- * @private
+ * @hidden
  * Menu Push Type
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
 class MenuPushType extends MenuType {
-  constructor(menu: Menu, platform: Platform) {
-    super();
+  constructor(menu: Menu, plt: Platform) {
+    super(plt);
 
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
-
-    if (menu.side === 'right') {
+    const width = menu.width();
+    if (menu.isRightSide) {
       // right side
-      contentOpenedX = -menu.width() + 'px';
-      menuClosedX = menu.width() + 'px';
+      contentOpenedX = -width + 'px';
+      menuClosedX = width + 'px';
       menuOpenedX = '0px';
 
     } else {
-      contentOpenedX = menu.width() + 'px';
+      contentOpenedX = width + 'px';
       menuOpenedX = '0px';
-      menuClosedX = -menu.width() + 'px';
+      menuClosedX = -width + 'px';
     }
 
-    let menuAni = new Animation(menu.getMenuElement());
+    const menuAni = new Animation(plt, menu.getMenuElement());
     menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
     this.ani.add(menuAni);
 
-    let contentApi = new Animation(menu.getContentElement());
+    const contentApi = new Animation(plt, menu.getContentElement());
     contentApi.fromTo('translateX', '0px', contentOpenedX);
     this.ani.add(contentApi);
   }
@@ -128,32 +131,33 @@ MenuController.registerType('push', MenuPushType);
 
 
 /**
- * @private
+ * @hidden
  * Menu Overlay Type
  * The menu slides over the content. The content
  * itself, which is under the menu, does not move.
  */
 class MenuOverlayType extends MenuType {
-  constructor(menu: Menu, platform: Platform) {
-    super();
+  constructor(menu: Menu, plt: Platform) {
+    super(plt);
 
     let closedX: string, openedX: string;
-    if (menu.side === 'right') {
+    const width = menu.width();
+    if (menu.isRightSide) {
       // right side
-      closedX = 8 + menu.width() + 'px';
+      closedX = 8 + width + 'px';
       openedX = '0px';
 
     } else {
       // left side
-      closedX = -(8 + menu.width()) + 'px';
+      closedX = -(8 + width) + 'px';
       openedX = '0px';
     }
 
-    let menuAni = new Animation(menu.getMenuElement());
+    const menuAni = new Animation(plt, menu.getMenuElement());
     menuAni.fromTo('translateX', closedX, openedX);
     this.ani.add(menuAni);
 
-    let backdropApi = new Animation(menu.getBackdropElement());
+    const backdropApi = new Animation(plt, menu.getBackdropElement());
     backdropApi.fromTo('opacity', 0.01, 0.35);
     this.ani.add(backdropApi);
   }

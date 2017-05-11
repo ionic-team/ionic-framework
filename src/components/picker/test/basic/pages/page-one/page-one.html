@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Picker</ion-title>
+    <ion-buttons end>
+      <button ion-button strong (click)="push()">Push</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <button ion-button block class="e2eTwoColumns" (click)="twoColumns()">
+    2 Columns
+  </button>
+
+  <button ion-button block class="e2ePrefixLabel" (click)="prefixLabel()">
+    Prefix Label
+  </button>
+
+  <button ion-button block class="e2eSuffixLabel" (click)="suffixLabel()">
+    Suffix Label
+  </button>
+
+  <button ion-button block class="e2eColumnSizesLabel" (click)="columnSizes()">
+    Columns with sizes
+  </button>
+
+
+  <p aria-hidden="true" padding>
+    <code>Smoothie: {{ smoothie }}</code><br>
+    <code>Timer: {{ timer }}</code><br>
+  </p>
+
+</ion-content>

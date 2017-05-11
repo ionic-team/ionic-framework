@@ -1,4 +1,4 @@
-import { assign, isBlank, isPresent, isString } from './util';
+import { isBlank, isPresent, isString } from './util';
 
 
 export function renderDateTime(template: string, value: DateTimeData, locale: LocaleData) {
@@ -11,9 +11,9 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {
       var token = '{' + index + '}';
-      var text = renderTextFormat(format.f, value[format.k], value, locale);
+      var text = renderTextFormat(format.f, (<any>value)[format.k], value, locale);
 
-      if (!hasText && text && isPresent(value[format.k])) {
+      if (!hasText && text && isPresent((<any>value)[format.k])) {
         hasText = true;
       }
 
@@ -150,13 +150,13 @@ export function dateValueRange(format: string, min: DateTimeData, max: DateTimeD
   return opts;
 }
 
-export function dateSortValue(year: number, month: number, day: number): number {
-  return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}`, 10);
+export function dateSortValue(year: number, month: number, day: number, hour: number = 0, minute: number = 0): number {
+  return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
 export function dateDataSortValue(data: DateTimeData): number {
   if (data) {
-    return dateSortValue(data.year, data.month, data.day);
+    return dateSortValue(data.year, data.month, data.day, data.hour, data.minute);
   }
   return -1;
 }
@@ -229,7 +229,7 @@ export function parseDate(val: any): DateTimeData {
 }
 
 
-export function updateDate(existingData: DateTimeData, newData: any) {
+export function updateDate(existingData: DateTimeData, newData: any): boolean {
   if (isPresent(newData) && newData !== '') {
 
     if (isString(newData)) {
@@ -238,8 +238,8 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       newData = parseDate(newData);
       if (newData) {
         // successfully parsed the ISO string to our DateTimeData
-        assign(existingData, newData);
-        return;
+        Object.assign(existingData, newData);
+        return true;
       }
 
     } else if ((isPresent(newData.year) || isPresent(newData.hour) || isPresent(newData.month) || isPresent(newData.day) || isPresent(newData.minute) || isPresent(newData.second))) {
@@ -259,10 +259,10 @@ export function updateDate(existingData: DateTimeData, newData: any) {
       // merge new values from the picker's selection
       // to the existing DateTimeData values
       for (var k in newData) {
-        existingData[k] = newData[k].value;
+        (<any>existingData)[k] = newData[k].value;
       }
 
-      return;
+      return true;
     }
 
     // eww, invalid data
@@ -271,9 +271,10 @@ export function updateDate(existingData: DateTimeData, newData: any) {
   } else {
     // blank data, clear everything out
     for (var k in existingData) {
-      delete existingData[k];
+      delete (<any>existingData)[k];
     }
   }
+  return false;
 }
 
 
@@ -318,7 +319,7 @@ export function getValueFromFormat(date: DateTimeData, format: string) {
   if (format === FORMAT_hh || format === FORMAT_h) {
     return (date.hour > 12 ? date.hour - 12 : date.hour);
   }
-  return date[convertFormatToKey(format)];
+  return (<any>date)[convertFormatToKey(format)];
 }
 
 

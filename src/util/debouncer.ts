@@ -1,17 +1,8 @@
 
-import { nativeRaf } from './dom';
 
 export interface Debouncer {
-  debounce(Function);
-  cancel();
-}
-
-
-export class FakeDebouncer implements Debouncer {
-  debounce(callback: Function) {
-    callback();
-  }
-  cancel() {}
+  debounce(callback: Function): void;
+  cancel(): void;
 }
 
 export class TimeoutDebouncer implements Debouncer {
@@ -42,36 +33,3 @@ export class TimeoutDebouncer implements Debouncer {
   }
 
 }
-
-export class NativeRafDebouncer implements Debouncer {
-  callback: Function = null;
-  fireFunc: Function;
-  ptr: number = null;
-
-  constructor() {
-    this.fireFunc = this.fire.bind(this);
-  }
-
-  debounce(callback: Function) {
-    if (this.callback === null) {
-      this.callback = callback;
-      this.ptr = nativeRaf(this.fireFunc);
-    }
-  }
-
-  fire() {
-    this.callback();
-    this.callback = null;
-    this.ptr = null;
-  }
-
-  cancel() {
-    if (this.ptr !== null) {
-      cancelAnimationFrame(this.ptr);
-      this.ptr = null;
-      this.callback = null;
-    }
-  }
-
-}
-

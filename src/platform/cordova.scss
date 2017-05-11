@@ -45,7 +45,6 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
   > .toolbar.statusbar-padding:first-child {
     padding-top: calc(#{$cordova-statusbar-padding} + #{$toolbar-padding});
 
-    height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
   }
 

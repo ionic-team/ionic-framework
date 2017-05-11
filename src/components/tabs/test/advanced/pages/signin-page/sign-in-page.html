@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Sign In</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-item>
+      <ion-label>Username:</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password:</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <a ion-button block [navPush]="tabsPage" class="e2eSignIn">Sign In</a>
+    </ion-item>
+  </ion-card>
+
+  <p style="text-align: center;">
+    <a [navPush]="tabsPage">View Tabs Page</a>
+  </p>
+
+</ion-content>

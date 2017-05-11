@@ -13,36 +13,36 @@ describe('UrlSerializer', () => {
       const link3 = { component: MockView1, name: 'viewthree', segment: 'view/:param1/:param2' };
 
       serializer = mockSerializer([link1, link2, link3]);
-      serializer.createSegment = noop;
-      spyOn(serializer, 'createSegment');
+      serializer._createSegment = noop;
+      spyOn(serializer, '_createSegment');
       serializer.serializeComponent(MockView1, null);
-      expect(serializer.createSegment).toHaveBeenCalledWith(link1, null);
+      expect(serializer._createSegment).toHaveBeenCalledWith(link1, null);
     });
 
     it('should create segment if component found in links', () => {
-      serializer.createSegment = noop;
-      spyOn(serializer, 'createSegment');
+      serializer._createSegment = noop;
+      spyOn(serializer, '_createSegment');
       serializer.serializeComponent(MockView1, null);
-      expect(serializer.createSegment).toHaveBeenCalled();
+      expect(serializer._createSegment).toHaveBeenCalled();
     });
 
     it('should return null if component not found in links', () => {
-      serializer.createSegment = noop;
-      spyOn(serializer, 'createSegment');
+      serializer._createSegment = noop;
+      spyOn(serializer, '_createSegment');
       serializer.serializeComponent(NotFound, null);
-      expect(serializer.createSegment).not.toHaveBeenCalled();
+      expect(serializer._createSegment).not.toHaveBeenCalled();
     });
 
     it('should create tab segment if component found in deep links', () => {
-      serializer.createSegment = noop;
-      spyOn(serializer, 'createSegment');
+      serializer._createSegment = noop;
+      spyOn(serializer, '_createSegment');
       serializer.serializeComponent(MockView1, null);
-      expect(serializer.createSegment).toHaveBeenCalled();
+      expect(serializer._createSegment).toHaveBeenCalled();
     });
 
   });
 
-  describe('createSegment', () => {
+  describe('_createSegment', () => {
 
     it('should create segement path data', () => {
       let link: NavLink = {
@@ -53,7 +53,7 @@ describe('UrlSerializer', () => {
         id: 8675309,
         name: 'jenny'
       };
-      let p = serializer.createSegment(link, data);
+      let p = serializer._createSegment(link, data);
       expect(p.id).toEqual('a/8675309/jenny');
       expect(p.component).toEqual(MockView1);
     });
@@ -69,7 +69,7 @@ describe('UrlSerializer', () => {
       let data: any = {
         id: char
       };
-      let p = serializer.createSegment(link, data);
+      let p = serializer._createSegment(link, data);
       expect(p.id).toEqual('a/' + encoded);
       expect(p.component).toEqual(MockView1);
       expect(p.data.id).toEqual(char);
@@ -80,7 +80,7 @@ describe('UrlSerializer', () => {
         parts: ['a'],
         component: MockView1
       };
-      let p = serializer.createSegment(link, null);
+      let p = serializer._createSegment(link, null);
       expect(p.id).toEqual('a');
       expect(p.component).toEqual(MockView1);
       expect(p.data).toEqual(null);

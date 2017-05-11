@@ -1,0 +1,57 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Datetime</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-item>
+    <ion-label stacked>Stacked</ion-label>
+    <ion-datetime [(ngModel)]="stacked1"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Stacked</ion-label>
+    <ion-datetime [(ngModel)]="stacked2"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Floating</ion-label>
+    <ion-datetime displayFormat="MMMM YY" [(ngModel)]="floating1"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Floating</ion-label>
+    <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="floating2"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Floating</ion-label>
+    <ion-datetime [(ngModel)]="floating3"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label fixed>Fixed</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="fixed1"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label fixed>Fixed</ion-label>
+    <ion-datetime displayFormat="DDDD MMM D, YYYY" [(ngModel)]="fixed2"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Inline</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="inline1"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Inline</ion-label>
+    <ion-datetime displayFormat="DDDD MMM D, YYYY" [(ngModel)]="inline2"></ion-datetime>
+  </ion-item>
+
+</ion-content>

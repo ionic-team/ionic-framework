@@ -3,21 +3,43 @@
 // iOS Loading Indicator
 // --------------------------------------------------
 
+/// @prop - Padding of the loading wrapper
 $loading-ios-padding:                   24px 34px !default;
+
+/// @prop - Max width of the loading wrapper
 $loading-ios-max-width:                 270px !default;
+
+/// @prop - Maximum height of the loading wrapper
 $loading-ios-max-height:                90% !default;
+
+/// @prop - Border radius of the loading wrapper
 $loading-ios-border-radius:             8px !default;
+
+/// @prop - Text color of the loading wrapper
 $loading-ios-text-color:                #000 !default;
+
+/// @prop - Background of the loading wrapper
 $loading-ios-background:                #f8f8f8 !default;
 
+/// @prop - Font weight of the loading content
 $loading-ios-content-font-weight:       bold !default;
 
+/// @prop - Color of the loading spinner
 $loading-ios-spinner-color:             #69717d !default;
 
+/// @prop - Color of the ios loading spinner
 $loading-ios-spinner-ios-color:         $loading-ios-spinner-color !default;
+
+/// @prop - Color of the bubbles loading spinner
 $loading-ios-spinner-bubbles-color:     $loading-ios-spinner-color !default;
+
+/// @prop - Color of the circles loading spinner
 $loading-ios-spinner-circles-color:     $loading-ios-spinner-color !default;
+
+/// @prop - Color of the crescent loading spinner
 $loading-ios-spinner-crescent-color:    $loading-ios-spinner-color !default;
+
+/// @prop - Color of the dots loading spinner
 $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 
 

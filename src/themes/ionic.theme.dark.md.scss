@@ -18,6 +18,7 @@ $font-size-md-base:                   $font-size-base !default;
 // --------------------------------------------------
 $outer-content-md-background-color:   $background-color !default;
 
+
 // Material Design Toolbar
 // --------------------------------------------------
 
@@ -27,12 +28,22 @@ $toolbar-md-text-color:               #fff !default;
 $toolbar-md-active-color:             $toolbar-active-color !default;
 $toolbar-md-inactive-color:           $toolbar-inactive-color !default;
 
+
+// Material Design Tabs
+// --------------------------------------------------
+
+$tabs-md-background:                  $tabs-background !default;
+$tabs-md-tab-color-inactive:          $tabs-tab-color-inactive !default;
+$tabs-md-tab-color-active:            $tabs-tab-color-active !default;
+
+
 // Material Design Card
 // --------------------------------------------------
 
 $card-md-header-color:                #ddd !default;
 $card-md-title-text-color:            #fff !default;
 $card-md-text-color:                  #ddd !default;
+
 
 // Material Design List
 // --------------------------------------------------

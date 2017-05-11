@@ -3,14 +3,22 @@
 // Refresher
 // --------------------------------------------------
 
+/// @prop - Height of the refresher
 $refresher-height:             60px !default;
 
+/// @prop - Color of the refresher icon
 $refresher-icon-color:         #000 !default;
+
+/// @prop - Font size of the refresher icon
 $refresher-icon-font-size:     30px !default;
 
+/// @prop - Text color of the refresher content
 $refresher-text-color:         #000 !default;
+
+/// @prop - Font size of the refresher content
 $refresher-text-font-size:     16px !default;
 
+/// @prop - Border color of the refresher
 $refresher-border-color:       #ddd !default;
 
 
@@ -61,8 +69,9 @@ ion-refresher-content {
 
 .refresher-pulling-icon,
 .refresher-refreshing-icon {
+  @include text-align(center);
+
   font-size: $refresher-icon-font-size;
-  text-align: center;
   color: $refresher-icon-color;
   transform-origin: center;
   transition: 200ms;
@@ -70,9 +79,22 @@ ion-refresher-content {
 
 .refresher-pulling-text,
 .refresher-refreshing-text {
+  @include text-align(center);
+
   font-size: $refresher-text-font-size;
-  text-align: center;
   color: $refresher-text-color;
+}
+
+.refresher-refreshing .spinner-ios line,
+.refresher-refreshing .spinner-ios-small line,
+.refresher-refreshing .spinner-crescent circle {
+  stroke: $refresher-icon-color;
+}
+
+.refresher-refreshing .spinner-bubbles circle,
+.refresher-refreshing .spinner-circles circle,
+.refresher-refreshing .spinner-dots circle {
+  fill: $refresher-icon-color;
 }
 
 

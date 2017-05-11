@@ -1,15 +1,9 @@
-import { ContentChild, Directive, ElementRef, EventEmitter, forwardRef, Output, Renderer } from '@angular/core';
+import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EventEmitter, Input, Output, Renderer } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListHeader } from '../list/list-header';
-import { isCheckedProperty } from '../../util/util';
+import { isCheckedProperty, isTrueProperty } from '../../util/util';
 import { RadioButton } from './radio-button';
-
-export const RADIO_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => RadioGroup),
-  multi: true
-};
 
 /**
  * @name RadioGroup
@@ -58,8 +52,8 @@ export const RADIO_VALUE_ACCESSOR: any = {
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/radio/
- * @see {@link /docs/v2/components#radio Radio Component Docs}
+ * @demo /docs/demos/src/radio/
+ * @see {@link /docs/components#radio Radio Component Docs}
  * @see {@link ../RadioButton RadioButton API Docs}
 */
 @Directive({
@@ -67,54 +61,71 @@ export const RADIO_VALUE_ACCESSOR: any = {
   host: {
     'role': 'radiogroup'
   },
-  providers: [RADIO_VALUE_ACCESSOR]
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: RadioGroup, multi: true } ],
 })
 export class RadioGroup {
 
   /**
-   * @private
+   * @internal
+   */
+  _disabled: boolean = false;
+
+  /**
+   * @hidden
    */
   _btns: RadioButton[] = [];
 
   /**
-   * @private
+   * @hidden
    */
   _fn: Function;
 
   /**
-   * @private
+   * @hidden
    */
   _ids: number = -1;
 
   /**
-   * @private
+   * @hidden
    */
   _init: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   value: any;
 
   /**
-   * @private
+   * @hidden
    */
   id: number;
 
   /**
-   * @output {any} expression to be evaluated when selection has been changed
+   * @input {boolean} If true, the user cannot interact with any of the buttons in the group.
+   */
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(val: boolean) {
+    this._disabled = isTrueProperty(val);
+  }
+
+  /**
+   * @output {any} Emitted when the selected button has changed.
    */
   @Output() ionChange: EventEmitter<RadioGroup> = new EventEmitter<RadioGroup>();
 
   constructor(
     private _renderer: Renderer,
-    private _elementRef: ElementRef
+    private _elementRef: ElementRef,
+    private _cd: ChangeDetectorRef
   ) {
     this.id = ++radioGroupIds;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     let activeButton = this._btns.find(b => b.checked);
@@ -124,7 +135,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   writeValue(val: any) {
     console.debug('radio group, writeValue', val);
@@ -140,7 +151,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnChange(fn: Function): void {
     this._fn = fn;
@@ -156,12 +167,12 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
   /**
-   * @private
+   * @hidden
    */
   _update() {
     // loop through each of the radiobuttons
@@ -182,14 +193,14 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setActive(radioButton: RadioButton) {
     this._renderer.setElementAttribute(this._elementRef.nativeElement, 'aria-activedescendant', radioButton.id);
   }
 
   /**
-   * @private
+   * @hidden
    */
   add(button: RadioButton): string {
     this._btns.push(button);
@@ -204,7 +215,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   remove(button: RadioButton) {
     let index = this._btns.indexOf(button);
@@ -217,7 +228,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ContentChild(ListHeader)
   set _header(header: any) {
@@ -230,7 +241,7 @@ export class RadioGroup {
   }
 
   /**
-   * @private
+   * @hidden
    */
   onChange(val: any) {
     // onChange used when there is not an formControlName
@@ -239,12 +250,20 @@ export class RadioGroup {
     this._update();
     this.onTouched();
     this.ionChange.emit(val);
+    this._cd.detectChanges();
   }
 
   /**
-   * @private
+   * @hidden
    */
   onTouched() {}
+
+  /**
+   * @hidden
+   */
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
 
 }
 

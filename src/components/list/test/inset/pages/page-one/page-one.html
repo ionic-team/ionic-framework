@@ -1,0 +1,110 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Inset List</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <div>
+    <ion-fab top center>
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </div>
+  <ion-fab bottom center>
+    <button ion-fab><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+
+  <ion-list inset no-lines>
+
+    <ion-list-header>
+      List Header 1
+    </ion-list-header>
+
+    <a ion-item href="#">
+      <ion-icon name="alarm" item-start></ion-icon>
+      List Link Item 1
+    </a>
+
+    <ion-item>
+      <ion-label>Toggle</ion-label>
+      <ion-toggle checked="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Checkbox</ion-label>
+      <ion-checkbox checked="true"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="boat" item-start></ion-icon>
+      List Button Item 1
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list inset no-lines>
+      <ion-list-header>
+          List header 2
+      </ion-list-header>
+      <ion-item>
+          <ion-icon name="list" item-start></ion-icon>
+          item 1
+      </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+        List header 3
+    </ion-list-header>
+    <ion-item>
+        <ion-icon name="list" item-start></ion-icon>
+        item 1
+    </ion-item>
+  </ion-list>
+
+  <ion-list inset no-lines>
+    <ion-list-header>
+        List header 4
+    </ion-list-header>
+    <ion-item>
+        <ion-icon name="list" item-start></ion-icon>
+        item 1
+    </ion-item>
+  </ion-list>
+
+  <ion-list inset>
+
+    <ion-item>
+      Inset List, No Header
+      <button ion-button outline item-end>View</button>
+    </ion-item>
+
+    <ion-item>
+      List Item 1
+    </ion-item>
+
+    <ion-item>
+      List Item 2
+    </ion-item>
+
+    <ion-item text-wrap>
+      This is a multiline content within a list that should
+      take up multiple lines and stuff.
+    </ion-item>
+
+  </ion-list>
+
+
+  <ion-list inset>
+
+    <ion-item>
+      Inset List, no header, no items
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

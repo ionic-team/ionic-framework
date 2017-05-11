@@ -3,10 +3,10 @@
 // Material Design Label
 // --------------------------------------------------
 
-/// @prop - Text color of the label
+/// @prop - Text color of the label by an input, select, or datetime
 $label-md-text-color:                 #999 !default;
 
-/// @prop - Text color of the label when it has focused
+/// @prop - Text color of the stacked/floating label when it is focused
 $label-md-text-color-focused:         color($colors-md, primary) !default;
 
 /// @prop - Margin of the label
@@ -48,6 +48,10 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
   transition: transform 150ms ease-in-out;
 }
 
+[dir="rtl"] .label-md[floating] {
+  transform-origin: right top;
+}
+
 .label-md[stacked],
 .label-md[floating] {
   margin-bottom: 0;
@@ -64,8 +68,10 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
   transform: translate3d(0, 0, 0) scale(.8);
 }
 
-.item-md.item-label-stacked [item-right],
-.item-md.item-label-floating [item-right] {
+.item-md.item-label-stacked [item-right], // deprecated
+.item-md.item-label-floating [item-right], // deprecated
+.item-md.item-label-stacked [item-end],
+.item-md.item-label-floating [item-end] {
   margin-top: $item-md-padding-media-top - 2;
   margin-bottom: $item-md-padding-media-bottom - 2;
 }

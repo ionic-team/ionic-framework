@@ -7,19 +7,23 @@
     "lib": ["dom", "es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noImplicitAny": false,
-    "removeComments": true,
+    "noImplicitAny": true,
+    "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
-    "types": ["jasmine"]
+    "target": "es2015",
+    "types": ["jasmine", "systemjs"]
   },
   "include": [
-    "./src/**/*.ts",
-    "./demos/src/**/*.ts"
+    "src/**/*.ts",
+    "demos/src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
+  },
+  "angularCompilerOptions": {
+    "annotationsAs": "static fields",
+    "annotateForClosureCompiler": true
   }
 }

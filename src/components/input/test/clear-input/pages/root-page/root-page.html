@@ -1,0 +1,57 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Clear Input</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>No Input Clear:</ion-label>
+      <ion-input class="e2eClearInput" [(ngModel)]="myValue"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Input Clear No ngModel:</ion-label>
+      <ion-input clearInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Input Clear:</ion-label>
+      <ion-input class="e2eClearInput" [(ngModel)]="myValue" clearInput></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Button:</ion-label>
+      <ion-input class="e2eClearInput" [(ngModel)]="myValue"></ion-input>
+      <button ion-button item-end (click)="clicked()">Button</button>
+    </ion-item>
+
+    <ion-item>
+      <input type="text" placeholder="Native Input"/>
+      <button ion-button item-end (click)="clicked()">Button</button>
+    </ion-item>
+  </ion-list>
+
+  <form [formGroup]="userForm">
+    <ion-list>
+      <ion-list-header>
+        Form w/ clearInput
+      </ion-list-header>
+      <ion-item>
+        <ion-label floating>Username</ion-label>
+        <ion-input formControlName="username" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="password" clearInput></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
+
+</ion-content>

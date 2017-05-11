@@ -1,15 +1,17 @@
-import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Config } from '../../config/config';
-import { focusOutActiveElement } from '../../util/dom';
-import { Key } from '../../util/key';
-import { NavParams } from '../../navigation/nav-params';
-import { ViewController } from '../../navigation/view-controller';
-import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { ActionSheetOptions, ActionSheetButton } from './action-sheet-options';
 import { assert } from '../../util/util';
+import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { Config } from '../../config/config';
+import { KEY_ESCAPE } from '../../platform/key';
+import { Platform } from '../../platform/platform';
+import { NavParams } from '../../navigation/nav-params';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-action-sheet',
@@ -25,10 +27,10 @@ import { assert } from '../../util/util';
             '{{b.text}}' +
           '</button>' +
         '</div>' +
-        '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
-          '<button ion-button="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-left]="d.cancelButton.icon ? \'\' : null" [ngClass]="d.cancelButton.cssClass">' +
-            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
-            '{{d.cancelButton.text}}' +
+        '<div class="action-sheet-group" *ngIf="cancelButton">' +
+          '<button ion-button="action-sheet-button" (click)="click(cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-left]="cancelButton.icon ? \'\' : null" [ngClass]="cancelButton.cssClass">' +
+            '<ion-icon [name]="cancelButton.icon" *ngIf="cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
+            '{{cancelButton.text}}' +
           '</button>' +
         '</div>' +
       '</div>' +
@@ -40,15 +42,11 @@ import { assert } from '../../util/util';
   },
   encapsulation: ViewEncapsulation.None,
 })
+
 export class ActionSheetCmp {
-  d: {
-    title?: string;
-    subTitle?: string;
-    cssClass?: string;
-    buttons?: Array<any>;
-    enableBackdropDismiss?: boolean;
-    cancelButton: any;
-  };
+
+  d: ActionSheetOptions;
+  cancelButton: ActionSheetButton;
   descId: string;
   enabled: boolean;
   hdrId: string;
@@ -59,6 +57,7 @@ export class ActionSheetCmp {
   constructor(
     private _viewCtrl: ViewController,
     config: Config,
+    private _plt: Platform,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
@@ -87,30 +86,26 @@ export class ActionSheetCmp {
 
   ionViewDidLoad() {
     // normalize the data
-    let buttons: any[] = [];
-
-    this.d.buttons.forEach((button: any) => {
+    this.d.buttons = this.d.buttons.map(button => {
       if (typeof button === 'string') {
         button = { text: button };
       }
       if (!button.cssClass) {
         button.cssClass = '';
       }
-
-      if (button.role === 'cancel') {
-        this.d.cancelButton = button;
-
-      } else {
-        if (button.role === 'destructive') {
+      switch (button.role) {
+        case 'cancel':
+          this.cancelButton = button;
+          return null;
+        case 'destructive':
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
-        } else if (button.role === 'selected') {
+          break;
+        case 'selected':
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-selected';
-        }
-        buttons.push(button);
+          break;
       }
-    });
-
-    this.d.buttons = buttons;
+      return button;
+    }).filter(button => button !== null);
   }
 
   ionViewWillEnter() {
@@ -122,9 +117,9 @@ export class ActionSheetCmp {
   }
 
   ionViewDidEnter() {
-    focusOutActiveElement();
+    this._plt.focusOutActiveElement();
 
-    let focusableEle = this._elementRef.nativeElement.querySelector('button');
+    const focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {
       focusableEle.focus();
     }
@@ -133,16 +128,14 @@ export class ActionSheetCmp {
 
   @HostListener('body:keyup', ['$event'])
   keyUp(ev: KeyboardEvent) {
-    if (this.enabled && this._viewCtrl.isLast()) {
-      if (ev.keyCode === Key.ESCAPE) {
-        console.debug('actionsheet, escape button');
-        this.bdClick();
-      }
+    if (this.enabled && ev.keyCode === KEY_ESCAPE && this._viewCtrl.isLast()) {
+      console.debug('actionsheet, escape button');
+      this.bdClick();
     }
   }
 
-  click(button: any) {
-    if (! this.enabled ) {
+  click(button: ActionSheetButton) {
+    if (!this.enabled) {
       return;
     }
 
@@ -163,8 +156,8 @@ export class ActionSheetCmp {
 
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
-      if (this.d.cancelButton) {
-        this.click(this.d.cancelButton);
+      if (this.cancelButton) {
+        this.click(this.cancelButton);
 
       } else {
         this.dismiss('backdrop');
@@ -172,12 +165,16 @@ export class ActionSheetCmp {
     }
   }
 
-  dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
+  dismiss(role: string): Promise<any> {
+    const opts: NavOptions = {
+      minClickBlockDuration: 400
+    };
+    return this._viewCtrl.dismiss(null, role, opts);
   }
 
   ngOnDestroy() {
     assert(this.gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this.d = this.cancelButton = null;
     this.gestureBlocker.destroy();
   }
 }

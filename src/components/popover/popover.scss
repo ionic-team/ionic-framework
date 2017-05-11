@@ -35,6 +35,11 @@ ion-popover {
   flex-direction: column;
 }
 
+.popover-content ion-content,
+.popover-content .scroll-content {
+  contain: none;
+}
+
 .popover-content .scroll-content {
   position: relative;
 }

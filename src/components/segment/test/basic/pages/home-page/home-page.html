@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-segment id="segment" [(ngModel)]="relationship" (ionChange)="onSegmentChanged($event)">
+      <ion-segment-button value="friends" (ionSelect)="onSegmentSelected($event)" class="e2eSegmentFriends">
+        Friends
+      </ion-segment-button>
+      <ion-segment-button value="enemies" (ionSelect)="onSegmentSelected($event)">
+        Enemies
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-segment [(ngModel)]="icons" color="secondary">
+      <ion-segment-button value="camera">
+        <ion-icon name="camera"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="bookmark">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <div>Are we friends or enemies? <b>{{ relationship }}</b></div>
+  <h4>Map mode: formControlName</h4>
+  <form (submit)="doSubmit($event)" [formGroup]="myForm">
+    <ion-segment formControlName="mapStyle" color="danger">
+      <ion-segment-button value="active" class="e2eSegmentStandard">
+        Active
+      </ion-segment-button>
+      <ion-segment-button value="disabled" [disabled]="isDisabledB">
+        Disabled
+      </ion-segment-button>
+      <ion-segment-button value="inactive" disabled="false">
+        Inactive
+      </ion-segment-button>
+    </ion-segment>
+  </form>
+  <p>
+    Map mode: <b>{{myForm.controls.mapStyle.value}}</b> -
+    <span [ngSwitch]="myForm.controls.mapStyle.value">
+      <span *ngSwitchCase="'active'">
+        <b>Standard</b>
+      </span>
+      <span *ngSwitchCase="'disabled'">
+        <b>Hybrid</b>
+      </span>
+      <span *ngSwitchCase="'inactive'">
+        <b>Satellite</b>
+      </span>
+    </span>
+  </p>
+  <hr>
+  <h4>Model style: NgModel</h4>
+  <ion-segment [(ngModel)]="modelStyle" color="dark" [disabled]="isDisabledS">
+    <ion-segment-button value="A">
+      Model A
+    </ion-segment-button>
+    <ion-segment-button value="B">
+      Model B
+    </ion-segment-button>
+    <ion-segment-button value="C" class="e2eSegmentModelC">
+      Model C
+    </ion-segment-button>
+    <ion-segment-button value="D" [disabled]="isDisabledB">
+      Model D
+    </ion-segment-button>
+  </ion-segment>
+  <p>Model Style: <b>Model {{ modelStyle }}</b></p>
+  <ion-segment [(ngModel)]="icons" >
+    <ion-segment-button value="camera">
+      <ion-icon name="camera"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="bookmark">
+      <ion-icon name="bookmark"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+  <button ion-button color="dark" (click)="toggleBDisabled()">Toggle Button Disabled</button>
+  <button ion-button color="dark" (click)="toggleSDisabled()">Toggle Segment Disabled</button>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-segment [(ngModel)]="appType" color="light">
+      <ion-segment-button value="paid">
+        Primary
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Toolbar
+      </ion-segment-button>
+      <ion-segment-button value="top" class="e2eSegmentTopGrossing">
+        Light Segment
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="appType" color="danger">
+      <ion-segment-button value="paid">
+        Default
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Toolbar
+      </ion-segment-button>
+      <ion-segment-button value="top">
+        Danger Segment
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="appType" color="dark" [disabled]="isDisabledS">
+      <ion-segment-button value="paid">
+        Default
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Toolbar
+      </ion-segment-button>
+      <ion-segment-button value="top">
+        Dark Segment
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

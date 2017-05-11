@@ -3,6 +3,7 @@
 // iOS Toolbar
 // --------------------------------------------------
 
+/// @prop - Order of the toolbar elements
 $toolbar-order-ios: (
   back-button: 0,
   menu-toggle-start: 1,
@@ -14,17 +15,34 @@ $toolbar-order-ios: (
   menu-toggle-end: 7,
 );
 
+/// @prop - Font size of the toolbar button
 $toolbar-ios-button-font-size:              1.7rem !default;
 
+/// @prop - Font size of the toolbar title
 $toolbar-ios-title-font-size:               1.7rem !default;
+
+/// @prop - Font weight of the toolbar title
 $toolbar-ios-title-font-weight:             600 !default;
+
+/// @prop - Text alignment of the toolbar title
 $toolbar-ios-title-text-align:              center !default;
+
+/// @prop - Text color of the toolbar title
 $toolbar-ios-title-text-color:              color-contrast($colors-ios, $toolbar-ios-background) !default;
 
+/// @prop - Text color of the toolbar button
 $toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar-ios-background, ios) !default;
+
+/// @prop - Border radius of the toolbar button
 $toolbar-ios-button-border-radius:          4px !default;
 
+/// @prop - Font weight of the strong toolbar button
+$toolbar-ios-button-strong-font-weight:     600 !default;
+
+/// @prop - Height of the navigation bar
 $navbar-ios-height:                         $toolbar-ios-height !default;
+
+$toolbar-button-ios-strong-font-weight:     600 !default;
 
 
 .toolbar-ios {
@@ -45,25 +63,25 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 // iOS Header / Footer Borders
 // --------------------------------------------------
 
-.header-ios,
-.footer-ios {
+.header-ios .toolbar-background-ios,
+.footer-ios .toolbar-background-ios {
   border-style: solid;
   border-color: $toolbar-ios-border-color;
 }
 
-.header-ios {
+.header-ios .toolbar-ios:last-child .toolbar-background-ios {
   border-width: 0 0 $hairlines-width;
 }
 
-.footer-ios {
+.footer-ios .toolbar-ios:first-child .toolbar-background-ios {
   border-width: $hairlines-width 0 0;
 }
 
-.header-ios[no-border] {
-  border-top-width: 0;
+.header-ios[no-border] .toolbar-ios:last-child .toolbar-background-ios {
+  border-bottom-width: 0;
 }
 
-.footer-ios[no-border] {
+.footer-ios[no-border] .toolbar-ios:first-child .toolbar-background-ios {
   border-top-width: 0;
 }
 
@@ -79,9 +97,10 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 }
 
 .toolbar-title-ios {
+  @include text-align($toolbar-ios-title-text-align);
+
   font-size: $toolbar-ios-title-font-size;
   font-weight: $toolbar-ios-title-font-weight;
-  text-align: $toolbar-ios-title-text-align;
   color: $toolbar-ios-title-text-color;
 
   pointer-events: auto;
@@ -138,15 +157,15 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 }
 
 .bar-buttons-ios[end] {
-  order: map-get($toolbar-order-ios, buttons-end);
+  @include text-align(end);
 
-  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-end);
 }
 
 .bar-buttons-ios[right] {
-  order: map-get($toolbar-order-ios, buttons-right);
+  @include text-align(right);
 
-  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-right);
 }
 
 
@@ -358,4 +377,12 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
   @include ios-bar-button-default($color-name, $color-base, $color-contrast);
   @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
   @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
+}
+
+
+// iOS strong Button
+// --------------------------------------------------
+
+.bar-button-strong-ios {
+  font-weight: $toolbar-ios-button-strong-font-weight;
 }

@@ -1,9 +1,10 @@
 import { Animation, AnimationOptions } from '../animations/animation';
+import { Platform } from '../platform/platform';
 import { ViewController } from '../navigation/view-controller';
 
 
 /**
- * @private
+ * @hidden
  *
  * - play
  * - Add before classes - DOM WRITE
@@ -23,8 +24,13 @@ export class Transition extends Animation {
   parent: Transition;
   trnsId: number;
 
-  constructor(public enteringView: ViewController, public leavingView: ViewController, opts: AnimationOptions, raf?: Function) {
-    super(null, opts, raf);
+  constructor(
+    plt: Platform,
+    public enteringView: ViewController,
+    public leavingView: ViewController,
+    opts: AnimationOptions
+    ) {
+    super(plt, null, opts);
   }
 
   init() {}
@@ -33,18 +39,17 @@ export class Transition extends Animation {
     this._trnsStart = trnsStart;
   }
 
-  isRoot(): boolean {
-    return !this.parent;
-  }
-
   start() {
     this._trnsStart && this._trnsStart();
     this._trnsStart = null;
+
+    // bubble up start
+    this.parent && this.parent.start();
   }
 
   destroy() {
     super.destroy();
-    this.enteringView = this.leavingView = this._trnsStart = null;
+    this.parent = this.enteringView = this.leavingView = this._trnsStart = null;
   }
 
 }

@@ -3,12 +3,22 @@
 // iOS Select
 // --------------------------------------------------
 
+/// @prop - Padding top of the select
 $select-ios-padding-top:         $item-ios-padding-top !default;
+
+/// @prop - Padding right of the select
 $select-ios-padding-right:       ($item-ios-padding-right / 2) !default;
+
+/// @prop - Padding bottom of the select
 $select-ios-padding-bottom:      $item-ios-padding-bottom !default;
+
+/// @prop - Padding left of the select
 $select-ios-padding-left:        $item-ios-padding-left !default;
 
+/// @prop - Color of the select icon
 $select-ios-icon-color:          #999 !default;
+
+/// @prop - Color of the select placeholder
 $select-ios-placeholder-color:   $select-ios-icon-color !default;
 
 

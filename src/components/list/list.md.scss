@@ -168,6 +168,11 @@ $list-md-header-color:           #757575 !default;
   color: $list-md-header-color;
 }
 
+[dir="rtl"] .list-header-md {
+  padding-right: $list-md-header-padding-left;
+  padding-left: 0;
+}
+
 
 // Generate Material Design List Header Colors
 // --------------------------------------------------
@@ -177,4 +182,12 @@ $list-md-header-color:           #757575 !default;
     color: $color-contrast;
     background-color: $color-base;
   }
+}
+
+
+// Material Design List inputs
+// --------------------------------------------------
+
+.list-md .item-input:last-child {
+  border-bottom: 1px solid $list-md-border-color;
 }

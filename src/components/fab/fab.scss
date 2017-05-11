@@ -20,6 +20,7 @@ $fab-list-button-background-color:      #f4f4f4 !default;
 
 
 .fab {
+  @include text-align(center);
   @include appearance(none);
 
   position: relative;
@@ -33,7 +34,6 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   border-radius: 50%;
   font-size: 14px;
   line-height: $fab-size;
-  text-align: center;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
@@ -132,7 +132,7 @@ ion-fab-list {
   min-height: $fab-size;
 }
 
-ion-fab-list .fab-in-list {
+.fab-in-list {
   margin: 8px 0;
 
   width: $fab-mini-size;
@@ -141,12 +141,9 @@ ion-fab-list .fab-in-list {
   opacity: 0;
   visibility: hidden;
   transform: scale(0);
-  transition: all 200ms ease;
-  transition-delay: 10ms;
-  transition-property: transform, opacity;
 }
 
-ion-fab-list .fab-in-list.show {
+.fab-in-list.show {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
