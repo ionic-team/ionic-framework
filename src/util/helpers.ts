@@ -108,3 +108,20 @@ export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: stri
     (<any>elm.style)[styleProps[i]] = styles[styleProps[i]];
   }
 }
+
+export function asyncFn(queue: Function[], cb: Function) {
+  if (queue === null) {
+    cb();
+  } else {
+    queue.push(cb);
+  }
+}
+
+export function drainAsyncFns(queue: Function[]): any {
+  if (queue) {
+    for (var i = 0; i < queue.length; i++) {
+      queue[i]();
+    }
+  }
+  return null;
+}

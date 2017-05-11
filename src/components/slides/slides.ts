@@ -529,7 +529,7 @@ export class Slides {
   /**
    * @hidden
    */
-  ngOnDestroy() {
+  ionViewWillUnload() {
     this._init = false;
 
     this.swiper.destroy(true, true);

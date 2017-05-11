@@ -12,31 +12,25 @@ $badge-font-weight:               bold !default;
 
 
 ion-badge {
-  @include host() {
-    display: inline-block;
-    visibility: inherit !important;
-    contain: content;
-  }
+  display: inline-block;
+  visibility: inherit !important;
+  contain: content;
 }
 
 .badge {
-  @include host() {
-    padding: 3px 8px;
+  padding: 3px 8px;
 
-    min-width: 10px;
+  min-width: 10px;
 
-    font-size: $badge-font-size;
-    font-weight: $badge-font-weight;
-    line-height: 1;
+  font-size: $badge-font-size;
+  font-weight: $badge-font-weight;
+  line-height: 1;
 
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-  }
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
 }
 
 ion-badge:empty {
-  @include host(':empty') {
-    display: none;
-  }
+  display: none;
 }

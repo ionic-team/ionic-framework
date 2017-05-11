@@ -1,5 +1,5 @@
 import { BooleanInputComponent, GestureDetail } from '../../util/interfaces';
-import { Component, h, Ionic, Listen, Prop, Watch } from '../index';
+import { Component, h, Ionic, Listen, Method, Prop, Watch } from '../index';
 
 
 @Component({
@@ -28,18 +28,18 @@ export class Toggle implements BooleanInputComponent {
   }
 
 
-  canStart() {
+  private canStart() {
     return !this.disabled;
   }
 
 
-  onDragStart(detail: GestureDetail) {
+  private onDragStart(detail: GestureDetail) {
     this.startX = detail.startX;
     this.fireFocus();
   }
 
 
-  onDragMove(detail: GestureDetail) {
+  private onDragMove(detail: GestureDetail) {
     if (this.checked) {
       if (detail.currentX + 15 < this.startX) {
         this.checked = false;
@@ -55,7 +55,7 @@ export class Toggle implements BooleanInputComponent {
   }
 
 
-  onDragEnd(detail: GestureDetail) {
+  private onDragEnd(detail: GestureDetail) {
     if (this.checked) {
       if (detail.startX + 4 > detail.currentX) {
         this.checked = false;
@@ -78,12 +78,13 @@ export class Toggle implements BooleanInputComponent {
     ev.preventDefault();
   }
 
-
+  @Method()
   toggle() {
     if (!this.disabled) {
       this.checked = !this.checked;
       this.fireFocus();
     }
+    return this.checked;
   }
 
 
@@ -122,7 +123,7 @@ export class Toggle implements BooleanInputComponent {
           'type': 'pan,press',
           'direction': 'x',
           'threshold': 20,
-          'listenOn': 'parent'
+          'attachTo': 'parent'
         }
       }),
         [

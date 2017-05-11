@@ -1,5 +1,5 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../util/helpers';
-import { Component, Listen, Ionic, Prop } from '../index';
+import { Component, Ionic, Listen, Prop } from '../index';
 import { GestureCallback, GestureDetail } from '../../util/interfaces';
 import { GestureController, GestureDelegate } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
@@ -25,7 +25,7 @@ export class Gesture {
   @Prop() direction: string = 'x';
   @Prop() gestureName: string = '';
   @Prop() gesturePriority: number = 0;
-  @Prop() listenOn: string = 'child';
+  @Prop() attachTo: string = 'child';
   @Prop() maxAngle: number = 40;
   @Prop() threshold: number = 20;
   @Prop() type: string = 'pan';
@@ -52,11 +52,11 @@ export class Gesture {
     this.hasPress = (types.indexOf('press') > -1);
 
     if (this.pan || this.hasPress) {
-      Ionic.listener.enable(this, 'touchstart', true, this.listenOn);
-      Ionic.listener.enable(this, 'mousedown', true, this.listenOn);
+      Ionic.listener.enable(this, 'touchstart', true, this.attachTo);
+      Ionic.listener.enable(this, 'mousedown', true, this.attachTo);
 
       Ionic.dom.write(() => {
-        applyStyles(getElementReference(this.$el, this.listenOn), GESTURE_INLINE_STYLES);
+        applyStyles(getElementReference(this.$el, this.attachTo), GESTURE_INLINE_STYLES);
       });
     }
   }

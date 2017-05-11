@@ -3,6 +3,7 @@ export interface Ionic {
   emit: EventEmit;
   listener: {
     enable: EventListenerEnable;
+    add: AddEventListenerApi;
   };
   theme: IonicTheme;
   controllers: {
@@ -10,6 +11,69 @@ export interface Ionic {
   };
   dom: DomControllerApi;
   config: ConfigApi;
+  modal: ModalControllerApi;
+  Animation: Animation;
+}
+
+
+export interface IonicGlobal {
+  staticDir?: string;
+  components?: LoadComponents;
+  loadComponents?: (coreVersion: number, bundleId: string, modulesImporterFn: ModulesImporterFn, cmp0?: ComponentModeData, cmp1?: ComponentModeData, cmp2?: ComponentModeData) => void;
+  eventNameFn?: (eventName: string) => string;
+  config?: Object;
+  ConfigCtrl?: ConfigApi;
+  DomCtrl?: DomControllerApi;
+  NextTickCtrl?: NextTickApi;
+  Animation: any;
+}
+
+
+export interface ModalControllerApi {
+  create: (component: string, params?: any, opts?: ModalOptions) => Promise<Modal>;
+}
+
+
+export interface ModalControllerInternalApi extends ModalControllerApi {
+  _create?: any[];
+}
+
+
+export interface Modal {
+  component: string;
+  id: string;
+  style?: {
+    zIndex: number;
+  };
+  showBackdrop: boolean;
+  enableBackdropDismiss: boolean;
+  enterAnimation: AnimationBuilder;
+  exitAnimation: AnimationBuilder;
+  cssClass: string;
+  params: any;
+  present: (done?: Function) => void;
+  dismiss: (done?: Function) => void;
+}
+
+
+export interface ModalOptions {
+  showBackdrop?: boolean;
+  enableBackdropDismiss?: boolean;
+  enterAnimation?: AnimationBuilder;
+  exitAnimation?: AnimationBuilder;
+  cssClass?: string;
+}
+
+
+export interface ModalEvent extends Event {
+  detail: {
+    modal: Modal;
+  };
+}
+
+
+export interface AddEventListenerApi {
+  (elm: HTMLElement|HTMLDocument|Window, eventName: string, cb: (ev?: any) => void, opts?: ListenOptions): Function;
 }
 
 
@@ -27,7 +91,7 @@ export interface CustomEventOptions {
 
 
 export interface EventListenerEnable {
-  (instance: any, eventName: string, enabled: boolean, listenOn?: string): void;
+  (instance: any, eventName: string, enabled: boolean, attachTo?: string): void;
 }
 
 
@@ -100,18 +164,6 @@ export interface ContentDimensions {
 }
 
 
-export interface IonicGlobal {
-  staticDir?: string;
-  components?: LoadComponents;
-  loadComponents?: {(bundleId: string, modulesImporterFn: ModulesImporterFn, cmp0?: ComponentModeData, cmp1?: ComponentModeData, cmp2?: ComponentModeData): void};
-  eventNameFn?: {(eventName: string): string};
-  config?: Object;
-  ConfigCtrl?: ConfigApi;
-  DomCtrl?: DomControllerApi;
-  NextTickCtrl?: NextTickApi;
-}
-
-
 export interface NextTickApi {
   nextTick: NextTick;
 }
@@ -150,9 +202,9 @@ export interface ComponentModeData {
   [0]: string;
 
   /**
-   * component class name (Badge)
+   * methods
    */
-  [1]: string;
+  [1]: Methods;
 
   /**
    * listeners
@@ -245,26 +297,38 @@ export interface PropOptions {
 }
 
 
-export interface Props {
-  [propName: string]: PropOptions;
+export interface PropMeta {
+  propName?: string;
+  propType?: any;
 }
+
+
+export type Methods = string[];
+
+
+export interface MethodDecorator {
+  (opts?: MethodOptions): any;
+}
+
+
+export interface MethodOptions {}
 
 
 export interface ListenDecorator {
-  (eventName: string, opts?: ListenOpts): any;
+  (eventName: string, opts?: ListenOptions): any;
 }
 
 
-export interface ComponentMetaListeners {
-  [methodName: string]: ListenOpts;
-}
-
-
-export interface ListenOpts {
+export interface ListenOptions {
   eventName?: string;
   capture?: boolean;
   passive?: boolean;
   enabled?: boolean;
+}
+
+
+export interface ListenMeta extends ListenOptions {
+  methodName?: string;
 }
 
 
@@ -278,8 +342,8 @@ export interface WatchOpts {
 }
 
 
-export interface Watchers {
-  [propName: string]: WatchOpts;
+export interface WatchMeta extends WatchOpts {
+  propName?: string;
 }
 
 
@@ -297,18 +361,21 @@ export interface ConfigApi {
 
 export interface ComponentMeta {
   tag?: string;
-  props?: Props;
-  listeners?: ComponentMetaListeners;
-  watchers?: Watchers;
+  methods?: Methods;
+  props?: PropMeta[];
+  listeners?: ListenMeta[];
+  watchers?: WatchMeta[];
+  modes: ModeMeta[];
   shadow?: boolean;
+  namedSlots?: string[];
   obsAttrs?: string[];
   componentModule?: any;
-  modes: {[modeName: string]: ComponentMode};
   priority?: 'high'|'low';
 }
 
 
-export interface ComponentMode {
+export interface ModeMeta {
+  modeName?: string;
   bundleId?: string;
   styles?: string;
   styleUrls?: string[];
@@ -317,10 +384,10 @@ export interface ComponentMode {
 
 
 export interface Component {
-  ionViewDidLoad?: {(): void};
-  ionViewWillUnload?: {(): void};
+  ionViewDidLoad?: () => void;
+  ionViewWillUnload?: () => void;
 
-  render?: {(): VNode};
+  render?: () => VNode;
 
   mode?: string;
   color?: string;
@@ -328,8 +395,10 @@ export interface Component {
   $el?: ProxyElement;
   $meta?: ComponentMeta;
   $listeners?: ComponentActiveListeners;
+  $watchers?: ComponentActiveWatchers;
   $root?: HTMLElement | ShadowRoot;
   $vnode?: VNode;
+  $values?: ComponentActiveValues;
 
   [memberName: string]: any;
 }
@@ -340,19 +409,27 @@ export interface ComponentActiveListeners {
 }
 
 
+export type ComponentActiveWatchers = Function[];
+
+
+export interface ComponentActiveValues {
+  [propName: string]: any;
+}
+
+
 export interface BaseInputComponent extends Component {
   disabled: boolean;
   hasFocus: boolean;
   value: string;
 
-  fireFocus: {(): void};
-  fireBlur: {(): void};
+  fireFocus: () => void;
+  fireBlur: () => void;
 }
 
 
 export interface BooleanInputComponent extends BaseInputComponent {
   checked: boolean;
-  toggle: {(ev: UIEvent): void};
+  toggle: (ev: UIEvent) => void;
 }
 
 
@@ -367,22 +444,28 @@ export interface ComponentRegistry {
 
 
 export interface ProxyElement extends HTMLElement {
-  connectedCallback: {(): void};
-  attributeChangedCallback: {(attrName: string, oldVal: string, newVal: string, namespace: string): void};
-  disconnectedCallback: {(): void};
+  connectedCallback: () => void;
+  attributeChangedCallback: (attrName: string, oldVal: string, newVal: string, namespace: string) => void;
+  disconnectedCallback: () => void;
+  $queueUpdate: () => void;
 
   $queued?: boolean;
   $instance?: Component;
+  $hostContent?: HostContentNodes;
+  $tmpDisconnected?: boolean;
 
   [memberName: string]: any;
 }
+
+
+export type QueueHandlerId = number;
 
 
 export type Side = 'left' | 'right' | 'start' | 'end';
 
 
 export interface RendererApi {
-  (oldVnode: VNode | Element, vnode: VNode, manualSlotProjection?: boolean): VNode;
+  (oldVnode: VNode | Element, vnode: VNode, hostContentNodes?: HostContentNodes): VNode;
 }
 
 
@@ -411,6 +494,12 @@ export interface VNode {
 }
 
 
+export interface HostContentNodes {
+  $defaultSlot: Node[];
+  $namedSlots?: {[slotName: string]: Node[]};
+}
+
+
 export interface VNodeData {
   props?: any;
   attrs?: any;
@@ -418,7 +507,7 @@ export interface VNodeData {
   style?: any;
   dataset?: any;
   on?: any;
-  attachData?: any;
+  ref?: (elm: any) => void;
   vkey?: Key;
   vns?: string; // for SVGs
   [key: string]: any; // for any other 3rd party module
@@ -428,7 +517,7 @@ export interface VNodeData {
 export interface PlatformApi {
   registerComponent: (tag: string, data: any[]) => ComponentMeta;
   getComponentMeta: (tag: string) => ComponentMeta;
-  loadComponent: (bundleId: string, priority: string, cb: Function) => void;
+  loadBundle: (bundleId: string, priority: string, cb: Function) => void;
   nextTick: NextTick;
 
   isElement: (node: Node) => node is Element;
@@ -462,4 +551,93 @@ export interface PlatformConfig {
 export interface ServerInitConfig {
   staticDir: string;
   config?: Object;
+}
+
+
+export interface Animation {
+  new(elm?: Node|Node[]|NodeList): Animation;
+  addChildAnimation: (childAnimation: Animation) => Animation;
+  addElement: (elm: Node|Node[]|NodeList) => Animation;
+  afterAddClass: (className: string) => Animation;
+  afterClearStyles: (propertyNames: string[]) => Animation;
+  afterRemoveClass: (className: string) => Animation;
+  afterStyles: (styles: { [property: string]: any; }) => Animation;
+  beforeAddClass: (className: string) => Animation;
+  beforeClearStyles: (propertyNames: string[]) => Animation;
+  beforeRemoveClass: (className: string) => Animation;
+  beforeStyles: (styles: { [property: string]: any; }) => Animation;
+  destroy: () => void;
+  duration: (milliseconds: number) => Animation;
+  easing: (name: string) => Animation;
+  from: (prop: string, val: any) => Animation;
+  fromTo: (prop: string, fromVal: any, toVal: any, clearProperyAfterTransition?: boolean) => Animation;
+  hasCompleted: boolean;
+  isPlaying: boolean;
+  onFinish: (callback: (animation?: Animation) => void, opts?: {oneTimeCallback: boolean, clearExistingCallacks: boolean}) => Animation;
+  play: (opts?: PlayOptions) => void;
+  progressEnd: (shouldComplete: boolean, currentStepValue: number, dur: number) => void;
+  progressStep: (stepValue: number) => void;
+  progressStart: () => void;
+  reverse: (shouldReverse?: boolean) => Animation;
+  stop: (stepValue?: number) => void;
+  to: (prop: string, val: any, clearProperyAfterTransition?: boolean) => Animation;
+}
+
+
+export interface AnimationBuilder {
+  (elm?: HTMLElement): Animation;
+}
+
+
+export interface AnimationOptions {
+  animation?: string;
+  duration?: number;
+  easing?: string;
+  direction?: string;
+  isRTL?: boolean;
+  ev?: any;
+}
+
+
+export interface PlayOptions {
+  duration?: number;
+  promise?: boolean;
+}
+
+
+export interface EffectProperty {
+  effectName: string;
+  trans: boolean;
+  wc?: string;
+  to?: EffectState;
+  from?: EffectState;
+  [state: string]: any;
+}
+
+
+export interface EffectState {
+  val: any;
+  num: number;
+  effectUnit: string;
+}
+
+
+export interface RequestIdleCallback {
+  (callback: IdleCallback): number;
+}
+
+
+export interface IdleCallback {
+  (deadline: IdleDeadline, options?: IdleOptions): void;
+}
+
+
+export interface IdleDeadline {
+  didTimeout: boolean;
+  timeRemaining: () => number;
+}
+
+
+export interface IdleOptions {
+  timeout?: number;
 }

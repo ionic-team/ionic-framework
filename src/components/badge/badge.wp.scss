@@ -16,11 +16,9 @@ $badge-wp-text-color:               color-contrast($colors-wp, $badge-wp-backgro
 
 
 .badge-wp {
-  @include host-context() {
-    border-radius: $badge-wp-border-radius;
-    color: $badge-wp-text-color;
-    background-color: $badge-wp-background-color;
-  }
+  border-radius: $badge-wp-border-radius;
+  color: $badge-wp-text-color;
+  background-color: $badge-wp-background-color;
 }
 
 
@@ -30,10 +28,8 @@ $badge-wp-text-color:               color-contrast($colors-wp, $badge-wp-backgro
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
   .badge-wp-#{$color-name} {
-    @include host-context() {
-      color: $color-contrast;
-      background-color: $color-base;
-    }
+    color: $color-contrast;
+    background-color: $color-base;
   }
 
 }

@@ -7,12 +7,11 @@ import { Component, h, Ionic } from '../index';
     ios: 'card-header.ios.scss',
     md: 'card-header.md.scss',
     wp: 'card-header.wp.scss'
-  }
+  },
+  shadow: false
 })
 export class CardHeader {
   render() {
-    return h(this, Ionic.theme(this, 'card-header'),
-      h('slot')
-    );
+    return h(this, Ionic.theme(this, 'card-header'));
   }
 }

@@ -7,12 +7,11 @@ import { Component, h, Ionic } from '../index';
     ios: 'badge.ios.scss',
     md: 'badge.md.scss',
     wp: 'badge.wp.scss'
-  }
+  },
+  shadow: false
 })
 export class Badge {
   render() {
-    return h(this, Ionic.theme(this, 'badge'),
-      h('slot')
-    );
+    return h(this, Ionic.theme(this, 'badge'));
   }
 }
