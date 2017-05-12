@@ -7,6 +7,8 @@ import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
 import { Label } from '../label/label';
 import { ItemReorder } from './item-reorder';
+import { isStartSide, Side } from '../../util/util';
+import { Platform } from '../../platform/platform';
 
 
 /**
@@ -276,6 +278,7 @@ import { ItemReorder } from './item-reorder';
   template:
     '<ng-content select="[item-start],[item-left],ion-checkbox:not([item-end]):not([item-right])"></ng-content>' +
     '<div class="item-inner">' +
+      '<ion-reorder *ngIf="_reorderSide == \'start\'" class="reorder-start"></ion-reorder>' +
       '<div class="input-wrapper">' +
         '<ng-content select="ion-label"></ng-content>' +
         '<ion-label *ngIf="_viewLabel">' +
@@ -284,7 +287,7 @@ import { ItemReorder } from './item-reorder';
         '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
       '</div>' +
       '<ng-content select="[item-end],[item-right],ion-radio,ion-toggle"></ng-content>' +
-      '<ion-reorder *ngIf="_hasReorder"></ion-reorder>' +
+      '<ion-reorder *ngIf="_reorderSide == \'end\'" class="reorder-end"></ion-reorder>' +
     '</div>' +
     '<div class="button-effect"></div>',
   host: {
@@ -299,7 +302,7 @@ export class Item extends Ion {
   _label: Label;
   _viewLabel: boolean = true;
   _name: string = 'item';
-  _hasReorder: boolean;
+  _reorderSide: Side;
 
   /**
    * @hidden
@@ -316,12 +319,13 @@ export class Item extends Ion {
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
+    plt: Platform,
     @Optional() reorder: ItemReorder
   ) {
     super(config, elementRef, renderer, 'item');
 
     this._setName(elementRef);
-    this._hasReorder = !!reorder;
+    this._reorderSide = reorder ? (isStartSide(reorder.side, plt.isRTL) ? 'start' : 'end') : null;
     this.id = form.nextId().toString();
 
     // auto add "tappable" attribute to ion-item components that have a click listener

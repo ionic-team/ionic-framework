@@ -161,7 +161,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   /**
    * @input {string} Which side of the view the menu should be placed. Default `"start"`.
    */
-  @Input() side: Side = 'start';
+  @Input() side: Side = 'end';
 
   constructor(
     private _plt: Platform,

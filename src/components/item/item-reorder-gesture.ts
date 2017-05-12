@@ -135,7 +135,7 @@ export class ItemReorderGesture {
   }
 
   private itemForCoord(coord: PointerCoordinates): HTMLElement {
-    const sideOffset = isRightSide(this.reorderList.side, this.plt.isRTL) ? 100 : -100;
+    const sideOffset = isRightSide(this.reorderList.side, this.plt.isRTL) ? -100 : 100;
     const x = this.offset.x + sideOffset;
     const y = coord.y;
     const element = this.plt.getElementFromPoint(x, y);
