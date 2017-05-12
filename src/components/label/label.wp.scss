@@ -9,12 +9,22 @@ $label-wp-text-color:                 #999 !default;
 /// @prop - Text color of the stacked/floating label when it is focused
 $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 
+/// @prop - Margin of the label
+$label-wp-margin:                     $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0 !default;
+
+/// @prop - Margin of the label for RTL
+$label-wp-margin-rtl:                 $item-wp-padding-top 0 $item-wp-padding-bottom ($item-wp-padding-right / 2) !default;
+
 
 // Windows Default Label
 // --------------------------------------------------
 
 .label-wp {
-  margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0;
+  margin: $label-wp-margin;
+}
+
+[dir="rtl"] .label-wp {
+  margin: $label-wp-margin-rtl;
 }
 
 
@@ -49,6 +59,12 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 .label-wp[floating] {
   margin-bottom: 0;
   margin-left: 0;
+}
+
+[dir="rtl"] .label-wp[stacked],
+[dir="rtl"] .label-wp[floating] {
+  margin-right: 0;
+  margin-left: ($item-wp-padding-right / 2);
 }
 
 .input-has-focus .label-wp[stacked],
