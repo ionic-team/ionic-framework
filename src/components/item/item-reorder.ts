@@ -142,7 +142,10 @@ export class ReorderIndexes {
   host: {
     '[class.reorder-enabled]': '_enableReorder',
     '[class.reorder-visible]': '_visibleReorder',
-    'side': 'side',
+    '[class.reorder-side-left]': 'side === "left"',
+    '[class.reorder-side-right]': 'side === "right"',
+    '[class.reorder-side-start]': 'side === "start"',
+    '[class.reorder-side-end]': 'side === "end"'
   }
 })
 export class ItemReorder implements ItemReorderGestureDelegate {
