@@ -11,9 +11,9 @@ $picker-max-width:                         500px !default;
 
 
 ion-picker-cmp {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-overlay;
   display: block;
 
@@ -32,18 +32,17 @@ ion-picker-cmp {
 }
 
 .picker-wrapper {
+  @include position(null, 0, 0, 0);
+
+  @include margin(auto);
+
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-overlay-wrapper;
   display: flex;
 
   overflow: hidden;
 
   flex-direction: column;
-
-  margin: auto;
 
   width: $picker-width;
   max-width: $picker-max-width;
@@ -114,11 +113,11 @@ ion-picker-cmp {
 
 // contain property is supported by Chrome
 .picker-opt {
+  @include position(0, null, null, 0);
   @include text-align(center);
 
   position: absolute;
-  top: 0;
-  left: 0;
+
   display: block;
   overflow: hidden;
 

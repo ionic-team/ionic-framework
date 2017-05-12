@@ -20,11 +20,10 @@ $alert-input-placeholder-color:   #999 !default;
 
 
 ion-alert {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+
   z-index: $z-index-overlay;
 
   display: flex;
@@ -60,13 +59,13 @@ ion-alert input {
 }
 
 .alert-title {
-  margin: 0;
-  padding: 0;
+  @include margin(0);
+  @include padding(0);
 }
 
 .alert-sub-title {
-  margin: 5px 0 0;
-  padding: 0;
+  @include margin(5px, 0, 0);
+  @include padding(0);
 
   font-weight: normal;
 }
@@ -79,8 +78,7 @@ ion-alert input {
 
 .alert-input {
   @include placeholder($alert-input-placeholder-color);
-
-  padding: 10px 0;
+  @include padding(10px, 0);
 
   border: 0;
   background: inherit;
@@ -98,10 +96,10 @@ ion-alert input {
 }
 
 .alert-button {
+  @include margin(0);
+
   z-index: 0;
   display: block;
-
-  margin: 0;
 
   font-size: $alert-button-font-size;
   line-height: $alert-button-line-height;
@@ -110,9 +108,8 @@ ion-alert input {
 .alert-tappable {
   @include text-align(start);
   @include appearance(none);
-
-  margin: 0;
-  padding: 0;
+  @include margin(0);
+  @include padding(0);
 
   width: 100%;
 
