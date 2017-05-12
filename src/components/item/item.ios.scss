@@ -52,6 +52,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios {
   position: relative;
 
+  padding-right: $item-ios-padding-right;
   padding-left: $item-ios-padding-left;
 
   border-radius: 0;
