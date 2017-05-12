@@ -1,3 +1,14 @@
+<a name="3.2.1"></a>
+## [3.2.1](https://github.com/driftyco/ionic/compare/v3.2.0...v3.2.1) (2017-05-12)
+
+
+### Bug Fixes
+
+* **label:** set the ios variables to null to avoid styling ([2c66c56](https://github.com/driftyco/ionic/commit/2c66c56)), closes [#11631](https://github.com/driftyco/ionic/issues/11631)
+* **searchbar:** update signature mismatch in template & class ([#11599](https://github.com/driftyco/ionic/issues/11599)) ([4347627](https://github.com/driftyco/ionic/commit/4347627)), closes [#11598](https://github.com/driftyco/ionic/issues/11598)
+
+
+
 <a name="3.2.0"></a>
 # [3.2.0](https://github.com/driftyco/ionic/compare/v3.1.1...v3.2.0) (2017-05-10)
 
