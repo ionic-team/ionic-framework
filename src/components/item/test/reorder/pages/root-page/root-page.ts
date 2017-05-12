@@ -9,7 +9,7 @@ export class RootPage {
   isReordering: boolean = false;
 
   constructor() {
-    let nu = 9;
+    let nu = 5;
     for (let i = 0; i < nu; i++) {
       this.items.push(i);
     }
