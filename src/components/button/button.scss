@@ -3,8 +3,20 @@
 // Buttons
 // --------------------------------------------------
 
-/// @prop - Padding of the round button
-$button-round-padding:            0 2.6rem !default;
+// deprecated
+$button-round-padding:            null !default;
+
+/// @prop - Padding top of the round button
+$button-round-padding-top:        0 !default;
+
+/// @prop - Padding end of the round button
+$button-round-padding-end:        2.6rem !default;
+
+/// @prop - Padding bottom of the round button
+$button-round-padding-bottom:     $button-round-padding-top !default;
+
+/// @prop - Padding start of the round button
+$button-round-padding-start:      $button-round-padding-end !default;
 
 /// @prop - Border radius of the round button
 $button-round-border-radius:      64px !default;
@@ -93,7 +105,8 @@ button[disabled],
 // --------------------------------------------------
 
 .button-full.button-outline {
+  @include border-radius(0);
+
   border-right-width: 0;
   border-left-width: 0;
-  border-radius: 0;
 }

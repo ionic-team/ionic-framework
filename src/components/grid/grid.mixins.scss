@@ -8,9 +8,9 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-grid($padding-width: $grid-padding-width) {
-  padding: $padding-width / 2;
-  margin-left: auto;
-  margin-right: auto;
+  @include padding($padding-width / 2);
+  @include margin-horizontal(auto);
+
   width: 100%;
 
   display: flex;
@@ -19,10 +19,10 @@
 
   // Remove the padding from the grid and all immediate children columns
   &[no-padding] {
-    padding: 0;
+    @include padding(0);
 
     > .row > .col {
-      padding: 0;
+      @include padding(0);
     }
   }
 }
@@ -100,12 +100,12 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-column-base($padding-width: $grid-padding-width) {
+  @include padding($padding-width / 2);
+
   position: relative;
 
-  padding: $padding-width / 2;
-
   width: 100%;
-  margin: 0;
+  @include margin(0);
   min-height: 1px; // Prevent columns from collapsing when empty
   flex-basis: 0;
   flex-grow: 1;
@@ -153,17 +153,17 @@
   @each $breakpoint in map-keys($padding-widths) {
     @include media-breakpoint-up($breakpoint) {
       $padding-width: map-get($padding-widths, $breakpoint);
-      padding: ($padding-width / 2);
+      @include padding($padding-width / 2);
     }
   }
 }
 
 
-// Offset the column using margin-left
+// Offset the column using margin-start
 // ---------------------------------------------------------------------------------
 
 @mixin make-column-offset($size, $columns: $grid-columns) {
-  margin-left: percentage($size / $columns);
+  @include margin-horizontal(percentage($size / $columns), null);
 }
 
 
@@ -171,7 +171,7 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-column-push($size, $columns: $grid-columns) {
-  left: if($size > 0, percentage($size / $columns), auto);
+  @include position(null, null, null, if($size > 0, percentage($size / $columns), auto));
 }
 
 
@@ -179,7 +179,7 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-column-pull($size, $columns: $grid-columns) {
-  right: if($size > 0, percentage($size / $columns), auto);
+  @include position(null, if($size > 0, percentage($size / $columns), auto), null, null);
 }
 
 

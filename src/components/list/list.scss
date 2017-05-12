@@ -4,24 +4,24 @@
 // --------------------------------------------------
 
 ion-list-header {
+  @include margin(0);
+  @include padding(0);
+
   display: flex;
   overflow: hidden;
 
   align-items: center;
   justify-content: space-between;
 
-  margin: 0;
-  padding: 0;
-
   width: 100%;
   min-height: 4rem;
 }
 
 ion-list {
-  display: block;
+  @include margin(0);
+  @include padding(0);
 
-  margin: 0;
-  padding: 0;
+  display: block;
 
   list-style-type: none;
 }

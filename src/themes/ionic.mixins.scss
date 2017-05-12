@@ -156,3 +156,239 @@
     @content;
   }
 }
+
+$include-rtl: true !default;
+
+@mixin rtl() {
+  @if $include-rtl {
+    $root: #{&};
+    @at-root [dir="rtl"] {
+      #{$root} {
+        @content;
+      }
+    }
+  }
+}
+
+// If deprecated variable exists, use it, otherwise, use alternative
+// @param {string} $property - property to default
+// @param {string} $variable - the deprecated variable
+// ----------------------------------------------------------
+@mixin deprecated-variable($property, $variable) {
+  @if $variable == null {
+    @content;
+  } @else {
+    // TODO find variable name
+    @warn "you are using a deprecated variable";
+    #{$property}: $variable;
+  }
+}
+
+// Add padding horizontal
+// @param {string} $start - amount to pad start
+// @param {string} $end - amount to pad end
+// ----------------------------------------------------------
+@mixin padding-horizontal($start, $end: $start) {
+  @if $start != null {
+    padding-left: $start;
+  }
+
+  @if $end != null {
+    padding-right: $end;
+  }
+
+  @if $start != $end {
+    @include rtl() {
+      @if $start != null {
+        padding-right: $start;
+      } @else if $end != null {
+        padding-right: initial;
+      }
+
+      @if $end != null {
+        padding-left: $end;
+      } @else if $start != null {
+        padding-left: initial;
+      }
+    }
+  }
+}
+
+// Add padding for all sides
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin padding($top, $end: $top, $bottom: $top, $start: $end) {
+  @if ($top == $end and $top == $bottom and $top == $start) {
+    padding: $top;
+  } @else {
+    @include padding-horizontal($start, $end);
+    padding-top: $top;
+    padding-bottom: $bottom;
+  }
+}
+
+// Add margin horizontal
+// @param {string} $start - amount to margin start
+// @param {string} $end - amount to margin end
+// ----------------------------------------------------------
+@mixin margin-horizontal($start, $end: $start) {
+  @if $start != null {
+    margin-left: $start;
+  }
+
+  @if $end != null {
+    margin-right: $end;
+  }
+
+  @if $start != $end {
+    @include rtl() {
+      @if $start != null {
+        margin-right: $start;
+      } @else if $end != null {
+        margin-right: initial;
+      }
+
+      @if $end != null {
+        margin-left: $end;
+      } @else if $start != null {
+        margin-left: initial;
+      }
+    }
+  }
+}
+
+// Add margin for all sides
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin margin($top, $end: $top, $bottom: $top, $start: $end) {
+  @if ($top == $end and $top == $bottom and $top == $start) {
+    margin: $top;
+  } @else {
+    @include margin-horizontal($start, $end);
+    margin-top: $top;
+    margin-bottom: $bottom;
+  }
+}
+
+// Add position horizontal
+// @param {string} $start - amount to position start
+// @param {string} $end - amount to left: 0; end
+// ----------------------------------------------------------
+@mixin position-horizontal($start: null, $end: null) {
+  @if $start != null {
+    left: $start;
+  }
+
+  @if $end != null {
+    right: $end;
+  }
+
+  @if $start != $end {
+    @include rtl() {
+      @if $start != null {
+        right: $start;
+      } @else if $end != null {
+        right: auto;
+      }
+
+      @if $end != null {
+        left: $end;
+      } @else if $start != null {
+        left: auto;
+      }
+    }
+  }
+}
+
+// Add position for all sides
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin position($top: null, $end: null, $bottom: null, $start: null) {
+  @include position-horizontal($start, $end);
+  @if $top != null {
+    top: $top;
+  }
+  @if $bottom != null {
+    bottom: $bottom;
+  }
+}
+
+// Add correct border radius for ltr and rtl
+// @param {string} $top-start
+// @param {string} $top-end
+// @param {string} $bottom-end
+// @param {string} $bottom-start
+// ----------------------------------------------------------
+@mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
+  @if ($top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start) {
+    border-radius: $top-start;
+  } @else {
+    @if $top-start != null {
+      border-top-left-radius: $top-start;
+    }
+
+    @if $top-end != null {
+      border-top-right-radius: $top-end;
+    }
+
+    @if $bottom-end != null {
+      border-bottom-right-radius: $bottom-end;
+    }
+
+    @if $bottom-start != null {
+      border-bottom-left-radius: $bottom-start;
+    }
+
+    @include rtl() {
+      @if $top-start != null {
+        border-top-right-radius: $top-start;
+      } @else if $top-end != null {
+        border-top-right-radius: 0;
+      }
+
+      @if $top-end != null {
+        border-top-left-radius: $top-end;
+      } @else if $top-start != null {
+        border-top-left-radius: 0;
+      }
+
+      @if $bottom-end != null {
+        border-bottom-left-radius: $bottom-end;
+      } @else if $bottom-start != null {
+        border-bottom-left-radius: 0;
+      }
+
+      @if $bottom-start != null {
+        border-bottom-right-radius: $bottom-start;
+      } @else if $bottom-end != null {
+        border-bottom-right-radius: 0;
+      }
+    }
+  }
+}
+
+
+// Sets correct text align with support for old browsers
+// @param {string} $direction - text direction
+// @param {string} $decorator - !important
+// ----------------------------------------------------------
+@mixin text-align($direction, $decorator: null) {
+  @if $direction == start {
+    text-align: left;
+    text-align: start $decorator;
+  } @else if $direction == end {
+    text-align: right;
+    text-align: end $decorator;
+  } @else {
+    text-align: $direction $decorator;
+  }
+}

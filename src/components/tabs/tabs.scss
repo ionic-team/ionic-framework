@@ -4,9 +4,10 @@
 // --------------------------------------------------
 
 .tabbar {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  bottom: 0;
-  left: 0;
+
   z-index: $z-index-toolbar;
   display: flex;
 
@@ -26,7 +27,9 @@
 }
 
 .tab-button {
+  @include margin(0);
   @include text-align(center);
+  @include border-radius(0);
 
   position: relative;
   z-index: 0;
@@ -39,10 +42,7 @@
   align-self: center;
   justify-content: center;
 
-  margin: 0;
-
   border: 0;
-  border-radius: 0;
 
   text-decoration: none;
   background: none;
@@ -99,17 +99,15 @@
 }
 
 [tabsLayout=icon-left] .tab-button .tab-button-icon {
+  @include padding-horizontal(null, 8px);
   @include text-align(end);
-
-  padding-right: 8px;
 }
 
 [tabsLayout=icon-right] .tab-button .tab-button-icon {
+  @include padding-horizontal(8px, null);
   @include text-align(start);
 
   order: 10;
-
-  padding-left: 8px;
 }
 
 .tab-hidden,
@@ -123,12 +121,11 @@
 // --------------------------------------------------
 
 .tab-badge {
-  position: absolute;
-  top: 6%;
-  right: 4%;
-  right: calc(50% - 50px);
+  @include position(6%, 4%, null, null); // 4% fallback
+  @include position(null, calc(50% - 50px), null, null);
+  @include padding(1px, 6px);
 
-  padding: 1px 6px;
+  position: absolute;
 
   height: auto;
 
@@ -137,11 +134,11 @@
 }
 
 .has-icon .tab-badge {
-  right: calc(50% - 30px);
+  @include position(null, calc(50% - 30px), null, null);
 }
 
 [tabsLayout=icon-bottom] .tab-badge,
 [tabsLayout=icon-left] .tab-badge,
 [tabsLayout=icon-right] .tab-badge {
-  right: calc(50% - 50px);
+  @include position(null, calc(50% - 50px), null, null);
 }
