@@ -49,6 +49,8 @@ import { Config } from '../../config/config';
  *
  * @usage
  * ```ts
+ * import { AlertController } from 'ionic-angular';
+ *
  * constructor(private alertCtrl: AlertController) {
  *
  * }
