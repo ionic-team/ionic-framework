@@ -2,7 +2,7 @@ import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional,
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { isTrueProperty, reorderArray } from '../../util/util';
+import { isTrueProperty, reorderArray, Side } from '../../util/util';
 import { ItemReorderGestureDelegate, ItemReorderGesture } from './item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
@@ -157,6 +157,11 @@ export class ItemReorder implements ItemReorderGestureDelegate {
    * with `from` and `to` properties.
    */
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
+
+  /**
+   * @input {string} Which side of the view the menu should be placed. Default `"start"`.
+   */
+  @Input() side: Side = 'start';
 
   constructor(
     private _plt: Platform,
