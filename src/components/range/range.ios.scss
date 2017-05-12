@@ -193,10 +193,12 @@ $range-ios-pin-padding:                       8px !default;
 
   transform: translate3d(0, 28px, 0) scale(.01);
   transition: transform 120ms ease;
+  transition-delay: 0.5s;
 }
 
 .range-ios .range-knob-pressed .range-pin {
   transform: translate3d(0, 0, 0) scale(1);
+  transition-delay: 0s;
 }
 
 .range-ios.range-disabled {
