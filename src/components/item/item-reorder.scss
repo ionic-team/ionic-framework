@@ -42,9 +42,9 @@ ion-reorder {
 .reorder-side-left ion-reorder {
   transform: translate3d(-160%, 0, 0); // stays the same for rtl
 
-  //@include ltr() {
+  @include ltr() {
     order: -1;
-  //}
+  }
 }
 
 ion-reorder ion-icon {
