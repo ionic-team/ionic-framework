@@ -4,10 +4,10 @@
 // --------------------------------------------------
 
 /// @prop - Text color of the label by an input, select, or datetime
-$label-ios-text-color:                 unset !default;
+$label-ios-text-color:                 null !default;
 
 /// @prop - Text color of the stacked/floating label when it is focused
-$label-ios-text-color-focused:         unset !default;
+$label-ios-text-color-focused:         null !default;
 
 /// @prop - Margin of the label
 $label-ios-margin:                     $item-ios-padding-top ($item-ios-padding-right / 2) $item-ios-padding-bottom 0 !default;
