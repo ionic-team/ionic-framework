@@ -31,7 +31,7 @@ Update your package.json to match the following dependencies, remove the existin
   "@ionic-native/splash-screen": "3.6.1",
   "@ionic-native/status-bar": "3.6.1",
   "@ionic/storage": "2.0.1",
-  "ionic-angular": "3.2.0",
+  "ionic-angular": "3.2.1",
   "ionicons": "3.0.0",
   "rxjs": "5.1.1",
   "sw-toolbox": "3.6.0",
