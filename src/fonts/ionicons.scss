@@ -32,4 +32,14 @@ ion-icon {
   text-rendering: auto;
   text-transform: none;
   speak: none;
+
+  @include rtl() {
+    &[aria-label^="arrow"], &[flip-rtl] {
+      transform: scaleX(-1);
+    }
+
+    &[unflip-rtl] {
+      transform: scaleX(1);
+    }
+  }
 }
