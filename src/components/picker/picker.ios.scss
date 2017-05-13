@@ -148,7 +148,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
 
 .picker-ios .picker-opt {
   @include margin(0);
-  @include transform-origin(center);
+  @include transform-origin(center, center);
 
   height: 4.6rem;
 

@@ -472,7 +472,7 @@ $button-md-strong-font-weight:                  bold !default;
 .button-effect {
   @include position(0, null, null, 0);
   @include border-radius(50%);
-  @include transform-origin(center);
+  @include transform-origin(center, center);
 
   position: absolute;
   z-index: 0;
