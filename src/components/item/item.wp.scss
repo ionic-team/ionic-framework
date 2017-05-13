@@ -138,13 +138,11 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
     background-repeat: no-repeat;
     background-position: right ($item-wp-padding-end - 2) center;
     background-size: 14px 14px;
-  }
-  
-  [dir="rtl"] .item-wp[detail-push] .item-inner,
-  [dir="rtl"] button.item-wp:not([detail-none]) .item-inner,
-  [dir="rtl"] a.item-wp:not([detail-none]) .item-inner {
-    @include svg-background-image($item-wp-detail-push-svg-rtl);
-    background-position: left ($item-wp-padding-right - 2) center;
+
+    @include rtl() {
+      @include svg-background-image($item-wp-detail-push-svg-rtl);
+      background-position: left ($item-wp-padding-end - 2) center;
+    }
   }
 }
 
