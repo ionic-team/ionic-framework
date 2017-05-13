@@ -87,17 +87,53 @@ $tabs-md-tab-text-transform-active:           scale3d($tabs-md-tab-font-size-act
 /// @prop - Text transition for the tab button text
 $tabs-md-tab-text-transition:                 transform .3s ease-in-out !default;
 
-/// @prop - Transform for the active tab button icon when the layout is icon-top, icon-only, or title-only
-$tabs-md-tab-icon-transform-active:           translate3d(0, -2px, 0) !default;
+// deprecated
+$tabs-md-tab-icon-transform-active:           null !default;
 
-/// @prop - Transform for the active tab button icon when the layout is icon-right
-$tabs-md-tab-icon-right-transform-active:     translate3d(2px, 0, 0) !default;
+/// @prop - Transform x for the active tab button icon when the layout is icon-top, icon-only, or title-only
+$tabs-md-tab-icon-transform-x-active:         0 !default;
 
-/// @prop - Transform for the active tab button icon when the layout is icon-bottom
-$tabs-md-tab-icon-bottom-transform-active:    translate3d(0, 2px, 0) !default;
+/// @prop - Transform y for the active tab button icon when the layout is icon-top, icon-only, or title-only
+$tabs-md-tab-icon-transform-y-active:         -2px !default;
 
-/// @prop - Transform for the active tab button icon when the layout is icon-left
-$tabs-md-tab-icon-left-transform-active:      translate3d(-2px, 0, 0) !default;
+/// @prop - Transform z for the active tab button icon when the layout is icon-top, icon-only, or title-only
+$tabs-md-tab-icon-transform-z-active:         0 !default;
+
+// deprecated
+$tabs-md-tab-icon-right-transform-active:     null !default;
+
+/// @prop - Transform x for the active tab button icon when the layout is icon-right
+$tabs-md-tab-icon-right-transform-x-active:   2px !default;
+
+/// @prop - Transform y for the active tab button icon when the layout is icon-right
+$tabs-md-tab-icon-right-transform-y-active:   0 !default;
+
+/// @prop - Transform z for the active tab button icon when the layout is icon-right
+$tabs-md-tab-icon-right-transform-z-active:   0 !default;
+
+// deprecated
+$tabs-md-tab-icon-bottom-transform-active:    null !default;
+
+/// @prop - Transform x for the active tab button icon when the layout is icon-bottom
+$tabs-md-tab-icon-bottom-transform-x-active:  0 !default;
+
+/// @prop - Transform y for the active tab button icon when the layout is icon-bottom
+$tabs-md-tab-icon-bottom-transform-y-active:  2px !default;
+
+/// @prop - Transform z for the active tab button icon when the layout is icon-bottom
+$tabs-md-tab-icon-bottom-transform-z-active:  0 !default;
+
+// deprecated
+$tabs-md-tab-icon-left-transform-active:      null !default;
+
+/// @prop - Transform x for the active tab button icon when the layout is icon-left
+$tabs-md-tab-icon-left-transform-x-active:    -2px !default;
+
+/// @prop - Transform y for the active tab button icon when the layout is icon-left
+$tabs-md-tab-icon-left-transform-y-active:    0 !default;
+
+/// @prop - Transform z for the active tab button icon when the layout is icon-left
+$tabs-md-tab-icon-left-transform-z-active:    0 !default;
 
 /// @prop - Transform origin for the tab button text
 $tabs-md-tab-icon-transform-origin:           50% 150% !default;
@@ -187,22 +223,30 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
   color: $tabs-md-tab-icon-color-active;
 
-  transform: $tabs-md-tab-icon-transform-active;
+  @include deprecated-variable(transform, $tabs-md-tab-icon-transform-active) {
+    @include translate3d($tabs-md-tab-icon-transform-x-active, $tabs-md-tab-icon-transform-y-active, $tabs-md-tab-icon-transform-z-active);
+  }
 }
 
 // Tab layout: icon-right
 .tabs-md[tabsLayout=icon-right] .tab-button[aria-selected=true] .tab-button-icon {
-  transform: $tabs-md-tab-icon-right-transform-active;
+  @include deprecated-variable(transform, $tabs-md-tab-icon-right-transform-active) {
+    @include translate3d($tabs-md-tab-icon-right-transform-x-active, $tabs-md-tab-icon-right-transform-y-active, $tabs-md-tab-icon-right-transform-z-active);
+  }
 }
 
 // Tab layout: icon-bottom
 .tabs-md[tabsLayout=icon-bottom] .tab-button[aria-selected=true] .tab-button-icon {
-  transform: $tabs-md-tab-icon-bottom-transform-active;
+  @include deprecated-variable(transform, $tabs-md-tab-icon-bottom-transform-active) {
+    @include translate3d($tabs-md-tab-icon-bottom-transform-x-active, $tabs-md-tab-icon-bottom-transform-y-active, $tabs-md-tab-icon-bottom-transform-z-active);
+  }
 }
 
 // Tab layout: icon-left
 .tabs-md[tabsLayout=icon-left] .tab-button[aria-selected=true] .tab-button-icon {
-  transform: $tabs-md-tab-icon-left-transform-active;
+  @include deprecated-variable(transform, $tabs-md-tab-icon-left-transform-active) {
+    @include translate3d($tabs-md-tab-icon-left-transform-x-active, $tabs-md-tab-icon-left-transform-y-active, $tabs-md-tab-icon-left-transform-z-active);
+  }
 }
 
 

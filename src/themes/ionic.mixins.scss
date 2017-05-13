@@ -392,3 +392,50 @@ $include-rtl: true !default;
     text-align: $direction $decorator;
   }
 }
+
+@mixin multi-dir() {}
+@mixin ltr() {}
+
+@mixin scale($amount) {
+  @include multi-dir() {
+    transform: scale($amount);
+  }
+}
+
+@mixin scale($amount) {
+  @include multi-dir() {
+    transform: scale($amount);
+  }
+}
+
+@mixin translate3d($x, $y, $z) {
+  @if $x == 0 {
+    @include multi-dir() {
+      transform: translate3d($x, $y, $z);
+    }
+  } @else {
+    @include ltr() {
+      transform: translate3d($x, $y, $z);
+    }
+
+    @include rtl() {
+      transform: translate3d(-$x, $y, $z);
+    }
+  }
+}
+
+@mixin transform($x, $y, $z, $extra: null) {
+  @if $x == 0 {
+    @include multi-dir() {
+      transform: translate3d($x, $y, $z) $extra;
+    }
+  } @else {
+    @include ltr() {
+      transform: translate3d($x, $y, $z) $extra;
+    }
+
+    @include rtl() {
+      transform: translate3d(-$x, $y, $z) $extra;
+    }
+  }
+}

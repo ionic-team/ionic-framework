@@ -56,7 +56,8 @@ $label-md-margin-start:               0 !default;
 }
 
 .label-md[floating] {
-  transform: translate3d(0, 27px, 0);
+  @include translate3d(0, 27px, 0);
+
   transform-origin: left top;
   transition: transform 150ms ease-in-out;
 }
@@ -77,7 +78,7 @@ $label-md-margin-start:               0 !default;
 
 .input-has-focus .label-md[floating],
 .input-has-value .label-md[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(0, 0, 0, scale(.8));
 }
 
 .item-md.item-label-stacked [item-right], // deprecated
