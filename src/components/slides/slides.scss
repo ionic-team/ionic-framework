@@ -238,6 +238,7 @@ button.swiper-pagination-bullet {
 
 .swiper-pagination-progress .swiper-pagination-progressbar {
   @include position(0, null, null, 0);
+  @include transform-origin(start, top);
 
   background: #007aff;
   position: absolute;
@@ -245,11 +246,10 @@ button.swiper-pagination-bullet {
   width: 100%;
   height: 100%;
   transform: scale(0);
-  transform-origin: left top;
 }
 
 .swiper-container-rtl .swiper-pagination-progress .swiper-pagination-progressbar {
-  transform-origin: right top;
+  @include transform-origin(end, top);
 }
 
 .swiper-container-horizontal > .swiper-pagination-progress {
@@ -368,14 +368,15 @@ button.swiper-pagination-bullet {
 
 /* Cube */
 .swiper-container-cube .swiper-slide {
+  @include transform-origin(0, 0);
+
   visibility: hidden;
-  transform-origin: 0 0;
   width: 100%;
   height: 100%;
 }
 
 .swiper-container-cube.swiper-container-rtl .swiper-slide {
-  transform-origin: 100% 0;
+  @include transform-origin(100%, 0);
 }
 
 .swiper-container-cube .swiper-slide-active,
@@ -484,12 +485,12 @@ button.swiper-pagination-bullet {
 .swiper-lazy-preloader {
   @include position(50%, null, null, 50%);
   @include margin(-21px, null, null, -21px);
+  @include transform-origin(50%);
 
   width: 42px;
   height: 42px;
   position: absolute;
   z-index: 10;
-  transform-origin: 50%;
   animation: swiper-preloader-spin 1s steps(12, end) infinite;
 }
 

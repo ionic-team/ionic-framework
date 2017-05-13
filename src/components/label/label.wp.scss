@@ -37,11 +37,7 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 
 .label-wp[floating] {
   @include translate3d(8px, 34px, 0);
-  transform-origin: left top;
-}
-
-[dir="rtl"] .label-wp[floating] {
-  transform-origin: right top;
+  @include transform-origin(start, top);
 }
 
 .label-wp[stacked],

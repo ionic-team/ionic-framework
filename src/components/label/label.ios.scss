@@ -67,14 +67,11 @@ $label-ios-margin-start:       0 !default;
 
 .label-ios[floating] {
   @include translate3d(0, 27px, 0);
+  @include transform-origin(start, top);
+
   margin-bottom: 0;
 
-  transform-origin: left top;
   transition: transform 150ms ease-in-out;
-}
-
-[dir="rtl"] .label-ios[floating] {
-  transform-origin: right top;
 }
 
 .input-has-focus .label-ios[floating],

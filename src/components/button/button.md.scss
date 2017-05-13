@@ -472,6 +472,7 @@ $button-md-strong-font-weight:                  bold !default;
 .button-effect {
   @include position(0, null, null, 0);
   @include border-radius(50%);
+  @include transform-origin(center);
 
   position: absolute;
   z-index: 0;
@@ -480,7 +481,6 @@ $button-md-strong-font-weight:                  bold !default;
   background-color: $button-md-ripple-background-color;
   opacity: .2;
 
-  transform-origin: center center;
   transition-timing-function: ease-in-out;
 
   pointer-events: none;

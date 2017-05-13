@@ -396,15 +396,29 @@ $include-rtl: true !default;
 @mixin multi-dir() {}
 @mixin ltr() {}
 
-@mixin scale($amount) {
-  @include multi-dir() {
-    transform: scale($amount);
-  }
-}
+@mixin transform-origin($x-axis, $y-axis: null) {
+  @if $x-axis == start or $x-axis == end {
+    @if $x-axis == start {
+      @include ltr() {
+        transform-origin: left $y-axis;
+      }
 
-@mixin scale($amount) {
-  @include multi-dir() {
-    transform: scale($amount);
+      @include rtl() {
+        transform-origin: right $y-axis;
+      }
+    } @else {
+      @include ltr() {
+        transform-origin: right $y-axis;
+      }
+
+      @include rtl() {
+        transform-origin: left $y-axis;
+      }
+    }
+  } @else {
+    @include multi-dir() {
+      transform-origin: $x-axis $y-axis;
+    }
   }
 }
 

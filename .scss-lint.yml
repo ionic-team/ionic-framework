@@ -163,7 +163,6 @@ linters:
 
       - transform
       - transform-box
-      - transform-origin
       - transform-style
 
       - transition
@@ -212,3 +211,5 @@ linters:
       - border-bottom-left-radius
 
       - text-align
+
+      - transform-origin
