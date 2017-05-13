@@ -1,4 +1,4 @@
-import { AfterContentInit, NgZone, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, NgZone, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -77,7 +77,6 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
 
   _activated: boolean = false;
   _startX: number;
-  _msPrv: number = 0;
   _gesture: ToggleGesture;
 
   /**
@@ -102,7 +101,6 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
     @Optional() item: Item,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
-    private _cd: ChangeDetectorRef,
     private _zone: NgZone,
   ) {
     super(config, elementRef, renderer, 'toggle', false, form, item, null);
@@ -211,7 +209,8 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
   /**
    * @hidden
    */
-  @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
+  @HostListener('keyup', ['$event'])
+  _keyup(ev: KeyboardEvent) {
     if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
       console.debug(`toggle, keyup: ${ev.keyCode}`);
       ev.preventDefault();

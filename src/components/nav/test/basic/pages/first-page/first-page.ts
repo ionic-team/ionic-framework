@@ -118,13 +118,11 @@ export class FirstPage {
     this.navCtrl.push('primary-header-page', null, {
       animate: true,
       animation: 'ios-transition'
-    }).then(() => { }, (rejectReason: string) => {
-    });
+    }).then(() => { }, (rejectReason: string) => { });
   }
 
   pushRedirect() {
-    this.navCtrl.push('redirect-page').then(() => { }, (rejectReason: string) => {
-    });
+    this.navCtrl.push('redirect-page').then(() => { }, (rejectReason: string) => { });
   }
 
   pushFullPage() {

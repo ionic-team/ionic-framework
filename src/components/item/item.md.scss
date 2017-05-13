@@ -45,18 +45,14 @@ $item-md-divider-font-size:          $item-md-body-text-font-size !default;
 /// @prop - Border bottom for the divider
 $item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
 
-/// @prop - Padding for the divider
-$item-md-divider-padding:            5px 15px !default;
-
 /// @prop - Background for the sliding content
 $item-md-sliding-content-background: $list-md-background-color !default;
 
 
 .item-md {
-  position: relative;
+  @include padding-horizontal($item-md-padding-start, 0);
 
-  padding-right: 0;
-  padding-left: ($item-md-padding-left);
+  position: relative;
 
   font-size: $item-md-font-size;
   font-weight: normal;
@@ -77,14 +73,14 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 }
 
 .item-md h1 {
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 2.4rem;
   font-weight: normal;
 }
 
 .item-md h2 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.6rem;
   font-weight: normal;
@@ -94,7 +90,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 .item-md h4,
 .item-md h5,
 .item-md h6 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.4rem;
   font-weight: normal;
@@ -104,7 +100,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 .item-md p {
   overflow: inherit;
 
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 1.4rem;
   line-height: normal;
@@ -113,7 +109,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 }
 
 .item-md.item-block .item-inner {
-  padding-right: ($item-md-padding-right / 2);
+  @include padding-horizontal(null, ($item-md-padding-end / 2));
 
   border-bottom: 1px solid $list-md-border-color;
 }
@@ -129,10 +125,10 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   a.item-md:not([detail-none]) .item-inner {
     @include svg-background-image($item-md-detail-push-svg);
 
-    padding-right: 32px;
+    @include padding-horizontal(null, 32px);
 
     background-repeat: no-repeat;
-    background-position: right ($item-md-padding-right - 2) center;
+    background-position: right ($item-md-padding-end - 2) center;
     background-size: 14px 14px;
   }
 }
@@ -141,20 +137,22 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 // Material Design Item Media
 // --------------------------------------------------
 
-.item-md [item-left],
-.item-md [item-right] {
-  margin: $item-md-padding-media-top ($item-md-padding-right / 2) $item-md-padding-media-bottom 0;
+.item-md [item-left], // deprecated
+.item-md [item-right], // deprecated
+.item-md [item-start],
+.item-md [item-end] {
+  @include margin($item-md-padding-media-top, ($item-md-padding-end / 2), $item-md-padding-media-bottom, 0);
 }
 
-.item-md ion-icon[item-left],
-.item-md ion-icon[item-right] {
-  margin-top: $item-md-padding-icon-top;
-  margin-bottom: $item-md-padding-icon-bottom;
-  margin-left: 0;
+.item-md ion-icon[item-left], // deprecated
+.item-md ion-icon[item-right], // deprecated
+.item-md ion-icon[item-start],
+.item-md ion-icon[item-end] {
+  @include margin($item-md-padding-icon-top, null, $item-md-padding-icon-bottom, 0);
 }
 
 .item-md .item-button {
-  padding: 0 .6em;
+  @include padding(0, .6em);
 
   height: 25px;
 
@@ -163,22 +161,28 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 .item-md .item-button[icon-only] ion-icon,
 .item-md .item-button[icon-only] {
-  padding: 0 1px;
+  @include padding(0, 1px);
 }
 
-.item-md ion-icon[item-left] + .item-inner,
-.item-md ion-icon[item-left] + .item-input {
-  margin-left: $item-md-padding-left + ($item-md-padding-left / 2);
+.item-md ion-icon[item-left] + .item-inner, // deprecated
+.item-md ion-icon[item-left] + .item-input, // deprecated
+.item-md ion-icon[item-start] + .item-inner,
+.item-md ion-icon[item-start] + .item-input {
+  @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 
-.item-md ion-avatar[item-left],
-.item-md ion-thumbnail[item-left] {
-  margin: ($item-md-padding-right / 2) $item-md-padding-right ($item-md-padding-right / 2) 0;
+.item-md ion-avatar[item-left], // deprecated
+.item-md ion-thumbnail[item-left], // deprecated
+.item-md ion-avatar[item-start],
+.item-md ion-thumbnail[item-start] {
+  @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
 }
 
-.item-md ion-avatar[item-right],
-.item-md ion-thumbnail[item-right] {
-  margin: ($item-md-padding-right / 2);
+.item-md ion-avatar[item-right], // deprecated
+.item-md ion-thumbnail[item-right], // deprecated
+.item-md ion-avatar[item-end],
+.item-md ion-thumbnail[item-end] {
+  @include margin(($item-md-padding-end / 2));
 }
 
 
@@ -233,7 +237,7 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 // --------------------------------------------------
 
 .item-divider-md {
-  padding-left: $item-md-padding-left;
+  @include padding-horizontal($item-md-padding-start, null);
 
   color: $item-md-divider-color;
   background-color: $item-md-divider-background;

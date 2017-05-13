@@ -11,19 +11,7 @@ export class E2EPage {
   webview: string = '';
   counter: number = 0;
 
-  constructor(plt: Platform, public navCtrl: NavController) {
-    if (plt.is('ios')) {
-      if (plt.testUserAgent('Safari')) {
-        this.webview = ': iOS Safari';
-
-      } else if (!!(window as any)['webkit']) {
-        this.webview = ': iOS WKWebView';
-
-      } else {
-        this.webview = ': iOS UIWebView';
-      }
-    }
-  }
+  constructor(plt: Platform, public navCtrl: NavController) {}
 
   addItems() {
     if (this.items.length === 0) {
@@ -54,8 +42,25 @@ export class E2EPage {
     this.counter++;
   }
 
-  reload() {
-    window.location.reload(true);
+  addRandomItem() {
+    const index = Math.floor(Math.random() * this.items.length);
+    console.log('Adding to index: ', index);
+    this.items.splice( index, 0, {
+      value: Math.floor(Math.random() * 10000),
+      someMethod: function() {
+        return '!!';
+      }
+    });
+  }
+
+  changeItem() {
+    const index = Math.floor(Math.random() * this.items.length);
+    console.log('Change to index: ', index);
+    this.items[index] = { value: Math.floor(Math.random() * 10000), someMethod: () => '!!' };
+  }
+
+  trackByFn(index: number, item: any) {
+    return item.value;
   }
 
 }

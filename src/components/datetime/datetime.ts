@@ -8,7 +8,7 @@ import { PickerColumn } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
-import { deepCopy, isBlank, isPresent, isArray, isString, assert, clamp } from '../../util/util';
+import { deepCopy, isBlank, isPresent, isArray, isObject, isString, assert, clamp } from '../../util/util';
 import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
 
 /**
@@ -758,6 +758,16 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
    */
   getValue(): DateTimeData {
     return this._value;
+  }
+
+  /**
+   * @hidden
+   */
+  hasValue(): boolean {
+    const val = this._value;
+    return isPresent(val)
+      && isObject(val)
+      && Object.keys(val).length > 0;
   }
 
   /**

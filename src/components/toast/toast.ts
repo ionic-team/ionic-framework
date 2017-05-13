@@ -59,7 +59,7 @@ export class Toast extends ViewController {
   }
 
   /**
-   * @param {string} message  Toast message content
+   * @param {number} dur  Toast message duration
    */
   setDuration(dur: number): Toast {
     this.data.duration = dur;
@@ -67,7 +67,7 @@ export class Toast extends ViewController {
   }
 
   /**
-   * @param {string} message  Toast message content
+   * @param {'top'|'middle'|'bottom'} pos  Toast message position
    */
   setPosition(pos: 'top' | 'middle' | 'bottom'): Toast {
     this.data.position = pos;
@@ -75,7 +75,7 @@ export class Toast extends ViewController {
   }
 
   /**
-   * @param {string} message  Toast message content
+   * @param {string} cssClass  Toast message CSS class
    */
   setCssClass(cssClass: string): Toast {
     this.data.cssClass = cssClass;
@@ -83,7 +83,7 @@ export class Toast extends ViewController {
   }
 
   /**
-   * @param {string} message  Toast message content
+   * @param {boolean} closeButton  Toast message close button
    */
   setShowCloseButton(closeButton: boolean): Toast {
     this.data.showCloseButton = closeButton;
@@ -93,7 +93,7 @@ export class Toast extends ViewController {
   /**
    * Present the toast instance.
    *
-   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @param {NavOptions} [navOptions={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}): Promise<any> {

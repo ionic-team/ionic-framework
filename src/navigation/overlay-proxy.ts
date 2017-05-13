@@ -25,7 +25,7 @@ export class OverlayProxy {
   /**
    * Present the modal instance.
    *
-   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @param {NavOptions} [navOptions={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}) {
@@ -42,7 +42,7 @@ export class OverlayProxy {
     }
   }
 
-  dismiss(data?: any, role?: any, navOptions?: NavOptions): Promise<any> {
+  dismiss(data?: any, role?: string, navOptions?: NavOptions): Promise<any> {
     if (this.overlay) {
       return this.overlay.dismiss();
     }
@@ -51,7 +51,7 @@ export class OverlayProxy {
   /**
    * Called when the current viewController has be successfully dismissed
    */
-  onDidDismiss(callback: Function) {
+  onDidDismiss(callback: (data: any, role: string) => void) {
     this._onDidDismiss = callback;
     if (this.overlay) {
       this.overlay.onDidDismiss(this._onDidDismiss);
