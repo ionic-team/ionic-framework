@@ -30,10 +30,6 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
   @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
 }
 
-[dir="rtl"] .select-md {
-  padding: $select-md-padding-top $select-md-padding-left $select-md-padding-bottom $select-md-padding-right;
-}
-
 .select-md .select-placeholder {
   color: $select-md-placeholder-color;
 }
@@ -65,9 +61,4 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
   color: $select-md-icon-color;
 
   pointer-events: none;
-}
-
-[dir="rtl"] .select-md .select-icon .select-icon-inner {
-  right: 5px;
-  left: auto;
 }
