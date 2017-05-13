@@ -283,7 +283,7 @@ const SPINNERS: any = {
   crescent: {
     dur: 750,
     circles: 1,
-    fn: function (dur: number) {
+    fn: function () {
       return {
         r: 26,
         style: {}
@@ -294,7 +294,7 @@ const SPINNERS: any = {
   dots: {
     dur: 750,
     circles: 3,
-    fn: function (dur: number, index: number, total: number) {
+    fn: function (dur: number, index: number) {
       const animationDelay = -(110 * index) + 'ms';
       return {
         r: 6,

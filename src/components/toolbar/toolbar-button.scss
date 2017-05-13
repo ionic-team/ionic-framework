@@ -4,16 +4,15 @@
 // --------------------------------------------------
 
 .bar-button {
+  @include margin(0);
+  @include padding(0);
+  @include text-align(center);
   @include appearance(none);
 
   position: relative;
   display: inline-block;
 
-  margin: 0;
-  padding: 0;
-
   line-height: 1;
-  text-align: center;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
@@ -27,12 +26,10 @@
 }
 
 .bar-button::after {
+  @include position(-7px, -2px, -6px, -2px);
+
   // used to make the button's hit area larger
   position: absolute;
-  top: -7px;
-  right: -2px;
-  bottom: -6px;
-  left: -2px;
 
   content: "";
 }

@@ -14,11 +14,11 @@ import { Ion } from '../ion';
   * <ion-content>
   *   <ion-list>
   *     <ion-item>
-  *       <ion-note item-left>
+  *       <ion-note item-start>
   *         Left Note
   *       </ion-note>
   *       My Item
-  *       <ion-note item-right>
+  *       <ion-note item-end>
   *         Right Note
   *       </ion-note>
   *     </ion-item>
