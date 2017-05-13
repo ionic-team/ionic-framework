@@ -24,6 +24,10 @@ ion-reorder {
   touch-action: manipulation;
 }
 
+[dir="rtl"] ion-reorder {
+  transform: translate3d(-160%, 0, 0);
+}
+
 ion-reorder ion-icon {
   pointer-events: none;
 }
