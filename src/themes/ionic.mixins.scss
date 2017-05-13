@@ -155,6 +155,19 @@
 
 $include-rtl: true !default;
 
+@mixin multi-dir() {
+  @if $include-rtl {
+    $root: #{&};
+    @at-root [dir="ltr"], [dir="rtl"] {
+      #{$root} {
+        @content;
+      }
+    }
+  } @else {
+    @content;
+  }
+}
+
 @mixin rtl() {
   @if $include-rtl {
     $root: #{&};
@@ -199,8 +212,10 @@ $include-rtl: true !default;
 // ----------------------------------------------------------
 @mixin property-horizontal($prop, $start, $end: $start) {
   @if $start == $end {
-    #{$prop}-left: $start;
-    #{$prop}-right: $end;
+    @include multi-dir() {
+      #{$prop}-left: $start;
+      #{$prop}-right: $end;
+    }
   } @else {
     @include ltr() {
       #{$prop}-left: $start;
@@ -223,11 +238,17 @@ $include-rtl: true !default;
 // ----------------------------------------------------------
 @mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end, $content: false) {
   @if $top == $end and $top == $bottom and $top == $start {
-    #{$prop}: $top;
+    @include multi-dir() {
+      #{$prop}: $top;
+    }
   } @else if $top == $bottom and $end == $start and $top != null and $end != null {
-    #{$prop}: $top $end;
+    @include multi-dir() {
+      #{$prop}: $top $end;
+    }
   } @else if $end == $start and $top != null and $end != null and $bottom != null {
-    #{$prop}: $top $end $bottom;
+    @include multi-dir() {
+      #{$prop}: $top $end $bottom;
+    }
   } @else if $top != null and $end != null and $bottom != null and $start != null {
     @include ltr() {
       #{$prop}: $top $end $bottom $start;
@@ -240,8 +261,10 @@ $include-rtl: true !default;
       @content;
     } @else {
       @include property-horizontal($prop, $start, $end);
-      #{$prop}-top: $top;
-      #{$prop}-bottom: $bottom;
+      @include multi-dir() {
+        #{$prop}-top: $top;
+        #{$prop}-bottom: $bottom;
+      }
     }
   }
 }
@@ -288,8 +311,10 @@ $include-rtl: true !default;
 // ----------------------------------------------------------
 @mixin position-horizontal($start: null, $end: null) {
   @if $start == $end {
-    left: $start;
-    right: $end;
+    @include multi-dir() {
+      left: $start;
+      right: $end;
+    }
   } @else {
     @include ltr() {
       left: $start;
@@ -324,17 +349,8 @@ $include-rtl: true !default;
   @include property(border-radius, $top-start, $top-end, $bottom-end, $bottom-start, true) {
     @include ltr() {
       border-top-left-radius: $top-start;
-    }
-
-    @if $top-end != null {
       border-top-right-radius: $top-end;
-    }
-
-    @if $bottom-end != null {
       border-bottom-right-radius: $bottom-end;
-    }
-
-    @if $bottom-start != null {
       border-bottom-left-radius: $bottom-start;
     }
 
