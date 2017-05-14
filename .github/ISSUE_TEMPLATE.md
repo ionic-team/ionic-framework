@@ -17,9 +17,9 @@
 **Steps to reproduce:**
 <!-- If you are able to illustrate the bug or feature request with an example, please provide steps to reproduce and if possible a demo using one of the following templates:
 
-For Ionic 1 issues - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
+For Ionic V1 issues - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
 
-For Ionic 2 issues - http://plnkr.co/edit/z0DzVL?p=preview
+For Ionic issues - http://plnkr.co/edit/z0DzVL?p=preview
 -->
 
 **Related code:**
