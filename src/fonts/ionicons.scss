@@ -33,17 +33,18 @@ ion-icon {
   text-transform: none;
   speak: none;
 
-  &:before {
-    display: inline-block;
-  }
-
   @include rtl() {
-    &[aria-label^="arrow"]:before, &[flip-rtl]:before {
+    &[aria-label^="arrow"]::before,
+    &[flip-rtl]::before {
       transform: scaleX(-1);
     }
 
-    &[unflip-rtl]:before {
+    &[unflip-rtl]::before {
       transform: scaleX(1);
     }
+  }
+
+  &::before {
+    display: inline-block;
   }
 }
