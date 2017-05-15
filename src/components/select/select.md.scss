@@ -47,7 +47,7 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
 
 .select-md .select-icon .select-icon-inner {
   @include position(50%, null, null, 5px);
-  @include margin(3px, null, null, null);
+  @include margin(-3px, null, null, null);
 
   position: absolute;
 
