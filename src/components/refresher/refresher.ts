@@ -28,7 +28,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
  * ```html
  * <ion-content>
  *
- *   <ion-refresher (ionRefresh)="doRefresh($event)">
+ *   <ion-refresher (refresh)="doRefresh($event)">
  *     <ion-refresher-content></ion-refresher-content>
  *   </ion-refresher>
  *
@@ -62,7 +62,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
  *  ```html
  *  <ion-content>
  *
- *    <ion-refresher (ionRefresh)="doRefresh($event)">
+ *    <ion-refresher (refresh)="doRefresh($event)">
  *      <ion-refresher-content
  *        pullingIcon="arrow-dropdown"
  *        pullingText="Pull to refresh"
