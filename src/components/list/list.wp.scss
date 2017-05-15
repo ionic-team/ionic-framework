@@ -115,8 +115,8 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp + ion-list ion-list-header {
-  margin-top: -$list-wp-margin-top;
-  padding-top: 0;
+  @include margin(-$list-wp-margin-top, null, null, null);
+  @include padding(0, null, null, null);
 }
 
 
@@ -145,7 +145,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp[inset] + ion-list[inset] {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 .list-wp[inset] ion-list-header {

@@ -56,11 +56,6 @@ linters:
       - justify-content
       - order
       -
-      - margin-top
-      - margin-bottom
-      - padding-top
-      - padding-bottom
-      -
       - width
       - min-width
       - max-width
@@ -200,10 +195,14 @@ linters:
       - padding
       - padding-left
       - padding-right
+      - padding-top
+      - padding-bottom
 
       - margin
       - margin-left
       - margin-right
+      - margin-top
+      - margin-bottom
 
       - border-radius
       - border-top-left-radius

@@ -62,8 +62,7 @@
 }
 
 .tab-button-text {
-  margin-top: 3px;
-  margin-bottom: 2px;
+  @include margin(3px, null, 2px, null);
 }
 
 .tab-button-text,

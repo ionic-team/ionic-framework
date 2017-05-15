@@ -43,10 +43,9 @@ $select-ios-placeholder-color:   $select-ios-icon-color !default;
 
 .select-ios .select-icon .select-icon-inner {
   @include position(50%, null, null, 5px);
+  @include margin(-2px, null, null, null);
 
   position: absolute;
-
-  margin-top: -2px;
 
   width: 0;
   height: 0;

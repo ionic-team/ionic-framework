@@ -79,14 +79,13 @@ ion-fab {
 
   &[center] {
     @include position(null, null, null, 50%);
-
     @include margin-horizontal(-$fab-size / 2, null);
   }
 
   &[middle] {
-    top: 50%;
+    @include margin(-$fab-size / 2, null, null, null);
 
-    margin-top: -$fab-size / 2;
+    top: 50%;
   }
 
   &[top] {

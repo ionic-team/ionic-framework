@@ -92,7 +92,7 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 }
 
 .range-wp.range-has-pin {
-  padding-top: $range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding-top;
+  @include padding($range-wp-padding-vertical + $range-wp-pin-font-size + $range-wp-pin-padding-top, null, null, null);
 }
 
 .range-wp .range-slider {
