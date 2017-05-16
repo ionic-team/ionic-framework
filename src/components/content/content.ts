@@ -358,6 +358,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
     this._imgReqBfr = config.getNumber('imgRequestBuffer', 1400);
     this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
     this._imgVelMax = config.getNumber('imgVelocityMax', 3);
+    this._scroll = new ScrollView(_plt, _dom);
 
     this._scroll = new ScrollView(_app, _plt, _dom);
 
