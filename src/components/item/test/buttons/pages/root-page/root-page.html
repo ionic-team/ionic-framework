@@ -34,55 +34,55 @@
   </button>
 
   <ion-item (click)="testClickOutsize($event)">
-    <button ion-button item-left (click)="testClick($event)">Default</button>
+    <button ion-button item-start (click)="testClick($event)">Default</button>
     Inner Buttons
-    <button ion-button outline item-right (click)="testClick($event)">Outline</button>
+    <button ion-button outline item-end (click)="testClick($event)">Outline</button>
   </ion-item>
 
   <button ion-item disabled>
-    <button ion-button item-left icon-left (click)="testClick($event)">
+    <button ion-button item-start icon-left (click)="testClick($event)">
       <ion-icon name="home"></ion-icon>
       Left Icon
     </button>
     disabled left icon buttons
-    <button ion-button outline item-right icon-left (click)="testClick($event)">
+    <button ion-button outline item-end icon-left (click)="testClick($event)">
       <ion-icon name="star"></ion-icon>
       Left Icon
     </button>
   </button>
 
   <ion-item>
-    <button ion-button item-left icon-right (click)="testClick($event)">
+    <button ion-button item-start icon-right (click)="testClick($event)">
       Right Icon
       <ion-icon name="home"></ion-icon>
     </button>
     right icon buttons
-    <button ion-button outline item-right icon-right (click)="testClick($event)">
+    <button ion-button outline item-end icon-right (click)="testClick($event)">
       Right Icon
       <ion-icon name="star"></ion-icon>
     </button>
   </ion-item>
 
   <ion-item>
-    <button ion-button icon-only clear item-left default (click)="testClick($event)">
+    <button ion-button icon-only clear item-start default (click)="testClick($event)">
       <ion-icon name="navigate"></ion-icon>
     </button>
     icon only buttons default
-    <button ion-button icon-only clear item-right default (click)="testClick($event)">
+    <button ion-button icon-only clear item-end default (click)="testClick($event)">
       <ion-icon name="navigate"></ion-icon>
     </button>
   </ion-item>
 
   <a ion-item disabled>
     a ion-item disabled right icon/text button large
-    <button ion-button item-right large icon-left (click)="testClick($event)">
+    <button ion-button item-end large icon-left (click)="testClick($event)">
       <ion-icon name="refresh"></ion-icon>
       Refresh
     </button>
   </a>
 
   <ion-item>
-    <button ion-button clear item-left small icon-left (click)="testClick($event)">
+    <button ion-button clear item-start small icon-left (click)="testClick($event)">
       <ion-icon name="settings"></ion-icon>
       Settings
     </button>
@@ -91,7 +91,7 @@
 
   <ion-item>
     ion-item right clear button
-    <button ion-button secondary clear item-right (click)="testClick($event)">
+    <button ion-button secondary clear item-end (click)="testClick($event)">
       Edit
     </button>
   </ion-item>
@@ -100,23 +100,23 @@
     This is multiline text that has a
     long description of about how the text is really long
     and a <a href="#" (click)="testClick($event)">link</a>.
-    <button ion-button outline item-right (click)="testClick($event)">View</button>
+    <button ion-button outline item-end (click)="testClick($event)">View</button>
   </ion-item>
 
   <button ion-item *ngFor="let data of [0,1,2,3,4]; let i = index" [class.activated]="i == 1" (click)="testClick($event)">
-    <ion-avatar item-left>
+    <ion-avatar item-start>
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
     </ion-avatar>
     <h3>ng-for {{i}}</h3>
-    <ion-badge item-right>260k</ion-badge>
+    <ion-badge item-end>260k</ion-badge>
   </button>
 
   <ion-item (click)="testClickOutsize($event)">
     <div>
-      <button ion-button icon-only clear item-right (click)="testClick($event)">
+      <button ion-button icon-only clear item-end (click)="testClick($event)">
           <ion-icon name="remove-circle"></ion-icon>
       </button>
-      <button ion-button icon-only clear item-right (click)="testClick($event)">
+      <button ion-button icon-only clear item-end (click)="testClick($event)">
           <ion-icon name="add-circle"></ion-icon>
       </button>
     </div>

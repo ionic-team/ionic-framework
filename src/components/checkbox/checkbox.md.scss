@@ -12,12 +12,6 @@ $checkbox-md-border-bottom-style:        solid !default;
 /// @prop - Border bottom color of the checkbox
 $checkbox-md-border-bottom-color:        $list-md-border-color !default;
 
-/// @prop - Padding of the checkbox
-$checkbox-md-padding:                    $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
-
-/// @prop - Margin of the checkbox
-$checkbox-md-margin:                     0 !default;
-
 /// @prop - Opacity of the disabled checkbox
 $checkbox-md-disabled-opacity:           .3 !default;
 
@@ -60,11 +54,35 @@ $checkbox-md-transition-duration:        280ms !default;
 /// @prop - Transition easing of the checkbox
 $checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
 
-/// @prop - Margin of the left checkbox item
-$checkbox-md-item-left-margin:           $item-md-padding-media-top 36px $item-md-padding-media-bottom 4px !default;
+// deprecated
+$checkbox-md-item-left-margin:           null !default;
 
-/// @prop - Margin of the right checkbox item
-$checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
+/// @prop - Margin top of the start checkbox item
+$checkbox-md-item-start-margin-top:      $item-md-padding-media-top !default;
+
+/// @prop - Margin end of the start checkbox item
+$checkbox-md-item-start-margin-end:      36px !default;
+
+/// @prop - Margin bottom of the start checkbox item
+$checkbox-md-item-start-margin-bottom:   $item-md-padding-media-bottom !default;
+
+/// @prop - Margin start of the start checkbox item
+$checkbox-md-item-start-margin-start:    4px !default;
+
+// deprecated
+$checkbox-md-item-right-margin:          null !default;
+
+/// @prop - Margin top of the end checkbox item
+$checkbox-md-item-end-margin-top:        11px !default;
+
+/// @prop - Margin end of the end checkbox item
+$checkbox-md-item-end-margin-end:        10px !default;
+
+/// @prop - Margin bottom of the end checkbox item
+$checkbox-md-item-end-margin-bottom:     10px !default;
+
+/// @prop - Margin start of the end checkbox item
+$checkbox-md-item-end-margin-start:      0 !default;
 
 
 .checkbox-md {
@@ -77,6 +95,8 @@ $checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
 // -----------------------------------------
 
 .checkbox-md .checkbox-icon {
+  @include border-radius($checkbox-md-icon-border-radius);
+
   position: relative;
 
   width: $checkbox-md-icon-size;
@@ -84,7 +104,6 @@ $checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
 
   border-width: $checkbox-md-icon-border-width;
   border-style: $checkbox-md-icon-border-style;
-  border-radius: $checkbox-md-icon-border-radius;
   border-color: $checkbox-md-icon-border-color-off;
   background-color: $checkbox-md-icon-background-color-off;
 
@@ -107,9 +126,9 @@ $checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
 // -----------------------------------------
 
 .checkbox-md .checkbox-checked .checkbox-inner {
+  @include position(0, null, null, 4px);
+
   position: absolute;
-  top: 0;
-  left: 4px;
 
   width: 5px;
   height: 10px;
@@ -141,15 +160,20 @@ $checkbox-md-item-right-margin:          11px 10px 10px 0 !default;
   position: static;
   display: block;
 
-  margin: $checkbox-md-item-left-margin;
+  @include deprecated-variable(margin, $checkbox-md-item-left-margin) {
+    @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
+  }
 }
 
-.item.item-md .checkbox-md[item-right] {
-  margin: $checkbox-md-item-right-margin;
+.item.item-md .checkbox-md[item-right], // deprecated
+.item.item-md .checkbox-md[item-end] {
+  @include deprecated-variable(margin, $checkbox-md-item-right-margin) {
+    @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
+  }
 }
 
 .checkbox-md + .item-inner ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 

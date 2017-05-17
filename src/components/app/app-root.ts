@@ -157,7 +157,7 @@ export class IonicApp extends Ion implements OnInit {
 
   stopScroll(): Promise<boolean> {
     if (this._stopScrollPlugin) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         this._stopScrollPlugin.stop(() => resolve(true));
       });
     } else {

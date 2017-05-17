@@ -235,6 +235,9 @@ export class Scroll implements IScroll {
     }
   }
 
+  constructor() { }
+
+
   /**
    * DOM WRITE
    */

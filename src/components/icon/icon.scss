@@ -1,10 +1,14 @@
 @import "../../themes/ionic.globals";
 
+@import "../../fonts/ionicons";
+
 // Icon
 // --------------------------------------------------
 
 
 ion-icon {
+  visibility: inherit !important;
+
   display: inline-block;
 
   font-size: 1.2em;

@@ -131,7 +131,7 @@ function testValues(): any {
   };
 }
 
-var dom: MockDomController;
+let dom: MockDomController;
 
 function mockActivator(appEnabled: boolean, css: string) {
   dom = mockDomController();

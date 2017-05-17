@@ -75,8 +75,8 @@ export class Button {
   @Prop() href: string;
 
   /**
-   * @Prop {boolean} If true, activates the large button size.
-   * Type: size
+   * @Prop {string} The type of button.
+   * Possible values are: `"button"`, `"bar-button"`.
    */
   @Prop() buttonType: string = 'button';
 

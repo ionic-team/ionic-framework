@@ -10,7 +10,7 @@ describe('Overlay Proxy', () => {
       instance.overlay = mockOverlay();
       spyOn(instance.overlay, instance.overlay.dismiss.name).and.returnValue(Promise.resolve());
 
-      const promise = instance.dismiss(null, null, null);
+      const promise = instance.dismiss();
 
       promise.then(() => {
         expect(instance.overlay.dismiss).toHaveBeenCalled();

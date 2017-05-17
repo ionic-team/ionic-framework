@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ionic2",
-  "version": "3.1.1",
+  "version": "3.2.1",
   "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular 2",
   "keywords": [
     "ionic",
@@ -35,7 +35,7 @@
     "@angular/platform-browser-dynamic": "4.1.0",
     "ionicons": "~3.0.0",
     "rxjs": "5.1.1",
-    "zone.js": "^0.8.9"
+    "zone.js": "^0.8.10"
   },
   "devDependencies": {
     "@ionic/app-scripts": "nightly",
@@ -69,6 +69,7 @@
     "del": "2.2.2",
     "dgeni": "^0.4.7",
     "dgeni-packages": "^0.16.10",
+    "dotenv": "4.0.0",
     "event-stream": "3.3.4",
     "file-loader": "0.9.0",
     "fs-extra": "^2.0.0",
@@ -121,6 +122,7 @@
     "rollup-plugin-node-resolve": "3.0.0",
     "rollup-plugin-uglify": "1.0.1",
     "run-sequence": "1.2.2",
+    "s3": "4.4.0",
     "sassdoc": "2.2.1",
     "semver": "5.3.0",
     "serve-static": "1.11.1",

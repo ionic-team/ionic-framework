@@ -37,10 +37,10 @@ ion-searchbar {
 }
 
 .searchbar-clear-icon {
-  display: none;
+  @include margin(0);
+  @include padding(0);
 
-  margin: 0;
-  padding: 0;
+  display: none;
 
   min-height: 0;
 }

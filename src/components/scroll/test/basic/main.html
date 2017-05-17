@@ -1,0 +1,66 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Scroll</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <h2>Horizontal</h2>
+  <ion-scroll scrollX="true" style="height: 200px">
+    <div style="height: 200px; width: 2500px;" class="pattern1"></div>
+  </ion-scroll>
+
+  <h2>Vertical</h2>
+  <ion-scroll scrollY="true" style="width: 200px; height: 500px">
+    <div style="height: 2500px; width: 200px;" class="pattern2"></div>
+  </ion-scroll>
+
+  <h2>Both</h2>
+  <ion-scroll scrollX scrollY style="width: 100%; height: 500px">
+    <div style="height: 2500px; width: 2500px;" class="pattern3"></div>
+  </ion-scroll>
+
+</ion-content>
+
+
+<style>
+  f { display: block; height: 400px; width: 100%; background-color: #387ef5; margin-bottom: 15px; }
+  #counter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 5;
+  }
+
+  .pattern1 {
+    background:
+    radial-gradient(circle at 0% 50%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px) 0 10px,
+    radial-gradient(at 100% 100%,      rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px),
+    #8a3;
+    background-size: 20px 20px;
+  }
+
+  .pattern2 {
+    background:
+linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
+linear-gradient(63deg, transparent 74%, #999 78%),
+linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
+#444;
+background-size: 16px 48px;
+  }
+
+  .pattern3 {
+    background:
+linear-gradient(135deg, #708090 22px, #d9ecff 22px, #d9ecff 24px, transparent 24px, transparent 67px, #d9ecff 67px, #d9ecff 69px, transparent 69px),
+linear-gradient(225deg, #708090 22px, #d9ecff 22px, #d9ecff 24px, transparent 24px, transparent 67px, #d9ecff 67px, #d9ecff 69px, transparent 69px)0 64px;
+background-color:#708090;
+background-size: 64px 128px
+  }
+</style>

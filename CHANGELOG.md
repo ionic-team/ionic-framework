@@ -1,3 +1,82 @@
+<a name="3.2.1"></a>
+## [3.2.1](https://github.com/driftyco/ionic/compare/v3.2.0...v3.2.1) (2017-05-12)
+
+
+### Bug Fixes
+
+* **label:** set the ios variables to null to avoid styling ([2c66c56](https://github.com/driftyco/ionic/commit/2c66c56)), closes [#11631](https://github.com/driftyco/ionic/issues/11631)
+* **searchbar:** update signature mismatch in template & class ([#11599](https://github.com/driftyco/ionic/issues/11599)) ([4347627](https://github.com/driftyco/ionic/commit/4347627)), closes [#11598](https://github.com/driftyco/ionic/issues/11598)
+
+
+
+<a name="3.2.0"></a>
+# [3.2.0](https://github.com/driftyco/ionic/compare/v3.1.1...v3.2.0) (2017-05-10)
+
+
+### Steps to Upgrade
+
+Update your package.json to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
+
+```
+"dependencies": {
+  "@angular/common": "4.1.0",
+  "@angular/compiler": "4.1.0",
+  "@angular/compiler-cli": "4.1.0",
+  "@angular/core": "4.1.0",
+  "@angular/forms": "4.1.0",
+  "@angular/http": "4.1.0",
+  "@angular/platform-browser": "4.1.0",
+  "@angular/platform-browser-dynamic": "4.1.0",
+  "@ionic-native/core": "3.6.1",
+  "@ionic-native/splash-screen": "3.6.1",
+  "@ionic-native/status-bar": "3.6.1",
+  "@ionic/storage": "2.0.1",
+  "ionic-angular": "3.2.1",
+  "ionicons": "3.0.0",
+  "rxjs": "5.1.1",
+  "sw-toolbox": "3.6.0",
+  "zone.js": "0.8.10"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "1.3.7",
+  "typescript": "2.2.1"
+}
+```
+
+Using v3 of the Ionic CLI? Make sure to add `@ionic/cli-plugin-ionic-angular` and `@ionic/cli-plugin-cordova` to your `devDependencies`. Read more about this on our [blog](http://blog.ionic.io/announcing-ionic-cli-v3/).
+
+
+### Bug Fixes
+
+* **button:** display box shadow correctly for Chrome ([cbe0b42](https://github.com/driftyco/ionic/commit/cbe0b42))
+* **datetime:** fix floating label with empty ion-datetime ([#11552](https://github.com/driftyco/ionic/issues/11552)) ([5a895bb](https://github.com/driftyco/ionic/commit/5a895bb)), closes [#11547](https://github.com/driftyco/ionic/issues/11547)
+* **label:** add the $label-ios-text-color sass variables back ([588fad8](https://github.com/driftyco/ionic/commit/588fad8)), closes [#11373](https://github.com/driftyco/ionic/issues/11373)
+* **module-loader:** remove null references ([2afc5cf](https://github.com/driftyco/ionic/commit/2afc5cf))
+* **nav-controller:** popToRoot should not remove root view ([646d736](https://github.com/driftyco/ionic/commit/646d736))
+* **rtl:** add correct text-align ([#11353](https://github.com/driftyco/ionic/issues/11353)) ([424b15a](https://github.com/driftyco/ionic/commit/424b15a))
+* **rtl:** change item reorder offset for RTL ([#11395](https://github.com/driftyco/ionic/issues/11395)) ([665e44f](https://github.com/driftyco/ionic/commit/665e44f))
+* **select:** fire the events properly in popover interface ([59dd853](https://github.com/driftyco/ionic/commit/59dd853))
+* **tap-click:** update setupTapClick signature ([df8d1cc](https://github.com/driftyco/ionic/commit/df8d1cc))
+* **view-controller:** set _dismissRole to a string ([6d11499](https://github.com/driftyco/ionic/commit/6d11499))
+* **virtual-scroll:** update virtualTrackBy reference ([de19dbe](https://github.com/driftyco/ionic/commit/de19dbe))
+* **virtual-scroll:** remove duplicate items ([f893aa6](https://github.com/driftyco/ionic/commit/f893aa6))
+* **virtual-scroll:** initialize differ with trackByFn ([#11492](https://github.com/driftyco/ionic/issues/11492)) ([299a68b](https://github.com/driftyco/ionic/commit/299a68b))
+
+
+### Features
+
+* **item:** deprecate item-left / item-right attributes for item-start / item-end ([#11125](https://github.com/driftyco/ionic/issues/11125)) ([26c653e](https://github.com/driftyco/ionic/commit/26c653e))
+* **select:** close select programatically ([a04b577](https://github.com/driftyco/ionic/commit/a04b577))
+* **wk:** built-in support for WK ([#11048](https://github.com/driftyco/ionic/issues/11048)) ([325cc5e](https://github.com/driftyco/ionic/commit/325cc5e))
+
+
+### Performance Improvements
+
+* **virtual-scroll:** relax the restrictions for fast path ([88e5642](https://github.com/driftyco/ionic/commit/88e5642))
+* **virtual-scroll:** fast path for removing ([8baa647](https://github.com/driftyco/ionic/commit/8baa647))
+
+
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/driftyco/ionic/compare/v3.1.0...v3.1.1) (2017-04-28)
 

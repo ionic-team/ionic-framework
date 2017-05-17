@@ -68,7 +68,7 @@ describe('Img', () => {
     renderer = mockRenderer();
     plt = mockPlatform();
     dom = mockDomController();
-    img = new Img(elementRef, renderer, plt, mockZone(), content, dom);
+    img = new Img(elementRef, renderer, plt, content, dom);
   });
 
 });

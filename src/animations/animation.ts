@@ -501,7 +501,7 @@ export class Animation {
 
     const self = this;
 
-    function onTransitionEnd(ev: any) {
+    function onTransitionEnd() {
       // congrats! a successful transition completed!
       // ensure transition end events and timeouts have been cleared
       self._clearAsync();

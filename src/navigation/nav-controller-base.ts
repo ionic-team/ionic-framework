@@ -331,7 +331,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (ti.removeCount < 0) {
         ti.removeCount = (viewsLength - ti.removeStart);
       }
-      ti.leavingRequiresTransition = ((ti.removeStart + ti.removeCount) === viewsLength);
+      ti.leavingRequiresTransition = (ti.removeCount > 0) && ((ti.removeStart + ti.removeCount) === viewsLength);
     }
 
     if (ti.insertViews) {

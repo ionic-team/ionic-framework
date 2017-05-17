@@ -11,7 +11,6 @@ import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual, assert } from '../../util/util';
 import { Item } from '../item/item';
-import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
 import { SelectPopover, SelectPopoverOption } from './select-popover-component';
 
@@ -200,7 +199,6 @@ export class Select extends BaseInput<any> implements OnDestroy {
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() item: Item,
-    @Optional() private _nav: NavController,
     public deepLinker: DeepLinker
   ) {
     super(config, elementRef, renderer, 'select', [], form, item, null);
@@ -370,7 +368,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
     this._fireFocus();
 
-    overlay.onDidDismiss((value: any) => {
+    overlay.onDidDismiss(() => {
       this._fireBlur();
       this._overlay = undefined;
     });
@@ -381,7 +379,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
   /**
    * Close the select interface.
    */
-  close() {
+  close(): Promise<any> {
     if (!this._overlay || !this.isFocus()) {
       return;
     }

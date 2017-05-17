@@ -103,15 +103,15 @@ import { ItemReorder } from './item-reorder';
  *
  *  | Attribute      | Description                                                                                          |
  *  |----------------|----------------------------------------------------------------------------------------------------- |
- *  | `item-left`    | Placed to the left of all other elements, outside of the inner item.                                 |
- *  | `item-right`   | Placed to the right of all other elements, inside of the inner item, outside of the input wrapper.   |
+ *  | `item-start`   | Placed to the left of all other elements, outside of the inner item.                                 |
+ *  | `item-end`     | Placed to the right of all other elements, inside of the inner item, outside of the input wrapper.   |
  *  | `item-content` | Placed to the right of any `ion-label`, inside of the input wrapper.                                 |
  *
  * ### Checkboxes, Radios and Toggles
- * [Checkboxes](../../checkbox/Checkbox) are positioned in the same place as the `item-left` attribute.
+ * [Checkboxes](../../checkbox/Checkbox) are positioned in the same place as the `item-start` attribute.
  * [Radios](../../radio/RadioButton) and [Toggles](../../toggle/Toggle) are positioned in the same place
- * as the `item-right` attribute. All of these components can be positioned differently by adding the
- * `item-left` or `item-right` attribute.
+ * as the `item-end` attribute. All of these components can be positioned differently by adding the
+ * `item-start` or `item-end` attribute.
  *
  * ### Content and Inputs
  * A [Label](../../label/Label) is placed inside of the item to the left of all content and inputs. The
@@ -180,9 +180,9 @@ import { ItemReorder } from './item-reorder';
  *
  *   <!-- List header with buttons on each side -->
  *   <ion-list-header>
- *     <button ion-button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-start (click)="buttonClick()">Button</button>
  *     List Header
- *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-end (click)="buttonClick()">Outline</button>
  *   </ion-list-header>
  *
  *   <!-- Loops through and creates multiple items -->
@@ -192,7 +192,7 @@ import { ItemReorder } from './item-reorder';
  *
  *   <!-- Button item with an icon on the left -->
  *   <button ion-item>
- *     <ion-icon name="star" item-left></ion-icon>
+ *     <ion-icon name="star" item-start></ion-icon>
  *     Button Item
  *   </button>
  *
@@ -208,25 +208,25 @@ import { ItemReorder } from './item-reorder';
  *
  *   <!-- Item with left and right buttons -->
  *   <ion-item>
- *     <button ion-button item-left (click)="buttonClick()">Button</button>
+ *     <button ion-button item-start (click)="buttonClick()">Button</button>
  *     Item
- *     <button ion-button outline item-right (click)="buttonClick()">Outline</button>
+ *     <button ion-button outline item-end (click)="buttonClick()">Outline</button>
  *   </ion-item>
  *
  *   <!-- Item divider with a right button -->
  *   <ion-item-divider>
  *     Item Divider
- *     <button ion-button item-right>Button</button>
+ *     <button ion-button item-end>Button</button>
  *   </ion-item-divider>
  *
  *   <!-- Disabled button item with left and right buttons -->
  *   <button ion-item disabled>
- *     <button ion-button item-left (click)="buttonClick()">
+ *     <button ion-button item-start (click)="buttonClick()">
  *       <ion-icon name="home"></ion-icon>
  *       Left Icon
  *     </button>
  *     Disabled Button Item
- *     <button ion-button outline item-right (click)="buttonClick()">
+ *     <button ion-button outline item-end (click)="buttonClick()">
  *       <ion-icon name="star"></ion-icon>
  *       Left Icon
  *     </button>
@@ -234,18 +234,18 @@ import { ItemReorder } from './item-reorder';
  *
  *   <!-- Item with an avatar on the left and button on the right -->
  *   <ion-item>
- *     <ion-avatar item-left>
+ *     <ion-avatar item-start>
  *       <img src="img/my-avatar.png">
  *     </ion-avatar>
  *     Avatar Item
- *     <button ion-button outline item-right>View</button>
+ *     <button ion-button outline item-end>View</button>
  *   </ion-item>
  *
  *   <!-- Item with a thumbnail on the right -->
  *   <ion-item>
  *     <h2>Item</h2>
  *     <p>Item Paragraph</p>
- *     <ion-thumbnail item-right>
+ *     <ion-thumbnail item-end>
  *       <img src="img/my-thumbnail.png">
  *     </ion-thumbnail>
  *   </ion-item>
@@ -272,7 +272,7 @@ import { ItemReorder } from './item-reorder';
 @Component({
   selector: 'ion-list-header,ion-item,[ion-item],ion-item-divider',
   template:
-    '<ng-content select="[item-left],ion-checkbox:not([item-right])"></ng-content>' +
+    '<ng-content select="[item-start],[item-left],ion-checkbox:not([item-end]):not([item-right])"></ng-content>' +
     '<div class="item-inner">' +
       '<div class="input-wrapper">' +
         '<ng-content select="ion-label"></ng-content>' +
@@ -281,7 +281,7 @@ import { ItemReorder } from './item-reorder';
         '</ion-label>' +
         '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
       '</div>' +
-      '<ng-content select="[item-right],ion-radio,ion-toggle"></ng-content>' +
+      '<ng-content select="[item-end],[item-right],ion-radio,ion-toggle"></ng-content>' +
       '<ion-reorder *ngIf="_hasReorder"></ion-reorder>' +
     '</div>' +
     '<div class="button-effect"></div>',

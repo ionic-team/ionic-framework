@@ -658,6 +658,20 @@ describe('DateTime', () => {
 
   });
 
+  describe('hasValue', () => {
+
+    it('should return false if value is not set, and return true if value is set', zoned(() => {
+      expect(datetime.hasValue()).toEqual(false);
+
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+      expect(datetime.hasValue()).toEqual(true);
+
+      datetime.setValue('');
+      expect(datetime.hasValue()).toEqual(false);
+    }));
+
+  });
+
   var datetime: DateTime;
   var picker: Picker;
 

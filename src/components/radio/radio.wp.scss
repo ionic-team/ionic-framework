@@ -4,37 +4,61 @@
 // --------------------------------------------------
 
 /// @prop - Color of the checked radio
-$radio-wp-color-on:               color($colors-wp, primary) !default;
+$radio-wp-color-on:                   color($colors-wp, primary) !default;
 
 /// @prop - Color of the unchecked radio
-$radio-wp-color-off:              #333 !default;
+$radio-wp-color-off:                  #333 !default;
 
 /// @prop - Order of the radio (places to the left of the item)
-$radio-wp-order:                  -1 !default;
+$radio-wp-order:                      -1 !default;
 
 /// @prop - Width of the radio icon
-$radio-wp-icon-width:             16px !default;
+$radio-wp-icon-width:                 16px !default;
 
 /// @prop - Height of the radio icon
-$radio-wp-icon-height:            16px !default;
+$radio-wp-icon-height:                16px !default;
 
 /// @prop - Border width of the radio icon
-$radio-wp-icon-border-width:      2px !default;
+$radio-wp-icon-border-width:          2px !default;
 
 /// @prop - Border style of the radio icon
-$radio-wp-icon-border-style:      solid !default;
+$radio-wp-icon-border-style:          solid !default;
 
 /// @prop - Border radius of the radio icon
-$radio-wp-icon-border-radius:     50% !default;
+$radio-wp-icon-border-radius:         50% !default;
 
 /// @prop - Opacity of the disabled radio
-$radio-wp-disabled-opacity:       .3 !default;
+$radio-wp-disabled-opacity:           .3 !default;
 
-/// @prop - Margin of the item-left in a radio
-$radio-wp-item-left-margin:       9px 20px 9px 4px !default;
+// deprecated
+$radio-wp-item-left-margin:           null !default;
 
-/// @prop - Margin of the item-right in a radio
-$radio-wp-item-right-margin:      11px 10px 10px 0 !default;
+/// @prop - Margin top of the item-start in a radio
+$radio-wp-item-start-margin-top:      9px !default;
+
+/// @prop - Margin end of the item-start in a radio
+$radio-wp-item-start-margin-end:      20px !default;
+
+/// @prop - Margin bottom of the item-start in a radio
+$radio-wp-item-start-margin-bottom:   9px !default;
+
+/// @prop - Margin start of the item-start in a radio
+$radio-wp-item-start-margin-start:    4px !default;
+
+// deprecated
+$radio-wp-item-right-margin:          null !default;
+
+/// @prop - Margin top of the item-end in a radio
+$radio-wp-item-end-margin-top:        11px !default;
+
+/// @prop - Margin end of the item-end in a radio
+$radio-wp-item-end-margin-end:        10px !default;
+
+/// @prop - Margin bottom of the item-end in a radio
+$radio-wp-item-end-margin-bottom:     10px !default;
+
+/// @prop - Margin start of the item-end in a radio
+$radio-wp-item-end-margin-start:      0 !default;
 
 
 .radio-wp {
@@ -47,19 +71,19 @@ $radio-wp-item-right-margin:      11px 10px 10px 0 !default;
 // -----------------------------------------
 
 .radio-wp .radio-icon {
-  position: relative;
-  top: 0;
-  left: 0;
-  display: block;
+  @include position(0, null, null, 0);
+  @include margin(0);
+  @include border-radius($radio-wp-icon-border-radius);
 
-  margin: 0;
+  position: relative;
+
+  display: block;
 
   width: $radio-wp-icon-width;
   height: $radio-wp-icon-height;
 
   border-width: $radio-wp-icon-border-width;
   border-style: $radio-wp-icon-border-style;
-  border-radius: $radio-wp-icon-border-radius;
   border-color: $radio-wp-color-off;
 }
 
@@ -68,15 +92,16 @@ $radio-wp-item-right-margin:      11px 10px 10px 0 !default;
 // -----------------------------------------
 
 .radio-wp .radio-inner {
+  @include position($radio-wp-icon-border-width, null, null, $radio-wp-icon-border-width);
+  @include border-radius(50%);
+
   position: absolute;
-  top: $radio-wp-icon-border-width;
-  left: $radio-wp-icon-border-width;
+
   display: none;
 
   width: $radio-wp-icon-width / 2;
   height: $radio-wp-icon-height / 2;
 
-  border-radius: 50%;
   background-color: $radio-wp-color-off;
 }
 
@@ -118,17 +143,22 @@ $radio-wp-item-right-margin:      11px 10px 10px 0 !default;
 
   order: $radio-wp-order;
 
-  margin: $radio-wp-item-left-margin;
+  @include deprecated-variable(margin, $radio-wp-item-left-margin) {
+    @include margin($radio-wp-item-start-margin-top, $radio-wp-item-start-margin-end, $radio-wp-item-start-margin-bottom, $radio-wp-item-start-margin-start);
+  }
 
-  &[item-right] {
+  &[item-right], // deprecated
+  &[item-end] {
     order: 0;
 
-    margin: $radio-wp-item-right-margin;
+    @include deprecated-variable(margin, $radio-wp-item-right-margin) {
+      @include margin($radio-wp-item-end-margin-top, $radio-wp-item-end-margin-end, $radio-wp-item-end-margin-bottom, $radio-wp-item-end-margin-start);
+    }
   }
 }
 
 .item-radio.item-wp ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 

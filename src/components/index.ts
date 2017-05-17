@@ -14,4 +14,6 @@ export declare const Method: interfaces.MethodDecorator;
 
 export declare const Prop: interfaces.PropDecorator;
 
+export declare const State: interfaces.StateDecorator;
+
 export declare const Watch: interfaces.WatchDecorator;

@@ -34,7 +34,7 @@ import { Platform } from '../../platform/platform';
         '<ion-icon name="md-arrow-back"></ion-icon>' +
       '</ion-button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
-      '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" ' +
+      '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred()" (focus)="inputFocused()" ' +
         '[attr.placeholder]="placeholder" ' +
         '[attr.type]="type" ' +
         '[attr.autocomplete]="_autocomplete" ' +
@@ -236,11 +236,11 @@ export class Searchbar extends BaseInput<string> {
       var textWidth = tempSpan.offsetWidth;
       doc.body.removeChild(tempSpan);
 
-      // Set the input padding left
+      // Set the input padding start
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
       inputEle.style.paddingLeft = inputLeft;
 
-      // Set the icon margin left
+      // Set the icon margin start
       var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
       iconEle.style.marginLeft = iconLeft;
     }
@@ -283,7 +283,7 @@ export class Searchbar extends BaseInput<string> {
    * @hidden
    * Sets the Searchbar to focused and active on input focus.
    */
-  inputFocused(ev: UIEvent) {
+  inputFocused() {
     this._isActive = true;
     this._fireFocus();
     this.positionElements();
@@ -294,7 +294,7 @@ export class Searchbar extends BaseInput<string> {
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  inputBlurred(ev: UIEvent) {
+  inputBlurred() {
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this._shouldBlur === false) {

@@ -1,5 +1,5 @@
 import { mockApp, mockConfig } from '../../../util/mock-providers';
-import { ToastController } from '../../toast/toast-controller';
+import { ToastController } from '../toast-controller';
 
 
 describe('Toast', () => {
