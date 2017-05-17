@@ -1,0 +1,48 @@
+@import "../../themes/ionic.globals.md";
+@import "./card-header";
+
+
+// Material Design Card Header
+// --------------------------------------------------
+
+/// @prop - Font size of the card header
+$card-md-header-font-size:            1.6rem !default;
+
+/// @prop - Padding of the card header
+$card-md-header-padding:              16px !default;
+
+/// @prop - Color of the card header
+$card-md-header-color:                #222 !default;
+
+
+.card-header-md {
+  padding: $card-md-header-padding;
+
+  font-size: $card-md-header-font-size;
+  color: $card-md-header-color;
+}
+
+
+// Generate Material Design Card Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .card-md-#{$color-name} {
+
+    .card-header-md {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+      .card-header-md-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-header-md-#{$color-name} {
+    color: $color-base;
+  }
+
+}

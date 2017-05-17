@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
-
-import { Slides } from './slides';
+import { Component, h } from '../index';
 
  /**
   * @name Slide
@@ -15,29 +13,21 @@ import { Slides } from './slides';
   * @see {@link /docs/api/components/slides/Slides/ Slides API Docs}
   */
 @Component({
-  selector: 'ion-slide',
-  template:
-    '<div class="slide-zoom">' +
-      '<ng-content></ng-content>' +
-    '</div>',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+  tag: 'ion-slide',
+  styleUrls: {
+    default: 'slide.scss',
+  },
+  shadow: false
 })
 export class Slide {
+  $el: HTMLElement;
 
-  constructor(
-    elementRef: ElementRef,
-    renderer: Renderer,
-    private _slides: Slides
-  ) {
-    renderer.setElementClass(elementRef.nativeElement, 'swiper-slide', true);
-    _slides.update(10);
-  }
-
-  /**
-   * @hidden
-   */
-  ngOnDestroy() {
-    this._slides.update(10);
+  render() {
+    return h(this, {
+      class: {
+        'slide-zoom': true,
+        'swiper-slide': true
+      }
+    });
   }
 }

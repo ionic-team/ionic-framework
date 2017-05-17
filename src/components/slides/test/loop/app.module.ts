@@ -1,6 +1,6 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Slides } from '../../../..';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { IonicApp, IonicModule, Slides } from '../../../..';
 })
 export class E2EPage {
   slides: any[];
-  @ViewChild('loopSlider') loopSlider: Slides;
+  loopSlider: any;
   startingIndex: number;
   myTopSlideOptions: any;
 
@@ -35,7 +35,7 @@ export class E2EPage {
 
   }
 
-  onSlideChanged(slider: Slides) {
+  onSlideChanged(slider: any) {
     console.log('Slide changed', slider);
   }
 

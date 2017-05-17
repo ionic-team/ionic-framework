@@ -1,5 +1,6 @@
 @import "../../themes/ionic.globals";
 
+
 // Badge
 // --------------------------------------------------
 
@@ -11,10 +12,9 @@ $badge-font-weight:               bold !default;
 
 
 ion-badge {
-  @include padding(3px, 8px);
-  @include text-align(center);
-
   display: inline-block;
+
+  padding: 3px 8px;
 
   min-width: 10px;
 
@@ -22,8 +22,15 @@ ion-badge {
   font-weight: $badge-font-weight;
   line-height: 1;
 
+  text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
+
+  contain: content;
+}
+
+ion-badge.upgraded {
+  visibility: inherit;
 }
 
 ion-badge:empty {

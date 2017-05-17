@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { Toggle } from '../../../../../../';
 
 @Component({
   templateUrl: 'root-page.html'
@@ -38,20 +37,20 @@ export class RootPage {
     this.grapeCtrl.enabled ? this.grapeCtrl.disable() : this.grapeCtrl.enable();
   }
 
-  appleChange(toggle: Toggle) {
+  appleChange(toggle: any) {
     console.log('appleChange', toggle);
   }
 
-  bananaChange(toggle: Toggle) {
+  bananaChange(toggle: any) {
     console.log('bananaChange', toggle);
   }
 
-  kiwiChange(toggle: Toggle) {
+  kiwiChange(toggle: any) {
     console.log('kiwiChange', toggle);
     this.kiwiValue = toggle.checked;
   }
 
-  strawberryChange(toggle: Toggle) {
+  strawberryChange(toggle: any) {
     console.log('strawberryChange', toggle);
     this.strawberryValue = toggle.checked;
   }
