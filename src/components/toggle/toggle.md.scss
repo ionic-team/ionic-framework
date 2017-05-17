@@ -160,7 +160,7 @@ $toggle-md-item-right-padding:           12px ($item-md-padding-right / 2) 12px 
   cursor: pointer;
 }
 
-.item-md .toggle-md[item-left] {
+.item-md .toggle-md[slot="start"] {
   padding: $toggle-md-item-left-padding;
 }
 

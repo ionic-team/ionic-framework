@@ -1,5 +1,5 @@
 import { BooleanInputComponent, GestureDetail } from '../../util/interfaces';
-import { Component, h, Ionic, Listen, Method, Prop, Watch } from '../index';
+import { Component, h, Ionic, Listen, Prop, Watch } from '../index';
 
 
 @Component({
@@ -8,7 +8,8 @@ import { Component, h, Ionic, Listen, Method, Prop, Watch } from '../index';
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss',
     wp: 'toggle.wp.scss'
-  }
+  },
+  shadow: false
 })
 export class Toggle implements BooleanInputComponent {
   activated: boolean;
@@ -78,7 +79,6 @@ export class Toggle implements BooleanInputComponent {
     ev.preventDefault();
   }
 
-  @Method()
   toggle() {
     if (!this.disabled) {
       this.checked = !this.checked;

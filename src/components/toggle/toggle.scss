@@ -4,16 +4,19 @@
 // Toggle
 // --------------------------------------------------
 
-ion-toggle,
-:host {
+ion-toggle {
   display: inline-block;
-  visibility: inherit !important;
+
   contain: content;
 }
 
-ion-gesture {
+ion-toggle.upgraded {
+  visibility: inherit;
+}
+
+ion-toggle ion-gesture {
   display: block;
-  visibility: inherit !important;
+  visibility: inherit;
 }
 
 .toggle-cover {
