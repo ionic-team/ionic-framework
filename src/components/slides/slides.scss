@@ -2,7 +2,14 @@
 @import "./slides-import";
 
 
+// Slides
+// --------------------------------------------------
+
+
 ion-slides {
   display: block;
-  visibility: inherit !important;
+}
+
+ion-slides.upgraded {
+  visibility: inherit;
 }

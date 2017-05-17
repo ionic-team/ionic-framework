@@ -529,7 +529,7 @@ export class Slides {
   /**
    * @hidden
    */
-  ionViewWillUnload() {
+  ionViewDidUnload() {
     this._init = false;
 
     this.swiper.destroy(true, true);
