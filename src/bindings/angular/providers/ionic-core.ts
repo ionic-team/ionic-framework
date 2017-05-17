@@ -29,7 +29,7 @@ export function setupCore(config: Config, plt: Platform, domCtrl: DomController,
 
     // next tick controller created here so that it can
     // be created to run outside of angular
-    ionic['NextTickCtrl'] = getNextTickController(zone, plt.userAgent().toLowerCase());
+    ionic['QueueCtrl'] = getQueueController(win, zone);
 
     // keep core and angular dom reads/writes *nsync
     ionic['eventNameFn'] = function(eventName: string) {
@@ -59,48 +59,64 @@ export function setupCore(config: Config, plt: Platform, domCtrl: DomController,
 }
 
 
-function getNextTickController(zone: NgZone, ua: string) {
-  /* Adopted from Vue.js, MIT, https://github.com/vuejs/vue */
+function getQueueController(win: any, zone: NgZone) {
+  const hostScheduleDefer: Function = win['requestIdleCallback'];
   const callbacks: Function[] = [];
-  const isIOS = /iphone|ipad|ipod|ios/.test(ua);
-  const noop = () => {};
-  const promise = Promise.resolve();
-  const logError = (err: any) => { console.error(err); };
   let pending = false;
 
+  function doWork(deadlineObj: any) {
+    // let's see if we've got time to take care of things
+    while (deadlineObj.timeRemaining() > 1 && callbacks.length > 0) {
+      // do some work while within the allowed time
+      // shift the array and fire off the callbacks from the beginning
+      // once we run out of time or callbacks we'll stop
+      callbacks.shift()();
+    }
 
-  function nextTickHandler() {
-    pending = false;
-    const copies = callbacks.slice(0);
-
-    callbacks.length = 0;
-    for (let i = 0; i < copies.length; i++) {
-      copies[i]();
+    // check to see if we still have work to do
+    if (pending = (callbacks.length > 0)) {
+      // everyone just settle down now
+      // we already don't have time to do anything in this callback
+      // let's throw the next one in a requestAnimationFrame
+      // so we can just simmer down for a bit
+      zone.runOutsideAngular(() => {
+        requestAnimationFrame(flush);
+      });
     }
   }
 
-  function promiseTick() {
-    zone.runOutsideAngular(() => {
-      promise.then(nextTickHandler).catch(logError);
-      // in problematic UIWebViews, Promise.then doesn't completely break, but
-      // it can get stuck in a weird state where callbacks are pushed into the
-      // microtask queue but the queue isn't being flushed, until the browser
-      // needs to do some other work, e.g. handle a timer. Therefore we can
-      // "force" the microtask queue to be flushed by adding an empty timer.
-      if (isIOS) setTimeout(noop);
-    });
+  function flush() {
+    // always force a bunch of callbacks to run, but still have
+    // a throttle on how many can run in a certain time
+    const start = performance.now();
+    while (callbacks.length > 0 && (performance.now() - start < 4)) {
+      callbacks.shift()();
+    }
+
+    if (pending = (callbacks.length > 0)) {
+      // still more to do yet, but we've run out of time
+      // let's let thing cool off and try again after a raf
+      zone.runOutsideAngular(() => {
+        hostScheduleDefer(doWork);
+      });
+    }
   }
 
-  function queueNextTick(cb: Function) {
+  function add(cb: Function) {
+    // add the work to the end of the callbacks
     callbacks.push(cb);
 
     if (!pending) {
+      // not already pending work to do, so let's tee it up
       pending = true;
-      promiseTick();
+      zone.runOutsideAngular(() => {
+        hostScheduleDefer(doWork);
+      });
     }
   }
 
   return {
-    nextTick: queueNextTick
+    add: add,
+    flush: flush
   };
 }
