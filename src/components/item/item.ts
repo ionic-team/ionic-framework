@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
-import { Icon } from '../icon/icon';
 import { Ion } from '../ion';
 import { Label } from '../label/label';
 import { ItemReorder } from './item-reorder';
@@ -422,10 +421,10 @@ export class Item extends Ion {
   /**
    * @hidden
    */
-  @ContentChildren(Icon)
-  set _icons(icons: QueryList<Icon>) {
-    icons.forEach(icon => {
-      icon.setElementClass('item-icon', true);
-    });
-  }
+  // @ContentChildren(Icon)
+  // set _icons(icons: QueryList<Icon>) {
+    // icons.forEach(icon => {
+      // icon.setElementClass('item-icon', true);
+    // });
+  // }
 }

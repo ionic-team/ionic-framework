@@ -23,7 +23,6 @@ export { Col } from './components/grid/col';
 export { Grid } from './components/grid/grid';
 export { Row } from './components/grid/row';
 export { Ion } from './components/ion';
-export { Icon } from './components/icon/icon';
 export { Img } from './components/img/img';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';

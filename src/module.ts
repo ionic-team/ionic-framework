@@ -60,7 +60,6 @@ import { FabList } from './components/fab/fab-list';
 import { Col } from './components/grid/col';
 import { Grid } from './components/grid/grid';
 import { Row } from './components/grid/row';
-import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
@@ -192,7 +191,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     FabList,
     Grid,
     Img,
-    Icon,
     InfiniteScroll,
     InfiniteScrollContent,
     Item,
@@ -286,7 +284,6 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     FabList,
     Grid,
     Img,
-    Icon,
     InfiniteScroll,
     InfiniteScrollContent,
     Item,
