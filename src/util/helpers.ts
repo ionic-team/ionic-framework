@@ -64,14 +64,7 @@ export function getElementReference(elm: any, ref: string) {
     return elm.firstElementChild;
   }
   if (ref === 'parent') {
-    if (elm.parentElement ) {
-      // normal element with a parent element
-      return elm.parentElement;
-    }
-    if (elm.parentNode && elm.parentNode.host) {
-      // shadow dom's document fragment
-      return elm.parentNode.host;
-    }
+    return getParentElement(elm) || elm;
   }
   if (ref === 'body') {
     return elm.ownerDocument.body;
@@ -85,18 +78,14 @@ export function getElementReference(elm: any, ref: string) {
   return elm;
 }
 
-export function getKeyCodeByName(keyName: string) {
-  if (keyName === 'enter') {
-    return 13;
+export function getParentElement(elm: any) {
+  if (elm.parentElement ) {
+    // normal element with a parent element
+    return elm.parentElement;
   }
-  if (keyName === 'escape') {
-    return 27;
-  }
-  if (keyName === 'space') {
-    return 32;
-  }
-  if (keyName === 'tab') {
-    return 9;
+  if (elm.parentNode && elm.parentNode.host) {
+    // shadow dom's document fragment
+    return elm.parentNode.host;
   }
   return null;
 }
@@ -107,21 +96,4 @@ export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: stri
   for (var i = 0; i < styleProps.length; i++) {
     (<any>elm.style)[styleProps[i]] = styles[styleProps[i]];
   }
-}
-
-export function asyncFn(queue: Function[], cb: Function) {
-  if (queue === null) {
-    cb();
-  } else {
-    queue.push(cb);
-  }
-}
-
-export function drainAsyncFns(queue: Function[]): any {
-  if (queue) {
-    for (var i = 0; i < queue.length; i++) {
-      queue[i]();
-    }
-  }
-  return null;
 }

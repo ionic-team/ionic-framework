@@ -6,13 +6,27 @@ export interface Ionic {
     add: AddEventListenerApi;
   };
   theme: IonicTheme;
-  controllers: {
-    gesture?: any;
-  };
+  controllers: {[ctrlName: string]: any};
+  overlay: IonicOverlay;
   dom: DomControllerApi;
   config: ConfigApi;
-  modal: ModalControllerApi;
   Animation: Animation;
+}
+
+
+export interface OverlayApi {
+  load: (opts?: any) => Promise<any>;
+}
+
+
+export interface IonicOverlay {
+  <ModalController>(ctrlName: 'modal', opts: ModalOptions): Promise<Modal>;
+  (ctrlName: string, opts?: any): Promise<any>;
+}
+
+
+export interface IonicControllerLoaded {
+  (ctrlName: string): void;
 }
 
 
@@ -22,25 +36,22 @@ export interface IonicGlobal {
   loadComponents?: (coreVersion: number, bundleId: string, modulesImporterFn: ModulesImporterFn, cmp0?: ComponentModeData, cmp1?: ComponentModeData, cmp2?: ComponentModeData) => void;
   eventNameFn?: (eventName: string) => string;
   config?: Object;
+  loadController?: (ctrlName: string, ctrl: any) => any;
   ConfigCtrl?: ConfigApi;
   DomCtrl?: DomControllerApi;
-  NextTickCtrl?: NextTickApi;
-  Animation: any;
+  QueueCtrl?: QueueApi;
+  Animation?: any;
 }
 
 
-export interface ModalControllerApi {
-  create: (component: string, params?: any, opts?: ModalOptions) => Promise<Modal>;
-}
+export interface ModalController {
 
-
-export interface ModalControllerInternalApi extends ModalControllerApi {
-  _create?: any[];
 }
 
 
 export interface Modal {
   component: string;
+  componentProps?: any;
   id: string;
   style?: {
     zIndex: number;
@@ -50,13 +61,14 @@ export interface Modal {
   enterAnimation: AnimationBuilder;
   exitAnimation: AnimationBuilder;
   cssClass: string;
-  params: any;
   present: (done?: Function) => void;
   dismiss: (done?: Function) => void;
 }
 
 
 export interface ModalOptions {
+  component: string;
+  componentProps?: any;
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
   enterAnimation?: AnimationBuilder;
@@ -164,13 +176,9 @@ export interface ContentDimensions {
 }
 
 
-export interface NextTickApi {
-  nextTick: NextTick;
-}
-
-
-export interface NextTick {
-  (cb: Function): void;
+export interface QueueApi {
+  add: (cb: Function) => void;
+  flush: Function;
 }
 
 
@@ -204,32 +212,37 @@ export interface ComponentModeData {
   /**
    * methods
    */
-  [1]: Methods;
+  [1]: MethodMeta[];
+
+  /**
+   * states
+   */
+  [2]: StateMeta[];
 
   /**
    * listeners
    */
-  [2]: ComponentListenersData[];
+  [3]: ComponentListenersData[];
 
   /**
    * watchers
    */
-  [3]: ComponentWatchersData[];
+  [4]: ComponentWatchersData[];
 
   /**
    * shadow
    */
-  [4]: boolean;
+  [5]: boolean;
 
   /**
    * mode name (ios, md, wp)
    */
-  [5]: string;
+  [6]: number;
 
   /**
    * component mode styles
    */
-  [6]: string;
+  [7]: string;
 }
 
 
@@ -303,7 +316,7 @@ export interface PropMeta {
 }
 
 
-export type Methods = string[];
+export type MethodMeta = string;
 
 
 export interface MethodDecorator {
@@ -330,6 +343,14 @@ export interface ListenOptions {
 export interface ListenMeta extends ListenOptions {
   methodName?: string;
 }
+
+
+export interface StateDecorator {
+  (): any;
+}
+
+
+export type StateMeta = string;
 
 
 export interface WatchDecorator {
@@ -361,10 +382,11 @@ export interface ConfigApi {
 
 export interface ComponentMeta {
   tag?: string;
-  methods?: Methods;
+  methods?: MethodMeta[];
   props?: PropMeta[];
   listeners?: ListenMeta[];
   watchers?: WatchMeta[];
+  states?: StateMeta[];
   modes: ModeMeta[];
   shadow?: boolean;
   namedSlots?: string[];
@@ -385,7 +407,7 @@ export interface ModeMeta {
 
 export interface Component {
   ionViewDidLoad?: () => void;
-  ionViewWillUnload?: () => void;
+  ionViewDidUnload?: () => void;
 
   render?: () => VNode;
 
@@ -447,14 +469,17 @@ export interface ProxyElement extends HTMLElement {
   connectedCallback: () => void;
   attributeChangedCallback: (attrName: string, oldVal: string, newVal: string, namespace: string) => void;
   disconnectedCallback: () => void;
-  $queueUpdate: () => void;
 
+  $queueUpdate: () => void;
+  $initLoadComponent: () => void;
   $queued?: boolean;
   $instance?: Component;
   $hostContent?: HostContentNodes;
-  $tmpDisconnected?: boolean;
-
-  [memberName: string]: any;
+  $isLoaded?: boolean;
+  $hasConnected?: boolean;
+  $hasRendered?: boolean;
+  $awaitLoads?: ProxyElement[];
+  $depth?: number;
 }
 
 
@@ -515,10 +540,11 @@ export interface VNodeData {
 
 
 export interface PlatformApi {
-  registerComponent: (tag: string, data: any[]) => ComponentMeta;
+  registerComponents: (components: LoadComponents) => ComponentMeta[];
+  defineComponent: (tag: string, constructor: Function) => void;
   getComponentMeta: (tag: string) => ComponentMeta;
   loadBundle: (bundleId: string, priority: string, cb: Function) => void;
-  nextTick: NextTick;
+  queue: QueueApi;
 
   isElement: (node: Node) => node is Element;
   isText: (node: Node) => node is Text;
@@ -538,6 +564,7 @@ export interface PlatformApi {
   $getTextContent: (node: Node) => string | null;
   $getAttribute: (elm: Element, attrName: string) => string;
   $attachComponent: (elm: Element, cmpMeta: ComponentMeta, instance: Component) => void;
+  $tmpDisconnected: boolean;
 }
 
 
