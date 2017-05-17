@@ -348,7 +348,7 @@ export class Gesture {
   }
 
 
-  ionViewWillUnload() {
+  ionViewDidUnload() {
     this.gesture && this.gesture.destroy();
     this.gesture = this.pan = this.detail = this.detail.event = null;
   }
