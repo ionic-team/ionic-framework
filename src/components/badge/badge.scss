@@ -13,11 +13,7 @@ $badge-font-weight:               bold !default;
 
 ion-badge {
   display: inline-block;
-  visibility: inherit !important;
-  contain: content;
-}
 
-.badge {
   padding: 3px 8px;
 
   min-width: 10px;
@@ -29,6 +25,12 @@ ion-badge {
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
+
+  contain: content;
+}
+
+ion-badge.upgraded {
+  visibility: inherit;
 }
 
 ion-badge:empty {
