@@ -6,5 +6,8 @@
 
 ion-card-title {
   display: block;
-  visibility: inherit !important;
+}
+
+ion-card-header.upgraded {
+  visibility: inherit;
 }

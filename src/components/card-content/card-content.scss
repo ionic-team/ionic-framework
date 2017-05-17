@@ -6,5 +6,8 @@
 
 ion-card-content {
   display: block;
-  visibility: inherit !important;
+}
+
+ion-card-content.upgraded {
+  visibility: inherit;
 }

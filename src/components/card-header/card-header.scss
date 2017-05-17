@@ -8,8 +8,11 @@
 ion-card-header {
   display: block;
   overflow: hidden;
-  visibility: inherit !important;
 
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+ion-card-header.upgraded {
+  visibility: inherit;
 }

@@ -7,7 +7,10 @@
 ion-card {
   display: block;
   overflow: hidden;
-  visibility: inherit !important;
+}
+
+ion-card.upgraded {
+  visibility: inherit;
 }
 
 ion-card img {
