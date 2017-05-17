@@ -9,10 +9,6 @@ $button-round-padding:            0 2.6rem !default;
 /// @prop - Border radius of the round button
 $button-round-border-radius:      64px !default;
 
-:host {
-  visibility: inherit !important;
-}
-
 
 .button {
   @include text-align(center);
@@ -37,6 +33,10 @@ $button-round-border-radius:      64px !default;
   user-select: none;
 
   contain: content;
+}
+
+ion-button.upgraded {
+  visibility: inherit;
 }
 
 .button-inner {
