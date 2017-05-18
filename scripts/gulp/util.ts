@@ -56,6 +56,10 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   }
   config.include = includeGlob;
 
+  config.exclude = [
+    './components/badge/**/*'
+  ];
+
   if (overrideCompileOptions) {
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
   }
@@ -188,7 +192,7 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string) {
+export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, coreCompilerFilePath: string, coreDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string) {
   console.log('Running ionic-app-scripts serve with', testOrDemoName);
   const deepLinksDir = dirname(dirname(appNgModulePath));
   let scriptArgs = [
@@ -201,6 +205,8 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--tsconfig', tsConfig,
     '--readConfigJson', 'false',
     '--ionicAngularDir', ionicAngularDir,
+    '--coreCompilerFilePath', coreCompilerFilePath,
+    '--coreDir', coreDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
     '--enableLint', 'false',

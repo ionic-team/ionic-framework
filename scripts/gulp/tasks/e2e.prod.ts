@@ -25,7 +25,7 @@ task('e2e.prepareSass', (done: Function) => {
   done();
 });
 
-task('e2e.prod', ['e2e.prepare'], (done: Function) => {
+task('e2e.prod', ['e2e.prepare', 'core'], (done: Function) => {
   // okay, first find out all of the e2e tests to run by finding all of the 'main.ts' files
   filterE2eTestfiles().then((filePaths: string[]) => {
     if (filePaths && filePaths.length > 0) {
