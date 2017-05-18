@@ -373,7 +373,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   set virtualTrackBy(val: TrackByFn) {
     if (isPresent(val)) {
       this._virtualTrackBy = val;
-      this._createDiffer();
+      this._updateDiffer();
     }
   }
   get virtualTrackBy(): TrackByFn {
@@ -528,12 +528,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   private _updateDiffer() {
-    if (isBlank(this._differ)) {
-      this._createDiffer();
-    }
-  }
-
-  private _createDiffer() {
     if (isPresent(this._records)) {
       this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
     }
