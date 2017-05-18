@@ -49,12 +49,7 @@ import { IonicApp } from './components/app/app-root';
 import { OverlayPortal } from './components/app/overlay-portal';
 import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
-import { Badge } from './components/badge/badge';
 import { Button } from './components/button/button';
-import { Card } from './components/card/card';
-import { CardContent } from './components/card/card-content';
-import { CardHeader } from './components/card/card-header';
-import { CardTitle } from './components/card/card-title';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
@@ -117,8 +112,6 @@ import { SelectPopover } from './components/select/select-popover-component';
 import { SegmentButton } from './components/segment/segment-button';
 import { ShowWhen } from './components/show-hide-when/show-when';
 import { HideWhen } from './components/show-hide-when/hide-when';
-import { Slide } from './components/slides/slide';
-import { Slides } from './components/slides/slides';
 import { Spinner } from './components/spinner/spinner';
 import { SplitPane } from './components/split-pane/split-pane';
 import { Tab } from './components/tabs/tab';
@@ -128,7 +121,6 @@ import { Tabs } from './components/tabs/tabs';
 import { Thumbnail } from './components/thumbnail/thumbnail';
 import { ToastCmp } from './components/toast/toast-component';
 import { ToastController } from './components/toast/toast-controller';
-import { Toggle } from './components/toggle/toggle';
 import { Footer } from './components/toolbar/toolbar-footer';
 import { Header } from './components/toolbar/toolbar-header';
 import { Toolbar } from './components/toolbar/toolbar';
@@ -190,12 +182,7 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     OverlayPortal,
     Avatar,
     Backdrop,
-    Badge,
     Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
     Checkbox,
     Chip,
     Col,
@@ -252,8 +239,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     SelectPopover,
     ShowWhen,
     HideWhen,
-    Slide,
-    Slides,
     Spinner,
     SplitPane,
     Tab,
@@ -263,7 +248,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     TextInput,
     Thumbnail,
     ToastCmp,
-    Toggle,
     Footer,
     Header,
     Toolbar,
@@ -293,12 +277,7 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     OverlayPortal,
     Avatar,
     Backdrop,
-    Badge,
     Button,
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
     Checkbox,
     Chip,
     Col,
@@ -355,8 +334,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     SelectPopover,
     ShowWhen,
     HideWhen,
-    Slide,
-    Slides,
     Spinner,
     SplitPane,
     Tab,
@@ -366,7 +343,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     TextInput,
     Thumbnail,
     ToastCmp,
-    Toggle,
     Footer,
     Header,
     Toolbar,
