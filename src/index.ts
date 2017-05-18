@@ -122,6 +122,7 @@ export { NavController } from './navigation/nav-controller';
 export { NavControllerBase } from './navigation/nav-controller-base';
 export { NavParams } from './navigation/nav-params';
 export { NavLink, NavOptions, DeepLinkConfig, DeepLinkMetadata, DeepLinkMetadataFactory } from './navigation/nav-util';
+export { setupCore } from './bindings/angular/providers/ionic-core';
 export { TapClick, setupTapClick, isActivatable } from './tap-click/tap-click';
 export { UrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
 export { ViewController } from './navigation/view-controller';

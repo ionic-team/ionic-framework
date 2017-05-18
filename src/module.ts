@@ -31,6 +31,7 @@ import { ModuleLoader, provideModuleLoader, setupPreloading, LAZY_LOADED_TOKEN }
 import { NgModuleLoader } from './util/ng-module-loader';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
+import { setupCore } from './bindings/angular/providers/ionic-core';
 import { TapClick, setupTapClick } from './tap-click/tap-click';
 import { registerModeConfigs } from './config/mode-registry';
 import { TransitionController } from './transitions/transition-controller';
@@ -395,6 +396,7 @@ export class IonicModule {
 
         // useFactory: ionic app initializers
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupCore, deps: [ Config, Platform, DomController, NgZone ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, GestureController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupPreloading, deps: [ Config, DeepLinkConfigToken, ModuleLoader, NgZone ], multi: true },
