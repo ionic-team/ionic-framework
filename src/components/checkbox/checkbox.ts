@@ -42,6 +42,34 @@ import { Item } from '../item/item';
  *  </ion-list>
  * ```
  *
+ * @advanced
+ *
+ * ```html
+ *
+ * <!-- Call function when state changes -->
+ *  <ion-list>
+ *
+ *    <ion-item>
+ *      <ion-label>Cucumber</ion-label>
+ *      <ion-checkbox [(ngModel)]="cucumber" (ionChange)="updateCucumber()"></ion-checkbox>
+ *    </ion-item>
+ *
+ *  </ion-list>
+ * ```
+ *
+ * ```ts
+ * @Component({
+ *   templateUrl: 'main.html'
+ * })
+ * class SaladPage {
+ *   cucumber: boolean;
+ *
+ *   updateCucumber() {
+ *     console.log("Cucumbers new state:" + this.cucumber);
+ *   }
+ * }
+ * ```
+ *
  * @demo /docs/demos/src/checkbox/
  * @see {@link /docs/components#checkbox Checkbox Component Docs}
  */
