@@ -5,6 +5,5 @@ export interface LoadingOptions {
   cssClass?: string;
   showBackdrop?: boolean;
   dismissOnPageChange?: boolean;
-  delay?: number;
   duration?: number;
 }
