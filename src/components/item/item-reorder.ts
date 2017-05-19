@@ -2,7 +2,7 @@ import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional,
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { isTrueProperty, reorderArray, Side } from '../../util/util';
+import { isTrueProperty, reorderArray } from '../../util/util';
 import { ItemReorderGestureDelegate, ItemReorderGesture } from './item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
@@ -142,10 +142,7 @@ export class ReorderIndexes {
   host: {
     '[class.reorder-enabled]': '_enableReorder',
     '[class.reorder-visible]': '_visibleReorder',
-    '[class.reorder-side-left]': 'side === "left"',
-    '[class.reorder-side-right]': 'side === "right"',
-    '[class.reorder-side-start]': 'side === "start"',
-    '[class.reorder-side-end]': 'side === "end"'
+    '[class.reorder-side-start]': 'side === "start"'
   }
 })
 export class ItemReorder implements ItemReorderGestureDelegate {
@@ -165,7 +162,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   /**
    * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
    */
-  @Input() side: Side = 'end';
+  @Input() side: 'start' | 'end' = 'end';
 
   constructor(
     private _plt: Platform,

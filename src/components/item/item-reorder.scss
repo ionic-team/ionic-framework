@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-reorder {
+  @include translate3d(160%, 0, 0);
+
   display: none;
 
   flex: 1;
@@ -22,29 +24,10 @@ ion-reorder {
   touch-action: manipulation;
 }
 
-.reorder-side-end ion-reorder {
-  transform: translate3d(160%, 0, 0)
-}
-
 .reorder-side-start ion-reorder {
+  @include translate3d(-160%, 0, 0);
+
   order: -1;
-  transform: translate3d(-160%, 0, 0);
-}
-
-.reorder-side-right ion-reorder {
-  transform: translate3d(160%, 0, 0); // stays the same for rtl
-
-  @include rtl() {
-    order: -1;
-  }
-}
-
-.reorder-side-left ion-reorder {
-  transform: translate3d(-160%, 0, 0); // stays the same for rtl
-
-  @include ltr() {
-    order: -1;
-  }
 }
 
 ion-reorder ion-icon {
