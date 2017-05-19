@@ -133,6 +133,7 @@ import { VirtualFooter } from './components/virtual-scroll/virtual-footer';
 import { VirtualHeader } from './components/virtual-scroll/virtual-header';
 import { VirtualItem } from './components/virtual-scroll/virtual-item';
 import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
+import { BooleanInput } from './bindings/angular/components/boolean-input';
 
 /**
  * @name IonicModule
@@ -259,7 +260,8 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     VirtualFooter,
     VirtualHeader,
     VirtualItem,
-    VirtualScroll
+    VirtualScroll,
+    BooleanInput
   ],
   imports: [
     CommonModule,
@@ -354,7 +356,8 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     VirtualFooter,
     VirtualHeader,
     VirtualItem,
-    VirtualScroll
+    VirtualScroll,
+    BooleanInput
   ],
   entryComponents: [
     ActionSheetCmp,

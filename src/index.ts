@@ -107,6 +107,7 @@ export { VirtualFooter } from './components/virtual-scroll/virtual-footer';
 export { VirtualHeader } from './components/virtual-scroll/virtual-header';
 export { VirtualItem } from './components/virtual-scroll/virtual-item';
 export { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
+export { BooleanInput } from './bindings/angular/components/boolean-input';
 
 
 /**

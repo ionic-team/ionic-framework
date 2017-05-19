@@ -67,10 +67,9 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     'gesture'
   ];
 
-  config.exclude = componetsToExclude.map(cmp => path.join(PROJECT_ROOT, `src/components/${cmp}`) + `**/*`)
+  config.exclude = componetsToExclude.map(cmp => path.join(PROJECT_ROOT, `src/components/${cmp}`) + `/*.ts`)
     .concat([
       path.join(PROJECT_ROOT, 'src/components/index.ts'),
-      path.join(PROJECT_ROOT, 'src/bindings/**/*'),
     ]);
 
   if (overrideCompileOptions) {
