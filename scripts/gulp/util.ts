@@ -249,10 +249,10 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   });
 }
 
-export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false) {
+export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, coreCompilerFilePath: string, coreDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false) {
   const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
   const debug: boolean = argv.debug;
-  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath, isDev);
+  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, coreCompilerFilePath, coreDir, sassConfigPath, copyConfigPath, isDev);
 }
 
 /** Resolves the path for a node package executable. */

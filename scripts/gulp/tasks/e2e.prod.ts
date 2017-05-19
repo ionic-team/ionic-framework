@@ -120,6 +120,8 @@ function buildTest(filePath: string) {
 
   const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), srcTestRoot);
   const distTestRoot = join(process.cwd(), 'dist', 'e2e', relativePathFromComponents);
+  const coreCompilerFilePath = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiler');
+  const coreDir = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiled-ionic-angular');
 
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
@@ -133,7 +135,7 @@ function buildTest(filePath: string) {
   const appNgModulePath = join(dirname(appEntryPoint), 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
-  return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, argv.dev).then(() => {
+  return runAppScriptsBuild(appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, coreCompilerFilePath, coreDir, sassConfigPath, copyConfigPath, argv.dev).then(() => {
     const end = Date.now();
     console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
   }).catch((err) => {

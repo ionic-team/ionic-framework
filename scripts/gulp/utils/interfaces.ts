@@ -13,6 +13,8 @@ export interface MessageToWorker {
   distDir: string;
   tsConfig: string;
   ionicAngularDir: string;
+  coreCompilerFilePath: string;
+  coreDir: string;
   sassConfigPath: string;
   copyConfigPath: string;
   isDev: boolean;
