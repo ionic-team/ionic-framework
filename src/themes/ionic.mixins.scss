@@ -443,7 +443,7 @@ $include-rtl: true !default;
     }
 
     @include rtl() {
-      transform: translate3d(-$x, $y, $z);
+      transform: translate3d(calc(-1 * #{$x}), $y, $z);
     }
   }
 }
@@ -459,7 +459,7 @@ $include-rtl: true !default;
     }
 
     @include rtl() {
-      transform: translate3d(-$x, $y, $z) $extra;
+      transform: translate3d(calc(-1 * #{$x}), $y, $z) $extra;
     }
   }
 }
