@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
+import { NODE_MODULES_ROOT, SRC_ROOT, PROJECT_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { dirname, join } from 'path';
 import { ensureDirSync, readdirSync, readFile, readFileSync, statSync, writeFile, writeFileSync } from 'fs-extra';
@@ -11,6 +11,7 @@ import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
 import { argv } from 'yargs';
+import * as path from 'path';
 
 import { runWorker } from './utils/app-scripts-worker-client';
 
@@ -55,10 +56,22 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions.target = target;
   }
   config.include = includeGlob;
-
-  config.exclude = [
-    './components/badge/**/*'
+  const componetsToExclude = [
+    'badge',
+    'card',
+    'card-content',
+    'card-header',
+    'card-title',
+    'slides',
+    'toggle',
+    'gesture'
   ];
+
+  config.exclude = componetsToExclude.map(cmp => path.join(PROJECT_ROOT, `src/components/${cmp}`) + `**/*`)
+    .concat([
+      path.join(PROJECT_ROOT, 'src/components/index.ts'),
+      path.join(PROJECT_ROOT, 'src/bindings/**/*'),
+    ]);
 
   if (overrideCompileOptions) {
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
