@@ -897,7 +897,7 @@ function cleanupStyles(s: Slides) {
   }
 
   // Container
-  if(s.container){
+  if (s.container) {
     removeClass(s.container, s._classNames);
     s.container.removeAttribute('style');
   }
