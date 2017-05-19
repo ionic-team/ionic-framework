@@ -528,7 +528,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   private _updateDiffer() {
-    if (isBlank(this._differ) && isPresent(this._records)) {
+    if (isPresent(this._records)) {
       this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
     }
   }
