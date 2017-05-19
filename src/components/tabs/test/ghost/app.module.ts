@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren, NgModule } from '@angular/core';
+import { Component, QueryList, ViewChildren, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, Tab } from '../../../..';
 
@@ -142,6 +142,7 @@ export class TabsPage {
     Tab3,
     QuesaritoPage,
     TabsPage
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

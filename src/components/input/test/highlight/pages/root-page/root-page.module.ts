@@ -10,6 +10,6 @@ import { RootPage } from './root-page';
   imports: [
     IonicPageModule.forChild(RootPage)
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEM]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RootPageModule {}
