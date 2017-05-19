@@ -170,14 +170,14 @@ import { RootNode } from '../split-pane/split-pane';
  * }
  * ```
  *
- * See the [MenuController](../MenuController) API docs for all of the methods
+ * See the [MenuController](../../app/MenuController) API docs for all of the methods
  * and usage information.
  *
  *
  * @demo /docs/demos/src/menu/
  *
  * @see {@link /docs/components#menus Menu Component Docs}
- * @see {@link ../MenuController MenuController API Docs}
+ * @see {@link ../../app/MenuController MenuController API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
  * @see {@link ../../nav/NavController NavController API Docs}
  */
