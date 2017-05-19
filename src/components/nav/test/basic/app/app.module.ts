@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
@@ -15,6 +15,7 @@ import { FirstPageModule } from '../pages/first-page/first-page.module';
     IonicModule.forRoot(AppComponent, { swipeBackEnabled: true, preloadModules: true }),
     FirstPageModule
   ],
-  bootstrap: [IonicApp]
+  bootstrap: [IonicApp],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

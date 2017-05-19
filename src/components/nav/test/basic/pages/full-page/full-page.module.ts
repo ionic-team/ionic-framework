@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 import { FullPage } from './full-page';
 
@@ -12,6 +12,7 @@ import { FullPage } from './full-page';
   ],
   entryComponents: [
     FullPage,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class FullPageModule { }

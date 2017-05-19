@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule, IonicApp } from '../../../../..';
 
@@ -21,6 +21,7 @@ import { SomeAppProvider } from '../services/some-app-provider';
   ],
   bootstrap: [IonicApp],
   providers: [SomeAppProvider],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
 

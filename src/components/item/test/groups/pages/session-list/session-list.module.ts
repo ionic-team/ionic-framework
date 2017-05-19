@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SessionList } from './session-list';
 import { IonicPageModule } from '../../../../../..';
 
@@ -8,6 +8,7 @@ import { IonicPageModule } from '../../../../../..';
   ],
   imports: [
     IonicPageModule.forChild(SessionList)
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SessionListModule {}

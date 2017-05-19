@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { PageThree } from './page-three';
@@ -12,6 +12,7 @@ import { PageThree } from './page-three';
   ],
   entryComponents: [
     PageThree,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PageThreeModule {}

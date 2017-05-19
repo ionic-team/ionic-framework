@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { MyModal } from './modal';
@@ -12,6 +12,7 @@ import { MyModal } from './modal';
   ],
   entryComponents: [
     MyModal,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MyModalModule {}

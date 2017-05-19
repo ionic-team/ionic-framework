@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { PopoverLongListPage } from './popover-long-list-page';
@@ -12,6 +12,7 @@ import { PopoverLongListPage } from './popover-long-list-page';
   ],
   entryComponents: [
     PopoverLongListPage,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PopoverLongListPageModule {}

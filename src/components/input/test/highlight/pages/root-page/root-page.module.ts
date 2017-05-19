@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { RootPage } from './root-page';
@@ -9,6 +9,7 @@ import { RootPage } from './root-page';
   ],
   imports: [
     IonicPageModule.forChild(RootPage)
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEM]
 })
 export class RootPageModule {}

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
@@ -18,7 +18,8 @@ import { SidePageModule } from '../pages/side-page/side-page.module';
     PageOneModule,
     SidePageModule
   ],
-  bootstrap: [IonicApp]
+  bootstrap: [IonicApp],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
 

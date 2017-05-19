@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 import { PageTwo } from './page-two';
 
@@ -9,5 +9,6 @@ import { PageTwo } from './page-two';
   declarations: [
     PageTwo
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PageTwoModule { }

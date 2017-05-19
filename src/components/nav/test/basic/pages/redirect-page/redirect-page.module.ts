@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 import { RedirectPage } from './redirect-page';
 
@@ -12,6 +12,7 @@ import { RedirectPage } from './redirect-page';
   ],
   entryComponents: [
     RedirectPage,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class RedirectPageModule { }

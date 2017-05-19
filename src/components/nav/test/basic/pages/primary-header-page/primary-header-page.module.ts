@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 import { PrimaryHeaderPage } from './primary-header-page';
 
@@ -12,6 +12,7 @@ import { PrimaryHeaderPage } from './primary-header-page';
   ],
   entryComponents: [
     PrimaryHeaderPage,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PrimaryHeaderPageModule { }
