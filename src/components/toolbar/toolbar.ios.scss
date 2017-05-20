@@ -275,7 +275,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // iOS Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-ios.bar-button-icon-left ion-icon {
+.bar-button-ios.bar-button-icon-start ion-icon {
   @include padding-horizontal(null, .3em);
 
   font-size: 1.4em;
@@ -284,7 +284,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
   pointer-events: none;
 }
 
-.bar-button-ios.bar-button-icon-right ion-icon {
+.bar-button-ios.bar-button-icon-end ion-icon {
   @include padding-horizontal(.4em, null);
 
   font-size: 1.4em;
