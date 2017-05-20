@@ -195,6 +195,7 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 }
 
 // Tab layout: icon-end
+.tabs-md[tabsLayout=icon-right] .tab-button[aria-selected=true] .tab-button-icon, // deprecated
 .tabs-md[tabsLayout=icon-end] .tab-button[aria-selected=true] .tab-button-icon {
   transform: $tabs-md-tab-icon-end-transform-active;
 }
@@ -205,6 +206,7 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 }
 
 // Tab layout: icon-start
+.tabs-md[tabsLayout=icon-left] .tab-button[aria-selected=true] .tab-button-icon, // deprecated
 .tabs-md[tabsLayout=icon-start] .tab-button[aria-selected=true] .tab-button-icon {
   transform: $tabs-md-tab-icon-start-transform-active;
 }
