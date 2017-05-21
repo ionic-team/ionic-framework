@@ -12,6 +12,10 @@ $content-ios-transition-background:     #000 !default;
 
 .content-ios {
   color: $text-ios-color;
+  background-color: rgba(255,255,255,0);
+}
+
+.fixed-content {
   background-color: $background-ios-color;
 }
 
