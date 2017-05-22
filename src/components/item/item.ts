@@ -274,7 +274,7 @@ import { ItemReorder } from './item-reorder';
 @Component({
   selector: 'ion-list-header,ion-item,[ion-item],ion-item-divider',
   template:
-    '<ng-content select="[item-start],[item-left],ion-checkbox:not([item-end]):not([item-right])"></ng-content>' +
+    '<ng-content select="[slot=\'start\'],[item-start],[item-left],ion-checkbox:not([slot=\'end\']):not([item-end]):not([item-right])"></ng-content>' +
     '<div class="item-inner">' +
       '<div class="input-wrapper">' +
         '<ng-content select="ion-label"></ng-content>' +
@@ -283,7 +283,7 @@ import { ItemReorder } from './item-reorder';
         '</ion-label>' +
         '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
       '</div>' +
-      '<ng-content select="[item-end],[item-right],ion-radio,ion-toggle"></ng-content>' +
+      '<ng-content select="[slot=\'end\'],[item-end],[item-right],ion-radio,ion-toggle"></ng-content>' +
       '<ion-reorder *ngIf="_hasReorder"></ion-reorder>' +
     '</div>' +
     '<div class="button-effect"></div>',
