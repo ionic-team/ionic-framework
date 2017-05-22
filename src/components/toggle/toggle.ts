@@ -118,7 +118,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
   /**
    * @hidden
    */
-  _inputCheckHasValue() {}
+  _inputUpdated() {}
 
   /**
    * @hidden
