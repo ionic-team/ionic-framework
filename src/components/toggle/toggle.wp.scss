@@ -62,12 +62,35 @@ $toggle-wp-transition-duration:          300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-wp-disabled-opacity:             .3 !default;
 
-/// @prop - Padding of the toggle positioned on the left in an item
-$toggle-wp-item-left-padding:            12px 18px 12px 2px !default;
+// deprecated
+$toggle-wp-item-left-padding:            null !default;
 
-/// @prop - Padding of the toggle positioned on the right in an item
-$toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px $item-wp-padding-left !default;
+/// @prop - Padding top of the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-top:       12px !default;
 
+/// @prop - Padding end of the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-end:       18px !default;
+
+/// @prop - Padding bottom of the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-bottom:    12px !default;
+
+/// @prop - Padding start the toggle positioned on the start in an item
+$toggle-wp-item-start-padding-start:     2px !default;
+
+// deprecated
+$toggle-wp-item-right-padding:           null !default;
+
+/// @prop - Padding top of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-top:         12px !default;
+
+/// @prop - Padding end of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-end:         ($item-wp-padding-end / 2) !default;
+
+/// @prop - Padding bottom of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-bottom:      12px !default;
+
+/// @prop - Padding start of the toggle positioned on the end in an item
+$toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 
 // Windows Toggle
 // -----------------------------------------
@@ -88,6 +111,8 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 // -----------------------------------------
 
 .toggle-wp .toggle-icon {
+  @include border-radius($toggle-wp-track-height);
+
   position: relative;
   display: block;
 
@@ -95,7 +120,6 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
   height: 100%;
 
   border: $toggle-wp-track-border-width solid $toggle-wp-track-border-color-off;
-  border-radius: $toggle-wp-track-height;
   background-color: $toggle-wp-track-background-color-off;
 
   pointer-events: none;
@@ -108,14 +132,14 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 // -----------------------------------------
 
 .toggle-wp .toggle-inner {
+  @include position($toggle-wp-handle-top, null, null, $toggle-wp-handle-left);
+  @include border-radius($toggle-wp-handle-border-radius);
+
   position: absolute;
-  top: $toggle-wp-handle-top;
-  left: $toggle-wp-handle-left;
 
   width: $toggle-wp-handle-width;
   height: $toggle-wp-handle-height;
 
-  border-radius: $toggle-wp-handle-border-radius;
   background-color: $toggle-wp-handle-background-color-off;
 
   transition-duration: $toggle-wp-transition-duration;
@@ -162,18 +186,23 @@ $toggle-wp-item-right-padding:           12px ($item-wp-padding-right / 2) 12px 
 // -----------------------------------------
 
 .item-wp .toggle-wp {
-  margin: $toggle-wp-media-margin;
-  padding: $toggle-wp-item-right-padding;
+  @include margin($toggle-wp-media-margin);
 
   cursor: pointer;
+
+  @include deprecated-variable(padding, $toggle-wp-item-right-padding) {
+    @include padding($toggle-wp-item-end-padding-top, $toggle-wp-item-end-padding-end, $toggle-wp-item-end-padding-bottom, $toggle-wp-item-end-padding-start);
+  }
 }
 
 .item-wp .toggle-wp[slot="start"] {
-  padding: $toggle-wp-item-left-padding;
+  @include deprecated-variable(padding, $toggle-wp-item-left-padding) {
+    @include padding($toggle-wp-item-start-padding-top, $toggle-wp-item-start-padding-end, $toggle-wp-item-start-padding-bottom, $toggle-wp-item-start-padding-start);
+  }
 }
 
 .item-wp.item-toggle ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 

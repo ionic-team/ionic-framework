@@ -8,14 +8,18 @@
 /// @prop - Padding top of the card
 $card-wp-padding-top:                 13px !default;
 
-/// @prop - Padding right of the card
+// deprecated
 $card-wp-padding-right:               16px !default;
+/// @prop - Padding end of the card
+$card-wp-padding-end:                 $card-wp-padding-right;
 
 /// @prop - Padding bottom of the card
 $card-wp-padding-bottom:              13px !default;
 
-/// @prop - Padding left of the card
+// deprecated
 $card-wp-padding-left:                16px !default;
+/// @prop - Padding start of the card
+$card-wp-padding-start:               $card-wp-padding-left;
 
 /// @prop - Font size of the card
 $card-wp-font-size:                   1.4rem !default;
@@ -25,11 +29,12 @@ $card-wp-line-height:                 1.5 !default;
 
 
 .card-content-wp {
-  padding: $card-wp-padding-top $card-wp-padding-right $card-wp-padding-bottom $card-wp-padding-left;
+  @include padding($card-wp-padding-top, $card-wp-padding-end, $card-wp-padding-bottom, $card-wp-padding-start);
 
   font-size: $card-wp-font-size;
   line-height: $card-wp-line-height;
 }
+
 
 
 // Generate Windows Card Content Colors

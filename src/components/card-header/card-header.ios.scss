@@ -11,19 +11,33 @@ $card-ios-header-font-size:            1.6rem !default;
 /// @prop - Font weight of the card header
 $card-ios-header-font-weight:          500 !default;
 
-/// @prop - Padding of the card header
-$card-ios-header-padding:              16px !default;
+// deprecated
+$card-ios-header-padding:              null !default;
+
+/// @prop - Padding top of the card header
+$card-ios-header-padding-top:          16px !default;
+
+/// @prop - Padding end of the card header
+$card-ios-header-padding-end:          $card-ios-header-padding-top !default;
+
+/// @prop - Padding bottom of the card header
+$card-ios-header-padding-bottom:       $card-ios-header-padding-top !default;
+
+/// @prop - Padding start of the card header
+$card-ios-header-padding-start:        $card-ios-header-padding-end !default;
 
 /// @prop - Color of the card header
 $card-ios-header-color:                #333 !default;
 
 
 .card-header-ios {
-  padding: $card-ios-header-padding;
-
   font-size: $card-ios-header-font-size;
   font-weight: $card-ios-header-font-weight;
   color: $card-ios-header-color;
+
+  @include deprecated-variable(padding, $card-ios-header-padding) {
+    @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
+  }
 }
 
 
