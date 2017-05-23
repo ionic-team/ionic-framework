@@ -147,7 +147,7 @@ $card-md-header-color:                #222 !default;
   border-bottom: 0;
 }
 
-.card-md .item-md.item-block .item-inner {
+.card-md .item-md.item-block:not(.item-input) .item-inner {
   border: 0;
 }
 
