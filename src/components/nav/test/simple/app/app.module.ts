@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
 import { AppComponent } from './app.component';
-import { FirstPageModule } from '../pages/first-page/first-page.module';
-
 
 @NgModule({
   declarations: [
@@ -13,7 +11,6 @@ import { FirstPageModule } from '../pages/first-page/first-page.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(AppComponent, { swipeBackEnabled: true, preloadModules: true }),
-    FirstPageModule
   ],
   bootstrap: [IonicApp]
 })
