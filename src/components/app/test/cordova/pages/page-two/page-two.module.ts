@@ -12,6 +12,7 @@ import { PageTwo } from './page-two';
   ],
   entryComponents: [
     PageTwo,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PageTwoModule {}
