@@ -101,6 +101,14 @@ export function isNav(nav: any): boolean {
   return !!nav && !!nav.push;
 }
 
+export function linkToSegment(navId: string, type: string, secondaryId: string, link: NavLink): NavSegment {
+  const segment = <NavSegment> Object.assign({}, link);
+  segment.navId = navId;
+  segment.type = type;
+  segment.secondaryIdentifier = secondaryId;
+  return segment;
+}
+
 /**
  * @hidden
  */
@@ -138,8 +146,8 @@ export interface NavLink {
   loadChildren?: string;
   name?: string;
   segment?: string;
-  parts?: string[];
-  partsLen?: number;
+  segmentParts?: string[];
+  segmentPartsLen?: number;
   staticLen?: number;
   dataLen?: number;
   dataKeys?: {[key: string]: boolean};
@@ -160,7 +168,9 @@ export interface NavSegment {
   component?: any;
   loadChildren?: string;
   data: any;
-  navId?: string;
+  type: string;
+  navId: string;
+  secondaryIdentifier: string;
   defaultHistory?: NavSegment[];
 }
 
@@ -217,3 +227,6 @@ export const INIT_ZINDEX = 100;
 export const DIRECTION_BACK = 'back';
 export const DIRECTION_FORWARD = 'forward';
 export const DIRECTION_SWITCH = 'switch';
+
+export const NAV = 'nav';
+export const TABS = 'tabs';

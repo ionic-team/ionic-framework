@@ -12,7 +12,7 @@ describe('App', () => {
 
     it('should not select the previous tab', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
@@ -45,7 +45,7 @@ describe('App', () => {
 
     it('should pop from the active tab, when tabs is nested is the root nav', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       let tabs = mockTabs();
       mockTab(tabs);
@@ -75,7 +75,7 @@ describe('App', () => {
       mockTab(tabs);
       let tab2 = mockTab(tabs);
       mockTab(tabs);
-      app._setRootNav(tabs);
+      app.registerRootNav(tabs);
 
       tab2.setSelected(true);
 
@@ -97,7 +97,7 @@ describe('App', () => {
       let nestedNav = mockNavController();
       rootNav.registerChildNav(nestedNav);
       nestedNav.parent = rootNav;
-      app._setRootNav(rootNav);
+      app.registerRootNav(rootNav);
 
       spyOn(plt, 'exitApp');
       spyOn(rootNav, 'pop');
@@ -122,7 +122,7 @@ describe('App', () => {
     it('should pop a view from the nested nav that has more than 1 view', () => {
       let rootNav = mockNavController();
       let nestedNav = mockNavController();
-      app._setRootNav(rootNav);
+      app.registerRootNav(rootNav);
       rootNav.registerChildNav(nestedNav);
 
       spyOn(plt, 'exitApp');
@@ -148,7 +148,7 @@ describe('App', () => {
 
     it('should pop the overlay in the portal of the root nav', (done: Function) => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
@@ -174,7 +174,7 @@ describe('App', () => {
 
     it('should pop the second view in the root nav', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
@@ -193,7 +193,7 @@ describe('App', () => {
 
     it('should exit app when only one view in the root nav', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
@@ -202,7 +202,7 @@ describe('App', () => {
       let view1 = mockView();
       mockViews(nav, [view1]);
 
-      expect(app.getActiveNav()).toBe(nav);
+      expect(app.getActiveNav(nav.id)).toBe(nav);
       expect(nav.first()).toBe(view1);
 
       app.goBack();
@@ -214,7 +214,7 @@ describe('App', () => {
 
     it('should not exit app when only one view in the root nav, but navExitApp config set', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
@@ -225,7 +225,7 @@ describe('App', () => {
       let view1 = mockView();
       mockViews(nav, [view1]);
 
-      expect(app.getActiveNav()).toBe(nav);
+      expect(app.getActiveNav(nav.id)).toBe(nav);
       expect(nav.first()).toBe(view1);
 
       app.goBack();
@@ -237,7 +237,7 @@ describe('App', () => {
 
     it('should not go back if app is not enabled', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
@@ -269,7 +269,7 @@ describe('App', () => {
 
     it('should get active NavController when using tabs with nested nav', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       let tabs = mockTabs();
       let tab1 = mockTab(tabs);
@@ -284,12 +284,12 @@ describe('App', () => {
       tab2.registerChildNav(nav2);
       tab2.registerChildNav(nav3);
 
-      expect(app.getActiveNav()).toBe(nav3);
+      expect(app.getActiveNav(nav.id)).toBe(nav3);
     });
 
     it('should get active NavController when using tabs, nested in a root nav', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
+      app.registerRootNav(nav);
 
       let tabs = mockTabs();
       mockTab(tabs);
@@ -299,11 +299,11 @@ describe('App', () => {
 
       tab2.setSelected(true);
 
-      expect(app.getActiveNav()).toBe(tab2);
+      expect(app.getActiveNav(nav.id)).toBe(tab2);
 
       tab2.setSelected(false);
       tab3.setSelected(true);
-      expect(app.getActiveNav()).toBe(tab3);
+      expect(app.getActiveNav(nav.id)).toBe(tab3);
     });
 
     it('should get active tab NavController when using tabs, and tabs is the root', () => {
@@ -311,53 +311,53 @@ describe('App', () => {
       mockTab(tabs);
       let tab2 = mockTab(tabs);
       let tab3 = mockTab(tabs);
-      app._setRootNav(tabs);
+      app.registerRootNav(tabs);
 
       tab2.setSelected(true);
 
-      expect(app.getActiveNav()).toBe(tab2);
+      expect(app.getActiveNav(tab2.id)).toBe(tab2);
 
       tab2.setSelected(false);
       tab3.setSelected(true);
-      expect(app.getActiveNav()).toBe(tab3);
+      expect(app.getActiveNav(tab3.id)).toBe(tab3);
     });
 
     it('should get active NavController when nested 3 deep', () => {
       let nav1 = mockNavController();
       let nav2 = mockNavController();
       let nav3 = mockNavController();
-      app._setRootNav(nav1);
+      app.registerRootNav(nav1);
 
       nav1.registerChildNav(nav2);
       nav2.registerChildNav(nav3);
 
-      expect(app.getActiveNav()).toBe(nav3);
+      expect(app.getActiveNav(nav3.id)).toBe(nav3);
     });
 
     it('should get active NavController when nested 2 deep', () => {
       let nav1 = mockNavController();
       let nav2 = mockNavController();
-      app._setRootNav(nav1);
+      app.registerRootNav(nav1);
 
       nav1.registerChildNav(nav2);
-      expect(app.getActiveNav()).toBe(nav2);
+      expect(app.getActiveNav(nav2.id)).toBe(nav2);
     });
 
     it('should get active NavController when only one nav controller', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
-      expect(app.getActiveNav()).toBe(nav);
+      app.registerRootNav(nav);
+      expect(app.getActiveNav(nav.id)).toBe(nav);
     });
 
     it('should set/get the root nav controller', () => {
       let nav = mockNavController();
-      app._setRootNav(nav);
-      expect(app.getRootNav()).toBe(nav);
+      app.registerRootNav(nav);
+      expect(app.getRootNavById(nav.id)).toBe(nav);
     });
 
     it('should not get an active NavController if there is not root set', () => {
-      expect(app.getActiveNav()).toBeNull();
-      expect(app.getRootNav()).toBeNull();
+      expect(app.getActiveNav('')).toBeNull();
+      expect(app.getRootNavById('')).toBeNull();
     });
   });
 

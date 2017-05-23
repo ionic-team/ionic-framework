@@ -8,6 +8,7 @@ import { isBlank, assert } from '../../util/util';
 import { Tabs as ITabs } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavigationContainer } from '../../navigation/navigation-container';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
 import { RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
@@ -160,7 +161,7 @@ import { ViewController } from '../../navigation/view-controller';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Tabs) }]
 })
-export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
+export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, NavigationContainer {
   /** @internal */
   _ids: number = -1;
   /** @internal */
@@ -251,7 +252,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
 
     } else if (this._app) {
       // this is the root navcontroller for the entire app
-      this._app._setRootNav(this);
+      this._app.registerRootNav(this);
     }
 
     // Tabs may also be an actual ViewController which was navigated to
@@ -387,7 +388,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
       selectedTab.load(opts, () => {
         this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
         if (opts.updateUrl !== false) {
-          this._linker.navChange(DIRECTION_SWITCH);
+          this._linker.navChange(this.id, DIRECTION_SWITCH);
         }
         assert(this.getSelected() === selectedTab, 'selected tab does not match');
         this._fireChangeEvent(selectedTab);
@@ -563,6 +564,26 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     }
   }
 
+  goToRoot(opts: NavOptions) {
+    if (this._tabs.length) {
+      return this.select(this._tabs[0], opts);
+    }
+  }
+
+  /*
+   * @private
+   */
+  getType() {
+    return 'tabs';
+  }
+
+  /*
+   * @private
+   */
+  getSecondaryIdentifier(): string {
+    console.log('TODO');
+    return 'tab-one';
+  }
 }
 
 let tabIds = -1;

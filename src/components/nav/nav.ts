@@ -9,6 +9,7 @@ import { Keyboard } from '../../platform/keyboard';
 import { Nav as INav } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavigationContainer } from '../../navigation/navigation-container';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
@@ -55,7 +56,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Nav) }]
 })
-export class Nav extends NavControllerBase implements AfterViewInit, RootNode, INav {
+export class Nav extends NavControllerBase implements AfterViewInit, RootNode, INav, NavigationContainer {
 
   private _root: any;
   private _hasInit: boolean = false;
@@ -94,10 +95,10 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
       this.parent = viewCtrl.getNav();
       this.parent.registerChildNav(this);
 
-    } else if (app && !app.getRootNav()) {
+    } else if (app && !app.getRootNavById(this.id)) {
       // a root nav has not been registered yet with the app
       // this is the root navcontroller for the entire app
-      app._setRootNav(this);
+      app.registerRootNav(this);
     }
   }
 
@@ -122,13 +123,9 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
     } else if (this._root) {
       // no segment match, so use the root property
       return this.push(this._root, this.rootParams, {
-        isNavRoot: (<any>this._app.getRootNav() === this)
+        isNavRoot: (<any>this._app.getRootNavById(this.id) === this)
       }, null);
     }
-  }
-
-  goToRoot(opts: NavOptions) {
-    return this.setRoot(this._root, this.rootParams, opts, null);
   }
 
   /**
@@ -169,4 +166,21 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
     }
   }
 
+  goToRoot(opts: NavOptions) {
+    return this.setRoot(this._root, this.rootParams, opts, null);
+  }
+
+  /*
+   * @private
+   */
+  getType() {
+    return 'nav';
+  }
+
+  /*
+   * @private
+   */
+  getSecondaryIdentifier(): string {
+    return null;
+  }
 }

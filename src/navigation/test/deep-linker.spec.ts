@@ -387,7 +387,7 @@ describe('DeepLinker', () => {
 
     it('should use indexAliasUrl when set and browserUrl is /', () => {
       linker._loadNavFromPath = (nav: any): any => {};
-      linker._app.getRootNav = () => {
+      linker._app.getRootNavById = () => {
         return mockNavController();
       };
       spyOn(serializer, 'parse');
@@ -400,7 +400,7 @@ describe('DeepLinker', () => {
 
     it('should use indexAliasUrl when set and browserUrl is /', () => {
       linker._loadNavFromPath = (nav: any): any => {};
-      linker._app.getRootNav = () => {
+      linker._app.getRootNavById = () => {
         return mockNavController();
       };
       spyOn(serializer, 'parse');

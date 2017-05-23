@@ -512,6 +512,7 @@ export abstract class NavController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract goToRoot(options: NavOptions): Promise<any>;
 
   /**
    * Set the views of the current navigation stack and navigate to the

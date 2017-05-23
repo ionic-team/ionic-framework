@@ -9,6 +9,7 @@ import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
 import { NavController } from '../../navigation/nav-controller';
+import { NavigationContainer } from '../../navigation/navigation-container';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { IOSTransition } from '../../transitions/transition-ios';
@@ -28,7 +29,7 @@ export class App {
   private _scrollTime: number = 0;
   private _title: string = '';
   private _titleSrv: Title = new Title(DOCUMENT);
-  private _rootNav: NavController = null;
+  private _rootNavs = new Map<string, NavigationContainer>();
   private _disableScrollAssist: boolean;
 
   /**
@@ -200,26 +201,38 @@ export class App {
   /**
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
-  getActiveNav(): NavController {
+  getActiveNav(navId: string): NavController {
     const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
       return findTopNav(portal);
     }
-    return findTopNav(this._rootNav || null);
+    if (!this._rootNavs || !this._rootNavs.size || !this._rootNavs.has(navId)) {
+      return null;
+    }
+    return findTopNav(this.getRootNavById(navId));
   }
 
   /**
    * @return {NavController} Returns the root NavController
    */
-  getRootNav(): NavController {
-    return this._rootNav;
+  getRootNavById(navId: string): NavigationContainer {
+    return this._rootNavs.get(navId);
   }
 
   /**
    * @hidden
    */
-  _setRootNav(nav: any) {
-    this._rootNav = nav;
+  registerRootNav(nav: NavigationContainer) {
+    this._rootNavs.set(nav.id, nav);
+  }
+
+  getActiveNavContainers(): NavigationContainer[] {
+    // for each root nav container, get it's active nav
+    const list: NavigationContainer[] = [];
+    this._rootNavs.forEach((container: NavigationContainer) => {
+      list.push(container);
+    });
+    return list;
   }
 
   /**
@@ -275,7 +288,7 @@ export class App {
    * @hidden
    */
   navPop(): Promise<any> {
-    if (!this._rootNav || !this.isEnabled()) {
+    if (!this._rootNavs || this._rootNavs.size === 0 || this.isEnabled()) {
       return Promise.resolve();
     }
 
@@ -286,7 +299,8 @@ export class App {
     }
     // next get the active nav, check itself and climb up all
     // of its parent navs until it finds a nav that can pop
-    return recursivePop(this.getActiveNav());
+    return Promise.reject(new Error('Figure this out'));
+    //return recursivePop(this.getActiveNav());
   }
 
 }
@@ -308,18 +322,14 @@ function recursivePop(nav: any): Promise<any> {
   return recursivePop(nav.parent);
 }
 
-function findTopNav(nav: NavController) {
-  var activeChildNav: any;
-
-  while (nav) {
-    activeChildNav = nav.getActiveChildNav();
-    if (!activeChildNav) {
-      break;
-    }
-    nav = activeChildNav;
+function findTopNav(nav: NavigationContainer): NavController {
+  let topNav = nav.getActiveChildNav();
+  let iterator = topNav;
+  while (topNav) {
+    iterator = topNav;
+    topNav = topNav.getActiveChildNav();
   }
-
-  return nav;
+  return iterator;
 }
 
 const ACTIVE_SCROLLING_TIME = 100;

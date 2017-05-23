@@ -23,7 +23,8 @@ export class NavPushAnchor implements AfterContentInit {
 
   updateHref() {
     if (this.host && this.linker) {
-      this._href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams) || '#';
+      // TODO
+      //this._href = this.linker.createUrl(this.host._nav, this.host.navPush, this.host.navParams) || '#';
 
     } else {
       this._href = '#';

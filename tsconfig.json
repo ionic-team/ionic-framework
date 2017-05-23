@@ -8,6 +8,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "outDir": "dist/tmp",
     "removeComments": false,
     "sourceMap": true,
     "target": "es2015",
@@ -16,6 +17,9 @@
   "include": [
     "src/**/*.ts",
     "demos/src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

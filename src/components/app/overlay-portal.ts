@@ -7,6 +7,7 @@ import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { Keyboard } from '../../platform/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavigationContainer } from '../../navigation/navigation-container';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
@@ -17,7 +18,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Directive({
   selector: '[overlay-portal]',
 })
-export class OverlayPortal extends NavControllerBase {
+export class OverlayPortal extends NavControllerBase implements NavigationContainer {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
@@ -57,4 +58,17 @@ export class OverlayPortal extends NavControllerBase {
     this.destroy();
   }
 
+  /*
+   * @private
+   */
+  getType() {
+    return 'portal';
+  }
+
+  /*
+   * @private
+   */
+  getSecondaryIdentifier(): string {
+    return null;
+  }
 }

@@ -754,7 +754,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (!this.hasChildren() && opts.updateUrl !== false) {
         // notify deep linker of the nav change
         // if a direction was provided and should update url
-        this._linker.navChange(opts.direction);
+        this._linker.navChange(this.id, opts.direction);
       }
 
       if (opts.keyboardClose !== false) {
@@ -960,7 +960,7 @@ export class NavControllerBase extends Ion implements NavController {
     return this._children.length > 0;
   }
 
-  getActiveChildNav(): any {
+  getActiveChildNav(): NavController {
     return this._children[this._children.length - 1];
   }
 
@@ -1135,6 +1135,9 @@ export class NavControllerBase extends Ion implements NavController {
     content && content.resize();
   }
 
+  goToRoot(opts: NavOptions) {
+    return Promise.reject(new Error('goToRoot needs to be implemented by child class'));
+  }
 }
 
 let ctrlIds = -1;

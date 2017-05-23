@@ -5,7 +5,8 @@ import { App } from '../components/app/app';
 import { convertToViews, DIRECTION_BACK, isNav, isTab, isTabs, NavLink, NavSegment } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
-import { Nav, Tab, Tabs } from './nav-interfaces';
+import { Tab, Tabs } from './nav-interfaces';
+import { NavigationContainer } from './navigation-container';
 import { NavController } from './nav-controller';
 import { UrlSerializer } from './url-serializer';
 import { ViewController } from './view-controller';
@@ -74,9 +75,9 @@ export class DeepLinker {
         this._historyPush(browserUrl);
       }
 
-      // get the app's root nav
-      const appRootNav = <Nav> (this._app.getRootNav() as any);
-      if (appRootNav) {
+      // get the app's root nav container
+      const rootNavContainers = this._app.getActiveNavContainers();
+      if (rootNavContainers && rootNavContainers.length) {
         if (browserUrl === '/') {
           // a url change to the index url
           if (isPresent(this._indexAliasUrl)) {
@@ -88,17 +89,21 @@ export class DeepLinker {
             // the url change is to the root but we don't
             // already know the url used. So let's just
             // reset the root nav to its root page
-            return appRootNav.goToRoot({
-              updateUrl: false,
-              isNavRoot: true
-            });
+            rootNavContainers
+              .map(rootNavContainer => rootNavContainer.getActiveChildNav())
+              .forEach((nav: NavController) => {
+                nav.goToRoot({
+                  updateUrl: false,
+                  isNavRoot: true
+                });
+              });
+            return;
           }
         }
 
         // normal url
         this._segments = this._serializer.parse(browserUrl);
-        // this is so dirty I need a shower
-        this._loadNavFromPath(((appRootNav as any) as NavController));
+        //this._loadNavFromPath(((appRootNav as any) as NavController));
       }
     }
   }
@@ -107,23 +112,58 @@ export class DeepLinker {
    * Update the deep linker using the NavController's current active view.
    * @internal
    */
-  navChange(direction: string) {
-    // all transitions completed
+  navChange(navId: string, direction: string) {
+    /*// all transitions completed
     if (direction) {
       // get the app's active nav, which is the lowest level one being viewed
-      const activeNav = this._app.getActiveNav();
+      const activeNav = this._app.getActiveNav(navId);
+
       if (activeNav) {
 
+        console.log('navId: ',navId);
         // build up the segments of all the navs from the lowest level
         this._segments = this._pathFromNavs(activeNav);
+        console.log('this._segments: ', this._segments);
 
         // build a string URL out of the Path
-        const browserUrl = this._serializer.serialize(this._segments);
+
 
         // update the browser's location
         this._updateLocation(browserUrl, direction);
       }
     }
+    */
+    if (direction) {
+      const rootNavContainers = this._app.getActiveNavContainers();
+      const segments = rootNavContainers.map(rootNavContainer => {
+        if (isNav(rootNavContainer)) {
+          return this.getSegmentFromNav(<NavController> <any> rootNavContainer, null, null);
+        } else {
+          return null;
+        }
+      }).filter(segment => !!segment);
+      console.log('segments: ', segments);
+      const browserUrl = this._serializer.serialize(segments);
+      this._updateLocation(browserUrl, direction);
+    }
+  }
+
+  getSegmentFromNav(nav: NavController, component?: any, data?: any): NavSegment {
+    while (nav) {
+      if (!component) {
+        const viewController = nav.getActive(true);
+        if (viewController) {
+          component = viewController.component;
+          data = viewController.data;
+        }
+      }
+      if (!nav.parent) {
+        break;
+      }
+      nav = nav.parent;
+    }
+
+    return this._serializer.serializeComponent({ navId: nav.id, secondaryId: null, type: 'nav'}, component, data);
   }
 
   /**
@@ -196,15 +236,16 @@ export class DeepLinker {
   /**
    * @internal
    */
-  createUrl(nav: any, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
+  createUrl(navContainer: NavigationContainer, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
-    const segment = this._serializer.createSegmentFromName(nameOrComponent);
+    const segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent);
     if (segment) {
-      const path = this._pathFromNavs(nav, segment.component, data);
+      throw new Error('TODO');
+      //const path = this._pathFromNavs(nav, segment.component, data);
       // serialize the segments into a browser URL
       // and prepare the URL with the location and return
-      const url = this._serializer.serialize(path);
-      return prepareExternalUrl ? this._location.prepareExternalUrl(url) : url;
+      //const url = this._serializer.serialize(path);
+      //return prepareExternalUrl ? this._location.prepareExternalUrl(url) : url;
     }
     return '';
   }
@@ -217,7 +258,7 @@ export class DeepLinker {
    * @internal
    */
   _pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
-    const segments: NavSegment[] = [];
+    /*const segments: NavSegment[] = [];
     let view: ViewController;
     let segment: NavSegment;
     let tabSelector: string;
@@ -274,6 +315,8 @@ export class DeepLinker {
 
     // segments added from bottom to top, so Ti esrever dna ti pilf
     return segments.reverse();
+    */
+    return null;
   }
 
   /**
