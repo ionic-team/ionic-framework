@@ -86,12 +86,16 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 @if ($text-input-md-show-focus-highlight) {
   // In order to get a 2px border we need to add an inset
   // box-shadow 1px (this is to avoid the div resizing)
+
+  // TODO remove all uses of input-has-focus in v4
+  .item-md.item-input.item-input-has-focus .item-inner,
   .item-md.item-input.input-has-focus .item-inner {
     @include md-input-highlight($text-input-md-highlight-color);
   }
 
   // The last item in a list has a border on the item, not the
   // inner item, so add it to the item itself
+  .list-md .item-input.item-input-has-focus:last-child,
   .list-md .item-input.input-has-focus:last-child {
     @include md-input-highlight($text-input-md-highlight-color);
 
@@ -103,11 +107,15 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($text-input-md-show-valid-highlight) {
-  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+  // TODO remove all uses of input-has-focus in v4
+  // TODO remove all uses of input-has-value in v4
+  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
     @include md-input-highlight($text-input-md-highlight-color-valid);
   }
 
-  .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+  .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+  .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
     @include md-input-highlight($text-input-md-highlight-color-valid);
 
     .item-inner {
@@ -118,11 +126,11 @@ $text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-md-show-invalid-highlight) {
-  .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+  .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
     @include md-input-highlight($text-input-md-highlight-color-invalid);
   }
 
-  .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+  .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
     @include md-input-highlight($text-input-md-highlight-color-invalid);
 
     .item-inner {
