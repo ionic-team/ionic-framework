@@ -8,15 +8,16 @@
 /// @prop - Margin top of the card
 $card-ios-margin-top:                  12px !default;
 
-/// @prop - Margin right of the card
+// deprecated
 $card-ios-margin-right:                12px !default;
+/// @prop - Margin end of the card
+$card-ios-margin-end:                  $card-ios-margin-right !default;
 
 /// @prop - Margin bottom of the card
 $card-ios-margin-bottom:               12px !default;
 
-/// @prop - Margin left of the card
+// deprecated
 $card-ios-margin-left:                 12px !default;
-
 /// @prop - Margin start of the card
 $card-ios-margin-start:                $card-ios-margin-left;
 
@@ -46,11 +47,11 @@ $card-ios-text-color:                  #666 !default;
 
 
 .card-ios {
-  margin: $card-ios-margin-top $card-ios-margin-right $card-ios-margin-bottom $card-ios-margin-left;
+  @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);
+  @include border-radius($card-ios-border-radius);
 
-  width: calc(100% - #{($card-ios-margin-right + $card-ios-margin-left)});
+  width: calc(100% - #{($card-ios-margin-end + $card-ios-margin-start)});
 
-  border-radius: $card-ios-border-radius;
   font-size: $card-ios-font-size;
 
   background: $card-ios-background-color;
@@ -76,14 +77,14 @@ $card-ios-text-color:                  #666 !default;
 }
 
 .card-ios h1 {
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 2.4rem;
   font-weight: normal;
 }
 
 .card-ios h2 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.6rem;
   font-weight: normal;
@@ -93,14 +94,14 @@ $card-ios-text-color:                  #666 !default;
 .card-ios h4,
 .card-ios h5,
 .card-ios h6 {
-  margin: 2px 0;
+  @include margin(2px, 0);
 
   font-size: 1.4rem;
   font-weight: normal;
 }
 
 .card-ios p {
-  margin: 0 0 2px;
+  @include margin(0, 0, 2px);
 
   font-size: 1.4rem;
   color: $card-ios-text-color;
