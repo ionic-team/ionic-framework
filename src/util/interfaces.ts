@@ -32,8 +32,8 @@ export interface IonicControllerLoaded {
 
 export interface IonicGlobal {
   staticDir?: string;
-  components?: LoadComponents;
-  loadComponents?: (coreVersion: number, bundleId: string, modulesImporterFn: ModulesImporterFn, cmp0?: ComponentModeData, cmp1?: ComponentModeData, cmp2?: ComponentModeData) => void;
+  components?: LoadComponentData[];
+  defineComponents?: (coreVersion: number, bundleId: string, modulesImporterFn: ModulesImporterFn, cmp0?: ComponentModeData, cmp1?: ComponentModeData, cmp2?: ComponentModeData) => void;
   eventNameFn?: (eventName: string) => string;
   config?: Object;
   loadController?: (ctrlName: string, ctrl: any) => any;
@@ -198,9 +198,32 @@ export interface DomControllerCallback {
 }
 
 
-export interface LoadComponents {
-  [tag: string]: any[];
+export interface LoadComponentData {
+  /**
+   * tag name (ion-badge)
+   */
+  [0]: string;
+
+  /**
+   * map of the modes and bundle ids
+   */
+  [1]: {
+    [modeCode: string]: string;
+  };
+
+  /**
+   * props
+   */
+  [2]: any[];
+
+  /**
+   * bundle priority
+   */
+  [3]: LoadPriority;
 }
+
+
+export type LoadPriority = number;
 
 
 export interface ComponentModeData {
@@ -210,39 +233,45 @@ export interface ComponentModeData {
   [0]: string;
 
   /**
+   * props
+   */
+  [1]: any[][];
+
+  /**
    * methods
    */
-  [1]: MethodMeta[];
+  [2]: MethodMeta[];
 
   /**
    * states
    */
-  [2]: StateMeta[];
+  [3]: StateMeta[];
 
   /**
    * listeners
    */
-  [3]: ComponentListenersData[];
+  [4]: ComponentListenersData[];
 
   /**
    * watchers
    */
-  [4]: ComponentWatchersData[];
+  [5]: ComponentWatchersData[];
 
   /**
    * shadow
    */
-  [5]: boolean;
+  [6]: boolean;
 
   /**
-   * mode name (ios, md, wp)
+   * mode code, which is a number that'll
+   * map to a mode name later (ios, md, wp)
    */
-  [6]: number;
+  [7]: number;
 
   /**
    * component mode styles
    */
-  [7]: string;
+  [8]: string;
 }
 
 
@@ -313,6 +342,8 @@ export interface PropOptions {
 export interface PropMeta {
   propName?: string;
   propType?: any;
+  attrName?: string;
+  attrCase?: number;
 }
 
 
@@ -387,21 +418,18 @@ export interface ComponentMeta {
   listeners?: ListenMeta[];
   watchers?: WatchMeta[];
   states?: StateMeta[];
-  modes: ModeMeta[];
+  modes?: {[modeCode: string]: ModeMeta};
   shadow?: boolean;
   namedSlots?: string[];
-  obsAttrs?: string[];
   componentModule?: any;
-  priority?: 'high'|'low';
+  priority?: LoadPriority;
 }
 
 
 export interface ModeMeta {
-  modeName?: string;
   bundleId?: string;
   styles?: string;
   styleUrls?: string[];
-  styleElm?: HTMLElement;
 }
 
 
@@ -467,8 +495,8 @@ export interface ComponentRegistry {
 
 export interface ProxyElement extends HTMLElement {
   connectedCallback: () => void;
-  attributeChangedCallback: (attrName: string, oldVal: string, newVal: string, namespace: string) => void;
-  disconnectedCallback: () => void;
+  attributeChangedCallback?: (attrName: string, oldVal: string, newVal: string, namespace: string) => void;
+  disconnectedCallback?: () => void;
 
   $queueUpdate: () => void;
   $initLoadComponent: () => void;
@@ -483,14 +511,11 @@ export interface ProxyElement extends HTMLElement {
 }
 
 
-export type QueueHandlerId = number;
-
-
 export type Side = 'left' | 'right' | 'start' | 'end';
 
 
 export interface RendererApi {
-  (oldVnode: VNode | Element, vnode: VNode, hostContentNodes?: HostContentNodes): VNode;
+  (oldVnode: VNode | Element, vnode: VNode, hostContentNodes?: HostContentNodes, isSsrHydrated?: boolean): VNode;
 }
 
 
@@ -540,11 +565,13 @@ export interface VNodeData {
 
 
 export interface PlatformApi {
-  registerComponents: (components: LoadComponents) => ComponentMeta[];
+  registerComponents: (components?: LoadComponentData[]) => ComponentMeta[];
   defineComponent: (tag: string, constructor: Function) => void;
   getComponentMeta: (tag: string) => ComponentMeta;
-  loadBundle: (bundleId: string, priority: string, cb: Function) => void;
+  loadBundle: (bundleId: string, priority: LoadPriority, cb: Function) => void;
   queue: QueueApi;
+  css?: {[cmpModeId: string]: string};
+  isServer?: boolean;
 
   isElement: (node: Node) => node is Element;
   isText: (node: Node) => node is Text;
@@ -562,11 +589,13 @@ export interface PlatformApi {
   $tagName: (elm: Element) => string;
   $setTextContent: (node: Node, text: string | null) => void;
   $getTextContent: (node: Node) => string | null;
-  $getAttribute: (elm: Element, attrName: string) => string;
+  $getAttribute: (elm: any, attrName: string) => string;
+  $setAttribute: (elm: any, attrName: string, attrValue: any) => void;
+  $removeAttribute: (elm: any, attrName: string) => void;
+  $setClass: (elm: any, cssClassName: string, shouldAddCssClassName: boolean) => void;
   $attachComponent: (elm: Element, cmpMeta: ComponentMeta, instance: Component) => void;
   $tmpDisconnected: boolean;
 }
-
 
 export interface PlatformConfig {
   name: string;
@@ -577,7 +606,32 @@ export interface PlatformConfig {
 
 export interface ServerInitConfig {
   staticDir: string;
+  sys?: UniversalSys;
   config?: Object;
+}
+
+export interface HydrateConfig {
+  req?: any;
+  url?: string;
+  referrer?: string;
+  userAgent?: string;
+  cookie?: string;
+  config?: Object;
+}
+
+
+export interface UniversalSys {
+  fs?: {
+    readdirSync?(path: string | Buffer): string[];
+    readFileSync?(filename: string, encoding: string): string;
+    statSync?(path: string | Buffer): {
+      isDirectory?(): boolean;
+    }
+  };
+  path?: {
+    join?: (...paths: string[]) => string;
+  };
+  isValidComponent?: (fileName: string) => boolean;
 }
 
 
@@ -667,4 +721,9 @@ export interface IdleDeadline {
 
 export interface IdleOptions {
   timeout?: number;
+}
+
+
+export interface BundleCallbacks {
+  [bundleId: string]: Function[];
 }
