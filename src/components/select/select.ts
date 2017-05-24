@@ -309,7 +309,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
       var popoverCssClass = 'select-popover';
 
       // If the user passed a cssClass for the select, add it
-      popoverCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : popoverCssClass;
+      popoverCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
       overlay = new Popover(this._app, SelectPopover, {
         options: popoverOptions
