@@ -50,12 +50,18 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
   @include margin(null, null, 0, 0);
 }
 
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus .label-wp[stacked],
 .input-has-focus .label-wp[stacked],
+.item-input-has-focus .label-wp[floating],
 .input-has-focus .label-wp[floating] {
   color: $label-wp-text-color-focused;
 }
 
+.item-input-has-focus .label-wp[floating],
 .input-has-focus .label-wp[floating],
+.item-input-has-value .label-wp[floating],
 .input-has-value .label-wp[floating] {
   transform: translate3d(0, 0, 0) scale(.8);
 }

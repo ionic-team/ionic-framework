@@ -607,7 +607,9 @@ export class TextInput extends Ion implements IonicFormInput {
   checkHasValue(inputValue: any) {
     if (this._item) {
       var hasValue = (inputValue !== null && inputValue !== undefined && inputValue !== '');
+      // TODO remove all uses of input-has-value in v4
       this._item.setElementClass('input-has-value', hasValue);
+      this._item.setElementClass('item-input-has-value', hasValue);
     }
   }
 
@@ -617,7 +619,9 @@ export class TextInput extends Ion implements IonicFormInput {
   focusChange(inputHasFocus: boolean) {
     if (this._item) {
       console.debug(`input-base, focusChange, inputHasFocus: ${inputHasFocus}, ${this._item.getNativeElement().nodeName}.${this._item.getNativeElement().className}`);
+      // TODO remove input-has-focus for v4
       this._item.setElementClass('input-has-focus', inputHasFocus);
+      this._item.setElementClass('item-input-has-focus', inputHasFocus);
     }
 
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
