@@ -3,9 +3,9 @@
   <ion-toolbar>
     <ion-title>Outline Buttons</ion-title>
     <ion-buttons end>
-      <ion-button [strong]="strong" (click)="strong = !strong" class="e2eButtonEdit">
+      <button ion-button [strong]="strong" (click)="strong = !strong" class="e2eButtonEdit">
         {{strong ? 'Done' : 'Edit' }}
-      </ion-button>
+      </button>
     </ion-buttons>
   </ion-toolbar>
 
@@ -15,43 +15,43 @@
 <ion-content padding style="text-align:center" class="outer-content">
 
   <p>
-    <ion-button [strong]="strong" small>Default (small)</ion-button>
-    <ion-button strong small>Default (small)</ion-button>
+    <button ion-button [strong]="strong" small>Default (small)</button>
+    <button ion-button strong small>Default (small)</button>
   </p>
 
   <p>
-    <ion-button outline [strong]="strong" color="secondary">Outline</ion-button>
-    <ion-button outline strong color="secondary">Outline</ion-button>
+    <button ion-button outline [strong]="strong" color="secondary">Outline</button>
+    <button ion-button outline strong color="secondary">Outline</button>
   </p>
 
   <p>
-    <ion-button block [strong]="strong" color="danger" large>Block (large)</ion-button>
-    <ion-button block strong color="danger" large>Block (large)</ion-button>
+    <button ion-button block [strong]="strong" color="danger" large>Block (large)</button>
+    <button ion-button block strong color="danger" large>Block (large)</button>
   </p>
 
   <p>
-    <ion-button full [strong]="strong" color="dark">Full</ion-button>
-    <ion-button full strong color="dark">Default</ion-button>
+    <button ion-button full [strong]="strong" color="dark">Full</button>
+    <button ion-button full strong color="dark">Default</button>
   </p>
 
   <p>
-    <ion-button raised [strong]="strong" color="light">Raised</ion-button>
-    <ion-button raised strong color="light">Raised</ion-button>
+    <button ion-button raised [strong]="strong" color="light">Raised</button>
+    <button ion-button raised strong color="light">Raised</button>
   </p>
 
   <p>
-    <ion-button round [strong]="strong">Round</ion-button>
-    <ion-button round strong>Round</ion-button>
+    <button ion-button round [strong]="strong">Round</button>
+    <button ion-button round strong>Round</button>
   </p>
 
   <p>
-    <ion-button clear [strong]="strong">Clear</ion-button>
-    <ion-button clear strong>Clear</ion-button>
+    <button ion-button clear [strong]="strong">Clear</button>
+    <button ion-button clear strong>Clear</button>
   </p>
 
   <p>
-    <ion-button clear [strong]="strong">Default</ion-button>
-    <ion-button clear strong>Default</ion-button>
+    <button ion-button clear [strong]="strong">Default</button>
+    <button ion-button clear strong>Default</button>
   </p>
 
 </ion-content>

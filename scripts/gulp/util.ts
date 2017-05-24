@@ -72,9 +72,8 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
       path.join(PROJECT_ROOT, 'src/components/index.ts'),
     ]);
 
-  config.exclude = [
-    './components/badge/**/*'
-  ];
+  console.log('excluding core components from ng buld:');
+  console.log(config.exclude);
 
   if (overrideCompileOptions) {
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);

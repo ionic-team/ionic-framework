@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
@@ -14,7 +14,6 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
     IonicModule.forRoot(AppComponent),
     PageOneModule
   ],
-  bootstrap: [IonicApp],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  bootstrap: [IonicApp]
 })
 export class AppModule {}

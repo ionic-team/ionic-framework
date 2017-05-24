@@ -1,5 +1,9 @@
-import { Component, h, Prop } from '../index';
-type CssClassObject = { [className: string]: boolean };
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
+
+import { Config } from '../../config/config';
+import { Ion } from '../ion';
+import { isTrueProperty } from '../../util/util';
+
 
 /**
   * @name Button
@@ -60,217 +64,301 @@ type CssClassObject = { [className: string]: boolean };
   *  <button ion-button small>Small</button>
   * ```
   *
-  */
+  * @advanced
+  *
+  * ```html
+  *
+  * <!-- Bind the color and outline inputs to an expression -->
+  * <button ion-button [color]="isDanger ? 'danger' : 'primary'" [outline]="isOutline">
+  *   Danger (Solid)
+  * </button>
+  *
+  * <!-- Bind the color and round inputs to an expression -->
+  * <button ion-button [color]="myColor" [round]="isRound">
+  *   Secondary (Round)
+  * </button>
+  *
+  * <!-- Bind the color and clear inputs to an expression -->
+  * <button ion-button [color]="isSecondary ? 'secondary' : 'primary'"  [clear]="isClear">
+  *   Primary (Clear)
+  * </button>
+  *
+  * <!-- Bind the color, outline and round inputs to an expression -->
+  * <button ion-button [color]="myColor2" [outline]="isOutline" [round]="isRound">
+  *   Dark (Solid + Round)
+  * </button>
+  *
+  * <!-- Bind the click event to a method -->
+  * <button ion-button (click)="logEvent($event)">
+  *   Click me!
+  * </button>
+  * ```
+  *
+  * ```ts
+  * @Component({
+  *   templateUrl: 'main.html'
+  * })
+  * class E2EPage {
+  *   isDanger: boolean = true;
+  *   isSecondary: boolean = false;
+  *   isRound: boolean = true;
+  *   isOutline: boolean = false;
+  *   isClear: boolean = true;
+  *   myColor: string = 'secondary';
+  *   myColor2: string = 'dark';
+  *
+  *   logEvent(event) {
+  *     console.log(event)
+  *   }
+  * }
+  *
+  * ```
+  *
+  * @demo /docs/demos/src/button/
+  * @see {@link /docs/components#buttons Button Component Docs}
+  * @see {@link /docs/components#fabs FabButton Docs}
+  * @see {@link ../../fab/FabButton FabButton API Docs}
+  * @see {@link ../../fab/FabContainer FabContainer API Docs}
+ */
 @Component({
-  tag: 'ion-button',
-  styleUrls: {
-    ios: 'button.ios.scss',
-    md: 'button.md.scss',
-    wp: 'button.wp.scss'
-  },
-  shadow: false
+  selector: '[ion-button]',
+  template:
+    '<span class="button-inner">' +
+      '<ng-content></ng-content>' +
+    '</span>' +
+    '<div class="button-effect"></div>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
-export class Button {
+export class Button extends Ion {
+  /** @hidden */
+  _role: string = 'button'; // bar-button
 
-  @Prop() href: string;
+  /** @hidden */
+  _size: string; // large/small/default
+
+  /** @hidden */
+  _style: string = 'default'; // outline/clear/solid
+
+  /** @hidden */
+  _shape: string; // round/fab
+
+  /** @hidden */
+  _display: string; // block/full
+
+  /** @hidden */
+  _decorator: string; // strong
+
+  /** @hidden */
+  _init: boolean;
 
   /**
-   * @Prop {string} The type of button.
-   * Possible values are: `"button"`, `"bar-button"`.
+   * @input {boolean} If true, activates the large button size.
    */
-  @Prop() buttonType: string = 'button';
+  @Input()
+  set large(val: boolean) {
+    this._attr('_size', 'large', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates the large button size.
-   * Type: size
+   * @input {boolean} If true, activates the small button size.
    */
-  @Prop() large: boolean = false;
+  @Input()
+  set small(val: boolean) {
+    this._attr('_size', 'small', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates the small button size.
-   * Type: size
+   * @input {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
    */
-  @Prop() small: boolean = false;
+  @Input()
+  set default(val: boolean) {
+    this._attr('_size', 'default', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
-   * Type: size
+   * @input {boolean} If true, activates a transparent button style with a border.
    */
-  @Prop() default: boolean = false;
+  @Input()
+  set outline(val: boolean) {
+    this._attr('_style', 'outline', val);
+  }
 
   /**
-   * @Prop {boolean} If true, sets the button into a disabled state.
+   * @input {boolean} If true, activates a transparent button style without a border.
    */
-  @Prop() disabled: boolean = false;
+  @Input()
+  set clear(val: boolean) {
+    this._attr('_style', 'clear', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates a transparent button style with a border.
-   * Type: style
+   * @input {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
    */
-  @Prop() outline: boolean = false;
+  @Input()
+  set solid(val: boolean) {
+    this._attr('_style', 'solid', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates a transparent button style without a border.
-   * Type: style
+   * @input {boolean} If true, activates a button with rounded corners.
    */
-  @Prop() clear: boolean = false;
+  @Input()
+  set round(val: boolean) {
+    this._attr('_shape', 'round', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
-   * Type: style
+   * @input {boolean} If true, activates a button style that fills the available width.
    */
-  @Prop() solid: boolean = false;
+  @Input()
+  set block(val: boolean) {
+    this._attr('_display', 'block', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates a button with rounded corners.
-   * Type: shape
-   */
-  @Prop() round: boolean = false;
-
-  /**
-   * @Prop {boolean} If true, activates a button style that fills the available width.
-   * Type: display
-   */
-  @Prop() block: boolean = false;
-
-  /**
-   * @Prop {boolean} If true, activates a button style that fills the available width without
+   * @input {boolean} If true, activates a button style that fills the available width without
    * a left and right border.
-   * Type: display
    */
-  @Prop() full: boolean = false;
+  @Input()
+  set full(val: boolean) {
+    this._attr('_display', 'full', val);
+  }
 
   /**
-   * @Prop {boolean} If true, activates a button with a heavier font weight.
-   * Type: decorator
+   * @input {boolean} If true, activates a button with a heavier font weight.
    */
-  @Prop() strong: boolean = false;
+  @Input()
+  set strong(val: boolean) {
+    this._attr('_decorator', 'strong', val);
+  }
 
   /**
-   * @Prop {string} The mode determines which platform styles to use.
+   * @input {string} The mode determines which platform styles to use.
    * Possible values are: `"ios"`, `"md"`, or `"wp"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Input()
+  set mode(val: string) {
+    this._assignCss(false);
+    this._mode = val;
+    this._assignCss(true);
+  }
+
+  /** @hidden */
+  _attr(type: string, attrName: string, attrValue: boolean) {
+    if (type === '_style') {
+      this._updateColor(this._color, false);
+    }
+    this._setClass((<any>this)[type], false);
+    if (isTrueProperty(attrValue)) {
+      (<any>this)[type] = attrName;
+      this._setClass(attrName, true);
+
+    } else {
+      // Special handling for '_style' which defaults to 'default'.
+      (<any>this)[type] = (type === '_style' ? 'default' : null);
+      this._setClass((<any>this)[type], true);
+    }
+    if (type === '_style') {
+      this._updateColor(this._color, true);
+    }
+
+  }
 
   /**
-   * @Prop {string} The color to use from your Sass `$colors` map.
+   * @input {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Input()
+  set color(val: string) {
+    this._updateColor(this._color, false);
+    this._updateColor(val, true);
+    this._color = val;
+
+  }
+
+  constructor(
+    @Attribute('ion-button') ionButton: string,
+    config: Config,
+    elementRef: ElementRef,
+    renderer: Renderer
+  ) {
+    super(config, elementRef, renderer);
+    this._mode = config.get('mode');
+
+    if (config.get('hoverCSS') === false) {
+      this.setElementClass('disable-hover', true);
+    }
+
+    if (ionButton.trim().length > 0) {
+      this.setRole(ionButton);
+    }
+  }
+
+  /** @hidden */
+  ngAfterContentInit() {
+    this._init = true;
+    this._assignCss(true);
+  }
 
   /**
    * @hidden
    */
-  getElementClassList(buttonType: string, mode: string): string[] {
-    if (!buttonType) {
-      return [];
-    }
-    return [
-      buttonType,
-      `${buttonType}-${mode}`
-    ];
-  }
-
-
-  /**
-   * @hidden
-   */
-  getClassList(buttonType: string, type: string, mode: string): string[] {
-    if (!type) {
-      return [];
-    }
-    type = type.toLocaleLowerCase();
-    return [
-      `${buttonType}-${type}`,
-      `${buttonType}-${type}-${mode}`
-    ];
+  setRole(val: string) {
+    this._assignCss(false);
+    this._role = val;
+    this._assignCss(true);
   }
 
   /**
    * @hidden
    */
-  getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
-    style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
-    let className =
-      buttonType +
-      ((style && style !== 'default') ?
-        '-' + style.toLowerCase() :
-        '');
+  _assignCss(assignCssClass: boolean) {
+    let role = this._role;
+    if (role) {
+      this.setElementClass(role, assignCssClass); // button
+      this.setElementClass(`${role}-${this._mode}`, assignCssClass); // button
 
-    return [`${className}-${mode}`].concat(
-        color ? `${className}-${mode}-${color}` : []
-      );
-  }
-
-  getStyleClassList(buttonType: string): string[] {
-    let classList = [].concat(
-      this.outline ? this.getColorClassList(this.color, buttonType, 'outline', this.mode) : [],
-      this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : [],
-      this.solid ? this.getColorClassList(this.color, buttonType, 'solid', this.mode) : []
-    );
-
-    if (classList.length === 0) {
-      classList = this.getColorClassList(this.color, buttonType, 'default', this.mode);
+      this._setClass(this._style, assignCssClass); // button-clear
+      this._setClass(this._shape, assignCssClass); // button-round
+      this._setClass(this._display, assignCssClass); // button-full
+      this._setClass(this._size, assignCssClass); // button-small
+      this._setClass(this._decorator, assignCssClass); // button-strong
+      this._updateColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
-
-    return classList;
   }
 
-  render() {
-    const size =
-      (this.large ? 'large' : null) ||
-      (this.small ? 'small' : null) ||
-      (this.default ? 'default' : null);
+  /**
+   * @hidden
+   */
+  _setClass(type: string, assignCssClass: boolean) {
+    if (type && this._init) {
+      type = type.toLocaleLowerCase();
+      this.setElementClass(`${this._role}-${type}`, assignCssClass);
+      this.setElementClass(`${this._role}-${type}-${this._mode}`, assignCssClass);
+    }
+  }
 
-    const shape = (this.round ? 'round' : null);
+  /**
+   * @hidden
+   */
+  _updateColor(color: string, isAdd: boolean) {
+    if (color && this._init) {
+      // The class should begin with the button role
+      // button, bar-button
+      let className = this._role;
 
-    const display =
-      (this.block ? 'block' : null) ||
-      (this.full ? 'full' : null);
+      // If the role is not a bar-button, don't apply the solid style
+      let style = this._style;
+      style = (this._role !== 'bar-button' && style === 'solid' ? 'default' : style);
 
-    const decorator = (this.strong ? 'strong' : null);
+      className += (style !== null && style !== '' && style !== 'default' ? '-' + style.toLowerCase() : '');
 
-    const buttonClasses: CssClassObject = []
-      .concat(
-        this.getElementClassList(this.buttonType, this.mode),
-        this.getClassList(this.buttonType, shape, this.mode),
-        this.getClassList(this.buttonType, display, this.mode),
-        this.getClassList(this.buttonType, size, this.mode),
-        this.getClassList(this.buttonType, decorator, this.mode),
-        this.getStyleClassList(this.buttonType)
-      )
-      .reduce((prevValue, cssClass) => {
-        prevValue[cssClass] = true;
-        return prevValue;
-      }, {});
-
-    const tagType = this.href ? 'a' : 'button';
-
-    return h(this,
-      h(tagType, {
-        class: buttonClasses,
-        props: {
-          disabled: this.disabled
-        }
-      },
-        [
-          h('span', {
-              class: {
-                'button-inner': true
-              }
-            },
-            h('slot')
-          ),
-          h('div', {
-              class: {
-                'button-effect': true
-              }
-            }
-          )
-        ]
-      )
-    );
+      if (color !== null && color !== '') {
+        this.setElementClass(`${className}-${this._mode}-${color}`, isAdd);
+      }
+    }
   }
 }
