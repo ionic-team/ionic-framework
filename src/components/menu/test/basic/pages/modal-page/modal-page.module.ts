@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { ModalPage } from './modal-page';
@@ -9,6 +9,7 @@ import { ModalPage } from './modal-page';
   ],
   imports: [
     IonicPageModule.forChild(ModalPage)
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ModalPageModule {}

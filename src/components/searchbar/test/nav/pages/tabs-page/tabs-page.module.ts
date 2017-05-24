@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { TabsPage } from './tabs-page';
@@ -11,6 +11,7 @@ import { SearchPageModule } from '../search-page/search-page.module';
   imports: [
     IonicPageModule.forChild(TabsPage),
     SearchPageModule
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TabsPageModule {}

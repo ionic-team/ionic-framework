@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
+import { NODE_MODULES_ROOT, SRC_ROOT, PROJECT_ROOT } from './constants';
 import { src, dest } from 'gulp';
 import { dirname, join } from 'path';
 import { ensureDirSync, readdirSync, readFile, readFileSync, statSync, writeFile, writeFileSync } from 'fs-extra';
@@ -11,6 +11,7 @@ import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
 import { argv } from 'yargs';
+import * as path from 'path';
 
 import { runWorker } from './utils/app-scripts-worker-client';
 
@@ -55,6 +56,21 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions.target = target;
   }
   config.include = includeGlob;
+  const componetsToExclude = [
+    'badge',
+    'card',
+    'card-content',
+    'card-header',
+    'card-title',
+    'slides',
+    'toggle',
+    'gesture'
+  ];
+
+  config.exclude = componetsToExclude.map(cmp => path.join(PROJECT_ROOT, `src/components/${cmp}`) + `/*.ts`)
+    .concat([
+      path.join(PROJECT_ROOT, 'src/components/index.ts'),
+    ]);
 
   config.exclude = [
     './components/badge/**/*'
@@ -236,10 +252,10 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   });
 }
 
-export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false) {
+export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, coreCompilerFilePath: string, coreDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false) {
   const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
   const debug: boolean = argv.debug;
-  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath, isDev);
+  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, coreCompilerFilePath, coreDir, sassConfigPath, copyConfigPath, isDev);
 }
 
 /** Resolves the path for a node package executable. */

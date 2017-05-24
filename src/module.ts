@@ -1,7 +1,7 @@
 /**
  * Import Angular
  */
-import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, CUSTOM_ELEMENTS_SCHEMA, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
+import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { DOCUMENT, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -50,6 +50,7 @@ import { IonicApp } from './components/app/app-root';
 import { OverlayPortal } from './components/app/overlay-portal';
 import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
+import { Button } from './components/button/button';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
@@ -181,6 +182,7 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     OverlayPortal,
     Avatar,
     Backdrop,
+    Button,
     Checkbox,
     Chip,
     Col,
@@ -274,6 +276,7 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     OverlayPortal,
     Avatar,
     Backdrop,
+    Button,
     Checkbox,
     Chip,
     Col,

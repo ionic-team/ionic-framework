@@ -105,13 +105,13 @@ export class Toggle implements BooleanInputComponent {
 
 
   render() {
-    return h(this,
-      h('ion-gesture', Ionic.theme(this, 'toggle', {
-        class: {
-          'toggle-activated': this.activated,
-          'toggle-checked': this.checked,
-          'toggle-disabled': this.disabled,
-        },
+    return h(this, Ionic.theme(this, 'toggle', {
+      class: {
+        'toggle-activated': this.activated,
+        'toggle-checked': this.checked,
+        'toggle-disabled': this.disabled,
+      },
+    }), h('ion-gesture', {
         props: {
           'canStart': this.canStart.bind(this),
           'onStart': this.onDragStart.bind(this),
@@ -125,7 +125,7 @@ export class Toggle implements BooleanInputComponent {
           'threshold': 20,
           'attachTo': 'parent'
         }
-      }),
+    },
         [
           h('div.toggle-icon',
             h('div.toggle-inner')

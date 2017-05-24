@@ -15,7 +15,7 @@
     <ion-item *virtualItem="let item" [ngClass]="item.class">
       <ion-label>{{item.type}}-{{item.value}}</ion-label>
       <ion-checkbox *ngIf="item.type === 'checkbox'" item-start></ion-checkbox>
-      <ion-toggle *ngIf="item.type === 'toggle'" item-start></ion-toggle>
+      <ion-toggle *ngIf="item.type === 'toggle'" slot="start"></ion-toggle>
       <ion-radio *ngIf="item.type === 'radio'" item-start></ion-radio>
       <ion-range *ngIf="item.type === 'range'"></ion-range>
     </ion-item>

@@ -3,7 +3,7 @@ import { dirname, join } from 'path';
 
 import { MessageToWorker, WorkerProcess } from './interfaces';
 
-export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean) {
+export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, coreCompilerFilePath: string, coreDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean) {
   return new Promise((resolve, reject) => {
 
     const msgToWorker: MessageToWorker = {
@@ -15,6 +15,8 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
       distDir: distDir,
       tsConfig: tsConfig,
       ionicAngularDir: ionicAngularDir,
+      coreCompilerFilePath: coreCompilerFilePath,
+      coreDir: coreDir,
       sassConfigPath: sassConfigPath,
       copyConfigPath: copyConfigPath,
       isDev: isDev
@@ -70,6 +72,8 @@ export function createWorker(msg: MessageToWorker): any {
       '--experimentalManualTreeshaking', 'false',
       '--experimentalPurgeDecorators', 'false',
       '--ionicAngularDir', msg.ionicAngularDir,
+      '--coreCompilerFilePath', msg.coreCompilerFilePath,
+      '--coreDir', msg.coreDir,
       '--sass', msg.sassConfigPath,
       '--copy', msg.copyConfigPath,
       '--enableLint', 'false',

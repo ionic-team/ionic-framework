@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 import { Tab3 } from './tab-three';
 
@@ -12,6 +12,7 @@ import { Tab3 } from './tab-three';
   ],
   entryComponents: [
     Tab3,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab3Module { }

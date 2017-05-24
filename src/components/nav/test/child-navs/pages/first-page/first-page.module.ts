@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { FirstPage } from './first-page';
@@ -12,6 +12,7 @@ import { FirstPage } from './first-page';
   ],
   entryComponents: [
     FirstPage,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class FirstPageModule {}

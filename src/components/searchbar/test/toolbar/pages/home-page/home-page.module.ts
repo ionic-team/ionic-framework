@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { HomePage } from './home-page';
@@ -9,6 +9,7 @@ import { HomePage } from './home-page';
   ],
   imports: [
     IonicPageModule.forChild(HomePage)
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePageModule {}

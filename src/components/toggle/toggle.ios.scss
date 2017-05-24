@@ -203,7 +203,9 @@ $toggle-ios-item-right-padding:        6px ($item-ios-padding-right / 2) 5px ($i
 }
 
 .item-ios .toggle-ios[slot="start"] {
-  padding: $toggle-ios-item-left-padding;
+  @include deprecated-variable(padding, $toggle-ios-item-left-padding) {
+    @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
+  }
 }
 
 

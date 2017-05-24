@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SessionDetail } from './session-detail';
 import { IonicPageModule } from '../../../../../..';
 
@@ -12,6 +12,7 @@ import { IonicPageModule } from '../../../../../..';
   entryComponents: [
     SessionDetail
   ],
-  providers: []
+  providers: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SessionDetailModule {}

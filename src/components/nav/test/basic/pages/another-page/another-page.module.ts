@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 import { AnotherPage } from './another-page';
 
@@ -12,6 +12,7 @@ import { AnotherPage } from './another-page';
   ],
   entryComponents: [
     AnotherPage,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AnotherPageModule { }

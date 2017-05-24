@@ -28,8 +28,6 @@ export class AppComponent {
   entryComponents: [
     E2EPage
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

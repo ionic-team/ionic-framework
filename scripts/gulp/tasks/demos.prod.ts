@@ -85,6 +85,8 @@ function buildDemo(filePath: string) {
   const relativePathFromComponents = relative(dirname(DEMOS_SRC_ROOT), componentDir);
 
   const distTestRoot = join(process.cwd(), 'dist', 'demos', relativePathFromComponents);
+  const coreCompilerFilePath = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiler');
+  const coreDir = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiled-ionic-angular');
 
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts'), join(componentDir, '**', '*.ts')];
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
@@ -100,14 +102,17 @@ function buildDemo(filePath: string) {
   const distDir = join(distTestRoot, 'www');
 
   return runAppScriptsBuild(
-    appEntryPoint, 
-    appNgModulePath, 
-    ionicAngularDir, 
-    distDir, 
-    pathToWriteFile, 
-    ionicAngularDir, 
-    sassConfigPath, 
-    copyConfigPath
+    appEntryPoint,
+    appNgModulePath,
+    ionicAngularDir,
+    coreCompilerFilePath,
+    coreDir,
+    distDir,
+    pathToWriteFile,
+    ionicAngularDir,
+    sassConfigPath,
+    copyConfigPath,
+    argv.dev
   ).then(() => {
     const end = Date.now();
     console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
@@ -144,7 +149,7 @@ function uploadToS3(path) {
 
   let params = {
     localDir: path.replace('tsconfig.json',''),
-    deleteRemoved: true, 
+    deleteRemoved: true,
     s3Params: {
       Bucket: "ionic-demos",
       Prefix: demo,
@@ -153,7 +158,7 @@ function uploadToS3(path) {
 
   var uploader = client.uploadDir(params);
 
-  return new Promise((resolve, reject) => {    
+  return new Promise((resolve, reject) => {
     uploader.on('error', function(err) {
       console.error("s3 Upload Error:", err.stack);
       reject();
@@ -186,7 +191,7 @@ task('demos.download', (done: Function) => {
 
   let uploader = client.downloadDir(params);
 
-  return new Promise((resolve, reject) => {    
+  return new Promise((resolve, reject) => {
     uploader.on('error', function(err) {
       console.error("s3 Download Error:", err.stack);
       reject();

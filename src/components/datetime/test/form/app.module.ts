@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IonicApp, IonicModule } from '../../../..';
@@ -45,6 +45,7 @@ export class AppComponent {
   bootstrap: [IonicApp],
   entryComponents: [
     E2EPage
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

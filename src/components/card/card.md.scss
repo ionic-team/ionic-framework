@@ -17,6 +17,9 @@ $card-md-margin-bottom:               10px !default;
 /// @prop - Margin left of the card
 $card-md-margin-left:                 10px !default;
 
+/// @prop - Margin start of the card
+$card-md-margin-start:                $card-md-margin-left;
+
 /// @prop - Padding top of the media on the card
 $card-md-padding-media-top:           10px !default;
 

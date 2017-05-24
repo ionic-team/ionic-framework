@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { ToolbarModal } from './toolbar';
@@ -12,6 +12,7 @@ import { ToolbarModal } from './toolbar';
   ],
   entryComponents: [
     ToolbarModal,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ToolbarModalModule {}

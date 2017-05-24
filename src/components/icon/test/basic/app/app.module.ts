@@ -18,8 +18,6 @@ import { RootPage } from '../pages/root-page/root-page';
   entryComponents: [
     RootPage
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

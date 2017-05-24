@@ -14,8 +14,6 @@ import { PageOne } from './page-one';
   entryComponents: [
     PageOne,
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PageOneModule {}

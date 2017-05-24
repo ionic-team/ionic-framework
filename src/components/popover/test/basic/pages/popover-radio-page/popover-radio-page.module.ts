@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 
 import { PopoverRadioPage } from './popover-radio-page';
@@ -12,6 +12,7 @@ import { PopoverRadioPage } from './popover-radio-page';
   ],
   entryComponents: [
     PopoverRadioPage,
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PopoverRadioPageModule {}

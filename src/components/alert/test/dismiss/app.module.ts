@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, AlertController, LoadingController, NavController } from '../../../..';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -188,6 +188,7 @@ export class AppComponent {
   entryComponents: [
     E2EPage,
     AnotherPage
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}

@@ -17,6 +17,9 @@ $card-wp-margin-bottom:               8px !default;
 /// @prop - Margin left of the card
 $card-wp-margin-left:                 8px !default;
 
+/// @prop - Margin start of the card
+$card-wp-margin-start:                $card-wp-margin-left;
+
 /// @prop - Padding top of the media on the card
 $card-wp-padding-media-top:           10px !default;
 

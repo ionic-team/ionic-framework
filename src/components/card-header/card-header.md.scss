@@ -8,18 +8,32 @@
 /// @prop - Font size of the card header
 $card-md-header-font-size:            1.6rem !default;
 
-/// @prop - Padding of the card header
-$card-md-header-padding:              16px !default;
+// deprecated
+$card-md-header-padding:              null !default;
+
+/// @prop - Padding top of the card header
+$card-md-header-padding-top:          16px !default;
+
+/// @prop - Padding end of the card header
+$card-md-header-padding-end:          $card-md-header-padding-top !default;
+
+/// @prop - Padding bottom of the card header
+$card-md-header-padding-bottom:       $card-md-header-padding-top !default;
+
+/// @prop - Padding start of the card header
+$card-md-header-padding-start:        $card-md-header-padding-end !default;
 
 /// @prop - Color of the card header
 $card-md-header-color:                #222 !default;
 
 
 .card-header-md {
-  padding: $card-md-header-padding;
-
   font-size: $card-md-header-font-size;
   color: $card-md-header-color;
+
+  @include deprecated-variable(padding, $card-md-header-padding) {
+    @include padding($card-md-header-padding-top, $card-md-header-padding-end, $card-md-header-padding-bottom, $card-md-header-padding-start);
+  }
 }
 
 

@@ -5,27 +5,36 @@
 // iOS Card Header
 // --------------------------------------------------
 
-/// @prop - Font size of the card
-$card-ios-font-size:                   1.4rem !default;
-
 /// @prop - Padding top of the card
 $card-ios-padding-top:                 13px !default;
 
-/// @prop - Padding right of the card
+// deprecated
 $card-ios-padding-right:               16px !default;
+/// @prop - Padding end of the card
+$card-ios-padding-end:                 $card-ios-padding-right;
 
 /// @prop - Padding bottom of the card
 $card-ios-padding-bottom:              14px !default;
 
-/// @prop - Padding left of the card
+// deprecated
 $card-ios-padding-left:                16px !default;
+/// @prop - Padding start of the card
+$card-ios-padding-start:               $card-ios-padding-left;
+
+/// @prop - Font size of the card
+$card-ios-font-size:                   1.4rem !default;
 
 
 .card-content-ios {
-  padding: $card-ios-padding-top $card-ios-padding-right $card-ios-padding-bottom $card-ios-padding-left;
+  @include padding($card-ios-padding-top, $card-ios-padding-end, $card-ios-padding-bottom, $card-ios-padding-start);
 
   font-size: $card-ios-font-size;
   line-height: 1.4;
+}
+
+.card-header-ios + .card-content-ios,
+.card-ios .item + .card-content-ios {
+  padding-top: 0;
 }
 
 

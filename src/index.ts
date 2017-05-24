@@ -12,6 +12,7 @@ export { AlertCmp } from './components/alert/alert-component';
 export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';
 export { Backdrop } from './components/backdrop/backdrop';
+export { Button } from './components/button/button';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { Content, ScrollEvent } from './components/content/content';

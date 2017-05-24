@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicPageModule } from '../../../../../..';
 import { Tab2Page1 } from './tab2-page1';
 
@@ -9,6 +9,7 @@ import { Tab2Page1 } from './tab2-page1';
   ],
   declarations: [
     Tab2Page1
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page1Module { }
