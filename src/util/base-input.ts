@@ -282,7 +282,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._item) {
       return;
     }
+    // TODO remove all uses of input-has-value in v4
     this._item.setElementClass('input-has-value', this.hasValue());
+    this._item.setElementClass('item-input-has-value', this.hasValue());
   }
 
   /**
