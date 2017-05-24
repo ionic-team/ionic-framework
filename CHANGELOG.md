@@ -4,7 +4,7 @@
 
 ### Steps to Upgrade
 
-`ionic-angular` now supports the latest `@angular` version (4.1.2). Feel free to update apps by updating the `package.json` `@angular` dependencies, removeing the existing `node_modules` directory, and then running `npm install`:
+`ionic-angular` now supports the latest `@angular` (4.1.2), and `typescript` (2.3.3) versions. Feel free to update apps by updating the `package.json` dependencies to match below:
 
 ```
 "dependencies": {
@@ -28,10 +28,11 @@
 },
 "devDependencies": {
   "@ionic/app-scripts": "1.3.7",
-  "typescript": "2.2.1"
+  "typescript": "2.3.3"
 }
 ```
 
+Another optional step is to remove the `src/declarations.d.ts` file. This is a legacy file introduced early with `ionic-angular` projects to improve compatibility between TypeScript and third-party libraries. Due to improvements in TypeScript, this file is no longer necessary. By removing this file, the TypeScript compiler will be able to provide more accurate error messages for `import` statements.
 
 ### Bug Fixes
 
