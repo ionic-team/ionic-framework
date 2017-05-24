@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, HostListener, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Form } from '../../util/form';
@@ -332,6 +332,15 @@ export class Item extends Ion {
         return (<any>renderer).orgListen(renderElement, name, callback);
       };
     }
+  }
+
+  @HostListener('$ionStyle', ['$event'])
+  itemStyle(ev: any) {
+    ev.stopPropagation();
+
+    Object.keys(ev.detail).forEach(cssClassName => {
+      this._elementRef.nativeElement.classList[ev.detail[cssClassName] ? 'add' : 'remove']('item-' + cssClassName);
+    });
   }
 
   /**
