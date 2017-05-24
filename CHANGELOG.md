@@ -1,3 +1,23 @@
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/driftyco/ionic/compare/v3.2.1...v3.3.0) (2017-05-24)
+
+
+### Bug Fixes
+
+* **range:** update the UI when min/max change ([#11720](https://github.com/driftyco/ionic/issues/11720)) ([d86785c](https://github.com/driftyco/ionic/commit/d86785c)), closes [#11719](https://github.com/driftyco/ionic/issues/11719)
+* **searchbar:** searchbar padding should be on the left ([#11651](https://github.com/driftyco/ionic/issues/11651)) ([3443ffd](https://github.com/driftyco/ionic/commit/3443ffd))
+* **segment:** add z-index to ios back button ([#10363](https://github.com/driftyco/ionic/issues/10363)) ([bb22e4a](https://github.com/driftyco/ionic/commit/bb22e4a))
+* **select:** RTL fix for searchbar ([#11355](https://github.com/driftyco/ionic/issues/11355)) ([ca71072](https://github.com/driftyco/ionic/commit/ca71072))
+* **VirtualScroll:** initialize trackByFn reference ([#11624](https://github.com/driftyco/ionic/issues/11624)) ([892e14f](https://github.com/driftyco/ionic/commit/892e14f))
+
+
+### Features
+
+* **icon:** add flip/unflip for icon on rtl ([#11634](https://github.com/driftyco/ionic/issues/11634)) ([7bdfaac](https://github.com/driftyco/ionic/commit/7bdfaac))
+* **rtl:** add rtl margin, padding, position and border-radius ([#11342](https://github.com/driftyco/ionic/issues/11342)) ([a30379b](https://github.com/driftyco/ionic/commit/a30379b))
+
+
+
 <a name="3.2.1"></a>
 ## [3.2.1](https://github.com/driftyco/ionic/compare/v3.2.0...v3.2.1) (2017-05-12)
 
