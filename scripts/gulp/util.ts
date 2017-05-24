@@ -209,8 +209,7 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--coreDir', coreDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
-    '--enableLint', 'false',
-    '--bonjour'
+    '--enableLint', 'false'
   ];
 
   if (watchConfigPath) {
