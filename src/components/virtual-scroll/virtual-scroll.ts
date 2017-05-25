@@ -4,7 +4,7 @@ import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processR
 import { Config } from '../../config/config';
 import { Content, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { isBlank, isFunction, isPresent, assert } from '../../util/util';
+import { isFunction, isPresent, assert } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
@@ -528,7 +528,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   private _updateDiffer() {
-    if (isBlank(this._differ) && isPresent(this._records)) {
+    if (isPresent(this._records)) {
       this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
     }
   }

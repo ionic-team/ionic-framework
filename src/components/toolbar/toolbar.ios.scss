@@ -315,6 +315,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 .back-button-ios {
   @include margin(0);
 
+  z-index: 99;
   overflow: visible;
 
   order: map-get($toolbar-order-ios, back-button);

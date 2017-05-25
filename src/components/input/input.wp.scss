@@ -96,6 +96,9 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 // Show the focus highlight when the input has focus
 @if ($text-input-wp-show-focus-highlight) {
+  // TODO remove all uses of input-has-focus in v4
+  // TODO remove all uses of input-has-value in v4
+  .item-wp.item-input.item-input-has-focus .text-input,
   .item-wp.item-input.input-has-focus .text-input {
     border-color: $text-input-wp-highlight-color;
   }
@@ -103,14 +106,15 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($text-input-wp-show-valid-highlight) {
-  .item-wp.item-input.ng-valid.input-has-value:not(.input-has-focus) .text-input {
+  .item-wp.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input,
+  .item-wp.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input {
     border-color: $text-input-wp-highlight-color-valid;
   }
 }
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-wp-show-invalid-highlight) {
-  .item-wp.item-input.ng-invalid.ng-touched:not(.input-has-focus) .text-input {
+  .item-wp.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .text-input {
     border-color: $text-input-wp-highlight-color-invalid;
   }
 }

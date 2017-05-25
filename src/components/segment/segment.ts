@@ -31,11 +31,11 @@ import { SegmentButton } from './segment-button';
  *
  * <ion-content>
  *   <!-- Segment in content -->
- *   <ion-segment [(ngModel)]="relationship" color="primary">
- *     <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
+ *   <ion-segment [(ngModel)]="relationship" color="primary" (ionChange)="segmentChanged($event)">
+ *     <ion-segment-button value="friends">
  *       Friends
  *     </ion-segment-button>
- *     <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
+ *     <ion-segment-button value="enemies">
  *       Enemies
  *     </ion-segment-button>
  *   </ion-segment>

@@ -70,12 +70,18 @@ $label-md-margin-start:               0 !default;
   @include margin(null, null, 0, 0);
 }
 
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus .label-md[stacked],
 .input-has-focus .label-md[stacked],
+.item-input-has-focus .label-md[floating],
 .input-has-focus .label-md[floating] {
   color: $label-md-text-color-focused;
 }
 
+.item-input-has-focus .label-md[floating],
 .input-has-focus .label-md[floating],
+.item-input-has-value .label-md[floating],
 .input-has-value .label-md[floating] {
   transform: translate3d(0, 0, 0) scale(.8);
 }

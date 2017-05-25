@@ -3,19 +3,19 @@
 
 # Ionic
 
-[Ionic](http://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
+[Ionic](https://ionicframework.com/) is the open-source mobile app development framework that makes it easy to
 build top quality native and progressive web apps with web technologies.
 
 Ionic is based on [Angular](https://angular.io/) and comes with many significant performance, usability, and
 feature improvements over the past versions.
 
-See the [Building Apps with Ionic](http://adamdbradley.github.io/building-with-ionic2) slides for a quick
+See the [Building Apps with Ionic](https://adamdbradley.github.io/building-with-ionic2) slides for a quick
 overview or watch our [Crash Course](https://youtu.be/O2WiI9QrS5s) video for a quick walkthrough on how to get
 started using Ionic.
 
 ### Getting Started
 
-Start a new project by following our quick [Getting Started guide](http://ionicframework.com/getting-started/).
+Start a new project by following our quick [Getting Started guide](https://ionicframework.com/getting-started/).
 We would love to hear from you! If you have any feedback or run into issues using our framework, please file
 an [issue](https://github.com/driftyco/ionic/issues/new) on this repository.
 
@@ -31,7 +31,7 @@ label.
 The [Ionic Conference App](https://github.com/driftyco/ionic-conference-app) is a full featured Ionic app.
 It is the perfect starting point for learning and building your own app.
 
-### Ionic 1.x
+### Ionic V1
 
-The source code for Ionic 1.x has been moved to [driftyco/ionic-v1](https://github.com/driftyco/ionic-v1).
-Please open any issues and pull requests related to Ionic 1.x on that repository.
+The source code for Ionic V1 has been moved to [driftyco/ionic-v1](https://github.com/driftyco/ionic-v1).
+Please open any issues and pull requests related to Ionic V1 on that repository.
