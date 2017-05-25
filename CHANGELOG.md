@@ -1,3 +1,55 @@
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/driftyco/ionic/compare/v3.2.1...v3.3.0) (2017-05-24)
+
+
+### Steps to Upgrade
+
+`ionic-angular` now supports the latest `@angular` (4.1.2), and `typescript` (2.3.3) versions. Feel free to update apps by updating the `package.json` dependencies to match below:
+
+```
+"dependencies": {
+  "@angular/common": "4.1.2",
+  "@angular/compiler": "4.1.2",
+  "@angular/compiler-cli": "4.1.2",
+  "@angular/core": "4.1.2",
+  "@angular/forms": "4.1.2",
+  "@angular/http": "4.1.2",
+  "@angular/platform-browser": "4.1.2",
+  "@angular/platform-browser-dynamic": "4.1.2",
+  "@ionic-native/core": "3.6.1",
+  "@ionic-native/splash-screen": "3.6.1",
+  "@ionic-native/status-bar": "3.6.1",
+  "@ionic/storage": "2.0.1",
+  "ionic-angular": "3.3.0",
+  "ionicons": "3.0.0",
+  "rxjs": "5.1.1",
+  "sw-toolbox": "3.6.0",
+  "zone.js": "0.8.10"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "1.3.7",
+  "typescript": "2.3.3"
+}
+```
+
+Another optional step is to remove the `src/declarations.d.ts` file. This is a legacy file introduced early with `ionic-angular` projects to improve compatibility between TypeScript and third-party libraries. Due to improvements in TypeScript, this file is no longer necessary. By removing this file, the TypeScript compiler will be able to provide more accurate error messages for `import` statements.
+
+### Bug Fixes
+
+* **range:** update the UI when min/max change ([#11720](https://github.com/driftyco/ionic/issues/11720)) ([d86785c](https://github.com/driftyco/ionic/commit/d86785c)), closes [#11719](https://github.com/driftyco/ionic/issues/11719)
+* **searchbar:** searchbar padding should be on the left ([#11651](https://github.com/driftyco/ionic/issues/11651)) ([3443ffd](https://github.com/driftyco/ionic/commit/3443ffd))
+* **segment:** add z-index to ios back button ([#10363](https://github.com/driftyco/ionic/issues/10363)) ([bb22e4a](https://github.com/driftyco/ionic/commit/bb22e4a))
+* **select:** RTL fix for searchbar ([#11355](https://github.com/driftyco/ionic/issues/11355)) ([ca71072](https://github.com/driftyco/ionic/commit/ca71072))
+* **VirtualScroll:** initialize trackByFn reference ([#11624](https://github.com/driftyco/ionic/issues/11624)) ([892e14f](https://github.com/driftyco/ionic/commit/892e14f))
+
+
+### Features
+
+* **icon:** add flip/unflip for icon on rtl ([#11634](https://github.com/driftyco/ionic/issues/11634)) ([7bdfaac](https://github.com/driftyco/ionic/commit/7bdfaac))
+* **rtl:** add rtl margin, padding, position and border-radius ([#11342](https://github.com/driftyco/ionic/issues/11342)) ([a30379b](https://github.com/driftyco/ionic/commit/a30379b))
+
+
+
 <a name="3.2.1"></a>
 ## [3.2.1](https://github.com/driftyco/ionic/compare/v3.2.0...v3.2.1) (2017-05-12)
 
