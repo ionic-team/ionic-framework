@@ -375,7 +375,7 @@ export class Tab extends NavControllerBase implements ITab {
    */
   updateHref(component: any, data: any) {
     if (this.btn && this.linker) {
-      let href = this.linker.createUrl(this.parent, this, component, data) || '#';
+      let href = this.linker.createUrl(this.parent, component, data) || '#';
       this.btn.updateHref(href);
     }
   }

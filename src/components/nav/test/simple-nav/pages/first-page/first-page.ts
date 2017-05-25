@@ -10,6 +10,6 @@ export class FirstPage {
   }
 
   goToPageTwo() {
-    this.nav.push('SecondPage');
+    this.nav.push('SecondPage', { userId: '123', name: 'ted'});
   }
 }

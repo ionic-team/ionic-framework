@@ -1,7 +1,7 @@
 import { OpaqueToken } from '@angular/core';
 
 import { NavigationContainer } from './navigation-container';
-import { DeepLinkConfig, isTabs, linkToSegment, NavLink, NavSegment } from './nav-util';
+import { DeepLinkConfig, linkToSegment, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
@@ -40,7 +40,10 @@ export class UrlSerializer {
 
   createSegmentFromName(navContainer: NavigationContainer, nameOrComponent: any): NavSegment {
     const configLink = this.getLinkFromName(nameOrComponent);
-    return linkToSegment(navContainer.id, navContainer.getType(), navContainer.getSecondaryIdentifier(), configLink);
+    if (configLink) {
+      return this._createSegment({ navId: navContainer.id, secondaryId: navContainer.getSecondaryIdentifier(), type: 'tabs'}, configLink, null);
+    }
+    return null;
   }
 
   getLinkFromName(nameOrComponent: any) {
@@ -58,8 +61,10 @@ export class UrlSerializer {
     if (!segments || !segments.length) {
       return '';
     }
-    console.log('segments: ', segments);
     const sections = segments.map(segment => {
+      if (segment.type === 'tabs') {
+        return `/${segment.type}/${segment.navId}/${segment.secondaryIdentifier}/${segment.id}`;
+      }
       return `/${segment.type}/${segment.navId}/${segment.id}`;
     });
     return sections.join('/');

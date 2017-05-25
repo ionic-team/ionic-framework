@@ -17,8 +17,6 @@ import { ViewController } from './view-controller';
 export class DeepLinker {
 
   /** @internal */
-  _segments: NavSegment[] = [];
-  /** @internal */
   _history: string[] = [];
   /** @internal */
   _indexAliasUrl: string;
@@ -39,9 +37,6 @@ export class DeepLinker {
     // scenario 1: Initial load of all navs from the initial browser URL
     const browserUrl = normalizeUrl(this._location.path());
     console.debug(`DeepLinker, init load: ${browserUrl}`);
-
-    // update the Path from the browser URL
-    this._segments = this._serializer.parse(browserUrl);
 
     // remember this URL in our internal history stack
     this._historyPush(browserUrl);
@@ -102,7 +97,8 @@ export class DeepLinker {
         }
 
         // normal url
-        this._segments = this._serializer.parse(browserUrl);
+        const segments = this._serializer.parse(browserUrl);
+        console.log('[_urlChange] segments: ', segments);
         //this._loadNavFromPath(((appRootNav as any) as NavController));
       }
     }
@@ -113,33 +109,13 @@ export class DeepLinker {
    * @internal
    */
   navChange(navId: string, direction: string) {
-    /*// all transitions completed
-    if (direction) {
-      // get the app's active nav, which is the lowest level one being viewed
-      const activeNav = this._app.getActiveNav(navId);
-
-      if (activeNav) {
-
-        console.log('navId: ',navId);
-        // build up the segments of all the navs from the lowest level
-        this._segments = this._pathFromNavs(activeNav);
-        console.log('this._segments: ', this._segments);
-
-        // build a string URL out of the Path
-
-
-        // update the browser's location
-        this._updateLocation(browserUrl, direction);
-      }
-    }
-    */
     if (direction) {
       const rootNavContainers = this._app.getActiveNavContainers();
       const segments = rootNavContainers.map(rootNavContainer => {
         if (isNav(rootNavContainer)) {
           return this.getSegmentFromNav(<NavController> <any> rootNavContainer, null, null);
         } else {
-          return null;
+          return this.getSegmentFromTabs(rootNavContainer, null, null);
         }
       }).filter(segment => !!segment);
       console.log('segments: ', segments);
@@ -164,6 +140,16 @@ export class DeepLinker {
     }
 
     return this._serializer.serializeComponent({ navId: nav.id, secondaryId: null, type: 'nav'}, component, data);
+  }
+
+  getSegmentFromTabs(navContainer: NavigationContainer, component?: any, data?: any): NavSegment {
+    const activeChildNav = navContainer.getActiveChildNav();
+    const viewController = activeChildNav.getActive(true);
+    if (viewController) {
+      component = viewController.component;
+      data = viewController.data;
+    }
+    return this._serializer.serializeComponent({ navId: navContainer.id, secondaryId: navContainer.getSecondaryIdentifier(), type: 'tabs'}, component, data);
   }
 
   /**
@@ -240,12 +226,8 @@ export class DeepLinker {
     // create a segment out of just the passed in name
     const segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent);
     if (segment) {
-      throw new Error('TODO');
-      //const path = this._pathFromNavs(nav, segment.component, data);
-      // serialize the segments into a browser URL
-      // and prepare the URL with the location and return
-      //const url = this._serializer.serialize(path);
-      //return prepareExternalUrl ? this._location.prepareExternalUrl(url) : url;
+      const url = this._serializer.serialize([segment]);
+      return prepareExternalUrl ? this._location.prepareExternalUrl(url) : url;
     }
     return '';
   }
@@ -322,22 +304,9 @@ export class DeepLinker {
   /**
    * @internal
    */
-  _getTabSelector(tab: Tab): string {
-    if (isPresent(tab.tabUrlPath)) {
-      return tab.tabUrlPath;
-    }
-    if (isPresent(tab.tabTitle)) {
-      return this._serializer.formatUrlPart(tab.tabTitle);
-    }
-    return `tab-${tab.index}`;
-  }
-
-  /**
-   * @internal
-   */
-  getSelectedTabIndex(tabsNav: Tabs, pathName: string, fallbackIndex: number = 0): number {
+  getSelectedTabIndex(tabsNav: Tabs, secondaryId: string, fallbackIndex: number = 0): number {
     // we found a segment which probably represents which tab to select
-    const indexMatch = pathName.match(/tab-(\d+)/);
+    const indexMatch = secondaryId.match(/tab-(\d+)/);
     if (indexMatch) {
       // awesome, the segment name was something "tab-0", and
       // the numbe represents which tab to select
@@ -346,8 +315,8 @@ export class DeepLinker {
 
     // wasn't in the "tab-0" format so maybe it's using a word
     const tab = tabsNav._tabs.find(t => {
-      return (isPresent(t.tabUrlPath) && t.tabUrlPath === pathName) ||
-             (isPresent(t.tabTitle) && this._serializer.formatUrlPart(t.tabTitle) === pathName);
+      return (isPresent(t.tabUrlPath) && t.tabUrlPath === secondaryId) ||
+             (isPresent(t.tabTitle) && this._serializer.formatUrlPart(t.tabTitle) === secondaryId);
     });
 
     return isPresent(tab) ? tab.index : fallbackIndex;
@@ -359,21 +328,23 @@ export class DeepLinker {
    * where it lives in the path and load up the correct component.
    * @internal
    */
-  initNav(nav: any): NavSegment {
-    const path = this._segments;
+  initNav(nav: NavigationContainer): NavSegment {
+    const browserUrl = normalizeUrl(this._location.path());
+    const segments = this._serializer.parse(browserUrl);
+    //const path = this._segments;
 
-    if (nav && path.length) {
+    if (nav && segments.length) {
       if (!nav.parent) {
         // a nav without a parent is always the first nav segment
-        path[0].navId = nav.id;
-        return path[0];
+        segments[0].navId = nav.id;
+        return segments[0];
       }
 
-      for (var i = 1; i < path.length; i++) {
-        if (path[i - 1].navId === nav.parent.id) {
+      for (var i = 1; i < segments.length; i++) {
+        if (segments[i - 1].navId === nav.parent.id) {
           // this nav's parent segment is the one before this segment's index
-          path[i].navId = nav.id;
-          return path[i];
+          segments[i].navId = nav.id;
+          return segments[i];
         }
       }
     }
@@ -515,6 +486,19 @@ export class DeepLinker {
     if (!this._history.length) {
       this._historyPush(this._location.path());
     }
+  }
+
+  /**
+   * @internal
+   */
+  _getTabSelector(tab: Tab): string {
+    if (isPresent(tab.tabUrlPath)) {
+      return tab.tabUrlPath;
+    }
+    if (isPresent(tab.tabTitle)) {
+      return this._serializer.formatUrlPart(tab.tabTitle);
+    }
+    return `tab-${tab.index}`;
   }
 
 }

@@ -1,11 +1,12 @@
 import { Renderer, TypeDecorator } from '@angular/core';
-
 import { DeepLinker } from './deep-linker';
 import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
+import { Tab } from './nav-interfaces';
 import { Transition } from '../transitions/transition';
+import { UrlSerializer } from './url-serializer';
 
 
 export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?: any): Promise<ViewController> {

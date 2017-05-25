@@ -298,7 +298,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     const tabsSegment = this._linker.initNav(this);
     if (tabsSegment && isBlank(tabsSegment.component)) {
       // we found a segment which probably represents which tab to select
-      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name, selectedIndex);
+      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.secondaryIdentifier, selectedIndex);
     }
 
     // get the selectedIndex and ensure it isn't hidden or disabled
@@ -310,20 +310,10 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     }
 
     if (selectedTab) {
-      // we found a tab to select
-      // get the segment the deep linker says this tab should load with
-      let pageId: string = null;
       if (tabsSegment) {
-        let selectedTabSegment = this._linker.initNav(selectedTab);
-        if (selectedTabSegment && selectedTabSegment.component) {
-          selectedTab.root = selectedTabSegment.component;
-          selectedTab.rootParams = selectedTabSegment.data;
-          pageId = selectedTabSegment.id;
-        }
+        selectedTab.rootParams = tabsSegment.data;
       }
-      this.select(selectedTab, {
-        id: pageId
-      });
+      this.select(selectedTab);
     }
 
     // set the initial href attribute values for each tab
@@ -362,7 +352,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
 
     // If the selected tab is the current selected tab, we do not switch
     const currentTab = this.getSelected();
-    if (selectedTab === currentTab) {
+    if (selectedTab === currentTab && currentTab.getActive()) {
       return this._touchActive(selectedTab);
     }
 
@@ -469,6 +459,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
       if (tabs[i].isSelected) {
         return tabs[i];
       }
+    }
+    if (tabs.length) {
+      return tabs[0];
     }
     return null;
   }
@@ -581,8 +574,11 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    * @private
    */
   getSecondaryIdentifier(): string {
-    console.log('TODO');
-    return 'tab-one';
+    const tab = this.getActiveChildNav();
+    if (tab) {
+      return this._linker._getTabSelector(tab);
+    }
+    return '';
   }
 }
 

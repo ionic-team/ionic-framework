@@ -3,9 +3,13 @@ import { IonicPage, NavController, } from '../../../../../..';
 
 @IonicPage()
 @Component({
-  templateUrl: 'second-page.html'
+  templateUrl: 'first-page.html'
 })
-export class SecondPage {
+export class FirstPage {
   constructor(public nav: NavController) {
+  }
+
+  clickMe() {
+    this.nav.push('ThirdPage');
   }
 }
