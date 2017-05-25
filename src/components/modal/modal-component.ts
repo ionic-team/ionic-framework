@@ -106,7 +106,9 @@ export class ModalCmp {
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
     if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === KEY_ESCAPE) {
-      this._bdClick();
+        this._bdClick().catch((err) => {
+          console.warn(err);
+        });
     }
   }
 
