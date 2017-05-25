@@ -16,7 +16,8 @@ import { assert } from '../../util/util';
   selector: 'ion-popover',
   template:
     '<ion-backdrop (click)="_bdClick()" [hidden]="!d.showBackdrop"></ion-backdrop>' +
-    '<div class="popover-wrapper">' +
+    '<div class="popover-wrapper" id="{{_wrpId}}" tabindex="-1" role="dialog" [attr.aria-label]="_label">' +
+      '<button class="popover-dismiss" (click)="_bdClick()" *ngIf="d.enableBackdropDismiss" [attr.aria-label]="_dismissLabel"></button>' +
       '<div class="popover-arrow"></div>' +
       '<div class="popover-content">' +
         '<div class="popover-viewport">' +
@@ -33,10 +34,15 @@ export class PopoverCmp {
     cssClass?: string;
     showBackdrop?: boolean;
     enableBackdropDismiss?: boolean;
+    ariaLabel?: string;
   };
 
   _enabled: boolean;
   _gestureBlocker: BlockerDelegate;
+  _wrpId: string;
+  _label: string;
+  _dismissLabel: string;
+  _activeElement: HTMLElement;
 
   id: number;
 
@@ -51,6 +57,9 @@ export class PopoverCmp {
     gestureCtrl: GestureController,
     public moduleLoader: ModuleLoader
   ) {
+    let opts = _navParams.get('opts');
+    assert(opts, 'popover data must be valid');
+
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = _navParams.data.opts;
 
@@ -64,11 +73,29 @@ export class PopoverCmp {
     }
 
     this.id = (++popoverIds);
+    this._wrpId = 'popover-wrap-' + this.id;
+
+    if (opts.ariaLabel) {
+      this._label = opts.ariaLabel;
+    } else {
+      // May be worth considering trying to pull something out of the popover page
+      this._label = '';
+    }
+
+    if (opts.dismissLabel) {
+      this._dismissLabel = opts.dismissLabel;
+    } else {
+      this._dismissLabel = 'Tap to dismiss';
+    }
   }
 
   ionViewPreLoad() {
-    this._plt.focusOutActiveElement();
     this._load(this._navParams.data.component);
+  }
+
+  ionViewDidLeave() {
+    this._plt.untrapVirtualCursor(this._elementRef.nativeElement);
+    this._activeElement.focus();
   }
 
   _load(component: any) {
@@ -88,6 +115,7 @@ export class PopoverCmp {
       // TODO, should we unsubscribe? memory leak?
       this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
       this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
+      this._viewCtrl.didEnter.subscribe(this._viewDidEnter.bind(this));
     }
   }
 
@@ -95,7 +123,32 @@ export class PopoverCmp {
     this._gestureBlocker.block();
   }
 
+  _viewDidEnter() {
+    // remember the focused element so we can restore it later
+    this._activeElement = <HTMLElement>document.activeElement;
+    if (this._activeElement) {
+      this._activeElement.blur();
+    }
+
+    // trap focus and virtual cursor within the alert box
+    // only the virtual cursor trap needs to be removed when the alert is dismissed
+    // as the focus trap is destroyed with the element
+    this._plt.trapFocus(this._elementRef.nativeElement);
+    this._plt.trapVirtualCursor(this._elementRef.nativeElement);
+
+    // set focus to the wrapper element
+    document.getElementById(this._wrpId).focus();
+
+    // allow dismissing dialog with hardware back button (android and win only)
+    var backButtonAction = this._plt.registerBackButtonAction(() => {
+      backButtonAction();
+      this._bdClick();
+    });
+  }
+
   _viewDidLeave() {
+    this._plt.untrapVirtualCursor(this._elementRef.nativeElement);
+    this._activeElement.focus();
     this._gestureBlocker.unblock();
   }
 

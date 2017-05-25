@@ -786,6 +786,62 @@ export class Platform {
     activeElement && activeElement.blur && activeElement.blur();
   }
 
+  /**
+   * @hidden
+   * Prevent tabbing out of overlays such as modals
+   */
+  trapFocus(ele: HTMLElement) {
+    const focusableQueryString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+    const focusable = ele.querySelectorAll(focusableQueryString);
+    const firstFocusable = <HTMLElement>focusable[0];
+    const lastFocusable = <HTMLElement>focusable[focusable.length - 1];
+    ele.addEventListener('keydown', function(e) {
+      if (e.keyCode === 9) {
+        if (e.shiftKey) {
+            if (document.activeElement === firstFocusable) {
+                e.preventDefault();
+                lastFocusable.focus();
+            }
+        } else {
+            if (document.activeElement === lastFocusable) {
+                e.preventDefault();
+                firstFocusable.focus();
+            }
+        }
+      }
+    });
+  }
+
+  /**
+   * @hidden
+   * Prevent moving a screen reader's virtual cursor out of overlays such as modals
+   */
+  trapVirtualCursor(ele: HTMLElement) {
+    var child = ele.parentNode.firstChild;
+    for ( ; child; child = child.nextSibling) {
+      if (child.nodeType === 1 && child !== ele && !(<HTMLElement>child).getAttribute('aria-hidden')) {
+        // Mark the element so we know which one to unhide again, in case some siblings
+        // are aria-hidden before running this
+        (<HTMLElement>child).setAttribute('data-traphide', 'true');
+        (<HTMLElement>child).setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+
+  /**
+   * @hidden
+   * Release a virtual cursor trap
+   */
+  untrapVirtualCursor(ele: HTMLElement) {
+    var child = ele.parentNode.firstChild;
+    for ( ; child; child = child.nextSibling) {
+      if (child.nodeType === 1 && child !== ele && (<HTMLElement>child).getAttribute('data-traphide')) {
+        (<HTMLElement>child).removeAttribute('data-traphide');
+        (<HTMLElement>child).removeAttribute('aria-hidden');
+      }
+    }
+  }
+
   private _initEvents() {
     // Test via a getter in the options object to see if the passive property is accessed
     try {

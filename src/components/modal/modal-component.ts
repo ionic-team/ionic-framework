@@ -3,6 +3,7 @@ import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer
 import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
+import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';
 import { ModuleLoader } from '../../util/module-loader';
@@ -15,7 +16,7 @@ import { assert } from '../../util/util';
   selector: 'ion-modal',
   template:
     '<ion-backdrop (click)="_bdClick()" [class.backdrop-no-tappable]="!_bdDismiss"></ion-backdrop>' +
-    '<div class="modal-wrapper">' +
+    '<div class="modal-wrapper" id="{{_wrpId}}" tabindex="-1" role="dialog" [attr.aria-label]="_label">' +
       '<div #viewport nav-viewport></div>' +
     '</div>'
 })
@@ -26,6 +27,11 @@ export class ModalCmp {
   _bdDismiss: boolean;
   _enabled: boolean;
   _gestureBlocker: BlockerDelegate;
+  _wrpId: string;
+  _label: string;
+  _activeElement: HTMLElement;
+
+  id: number;
 
   constructor(
     public _cfr: ComponentFactoryResolver,
@@ -34,8 +40,8 @@ export class ModalCmp {
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController,
-    public moduleLoader: ModuleLoader
-
+    public moduleLoader: ModuleLoader,
+    private _plt: Platform
   ) {
     let opts = _navParams.get('opts');
     assert(opts, 'modal data must be valid');
@@ -50,6 +56,16 @@ export class ModalCmp {
         // Make sure the class isn't whitespace, otherwise it throws exceptions
         if (cssClass.trim() !== '') _renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
       });
+    }
+
+    this.id = (++modalIds);
+    this._wrpId = 'modal-wrap-' + this.id;
+
+    if (opts.ariaLabel) {
+      this._label = opts.ariaLabel;
+    } else {
+      // May be worth considering trying to pull something out of the modal page
+      this._label = '';
     }
   }
 
@@ -78,6 +94,7 @@ export class ModalCmp {
     this._viewCtrl._setInstance(componentRef.instance);
     this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
     this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
+    this._viewCtrl.didEnter.subscribe(this._viewDidEnter.bind(this));
 
     this._enabled = true;
   }
@@ -87,7 +104,26 @@ export class ModalCmp {
   }
 
   _viewDidLeave() {
+    this._plt.untrapVirtualCursor(this._elementRef.nativeElement);
+    this._activeElement.focus();
     this._gestureBlocker.unblock();
+  }
+
+  _viewDidEnter() {
+    // remember the focused element so we can restore it later
+    this._activeElement = <HTMLElement>document.activeElement;
+    if (this._activeElement) {
+      this._activeElement.blur();
+    }
+
+    // trap focus and virtual cursor within the alert box
+    // only the virtual cursor trap needs to be removed when the alert is dismissed
+    // as the focus trap is destroyed with the element
+    this._plt.trapFocus(this._elementRef.nativeElement);
+    this._plt.trapVirtualCursor(this._elementRef.nativeElement);
+
+    // set focus to the wrapper element
+    document.getElementById(this._wrpId).focus();
   }
 
   _setCssClass(componentRef: any, className: string) {
@@ -115,3 +151,5 @@ export class ModalCmp {
     this._gestureBlocker.destroy();
   }
 }
+
+let modalIds = -1;

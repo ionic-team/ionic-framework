@@ -340,6 +340,8 @@ export class Select extends BaseInput<any> implements OnDestroy {
         };
       });
 
+      selectOptions.alertDialogRole = false;
+
       var selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions

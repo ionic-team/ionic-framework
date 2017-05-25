@@ -17,7 +17,7 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-action-sheet',
   template:
     '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
-    '<div class="action-sheet-wrapper">' +
+    '<div class="action-sheet-wrapper" id="{{wrpId}}" tabindex="-1"  role="dialog" [attr.aria-labelledby]="hdrId" [attr.aria-describedby]="descId">' +
       '<div class="action-sheet-container">' +
         '<div class="action-sheet-group">' +
           '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
@@ -36,9 +36,6 @@ import { ViewController } from '../../navigation/view-controller';
       '</div>' +
     '</div>',
   host: {
-    'role': 'dialog',
-    '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId'
   },
   encapsulation: ViewEncapsulation.None,
 })
@@ -51,8 +48,10 @@ export class ActionSheetCmp {
   enabled: boolean;
   hdrId: string;
   id: number;
+  wrpId: string;
   mode: string;
   gestureBlocker: BlockerDelegate;
+  activeElement: HTMLElement;
 
   constructor(
     private _viewCtrl: ViewController,
@@ -76,6 +75,7 @@ export class ActionSheetCmp {
     }
 
     this.id = (++actionSheetIds);
+    this.wrpId = 'acst-wrp-' + this.id;
     if (this.d.title) {
       this.hdrId = 'acst-hdr-' + this.id;
     }
@@ -113,17 +113,33 @@ export class ActionSheetCmp {
   }
 
   ionViewDidLeave() {
+    this._plt.untrapVirtualCursor(this._elementRef.nativeElement);
+    this.activeElement.focus();
     this.gestureBlocker.unblock();
   }
 
   ionViewDidEnter() {
-    this._plt.focusOutActiveElement();
-
-    const focusableEle = this._elementRef.nativeElement.querySelector('button');
-    if (focusableEle) {
-      focusableEle.focus();
+    // remember the focused element so we can restore it later
+    this.activeElement = <HTMLElement>document.activeElement;
+    if (this.activeElement) {
+      this.activeElement.blur();
     }
+
+    // trap focus and virtual cursor within the action sheet
+    // only the virtual cursor trap needs to be removed when the action sheet is dismissed
+    // as the focus trap is destroyed with the element
+    this._plt.trapFocus(this._elementRef.nativeElement);
+    this._plt.trapVirtualCursor(this._elementRef.nativeElement);
+
+    // set focus to the container
+    document.getElementById(this.wrpId).focus();
     this.enabled = true;
+
+    // allow dismissing dialog with hardware back button (android and win only)
+    var backButtonAction = this._plt.registerBackButtonAction(() => {
+      this.bdClick();
+      backButtonAction();
+    });
   }
 
   @HostListener('body:keyup', ['$event'])

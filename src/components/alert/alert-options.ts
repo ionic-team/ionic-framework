@@ -8,6 +8,7 @@ export interface AlertOptions {
   inputs?: AlertInputOptions[];
   buttons?: (AlertButton|string)[];
   enableBackdropDismiss?: boolean;
+  alertDialogRole?: boolean;
 }
 
 export interface AlertInputOptions {

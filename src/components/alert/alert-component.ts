@@ -19,7 +19,7 @@ import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
   selector: 'ion-alert',
   template:
     '<ion-backdrop (click)="bdClick()" [class.backdrop-no-tappable]="!d.enableBackdropDismiss"></ion-backdrop>' +
-    '<div class="alert-wrapper">' +
+    '<div class="alert-wrapper" id="{{wrpId}}" tabindex="-1"  [attr.role]="role" [attr.aria-labelledby]="hdrId" [attr.aria-describedby]="descId">' +
       '<div class="alert-head">' +
         '<h2 id="{{hdrId}}" class="alert-title" *ngIf="d.title" [innerHTML]="d.title"></h2>' +
         '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
@@ -65,14 +65,10 @@ import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
       '</div>' +
     '</div>',
   host: {
-    'role': 'dialog',
-    '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId'
   },
   encapsulation: ViewEncapsulation.None,
 })
 export class AlertCmp {
-
   activeId: string;
   descId: string;
   d: AlertOptions;
@@ -83,8 +79,11 @@ export class AlertCmp {
   lastClick: number;
   msgId: string;
   subHdrId: string;
+  wrpId: string;
   mode: string;
   gestureBlocker: BlockerDelegate;
+  role: string;
+  activeElement: HTMLElement;
 
   constructor(
     public _viewCtrl: ViewController,
@@ -113,6 +112,7 @@ export class AlertCmp {
     this.hdrId = 'alert-hdr-' + this.id;
     this.subHdrId = 'alert-subhdr-' + this.id;
     this.msgId = 'alert-msg-' + this.id;
+    this.wrpId = 'alert-wrp-' + this.id;
     this.activeId = '';
     this.lastClick = 0;
 
@@ -126,6 +126,8 @@ export class AlertCmp {
     if (!this.d.message) {
       this.d.message = '';
     }
+
+    this.role = this.d.alertDialogRole ? 'alertdialog' : 'dialog';
   }
 
   ionViewDidLoad() {
@@ -192,27 +194,48 @@ export class AlertCmp {
   }
 
   ionViewDidLeave() {
-    this._plt.focusOutActiveElement();
+    this._plt.untrapVirtualCursor(this._elementRef.nativeElement);
+    this.activeElement.focus();
     this.gestureBlocker.unblock();
   }
 
   ionViewWillLeave() {
-    this._plt.focusOutActiveElement();
   }
 
   ionViewDidEnter() {
-    // focus out of the active element
-    this._plt.focusOutActiveElement();
+    // remember the focused element so we can restore it later
+    this.activeElement = <HTMLElement>document.activeElement;
+    if (this.activeElement) {
+      this.activeElement.blur();
+    }
 
-    // set focus on the first input or button in the alert
-    // note that this does not always work and bring up the keyboard on
-    // devices since the focus command must come from the user's touch event
-    // and ionViewDidEnter is not in the same callstack as the touch event :(
-    const focusableEle = this._elementRef.nativeElement.querySelector('input,button');
-    if (focusableEle) {
-      focusableEle.focus();
+    // trap focus and virtual cursor within the alert box
+    // only the virtual cursor trap needs to be removed when the alert is dismissed
+    // as the focus trap is destroyed with the element
+    this._plt.trapFocus(this._elementRef.nativeElement);
+    this._plt.trapVirtualCursor(this._elementRef.nativeElement);
+
+    // If this is an alertdialog, we want focus on the first focusable element,
+    // if it's a dialog on the dialog itself
+    if (this.d.alertDialogRole) {
+      // set focus on the first input or button in the alert
+      // note that this does not always work and bring up the keyboard on
+      // devices since the focus command must come from the user's touch event
+      // and ionViewDidEnter is not in the same callstack as the touch event :(
+      const focusableEle = this._elementRef.nativeElement.querySelector('input,button');
+      if (focusableEle) {
+        focusableEle.focus();
+      }
+    } else {
+      document.getElementById(this.wrpId).focus();
     }
     this.enabled = true;
+
+    // allow dismissing dialog with hardware back button (android and win only)
+    var backButtonAction = this._plt.registerBackButtonAction(() => {
+      this.bdClick();
+      backButtonAction();
+    });
   }
 
   @HostListener('body:keyup', ['$event'])

@@ -7,4 +7,5 @@ export interface ToastOptions {
   closeButtonText?: string;
   dismissOnPageChange?: boolean;
   position?: string;
+  silent?: boolean;
 }
