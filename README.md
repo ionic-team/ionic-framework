@@ -26,7 +26,7 @@ Components are no longer able to have their mode changed dynamically. You can ch
 
 Button should now be written as an `<ion-button>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute.
 
-Old Usage Examples:
+**Old Usage Example:**
 
 ```html
 <button ion-button (click)="doSomething()">
@@ -38,7 +38,7 @@ Old Usage Examples:
 </a>
 ```
 
-New Usage Examples:
+**New Usage Example:**
 
 ```html
 <ion-button (click)="doSomething()">
@@ -62,7 +62,7 @@ These have been renamed to the following, and moved from the button element to t
 | `icon-right`, `icon-end`  | `slot="end"`   | Positions to the right of the button in LTR, and to the left in RTL.  |
 
 
-Old Usage Examples:
+**Old Usage Example:**
 
 ```html
 <ion-button icon-left>
@@ -86,7 +86,7 @@ Old Usage Examples:
 </ion-button>
 ```
 
-New Usage Examples:
+**New Usage Example:**
 
 ```html
 <ion-button>
@@ -125,7 +125,7 @@ These have been renamed to the following:
 | `item-right`, `item-end`  | `slot="end"`   | Positions to the right of the item in LTR, and to the left in RTL.  |
 
 
-Old Usage Examples:
+**Old Usage Example:**
 
 ```html
 <ion-item>
@@ -141,7 +141,7 @@ Old Usage Examples:
 </ion-item>
 ```
 
-New Usage Example:
+**New Usage Example:**
 
 ```html
 <ion-item>
@@ -156,25 +156,25 @@ New Usage Example:
 
 ##### Attributes Renamed
 
-Similar to item, the attributes to position an `ion-buttons` element inside of a toolbar have been renamed, as well as the behavior attached to the name. We noticed there was some confusion behind the behavior of the `start` and `end` attributes, and with the new support for RTL we wanted to make the behavior of these match RTL. In order to do this we had to rename the old `start`/`end` to something that makes more sense with their behavior.
+The attributes to position an `ion-buttons` element inside of a toolbar have been renamed, as well as the behavior attached to the name. We noticed there was some confusion behind the behavior of the `start` and `end` attributes, and with the new support for RTL we wanted to make the behavior of these match RTL. In order to do this we had to rename the old `start`/`end` to something that makes more sense with their behavior.
 
 The names and behavior of each of the properties was previously:
 
-| Property | Description                                                                                            |
-|----------|--------------------------------------------------------------------------------------------------------|
-| `start`  | Positions element to the left of the content in `ios` mode, and directly to the right in `md` and `wp` mode. |
-| `end`       | Positions element to the right of the content in `ios` mode, and to the far right in `md` and `wp` mode.     |
-| `left`   | Positions element to the left of all other elements.                                                   |
-| `right`  | Positions element to the right of all other elements.                                                  |
+| Old Property | Property Behavior                                                                                            |
+|--------------|--------------------------------------------------------------------------------------------------------------|
+| `start`      | Positions element to the left of the content in `ios` mode, and directly to the right in `md` and `wp` mode. |
+| `end`        | Positions element to the right of the content in `ios` mode, and to the far right in `md` and `wp` mode.     |
+| `left`       | Positions element to the left of all other elements.                                                         |
+| `right`      | Positions element to the right of all other elements.                                                        |
 
 The properties have been renamed to the following:
 
-| Old Property | New Property        | Property Behavior                                                                     |
-|--------------|---------------------|---------------------------------------------------------------------------------------|
-| `start`         | `slot="mode-start"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` and `wp` mode. |
-| `end`           | `slot="mode-end"`   | Positions element to the `right` of the content in `ios` mode, and to the far right in `md` and `wp` mode. |
-| `left`         | `slot="start"`      | Positions element to the `left` of all other elements in `LTR`, and to the `right` in `RTL`.  |
-| `right`         | `slot="end"`        | Positions element to the `right` of all other elements in `LTR`, and to the `left` in `RTL`.  |
+| Old Property | New Property        | Property Behavior                                                                                                |
+|--------------|---------------------|------------------------------------------------------------------------------------------------------------------|
+| `start`      | `slot="mode-start"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` and `wp` mode. |
+| `end`        | `slot="mode-end"`   | Positions element to the `right` of the content in `ios` mode, and to the far right in `md` and `wp` mode.       |
+| `left`       | `slot="start"`      | Positions element to the `left` of all other elements in `LTR`, and to the `right` in `RTL`.                     |
+| `right`      | `slot="end"`        | Positions element to the `right` of all other elements in `LTR`, and to the `left` in `RTL`.                     |
 
 
 ### Testing
