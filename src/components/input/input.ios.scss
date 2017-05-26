@@ -20,7 +20,7 @@ $text-input-ios-margin-bottom:             $item-ios-padding-bottom !default;
 // deprecated
 $text-input-ios-margin-left:               0 !default;
 /// @prop - Margin start of the input
-$text-input-ios-margin-start:              $text-input-ios-margin-left;
+$text-input-ios-margin-start:              $text-input-ios-margin-left !default;
 
 /// @prop - Width of the icon used to clear the input
 $text-input-ios-input-clear-icon-width:    30px !default;
