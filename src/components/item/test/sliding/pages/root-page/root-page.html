@@ -69,7 +69,7 @@
         <h2>HubStruck Notifications</h2>
         <p>A new message from a repo in your network</p>
         <p>Oceanic Next has joined your network</p>
-        <ion-note item-right>
+        <ion-note item-end>
           10:45 AM
         </ion-note>
       </a>
@@ -136,7 +136,7 @@
 
     <ion-item-sliding #item3>
       <ion-item text-wrap detail-push>
-        <h2>RIGHT/LEFT side - icons (item-left)</h2>
+        <h2>RIGHT/LEFT side - icons (item-start)</h2>
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
       <ion-item-options side="left" icon-left (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
@@ -158,7 +158,7 @@
 
     <ion-item-sliding #item4>
       <ion-item>
-        <ion-icon name="mail" item-left></ion-icon>
+        <ion-icon name="mail" item-start></ion-icon>
         One Line w/ Icon, div only text
       </ion-item>
       <ion-item-options icon-left (ionSwipe)="archive($event)">
@@ -171,7 +171,7 @@
 
     <ion-item-sliding #item5 *ngIf="slidingEnabled">
       <ion-item>
-        <ion-avatar item-left>
+        <ion-avatar item-start>
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
         </ion-avatar>
         One Line w/ Avatar, div only text
@@ -208,7 +208,7 @@
 
     <ion-item-sliding #item8>
       <ion-item>
-        <ion-thumbnail item-left>
+        <ion-thumbnail item-start>
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
         </ion-thumbnail>
         <h2>DOWNLOAD</h2>
@@ -228,7 +228,7 @@
 
     <ion-item-sliding #item9>
       <ion-item>
-        <ion-thumbnail item-left>
+        <ion-thumbnail item-start>
           <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
         </ion-thumbnail>
         <h2>ion-item-sliding without options (no sliding)</h2>

@@ -8,13 +8,14 @@ export interface SelectPopoverOption {
   value: string;
   disabled: boolean;
   checked: boolean;
+  handler?: Function;
 }
 
 /** @hidden */
 @Component({
   template: `
     <ion-list radio-group [(ngModel)]="value">
-      <ion-item *ngFor="let option of options; let i = index">
+      <ion-item *ngFor="let option of options">
         <ion-label>{{option.text}}</ion-label>
         <ion-radio [checked]="option.checked" [value]="option.value" [disabled]="option.disabled"></ion-radio>
       </ion-item>
@@ -30,10 +31,14 @@ export class SelectPopover implements OnInit {
   }
 
   public set value(value: any) {
+    let checkedOption = this.options.find(option => option.value === value);
+    if (checkedOption && checkedOption.handler) {
+      checkedOption.handler();
+    }
     this.viewController.dismiss(value);
   }
 
-  private options: SelectPopoverOption[];
+  options: SelectPopoverOption[];
 
   constructor(
     private navParams: NavParams,

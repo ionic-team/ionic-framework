@@ -8,9 +8,9 @@
  * @usage
  * ```ts
  * export class MyClass{
- *  constructor(public params: NavParams){
+ *  constructor(public navParams: NavParams){
  *    // userParams is an object we have in our nav-parameters
- *    this.params.get('userParams');
+ *    this.navParams.get('userParams');
  *  }
  * }
  * ```
@@ -33,15 +33,15 @@ export class NavParams {
    *
    * ```ts
    * export class MyClass{
-   *  constructor(public params: NavParams){
+   *  constructor(public navParams: NavParams){
    *    // userParams is an object we have in our nav-parameters
-   *    this.params.get('userParams');
+   *    this.navParams.get('userParams');
    *  }
    * }
    * ```
    *
    *
-   * @param {string} parameter Which param you want to look up
+   * @param {string} param Which param you want to look up
    */
   get(param: string): any {
     return this.data[param];

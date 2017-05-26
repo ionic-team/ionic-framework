@@ -867,7 +867,7 @@ export function slidePrev(s: Slides, plt: Platform, runCallbacks?: boolean, spee
   return false;
 }
 
-export function slideReset(s: Slides, plt: Platform, runCallbacks?: boolean, speed?: number, internal?: boolean) {
+export function slideReset(s: Slides, plt: Platform, runCallbacks?: boolean, speed?: number) {
   return slideTo(s, plt, s._activeIndex, speed, runCallbacks, true);
 }
 
@@ -891,10 +891,16 @@ export function enableTouchControl(s: Slides) {
 
 // Cleanup dynamic styles
 function cleanupStyles(s: Slides) {
-  // Container
-  removeClass(s.container, s._classNames);
-  s.container.removeAttribute('style');
+  if (!s.container || !s._wrapper) {
+    // fix #10830
+    return;
+  }
 
+  // Container
+  if (s.container) {
+    removeClass(s.container, s._classNames);
+    s.container.removeAttribute('style');
+  }
   // Wrapper
   s._wrapper.removeAttribute('style');
 

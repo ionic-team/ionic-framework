@@ -1,3 +1,4 @@
+import { spawn } from 'child_process';
 import { accessSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join, relative } from 'path';
 
@@ -9,7 +10,7 @@ import * as runSequence from 'run-sequence';
 import { argv } from 'yargs';
 
 
-import { ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
+import { DIST_E2E_COMPONENTS_ROOT, ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
 import { createTempTsConfig, createTimestamp, getFolderInfo, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
 
 import * as pAll from 'p-all';
@@ -239,4 +240,23 @@ task('e2e.polyfill', (done: Function) => {
   }).catch(err => {
     done(err);
   });
+});
+
+task('e2e.openProd', (done: Function) => {
+  runSequence('e2e.prod', 'e2e.open', (err: any) => done(err));
+});
+
+task('e2e.open', (done: Function) => {
+  const folderInfo = getFolderInfo();
+  if (folderInfo && folderInfo.componentName && folderInfo.componentTest) {
+    const filePath = `${folderInfo.componentName}/test/${folderInfo.componentTest}/www/index.html`;
+    const fullPath = join(DIST_E2E_COMPONENTS_ROOT, filePath);
+    const spawnedCommand = spawn('open', [fullPath]);
+
+    spawnedCommand.on('close', (code: number) => {
+      done();
+    });
+  } else {
+    console.log(`Can't open without folder argument.`);
+  }
 });

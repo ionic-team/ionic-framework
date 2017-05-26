@@ -16,12 +16,12 @@
 
     <ion-item-sliding *ngFor="let chat of chats" #item>
       <ion-item>
-        <ion-avatar item-left>
+        <ion-avatar item-start>
           <img [src]="chat.img">
         </ion-avatar>
         <h2>{{chat.name}}</h2>
         <p>{{chat.message}}</p>
-        <ion-note item-right>
+        <ion-note item-end>
           {{chat.time}}
         </ion-note>
       </ion-item>
@@ -58,7 +58,7 @@
 
     <ion-item-sliding *ngFor="let login of logins" #item>
       <ion-item>
-        <ion-icon [name]="login.icon" item-left></ion-icon>
+        <ion-icon [name]="login.icon" item-start></ion-icon>
         <h2>{{login.name}}</h2>
         <p>{{login.username}}</p>
       </ion-item>
