@@ -11,7 +11,7 @@ import { Platform } from '../../platform/platform';
  * type will provide their own animations for open and close
  * and registers itself with Menu.
  */
-export class MenuType implements IMenuType {
+export abstract class MenuType implements IMenuType {
 
   ani: Animation;
   isOpening: boolean;
@@ -67,8 +67,7 @@ export class MenuType implements IMenuType {
     ani.progressEnd(shouldComplete, currentStepValue, dur);
   }
 
-  updatePosition() {
-  }
+  abstract updatePosition(): void;
 
   destroy() {
     this.ani.destroy();
@@ -128,17 +127,17 @@ class MenuPushType extends MenuType {
 
   updatePosition() {
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
+    const width = this.menu.width();
 
     if (this.menu.isRightSide) {
       // right side
-      contentOpenedX = -this.menu.width() + 'px';
-      menuClosedX = this.menu.width() + 'px';
+      contentOpenedX = -width + 'px';
+      menuClosedX = width + 'px';
       menuOpenedX = '0px';
-
     } else {
-      contentOpenedX = this.menu.width() + 'px';
+      contentOpenedX = width + 'px';
       menuOpenedX = '0px';
-      menuClosedX = -this.menu.width() + 'px';
+      menuClosedX = -width + 'px';
     }
 
     this.menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
@@ -172,14 +171,16 @@ class MenuOverlayType extends MenuType {
 
   updatePosition() {
     let closedX: string, openedX: string;
+    const width = this.menu.width();
+
     if (this.menu.isRightSide) {
       // right side
-      closedX = 8 + this.menu.width() + 'px';
+      closedX = 8 + width + 'px';
       openedX = '0px';
 
     } else {
       // left side
-      closedX = -(8 + this.menu.width()) + 'px';
+      closedX = -(8 + width) + 'px';
       openedX = '0px';
     }
 
