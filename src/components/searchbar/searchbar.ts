@@ -188,7 +188,9 @@ export class Searchbar extends BaseInput<string> {
    */
   _inputUpdated() {
     const ele = this._searchbarInput.nativeElement;
-    if (ele) {
+    // It is important not to re-assign the value if it is the same, because,
+    // otherwise, the caret is moved to the end of the input
+    if (ele && ele.value !== this.value) {
       ele.value = this.value;
     }
     this.positionElements();
