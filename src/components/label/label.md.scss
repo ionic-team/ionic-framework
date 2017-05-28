@@ -3,21 +3,34 @@
 // Material Design Label
 // --------------------------------------------------
 
-/// @prop - Text color of the label
+/// @prop - Text color of the label by an input, select, or datetime
 $label-md-text-color:                 #999 !default;
 
-/// @prop - Text color of the label when it has focused
+/// @prop - Text color of the stacked/floating label when it is focused
 $label-md-text-color-focused:         color($colors-md, primary) !default;
 
-/// @prop - Margin of the label
-$label-md-margin:                     $item-md-padding-top ($item-md-padding-right / 2) $item-md-padding-bottom 0 !default;
+// deprecated
+$label-md-margin:                     null !default;
 
+/// @prop - Margin top of the label
+$label-md-margin-top:                 $item-md-padding-top !default;
+
+/// @prop - Margin end of the label
+$label-md-margin-end:                 ($item-md-padding-end / 2) !default;
+
+/// @prop - Margin bottom of the label
+$label-md-margin-bottom:              $item-md-padding-bottom !default;
+
+/// @prop - Margin start of the label
+$label-md-margin-start:               0 !default;
 
 // Material Design Default Label
 // --------------------------------------------------
 
 .label-md {
-  margin: $label-md-margin;
+  @include deprecated-variable(margin, $label-md-margin) {
+    @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
+  }
 }
 
 [text-wrap] .label-md {
@@ -48,10 +61,13 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
   transition: transform 150ms ease-in-out;
 }
 
+[dir="rtl"] .label-md[floating] {
+  transform-origin: right top;
+}
+
 .label-md[stacked],
 .label-md[floating] {
-  margin-bottom: 0;
-  margin-left: 0;
+  @include margin(null, null, 0, 0);
 }
 
 .input-has-focus .label-md[stacked],
@@ -64,8 +80,10 @@ $label-md-margin:                     $item-md-padding-top ($item-md-padding-rig
   transform: translate3d(0, 0, 0) scale(.8);
 }
 
-.item-md.item-label-stacked [item-right],
-.item-md.item-label-floating [item-right] {
+.item-md.item-label-stacked [item-right], // deprecated
+.item-md.item-label-floating [item-right], // deprecated
+.item-md.item-label-stacked [item-end],
+.item-md.item-label-floating [item-end] {
   margin-top: $item-md-padding-media-top - 2;
   margin-bottom: $item-md-padding-media-bottom - 2;
 }

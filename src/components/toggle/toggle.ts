@@ -1,4 +1,4 @@
-import { NgZone, AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, NgZone, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -73,11 +73,10 @@ import { ToggleGesture } from './toggle-gesture';
   providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Toggle, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterViewInit, OnDestroy  {
+export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterContentInit, OnDestroy  {
 
   _activated: boolean = false;
   _startX: number;
-  _msPrv: number = 0;
   _gesture: ToggleGesture;
 
   /**
@@ -102,7 +101,6 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
     @Optional() item: Item,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
-    private _cd: ChangeDetectorRef,
     private _zone: NgZone,
   ) {
     super(config, elementRef, renderer, 'toggle', false, form, item, null);
@@ -111,7 +109,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
   /**
    * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this._initialize();
     this._gesture = new ToggleGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
     this._gesture.listen();
@@ -211,7 +209,8 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterVi
   /**
    * @hidden
    */
-  @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
+  @HostListener('keyup', ['$event'])
+  _keyup(ev: KeyboardEvent) {
     if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
       console.debug(`toggle, keyup: ${ev.keyCode}`);
       ev.preventDefault();

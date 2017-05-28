@@ -4,6 +4,7 @@ import { NgControl } from '@angular/forms';
 import { Config } from '../../config/config';
 import { BaseInput } from '../../util/base-input';
 import { isPresent, isTrueProperty } from '../../util/util';
+import { TimeoutDebouncer } from '../../util/debouncer';
 import { Platform } from '../../platform/platform';
 
 /**
@@ -33,7 +34,7 @@ import { Platform } from '../../platform/platform';
         '<ion-icon name="md-arrow-back"></ion-icon>' +
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
-      '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" ' +
+      '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred()" (focus)="inputFocused()" ' +
         '[attr.placeholder]="placeholder" ' +
         '[attr.type]="type" ' +
         '[attr.autocomplete]="_autocomplete" ' +
@@ -63,6 +64,7 @@ export class Searchbar extends BaseInput<string> {
   _isActive: boolean = false;
   _showCancelButton: boolean = false;
   _animated: boolean = false;
+  _inputDebouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
@@ -89,6 +91,7 @@ export class Searchbar extends BaseInput<string> {
   }
   set debounce(val: number) {
     this._debouncer.wait = val;
+    this._inputDebouncer.wait = val;
   }
 
   /**
@@ -171,15 +174,6 @@ export class Searchbar extends BaseInput<string> {
 
   /**
    * @hidden
-   * After View Checked position the elements
-   */
-  ngAfterViewInit() {
-    this._initialize();
-    this.positionElements();
-  }
-
-  /**
-   * @hidden
    * On Initialization check for attributes
    */
   ngOnInit() {
@@ -193,11 +187,9 @@ export class Searchbar extends BaseInput<string> {
    * @hidden
    */
   _inputUpdated() {
-    if (this._searchbarInput) {
-      var ele = this._searchbarInput.nativeElement;
-      if (ele) {
-        ele.value = this.value;
-      }
+    const ele = this._searchbarInput.nativeElement;
+    if (ele) {
+      ele.value = this.value;
     }
     this.positionElements();
   }
@@ -226,9 +218,6 @@ export class Searchbar extends BaseInput<string> {
   }
 
   positionPlaceholder() {
-    if (!this._searchbarInput || !this._searchbarIcon) {
-      return;
-    }
     const inputEle = this._searchbarInput.nativeElement;
     const iconEle = this._searchbarIcon.nativeElement;
 
@@ -247,11 +236,11 @@ export class Searchbar extends BaseInput<string> {
       var textWidth = tempSpan.offsetWidth;
       doc.body.removeChild(tempSpan);
 
-      // Set the input padding left
+      // Set the input padding start
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
       inputEle.style.paddingLeft = inputLeft;
 
-      // Set the icon margin left
+      // Set the icon margin start
       var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
       iconEle.style.marginLeft = iconLeft;
     }
@@ -262,9 +251,6 @@ export class Searchbar extends BaseInput<string> {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   positionCancelButton() {
-    if (!this._cancelButton || !this._cancelButton.nativeElement) {
-      return;
-    }
     const showShowCancel = this._isFocus;
     if (showShowCancel !== this._isCancelVisible) {
       var cancelStyleEle = this._cancelButton.nativeElement;
@@ -288,14 +274,16 @@ export class Searchbar extends BaseInput<string> {
    */
   inputChanged(ev: any) {
     this.value = ev.target.value;
-    this.ionInput.emit(ev);
+    this._inputDebouncer.debounce(() => {
+      this.ionInput.emit(ev);
+    });
   }
 
   /**
    * @hidden
    * Sets the Searchbar to focused and active on input focus.
    */
-  inputFocused(ev: UIEvent) {
+  inputFocused() {
     this._isActive = true;
     this._fireFocus();
     this.positionElements();
@@ -306,7 +294,7 @@ export class Searchbar extends BaseInput<string> {
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  inputBlurred(ev: UIEvent) {
+  inputBlurred() {
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this._shouldBlur === false) {
@@ -351,8 +339,8 @@ export class Searchbar extends BaseInput<string> {
     this._isActive = false;
   }
 
-  _fireFocus() {
+  setFocus() {
     this._renderer.invokeElementMethod(this._searchbarInput.nativeElement, 'focus');
-    super._fireFocus();
   }
+
 }

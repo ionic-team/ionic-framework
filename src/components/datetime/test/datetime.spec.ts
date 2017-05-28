@@ -139,12 +139,45 @@ describe('DateTime', () => {
 
       expect(columns[1].options[12].disabled).toEqual(true);
     });
+
+    it('should always return a string', () => {
+      datetime.monthValues = '6,7,8';
+      datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 31';
+      datetime.yearValues = '2014,2015';
+
+      datetime.registerOnChange((value: string) => {
+        expect(value).toEqual(jasmine.any(String));
+      });
+    });
+
+    it('should return a string when setValue is passed an object', zoned(() => {
+      const dateTimeData = {
+        hour: {
+          text: '12',
+          value: 12,
+        },
+        minute: {
+          text: '09',
+          value: 9,
+        },
+        ampm: {
+          text: 'pm',
+          value: 'pm',
+        },
+      };
+
+      datetime.setValue(dateTimeData);
+
+      datetime.registerOnChange((value: string) => {
+        expect(value).toEqual(jasmine.any(String));
+      });
+    }));
   });
 
   describe('writeValue', () => {
 
     it('should updateText with default MMM D, YYYY when no displayFormat or pickerFormat', zoned(() => {
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.writeValue('1994-12-15T13:47:20.789Z');
 
       expect(datetime._text).toEqual('Dec 15, 1994');
@@ -152,7 +185,7 @@ describe('DateTime', () => {
 
     it('should updateText with pickerFormat when no displayFormat', zoned(() => {
       datetime.pickerFormat = 'YYYY';
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.writeValue('1994-12-15T13:47:20.789Z');
 
       expect(datetime._text).toEqual('1994');
@@ -160,7 +193,7 @@ describe('DateTime', () => {
 
     it('should updateText with displayFormat when no pickerFormat', zoned(() => {
       datetime.displayFormat = 'YYYY';
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.writeValue('1994-12-15T13:47:20.789Z');
 
       expect(datetime._text).toEqual('1994');
@@ -172,7 +205,7 @@ describe('DateTime', () => {
 
     it('should generate with default MMM D, YYYY when no displayFormat or pickerFormat', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
       datetime.generate();
@@ -186,7 +219,7 @@ describe('DateTime', () => {
 
     it('should generate with only displayFormat', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.displayFormat = 'YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
@@ -199,7 +232,7 @@ describe('DateTime', () => {
 
     it('should generate with only pickerFormat', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.pickerFormat = 'YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
@@ -212,7 +245,7 @@ describe('DateTime', () => {
 
     it('should generate with custom locale short month names from input property', zoned(() => {
       datetime.monthShortNames = customLocale.monthShortNames;
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.pickerFormat = 'MMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
@@ -227,7 +260,7 @@ describe('DateTime', () => {
 
     it('should generate with custom locale full month names from input property', zoned(() => {
       datetime.monthNames = customLocale.monthNames;
-      datetime.ngAfterViewInit();
+      datetime.ngAfterContentInit();
       datetime.pickerFormat = 'MMMM YYYY';
       datetime.setValue('1994-12-15T13:47:20.789Z');
 
@@ -621,6 +654,20 @@ describe('DateTime', () => {
 
       datetime.setValue('');
       expect(datetime.getValue()).toEqual({});
+    }));
+
+  });
+
+  describe('hasValue', () => {
+
+    it('should return false if value is not set, and return true if value is set', zoned(() => {
+      expect(datetime.hasValue()).toEqual(false);
+
+      datetime.setValue('1994-12-15T13:47:20.789Z');
+      expect(datetime.hasValue()).toEqual(true);
+
+      datetime.setValue('');
+      expect(datetime.hasValue()).toEqual(false);
     }));
 
   });

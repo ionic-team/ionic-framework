@@ -128,7 +128,7 @@ import { VirtualHeader } from './virtual-header';
  * <ion-list [virtualScroll]="items">
  *
  *   <ion-item *virtualItem="let item">
- *     <ion-avatar item-left>
+ *     <ion-avatar item-start>
  *       <ion-img [src]="item.avatarUrl"></ion-img>
  *     </ion-avatar>
  *    {% raw %} {{ item.firstName }} {{ item.lastName }}{% endraw %}
@@ -190,7 +190,7 @@ import { VirtualHeader } from './virtual-header';
  * virtual scroll isn't aware of the dimensions until after they have been
  * rendered. For the initial render, virtual scroll still needs to set
  * how many items should be built. With "approx" property inputs, such as
- * `approxItemHeight`, we're able to give virtual sroll an approximate size,
+ * `approxItemHeight`, we're able to give virtual scroll an approximate size,
  * therefore allowing virtual scroll to decide how many items should be
  * created.
  *
@@ -229,16 +229,17 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _nodes: VirtualNode[] = [];
   _vHeight: number = 0;
   _lastCheck: number = 0;
+  _recordSize: number = 0;
   _data: VirtualData = {
     scrollTop: 0,
   };
   _queue: number = SCROLL_QUEUE_NO_CHANGES;
-  _recordSize: number = 0;
+
+  _virtualTrackBy: TrackByFn;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
   @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
-
 
   /**
    * @input {array} The data that builds the templates within the virtual scroll.
@@ -249,9 +250,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input()
   set virtualScroll(val: any) {
     this._records = val;
-    if (isBlank(this._differ) && isPresent(val)) {
-      this._differ = this._iterableDiffers.find(val).create(this.virtualTrackBy);
-    }
+    this._updateDiffer();
   }
 
   /**
@@ -346,7 +345,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * and what data to give to the header template. The function must return
    * `null` if a header cell shouldn't be created.
    */
-  @Input() set headerFn(val: Function) {
+  @Input()
+  set headerFn(val: Function) {
     if (isFunction(val)) {
       this._hdrFn = val.bind((this._ctrl._cmp) || this);
     }
@@ -359,7 +359,8 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * should be used, and what data to give to the footer template. The function
    * must return `null` if a footer cell shouldn't be created.
    */
-  @Input() set footerFn(val: Function) {
+  @Input()
+  set footerFn(val: Function) {
     if (isFunction(val)) {
       this._ftrFn = val.bind((this._ctrl._cmp) || this);
     }
@@ -368,8 +369,16 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @input {function} Same as `ngForTrackBy` which can be used on `ngFor`.
    */
-  @Input() virtualTrackBy: TrackByFn;
-
+  @Input()
+  set virtualTrackBy(val: TrackByFn) {
+    if (isPresent(val)) {
+      this._virtualTrackBy = val;
+      this._updateDiffer();
+    }
+  }
+  get virtualTrackBy(): TrackByFn {
+    return this._virtualTrackBy;
+  }
 
   constructor(
     private _iterableDiffers: IterableDiffers,
@@ -406,6 +415,22 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   /**
    * @hidden
    */
+  firstRecord(): number {
+    const cells = this._cells;
+    return (cells.length > 0) ? cells[0].record : 0;
+  }
+
+  /**
+   * @hidden
+   */
+  lastRecord(): number {
+    const cells = this._cells;
+    return (cells.length > 0) ? cells[cells.length - 1].record : 0;
+  }
+
+  /**
+   * @hidden
+   */
   ngDoCheck() {
     // only continue if we've already initialized
     if (!this._init) {
@@ -420,9 +445,21 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     let needClean = false;
     if (changes) {
-      changes.forEachOperation((item, _, cindex) => {
-        if (item.previousIndex != null || (cindex < this._recordSize)) {
+      var lastRecord = this._recordSize;
+
+      changes.forEachOperation((_, pindex, cindex) => {
+
+        // add new record after current position
+        if (pindex === null && (cindex < lastRecord)) {
+          console.debug('adding record before current position, slow path');
           needClean = true;
+          return;
+        }
+        // remove record after current position
+        if (pindex < lastRecord && cindex === null) {
+          console.debug('removing record before current position, slow path');
+          needClean = true;
+          return;
         }
       });
     } else {
@@ -434,10 +471,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     this.writeUpdate(needClean);
   }
 
+  /**
+   * @hidden
+   */
   readUpdate(needClean: boolean) {
     if (needClean) {
       // reset everything
-      console.debug(`virtual-scroll, readUpdate: slow path`);
+      console.debug('virtual-scroll, readUpdate: slow path');
       this._cells.length = 0;
       this._nodes.length = 0;
       this._itmTmp.viewContainer.clear();
@@ -449,8 +489,11 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
   }
 
+  /**
+   * @hidden
+   */
   writeUpdate(needClean: boolean) {
-    console.debug(`virtual-scroll, writeUpdate`);
+    console.debug('virtual-scroll, writeUpdate need clean:', needClean);
     const data = this._data;
     const stopAtHeight = (data.scrollTop + data.renderHeight);
     data.scrollDiff = SCROLL_DIFFERENCE_MINIMUM + 1;
@@ -466,6 +509,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     this.renderVirtual(needClean);
   }
 
+  /**
+   * @hidden
+   */
   private calcDimensions() {
     calcDimensions(this._data, this._elementRef.nativeElement,
       this.approxItemWidth, this.approxItemHeight,
@@ -479,6 +525,12 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       return this._differ.diff(this._records);
     }
     return null;
+  }
+
+  private _updateDiffer() {
+    if (isBlank(this._differ) && isPresent(this._records)) {
+      this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
+    }
   }
 
   /**
@@ -509,7 +561,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
           this._itmTmp.viewContainer,
           this._itmTmp.templateRef,
           this._hdrTmp && this._hdrTmp.templateRef,
-          this._ftrTmp && this._ftrTmp.templateRef, needClean,
+          this._ftrTmp && this._ftrTmp.templateRef, needClean
         );
       });
 
@@ -556,7 +608,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   resize() {
     // only continue if we've already initialized
@@ -590,7 +642,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private _stepChangeDetection() {
     // we need to do some change detection in this frame
@@ -609,7 +661,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private _stepNoChanges() {
     const data = this._data;
@@ -632,7 +684,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       var stopAtHeight = (data.scrollTop + data.renderHeight);
 
       processRecords(stopAtHeight, records, cells,
-                      this._hdrFn, this._ftrFn, data);
+        this._hdrFn, this._ftrFn, data);
     }
 
     // ******** DOM READ ****************
@@ -660,7 +712,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   scrollUpdate(ev: ScrollEvent) {
     // set the scroll top from the scroll event
@@ -685,7 +737,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @hidden
    * DOM WRITE
    */
-  scrollEnd(ev: ScrollEvent) {
+  scrollEnd() {
     // ******** DOM READ ****************
     updateDimensions(this._plt, this._nodes, this._cells, this._data, false);
     adjustRendered(this._cells, this._data);
@@ -703,6 +755,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
+   * @hidden
    * NO DOM
    */
   private _listeners() {
@@ -723,6 +776,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
+   * @hidden
    * DOM WRITE
    */
   private _setHeight(newVirtualHeight: number) {
@@ -747,6 +801,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
   }
 
+  /**
+   * @hidden
+   */
   setElementClass(className: string, add: boolean) {
     this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
   }

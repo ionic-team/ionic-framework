@@ -14,7 +14,8 @@ $badge-ios-text-color:         color-contrast($colors-ios, $badge-ios-background
 
 
 .badge-ios {
-  border-radius: $badge-ios-border-radius;
+  @include border-radius($badge-ios-border-radius);
+
   color: $badge-ios-text-color;
   background-color: $badge-ios-background-color;
 }

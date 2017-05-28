@@ -73,7 +73,7 @@ export class Base {
   template: TEMPLATE
 })
 export class Page1 extends Base {
-  constructor(private nav: NavController) {
+  constructor() {
     super('Page1');
   }
 }
@@ -158,7 +158,7 @@ export class Page4 extends Base {
   template: TEMPLATE
 })
 export class Page5 extends Base {
-  constructor(private nav: NavController) {
+  constructor() {
     super('Page5');
   }
 
@@ -271,7 +271,7 @@ export class Page7 extends Base {
   template: TEMPLATE
 })
 export class Page8 extends Base {
-  constructor(private nav: NavController) {
+  constructor() {
     super('Page8');
   }
 }
@@ -291,7 +291,8 @@ export class Page8 extends Base {
 })
 export class Results {
   result: any;
-  constructor(private nav: NavController, private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer) {
+  }
   ionViewDidEnter() {
     setTimeout(() => {
       if (SIMPLE_LOG !== EXPECTED) {

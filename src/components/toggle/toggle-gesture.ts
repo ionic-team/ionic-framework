@@ -29,7 +29,7 @@ export class ToggleGesture extends PanGesture {
     });
   }
 
-  canStart(ev: any): boolean {
+  canStart(): boolean {
     return true;
   }
 

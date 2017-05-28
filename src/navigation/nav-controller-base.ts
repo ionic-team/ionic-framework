@@ -216,6 +216,10 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _success(result: NavResult, ti: TransitionInstruction) {
+    if (this._queue === null) {
+      this._fireError('nav controller was destroyed', ti);
+      return;
+    }
     this._init = true;
     this._trnsId = null;
 
@@ -237,6 +241,10 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _failed(rejectReason: any, ti: TransitionInstruction) {
+    if (this._queue === null) {
+      this._fireError('nav controller was destroyed', ti);
+      return;
+    }
     this._trnsId = null;
     this._queue.length = 0;
 
@@ -245,6 +253,10 @@ export class NavControllerBase extends Ion implements NavController {
     this._swipeBackCheck();
     this._nextTrns();
 
+    this._fireError(rejectReason, ti);
+  }
+
+  _fireError(rejectReason: any, ti: TransitionInstruction) {
     if (ti.done) {
       ti.done(false, false, rejectReason);
     }
@@ -319,7 +331,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (ti.removeCount < 0) {
         ti.removeCount = (viewsLength - ti.removeStart);
       }
-      ti.leavingRequiresTransition = ((ti.removeStart + ti.removeCount) === viewsLength);
+      ti.leavingRequiresTransition = (ti.removeCount > 0) && ((ti.removeStart + ti.removeCount) === viewsLength);
     }
 
     if (ti.insertViews) {
@@ -587,7 +599,7 @@ export class NavControllerBase extends Ion implements NavController {
       direction: opts.direction,
       duration: (opts.animate === false ? 0 : opts.duration),
       easing: opts.easing,
-      isRTL: this._config.plt.isRTL(),
+      isRTL: this._config.plt.isRTL,
       ev: opts.ev,
     };
 
@@ -1105,7 +1117,7 @@ export class NavControllerBase extends Ion implements NavController {
   dismissPageChangeViews() {
     for (let view of this._views) {
       if (view.data && view.data.dismissOnPageChange) {
-        view.dismiss().catch(null);
+        view.dismiss().catch(() => {});
       }
     }
   }

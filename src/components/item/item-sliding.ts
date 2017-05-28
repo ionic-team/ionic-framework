@@ -4,16 +4,15 @@ import { swipeShouldReset, assert } from '../../util/util';
 import { Item } from './item';
 import { List } from '../list/list';
 import { Platform } from '../../platform/platform';
-import { DomController } from '../../platform/dom-controller';
 import { ItemOptions } from './item-options';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
-export const ITEM_SIDE_FLAG_NONE = 0;
-export const ITEM_SIDE_FLAG_LEFT = 1 << 0;
-export const ITEM_SIDE_FLAG_RIGHT = 1 << 1;
-export const ITEM_SIDE_FLAG_BOTH = ITEM_SIDE_FLAG_LEFT | ITEM_SIDE_FLAG_RIGHT;
+const ITEM_SIDE_FLAG_NONE = 0;
+const ITEM_SIDE_FLAG_LEFT = 1 << 0;
+const ITEM_SIDE_FLAG_RIGHT = 1 << 1;
+const ITEM_SIDE_FLAG_BOTH = ITEM_SIDE_FLAG_LEFT | ITEM_SIDE_FLAG_RIGHT;
 
 
 const enum SlidingState {
@@ -121,6 +120,7 @@ const enum SlidingState {
   encapsulation: ViewEncapsulation.None
 })
 export class ItemSliding {
+
   private _openAmount: number = 0;
   private _startX: number = 0;
   private _optsWidthRightSide: number = 0;
@@ -163,10 +163,10 @@ export class ItemSliding {
   constructor(
     @Optional() list: List,
     private _plt: Platform,
-    private _dom: DomController,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
-    private _zone: NgZone) {
+    private _zone: NgZone
+  ) {
     list && list.containsSlidingItem(true);
     _elementRef.nativeElement.$ionComponent = this;
     this.setElementClass('item-wrapper', true);
@@ -180,13 +180,13 @@ export class ItemSliding {
     this._leftOptions = this._rightOptions = null;
 
     for (var item of itemOptions.toArray()) {
-      var side = item.getSides();
-      if (side === ITEM_SIDE_FLAG_LEFT) {
-        this._leftOptions = item;
-      } else {
+      if (item.isRightSide()) {
         this._rightOptions = item;
+        sides |= ITEM_SIDE_FLAG_RIGHT;
+      } else {
+        this._leftOptions = item;
+        sides |= ITEM_SIDE_FLAG_LEFT;
       }
-      sides |= item.getSides();
     }
     this._optsDirty = true;
     this._sides = sides;
@@ -203,7 +203,7 @@ export class ItemSliding {
    * @hidden
    */
   getSlidingPercent(): number {
-    let openAmount = this._openAmount;
+    const openAmount = this._openAmount;
     if (openAmount > 0) {
       return openAmount / this._optsWidthRightSide;
     } else if (openAmount < 0) {
@@ -272,9 +272,9 @@ export class ItemSliding {
 
     // Check if the drag didn't clear the buttons mid-point
     // and we aren't moving fast enough to swipe open
-    let isResetDirection = (this._openAmount > 0) === !(velocity < 0);
-    let isMovingFast = Math.abs(velocity) > 0.3;
-    let isOnCloseZone = Math.abs(this._openAmount) < Math.abs(restingPoint / 2);
+    const isResetDirection = (this._openAmount > 0) === !(velocity < 0);
+    const isMovingFast = Math.abs(velocity) > 0.3;
+    const isOnCloseZone = Math.abs(this._openAmount) < Math.abs(restingPoint / 2);
     if (swipeShouldReset(isResetDirection, isMovingFast, isOnCloseZone)) {
       restingPoint = 0;
     }
@@ -330,14 +330,14 @@ export class ItemSliding {
 
     } else {
       if (openAmount > 0) {
-        let state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
+        var state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
           ? SlidingState.Right | SlidingState.SwipeRight
           : SlidingState.Right;
 
         this._setState(state);
 
       } else if (openAmount < 0) {
-        let state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
+        var state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
           ? SlidingState.Left | SlidingState.SwipeLeft
           : SlidingState.Left;
 

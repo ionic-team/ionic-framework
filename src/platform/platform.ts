@@ -30,6 +30,7 @@ import { removeArrayItem } from '../util/util';
  * @demo /docs/demos/src/platform/
  */
 export class Platform {
+
   private _win: Window;
   private _doc: HTMLDocument;
   private _versions: {[name: string]: PlatformVersion} = {};
@@ -313,9 +314,12 @@ export class Platform {
    * direction needs to be dynamically changed per user/session.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @param {string} dir  Examples: `rtl`, `ltr`
+   * @param {boolean} updateDocument
    */
   setDir(dir: string, updateDocument: boolean) {
-    this._dir = (dir || '').toLowerCase();
+    this._dir = dir = (dir || '').toLowerCase();
+    this.isRTL = (dir === 'rtl');
+
     if (updateDocument !== false) {
       this._doc['documentElement'].setAttribute('dir', dir);
     }
@@ -339,9 +343,7 @@ export class Platform {
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {boolean}
    */
-  isRTL(): boolean {
-    return (this._dir === 'rtl');
-  }
+  isRTL: boolean;
 
   /**
    * Set the app's language and optionally the country code, which will update
@@ -424,7 +426,7 @@ export class Platform {
    * button is pressed. This method decides which of the registered back button
    * actions has the highest priority and should be called.
    *
-   * @param {Function} callback Called when the back button is pressed,
+   * @param {Function} fn Called when the back button is pressed,
    * if this registered action has the highest priority.
    * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
    * @returns {Function} A function that, when called, will unregister

@@ -100,11 +100,11 @@ html {
 }
 
 body {
+  @include margin(0);
+  @include padding(0);
+
   position: fixed;
   overflow: hidden;
-
-  margin: 0;
-  padding: 0;
 
   width: 100%;
   max-width: 100%;
@@ -229,9 +229,9 @@ ion-nav,
 ion-tab,
 ion-tabs,
 .app-root {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-page-container;
   display: block;
 
@@ -267,9 +267,9 @@ ion-tabs,
 // --------------------------------------------------
 
 .ion-page {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   display: block;
 
   width: 100%;
@@ -289,9 +289,9 @@ ion-tabs,
 // --------------------------------------------------
 
 ion-header {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-toolbar;
   display: block;
 
@@ -299,9 +299,9 @@ ion-header {
 }
 
 ion-footer {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-toolbar;
   display: block;
 
@@ -333,33 +333,27 @@ ion-footer {
       // Provide `[text-{bp}]` attributes for aligning the text based
       // on the breakpoint
       [text#{$infix}-center] {
-        // scss-lint:disable ImportantRule
-        text-align: center !important;
+        @include text-align(center, !important);
       }
 
       [text#{$infix}-justify] {
-        // scss-lint:disable ImportantRule
-        text-align: justify !important;
+        @include text-align(justify, !important);
       }
 
       [text#{$infix}-start] {
-        // scss-lint:disable ImportantRule
-        text-align: start !important;
+        @include text-align(start, !important);
       }
 
       [text#{$infix}-end] {
-        // scss-lint:disable ImportantRule
-        text-align: end !important;
+        @include text-align(end, !important);
       }
 
       [text#{$infix}-left] {
-        // scss-lint:disable ImportantRule
-        text-align: left !important;
+        @include text-align(left, !important);
       }
 
       [text#{$infix}-right] {
-        // scss-lint:disable ImportantRule
-        text-align: right !important;
+        @include text-align(right, !important);
       }
 
       [text#{$infix}-nowrap] {
@@ -418,33 +412,31 @@ ion-footer {
       // Provide `[float-{bp}]` attributes for floating the element based
       // on the breakpoint
       [float#{$infix}-left] {
-        // scss-lint:disable ImportantRule
+        // scss-lint:disable ImportantRule, PropertySpelling
         float: left !important;
       }
 
       [float#{$infix}-right] {
-        // scss-lint:disable ImportantRule
+        // scss-lint:disable ImportantRule, PropertySpelling
         float: right !important;
       }
 
       [float#{$infix}-start] {
-        // scss-lint:disable ImportantRule
+        // scss-lint:disable ImportantRule, PropertySpelling
         float: left !important;
+
+        @include rtl() {
+          float: right !important;
+        }
       }
 
       [float#{$infix}-end] {
-        // scss-lint:disable ImportantRule
+        // scss-lint:disable ImportantRule, PropertySpelling
         float: right !important;
-      }
 
-      [dir="rtl"] [float#{$infix}-start] {
-        // scss-lint:disable ImportantRule
-        float: right !important;
-      }
-
-      [dir="rtl"] [float#{$infix}-end] {
-        // scss-lint:disable ImportantRule
-        float: left !important;
+        @include rtl() {
+          float: left !important;
+        }
       }
     }
   }
