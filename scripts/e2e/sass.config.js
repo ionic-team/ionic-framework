@@ -42,7 +42,6 @@ module.exports = {
    */
   includePaths: [
     'src/themes',
-    'node_modules/ionicons/dist/scss',
     'src/fonts'
   ],
 
