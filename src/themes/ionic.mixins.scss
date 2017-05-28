@@ -153,10 +153,10 @@
   }
 }
 
-$include-rtl: true !default;
+$app-direction: null !default;
 
 @mixin multi-dir() {
-  @if $include-rtl {
+  @if $app-direction == null {
     $root: #{&};
     @at-root [dir="ltr"], [dir="rtl"] {
       #{$root} {
@@ -169,25 +169,27 @@ $include-rtl: true !default;
 }
 
 @mixin rtl() {
-  @if $include-rtl {
+  @if $app-direction == null {
     $root: #{&};
     @at-root [dir="rtl"] {
       #{$root} {
         @content;
       }
     }
+  } @else if $app-direction == rtl {
+    @content;
   }
 }
 
 @mixin ltr() {
-  @if $include-rtl {
+  @if $app-direction == null {
     $root: #{&};
     @at-root [dir="ltr"] {
       #{$root} {
         @content;
       }
     }
-  } @else {
+  } @else if $app-direction == ltr {
     @content;
   }
 }
