@@ -203,8 +203,7 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
-    '--enableLint', 'false',
-    '--bonjour'
+    '--enableLint', 'false'
   ];
 
   if (watchConfigPath) {

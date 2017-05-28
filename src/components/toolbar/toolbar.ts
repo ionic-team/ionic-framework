@@ -8,7 +8,7 @@ import { ToolbarBase } from './toolbar-base';
  * @name Toolbar
  * @description
  * A Toolbar is a generic bar that is positioned above or below content.
- * Unlike a [Navbar](../../navbar/Navbar), a toolbar can be used as a subheader.
+ * Unlike a [Navbar](../Navbar/), a toolbar can be used as a subheader.
  * When toolbars are placed within an `<ion-header>` or `<ion-footer>`,
  * the toolbars stay fixed in their respective location. When placed within
  * `<ion-content>`, toolbars will scroll with the content.
@@ -90,7 +90,7 @@ import { ToolbarBase } from './toolbar-base';
  *  ```
  *
  * @demo /docs/demos/src/toolbar/
- * @see {@link ../../navbar/Navbar/ Navbar API Docs}
+ * @see {@link ../Navbar/ Navbar API Docs}
  */
 @Component({
   selector: 'ion-toolbar',
