@@ -65,7 +65,7 @@ import { Item } from '../item/item';
  *   cucumber: boolean;
  *
  *   updateCucumber() {
- *     console.log("Cucumbers new state:" + this.cucumber);
+ *     console.log('Cucumbers new state:' + this.cucumber);
  *   }
  * }
  * ```
