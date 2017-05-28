@@ -432,22 +432,6 @@ $include-rtl: true !default;
   }
 }
 
-@mixin translate3d($x, $y, $z) {
-  @if $x == 0 {
-    @include multi-dir() {
-      transform: translate3d($x, $y, $z);
-    }
-  } @else {
-    @include ltr() {
-      transform: translate3d($x, $y, $z);
-    }
-
-    @include rtl() {
-      transform: translate3d(calc(-1 * #{$x}), $y, $z);
-    }
-  }
-}
-
 @mixin transform($x, $y, $z, $extra: null) {
   @if $x == 0 {
     @include multi-dir() {
@@ -462,4 +446,8 @@ $include-rtl: true !default;
       transform: translate3d(calc(-1 * #{$x}), $y, $z) $extra;
     }
   }
+}
+
+@mixin translate3d($x, $y, $z) {
+  @include transform($x, $y, $z);
 }
