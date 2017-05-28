@@ -47,7 +47,8 @@ ion-menu.show-menu {
 }
 
 ion-menu[side=right] > .menu-inner {
-  @include position-horizontal(auto, 0);
+    left: auto;
+    right: 0;
 }
 
 ion-menu ion-backdrop {
