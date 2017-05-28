@@ -366,10 +366,10 @@ export class ItemSliding {
     }
     this.setElementClass('active-slide', (state !== SlidingState.Disabled));
     if(this._plt.isRTL) {
-      this.setElementClass('active-options-right', !!(state & SlidingState.Right));
-      this.setElementClass('active-options-left', !!(state & SlidingState.Left));
-      this.setElementClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
-      this.setElementClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
+      this.setElementClass('active-options-left', !!(state & SlidingState.Right));
+      this.setElementClass('active-options-right', !!(state & SlidingState.Left));
+      this.setElementClass('active-swipe-left', !!(state & SlidingState.SwipeRight));
+      this.setElementClass('active-swipe-right', !!(state & SlidingState.SwipeLeft));
     } else {
       this.setElementClass('active-options-right', !!(state & SlidingState.Right));
       this.setElementClass('active-options-left', !!(state & SlidingState.Left));
