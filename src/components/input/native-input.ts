@@ -121,8 +121,8 @@ export class NativeInput {
           // move the native input to a location safe to receive focus
           // according to the browser, the native input receives focus in an
           // area which doesn't require the browser to scroll the input into place
-          const tx = this._plt.dir().toLowerCase() === 'rtl' ? 9999 : -9999;
-          (<any>focusedInputEle.style)[this._plt.Css.transform] =  `translate3d(${tx}px,${inputRelativeY}px,0)`;
+          const tx = this._plt.isRTL ? 9999 : -9999;
+          (<any>focusedInputEle.style)[this._plt.Css.transform] = `translate3d(${tx}px,${inputRelativeY}px,0)`;
           focusedInputEle.style.opacity = '0';
         }
 
