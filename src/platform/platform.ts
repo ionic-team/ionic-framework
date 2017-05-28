@@ -4,6 +4,7 @@ import { getCss, isTextInput } from '../util/dom';
 import { QueryParams } from './query-params';
 import { removeArrayItem } from '../util/util';
 
+export type PageDirection = 'ltr' | 'rtl';
 
 /**
  * @name Platform
@@ -34,7 +35,7 @@ export class Platform {
   private _win: Window;
   private _doc: HTMLDocument;
   private _versions: {[name: string]: PlatformVersion} = {};
-  private _dir: string;
+  private _dir: PageDirection;
   private _lang: string;
   private _ua: string;
   private _qp = new QueryParams();
@@ -313,11 +314,11 @@ export class Platform {
    * `<html dir="ltr">` or `<html dir="rtl">`. This method is useful if the
    * direction needs to be dynamically changed per user/session.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-   * @param {string} dir  Examples: `rtl`, `ltr`
+   * @param {PageDirection} dir  Examples: `rtl`, `ltr`
    * @param {boolean} updateDocument
    */
-  setDir(dir: string, updateDocument: boolean) {
-    this._dir = dir = (dir || '').toLowerCase();
+  setDir(dir: PageDirection, updateDocument: boolean) {
+    this._dir = dir;
     this.isRTL = (dir === 'rtl');
 
     if (updateDocument !== false) {
@@ -330,9 +331,9 @@ export class Platform {
    * We recommend the app's `index.html` file already has the correct `dir`
    * attribute value set, such as `<html dir="ltr">` or `<html dir="rtl">`.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-   * @returns {string}
+   * @returns {PageDirection}
    */
-  dir(): string {
+  dir(): PageDirection {
     return this._dir;
   }
 
@@ -672,9 +673,9 @@ export class Platform {
     // use event listener options when supported
     // otherwise it's just a boolean for the "capture" arg
     const listenerOpts: any = this._uiEvtOpts ? {
-        'capture': !!opts.capture,
-        'passive': !!opts.passive,
-      } : !!opts.capture;
+      'capture': !!opts.capture,
+      'passive': !!opts.passive,
+    } : !!opts.capture;
 
     let unReg: Function;
     if (!opts.zone && ele['__zone_symbol__addEventListener']) {
@@ -1180,7 +1181,7 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
   // set values from "document"
   const docElement = doc.documentElement;
   plt.setDocument(doc);
-  plt.setDir(docElement.dir, false);
+  plt.setDir(docElement.dir === 'rtl' ? 'rtl' : 'ltr', false);
   plt.setLang(docElement.lang, false);
 
   // set css properties
