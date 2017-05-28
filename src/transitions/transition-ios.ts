@@ -9,6 +9,8 @@ const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
 const OFF_RIGHT = '99.5%';
 const OFF_LEFT = '-33%';
+const OFF_RIGHT_RTL = '-99.5%';
+const OFF_LEFT_RTL = '33%';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
@@ -43,14 +45,14 @@ export class IOSTransition extends PageTransition {
       if (backDirection) {
         // entering content, back direction
         enteringContent
-          .fromTo(TRANSLATEX, OFF_LEFT, CENTER, true)
+          .fromTo(TRANSLATEX, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT), CENTER, true)
           .fromTo(OPACITY, OFF_OPACITY, 1, true);
 
       } else {
         // entering content, forward direction
         enteringContent
           .beforeClearStyles([OPACITY])
-          .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+          .fromTo(TRANSLATEX, (plt.isRTL ? OFF_RIGHT_RTL : OFF_RIGHT), CENTER, true);
       }
 
       if (enteringHasNavbar) {
@@ -76,7 +78,7 @@ export class IOSTransition extends PageTransition {
         // set properties depending on direction
         if (backDirection) {
           // entering navbar, back direction
-          enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
+          enteringTitle.fromTo(TRANSLATEX, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT), CENTER, true);
 
           if (enteringView.enableBack()) {
             // back direction, entering page has a back button
@@ -87,11 +89,11 @@ export class IOSTransition extends PageTransition {
 
         } else {
           // entering navbar, forward direction
-          enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+          enteringTitle.fromTo(TRANSLATEX, (plt.isRTL ? OFF_RIGHT_RTL : OFF_RIGHT), CENTER, true);
 
           enteringNavbarBg
             .beforeClearStyles([OPACITY])
-            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+            .fromTo(TRANSLATEX, (plt.isRTL ? OFF_RIGHT_RTL : OFF_RIGHT), CENTER, true);
 
           if (enteringView.enableBack()) {
             // forward direction, entering page has a back button
@@ -100,7 +102,7 @@ export class IOSTransition extends PageTransition {
               .fromTo(OPACITY, 0.01, 1, true);
 
             const enteringBackBtnText = new Animation(plt, enteringNavbarEle.querySelector('.back-button-text'));
-            enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
+            enteringBackBtnText.fromTo(TRANSLATEX, (plt.isRTL ? '-100px' : '100px'), '0px');
             enteringNavBar.add(enteringBackBtnText);
 
           } else {
@@ -123,12 +125,12 @@ export class IOSTransition extends PageTransition {
         // leaving content, back direction
         leavingContent
           .beforeClearStyles([OPACITY])
-          .fromTo(TRANSLATEX, CENTER, '100%');
+          .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? '-100%' : '100%'));
 
       } else {
         // leaving content, forward direction
         leavingContent
-          .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
+          .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT))
           .fromTo(OPACITY, 1, OFF_OPACITY)
           .afterClearStyles([TRANSFORM, OPACITY]);
       }
@@ -157,22 +159,22 @@ export class IOSTransition extends PageTransition {
 
         if (backDirection) {
           // leaving navbar, back direction
-          leavingTitle.fromTo(TRANSLATEX, CENTER, '100%');
+          leavingTitle.fromTo(TRANSLATEX, CENTER, (plt.isRTL ? '-100%' : '100%'));
 
           // leaving navbar, back direction, and there's no entering navbar
           // should just slide out, no fading out
           leavingNavbarBg
             .beforeClearStyles([OPACITY])
-            .fromTo(TRANSLATEX, CENTER, '100%');
+            .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? '-100%' : '100%'));
 
           let leavingBackBtnText = new Animation(plt, leavingNavbarEle.querySelector('.back-button-text'));
-          leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (300) + 'px');
+          leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (plt.isRTL ? -300 : 300) + 'px');
           leavingNavBar.add(leavingBackBtnText);
 
         } else {
           // leaving navbar, forward direction
           leavingTitle
-            .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
+            .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT))
             .afterClearStyles([TRANSFORM]);
 
           leavingBackButton.afterClearStyles([OPACITY]);
