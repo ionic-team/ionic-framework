@@ -72,7 +72,7 @@ import { ViewController } from '../../navigation/view-controller';
  *   // set some user information on chatParams
  *   chatParams = {
  *     user1: 'admin',
- *     user2: 'ionic
+ *     user2: 'ionic'
  *   };
  *
  *   constructor() {
