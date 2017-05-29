@@ -47,8 +47,9 @@ ion-menu.show-menu {
 }
 
 ion-menu[side=right] > .menu-inner {
-    left: auto;
-    right: 0;
+  // scss-lint:disable PropertySpelling
+  left: auto;
+  right: 0;
 }
 
 ion-menu ion-backdrop {
