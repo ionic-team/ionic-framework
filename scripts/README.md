@@ -7,7 +7,7 @@ All of these commands require you to run `npm install` first. To see a full list
 
 ### Committing
 
-Please follow the commit message format in [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
+Please follow the commit message format in [CONTRIBUTING.md](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
 
 
 ### Installing Nightly Version
@@ -119,7 +119,7 @@ It does not work for windows, linux, or non retina macs.
 
 **Requires Ruby. Skip this step entirely if you are unable to install Ruby.**
 
-1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
+1. See the [Sass Guidelines](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
 2. Install the linter: `gem install scss_lint`
 3. Run `gulp lint.sass` and fix any linter errors.
 
@@ -160,13 +160,13 @@ It does not work for windows, linux, or non retina macs.
 
 ### Releasing Component Demos
 
-Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/driftyco/ionic-preview-app). No action is necessary.
+Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/ionic-team/ionic-preview-app). No action is necessary.
 
-If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/driftyco/ionic-preview-app#running-locally-on-the-site).
+If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/ionic-team/ionic-preview-app#running-locally-on-the-site).
 
 
 ### Releasing API Demos
 
 Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary.
 
-If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run `gulp demos` and then `gulp docs`, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.
+If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/ionic-team/ionic-site) repo as a sibling of `ionic`. From `ionic` run `gulp demos` and then `gulp docs`, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.

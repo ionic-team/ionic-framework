@@ -331,7 +331,7 @@ export class Searchbar extends BaseInput<string> {
   clearInput(ev: UIEvent) {
     this.ionClear.emit(ev);
 
-    // setTimeout() fixes https://github.com/driftyco/ionic/issues/7527
+    // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
     setTimeout(() => {
       let value = this._value;
