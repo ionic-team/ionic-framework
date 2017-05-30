@@ -92,7 +92,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  *   slideChanged() {
  *     let currentIndex = this.slides.getActiveIndex();
- *     console.log("Current index is", currentIndex);
+ *     console.log('Current index is', currentIndex);
  *   }
  * }
  * ```
