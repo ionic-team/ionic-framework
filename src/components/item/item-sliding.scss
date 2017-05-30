@@ -80,16 +80,48 @@ ion-item-sliding.active-slide {
     display: flex;
   }
 
-  &.active-options-left ion-item-options[side=left] {
-    width: 100%;
+  &.active-options-left ion-item-options {
+    &[side=left] {
+      width: 100%;
 
-    visibility: visible;
+      visibility: visible;
+    }
+
+    @include rtl() {
+      &[side=left] {
+        width: initial;
+
+        visibility: hidden;
+      }
+
+      &:not([side=left]) {
+        width: 100%;
+
+        visibility: visible;
+      }
+    }
   }
 
-  &.active-options-right ion-item-options:not([side=left]) {
-    width: 100%;
+  &.active-options-right ion-item-options {
+    &:not([side=left]) {
+      width: 100%;
 
-    visibility: visible;
+      visibility: visible;
+    }
+
+    @include rtl() {
+      &:not([side=left]) {
+        width: initial;
+
+        visibility: hidden;
+      }
+
+      &[side=left] {
+        width: 100%;
+
+        visibility: visible;
+      }
+    }
   }
 }
 
