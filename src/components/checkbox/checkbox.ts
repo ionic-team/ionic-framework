@@ -15,7 +15,7 @@ import { Item } from '../item/item';
  * The Checkbox is a simple component styled based on the mode. It can be
  * placed in an `ion-item` or used as a stand-alone checkbox.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * See the [Angular Docs](https://angular.io/docs/ts/latest/guide/forms.html)
  * for more info on forms and inputs.
  *
  *
@@ -65,7 +65,7 @@ import { Item } from '../item/item';
  *   cucumber: boolean;
  *
  *   updateCucumber() {
- *     console.log("Cucumbers new state:" + this.cucumber);
+ *     console.log('Cucumbers new state:' + this.cucumber);
  *   }
  * }
  * ```
