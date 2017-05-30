@@ -297,6 +297,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
     } else if (this.interface === 'popover') {
       let popoverOptions: SelectPopoverOption[] = options.map(input => ({
         text: input.text,
+        id: input.id,
         checked: input.selected,
         disabled: input.disabled,
         value: input.value,
@@ -327,6 +328,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
         return {
           type: (this._multi ? 'checkbox' : 'radio'),
           label: input.text,
+          id: input.id,
           value: input.value,
           checked: input.selected,
           disabled: input.disabled,
