@@ -119,7 +119,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * To see all of the available options, take a look at the
- * [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts).
+ * [source for slides](https://github.com/ionic-team/ionic/blob/master/src/components/slides/slides.ts).
  *
  * @demo /docs/demos/src/slides/
  * @see {@link /docs/components#slides Slides Component Docs}
@@ -1035,7 +1035,7 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the next slides.
-   * @param {boolean} shouldLockSwipeToNext If set to true the user will not be able to swipe to the next slide. 
+   * @param {boolean} shouldLockSwipeToNext If set to true the user will not be able to swipe to the next slide.
    * Set to false to unlock this behaviour.
    */
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
@@ -1053,7 +1053,7 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to change slides.
-   * @param {boolean} shouldLockSwipes If set to true user can not swipe in either direction on slide. 
+   * @param {boolean} shouldLockSwipes If set to true user can not swipe in either direction on slide.
    * False allows swiping in both directions.
    */
   lockSwipes(shouldLockSwipes: boolean) {
