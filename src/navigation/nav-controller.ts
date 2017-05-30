@@ -92,7 +92,7 @@ import { ViewController } from './view-controller';
  * })
  * export class MyApp {
  *    @ViewChild('myNav') nav: NavController
- *    public rootPage = TabsPage;
+ *    public rootPage: any = TabsPage;
  *
  *    // Wait for the components in MyApp's template to be initialized
  *    // In this case, we are waiting for the Nav with reference variable of "#myNav"
