@@ -9,31 +9,39 @@ describe('Events service', () => {
   });
 
   it('should call listener when event is published', () => {
-    const eventParams = [{}, {}, {}];
+    const eventData = {};
 
     listener = jasmine.createSpy('listener');
     events.subscribe('test', listener);
-    events.publish('test', ...eventParams);
+    events.publish('test', eventData);
 
-    expect(listener).toHaveBeenCalledWith(...eventParams);
+    expect(listener).toHaveBeenCalledWith(eventData);
   });
 
   it('should unsubscribe listener', () => {
     listener = jasmine.createSpy('listener');
-    events.subscribe('test', listener);
-    events.unsubscribe('test', listener);
+    const subscription = events.subscribe('test', listener);
+    subscription.unsubscribe();
+    events.publish('test');
 
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it('should return an array of responses when event is published', () => {
-    const [response, anotherResponse] = [{}, {}];
-    const listener = jasmine.createSpy('listener').and.returnValue(response);
-    const anotherListener = jasmine.createSpy('anotherListener').and.returnValue(anotherResponse);
+  it('should provide observable for the topic', () => {
+    const listener = jasmine.createSpy('listener');
+    const eventData = {};
 
-    events.subscribe('test', listener, anotherListener);
-    const responses = events.publish('test');
+    events.topic('test').subscribe(listener);
+    events.publish('test');
 
-    expect(responses).toEqual([response, anotherResponse]);
+    expect(listener).toHaveBeenCalledWith(eventData);
   });
+
+  it('should create new observable for the topic if the current one was completed', () => {
+    const originalTopic = events.topic('test');
+
+    events.topic('test').complete();
+
+    expect(events.topic('test')).not.toEqual(originalTopic);
+  })
 });
