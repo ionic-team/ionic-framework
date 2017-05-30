@@ -72,7 +72,7 @@ export class Searchbar extends BaseInput<string> {
   @Input() cancelButtonText: string = 'Cancel';
 
   /**
-   * @input {boolean} If true, show the cancel button.
+   * @input {boolean} If true, show the cancel button. Default `false`.
    */
   @Input()
   get showCancelButton(): boolean {
@@ -129,7 +129,7 @@ export class Searchbar extends BaseInput<string> {
   @Input() type: string = 'search';
 
   /**
-   * @input {boolean} If true, enable searchbar animation.
+   * @input {boolean} If true, enable searchbar animation. Default `false`.
    */
   @Input()
   get animated(): boolean {
