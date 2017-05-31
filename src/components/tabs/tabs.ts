@@ -311,6 +311,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
 
     if (selectedTab) {
       if (tabsSegment) {
+        selectedTab.root = tabsSegment.name;
         selectedTab.rootParams = tabsSegment.data;
       }
       this.select(selectedTab);
