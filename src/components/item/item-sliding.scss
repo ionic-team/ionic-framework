@@ -17,10 +17,9 @@ ion-item-sliding .item {
 }
 
 ion-item-options {
-  @include position(0, 0, null, null);
-
   position: absolute;
-
+  // scss-lint:disable PropertySpelling
+  top: 0;
   z-index: $z-index-item-options;
   display: none;
 
@@ -29,14 +28,32 @@ ion-item-options {
   height: 100%;
 
   font-size: 14px;
-
   visibility: hidden;
+
+  right: 0;
+
+  @include rtl() {
+    justify-content: flex-start;
+
+    &:not([side=right]) {
+      justify-content: flex-end;
+
+      right: auto;
+      left: 0;
+    }
+  }
 }
 
 ion-item-options[side=left] {
-  @include position-horizontal(0, auto);
-
   justify-content: flex-start;
+
+  // scss-lint:disable PropertySpelling
+  right: auto;
+  left: 0;
+
+  @include rtl() {
+    justify-content: flex-end;
+  }
 }
 
 ion-item-options .button {
@@ -62,6 +79,13 @@ ion-item-options:not([icon-left]) .button:not([icon-only]) {
 }
 
 ion-item-sliding.active-slide {
+  @include rtl() {
+    &.active-options-left ion-item-options:not([side=right]) {
+      width: 100%;
+
+      visibility: visible;
+     }
+  }
 
   .item,
   .item.activated {
@@ -80,48 +104,16 @@ ion-item-sliding.active-slide {
     display: flex;
   }
 
-  &.active-options-left ion-item-options {
-    @include rtl() {
-      &[side=left] {
-        width: initial;
+  &.active-options-left ion-item-options[side=left] {
+    width: 100%;
 
-        visibility: hidden;
-      }
-
-      &:not([side=left]) {
-        width: 100%;
-
-        visibility: visible;
-      }
-    }
-
-    &[side=left] {
-      width: 100%;
-
-      visibility: visible;
-    }
+    visibility: visible;
   }
 
-  &.active-options-right ion-item-options {
-    @include rtl() {
-      &:not([side=left]) {
-        width: initial;
+  &.active-options-right ion-item-options:not([side=left]) {
+    width: 100%;
 
-        visibility: hidden;
-      }
-
-      &[side=left] {
-        width: 100%;
-
-        visibility: visible;
-      }
-    }
-
-    &:not([side=left]) {
-      width: 100%;
-
-      visibility: visible;
-    }
+    visibility: visible;
   }
 }
 
@@ -137,19 +129,20 @@ button[expandable] {
 }
 
 ion-item-sliding.active-swipe-right button[expandable] {
-  @include padding-horizontal(90%, null);
-
   order: 1;
 
   transition-duration: .6s;
   transition-property: padding-left;
+  // scss-lint:disable PropertySpelling
+  padding-left: 90%;
 }
 
 ion-item-sliding.active-swipe-left button[expandable] {
-  @include padding-horizontal(null, 90%);
-
   order: -1;
 
   transition-duration: .6s;
   transition-property: padding-right;
+
+  // scss-lint:disable PropertySpelling
+  padding-right: 90%;
 }
