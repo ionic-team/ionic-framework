@@ -1,5 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { isPresent, isTrueProperty } from '../../util/util';
 
 /**
@@ -27,6 +26,16 @@ export class Option {
   }
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
+  }
+
+  @HostListener('click', ['$event'])
+  private _click(ev: UIEvent) {
+    console.debug('option, select');
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    this.selected = true;
+    this.ionSelect.emit(this.value);
   }
 
   /**
