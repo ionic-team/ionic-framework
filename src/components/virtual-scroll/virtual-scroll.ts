@@ -4,7 +4,7 @@ import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processR
 import { Config } from '../../config/config';
 import { Content, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { isBlank, isFunction, isPresent, assert } from '../../util/util';
+import { isFunction, isPresent, assert } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';

@@ -117,7 +117,7 @@ $alert-md-input-margin-bottom:                5px !default;
 // deprecated
 $alert-md-input-margin-left:                  0 !default;
 /// @prop - Margin start of the alert input
-$alert-md-input-margin-start:                 $alert-md-input-margin-left;
+$alert-md-input-margin-start:                 $alert-md-input-margin-left !default;
 
 /// @prop - Flex wrap of the alert button group
 $alert-md-button-group-flex-wrap:             wrap-reverse !default;
