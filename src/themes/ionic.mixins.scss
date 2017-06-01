@@ -230,7 +230,7 @@ $app-direction: null !default;
   }
 }
 
-// Add property for all sides
+// Add property for all directions
 // @param {string} $prop
 // @param {string} $top
 // @param {string} $end
@@ -279,7 +279,7 @@ $app-direction: null !default;
   @include property-horizontal(padding, $start, $end);
 }
 
-// Add padding for all sides
+// Add padding for all directions
 // @param {string} $top
 // @param {string} $end
 // @param {string} $bottom
@@ -297,7 +297,7 @@ $app-direction: null !default;
   @include property-horizontal(margin, $start, $end);
 }
 
-// Add margin for all sides
+// Add margin for all directions
 // @param {string} $top
 // @param {string} $end
 // @param {string} $bottom
@@ -329,7 +329,7 @@ $app-direction: null !default;
   }
 }
 
-// Add position for all sides
+// Add position for all directions
 // @param {string} $top
 // @param {string} $end
 // @param {string} $bottom
@@ -341,7 +341,7 @@ $app-direction: null !default;
   bottom: $bottom;
 }
 
-// Add correct border radius for ltr and rtl
+// Add border radius for all directions
 // @param {string} $top-start
 // @param {string} $top-end
 // @param {string} $bottom-end
@@ -365,7 +365,6 @@ $app-direction: null !default;
   }
 }
 
-
 // Sets correct text align with support for old browsers
 // @param {string} $direction - text direction
 // @param {string} $decorator - !important
@@ -379,5 +378,49 @@ $app-direction: null !default;
     text-align: end $decorator;
   } @else {
     text-align: $direction $decorator;
+  }
+}
+
+// Add direction for all directions
+// @param {string} $dir - Direction on LTR
+@mixin dir($dir) {
+  $other-dir: null;
+
+  @if $dir == ltr {
+    $other-dir: rtl;
+  } @else {
+    $other-dir: ltr;
+  }
+
+  @include ltr() {
+    direction: $dir;
+  }
+  @include rtl() {
+    direction: $other-dir;
+  }
+}
+
+// Add float for all directions
+// @param {string} $side
+// @param {string} $decorator - !important
+@mixin float($side, $decorator: null) {
+  @if $side == start {
+    @include ltr() {
+      float: left $decorator;
+    }
+    @include rtl() {
+      float: right $decorator;
+    }
+  } @else if $side == end {
+    @include ltr() {
+      float: right $decorator;
+    }
+    @include rtl() {
+      float: left $decorator;
+    }
+  } @else {
+    @include multi-dir() {
+      float: $side $decorator;
+    }
   }
 }

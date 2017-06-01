@@ -187,27 +187,29 @@ linters:
     extra_properties:
       - contain
     disabled_properties:
+      - direction
+      -
       - right
       - left
-
+      -
       - float
-
+      -
       - padding
       - padding-left
       - padding-right
       - padding-top
       - padding-bottom
-
+      -
       - margin
       - margin-left
       - margin-right
       - margin-top
       - margin-bottom
-
+      -
       - border-radius
       - border-top-left-radius
       - border-top-right-radius
       - border-bottom-right-radius
       - border-bottom-left-radius
-
+      -
       - text-align

@@ -411,35 +411,19 @@ ion-footer {
       // Provide `[float-{bp}]` attributes for floating the element based
       // on the breakpoint
       [float#{$infix}-left] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        float: left !important;
+        @include float(left, !important);
       }
 
       [float#{$infix}-right] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        float: right !important;
+        @include float(right, !important);
       }
 
       [float#{$infix}-start] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        @include ltr() {
-          float: left !important;
-        }
-
-        @include rtl() {
-          float: right !important;
-        }
+        @include float(start, !important);
       }
 
       [float#{$infix}-end] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        @include ltr() {
-          float: right !important;
-        }
-
-        @include rtl() {
-          float: left !important;
-        }
+        @include float(end, !important);
       }
     }
   }
