@@ -383,7 +383,7 @@ $app-direction: null !default;
 
 // Add direction for all directions
 // @param {string} $dir - Direction on LTR
-@mixin dir($dir) {
+@mixin direction($dir) {
   $other-dir: null;
 
   @if $dir == ltr {
