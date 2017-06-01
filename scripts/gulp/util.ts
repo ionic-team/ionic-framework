@@ -16,6 +16,7 @@ import { runWorker } from './utils/app-scripts-worker-client';
 
 // These packages lack of types.
 const resolveBin = require('resolve-bin');
+const gulpTransform = require('gulp-transform');
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -132,6 +133,8 @@ export function compileSass(destinationPath: string) {
     path.basename = path.basename.replace('.build', '');
   }))
 
+  .pipe(optimizeCss())
+
   .pipe(dest(destinationPath))
 
   .pipe(cleanCSS())
@@ -141,6 +144,41 @@ export function compileSass(destinationPath: string) {
   }))
 
   .pipe(dest(destinationPath));
+}
+
+export function optimizeCss() {
+  return gulpTransform(contents => {
+    contents = joinDirections(String(contents));
+    return new Buffer(contents);
+  });
+}
+
+function joinDirections(contents) {
+  // This includes multi directional selectors, like `[dir="ltr"] sel, [dir="rtl"] sel`,
+  // Which go into the ltr pile, but it is ok as the rest (`sel, [dir="rtl"] sel`) is still good.
+  const dirExp = /\[dir="(.*?)"\](.*?){\s*([^}]*?)\s*}/gm;
+
+  let directions = {};
+
+  let matches;
+  while (matches = dirExp.exec(contents)) {
+    if (!(matches[1] in directions))
+      directions[matches[1]] = {};
+    if (!(matches[2] in directions[matches[1]]))
+      directions[matches[1]][matches[2]] = '';
+    directions[matches[1]][matches[2]] += matches[3];
+  }
+
+  contents = contents.replace(dirExp, '');
+  let directionalContents = '';
+
+  Object.keys(directions).forEach(dir => {
+    Object.keys(directions[dir]).forEach(selector => {
+      directionalContents += `[dir="${dir}"]${selector}{${directions[dir][selector]}}\n`;
+    });
+  });
+
+  return contents + directionalContents;
 }
 
 export function setSassIonicVersion(version: string) {
