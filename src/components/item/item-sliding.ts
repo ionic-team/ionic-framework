@@ -365,7 +365,8 @@ export class ItemSliding {
       return;
     }
     this.setElementClass('active-slide', (state !== SlidingState.Disabled));
-    this.setElementClass('active-options', !!(state & (SlidingState.Right | SlidingState.Left)));
+    this.setElementClass('active-options-right', !!(state & SlidingState.Right));
+    this.setElementClass('active-options-left', !!(state & SlidingState.Left));
     this.setElementClass('active-swipe-right', !!(state & SlidingState.SwipeRight));
     this.setElementClass('active-swipe-left', !!(state & SlidingState.SwipeLeft));
     this._state = state;
