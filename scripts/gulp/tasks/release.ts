@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { exec, spawnSync, spawn } from 'child_process';
 import { writeFileSync } from 'fs';
 import * as changelog from 'conventional-changelog';
@@ -11,8 +12,10 @@ import * as runSequence from 'run-sequence';
 import * as semver from 'semver';
 import { obj } from 'through2';
 
-import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
-import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
+import { ionicRollupFesmPlugin } from '../utils/rollup-fesm-plugin';
+
+import { DIST_BUILD_ES2015_FESM_ROOT, DIST_BUILD_ES5_FESM_ROOT, DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
+import { compileSass, copyFonts, createTimestamp, deleteFiles, setSassIonicVersion, writePolyfills } from '../util';
 
 var promptAnswers;
 
@@ -204,6 +207,8 @@ task('release.prepareReleasePackage', (done: (err: any) => void) => {
           'release.fonts',
           'release.sass',
           'release.createUmdBundle',
+          'release.createEs5FesmBundle',
+          'release.createEs2015FesmBundle',
           done);
 });
 
@@ -226,6 +231,46 @@ task('release.createUmdBundle', (done: Function) => {
     });
   });
 });
+
+task('release.createEs5FesmBundle', (done: Function) => {
+  return createFesmBundle(DIST_BUILD_ES5_FESM_ROOT);
+});
+
+task('release.createEs2015FesmBundle', (done: Function) => {
+  return createFesmBundle(DIST_BUILD_ES2015_FESM_ROOT);
+});
+
+function createFesmBundle(fesmDirectoryPath: string) {
+  return rollup({
+    entry: join(fesmDirectoryPath, 'ionic-angular.js'),
+    external: (moduleId: string) => {
+      if (moduleId.indexOf('@angular') >= 0 || moduleId.indexOf('rxjs') >= 0) {
+        return true;
+      }
+      return false;
+    },
+    plugins: [
+      nodeResolve({
+        module: true,
+        jsnext: true,
+        main: true
+      }),
+      ionicRollupFesmPlugin(fesmDirectoryPath)
+    ]
+  }).then((bundle) => {
+    return bundle.write({
+      format: 'es',
+      dest: join(fesmDirectoryPath, 'ionic-angular.js'),
+      sourceMap: true
+    });
+  }).then(() => {
+    // clean up
+    deleteFiles([`${fesmDirectoryPath}/**/*.js`,
+                  `${fesmDirectoryPath}/**/*.map`,
+                  `!${fesmDirectoryPath}/ionic-angular.js.map`,
+                  `!${fesmDirectoryPath}/ionic-angular.js`], () => {});
+  });
+}
 
 task('release.polyfill', (done: Function) => {
   writePolyfills('dist/ionic-angular/polyfills').then(() => {

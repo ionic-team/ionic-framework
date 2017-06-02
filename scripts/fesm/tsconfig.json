@@ -13,15 +13,14 @@
     "target": "es2015",
     "types": ["jasmine", "systemjs"]
   },
-  "include": [
-    "src/**/*.ts",
-    "demos/src/**/*.ts"
-  ],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": false
   },
+  "files": [
+    "index.ts"
+  ],
   "angularCompilerOptions": {
     "annotationsAs": "static fields",
     "annotateForClosureCompiler": true,
