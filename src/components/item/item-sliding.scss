@@ -81,12 +81,7 @@ ion-item-sliding.active-slide {
     display: flex;
   }
 
-  &.active-options-left ion-item-options[side=left] {
-    width: 100%;
-
-    visibility: visible;
-  }
-
+  &.active-options-left ion-item-options[side=left],
   &.active-options-right ion-item-options:not([side=left]) {
     width: 100%;
 
