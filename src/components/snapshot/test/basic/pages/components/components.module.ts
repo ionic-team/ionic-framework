@@ -15,6 +15,22 @@ import {AppModule as AppGestures} from '../../../../../app/test/gestures/app.mod
 import {AppModule as AppTypography} from '../../../../../app/test/typography/app/app.module';
 import {AppModule as AppUtilities} from '../../../../../app/test/utilities/app/app.module';
 
+import {AppModule as BadgeBasic} from '../../../../../badge/test/basic/app/app.module';
+
+import {AppModule as ButtonAnchors} from '../../../../../button/test/anchors/app/app.module';
+import {AppModule as ButtonAttributes} from '../../../../../button/test/attributes/app/app.module';
+import {AppModule as ButtonBasic} from '../../../../../button/test/basic/app/app.module';
+import {AppModule as ButtonBlock} from '../../../../../button/test/block/app/app.module';
+import {AppModule as ButtonClear} from '../../../../../button/test/clear/app/app.module';
+import {AppModule as ButtonDecorator} from '../../../../../button/test/decorator/app/app.module';
+import {AppModule as ButtonDynamic} from '../../../../../button/test/dynamic/app/app.module';
+import {AppModule as ButtonFull} from '../../../../../button/test/full/app/app.module';
+import {AppModule as ButtonIcons} from '../../../../../button/test/icons/app/app.module';
+import {AppModule as ButtonOutline} from '../../../../../button/test/outline/app/app.module';
+import {AppModule as ButtonRaised} from '../../../../../button/test/raised/app.module';
+import {AppModule as ButtonRound} from '../../../../../button/test/round/app/app.module';
+import {AppModule as ButtonSizes} from '../../../../../button/test/sizes/app/app.module';
+
 @NgModule({
   declarations: [
     ComponentsPage
@@ -32,7 +48,23 @@ import {AppModule as AppUtilities} from '../../../../../app/test/utilities/app/a
     AppGestureCollision,
     AppGestures,
     AppTypography,
-    AppUtilities
+    AppUtilities,
+
+    BadgeBasic,
+
+    ButtonAnchors,
+    ButtonAttributes,
+    ButtonBasic,
+    ButtonBlock,
+    ButtonClear,
+    ButtonDecorator,
+    ButtonDynamic,
+    ButtonFull,
+    ButtonIcons,
+    ButtonOutline,
+    ButtonRaised,
+    ButtonRound,
+    ButtonSizes,
   ],
   entryComponents: [
     ComponentsPage

@@ -7,8 +7,8 @@
 <ion-content>
   <ion-list>
     <ion-item-group *ngFor="let componentItem of components">
-      <ion-list-header>{{componentItem.name}}</ion-list-header>
-      <button ion-item *ngFor="let component of componentItem.components" [navPush]="component.component">
+      <ion-item-divider>{{componentItem.name}}</ion-item-divider>
+      <button ion-item *ngFor="let component of componentItem.components" (click)="open(component.component)">
         <ion-label>{{component.name}}</ion-label>
       </button>
     </ion-item-group>
