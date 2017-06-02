@@ -8,6 +8,13 @@ import {AppModule as ActionSheetBasic} from '../../../../../action-sheet/test/ba
 import {AppModule as AlertBasic} from '../../../../../alert/test/basic/app/app.module';
 import {AppModule as AlertDismiss} from '../../../../../alert/test/dismiss/app.module';
 
+import {AppModule as AppAnimations} from '../../../../../app/test/animations/app.module';
+import {AppModule as AppCordova} from '../../../../../app/test/cordova/app/app.module';
+import {AppModule as AppGestureCollision} from '../../../../../app/test/gesture-collision/app/app.module';
+import {AppModule as AppGestures} from '../../../../../app/test/gestures/app.module';
+import {AppModule as AppTypography} from '../../../../../app/test/typography/app/app.module';
+import {AppModule as AppUtilities} from '../../../../../app/test/utilities/app/app.module';
+
 @NgModule({
   declarations: [
     ComponentsPage
@@ -18,7 +25,14 @@ import {AppModule as AlertDismiss} from '../../../../../alert/test/dismiss/app.m
     ActionSheetBasic,
 
     AlertBasic,
-    AlertDismiss
+    AlertDismiss,
+
+    AppAnimations,
+    AppCordova,
+    AppGestureCollision,
+    AppGestures,
+    AppTypography,
+    AppUtilities
   ],
   entryComponents: [
     ComponentsPage
