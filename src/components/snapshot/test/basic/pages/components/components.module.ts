@@ -31,6 +31,49 @@ import {AppModule as ButtonRaised} from '../../../../../button/test/raised/app.m
 import {AppModule as ButtonRound} from '../../../../../button/test/round/app/app.module';
 import {AppModule as ButtonSizes} from '../../../../../button/test/sizes/app/app.module';
 
+import {AppModule as CardAdvanced} from '../../../../../card/test/advanced/app/app.module';
+import {AppModule as CardBasic} from '../../../../../card/test/basic/app/app.module';
+import {AppModule as CardColors} from '../../../../../card/test/colors/app/app.module';
+import {AppModule as CardImages} from '../../../../../card/test/images/app/app.module';
+import {AppModule as CardList} from '../../../../../card/test/list/app/app.module';
+import {AppModule as CardMap} from '../../../../../card/test/map/app.module';
+import {AppModule as CardSocial} from '../../../../../card/test/social/app.module';
+
+import {AppModule as CheckboxBasic} from '../../../../../checkbox/test/basic/app/app.module';
+
+import {AppModule as ChipBasic} from '../../../../../chip/test/basic/app/app.module';
+
+import {AppModule as ContentBasic} from '../../../../../content/test/basic/app/app.module';
+import {AppModule as ContentFullscreen} from '../../../../../content/test/fullscreen/app/app.module';
+import {AppModule as ContentHeaderScroll} from '../../../../../content/test/header-scroll/app.module';
+import {AppModule as ContentNoBounce} from '../../../../../content/test/no-bounce/app/app.module';
+import {AppModule as ContentScrollDownOnLoad} from '../../../../../content/test/scroll-down-on-load/app/app.module';
+
+import {AppModule as DatetimeBasic} from '../../../../../datetime/test/basic/app/app.module';
+import {AppModule as DatetimeForm} from '../../../../../datetime/test/form/app.module';
+import {AppModule as DatetimeIssues} from '../../../../../datetime/test/issues/app/app.module';
+import {AppModule as DatetimeLabels} from '../../../../../datetime/test/labels/app/app.module';
+
+import {AppModule as FabBasic} from '../../../../../fab/test/basic/app/app.module';
+
+import {AppModule as GridAlignment} from '../../../../../grid/test/alignment/app.module';
+import {AppModule as GridBasic} from '../../../../../grid/test/basic/app/app.module';
+import {AppModule as GridCard} from '../../../../../grid/test/card/app.module';
+import {AppModule as GridFull} from '../../../../../grid/test/full/app.module';
+import {AppModule as GridResponsive} from '../../../../../grid/test/responsive/app.module';
+
+import {AppModule as IconBasic} from '../../../../../icon/test/basic/app/app.module';
+
+import {AppModule as ImgBasic} from '../../../../../img/test/basic/app/app.module';
+import {AppModule as ImgCards} from '../../../../../img/test/cards/app.module';
+import {AppModule as ImgLazyLoad} from '../../../../../img/test/lazy-load/app.module';
+import {AppModule as ImgList} from '../../../../../img/test/list/app.module';
+
+import {AppModule as InfiniteScrollBasic} from '../../../../../infinite-scroll/test/basic/app.module';
+import {AppModule as InfiniteScrollPositionTop} from '../../../../../infinite-scroll/test/position-top/app/app.module';
+import {AppModule as InfiniteScrollShortList} from '../../../../../infinite-scroll/test/short-list/app.module';
+
+
 @NgModule({
   declarations: [
     ComponentsPage
@@ -65,6 +108,48 @@ import {AppModule as ButtonSizes} from '../../../../../button/test/sizes/app/app
     ButtonRaised,
     ButtonRound,
     ButtonSizes,
+
+    CardAdvanced,
+    CardBasic,
+    CardColors,
+    CardImages,
+    CardList,
+    CardMap,
+    CardSocial,
+
+    CheckboxBasic,
+
+    ChipBasic,
+
+    ContentBasic,
+    ContentFullscreen,
+    ContentHeaderScroll,
+    ContentNoBounce,
+    ContentScrollDownOnLoad,
+
+    DatetimeBasic,
+    DatetimeForm,
+    DatetimeIssues,
+    DatetimeLabels,
+
+    FabBasic,
+
+    GridAlignment,
+    GridBasic,
+    GridCard,
+    GridFull,
+    GridResponsive,
+
+    IconBasic,
+
+    ImgBasic,
+    ImgCards,
+    ImgLazyLoad,
+    ImgList,
+
+    InfiniteScrollBasic,
+    InfiniteScrollPositionTop,
+    InfiniteScrollShortList,
   ],
   entryComponents: [
     ComponentsPage
