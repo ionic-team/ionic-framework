@@ -140,7 +140,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
       border-color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
       @include md-bar-button-default($color-name, $color-base, $color-contrast);
       @include md-bar-button-outline($color-name, $color-base, $color-contrast);
       @include md-bar-button-solid($color-name, $color-base, $color-contrast);
@@ -384,7 +384,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 @include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 @include md-bar-button-default(clear, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
   @include md-toolbar-theme($color-name, $color-base, $color-contrast);
   @include md-bar-button-default($color-name, $color-base, $color-contrast);
   @include md-bar-button-outline($color-name, $color-base, $color-contrast);
