@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Components</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-group *ngFor="let componentItem of components">
+      <ion-list-header>{{componentItem.name}}</ion-list-header>
+      <button ion-item *ngFor="let component of componentItem.components" [navPush]="component.component">
+        <ion-label>{{component.name}}</ion-label>
+      </button>
+    </ion-item-group>
+  </ion-list>
+</ion-content>
