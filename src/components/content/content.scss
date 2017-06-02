@@ -58,6 +58,10 @@ ion-content.js-scroll > .scroll-content {
   touch-action: none;
 }
 
+ion-content.has-refresher > .scroll-content {
+  background-color: inherit;
+}
+
 
 // Fixed Content (ion-fixed and ion-fab)
 // --------------------------------------------------
