@@ -1,5 +1,5 @@
 **Ionic version:**  (check one with "x")
-[ ] **1.x** (For Ionic 1.x issues, please use https://github.com/driftyco/ionic-v1)
+[ ] **1.x** (For Ionic 1.x issues, please use https://github.com/ionic-team/ionic-v1)
 [ ] **2.x**
 [ ] **3.x**
 

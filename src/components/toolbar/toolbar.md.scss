@@ -116,7 +116,6 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
 @mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
   .toolbar-md-#{$color-name} {
-    $fg-color: color-contrast($colors-md, $color-base, md);
 
     .toolbar-background-md {
       background: $color-base;
@@ -126,19 +125,19 @@ $toolbar-button-md-strong-font-weight:   bold !default;
     .bar-button-default-md,
     .bar-button-outline-md,
     .toolbar-title-md {
-      color: $fg-color;
+      color: $color-contrast;
     }
 
     .bar-button-clear-md,
     .bar-button-default-md,
     .bar-button-outline-md {
       .button-effect {
-        background-color: $fg-color;
+        background-color: $color-contrast;
       }
     }
 
     .bar-button-outline-md {
-      border-color: $fg-color;
+      border-color: $color-contrast;
     }
 
     @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {

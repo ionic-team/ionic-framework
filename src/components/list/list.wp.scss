@@ -41,7 +41,7 @@ $list-inset-wp-border-radius:    2px !default;
 // deprecated
 $list-wp-header-padding-left:    $item-wp-padding-start !default;
 /// @prop - Padding start of the header in a list
-$list-wp-header-padding-start:   $list-wp-header-padding-left;
+$list-wp-header-padding-start:   $list-wp-header-padding-left !default;
 
 /// @prop - Border bottom of the header in a list
 $list-wp-header-border-bottom:   1px solid $list-wp-border-color !default;
