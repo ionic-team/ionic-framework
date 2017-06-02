@@ -91,11 +91,11 @@ const enum SlidingState {
  * ### Button Layout
  * If an icon is placed with text in the option button, by default it will
  * display the icon on top of the text. This can be changed to display the icon
- * to the left of the text by setting `icon-left` as an attribute on the
+ * to the left of the text by setting `icon-start` as an attribute on the
  * `<ion-item-options>` element.
  *
  * ```html
- * <ion-item-options icon-left>
+ * <ion-item-options icon-start>
  *    <button ion-button (click)="archive(item)">
  *      <ion-icon name="archive"></ion-icon>
  *      Archive

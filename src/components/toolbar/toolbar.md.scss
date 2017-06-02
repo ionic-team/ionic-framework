@@ -295,7 +295,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-md.bar-button-icon-left ion-icon {
+.bar-button-md.bar-button-icon-start ion-icon {
   @include padding-horizontal(null, .3em);
 
   font-size: 1.4em;
@@ -304,7 +304,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   pointer-events: none;
 }
 
-.bar-button-md.bar-button-icon-right ion-icon {
+.bar-button-md.bar-button-icon-end ion-icon {
   @include padding-horizontal(.4em, null);
 
   font-size: 1.4em;
