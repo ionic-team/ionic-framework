@@ -529,7 +529,8 @@ export function mockItem(): Item {
   const config = mockConfig();
   const elementRef = mockElementRef();
   const renderer = mockRenderer();
-  return new Item(form, config, elementRef, renderer, null);
+  const platform = mockPlatform();
+  return new Item(form, config, elementRef, renderer, platform, null);
 }
 
 export function mockTabs(app?: App): Tabs {

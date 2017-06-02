@@ -161,6 +161,24 @@ export function isRightSide(side: Side, isRTL: boolean, defaultRight: boolean = 
   }
 }
 
+/**
+ * @hidden
+ * Given a side, return if it is the start
+ * based on the value of dir
+ * @param side the side
+ * @param isRTL whether the application dir is rtl
+ * @param defaultStart whether the default side is start
+ */
+export function isStartSide(side: Side, isRTL: boolean, defaultStart: boolean = true): boolean {
+  switch (side) {
+    case 'end': return false;
+    case 'start': return true;
+    case 'right': return isRTL;
+    case 'left': return !isRTL;
+    default: return defaultStart;
+  }
+}
+
 
 /** @hidden */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {

@@ -19,18 +19,21 @@
     </button>
   </ion-list>
 
-  <ion-list [reorder]="isReordering" (ionItemReorder)="$event.applyTo(items)">
-    <ion-item-sliding *ngFor="let item of items">
-      <button ion-item (click)="clickedButton(item)">
-        <h2>Sliding item {{item}}</h2>
-      </button>
-      <ion-item-options side="right" icon-left>
-        <button ion-button color='danger'>
-          <ion-icon name="trash"></ion-icon>
-          Remove
+  <div *ngFor="let side of ['left', 'right', 'start', 'end']">
+    <ion-list [reorder]="isReordering" (ionItemReorder)="$event.applyTo(items)" [side]="side">
+      <ion-list-header>{{side}}</ion-list-header>
+      <ion-item-sliding *ngFor="let item of items">
+        <button ion-item (click)="clickedButton(item)">
+          <h2>Sliding item {{item}}</h2>
         </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+        <ion-item-options side="right" icon-left>
+          <button ion-button color='danger'>
+            <ion-icon name="trash"></ion-icon>
+            Remove
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div>
 
 </ion-content>

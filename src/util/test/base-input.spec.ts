@@ -29,7 +29,7 @@ describe('BaseInput', () => {
 
   it('should configure with item', () => {
     const form = new Form();
-    const item = new Item(form, config, elementRef, renderer, null);
+    const item = new Item(form, config, elementRef, renderer, platform, null);
     const input = mockInput(form, item, null);
 
     expect(input.id).toEqual('input-0-0');
