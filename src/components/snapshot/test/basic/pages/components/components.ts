@@ -113,8 +113,8 @@ import {AppComponent as LoadingBasic} from '../../../../../loading/test/basic/ap
 import {AppComponent as LoadingTabs} from '../../../../../tabs/test/basic/app/app.component';
 
 import {AppComponent as MenuBasic} from '../../../../../menu/test/basic/app/app.component';
-import {AppComponent as MenuDisableSwipe} from '../../../../../menu/test/disable-swipe/app.module';
-import {AppComponent as MenuEnableDisable} from '../../../../../menu/test/enable-disable/app.module';
+// import {AppComponent as MenuDisableSwipe} from '../../../../../menu/test/disable-swipe/app.module';
+// import {AppComponent as MenuEnableDisable} from '../../../../../menu/test/enable-disable/app.module';
 import {AppComponent as MenuMultiple} from '../../../../../menu/test/multiple/app/app.component';
 import {AppComponent as MenuOverlay} from '../../../../../menu/test/overlay/app.module';
 import {AppComponent as MenuPush} from '../../../../../menu/test/push/app.module';
@@ -139,7 +139,7 @@ import {AppComponent as RadioBasic} from '../../../../../radio/test/basic/app/ap
 import {AppComponent as RangeBasic} from '../../../../../range/test/basic/app/app.component';
 
 import {AppComponent as RefresherBasic} from '../../../../../refresher/test/basic/app.module';
-import {AppComponent as RefresherNavigation} from '../../../../../refresher/test/navigation/app.module';
+// import {AppComponent as RefresherNavigation} from '../../../../../refresher/test/navigation/app.module';
 
 import {AppComponent as ScrollBasic} from '../../../../../scroll/test/basic/app.module';
 
@@ -390,8 +390,8 @@ export class ComponentsPage {
       name: 'Menu',
       components: [
         {name: 'basic', component: MenuBasic},
-        {name: 'disable-swipe', component: MenuDisableSwipe},
-        {name: 'enable-disable', component: MenuEnableDisable},
+        // {name: 'disable-swipe', component: MenuDisableSwipe},
+        // {name: 'enable-disable', component: MenuEnableDisable},
         {name: 'multiple', component: MenuMultiple},
         {name: 'overlay', component: MenuOverlay},
         {name: 'push', component: MenuPush},
@@ -443,7 +443,7 @@ export class ComponentsPage {
       name: 'Refresher',
       components: [
         {name: 'basic', component: RefresherBasic},
-        {name: 'navigation', component: RefresherNavigation}
+        // {name: 'navigation', component: RefresherNavigation}
       ]
     }, {
       name: 'Scroll',
