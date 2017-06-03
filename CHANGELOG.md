@@ -471,8 +471,8 @@ of ion-slides.
 #### Split Pane
 As part of our initiative to improve desktop support we have introduced a new component called [Split Pane](http://ionicframework.com/docs/v2/api/components/split-pane/SplitPane/). Split Pane makes it possible to easily create multi-view layouts. It allows elements, such as a menu or another navigation pane, to be displayed on large viewports. Split Pane can be used to achieve a layout similar to the Gmail (Android) or Mail (Apple) applications.
 
-#### Angular 2.4.8
-Ionic has been updated to depend on Angular 2.4.8, which is the latest version that we have tested and confirmed to be compatible with Ionic. This means that updating to the 2.2.0 release of Ionic will automatically work with all of the performance updates, bug fixes and features in Angular 2.4.8!
+#### Angular.4.8
+Ionic has been updated to depend on Angular.4.8, which is the latest version that we have tested and confirmed to be compatible with Ionic. This means that updating to the 2.2.0 release of Ionic will automatically work with all of the performance updates, bug fixes and features in Angular.4.8!
 
 ### Ionic Storage
 
@@ -1286,7 +1286,7 @@ Select’s `alertOptions` input has been renamed to `selectOptions`. It now allo
 
 **Reason for this change:**
 - It was difficult to have custom buttons since buttons automatically received the Ionic styles. The user can now take advantage of adding their own styling to a button if they want it to behave differently than the Ionic button.
-Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute gives us the ability to take advantage of the native functionality and built-in accessibility of native elements. If Ionic provided an `<ion-button>` we’d have to copy over all the possible attributes and events to the real nested button/link (`type=submit`, `formnovalidate`, `value`, `autofocus`, `href`, `target`, `focus`/`blur`, `download`, `nofollow`, `ping`, etc). Additionally, Angular 2 does not have the "replace" directive where `<ion-button>` could be turned into `<a ion-button>`.
+Keeping the `<a>` and `<button>` element and adding `ion-button` as an attribute gives us the ability to take advantage of the native functionality and built-in accessibility of native elements. If Ionic provided an `<ion-button>` we’d have to copy over all the possible attributes and events to the real nested button/link (`type=submit`, `formnovalidate`, `value`, `autofocus`, `href`, `target`, `focus`/`blur`, `download`, `nofollow`, `ping`, etc). Additionally, Angular does not have the "replace" directive where `<ion-button>` could be turned into `<a ion-button>`.
 - Since `button` was already being used as an attribute to the `<a>` element, this is more consistent between the two.
 - If a navPush or navPop directive is on an `<a ion-button>`, Ionic can automatically add the `href` attribute.
 - [A few reasons why we didn’t create `<ion-button>`](https://www.youtube.com/watch?list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g&v=CZGqnp06DnI)
