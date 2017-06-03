@@ -106,14 +106,18 @@ $tabs-ios-tab-icon-size:            30px !default;
   vertical-align: top;
 }
 
-.tabs-ios[tabsLayout=icon-right] .tab-button .tab-button-text,
-.tabs-ios[tabsLayout=icon-left] .tab-button .tab-button-text {
+.tabs-ios[tabsLayout=icon-right] .tab-button .tab-button-text, // deprecated
+.tabs-ios[tabsLayout=icon-left] .tab-button .tab-button-text, // deprecated
+.tabs-ios[tabsLayout=icon-end] .tab-button .tab-button-text,
+.tabs-ios[tabsLayout=icon-start] .tab-button .tab-button-text {
   font-size: 1.4rem;
   line-height: 1.1;
 }
 
-.tabs-ios[tabsLayout=icon-right] .tab-button ion-icon,
-.tabs-ios[tabsLayout=icon-left] .tab-button ion-icon {
+.tabs-ios[tabsLayout=icon-right] .tab-button ion-icon, // deprecated
+.tabs-ios[tabsLayout=icon-left] .tab-button ion-icon, // deprecated
+.tabs-ios[tabsLayout=icon-end] .tab-button ion-icon,
+.tabs-ios[tabsLayout=icon-start] .tab-button ion-icon {
   min-width: 24px;
   height: 26px;
 

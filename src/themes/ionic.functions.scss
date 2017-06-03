@@ -271,7 +271,7 @@
 // @param {Map} $colors - colors map
 // @return {List} $color-name, $color-base, $color-contrast
 // ----------------------------------------------------------
-@function get-colors($colors) {
+@function get-colors($colors, $custom-contrast-mode: null) {
   $colors-list: ();
 
   @each $color-name, $color-value in $colors {
@@ -283,7 +283,7 @@
       $color-contrast: map-get($color-value, contrast);
     } @else {
       $color-base: $color-value;
-      $color-contrast: color-inverse($color-value);
+      $color-contrast: color-contrast($colors, $color-value, $custom-contrast-mode);
     }
 
     $colors-list: append($colors-list, ($color-name, $color-base, $color-contrast), comma);
@@ -291,3 +291,4 @@
 
   @return $colors-list;
 }
+
