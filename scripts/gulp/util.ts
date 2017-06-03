@@ -144,7 +144,7 @@ export function compileSass(destinationPath: string) {
 }
 
 export function setSassIonicVersion(version: string) {
-  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}"; // scss-lint:disable DefaultRule`);
 }
 
 export function copyFile(srcPath: string, destPath: string) {
