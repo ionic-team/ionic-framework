@@ -204,14 +204,14 @@ import {AppComponent as VirtualScrollSlidingItem} from '../../../../../virtual-s
 import {AppComponent as VirtualScrollVariableSize} from '../../../../../virtual-scroll/test/variable-size/app.module';
 
 
-export type ComponentItem = { name: string, components: Array<{ name: string, component: any }> };
+export type ComponentsGroup = { name: string, components: Array<{ name: string, component: any }> };
 
 @IonicPage()
 @Component({
   templateUrl: 'components.html'
 })
 export class ComponentsPage {
-  components: Array<ComponentItem> = [
+  components: Array<ComponentsGroup> = [
     {
       name: 'Action Sheet',
       components: [
@@ -370,7 +370,7 @@ export class ComponentsPage {
       name: 'Label',
       components: []
     }, {
-      name: 'Label',
+      name: 'List',
       components: [
         {name: 'chat-list', component: ListChatList},
         {name: 'header-scenarios', component: ListHeaderScenarios},
