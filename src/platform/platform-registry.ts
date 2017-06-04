@@ -1,4 +1,4 @@
-import { OpaqueToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
 import { isCordova, isElectron, isIos, isIosUIWebView } from './platform-utils';
@@ -241,7 +241,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 };
 
 
-export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');
+export const PlatformConfigToken = new InjectionToken<string>('PLTCONFIG');
 
 export function providePlatformConfigs() {
   return PLATFORM_CONFIGS;
