@@ -92,7 +92,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  *   slideChanged() {
  *     let currentIndex = this.slides.getActiveIndex();
- *     console.log("Current index is", currentIndex);
+ *     console.log('Current index is', currentIndex);
  *   }
  * }
  * ```
@@ -119,7 +119,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * To see all of the available options, take a look at the
- * [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts).
+ * [source for slides](https://github.com/ionic-team/ionic/blob/master/src/components/slides/slides.ts).
  *
  * @demo /docs/demos/src/slides/
  * @see {@link /docs/components#slides Slides Component Docs}
@@ -365,9 +365,21 @@ export class Slides extends Ion {
     return this._slidesPerView;
   }
   set slidesPerView(val: any) {
-    this._slidesPerView = val === 'auto' ? 'auto' : parseInt(val, 10);
+    this._slidesPerView = val === 'auto' ? 'auto' : parseFloat(val);
   }
   private _slidesPerView: number|string = 1;
+
+  /** 
+   * @input {boolean} Center a slide in the middle of the screen.
+   */
+  @Input()
+  get centeredSlides() {
+    return this._centeredSlides;
+  }
+  set centeredSlides(val: boolean) {
+    this._centeredSlides = isTrueProperty(val);
+  }
+  private _centeredSlides: boolean = false;
 
   /**
    * @hidden
@@ -381,10 +393,6 @@ export class Slides extends Ion {
    * @hidden
    */
   slidesPerGroup = 1;
-  /**
-   * @hidden
-   */
-  centeredSlides = false;
   /**
    * @hidden
    */
@@ -1035,7 +1043,7 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the next slides.
-   * @param {boolean} shouldLockSwipeToNext If set to true the user will not be able to swipe to the next slide. 
+   * @param {boolean} shouldLockSwipeToNext If set to true the user will not be able to swipe to the next slide.
    * Set to false to unlock this behaviour.
    */
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
@@ -1053,7 +1061,7 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to change slides.
-   * @param {boolean} shouldLockSwipes If set to true user can not swipe in either direction on slide. 
+   * @param {boolean} shouldLockSwipes If set to true user can not swipe in either direction on slide.
    * False allows swiping in both directions.
    */
   lockSwipes(shouldLockSwipes: boolean) {
