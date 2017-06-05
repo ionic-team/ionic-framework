@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ElementRef, Renderer2} from '@angular/core';
-import {DomController} from '../../../../../../platform/dom-controller';
-import {AssistiveTouchProvider} from '../../providers/assistive-touch/assistive-touch';
+import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
+import { DomController } from '../../../../../../platform/dom-controller';
+import { AssistiveTouchProvider } from '../../providers/assistive-touch/assistive-touch';
 
 @Component({
   selector: 'assistive-touch',
