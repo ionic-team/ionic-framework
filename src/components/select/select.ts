@@ -306,10 +306,15 @@ export class Select extends BaseInput<any> implements OnDestroy {
         }
       }));
 
+      var popoverCssClass = 'select-popover';
+
+      // If the user passed a cssClass for the select, add it
+      popoverCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
+
       overlay = new Popover(this._app, SelectPopover, {
         options: popoverOptions
       }, {
-        cssClass: 'select-popover'
+        cssClass: popoverCssClass
       }, this.config, this.deepLinker);
 
       // ev.target is readonly.
