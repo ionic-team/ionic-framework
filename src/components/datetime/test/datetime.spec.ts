@@ -140,6 +140,40 @@ describe('DateTime', () => {
       expect(columns[1].options[12].disabled).toEqual(true);
     });
 
+    it('should enable the weekday values given', () => {
+      datetime.monthValues = '6,7,8';
+      datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 31';
+      datetime.yearValues = '2014,2015';
+      datetime.weekdayValues = '1,2,3,4,5'; // Monday - Friday
+
+      datetime.pickerFormat = 'MM DD YYYY';
+
+      datetime.generate();
+
+      var columns = picker.getColumns();
+
+      // Days will vary based on the month and year chosen.
+      columns[2].selectedIndex = 0; // 2014
+      datetime.validate();
+      columns[0].selectedIndex = 1; // July
+      datetime.validate();
+
+      // July 2014 has 23 weekdays starting on Tuesday July 1
+      var JulyWeekDays = [1, 2, 3, 4, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 21, 22, 23, 24, 25, 28, 29, 30, 31];
+      for (var i = 0; i < columns[1].options.length; i++) {
+        expect(columns[1].options[i].disabled).toEqual(JulyWeekDays.indexOf(columns[1].options[i].value) === -1);
+      }
+
+      columns[0].selectedIndex = 0; // June
+      datetime.validate();
+
+      // June 2014 has 21 weekdays starting on Monday June 2.
+      var JuneWeekDays = [2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 23, 24, 25, 26, 27, 30];
+      for (var i = 0; i < columns[1].options.length; i++) {
+        expect(columns[1].options[i].disabled).toEqual(JuneWeekDays.indexOf(columns[1].options[i].value) === -1);
+      }
+    });
+
     it('should always return a string', () => {
       datetime.monthValues = '6,7,8';
       datetime.dayValues = '01,02,03,04,05,06,08,09,10, 11, 12, 13, 31';
