@@ -121,13 +121,17 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
   @include padding(8px, null, 8px, null);
 }
 
-.tabs-wp[tabsLayout=icon-right] .tab-button,
-.tabs-wp[tabsLayout=icon-left] .tab-button {
+.tabs-wp[tabsLayout=icon-right] .tab-button, // deprecated
+.tabs-wp[tabsLayout=icon-left] .tab-button, // deprecated
+.tabs-wp[tabsLayout=icon-end] .tab-button,
+.tabs-wp[tabsLayout=icon-start] .tab-button {
   @include padding(null, null, 10px, null);
 }
 
-.tabs-wp[tabsLayout=icon-right] .tab-button ion-icon,
-.tabs-wp[tabsLayout=icon-left] .tab-button ion-icon {
+.tabs-wp[tabsLayout=icon-right] .tab-button ion-icon, // deprecated
+.tabs-wp[tabsLayout=icon-left] .tab-button ion-icon, // deprecated
+.tabs-wp[tabsLayout=icon-end] .tab-button ion-icon,
+.tabs-wp[tabsLayout=icon-start] .tab-button ion-icon {
   min-width: 24px;
 }
 

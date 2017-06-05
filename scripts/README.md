@@ -110,6 +110,12 @@ It does not work for windows, linux, or non retina macs.
 
 - `--dev` runs a dev build when building the e2e tests. This build takes much less time than a production build, so it is advisable to use this when doing quick validation.
 
+#### Errors
+
+If you are having getting an error running snapshot such as `SessionNotCreatedError: session not created exception` or `UnknownError: Connection refused` the solution is to download the chromedriver from here: http://chromedriver.storage.googleapis.com/index.html?path=2.24/ and then move it into your `protractor/selenium` folder
+
+Running `webdriver-manager help` should show you what directory the webdriver is at under the options. For example, yours may be at `/usr/local/lib/node_modules/protractor/selenium` or if you use nvm `/Users/{username}/.nvm/versions/node/v7.5.0/lib/node_modules/protractor/selenium`.
+
 ### Running Tests
 
 1. `gulp validate`

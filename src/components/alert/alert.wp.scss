@@ -262,8 +262,10 @@ $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 /// @prop - Top of the icon in the radio alert
 $alert-wp-radio-icon-top:                      2px !default;
 
-/// @prop - Left of the icon in the radio alert
+// deprecated
 $alert-wp-radio-icon-left:                     2px !default;
+/// @prop - Start of the icon in the radio alert
+$alert-wp-radio-icon-start:                    $alert-wp-radio-icon-left !default;
 
 /// @prop - Width of the icon in the radio alert
 $alert-wp-radio-icon-width:                    8px !default;
@@ -328,8 +330,10 @@ $alert-wp-checkbox-background-on:              color($colors-wp, primary) !defau
 /// @prop - Top of the icon in the checkbox alert
 $alert-wp-checkbox-icon-top:                   -2px !default;
 
-/// @prop - Left of the icon in the checkbox alert
+// deprecated
 $alert-wp-checkbox-icon-left:                  3px !default;
+/// @prop - Start of the icon in the checkbox alert
+$alert-wp-checkbox-icon-start:                 $alert-wp-checkbox-icon-left !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-wp-checkbox-icon-width:                 6px !default;
@@ -495,7 +499,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // ---------------------------------------------------
 
 .alert-wp .alert-radio-inner {
-  @include position($alert-wp-radio-icon-top, null, null, $alert-wp-radio-icon-left);
+  @include position($alert-wp-radio-icon-top, null, null, $alert-wp-radio-icon-start);
   @include border-radius($alert-wp-radio-icon-border-radius);
 
   position: absolute;
@@ -575,7 +579,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp [aria-checked=true] .alert-checkbox-inner {
-  @include position($alert-wp-checkbox-icon-top, null, null, $alert-wp-checkbox-icon-left);
+  @include position($alert-wp-checkbox-icon-top, null, null, $alert-wp-checkbox-icon-start);
 
   position: absolute;
 
