@@ -205,8 +205,7 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
-    '--enableLint', 'false',
-    '--debug'
+    '--enableLint', 'false'
   ];
 
   if (watchConfigPath) {
