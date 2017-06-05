@@ -6,9 +6,7 @@ import join from 'path';
 task('lint', ['lint.sass', 'lint.ts']);
 
 task('lint.ts', () => {
-  return src([
-      join('src', '**', '*.ts')
-    ]).pipe(tslint({
+  return src(['src/**/*.ts']).pipe(tslint({
       formatter: 'verbose'
     }))
     .pipe(tslint.report());
@@ -16,10 +14,10 @@ task('lint.ts', () => {
 
 task('lint.sass', function() {
   return src([
-      join('src', '**', '*.scss'),
-      join('!src', 'components', '*', 'test', '**', '*'),
-      join('!src', 'util', 'test', '*'),
-      join('!src', 'themes', 'normalize.scss')
+      'src/**/*.scss',
+      '!src/components/*/test/**/*',
+      '!src/util/test/*',
+      '!src/themes/normalize.scss'
     ])
     .pipe(scsslint())
     .pipe(scsslint.failReporter());
