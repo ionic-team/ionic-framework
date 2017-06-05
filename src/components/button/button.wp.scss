@@ -3,11 +3,35 @@
 // Windows Button
 // --------------------------------------------------
 
-/// @prop - Margin of the button
-$button-wp-margin:                                        .4rem .2rem !default;
+// deprecated
+$button-wp-margin:                                        null !default;
 
-/// @prop - Padding of the button
-$button-wp-padding:                                       0 1.1em !default;
+/// @prop - Margin top of the button
+$button-wp-margin-top:                                    .4rem !default;
+
+/// @prop - Margin end of the button
+$button-wp-margin-end:                                    .2rem !default;
+
+/// @prop - Margin bottom of the button
+$button-wp-margin-bottom:                                 .4rem !default;
+
+/// @prop - Margin start of the button
+$button-wp-margin-start:                                  .2rem !default;
+
+// deprecated
+$button-wp-padding:                                       null !default;
+
+/// @prop - Padding top of the button
+$button-wp-padding-top:                                   0 !default;
+
+/// @prop - Padding end of the button
+$button-wp-padding-end:                                   1.1em !default;
+
+/// @prop - Padding bottom of the button
+$button-wp-padding-bottom:                                $button-wp-padding-top !default;
+
+/// @prop - Padding start of the button
+$button-wp-padding-start:                                 $button-wp-padding-end !default;
 
 /// @prop - Height of the button
 $button-wp-height:                                        3.6rem !default;
@@ -40,8 +64,20 @@ $button-wp-background-color-activated:                    color-shade($button-wp
 // Windows Large Button
 // --------------------------------------------------
 
-/// @prop - Padding of the large button
-$button-wp-large-padding:                                 0 1em !default;
+// deprecated
+$button-wp-large-padding:                                 null !default;
+
+/// @prop - Padding top of the large button
+$button-wp-large-padding-top:                             0 !default;
+
+/// @prop - Padding end of the large button
+$button-wp-large-padding-end:                             1em !default;
+
+/// @prop - Padding bottom of the large button
+$button-wp-large-padding-bottom:                          $button-wp-large-padding-top !default;
+
+/// @prop - Padding start of the large button
+$button-wp-large-padding-start:                           $button-wp-large-padding-end !default;
 
 /// @prop - Height of the large button
 $button-wp-large-height:                                  2.8em !default;
@@ -53,8 +89,20 @@ $button-wp-large-font-size:                               2rem !default;
 // Windows Small Button
 // --------------------------------------------------
 
-/// @prop - Padding of the small button
-$button-wp-small-padding:                                 0 .9em !default;
+// deprecated
+$button-wp-small-padding:                                 null !default;
+
+/// @prop - Padding top of the small button
+$button-wp-small-padding-top:                             0 !default;
+
+/// @prop - Padding end of the small button
+$button-wp-small-padding-end:                             .9em !default;
+
+/// @prop - Padding bottom of the small button
+$button-wp-small-padding-bottom:                          $button-wp-small-padding-top !default;
+
+/// @prop - Padding start of the small button
+$button-wp-small-padding-start:                           $button-wp-small-padding-end !default;
 
 /// @prop - Height of the small button
 $button-wp-small-height:                                  2.1em !default;
@@ -110,8 +158,20 @@ $button-wp-clear-background-color-hover:                  rgba(158, 158, 158, .1
 // Windows Round Button
 // --------------------------------------------------
 
-/// @prop - Padding of the round button
-$button-wp-round-padding:                                 $button-round-padding !default;
+// deprecated
+$button-wp-round-padding:                                 null !default;
+
+/// @prop - Padding top of the round button
+$button-wp-round-padding-top:                             $button-round-padding-top !default;
+
+/// @prop - Padding end of the round button
+$button-wp-round-padding-end:                             $button-round-padding-end !default;
+
+/// @prop - Padding bottom of the round button
+$button-wp-round-padding-bottom:                          $button-round-padding-bottom !default;
+
+/// @prop - Padding start of the round button
+$button-wp-round-padding-start:                           $button-round-padding-start !default;
 
 /// @prop - Border radius of the round button
 $button-wp-round-border-radius:                           $button-round-border-radius !default;
@@ -128,18 +188,24 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-wp {
-  margin: $button-wp-margin;
-  padding: $button-wp-padding;
+  @include border-radius($button-wp-border-radius);
 
   height: $button-wp-height;
 
   border: $button-wp-border-width $button-wp-border-style $button-wp-border-color;
-  border-radius: $button-wp-border-radius;
 
   font-size: $button-wp-font-size;
 
   color: $button-wp-text-color;
   background-color: $button-wp-background-color;
+
+  @include deprecated-variable(margin, $button-wp-margin) {
+    @include margin($button-wp-margin-top, $button-wp-margin-end, $button-wp-margin-bottom, $button-wp-margin-start);
+  }
+
+  @include deprecated-variable(padding, $button-wp-padding) {
+    @include padding($button-wp-padding-top, $button-wp-padding-end, $button-wp-padding-bottom, $button-wp-padding-start);
+  }
 }
 
 .button-wp:hover:not(.disable-hover) {
@@ -180,19 +246,23 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-large-wp {
-  padding: $button-wp-large-padding;
-
   height: $button-wp-large-height;
 
   font-size: $button-wp-large-font-size;
+
+  @include deprecated-variable(padding, $button-wp-large-padding) {
+    @include padding($button-wp-large-padding-top, $button-wp-large-padding-end, $button-wp-large-padding-bottom, $button-wp-large-padding-start);
+  }
 }
 
 .button-small-wp {
-  padding: $button-wp-small-padding;
-
   height: $button-wp-small-height;
 
   font-size: $button-wp-small-font-size;
+
+  @include deprecated-variable(padding, $button-wp-small-padding) {
+    @include padding($button-wp-small-padding-top, $button-wp-small-padding-end, $button-wp-small-padding-bottom, $button-wp-small-padding-start);
+  }
 }
 
 .button-small-wp[icon-only] ion-icon {
@@ -203,20 +273,18 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-block-wp {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 }
 
 // Windows Full Button
 // --------------------------------------------------
 
 .button-full-wp {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
+  @include border-radius(0);
 
   border-right-width: 0;
   border-left-width: 0;
-  border-radius: 0;
 }
 
 // Windows Outline Button
@@ -304,13 +372,15 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-round-wp {
-  padding: $button-wp-round-padding;
+  @include border-radius($button-wp-round-border-radius);
 
-  border-radius: $button-wp-round-border-radius;
+  @include deprecated-variable(padding, $button-wp-round-padding) {
+    @include padding($button-wp-round-padding-top, $button-wp-round-padding-end, $button-wp-round-padding-bottom, $button-wp-round-padding-start);
+  }
 }
 
 .button-wp [icon-only] {
-  padding: 0;
+  @include padding(0);
 }
 
 

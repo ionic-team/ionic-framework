@@ -93,6 +93,14 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>dynamic min and max</ion-label>
+      <ion-range [min]="min" [max]="max" [(ngModel)]="singeValue5">
+        <ion-label range-left><input type="text" style="width: 50px;" [(ngModel)]="min" /></ion-label>
+        <ion-label range-right><input type="text" style="width: 50px;" [(ngModel)]="max" /></ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
       <ion-label>dual, pin, {{dualValue | json}}</ion-label>
       <ion-range dualKnobs="true" pin="true" [(ngModel)]="dualValue"></ion-range>
     </ion-item>

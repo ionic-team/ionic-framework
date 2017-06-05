@@ -11,9 +11,9 @@
 
 .item > ion-icon:first-child,
 .item-inner > ion-icon:first-child {
-  min-width: 24px;
+  @include text-align(center);
 
-  text-align: center;
+  min-width: 24px;
 }
 
 .item > ion-icon,
@@ -51,9 +51,9 @@ ion-thumbnail img {
 }
 
 .item-cover {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
 
   width: 100%;
   height: 100%;
