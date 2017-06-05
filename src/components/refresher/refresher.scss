@@ -23,10 +23,12 @@ $refresher-border-color:       #ddd !default;
 
 
 ion-refresher {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   z-index: $z-index-refresher;
+
   display: none;
 
   width: 100%;
@@ -69,8 +71,9 @@ ion-refresher-content {
 
 .refresher-pulling-icon,
 .refresher-refreshing-icon {
+  @include text-align(center);
+
   font-size: $refresher-icon-font-size;
-  text-align: center;
   color: $refresher-icon-color;
   transform-origin: center;
   transition: 200ms;
@@ -78,8 +81,9 @@ ion-refresher-content {
 
 .refresher-pulling-text,
 .refresher-refreshing-text {
+  @include text-align(center);
+
   font-size: $refresher-text-font-size;
-  text-align: center;
   color: $refresher-text-color;
 }
 

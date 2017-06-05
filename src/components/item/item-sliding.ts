@@ -4,7 +4,6 @@ import { swipeShouldReset, assert } from '../../util/util';
 import { Item } from './item';
 import { List } from '../list/list';
 import { Platform } from '../../platform/platform';
-import { DomController } from '../../platform/dom-controller';
 import { ItemOptions } from './item-options';
 
 const SWIPE_MARGIN = 30;
@@ -92,11 +91,11 @@ const enum SlidingState {
  * ### Button Layout
  * If an icon is placed with text in the option button, by default it will
  * display the icon on top of the text. This can be changed to display the icon
- * to the left of the text by setting `icon-left` as an attribute on the
+ * to the left of the text by setting `icon-start` as an attribute on the
  * `<ion-item-options>` element.
  *
  * ```html
- * <ion-item-options icon-left>
+ * <ion-item-options icon-start>
  *    <button ion-button (click)="archive(item)">
  *      <ion-icon name="archive"></ion-icon>
  *      Archive
@@ -164,7 +163,6 @@ export class ItemSliding {
   constructor(
     @Optional() list: List,
     private _plt: Platform,
-    private _dom: DomController,
     private _renderer: Renderer,
     private _elementRef: ElementRef,
     private _zone: NgZone

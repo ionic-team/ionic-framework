@@ -9,14 +9,18 @@ $text-input-ios-background-color:          $list-ios-background-color !default;
 /// @prop - Margin top of the input
 $text-input-ios-margin-top:                $item-ios-padding-top !default;
 
-/// @prop - Margin right of the input
-$text-input-ios-margin-right:              ($item-ios-padding-right / 2) !default;
+// deprecated
+$text-input-ios-margin-right:              ($item-ios-padding-end / 2) !default;
+/// @prop - Margin end of the input
+$text-input-ios-margin-end:                $text-input-ios-margin-right !default;
 
 /// @prop - Margin bottom of the input
 $text-input-ios-margin-bottom:             $item-ios-padding-bottom !default;
 
-/// @prop - Margin left of the input
+// deprecated
 $text-input-ios-margin-left:               0 !default;
+/// @prop - Margin start of the input
+$text-input-ios-margin-start:              $text-input-ios-margin-left !default;
 
 /// @prop - Width of the icon used to clear the input
 $text-input-ios-input-clear-icon-width:    30px !default;
@@ -53,10 +57,10 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 // --------------------------------------------------
 
 .text-input-ios {
-  margin: $text-input-ios-margin-top $text-input-ios-margin-right $text-input-ios-margin-bottom $text-input-ios-margin-left;
-  padding: 0;
+  @include margin($text-input-ios-margin-top, $text-input-ios-margin-end, $text-input-ios-margin-bottom, $text-input-ios-margin-start);
+  @include padding(0);
 
-  width: calc(100% - #{($text-input-ios-margin-right + $text-input-ios-margin-left)});
+  width: calc(100% - #{($text-input-ios-margin-end + $text-input-ios-margin-start)});
 }
 
 
@@ -64,8 +68,8 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 // --------------------------------------------------
 
 .input-ios .inset-input {
-  margin: ($item-ios-padding-top / 2) $item-ios-padding-right ($item-ios-padding-bottom / 2) 0;
-  padding: ($item-ios-padding-top / 2) ($item-ios-padding-right / 2) ($item-ios-padding-bottom / 2) ($item-ios-padding-left / 2);
+  @include padding(($item-ios-padding-top / 2), ($item-ios-padding-end / 2), ($item-ios-padding-bottom / 2), ($item-ios-padding-start / 2));
+  @include margin(($item-ios-padding-top / 2), $item-ios-padding-end, ($item-ios-padding-bottom / 2), 0);
 }
 
 
@@ -81,12 +85,17 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 @if ($text-input-ios-show-focus-highlight) {
   // In order to get a 2px border we need to add an inset
   // box-shadow 1px (this is to avoid the div resizing)
+
+  // TODO remove all uses of input-has-focus in v4
+  // TODO remove all uses of input-has-value in v4
+  .item-ios.item-input.item-input-has-focus .item-inner,
   .item-ios.item-input.input-has-focus .item-inner {
     @include ios-input-highlight($text-input-ios-highlight-color);
   }
 
   // The last item in a list has a border on the item, not the
   // inner item, so add it to the item itself
+  .list-ios .item-input.item-input-has-focus:last-child,
   .list-ios .item-input.input-has-focus:last-child {
     @include ios-input-highlight($text-input-ios-highlight-color);
 
@@ -98,11 +107,13 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($text-input-ios-show-valid-highlight) {
-  .item-ios.item-input.ng-valid.input-has-value:not(.input-has-focus) .item-inner {
+  .item-ios.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+  .item-ios.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
     @include ios-input-highlight($text-input-ios-highlight-color-valid);
   }
 
-  .list-ios .item-input.ng-valid.input-has-value:not(.input-has-focus):last-child {
+  .list-ios .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+  .list-ios .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
     @include ios-input-highlight($text-input-ios-highlight-color-valid);
 
     .item-inner {
@@ -113,11 +124,11 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-ios-show-invalid-highlight) {
-  .item-ios.item-input.ng-invalid.ng-touched:not(.input-has-focus) .item-inner {
+  .item-ios.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
     @include ios-input-highlight($text-input-ios-highlight-color-invalid);
   }
 
-  .list-ios .item-input.ng-invalid.ng-touched:not(.input-has-focus):last-child {
+  .list-ios .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
     @include ios-input-highlight($text-input-ios-highlight-color-invalid);
 
     .item-inner {
@@ -132,23 +143,19 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 .item-ios.item-label-stacked .text-input,
 .item-ios.item-label-floating .text-input {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-left: 0;
+  @include margin(8px, null, 8px, 0);
 
-  width: calc(100% - #{$text-input-ios-margin-right});
+  width: calc(100% - #{$text-input-ios-margin-end});
 }
 
 .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
 .item-ios.item-label-floating .label-ios + .input + .cloned-input {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 .item-label-stacked .select-ios,
 .item-label-floating .select-ios {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 0;
+  @include padding(8px, null, 8px, 0);
 }
 
 
@@ -160,13 +167,12 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 }
 
 .input-ios[clearInput] .text-input {
-  padding-right: $text-input-ios-input-clear-icon-width;
+  @include padding-horizontal(null, $text-input-ios-input-clear-icon-width);
 }
 
 .input-ios .text-input-clear-icon {
+  @include position-horizontal(null, ($item-ios-padding-end / 2));
   @include svg-background-image($text-input-ios-input-clear-icon-svg);
-
-  right: ($item-ios-padding-right / 2);
 
   width: $text-input-ios-input-clear-icon-width;
 

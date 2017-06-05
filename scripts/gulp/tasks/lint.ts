@@ -18,7 +18,8 @@ task('lint.sass', function() {
   return src([
       join('src', '**', '*.scss'),
       join('!src', 'components', '*', 'test', '**', '*'),
-      join('!src', 'util', 'test', '*')
+      join('!src', 'util', 'test', '*'),
+      join('!src', 'themes', 'normalize.scss')
     ])
     .pipe(scsslint())
     .pipe(scsslint.failReporter());

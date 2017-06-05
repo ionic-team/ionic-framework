@@ -295,7 +295,7 @@ export class AlertCmp {
     }
   }
 
-  dismiss(role: any): Promise<any> {
+  dismiss(role: string): Promise<any> {
     const opts: NavOptions = {
       minClickBlockDuration: 400
     };

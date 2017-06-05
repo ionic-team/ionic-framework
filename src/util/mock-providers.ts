@@ -550,7 +550,7 @@ export function mockMenu(platform: MockPlatform = null): Menu {
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let plt = platform === null ? mockPlatform() : platform;
-  return new Menu(null, elementRef, null, plt, renderer, null, null, gestureCtrl, dom, app);
+  return new Menu(null, elementRef, null, plt, renderer, null, gestureCtrl, dom, app);
 }
 
 export function mockDeepLinkConfig(links?: any[]): DeepLinkConfig {
@@ -591,7 +591,7 @@ export function mockNgModuleLoader(): NgModuleLoader {
 export function mockOverlay() {
   return {
     present: (opts?: NavOptions) => { return Promise.resolve(); },
-    dismiss: (data?: any, role?: any, navOptions?: NavOptions) => { return Promise.resolve(); },
+    dismiss: (data?: any, role?: string, navOptions?: NavOptions) => { return Promise.resolve(); },
     onDidDismiss: (callback: Function) => { },
     onWillDismiss: (callback: Function) => { }
   };

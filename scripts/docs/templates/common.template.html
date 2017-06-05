@@ -10,7 +10,7 @@ header_sub_title: "Ionic API Documentation"
 doc: "<$ doc.name $>"
 docType: "<$ doc.docType $>"
 <@ if doc.demo @>show_preview_device: true
-preview_device_url: "<$ doc.demo $>"
+preview_device_url: "<$ doc.demo $>www/"
 angular_controller: APIDemoCtrl <@ endif @>
 ---
 
@@ -225,7 +225,7 @@ Delegate: <$ doc.delegate $>
 
 </h1>
 
-<a class="improve-v2-docs" href="http://github.com/driftyco/ionic/edit/master/<$ doc.fileInfo.projectRelativePath $>#L<$ doc.location.start.line $>">
+<a class="improve-v2-docs" href="http://github.com/ionic-team/ionic/edit/master/<$ doc.fileInfo.projectRelativePath $>#L<$ doc.location.start.line $>">
 Improve this doc
 </a>
 

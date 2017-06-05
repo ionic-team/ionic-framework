@@ -15,14 +15,13 @@ ion-segment {
 }
 
 .segment-button {
+  @include margin-horizontal(0);
+  @include text-align(center);
+
   position: relative;
   display: block;
   overflow: hidden;
 
-  margin-right: 0;
-  margin-left: 0;
-
-  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;

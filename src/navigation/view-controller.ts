@@ -35,10 +35,10 @@ export class ViewController {
   private _isHidden: boolean = false;
   private _leavingOpts: NavOptions;
   private _nb: Navbar;
-  private _onDidDismiss: Function;
-  private _onWillDismiss: Function;
+  private _onDidDismiss: (data: any, role: string) => void;
+  private _onWillDismiss: (data: any, role: string) => void;
   private _dismissData: any;
-  private _dismissRole: any;
+  private _dismissRole: string;
   private _detached: boolean;
 
   _cmp: ComponentRef<any>;
@@ -149,14 +149,14 @@ export class ViewController {
   /**
    * Called when the current viewController has be successfully dismissed
    */
-  onDidDismiss(callback: Function) {
+  onDidDismiss(callback: (data: any, role: string) => void) {
     this._onDidDismiss = callback;
   }
 
   /**
    * Called when the current viewController will be dismissed
    */
-  onWillDismiss(callback: Function) {
+  onWillDismiss(callback: (data: any, role: string) => void) {
     this._onWillDismiss = callback;
   }
 
@@ -164,10 +164,10 @@ export class ViewController {
    * Dismiss the current viewController
    * @param {any} [data] Data that you want to return when the viewController is dismissed.
    * @param {any} [role ]
-   * @param {NavOptions} NavOptions Options for the dismiss navigation.
+   * @param {NavOptions} navOptions Options for the dismiss navigation.
    * @returns {any} data Returns the data passed in, if any.
    */
-  dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
+  dismiss(data?: any, role?: string, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
       assert(this._state === STATE_DESTROYED, 'ViewController does not have a valid _nav');
       return Promise.resolve(false);
@@ -396,7 +396,7 @@ export class ViewController {
   /**
    * Change the title of the back-button. Be sure to call this
    * after `ionViewWillEnter` to make sure the  DOM has been rendered.
-   * @param {string} backButtonText Set the back button text.
+   * @param {string} val Set the back button text.
    */
   setBackButtonText(val: string) {
     this._nb && this._nb.setBackButtonText(val);

@@ -16,12 +16,12 @@
 
     <ion-item-sliding *ngFor="let chat of chats" #item>
       <ion-item>
-        <ion-avatar item-left>
+        <ion-avatar item-start>
           <img [src]="chat.img">
         </ion-avatar>
         <h2>{{chat.name}}</h2>
         <p>{{chat.message}}</p>
-        <ion-note item-right>
+        <ion-note item-end>
           {{chat.time}}
         </ion-note>
       </ion-item>
@@ -58,7 +58,7 @@
 
     <ion-item-sliding *ngFor="let login of logins" #item>
       <ion-item>
-        <ion-icon [name]="login.icon" item-left></ion-icon>
+        <ion-icon [name]="login.icon" item-start></ion-icon>
         <h2>{{login.name}}</h2>
         <p>{{login.username}}</p>
       </ion-item>
@@ -67,7 +67,7 @@
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>
-      <ion-item-options (ionSwipe)="download(item)" icon-left>
+      <ion-item-options (ionSwipe)="download(item)" icon-start>
         <button ion-button color="dark" (click)="more(item)">
           <ion-icon name="volume-off"></ion-icon>
           Mute
@@ -85,7 +85,7 @@
 </ion-content>
 
 <style>
-  /* TODO: spinner is dropping classes so we have to use ids: https://github.com/driftyco/ionic/issues/7087 */
+  /* TODO: spinner is dropping classes so we have to use ids: https://github.com/ionic-team/ionic/issues/7087 */
   #archive-spinner,
   #download-spinner,
   .archiving .expand-hide,
@@ -93,7 +93,7 @@
     display: none;
   }
 
-  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/driftyco/ionic/issues/7087 */
+  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/ionic-team/ionic/issues/7087 */
   #archive-spinner.spinner-ios line,
   #archive-spinner.spinner-crescent circle {
     stroke: #fff;

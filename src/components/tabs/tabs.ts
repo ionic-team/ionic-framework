@@ -184,7 +184,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
   @Input() selectedIndex: number;
 
   /**
-   * @input {string} Set the tabbar layout: `icon-top`, `icon-left`, `icon-right`, `icon-bottom`, `icon-hide`, `title-hide`.
+   * @input {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
   @Input() tabsLayout: string;
 

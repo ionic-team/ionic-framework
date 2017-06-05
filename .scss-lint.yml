@@ -2,6 +2,8 @@
 
 # See config at https://github.com/brigade/scss-lint/blob/master/config/default.yml
 
+plugin_directories: ['.scss-linters']
+
 exclude:
   - 'src/components/item/item.ios.scss'
   - 'src/components/item/item.md.scss'
@@ -17,6 +19,9 @@ exclude:
 
 linters:
   ColorVariable:
+    enabled: false
+
+  DefaultRule:
     enabled: false
 
   DuplicateProperty:
@@ -37,13 +42,10 @@ linters:
 
       - position
       - top
-      - right
       - bottom
-      - left
       - z-index
       - display
       - overflow
-      - float
       - clear
       -
       - flex
@@ -59,16 +61,10 @@ linters:
       - justify-content
       - order
       -
-      - margin
       - margin-top
-      - margin-right
       - margin-bottom
-      - margin-left
-      - padding
       - padding-top
-      - padding-right
       - padding-bottom
-      - padding-left
       -
       - width
       - min-width
@@ -104,12 +100,6 @@ linters:
       - border-bottom-style
       - border-left-style
 
-      - border-radius
-      - border-top-left-radius
-      - border-top-right-radius
-      - border-bottom-left-radius
-      - border-bottom-right-radius
-
       - border-color
       - border-top-color
       - border-right-color
@@ -135,7 +125,6 @@ linters:
       - letter-spacing
       - line-height
       - list-style
-      - text-align
       - text-decoration
       - text-indent
       - text-overflow
@@ -207,3 +196,24 @@ linters:
   PropertySpelling:
     extra_properties:
       - contain
+    disabled_properties:
+      - right
+      - left
+
+      - float
+
+      - padding
+      - padding-left
+      - padding-right
+
+      - margin
+      - margin-left
+      - margin-right
+
+      - border-radius
+      - border-top-left-radius
+      - border-top-right-radius
+      - border-bottom-right-radius
+      - border-bottom-left-radius
+
+      - text-align

@@ -147,7 +147,7 @@ export class Platform {
    *   constructor(public plt: Platform) {
    *     if (this.plt.is('ios')) {
    *       // This will only print when on iOS
-   *       console.log("I'm an iOS device!");
+   *       console.log('I am an iOS device!');
    *     }
    *   }
    * }
@@ -426,7 +426,7 @@ export class Platform {
    * button is pressed. This method decides which of the registered back button
    * actions has the highest priority and should be called.
    *
-   * @param {Function} callback Called when the back button is pressed,
+   * @param {Function} fn Called when the back button is pressed,
    * if this registered action has the highest priority.
    * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
    * @returns {Function} A function that, when called, will unregister

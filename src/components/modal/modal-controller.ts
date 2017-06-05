@@ -65,6 +65,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
  * |-----------------------|------------|------------------------------------------------------------------------------------------------------------------|
  * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
  * | enableBackdropDismiss |`boolean`   | Whether the popover should be dismissed by tapping the backdrop. Default true.                                   |
+ * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                       |
  *
  * A modal can also emit data, which is useful when it is used to add or edit
  * data. For example, a profile page could slide up in a modal, and on submit,
