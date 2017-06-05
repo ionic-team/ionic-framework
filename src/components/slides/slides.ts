@@ -365,9 +365,21 @@ export class Slides extends Ion {
     return this._slidesPerView;
   }
   set slidesPerView(val: any) {
-    this._slidesPerView = val === 'auto' ? 'auto' : parseInt(val, 10);
+    this._slidesPerView = val === 'auto' ? 'auto' : parseFloat(val);
   }
   private _slidesPerView: number|string = 1;
+
+  /** 
+   * @input {boolean} Center a slide in the middle of the screen.
+   */
+  @Input()
+  get centeredSlides() {
+    return this._centeredSlides;
+  }
+  set centeredSlides(val: boolean) {
+    this._centeredSlides = isTrueProperty(val);
+  }
+  private _centeredSlides: boolean = false;
 
   /**
    * @hidden
@@ -381,10 +393,6 @@ export class Slides extends Ion {
    * @hidden
    */
   slidesPerGroup = 1;
-  /**
-   * @hidden
-   */
-  centeredSlides = false;
   /**
    * @hidden
    */
