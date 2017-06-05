@@ -6,7 +6,7 @@ import { customLaunchers } from './browser-providers.ts';
 
 export function config(config) {
   config.set({
-    basePath: path.join(__dirname, '..', '..'),
+    basePath: path.join(__dirname, '../..'),
     frameworks: ['jasmine'],
     plugins: [
       require('karma-jasmine'),
@@ -16,29 +16,29 @@ export function config(config) {
       require('karma-spec-reporter')
     ],
     files: [
-      {pattern: path.join('dist', 'vendor', 'core-js', 'client', 'core.js)', included: true, watched: false},
-      {pattern: path.join('dist', 'vendor', 'systemjs', 'dist', 'system-polyfills.js)', included: true, watched: false},
-      {pattern: path.join('dist', 'vendor', 'systemjs', 'dist', 'system.src.js)', included: true, watched: false},
-      {pattern: path.join('dist', 'vendor', 'zone.js', 'dist', 'zone.js)', included: true, watched: false},
-      {pattern: path.join('dist', 'vendor', 'zone.js', 'dist', 'proxy.js)', included: true, watched: false},
-      {pattern: path.join('dist', 'vendor', 'zone.js', 'dist', 'async-test.js)', included: true, watched: false},
-      {pattern: path.join('dist', 'vendor', 'zone.js', 'dist', 'fake-async-test.js)', included: true, watched: false},
+      {pattern: 'dist/vendor/core-js/client/core.js', included: true, watched: false},
+      {pattern: 'dist/vendor/systemjs/dist/system-polyfills.js', included: true, watched: false},
+      {pattern: 'dist/vendor/systemjs/dist/system.src.js', included: true, watched: false},
+      {pattern: 'dist/vendor/zone.js/dist/zone.js', included: true, watched: false},
+      {pattern: 'dist/vendor/zone.js/dist/proxy.js', included: true, watched: false},
+      {pattern: 'dist/vendor/zone.js/dist/async-test.js', included: true, watched: false},
+      {pattern: 'dist/vendor/zone.js/dist/fake-async-test.js', included: true, watched: false},
 
-      {pattern: path.join('scripts', 'karma', 'system.config.js)', included: true, watched: false},
+      {pattern: 'scripts/karma/system.config.js', included: true, watched: false},
 
       // paths loaded via module imports
-      {pattern: path.join('dist', '**', '*.js)', included: false, watched: true},
+      {pattern: 'dist/**/*.js', included: false, watched: true},
 
       // paths to support debugging with source maps in dev tools
-      {pattern: path.join('dist', '**', '*.ts)', included: false, watched: false},
-      {pattern: path.join('dist', '**', '*.js.map)', included: false, watched: false}
+      {pattern: 'dist/**/*.ts', included: false, watched: false},
+      {pattern: 'dist/**/*.js.map', included: false, watched: false}
     ],
     proxies: {},
 
     customLaunchers: customLaunchers,
 
     exclude: [
-      path.join('dist', 'e2e', '**', '*')
+      'dist/e2e/**/*'
     ],
     // Source files that you wanna generate coverage for.
     // Do not include tests or libraries (these files will be instrumented by Istanbul)
