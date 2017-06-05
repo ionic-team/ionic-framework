@@ -90,14 +90,18 @@ $tabs-md-tab-text-transition:                 transform .3s ease-in-out !default
 /// @prop - Transform for the active tab button icon when the layout is icon-top, icon-only, or title-only
 $tabs-md-tab-icon-transform-active:           translate3d(0, -2px, 0) !default;
 
-/// @prop - Transform for the active tab button icon when the layout is icon-right
+// deprecated
 $tabs-md-tab-icon-right-transform-active:     translate3d(2px, 0, 0) !default;
+/// @prop - Transform for the active tab button icon when the layout is icon-end
+$tabs-md-tab-icon-end-transform-active:       $tabs-md-tab-icon-right-transform-active !default;
 
 /// @prop - Transform for the active tab button icon when the layout is icon-bottom
 $tabs-md-tab-icon-bottom-transform-active:    translate3d(0, 2px, 0) !default;
 
-/// @prop - Transform for the active tab button icon when the layout is icon-left
+// deprecated
 $tabs-md-tab-icon-left-transform-active:      translate3d(-2px, 0, 0) !default;
+/// @prop - Transform for the active tab button icon when the layout is icon-start
+$tabs-md-tab-icon-start-transform-active:     $tabs-md-tab-icon-left-transform-active !default;
 
 /// @prop - Transform origin for the tab button text
 $tabs-md-tab-icon-transform-origin:           50% 150% !default;
@@ -190,9 +194,10 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
   transform: $tabs-md-tab-icon-transform-active;
 }
 
-// Tab layout: icon-right
-.tabs-md[tabsLayout=icon-right] .tab-button[aria-selected=true] .tab-button-icon {
-  transform: $tabs-md-tab-icon-right-transform-active;
+// Tab layout: icon-end
+.tabs-md[tabsLayout=icon-right] .tab-button[aria-selected=true] .tab-button-icon, // deprecated
+.tabs-md[tabsLayout=icon-end] .tab-button[aria-selected=true] .tab-button-icon {
+  transform: $tabs-md-tab-icon-end-transform-active;
 }
 
 // Tab layout: icon-bottom
@@ -200,9 +205,10 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
   transform: $tabs-md-tab-icon-bottom-transform-active;
 }
 
-// Tab layout: icon-left
-.tabs-md[tabsLayout=icon-left] .tab-button[aria-selected=true] .tab-button-icon {
-  transform: $tabs-md-tab-icon-left-transform-active;
+// Tab layout: icon-start
+.tabs-md[tabsLayout=icon-left] .tab-button[aria-selected=true] .tab-button-icon, // deprecated
+.tabs-md[tabsLayout=icon-start] .tab-button[aria-selected=true] .tab-button-icon {
+  transform: $tabs-md-tab-icon-start-transform-active;
 }
 
 

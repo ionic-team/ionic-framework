@@ -31,7 +31,15 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   vibrant:    rebeccapurple,
-  bright:     #ffc125
+  bright:     #ffc125,
+  greyYellow: (
+    base:#49606e,
+    contrast:#fbb636
+  ),
+  greyWhite: (
+    base:#49606e,
+    contrast:#fff
+  )
 );
 
 
