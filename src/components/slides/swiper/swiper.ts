@@ -897,9 +897,10 @@ function cleanupStyles(s: Slides) {
   }
 
   // Container
-  removeClass(s.container, s._classNames);
-  s.container.removeAttribute('style');
-
+  if (s.container) {
+    removeClass(s.container, s._classNames);
+    s.container.removeAttribute('style');
+  }
   // Wrapper
   s._wrapper.removeAttribute('style');
 

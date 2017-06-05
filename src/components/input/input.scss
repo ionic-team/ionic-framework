@@ -104,17 +104,24 @@ input.text-input:-webkit-autofill {
 // --------------------------------------------------
 // When the input has focus, then the input cover should be hidden
 
+// TODO remove all uses of input-has-focus in v4
+.item-input-has-focus .input-cover,
 .input-has-focus .input-cover {
   display: none;
 }
 
+.item-input-has-focus,
 .input-has-focus {
   pointer-events: none;
 }
 
+.item-input-has-focus input,
 .input-has-focus input,
+.item-input-has-focus textarea,
 .input-has-focus textarea,
+.item-input-has-focus a,
 .input-has-focus a,
+.item-input-has-focus button,
 .input-has-focus button {
   pointer-events: auto;
 }
@@ -158,6 +165,9 @@ input.text-input:-webkit-autofill {
   background-position: center;
 }
 
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus.item-input-has-value .text-input-clear-icon,
 .input-has-focus.input-has-value .text-input-clear-icon {
   display: block;
 }
