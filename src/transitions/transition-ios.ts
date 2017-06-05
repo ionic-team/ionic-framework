@@ -7,10 +7,6 @@ const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 const OPACITY = 'opacity';
 const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
-const OFF_RIGHT = '99.5%';
-const OFF_LEFT = '-33%';
-const OFF_RIGHT_RTL = '-99.5%';
-const OFF_LEFT_RTL = '33%';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
@@ -22,6 +18,8 @@ export class IOSTransition extends PageTransition {
     super.init();
 
     const plt = this.plt;
+    const OFF_RIGHT = plt.isRTL ? '-99.5%' : '99.5%';
+    const OFF_LEFT = plt.isRTL ? '33%' : '-33%';
     const enteringView = this.enteringView;
     const leavingView = this.leavingView;
     const opts = this.opts;
@@ -45,14 +43,14 @@ export class IOSTransition extends PageTransition {
       if (backDirection) {
         // entering content, back direction
         enteringContent
-          .fromTo(TRANSLATEX, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT), CENTER, true)
+          .fromTo(TRANSLATEX, OFF_LEFT, CENTER, true)
           .fromTo(OPACITY, OFF_OPACITY, 1, true);
 
       } else {
         // entering content, forward direction
         enteringContent
           .beforeClearStyles([OPACITY])
-          .fromTo(TRANSLATEX, (plt.isRTL ? OFF_RIGHT_RTL : OFF_RIGHT), CENTER, true);
+          .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
       }
 
       if (enteringHasNavbar) {
@@ -78,7 +76,7 @@ export class IOSTransition extends PageTransition {
         // set properties depending on direction
         if (backDirection) {
           // entering navbar, back direction
-          enteringTitle.fromTo(TRANSLATEX, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT), CENTER, true);
+          enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
 
           if (enteringView.enableBack()) {
             // back direction, entering page has a back button
@@ -89,11 +87,11 @@ export class IOSTransition extends PageTransition {
 
         } else {
           // entering navbar, forward direction
-          enteringTitle.fromTo(TRANSLATEX, (plt.isRTL ? OFF_RIGHT_RTL : OFF_RIGHT), CENTER, true);
+          enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
           enteringNavbarBg
             .beforeClearStyles([OPACITY])
-            .fromTo(TRANSLATEX, (plt.isRTL ? OFF_RIGHT_RTL : OFF_RIGHT), CENTER, true);
+            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
           if (enteringView.enableBack()) {
             // forward direction, entering page has a back button
@@ -130,7 +128,7 @@ export class IOSTransition extends PageTransition {
       } else {
         // leaving content, forward direction
         leavingContent
-          .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT))
+          .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
           .fromTo(OPACITY, 1, OFF_OPACITY)
           .afterClearStyles([TRANSFORM, OPACITY]);
       }
@@ -174,7 +172,7 @@ export class IOSTransition extends PageTransition {
         } else {
           // leaving navbar, forward direction
           leavingTitle
-            .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? OFF_LEFT_RTL : OFF_LEFT))
+            .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
             .afterClearStyles([TRANSFORM]);
 
           leavingBackButton.afterClearStyles([OPACITY]);
