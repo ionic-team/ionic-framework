@@ -121,7 +121,7 @@ function buildTest(filePath: string) {
   const relativePathFromComponents = relative(dirname(SRC_COMPONENTS_ROOT), srcTestRoot);
   const distTestRoot = join(process.cwd(), 'dist', 'e2e', relativePathFromComponents);
 
-  const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
+  const includeGlob = [join(ionicAngularDir, '**', '*.ts')];
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
   const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
 
@@ -154,7 +154,7 @@ function copyProtractorTestContent(filePaths: string[]): Promise<any> {
 }
 
 function applyTemplate(filePathContent: Map<string, string>) {
-  const buildConfig = require('../../build/config');
+  const buildConfig = require(join('..', '..', 'build', 'config'));
   const templateFileContent = readFileSync(join(SCRIPTS_ROOT, 'e2e', 'e2e.template.js'));
   const templater = template(templateFileContent.toString());
   const modifiedMap = new Map<string, string>();
@@ -235,7 +235,7 @@ task('e2e.polyfill', (done: Function) => {
     return done();
   }
 
-  writePolyfills('dist/e2e/polyfills').then(() => {
+  writePolyfills(join('dist', 'e2e', 'polyfills')).then(() => {
     done();
   }).catch(err => {
     done(err);

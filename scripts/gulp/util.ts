@@ -60,7 +60,9 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
   }
 
+  // TS represents paths internally with '/' and expects the tsconfig path to be in this format
   let json = JSON.stringify(config, null, 2);
+  json = json.replace(/\\\\/g, '/');
 
   const dirToCreate = dirname(pathToWriteFile);
   ensureDirSync(dirToCreate);
@@ -204,6 +206,7 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
     '--enableLint', 'false',
+    '--debug'
   ];
 
   if (watchConfigPath) {

@@ -1,24 +1,26 @@
 
+import path = require('path');
+
 module.exports = {
   dist: 'dist',
   src: {
-    spec: ['src/**/test/*.spec.js'],
-    js: ['src/**/*.js'],
+    spec: [path.join('src', '**', 'test', '*.spec.js')],
+    js: [path.join('src', '**', '*.js')],
 
     // Get all the non-js files and main.js
-    e2e: ['src/components/*/test/*/**/*'],
-    html: 'src/**/*.html',
-    scss: 'src/**/*.scss',
+    e2e: [path.join('src', 'components', '*', 'test', '*', '**', '*')],
+    html: path.join('src', '**', '*.html'),
+    scss: path.join('src', '**', '*.scss'),
   },
 
   scripts: [
-    'node_modules/systemjs/node_modules/es6-module-loader/dist/es6-module-loader.js',
-    'node_modules/systemjs/dist/system.js',
-    'node_modules/angular2/bundles/angular2.dev.js',
-    'node_modules/angular2/bundles/router.dev.js',
-    'node_modules/angular2/bundles/http.dev.js',
-    'node_modules/es6-shim/es6-shim.min.js',
-    'dist/js/ionic.js'
+    path.join('node_modules', 'systemjs', 'node_modules', 'es6-module-loader', 'dist', 'es6-module-loader.js'),
+    path.join('node_modules', 'systemjs', 'dist', 'system.js'),
+    path.join('node_modules', 'angular2', 'bundles', 'angular2.dev.js'),
+    path.join('node_modules', 'angular2', 'bundles', 'router.dev.js'),
+    path.join('node_modules', 'angular2', 'bundles', 'http.dev.js'),
+    path.join('node_modules', 'es6-shim', 'es6-shim.min.js'),
+    path.join('dist', 'js', 'ionic.js')
   ],
 
   protractorPort: 8876,
