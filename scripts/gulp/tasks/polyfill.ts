@@ -1,6 +1,6 @@
 import { task, src, dest } from 'gulp';
 import { writePolyfills } from '../util';
-import { join, relative } from 'path';
+import { join } from 'path';
 
 task('polyfill', ['polyfill.copy-readme', 'polyfill.write']);
 
