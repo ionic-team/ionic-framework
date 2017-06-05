@@ -1,5 +1,5 @@
 import { spawn } from 'child_process';
-import { accessSync, readFileSync, writeFileSync } from 'fs';
+import { accessSync, readFileSync } from 'fs';
 import { dirname, join, relative } from 'path';
 
 import * as glob from 'glob';
@@ -11,7 +11,10 @@ import { argv } from 'yargs';
 
 
 import { DIST_E2E_COMPONENTS_ROOT, ES_2015, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT, SCRIPTS_ROOT } from '../constants';
-import { createTempTsConfig, createTimestamp, getFolderInfo, readFileAsync, runAppScriptsBuild, writeFileAsync, writePolyfills } from '../util';
+import {
+  createTempTsConfig, createTimestamp, getFolderInfo, readFileAsync, runAppScriptsBuild,
+  setSassIonicVersion, writeFileAsync, writePolyfills
+} from '../util';
 
 import * as pAll from 'p-all';
 
@@ -21,7 +24,7 @@ task('e2e.prepare', (done: Function) => {
 
 task('e2e.prepareSass', (done: Function) => {
   const version = `E2E-${createTimestamp()}`;
-  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  setSassIonicVersion(version);
   done();
 });
 
