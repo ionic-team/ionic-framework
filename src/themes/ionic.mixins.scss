@@ -29,15 +29,6 @@
   }
 }
 
-
-// SVG Background Image Mixin
-// --------------------------------------------------
-
-@mixin svg-background-image($svg) {
-  $url: url-encode($svg);
-  background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
-}
-
 // Check that the given map values are in ascending order
 // ---------------------------------------------------------------------------------
 
@@ -203,6 +194,28 @@
     // TODO find variable name
     @warn "you are using a deprecated variable";
     #{$property}: $variable;
+  }
+}
+
+// SVG Background Image Mixin
+// @param {string} $svg
+// ----------------------------------------------------------
+@mixin svg-background-image($svg, $flip-rtl: false) {
+  $url: url-encode($svg);
+
+  @if $flip-rtl != true {
+    @include multi-dir() {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+    }
+  } @else {
+    $flipped-url: url-encode(str-replace($svg, "<path", "<path transform='scale(-1, 1)'"));
+
+    @include ltr() {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+    }
+    @include rtl() {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$flipped-url}");
+    }
   }
 }
 
