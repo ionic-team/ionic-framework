@@ -445,7 +445,7 @@
     @include rtl() {
       background-position: left $horizontal-amount $vertical $vertical-amount;
     }
-  } @else if $horizontal == left or $horizontal == right {
+  } @else if $horizontal == left or $horizontal == right  or $horizontal == center {
     @include multi-dir() {
       background-position: $horizontal $horizontal-amount $vertical $vertical-amount;
     }
