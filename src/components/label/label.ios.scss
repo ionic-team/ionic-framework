@@ -67,7 +67,7 @@ $label-ios-margin-start:       0 !default;
 
 .label-ios[floating] {
   @include margin(null, null, 0, null);
-  @include translate3d(0, 27px, 0);
+  @include transform(0, 27px, 0);
   @include transform-origin(start, top);
 
   transition: transform 150ms ease-in-out;

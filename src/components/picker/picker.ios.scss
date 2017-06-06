@@ -171,7 +171,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
 
 .picker-ios .picker-above-highlight {
   @include position(0, null, null, 0);
-  @include translate3d(0, 0, 90px);
+  @include transform(0, 0, 90px);
 
   position: absolute;
   z-index: 10;
@@ -189,7 +189,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
 
 .picker-ios .picker-below-highlight {
   @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
-  @include translate3d(0, 0, 90px);
+  @include transform(0, 0, 90px);
 
   position: absolute;
 

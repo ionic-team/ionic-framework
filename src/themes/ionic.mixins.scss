@@ -467,7 +467,3 @@
     }
   }
 }
-
-@mixin translate3d($x, $y, $z) {
-  @include transform($x, $y, $z);
-}

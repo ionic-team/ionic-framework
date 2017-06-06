@@ -56,7 +56,7 @@ $label-md-margin-start:               0 !default;
 }
 
 .label-md[floating] {
-  @include translate3d(0, 27px, 0);
+  @include transform(0, 27px, 0);
   @include transform-origin(start, top);
 
   transition: transform 150ms ease-in-out;

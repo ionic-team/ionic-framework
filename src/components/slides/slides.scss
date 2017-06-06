@@ -53,7 +53,7 @@
 
 .swiper-container-android .swiper-slide,
 .swiper-wrapper {
-  @include translate3d(0, 0, 0);
+  @include transform(0, 0, 0);
 }
 
 .swiper-container-multirow > .swiper-wrapper {
@@ -183,7 +183,7 @@
 // Pagination Styles
 .swiper-pagination {
   @include text-align(center);
-  @include translate3d(0, 0, 0);
+  @include transform(0, 0, 0);
 
   position: absolute;
   z-index: 10;
@@ -253,7 +253,7 @@ button.swiper-pagination-bullet {
 
 .swiper-container-vertical > .swiper-pagination-bullets {
   @include position(50%, 10px, null, null);
-  @include translate3d(0, -50%, 0);
+  @include transform(0, -50%, 0);
 }
 
 .swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {

@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 ion-reorder {
-  @include translate3d(160%, 0, 0);
+  @include transform(160%, 0, 0);
 
   display: none;
 
@@ -34,7 +34,7 @@ ion-reorder ion-icon {
 }
 
 .reorder-visible ion-reorder {
-  @include translate3d(0, 0, 0);
+  @include transform(0, 0, 0);
 }
 
 .reorder-list-active .item,

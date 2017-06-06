@@ -241,7 +241,7 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
   color: $tabs-md-tab-icon-color-active;
 
   @include deprecated-variable(transform, $tabs-md-tab-icon-transform-active) {
-    @include translate3d($tabs-md-tab-icon-transform-x-active, $tabs-md-tab-icon-transform-y-active, $tabs-md-tab-icon-transform-z-active);
+    @include transform($tabs-md-tab-icon-transform-x-active, $tabs-md-tab-icon-transform-y-active, $tabs-md-tab-icon-transform-z-active);
   }
 }
 
@@ -249,14 +249,14 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 .tabs-md[tabsLayout=icon-right] .tab-button[aria-selected=true] .tab-button-icon, // deprecated
 .tabs-md[tabsLayout=icon-end] .tab-button[aria-selected=true] .tab-button-icon {
   @include deprecated-variable(transform, $tabs-md-tab-icon-end-transform-active) {
-    @include translate3d($tabs-md-tab-icon-right-transform-x-active, $tabs-md-tab-icon-right-transform-y-active, $tabs-md-tab-icon-right-transform-z-active);
+    @include transform($tabs-md-tab-icon-right-transform-x-active, $tabs-md-tab-icon-right-transform-y-active, $tabs-md-tab-icon-right-transform-z-active);
   }
 }
 
 // Tab layout: icon-bottom
 .tabs-md[tabsLayout=icon-bottom] .tab-button[aria-selected=true] .tab-button-icon {
   @include deprecated-variable(transform, $tabs-md-tab-icon-bottom-transform-active) {
-    @include translate3d($tabs-md-tab-icon-bottom-transform-x-active, $tabs-md-tab-icon-bottom-transform-y-active, $tabs-md-tab-icon-bottom-transform-z-active);
+    @include transform($tabs-md-tab-icon-bottom-transform-x-active, $tabs-md-tab-icon-bottom-transform-y-active, $tabs-md-tab-icon-bottom-transform-z-active);
   }
 }
 
@@ -264,7 +264,7 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 .tabs-md[tabsLayout=icon-left] .tab-button[aria-selected=true] .tab-button-icon, // deprecated
 .tabs-md[tabsLayout=icon-start] .tab-button[aria-selected=true] .tab-button-icon {
   @include deprecated-variable(transform, $tabs-md-tab-icon-start-transform-active) {
-    @include translate3d($tabs-md-tab-icon-left-transform-x-active, $tabs-md-tab-icon-left-transform-y-active, $tabs-md-tab-icon-left-transform-z-active);
+    @include transform($tabs-md-tab-icon-left-transform-x-active, $tabs-md-tab-icon-left-transform-y-active, $tabs-md-tab-icon-left-transform-z-active);
   }
 }
 

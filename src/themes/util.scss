@@ -68,5 +68,5 @@ ion-input :focus {
 }
 
 .click-block-active {
-  @include translate3d(0, 0, 0);
+  @include transform(0, 0, 0);
 }
