@@ -134,7 +134,7 @@ $checkbox-md-item-end-margin-start:      0 !default;
 // Material Design Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-.checkbox-md .checkbox-checked:not(.checkbox-indeterminate) .checkbox-inner {
+.checkbox-md .checkbox-checked .checkbox-inner {
   @include position(0, null, null, 4px);
 
   position: absolute;
