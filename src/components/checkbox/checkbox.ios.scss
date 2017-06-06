@@ -103,6 +103,15 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 }
 
 
+// iOS Checkbox Outer Circle: Indeterminate
+// -----------------------------------------
+
+.checkbox-ios .checkbox-indeterminate {
+  border-color: $checkbox-ios-icon-border-color-on;
+  background-color: $checkbox-ios-background-color-on;
+}
+
+
 // iOS Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
@@ -120,6 +129,27 @@ $checkbox-ios-item-end-margin-start:      0 !default;
   border-style: $checkbox-ios-icon-checkmark-style;
   border-color: $checkbox-ios-icon-checkmark-color;
   transform: rotate(45deg);
+}
+
+
+// iOS Checkbox Inner Checkmark: Indeterminate
+// -----------------------------------------
+
+.checkbox-ios .checkbox-indeterminate .checkbox-inner {
+  @include position(9px, null, null, 5px);
+
+  position: absolute;
+
+  width: 9px;
+  height: 0;
+
+  border-width: $checkbox-ios-icon-checkmark-width;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-style: $checkbox-ios-icon-checkmark-style;
+  border-color: $checkbox-ios-icon-checkmark-color;
+  transform: none;
 }
 
 

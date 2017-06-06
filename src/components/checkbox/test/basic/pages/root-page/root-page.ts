@@ -28,6 +28,11 @@ export class RootPage {
     'grape': this.grapeCtrl
   });
 
+  chkStates = {
+    checked: true,
+    indeterminate: true,
+  };
+
   public checked: boolean = false;
   public disabled: boolean = false;
 

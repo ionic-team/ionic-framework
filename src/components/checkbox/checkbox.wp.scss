@@ -111,6 +111,15 @@ $checkbox-wp-item-end-margin-start:      0 !default;
 }
 
 
+// Windows Checkbox Outer Square: Indeterminate
+// -----------------------------------------
+
+.checkbox-wp .checkbox-indeterminate {
+  border-color: $checkbox-wp-icon-background-color-on;
+  background-color: $checkbox-wp-icon-checkmark-color;
+}
+
+
 // Windows Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
@@ -128,6 +137,24 @@ $checkbox-wp-item-end-margin-start:      0 !default;
   border-style: $checkbox-wp-icon-checkmark-style;
   border-color: $checkbox-wp-icon-checkmark-color;
   transform: rotate(45deg);
+}
+
+
+// Windows Checkbox Inner Checkmark: Indeterminate
+// -----------------------------------------
+
+.checkbox-wp .checkbox-indeterminate .checkbox-inner {
+  @include position(2px, null, null, 2px);
+
+  position: absolute;
+
+  width: 8px;
+  height: 0px;
+
+  border-width: 4px;
+  border-style: $checkbox-wp-icon-checkmark-style;
+  border-color: $checkbox-wp-icon-border-color-on;
+  transform: none;
 }
 
 
