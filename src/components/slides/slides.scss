@@ -568,3 +568,7 @@ ion-slides {
   max-width: 100%;
   max-height: 100%;
 }
+
+ion-slide[scroll] {
+  overflow-y: scroll;
+}
