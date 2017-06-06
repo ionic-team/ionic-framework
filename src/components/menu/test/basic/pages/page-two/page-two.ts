@@ -13,7 +13,7 @@ export class PageTwo {
     public modalCtrl: ModalController,
     public platform: Platform) { }
 
-  myMenu: string = 'right';
+  myMenu: string = 'end';
 
   toggleDir() {
     this.platform.setDir(this.platform.isRTL ? 'ltr' : 'rtl', true);
