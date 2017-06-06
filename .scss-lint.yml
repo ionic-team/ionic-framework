@@ -2,6 +2,8 @@
 
 # See config at https://github.com/brigade/scss-lint/blob/master/config/default.yml
 
+plugin_directories: ['.scss-linters']
+
 exclude:
   - 'src/themes/ionic.mixins.scss'
   - 'src/themes/license.scss'
@@ -12,6 +14,9 @@ exclude:
 
 linters:
   ColorVariable:
+    enabled: false
+
+  DefaultRule:
     enabled: false
 
   DuplicateProperty:

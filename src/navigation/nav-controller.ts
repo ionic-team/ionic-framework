@@ -270,7 +270,7 @@ import { ViewController } from './view-controller';
  * ## Nav Guards
  *
  * In some cases, a developer should be able to control views leaving and entering. To allow for this, NavController has the `ionViewCanEnter` and `ionViewCanLeave` methods.
- * Similar to Angular 2 route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
+ * Similar to Angular route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
  *
  * ```ts
  * export class MyClass{
