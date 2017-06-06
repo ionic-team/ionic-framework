@@ -422,3 +422,39 @@
     }
   }
 }
+
+@mixin background-position($horizontal, $vertical: null, $horizontal-amount: null, $vertical-amount: null) {
+  @if $horizontal-amount != null {
+    $temp: $horizontal-amount;
+
+    $horizontal-amount: $vertical;
+    $vertical: $temp;
+  }
+
+  @if $horizontal == start {
+    @include ltr() {
+      background-position: left $horizontal-amount $vertical $vertical-amount;
+    }
+    @include rtl() {
+      background-position: right $horizontal-amount $vertical $vertical-amount;
+    }
+  } @else if $horizontal == end {
+    @include ltr() {
+      background-position: right $horizontal-amount $vertical $vertical-amount;
+    }
+    @include rtl() {
+      background-position: left $horizontal-amount $vertical $vertical-amount;
+    }
+  } @else if $horizontal == left or $horizontal == right {
+    @include multi-dir() {
+      background-position: $horizontal $horizontal-amount $vertical $vertical-amount;
+    }
+  } @else {
+    @include ltr() {
+      background-position: $horizontal $vertical $vertical-amount;
+    }
+    @include rtl() {
+      background-position: right $horizontal $vertical $vertical-amount;
+    }
+  }
+}
