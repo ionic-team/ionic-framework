@@ -455,10 +455,14 @@ export class TextInput extends Ion implements IonicFormInput {
       var ele: HTMLElement = this._elementRef.nativeElement;
       ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
 
+      // check if input is in ion-slides
+      var slidesEle = ele.closest('ion-slides');
+
       var scrollData = getScrollData(ele.offsetTop, ele.offsetHeight, content.getContentDimensions(), this._keyboardHeight, this._plt.height());
-      if (Math.abs(scrollData.scrollAmount) < 4) {
+      if (Math.abs(scrollData.scrollAmount) < 4 || slidesEle) {
         // the text input is in a safe position that doesn't
-        // require it to be scrolled into view, just set focus now
+        // require it to be scrolled into view or is in an
+        // ion-slides, just set focus now
         this.setFocus();
 
         // all good, allow clicks again
