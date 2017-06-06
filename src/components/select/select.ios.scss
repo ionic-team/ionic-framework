@@ -9,7 +9,7 @@ $select-ios-padding-top:         $item-ios-padding-top !default;
 // deprecated
 $select-ios-padding-right:       ($item-ios-padding-end / 2) !default;
 /// @prop - Padding end of the select
-$select-ios-padding-end:         $select-ios-padding-right;
+$select-ios-padding-end:         $select-ios-padding-right !default;
 
 /// @prop - Padding bottom of the select
 $select-ios-padding-bottom:      $item-ios-padding-bottom !default;
@@ -17,7 +17,7 @@ $select-ios-padding-bottom:      $item-ios-padding-bottom !default;
 // deprecated
 $select-ios-padding-left:        $item-ios-padding-start !default;
 /// @prop - Padding start of the select
-$select-ios-padding-start:       $select-ios-padding-left;
+$select-ios-padding-start:       $select-ios-padding-left !default;
 
 /// @prop - Color of the select icon
 $select-ios-icon-color:          #999 !default;
@@ -43,10 +43,9 @@ $select-ios-placeholder-color:   $select-ios-icon-color !default;
 
 .select-ios .select-icon .select-icon-inner {
   @include position(50%, null, null, 5px);
+  @include margin(-2px, null, null, null);
 
   position: absolute;
-
-  margin-top: -2px;
 
   width: 0;
   height: 0;

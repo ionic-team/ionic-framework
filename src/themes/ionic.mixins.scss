@@ -1,3 +1,4 @@
+@import "ionic.functions";
 
 // Appearance
 // --------------------------------------------------
@@ -8,7 +9,6 @@
   -webkit-appearance: $val;
   appearance: $val;
 }
-
 
 // Input Placeholder
 // --------------------------------------------------
@@ -82,6 +82,15 @@
 
 // ---------------------------------------------------------------------------------
 
+// Minimum breakpoint width. Null for the smallest (first) breakpoint.
+//
+//    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    576px
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  @return if($min != 0, $min, null);
+}
+
 
 // Returns a blank string if smallest breakpoint, otherwise returns the name with a dash infront.
 // Useful for making responsive utilities.
@@ -93,17 +102,6 @@
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
   @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
 }
-
-
-// Minimum breakpoint width. Null for the smallest (first) breakpoint.
-//
-//    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    576px
-@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
-  $min: map-get($breakpoints, $name);
-  @return if($min != 0, $min, null);
-}
-
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
 // Makes the @content apply to the given breakpoint and wider.
@@ -118,18 +116,6 @@
   }
 }
 
-
-// Maximum breakpoint width. Null for the largest (last) breakpoint.
-// The maximum value is calculated as the minimum of the next one less 0.1.
-//
-//    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
-//    767px
-@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
-  $next: breakpoint-next($name, $breakpoints);
-  @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
-}
-
-
 // Name of the next breakpoint, or null for the last breakpoint.
 //
 //    >> breakpoint-next(sm)
@@ -141,6 +127,16 @@
 @function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
   $n: index($breakpoint-names, $name);
   @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}
+
+// Maximum breakpoint width. Null for the largest (last) breakpoint.
+// The maximum value is calculated as the minimum of the next one less 0.1.
+//
+//    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
+//    767px
+@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
+  $next: breakpoint-next($name, $breakpoints);
+  @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
 }
 
 
@@ -157,16 +153,42 @@
   }
 }
 
-$include-rtl: true !default;
+@mixin multi-dir() {
+  @if $app-direction == null {
+    $root: #{&};
+    @at-root [dir="ltr"], [dir="rtl"] {
+      #{$root} {
+        @content;
+      }
+    }
+  } @else {
+    @content;
+  }
+}
 
 @mixin rtl() {
-  @if $include-rtl {
+  @if $app-direction == null {
     $root: #{&};
     @at-root [dir="rtl"] {
       #{$root} {
         @content;
       }
     }
+  } @else if $app-direction == rtl {
+    @content;
+  }
+}
+
+@mixin ltr() {
+  @if $app-direction == null {
+    $root: #{&};
+    @at-root [dir="ltr"] {
+      #{$root} {
+        @content;
+      }
+    }
+  } @else if $app-direction == ltr {
+    @content;
   }
 }
 
@@ -184,96 +206,103 @@ $include-rtl: true !default;
   }
 }
 
-// Add padding horizontal
-// @param {string} $start - amount to pad start
-// @param {string} $end - amount to pad end
+// Add property horizontal
+// @param {string} $start
+// @param {string} $end
 // ----------------------------------------------------------
-@mixin padding-horizontal($start, $end: $start) {
-  @if $start != null {
-    padding-left: $start;
-  }
-
-  @if $end != null {
-    padding-right: $end;
-  }
-
-  @if $start != $end {
+@mixin property-horizontal($prop, $start, $end: $start) {
+  @if $start == $end {
+    @include multi-dir() {
+      #{$prop}-left: $start;
+      #{$prop}-right: $end;
+    }
+  } @else {
+    @include ltr() {
+      #{$prop}-left: $start;
+      #{$prop}-right: $end;
+    }
     @include rtl() {
-      @if $start != null {
-        padding-right: $start;
-      } @else if $end != null {
-        padding-right: initial;
-      }
+      #{$prop}-left: $end;
+      #{$prop}-right: $start;
+    }
+  }
+}
 
-      @if $end != null {
-        padding-left: $end;
-      } @else if $start != null {
-        padding-left: initial;
+// Add property for all directions
+// @param {string} $prop
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// @param {boolean} $content include content or use default
+// ----------------------------------------------------------
+@mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end, $content: false) {
+  @if $top == $end and $top == $bottom and $top == $start {
+    @include multi-dir() {
+      #{$prop}: $top;
+    }
+  } @else if $top == $bottom and $end == $start and $top != null and $end != null {
+    @include multi-dir() {
+      #{$prop}: $top $end;
+    }
+  } @else if $end == $start and $top != null and $end != null and $bottom != null {
+    @include multi-dir() {
+      #{$prop}: $top $end $bottom;
+    }
+  } @else if $top != null and $end != null and $bottom != null and $start != null {
+    @include ltr() {
+      #{$prop}: $top $end $bottom $start;
+    }
+    @include rtl() {
+      #{$prop}: $top $start $bottom $end;
+    }
+  } @else {
+    @if $content == true { // TODO check if @content exists instead
+      @content;
+    } @else {
+      @include property-horizontal($prop, $start, $end);
+      @include multi-dir() {
+        #{$prop}-top: $top;
+        #{$prop}-bottom: $bottom;
       }
     }
   }
 }
 
-// Add padding for all sides
+// Add padding horizontal
+// @param {string} $start
+// @param {string} $end
+// ----------------------------------------------------------
+@mixin padding-horizontal($start, $end: $start) {
+  @include property-horizontal(padding, $start, $end);
+}
+
+// Add padding for all directions
 // @param {string} $top
 // @param {string} $end
 // @param {string} $bottom
 // @param {string} $start
 // ----------------------------------------------------------
 @mixin padding($top, $end: $top, $bottom: $top, $start: $end) {
-  @if ($top == $end and $top == $bottom and $top == $start) {
-    padding: $top;
-  } @else {
-    @include padding-horizontal($start, $end);
-    padding-top: $top;
-    padding-bottom: $bottom;
-  }
+  @include property(padding, $top, $end, $bottom, $start);
 }
 
 // Add margin horizontal
-// @param {string} $start - amount to margin start
-// @param {string} $end - amount to margin end
+// @param {string} $start
+// @param {string} $end
 // ----------------------------------------------------------
 @mixin margin-horizontal($start, $end: $start) {
-  @if $start != null {
-    margin-left: $start;
-  }
-
-  @if $end != null {
-    margin-right: $end;
-  }
-
-  @if $start != $end {
-    @include rtl() {
-      @if $start != null {
-        margin-right: $start;
-      } @else if $end != null {
-        margin-right: initial;
-      }
-
-      @if $end != null {
-        margin-left: $end;
-      } @else if $start != null {
-        margin-left: initial;
-      }
-    }
-  }
+  @include property-horizontal(margin, $start, $end);
 }
 
-// Add margin for all sides
+// Add margin for all directions
 // @param {string} $top
 // @param {string} $end
 // @param {string} $bottom
 // @param {string} $start
 // ----------------------------------------------------------
 @mixin margin($top, $end: $top, $bottom: $top, $start: $end) {
-  @if ($top == $end and $top == $bottom and $top == $start) {
-    margin: $top;
-  } @else {
-    @include margin-horizontal($start, $end);
-    margin-top: $top;
-    margin-bottom: $bottom;
-  }
+  @include property(margin, $top, $end, $bottom, $start);
 }
 
 // Add position horizontal
@@ -281,32 +310,24 @@ $include-rtl: true !default;
 // @param {string} $end - amount to left: 0; end
 // ----------------------------------------------------------
 @mixin position-horizontal($start: null, $end: null) {
-  @if $start != null {
-    left: $start;
-  }
-
-  @if $end != null {
-    right: $end;
-  }
-
-  @if $start != $end {
+  @if $start == $end {
+    @include multi-dir() {
+      left: $start;
+      right: $end;
+    }
+  } @else {
+    @include ltr() {
+      left: $start;
+      right: $end;
+    }
     @include rtl() {
-      @if $start != null {
-        right: $start;
-      } @else if $end != null {
-        right: auto;
-      }
-
-      @if $end != null {
-        left: $end;
-      } @else if $start != null {
-        left: auto;
-      }
+      left: $end;
+      right: $start;
     }
   }
 }
 
-// Add position for all sides
+// Add position for all directions
 // @param {string} $top
 // @param {string} $end
 // @param {string} $bottom
@@ -314,68 +335,33 @@ $include-rtl: true !default;
 // ----------------------------------------------------------
 @mixin position($top: null, $end: null, $bottom: null, $start: null) {
   @include position-horizontal($start, $end);
-  @if $top != null {
-    top: $top;
-  }
-  @if $bottom != null {
-    bottom: $bottom;
-  }
+  top: $top;
+  bottom: $bottom;
 }
 
-// Add correct border radius for ltr and rtl
+// Add border radius for all directions
 // @param {string} $top-start
 // @param {string} $top-end
 // @param {string} $bottom-end
 // @param {string} $bottom-start
 // ----------------------------------------------------------
 @mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
-  @if ($top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start) {
-    border-radius: $top-start;
-  } @else {
-    @if $top-start != null {
+  @include property(border-radius, $top-start, $top-end, $bottom-end, $bottom-start, true) {
+    @include ltr() {
       border-top-left-radius: $top-start;
-    }
-
-    @if $top-end != null {
       border-top-right-radius: $top-end;
-    }
-
-    @if $bottom-end != null {
       border-bottom-right-radius: $bottom-end;
-    }
-
-    @if $bottom-start != null {
       border-bottom-left-radius: $bottom-start;
     }
 
     @include rtl() {
-      @if $top-start != null {
-        border-top-right-radius: $top-start;
-      } @else if $top-end != null {
-        border-top-right-radius: 0;
-      }
-
-      @if $top-end != null {
-        border-top-left-radius: $top-end;
-      } @else if $top-start != null {
-        border-top-left-radius: 0;
-      }
-
-      @if $bottom-end != null {
-        border-bottom-left-radius: $bottom-end;
-      } @else if $bottom-start != null {
-        border-bottom-left-radius: 0;
-      }
-
-      @if $bottom-start != null {
-        border-bottom-right-radius: $bottom-start;
-      } @else if $bottom-end != null {
-        border-bottom-right-radius: 0;
-      }
+      border-top-left-radius: $top-end;
+      border-top-right-radius: $top-start;
+      border-bottom-right-radius: $bottom-start;
+      border-bottom-left-radius: $bottom-end;
     }
   }
 }
-
 
 // Sets correct text align with support for old browsers
 // @param {string} $direction - text direction
@@ -390,5 +376,49 @@ $include-rtl: true !default;
     text-align: end $decorator;
   } @else {
     text-align: $direction $decorator;
+  }
+}
+
+// Add direction for all directions
+// @param {string} $dir - Direction on LTR
+@mixin direction($dir) {
+  $other-dir: null;
+
+  @if $dir == ltr {
+    $other-dir: rtl;
+  } @else {
+    $other-dir: ltr;
+  }
+
+  @include ltr() {
+    direction: $dir;
+  }
+  @include rtl() {
+    direction: $other-dir;
+  }
+}
+
+// Add float for all directions
+// @param {string} $side
+// @param {string} $decorator - !important
+@mixin float($side, $decorator: null) {
+  @if $side == start {
+    @include ltr() {
+      float: left $decorator;
+    }
+    @include rtl() {
+      float: right $decorator;
+    }
+  } @else if $side == end {
+    @include ltr() {
+      float: right $decorator;
+    }
+    @include rtl() {
+      float: left $decorator;
+    }
+  } @else {
+    @include multi-dir() {
+      float: $side $decorator;
+    }
   }
 }

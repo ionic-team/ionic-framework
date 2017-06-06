@@ -11,8 +11,8 @@
 @import "./ionic.mixins";
 
 
-// Global include-rtl
-$include-rtl: true !default;
+// Global app direction
+$app-direction: null !default;
 
 
 // Global font path
