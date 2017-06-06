@@ -278,6 +278,7 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 
 .list-md ion-item-sliding {
   background-color: $item-md-sliding-content-background;
+  contain: paint;
 }
 
 // Item reorder
