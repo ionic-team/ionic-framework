@@ -153,8 +153,6 @@
   }
 }
 
-$app-direction: null !default;
-
 @mixin multi-dir() {
   @if $app-direction == null {
     $root: #{&};
