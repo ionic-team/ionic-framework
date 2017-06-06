@@ -106,7 +106,7 @@ $tabs-md-tab-icon-transform-y-active:         -2px !default;
 $tabs-md-tab-icon-transform-z-active:         0 !default;
 
 // deprecated
-$tabs-md-tab-icon-right-transform-active:     null !default;
+$tabs-md-tab-icon-end-transform-active:       null !default;
 
 /// @prop - Transform x for the active tab button icon when the layout is icon-right
 $tabs-md-tab-icon-right-transform-x-active:   2px !default;
@@ -130,7 +130,7 @@ $tabs-md-tab-icon-bottom-transform-y-active:  2px !default;
 $tabs-md-tab-icon-bottom-transform-z-active:  0 !default;
 
 // deprecated
-$tabs-md-tab-icon-left-transform-active:      null !default;
+$tabs-md-tab-icon-start-transform-active:     null !default;
 
 /// @prop - Transform x for the active tab button icon when the layout is icon-left
 $tabs-md-tab-icon-left-transform-x-active:    -2px !default;
