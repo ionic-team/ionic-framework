@@ -89,7 +89,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md.range-has-pin {
-  padding-top: $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical;
+  @include padding($range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null, null, null);
 }
 
 .range-md .range-slider {

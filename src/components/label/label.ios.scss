@@ -60,21 +60,24 @@ $label-ios-margin-start:       0 !default;
 // --------------------------------------------------
 
 .label-ios[stacked] {
-  margin-bottom: 4px;
+  @include margin(null, null, 4px, null);
 
   font-size: 1.2rem;
 }
 
 .label-ios[floating] {
+  @include margin(null, null, 0, null);
   @include translate3d(0, 27px, 0);
   @include transform-origin(start, top);
-
-  margin-bottom: 0;
 
   transition: transform 150ms ease-in-out;
 }
 
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus .label-ios[floating],
 .input-has-focus .label-ios[floating],
+.item-input-has-value .label-ios[floating],
 .input-has-value .label-ios[floating] {
   @include transform(0, 0, 0, scale(.8));
 }
@@ -83,11 +86,12 @@ $label-ios-margin-start:       0 !default;
 .item-ios.item-label-floating [item-right], // deprecated
 .item-ios.item-label-stacked [item-end],
 .item-ios.item-label-floating [item-end] {
-  margin-top: $item-ios-padding-media-top - 2;
-  margin-bottom: $item-ios-padding-media-bottom - 2;
+  @include margin($item-ios-padding-media-top - 2, null, $item-ios-padding-media-bottom - 2, null);
 }
 
+.item-input-has-focus .label-ios[stacked],
 .input-has-focus .label-ios[stacked],
+.item-input-has-focus .label-ios[floating],
 .input-has-focus .label-ios[floating] {
   color: $label-ios-text-color-focused;
 }
