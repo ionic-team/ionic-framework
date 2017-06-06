@@ -162,12 +162,11 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 }
 
 .tabs-md[tabsLayout=icon-top] .has-icon .tab-button-text {
-  margin-top: 4px;
-  margin-bottom: 0;
+  @include margin(4px, null, 0, null);
 }
 
 .tabs-md[tabsLayout=icon-bottom] .tab-button .tab-button-text {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 
@@ -175,7 +174,7 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 // --------------------------------------------------
 
 .tabs-md .tab-button-icon {
-  margin-top: 1px;
+  @include margin(1px, null, null, null);
 
   min-width: $tabs-md-tab-icon-size;
 
