@@ -53,7 +53,7 @@ ion-input :focus {
 
 .click-block-enabled {
   @include position(0, 0, 0, 0);
-  @include transform(0, -100%, 0, translateY(1px));
+  @include transform(translate3d(0, -100%, 0), translateY(1px));
 
   position: absolute;
 
@@ -68,5 +68,5 @@ ion-input :focus {
 }
 
 .click-block-active {
-  @include transform(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }

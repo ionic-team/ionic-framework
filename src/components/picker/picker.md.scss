@@ -163,7 +163,7 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
 .picker-md .picker-above-highlight {
   @include position(0, null, null, 0);
-  @include transform(0, 0, 90px);
+  @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
   z-index: 10;
@@ -180,7 +180,7 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
 .picker-md .picker-below-highlight {
   @include position($picker-md-option-offset-y + $picker-md-option-height - 4, null, null, 0);
-  @include transform(0, 0, 90px);
+  @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
   z-index: 11;

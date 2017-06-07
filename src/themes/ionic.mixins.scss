@@ -485,7 +485,7 @@
     }
   }
 
-  @if $x == 0 {
+  @if $x == 0 or $x == null {
     @include multi-dir() {
       transform: $ltr-translate $extra;
     }
