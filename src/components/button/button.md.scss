@@ -470,7 +470,6 @@ $button-md-strong-font-weight:                  bold !default;
 // it's display none, and .md sets to display block.
 
 .button-effect {
-  // scss-lint:disable PropertySpelling
   @include border-radius(50%);
 
   position: absolute;
@@ -486,8 +485,8 @@ $button-md-strong-font-weight:                  bold !default;
   pointer-events: none;
 
   @include multi-dir() {
+    // scss-lint:disable PropertySpelling
     top: 0;
-
     left: 0;
   }
 }
