@@ -265,7 +265,7 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 // Windows Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-wp.bar-button-icon-left ion-icon {
+.bar-button-wp.bar-button-icon-start ion-icon {
   @include padding-horizontal(null, .3em);
 
   font-size: 1.4em;
@@ -274,7 +274,7 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
   pointer-events: none;
 }
 
-.bar-button-wp.bar-button-icon-right ion-icon {
+.bar-button-wp.bar-button-icon-end ion-icon {
   @include padding-horizontal(.4em, null);
 
   font-size: 1.4em;
