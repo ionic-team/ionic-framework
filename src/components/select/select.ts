@@ -455,7 +455,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
           return isCheckedProperty(selectValue, option.value);
         });
 
-        if (option.selected) {
+        if (option.selected && option.value) {
           this._texts.push(option.text);
         }
       });
