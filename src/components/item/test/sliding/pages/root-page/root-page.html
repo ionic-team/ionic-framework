@@ -1,0 +1,288 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Sliding Items</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="reload()">Reload</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <div padding>
+    <button ion-button block (click)="toggleSliding()">Toggle sliding</button>
+    <button ion-button block (click)="changeDynamic()">Change Dynamic Options</button>
+    <button ion-button block (click)="closeOpened()">Close Opened Items</button>
+  </div>
+
+  <ion-list #myList>
+
+    <ion-item-sliding>
+      <ion-item>
+        <h2>No Options</h2>
+        <p>Should not error or swipe without options</p>
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item6>
+      <ion-item>
+        One Line, dynamic option and text
+      </ion-item>
+      <ion-item-options *ngIf="showOptions">
+        <button ion-button color="primary">
+          <ion-icon name="more"></ion-icon>
+          {{ moreText }}
+        </button>
+        <button ion-button color="secondary" (click)="archive(item6)">
+          <ion-icon name="archive"></ion-icon>
+          {{ archiveText }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item6>
+      <ion-item>
+        Two options, one dynamic option and text
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button icon-only color="primary">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-item-options>
+      <ion-item-options side="right" *ngIf="showOptions">
+        <button ion-button color="primary">
+          <ion-icon name="more"></ion-icon>
+          {{ moreText }}
+        </button>
+        <button ion-button color="secondary" (click)="archive(item6)">
+          <ion-icon name="archive"></ion-icon>
+          {{ archiveText }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item100>
+      <a ion-item>
+        <h2>HubStruck Notifications</h2>
+        <p>A new message from a repo in your network</p>
+        <p>Oceanic Next has joined your network</p>
+        <ion-note item-end>
+          10:45 AM
+        </ion-note>
+      </a>
+
+      <ion-item-options side="left">
+        <button ion-button (click)="noclose(item100)">
+          No close
+        </button>
+      </ion-item-options>
+      <ion-item-options side="right">
+        <button ion-button icon-only color="danger" (click)="unread(item100)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+        <button ion-button icon-only (click)="unread(item100)">
+          <ion-icon name="star"></ion-icon>
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+    <ion-item-sliding #item0>
+      <button ion-item text-wrap (click)="didClick(item0)">
+        <h2>RIGHT side - no icons</h2>
+        <p>Hey do you want to go to the game tonight?</p>
+      </button>
+      <ion-item-options *ngIf="slidingEnabled">
+        <button ion-button color="primary" (click)="archive(item0)">Archive</button>
+        <button ion-button color="danger" (click)="del(item0)">Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item1>
+      <a ion-item text-wrap detail-push class="activated">
+        <h2>LEFT side - no icons</h2>
+        <p>I think I figured out how to get more Mountain Dew</p>
+      </a>
+      <ion-item-options side="left" *ngIf="slidingEnabled">
+        <button ion-button color="primary" (click)="archive(item1)">Archive</button>
+        <button ion-button color="danger" (click)="del(item1)">Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+    <ion-item-sliding #item2>
+      <ion-item text-wrap detail-push>
+        <h2>RIGHT/LEFT side - icons</h2>
+        <p>I think I figured out how to get more Mountain Dew</p>
+      </ion-item>
+      <ion-item-options side="left" (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
+        <button ion-button color="secondary" expandable (click)="unread(item2)">
+          <ion-icon name="ios-checkmark"></ion-icon>Unread
+        </button>
+      </ion-item-options>
+
+      <ion-item-options side="right" (ionSwipe)="del(item2)" *ngIf="slidingEnabled">
+        <button ion-button color="primary" (click)="archive(item2)">
+          <ion-icon name="mail"></ion-icon>Archive
+        </button>
+        <button ion-button color="danger" (click)="del(item2)" expandable>
+          <ion-icon name="trash"></ion-icon>Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item3>
+      <ion-item text-wrap detail-push>
+        <h2>RIGHT/LEFT side - icons (item-start)</h2>
+        <p>I think I figured out how to get more Mountain Dew</p>
+      </ion-item>
+      <ion-item-options side="left" icon-start (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
+        <button ion-button color="secondary" expandable (click)="unread(item3)">
+          <ion-icon name="ios-checkmark"></ion-icon>Unread
+        </button>
+      </ion-item-options>
+
+      <ion-item-options icon-start (ionSwipe)="del(item3)">
+        <button ion-button color="primary" (click)="archive(item3)">
+          <ion-icon name="mail"></ion-icon>Archive
+        </button>
+        <button ion-button color="danger" (click)="del(item3)" expandable *ngIf="slidingEnabled">
+          <ion-icon name="trash"></ion-icon>Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+    <ion-item-sliding #item4>
+      <ion-item>
+        <ion-icon name="mail" item-start></ion-icon>
+        One Line w/ Icon, div only text
+      </ion-item>
+      <ion-item-options icon-start (ionSwipe)="archive($event)">
+        <button ion-button color="primary" (click)="archive(item4)" expandable *ngIf="slidingEnabled">
+          <ion-icon name="archive"></ion-icon>Archive
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+    <ion-item-sliding #item5 *ngIf="slidingEnabled">
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        </ion-avatar>
+        One Line w/ Avatar, div only text
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="primary" expandable>
+          <ion-icon name="more"></ion-icon>More
+        </button>
+        <button ion-button color="secondary" (click)="archive(item5)">
+          <ion-icon name="archive"></ion-icon>Archive
+        </button>
+        <button ion-button color="danger" (click)="del(item5)">
+          <ion-icon name="trash"></ion-icon>Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+    <ion-item-sliding #item7>
+      <ion-item>
+        One Line, dynamic icon-start option
+      </ion-item>
+      <ion-item-options icon-start>
+        <button ion-button color="primary">
+          <ion-icon name="more"></ion-icon>
+          {{ moreText }}
+        </button>
+        <button ion-button color="secondary" (click)="archive(item7)">
+          <ion-icon name="archive"></ion-icon>
+          {{ archiveText }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item8>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        </ion-thumbnail>
+        <h2>DOWNLOAD</h2>
+        <p>Paragraph text.</p>
+      </ion-item>
+      <ion-item-options (ionSwipe)="download($event)">
+        <button ion-button color="primary" (click)="archive(item8)">
+          <ion-icon name="archive"></ion-icon>Archive
+        </button>
+        <button ion-button color="secondary" expandable (click)="download(item8)">
+          <ion-icon name="download" class="download-hide"></ion-icon>
+          <div class="download-hide">Download</div>
+          <ion-spinner id="download-spinner"></ion-spinner>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding #item9>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+        </ion-thumbnail>
+        <h2>ion-item-sliding without options (no sliding)</h2>
+        <p>Paragraph text.</p>
+      </ion-item>
+    </ion-item-sliding>
+
+    <ion-item text-wrap>
+      <h2>Normal ion-item (no sliding)</h2>
+      <p>Paragraph text.</p>
+    </ion-item>
+
+    <button ion-item text-wrap (click)="didClick(item9)">
+      <h2>Normal button (no sliding)</h2>
+      <p>Hey do you want to go to the game tonight?</p>
+    </button>
+
+  </ion-list>
+
+
+  <ion-list no-lines>
+    <ion-item-sliding *ngFor="let data of items" #item9>
+      <ion-item text-wrap detail-push>
+        <h3>ng-for {{data}}</h3>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="primary" (click)="archive(item9)">Archive</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>
+
+
+<style>
+  img {
+    height: 100px;
+  }
+
+  #download-spinner {
+    display: none;
+  }
+
+  svg circle {
+    stroke: white;
+  }
+
+  .downloading #download-spinner {
+    display: block;
+  }
+
+  .downloading .download-hide {
+    display: none;
+  }
+
+</style>

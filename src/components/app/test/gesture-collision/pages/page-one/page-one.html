@@ -1,0 +1,179 @@
+<ion-menu [content]="content" side="left" persistent="true">
+
+  <ion-header>
+    <ion-toolbar color="secondary">
+      <ion-title>Left Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <ion-list>
+
+      <ion-item-sliding *ngFor="let p of pages">
+        <button ion-item (click)="openPage(p)">
+          {{p.title}}
+        </button>
+        <ion-item-options side="left">
+          <button ion-button>Test</button>
+        </ion-item-options>
+        <ion-item-options>
+          <button ion-button>Test</button>
+        </ion-item-options>
+      </ion-item-sliding>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle item-start></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle></ion-toggle>
+      </ion-item>
+
+      <button ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="left" detail-none>
+        Close Menu
+      </button>
+
+    </ion-list>
+  </ion-content>
+
+  <ion-footer>
+    <ion-toolbar color="secondary">
+      <ion-title>Footer</ion-title>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-menu>
+
+
+<ion-menu [content]="content" side="right">
+
+  <ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>Right Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle item-start></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle></ion-toggle>
+      </ion-item>
+
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+
+      <button ion-item menuClose="right" class="e2eCloseRightMenu" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+      <button ion-item menuClose="right" detail-none>
+        Close Menu
+      </button>
+
+    </ion-list>
+
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="true"></ion-nav>

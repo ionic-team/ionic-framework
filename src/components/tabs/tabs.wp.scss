@@ -3,8 +3,20 @@
 // Windows Tabs
 // --------------------------------------------------
 
-/// @prop - Padding on the tab button
-$tabs-wp-tab-padding:                   12px 10px 5px 10px !default;
+// deprecated
+$tabs-wp-tab-padding:                   null !default;
+
+/// @prop - Padding top on the tab button
+$tabs-wp-tab-padding-top:               12px !default;
+
+/// @prop - Padding end on the tab button
+$tabs-wp-tab-padding-end:               10px !default;
+
+/// @prop - Padding bottom on the tab button
+$tabs-wp-tab-padding-bottom:            5px !default;
+
+/// @prop - Padding start on the tab button
+$tabs-wp-tab-padding-start:             10px !default;
 
 /// @prop - Minimum height of the tab button
 $tabs-wp-tab-min-height:                4.8rem !default;
@@ -48,16 +60,19 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 }
 
 .tabs-wp .tab-button {
-  padding: $tabs-wp-tab-padding;
+  @include border-radius(0);
 
   min-height: $tabs-wp-tab-min-height;
 
   border-bottom: $tabs-wp-tab-border;
-  border-radius: 0;
   font-size: $tabs-wp-tab-font-size;
   font-weight: $tabs-wp-tab-font-weight;
   color: $tabs-wp-tab-color;
   box-shadow: none;
+
+  @include deprecated-variable(padding, $tabs-wp-tab-padding) {
+    @include padding($tabs-wp-tab-padding-top, $tabs-wp-tab-padding-end, $tabs-wp-tab-padding-bottom, $tabs-wp-tab-padding-start);
+  }
 }
 
 .tabs-wp .tab-button[aria-selected=true] {
@@ -83,8 +98,7 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 // --------------------------------------------------
 
 .tabs-wp .tab-button-text {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  @include margin(5px, null);
 }
 
 
@@ -104,17 +118,20 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 }
 
 .tabs-wp[tabsLayout=icon-bottom] .tab-button {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  @include padding(8px, null, 8px, null);
 }
 
-.tabs-wp[tabsLayout=icon-right] .tab-button,
-.tabs-wp[tabsLayout=icon-left] .tab-button {
-  padding-bottom: 10px;
+.tabs-wp[tabsLayout=icon-right] .tab-button, // deprecated
+.tabs-wp[tabsLayout=icon-left] .tab-button, // deprecated
+.tabs-wp[tabsLayout=icon-end] .tab-button,
+.tabs-wp[tabsLayout=icon-start] .tab-button {
+  @include padding(null, null, 10px, null);
 }
 
-.tabs-wp[tabsLayout=icon-right] .tab-button ion-icon,
-.tabs-wp[tabsLayout=icon-left] .tab-button ion-icon {
+.tabs-wp[tabsLayout=icon-right] .tab-button ion-icon, // deprecated
+.tabs-wp[tabsLayout=icon-left] .tab-button ion-icon, // deprecated
+.tabs-wp[tabsLayout=icon-end] .tab-button ion-icon,
+.tabs-wp[tabsLayout=icon-start] .tab-button ion-icon {
   min-width: 24px;
 }
 
@@ -122,7 +139,7 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 .tabs-wp[tabsLayout=title-hide] .tab-button,
 .tabs-wp .tab-button.icon-only,
 .tabs-wp .tab-button.has-title-only {
-  padding: 6px 10px;
+  @include padding(6px, 10px);
 }
 
 

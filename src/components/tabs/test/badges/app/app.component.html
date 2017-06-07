@@ -1,0 +1,71 @@
+<div class="e2e-stacked-tabbars">
+
+<!-- Text -->
+<ion-tabs no-navbar>
+  <ion-tab [root]="root" tabTitle="Recents"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabBadge="32"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Settings"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons -->
+<ion-tabs no-navbar>
+  <ion-tab [root]="root" tabIcon="call"></ion-tab>
+  <ion-tab [root]="root" tabIcon="heart"></ion-tab>
+  <ion-tab [root]="root" tabIcon="settings" tabBadge="all" tabBadgeStyle="primary"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons on top of text -->
+<ion-tabs no-navbar>
+  <ion-tab [root]="root" tabTitle="Location" tabIcon="navigate" tabBadge="11" tabBadgeStyle="secondary"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabIcon="star"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Radio" tabIcon="musical-notes"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons below text -->
+<ion-tabs tabsLayout="icon-bottom" no-navbar>
+  <ion-tab [root]="root" tabTitle="Recents" tabIcon="call"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart" tabBadge="577" tabBadgeStyle="dark"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings"></ion-tab>
+</ion-tabs>
+
+
+<!-- Icons right of text -->
+<ion-tabs tabsLayout="icon-end" primary no-navbar>
+  <ion-tab [root]="root" tabTitle="Recents" tabIcon="call"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings" tabBadge="1030" tabBadgeStyle="light"></ion-tab>
+</ion-tabs>
+
+<!-- Icons left of text -->
+<ion-tabs tabsLayout="icon-start" no-navbar>
+  <ion-tab [root]="root" tabTitle="Recents" tabIcon="call" tabBadge="32" tabBadgeStyle="danger"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings"></ion-tab>
+</ion-tabs>
+
+<!-- No icons -->
+<ion-tabs no-navbar tabsLayout="icon-hide">
+  <ion-tab [root]="root" tabTitle="Recents" tabIcon="call"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart" tabBadge="4"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings"></ion-tab>
+</ion-tabs>
+
+
+<!-- No title -->
+<ion-tabs tabsLayout="title-hide" secondary no-navbar>
+  <ion-tab [root]="root" tabTitle="Recents" tabIcon="call" tabBadge="7" tabBadgeStyle="light"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings"></ion-tab>
+</ion-tabs>
+
+<!-- Dynamic Badge -->
+<ion-tabs tabsLayout="icon-start" no-navbar>
+  <ion-tab [root]="root" tabTitle="Recents" tabIcon="call"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
+  <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings" [tabBadge]="myBadge" tabBadgeStyle="primary"></ion-tab>
+</ion-tabs>
+
+</div>

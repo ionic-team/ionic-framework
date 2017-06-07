@@ -1,6 +1,7 @@
 import { Component, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IonicApp, IonicModule } from '../../../../../ionic-angular';
+import { IonicApp, IonicModule } from '../../../..';
 
 
 
@@ -28,17 +29,18 @@ export class E2EPage {
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     E2EPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

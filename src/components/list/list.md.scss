@@ -6,26 +6,34 @@
 /// @prop - Margin top of the list
 $list-md-margin-top:             16px !default;
 
-/// @prop - Margin right of the list
+// deprecated
 $list-md-margin-right:           0 !default;
+/// @prop - Margin end of the list
+$list-md-margin-end:             $list-md-margin-right !default;
 
 /// @prop - Margin bottom of the list
 $list-md-margin-bottom:          16px !default;
 
-/// @prop - Margin left of the list
+// deprecated
 $list-md-margin-left:            0 !default;
+/// @prop - Margin start of the list
+$list-md-margin-start:           $list-md-margin-left !default;
 
 /// @prop - Margin top of the inset list
 $list-inset-md-margin-top:       16px !default;
 
-/// @prop - Margin right of the inset list
+// deprecated
 $list-inset-md-margin-right:     16px !default;
+/// @prop - Margin end of the inset list
+$list-inset-md-margin-end:       $list-inset-md-margin-right !default;
 
 /// @prop - Margin bottom of the inset list
 $list-inset-md-margin-bottom:    16px !default;
 
-/// @prop - Margin left of the inset list
+// deprecated
 $list-inset-md-margin-left:      16px !default;
+/// @prop - Margin start of the inset list
+$list-inset-md-margin-start:     $list-inset-md-margin-left !default;
 
 /// @prop - Border radius of the inset list
 $list-inset-md-border-radius:    2px !default;
@@ -33,8 +41,10 @@ $list-inset-md-border-radius:    2px !default;
 /// @prop - Margin bottom of the header in a list
 $list-md-header-margin-bottom:   13px !default;
 
-/// @prop - Padding left of the header in a list
-$list-md-header-padding-left:    $item-md-padding-left !default;
+// deprecated
+$list-md-header-padding-left:   $item-md-padding-start !default;
+/// @prop - Padding start of the header in a list
+$list-md-header-padding-start:   $list-md-header-padding-left !default;
 
 /// @prop - Minimum height of the header in a list
 $list-md-header-min-height:      4.5rem !default;
@@ -53,7 +63,7 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-md {
-  margin: -1px $list-md-margin-right $list-md-margin-bottom $list-md-margin-left;
+  @include margin(-1px, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
 }
 
 .list-md .item-block .item-inner {
@@ -69,7 +79,7 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md > ion-input:last-child::after {
-  left: 0;
+  @include position-horizontal(0, null);
 }
 
 .list-md ion-item-options {
@@ -77,23 +87,24 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md ion-item-options .button {
+  @include margin(1px, 0);
+  @include border-radius(0);
+
   display: inline-flex;
 
   align-items: center;
 
-  margin: 1px 0;
-
   height: calc(100% - 2px);
 
   border: 0;
-  border-radius: 0;
+
   box-shadow: none;
 
   box-sizing: border-box;
 }
 
 .list-md ion-item-options .button::before {
-  margin: 0 auto;
+  @include margin(0, auto);
 }
 
 // If the item has the no-lines attribute remove the bottom border from:
@@ -105,7 +116,7 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md + ion-list ion-list-header {
-  margin-top: -$list-md-margin-top;
+  @include margin(-$list-md-margin-top, null, null, null);
 }
 
 
@@ -113,30 +124,28 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-md[inset] {
-  margin: $list-inset-md-margin-top $list-inset-md-margin-right $list-inset-md-margin-bottom $list-inset-md-margin-left;
-
-  border-radius: $list-inset-md-border-radius;
+  @include margin($list-inset-md-margin-top, $list-inset-md-margin-end, $list-inset-md-margin-bottom, $list-inset-md-margin-start);
+  @include border-radius($list-inset-md-border-radius);
 }
 
 .list-md[inset] .item:first-child {
+  @include border-radius($list-inset-md-border-radius, $list-inset-md-border-radius, null, null);
+
   border-top-width: 0;
-  border-top-left-radius: $list-inset-md-border-radius;
-  border-top-right-radius: $list-inset-md-border-radius;
 }
 
 .list-md[inset] .item:last-child {
+  @include border-radius(null, null, $list-inset-md-border-radius, $list-inset-md-border-radius);
+
   border-bottom-width: 0;
-  border-bottom-left-radius: $list-inset-md-border-radius;
-  border-bottom-right-radius: $list-inset-md-border-radius;
 }
 
 .list-md[inset] .item-input {
-  padding-right: 0;
-  padding-left: 0;
+  @include padding-horizontal(0);
 }
 
 .list-md[inset] + ion-list[inset] {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 .list-md[inset] ion-list-header {
@@ -158,8 +167,8 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-header-md {
-  margin-bottom: $list-md-header-margin-bottom;
-  padding-left: $list-md-header-padding-left;
+  @include padding-horizontal($list-md-header-padding-start, null);
+  @include margin(null, null, $list-md-header-margin-bottom, null);
 
   min-height: $list-md-header-min-height;
 
@@ -167,7 +176,6 @@ $list-md-header-color:           #757575 !default;
   font-size: $list-md-header-font-size;
   color: $list-md-header-color;
 }
-
 
 // Generate Material Design List Header Colors
 // --------------------------------------------------

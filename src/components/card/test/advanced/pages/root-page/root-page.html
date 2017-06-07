@@ -1,0 +1,132 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Advanced Cards</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-card>
+
+    <div>
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </div>
+
+    <ion-card-content>
+      <ion-card-title>
+        Card Title Goes Here
+      </ion-card-title>
+      <p>
+        Keep close to Nature's heart... and break clear away,
+        once in awhile, and climb a mountain. I am within a paragraph element.
+      </p>
+    </ion-card-content>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col no-padding>
+          <button ion-button icon-start clear small>
+            <ion-icon name="star"></ion-icon>
+            Star
+          </button>
+        </ion-col>
+        <ion-col no-padding text-right>
+          <button ion-button icon-start clear small class="activated">
+            <ion-icon name="share"></ion-icon>
+            Activated
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card>
+
+
+  <ion-card>
+
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      <h2>Card With An Inset Picture</h2>
+      <p>Isn't it beautiful</p>
+    </ion-item>
+
+    <div>
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </div>
+
+    <ion-card-content>
+      <p>Hello. I am a paragraph.</p>
+    </ion-card-content>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col no-padding>
+          <button ion-button icon-start clear small>
+            <ion-icon name="star"></ion-icon>
+            Favorite
+          </button>
+        </ion-col>
+        <ion-col no-padding text-center>
+          <button ion-button icon-start clear small>
+            <ion-icon name="musical-notes"></ion-icon>
+            Listen
+          </button>
+        </ion-col>
+        <ion-col no-padding align-self-center padding-right text-right>
+          <ion-note>
+            11h ago
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-card no-margin>
+
+    <div>
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </div>
+
+    <ion-card-content>
+      ion-card[no-margin] This card was breaking the border radius.
+    </ion-card-content>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col no-padding>
+          <button ion-button icon-start clear small dark>
+            <ion-icon name="star"></ion-icon>
+            Favorite
+          </button>
+        </ion-col>
+
+        <ion-col no-padding text-center>
+          <button ion-button icon-start clear small dark>
+            <ion-icon name="musical-notes"></ion-icon>
+            Listen
+          </button>
+        </ion-col>
+        <ion-col no-padding text-right>
+          <button ion-button icon-start clear small dark>
+            <ion-icon name="share-alt"></ion-icon>
+            Share
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card>
+
+</ion-content>
+
+
+<style>
+  img {
+    height: 100px;
+  }
+</style>

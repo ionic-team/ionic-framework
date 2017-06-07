@@ -1,0 +1,81 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Item Colors</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-item>
+    <h1>Heading</h1>
+    <p>Paragraph</p>
+    <p ion-text color="secondary">Secondary paragraph</p>
+  </ion-item>
+
+  <ion-item color="dark">
+    <h1>Heading</h1>
+    <p>Paragraph</p>
+  </ion-item>
+
+  <a ion-item href="#" color="danger">
+    a[ion-item] danger
+  </a>
+
+  <a ion-item href="#" color="danger" class="activated">
+    a[ion-item].activated danger
+  </a>
+
+  <button ion-item color="secondary">
+    button[ion-item]
+  </button>
+
+  <button ion-item color="secondary" class="activated">
+    button[ion-item].activated secondary
+  </button>
+
+  <ion-item color="primary">
+    <button ion-button item-start color="dark">Dark</button>
+    <h1>Heading</h1>
+    <p>Normal paragraph</p>
+    <button ion-button outline item-end>Outline</button>
+  </ion-item>
+
+  <button ion-item color="dark">
+    <button ion-button item-start icon-start>
+      <ion-icon name="home"></ion-icon>
+      Left Icon
+    </button>
+    left icon buttons
+    <p ion-text color="primary">Primary paragraph</p>
+  </button>
+
+  <button ion-item disabled color="dark">
+    <button ion-button item-start icon-start>
+      <ion-icon name="home"></ion-icon>
+      Left Icon
+    </button>
+    disabled left icon buttons
+    <p ion-text color="primary">Primary paragraph</p>
+  </button>
+
+  <ion-item color="light">
+    <button ion-button item-start icon-end>
+      Right Icon
+      <ion-icon name="home"></ion-icon>
+    </button>
+    right icon buttons
+    <button ion-button outline item-end icon-end>
+      Right Icon
+      <ion-icon name="star"></ion-icon>
+    </button>
+  </ion-item>
+
+  <a ion-item disabled color="danger">
+    a ion-item disabled right icon/text button large
+    <p>Default paragraph</p>
+  </a>
+
+</ion-content>

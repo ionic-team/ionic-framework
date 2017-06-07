@@ -4,8 +4,8 @@
 <@ for ver in version.list @>
   <option
    value="<$ ver.href $>/{% if page.path != ''%}{{page.path}}{% else %}api/{% endif %}"
-   {% if page.version == "<$ ver.name $>"%}selected{% endif %}>
-    <@ if ver.name == "nightly" @>2.0.0-<@ endif @><$ ver.name $> <@ if version.latest.name == ver.name @>(latest)<@ endif @>
+    {% if page.version == "<$ ver.name $>"%}selected{% endif %}>
+    <$ ver.name $> <@ if version.latest.name == ver.name @>(latest)<@ endif @>
   </option>
 <@ endfor @>
 </select>

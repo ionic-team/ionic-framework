@@ -5,7 +5,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
 
 
 /**
- * @private
+ * @hidden
  */
 export class ItemReorderGesture {
   private selectedItemEle: HTMLElement = null;
@@ -134,7 +134,8 @@ export class ItemReorderGesture {
   }
 
   private itemForCoord(coord: PointerCoordinates): HTMLElement {
-    const x = this.offset.x - 100;
+    const sideOffset = this.plt.isRTL ? 100 : -100;
+    const x = this.offset.x + sideOffset;
     const y = coord.y;
     const element = this.plt.getElementFromPoint(x, y);
     return findReorderItem(element, this.reorderList.getNativeElement());
@@ -150,7 +151,7 @@ export class ItemReorderGesture {
   }
 
   /**
-   * @private
+   * @hidden
    */
   destroy() {
     this.onDragEnd(null);

@@ -20,7 +20,9 @@ $fab-list-button-background-color:      #f4f4f4 !default;
 
 
 .fab {
+  @include text-align(center);
   @include appearance(none);
+  @include border-radius(50%);
 
   position: relative;
   z-index: 0;
@@ -30,10 +32,8 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   width: $fab-size;
   height: $fab-size;
 
-  border-radius: 50%;
   font-size: 14px;
   line-height: $fab-size;
-  text-align: center;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
@@ -57,7 +57,7 @@ $fab-list-button-background-color:      #f4f4f4 !default;
 // --------------------------------------------------
 
 .fab[mini] {
-  margin: ($fab-size - $fab-mini-size) / 2;
+  @include margin(($fab-size - $fab-mini-size) / 2);
 
   width: $fab-mini-size;
   height: $fab-mini-size;
@@ -78,15 +78,14 @@ ion-fab {
   z-index: $z-index-fixed-content;
 
   &[center] {
-    left: 50%;
-
-    margin-left: -$fab-size / 2;
+    @include position(null, null, null, 50%);
+    @include margin-horizontal(-$fab-size / 2, null);
   }
 
   &[middle] {
-    top: 50%;
+    @include margin(-$fab-size / 2, null, null, null);
 
-    margin-top: -$fab-size / 2;
+    top: 50%;
   }
 
   &[top] {
@@ -94,7 +93,14 @@ ion-fab {
   }
 
   &[right] {
-    right: $fab-content-margin;
+    // scss-lint:disable PropertySpelling
+    @include multi-dir() {
+      right: $fab-content-margin;
+    }
+  }
+
+  &[end] {
+    @include position-horizontal(null, $fab-content-margin);
   }
 
   &[bottom] {
@@ -102,7 +108,14 @@ ion-fab {
   }
 
   &[left] {
-    left: $fab-content-margin;
+    // scss-lint:disable PropertySpelling
+    @include multi-dir() {
+      left: $fab-content-margin;
+    }
+  }
+
+  &[start] {
+    @include position-horizontal($fab-content-margin, null);
   }
 
   &[top][edge] {
@@ -119,6 +132,8 @@ ion-fab {
 // --------------------------------------------------
 
 ion-fab-list {
+  @include margin($fab-size + $fab-list-margin, 0);
+
   position: absolute;
   top: 0;
   display: none;
@@ -126,14 +141,12 @@ ion-fab-list {
   flex-direction: column;
   align-items: center;
 
-  margin: $fab-size + $fab-list-margin 0;
-
   min-width: $fab-size;
   min-height: $fab-size;
 }
 
 .fab-in-list {
-  margin: 8px 0;
+  @include margin(8px, 0);
 
   width: $fab-mini-size;
   height: $fab-mini-size;
@@ -151,7 +164,7 @@ ion-fab-list {
 
 ion-fab-list[side=left] .fab-in-list,
 ion-fab-list[side=right] .fab-in-list {
-  margin: 0 8px;
+  @include margin(0, 8px);
 }
 
 ion-fab-list[side=top] {
@@ -162,19 +175,17 @@ ion-fab-list[side=top] {
 }
 
 ion-fab-list[side=left] {
-  right: 0;
+  @include margin(0, $fab-size + $fab-list-margin);
+  @include position-horizontal(null, 0);
 
   flex-direction: row-reverse;
-
-  margin: 0 $fab-size + $fab-list-margin;
 }
 
 ion-fab-list[side=right] {
-  left: 0;
+  @include margin(0, $fab-size + $fab-list-margin);
+  @include position(null, null, null, 0);
 
   flex-direction: row;
-
-  margin: 0 $fab-size + $fab-list-margin;
 }
 
 
@@ -186,10 +197,9 @@ ion-fab-list[side=right] {
 }
 
 .fab-close-icon {
+  @include position(0, 0, null, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
 
   line-height: $fab-size;
   opacity: 0;

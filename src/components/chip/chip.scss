@@ -6,8 +6,20 @@
 /// @prop - Border radius of the button in the chip
 $chip-button-border-radius:     50% !default;
 
-/// @prop - Margin of the button in the chip
-$chip-button-margin:            0 !default;
+// deprecated
+$chip-button-margin:            null !default;
+
+/// @prop - Margin top of the button in the chip
+$chip-button-margin-top:        0 !default;
+
+/// @prop - Margin end of the button in the chip
+$chip-button-margin-end:        $chip-button-margin-top !default;
+
+/// @prop - Margin bottom of the button in the chip
+$chip-button-margin-bottom:     $chip-button-margin-top !default;
+
+/// @prop - Margin start of the button in the chip
+$chip-button-margin-start:      $chip-button-margin-end !default;
 
 /// @prop - Width and height of the button in the chip
 $chip-button-size:              32px !default;
@@ -43,41 +55,43 @@ ion-chip {
 }
 
 ion-chip .button {
-  margin: $chip-button-margin;
+  @include border-radius($chip-button-border-radius);
 
   width: $chip-button-size;
   height: $chip-button-size;
 
-  border-radius: $chip-button-border-radius;
+  @include deprecated-variable(margin, $chip-button-margin) {
+    @include margin($chip-button-margin-top, $chip-button-margin-end, $chip-button-margin-bottom, $chip-button-margin-start);
+  }
 }
 
 ion-chip ion-icon {
+  @include text-align($chip-icon-text-align);
+  @include border-radius($chip-icon-border-radius);
+
   width: $chip-icon-size;
   height: $chip-icon-size;
 
-  border-radius: $chip-icon-border-radius;
-
   font-size: $chip-icon-font-size;
   line-height: $chip-icon-size;
-  text-align: $chip-icon-text-align;
 }
 
 ion-chip ion-avatar {
+  @include border-radius($chip-avatar-border-radius);
+
   width: $chip-avatar-size;
   min-width: $chip-avatar-size;
   height: $chip-avatar-size;
   min-height: $chip-avatar-size;
-
-  border-radius: $chip-avatar-border-radius;
 }
 
 ion-chip ion-avatar img {
+  @include border-radius($chip-avatar-border-radius);
+
   display: block;
 
   width: 100%;
   max-width: 100%;
   height: 100%;
   max-height: 100%;
-
-  border-radius: $chip-avatar-border-radius;
 }

@@ -20,8 +20,8 @@ import { Platform } from '../../platform/platform';
  * interaction modes such as swipe to edit, drag to reorder, and
  * removing items.
  *
- * @demo /docs/v2/demos/src/list/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/list/
+ * @see {@link /docs/components#lists List Component Docs}
  * @advanced
  *
  * Enable the sliding items.
@@ -63,16 +63,6 @@ export class List extends Ion {
   }
 
   /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
    * @input {boolean} If true, the sliding items will be enabled.
    */
   @Input()
@@ -85,7 +75,7 @@ export class List extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   containsSlidingItem(contains: boolean) {
     this._containsSlidingItems = contains;
@@ -114,7 +104,7 @@ export class List extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   destroy() {
     this._slidingGesture && this._slidingGesture.destroy();

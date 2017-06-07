@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, Events } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, Events } from '../../../..';
 
 //
 // Tab 1
@@ -75,25 +76,26 @@ export class TabsPage {
 @Component({
   template: `<ion-nav [root]="root"></ion-nav>`
 })
-export class E2EApp {
+export class AppComponent {
   root = TabsPage;
 }
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     Tab1,
     Tab2,
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp, {
+    BrowserModule,
+    IonicModule.forRoot(AppComponent, {
       tabsHighlight: true,
     })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     Tab1,
     Tab2,
     TabsPage

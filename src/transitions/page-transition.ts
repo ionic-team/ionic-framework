@@ -3,7 +3,7 @@ import { Transition } from './transition';
 
 
 /**
- * @private
+ * @hidden
  */
 export class PageTransition extends Transition {
   enteringPage: Animation;
@@ -25,6 +25,7 @@ export class PageTransition extends Transition {
 
   destroy() {
     super.destroy();
+    this.enteringPage && this.enteringPage.destroy();
     this.enteringPage = null;
   }
 

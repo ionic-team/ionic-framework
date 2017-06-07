@@ -1,12 +1,12 @@
-import { GestureController, GesturePriority, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
+import { GestureController, GESTURE_PRIORITY_TOGGLE, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
 import { DomController } from '../../platform/dom-controller';
-import { PanGesture } from '../../gestures/drag-gesture';
+import { PanGesture } from '../../gestures/pan-gesture';
 import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
 import { Toggle } from './toggle';
 
 /**
- * @private
+ * @hidden
  */
 export class ToggleGesture extends PanGesture {
 
@@ -20,16 +20,16 @@ export class ToggleGesture extends PanGesture {
       plt,
       toggle.getNativeElement(), {
       threshold: 0,
-      zone: true,
+      zone: false,
       domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_TOGGLE,
-        priority: GesturePriority.Toggle,
+        priority: GESTURE_PRIORITY_TOGGLE
       })
     });
   }
 
-  canStart(ev: any): boolean {
+  canStart(): boolean {
     return true;
   }
 

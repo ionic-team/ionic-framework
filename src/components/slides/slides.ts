@@ -65,6 +65,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```ts
  * import { ViewChild } from '@angular/core';
+ * import { Slides } from 'ionic-angular';
  *
  * class MyPage {
  *   @ViewChild(Slides) slides: Slides;
@@ -91,7 +92,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  *   slideChanged() {
  *     let currentIndex = this.slides.getActiveIndex();
- *     console.log("Current index is", currentIndex);
+ *     console.log('Current index is', currentIndex);
  *   }
  * }
  * ```
@@ -104,6 +105,9 @@ import { ViewController } from '../../navigation/view-controller';
  * should be used, where `freeMode` is the option to change:
  *
  * ```ts
+ * import { ViewChild } from '@angular/core';
+ * import { Slides } from 'ionic-angular';
+
  * class MyPage {
  *   @ViewChild(Slides) slides: Slides;
  *
@@ -115,10 +119,10 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * To see all of the available options, take a look at the
- * [source for slides](https://github.com/driftyco/ionic/blob/master/src/components/slides/slides.ts).
+ * [source for slides](https://github.com/ionic-team/ionic/blob/master/src/components/slides/slides.ts).
  *
- * @demo /docs/v2/demos/src/slides/
- * @see {@link /docs/v2/components#slides Slides Component Docs}
+ * @demo /docs/demos/src/slides/
+ * @see {@link /docs/components#slides Slides Component Docs}
  *
  * Adopted from Swiper.js:
  * The most modern mobile touch slider and framework with
@@ -135,7 +139,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-slides',
   template:
-    '<div class="swiper-container">' +
+    '<div class="swiper-container" [attr.dir]="_rtl? \'rtl\' : null">' +
       '<div class="swiper-wrapper">' +
         '<ng-content></ng-content>' +
       '</div>' +
@@ -245,6 +249,14 @@ export class Slides extends Ion {
   }
   private _pager = false;
 
+/**
+ * @input {string} If dir attribute is equal to rtl, set interal _rtl to true;
+ */
+  @Input()
+  set dir(val: string) {
+    this._rtl = (val.toLowerCase() === 'rtl');
+  }
+
   /**
    * @input {string}  Type of pagination. Possible values are:
    * `bullets`, `fraction`, `progress`. Default: `bullets`.
@@ -263,7 +275,7 @@ export class Slides extends Ion {
   private _paginationType = 'bullets';
 
 
-  /** @private */
+  /** @hidden */
   paginationBulletRender: (index?: number, cssClass?: string) => void = null;
 
   /**
@@ -305,19 +317,19 @@ export class Slides extends Ion {
   private _isZoom = false;
 
   /**
-   * @private
+   * @hidden
    * Height of container.
    */
   height: number;
 
   /**
-   * @private
+   * @hidden
    * Width of container.
    */
   width: number;
 
   /**
-   * @private
+   * @hidden
    * Enabled this option and swiper will be operated as usual except it will
    * not move, real translate values on wrapper will not be set. Useful when
    * you may need to create custom slide transition.
@@ -325,7 +337,7 @@ export class Slides extends Ion {
   virtualTranslate = false;
 
   /**
-   * @private
+   * @hidden
    * Set to true to round values of slides width and height to prevent blurry
    * texts on usual resolution screens (if you have such)
    */
@@ -353,228 +365,236 @@ export class Slides extends Ion {
     return this._slidesPerView;
   }
   set slidesPerView(val: any) {
-    this._slidesPerView = val === 'auto' ? 'auto' : parseInt(val, 10);
+    this._slidesPerView = val === 'auto' ? 'auto' : parseFloat(val);
   }
   private _slidesPerView: number|string = 1;
 
+  /** 
+   * @input {boolean} Center a slide in the middle of the screen.
+   */
+  @Input()
+  get centeredSlides() {
+    return this._centeredSlides;
+  }
+  set centeredSlides(val: boolean) {
+    this._centeredSlides = isTrueProperty(val);
+  }
+  private _centeredSlides: boolean = false;
+
   /**
-   * @private
+   * @hidden
    */
   slidesPerColumn = 1;
   /**
-   * @private
+   * @hidden
    */
   slidesPerColumnFill = 'column';
   /**
-   * @private
+   * @hidden
    */
   slidesPerGroup = 1;
   /**
-   * @private
-   */
-  centeredSlides = false;
-  /**
-   * @private
+   * @hidden
    */
   slidesOffsetBefore = 0;
   /**
-   * @private
+   * @hidden
    */
   slidesOffsetAfter = 0;
 
   /**
-   * @private
+   * @hidden
    */
   touchEventsTarget: 'container';
 
   // autoplay
   /**
-   * @private
+   * @hidden
    */
   autoplayDisableOnInteraction = true;
   /**
-   * @private
+   * @hidden
    */
   autoplayStopOnLast = false;
 
   // Free mode
   /**
-   * @private
+   * @hidden
    */
   freeMode = false;
   /**
-   * @private
+   * @hidden
    */
   freeModeMomentum = true;
   /**
-   * @private
+   * @hidden
    */
   freeModeMomentumRatio = 1;
   /**
-   * @private
+   * @hidden
    */
   freeModeMomentumBounce = true;
   /**
-   * @private
+   * @hidden
    */
   freeModeMomentumBounceRatio = 1;
   /**
-   * @private
+   * @hidden
    */
   freeModeMomentumVelocityRatio = 1;
   /**
-   * @private
+   * @hidden
    */
   freeModeSticky = false;
   /**
-   * @private
+   * @hidden
    */
   freeModeMinimumVelocity = 0.02;
 
   // Autoheight
   /**
-   * @private
+   * @hidden
    */
   autoHeight = false;
 
   // Set wrapper width
   /**
-   * @private
+   * @hidden
    */
   setWrapperSize = false;
 
   // Zoom
   /**
-   * @private
+   * @hidden
    */
   zoomMax = 3;
   /**
-   * @private
+   * @hidden
    */
   zoomMin = 1;
   /**
-   * @private
+   * @hidden
    */
   zoomToggle = true;
 
   // Touches
   /**
-   * @private
+   * @hidden
    */
   touchRatio = 1;
   /**
-   * @private
+   * @hidden
    */
   touchAngle = 45;
   /**
-   * @private
+   * @hidden
    */
   simulateTouch = true;
   /**
-   * @private
+   * @hidden
    */
   shortSwipes = true;
   /**
-   * @private
+   * @hidden
    */
   longSwipes = true;
   /**
-   * @private
+   * @hidden
    */
   longSwipesRatio = 0.5;
   /**
-   * @private
+   * @hidden
    */
   longSwipesMs = 300;
   /**
-   * @private
+   * @hidden
    */
   followFinger = true;
   /**
-   * @private
+   * @hidden
    */
   onlyExternal = false;
   /**
-   * @private
+   * @hidden
    */
   threshold = 0;
   /**
-   * @private
+   * @hidden
    */
   touchMoveStopPropagation = true;
   /**
-   * @private
+   * @hidden
    */
   touchReleaseOnEdges = false;
 
   // To support iOS's swipe-to-go-back gesture (when being used in-app, with UIWebView).
   /**
-   * @private
+   * @hidden
    */
   iOSEdgeSwipeDetection = false;
   /**
-   * @private
+   * @hidden
    */
   iOSEdgeSwipeThreshold = 20;
 
   // Pagination
   /**
-   * @private
+   * @hidden
    */
   paginationClickable = false;
   /**
-   * @private
+   * @hidden
    */
   paginationHide = false;
 
   // Resistance
-  /** @private */
+  /** @hidden */
   resistance = true;
-  /** @private */
+  /** @hidden */
   resistanceRatio = 0.85;
 
   // Progress
-  /** @private */
+  /** @hidden */
   watchSlidesProgress = false;
-  /** @private */
+  /** @hidden */
   watchSlidesVisibility = false;
 
   // Clicks
   /**
-   * @private
+   * @hidden
    */
   preventClicks = true;
   /**
-   * @private
+   * @hidden
    */
   preventClicksPropagation = true;
   /**
-   * @private
+   * @hidden
    */
   slideToClickedSlide = false;
 
   // loop
   /**
-   * @private
+   * @hidden
    */
   loopAdditionalSlides = 0;
   /**
-   * @private
+   * @hidden
    */
   loopedSlides: number = null;
 
   // Swiping/no swiping
   /**
-   * @private
+   * @hidden
    */
   swipeHandler: any = null;
   /**
-   * @private
+   * @hidden
    */
   noSwiping = true;
 
   // Callbacks
-  /** @private */
+  /** @hidden */
   runCallbacksOnInit = true;
 
   // Controller
@@ -583,13 +603,13 @@ export class Slides extends Ion {
 
   // Keyboard
   /**
-   * @private
+   * @hidden
    */
   keyboardControl = true;
 
   // Effects
   /**
-   * @private
+   * @hidden
    */
   coverflow = {
     rotate: 50,
@@ -599,14 +619,14 @@ export class Slides extends Ion {
     slideShadows: true
   };
   /**
-   * @private
+   * @hidden
    */
   flip = {
     slideShadows: true,
     limitRotation: true
   };
   /**
-   * @private
+   * @hidden
    */
   cube = {
     slideShadows: true,
@@ -615,7 +635,7 @@ export class Slides extends Ion {
     shadowScale: 0.94
   };
   /**
-   * @private
+   * @hidden
    */
   fade = {
     crossFade: false
@@ -623,24 +643,24 @@ export class Slides extends Ion {
 
   // Accessibility
   /**
-   * @private
+   * @hidden
    */
   prevSlideMessage = 'Previous slide';
   /**
-   * @private
+   * @hidden
    */
   nextSlideMessage = 'Next slide';
   /**
-   * @private
+   * @hidden
    */
   firstSlideMessage = 'This is the first slide';
   /**
-   * @private
+   * @hidden
    */
   lastSlideMessage = 'This is the last slide';
 
   /**
-   * @private
+   * @hidden
    */
   originalEvent: any;
 
@@ -715,59 +735,17 @@ export class Slides extends Ion {
   @Output() ionSlideDoubleTap: EventEmitter<Slides> = new EventEmitter();
 
 
-  /** @private */
+  /** @hidden */
   ionSlideProgress: EventEmitter<number> = new EventEmitter();
-  /** @private */
+  /** @hidden */
   ionSlideTransitionStart: EventEmitter<Slides> = new EventEmitter();
-  /** @private */
+  /** @hidden */
   ionSlideTransitionEnd: EventEmitter<Slides> = new EventEmitter();
-  /** @private */
+  /** @hidden */
   ionSlideTouchStart: EventEmitter<TouchEvent> = new EventEmitter();
-  /** @private */
+  /** @hidden */
   ionSlideTouchEnd: EventEmitter<TouchEvent> = new EventEmitter();
 
-  /**
-   * @private
-   * Deprecated
-   */
-  @Input()
-  set options(val: any) {
-    // Deprecated warning added 2016-12-28
-    console.warn('ion-slides "options" has been deprecated. Please use ion-slide\'s input properties instead.');
-  }
-
-  /**
-   * @private
-   * Deprecated: Use "ionSlideWillChange" instead.
-   * Added 2016-12-29
-   */
-  @Output()
-  get ionWillChange() {
-    console.warn('ion-slides "ionWillChange" has been deprecated, please use "ionSlideWillChange" instead.');
-    return new EventEmitter();
-  }
-
-  /**
-   * @private
-   * Deprecated: Use "ionSlideDidChange" instead.
-   * Added 2016-12-29
-   */
-  @Output()
-  get ionDidChange() {
-    console.warn('ion-slides "ionDidChange" has been deprecated, please use "ionSlideDidChange" instead.');
-    return new EventEmitter();
-  }
-
-  /**
-   * @private
-   * Deprecated: Use "ionSlideDrag" instead.
-   * Added 2016-12-29
-   */
-  @Output()
-  get ionDrag() {
-    console.warn('ion-slides "ionDrag" has been deprecated, please use "ionSlideDrag" instead.');
-    return new EventEmitter();
-  }
 
   /**
    * Private properties only useful to this class.
@@ -781,27 +759,27 @@ export class Slides extends Ion {
    * Properties that are exposed publically but no docs.
    * ------------------------------------
    */
-  /** @private */
+  /** @hidden */
   clickedIndex: number;
-  /** @private */
+  /** @hidden */
   clickedSlide: SlideElement;
-  /** @private */
+  /** @hidden */
   container: SlideContainer;
-  /** @private */
+  /** @hidden */
   id: number;
-  /** @private */
+  /** @hidden */
   progress: number;
-  /** @private */
+  /** @hidden */
   realIndex: number;
-  /** @private */
+  /** @hidden */
   renderedHeight: number;
-  /** @private */
+  /** @hidden */
   renderedWidth: number;
-  /** @private */
+  /** @hidden */
   slideId: string;
-  /** @private */
+  /** @hidden */
   swipeDirection: string;
-  /** @private */
+  /** @hidden */
   velocity: number;
 
 
@@ -879,14 +857,21 @@ export class Slides extends Ion {
   /** @internal */
   _zoom: SlideZoom;
 
-  /** @private */
+  /** @hidden */
   nextButton: HTMLElement;
-  /** @private */
+  /** @hidden */
   prevButton: HTMLElement;
 
 
 
-  constructor(config: Config, private _plt: Platform, zone: NgZone, @Optional() viewCtrl: ViewController, elementRef: ElementRef, renderer: Renderer) {
+  constructor(
+    config: Config,
+    private _plt: Platform,
+    zone: NgZone,
+    @Optional() viewCtrl: ViewController,
+    elementRef: ElementRef,
+    renderer: Renderer,
+  ) {
     super(config, elementRef, renderer, 'slides');
 
     this._zone = zone;
@@ -934,7 +919,7 @@ export class Slides extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
     this._plt.timeout(() => {
@@ -960,12 +945,18 @@ export class Slides extends Ion {
     }
   }
 
+  resize() {
+    if (this._init) {
+
+    }
+  }
+
   /**
    * Transition to the specified slide.
    *
    * @param {number} index  The index number of the slide.
    * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks] Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
+   * @param {boolean} [runCallbacks] Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
     slideTo(this, this._plt, index, speed, runCallbacks);
@@ -975,7 +966,7 @@ export class Slides extends Ion {
    * Transition to the next slide.
    *
    * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   slideNext(speed?: number, runCallbacks?: boolean) {
     slideNext(this, this._plt, runCallbacks, speed, true);
@@ -985,7 +976,7 @@ export class Slides extends Ion {
    * Transition to the previous slide.
    *
    * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionWillChange`/`ionDidChange` events. Default true.
+   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   slidePrev(speed?: number, runCallbacks?: boolean) {
     slidePrev(this, this._plt, runCallbacks, speed, true);
@@ -1052,6 +1043,8 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the next slides.
+   * @param {boolean} shouldLockSwipeToNext If set to true the user will not be able to swipe to the next slide.
+   * Set to false to unlock this behaviour.
    */
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
     this._allowSwipeToNext = !shouldLockSwipeToNext;
@@ -1059,6 +1052,8 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to the previous slides.
+   * @param {boolean} shouldLockSwipeToPrev If set to true the user will not be able to swipe to the previous slide.
+   * Set to false to unlock this behaviour.
    */
   lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
     this._allowSwipeToPrev = !shouldLockSwipeToPrev;
@@ -1066,6 +1061,8 @@ export class Slides extends Ion {
 
   /**
    * Lock or unlock the ability to slide to change slides.
+   * @param {boolean} shouldLockSwipes If set to true user can not swipe in either direction on slide.
+   * False allows swiping in both directions.
    */
   lockSwipes(shouldLockSwipes: boolean) {
     this._allowSwipeToNext = this._allowSwipeToPrev = !shouldLockSwipes;
@@ -1073,13 +1070,14 @@ export class Slides extends Ion {
 
   /**
    * Enable or disable keyboard control.
+   * @param {boolean} shouldEnableKeyboard If set to true the slider can be controled by a keyboard.
    */
   enableKeyboardControl(shouldEnableKeyboard: boolean) {
     enableKeyboardControl(this, this._plt, shouldEnableKeyboard);
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._init = false;
@@ -1092,16 +1090,6 @@ export class Slides extends Ion {
     destroySwiper(this);
 
     this.enableKeyboardControl(false);
-  }
-
-
-  /**
-   * @private
-   * Deprecated, please use the instance of ion-slides.
-   */
-  getSlider(): void {
-    // deprecated 2016-12-29
-    console.warn(`ion-slides, getSlider() has been removed. Please use the properties and methods on the instance of ion-slides instead.`);
   }
 }
 

@@ -1,0 +1,110 @@
+<ion-header>
+
+  <ion-navbar>
+
+    <button ion-button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+      Menu
+    </ion-title>
+
+    <button ion-button menuToggle="right" right color="danger">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+
+    <ion-refresher-content
+      pullingText="Pull to refresh..."
+      refreshingSpinner="bubbles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+  <h3>Page 1</h3>
+
+  <ion-list padding>
+    <ion-item-sliding>
+      <button ion-item class="e2eContentToggleLeftMenu" menuToggle="left">Toggle Left Menu</button>
+
+      <ion-item-options side="left">
+        <button ion-button>Test</button>
+      </ion-item-options>
+      <ion-item-options>
+        <button ion-button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+  <ion-list>
+
+    <ion-item-sliding>
+      <button ion-item class="e2eContentToggleRightMenu" menuToggle="right">Toggle Right Menu</button>
+
+      <ion-item-options side="left">
+        <button ion-button>Test</button>
+      </ion-item-options>
+      <ion-item-options>
+        <button ion-button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>LEFT button</ion-item>
+
+      <ion-item-options side="left">
+        <button ion-button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding>
+      <ion-item>RIGHT button</ion-item>
+
+      <ion-item-options>
+        <button ion-button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item>
+      <ion-label>Apple</ion-label>
+      <ion-toggle item-start></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Apple</ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <button ion-item (click)="goToPageTwo()">Push same page</button>
+
+    <ion-item>
+      <ion-label>RANGE</ion-label>
+      <ion-range></ion-range>
+    </ion-item>
+
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>SLIDING ITEM + RANGE</ion-label>
+        <ion-range></ion-range>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button>Test</button>
+      </ion-item-options>
+      <ion-item-options>
+        <button ion-button>Test</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
+
+</ion-content>

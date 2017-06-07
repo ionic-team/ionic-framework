@@ -1,0 +1,75 @@
+<ion-header>
+
+  <ion-navbar no-border-bottom>
+    <ion-title>Segment</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="appType">
+      <ion-segment-button value="Paid">
+        Paid
+      </ion-segment-button>
+      <ion-segment-button value="Free">
+        Free
+      </ion-segment-button>
+      <ion-segment-button value="Top">
+        Top
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="outer-content">
+  <ion-list>
+    <ion-list-header>{{ appType }}</ion-list-header>
+    <ion-item *ngFor="let item of getItems(appType)">
+      {{ item.name }}
+      <button ion-button outline item-end>{{ item.price }}</button>
+    </ion-item>
+  </ion-list>
+
+  <ion-card>
+    <ion-card-header>
+      {{ safari }}
+    </ion-card-header>
+    <ion-card-content>
+      <ion-segment [(ngModel)]="safari" color="dark">
+        <ion-segment-button value="Bookmarks">
+          <ion-icon name="book"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Reading List">
+          <ion-icon ios="ios-glasses-outline" md="md-glasses"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Shared Links">
+          <ion-icon ios="ios-at-outline" md="md-at"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+      <ion-list style="margin: 0" inset>
+        <button ion-item *ngFor="let sItem of getSafariItems(safari)">
+          <ion-icon item-start [name]="sItem.icon" color="primary"></ion-icon>
+          {{ sItem.name }}
+        </button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar no-border-bottom>
+    <ion-title>
+      Weather: {{ weather == 'sunny' ? '96' : '77' }}°
+      <ion-icon [name]="weather" color="danger"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
+  <ion-toolbar no-border-top no-border-bottom>
+    <ion-segment [(ngModel)]="weather" color="danger">
+      <ion-segment-button value="sunny">
+        Sunny
+      </ion-segment-button>
+      <ion-segment-button value="rainy" checked>
+        Rainy
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>

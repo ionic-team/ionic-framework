@@ -3,7 +3,7 @@ import { Platform, EventListenerOptions } from '../platform/platform';
 
 
 /**
- * @private
+ * @hidden
  */
 export class UIEventManager {
   private evts: Function[] = [];
@@ -43,10 +43,15 @@ export class UIEventManager {
     }
   }
 
-  destroy() {
+  unlistenAll() {
     this.evts.forEach(unRegEvent => {
       unRegEvent();
     });
     this.evts.length = 0;
+  }
+
+  destroy() {
+    this.unlistenAll();
+    this.evts = null;
   }
 }

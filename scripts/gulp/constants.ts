@@ -17,9 +17,10 @@ export const ES_2015 = 'es2015';
 export const ES5 = 'es5';
 export const INDEX_JS = 'index.js';
 export const BUNDLES = 'bundles';
+export const SITE_NAME = 'ionic-site';
 
 // File Paths
-export const PROJECT_ROOT = join(__dirname, '../..');
+export const PROJECT_ROOT = join(__dirname, '..', '..');
 export const DEMOS_ROOT = join(PROJECT_ROOT, DEMOS_NAME);
 export const DEMOS_SRC_ROOT = join(DEMOS_ROOT, SRC_NAME);
 export const DIST_ROOT = join(PROJECT_ROOT, DIST_NAME);
@@ -31,11 +32,12 @@ export const DIST_BUILD_ROOT = join(DIST_ROOT, PACKAGE_NAME);
 export const DIST_BUNDLE_ROOT = join(DIST_BUILD_ROOT, BUNDLES);
 export const DIST_BUILD_UMD_ROOT = join(DIST_BUILD_ROOT, UMD_MODULE);
 export const DIST_BUILD_UMD_BUNDLE_ENTRYPOINT = join(DIST_BUILD_ROOT, INDEX_JS);
-export const DIST_BUILD_ES2015_ROOT = join(DIST_BUILD_ROOT, ES_2015);
+export const DIST_BUILD_ES2015_ROOT = join(DIST_BUILD_ROOT, 'es2015');
 export const DIST_VENDOR_ROOT = join(DIST_ROOT, VENDOR_NAME);
 export const NODE_MODULES_ROOT = join(PROJECT_ROOT, NODE_MODULES);
 export const SCRIPTS_ROOT = join(PROJECT_ROOT, SCRIPTS_NAME);
 export const SRC_ROOT = join(PROJECT_ROOT, SRC_NAME);
+export const SITE_ROOT = join(PROJECT_ROOT, '..', SITE_NAME);
 
 export const SRC_COMPONENTS_ROOT = join(SRC_ROOT, COMPONENTS_NAME);
 export const WORKERS_SRC = join(SCRIPTS_ROOT, 'workers');
@@ -43,7 +45,7 @@ export const WORKERS_SRC = join(SCRIPTS_ROOT, 'workers');
 
 // NPM
 export const NPM_VENDOR_FILES = [
-  '@angular', 'core-js/client', 'rxjs', 'systemjs/dist', 'zone.js/dist'
+  '@angular', join('core-js', 'client'), 'rxjs', join('systemjs', 'dist'), join('zone.js', 'dist')
 ];
 
 

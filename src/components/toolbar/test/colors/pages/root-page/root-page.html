@@ -1,0 +1,209 @@
+
+<ion-content>
+  <ion-toolbar>
+    <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons start>
+      <button ion-button icon-only showWhen="ios">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button color="secondary" icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Default</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button showWhen="ios" icon-only>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button color="secondary" icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Primary</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-buttons start>
+      <button ion-button showWhen="ios" icon-only class="activated">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-only class="activated">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button color="secondary" icon-only class="activated">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Primary.activated</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only color="primary">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-start solid>
+        <ion-icon name="contact"></ion-icon>
+        Solid
+      </button>
+    </ion-buttons>
+    <ion-title>Secondary</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-end solid color="danger">
+        Help
+        <ion-icon name="help-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only color="primary" class="activated">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-start solid class="activated">
+        <ion-icon name="contact"></ion-icon>
+        Solid
+      </button>
+    </ion-buttons>
+    <ion-title>Secondary Activated</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-end solid color="danger" class="activated">
+        Help
+        <ion-icon name="help-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="dark">
+    <ion-buttons start>
+      <button ion-button icon-only outline>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-start outline>
+        <ion-icon name="star"></ion-icon>
+        Star
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only color="secondary" outline>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Dark</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="dark">
+    <ion-buttons start>
+      <button ion-button outline icon-only class="activated">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button outline icon-start class="activated">
+        <ion-icon name="star"></ion-icon>
+        Star
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button color="secondary" outline icon-only class="activated">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Dark.activated</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="danger">
+    <ion-buttons start>
+      <button ion-button icon-start>
+        <ion-icon name="contact"></ion-icon>
+        Clear
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-end>
+        Edit
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Danger</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="danger">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="star"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Danger</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+    <ion-buttons start>
+      <button ion-button icon-start>
+        <ion-icon name="contact"></ion-icon>
+        Clear
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-end>
+        Edit
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Light</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="light">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="star"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Light</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar transparent>
+    <ion-buttons end>
+      <button ion-button #button1 icon-only (click)="buttonClick(button1)">
+        <ion-icon name="star"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Transparent</ion-title>
+    <button ion-button menuToggle right>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-toolbar>
+
+  <ion-toolbar color="greyYellow">
+    <ion-title>Grey Yellow</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="greyWhite">
+    <ion-title>Grey White</ion-title>
+  </ion-toolbar>
+</ion-content>

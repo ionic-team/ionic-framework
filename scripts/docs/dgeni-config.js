@@ -1,8 +1,8 @@
 var Package = require('dgeni').Package;
 var jsdocPackage = require('dgeni-packages/jsdoc');
 var nunjucksPackage = require('dgeni-packages/nunjucks');
-var typescriptPackage = require('./typescript-package');
-var linksPackage = require('./links-package');
+var typescriptPackage = require('dgeni-packages/typescript');
+var linksPackage = require('dgeni-packages/links');
 var gitPackage = require('dgeni-packages/git');
 var path = require('path');
 var semver = require('semver');
@@ -19,8 +19,8 @@ module.exports = function(currentVersion, initialVersionBuild) {
 
 .processor(require('./processors/latest-version'))
 .processor(require('./processors/index-page'))
-.processor(require('./processors/jekyll'))
 .processor(require('./processors/remove-private-members'))
+.processor(require('./processors/jekyll'))
 .processor(require('./processors/hide-private-api'))
 .processor(require('./processors/collect-inputs-outputs'))
 .processor(require('./processors/parse-returns-object'))
@@ -103,8 +103,10 @@ module.exports = function(currentVersion, initialVersionBuild) {
       docPath += doc.name + '/index.md';
       var path = config.v2DocsDir + '/' + (versionData.current.folder || '') +
                      '/api/' +  docPath;
-                     path = path.replace('/home/ubuntu/ionic/src', '')
-                    return path;
+      path = path.replace('/home/ubuntu/ionic/src', '')
+              .replace(__dirname.replace('ionic/scripts/docs', ''),'')
+              .replace('/ionic/src','');
+      return path;
     }
   }];
 })

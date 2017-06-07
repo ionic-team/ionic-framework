@@ -1,11 +1,10 @@
-import { Attribute, Directive, ElementRef, Input, Renderer } from '@angular/core';
+import { Directive, ElementRef, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 
 
 /**
-  * @private TODO remove this line when we remove the other selectors in order to document it
   * @name Typography
   * @module ionic
   * @description
@@ -47,38 +46,12 @@ import { Ion } from '../ion';
   *
  */
 @Directive({
-  selector: 'h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color]:not([ion-button]):not([ion-item]):not([ion-fab]), p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color], [ion-text]'
+  selector: '[ion-text]'
 })
 export class Typography extends Ion {
 
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Attribute('ion-text') ionText: string) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
     super(config, elementRef, renderer, 'text');
-
-    // TODO: Deprecated: all selectors besides `[ion-text]` rc.3
-    // Remove all other selectors and the `ionText` attribute
-    if (ionText === null) {
-      console.warn('Deprecated: The color input has been removed from HTML elements. Please add the `ion-text` attribute in order to use the color input. For example: `<a ion-text color="secondary">Link</a>`');
-    }
   }
 
 }

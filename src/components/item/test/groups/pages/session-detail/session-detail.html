@@ -1,0 +1,9 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>{{session.name}}</ion-title>
+	</ion-navbar>
+</ion-header>
+<ion-content padding>
+	<p>{{session.description}}</p>
+	<p><button ion-button (click)="navCtrl.pop()">Go Back</button></p>
+</ion-content>

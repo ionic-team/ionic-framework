@@ -1,6 +1,6 @@
 import { DomController } from '../platform/dom-controller';
 import { Platform } from '../platform/platform';
-import { ScrollView } from '../util/scroll-view';
+import { ScrollView } from './scroll-view';
 
 /**
  * @name Events
@@ -12,22 +12,24 @@ import { ScrollView } from '../util/scroll-view';
  * ```ts
  * import { Events } from 'ionic-angular';
  *
- * constructor(public events: Events) {}
- *
  * // first page (publish an event when a user is created)
- * function createUser(user) {
+ * constructor(public events: Events) {}
+ * createUser(user) {
  *   console.log('User created!')
  *   events.publish('user:created', user, Date.now());
  * }
  *
- * // second page (listen for the user created event)
- * events.subscribe('user:created', (user, time) => {
- *   // user and time are the same arguments passed in `events.publish(user, time)`
- *   console.log('Welcome', user, 'at', time);
- * });
+ *
+ * // second page (listen for the user created event after function is called)
+ * constructor(public events: Events) {
+ *   events.subscribe('user:created', (user, time) => {
+ *     // user and time are the same arguments passed in `events.publish(user, time)`
+ *     console.log('Welcome', user, 'at', time);
+ *   });
+ * }
  *
  * ```
- * @demo /docs/v2/demos/src/events/
+ * @demo /docs/demos/src/events/
  */
 export class Events {
   private _channels: any = [];
@@ -107,7 +109,7 @@ export class Events {
 }
 
 /**
- * @private
+ * @hidden
  */
 export function setupEvents(plt: Platform, dom: DomController): Events {
   const events = new Events();
@@ -129,27 +131,28 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
     });
 
     // When that status taps, we respond
-    win.addEventListener('statusTap', (ev) => {
+    win.addEventListener('statusTap', () => {
       // TODO: Make this more better
       let el = <HTMLElement>doc.elementFromPoint(plt.width() / 2, plt.height() / 2);
       if (!el) { return; }
 
-      let contentEle = <HTMLElement>el.closest('.scroll-content');
+      let contentEle = <any>el.closest('.scroll-content');
       if (contentEle) {
-        var scroll = new ScrollView(plt, dom);
-        scroll.init(contentEle, 0, 0);
+        var style = contentEle.style;
+        var scroll = new ScrollView(null, plt, dom);
+        scroll._el = contentEle;
           // We need to stop scrolling if it's happening and scroll up
 
-        (<any>contentEle.style)['WebkitBackfaceVisibility'] = 'hidden';
-        (<any>contentEle.style)['WebkitTransform'] = 'translate3d(0,0,0)';
+        style['WebkitBackfaceVisibility'] = 'hidden';
+        style['WebkitTransform'] = 'translate3d(0,0,0)';
 
         dom.write(function() {
-          contentEle.style.overflow = 'hidden';
+          style.overflow = 'hidden';
 
           function finish() {
-            contentEle.style.overflow = '';
-            (<any>contentEle.style)['WebkitBackfaceVisibility'] = '';
-            (<any>contentEle.style)['WebkitTransform'] = '';
+            style.overflow = '';
+            style['WebkitBackfaceVisibility'] = '';
+            style['WebkitTransform'] = '';
           }
 
           let didScrollTimeout = plt.timeout(() => {
@@ -170,7 +173,7 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
 }
 
 /**
- * @private
+ * @hidden
  */
 export function setupProvideEvents(plt: Platform, dom: DomController) {
   return function() {

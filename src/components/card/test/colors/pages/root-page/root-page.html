@@ -1,0 +1,145 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Card Colors</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-card>
+
+    <ion-card-header color="secondary">
+      Secondary Header
+      <span ion-text color="primary">Primary Span in Header</span>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-title color="danger">
+        Danger Title
+      </ion-card-title>
+      Some normal text in content.
+      <h3>Normal h3 in content</h3>
+      <p>
+        Normal paragraph in default content.
+      </p>
+      <p ion-text color="secondary">
+        Secondary paragraph in default content.
+      </p>
+    </ion-card-content>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col no-padding>
+          <button ion-button clear small color="primary">
+            Primary
+          </button>
+        </ion-col>
+        <ion-col no-padding text-right>
+          <button ion-button clear small color="danger">
+            Danger
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header color="primary">
+      Primary Header
+    </ion-card-header>
+
+    <ion-card-content color="danger">
+      <ion-card-title color="primary">
+        Primary Title
+      </ion-card-title>
+      Some normal text in danger content.
+      <h3>Normal h3 in content</h3>
+      <p>
+        Normal paragraph in danger content.
+      </p>
+      <p ion-text color="primary">
+        Primary paragraph in danger content.
+      </p>
+
+    </ion-card-content>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col no-padding>
+          <button ion-button icon-start clear small color="danger">
+            <ion-icon name="star"></ion-icon>
+            Danger
+          </button>
+        </ion-col>
+        <ion-col no-padding text-right>
+          <button ion-button icon-start clear small color="dark">
+            <ion-icon name="share"></ion-icon>
+            Dark
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card>
+
+  <ion-card color="primary">
+
+    <ion-card-header>
+      Primary Card
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-title color="danger">
+        Danger Title
+      </ion-card-title>
+      <h3>Heading</h3>
+      <p>
+        Normal paragraph in normal content.
+      </p>
+      <p ion-text color="secondary">
+        Secondary paragraph in normal content.
+      </p>
+    </ion-card-content>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col no-padding>
+          <button ion-button clear small color="light">
+            Light
+          </button>
+        </ion-col>
+        <ion-col no-padding text-right>
+          <button ion-button clear small color="danger">
+            Danger
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+      Default Header
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-card-title>
+        Default Title
+      </ion-card-title>
+      <h3>Heading</h3>
+      <p>
+        Normal paragraph in normal content.
+      </p>
+      <p ion-text color="primary">
+        Primary paragraph in normal content.
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

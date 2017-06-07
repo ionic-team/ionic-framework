@@ -1,0 +1,53 @@
+<ion-content>
+  <h5 padding-left> Search - Default </h5>
+  <ion-searchbar [(ngModel)]="defaultSearch" type="tel" showCancelButton debounce="500" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionBlur)="inputBlurred($event)" (ionFocus)="inputFocused($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <h5 padding-left> Search - Animated </h5>
+  <ion-searchbar [(ngModel)]="defaultSearch" animated="true" showCancelButton debounce="500" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionBlur)="inputBlurred($event)" (ionFocus)="inputFocused($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <p padding-left>
+    defaultSearch: <b>{{ defaultSearch }}</b>
+  </p>
+
+  <h5 padding-left> Search - Custom Placeholder </h5>
+  <ion-searchbar [autocorrect]="isAutocorrect" showCancelButton="true" [autocomplete]="isAutocomplete" [spellcheck]="isSpellcheck" type="number" placeholder="Filter Schedules" [(ngModel)]="customPlaceholder" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <p padding-left>
+    customPlaceholder: <b>{{ customPlaceholder }}</b>
+  </p>
+
+  <h5 padding-left> Search - No Cancel Button </h5>
+  <ion-searchbar autocorrect="off" autocomplete="off" spellcheck="true" type="text" [(ngModel)]="defaultCancel" showCancelButton="false" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <p padding-left>
+    defaultCancel: <b>{{ defaultCancel }}</b>
+  </p>
+
+  <h5 padding-left> Search - Custom Cancel Button Danger </h5>
+  <ion-searchbar showCancelButton cancelButtonText="Really Long Cancel" color="danger" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <h5 padding-left> Search - Value passed </h5>
+  <ion-searchbar value="mysearch" cancelButtonText="Really Long Cancel" color="dark" showCancelButton (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
+  <h5 padding-left> Search - Mode iOS</h5>
+  <ion-searchbar mode="ios" animated="true" showCancelButton placeholder="Search"></ion-searchbar>
+
+  <h5 padding-left> Search - Mode MD</h5>
+  <ion-searchbar mode="md" animated="true" showCancelButton placeholder="Search"></ion-searchbar>
+
+  <h5 padding-left> Search - Mode WP</h5>
+  <ion-searchbar mode="wp" animated="true" showCancelButton placeholder="Search"></ion-searchbar>
+
+  <h5 padding-left> Search - Animated and No Cancel</h5>
+  <ion-searchbar [placeholder]="'Search'" [animated]="true" [showCancelButton]="false"></ion-searchbar>
+
+  <p padding>
+    <button ion-button block (click)="changeValue()">Change Value</button>
+  </p>
+
+  <button ion-button (click)="activeTab = 'a'">Error Please</button>
+  <div *ngIf="activeTab == 'a'">
+      <ion-searchbar animated="true" [showCancelButton]="true"></ion-searchbar>
+  </div>
+
+</ion-content>

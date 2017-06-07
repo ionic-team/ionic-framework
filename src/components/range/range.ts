@@ -1,24 +1,16 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { clamp, isPresent, isTrueProperty } from '../../util/util';
+import { clamp, isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
 import { DomController } from '../../platform/dom-controller';
 import { Form } from '../../util/form';
 import { Haptic } from '../../tap-click/haptic';
-import { Ion } from '../ion';
+import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
 import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
-import { TimeoutDebouncer } from '../../util/debouncer';
 import { UIEventManager } from '../../gestures/ui-event-manager';
-
-
-export const RANGE_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => Range),
-  multi: true
-};
 
 
 /**
@@ -90,7 +82,7 @@ export const RANGE_VALUE_ACCESSOR: any = {
  * ```
  *
  *
- * @demo /docs/v2/demos/src/range/
+ * @demo /docs/demos/src/range/
  */
 @Component({
   selector: 'ion-range',
@@ -100,8 +92,8 @@ export const RANGE_VALUE_ACCESSOR: any = {
       '<div class="range-tick" *ngFor="let t of _ticks" [style.left]="t.left" [class.range-tick-active]="t.active" role="presentation"></div>' +
       '<div class="range-bar" role="presentation"></div>' +
       '<div class="range-bar range-bar-active" [style.left]="_barL" [style.right]="_barR" #bar role="presentation"></div>' +
-      '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, false)" (ionDecrease)="_keyChg(false, false)" [ratio]="_ratioA" [val]="_valA" [pin]="_pin" [pressed]="_pressedA" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_lblId"></div>' +
-      '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, true)" (ionDecrease)="_keyChg(false, true)" [ratio]="_ratioB" [val]="_valB" [pin]="_pin" [pressed]="_pressedB" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_lblId" *ngIf="_dual"></div>' +
+      '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, false)" (ionDecrease)="_keyChg(false, false)" [ratio]="_ratioA" [val]="_valA" [pin]="_pin" [pressed]="_pressedA" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_labelId"></div>' +
+      '<div class="range-knob-handle" (ionIncrease)="_keyChg(true, true)" (ionDecrease)="_keyChg(false, true)" [ratio]="_ratioB" [val]="_valB" [pin]="_pin" [pressed]="_pressedB" [min]="_min" [max]="_max" [disabled]="_disabled" [labelId]="_labelId" *ngIf="_dual"></div>' +
     '</div>' +
     '<ng-content select="[range-right]"></ng-content>',
   host: {
@@ -109,16 +101,14 @@ export const RANGE_VALUE_ACCESSOR: any = {
     '[class.range-pressed]': '_pressed',
     '[class.range-has-pin]': '_pin'
   },
-  providers: [RANGE_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Range, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Range extends Ion implements AfterViewInit, ControlValueAccessor, OnDestroy {
+export class Range extends BaseInput<any> implements AfterContentInit, ControlValueAccessor, OnDestroy {
+
   _dual: boolean;
   _pin: boolean;
-  _disabled: boolean = false;
   _pressed: boolean;
-  _lblId: string;
-  _fn: Function;
 
   _activeB: boolean;
   _rect: ClientRect;
@@ -141,40 +131,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   _barL: string;
   _barR: string;
 
-  _debouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
   _events: UIEventManager;
 
   @ViewChild('slider') public _slider: ElementRef;
-
-  /**
-   * @private
-   */
-  value: any;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/v2/theming/theming-your-app).
-   */
-  @Input()
-  set color(val: string) {
-    this._setColor(val);
-  }
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/v2/theming/platform-specific-styles).
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
-   * @private
-   */
-  id: string;
 
   /**
    * @input {number} Minimum integer value of the range. Defaults to `0`.
@@ -187,6 +146,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     val = Math.round(val);
     if (!isNaN(val)) {
       this._min = val;
+      this._inputUpdated();
     }
   }
 
@@ -201,6 +161,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     val = Math.round(val);
     if (!isNaN(val)) {
       this._max = val;
+      this._inputUpdated();
     }
   }
 
@@ -266,19 +227,6 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
   }
 
   /**
-   * @input {boolean} If true, the user cannot interact with this element.
-   */
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-  set disabled(val: boolean) {
-    this._disabled = val = isTrueProperty(val);
-    const item = this._item;
-    item && item.setElementClass('item-range-disabled', val);
-  }
-
-  /**
    * Returns the ratio of the knob's is current location, which is a number
    * between `0` and `1`. If two knobs are used, this property represents
    * the lower value.
@@ -302,16 +250,10 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     return null;
   }
 
-  /**
-   * @output {Range} Emitted when the range value changes.
-   */
-  @Output() ionChange: EventEmitter<Range> = new EventEmitter<Range>();
-
-
   constructor(
-    private _form: Form,
+    form: Form,
     private _haptic: Haptic,
-    @Optional() private _item: Item,
+    @Optional() item: Item,
     config: Config,
     private _plt: Platform,
     elementRef: ElementRef,
@@ -319,21 +261,16 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     private _dom: DomController,
     private _cd: ChangeDetectorRef
   ) {
-    super(config, elementRef, renderer, 'range');
+    super(config, elementRef, renderer, 'range', 0, form, item, null);
     this._events = new UIEventManager(_plt);
-    _form.register(this);
-
-    if (_item) {
-      this.id = 'rng-' + _item.registerInput('range');
-      this._lblId = 'lbl-' + _item.id;
-      _item.setElementClass('item-range', true);
-    }
   }
 
   /**
-   * @private
+   * @hidden
    */
-  ngAfterViewInit() {
+  ngAfterContentInit() {
+    this._initialize();
+
     // add touchstart/mousedown listeners
     this._events.pointerEvents({
       element: this._slider.nativeElement,
@@ -356,6 +293,9 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       return false;
     }
 
+    // trigger ionFocus event
+    this._fireFocus();
+
     // prevent default so scrolling does not happen
     ev.preventDefault();
     ev.stopPropagation();
@@ -368,7 +308,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
     // figure out which knob they started closer to
     const ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
-    this._activeB = (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
+    this._activeB = this._dual && (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
 
     // update the active knob's position
     this._update(current, rect, true);
@@ -383,35 +323,40 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
   /** @internal */
   _pointerMove(ev: UIEvent) {
-    if (!this._disabled) {
-      // prevent default so scrolling does not happen
-      ev.preventDefault();
-      ev.stopPropagation();
+    if (this._disabled) {
+      return;
+    }
+    // prevent default so scrolling does not happen
+    ev.preventDefault();
+    ev.stopPropagation();
 
-      // update the active knob's position
-      const hasChanged = this._update(pointerCoord(ev), this._rect, true);
+    // update the active knob's position
+    const hasChanged = this._update(pointerCoord(ev), this._rect, true);
 
-      if (hasChanged && this._snaps) {
-        // trigger a haptic selection changed event
-        // if this is a snap range
-        this._haptic.gestureSelectionChanged();
-      }
+    if (hasChanged && this._snaps) {
+      // trigger a haptic selection changed event
+      // if this is a snap range
+      this._haptic.gestureSelectionChanged();
     }
   }
 
   /** @internal */
   _pointerUp(ev: UIEvent) {
-    if (!this._disabled) {
-      // prevent default so scrolling does not happen
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      // update the active knob's position
-      this._update(pointerCoord(ev), this._rect, false);
-
-      // trigger a haptic end
-      this._haptic.gestureSelectionEnd();
+    if (this._disabled) {
+      return;
     }
+    // prevent default so scrolling does not happen
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    // update the active knob's position
+    this._update(pointerCoord(ev), this._rect, false);
+
+    // trigger a haptic end
+    this._haptic.gestureSelectionEnd();
+
+    // trigger ionBlur event
+    this._fireBlur();
   }
 
   /** @internal */
@@ -428,18 +373,14 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
 
     // update which knob is pressed
     this._pressed = isPressed;
-
+    let valChanged = false;
     if (this._activeB) {
       // when the pointer down started it was determined
       // that knob B was the one they were interacting with
       this._pressedB = isPressed;
       this._pressedA = false;
       this._ratioB = ratio;
-
-      if (val === this._valB) {
-        // hasn't changed
-        return false;
-      }
+      valChanged = val === this._valB;
       this._valB = val;
 
     } else {
@@ -447,38 +388,33 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
       this._pressedA = isPressed;
       this._pressedB = false;
       this._ratioA = ratio;
-
-      if (val === this._valA) {
-        // hasn't changed
-        return false;
-      }
+      valChanged = val === this._valA;
       this._valA = val;
+    }
+    this._updateBar();
+    if (valChanged) {
+      return false;
     }
 
     // value has been updated
+    let value;
     if (this._dual) {
       // dual knobs have an lower and upper value
-      if (!this.value) {
-        // ensure we're always updating the same object
-        this.value = {};
-      }
-      this.value.lower = Math.min(this._valA, this._valB);
-      this.value.upper = Math.max(this._valA, this._valB);
+      value = {
+        lower: Math.min(this._valA, this._valB),
+        upper: Math.max(this._valA, this._valB)
+      };
 
       console.debug(`range, updateKnob: ${ratio}, lower: ${this.value.lower}, upper: ${this.value.upper}`);
 
     } else {
       // single knob only has one value
-      this.value = this._valA;
+      value = this._valA;
       console.debug(`range, updateKnob: ${ratio}, value: ${this.value}`);
     }
 
-    this._debouncer.debounce(() => {
-      this.onChange(this.value);
-      this.ionChange.emit(this);
-    });
-
-    this._updateBar();
+    // Update input value
+    this.value = value;
 
     return true;
   }
@@ -539,7 +475,7 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     }
   }
 
-  /** @private */
+  /** @hidden */
   _keyChg(isIncrease: boolean, isKnobB: boolean) {
     const step = this._step;
     if (isKnobB) {
@@ -577,70 +513,40 @@ export class Range extends Ion implements AfterViewInit, ControlValueAccessor, O
     return clamp(0, value, 1);
   }
 
-  /**
-   * @private
-   */
-  writeValue(val: any) {
-    if (isPresent(val)) {
-      this.value = val;
-
-      if (this._dual) {
-        this._valA = val.lower;
-        this._valB = val.upper;
-        this._ratioA = this._valueToRatio(val.lower);
-        this._ratioB = this._valueToRatio(val.upper);
-
-      } else {
-        this._valA = val;
-        this._ratioA = this._valueToRatio(val);
-      }
-
-      this._updateBar();
+  _inputNormalize(val: any): any {
+    if (this._dual) {
+      return val;
+    } else {
+      val = parseFloat(val);
+      return isNaN(val) ? undefined : val;
     }
   }
 
   /**
-   * @private
+   * @hidden
    */
-  registerOnChange(fn: Function): void {
-    this._fn = fn;
-    this.onChange = (val: any) => {
-      fn(val);
-      this.onTouched();
-    };
-  }
+  _inputUpdated() {
+    const val = this.value;
+    if (this._dual) {
+      this._valA = val.lower;
+      this._valB = val.upper;
+      this._ratioA = this._valueToRatio(val.lower);
+      this._ratioB = this._valueToRatio(val.upper);
 
-  /**
-   * @private
-   */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
+    } else {
+      this._valA = val;
+      this._ratioA = this._valueToRatio(val);
+    }
 
-  /**
-   * @private
-   */
-  onChange(val: any) {
-    // used when this input does not have an ngModel or formControlName
-    this.onTouched();
+    this._updateBar();
     this._cd.detectChanges();
   }
 
   /**
-   * @private
-   */
-  onTouched() { }
-
-  /**
-   * @private
-   */
-  setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
-  }
-
-  /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
-    this._form.deregister(this);
+    super.ngOnDestroy();
     this._events.destroy();
   }
 }

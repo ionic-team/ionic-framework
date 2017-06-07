@@ -1,13 +1,13 @@
 import { swipeShouldReset } from '../util/util';
 import { DomController } from '../platform/dom-controller';
-import { GestureController, GesturePriority, GESTURE_GO_BACK_SWIPE } from '../gestures/gesture-controller';
+import { GestureController, GESTURE_PRIORITY_GO_BACK_SWIPE, GESTURE_GO_BACK_SWIPE } from '../gestures/gesture-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Platform } from '../platform/platform';
 import { SlideData } from '../gestures/slide-gesture';
 import { SlideEdgeGesture } from '../gestures/slide-edge-gesture';
 
 /**
- * @private
+ * @hidden
  */
 export class SwipeBackGesture extends SlideEdgeGesture {
 
@@ -19,14 +19,14 @@ export class SwipeBackGesture extends SlideEdgeGesture {
   ) {
     super(plt, plt.doc().body, {
       direction: 'x',
-      edge: 'left',
+      edge: 'start',
       maxEdgeStart: 75,
       threshold: 5,
       zone: false,
       domController: domCtrl,
       gesture: gestureCtlr.createGesture({
         name: GESTURE_GO_BACK_SWIPE,
-        priority: GesturePriority.GoBackSwipe,
+        priority: GESTURE_PRIORITY_GO_BACK_SWIPE,
         disableScroll: true
       })
     });
@@ -50,7 +50,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
     ev.preventDefault();
     ev.stopPropagation();
 
-    let stepValue = (slide.distance / slide.max);
+    const stepValue = (slide.distance / slide.max);
     this._nav.swipeBackProgress(stepValue);
   }
 

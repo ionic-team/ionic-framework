@@ -1,0 +1,131 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Item Sliding</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-list class="chat-sliding-demo">
+    <ion-list-header>
+      Chats
+    </ion-list-header>
+
+    <ion-item-sliding *ngFor="let chat of chats" #item>
+      <ion-item>
+        <ion-avatar item-start>
+          <img [src]="chat.img">
+        </ion-avatar>
+        <h2>{{chat.name}}</h2>
+        <p>{{chat.message}}</p>
+        <ion-note item-end>
+          {{chat.time}}
+        </ion-note>
+      </ion-item>
+
+      <ion-item-options>
+        <button ion-button color="secondary" (click)="more(item)">
+          <ion-icon name="menu"></ion-icon>
+          More
+        </button>
+        <button ion-button color="dark" (click)="mute(item)">
+          <ion-icon name="volume-off"></ion-icon>
+          Mute
+        </button>
+        <button ion-button color="danger" (click)="delete(item)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+
+      <ion-item-options side="left" (ionSwipe)="archive(item)">
+        <button ion-button color="primary" expandable (click)="archive(item)">
+          <ion-icon name="archive" class="expand-hide"></ion-icon>
+          <div class="expand-hide">Archive</div>
+          <ion-spinner id="archive-spinner"></ion-spinner>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-list class="login-sliding-demo">
+    <ion-list-header>
+      Logins
+    </ion-list-header>
+
+    <ion-item-sliding *ngFor="let login of logins" #item>
+      <ion-item>
+        <ion-icon [name]="login.icon" item-start></ion-icon>
+        <h2>{{login.name}}</h2>
+        <p>{{login.username}}</p>
+      </ion-item>
+      <ion-item-options side="left">
+        <button ion-button color="danger">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+      <ion-item-options (ionSwipe)="download(item)" icon-start>
+        <button ion-button color="dark" (click)="more(item)">
+          <ion-icon name="volume-off"></ion-icon>
+          Mute
+        </button>
+        <button ion-button color="light" expandable (click)="download(item)">
+          <ion-icon name="download" class="expand-hide"></ion-icon>
+          <div class="expand-hide">Download</div>
+          <ion-spinner id="download-spinner"></ion-spinner>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>
+
+<style>
+  /* TODO: spinner is dropping classes so we have to use ids: https://github.com/ionic-team/ionic/issues/7087 */
+  #archive-spinner,
+  #download-spinner,
+  .archiving .expand-hide,
+  .downloading .expand-hide {
+    display: none;
+  }
+
+  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/ionic-team/ionic/issues/7087 */
+  #archive-spinner.spinner-ios line,
+  #archive-spinner.spinner-crescent circle {
+    stroke: #fff;
+  }
+
+  #archive-spinner.spinner-circles circle {
+    fill: #fff;
+  }
+
+  .archiving #archive-spinner,
+  .downloading #download-spinner {
+    display: block;
+  }
+
+  .chat-sliding-demo ion-note {
+    font-size: 13px;
+    margin-top: -8px;
+  }
+
+  .chat-sliding-demo img {
+    pointer-events: none;
+  }
+
+  .login-sliding-demo .ion-logo-twitter {
+    color: #53ACEB;
+  }
+
+  .login-sliding-demo .ion-logo-github {
+    color: #000000;
+  }
+
+  .login-sliding-demo .ion-logo-instagram {
+    color: #235D8D;
+  }
+</style>

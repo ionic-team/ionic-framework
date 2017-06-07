@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicApp, IonicModule, NavController, Platform } from '../../../../../ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, NavController, Platform } from '../../../..';
 
 
 @Component({
@@ -8,26 +9,14 @@ import { IonicApp, IonicModule, NavController, Platform } from '../../../../../i
 export class E2EPage {
   items: any[] = [];
   webview: string = '';
+  counter: number = 0;
 
-  constructor(plt: Platform, public navCtrl: NavController) {
-    for (var i = 0; i < 200; i++) {
-      this.items.push({
-        value: i,
-        someMethod: function() {
-          return '!!';
-        }
-      });
-    }
+  constructor(plt: Platform, public navCtrl: NavController) {}
 
-    if (plt.is('ios')) {
-      if (plt.testUserAgent('Safari')) {
-        this.webview = ': iOS Safari';
-
-      } else if (!!window['webkit']) {
-        this.webview = ': iOS WKWebView';
-
-      } else {
-        this.webview = ': iOS UIWebView';
+  addItems() {
+    if (this.items.length === 0) {
+      for (var i = 0; i < 200; i++) {
+        this.addItem();
       }
     }
   }
@@ -43,8 +32,35 @@ export class E2EPage {
     this.navCtrl.push(E2EPage);
   }
 
-  reload() {
-    window.location.reload(true);
+  addItem() {
+    this.items.push({
+      value: this.counter,
+      someMethod: function() {
+        return '!!';
+      }
+    });
+    this.counter++;
+  }
+
+  addRandomItem() {
+    const index = Math.floor(Math.random() * this.items.length);
+    console.log('Adding to index: ', index);
+    this.items.splice( index, 0, {
+      value: Math.floor(Math.random() * 10000),
+      someMethod: function() {
+        return '!!';
+      }
+    });
+  }
+
+  changeItem() {
+    const index = Math.floor(Math.random() * this.items.length);
+    console.log('Change to index: ', index);
+    this.items[index] = { value: Math.floor(Math.random() * 10000), someMethod: () => '!!' };
+  }
+
+  trackByFn(index: number, item: any) {
+    return item.value;
   }
 
 }
@@ -53,22 +69,23 @@ export class E2EPage {
 @Component({
   template: '<ion-nav [root]="root"></ion-nav>'
 })
-export class E2EApp {
+export class AppComponent {
   root = E2EPage;
 }
 
 
 @NgModule({
   declarations: [
-    E2EApp,
+    AppComponent,
     E2EPage
   ],
   imports: [
-    IonicModule.forRoot(E2EApp)
+    BrowserModule,
+    IonicModule.forRoot(AppComponent)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    E2EApp,
+    AppComponent,
     E2EPage
   ]
 })

@@ -340,4 +340,12 @@ describe('util', () => {
 
   });
 
+  describe('requestIdleCallback polyfill', () => {
+
+    it('should return a value lazily', () => {
+      expect(util.requestIonicCallback(() => { return 1; })).toEqual(1);
+    });
+
+  });
+
 });

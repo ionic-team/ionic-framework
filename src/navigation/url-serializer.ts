@@ -5,7 +5,7 @@ import { isArray, isBlank, isPresent } from '../util/util';
 
 
 /**
- * @private
+ * @hidden
  */
 export class UrlSerializer {
   links: NavLink[];
@@ -35,19 +35,23 @@ export class UrlSerializer {
   }
 
   createSegmentFromName(nameOrComponent: any): NavSegment {
-    const configLink = this.links.find((link: NavLink) => {
-      return (link.component === nameOrComponent) ||
-             (link.name === nameOrComponent) ||
-             (link.component.name === nameOrComponent);
-    });
+    const configLink = this.getLinkFromName(nameOrComponent);
 
     return configLink ? {
       id: configLink.name,
       name: configLink.name,
       component: configLink.component,
+      loadChildren: configLink.loadChildren,
       data: null,
       defaultHistory: configLink.defaultHistory
     } : null;
+  }
+
+  getLinkFromName(nameOrComponent: any) {
+    return this.links.find(link => {
+      return (link.component === nameOrComponent) ||
+             (link.name === nameOrComponent);
+    });
   }
 
   /**
@@ -65,13 +69,14 @@ export class UrlSerializer {
     if (component) {
       const link = findLinkByComponentData(this.links, component, data);
       if (link) {
-        return this.createSegment(link, data);
+        return this._createSegment(link, data);
       }
     }
     return null;
   }
 
-  createSegment(configLink: NavLink, data: any): NavSegment {
+  /** @internal */
+  _createSegment(configLink: NavLink, data: any): NavSegment {
     let urlParts = configLink.parts;
 
     if (isPresent(data)) {
@@ -101,6 +106,7 @@ export class UrlSerializer {
       id: urlParts.join('/'),
       name: configLink.name,
       component: configLink.component,
+      loadChildren: configLink.loadChildren,
       data: data,
       defaultHistory: configLink.defaultHistory
     };
@@ -151,6 +157,7 @@ export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavSe
           id: urlParts[i],
           name: urlParts[i],
           component: null,
+          loadChildren: null,
           data: null
         };
       }
@@ -181,6 +188,7 @@ export const fillMatchedUrlParts = (segments: NavSegment[], urlParts: string[], 
         id: matchedUrlParts.join('/'),
         name: configLink.name,
         component: configLink.component,
+        loadChildren: configLink.loadChildren,
         data: createMatchedData(matchedUrlParts, configLink),
         defaultHistory: configLink.defaultHistory
       };
@@ -310,7 +318,7 @@ function sortConfigLinks(a: NavLink, b: NavLink) {
 const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;
 
 /**
- * @private
+ * @hidden
  */
 export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
 
