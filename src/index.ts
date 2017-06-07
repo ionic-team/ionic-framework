@@ -62,8 +62,6 @@ export { NavPop } from './components/nav/nav-pop';
 export { NavPopAnchor } from './components/nav/nav-pop-anchor';
 export { NavPush } from './components/nav/nav-push';
 export { NavPushAnchor } from './components/nav/nav-push-anchor';
-export { NativeInput } from './components/input/native-input';
-export { NextInput } from './components/input/next-input';
 export { Note } from './components/note/note';
 export { Option } from './components/option/option';
 export { Picker } from './components/picker/picker';

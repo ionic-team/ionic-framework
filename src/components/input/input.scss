@@ -93,6 +93,8 @@ input.text-input:-webkit-autofill {
 
   width: 100%;
   height: 100%;
+
+  touch-action: manipulation;
 }
 
 .input[disabled] .input-cover {
@@ -124,27 +126,6 @@ input.text-input:-webkit-autofill {
 .item-input-has-focus button,
 .input-has-focus button {
   pointer-events: auto;
-}
-
-
-// Scroll Assist Input
-// --------------------------------------------------
-// This input is used to help the app handle
-// Next and Previous input tabbing
-
-[next-input] {
-  @include padding(0);
-
-  position: absolute;
-  bottom: 20px;
-
-  width: 1px;
-  height: 1px;
-
-  border: 0;
-  background: transparent;
-
-  pointer-events: none;
 }
 
 
