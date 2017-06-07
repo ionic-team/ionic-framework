@@ -235,7 +235,7 @@ describe('Config', () => {
     config.init(null, plt);
 
     config.set('tabsPlacement', 'bottom');
-    config.set('ios', 'tabsPlacement', 'top');
+    config.set('tabsPlacement', 'top', 'ios');
 
     expect(config.get('tabsPlacement')).toEqual('top');
   });
