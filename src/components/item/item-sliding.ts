@@ -104,6 +104,23 @@ const enum SlidingState {
  *
  * ```
  *
+ * ### Expandable Options
+ *
+ * Options can be expanded to take up the full width of the item if you swipe past
+ * a certain point. This can be combined with the `ionSwipe` event to call methods
+ * on the class.
+ *
+ * ```html
+ *
+ * <ion-item-sliding (ionSwipe)="delete(item)">
+ *   <ion-item>Item</ion-item>
+ *   <ion-item-options>
+ *     <button ion-button expandable (click)="delete(item)">Delete</button>
+ *   </ion-item-options>
+ * </ion-item-sliding>
+ * ```
+ *
+ * We can call `delete` by either clicking the button, or by doing a full swipe on the item.
  *
  * @demo /docs/demos/src/item-sliding/
  * @see {@link /docs/components#lists List Component Docs}
