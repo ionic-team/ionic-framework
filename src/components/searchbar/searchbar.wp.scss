@@ -141,7 +141,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 
 .searchbar-wp .searchbar-clear-icon {
   @include position(0, $searchbar-wp-input-padding-horizontal, null, null);
-  @include svg-background-image($searchbar-wp-input-clear-icon-svg, true);
+  @include svg-background-image($searchbar-wp-input-clear-icon-svg);
   @include padding(0);
 
   position: absolute;

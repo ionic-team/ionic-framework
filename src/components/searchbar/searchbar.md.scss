@@ -142,7 +142,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
 .searchbar-md .searchbar-clear-icon {
   @include position(0, 13px, null, null);
-  @include svg-background-image($searchbar-md-input-clear-icon-svg, true);
+  @include svg-background-image($searchbar-md-input-clear-icon-svg);
   @include padding(0);
 
   position: absolute;
