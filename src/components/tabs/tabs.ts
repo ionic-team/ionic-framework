@@ -438,8 +438,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     // walk backwards through the tab selection history
     // and find the first previous tab that is enabled and shown
     console.debug('run previousTab', this._selectHistory);
-    for (var i = this._selectHistory.length - 2; i >= 0; i--) {
-      var tab = this._tabs.find(t => t.id === this._selectHistory[i]);
+    for (let i = this._selectHistory.length - 1; i >= 0; i--) {
+      const tab = this._tabs.find(t => t.id === this._selectHistory[i]);
       if (tab && tab.enabled && tab.show) {
         if (trimHistory) {
           this._selectHistory.splice(i + 1);
