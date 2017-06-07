@@ -382,7 +382,21 @@ export class Slides extends Ion {
   private _centeredSlides: boolean = false;
 
   /**
+
+   * @input {boolean} If true, will center slide.
+   */
+  @Input()
+  get centeredSlides() {
+    return this._centeredSlides;
+  }
+  set centeredSlides(val: boolean) {
+    this._centeredSlides = isTrueProperty(val);
+  }
+  private _centeredSlides = false;
+
+  /**
    * @hidden
+
    */
   slidesPerColumn = 1;
   /**
