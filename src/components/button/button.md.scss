@@ -471,8 +471,10 @@ $button-md-strong-font-weight:                  bold !default;
 
 .button-effect {
   // scss-lint:disable PropertySpelling
-  left: 0;
-  top: 0;
+  @include multi-dir() {
+    left: 0;
+    top: 0;
+  }
   @include border-radius(50%);
 
   position: absolute;
