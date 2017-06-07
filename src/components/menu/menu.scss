@@ -46,6 +46,14 @@ ion-menu.show-menu {
   position: absolute;
 }
 
+ion-menu[side=left] > .menu-inner {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: auto;
+    left: 0;
+  }
+}
+
 ion-menu[side=right] > .menu-inner {
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
