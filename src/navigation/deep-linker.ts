@@ -8,7 +8,7 @@ import { isArray, isPresent } from '../util/util';
 import { Tab, Tabs } from './nav-interfaces';
 import { NavigationContainer } from './navigation-container';
 import { NavController } from './nav-controller';
-import { UrlSerializer } from './url-serializer';
+import { UrlSerializer, formatUrlPart } from './url-serializer';
 import { ViewController } from './view-controller';
 
 /**
@@ -84,22 +84,34 @@ export class DeepLinker {
             // the url change is to the root but we don't
             // already know the url used. So let's just
             // reset the root nav to its root page
-            rootNavContainers
-              .map(rootNavContainer => rootNavContainer.getActiveChildNav())
-              .forEach((nav: NavController) => {
-                nav.goToRoot({
-                  updateUrl: false,
-                  isNavRoot: true
-                });
+            rootNavContainers.forEach((navContainer: NavController) => {
+              navContainer.goToRoot({
+                updateUrl: false,
+                isNavRoot: true
               });
+            });
             return;
           }
         }
 
         // normal url
         const segments = this._serializer.parse(browserUrl);
-        console.log('[_urlChange] segments: ', segments);
-        //this._loadNavFromPath(((appRootNav as any) as NavController));
+        segments
+          .map(segment => {
+            // find the matching nav container
+            for (const navContainer of rootNavContainers) {
+              if (navContainer.id === segment.navId || (isTab(navContainer) && navContainer.parent && navContainer.parent.id === segment.navId)) {
+                return {
+                  segment: segment,
+                  navContainer: navContainer
+                };
+              }
+            }
+          })
+          .filter(pair => !!pair)
+          .forEach(pair => {
+            _loadViewForSegment(pair.navContainer, pair.segment, () => {});
+          });
       }
     }
   }
@@ -115,10 +127,9 @@ export class DeepLinker {
         if (isNav(rootNavContainer)) {
           return this.getSegmentFromNav(<NavController> <any> rootNavContainer, null, null);
         } else {
-          return this.getSegmentFromTabs(rootNavContainer, null, null);
+          return this.getSegmentFromTab(rootNavContainer, null, null);
         }
       }).filter(segment => !!segment);
-      console.log('segments: ', segments);
       const browserUrl = this._serializer.serialize(segments);
       this._updateLocation(browserUrl, direction);
     }
@@ -142,14 +153,18 @@ export class DeepLinker {
     return this._serializer.serializeComponent({ navId: nav.id, secondaryId: null, type: 'nav'}, component, data);
   }
 
-  getSegmentFromTabs(navContainer: NavigationContainer, component?: any, data?: any): NavSegment {
-    const activeChildNav = navContainer.getActiveChildNav();
-    const viewController = activeChildNav.getActive(true);
-    if (viewController) {
-      component = viewController.component;
-      data = viewController.data;
+  getSegmentFromTab(navContainer: NavigationContainer, component?: any, data?: any): NavSegment {
+    if (navContainer && navContainer.parent) {
+      const tabsNavContainer = navContainer.parent as NavigationContainer;
+      const activeChildNav = tabsNavContainer.getActiveChildNav();
+      // since it's a tabs, we know that the activeChildNav is a tab
+      const viewController = (activeChildNav as NavController).getActive(true);
+      if (viewController) {
+        component = viewController.component;
+        data = viewController.data;
+      }
+      return this._serializer.serializeComponent({ navId: tabsNavContainer.id, secondaryId: tabsNavContainer.getSecondaryIdentifier(), type: 'tabs'}, component, data);
     }
-    return this._serializer.serializeComponent({ navId: navContainer.id, secondaryId: navContainer.getSecondaryIdentifier(), type: 'tabs'}, component, data);
   }
 
   /**
@@ -224,6 +239,7 @@ export class DeepLinker {
    */
   createUrl(navContainer: NavigationContainer, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
+    console.log('createUrl: ');
     const segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent);
     if (segment) {
       const url = this._serializer.serialize([segment]);
@@ -233,119 +249,17 @@ export class DeepLinker {
   }
 
   /**
-   * Build a browser URL out of this NavController. Climbs up the tree
-   * of NavController's to create a string representation of all the
-   * NavControllers state.
-   *
-   * @internal
-   */
-  _pathFromNavs(nav: NavController, component?: any, data?: any): NavSegment[] {
-    /*const segments: NavSegment[] = [];
-    let view: ViewController;
-    let segment: NavSegment;
-    let tabSelector: string;
-
-    // recursivly climb up the nav ancestors
-    // and set each segment's data
-    while (nav) {
-      // this could be an ion-nav, ion-tab or ion-portal
-      // if a component and data was already passed in then use it
-      // otherwise get this nav's active view controller
-      if (!component && isNav(nav)) {
-        view = nav.getActive(true);
-        if (view) {
-          component = view.component;
-          data = view.data;
-        }
-      }
-
-      // the ion-nav or ion-portal has an active view
-      // serialize the component and its data to a NavSegment
-      segment = this._serializer.serializeComponent(component, data);
-
-      // reset the component/data
-      component = data = null;
-
-      if (!segment) {
-        break;
-      }
-
-      // add the segment to the path
-      segments.push(segment);
-
-      if (isTab(nav)) {
-        // this nav is a Tab, which is a child of Tabs
-        // add a segment to represent which Tab is the selected one
-        tabSelector = this._getTabSelector(<any>nav);
-        segments.push({
-          id: tabSelector,
-          name: tabSelector,
-          component: null,
-          data: null
-        });
-
-        // a parent to Tab is a Tabs
-        // we should skip over any Tabs and go to the next parent
-        nav = nav.parent && nav.parent.parent;
-
-      } else {
-        // this is an ion-nav
-        // climb up to the next parent
-        nav = nav.parent;
-      }
-    }
-
-    // segments added from bottom to top, so Ti esrever dna ti pilf
-    return segments.reverse();
-    */
-    return null;
-  }
-
-  /**
-   * @internal
-   */
-  getSelectedTabIndex(tabsNav: Tabs, secondaryId: string, fallbackIndex: number = 0): number {
-    // we found a segment which probably represents which tab to select
-    const indexMatch = secondaryId.match(/tab-(\d+)/);
-    if (indexMatch) {
-      // awesome, the segment name was something "tab-0", and
-      // the numbe represents which tab to select
-      return parseInt(indexMatch[1], 10);
-    }
-
-    // wasn't in the "tab-0" format so maybe it's using a word
-    const tab = tabsNav._tabs.find(t => {
-      return (isPresent(t.tabUrlPath) && t.tabUrlPath === secondaryId) ||
-             (isPresent(t.tabTitle) && this._serializer.formatUrlPart(t.tabTitle) === secondaryId);
-    });
-
-    return isPresent(tab) ? tab.index : fallbackIndex;
-  }
-
-  /**
    * Each NavController will call this method when it initializes for
    * the first time. This allows each NavController to figure out
    * where it lives in the path and load up the correct component.
    * @internal
    */
-  initNav(nav: NavigationContainer): NavSegment {
+  getSegmentByNavId(navId: string): NavSegment {
     const browserUrl = normalizeUrl(this._location.path());
     const segments = this._serializer.parse(browserUrl);
-    //const path = this._segments;
-
-    if (nav && segments.length) {
-      if (!nav.parent) {
-        // a nav without a parent is always the first nav segment
-        segments[0].navId = nav.id;
-        return segments[0];
-      }
-
-      for (var i = 1; i < segments.length; i++) {
-        if (segments[i - 1].navId === nav.parent.id) {
-          // this nav's parent segment is the one before this segment's index
-          segments[i].navId = nav.id;
-          return segments[i];
-        }
+    for (const segment of segments) {
+      if (segment.navId === navId) {
+        return segment;
       }
     }
     return null;
@@ -370,86 +284,6 @@ export class DeepLinker {
 
       return [view];
     });
-  }
-
-  /**
-   * Using the known Path of Segments, walk down all descendents
-   * from the root NavController and load each NavController according
-   * to each Segment. This is usually called after a browser URL and
-   * Path changes and needs to update all NavControllers to match
-   * the new browser URL. Because the URL is already known, it will
-   * not update the browser's URL when transitions have completed.
-   *
-   * @internal
-   */
-  _loadNavFromPath(nav: NavController, done?: Function) {
-    if (!nav) {
-      done && done();
-
-    } else {
-      this._loadViewFromSegment(nav, () => {
-        this._loadNavFromPath(nav.getActiveChildNav(), done);
-      });
-    }
-  }
-
-  /**
-   * @internal
-   */
-  _loadViewFromSegment(navInstance: any, done: Function) {
-    // load up which nav ids belong to its nav segment
-    let segment = this.initNav(navInstance);
-    if (!segment) {
-      done();
-      return;
-    }
-
-    if (isTabs(navInstance)) {
-      (<Tabs>navInstance).select(
-        this.getSelectedTabIndex((<Tabs>navInstance), segment.name),
-        {
-          updateUrl: false,
-          animate: false
-        }
-      );
-      done();
-      return;
-    }
-
-    let nav = <NavController>navInstance;
-
-    // walk backwards to see if the exact view we want to show here
-    // is already in the stack that we can just pop back to
-    let view: ViewController;
-    const count = nav.length() - 1;
-    for (var i = count; i >= 0; i--) {
-      view = nav.getByIndex(i);
-
-      if (view && view.id === segment.id) {
-        // hooray! we've already got a view loaded in the stack
-        // matching the view they wanted to show
-        if (i === count) {
-          // this is the last view in the stack and it's the same
-          // as the segment so there's no change needed
-          done();
-
-        } else {
-          // it's not the exact view as the end
-          // let's have this nav go back to this exact view
-          nav.popTo(view, {
-            animate: false,
-            updateUrl: false,
-          }, done);
-        }
-        return;
-      }
-    }
-
-    // ok, so they must be pushing a new view to the stack
-    // since we didn't find this same component already in the stack
-    nav.push(segment.component, segment.data, {
-      id: segment.id, animate: false, updateUrl: false
-    }, done);
   }
 
   /**
@@ -496,7 +330,7 @@ export class DeepLinker {
       return tab.tabUrlPath;
     }
     if (isPresent(tab.tabTitle)) {
-      return this._serializer.formatUrlPart(tab.tabTitle);
+      return formatUrlPart(tab.tabTitle);
     }
     return `tab-${tab.index}`;
   }
@@ -523,3 +357,59 @@ export function normalizeUrl(browserUrl: string): string {
   }
   return browserUrl;
 }
+
+/**
+   * Using the known Path of Segments, walk down all descendents
+   * from the root NavController and load each NavController according
+   * to each Segment. This is usually called after a browser URL and
+   * Path changes and needs to update all NavControllers to match
+   * the new browser URL. Because the URL is already known, it will
+   * not update the browser's URL when transitions have completed.
+   *
+   * @internal
+   */
+export function _loadViewForSegment(navContainer: NavigationContainer, segment: NavSegment, done: Function) {
+  if (!segment) {
+    return done();
+  }
+
+  if (isTab(navContainer) && navContainer.parent) {
+    const tabs = (<Tabs> <any> navContainer.parent);
+    const selectedIndex = tabs._getSelectedTabIndex(segment.name);
+    tabs.select(selectedIndex, {
+      updateUrl: false,
+      animate: false
+    });
+    return done();
+  }
+
+  const navController = <NavController> <any> navContainer;
+  const numViews = navController.length() - 1;
+  // walk backwards to see if the exact view we want to show here
+  // is already in the stack that we can just pop back to
+  for (let i = numViews; i >= 0; i--) {
+    const viewController = navController.getByIndex(i);
+    if (viewController && viewController.id === segment.id) {
+      // hooray! we've already got a view loaded in the stack
+      // matching the view they wanted to show
+      if (i === numViews) {
+        // this is the last view in the stack and it's the same
+        // as the segment so there's no change needed
+        return done();
+      } else {
+        // it's not the exact view as the end
+        // let's have this nav go back to this exact view
+        return navController.popTo(viewController, {
+          animate: false,
+          updateUrl: false,
+        }, done);
+      }
+    }
+  }
+  // ok, so they must be pushing a new view to the stack
+  // since we didn't find this same component already in the stack
+  return navController.push(segment.component, segment.data, {
+    id: segment.id, animate: false, updateUrl: false
+  }, done);
+}
+

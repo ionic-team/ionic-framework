@@ -9,10 +9,11 @@ import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
-import { isBlank, isNumber, isPresent, isTrueProperty, assert, removeArrayItem } from '../util/util';
+import { isBlank, isNumber, isPresent, isTrueProperty, assert } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
 import { Keyboard } from '../platform/keyboard';
+import { NavigationContainer } from './navigation-container';
 import { NavController } from './nav-controller';
 import { NavParams } from './nav-params';
 import { Platform } from '../platform/platform';
@@ -26,7 +27,7 @@ import { TransitionController } from '../transitions/transition-controller';
  */
 export class NavControllerBase extends Ion implements NavController {
 
-  _children: any[] = [];
+  _child: NavigationContainer;
   _ids: number = -1;
   _init = false;
   _isPortal: boolean;
@@ -751,7 +752,7 @@ export class NavControllerBase extends Ion implements NavController {
       // it's safe to enable the app again
       this._app.setEnabled(true);
 
-      if (!this.hasChildren() && opts.updateUrl !== false) {
+      if (!this.hasChild() && opts.updateUrl !== false) {
         // notify deep linker of the nav change
         // if a direction was provided and should update url
         this._linker.navChange(this.id, opts.direction);
@@ -956,20 +957,20 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  hasChildren(): boolean {
-    return this._children.length > 0;
+  hasChild(): boolean {
+    return !!this._child;
   }
 
-  getActiveChildNav(): NavController {
-    return this._children[this._children.length - 1];
+  getActiveChildNav(): NavigationContainer {
+    return this._child;
   }
 
-  registerChildNav(nav: any) {
-    this._children.push(nav);
+  registerChildNav(container: NavigationContainer) {
+    this._child = container;
   }
 
   unregisterChildNav(nav: any) {
-    removeArrayItem(this._children, nav);
+    this._child = null;
   }
 
   destroy() {
@@ -1044,7 +1045,7 @@ export class NavControllerBase extends Ion implements NavController {
   canSwipeBack(): boolean {
     return (this._sbEnabled &&
             !this._isPortal &&
-            this._children.length <= 1 &&
+            this._child &&
             !this.isTransitioning() &&
             this._app.isEnabled() &&
             this.canGoBack());
@@ -1137,6 +1138,20 @@ export class NavControllerBase extends Ion implements NavController {
 
   goToRoot(opts: NavOptions) {
     return Promise.reject(new Error('goToRoot needs to be implemented by child class'));
+  }
+
+  /*
+   * @private
+   */
+  getType() {
+    return 'nav';
+  }
+
+  /*
+   * @private
+   */
+  getSecondaryIdentifier(): string {
+    return null;
   }
 }
 

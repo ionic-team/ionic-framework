@@ -4,12 +4,13 @@ import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
-import { isBlank, assert } from '../../util/util';
+import { assert, isBlank, isPresent } from '../../util/util';
 import { Tabs as ITabs } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavigationContainer } from '../../navigation/navigation-container';
 import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { formatUrlPart } from '../../navigation/url-serializer';
 import { RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
@@ -295,10 +296,10 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(<any>this.selectedIndex, 10));
 
     // now see if the deep linker can find a tab index
-    const tabsSegment = this._linker.initNav(this);
+    const tabsSegment = this._linker.getSegmentByNavId(this.id);
     if (tabsSegment && isBlank(tabsSegment.component)) {
       // we found a segment which probably represents which tab to select
-      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.secondaryIdentifier, selectedIndex);
+      selectedIndex = this._getSelectedTabIndex(tabsSegment.secondaryIdentifier, selectedIndex);
     }
 
     // get the selectedIndex and ensure it isn't hidden or disabled
@@ -311,8 +312,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
 
     if (selectedTab) {
       if (tabsSegment) {
-        selectedTab.root = tabsSegment.name;
-        selectedTab.rootParams = tabsSegment.data;
+        selectedTab._lazyRootFromUrl = tabsSegment.name;
+        selectedTab._lazyRootFromUrlData = tabsSegment.data;
       }
       this.select(selectedTab);
     }
@@ -580,6 +581,27 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
       return this._linker._getTabSelector(tab);
     }
     return '';
+  }
+
+  /**
+   * @private
+   */
+  _getSelectedTabIndex(secondaryId: string, fallbackIndex: number = 0): number {
+    // we found a segment which probably represents which tab to select
+    const indexMatch = secondaryId.match(/tab-(\d+)/);
+    if (indexMatch) {
+      // awesome, the segment name was something "tab-0", and
+      // the numbe represents which tab to select
+      return parseInt(indexMatch[1], 10);
+    }
+
+    // wasn't in the "tab-0" format so maybe it's using a word
+    const tab = this._tabs.find(t => {
+      return (isPresent(t.tabUrlPath) && t.tabUrlPath === secondaryId) ||
+             (isPresent(t.tabTitle) && formatUrlPart(t.tabTitle) === secondaryId);
+    });
+
+    return isPresent(tab) ? tab.index : fallbackIndex;
   }
 }
 

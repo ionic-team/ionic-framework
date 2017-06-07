@@ -400,6 +400,7 @@ export class IonicModule {
      * @param {any} deepLinkConfig Any configuration needed for the Ionic Deeplinker.
      */
   static forRoot(appRoot: any, config: any = null, deepLinkConfig: DeepLinkConfig = null): ModuleWithProviders {
+    console.log('deepLinkConfig: ', deepLinkConfig);
     return {
       ngModule: IonicModule,
       providers: [

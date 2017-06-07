@@ -4,9 +4,7 @@ import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
-import { Tab } from './nav-interfaces';
 import { Transition } from '../transitions/transition';
-import { UrlSerializer } from './url-serializer';
 
 
 export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?: any): Promise<ViewController> {
@@ -99,7 +97,7 @@ export function isTab(nav: any): boolean {
 
 export function isNav(nav: any): boolean {
   // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
-  return !!nav && !!nav.push;
+  return !!nav && !!nav.push && nav.getType() === 'nav';
 }
 
 export function linkToSegment(navId: string, type: string, secondaryId: string, link: NavLink): NavSegment {

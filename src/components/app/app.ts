@@ -8,7 +8,6 @@ import { runInDev, assert } from '../../util/util';
 import { Config } from '../../config/config';
 import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
-import { NavController } from '../../navigation/nav-controller';
 import { NavigationContainer } from '../../navigation/navigation-container';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
@@ -201,7 +200,7 @@ export class App {
   /**
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
-  getActiveNav(navId: string): NavController {
+  getActiveNav(navId: string): NavigationContainer {
     const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
       return findTopNav(portal);
@@ -230,7 +229,7 @@ export class App {
     // for each root nav container, get it's active nav
     const list: NavigationContainer[] = [];
     this._rootNavs.forEach((container: NavigationContainer) => {
-      list.push(container);
+      list.push(findTopNav(container));
     });
     return list;
   }
@@ -322,14 +321,15 @@ function recursivePop(nav: any): Promise<any> {
   return recursivePop(nav.parent);
 }
 
-function findTopNav(nav: NavigationContainer): NavController {
-  let topNav = nav.getActiveChildNav();
-  let iterator = topNav;
-  while (topNav) {
-    iterator = topNav;
-    topNav = topNav.getActiveChildNav();
+function findTopNav(nav: NavigationContainer): NavigationContainer {
+  while (nav) {
+    const childNav = nav.getActiveChildNav();
+    if (!childNav) {
+      break;
+    }
+    nav = childNav;
   }
-  return iterator;
+  return nav;
 }
 
 const ACTIVE_SCROLLING_TIME = 100;

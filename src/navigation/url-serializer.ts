@@ -67,7 +67,7 @@ export class UrlSerializer {
       }
       return `/${segment.type}/${segment.navId}/${segment.id}`;
     });
-    return sections.join('/');
+    return sections.join('');
   }
 
   /**
@@ -122,24 +122,23 @@ export class UrlSerializer {
       secondaryIdentifier: navGroup.secondaryId
     };
   }
+}
 
-  formatUrlPart(name: string): string {
-    name = name.replace(URL_REPLACE_REG, '-');
-    name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
-      return '-' + match.toLowerCase();
-    });
-    while (name.indexOf('--') > -1) {
-      name = name.replace('--', '-');
-    }
-    if (name.charAt(0) === '-') {
-      name = name.substring(1);
-    }
-    if (name.substring(name.length - 1) === '-') {
-      name = name.substring(0, name.length - 1);
-    }
-    return encodeURIComponent(name);
+export function formatUrlPart(name: string): string {
+  name = name.replace(URL_REPLACE_REG, '-');
+  name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
+    return '-' + match.toLowerCase();
+  });
+  while (name.indexOf('--') > -1) {
+    name = name.replace('--', '-');
   }
-
+  if (name.charAt(0) === '-') {
+    name = name.substring(1);
+  }
+  if (name.substring(name.length - 1) === '-') {
+    name = name.substring(0, name.length - 1);
+  }
+  return encodeURIComponent(name);
 }
 
 export const parseUrlParts = (navGroups: NavGroup[], configLinks: NavLink[]): NavSegment[] => {
@@ -175,35 +174,6 @@ export const parseUrlParts = (navGroups: NavGroup[], configLinks: NavLink[]): Na
   return segments;
 };
 
-/*export const fillMatchedUrlParts = (segments: NavSegment[], urlParts: string[], configLink: NavLink) => {
-  for (var i = 0; i < urlParts.length; i++) {
-    var urlI = i;
-
-    for (var j = 0; j < configLink.segmentPartsLen; j++) {
-      if (isPartMatch(urlParts[urlI], configLink.segmentParts[j])) {
-        urlI++;
-      } else {
-        break;
-      }
-    }
-
-    if ((urlI - i) === configLink.segmentPartsLen) {
-      var matchedUrlParts = urlParts.slice(i, urlI);
-      for (var j = i; j < urlI; j++) {
-        urlParts[j] = undefined;
-      }
-      segments[i] = {
-        id: matchedUrlParts.join('/'),
-        name: configLink.name,
-        component: configLink.component,
-        loadChildren: configLink.loadChildren,
-        data: createMatchedData(matchedUrlParts, configLink),
-        defaultHistory: configLink.defaultHistory
-      };
-    }
-  }
-};
-*/
 export const isPartMatch = (urlPart: string, configLinkPart: string) => {
   if (isPresent(urlPart) && isPresent(configLinkPart)) {
     if (configLinkPart.charAt(0) === ':') {

@@ -9,8 +9,7 @@ import { Keyboard } from '../../platform/keyboard';
 import { Nav as INav } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavigationContainer } from '../../navigation/navigation-container';
-import { NavOptions } from '../../navigation/nav-util';
+import { NavOptions, NavSegment } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
@@ -56,7 +55,7 @@ import { RootNode } from '../split-pane/split-pane';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Nav) }]
 })
-export class Nav extends NavControllerBase implements AfterViewInit, RootNode, INav, NavigationContainer {
+export class Nav extends NavControllerBase implements AfterViewInit, RootNode, INav {
 
   private _root: any;
   private _hasInit: boolean = false;
@@ -113,17 +112,18 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
   ngAfterViewInit() {
     this._hasInit = true;
 
-    let navSegment = this._linker.initNav(this);
-    if (navSegment && (navSegment.component || navSegment.loadChildren)) {
-      // there is a segment match in the linker
-      return this._linker.initViews(navSegment).then(views => {
+    const segment = this._linker.getSegmentByNavId(this.id);
+
+    if (segment && (segment.component || segment.loadChildren)) {
+      return this._linker.initViews(segment).then(views => {
         this.setPages(views, null, null);
       });
-
     } else if (this._root) {
-      // no segment match, so use the root property
+      // no segment match, so use the root property but don't set the url I guess
+      const setUrl = segment ? false : true;
       return this.push(this._root, this.rootParams, {
-        isNavRoot: (<any>this._app.getRootNavById(this.id) === this)
+        isNavRoot: (<any>this._app.getRootNavById(this.id) === this),
+        updateUrl: setUrl
       }, null);
     }
   }

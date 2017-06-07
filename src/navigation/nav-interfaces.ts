@@ -9,6 +9,7 @@ export interface Tabs {
   select(tabOrIndex: number | Tab, opts: NavOptions): void;
   _top: number;
   setTabbarPosition(top: number, bottom: number): void;
+  _getSelectedTabIndex(secondaryId: string, fallbackIndex?: number): number;
 }
 
 export interface Tab {

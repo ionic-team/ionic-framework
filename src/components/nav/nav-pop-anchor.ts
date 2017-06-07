@@ -26,8 +26,7 @@ export class NavPopAnchor implements AfterContentInit {
   updateHref() {
     if (this.host && this.viewCtrl) {
       const previousView = this.host._nav.getPrevious(this.viewCtrl);
-      // TODO
-      //this._href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.component, this.viewCtrl.data)) || '#';
+      this._href = (previousView && this.linker.createUrl(this.host._nav, this.viewCtrl.component, this.viewCtrl.data)) || '#';
 
     } else {
       this._href = '#';

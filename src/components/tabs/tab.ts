@@ -175,6 +175,16 @@ export class Tab extends NavControllerBase implements ITab {
   _tabsHideOnSubPages: boolean;
 
   /**
+   * @hidden
+   */
+  _lazyRootFromUrl: any;
+
+  /**
+   * @hidden
+   */
+  _lazyRootFromUrlData: any;
+
+  /**
    * @input {Page} Set the root page for this tab.
    */
   @Input() root: any;
@@ -250,6 +260,8 @@ export class Tab extends NavControllerBase implements ITab {
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
+
+
   constructor(
     parent: Tabs,
     app: App,
@@ -297,7 +309,14 @@ export class Tab extends NavControllerBase implements ITab {
   load(opts: NavOptions, done?: () => void) {
     if (!this._loaded && this.root) {
       this.setElementClass('show-tab', true);
-      this.push(this.root, this.rootParams, opts, done);
+      if (this._lazyRootFromUrl) {
+        this.push(this._lazyRootFromUrl, this._lazyRootFromUrlData, opts, done);
+        this._lazyRootFromUrl = null;
+        this._lazyRootFromUrlData = null;
+      } else {
+        this.push(this.root, this.rootParams, opts, done);
+      }
+
       this._loaded = true;
 
     } else {
@@ -387,4 +406,10 @@ export class Tab extends NavControllerBase implements ITab {
     this.destroy();
   }
 
+  /**
+   * @hidden
+   */
+  getType() {
+    return 'tab';
+  }
 }
