@@ -414,7 +414,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 }
 
 .alert-md .alert-input:focus {
-  margin-bottom: $alert-md-input-margin-bottom - 1;
+  @include margin(null, null, $alert-md-input-margin-bottom - 1, null);
 
   border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
 }

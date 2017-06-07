@@ -90,8 +90,7 @@ $label-md-margin-start:               0 !default;
 .item-md.item-label-floating [item-right], // deprecated
 .item-md.item-label-stacked [item-end],
 .item-md.item-label-floating [item-end] {
-  margin-top: $item-md-padding-media-top - 2;
-  margin-bottom: $item-md-padding-media-bottom - 2;
+  @include margin($item-md-padding-media-top - 2, null, $item-md-padding-media-bottom - 2, null);
 }
 
 
