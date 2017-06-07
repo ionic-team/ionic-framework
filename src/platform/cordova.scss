@@ -43,18 +43,18 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 @mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding) {
 
   > .toolbar.statusbar-padding:first-child {
-    padding-top: calc(#{$cordova-statusbar-padding} + #{$toolbar-padding});
+    @include padding(calc(#{$cordova-statusbar-padding} + #{$toolbar-padding}), null, null, null);
 
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
   }
 
   > ion-content.statusbar-padding:first-child .scroll-content {
-    padding-top: $cordova-statusbar-padding;
+    @include padding($cordova-statusbar-padding, null, null, null);
   }
 
   > ion-content.statusbar-padding:first-child[padding] .scroll-content,
   > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
-    padding-top: calc(#{$content-padding} + #{$cordova-statusbar-padding});
+    @include padding(calc(#{$content-padding} + #{$cordova-statusbar-padding}), null, null, null);
   }
 
 }
@@ -67,7 +67,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
   > .toolbar.statusbar-padding:first-child ion-segment,
   > .toolbar.statusbar-padding:first-child ion-title {
-    padding-top: $cordova-statusbar-padding;
+    @include padding($cordova-statusbar-padding, null, null, null);
 
     height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});

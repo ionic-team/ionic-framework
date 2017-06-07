@@ -98,9 +98,9 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 }
 
 .item-md p {
-  overflow: inherit;
-
   @include margin(0, 0, 2px);
+
+  overflow: inherit;
 
   font-size: 1.4rem;
   line-height: normal;
@@ -196,12 +196,12 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 .item-md ion-avatar ion-img,
 .item-md ion-avatar img {
-  width: $item-md-avatar-size;
-  height: $item-md-avatar-size;
-
-  border-radius: $item-md-avatar-border-radius;
+  @include border-radius($item-md-avatar-border-radius);
 
   overflow: hidden;
+
+  width: $item-md-avatar-size;
+  height: $item-md-avatar-size;
 }
 
 
@@ -239,11 +239,10 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 .item-divider-md {
   @include padding-horizontal($item-md-padding-start, null);
 
-  color: $item-md-divider-color;
-  background-color: $item-md-divider-background;
-
   border-bottom: $item-md-divider-border-bottom;
   font-size: $item-md-divider-font-size;
+  color: $item-md-divider-color;
+  background-color: $item-md-divider-background;
 }
 
 
@@ -267,7 +266,7 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
     }
 
     &.activated {
-     background-color: color-shade($color-base);
+      background-color: color-shade($color-base);
     }
   }
 }

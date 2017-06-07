@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {ComponentsPage} from '../pages/components/components';
-import {AssistiveTouchProvider} from "../providers/assistive-touch/assistive-touch";
+import { ComponentsPage } from '../pages/components/components';
 
 @Component({
   template: `<assistive-touch></assistive-touch>

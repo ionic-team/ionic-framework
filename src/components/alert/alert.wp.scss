@@ -608,7 +608,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-button-group-vertical .alert-button {
-  margin-top: $alert-wp-button-group-vertical-margin-top;
+  @include margin($alert-wp-button-group-vertical-margin-top, null, null, null);
 
   width: $alert-wp-button-group-vertical-width;
 }
