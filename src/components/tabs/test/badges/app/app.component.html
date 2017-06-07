@@ -33,14 +33,14 @@
 
 
 <!-- Icons right of text -->
-<ion-tabs tabsLayout="icon-right" primary no-navbar>
+<ion-tabs tabsLayout="icon-end" primary no-navbar>
   <ion-tab [root]="root" tabTitle="Recents" tabIcon="call"></ion-tab>
   <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings" tabBadge="1030" tabBadgeStyle="light"></ion-tab>
 </ion-tabs>
 
 <!-- Icons left of text -->
-<ion-tabs tabsLayout="icon-left" no-navbar>
+<ion-tabs tabsLayout="icon-start" no-navbar>
   <ion-tab [root]="root" tabTitle="Recents" tabIcon="call" tabBadge="32" tabBadgeStyle="danger"></ion-tab>
   <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings"></ion-tab>
@@ -62,7 +62,7 @@
 </ion-tabs>
 
 <!-- Dynamic Badge -->
-<ion-tabs tabsLayout="icon-left" no-navbar>
+<ion-tabs tabsLayout="icon-start" no-navbar>
   <ion-tab [root]="root" tabTitle="Recents" tabIcon="call"></ion-tab>
   <ion-tab [root]="root" tabTitle="Favorites" tabIcon="heart"></ion-tab>
   <ion-tab [root]="root" tabTitle="Settings" tabIcon="settings" [tabBadge]="myBadge" tabBadgeStyle="primary"></ion-tab>

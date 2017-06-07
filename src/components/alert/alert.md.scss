@@ -249,8 +249,10 @@ $alert-md-radio-border-color-on:              $alert-md-button-text-color !defau
 /// @prop - Top of the icon in the alert radio
 $alert-md-radio-icon-top:                     2px !default;
 
-/// @prop - Left of the icon in the alert radio
+// deprecated
 $alert-md-radio-icon-left:                    2px !default;
+/// @prop - Start of the icon in the radio alert
+$alert-md-radio-icon-start:                   $alert-md-radio-icon-left !default;
 
 /// @prop - Width of the icon in the alert radio
 $alert-md-radio-icon-width:                   8px !default;
@@ -323,8 +325,10 @@ $alert-md-checkbox-border-color-on:           $alert-md-button-text-color !defau
 /// @prop - Top of the icon in the checkbox alert
 $alert-md-checkbox-icon-top:                  0 !default;
 
-/// @prop - Left of the icon in the checkbox alert
+// deprecated
 $alert-md-checkbox-icon-left:                 3px !default;
+/// @prop - Start of the icon in the checkbox alert
+$alert-md-checkbox-icon-start:                $alert-md-checkbox-icon-left !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-md-checkbox-icon-width:                6px !default;
@@ -481,7 +485,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // ---------------------------------------------------
 
 .alert-md .alert-radio-inner {
-  @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-left);
+  @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-start);
   @include border-radius($alert-md-radio-icon-border-radius);
 
   position: absolute;
@@ -559,7 +563,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 }
 
 .alert-md [aria-checked=true] .alert-checkbox-inner {
-  @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-left);
+  @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
 
   position: absolute;
 
