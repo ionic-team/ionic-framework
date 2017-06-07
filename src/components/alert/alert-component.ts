@@ -322,7 +322,9 @@ export class AlertCmp {
     this.d.inputs.forEach(i => {
       values[i.name] = i.value;
     });
-    return values;
+
+    // if the values object is empty, that means there were not inputs at all
+    return Object.keys(values).length ? values : undefined;
   }
 
   ngOnDestroy() {
