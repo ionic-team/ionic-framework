@@ -98,8 +98,7 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 // --------------------------------------------------
 
 .tabs-wp .tab-button-text {
-  margin-top: 5px;
-  margin-bottom: 5px;
+  @include margin(5px, null);
 }
 
 
@@ -119,15 +118,14 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 }
 
 .tabs-wp[tabsLayout=icon-bottom] .tab-button {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  @include padding(8px, null, 8px, null);
 }
 
 .tabs-wp[tabsLayout=icon-right] .tab-button, // deprecated
 .tabs-wp[tabsLayout=icon-left] .tab-button, // deprecated
 .tabs-wp[tabsLayout=icon-end] .tab-button,
 .tabs-wp[tabsLayout=icon-start] .tab-button {
-  padding-bottom: 10px;
+  @include padding(null, null, 10px, null);
 }
 
 .tabs-wp[tabsLayout=icon-right] .tab-button ion-icon, // deprecated

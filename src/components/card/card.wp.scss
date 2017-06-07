@@ -139,7 +139,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp ion-list {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .card-wp > .item:last-child,
@@ -171,7 +171,7 @@ $card-wp-header-color:                #222 !default;
 
 .card-header-wp + .card-content-wp,
 .card-wp .item + .card-content-wp {
-  padding-top: 0;
+  @include padding(0, null, null, null);
 }
 
 .card .note-wp {
@@ -231,7 +231,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp + ion-card {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 
