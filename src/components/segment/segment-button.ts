@@ -21,12 +21,12 @@ import { isPresent, isTrueProperty } from '../../util/util';
  *     </ion-segment-button>
  *   </ion-segment>
  *
- *   <!-- Segment buttons with text -->
- *   <ion-segment [(ngModel)]="relationship" color="primary">
- *     <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
+ *   <!-- Segment buttons with text and event -->
+ *   <ion-segment [(ngModel)]="relationship" color="primary" (ionChange)="segmentChanged($event)">
+ *     <ion-segment-button value="friends">
  *       Friends
  *     </ion-segment-button>
- *     <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
+ *     <ion-segment-button value="enemies">
  *       Enemies
  *     </ion-segment-button>
  *   </ion-segment>
