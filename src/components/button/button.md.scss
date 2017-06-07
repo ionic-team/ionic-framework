@@ -470,7 +470,6 @@ $button-md-strong-font-weight:                  bold !default;
 // it's display none, and .md sets to display block.
 
 .button-effect {
-  @include position(0, null, null, 0);
   @include border-radius(50%);
 
   position: absolute;
@@ -484,6 +483,13 @@ $button-md-strong-font-weight:                  bold !default;
   transition-timing-function: ease-in-out;
 
   pointer-events: none;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    top: 0;
+
+    left: 0;
+  }
 }
 
 .md .button-effect {

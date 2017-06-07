@@ -145,8 +145,7 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 1.6rem;
-  margin-bottom: 1rem;
+  @include margin(1.6rem, null, 1rem, null);
 
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
@@ -160,7 +159,7 @@ h6 {
   h5,
   h6 {
     &:first-child {
-      margin-top: -.3rem;
+      @include margin(-.3rem, null, null, null);
     }
   }
 }
@@ -168,17 +167,17 @@ h6 {
 h1 + h2,
 h1 + h3,
 h2 + h3 {
-  margin-top: -.3rem;
+  @include margin(-.3rem, null, null, null);
 }
 
 h1 {
-  margin-top: 2rem;
+  @include margin(2rem, null, null, null);
 
   font-size: $h1-font-size;
 }
 
 h2 {
-  margin-top: 1.8rem;
+  @include margin(1.8rem, null, null, null);
 
   font-size: $h2-font-size;
 }
@@ -412,31 +411,19 @@ ion-footer {
       // Provide `[float-{bp}]` attributes for floating the element based
       // on the breakpoint
       [float#{$infix}-left] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        float: left !important;
+        @include float(left, !important);
       }
 
       [float#{$infix}-right] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        float: right !important;
+        @include float(right, !important);
       }
 
       [float#{$infix}-start] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        float: left !important;
-
-        @include rtl() {
-          float: right !important;
-        }
+        @include float(start, !important);
       }
 
       [float#{$infix}-end] {
-        // scss-lint:disable ImportantRule, PropertySpelling
-        float: right !important;
-
-        @include rtl() {
-          float: left !important;
-        }
+        @include float(end, !important);
       }
     }
   }

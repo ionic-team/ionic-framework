@@ -97,16 +97,15 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 
 .action-sheet-ios .action-sheet-group {
   @include border-radius($action-sheet-ios-border-radius);
+  @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
 
   overflow: hidden;
-
-  margin-bottom: $action-sheet-ios-group-margin-bottom - 2;
 
   background: $action-sheet-ios-background;
 }
 
 .action-sheet-ios .action-sheet-group:last-child {
-  margin-bottom: $action-sheet-ios-group-margin-bottom;
+  @include margin(null, null, $action-sheet-ios-group-margin-bottom, null);
 }
 
 .action-sheet-ios .action-sheet-title {
@@ -137,7 +136,7 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 }
 
 .action-sheet-ios .action-sheet-button.activated {
-  margin-top: -$action-sheet-ios-button-border-width;
+  @include margin(-$action-sheet-ios-button-border-width, null, null, null);
 
   border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
   border-bottom-color: $action-sheet-ios-button-background-activated;

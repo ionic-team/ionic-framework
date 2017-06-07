@@ -4,7 +4,7 @@ module.exports = function(options) {
   var fs = require('fs');
   var path = require('path');
   var request = require('request');
-  var inputDir = path.join(__dirname, '../../dist/e2e/tests');
+  var inputDir = path.join(__dirname, '..', '..' , 'dist', 'e2e', 'tests');
   var uploadQueue = [];
 
   var ignoreFiles = /(\/test\/|\/ts\/|\/q\/|\/ionic-site\/|\/docs\/|\/examples\/|\/inquirer\/|\/lodash\/|\/tooling\/|\/colors\/|\/bin\/|\.ts$|\.bin|\.map$|\.md$|\.git|\.scss$|\.yml$|\.yaml$|\.dart$|\.txt|\.npm|bower|DS_Store|LICENSE)/i;
@@ -13,15 +13,15 @@ module.exports = function(options) {
     fs.readdir(dir, function(err, list) {
 
       list.forEach(function(file) {
-        var url = urlPath + '/' + file;
+        var url = path.join(urlPath, file);
 
 
-        fs.stat(dir + '/' + file, function(err, stat) {
+        fs.stat(path.join(dir, file), function(err, stat) {
           if (stat && stat.isDirectory()) {
-            uploadFiles(dir + '/' + file, urlPath + '/' + file);
+            uploadFiles(path.join(dir, file), path.join(urlPath, file);
           } else {
             if ( shouldProcessPath (url) ){
-              uploadFile(url, dir + '/' + file);
+              uploadFile(url, path.join(dir, file));
             }
           }
         });

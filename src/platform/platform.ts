@@ -148,7 +148,7 @@ export class Platform {
    *   constructor(public plt: Platform) {
    *     if (this.plt.is('ios')) {
    *       // This will only print when on iOS
-   *       console.log("I'm an iOS device!");
+   *       console.log('I am an iOS device!');
    *     }
    *   }
    * }
@@ -1181,7 +1181,8 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
   // set values from "document"
   const docElement = doc.documentElement;
   plt.setDocument(doc);
-  plt.setDir(docElement.dir === 'rtl' ? 'rtl' : 'ltr', false);
+  const dir = docElement.dir;
+  plt.setDir(dir === 'rtl' ? 'rtl' : 'ltr', !dir);
   plt.setLang(docElement.lang, false);
 
   // set css properties
