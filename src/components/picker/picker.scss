@@ -33,8 +33,8 @@ ion-picker-cmp {
 
 .picker-wrapper {
   @include position(null, 0, 0, 0);
-
   @include margin(auto);
+  @include transform(translate3d(0, 100%, 0));
 
   position: absolute;
   z-index: $z-index-overlay-wrapper;
@@ -46,8 +46,6 @@ ion-picker-cmp {
 
   width: $picker-width;
   max-width: $picker-max-width;
-
-  transform: translate3d(0, 100%, 0);
 
   contain: strict;
 }

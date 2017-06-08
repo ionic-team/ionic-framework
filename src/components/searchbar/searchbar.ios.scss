@@ -254,9 +254,9 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .searchbar-animated .searchbar-ios-cancel {
   @include margin-horizontal(null, -100%);
+  @include transform(translate3d(0, 0, 0));
 
   opacity: 0;
-  transform: translate3d(0, 0, 0);
   transition: $searchbar-ios-cancel-transition;
 
   pointer-events: none;

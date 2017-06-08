@@ -67,14 +67,10 @@ $label-ios-margin-start:       0 !default;
 
 .label-ios[floating] {
   @include margin(null, null, 0, null);
+  @include transform(translate3d(0, 27px, 0));
+  @include transform-origin(start, top);
 
-  transform: translate3d(0, 27px, 0);
-  transform-origin: left top;
   transition: transform 150ms ease-in-out;
-}
-
-[dir="rtl"] .label-ios[floating] {
-  transform-origin: right top;
 }
 
 // TODO remove all uses of input-has-focus in v4
@@ -83,7 +79,7 @@ $label-ios-margin-start:       0 !default;
 .input-has-focus .label-ios[floating],
 .item-input-has-value .label-ios[floating],
 .input-has-value .label-ios[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 .item-ios.item-label-stacked [item-right], // deprecated

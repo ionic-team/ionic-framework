@@ -447,3 +447,78 @@
     }
   }
 }
+
+@mixin transform-origin($x-axis, $y-axis: null) {
+  @if $x-axis == start {
+    @include ltr() {
+      transform-origin: left $y-axis;
+    }
+    @include rtl() {
+      transform-origin: right $y-axis;
+    }
+  } @else if $x-axis == end {
+    @include ltr() {
+      transform-origin: right $y-axis;
+    }
+    @include rtl() {
+      transform-origin: left $y-axis;
+    }
+  } @else if $x-axis == left or $x-axis == right {
+    @include multi-dir() {
+      transform-origin: $x-axis $y-axis;
+    }
+  } @else {
+    @include ltr() {
+      transform-origin: $x-axis $y-axis;
+    }
+    @include rtl() {
+      transform-origin: calc(100% - #{$x-axis}) $y-axis;
+    }
+  }
+}
+
+// Add transform for all directions
+// @param {string} $transforms - comma separated list of transforms
+@mixin transform($transforms...) {
+  $extra: null;
+
+  $x: null;
+  $ltr-translate: null;
+  $rtl-translate: null;
+
+  @each $transform in $transforms {
+    @if (str-index($transform, translate3d)) {
+      $transform: str-replace($transform, 'translate3d(');
+      $transform: str-replace($transform, ')');
+
+      $coordinates: str-split($transform, ',');
+
+      $x: nth($coordinates, 1);
+      $y: nth($coordinates, 2);
+      $z: nth($coordinates, 3);
+
+      $ltr-translate: translate3d($x, $y, $z);
+      $rtl-translate: translate3d(calc(-1 * #{$x}), $y, $z);
+    } @else {
+      @if $extra == null {
+        $extra: $transform;
+      } @else {
+        $extra: $extra $transform;
+      }
+    }
+  }
+
+  @if $x == '0' or $x == null {
+    @include multi-dir() {
+      transform: $ltr-translate $extra;
+    }
+  } @else {
+    @include ltr() {
+      transform: $ltr-translate $extra;
+    }
+
+    @include rtl() {
+      transform: $rtl-translate $extra;
+    }
+  }
+}
