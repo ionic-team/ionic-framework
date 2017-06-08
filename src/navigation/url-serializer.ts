@@ -320,7 +320,7 @@ const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|
 /**
  * @hidden
  */
-export const DeepLinkConfigToken = new InjectionToken<string>('USERLINKS');
+export const DeepLinkConfigToken = new InjectionToken<any>('USERLINKS');
 
 export function setupUrlSerializer(userDeepLinkConfig: any): UrlSerializer {
   return new UrlSerializer(userDeepLinkConfig);
