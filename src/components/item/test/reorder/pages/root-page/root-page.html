@@ -19,7 +19,7 @@
     </button>
   </ion-list>
 
-  <div *ngFor="let side of ['left', 'right', 'start', 'end']">
+  <div *ngFor="let side of ['start', 'end']">
     <ion-list [reorder]="isReordering" (ionItemReorder)="$event.applyTo(items)" [side]="side">
       <ion-list-header>{{side}}</ion-list-header>
       <ion-item-sliding *ngFor="let item of items">
