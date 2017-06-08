@@ -178,6 +178,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
   _overlay: ActionSheet | Alert | Popover;
   _texts: string[] = [];
   _text: string = '';
+  _compareWith: (o1: any, o2: any) => boolean = isCheckedProperty;
 
   /**
    * @input {string} The text to display on the cancel button. Default: `Cancel`.
@@ -222,8 +223,6 @@ export class Select extends BaseInput<any> implements OnDestroy {
     }
     this._compareWith = fn;
   }
-
-  private _compareWith: (o1: any, o2: any) => boolean = isCheckedProperty;
 
 
   /**
