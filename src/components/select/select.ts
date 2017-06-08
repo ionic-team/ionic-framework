@@ -223,7 +223,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
     this._compareWith = fn;
   }
 
-  private _compareWith: (o1: any, o2: any) => boolean;
+  private _compareWith: (o1: any, o2: any) => boolean = isCheckedProperty;
 
 
   /**
@@ -490,15 +490,9 @@ export class Select extends BaseInput<any> implements OnDestroy {
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        if (this._compareWith) {
-          option.selected = this.getValues().some(selectValue => {
-            return this._compareWith(selectValue, option.value);
-          });
-        } else {
-          option.selected = this.getValues().some(selectValue => {
-            return isCheckedProperty(selectValue, option.value);
-          });
-        }
+        option.selected = this.getValues().some(selectValue => {
+          return this._compareWith(selectValue, option.value);
+        });
 
         if (option.selected) {
           this._texts.push(option.text);
