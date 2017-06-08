@@ -134,8 +134,6 @@ button[expandable] {
 }
 
 ion-item-sliding.active-swipe-right button[expandable] {
-  order: 1;
-
   transition-duration: .6s;
   transition-property: padding-left;
 
@@ -143,16 +141,30 @@ ion-item-sliding.active-swipe-right button[expandable] {
     // scss-lint:disable PropertySpelling
     padding-left: 90%;
   }
+
+  @include ltr() {
+    order: 1;
+  }
+
+  @include rtl() {
+    order: -1;
+  }
 }
 
 ion-item-sliding.active-swipe-left button[expandable] {
-  order: -1;
-
   transition-duration: .6s;
   transition-property: padding-right;
 
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     padding-right: 90%;
+  }
+
+  @include ltr() {
+    order: -1;
+  }
+
+  @include rtl() {
+    order: 1;
   }
 }
