@@ -78,7 +78,7 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 }
 
 .loading-ios .loading-spinner + .loading-content {
-  @include margin-horizontal(16px, null);
+  @include margin-horizontal($content-margin, null);
 }
 
 
