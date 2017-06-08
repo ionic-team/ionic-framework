@@ -413,4 +413,4 @@ export function setupConfig(userConfig: any, plt: Platform): Config {
 /**
  * @hidden
  */
-export const ConfigToken = new InjectionToken<string>('USERCONFIG');
+export const ConfigToken = new InjectionToken<any>('USERCONFIG');
