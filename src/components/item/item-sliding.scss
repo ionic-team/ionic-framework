@@ -17,7 +17,6 @@ ion-item-sliding .item {
 }
 
 ion-item-options {
-  // scss-lint:disable PropertySpelling
   position: absolute;
   z-index: $z-index-item-options;
   display: none;
@@ -28,6 +27,7 @@ ion-item-options {
   visibility: hidden;
 
   @include multi-dir() {
+    // scss-lint:disable PropertySpelling
     top: 0;
 
     right: 0;
@@ -43,6 +43,7 @@ ion-item-options {
     &:not([side=right]) {
       justify-content: flex-end;
 
+      // scss-lint:disable PropertySpelling
       right: auto;
       left: 0;
     }
