@@ -135,7 +135,6 @@ linters:
       - background-color
       - background-image
       - background-repeat
-      - background-position
       - background-size
 
       # Other
@@ -191,6 +190,7 @@ linters:
     extra_properties:
       - contain
     disabled_properties:
+      - background-position
       - direction
       - right
       - left
