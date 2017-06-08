@@ -89,7 +89,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   getElementStartPos(slide: SlideData, ev: any) {
     const menu = this.menu;
-    if (this.menu.isRightSide !== this.plt.isRTL) {
+    if (menu.isRightSide !== this.plt.isRTL) {
       return menu.isOpen ? slide.min : slide.max;
     }
     // left menu
@@ -98,7 +98,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   getSlideBoundaries(): { min: number, max: number } {
     const menu = this.menu;
-    if (this.menu.isRightSide !== this.plt.isRTL) {
+    if (menu.isRightSide !== this.plt.isRTL) {
       return {
         min: -menu.width(),
         max: 0
