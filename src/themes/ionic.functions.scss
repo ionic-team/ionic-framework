@@ -140,7 +140,7 @@
   // empty array/list
   $split-arr: ();
   // first index of separator in string
-  $index : str-index($string, $separator);
+  $index: str-index($string, $separator);
   // loop through string
   @while $index != null {
     // get the substring from the first character to the separator
@@ -150,7 +150,7 @@
     // remove item and separator from string
     $string: str-slice($string, $index + 1);
     // find new index of separator
-    $index : str-index($string, $separator);
+    $index: str-index($string, $separator);
   }
   // add the remaining string to list (the last item)
   $split-arr: append($split-arr, $string);
