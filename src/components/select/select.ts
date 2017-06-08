@@ -9,7 +9,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual, assert } from '../../util/util';
+import { isPresent, isCheckedProperty, isTrueProperty, deepCopy, deepEqual, assert } from '../../util/util';
 import { Item } from '../item/item';
 import { Option } from '../option/option';
 import { SelectPopover, SelectPopoverOption } from './select-popover-component';
@@ -455,7 +455,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
           return isCheckedProperty(selectValue, option.value);
         });
 
-        if (option.selected && option.value) {
+        if (option.selected && isPresent(option.value) && option.value !== '') {
           this._texts.push(option.text);
         }
       });
