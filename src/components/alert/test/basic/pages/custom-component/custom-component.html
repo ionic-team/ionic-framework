@@ -1,0 +1,14 @@
+<ion-item>
+  <ion-label stacked>Kind</ion-label>
+  <ion-select [(ngModel)]="kind">
+    <ion-option value="fruits">Fruits</ion-option>
+    <ion-option value="numbers">Numbers</ion-option>
+  </ion-select>
+</ion-item>
+
+<ion-item>
+  <ion-label stacked>Value</ion-label>
+  <ion-select [(ngModel)]="selectedValue">
+    <ion-option *ngFor="let val of validValues()" [value]="val">{{ val }}</ion-option>
+  </ion-select>
+</ion-item>

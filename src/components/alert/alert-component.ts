@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewEncapsulation, ViewChild, ViewContainerRef, ReflectiveInjector } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
@@ -58,6 +58,9 @@ import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
         '</ng-template>' +
 
       '</div>' +
+
+      '<div #viewport nav-viewport></div>' +
+
       '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
         '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
@@ -75,7 +78,12 @@ export class AlertCmp {
 
   activeId: string;
   descId: string;
-  d: AlertOptions;
+  d: AlertOptions & {
+    subview?: {
+      component?: any;
+      args?: any
+    }
+  };
   enabled: boolean;
   hdrId: string;
   id: number;
@@ -85,6 +93,9 @@ export class AlertCmp {
   subHdrId: string;
   mode: string;
   gestureBlocker: BlockerDelegate;
+  isCustomAlert: boolean;
+
+  @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
   constructor(
     public _viewCtrl: ViewController,
@@ -93,6 +104,7 @@ export class AlertCmp {
     gestureCtrl: GestureController,
     params: NavParams,
     private _renderer: Renderer,
+    public _cfr: ComponentFactoryResolver,
     private _plt: Platform
   ) {
     // gesture blocker is used to disable gestures dynamically
@@ -115,6 +127,7 @@ export class AlertCmp {
     this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
     this.lastClick = 0;
+    this.isCustomAlert = false;
 
     if (this.d.message) {
       this.descId = this.msgId;
@@ -126,6 +139,32 @@ export class AlertCmp {
     if (!this.d.message) {
       this.d.message = '';
     }
+  }
+
+  ionViewPreLoad() {
+    const data = this.d;
+    if (!data.subview || !data.subview.component) {
+      return;
+    }
+
+    const componentFactory = this._cfr.resolveComponentFactory(data.subview.component);
+
+    const componentProviders = ReflectiveInjector.resolve([
+      { provide: NavParams, useValue: new NavParams(data.subview.args) }
+    ]);
+    const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, this._viewport.parentInjector);
+
+    // ******** DOM WRITE ****************
+    const viewController = this._viewCtrl;
+    const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, childInjector, []);
+    viewController._setInstance(componentRef.instance);
+
+    viewController.didLoad.subscribe(this.ionViewDidLoad.bind(this));
+    viewController.willEnter.subscribe(this.ionViewWillEnter.bind(this));
+    viewController.didEnter.subscribe(this.ionViewDidEnter.bind(this));
+    viewController.willLeave.subscribe(this.ionViewWillLeave.bind(this));
+    viewController.didLeave.subscribe(this.ionViewDidLeave.bind(this));
+    this.isCustomAlert = true;
   }
 
   ionViewDidLoad() {
@@ -303,6 +342,10 @@ export class AlertCmp {
   }
 
   getValues(): any {
+    if (this.isCustomAlert) {
+      return this._viewCtrl.instance;
+    }
+
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
