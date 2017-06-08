@@ -272,7 +272,11 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
    * @internal
    */
   ngAfterViewInit() {
-    this._setConfig('tabsPlacement', 'bottom');
+    if(this._plt.is('android')) {
+      this._setConfig('tabsPlacement', 'top');
+    } else {
+      this._setConfig('tabsPlacement', 'bottom');
+    }    
     this._setConfig('tabsLayout', 'icon-top');
     this._setConfig('tabsHighlight', this.tabsHighlight);
 
