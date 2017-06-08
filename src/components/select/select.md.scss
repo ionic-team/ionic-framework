@@ -9,7 +9,7 @@ $select-md-padding-top:         $item-md-padding-top !default;
 // deprecated
 $select-md-padding-right:       ($item-md-padding-end / 2) !default;
 /// @prop - Padding end of the select
-$select-md-padding-end:         $select-md-padding-right;
+$select-md-padding-end:         $select-md-padding-right !default;
 
 /// @prop - Padding bottom of the select
 $select-md-padding-bottom:      $item-md-padding-bottom !default;
@@ -17,7 +17,7 @@ $select-md-padding-bottom:      $item-md-padding-bottom !default;
 // deprecated
 $select-md-padding-left:        $item-md-padding-start !default;
 /// @prop - Padding start of the select
-$select-md-padding-start:       $select-md-padding-left;
+$select-md-padding-start:       $select-md-padding-left !default;
 
 /// @prop - Color of the select icon
 $select-md-icon-color:          #999 !default;
@@ -47,10 +47,9 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
 
 .select-md .select-icon .select-icon-inner {
   @include position(50%, null, null, 5px);
+  @include margin(-3px, null, null, null);
 
   position: absolute;
-
-  margin-top: -3px;
 
   width: 0;
   height: 0;

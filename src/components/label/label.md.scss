@@ -56,13 +56,10 @@ $label-md-margin-start:               0 !default;
 }
 
 .label-md[floating] {
-  transform: translate3d(0, 27px, 0);
-  transform-origin: left top;
-  transition: transform 150ms ease-in-out;
-}
+  @include transform(translate3d(0, 27px, 0));
+  @include transform-origin(start, top);
 
-[dir="rtl"] .label-md[floating] {
-  transform-origin: right top;
+  transition: transform 150ms ease-in-out;
 }
 
 .label-md[stacked],
@@ -70,22 +67,27 @@ $label-md-margin-start:               0 !default;
   @include margin(null, null, 0, 0);
 }
 
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus .label-md[stacked],
 .input-has-focus .label-md[stacked],
+.item-input-has-focus .label-md[floating],
 .input-has-focus .label-md[floating] {
   color: $label-md-text-color-focused;
 }
 
+.item-input-has-focus .label-md[floating],
 .input-has-focus .label-md[floating],
+.item-input-has-value .label-md[floating],
 .input-has-value .label-md[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 .item-md.item-label-stacked [item-right], // deprecated
 .item-md.item-label-floating [item-right], // deprecated
 .item-md.item-label-stacked [item-end],
 .item-md.item-label-floating [item-end] {
-  margin-top: $item-md-padding-media-top - 2;
-  margin-bottom: $item-md-padding-media-bottom - 2;
+  @include margin($item-md-padding-media-top - 2, null, $item-md-padding-media-bottom - 2, null);
 }
 
 

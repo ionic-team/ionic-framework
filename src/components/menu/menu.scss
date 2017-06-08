@@ -27,6 +27,7 @@ ion-menu.show-menu {
 
 .menu-inner {
   @include position(0, auto, 0, 0);
+  @include transform(translate3d(-9999px, 0, 0));
 
   position: absolute;
 
@@ -34,8 +35,6 @@ ion-menu.show-menu {
 
   width: $menu-width;
   height: 100%;
-
-  transform: translate3d(-9999px, 0, 0);
 
   contain: strict;
 }
@@ -46,7 +45,23 @@ ion-menu.show-menu {
   position: absolute;
 }
 
+ion-menu[side=left] > .menu-inner {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: auto;
+    left: 0;
+  }
+}
+
 ion-menu[side=right] > .menu-inner {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: 0;
+    left: auto;
+  }
+}
+
+ion-menu[side=end] > .menu-inner {
   @include position-horizontal(auto, 0);
 }
 
@@ -58,7 +73,7 @@ ion-menu ion-backdrop {
 }
 
 .menu-content {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }
 
 .menu-content-open {
@@ -95,7 +110,7 @@ ion-menu[type=reveal] {
 }
 
 ion-menu[type=reveal].show-menu .menu-inner {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }
 
 

@@ -20,7 +20,7 @@ export const BUNDLES = 'bundles';
 export const SITE_NAME = 'ionic-site';
 
 // File Paths
-export const PROJECT_ROOT = join(__dirname, '../..');
+export const PROJECT_ROOT = join(__dirname, '..', '..');
 export const DEMOS_ROOT = join(PROJECT_ROOT, DEMOS_NAME);
 export const DEMOS_SRC_ROOT = join(DEMOS_ROOT, SRC_NAME);
 export const DIST_ROOT = join(PROJECT_ROOT, DIST_NAME);
@@ -45,7 +45,7 @@ export const WORKERS_SRC = join(SCRIPTS_ROOT, 'workers');
 
 // NPM
 export const NPM_VENDOR_FILES = [
-  '@angular', 'core-js/client', 'rxjs', 'systemjs/dist', 'zone.js/dist'
+  '@angular', join('core-js', 'client'), 'rxjs', join('systemjs', 'dist'), join('zone.js', 'dist')
 ];
 
 

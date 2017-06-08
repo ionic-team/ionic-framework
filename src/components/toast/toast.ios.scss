@@ -47,15 +47,15 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
 }
 
 .toast-ios .toast-wrapper.toast-top {
-  top: 0;
+  @include transform(translate3d(0, -100%, 0));
 
-  transform: translate3d(0, -100%, 0);
+  top: 0;
 }
 
 .toast-ios .toast-wrapper.toast-bottom {
-  bottom: 0;
+  @include transform(translate3d(0, 100%, 0));
 
-  transform: translate3d(0, 100%, 0);
+  bottom: 0;
 }
 
 .toast-ios .toast-wrapper.toast-middle {

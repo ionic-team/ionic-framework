@@ -7,8 +7,6 @@ const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
 const OPACITY = 'opacity';
 const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
-const OFF_RIGHT = '99.5%';
-const OFF_LEFT = '-33%';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
@@ -20,6 +18,8 @@ export class IOSTransition extends PageTransition {
     super.init();
 
     const plt = this.plt;
+    const OFF_RIGHT = plt.isRTL ? '-99.5%' : '99.5%';
+    const OFF_LEFT = plt.isRTL ? '33%' : '-33%';
     const enteringView = this.enteringView;
     const leavingView = this.leavingView;
     const opts = this.opts;
@@ -100,7 +100,7 @@ export class IOSTransition extends PageTransition {
               .fromTo(OPACITY, 0.01, 1, true);
 
             const enteringBackBtnText = new Animation(plt, enteringNavbarEle.querySelector('.back-button-text'));
-            enteringBackBtnText.fromTo(TRANSLATEX, '100px', '0px');
+            enteringBackBtnText.fromTo(TRANSLATEX, (plt.isRTL ? '-100px' : '100px'), '0px');
             enteringNavBar.add(enteringBackBtnText);
 
           } else {
@@ -123,7 +123,7 @@ export class IOSTransition extends PageTransition {
         // leaving content, back direction
         leavingContent
           .beforeClearStyles([OPACITY])
-          .fromTo(TRANSLATEX, CENTER, '100%');
+          .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? '-100%' : '100%'));
 
       } else {
         // leaving content, forward direction
@@ -157,16 +157,16 @@ export class IOSTransition extends PageTransition {
 
         if (backDirection) {
           // leaving navbar, back direction
-          leavingTitle.fromTo(TRANSLATEX, CENTER, '100%');
+          leavingTitle.fromTo(TRANSLATEX, CENTER, (plt.isRTL ? '-100%' : '100%'));
 
           // leaving navbar, back direction, and there's no entering navbar
           // should just slide out, no fading out
           leavingNavbarBg
             .beforeClearStyles([OPACITY])
-            .fromTo(TRANSLATEX, CENTER, '100%');
+            .fromTo(TRANSLATEX, CENTER, (plt.isRTL ? '-100%' : '100%'));
 
           let leavingBackBtnText = new Animation(plt, leavingNavbarEle.querySelector('.back-button-text'));
-          leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (300) + 'px');
+          leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (plt.isRTL ? -300 : 300) + 'px');
           leavingNavBar.add(leavingBackBtnText);
 
         } else {
