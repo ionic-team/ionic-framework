@@ -107,7 +107,8 @@ $toggle-md-item-end-padding-start:       $item-md-padding-start !default;
 
 .toggle-md {
   position: relative;
-
+  display: block;
+  
   width: $toggle-md-track-width;
   height: $toggle-md-track-height;
 

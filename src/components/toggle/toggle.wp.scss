@@ -95,6 +95,7 @@ $toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 
 .toggle-wp {
   position: relative;
+  display: block;
 
   width: $toggle-wp-track-width;
   height: $toggle-wp-track-height;
