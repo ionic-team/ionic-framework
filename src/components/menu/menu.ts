@@ -425,7 +425,7 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
    * @hidden
    */
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
-    // If the menu is disabled or it is currenly being animated, let's do nothing
+    // If the menu is disabled or it is currently being animated, let's do nothing
     if ((shouldOpen === this.isOpen) || !this._canOpen() || this._isAnimating) {
       return Promise.resolve(this.isOpen);
     }
