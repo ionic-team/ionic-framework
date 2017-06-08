@@ -8,7 +8,7 @@ import { OverlayPortal } from './overlay-portal';
 import { Platform } from '../../platform/platform';
 import * as Constants from './app-constants';
 
-export const AppRootToken = new InjectionToken<string>('USERROOT');
+export const AppRootToken = new InjectionToken<any>('USERROOT');
 
 /**
  * @hidden
