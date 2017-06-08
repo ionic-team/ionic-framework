@@ -154,6 +154,16 @@ export class Searchbar extends BaseInput<string> {
    */
   @Output() ionClear: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
 
+  /**
+   * @output {event} Emitted when the searchbar gains focus.
+   */
+  @Output() ionFocus: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
+
+  /**
+   * @output {event} Emitted when the searchbar loses focus.
+   */
+  @Output() ionBlur: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
+
 
   constructor(
     config: Config,
@@ -301,10 +311,13 @@ export class Searchbar extends BaseInput<string> {
    * @hidden
    * Sets the Searchbar to focused and active on input focus.
    */
-  inputFocused() {
+  inputFocused(ev: any) {
     this._isActive = true;
     this._fireFocus();
     this.positionElements();
+    this._inputDebouncer.debounce(() => {
+      this.ionFocus.emit(ev);
+    });
   }
 
   /**
@@ -312,7 +325,7 @@ export class Searchbar extends BaseInput<string> {
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  inputBlurred() {
+  inputBlurred(ev: any) {
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this._shouldBlur === false) {
@@ -322,6 +335,9 @@ export class Searchbar extends BaseInput<string> {
     }
     this._fireBlur();
     this.positionElements();
+     this._inputDebouncer.debounce(() => {
+      this.ionBlur.emit(ev);
+    });
   }
 
   /**
