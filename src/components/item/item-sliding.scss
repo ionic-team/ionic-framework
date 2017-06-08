@@ -17,20 +17,25 @@ ion-item-sliding .item {
 }
 
 ion-item-options {
-  position: absolute;
   // scss-lint:disable PropertySpelling
-  top: 0;
+  position: absolute;
   z-index: $z-index-item-options;
   display: none;
-
-  justify-content: flex-end;
 
   height: 100%;
 
   font-size: 14px;
   visibility: hidden;
 
-  right: 0;
+  @include multi-dir() {
+    top: 0;
+
+    right: 0;
+  }
+
+  @include ltr() {
+    justify-content: flex-end;
+  }
 
   @include rtl() {
     justify-content: flex-start;
@@ -45,11 +50,15 @@ ion-item-options {
 }
 
 ion-item-options[side=left] {
-  justify-content: flex-start;
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: auto;
+    left: 0;
+  }
 
-  // scss-lint:disable PropertySpelling
-  right: auto;
-  left: 0;
+  @include ltr() {
+    justify-content: flex-start;
+  }
 
   @include rtl() {
     justify-content: flex-end;
@@ -129,8 +138,11 @@ ion-item-sliding.active-swipe-right button[expandable] {
 
   transition-duration: .6s;
   transition-property: padding-left;
-  // scss-lint:disable PropertySpelling
-  padding-left: 90%;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    padding-left: 90%;
+  }
 }
 
 ion-item-sliding.active-swipe-left button[expandable] {
@@ -139,6 +151,8 @@ ion-item-sliding.active-swipe-left button[expandable] {
   transition-duration: .6s;
   transition-property: padding-right;
 
-  // scss-lint:disable PropertySpelling
-  padding-right: 90%;
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    padding-right: 90%;
+  }
 }
