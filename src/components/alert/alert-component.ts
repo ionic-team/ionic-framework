@@ -316,15 +316,18 @@ export class AlertCmp {
       return this.d.inputs.filter(i => i.checked).map(i => i.value);
     }
 
+    if (this.d.inputs.length === 0) {
+      // this is an alert without any options/inputs at all
+      return undefined;
+    }
+
     // this is an alert with text inputs
     // return an object of all the values with the input name as the key
     const values: {[k: string]: string} = {};
     this.d.inputs.forEach(i => {
       values[i.name] = i.value;
     });
-
-    // if the values object is empty, that means there were not inputs at all
-    return Object.keys(values).length ? values : undefined;
+    return values;
   }
 
   ngOnDestroy() {
