@@ -423,6 +423,31 @@
   }
 }
 
+@mixin background-position($horizontal, $horizontal-amount: null, $vertical: null, $vertical-amount: null) {
+  @if $horizontal == start or $horizontal == end {
+    $horizontal-ltr: null;
+    $horizontal-rtl: null;
+    @if $horizontal == start {
+      $horizontal-ltr: left;
+      $horizontal-rtl: right;
+    } @else {
+      $horizontal-ltr: right;
+      $horizontal-rtl: left;
+    }
+
+    @include ltr() {
+      background-position: $horizontal-ltr $horizontal-amount $vertical $vertical-amount;
+    }
+    @include rtl() {
+      background-position: $horizontal-rtl $horizontal-amount $vertical $vertical-amount;
+    }
+  } @else {
+    @include multi-dir() {
+      background-position: $horizontal $horizontal-amount $vertical $vertical-amount;
+    }
+  }
+}
+
 @mixin transform-origin($x-axis, $y-axis: null) {
   @if $x-axis == start {
     @include ltr() {
