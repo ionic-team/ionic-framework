@@ -241,7 +241,7 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
 };
 
 
-export const PlatformConfigToken = new InjectionToken<string>('PLTCONFIG');
+export const PlatformConfigToken = new InjectionToken<any>('PLTCONFIG');
 
 export function providePlatformConfigs() {
   return PLATFORM_CONFIGS;
