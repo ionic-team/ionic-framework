@@ -142,7 +142,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
     this._root = page;
 
     if (this._hasInit) {
-      this.setRoot(page);
+      this.setRoot(page, this.rootParams);
     }
   }
 
