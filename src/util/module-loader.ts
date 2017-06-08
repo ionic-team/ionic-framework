@@ -4,7 +4,7 @@ import { DeepLinkConfig } from '../navigation/nav-util';
 import { NgModuleLoader } from './ng-module-loader';
 import { requestIonicCallback } from './util';
 
-export const LAZY_LOADED_TOKEN = new InjectionToken<string>('LZYCMP');
+export const LAZY_LOADED_TOKEN = new InjectionToken<any>('LZYCMP');
 
 
 
