@@ -150,30 +150,10 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
       return;
     }
 
-    let dirty = false;
-    let value: boolean;
-    let activated: boolean;
-
-    if (this._value) {
-      if ((this._plt.isRTL && (currentX - 15 > this._startX)) ||
-          (!this._plt.isRTL && (currentX + 15 < this._startX))) {
-        dirty = true;
-        value = false;
-        activated = true;
-      }
-
-    } else if ((this._plt.isRTL && (currentX + 15 < this._startX)) ||
-               (!this._plt.isRTL && (currentX - 15 > this._startX))){
-      dirty = true;
-      value = true;
-      activated = (this._plt.isRTL ? (currentX > this._startX - 5) : (currentX < this._startX + 5));
-    }
-
-    if (dirty) {
+    if (this._shouldToggle(currentX, -15)) {
       this._zone.run(() => {
-        this.value = value;
+        this.value = !this.value;
         this._startX = currentX;
-        this._activated = activated;
         this._haptic.selection();
       });
     }
@@ -191,16 +171,8 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
     console.debug('toggle, _onDragEnd', endX);
 
     this._zone.run(() => {
-      if (this._value) {
-        if ((this._plt.isRTL && (this._startX - 4 < endX)) ||
-            (!this._plt.isRTL && (this._startX + 4 > endX))){
-          this.value = false;
-          this._haptic.selection();
-        }
-
-      } else if ((this._plt.isRTL && (this._startX + 4 > endX)) ||
-                 (!this._plt.isRTL && (this._startX - 4 < endX))) {
-        this.value = true;
+      if (this._shouldToggle(endX, 4)) {
+        this.value = !this.value;
         this._haptic.selection();
       }
 
@@ -208,6 +180,21 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
       this._fireBlur();
       this._startX = null;
     });
+  }
+
+  /**
+   * @hidden
+   */
+  _shouldToggle(currentX: number, margin: number): boolean {
+    const isLTR = !this._plt.isRTL;
+    const startX = this._startX;
+    if (this._value) {
+      return (isLTR && (startX + margin > currentX)) ||
+        (!isLTR && (startX - margin < currentX));
+    } else {
+      return (isLTR && (startX - margin < currentX)) ||
+        (!isLTR && (startX + margin > currentX));
+    }
   }
 
   /**
