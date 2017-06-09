@@ -209,8 +209,12 @@
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
   } @else {
-    $x: nth($viewBox, 3);
-    $flipped-url: url-encode(str-replace($svg, "<path", "<path transform='translate(#{$x}, 0) scale(-1, 1)'"));
+    $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
+    $flipped-url: $svg;
+    $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
+    $flipped-url: str-replace($flipped-url, "<line", "<line #{$transform}");
+    $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
+    $flipped-url: url-encode($flipped-url);
 
     @include ltr () {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
