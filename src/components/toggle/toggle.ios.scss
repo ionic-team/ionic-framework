@@ -144,7 +144,7 @@ $toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
   background-color: $toggle-ios-handle-background-color;
   box-shadow: $toggle-ios-handle-box-shadow;
 
-  transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
+  transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
 
   will-change: transform;
   contain: strict;

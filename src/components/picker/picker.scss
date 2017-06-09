@@ -59,6 +59,11 @@ ion-picker-cmp {
   justify-content: center;
 
   contain: strict;
+
+  @include rtl() {
+    // Date is the same format in both directions
+    flex-direction: row-reverse;
+  }
 }
 
 .picker-col {
@@ -137,11 +142,21 @@ ion-picker-cmp {
 }
 
 .picker-opts-left {
-  justify-content: flex-start;
+  @include ltr() {
+    justify-content: flex-start;
+  }
+  @include rtl() {
+    justify-content: flex-end;
+  }
 }
 
 .picker-opts-right {
-  justify-content: flex-end;
+  @include ltr() {
+    justify-content: flex-end;
+  }
+  @include rtl() {
+    justify-content: flex-start;
+  }
 }
 
 .picker-above-highlight,
