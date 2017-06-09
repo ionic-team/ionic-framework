@@ -29,7 +29,6 @@
   }
 }
 
-
 // SVG Background Image Mixin
 // --------------------------------------------------
 
@@ -68,7 +67,6 @@
   }
 }
 
-
 // Breakpoint Mixins
 // ---------------------------------------------------------------------------------
 
@@ -90,7 +88,6 @@
   $min: map-get($breakpoints, $name);
   @return if($min != 0, $min, null);
 }
-
 
 // Returns a blank string if smallest breakpoint, otherwise returns the name with a dash infront.
 // Useful for making responsive utilities.
@@ -138,7 +135,6 @@
   $next: breakpoint-next($name, $breakpoints);
   @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
 }
-
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
@@ -236,7 +232,7 @@
 // @param {string} $start
 // @param {boolean} $content include content or use default
 // ----------------------------------------------------------
-@mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end, $content: false) {
+@mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end) {
   @if $top == $end and $top == $bottom and $top == $start {
     @include multi-dir() {
       #{$prop}: $top;
@@ -257,14 +253,10 @@
       #{$prop}: $top $start $bottom $end;
     }
   } @else {
-    @if $content == true { // TODO check if @content exists instead
-      @content;
-    } @else {
-      @include property-horizontal($prop, $start, $end);
-      @include multi-dir() {
-        #{$prop}-top: $top;
-        #{$prop}-bottom: $bottom;
-      }
+    @include property-horizontal($prop, $start, $end);
+    @include multi-dir() {
+      #{$prop}-top: $top;
+      #{$prop}-bottom: $bottom;
     }
   }
 }
@@ -346,7 +338,11 @@
 // @param {string} $bottom-start
 // ----------------------------------------------------------
 @mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
-  @include property(border-radius, $top-start, $top-end, $bottom-end, $bottom-start, true) {
+  @if $top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start {
+    @include multi-dir() {
+      border-radius: $top-start;
+    }
+  } @else {
     @include ltr() {
       border-top-left-radius: $top-start;
       border-top-right-radius: $top-end;
