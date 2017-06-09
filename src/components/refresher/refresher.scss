@@ -72,10 +72,10 @@ ion-refresher-content {
 .refresher-pulling-icon,
 .refresher-refreshing-icon {
   @include text-align(center);
+  @include transform-origin(center);
 
   font-size: $refresher-icon-font-size;
   color: $refresher-icon-color;
-  transform-origin: center;
   transition: 200ms;
 }
 

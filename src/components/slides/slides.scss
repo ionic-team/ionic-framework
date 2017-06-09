@@ -53,7 +53,7 @@
 
 .swiper-container-android .swiper-slide,
 .swiper-wrapper {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }
 
 .swiper-container-multirow > .swiper-wrapper {
@@ -183,11 +183,11 @@
 // Pagination Styles
 .swiper-pagination {
   @include text-align(center);
+  @include transform(translate3d(0, 0, 0));
 
   position: absolute;
   z-index: 10;
 
-  transform: translate3d(0, 0, 0);
   transition: 300ms;
 
   pointer-events: none;
@@ -253,8 +253,7 @@ button.swiper-pagination-bullet {
 
 .swiper-container-vertical > .swiper-pagination-bullets {
   @include position(50%, 10px, null, null);
-
-  transform: translate3d(0, -50%, 0);
+  @include transform(translate3d(0, -50%, 0));
 }
 
 .swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
@@ -276,6 +275,7 @@ button.swiper-pagination-bullet {
 
 .swiper-pagination-progress .swiper-pagination-progressbar {
   @include position(0, null, null, 0);
+  @include transform-origin(start, top);
 
   position: absolute;
 
@@ -285,11 +285,10 @@ button.swiper-pagination-bullet {
   background: #007aff;
 
   transform: scale(0);
-  transform-origin: left top;
 }
 
 .swiper-container-rtl .swiper-pagination-progress .swiper-pagination-progressbar {
-  transform-origin: right top;
+  @include transform-origin(end, top);
 }
 
 .swiper-container-horizontal > .swiper-pagination-progress {
@@ -413,15 +412,16 @@ button.swiper-pagination-bullet {
 
 // Cube
 .swiper-container-cube .swiper-slide {
+  @include transform-origin(0, 0);
+
   width: 100%;
   height: 100%;
 
   visibility: hidden;
-  transform-origin: 0 0;
 }
 
 .swiper-container-cube.swiper-container-rtl .swiper-slide {
-  transform-origin: 100% 0;
+  @include transform-origin(100%, 0);
 }
 
 .swiper-container-cube .swiper-slide-active,
@@ -540,14 +540,13 @@ button.swiper-pagination-bullet {
 .swiper-lazy-preloader {
   @include position(50%, null, null, 50%);
   @include margin(-21px, null, null, -21px);
+  @include transform-origin(50%);
 
   position: absolute;
   z-index: 10;
 
   width: 42px;
   height: 42px;
-
-  transform-origin: 50%;
 
   animation: swiper-preloader-spin 1s steps(12, end) infinite;
 }
