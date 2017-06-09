@@ -145,6 +145,7 @@ ion-picker-cmp {
   @include ltr() {
     justify-content: flex-start;
   }
+
   @include rtl() {
     justify-content: flex-end;
   }
@@ -154,6 +155,7 @@ ion-picker-cmp {
   @include ltr() {
     justify-content: flex-end;
   }
+
   @include rtl() {
     justify-content: flex-start;
   }
