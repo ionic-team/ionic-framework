@@ -35,6 +35,11 @@ $card-md-line-height:                 1.5 !default;
   line-height: $card-md-line-height;
 }
 
+.card-header-md + .card-content-md,
+.card-md .item + .card-content-md {
+  @include padding(0, null, null, null);
+}
+
 
 // Generate Material Design Card Content Colors
 // --------------------------------------------------

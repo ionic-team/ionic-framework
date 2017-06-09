@@ -180,8 +180,9 @@ $toggle-md-item-end-padding-start:       $item-md-padding-start !default;
 // -----------------------------------------
 
 .toggle-md.toggle-checked .toggle-inner {
+  @include transform(translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0));
+
   background-color: $toggle-md-handle-background-color-on;
-  transform: translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0);
 }
 
 

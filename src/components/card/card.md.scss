@@ -19,7 +19,7 @@ $card-md-margin-bottom:               10px !default;
 // deprecated
 $card-md-margin-left:                 10px !default;
 /// @prop - Margin start of the card
-$card-md-margin-start:                $card-md-margin-left;
+$card-md-margin-start:                $card-md-margin-left !default;
 
 /// @prop - Padding top of the media on the card
 $card-md-padding-media-top:           10px !default;
@@ -65,7 +65,7 @@ $card-md-text-color:                  #222 !default;
 }
 
 .card-md ion-list {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .card-md > .item:last-child,
@@ -76,11 +76,6 @@ $card-md-text-color:                  #222 !default;
 
 .card-md .item-md.item-block .item-inner {
   border: 0;
-}
-
-.card-header-md + .card-content-md,
-.card-md .item + .card-content-md {
-  padding-top: 0;
 }
 
 .card .note-md {
@@ -124,7 +119,7 @@ $card-md-text-color:                  #222 !default;
 }
 
 .card-md + ion-card {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 

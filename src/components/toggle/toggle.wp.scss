@@ -162,8 +162,9 @@ $toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 // -----------------------------------------
 
 .toggle-wp.toggle-checked .toggle-inner {
+  @include transform(translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ($toggle-wp-track-border-width * 2) - ($toggle-wp-handle-left * 2), 0, 0));
+
   background-color: $toggle-wp-handle-background-color-on;
-  transform: translate3d($toggle-wp-track-width - $toggle-wp-handle-width - ($toggle-wp-track-border-width * 2) - ($toggle-wp-handle-left * 2), 0, 0);
 }
 
 

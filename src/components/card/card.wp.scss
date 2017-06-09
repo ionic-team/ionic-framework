@@ -19,7 +19,7 @@ $card-wp-margin-bottom:               8px !default;
 // deprecated
 $card-wp-margin-left:                 8px !default;
 /// @prop - Margin start of the card
-$card-wp-margin-start:                $card-wp-margin-left;
+$card-wp-margin-start:                $card-wp-margin-left !default;
 
 /// @prop - Padding top of the media on the card
 $card-wp-padding-media-top:           10px !default;
@@ -68,7 +68,7 @@ $card-wp-text-color:                  #222 !default;
 }
 
 .card-wp ion-list {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .card-wp > .item:last-child,
@@ -79,11 +79,6 @@ $card-wp-text-color:                  #222 !default;
 
 .card-wp .item-wp.item-block .item-inner {
   border: 0;
-}
-
-.card-header-wp + .card-content-wp,
-.card-wp .item + .card-content-wp {
-  padding-top: 0;
 }
 
 .card .note-wp {
@@ -127,7 +122,7 @@ $card-wp-text-color:                  #222 !default;
 }
 
 .card-wp + ion-card {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 

@@ -1,23 +1,21 @@
 
-export function isDef(s: any): boolean { return s !== undefined && s !== null; }
+export function isDef(v: any): boolean { return v !== undefined && v !== null; }
 
-export function isUndef(s: any): boolean { return s === undefined; }
+export function isUndef(v: any): boolean { return v === undefined || v === null; }
 
-export function isArray(val: any): val is Array<any> { return Array.isArray(val); }
+export function isArray(v: any): v is Array<any> { return Array.isArray(v); }
 
-export function isObject(val: any): val is Object { return typeof val === 'object'; }
+export function isObject(v: any): v is Object { return v !== null && typeof v === 'object'; }
 
-export function isBoolean(val: any): val is (boolean) { return typeof val === 'boolean'; }
+export function isBoolean(v: any): v is (boolean) { return typeof v === 'boolean'; }
 
-export function isString(val: any): val is (string) { return typeof val === 'string'; }
+export function isString(v: any): v is (string) { return typeof v === 'string'; }
 
-export function isNumber(val: any): val is (number) { return typeof val === 'number'; }
+export function isNumber(v: any): v is (number) { return typeof v === 'number'; }
 
-export function isFunction(val: any): val is (Function) { return typeof val === 'function'; }
+export function isFunction(v: any): v is (Function) { return typeof v === 'function'; }
 
-export function isStringOrNumber(s: any): s is (string | number) {
-  return isString(s) || isNumber(s);
-}
+export function isStringOrNumber(v: any): v is (string | number) { return isString(v) || isNumber(v); }
 
 export function toDashCase(str: string) {
   return str.replace(/([A-Z])/g, (g) => '-' + g[0].toLowerCase());
@@ -89,7 +87,9 @@ export function getParentElement(elm: any) {
 export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: string|number}) {
   const styleProps = Object.keys(styles);
 
-  for (var i = 0; i < styleProps.length; i++) {
-    (<any>elm.style)[styleProps[i]] = styles[styleProps[i]];
+  if (elm) {
+    for (var i = 0; i < styleProps.length; i++) {
+      (<any>elm.style)[styleProps[i]] = styles[styleProps[i]];
+    }
   }
 }

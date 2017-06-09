@@ -35,6 +35,10 @@ $card-wp-line-height:                 1.5 !default;
   line-height: $card-wp-line-height;
 }
 
+.card-header-wp + .card-content-wp,
+.card-wp .item + .card-content-wp {
+  @include padding(0, null, null, null);
+}
 
 
 // Generate Windows Card Content Colors

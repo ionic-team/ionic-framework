@@ -146,8 +146,7 @@ $toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
   background-color: $toggle-ios-handle-background-color;
   box-shadow: $toggle-ios-handle-box-shadow;
 
-  transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms;
-
+  transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
   will-change: transform;
   contain: strict;
 }
@@ -174,8 +173,7 @@ $toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
 // -----------------------------------------
 
 .toggle-ios.toggle-checked .toggle-inner {
-  transform: translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0);
-
+  @include transform(translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0));
 }
 
 

@@ -1,16 +1,17 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../util/helpers';
-import { Component, Ionic, Listen, Prop } from '../index';
-import { GestureCallback, GestureDetail } from '../../util/interfaces';
-import { GestureController, GestureDelegate } from './gesture-controller';
+import { BlockerDelegate } from './gesture-controller';
+import { Component, Ionic, Listen, Prop, Watch } from '../index';
+import { GestureCallback, GestureDetail, IonicGlobal } from '../../util/interfaces';
+import { GestureController, GestureDelegate, BLOCK_ALL } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
 
 
 @Component({
-  tag: 'ion-gesture',
-  shadow: false
+  tag: 'ion-gesture'
 })
 export class Gesture {
   private $el: HTMLElement;
+  private ctrl: GestureController;
   private detail: GestureDetail = {};
   private positions: number[] = [];
   private gesture: GestureDelegate;
@@ -21,11 +22,15 @@ export class Gesture {
   private hasStartedPan = false;
   private requiresMove = false;
   private isMoveQueued = false;
+  private blocker: BlockerDelegate;
 
+  @Prop() attachTo: string = 'child';
+  @Prop() autoBlockAll: boolean = false;
+  @Prop() block: string = null;
+  @Prop() disableScroll: boolean = false;
   @Prop() direction: string = 'x';
   @Prop() gestureName: string = '';
   @Prop() gesturePriority: number = 0;
-  @Prop() attachTo: string = 'child';
   @Prop() maxAngle: number = 40;
   @Prop() threshold: number = 20;
   @Prop() type: string = 'pan';
@@ -39,9 +44,9 @@ export class Gesture {
 
 
   ionViewDidLoad() {
-    Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
+    this.ctrl = (<IonicGlobal>Ionic).controllers.gesture = ((<IonicGlobal>Ionic).controllers.gesture || new GestureController());
 
-    this.gesture = (<GestureController>Ionic.controllers.gesture).createGesture(this.gestureName, this.gesturePriority, false);
+    this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
 
     const types = this.type.replace(/\s/g, '').toLowerCase().split(',');
 
@@ -59,8 +64,23 @@ export class Gesture {
         applyStyles(getElementReference(this.$el, this.attachTo), GESTURE_INLINE_STYLES);
       });
     }
+
+    if (this.autoBlockAll) {
+      this.blocker = this.ctrl.createBlocker(BLOCK_ALL);
+      this.blocker.block();
+    }
   }
 
+
+  @Watch('block')
+  blockChange(block: string) {
+    if (this.blocker) {
+      this.blocker.destroy();
+    }
+    if (block) {
+      this.blocker = this.ctrl.createBlocker(block.split(','));
+    }
+  }
 
   // DOWN *************************
 
@@ -241,10 +261,10 @@ export class Gesture {
     this.hasStartedPan = false;
     this.hasCapturedPan = false;
 
-    this.gesture.release();
+    this.gesture && this.gesture.release();
 
     this.enable(false);
-    this.notCaptured(this.detail);
+    this.notCaptured && this.notCaptured(this.detail);
   }
 
 
@@ -349,8 +369,12 @@ export class Gesture {
 
 
   ionViewDidUnload() {
+    if (this.blocker) {
+      this.blocker.destroy();
+      this.blocker = null;
+    }
     this.gesture && this.gesture.destroy();
-    this.gesture = this.pan = this.detail = this.detail.event = null;
+    this.ctrl = this.gesture = this.pan = this.detail = this.detail.event = null;
   }
 
 }

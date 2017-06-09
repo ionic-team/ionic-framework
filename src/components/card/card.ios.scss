@@ -19,7 +19,7 @@ $card-ios-margin-bottom:               12px !default;
 // deprecated
 $card-ios-margin-left:                 12px !default;
 /// @prop - Margin start of the card
-$card-ios-margin-start:                $card-ios-margin-left;
+$card-ios-margin-start:                $card-ios-margin-left !default;
 
 /// @prop - Padding top of the media on the card
 $card-ios-padding-media-top:           10px !default;
@@ -59,7 +59,7 @@ $card-ios-text-color:                  #666 !default;
 }
 
 .card-ios ion-list {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .card-ios > .item:last-child,
@@ -108,7 +108,7 @@ $card-ios-text-color:                  #666 !default;
 }
 
 .card-ios + ion-card {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 

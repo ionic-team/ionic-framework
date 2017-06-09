@@ -9,7 +9,18 @@ export class GestureController {
 
 
   createGesture(gestureName: string, gesturePriority: number, disableScroll: boolean): GestureDelegate {
-    return new GestureDelegate(this, ++this.id, gestureName, gesturePriority, disableScroll);
+    return new GestureDelegate(this, this.newID(), gestureName, gesturePriority, disableScroll);
+  }
+
+  createBlocker(opts: BlockerOptions = {}): BlockerDelegate {
+    return new BlockerDelegate(this.newID(), this,
+      opts.disable,
+      !!opts.disableScroll
+    );
+  }
+
+  newID(): number {
+    return this.id++;
   }
 
   start(gestureName: string, id: number, priority: number): boolean {
@@ -171,3 +182,64 @@ export class GestureDelegate {
   }
 
 }
+
+
+export class BlockerDelegate {
+
+  blocked: boolean = false;
+
+  constructor(
+    private id: number,
+    private controller: GestureController,
+    private disable: string[],
+    private disableScroll: boolean
+  ) { }
+
+  block() {
+    if (!this.controller) {
+      return;
+    }
+    if (this.disable) {
+      this.disable.forEach(gesture => {
+        this.controller.disableGesture(gesture, this.id);
+      });
+    }
+
+    if (this.disableScroll) {
+      this.controller.disableScroll(this.id);
+    }
+    this.blocked = true;
+  }
+
+  unblock() {
+    if (!this.controller) {
+      return;
+    }
+    if (this.disable) {
+      this.disable.forEach(gesture => {
+        this.controller.enableGesture(gesture, this.id);
+      });
+    }
+    if (this.disableScroll) {
+      this.controller.enableScroll(this.id);
+    }
+    this.blocked = false;
+  }
+
+  destroy() {
+    this.unblock();
+    this.controller = null;
+  }
+}
+
+
+export interface BlockerOptions {
+  disableScroll?: boolean;
+  disable?: string[];
+}
+
+
+export const BLOCK_ALL: BlockerOptions = {
+  disable: ['menu-swipe', 'goback-swipe'],
+  disableScroll: true
+};
