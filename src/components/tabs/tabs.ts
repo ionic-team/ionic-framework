@@ -152,7 +152,7 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-tabs',
   template:
     '<div class="tabbar" role="tablist" #tabbar>' +
-      '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" role="tab" href="#" (ionSelect)="select(t)"></a>' +
+      '<button *ngFor="let t of _tabs" [tab]="t" class="tab-button" role="tab" (ionSelect)="select(t)"></button>' +
       '<div class="tab-highlight"></div>' +
     '</div>' +
     '<ng-content></ng-content>' +
