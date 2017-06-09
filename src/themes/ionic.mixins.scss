@@ -202,15 +202,17 @@
 // ----------------------------------------------------------
 @mixin svg-background-image($svg, $flip-rtl: false) {
   $url: url-encode($svg);
+  $viewBox: str-split(str-extract($svg, "viewBox='", "'"), " ");
 
-  @if $flip-rtl != true {
+  @if $flip-rtl != true or $viewBox == null {
     @include multi-dir() {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
   } @else {
-    $flipped-url: url-encode(str-replace($svg, "<path", "<path transform='scale(-1, 1)'"));
+    $x: nth($viewBox, 3);
+    $flipped-url: url-encode(str-replace($svg, "<path", "<path transform='translate(#{$x}, 0) scale(-1, 1)'"));
 
-    @include ltr() {
+    @include ltr () {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
     @include rtl() {
