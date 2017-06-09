@@ -155,16 +155,18 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
     let activated: boolean;
 
     if (this._value) {
-      if (currentX + 15 < this._startX) {
+      if ((this._plt.isRTL && (currentX - 15 > this._startX)) ||
+          (!this._plt.isRTL && (currentX + 15 < this._startX))) {
         dirty = true;
         value = false;
         activated = true;
       }
 
-    } else if (currentX - 15 > this._startX) {
+    } else if ((this._plt.isRTL && (currentX + 15 < this._startX)) ||
+               (!this._plt.isRTL && (currentX - 15 > this._startX))){
       dirty = true;
       value = true;
-      activated = (currentX < this._startX + 5);
+      activated = (this._plt.isRTL ? (currentX > this._startX - 5) : (currentX < this._startX + 5));
     }
 
     if (dirty) {
@@ -190,12 +192,14 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
 
     this._zone.run(() => {
       if (this._value) {
-        if (this._startX + 4 > endX) {
+        if ((this._plt.isRTL && (this._startX - 4 < endX)) ||
+            (!this._plt.isRTL && (this._startX + 4 > endX))){
           this.value = false;
           this._haptic.selection();
         }
 
-      } else if (this._startX - 4 < endX) {
+      } else if ((this._plt.isRTL && (this._startX + 4 > endX)) ||
+                 (!this._plt.isRTL && (this._startX - 4 < endX))) {
         this.value = true;
         this._haptic.selection();
       }
