@@ -1,7 +1,7 @@
 import { OpaqueToken } from '@angular/core';
 
 import { NavigationContainer } from './navigation-container';
-import { DeepLinkConfig, linkToSegment, NavLink, NavSegment } from './nav-util';
+import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
@@ -59,7 +59,7 @@ export class UrlSerializer {
    */
   serialize(segments: NavSegment[]): string {
     if (!segments || !segments.length) {
-      return '';
+      return '/';
     }
     const sections = segments.map(segment => {
       if (segment.type === 'tabs') {

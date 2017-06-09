@@ -4,5 +4,5 @@ import { Component } from '@angular/core';
   template: `<ion-nav [root]="root"></ion-nav>`
 })
 export class AppComponent {
-  root = 'TabsPage';
+  root = 'LoginPage';
 }

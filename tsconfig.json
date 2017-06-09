@@ -18,9 +18,6 @@
     "src/**/*.ts",
     "demos/src/**/*.ts"
   ],
-  "exclude": [
-    "src/**/*.spec.ts"
-  ],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
