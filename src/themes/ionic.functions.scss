@@ -159,6 +159,25 @@
 }
 
 
+// Str extract between start and end
+// --------------------------------------------------
+
+@function str-extract($string, $start, $end) {
+  $start-index: str-index($string, $start);
+
+  @if $start-index {
+    $post: str-slice($string, $start-index + str-length($start));
+    $end-index: str-index($post, $end);
+
+    @if $end-index {
+      @return str-slice($post, 1, $end-index - 1);
+    }
+  }
+
+  @return null;
+}
+
+
 // URL Encode Function
 // --------------------------------------------------
 

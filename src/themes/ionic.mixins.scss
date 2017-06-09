@@ -29,14 +29,6 @@
   }
 }
 
-// SVG Background Image Mixin
-// --------------------------------------------------
-
-@mixin svg-background-image($svg) {
-  $url: url-encode($svg);
-  background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
-}
-
 // Check that the given map values are in ascending order
 // ---------------------------------------------------------------------------------
 
@@ -199,6 +191,34 @@
     // TODO find variable name
     @warn "you are using a deprecated variable";
     #{$property}: $variable;
+  }
+}
+
+// SVG Background Image Mixin
+// @param {string} $svg
+// ----------------------------------------------------------
+@mixin svg-background-image($svg, $flip-rtl: false) {
+  $url: url-encode($svg);
+  $viewBox: str-split(str-extract($svg, "viewBox='", "'"), " ");
+
+  @if $flip-rtl != true or $viewBox == null {
+    @include multi-dir() {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+    }
+  } @else {
+    $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
+    $flipped-url: $svg;
+    $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
+    $flipped-url: str-replace($flipped-url, "<line", "<line #{$transform}");
+    $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
+    $flipped-url: url-encode($flipped-url);
+
+    @include ltr () {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+    }
+    @include rtl() {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$flipped-url}");
+    }
   }
 }
 
