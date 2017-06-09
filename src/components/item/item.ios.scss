@@ -45,6 +45,9 @@ $item-ios-detail-push-color:              $list-ios-border-color !default;
 /// @prop - Icon for the detail arrow
 $item-ios-detail-push-svg:                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-ios-detail-push-color}'/></svg>" !default;
 
+/// @prop - Icon for the detail arrow RTL
+$item-ios-detail-push-svg-rtl:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M10,20l2-2l-8-8l8,-8l-2-2l-10,10l10,10z' fill='#{$item-ios-detail-push-color}'/></svg>" !default;
+
 /// @prop - Background for the divider
 $item-ios-divider-background:             #f7f7f7 !default;
 
@@ -225,6 +228,11 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 
     background-repeat: no-repeat;
     background-size: 14px 14px;
+
+    @include rtl() {
+      @include svg-background-image($item-ios-detail-push-svg-rtl);
+      background-position: left ($item-ios-padding-end - 2) center;
+    }
   }
 }
 
