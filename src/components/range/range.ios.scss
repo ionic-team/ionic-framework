@@ -103,7 +103,7 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
 }
 
 .range-ios .range-bar {
-  @include position(($range-ios-slider-height / 2), null, null, 0);
+  @include position(($range-ios-slider-height / 2), null, null, null);
   @include border-radius(1px);
 
   position: absolute;
@@ -116,14 +116,6 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
   pointer-events: none;
 }
 
-.range-ios.range-pressed .range-bar-active {
-  will-change: left, right;
-}
-
-.range-ios.range-pressed .range-knob-handle {
-  will-change: left;
-}
-
 .range-ios .range-bar-active {
   bottom: 0;
 
@@ -133,14 +125,16 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
 }
 
 .range-ios .range-knob-handle {
-  @include position(($range-ios-slider-height / 2), null, null, 0);
-  @include margin(-($range-ios-hit-height / 2), null, null, -($range-ios-hit-width / 2));
-  @include text-align(center);
-
-  position: absolute;
+  @include position(($range-ios-slider-height / 2), null, null, null);
+  @include margin(-($range-ios-hit-height / 2), null, null, null);
 
   width: $range-ios-hit-width;
   height: $range-ios-hit-height;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    margin-left: -($range-ios-hit-width / 2);
+  }
 }
 
 .range-ios .range-knob {
@@ -180,9 +174,7 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
 }
 
 .range-ios .range-pin {
-  @include text-align(center);
   @include border-radius(50px);
-  @include transform(translate3d(0, 28px, 0), scale(.01));
 
   position: relative;
   top: -20px;
@@ -201,10 +193,6 @@ $range-ios-pin-padding-start:                 $range-ios-pin-padding-end !defaul
   @include deprecated-variable(padding, $range-ios-pin-padding) {
     @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
   }
-}
-
-.range-ios .range-knob-pressed .range-pin {
-  @include transform(translate3d(0, 0, 0), scale(1));
 }
 
 .range-ios.range-disabled {

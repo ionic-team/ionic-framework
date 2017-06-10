@@ -97,7 +97,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-bar {
-  @include position(($range-md-slider-height / 2), null, null, 0);
+  @include position(($range-md-slider-height / 2), null, null, null);
 
   position: absolute;
 
@@ -109,14 +109,6 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
   pointer-events: none;
 }
 
-.range-md.range-pressed .range-bar-active {
-  will-change: left, right;
-}
-
-.range-md.range-pressed .range-knob-handle {
-  will-change: left;
-}
-
 .range-md .range-bar-active {
   bottom: 0;
 
@@ -126,14 +118,16 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-knob-handle {
-  @include position(($range-md-slider-height / 2), null, null, 0);
-  @include margin(-($range-md-hit-height / 2), null, null, -($range-md-hit-width / 2));
-  @include text-align(center);
-
-  position: absolute;
+  @include position(($range-md-slider-height / 2), null, null, null);
+  @include margin(-($range-md-hit-height / 2), null, null, null);
 
   width: $range-md-hit-width;
   height: $range-md-hit-height;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    margin-left: -($range-md-hit-width / 2);
+  }
 }
 
 .range-md .range-knob {
@@ -182,9 +176,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
 .range-md .range-pin {
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
-  @include text-align(center);
   @include border-radius(50%);
-  @include transform(translate3d(0, 28px, 0), scale(.01));
 
   position: relative;
   top: -20px;
@@ -203,7 +195,6 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
   &::before {
     @include position(3px, null, null, 50%);
-    @include border-radius(50%, 50%, 50%, 0);
     @include margin-horizontal(-13px, null);
 
     position: absolute;
@@ -218,15 +209,16 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
     content: "";
     transform: rotate(-45deg);
     transition: background-color 120ms ease;
+
+    @include multi-dir() {
+      // scss-lint:disable PropertySpelling
+      border-radius: 50% 50% 50% 0;
+    }
   }
 }
 
-.range-md .range-knob-pressed .range-pin {
-  @include transform(translate3d(0, 0, 0), scale(1));
-}
-
 .range-md:not(.range-has-pin) .range-knob-pressed .range-knob {
-  transform: scale(1);
+  @include transform(flip-scale(1));
 }
 
 @mixin md-range-min() {

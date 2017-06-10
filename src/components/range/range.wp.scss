@@ -100,7 +100,7 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 }
 
 .range-wp .range-bar {
-  @include position(($range-wp-slider-height / 2), null, null, 0);
+  @include position(($range-wp-slider-height / 2), null, null, null);
 
   position: absolute;
 
@@ -112,14 +112,6 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
   pointer-events: none;
 }
 
-.range-wp.range-pressed .range-bar-active {
-  will-change: left, right;
-}
-
-.range-wp.range-pressed .range-knob-handle {
-  will-change: left;
-}
-
 .range-wp .range-bar-active {
   bottom: 0;
 
@@ -129,14 +121,16 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 }
 
 .range-wp .range-knob-handle {
-  @include position(($range-wp-slider-height / 2), null, null, 0);
-  @include margin(-($range-wp-hit-height / 2), null, null, -($range-wp-hit-width / 2));
-  @include text-align(center);
-
-  position: absolute;
+  @include position(($range-wp-slider-height / 2), null, null, null);
+  @include margin(-($range-wp-hit-height / 2), null, null, null);
 
   width: $range-wp-hit-width;
   height: $range-wp-hit-height;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    margin-left: -($range-wp-hit-width / 2);
+  }
 }
 
 .range-wp .range-knob {
@@ -174,9 +168,7 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 }
 
 .range-wp .range-pin {
-  @include text-align(center);
   @include border-radius(50px);
-  @include transform(translate3d(0, 28px, 0), scale(.01));
 
   position: relative;
   top: -24px;
@@ -195,10 +187,6 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
   @include deprecated-variable(padding, $range-wp-pin-padding) {
     @include padding($range-wp-pin-padding-top, $range-wp-pin-padding-end, $range-wp-pin-padding-bottom, $range-wp-pin-padding-start);
   }
-}
-
-.range-wp .range-knob-pressed .range-pin {
-  @include transform(translate3d(0, 0, 0), scale(1));
 }
 
 .range-wp.range-disabled {
