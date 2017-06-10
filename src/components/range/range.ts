@@ -509,11 +509,11 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
 
   /** @internal */
   _valueToRatio(value: number) {
-    value = (value - this._min) / this._step;
+    value = value - this._min;
     if (this.snaps) {
-      value = Math.round(value);
+      // snaps the ratio to the current value
+      value = Math.round(value / this._step) * this._step;
     }
-    value *= this._step;
     value = value / (this._max - this._min);
     return clamp(0, value, 1);
   }
