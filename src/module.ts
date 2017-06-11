@@ -103,6 +103,7 @@ import { PickerColumnCmp } from './components/picker/picker-column';
 import { PickerController } from './components/picker/picker-controller';
 import { PopoverCmp } from './components/popover/popover-component';
 import { PopoverController } from './components/popover/popover-controller';
+import { Progress } from './components/progress/progress';
 import { RadioButton } from './components/radio/radio-button';
 import { RadioGroup } from './components/radio/radio-group';
 import { Range } from './components/range/range';
@@ -237,6 +238,7 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     PickerCmp,
     PickerColumnCmp,
     PopoverCmp,
+    Progress,
     RadioButton,
     RadioGroup,
     Range,
@@ -340,6 +342,7 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     PickerCmp,
     PickerColumnCmp,
     PopoverCmp,
+    Progress,
     RadioButton,
     RadioGroup,
     Range,
