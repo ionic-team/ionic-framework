@@ -79,7 +79,9 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
   }
 
+  // TS represents paths internally with '/' and expects the tsconfig path to be in this format
   let json = JSON.stringify(config, null, 2);
+  json = json.replace(/\\\\/g, '/');
 
   const dirToCreate = dirname(pathToWriteFile);
   ensureDirSync(dirToCreate);
@@ -238,9 +240,11 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   }
 
   return new Promise((resolve, reject) => {
-    const args = ['./node_modules/.bin/ionic-app-scripts'].concat(scriptArgs);
-    console.log(`node ${args.join(' ')}`);
-    const spawnedCommand = spawn('node', args, {stdio: 'inherit'});
+    let pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+    pathToAppScripts = process.platform === 'win32' ? pathToAppScripts + '.cmd' : pathToAppScripts;
+
+    const spawnedCommand = spawn(pathToAppScripts, scriptArgs, {stdio: 'inherit'});
+    console.log(`${pathToAppScripts} ${scriptArgs.join(' ')}`);
 
     spawnedCommand.on('close', (code: number) => {
       if (code === 0) {

@@ -41,7 +41,7 @@ $list-inset-ios-border-radius:        4px !default;
 // deprecated
 $list-ios-header-padding-left:        $item-ios-padding-start !default;
 /// @prop - Padding start of the header in a list
-$list-ios-header-padding-start:       $list-ios-header-padding-left;
+$list-ios-header-padding-start:       $list-ios-header-padding-left !default;
 
 /// @prop - Border bottom of the header in a list
 $list-ios-header-border-bottom:       $hairlines-width solid $list-ios-border-color !default;
@@ -103,17 +103,17 @@ $list-ios-header-background-color:    transparent !default;
 }
 
 .list-ios ion-item-options .button {
+  @include margin(0);
+  @include border-radius(0);
+
   display: inline-flex;
 
   align-items: center;
-
-  @include margin(0);
 
   height: 100%;
   min-height: 100%;
 
   border: 0;
-  border-radius: 0;
 
   box-sizing: border-box;
 }
@@ -123,8 +123,8 @@ $list-ios-header-background-color:    transparent !default;
 }
 
 .list-ios:not([inset]) + .list-ios:not([inset]) ion-list-header {
-  margin-top: -$list-ios-margin-top;
-  padding-top: 0;
+  @include margin(-$list-ios-margin-top, null, null, null);
+  @include padding(0, null, null, null);
 }
 
 
@@ -133,8 +133,7 @@ $list-ios-header-background-color:    transparent !default;
 
 .list-ios[inset] {
   @include margin($list-inset-ios-margin-top, $list-inset-ios-margin-end, $list-inset-ios-margin-bottom, $list-inset-ios-margin-start);
-
-  border-radius: $list-inset-ios-border-radius;
+  @include border-radius($list-inset-ios-border-radius);
 }
 
 .list-ios[inset] ion-list-header {
@@ -160,7 +159,7 @@ $list-ios-header-background-color:    transparent !default;
 }
 
 .list-ios[inset] + ion-list[inset] {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 

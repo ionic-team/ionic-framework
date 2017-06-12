@@ -57,14 +57,14 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   onSlide(slide: SlideData, ev: any) {
-    const z = (this.menu.isRightSide ? slide.min : slide.max);
+    const z = (this.menu.isRightSide !== this.plt.isRTL ? slide.min : slide.max);
     const stepValue = (slide.distance / z);
 
     this.menu._swipeProgress(stepValue);
   }
 
   onSlideEnd(slide: SlideData, ev: any) {
-    let z = (this.menu.isRightSide ? slide.min : slide.max);
+    let z = (this.menu.isRightSide !== this.plt.isRTL ? slide.min : slide.max);
     const currentStepValue = (slide.distance / z);
     const velocity = slide.velocity;
     z = Math.abs(z * 0.5);
@@ -89,7 +89,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   getElementStartPos(slide: SlideData, ev: any) {
     const menu = this.menu;
-    if (menu.isRightSide) {
+    if (menu.isRightSide !== this.plt.isRTL) {
       return menu.isOpen ? slide.min : slide.max;
     }
     // left menu
@@ -98,7 +98,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
 
   getSlideBoundaries(): { min: number, max: number } {
     const menu = this.menu;
-    if (menu.isRightSide) {
+    if (menu.isRightSide !== this.plt.isRTL) {
       return {
         min: -menu.width(),
         max: 0

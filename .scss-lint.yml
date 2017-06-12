@@ -17,7 +17,7 @@ linters:
     enabled: false
 
   DefaultRule:
-    enabled: false
+    enabled: true
 
   DuplicateProperty:
     enabled: false

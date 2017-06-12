@@ -60,21 +60,17 @@ $label-ios-margin-start:       0 !default;
 // --------------------------------------------------
 
 .label-ios[stacked] {
-  margin-bottom: 4px;
+  @include margin(null, null, 4px, null);
 
   font-size: 1.2rem;
 }
 
 .label-ios[floating] {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
+  @include transform(translate3d(0, 27px, 0));
+  @include transform-origin(start, top);
 
-  transform: translate3d(0, 27px, 0);
-  transform-origin: left top;
   transition: transform 150ms ease-in-out;
-}
-
-[dir="rtl"] .label-ios[floating] {
-  transform-origin: right top;
 }
 
 // TODO remove all uses of input-has-focus in v4
@@ -83,15 +79,14 @@ $label-ios-margin-start:       0 !default;
 .input-has-focus .label-ios[floating],
 .item-input-has-value .label-ios[floating],
 .input-has-value .label-ios[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 .item-ios.item-label-stacked [item-right], // deprecated
 .item-ios.item-label-floating [item-right], // deprecated
 .item-ios.item-label-stacked [item-end],
 .item-ios.item-label-floating [item-end] {
-  margin-top: $item-ios-padding-media-top - 2;
-  margin-bottom: $item-ios-padding-media-bottom - 2;
+  @include margin($item-ios-padding-media-top - 2, null, $item-ios-padding-media-bottom - 2, null);
 }
 
 .item-input-has-focus .label-ios[stacked],

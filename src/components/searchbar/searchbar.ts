@@ -72,7 +72,7 @@ export class Searchbar extends BaseInput<string> {
   @Input() cancelButtonText: string = 'Cancel';
 
   /**
-   * @input {boolean} If true, show the cancel button.
+   * @input {boolean} If true, show the cancel button. Default `false`.
    */
   @Input()
   get showCancelButton(): boolean {
@@ -129,7 +129,7 @@ export class Searchbar extends BaseInput<string> {
   @Input() type: string = 'search';
 
   /**
-   * @input {boolean} If true, enable searchbar animation.
+   * @input {boolean} If true, enable searchbar animation. Default `false`.
    */
   @Input()
   get animated(): boolean {
@@ -188,7 +188,9 @@ export class Searchbar extends BaseInput<string> {
    */
   _inputUpdated() {
     const ele = this._searchbarInput.nativeElement;
-    if (ele) {
+    // It is important not to re-assign the value if it is the same, because,
+    // otherwise, the caret is moved to the end of the input
+    if (ele && ele.value !== this.value) {
       ele.value = this.value;
     }
     this.positionElements();
@@ -329,7 +331,7 @@ export class Searchbar extends BaseInput<string> {
   clearInput(ev: UIEvent) {
     this.ionClear.emit(ev);
 
-    // setTimeout() fixes https://github.com/driftyco/ionic/issues/7527
+    // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
     setTimeout(() => {
       let value = this._value;

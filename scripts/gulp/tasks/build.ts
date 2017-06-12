@@ -1,4 +1,5 @@
 import { task } from 'gulp';
+import { join } from 'path';
 import { DIST_BUILD_ROOT, DIST_BUILD_ES2015_ROOT, DIST_BUILD_UMD_ROOT, ES5, ES_2015, PROJECT_ROOT, UMD_MODULE } from '../constants';
 import { copySourceToDest, createTempTsConfig, deleteFiles, runNgc, runTsc } from '../util';
 
@@ -7,8 +8,8 @@ export function buildIonicAngularUmd(excludeSpec: boolean, stripDebug: boolean, 
   const stream = copySourceToDest(DIST_BUILD_UMD_ROOT, excludeSpec, true, stripDebug);
   stream.on('end', () => {
     // the source files are copied, copy over a tsconfig from
-    createTempTsConfig(['./**/*.ts'], ES5, UMD_MODULE, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_BUILD_UMD_ROOT}/tsconfig.json`);
-    runNgc(`${DIST_BUILD_UMD_ROOT}/tsconfig.json`, (err) => {
+    createTempTsConfig([join('.', '**', '*.ts')], ES5, UMD_MODULE, join(PROJECT_ROOT, 'tsconfig.json'), join(DIST_BUILD_UMD_ROOT, 'tsconfig.json'));
+    runNgc(join(DIST_BUILD_UMD_ROOT, 'tsconfig.json'), (err) => {
       if (err) {
         done(err);
         return;
@@ -27,8 +28,8 @@ export function buildIonicAngularUmdTsc(excludeSpec: boolean, stripDebug: boolea
   const stream = copySourceToDest(DIST_BUILD_UMD_ROOT, excludeSpec, true, stripDebug);
   stream.on('end', () => {
     // the source files are copied, copy over a tsconfig from
-    createTempTsConfig(['./**/*.ts'], ES5, UMD_MODULE, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_BUILD_UMD_ROOT}/tsconfig.json`);
-    runTsc(`${DIST_BUILD_UMD_ROOT}/tsconfig.json`, (err) => {
+    createTempTsConfig([join('.', '**', '*.ts')], ES5, UMD_MODULE, join(PROJECT_ROOT, 'tsconfig.json'), join(DIST_BUILD_UMD_ROOT, 'tsconfig.json'));
+    runTsc(join(DIST_BUILD_UMD_ROOT, 'tsconfig.json'), (err) => {
       if (err) {
         done(err);
         return;
@@ -48,8 +49,8 @@ export function buildIonicAngularEsm(stripDebug: boolean, done: Function) {
   const stream = copySourceToDest(DIST_BUILD_ROOT, true, true, stripDebug);
   stream.on('end', () => {
     // the source files are copied, copy over a tsconfig from
-    createTempTsConfig(['./**/*.ts'], ES5, ES_2015, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_BUILD_ROOT}/tsconfig.json`);
-    runNgc(`${DIST_BUILD_ROOT}/tsconfig.json`, (err) => {
+    createTempTsConfig([join('.', '**', '*.ts')], ES5, ES_2015, join(PROJECT_ROOT, 'tsconfig.json'), join(DIST_BUILD_ROOT, 'tsconfig.json'));
+    runNgc(join(DIST_BUILD_ROOT, 'tsconfig.json'), (err) => {
       if (err) {
         done(err);
         return;
@@ -67,8 +68,8 @@ export function buildIonicPureEs6(stripDebug: boolean, done: Function) {
   const stream = copySourceToDest(DIST_BUILD_ES2015_ROOT, true, true, stripDebug);
   stream.on('end', () => {
     // the source files are copied, copy over a tsconfig from
-    createTempTsConfig(['./**/*.ts'], ES_2015, ES_2015, `${PROJECT_ROOT}/tsconfig.json`, `${DIST_BUILD_ES2015_ROOT}/tsconfig.json`);
-    runNgc(`${DIST_BUILD_ES2015_ROOT}/tsconfig.json`, (err) => {
+    createTempTsConfig([join('.', '**', '*.ts')], ES_2015, ES_2015, join(PROJECT_ROOT, 'tsconfig.json'), join(DIST_BUILD_ES2015_ROOT, 'tsconfig.json'));
+    runNgc(join(DIST_BUILD_ES2015_ROOT, 'tsconfig.json'), (err) => {
       if (err) {
         done(err);
         return;

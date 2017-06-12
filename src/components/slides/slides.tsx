@@ -1,4 +1,4 @@
-import { Component, h, Ionic, Prop } from '../index';
+import { Component, Ionic, Prop } from '../index';
 import { Swiper } from '../../vendor/swiper';
 
 /**

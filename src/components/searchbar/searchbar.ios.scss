@@ -77,7 +77,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 @mixin ios-searchbar-icon($svg-icon, $fg-color) {
   $svg: str-replace($svg-icon, 'fg-color', $fg-color);
-  @include svg-background-image($svg);
+  @include svg-background-image($svg, true);
 }
 
 
@@ -123,6 +123,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 .searchbar-ios .searchbar-clear-icon {
   @include position(0, 0, null, null);
   @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $searchbar-ios-input-clear-icon-color);
+  @include background-position(center);
 
   position: absolute;
 
@@ -130,7 +131,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   height: 100%;
 
   background-repeat: no-repeat;
-  background-position: center;
   background-size: $searchbar-ios-input-clear-icon-size;
 }
 
@@ -254,9 +254,9 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .searchbar-animated .searchbar-ios-cancel {
   @include margin-horizontal(null, -100%);
+  @include transform(translate3d(0, 0, 0));
 
   opacity: 0;
-  transform: translate3d(0, 0, 0);
   transition: $searchbar-ios-cancel-transition;
 
   pointer-events: none;
