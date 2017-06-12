@@ -206,10 +206,6 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
-    if (ev.detail === 0) {
-      // do not continue if the click event came from a form submit
-      return;
-    }
     ev.preventDefault();
     ev.stopPropagation();
     this.open(ev);

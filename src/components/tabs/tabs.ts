@@ -1,10 +1,14 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
+
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
 import { isBlank, assert } from '../../util/util';
+import { Keyboard } from '../../platform/keyboard';
 import { Tabs as ITabs } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
@@ -176,7 +180,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
   /** @internal */
   _selectHistory: string[] = [];
   /** @internal */
-  _resizeObs: any;
+  _onDestroy = new Subject<void>();
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
@@ -231,7 +235,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     elementRef: ElementRef,
     private _plt: Platform,
     renderer: Renderer,
-    private _linker: DeepLinker
+    private _linker: DeepLinker,
+    keyboard?: Keyboard
   ) {
     super(config, elementRef, renderer, 'tabs');
 
@@ -261,10 +266,33 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
       viewCtrl._setContent(this);
       viewCtrl._setContentRef(elementRef);
     }
+
+    const keyboardResizes = config.getBoolean('keyboardResizes', false);
+    if (keyboard && keyboardResizes) {
+      keyboard.willHide
+        .takeUntil(this._onDestroy)
+        .subscribe(() => {
+          this._plt.timeout(() => this.setTabbarHidden(false), 50);
+        });
+      keyboard.willShow
+        .takeUntil(this._onDestroy)
+        .subscribe(() => this.setTabbarHidden(true));
+    }
   }
 
+  /**
+   * @internal
+   */
+  setTabbarHidden(tabbarHidden: boolean) {
+    this.setElementClass('tabbar-hidden', tabbarHidden);
+    this.resize();
+  }
+
+  /**
+   * @internal
+   */
   ngOnDestroy() {
-    this._resizeObs && this._resizeObs.unsubscribe();
+    this._onDestroy.next();
     this.parent.unregisterChildNav(this);
   }
 
@@ -277,9 +305,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     this._setConfig('tabsHighlight', this.tabsHighlight);
 
     if (this.tabsHighlight) {
-      this._resizeObs = this._plt.resize.subscribe(() => {
-        this._highlight.select(this.getSelected());
-      });
+      this._plt.resize
+        .takeUntil(this._onDestroy)
+        .subscribe(() => this._highlight.select(this.getSelected()));
     }
 
     this.initTabs();

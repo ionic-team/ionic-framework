@@ -17,6 +17,10 @@
   opacity: 0;
 }
 
+.tabbar-hidden .tabbar {
+  display: none;
+}
+
 .tabbar.show-tabbar {
   opacity: 1;
 }

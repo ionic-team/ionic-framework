@@ -118,7 +118,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
   /**
    * @hidden
    */
-  _inputCheckHasValue() {}
+  _inputUpdated() {}
 
   /**
    * @hidden
@@ -208,13 +208,6 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
       ev.stopPropagation();
       this.value = !this.value;
     }
-  }
-
-  /**
-   * @hidden
-   */
-  initFocus() {
-    this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**
