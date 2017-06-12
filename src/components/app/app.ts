@@ -6,9 +6,10 @@ import * as Constants from './app-constants';
 import { ClickBlock } from './click-block';
 import { runInDev, assert } from '../../util/util';
 import { Config } from '../../config/config';
-import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
 import { NavigationContainer } from '../../navigation/navigation-container';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { IOSTransition } from '../../transitions/transition-ios';
@@ -200,15 +201,15 @@ export class App {
   /**
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
-  getActiveNav(navId: string): NavigationContainer {
+  getActiveNav(navId: string): NavControllerBase {
     const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
-      return findTopNav(portal);
+      return <NavControllerBase> findTopNav(portal);
     }
     if (!this._rootNavs || !this._rootNavs.size || !this._rootNavs.has(navId)) {
       return null;
     }
-    return findTopNav(this.getRootNavById(navId));
+    return <NavControllerBase> findTopNav(this.getRootNavById(navId));
   }
 
   /**
@@ -287,7 +288,7 @@ export class App {
    * @hidden
    */
   navPop(): Promise<any> {
-    if (!this._rootNavs || this._rootNavs.size === 0 || this.isEnabled()) {
+    if (!this._rootNavs || this._rootNavs.size === 0 || !this.isEnabled()) {
       return Promise.resolve();
     }
 
@@ -296,26 +297,31 @@ export class App {
     if (portal.length() > 0) {
       return Promise.resolve();
     }
-    // next get the active nav, check itself and climb up all
-    // of its parent navs until it finds a nav that can pop
-    return Promise.reject(new Error('Figure this out'));
-    //return recursivePop(this.getActiveNav());
-  }
 
+    let navToPop: NavControllerBase = null;
+    let mostRecentVC: ViewController = null;
+    this._rootNavs.forEach((navContainer: NavigationContainer) => {
+      const activeNav = this.getActiveNav(navContainer.id);
+      const topViewController = activeNav.last();
+      if (topViewController && (!mostRecentVC || topViewController._ts >=  mostRecentVC._ts)) {
+        mostRecentVC = topViewController;
+        navToPop = activeNav;
+      }
+    });
+    return recursivePop(navToPop);
+  }
 }
 
-function recursivePop(nav: any): Promise<any> {
+function recursivePop(nav: NavControllerBase): Promise<any> {
   if (!nav) {
     return null;
   }
-  if (isNav(nav)) {
-    var len = nav.length();
-    if (len > 1 || (nav._isPortal && len > 0)) {
-      // this nav controller has more than one view
-      // pop the current view on this nav and we're done here
-      console.debug('app, goBack pop nav');
-      return nav.pop();
-    }
+  const len = nav.length();
+  if (len > 1 || (nav._isPortal && len > 0)) {
+    // this nav controller has more than one view
+    // pop the current view on this nav and we're done here
+    console.debug('app, goBack pop nav');
+    return nav.pop();
   }
   // try again using the parent nav (if there is one)
   return recursivePop(nav.parent);

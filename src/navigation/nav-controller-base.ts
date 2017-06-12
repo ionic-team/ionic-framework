@@ -107,6 +107,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   pop(opts?: NavOptions, done?: () => void): Promise<any> {
+    console.log('pop bottles: ', this._queueTrns);
     return this._queueTrns({
       removeStart: -1,
       removeCount: 1,
@@ -195,6 +196,7 @@ export class NavControllerBase extends Ion implements NavController {
   // 8. _transitionFinish(): called once the transition finishes
   // 9. _cleanup(): syncs the navigation internal state with the DOM. For example it removes the pages from the DOM or hides/show them.
   _queueTrns(ti: TransitionInstruction, done: () => void): Promise<boolean> {
+    console.log('_queueTrns called');
     const promise = new Promise<boolean>((resolve, reject) => {
       ti.resolve = resolve;
       ti.reject = reject;

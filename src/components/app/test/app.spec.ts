@@ -8,15 +8,15 @@ import { PORTAL_MODAL } from '../app-constants';
 
 describe('App', () => {
 
-  /*describe('goBack', () => {
+  describe('goBack', () => {
 
     it('should not select the previous tab', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
-      let tabs = mockTabs();
-      let tab1 = mockTab(tabs);
-      let tab2 = mockTab(tabs);
+      const tabs = mockTabs();
+      const tab1 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
 
       tab1.root = 'Page1';
       tab2.root = 'Page2';
@@ -44,71 +44,78 @@ describe('App', () => {
     });
 
     it('should pop from the active tab, when tabs is nested is the root nav', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
-      let tabs = mockTabs();
-      mockTab(tabs);
-      let tab2 = mockTab(tabs);
+      const tabs = mockTabs();
       mockTab(tabs);
       nav.registerChildNav(tabs);
+
+      const tab1 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
 
       tab2.setSelected(true);
 
       spyOn(plt, 'exitApp');
-      spyOn(tab2, 'pop');
+      spyOn(tab1, 'pop').and.returnValue(Promise.resolve());
+      spyOn(tab2, 'pop').and.returnValue(Promise.resolve());
       spyOn(portal, 'pop');
 
-      let view1 = mockView();
-      let view2 = mockView();
+      const view1 = mockView();
+      const view2 = mockView();
       tab2._views = [view1, view2];
+      tab1._views = [mockView()];
 
       app.goBack();
 
+      expect(tab1.pop).not.toHaveBeenCalled();
       expect(tab2.pop).toHaveBeenCalled();
       expect(portal.pop).not.toHaveBeenCalled();
       expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should pop from the active tab, when tabs is the root', () => {
-      let tabs = mockTabs();
-      mockTab(tabs);
-      let tab2 = mockTab(tabs);
+      const tabs = mockTabs();
       mockTab(tabs);
       app.registerRootNav(tabs);
+
+      const tab1 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
 
       tab2.setSelected(true);
 
       spyOn(plt, 'exitApp');
-      spyOn(tab2, 'pop');
+      spyOn(tab1, 'pop').and.returnValue(Promise.resolve());
+      spyOn(tab2, 'pop').and.returnValue(Promise.resolve());
 
-      let view1 = mockView();
-      let view2 = mockView();
+      const view1 = mockView();
+      const view2 = mockView();
       tab2._views = [view1, view2];
 
       app.goBack();
 
+      expect(tab1.pop).not.toHaveBeenCalled();
       expect(tab2.pop).toHaveBeenCalled();
       expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
     it('should pop the root nav when nested nav has less than 2 views', () => {
-      let rootNav = mockNavController();
-      let nestedNav = mockNavController();
+      const rootNav = mockNavController();
+      const nestedNav = mockNavController();
       rootNav.registerChildNav(nestedNav);
       nestedNav.parent = rootNav;
       app.registerRootNav(rootNav);
 
       spyOn(plt, 'exitApp');
-      spyOn(rootNav, 'pop');
-      spyOn(nestedNav, 'pop');
-      spyOn(portal, 'pop');
+      spyOn(rootNav, 'pop').and.returnValue(Promise.resolve());
+      spyOn(nestedNav, 'pop').and.returnValue(Promise.resolve());
+      spyOn(portal, 'pop').and.returnValue(Promise.resolve());
 
-      let rootView1 = mockView();
-      let rootView2 = mockView();
+      const rootView1 = mockView();
+      const rootView2 = mockView();
       mockViews(rootNav, [rootView1, rootView2]);
 
-      let nestedView1 = mockView();
+      const nestedView1 = mockView();
       mockViews(nestedNav, [nestedView1]);
 
       app.goBack();
@@ -264,7 +271,7 @@ describe('App', () => {
     });
 
   });
-*/
+
   describe('getActiveNav', () => {
 
     it('should get active NavController when using tabs with nested nav', () => {
