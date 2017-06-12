@@ -786,7 +786,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
     }
 
     // Refresher uses a border which should be hidden unless pulled
-    if (this._hasRefresher === true) {
+    if (this._hasRefresher) {
       this._cTop -= 1;
     }
 
