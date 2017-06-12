@@ -241,7 +241,6 @@ export class App {
     // TODO: move _setNav() to the earlier stages of NavController. _queueTrns()
     enteringView._setNav(portal);
 
-    opts.keyboardClose = false;
     opts.direction = DIRECTION_FORWARD;
 
     if (!opts.animation) {
@@ -249,7 +248,7 @@ export class App {
     }
 
     enteringView.setLeavingOpts({
-      keyboardClose: false,
+      keyboardClose: opts.keyboardClose,
       direction: DIRECTION_BACK,
       animation: enteringView.getTransitionName(DIRECTION_BACK),
       ev: opts.ev

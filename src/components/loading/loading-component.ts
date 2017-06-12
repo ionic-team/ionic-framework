@@ -79,8 +79,6 @@ export class LoadingCmp {
   }
 
   ionViewDidEnter() {
-    this._plt.focusOutActiveElement();
-
     // If there is a duration, dismiss after that amount of time
     if ( this.d && this.d.duration ) {
       this.durationTimeout = setTimeout(() => this.dismiss('backdrop'), this.d.duration);

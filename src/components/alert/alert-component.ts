@@ -194,18 +194,10 @@ export class AlertCmp {
   }
 
   ionViewDidLeave() {
-    this._plt.focusOutActiveElement();
     this.gestureBlocker.unblock();
   }
 
-  ionViewWillLeave() {
-    this._plt.focusOutActiveElement();
-  }
-
   ionViewDidEnter() {
-    // focus out of the active element
-    this._plt.focusOutActiveElement();
-
     // set focus on the first input or button in the alert
     // note that this does not always work and bring up the keyboard on
     // devices since the focus command must come from the user's touch event
