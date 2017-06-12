@@ -508,7 +508,9 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
       // We hide the focused input (with the visible caret) invisiable by making it scale(0),
       cloneInputComponent(platform, componentEle, focusedInputEle);
       const inputRelativeY = this._getScrollData().inputSafeY;
-      focusedInputEle.style[platform.Css.transform] = `translate3d(-9999px,${inputRelativeY}px,0)`;
+      // fix for #11817
+      const tx = this._plt.isRTL ? 9999 : -9999;
+      focusedInputEle.style[platform.Css.transform] = `translate3d(${tx}px,${inputRelativeY}px,0)`;
       focusedInputEle.style.opacity = '0';
 
     } else {
