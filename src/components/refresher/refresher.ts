@@ -202,6 +202,7 @@ export class Refresher {
 
   constructor(private _plt: Platform, @Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
     this._events = new UIEventManager(_plt);
+    _content._hasRefresher = true;
     _content.setElementClass('has-refresher', true);
     this._gesture = gestureCtrl.createGesture({
       name: GESTURE_REFRESHER,

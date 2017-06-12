@@ -224,6 +224,9 @@ describe('Refresher', () => {
 
   });
 
+  it('should set hasRefresher on content', () => {
+    expect(content._hasRefresher).toBeTruthy();
+  });
 
   let contentElementRef: any;
   let refresher: Refresher;

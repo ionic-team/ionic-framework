@@ -212,6 +212,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   /** @internal */
   _fullscreen: boolean;
   /** @internal */
+  _hasRefresher: boolean = false;
+  /** @internal */
   _footerEle: HTMLElement;
   /** @internal */
   _dirty: boolean;
@@ -780,6 +782,11 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
 
     } else if (this._tabsPlacement === 'bottom') {
       this._cBottom += this._tabbarHeight;
+    }
+
+    // Refresher uses a border which should be hidden unless pulled
+    if (this._hasRefresher === true) {
+      this._cTop -= 1;
     }
 
     // Fixed content shouldn't include content padding
