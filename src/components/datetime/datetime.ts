@@ -254,7 +254,6 @@ import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, con
     '<div *ngIf="!_text" class="datetime-text datetime-placeholder">{{placeholder}}</div>' +
     '<div *ngIf="_text" class="datetime-text">{{_text}}</div>' +
     '<button aria-haspopup="true" ' +
-            'type="button" ' +
             '[id]="id" ' +
             'ion-button="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +

@@ -248,6 +248,11 @@ describe('button', () => {
     expect(hasClass(b, 'alert-button')).toEqual(true);
   });
 
+  it('should have default type attribute', () => {
+    let b = mockButton();
+    expect(b._elementRef.nativeElement.hasAttribute('type')).toEqual(true);
+  });
+
 });
 
 function mockButton(config?: Config, ionButton?: string) {
