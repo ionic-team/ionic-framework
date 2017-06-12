@@ -167,7 +167,8 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
-    '[class.statusbar-padding]': 'statusbarPadding'
+    '[class.statusbar-padding]': 'statusbarPadding',
+    '[class.has-refresher]': '_hasRefresher'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
