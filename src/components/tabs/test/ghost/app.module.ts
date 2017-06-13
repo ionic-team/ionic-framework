@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, QueryList, ViewChildren, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, Tab } from '../../../..';
 

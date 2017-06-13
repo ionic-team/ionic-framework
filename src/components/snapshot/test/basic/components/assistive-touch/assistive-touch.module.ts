@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AssistiveTouchComponent } from './assistive-touch';
 import { IonicPageModule } from '../../../../../../module';
 import { AssistivePopoverModule } from './assistive-popover/assistive-popover.module';
@@ -13,7 +13,8 @@ import { AssistivePopoverModule } from './assistive-popover/assistive-popover.mo
   ],
   exports: [
     AssistiveTouchComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AssistiveTouchComponentModule {
 }

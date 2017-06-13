@@ -1,9 +1,10 @@
-import {  NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
 
 import {AppComponent} from './app.component';
 import {E2EPage} from '../pages/e2e-page/e2e-page';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +18,7 @@ import {E2EPage} from '../pages/e2e-page/e2e-page';
   entryComponents: [
     AppComponent,
     E2EPage
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
