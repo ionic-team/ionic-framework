@@ -84,8 +84,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     this._value = deepCopy(this._defaultValue);
 
     if (_item) {
+      assert('lbl-' + _item.id === _item.labelId, 'labelId was not calculated correctly');
       this.id = name + '-' + _item.registerInput(name);
-      this._labelId = 'lbl-' + _item.id;
+      this._labelId = _item.labelId;
       this._item.setElementClass('item-' + name, true);
     }
 
