@@ -220,10 +220,8 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-outline-md {
-  @include border-width(1px);
+  @include border(1px solid $toolbar-md-button-color);
 
-  border-style: solid;
-  border-color: $toolbar-md-button-color;
   color: $toolbar-md-button-color;
   background-color: transparent;
 

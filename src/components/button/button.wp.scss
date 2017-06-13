@@ -288,9 +288,8 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-outline-wp {
-  @include border-width($button-wp-outline-border-width);
-  border-style: $button-wp-outline-border-style;
-  border-color: $button-wp-outline-border-color;
+  @include border($button-wp-outline-border-width $button-wp-outline-border-style $button-wp-outline-border-color);
+
   color: $button-wp-outline-text-color;
   background-color: $button-wp-outline-background-color;
 }

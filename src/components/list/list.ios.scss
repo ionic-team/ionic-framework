@@ -149,7 +149,7 @@ $list-ios-header-background-color:    transparent !default;
 
 .list-ios[inset] > .item:first-child,
 .list-ios[inset] > .item-wrapper:first-child .item {
-  @include border(1, null, null, null);
+  @include border(1px, null, null, null);
 }
 
 .list-ios[inset] > .item:last-child,
