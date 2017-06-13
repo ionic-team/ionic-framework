@@ -52,35 +52,52 @@
   </ion-list>
 
   <p>
-    <a ion-button
+    <ion-button
+      href="#"
       [navPush]="pushPage"
-      [navParams]="{msg:'a (always visible)'}">a (always visible)</a>
+      [navParams]="{msg:'a (always visible)'}">
+      a (always visible)
+    </ion-button>
   </p>
 
   <p *ngIf="visible">
-    <a ion-button
+    <ion-button
+      href="#"
       [navPush]="pushPage"
-      [navParams]="{msg:'a (p *ngIf=visible)'}">a (p *ngIf="visible")</a>
+      [navParams]="{msg:'a (p *ngIf=visible)'}">
+      a (p *ngIf="visible")
+    </ion-button>
   </p>
 
   <p>
-    <a ion-button
+    <ion-button
+      href="#"
       *ngIf="visible"
       [navPush]="pushPage"
-      [navParams]="{msg:'a (a *ngIf=visible)'}">a (a *ngIf="visible")</a>
+      [navParams]="{msg:'a (a *ngIf=visible)'}">
+      a (a *ngIf="visible")
+    </ion-button>
   </p>
 
   <p *ngIf="!visible">
-    <a ion-button color="danger"
+    <ion-button
+      href="#"
+      color="danger"
       [navPush]="pushPage"
-      [navParams]="{msg:'a (p *ngIf=!visible)'}">a (p *ngIf="!visible")</a>
+      [navParams]="{msg:'a (p *ngIf=!visible)'}">
+      a (p *ngIf="!visible")
+    </ion-button>
   </p>
 
   <p>
-    <a ion-button color="danger"
+    <ion-button
+      href="#"
+      color="danger"
       *ngIf="!visible"
       [navPush]="pushPage"
-      [navParams]="{msg:'a (a *ngIf=!visible)'}">a (a *ngIf="!visible")</a>
+      [navParams]="{msg:'a (a *ngIf=!visible)'}">
+      a (a *ngIf="!visible")
+    </ion-button>
   </p>
 
   <p>
