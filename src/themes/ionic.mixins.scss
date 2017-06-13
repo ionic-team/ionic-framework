@@ -469,8 +469,6 @@
 }
 
 @mixin border-width($top, $end: $top, $bottom: $top, $start: $end) {
-  @include property(border, $top, $end, $bottom, $start);
-
   @if $top == $end and $top == $bottom and $top == $start {
     @include multi-dir() {
       border-width: $top;
