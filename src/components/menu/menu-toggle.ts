@@ -118,7 +118,7 @@ export class MenuToggle {
   ngAfterContentInit() {
     // Add the bar-button-menutoggle / button-menutoggle class
     if (this._isButton) {
-      //this._button._setClass('menutoggle', true);
+      // this._button._setClass('menutoggle', true);
     }
   }
 

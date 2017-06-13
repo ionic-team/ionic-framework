@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { SegmentButton } from '../../../../../..';
+import { Component } from '@angular/core';
+// import { SegmentButton } from '../../../../../..';
 
 
 @Component({
