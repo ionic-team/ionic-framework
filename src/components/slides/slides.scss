@@ -16,8 +16,6 @@
   @include margin-horizontal(auto);
   @include padding(0);
 
-  direction: ltr;
-
   position: relative;
   // Fix of Webkit flickering
   z-index: 1;
@@ -27,11 +25,18 @@
 
   width: 100%;
   height: 100%;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    direction: ltr;
+  }
 }
 
 .swiper-container.swiper-container-rtl {
-  direction: rtl;
-}
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    direction: rtl;
+  }}
 
 .swiper-container ion-slide {
   @include direction(ltr);
