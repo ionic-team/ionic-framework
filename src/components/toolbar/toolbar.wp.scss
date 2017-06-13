@@ -197,8 +197,9 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-outline-wp {
-  @include border(1px solid $toolbar-wp-button-color);
+  @include border(1px solid);
 
+  border-color: $toolbar-wp-button-color;
   color: $toolbar-wp-button-color;
   background-color: transparent;
 
