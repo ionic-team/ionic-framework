@@ -20,6 +20,7 @@ module.exports = function(currentVersion, initialVersionBuild) {
 .processor(require('./processors/latest-version'))
 .processor(require('./processors/index-page'))
 .processor(require('./processors/remove-private-members'))
+.processor(require('./processors/remove-params'))
 .processor(require('./processors/jekyll'))
 .processor(require('./processors/hide-private-api'))
 .processor(require('./processors/collect-inputs-outputs'))

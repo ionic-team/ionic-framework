@@ -295,6 +295,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     }
   }
 
+  /** @hidden */
   ngAfterContentInit() { }
 
   /**
