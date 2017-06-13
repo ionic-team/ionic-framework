@@ -139,7 +139,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-slides',
   template:
-    '<div class="swiper-container" [attr.dir]="isRTL? \'rtl\' : \'ltr\'">' +
+    '<div class="swiper-container">' +
       '<div class="swiper-wrapper">' +
         '<ng-content></ng-content>' +
       '</div>' +
