@@ -37,10 +37,10 @@ function buildAngularBinding(isDevAndWatch: boolean, done: Function) {
 
   ls.stdout.on('data', (data) => {
     console.log(data.toString().trim());
-    if (!hasRunDone && data.toString().trim().indexOf('compile, done') > -1) {
-      hasRunDone = true;
-      done();
-    }
+    // if (!hasRunDone && data.toString().trim().indexOf('compile, done') > -1) {
+    //   hasRunDone = true;
+    //   done();
+    // }
   });
 
   ls.stderr.on('data', (data) => {

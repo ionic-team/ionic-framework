@@ -62,6 +62,8 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     'card-content',
     'card-header',
     'card-title',
+    'icon',
+    'scroll',
     'slides',
     'toggle',
     'gesture'
