@@ -22,6 +22,7 @@
   @include margin(0);
   @include padding(0);
   @include text-align(initial);
+  @include border(0);
 
   display: flex;
   overflow: hidden;
@@ -32,8 +33,6 @@
   width: 100%;
   min-height: 4.4rem;
 
-  border: 0;
-
   font-weight: normal;
   line-height: normal;
   text-decoration: none;
@@ -43,6 +42,7 @@
 .item-inner {
   @include margin(0);
   @include padding(0);
+  @include border(0);
 
   display: flex;
   overflow: hidden;
@@ -53,8 +53,6 @@
   align-self: stretch;
 
   min-height: inherit;
-
-  border: 0;
 }
 
 .input-wrapper {
@@ -71,7 +69,7 @@
 
 .item[no-lines],
 .item.item[no-lines] .item-inner {
-  border: 0;
+  @include border(0);
 }
 
 ion-item-group {

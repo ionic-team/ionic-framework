@@ -47,15 +47,15 @@ $tabs-ios-tab-icon-size:            30px !default;
 
 
 .tabs-ios .tabbar {
+  @include border($tabs-ios-border, null, null, null);
+
   justify-content: center;
 
-  border-top: $tabs-ios-border;
   background: $tabs-ios-background;
 }
 
 .tabs-ios[tabsPlacement=top] .tabbar {
-  border-top: 0;
-  border-bottom: $tabs-ios-border;
+  @include border(0, null, $tabs-ios-border, null);
 }
 
 .tabs-ios .tab-button {

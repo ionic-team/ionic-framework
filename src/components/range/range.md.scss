@@ -232,7 +232,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 @mixin md-range-min() {
   .range-md .range-knob-min.range-knob-min {
     .range-knob {
-      border: $range-md-knob-min-border;
+      @include border($range-md-knob-min-border);
       background: $range-md-knob-min-background-color;
     }
 

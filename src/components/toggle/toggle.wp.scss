@@ -110,6 +110,7 @@ $toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 
 .toggle-wp .toggle-icon {
   @include border-radius($toggle-wp-track-height);
+  @include border($toggle-wp-track-border-width solid $toggle-wp-track-border-color-off);
 
   position: relative;
   display: block;
@@ -117,7 +118,6 @@ $toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
   width: 100%;
   height: 100%;
 
-  border: $toggle-wp-track-border-width solid $toggle-wp-track-border-color-off;
   background-color: $toggle-wp-track-background-color-off;
 
   pointer-events: none;

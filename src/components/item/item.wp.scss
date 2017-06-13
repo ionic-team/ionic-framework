@@ -74,7 +74,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 }
 
 .item-wp[no-lines] {
-  border-width: 0;
+  @include border-width(0);
 }
 
 .item-wp h1 {
@@ -115,8 +115,7 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-wp.item-block .item-inner {
   @include padding-horizontal(null, ($item-wp-padding-end / 2));
-
-  border-bottom: 1px solid $list-wp-border-color;
+  @include border(null, null, 1px solid $list-wp-border-color, null);
 }
 
 
@@ -234,8 +233,8 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
 
 .item-divider-wp {
   @include padding-horizontal($item-wp-padding-start, null);
+  @include border(null, null, $item-wp-divider-border-bottom, null);
 
-  border-bottom: $item-wp-divider-border-bottom;
   font-size: $item-wp-divider-font-size;
 
   color: $item-wp-divider-color;

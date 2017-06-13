@@ -105,21 +105,21 @@ page-api-radio-popover ion-col {
 */
 
 .ios .popover-text-smaller {
-  border-right: 1px solid #c8c7cc;
+  @include border(null, 1px solid #c8c7cc, null, null);
 }
 
 .ios .popover-row-dots {
-  border-bottom: 1px solid #c8c7cc;
+  @include border(null, null, 1px solid #c8c7cc, null);
 }
 
 .ios .popover-dot {
-  border: 1px solid #c8c7cc;
+  @include border(1px solid #c8c7cc);
 }
 
 .hairlines .popover-text-smaller,
 .hairlines .popover-row-dots,
 .hairlines .popover-dot {
-  border-width: 0.55px;
+  @include border-width(0.55px);
 }
 
 /*
@@ -127,15 +127,15 @@ page-api-radio-popover ion-col {
 */
 
 .md .popover-text-smaller {
-  border-right: 1px solid #dedede;
+  @include border(null, 1px solid #dedede, null, null);
 }
 
 .md .popover-row-dots {
-  border-bottom: 1px solid #dedede;
+  @include border(null, null, 1px solid #dedede, null);
 }
 
 .md .popover-dot {
-  border: 1px solid #dedede;
+  @include border(1px solid #dedede);
 }
 
 /*
@@ -143,7 +143,7 @@ page-api-radio-popover ion-col {
 */
 
 .wp .popover-dot {
-  border: 2px solid #ccc;
+  @include border(2px solid #ccc);
 }
 
 /*
@@ -196,12 +196,12 @@ page-api-radio-popover ion-col {
 
 @-webkit-keyframes pulse {
   50% {
-    border-width: 20px;
+    @include border-width(20px);
   }
 }
 @keyframes pulse {
   50% {
-    border-width: 20px;
+    @include border-width(20px);
   }
 }
 

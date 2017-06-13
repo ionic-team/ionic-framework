@@ -40,10 +40,10 @@ $datetime-wp-placeholder-color:   $input-wp-border-color !default;
 
 .datetime-wp .datetime-text {
   @include padding(0, 8px);
+  @include border($datetime-wp-border-width solid $datetime-wp-border-color);
 
   min-height: 3.4rem;
 
-  border: $datetime-wp-border-width solid $datetime-wp-border-color;
   line-height: 3rem;
 }
 

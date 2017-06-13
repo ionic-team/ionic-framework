@@ -74,21 +74,21 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 
 
 .picker-wp .picker-wrapper {
-  height: $picker-wp-height;
+  @include border($hairlines-width solid $picker-wp-border-color, null, null, null);
 
-  border-top: $hairlines-width solid $picker-wp-border-color;
+  height: $picker-wp-height;
 
   background: $picker-wp-background-color;
 }
 
 .picker-wp .picker-toolbar {
+  @include border-width($hairlines-width);
+
   display: flex;
 
   justify-content: flex-end;
 
   height: $picker-wp-toolbar-height;
-
-  border-width: $hairlines-width;
 
   background: $picker-wp-toolbar-background-color;
 }
@@ -176,6 +176,7 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 .picker-wp .picker-above-highlight {
   @include position(0, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
+  @include border(null, null, 1px solid $picker-wp-border-color, null);
 
   position: absolute;
 
@@ -183,8 +184,6 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 
   width: 100%;
   height: $picker-wp-option-offset-y + 4px;
-
-  border-bottom: 1px solid $picker-wp-border-color;
 
   background: linear-gradient(to bottom,
                             rgba($picker-wp-background-color, 1) 20%,
@@ -194,6 +193,7 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 .picker-wp .picker-below-highlight {
   @include position($picker-wp-option-offset-y + $picker-wp-option-height - 4, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
+  @include border(1px solid $picker-wp-border-color, null, null, null);
 
   position: absolute;
 
@@ -201,8 +201,6 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 
   width: 100%;
   height: $picker-wp-option-offset-y + $picker-wp-option-height;
-
-  border-top: 1px solid $picker-wp-border-color;
 
   background: linear-gradient(to top,
                            rgba($picker-wp-background-color, 1) 30%,

@@ -69,7 +69,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 }
 
 .item-md[no-lines] {
-  border-width: 0;
+  @include border-width(0);
 }
 
 .item-md h1 {
@@ -110,8 +110,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 
 .item-md.item-block .item-inner {
   @include padding-horizontal(null, ($item-md-padding-end / 2));
-
-  border-bottom: 1px solid $list-md-border-color;
+  @include border(null, null, 1px solid $list-md-border-color, null);
 }
 
 
@@ -223,12 +222,12 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 // --------------------------------------------------
 
 ion-item-group .item-md:first-child .item-inner {
-  border-top-width: 0;
+  @include border-width(0, null, null, null);
 }
 
 ion-item-group .item-md:last-child .item-inner,
 ion-item-group .item-md .item-wrapper:last-child .item-inner {
-  border: 0;
+  @include border(0);
 }
 
 
@@ -237,8 +236,8 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 
 .item-divider-md {
   @include padding-horizontal($item-md-padding-start, null);
+  @include border(null, null, $item-md-divider-border-bottom, null);
 
-  border-bottom: $item-md-divider-border-bottom;
   font-size: $item-md-divider-font-size;
   color: $item-md-divider-color;
   background-color: $item-md-divider-background;

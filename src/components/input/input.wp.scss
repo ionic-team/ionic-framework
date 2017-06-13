@@ -74,10 +74,10 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 .text-input-wp {
   @include margin($text-input-wp-margin-top, $text-input-wp-margin-end, $text-input-wp-margin-bottom, $text-input-wp-margin-start);
   @include padding($text-input-wp-padding-vertical, $text-input-wp-padding-horizontal);
+  @include border($text-input-wp-border-width solid $text-input-wp-border-color);
 
   width: calc(100% - #{$text-input-wp-margin-end} - #{$text-input-wp-margin-start});
 
-  border: $text-input-wp-border-width solid $text-input-wp-border-color;
   line-height: $text-input-wp-line-height;
 }
 

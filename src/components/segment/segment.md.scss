@@ -56,12 +56,13 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
 
 .segment-md .segment-button {
+  @include border-width(null, null, $segment-button-md-border-bottom-width, null);
+
   flex: 1;
 
   width: 0;
   height: $segment-button-md-height;
 
-  border-bottom-width: $segment-button-md-border-bottom-width;
   border-bottom-style: solid;
   border-bottom-color: $segment-button-md-border-bottom-color;
 

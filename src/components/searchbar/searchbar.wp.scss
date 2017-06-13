@@ -91,7 +91,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 }
 
 .searchbar-wp .searchbar-input-container {
-  border: $searchbar-wp-border-width solid $searchbar-wp-border-color;
+  @include border($searchbar-wp-border-width solid $searchbar-wp-border-color);
 }
 
 // Searchbar Search Icon

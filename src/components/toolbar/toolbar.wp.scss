@@ -162,10 +162,10 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
   @include margin(0, .2rem);
   @include padding(0, 5px);
   @include border-radius($toolbar-wp-button-border-radius);
+  @include border(0);
 
   height: 32px;
 
-  border: 0;
   font-size: $toolbar-wp-button-font-size;
   font-weight: 500;
   text-transform: uppercase;
@@ -197,7 +197,8 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-outline-wp {
-  border-width: 1px;
+  @include border-width(1px);
+
   border-style: solid;
   border-color: $toolbar-wp-button-color;
   color: $toolbar-wp-button-color;

@@ -284,9 +284,7 @@ $button-ios-strong-font-weight:                     600 !default;
 .button-full-ios {
   @include margin-horizontal(0);
   @include border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
+  @include border-width(null, 0, null, 0);
 }
 
 // iOS Outline Button
@@ -294,8 +292,8 @@ $button-ios-strong-font-weight:                     600 !default;
 
 .button-outline-ios {
   @include border-radius($button-ios-outline-border-radius);
+  @include border-width($button-ios-outline-border-width);
 
-  border-width: $button-ios-outline-border-width;
   border-style: $button-ios-outline-border-style;
   border-color: $button-ios-outline-border-color;
   color: $button-ios-outline-text-color;

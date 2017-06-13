@@ -144,11 +144,11 @@ $card-md-header-color:                #222 !default;
 .card-md > .item:last-child,
 .card-md > .item:last-child .item-inner,
 .card-md > .item-wrapper:last-child .item {
-  border-bottom: 0;
+  @include border(null, null, 0, null);
 }
 
 .card-md .item-md.item-block .item-inner {
-  border: 0;
+  @include border(0);
 }
 
 .card-content-md {

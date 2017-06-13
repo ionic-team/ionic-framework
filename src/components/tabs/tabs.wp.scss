@@ -61,10 +61,10 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 
 .tabs-wp .tab-button {
   @include border-radius(0);
+  @include border(null, null, $tabs-wp-tab-border, null);
 
   min-height: $tabs-wp-tab-min-height;
 
-  border-bottom: $tabs-wp-tab-border;
   font-size: $tabs-wp-tab-font-size;
   font-weight: $tabs-wp-tab-font-weight;
   color: $tabs-wp-tab-color;
@@ -85,8 +85,7 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 }
 
 .tabs-wp[tabsPlacement=bottom] .tab-button {
-  border-top: $tabs-wp-tab-border;
-  border-bottom-width: 0;
+  @include border($tabs-wp-tab-border, null, 0, null);
 }
 
 .tabs-wp[tabsPlacement=bottom] .tab-button[aria-selected=true] {

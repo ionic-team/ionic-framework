@@ -81,7 +81,7 @@ $chip-wp-icon-text-color:            color-contrast($colors-wp, $chip-wp-icon-ba
 }
 
 .chip-wp .button {
-  border: 0;
+  @include border(0);
 }
 
 

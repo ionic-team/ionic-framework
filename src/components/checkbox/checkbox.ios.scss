@@ -81,13 +81,13 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 
 .checkbox-ios .checkbox-icon {
   @include border-radius($checkbox-ios-icon-border-radius);
+  @include border-width($checkbox-ios-icon-border-width);
 
   position: relative;
 
   width: $checkbox-ios-icon-size;
   height: $checkbox-ios-icon-size;
 
-  border-width: $checkbox-ios-icon-border-width;
   border-style: $checkbox-ios-icon-border-style;
   border-color: $checkbox-ios-icon-border-color-off;
   background-color: $checkbox-ios-background-color-off;
@@ -108,15 +108,13 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 
 .checkbox-ios .checkbox-checked .checkbox-inner {
   @include position(4px, null, null, 7px);
+  @include border-width(0, $checkbox-ios-icon-checkmark-width, $checkbox-ios-icon-checkmark-width, 0);
 
   position: absolute;
 
   width: 4px;
   height: 9px;
 
-  border-width: $checkbox-ios-icon-checkmark-width;
-  border-top-width: 0;
-  border-left-width: 0;
   border-style: $checkbox-ios-icon-checkmark-style;
   border-color: $checkbox-ios-icon-checkmark-color;
   transform: rotate(45deg);

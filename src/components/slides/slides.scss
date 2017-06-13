@@ -225,8 +225,8 @@ button.swiper-pagination-bullet {
   @include margin(0);
   @include padding(0);
   @include appearance(none);
+  @include border(0);
 
-  border: 0;
   box-shadow: none;
 }
 

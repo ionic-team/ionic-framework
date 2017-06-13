@@ -44,8 +44,8 @@ ion-refresher {
   // this transition is what is used to put the
   // scroll content back into it's original location
   @include margin(-1px, null, null, null);
+  @include border(1px solid $refresher-border-color, null, null, null);
 
-  border-top: 1px solid $refresher-border-color;
   transition: transform 320ms cubic-bezier(.36, .66, .04, 1);
 }
 

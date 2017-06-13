@@ -61,24 +61,24 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp .item-block .item-inner {
-  border-bottom: 1px solid $list-wp-border-color;
+  @include border(null, null, 1px solid $list-wp-border-color, null);
 }
 
 .list-wp > .item-block:first-child,
 .list-wp > .item-wrapper:first-child .item-block {
-  border-top: 1px solid $list-wp-border-color;
+  @include border(1px solid $list-wp-border-color, null, null, null);
 }
 
 .list-wp > .item-block:last-child,
 .list-wp > .item-wrapper:last-child .item-block {
-  border-bottom: 1px solid $list-wp-border-color;
+  @include border(null, null, 1px solid $list-wp-border-color, null);
 }
 
 .list-wp > .item-block:last-child,
 .list-wp > .item-wrapper:last-child {
   ion-label,
   .item-inner {
-    border-bottom: 0;
+    @include border(null, null, 0, null);
   }
 }
 
@@ -89,6 +89,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 .list-wp ion-item-options .button {
   @include margin(1px, 0);
   @include border-radius(0);
+  @include border(0);
 
   display: inline-flex;
 
@@ -96,7 +97,6 @@ $list-wp-header-color:           $list-wp-text-color !default;
 
   height: calc(100% - 2px);
 
-  border: 0;
   box-shadow: none;
 
   box-sizing: border-box;
@@ -111,7 +111,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 // the item-inner class (if it is not last)
 .list-wp .item[no-lines],
 .list-wp .item[no-lines] .item-inner {
-  border-width: 0;
+  @include border-width(0);
 }
 
 .list-wp + ion-list ion-list-header {
@@ -130,14 +130,12 @@ $list-wp-header-color:           $list-wp-text-color !default;
 
 .list-wp[inset] .item:first-child {
   @include border-radius($list-inset-wp-border-radius, $list-inset-wp-border-radius, null, null);
-
-  border-top-width: 0;
+  @include border-width(0, null, null, null);
 }
 
 .list-wp[inset] .item:last-child {
   @include border-radius(null, null, $list-inset-wp-border-radius, $list-inset-wp-border-radius);
-
-  border-bottom-width: 0;
+  @include border-width(null, null, 0, null);
 }
 
 .list-wp[inset] .item-input {
@@ -158,7 +156,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 
 .list-wp[no-lines] .item,
 .list-wp[no-lines] .item .item-inner {
-  border-width: 0;
+  @include border-width(0);
 }
 
 
@@ -167,8 +165,8 @@ $list-wp-header-color:           $list-wp-text-color !default;
 
 .list-header-wp {
   @include padding-horizontal($list-wp-header-padding-start, null);
+  @include border(null, null, $list-wp-header-border-bottom, null);
 
-  border-bottom: $list-wp-header-border-bottom;
   font-size: $list-wp-header-font-size;
   color: $list-wp-header-color;
 }

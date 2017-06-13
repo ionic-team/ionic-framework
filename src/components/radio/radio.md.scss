@@ -77,6 +77,7 @@ $radio-md-item-end-margin-start:     0 !default;
   @include position(0, null, null, 0);
   @include margin(0);
   @include border-radius($radio-md-icon-border-radius);
+  @include border-width($radio-md-icon-border-width);
 
   position: relative;
   display: block;
@@ -84,7 +85,6 @@ $radio-md-item-end-margin-start:     0 !default;
   width: $radio-md-icon-width;
   height: $radio-md-icon-height;
 
-  border-width: $radio-md-icon-border-width;
   border-style: $radio-md-icon-border-style;
   border-color: $radio-md-color-off;
 }

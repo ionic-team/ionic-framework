@@ -74,6 +74,7 @@ $radio-wp-item-end-margin-start:      0 !default;
   @include position(0, null, null, 0);
   @include margin(0);
   @include border-radius($radio-wp-icon-border-radius);
+  @include border-width($radio-wp-icon-border-width);
 
   position: relative;
 
@@ -82,7 +83,6 @@ $radio-wp-item-end-margin-start:      0 !default;
   width: $radio-wp-icon-width;
   height: $radio-wp-icon-height;
 
-  border-width: $radio-wp-icon-border-width;
   border-style: $radio-wp-icon-border-style;
   border-color: $radio-wp-color-off;
 }

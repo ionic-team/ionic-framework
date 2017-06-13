@@ -74,9 +74,9 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
 
 .picker-md .picker-wrapper {
-  height: $picker-md-height;
+  @include border($hairlines-width solid $picker-md-border-color, null, null, null);
 
-  border-top: $hairlines-width solid $picker-md-border-color;
+  height: $picker-md-height;
 
   background: $picker-md-background-color;
 }
@@ -164,14 +164,13 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 .picker-md .picker-above-highlight {
   @include position(0, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
+  @include border(null, null, 1px solid $picker-md-border-color, null);
 
   position: absolute;
   z-index: 10;
 
   width: 100%;
   height: $picker-md-option-offset-y + 4px;
-
-  border-bottom: 1px solid $picker-md-border-color;
 
   background: linear-gradient(to bottom,
                             rgba($picker-md-background-color, 1) 20%,
@@ -181,14 +180,13 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 .picker-md .picker-below-highlight {
   @include position($picker-md-option-offset-y + $picker-md-option-height - 4, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
+  @include border(1px solid $picker-md-border-color, null, null, null);
 
   position: absolute;
   z-index: 11;
 
   width: 100%;
   height: $picker-md-option-offset-y + $picker-md-option-height;
-
-  border-top: 1px solid $picker-md-border-color;
 
   background: linear-gradient(to top,
                            rgba($picker-md-background-color, 1) 30%,

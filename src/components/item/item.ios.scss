@@ -124,8 +124,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 
 .item-ios.item-block .item-inner {
   @include padding-horizontal(null, $item-ios-padding-end / 2);
-
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  @include border(null, null, $hairlines-width solid $list-ios-border-color, null);
 }
 
 
@@ -233,12 +232,12 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 // --------------------------------------------------
 
 ion-item-group .item-ios:first-child .item-inner {
-  border-top-width: 0;
+  @include border-width(0, null, null, null);
 }
 
 ion-item-group .item-ios:last-child .item-inner,
 ion-item-group .item-wrapper:last-child .item-ios .item-inner {
-  border: 0;
+  @include border(0);
 }
 
 

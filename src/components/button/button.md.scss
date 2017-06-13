@@ -342,16 +342,14 @@ $button-md-strong-font-weight:                  bold !default;
 .button-full-md {
   @include margin-horizontal(0);
   @include border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
+  @include border-width(null, 0, null, 0);
 }
 
 // Material Design Outline Button
 // --------------------------------------------------
 
 .button-outline-md {
-  border-width: $button-md-outline-border-width;
+  @include border-width($button-md-outline-border-width);
   border-style: $button-md-outline-border-style;
   border-color: $button-md-outline-border-color;
   color: $button-md-outline-text-color;

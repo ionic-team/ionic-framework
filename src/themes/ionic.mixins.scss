@@ -464,6 +464,42 @@
   }
 }
 
+@mixin border($top, $end: $top, $bottom: $top, $start: $end) {
+  @include property(border, $top, $end, $bottom, $start);
+}
+
+@mixin border-width($top, $end: $top, $bottom: $top, $start: $end) {
+  @include property(border, $top, $end, $bottom, $start);
+
+  @if $top == $end and $top == $bottom and $top == $start {
+    @include multi-dir() {
+      border-width: $top;
+    }
+  } @else if $end == $start {
+    @include multi-dir() {
+      border-top-width: $top;
+      border-right-width: $end;
+      border-bottom-width: $bottom;
+      border-left-width: $start;
+    }
+  } @else {
+    @include ltr() {
+      border-top-width: $top;
+      border-right-width: $end;
+      border-bottom-width: $bottom;
+      border-left-width: $start;
+    }
+
+    @include rtl() {
+      border-top-width: $top;
+      border-right-width: $start;
+      border-bottom-width: $bottom;
+      border-left-width: $end;
+    }
+  }
+}
+
+
 @mixin transform-origin($x-axis, $y-axis: null) {
   @if $x-axis == start {
     @include ltr() {

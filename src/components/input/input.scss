@@ -47,6 +47,7 @@ ion-textarea {
   @include placeholder($text-input-placeholder-color);
   @include appearance(none);
   @include border-radius(0);
+  @include border(0);
 
   display: inline-block;
 
@@ -54,8 +55,6 @@ ion-textarea {
 
   width: 92%;
   width: calc(100% - 10px);
-
-  border: 0;
 
   background: transparent;
 }
