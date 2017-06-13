@@ -1,6 +1,5 @@
-import { Component, h, Ionic, Prop } from '../index';
-type CssClassObject = { [className: string]: boolean };
-
+import { Component, h, Ionic, Prop, State } from '../index';
+import { CssClassObject, VNodeData } from '../../util/interfaces';
 
 @Component({
   tag: 'ion-icon',
@@ -9,20 +8,24 @@ type CssClassObject = { [className: string]: boolean };
     md: 'icon.md.scss',
     wp: 'icon.wp.scss'
   },
-  shadow: false
+  host: {
+    theme: 'icon'
+  }
 })
 export class Icon {
   mode: string;
 
+  @Prop() color: string;
+
   /**
    * @input {string} Specifies the label to use for accessibility. Defaults to the icon name.
    */
-  @Prop() label: string = '';
+  @State() label: string = '';
 
   /**
    * @input {string} Specifies the mode to use for the icon.
    */
-  @Prop() iconMode: string = '';
+  @State() iconMode: string = '';
 
   /**
    * @input {string} Specifies which icon to use. The appropriate icon will be used based on the mode.
@@ -45,20 +48,14 @@ export class Icon {
    * An active icon is filled in, and an inactive icon is the outline of the icon.
    * The `isActive` property is largely used by the tabbar. Only affects `ios` icons.
    */
-  @Prop() isActive: boolean = false;
+  @Prop() isActive: boolean = null;
 
   /**
    * @input {boolean} If true, the icon is hidden.
    */
   @Prop() hidden: boolean = false;
 
-
-  constructor() {
-    // TODO set the right iconMode based on the platform
-    this.iconMode = this.mode || Ionic.config.get('iconMode', 'ios');
-  }
-
-  getElementClassList() {
+  getElementClass(): string {
     let iconName: string;
 
     // If no name was passed set iconName to null
@@ -82,13 +79,13 @@ export class Icon {
 
     if ((iconName === null) || (this.hidden === true)) {
       console.warn('Icon is hidden.');
-      return ['hide'];
+      return 'hide';
     }
 
     let iconMode = iconName.split('-', 2)[0];
     if (
       iconMode === 'ios' &&
-      !this.isActive &&
+      this.isActive === false &&
       iconName.indexOf('logo-') < 0 &&
       iconName.indexOf('-outline') < 0) {
       iconName += '-outline';
@@ -103,23 +100,29 @@ export class Icon {
     return `ion-${iconName}`;
   }
 
-  render() {
+  hostData(): VNodeData {
+    // TODO set the right iconMode based on the config
+    let iconMode = this.mode === 'md' ? 'md' : 'ios';
+    this.iconMode = iconMode || Ionic.config.get('iconMode');
+
     const iconClasses: CssClassObject = []
-       .concat(
-        this.getElementClassList(),
-       )
+      .concat(
+        this.getElementClass(),
+      )
       .reduce((prevValue, cssClass) => {
         prevValue[cssClass] = true;
         return prevValue;
        }, {});
 
-    return h(this, Ionic.theme(this, 'icon', {
+    return {
+      class: iconClasses,
       attrs: {
-        role: 'img',
-        'aria-label': this.label
-      },
-      class: iconClasses
-    }));
+        'role': 'img'
+      }
+    };
   }
 
+  render() {
+    return <slot></slot>;
+  }
 }
