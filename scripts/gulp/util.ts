@@ -56,7 +56,7 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions.target = target;
   }
   config.include = includeGlob;
-  const componetsToExclude = [
+  const componentsToExclude = [
     'badge',
     'card',
     'card-content',
@@ -69,13 +69,14 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     'gesture'
   ];
 
-  config.exclude = componetsToExclude.map(cmp => path.join(PROJECT_ROOT, `src/components/${cmp}`) + `/*.ts`)
+  config.exclude = componentsToExclude.map(cmp => path.join(PROJECT_ROOT, `src/components/${cmp}`) + `/*.ts`)
     .concat([
       path.join(PROJECT_ROOT, 'src/components/index.ts'),
     ]);
 
-  console.log('excluding core components from ng buld:');
-  console.log(config.exclude);
+  console.log('\x1b[36m%s\x1b[0m', '\nExcluding the following core components from ng build:\n');
+  console.log('\x1b[33m%s\x1b[0m', componentsToExclude.join(', ') + '\n');
+  console.log('\x1b[36m%s\x1b[0m', 'Important: all web components should be included in the above list.\n');
 
   if (overrideCompileOptions) {
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
