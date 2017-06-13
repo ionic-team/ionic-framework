@@ -104,6 +104,7 @@ import { Platform } from '../../platform/platform';
     '[readonly]="_readonly">' +
 
   '<textarea #textInput *ngIf="_isTextarea" class="text-input" ' +
+    '[ngClass]="\'text-input-\' + _mode"' +
     '(input)="onInput($event)" ' +
     '(blur)="onBlur($event)" ' +
     '(focus)="onFocus($event)" ' +
@@ -258,8 +259,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     @Optional() public ngControl: NgControl,
     private _dom: DomController
   ) {
-    super(config, elementRef, renderer,
-      elementRef.nativeElement.tagName === 'ION-TEXTAREA' ? 'textarea' : 'input', '', form, item, ngControl);
+    super(config, elementRef, renderer, 'input', '', form, item, ngControl);
 
     this.autocomplete = config.get('autocomplete', 'off');
     this.autocorrect = config.get('autocorrect', 'off');
@@ -267,6 +267,9 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     this._keyboardHeight = config.getNumber('keyboardHeight');
     this._isTextarea = !!(elementRef.nativeElement.tagName === 'ION-TEXTAREA');
 
+    if (this._isTextarea && item) {
+      item.setElementClass('item-textarea', true);
+    }
     // If not inside content, let's disable all the hacks
     if (!_content) {
       return;
