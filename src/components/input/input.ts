@@ -10,7 +10,7 @@ import 'rxjs/add/operator/takeUntil';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { Content, ContentDimensions } from '../content/content';
-import { hasPointerMoved, pointerCoord }  from '../../util/dom';
+import { copyInputAttributes, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { DomController } from '../../platform/dom-controller';
 import { Form, IonicFormInput } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
@@ -93,30 +93,25 @@ import { Platform } from '../../platform/platform';
     '(focus)="onFocus($event)" ' +
     '(keydown)="onKeydown($event)" ' +
     '[type]="_type" ' +
-    '[attr.name]="name" ' +
+    '[attr.aria-labelledby]="_labelId" ' +
     '[attr.min]="min" ' +
     '[attr.max]="max" ' +
     '[attr.step]="step" ' +
-    '[attr.maxlength]="maxlength" ' +
     '[attr.autocomplete]="autocomplete" ' +
     '[attr.autocorrect]="autocorrect" ' +
-    '[attr.spellcheck]="spellcheck" ' +
-    '[attr.autocapitalize]="autocapitalize" ' +
     '[placeholder]="placeholder" ' +
     '[disabled]="_disabled" ' +
     '[readonly]="_readonly">' +
 
   '<textarea #textInput *ngIf="_isTextarea" class="text-input" ' +
+    '[ngClass]="\'text-input-\' + _mode"' +
     '(input)="onInput($event)" ' +
     '(blur)="onBlur($event)" ' +
     '(focus)="onFocus($event)" ' +
     '(keydown)="onKeydown($event)" ' +
-    '[attr.name]="name" ' +
-    '[attr.maxlength]="maxlength" ' +
+    '[attr.aria-labelledby]="_labelId" ' +
     '[attr.autocomplete]="autocomplete" ' +
     '[attr.autocorrect]="autocorrect" ' +
-    '[attr.spellcheck]="spellcheck" ' +
-    '[attr.autocapitalize]="autocapitalize" ' +
     '[placeholder]="placeholder" ' +
     '[disabled]="_disabled" ' +
     '[readonly]="_readonly"></textarea>' +
@@ -134,7 +129,8 @@ import { Platform } from '../../platform/platform';
     '(mouseup)="_pointerEnd($event)"></div>',
 
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  inputs: ['value']
 })
 export class TextInput extends BaseInput<string> implements IonicFormInput {
 
@@ -217,26 +213,9 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   @Input() autocorrect: string = '';
 
   /**
-   * @input {string} Specifies whether the element is to have its spelling
-   * and grammar checked or not.
-   */
-  @Input() spellcheck: string = null;
-
-  /**
-   * @input {string} controls whether and how the text value for textual form control descendants should be automatically capitalized as it is entered/edited by the user.
-   */
-  @Input() autocapitalize: string = null;
-
-  /**
    * @input {string} Instructional text that shows before the input has a value.
    */
   @Input() placeholder: string = '';
-
-  /**
-   * @input {string} The name attribute is used to reference elements in a JavaScript,
-   * or to reference form data after a form is submitted.
-   */
-  @Input() name: string = null;
 
   /**
    * @input {any} The minimum value, which must not be greater than its maximum (max attribute) value.
@@ -252,11 +231,6 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
    * @input {any} Works with the min and max attributes to limit the increments at which a value can be set.
    */
   @Input() step: number | string = null;
-
-  /**
-   * @input {any} Specifies the maximum number of characters allowed in the <input> element.
-   */
-  @Input() maxlength: number | string = null;
 
   /**
    * @hidden
@@ -285,8 +259,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     @Optional() public ngControl: NgControl,
     private _dom: DomController
   ) {
-    super(config, elementRef, renderer,
-      elementRef.nativeElement.tagName === 'ION-TEXTAREA' ? 'textarea' : 'input', '', form, item, ngControl);
+    super(config, elementRef, renderer, 'input', '', form, item, ngControl);
 
     this.autocomplete = config.get('autocomplete', 'off');
     this.autocorrect = config.get('autocorrect', 'off');
@@ -294,6 +267,9 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     this._keyboardHeight = config.getNumber('keyboardHeight');
     this._isTextarea = !!(elementRef.nativeElement.tagName === 'ION-TEXTAREA');
 
+    if (this._isTextarea && item) {
+      item.setElementClass('item-textarea', true);
+    }
     // If not inside content, let's disable all the hacks
     if (!_content) {
       return;
@@ -331,10 +307,13 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
       this.clearOnEdit = true;
     }
     const ionInputEle: HTMLElement = this._elementRef.nativeElement;
+    const nativeInputEle: HTMLElement = this._native.nativeElement;
+
+    // Copy remaining attributes, not handled by ionic/angular
+    copyInputAttributes(ionInputEle, nativeInputEle);
 
     if (ionInputEle.hasAttribute('autofocus')) {
       // the ion-input element has the autofocus attributes
-      const nativeInputEle: HTMLElement = this._native.nativeElement;
       ionInputEle.removeAttribute('autofocus');
       switch (this._autoFocusAssist) {
         case 'immediate':
@@ -351,6 +330,8 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
       // traditionally iOS has big issues with autofocus on actual devices
       // autoFocus is disabled by default with the iOS mode config
     }
+
+    // Initialize the input (can start emitting events)
     this._initialize();
 
     if (this.focus.observers.length > 0) {

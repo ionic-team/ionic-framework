@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Input attributes</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Stacked</ion-label>
+        <ion-input #input1
+          type="number"
+          placeholder="Placeholder"
+          value="1234"
+          id="mystackinput"
+          name="holaa"
+          min="0"
+          max="10000"
+          step="2"
+          autocomplete="on"
+          autocorrect="on"
+          autocapitalize="on"
+          spellcheck="true"
+          maxlength="4"
+          disabled
+          readonly
+        ></ion-input>
+      </ion-item>
+
+      <ion-list>
+        <ion-item *ngIf="input1Valid" color="secondary">Test passed</ion-item>
+        <ion-item *ngIf="!input1Valid" color="danger">Test FAILED</ion-item>
+      </ion-list>
+
+    </ion-list>
+
+</ion-content>
