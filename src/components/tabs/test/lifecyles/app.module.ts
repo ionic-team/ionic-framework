@@ -23,8 +23,8 @@ import { IonicApp, IonicModule, NavController, AlertController } from '../../../
       <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
       <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
 
-      <button ion-button (click)="push()">push()</button>
-      <button ion-button (click)="openAlert()">open alert</button>
+      <ion-button (click)="push()">push()</ion-button>
+      <ion-button (click)="openAlert()">open alert</ion-button>
     </ion-content>
     `
 })

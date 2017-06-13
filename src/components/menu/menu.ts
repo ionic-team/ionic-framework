@@ -131,7 +131,7 @@ import { RootNode } from '../split-pane/split-pane';
  * directive anywhere in the page's template:
  *
  * ```html
- * <button ion-button menuToggle>Toggle Menu</button>
+ * <ion-button menuToggle>Toggle Menu</ion-button>
  * ```
  *
  * To close a menu, add the `menuClose` button. It can be added anywhere

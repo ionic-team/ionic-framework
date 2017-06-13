@@ -9,13 +9,13 @@ import { App, AlertController, IonicPage, NavController, NavParams, ViewControll
     <ion-content padding>
       <h1>Full page</h1>
       <p>This page does not have a nav bar!</p>
-      <p><button ion-button (click)="navCtrl.pop()">Pop</button></p>
-      <p><button ion-button class="e2eFrom2To3" (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button></p>
-      <p><button ion-button (click)="pushAnother()">Push to AnotherPage</button></p>
-      <p><button ion-button (click)="pushFirstPage()">Push to FirstPage</button></p>
-      <p><button ion-button class="e2eFrom2To1" navPop>Pop with NavPop (Go back to 1st)</button></p>
-      <p><button ion-button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</button></p>
-      <p><button ion-button (click)="presentAlert()">Present Alert</button></p>
+      <p><ion-button (click)="navCtrl.pop()">Pop</ion-button></p>
+      <p><ion-button class="e2eFrom2To3" (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</ion-button></p>
+      <p><ion-button (click)="pushAnother()">Push to AnotherPage</ion-button></p>
+      <p><ion-button (click)="pushFirstPage()">Push to FirstPage</ion-button></p>
+      <p><ion-button class="e2eFrom2To1" navPop>Pop with NavPop (Go back to 1st)</ion-button></p>
+      <p><ion-button (click)="setPages()">setPages() (Go to PrimaryHeaderPage, FirstPage 1st in history)</ion-button></p>
+      <p><ion-button (click)="presentAlert()">Present Alert</ion-button></p>
     </ion-content>
   `
 })

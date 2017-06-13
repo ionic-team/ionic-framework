@@ -41,12 +41,12 @@ const enum SlidingState {
  *       Item
  *     </ion-item>
  *     <ion-item-options side="left">
- *       <button ion-button (click)="favorite(item)">Favorite</button>
- *       <button ion-button color="danger" (click)="share(item)">Share</button>
+ *       <ion-button (click)="favorite(item)">Favorite</ion-button>
+ *       <ion-button color="danger" (click)="share(item)">Share</ion-button>
  *     </ion-item-options>
  *
  *     <ion-item-options side="right">
- *       <button ion-button (click)="unread(item)">Unread</button>
+ *       <ion-button (click)="unread(item)">Unread</ion-button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  * </ion-list>
@@ -61,17 +61,17 @@ const enum SlidingState {
  *
  * ```html
  * <ion-item-options side="right">
- *   <button ion-button (click)="archive(item)">
+ *   <ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
  *     Archive
- *   </button>
+ *   </ion-button>
  * </ion-item-options>
  *
  * <ion-item-options side="left">
- *   <button ion-button (click)="archive(item)">
+ *   <ion-button (click)="archive(item)">
  *     <ion-icon name="archive"></ion-icon>
  *     Archive
- *   </button>
+ *   </ion-button>
  * </ion-item-options>
  * ```
  *
@@ -83,7 +83,7 @@ const enum SlidingState {
  * <ion-item-sliding (ionDrag)="logDrag($event)">
  *   <ion-item>Item</ion-item>
  *   <ion-item-options>
- *     <button ion-button>Favorite</button>
+ *     <ion-button>Favorite</ion-button>
  *   </ion-item-options>
  * </ion-item-sliding>
  * ```
@@ -96,10 +96,10 @@ const enum SlidingState {
  *
  * ```html
  * <ion-item-options icon-start>
- *    <button ion-button (click)="archive(item)">
+ *    <ion-button (click)="archive(item)">
  *      <ion-icon name="archive"></ion-icon>
  *      Archive
- *    </button>
+ *    </ion-button>
  *  </ion-item-options>
  *
  * ```
@@ -115,7 +115,7 @@ const enum SlidingState {
  * <ion-item-sliding (ionSwipe)="delete(item)">
  *   <ion-item>Item</ion-item>
  *   <ion-item-options>
- *     <button ion-button expandable (click)="delete(item)">Delete</button>
+ *     <ion-button expandable (click)="delete(item)">Delete</ion-button>
  *   </ion-item-options>
  * </ion-item-sliding>
  * ```
@@ -404,7 +404,7 @@ export class ItemSliding {
    *       Item
    *     </ion-item>
    *     <ion-item-options>
-   *       <button ion-button (click)="share(slidingItem)">Share</button>
+   *       <ion-button (click)="share(slidingItem)">Share</ion-button>
    *     </ion-item-options>
    *   </ion-item-sliding>
    * </ion-list>

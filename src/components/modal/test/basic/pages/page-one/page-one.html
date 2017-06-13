@@ -5,7 +5,7 @@
     <h3>test2</h3>
     <h4>and more content</h4>
     <ion-buttons end>
-      <button ion-button (click)="push()">Push</button>
+      <ion-button (click)="push()">Push</ion-button>
     </ion-buttons>
   </ion-navbar>
 
@@ -15,22 +15,22 @@
 <ion-content padding>
 
   <p>
-    <button ion-button (click)="presentModal()">Present modal, pass params</button>
+    <ion-button (click)="presentModal()">Present modal, pass params</ion-button>
   </p>
   <p>
-    <button ion-button class="e2eOpenModal" (click)="presentModalChildNav()">Present modal w/ child ion-nav</button>
+    <ion-button class="e2eOpenModal" (click)="presentModalChildNav()">Present modal w/ child ion-nav</ion-button>
   </p>
   <p>
-    <button ion-button class="e2eOpenToolbarModal" (click)="presentToolbarModal()">Present modal w/ toolbar (and alert)</button>
+    <ion-button class="e2eOpenToolbarModal" (click)="presentToolbarModal()">Present modal w/ toolbar (and alert)</ion-button>
   </p>
   <p>
-    <button ion-button (click)="presentModalWithInputs()">Present modal w/ inputs</button>
+    <ion-button (click)="presentModalWithInputs()">Present modal w/ inputs</ion-button>
   </p>
   <p>
-    <button ion-button (click)="presentNavModalWithToast()">Present toast then child ion-nav modal</button>
+    <ion-button (click)="presentNavModalWithToast()">Present toast then child ion-nav modal</ion-button>
   </p>
   <p>
-    <button ion-button (click)="presentToolbarModalWithToast()">Present toast then toolbar modal</button>
+    <ion-button (click)="presentToolbarModalWithToast()">Present toast then toolbar modal</ion-button>
   </p>
   <p>
     {{platforms | json}}

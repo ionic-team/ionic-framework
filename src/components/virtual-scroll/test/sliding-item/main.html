@@ -2,9 +2,9 @@
   <ion-navbar>
     <ion-title>Virtual Scroll{{webview}}</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="reload()">
+      <ion-button (click)="reload()">
         Reload
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -22,10 +22,10 @@
     <ion-item-sliding *virtualItem="let item">
       <ion-item>Item: {{item.value}} {{item.someMethod()}}</ion-item>
       <ion-item-options>
-        <button ion-button>Archive</button>
+        <ion-button>Archive</ion-button>
       </ion-item-options>
       <ion-item-options side="left">
-        <button ion-button danger>Remove</button>
+        <ion-button danger>Remove</ion-button>
       </ion-item-options>
     </ion-item-sliding>
 

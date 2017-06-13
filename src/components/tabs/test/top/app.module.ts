@@ -55,8 +55,8 @@ export class Tab1 {
             <p>{{session.location}} {{session.location}} {{session.location}}</p>
           </ion-item>
           <ion-item-options>
-            <button ion-button color="primary">Speaker<br>Info</button>
-            <button ion-button color="secondary">Add to<br>Favorites</button>
+            <ion-button color="primary">Speaker<br>Info</ion-button>
+            <ion-button color="secondary">Add to<br>Favorites</ion-button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>

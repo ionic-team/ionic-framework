@@ -11,8 +11,8 @@ let count = 0;
   template: `
     <ion-content padding text-center>
       <p>Page 1</p>
-      <button ion-button (click)="stop()">Stop</button>
-      <button ion-button (click)="play()">Play</button>
+      <ion-button (click)="stop()">Stop</ion-button>
+      <ion-button (click)="play()">Play</ion-button>
     </ion-content>
   `
 })
@@ -45,8 +45,8 @@ export class Page1 {
   template: `
     <ion-content padding text-center>
       <p>Page 2</p>
-      <button ion-button (click)="stop()">Stop</button>
-      <button ion-button (click)="play()">Play</button>
+      <ion-button (click)="stop()">Stop</ion-button>
+      <ion-button (click)="play()">Play</ion-button>
     </ion-content>
   `
 })

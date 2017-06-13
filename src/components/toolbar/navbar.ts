@@ -23,18 +23,18 @@ import { ViewController } from '../../navigation/view-controller';
  * <ion-header>
  *
  *   <ion-navbar>
- *     <button ion-button icon-only menuToggle>
+ *     <ion-button icon-only menuToggle>
  *       <ion-icon name="menu"></ion-icon>
- *     </button>
+ *     </ion-button>
  *
  *     <ion-title>
  *       Page Title
  *     </ion-title>
  *
  *     <ion-buttons end>
- *       <button ion-button icon-only (click)="openModal()">
+ *       <ion-button icon-only (click)="openModal()">
  *         <ion-icon name="options"></ion-icon>
- *       </button>
+ *       </ion-button>
  *     </ion-buttons>
  *   </ion-navbar>
  *
@@ -48,10 +48,10 @@ import { ViewController } from '../../navigation/view-controller';
   selector: 'ion-navbar',
   template:
     '<div class="toolbar-background" [ngClass]="\'toolbar-background-\' + _mode"></div>' +
-    '<button (click)="backButtonClick($event)" ion-button="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
+    '<ion-button (click)="backButtonClick($event)" button-type="bar-button" class="back-button" [ngClass]="\'back-button-\' + _mode" [hidden]="_hideBb">' +
       '<ion-icon class="back-button-icon" [ngClass]="\'back-button-icon-\' + _mode" [name]="_bbIcon"></ion-icon>' +
       '<span class="back-button-text" [ngClass]="\'back-button-text-\' + _mode">{{_backText}}</span>' +
-    '</button>' +
+    '</ion-button>' +
     '<ng-content select="[menuToggle],ion-buttons[left]"></ng-content>' +
     '<ng-content select="ion-buttons[start]"></ng-content>' +
     '<ng-content select="ion-buttons[end],ion-buttons[right]"></ng-content>' +

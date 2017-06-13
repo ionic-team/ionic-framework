@@ -6,9 +6,9 @@ import { IonicPage } from '../../../../../..';
   template: `
   <ion-header>
     <ion-navbar>
-      <button ion-button menuToggle>
+      <ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
-      </button>
+      </ion-button>
       <ion-title>Page 2</ion-title>
     </ion-navbar>
   </ion-header>

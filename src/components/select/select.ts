@@ -133,13 +133,13 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
     '<div class="select-icon">' +
       '<div class="select-icon-inner"></div>' +
     '</div>' +
-    '<button aria-haspopup="true" ' +
+    '<ion-button aria-haspopup="true" ' +
             '[id]="id" ' +
-            'ion-button="item-cover" ' +
+            'button-type="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
             'class="item-cover">' +
-    '</button>',
+    '</ion-button>',
   host: {
     '[class.select-disabled]': '_disabled'
   },

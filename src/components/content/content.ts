@@ -117,7 +117,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  *       </ion-toolbar>
  *     </ion-header>
  *     <ion-content>
- *       <button ion-button (click)="toggleToolbar()">Toggle Toolbar</button>
+ *       <ion-button (click)="toggleToolbar()">Toggle Toolbar</ion-button>
  *     </ion-content>
  * `})
  *
@@ -141,7 +141,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  *
  * @Component({
  *   template: `<ion-content>
- *                <button ion-button (click)="scrollTo()">Down 500px</button>
+ *                <ion-button (click)="scrollTo()">Down 500px</ion-button>
  *              </ion-content>`
  * )}
  * export class MyPage{

@@ -10,7 +10,7 @@ import { AlertController, IonicPage, NavController, ViewController } from '../..
       <ion-navbar color="primary">
         <ion-title>Primary Color Page Header</ion-title>
         <ion-buttons end>
-          <button ion-button>S1g</button>
+          <ion-button>S1g</ion-button>
         </ion-buttons>
       </ion-navbar>
       <ion-toolbar>
@@ -18,16 +18,16 @@ import { AlertController, IonicPage, NavController, ViewController } from '../..
       </ion-toolbar>
     </ion-header>
     <ion-content padding fullscreen>
-      <p><button ion-button class="e2eFrom3To2" (click)="navCtrl.pop()">Pop</button></p>
-      <p><button ion-button (click)="pushAnother()">Push to AnotherPage</button></p>
-      <p><button ion-button (click)="pushFullPage()">Push to FullPage</button></p>
-      <p><button ion-button (click)="setRoot()">setRoot(AnotherPage)</button></p>
-      <p><button ion-button (click)="navCtrl.popToRoot()">Pop to root</button></p>
-      <p><button ion-button id="insert" (click)="insert()">Insert first page into history before this</button></p>
-      <p><button ion-button id="remove" (click)="removeSecond()">Remove second page in history</button></p>
+      <p><ion-button class="e2eFrom3To2" (click)="navCtrl.pop()">Pop</ion-button></p>
+      <p><ion-button (click)="pushAnother()">Push to AnotherPage</ion-button></p>
+      <p><ion-button (click)="pushFullPage()">Push to FullPage</ion-button></p>
+      <p><ion-button (click)="setRoot()">setRoot(AnotherPage)</ion-button></p>
+      <p><ion-button (click)="navCtrl.popToRoot()">Pop to root</ion-button></p>
+      <p><ion-button id="insert" (click)="insert()">Insert first page into history before this</ion-button></p>
+      <p><ion-button id="remove" (click)="removeSecond()">Remove second page in history</ion-button></p>
       <div class="yellow"><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div></div>
 
-      <button ion-button ion-fixed no-margin color="danger" (click)="presentAlert()">fixed button (alert)</button>
+      <ion-button ion-fixed no-margin color="danger" (click)="presentAlert()">fixed button (alert)</ion-button>
       <div ion-fixed style="position: absolute; pointer-events: none; top:0; bottom:0; right:0; width:50%; background: rgba(0,0,0,0.5);"></div>
     </ion-content>
     <ion-footer>

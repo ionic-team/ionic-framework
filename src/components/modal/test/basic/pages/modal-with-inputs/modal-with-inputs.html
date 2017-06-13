@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-buttons start>
-      <button ion-button (click)="dismiss()" strong>Close</button>
+      <ion-button (click)="dismiss()" strong>Close</ion-button>
     </ion-buttons>
     <ion-title>Modal w/ Inputs</ion-title>
   </ion-toolbar>
@@ -24,7 +24,7 @@
       </ion-item>
     </ion-list>
     <div padding>
-      <button ion-button block large type="submit" [disabled]="!addForm.valid">Save</button>
+      <ion-button block large type="submit" [disabled]="!addForm.valid">Save</ion-button>
     </div>
   </form>
 </ion-content>

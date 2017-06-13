@@ -180,9 +180,9 @@ import { ItemReorder } from './item-reorder';
  *
  *   <!-- List header with buttons on each side -->
  *   <ion-list-header>
- *     <button ion-button item-start (click)="buttonClick()">Button</button>
+ *     <ion-button item-start (click)="buttonClick()">Button</ion-button>
  *     List Header
- *     <button ion-button outline item-end (click)="buttonClick()">Outline</button>
+ *     <ion-button outline item-end (click)="buttonClick()">Outline</ion-button>
  *   </ion-list-header>
  *
  *   <!-- Loops through and creates multiple items -->
@@ -208,28 +208,28 @@ import { ItemReorder } from './item-reorder';
  *
  *   <!-- Item with left and right buttons -->
  *   <ion-item>
- *     <button ion-button item-start (click)="buttonClick()">Button</button>
+ *     <ion-button item-start (click)="buttonClick()">Button</ion-button>
  *     Item
- *     <button ion-button outline item-end (click)="buttonClick()">Outline</button>
+ *     <ion-button outline item-end (click)="buttonClick()">Outline</ion-button>
  *   </ion-item>
  *
  *   <!-- Item divider with a right button -->
  *   <ion-item-divider>
  *     Item Divider
- *     <button ion-button item-end>Button</button>
+ *     <ion-button item-end>Button</ion-button>
  *   </ion-item-divider>
  *
  *   <!-- Disabled button item with left and right buttons -->
  *   <button ion-item disabled>
- *     <button ion-button item-start (click)="buttonClick()">
+ *     <ion-button item-start (click)="buttonClick()">
  *       <ion-icon name="home"></ion-icon>
  *       Left Icon
- *     </button>
+ *     </ion-button>
  *     Disabled Button Item
- *     <button ion-button outline item-end (click)="buttonClick()">
+ *     <ion-button outline item-end (click)="buttonClick()">
  *       <ion-icon name="star"></ion-icon>
  *       Left Icon
- *     </button>
+ *     </ion-button>
  *   </button>
  *
  *   <!-- Item with an avatar on the left and button on the right -->
@@ -238,7 +238,7 @@ import { ItemReorder } from './item-reorder';
  *       <img src="img/my-avatar.png">
  *     </ion-avatar>
  *     Avatar Item
- *     <button ion-button outline item-end>View</button>
+ *     <ion-button outline item-end>View</ion-button>
  *   </ion-item>
  *
  *   <!-- Item with a thumbnail on the right -->
@@ -256,7 +256,7 @@ import { ItemReorder } from './item-reorder';
  *       Item
  *     </ion-item>
  *     <ion-item-options>
- *       <button ion-button color="primary" (click)="archive()">Archive</button>
+ *       <ion-button color="primary" (click)="archive()">Archive</ion-button>
  *     </ion-item-options>
  *   </ion-item-sliding>
  *

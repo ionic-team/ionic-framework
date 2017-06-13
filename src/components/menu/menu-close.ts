@@ -13,14 +13,14 @@ import { MenuController } from '../app/menu-controller';
  * A simple `menuClose` button can be added using the following markup:
  *
  * ```html
- * <button ion-button menuClose>Close Menu</button>
+ * <ion-button menuClose>Close Menu</ion-button>
  * ```
  *
  * To close a certain menu by its id or side, give the `menuClose`
  * directive a value.
  *
  * ```html
- * <button ion-button menuClose="left">Close Left Menu</button>
+ * <ion-button menuClose="left">Close Left Menu</ion-button>
  * ```
  *
  * @demo /docs/demos/src/menu/

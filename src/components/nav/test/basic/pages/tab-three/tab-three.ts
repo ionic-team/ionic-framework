@@ -8,9 +8,9 @@ import { AlertController, App, IonicPage, Tabs } from '../../../../../..';
   template: `
     <ion-header>
       <ion-navbar>
-        <button ion-button menuToggle>
+        <ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
-        </button>
+        </ion-button>
         <ion-title>Stopwatch</ion-title>
       </ion-navbar>
     </ion-header>
@@ -18,14 +18,14 @@ import { AlertController, App, IonicPage, Tabs } from '../../../../../..';
     <ion-content padding>
       <h2>Tab 3</h2>
       <p>
-        <button ion-button (click)="presentAlert()">Present Alert</button>
-        <button ion-button (click)="presentModal()">Present Modal</button>
+        <ion-button (click)="presentAlert()">Present Alert</ion-button>
+        <ion-button (click)="presentModal()">Present Modal</ion-button>
       </p>
       <p>
-        <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
+        <ion-button (click)="selectPrevious()">Select Previous Tab</ion-button>
       </p>
       <p>
-        <button ion-button (click)="appNavPop()">App Nav Pop</button>
+        <ion-button (click)="appNavPop()">App Nav Pop</ion-button>
       </p>
     </ion-content>
     `

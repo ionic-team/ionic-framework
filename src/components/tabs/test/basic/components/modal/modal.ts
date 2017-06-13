@@ -6,7 +6,7 @@ import { App, ViewController } from '../../../../../..';
   <ion-header>
     <ion-toolbar>
       <ion-buttons start>
-        <button ion-button (click)="dismiss()">Cancel</button>
+        <ion-button (click)="dismiss()">Cancel</ion-button>
       </ion-buttons>
 
       <ion-title>
@@ -14,7 +14,7 @@ import { App, ViewController } from '../../../../../..';
       </ion-title>
 
       <ion-buttons end>
-        <button ion-button (click)="dismiss()">Done</button>
+        <ion-button (click)="dismiss()">Done</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>

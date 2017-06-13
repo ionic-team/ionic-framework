@@ -17,7 +17,7 @@ import { IonicApp, IonicModule, Events } from '../../../..';
       <p>Tap the third tab below to fire broken events</p>
       <p>Then change to Tab 2 and back to Home</p>
       <p>{{datatest}} called: {{called}}</p>
-      <button ion-button (click)="change()">Fire events correctly</button>
+      <ion-button (click)="change()">Fire events correctly</ion-button>
     </ion-content>
     `
 })

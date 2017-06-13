@@ -18,15 +18,15 @@ import { App, IonicPage, NavController, Tabs } from '../../../../../..';
           Tab 1
         </ion-list-header>
         <ion-item>
-          <button ion-button (click)="goBack()">Back</button>
+          <ion-button (click)="goBack()">Back</ion-button>
         </ion-item>
         <ion-item (click)="goTo()" *ngFor="let i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
       </ion-list>
       <p>
-        <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
+        <ion-button (click)="selectPrevious()">Select Previous Tab</ion-button>
       </p>
       <p>
-        <button ion-button (click)="appNavPop()">App Nav Pop</button>
+        <ion-button (click)="appNavPop()">App Nav Pop</ion-button>
       </p>
     </ion-content>
     `

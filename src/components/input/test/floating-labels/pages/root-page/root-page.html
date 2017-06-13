@@ -14,9 +14,9 @@
     <ion-item>
       <ion-label floating>Params: {{ myParam }}</ion-label>
       <ion-input [(ngModel)]="myParam" type="text"></ion-input>
-      <button ion-button icon-only clear item-end>
+      <ion-button icon-only clear item-end>
         <ion-icon name="settings"></ion-icon>
-      </button>
+      </ion-button>
     </ion-item>
 
     <ion-item>
@@ -32,15 +32,15 @@
     <ion-item>
       <ion-label floating>value: {{ numberInput.value }} min: {{ minValue }} max: {{ maxValue }} step: {{ stepValue }} </ion-label>
       <ion-input #numberInput [min]="minValue" [max]="maxValue" [step]="stepValue" type="number"></ion-input>
-      <button item-end outline ion-button (click)="toggleValues()">Toggle</button>
+      <ion-button item-end outline (click)="toggleValues()">Toggle</ion-button>
     </ion-item>
 
     <ion-item>
       <ion-label floating color="primary">ngModel 2: {{ myValues.value2 }}</ion-label>
       <ion-textarea [(ngModel)]='myValues.value2'></ion-textarea>
-      <button ion-button outline item-end>
+      <ion-button outline item-end>
         View
-      </button>
+      </ion-button>
     </ion-item>
 
     <ion-item>

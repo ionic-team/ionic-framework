@@ -18,14 +18,14 @@ import { ViewController } from '../../navigation/view-controller';
  * A simple `menuToggle` button can be added using the following markup:
  *
  * ```html
- * <button ion-button menuToggle>Toggle Menu</button>
+ * <ion-button menuToggle>Toggle Menu</ion-button>
  * ```
  *
  * To toggle a specific menu by its id or side, give the `menuToggle`
  * directive a value.
  *
  * ```html
- * <button ion-button menuToggle="right">Toggle Right Menu</button>
+ * <ion-button menuToggle="right">Toggle Right Menu</ion-button>
  * ```
  *
  * If placing the `menuToggle` in a navbar or toolbar, it should be
@@ -37,20 +37,20 @@ import { ViewController } from '../../navigation/view-controller';
  *
  *   <ion-navbar>
  *     <ion-buttons start>
- *       <button ion-button>
+ *       <ion-button>
  *         <ion-icon name="contact"></ion-icon>
- *       </button>
+ *       </ion-button>
  *     </ion-buttons>
- *     <button ion-button menuToggle>
+ *     <ion-button menuToggle>
  *       <ion-icon name="menu"></ion-icon>
- *     </button>
+ *     </ion-button>
  *     <ion-title>
  *       Title
  *     </ion-title>
  *     <ion-buttons end>
- *       <button ion-button (click)="doClick()">
+ *       <ion-button (click)="doClick()">
  *         <ion-icon name="more"></ion-icon>
- *       </button>
+ *       </ion-button>
  *     </ion-buttons>
  *   </ion-navbar>
  *
@@ -62,16 +62,16 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```html
  * <ion-toolbar>
- *   <button ion-button menuToggle right>
+ *   <ion-button menuToggle right>
  *     <ion-icon name="menu"></ion-icon>
- *   </button>
+ *   </ion-button>
  *   <ion-title>
  *     Title
  *   </ion-title>
  *   <ion-buttons end>
- *     <button ion-button (click)="doClick()">
+ *     <ion-button (click)="doClick()">
  *       <ion-icon name="more"></ion-icon>
- *     </button>
+ *     </ion-button>
  *   </ion-buttons>
  * </ion-toolbar>
  * ```

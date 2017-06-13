@@ -15,16 +15,16 @@ import { NavParams } from '../../../../../src';
       </ion-row>
       <ion-row class="popover-row-dots">
         <ion-col>
-          <button (click)="changeBackground('white')" ion-button="popover-dot" class="popover-dot-white" [class.selected]="background == 'white'"></button>
+          <ion-button (click)="changeBackground('white')" button-type="popover-dot" class="popover-dot-white" [class.selected]="background == 'white'"></ion-button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('tan')" ion-button="popover-dot" class="popover-dot-tan" [class.selected]="background == 'tan'"></button>
+          <ion-button (click)="changeBackground('tan')" button-type="popover-dot" class="popover-dot-tan" [class.selected]="background == 'tan'"></ion-button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('grey')" ion-button="popover-dot" class="popover-dot-grey" [class.selected]="background == 'grey'"></button>
+          <ion-button (click)="changeBackground('grey')" button-type="popover-dot" class="popover-dot-grey" [class.selected]="background == 'grey'"></ion-button>
         </ion-col>
         <ion-col>
-          <button (click)="changeBackground('black')" ion-button="popover-dot" class="popover-dot-black" [class.selected]="background == 'black'"></button>
+          <ion-button (click)="changeBackground('black')" button-type="popover-dot" class="popover-dot-black" [class.selected]="background == 'black'"></ion-button>
         </ion-col>
       </ion-row>
       <ion-item class="popover-text-athelas">

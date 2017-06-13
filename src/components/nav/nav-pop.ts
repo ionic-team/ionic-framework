@@ -13,7 +13,7 @@ import { NavController } from '../../navigation/nav-controller';
  * ```html
  * <ion-content>
  *
- *  <button ion-button navPop>Go Back</button>
+ *  <ion-button navPop>Go Back</ion-button>
  *
  * </ion-content>
  * ```

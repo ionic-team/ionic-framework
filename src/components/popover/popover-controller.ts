@@ -49,9 +49,9 @@ import { DeepLinker } from '../../navigation/deep-linker';
  * which creates and presents the popover:
  *
  * ```html
- * <button ion-button icon-only (click)="presentPopover($event)">
+ * <ion-button icon-only (click)="presentPopover($event)">
  *   <ion-icon name="more"></ion-icon>
- * </button>
+ * </ion-button>
  * ```
  *
  * ```ts

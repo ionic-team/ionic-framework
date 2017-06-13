@@ -9,13 +9,13 @@ import { IonicPage } from '../../../../../..';
   <ion-header>
     <ion-navbar>
       <ion-title>This is a tab page</ion-title>
-      <button ion-button menuToggle>
+      <ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
-      </button>
+      </ion-button>
       <ion-buttons end>
-        <button ion-button>
+        <ion-button>
           <ion-icon name="funnel"></ion-icon>
-        </button>
+        </ion-button>
       </ion-buttons>
     </ion-navbar>
   </ion-header>

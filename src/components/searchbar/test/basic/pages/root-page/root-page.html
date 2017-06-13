@@ -42,10 +42,10 @@
   <ion-searchbar [placeholder]="'Search'" [animated]="true" [showCancelButton]="false"></ion-searchbar>
 
   <p padding>
-    <button ion-button block (click)="changeValue()">Change Value</button>
+    <ion-button block (click)="changeValue()">Change Value</ion-button>
   </p>
 
-  <button ion-button (click)="activeTab = 'a'">Error Please</button>
+  <ion-button (click)="activeTab = 'a'">Error Please</ion-button>
   <div *ngIf="activeTab == 'a'">
       <ion-searchbar animated="true" [showCancelButton]="true"></ion-searchbar>
   </div>

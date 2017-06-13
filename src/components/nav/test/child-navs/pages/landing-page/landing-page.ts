@@ -13,9 +13,9 @@ import { IonicPage, NavController } from '../../../../../..';
   </ion-header>
 
   <ion-content>
-    <button ion-button color="primary" (click)="goToPage()" class="e2eChildNavsNested">
+    <ion-button color="primary" (click)="goToPage()" class="e2eChildNavsNested">
       Nested Children Test
-    </button>
+    </ion-button>
   </ion-content>
   `
 })

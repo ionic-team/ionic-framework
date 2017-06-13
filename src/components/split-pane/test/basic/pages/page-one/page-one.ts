@@ -5,16 +5,16 @@ import { MenuController, NavController } from '../../../../../..';
   template: `
   <ion-header>
     <ion-navbar>
-      <button ion-button menuToggle>
+      <ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
-      </button>
+      </ion-button>
       <ion-title>Navigation</ion-title>
     </ion-navbar>
   </ion-header>
   <ion-content padding>
     <h1>Page 1</h1>
-    <button ion-button (click)="push()">Push</button>
-    <button ion-button (click)="menu()">Disable/enable menu</button>
+    <ion-button (click)="push()">Push</ion-button>
+    <ion-button (click)="menu()">Disable/enable menu</ion-button>
     <div f></div>
     <div f></div>
     <div f></div>

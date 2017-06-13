@@ -2,10 +2,10 @@
 
   <ion-toolbar>
     <ion-buttons end>
-      <button ion-button>Default</button>
-      <button ion-button solid>Solid</button>
-      <button ion-button outline>Outline</button>
-      <button ion-button [clear]="isBarClear" (click)="toggleBarClear()">Clear</button>
+      <ion-button>Default</ion-button>
+      <ion-button solid>Solid</ion-button>
+      <ion-button outline>Outline</ion-button>
+      <ion-button [clear]="isBarClear" (click)="toggleBarClear()">Clear</ion-button>
     </ion-buttons>
   </ion-toolbar>
 
@@ -14,26 +14,26 @@
 
 <ion-content padding style="text-align:center" no-bounce>
   <h5>Button Displays</h5>
-  <button ion-button [block]="isBlock" (click)="toggleBlock()">Block (toggle)</button>
-  <button ion-button [full]="isFull">Full</button>
-  <button ion-button full block>Both</button>
+  <ion-button [block]="isBlock" (click)="toggleBlock()">Block (toggle)</ion-button>
+  <ion-button [full]="isFull">Full</ion-button>
+  <ion-button full block>Both</ion-button>
 
   <h5>Button Styles (Click to Toggle)</h5>
-  <button ion-button [solid]="isSolid" (click)="toggleStyles()">Solid</button>
-  <button ion-button [outline]="isOutline" (click)="toggleStyles()">Outline</button>
-  <button ion-button [clear]="isClear" (click)="toggleStyles()">Clear</button>
+  <ion-button [solid]="isSolid" (click)="toggleStyles()">Solid</ion-button>
+  <ion-button [outline]="isOutline" (click)="toggleStyles()">Outline</ion-button>
+  <ion-button [clear]="isClear" (click)="toggleStyles()">Clear</ion-button>
 
   <h5>Button Sizes</h5>
-  <button ion-button small="true">Small</button>
-  <button ion-button default="true">Default</button>
-  <button ion-button large>Large</button>
+  <ion-button small="true">Small</ion-button>
+  <ion-button default="true">Default</ion-button>
+  <ion-button large>Large</ion-button>
 
   <h5>Button Colors (Click to Toggle)</h5>
-  <button ion-button block [color]="isSecondary" (click)="toggleColors()">Block</button>
-  <button ion-button solid [color]="isDanger" (click)="toggleColors()">Solid</button>
-  <button ion-button outline [color]="isDark" (click)="toggleColors()">Outline</button>
-  <button ion-button clear [color]="isSecondary" (click)="toggleColors()">Clear</button>
-  <button ion-button (click)="removeColors()">Remove Colors</button>
+  <ion-button block [color]="isSecondary" (click)="toggleColors()">Block</ion-button>
+  <ion-button solid [color]="isDanger" (click)="toggleColors()">Solid</ion-button>
+  <ion-button outline [color]="isDark" (click)="toggleColors()">Outline</ion-button>
+  <ion-button clear [color]="isSecondary" (click)="toggleColors()">Clear</ion-button>
+  <ion-button (click)="removeColors()">Remove Colors</ion-button>
 
 </ion-content>
 
@@ -41,10 +41,10 @@
 
   <ion-toolbar>
     <ion-buttons end>
-      <button ion-button color="secondary">Default</button>
-      <button ion-button solid color="danger">Solid</button>
-      <button ion-button outline color="dark">Outline</button>
-      <button ion-button clear color="secondary">Clear</button>
+      <ion-button color="secondary">Default</ion-button>
+      <ion-button solid color="danger">Solid</ion-button>
+      <ion-button outline color="dark">Outline</ion-button>
+      <ion-button clear color="secondary">Clear</ion-button>
     </ion-buttons>
   </ion-toolbar>
 

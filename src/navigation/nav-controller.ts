@@ -117,7 +117,7 @@ import { ViewController } from './view-controller';
  *     template: `
  *     <ion-content>
  *       <h1>My PopoverPage</h1>
- *       <button ion-button (click)="pushPage()">Call pushPage</button>
+ *       <ion-button (click)="pushPage()">Call pushPage</ion-button>
  *      </ion-content>
  *     `
  *   })
@@ -168,9 +168,9 @@ import { ViewController } from './view-controller';
  *    </ion-header>
  *
  *    <ion-content>
- *      <button ion-button (click)="pushPage()">
+ *      <ion-button (click)="pushPage()">
  *        Go to OtherPage
- *      </button>
+ *      </ion-button>
  *    </ion-content>
  *    `
  * })

@@ -53,17 +53,17 @@ import { Ion } from '../ion';
   * ```html
   * <ion-chip #chip1>
   *   <ion-label>Default</ion-label>
-  *   <button ion-button clear color="light" (click)="delete(chip1)">
+  *   <ion-button clear color="light" (click)="delete(chip1)">
   *     <ion-icon name="close-circle"></ion-icon>
-  *   </button>
+  *   </ion-button>
   * </ion-chip>
   *
   * <ion-chip #chip2>
   *   <ion-icon name="pin" color="primary"></ion-icon>
   *   <ion-label>With Icon</ion-label>
-  *   <button ion-button (click)="delete(chip2)">
+  *   <ion-button (click)="delete(chip2)">
   *     <ion-icon name="close"></ion-icon>
-  *   </button>
+  *   </ion-button>
   * </ion-chip>
   *
   * <ion-chip #chip3>
@@ -71,9 +71,9 @@ import { Ion } from '../ion';
   *     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
   *   </ion-avatar>
   *   <ion-label>With Avatar</ion-label>
-  *   <button ion-button clear color="dark" (click)="delete(chip3)">
+  *   <ion-button clear color="dark" (click)="delete(chip3)">
   *     <ion-icon name="close-circle"></ion-icon>
-  *   </button>
+  *   </ion-button>
   * </ion-chip>
   * ```
   *

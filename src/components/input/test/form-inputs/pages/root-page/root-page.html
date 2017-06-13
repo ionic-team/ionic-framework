@@ -41,7 +41,7 @@
       </ion-item>
 
       <div padding-left padding-right>
-        <button ion-button block (click)="submit($event, login)">Login</button>
+        <ion-button block (click)="submit($event, login)">Login</ion-button>
       </div>
       <div padding-left>
         <b>Valid form?:</b> {{ mf.form.valid }}<br>
@@ -76,8 +76,8 @@
         <ion-textarea formControlName="comments"></ion-textarea>
       </ion-item>
       <div padding-left padding-right>
-        <button ion-button block type="submit">Login</button>
-        <button ion-button block type="button" color="secondary" (click)="toggleDisable()">Disable (toggle)</button>
+        <ion-button block type="submit">Login</ion-button>
+        <ion-button block type="button" color="secondary" (click)="toggleDisable()">Disable (toggle)</ion-button>
       </div>
       <div padding-left>
         <b>Valid form?:</b> {{ lf.form.valid }}<br>
@@ -139,6 +139,6 @@
     </ion-item>
   </ion-list>
 
-  <button ion-button (click)="disable()">Disable</button>
+  <ion-button (click)="disable()">Disable</ion-button>
 
 </ion-content>

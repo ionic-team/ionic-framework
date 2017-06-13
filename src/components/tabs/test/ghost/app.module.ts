@@ -44,9 +44,9 @@ export class Tab2 {}
   template: `
     <ion-header>
       <ion-navbar>
-        <button ion-button menuToggle>
+        <ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
-        </button>
+        </ion-button>
         <ion-title>Stopwatch</ion-title>
       </ion-navbar>
     </ion-header>
@@ -64,9 +64,9 @@ export class Tab3 {}
   template: `
     <ion-header>
       <ion-navbar>
-        <button ion-button menuToggle>
+        <ion-button menuToggle>
           <ion-icon name="menu"></ion-icon>
-        </button>
+        </ion-button>
         <ion-title>Quesarito</ion-title>
       </ion-navbar>
     </ion-header>

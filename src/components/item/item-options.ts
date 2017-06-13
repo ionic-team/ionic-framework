@@ -18,9 +18,9 @@ import { ItemSliding } from './item-sliding';
  *     Item 1
  *   </ion-item>
  *   <ion-item-options side="right" (ionSwipe)="saveItem(item)">
- *     <button ion-button expandable (click)="saveItem(item)">
+ *     <ion-button expandable (click)="saveItem(item)">
  *       <ion-icon name="star"></ion-icon>
- *     </button>
+ *     </ion-button>
  *   </ion-item-options>
  * </ion-item-sliding>
  *```

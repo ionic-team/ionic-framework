@@ -11,14 +11,14 @@ import { Page } from '../../navigation/nav-util';
  *
  * @usage
  * ```html
- * <button ion-button [navPush]="pushPage"></button>
+ * <ion-button [navPush]="pushPage"></ion-button>
  * ```
  *
  * To specify parameters you can use array syntax or the `navParams`
  * property:
  *
  * ```html
- * <button ion-button [navPush]="pushPage" [navParams]="params">Go</button>
+ * <ion-button [navPush]="pushPage" [navParams]="params">Go</ion-button>
  * ```
  *
  * Where `pushPage` and `params` are specified in your component,
@@ -29,7 +29,7 @@ import { Page } from '../../navigation/nav-util';
  * import { LoginPage } from './login';
  *
  * @Component({
- *   template: `<button ion-button [navPush]="pushPage" [navParams]="params">Go</button>`
+ *   template: `<ion-button [navPush]="pushPage" [navParams]="params">Go</ion-button>`
  * })
  * class MyPage {
  *   params: Object;

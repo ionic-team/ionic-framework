@@ -1,4 +1,4 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, InfiniteScroll, NavController } from '../../../..';
 
@@ -61,7 +61,7 @@ export class E2EPage1 {}
 
 
 @Component({
-  template: '<ion-content><button ion-button (click)="navCtrl.pop()">Pop</button></ion-content>'
+  template: '<ion-content><ion-button (click)="navCtrl.pop()">Pop</ion-button></ion-content>'
 })
 export class E2EPage2 {
   constructor(public navCtrl: NavController) {}
@@ -92,7 +92,8 @@ export class AppComponent {
     E2EPage1,
     E2EPage2,
     MyContent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
 

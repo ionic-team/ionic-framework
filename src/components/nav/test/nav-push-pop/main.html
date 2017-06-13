@@ -13,35 +13,35 @@
     Is visible: {{visible}}
   </p>
   <p>
-    <button ion-button
+    <ion-button
       [navPush]="pushPage"
-      [navParams]="{msg:'button (always visible)'}">button (always visible)</button>
+      [navParams]="{msg:'button (always visible)'}">button (always visible)</ion-button>
   </p>
 
   <p *ngIf="visible">
-    <button ion-button
+    <ion-button
       [navPush]="pushPage"
-      [navParams]="{msg:'button (p *ngIf=visible)'}">button (p *ngIf="visible")</button>
+      [navParams]="{msg:'button (p *ngIf=visible)'}">button (p *ngIf="visible")</ion-button>
   </p>
 
   <p>
-    <button ion-button
+    <ion-button
       *ngIf="visible"
       [navPush]="pushPage"
-      [navParams]="{msg:'button (button *ngIf=visible)'}">button (button *ngIf="visible")</button>
+      [navParams]="{msg:'button (button *ngIf=visible)'}">button (button *ngIf="visible")</ion-button>
   </p>
 
   <p *ngIf="!visible">
-    <button ion-button color="danger"
+    <ion-button color="danger"
       [navPush]="pushPage"
-      [navParams]="{msg:'button (p *ngIf=!visible)'}">button (p *ngIf="!visible")</button>
+      [navParams]="{msg:'button (p *ngIf=!visible)'}">button (p *ngIf="!visible")</ion-button>
   </p>
 
   <p>
-    <button ion-button color="danger"
+    <ion-button color="danger"
       *ngIf="!visible"
       [navPush]="pushPage"
-      [navParams]="{msg:'button (button *ngIf=!visible)'}">button (button *ngIf="!visible")</button>
+      [navParams]="{msg:'button (button *ngIf=!visible)'}">button (button *ngIf="!visible")</ion-button>
   </p>
 
   <ion-list>
