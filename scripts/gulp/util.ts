@@ -57,16 +57,18 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   }
   config.include = includeGlob;
   const componentsToExclude = [
+    'avatar',
     'badge',
+    'button',
     'card',
     'card-content',
     'card-header',
     'card-title',
+    'gesture',
     'icon',
     'scroll',
     'slides',
-    'toggle',
-    'gesture'
+    'toggle'
   ];
 
   config.exclude = componentsToExclude.map(cmp => path.join(PROJECT_ROOT, `src/components/${cmp}`) + `/*.ts`)

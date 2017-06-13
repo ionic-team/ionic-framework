@@ -48,9 +48,7 @@ import { AlertController } from './components/alert/alert-controller';
 import { ClickBlock } from './components/app/click-block';
 import { IonicApp } from './components/app/app-root';
 import { OverlayPortal } from './components/app/overlay-portal';
-import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
-import { Button } from './components/button/button';
 import { Checkbox } from './components/checkbox/checkbox';
 import { Chip } from './components/chip/chip';
 import { Content } from './components/content/content';
@@ -180,9 +178,7 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     ClickBlock,
     IonicApp,
     OverlayPortal,
-    Avatar,
     Backdrop,
-    Button,
     Checkbox,
     Chip,
     Col,
@@ -274,9 +270,7 @@ import { BooleanInput } from './bindings/angular/components/boolean-input';
     ClickBlock,
     IonicApp,
     OverlayPortal,
-    Avatar,
     Backdrop,
-    Button,
     Checkbox,
     Chip,
     Col,

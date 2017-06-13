@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "button-icon";
 
 // Buttons
 // --------------------------------------------------
@@ -25,6 +26,9 @@ $button-round-border-radius:      64px !default;
 .button {
   @include text-align(center);
   @include appearance(none);
+
+  visibility: visible;
+  border: 0;
 
   position: relative;
   z-index: 0;

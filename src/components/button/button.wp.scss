@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals.wp";
+@import "./button";
 
 // Windows Button
 // --------------------------------------------------
@@ -265,7 +266,7 @@ $button-wp-strong-font-weight:                            bold !default;
   }
 }
 
-.button-small-wp[icon-only] ion-icon {
+[icon-only] .button-small-wp ion-icon {
   font-size: $button-wp-small-icon-font-size;
 }
 
@@ -379,7 +380,7 @@ $button-wp-strong-font-weight:                            bold !default;
   }
 }
 
-.button-wp [icon-only] {
+[icon-only] .button-wp {
   @include padding(0);
 }
 
