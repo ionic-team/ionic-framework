@@ -855,7 +855,7 @@ export class Slides extends Ion {
   /**
    * @input {'ltr' | 'rtl'} Sets an explicit direction for slides
    */
-  @Input() dir = 'ltr';
+  @Input() dir = 'ltr'; // deprecated
 
   /**
    * @input {boolean} If true, reverses the slides direction
