@@ -206,10 +206,8 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .bar-button-outline-ios {
-  @include border-width(1px);
+  @include border(1px solid $toolbar-ios-button-color);
 
-  border-style: solid;
-  border-color: $toolbar-ios-button-color;
   color: $toolbar-ios-button-color;
   background-color: transparent;
 
