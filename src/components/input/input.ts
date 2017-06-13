@@ -98,6 +98,8 @@ import { Platform } from '../../platform/platform';
     '[attr.max]="max" ' +
     '[attr.step]="step" ' +
     '[attr.maxlength]="maxlength" ' +
+    '[attr.autocomplete]="autocomplete" ' +
+    '[attr.autocorrect]="autocorrect" ' +
     '[attr.spellcheck]="spellcheck" ' +
     '[attr.autocapitalize]="autocapitalize" ' +
     '[placeholder]="placeholder" ' +
@@ -110,6 +112,11 @@ import { Platform } from '../../platform/platform';
     '(focus)="onFocus($event)" ' +
     '(keydown)="onKeydown($event)" ' +
     '[attr.name]="name" ' +
+    '[attr.maxlength]="maxlength" ' +
+    '[attr.autocomplete]="autocomplete" ' +
+    '[attr.autocorrect]="autocorrect" ' +
+    '[attr.spellcheck]="spellcheck" ' +
+    '[attr.autocapitalize]="autocapitalize" ' +
     '[placeholder]="placeholder" ' +
     '[disabled]="_disabled" ' +
     '[readonly]="_readonly"></textarea>' +
