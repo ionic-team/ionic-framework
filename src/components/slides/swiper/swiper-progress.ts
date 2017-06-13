@@ -48,7 +48,7 @@ function updateSlidesProgress(s: Slides, translate: number) {
   }
 
   var offsetCenter = -translate;
-  if (s._rtl) offsetCenter = translate;
+  if (s.isRTL) offsetCenter = translate;
 
   // Visible Slides
   removeClass(s._slides, CLS.slideVisible);
@@ -67,6 +67,6 @@ function updateSlidesProgress(s: Slides, translate: number) {
         s._slides[i].classList.add(CLS.slideVisible);
       }
     }
-    slide.progress = s._rtl ? -slideProgress : slideProgress;
+    slide.progress = s.isRTL ? -slideProgress : slideProgress;
   }
 }

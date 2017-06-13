@@ -460,7 +460,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   var diff = s._touches.diff = isHorizontal(s) ? s._touches.currentX - s._touches.startX : s._touches.currentY - s._touches.startY;
 
   diff = diff * s.touchRatio;
-  if (s._rtl) diff = -diff;
+  if (s.isRTL) diff = -diff;
 
   s.swipeDirection = diff > 0 ? 'prev' : 'next';
   currentTranslate = diff + startTranslate;
@@ -596,7 +596,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
 
   var currentPos: number;
   if (s.followFinger) {
-    currentPos = s._rtl ? s._translate : -s._translate;
+    currentPos = s.isRTL ? s._translate : -s._translate;
   } else {
     currentPos = -currentTranslate;
   }
@@ -642,7 +642,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
       var momentumDistance = s.velocity * momentumDuration;
 
       var newPosition = s._translate + momentumDistance;
-      if (s._rtl) newPosition = - newPosition;
+      if (s.isRTL) newPosition = - newPosition;
       var doBounce = false;
       var afterBouncePosition: number;
       var bounceAmount = Math.abs(s.velocity) * 20 * s.freeModeMomentumBounceRatio;
@@ -686,12 +686,12 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
         } else {
           newPosition = s._snapGrid[nextSlide - 1];
         }
-        if (!s._rtl) newPosition = - newPosition;
+        if (!s.isRTL) newPosition = - newPosition;
       }
 
       // Fix duration
       if (s.velocity !== 0) {
-        if (s._rtl) {
+        if (s.isRTL) {
           momentumDuration = Math.abs((-newPosition - s._translate) / s.velocity);
         } else {
           momentumDuration = Math.abs((newPosition - s._translate) / s.velocity);

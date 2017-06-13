@@ -3,7 +3,7 @@ import { updateClasses } from './swiper-classes';
 
 
 export function updateActiveIndex(s: Slides) {
-  var translate = s._rtl ? s._translate : -s._translate;
+  var translate = s.isRTL ? s._translate : -s._translate;
   var newActiveIndex: number;
   var i: number;
   var snapIndex: number;

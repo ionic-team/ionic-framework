@@ -43,7 +43,7 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
     var windowHeight = plt.height();
     var swiperOffset = offset(s.container, plt);
 
-    if (s._rtl) {
+    if (s.isRTL) {
       swiperOffset.left = swiperOffset.left - s.container.scrollLeft;
     }
 
@@ -76,11 +76,11 @@ function handleKeyboard(s: Slides, plt: Platform, e: KeyboardEvent) {
       }
     }
 
-    if ((kc === 39 && !s._rtl) || (kc === 37 && s._rtl)) {
+    if ((kc === 39 && !s.isRTL) || (kc === 37 && s.isRTL)) {
       slideNext(s, plt);
     }
 
-    if ((kc === 37 && !s._rtl) || (kc === 39 && s._rtl)) {
+    if ((kc === 37 && !s.isRTL) || (kc === 39 && s.isRTL)) {
       slidePrev(s, plt);
     }
 

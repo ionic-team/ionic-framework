@@ -9,7 +9,7 @@ function setParallaxTransform(s: Slides, el: HTMLElement, progress: number) {
   var p: string;
   var pX: string;
   var pY: string;
-  var rtlFactor = s._rtl ? -1 : 1;
+  var rtlFactor = s.isRTL ? -1 : 1;
 
   p = el.getAttribute('data-swiper-parallax') || '0';
   pX = el.getAttribute('data-swiper-parallax-x');

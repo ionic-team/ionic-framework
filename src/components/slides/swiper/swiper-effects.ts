@@ -70,7 +70,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
           tx = 0;
           rotateX = -rotateY;
           rotateY = 0;
-        } else if (s._rtl) {
+        } else if (s.isRTL) {
           rotateY = -rotateY;
         }
 
@@ -161,7 +161,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
         var slide = s._slides[i];
         var slideAngle = i * 90;
         var round = Math.floor(slideAngle / 360);
-        if (s._rtl) {
+        if (s.isRTL) {
           slideAngle = -slideAngle;
           round = Math.floor(-slideAngle / 360);
         }
@@ -180,7 +180,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
           tx = - s._renderedSize;
           tz = 3 * s._renderedSize + s._renderedSize * 4 * round;
         }
-        if (s._rtl) {
+        if (s.isRTL) {
           tx = -tx;
         }
 
@@ -192,7 +192,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
         var transformStr = 'rotateX(' + (isHorizontal(s) ? 0 : -slideAngle) + 'deg) rotateY(' + (isHorizontal(s) ? slideAngle : 0) + 'deg) translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px)';
         if (progress <= 1 && progress > -1) {
           wrapperRotate = i * 90 + progress * 90;
-          if (s._rtl) wrapperRotate = -i * 90 - progress * 90;
+          if (s.isRTL) wrapperRotate = -i * 90 - progress * 90;
         }
         transform(slide, transformStr);
 
