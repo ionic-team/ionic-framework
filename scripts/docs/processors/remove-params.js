@@ -1,4 +1,3 @@
-var console = require('better-console');
 module.exports = function removeParams() {
   return {
     name: 'remove-params',
