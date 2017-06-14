@@ -156,7 +156,7 @@ import { AppComponent as SelectSingleValue } from '../../../../../select/test/si
 
 import { AppComponent as ShowHideWhenBasic } from '../../../../../show-hide-when/test/basic/app.module';
 
-import { AppComponent as SlidesBasic } from '../../../../../slides/test/basic/app.module';
+import { AppComponent as SlidesBasic } from '../../../../../slides/test/basic/app/app.component';
 import { AppComponent as SlidesControl } from '../../../../../slides/test/control/app.module';
 import { AppComponent as SlidesController } from '../../../../../slides/test/controller/app.module';
 import { AppComponent as SlidesImages } from '../../../../../slides/test/images/app.module';

@@ -155,7 +155,7 @@ import { AppModule as SelectSingleValue } from '../../../../../select/test/singl
 
 import { AppModule as ShowHideWhenBasic } from '../../../../../show-hide-when/test/basic/app.module';
 
-import { AppModule as SlidesBasic } from '../../../../../slides/test/basic/app.module';
+import { AppModule as SlidesBasic } from '../../../../../slides/test/basic/app/app.module';
 import { AppModule as SlidesControl } from '../../../../../slides/test/control/app.module';
 import { AppModule as SlidesController } from '../../../../../slides/test/controller/app.module';
 import { AppModule as SlidesImages } from '../../../../../slides/test/images/app.module';
