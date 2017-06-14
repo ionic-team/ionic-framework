@@ -49,36 +49,36 @@
 
   <ion-toolbar no-border-top>
     <ion-buttons start>
-      <button  ion-button icon-only solid>
+      <ion-button icon-only solid>
         <ion-icon name="contact"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Solid</ion-title>
     <ion-buttons end>
-      <button  ion-button icon-end solid color="secondary">
+      <ion-button solid color="secondary">
         Help
-        <ion-icon name="help-circle"></ion-icon>
+        <ion-icon slot="end" name="help-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
   <ion-toolbar no-border-top>
     <ion-buttons start>
-      <button  ion-button icon-only outline>
+      <ion-button icon-only outline>
         <ion-icon name="contact"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons end>
-      <button  ion-button icon-end outline color="secondary">
+      <ion-button outline color="secondary">
         Help
-        <ion-icon name="help-circle"></ion-icon>
+        <ion-icon slot="end" name="help-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Outline</ion-title>
   </ion-toolbar>
 
   <ion-toolbar no-border-top>
-    <button  ion-button icon-only menuToggle>
+    <ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </ion-button>
     <ion-title>Left Menu</ion-title>
@@ -86,14 +86,14 @@
 
   <ion-toolbar no-border-top>
     <ion-title>Right Menu</ion-title>
-    <button  ion-button menuToggle right>
+    <ion-button menuToggle right>
       <ion-icon name="menu"></ion-icon>
     </ion-button>
   </ion-toolbar>
 
   <ion-toolbar no-border-top *ngIf="demo != 'Title'">
     <ion-buttons end>
-      <button  ion-button icon-only #button2 (click)="buttonClick(button2)">
+      <ion-button icon-only #button2 (click)="buttonClick(button2)">
         <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-buttons>

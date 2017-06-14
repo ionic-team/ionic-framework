@@ -119,8 +119,8 @@
   </ion-list>
 
   <p>
-    <ion-button icon-start (click)="updateIcon()">
-      <ion-icon [name]="btnIcon"></ion-icon>
+    <ion-button (click)="updateIcon()">
+      <ion-icon slot="start" [name]="btnIcon"></ion-icon>
       Update icon
     </ion-button>
   </p>

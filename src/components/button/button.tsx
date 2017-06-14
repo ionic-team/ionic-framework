@@ -38,14 +38,14 @@ import { CssClassObject } from '../../util/interfaces';
   *  <ion-button round outline>Outline + Round</ion-button>
   *
   *  <!-- Icons -->
-  *  <ion-button icon-start>
-  *    <ion-icon name="star"></ion-icon>
+  *  <ion-button>
+  *    <ion-icon slot="start" name="star"></ion-icon>
   *    Left Icon
   *  </ion-button>
   *
-  *  <ion-button icon-end>
+  *  <ion-button>
   *    Right Icon
-  *    <ion-icon name="star"></ion-icon>
+  *    <ion-icon slot="end" name="star"></ion-icon>
   *  </ion-button>
   *
   *  <ion-button icon-only>
