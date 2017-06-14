@@ -50,7 +50,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .toolbar-background-md {
-  border-color: $toolbar-md-border-color;
+  @include border-color($toolbar-md-border-color);
   background: $toolbar-md-background;
 }
 
@@ -136,7 +136,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
     }
 
     .bar-button-outline-md {
-      border-color: $color-contrast;
+      @include border-color($color-contrast);
     }
 
     @each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
@@ -221,8 +221,8 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
 .bar-button-outline-md {
   @include border(1px solid);
+  @include border-color($toolbar-md-button-color);
 
-  border-color: $toolbar-md-button-color;
   color: $toolbar-md-button-color;
   background-color: transparent;
 
@@ -243,7 +243,9 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
   .bar-button-outline-md-#{$color-name} {
     $fg-color: color-shade($color-base);
-    border-color: $fg-color;
+
+    @include border-color($fg-color);
+
     color: $fg-color;
     background-color: transparent;
 

@@ -151,7 +151,7 @@ $toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 // -----------------------------------------
 
 .toggle-wp.toggle-checked .toggle-icon {
-  border-color: $toggle-wp-track-background-color-on;
+  @include border-color($toggle-wp-track-background-color-on);
   background-color: $toggle-wp-track-background-color-on;
 }
 
@@ -212,7 +212,7 @@ $toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 @mixin toggle-theme-wp($color-name, $color-base, $color-contrast) {
 
   .toggle-wp-#{$color-name}.toggle-checked .toggle-icon {
-    border-color: $color-base;
+    @include border-color($color-base);
     background-color: $color-base;
   }
 

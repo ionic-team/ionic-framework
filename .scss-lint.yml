@@ -71,15 +71,6 @@ linters:
       - column-count
       - column-width
 
-      # Border
-      - border-style
-      - border-top-style
-      - border-bottom-style
-
-      - border-color
-      - border-top-color
-      - border-bottom-color
-
       - outline
       - outline-color
       - outline-offset
@@ -206,10 +197,16 @@ linters:
       - border-bottom
       - border-left
 
+      - border-style
+      - border-top-style
       - border-right-style
+      - border-bottom-style
       - border-left-style
 
+      - border-color
+      - border-top-color
       - border-right-color
+      - border-bottom-color
       - border-left-color
 
       - border-width

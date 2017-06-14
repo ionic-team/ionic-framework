@@ -71,7 +71,7 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .toolbar-background-wp {
-  border-color: $toolbar-wp-border-color;
+  @include border-color($toolbar-wp-border-color);
   background: $toolbar-wp-background;
 }
 
@@ -112,7 +112,7 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
   }
 
   .toolbar-wp-#{$color-name} .bar-button-outline-wp {
-    border-color: $color-contrast;
+    @include border-color($color-contrast);
   }
 
   .toolbar-wp-#{$color-name} {
@@ -198,8 +198,8 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 
 .bar-button-outline-wp {
   @include border(1px solid);
+  @include border-color($toolbar-wp-button-color);
 
-  border-color: $toolbar-wp-button-color;
   color: $toolbar-wp-button-color;
   background-color: transparent;
 
@@ -217,7 +217,9 @@ $toolbar-button-wp-strong-font-weight:   bold !default;
 
   .bar-button-outline-wp-#{$color-name} {
     $fg-color: color-shade($color-base);
-    border-color: $fg-color;
+
+    @include border-color($fg-color);
+
     color: $fg-color;
     background-color: transparent;
 

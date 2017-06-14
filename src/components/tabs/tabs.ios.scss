@@ -147,7 +147,7 @@ $tabs-ios-tab-icon-size:            30px !default;
 @mixin tabbar-ios($color-name, $color-base, $color-contrast) {
 
   .tabs-ios-#{$color-name} .tabbar {
-    border-color: darken($color-base, 10%);
+    @include border-color(darken($color-base, 10%));
     background-color: $color-base;
   }
 

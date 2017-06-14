@@ -78,7 +78,7 @@ $text-input-ios-highlight-color-invalid:   $text-input-highlight-color-invalid !
 
 // Input highlight mixin for focus, valid, and invalid states
 @mixin ios-input-highlight($highlight-color) {
-  border-bottom-color: $highlight-color;
+  @include border-color(null, null, $highlight-color, null);
 }
 
 // Show the focus highlight when the input has focus

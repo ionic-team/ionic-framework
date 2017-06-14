@@ -132,14 +132,14 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 }
 
 .action-sheet-ios .action-sheet-button:last-child {
-  border-bottom-color: transparent;
+  @include border-color(null, null, transparent, null);
 }
 
 .action-sheet-ios .action-sheet-button.activated {
   @include margin(-$action-sheet-ios-button-border-width, null, null, null);
   @include border($action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated, null, null, null);
+  @include border-color(null, null, $action-sheet-ios-button-background-activated, null);
 
-  border-bottom-color: $action-sheet-ios-button-background-activated;
   background: $action-sheet-ios-button-background-activated;
 }
 

@@ -80,7 +80,7 @@ ion-buttons div {
 // --------------------------------------------------
 
 .toolbar[transparent] .toolbar-background {
-  border-color: transparent;
+  @include border-color(transparent);
   background: transparent;
 }
 

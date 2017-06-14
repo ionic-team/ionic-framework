@@ -468,15 +468,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
   @include border-radius($alert-md-radio-border-radius);
   @include border-width($alert-md-radio-border-width);
+  @include border-style($alert-md-radio-border-style);
+  @include border-color($alert-md-radio-border-color-off);
 
   position: relative;
   display: block;
 
   width: $alert-md-radio-width;
   height: $alert-md-radio-height;
-
-  border-style: $alert-md-radio-border-style;
-  border-color: $alert-md-radio-border-color-off;
 }
 
 // Material Design Alert Radio Checked Dot
@@ -505,7 +504,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 }
 
 .alert-md [aria-checked=true] .alert-radio-icon {
-  border-color: $alert-md-radio-border-color-on;
+  @include border-color($alert-md-radio-border-color-on);
 }
 
 .alert-md [aria-checked=true] .alert-radio-inner {
@@ -542,35 +541,35 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
   @include border-radius($alert-md-checkbox-border-radius);
   @include border-width($alert-md-checkbox-border-width);
+  @include border-style($alert-md-checkbox-border-style);
+  @include border-color($alert-md-checkbox-border-color-off);
 
   position: relative;
 
   width: $alert-md-checkbox-width;
   height: $alert-md-checkbox-height;
-
-  border-style: $alert-md-checkbox-border-style;
-  border-color: $alert-md-checkbox-border-color-off;
 }
 
 // Material Design Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
 .alert-md [aria-checked=true] .alert-checkbox-icon {
-  border-color: $alert-md-checkbox-border-color-on;
+  @include border-color($alert-md-checkbox-border-color-on);
+
   background-color: $alert-md-checkbox-border-color-on;
 }
 
 .alert-md [aria-checked=true] .alert-checkbox-inner {
   @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
   @include border-width(0, $alert-md-checkbox-icon-border-width, $alert-md-checkbox-icon-border-width, 0);
+  @include border-style($alert-md-checkbox-icon-border-style);
+  @include border-color($alert-md-checkbox-icon-border-color);
 
   position: absolute;
 
   width: $alert-md-checkbox-icon-width;
   height: $alert-md-checkbox-icon-height;
 
-  border-style: $alert-md-checkbox-icon-border-style;
-  border-color: $alert-md-checkbox-icon-border-color;
   transform: $alert-md-checkbox-icon-transform;
 }
 
