@@ -84,10 +84,12 @@ ion-alert input {
   background: inherit;
 }
 
-.alert-button-group {
+.alert-button-group ion-button {
   display: flex;
 
   flex-direction: row;
+
+  width: 100%;
 }
 
 .alert-button-group-vertical {
