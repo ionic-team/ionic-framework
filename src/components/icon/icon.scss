@@ -7,11 +7,13 @@
 
 
 ion-icon {
-  visibility: inherit !important;
-
   display: inline-block;
 
   font-size: 1.2em;
+}
+
+ion-icon.hydrated {
+  visibility: inherit;
 }
 
 ion-icon[small] {

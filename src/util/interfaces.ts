@@ -709,7 +709,6 @@ export interface VNodeData {
   on?: any;
   vkey?: Key;
   vns?: string; // for SVGs
-  [key: string]: any; // for any other 3rd party module
 }
 
 
