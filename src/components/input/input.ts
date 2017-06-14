@@ -312,8 +312,13 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     // Copy remaining attributes, not handled by ionic/angular
     copyInputAttributes(ionInputEle, nativeInputEle);
 
+    // prevent having tabIndex duplicated
+    if (ionInputEle.hasAttribute('tabIndex')) {
+      ionInputEle.removeAttribute('tabIndex');
+    }
+
+    // handle the autofocus attribute
     if (ionInputEle.hasAttribute('autofocus')) {
-      // the ion-input element has the autofocus attributes
       ionInputEle.removeAttribute('autofocus');
       switch (this._autoFocusAssist) {
         case 'immediate':
