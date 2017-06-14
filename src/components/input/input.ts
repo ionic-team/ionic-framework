@@ -324,7 +324,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
         case 'delay':
           // config says to chill out a bit and focus on the input after transitions
           // works best on desktop
-          this._plt.timeout(() => nativeInputEle.focus(), 650);
+          this._plt.timeout(() => nativeInputEle.focus(), 800);
           break;
       }
       // traditionally iOS has big issues with autofocus on actual devices
