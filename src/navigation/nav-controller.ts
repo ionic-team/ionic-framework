@@ -576,7 +576,6 @@ export abstract class NavController {
    */
   abstract length(): number;
 
-
   /**
    * Returns the current stack of views in this nav controller.
    * @returns {Array<ViewController>} the stack of view controllers in this nav controller.
