@@ -1,10 +1,12 @@
 @import "../../themes/ionic.globals";
 
+$reorder-initial-transform: 160% !default;
+
 // Item reorder
 // --------------------------------------------------
 
 ion-reorder {
-  @include transform(translate3d(160%, 0, 0));
+  @include transform(translate3d($reorder-initial-transform, 0, 0));
 
   display: none;
 
@@ -25,7 +27,7 @@ ion-reorder {
 }
 
 .reorder-side-start ion-reorder {
-  @include transform(translate3d(-160%, 0, 0));
+  @include transform(translate3d(-$reorder-initial-transform, 0, 0));
 
   order: -1;
 }

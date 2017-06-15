@@ -2,7 +2,6 @@ import { indexForItem, findReorderItem } from './item-reorder-util';
 import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';
-import { isRightSide, Side } from '../../util/util';
 
 
 /**
@@ -135,7 +134,7 @@ export class ItemReorderGesture {
   }
 
   private itemForCoord(coord: PointerCoordinates): HTMLElement {
-    const sideOffset = isRightSide(this.reorderList.side, this.plt.isRTL) ? -100 : 100;
+    const sideOffset = this.reorderList._isStart === this.plt.isRTL ? -100 : 100;
     const x = this.offset.x + sideOffset;
     const y = coord.y;
     const element = this.plt.getElementFromPoint(x, y);
@@ -168,7 +167,7 @@ const SCROLL_JUMP = 10;
 const ITEM_REORDER_ACTIVE = 'reorder-active';
 
 export interface ItemReorderGestureDelegate {
-  side: Side;
+  _isStart: boolean;
   getNativeElement: () => any;
   _reorderPrepare: () => void;
   _scrollContent: (scrollPosition: number) => number;

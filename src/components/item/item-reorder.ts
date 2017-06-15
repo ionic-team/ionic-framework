@@ -142,13 +142,14 @@ export class ReorderIndexes {
   host: {
     '[class.reorder-enabled]': '_enableReorder',
     '[class.reorder-visible]': '_visibleReorder',
-    '[class.reorder-side-start]': 'side === "start"'
+    '[class.reorder-side-start]': '_isStart'
   }
 })
 export class ItemReorder implements ItemReorderGestureDelegate {
 
   _enableReorder: boolean = false;
   _visibleReorder: boolean = false;
+  _isStart: boolean = false;
   _reorderGesture: ItemReorderGesture;
   _lastToIndex: number = -1;
   _element: HTMLElement;
@@ -162,7 +163,10 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   /**
    * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
    */
-  @Input() side: 'start' | 'end' = 'end';
+  @Input('side')
+  set side(side: 'start' | 'end') {
+    this._isStart = side === 'start';
+  }
 
   constructor(
     private _plt: Platform,
