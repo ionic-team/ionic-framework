@@ -260,6 +260,7 @@ export interface DomControllerApi {
   read: DomControllerCallback;
   write: DomControllerCallback;
   raf: DomControllerCallback;
+  now(): number;
 }
 
 export interface RafCallback {
@@ -286,14 +287,19 @@ export interface LoadComponentData {
   };
 
   /**
+   * slot meta
+   */
+  [2]: number;
+
+  /**
    * props
    */
-  [2]: any[];
+  [3]: any[];
 
   /**
    * bundle priority
    */
-  [3]: LoadPriority;
+  [4]: LoadPriority;
 }
 
 
@@ -413,7 +419,7 @@ export interface ComponentWatchersData {
 
 
 export interface ModulesImporterFn {
-  (importer: any, h: Function, Ionic: Ionic): void;
+  (importer: any, h: Function, t: Function, Ionic: Ionic): void;
 }
 
 
@@ -527,8 +533,7 @@ export interface ComponentMeta {
   modesMeta?: {[modeCode: string]: ModeMeta};
   isShadowMeta?: boolean;
   hostMeta?: HostMeta;
-  hasSlotsMeta?: boolean;
-  namedSlotsMeta?: string[];
+  slotMeta?: number;
   componentModuleMeta?: any;
   priorityMeta?: LoadPriority;
 }
@@ -618,7 +623,7 @@ export interface HostElement extends HTMLElement {
   $instance?: Component;
 
   // private methods
-  _render: (isInitialRender: boolean) => void;
+  _render: (isUpdateRender?: boolean) => void;
   _initLoad: () => void;
   _queueUpdate: () => void;
 
@@ -638,25 +643,23 @@ export interface HostElement extends HTMLElement {
 
 
 export interface RendererApi {
-  (oldVnode: VNode | Element, vnode: VNode, hostContentNodes?: HostContentNodes, hydrating?: boolean): VNode;
+  (oldVNode: VNode | Element, newVNode: VNode, isUpdate?: boolean, hostContentNodes?: HostContentNodes): VNode;
 }
 
 
 export interface DomApi {
   $head: HTMLHeadElement;
   $body: HTMLElement;
-  $isElement(node: any): boolean;
-  $isText(node: any): boolean;
-  $isComment(node: any): boolean;
+  $nodeType(node: any): number;
   $createEvent(): CustomEvent;
   $createElement<K extends keyof HTMLElementTagNameMap>(tagName: K): HTMLElementTagNameMap[K];
   $createElement(tagName: string): HTMLElement;
   $createElementNS(namespace: string, tagName: string): any;
   $createTextNode(text: string): Text;
-  $createComment(text: string): Comment;
   $insertBefore(parentNode: Node, newNode: Node, referenceNode: Node): void;
   $removeChild(node: Node, child: Node): void;
   $appendChild(node: Node, child: Node): void;
+  $childNodes(node: Node): NodeList;
   $parentNode(node: Node): Node;
   $nextSibling(node: Node): Node;
   $tagName(elm: any): string;
@@ -683,32 +686,80 @@ export interface Hyperscript {
 }
 
 
-export interface VNode {
-  sel?: string | undefined;
-  vdata?: VNodeData | undefined;
-  vchildren?: Array<VNode | string> | undefined;
-  elm?: Node | undefined | HostElement;
-  vtext?: string | undefined;
-  vkey?: Key;
-}
-
-
 export interface HostContentNodes {
   defaultSlot?: Node[];
   namedSlots?: {[slotName: string]: Node[]};
 }
 
+
 export type CssClassObject = { [className: string]: boolean };
+
+
+
+export interface VNode {
+  // using v prefixes largely so closure has no issue property renaming
+  vtag: string;
+  vtext: string;
+  vchildren: VNode[];
+  vprops: any;
+  vattrs: any;
+  vclass: CssClassObject;
+  vstyle: any;
+  vlisteners: any;
+  vkey: Key;
+  elm: Element|Node;
+  vnamespace: any;
+  assignedListener: any;
+  skipDataOnUpdate: boolean;
+  skipChildrenOnUpdate: boolean;
+}
 
 export interface VNodeData {
   props?: any;
   attrs?: any;
   class?: CssClassObject;
   style?: any;
-  dataset?: any;
   on?: any;
-  vkey?: Key;
-  vns?: string; // for SVGs
+  key?: Key;
+  ns?: any; // for SVGs
+}
+
+/**
+ * used by production compiler
+ */
+export interface VNodeProdData {
+  /**
+   * props
+   */
+  p?: any;
+  /**
+   * attrs
+   */
+  a?: any;
+  /**
+   * css classes
+   */
+  c?: CssClassObject;
+  /**
+   * styles
+   */
+  s?: any;
+  /**
+   * on (event listeners)
+   */
+  o?: any;
+  /**
+   * key
+   */
+  k?: Key;
+  /**
+   * namespace
+   */
+  n?: any;
+  /**
+   * check once
+   */
+  x?: number;
 }
 
 
@@ -719,7 +770,7 @@ export interface PlatformApi {
   loadBundle: (bundleId: string, priority: LoadPriority, cb: Function) => void;
   render?: RendererApi;
   config: ConfigApi;
-  collectHostContent: (elm: HostElement, validNamedSlots: string[]) => void;
+  collectHostContent: (elm: HostElement, slotMeta: number) => void;
   queue: QueueApi;
   css?: {[cmpModeId: string]: string};
   isServer?: boolean;

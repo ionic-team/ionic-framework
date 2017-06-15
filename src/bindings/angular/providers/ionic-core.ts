@@ -60,58 +60,108 @@ export function setupCore(config: Config, plt: Platform, domCtrl: DomController,
 
 
 function getQueueController(win: any, zone: NgZone) {
-  const hostScheduleDefer: Function = win['requestIdleCallback'];
-  const callbacks: Function[] = [];
-  let pending = false;
+  function now() {
+    return win.performance.now();
+  }
 
-  function doWork(deadlineObj: any) {
-    // let's see if we've got time to take care of things
-    while (deadlineObj.timeRemaining() > 1 && callbacks.length > 0) {
-      // do some work while within the allowed time
-      // shift the array and fire off the callbacks from the beginning
-      // once we run out of time or callbacks we'll stop
-      callbacks.shift()();
+  const highPromise = Promise.resolve();
+
+  const highCallbacks: Function[] = [];
+  const mediumCallbacks: Function[] = [];
+  const lowCallbacks: Function[] = [];
+
+  let resolvePending = false;
+  let ricPending = false;
+
+
+  function doHighPriority() {
+    // holy geez we need to get this stuff done and fast
+    // all high priority callbacks should be fired off immediately
+    while (highCallbacks.length > 0) {
+      highCallbacks.shift()();
+    }
+    resolvePending = false;
+  }
+
+
+  function doWork() {
+    const start = now();
+
+    // always run all of the high priority work if there is any
+    doHighPriority();
+
+    while (mediumCallbacks.length > 0 && (now() - start < 40)) {
+      mediumCallbacks.shift()();
+    }
+
+    if (mediumCallbacks.length === 0) {
+      // we successfully drained the medium queue or the medium queue is empty
+      // so now let's drain the low queue with our remaining time
+      while (lowCallbacks.length > 0 && (now() - start < 40)) {
+        lowCallbacks.shift()();
+      }
     }
 
     // check to see if we still have work to do
-    if (pending = (callbacks.length > 0)) {
+    if (ricPending = (mediumCallbacks.length > 0 || lowCallbacks.length > 0)) {
       // everyone just settle down now
       // we already don't have time to do anything in this callback
       // let's throw the next one in a requestAnimationFrame
       // so we can just simmer down for a bit
       zone.runOutsideAngular(() => {
-        requestAnimationFrame(flush);
+        win.requestAnimationFrame(flush);
       });
     }
   }
 
   function flush() {
-    // always force a bunch of callbacks to run, but still have
+    // always run all of the high priority work if there is any
+    doHighPriority();
+
+    // always force a bunch of medium callbacks to run, but still have
     // a throttle on how many can run in a certain time
-    const start = performance.now();
-    while (callbacks.length > 0 && (performance.now() - start < 4)) {
-      callbacks.shift()();
+    const start = now();
+    while (mediumCallbacks.length > 0 && (now() - start < 4)) {
+      mediumCallbacks.shift()();
     }
 
-    if (pending = (callbacks.length > 0)) {
+    if (ricPending = (mediumCallbacks.length > 0 || lowCallbacks.length > 0)) {
       // still more to do yet, but we've run out of time
-      // let's let thing cool off and try again after a raf
+      // let's let this thing cool off and try again in the next ric
       zone.runOutsideAngular(() => {
-        hostScheduleDefer(doWork);
+        win.requestAnimationFrame(doWork);
       });
     }
   }
 
-  function add(cb: Function) {
-    // add the work to the end of the callbacks
-    callbacks.push(cb);
+  function add(cb: Function, priority?: number) {
+    if (priority === 3) {
+      // uses Promise.resolve() for next tick
+      highCallbacks.push(cb);
 
-    if (!pending) {
-      // not already pending work to do, so let's tee it up
-      pending = true;
-      zone.runOutsideAngular(() => {
-        hostScheduleDefer(doWork);
-      });
+      if (!resolvePending) {
+        // not already pending work to do, so let's tee it up
+        resolvePending = true;
+        highPromise.then(doHighPriority);
+      }
+
+    } else {
+      if (priority === 1) {
+        lowCallbacks.push(cb);
+
+      } else {
+        // defaults to medium priority
+        // uses requestIdleCallback
+        mediumCallbacks.push(cb);
+      }
+
+      if (!ricPending) {
+        // not already pending work to do, so let's tee it up
+        ricPending = true;
+        zone.runOutsideAngular(() => {
+          win.requestAnimationFrame(doWork);
+        });
+      }
     }
   }
 

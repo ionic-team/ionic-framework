@@ -102,6 +102,14 @@ export class DomController {
     }
   }
 
+  now() {
+    return this.plt.win().performance.now();
+  }
+
+  raf(cb: any) {
+    return this.plt.raf(cb);
+  }
+
   private _queue() {
     const self = this;
     if (!self.q) {
