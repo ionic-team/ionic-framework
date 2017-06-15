@@ -10,10 +10,6 @@ ion-toggle {
   contain: content;
 }
 
-ion-toggle.hydrated {
-  visibility: inherit;
-}
-
 ion-toggle ion-gesture {
   display: block;
 

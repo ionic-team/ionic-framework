@@ -433,6 +433,18 @@ ion-footer {
 // Core Components
 // --------------------------------------------------
 
-ion-badge {
+ion-badge,
+ion-card,
+ion-card-content,
+ion-card-header,
+ion-card-title,
+ion-gesture,
+ion-toggle,
+ion-slides,
+ion-slide {
   visibility: hidden;
+}
+
+.hydrated {
+  visibility:inherit
 }

@@ -29,10 +29,6 @@ ion-badge {
   contain: content;
 }
 
-ion-badge.hydrated {
-  visibility: inherit;
-}
-
 ion-badge:empty {
   display: none;
 }

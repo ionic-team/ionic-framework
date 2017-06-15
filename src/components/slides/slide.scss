@@ -10,10 +10,6 @@ ion-slide {
   display: block;
 }
 
-ion-slide.hydrated {
-  visibility: inherit;
-}
-
 .slide-zoom {
   @include text-align(center);
 
