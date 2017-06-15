@@ -26,9 +26,9 @@
         <ion-item-sliding *ngFor="let item of items">
           <button ion-item (click)="clickedButton(item)">
             <h2>Sliding item {{item}}</h2>
-            <div item-right>right</div>
+            <div item-end>right</div>
           </button>
-          <ion-item-options side="right" icon-left>
+          <ion-item-options side="right" icon-start>
             <button ion-button color='danger'>
               <ion-icon name="trash"></ion-icon>
               Remove
