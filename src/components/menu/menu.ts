@@ -490,10 +490,11 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
 
     // user has finished dragging the menu
     const isRightSide = this.isRightSide;
+    const isRTL = this._plt.isRTL;
     const opening = !this.isOpen;
     const shouldComplete = (opening)
-    ? isRightSide ? shouldCompleteLeft : shouldCompleteRight
-    : isRightSide ? shouldCompleteRight : shouldCompleteLeft;
+    ? (isRightSide !== isRTL) ? shouldCompleteLeft : shouldCompleteRight
+    : (isRightSide !== isRTL) ? shouldCompleteRight : shouldCompleteLeft;
 
     this._getType().setProgressEnd(shouldComplete, stepValue, velocity, (isOpen: boolean) => {
       console.debug('menu, swipeEnd', this.side);

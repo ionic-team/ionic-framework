@@ -344,24 +344,24 @@ export class ItemSliding {
 
     if (isFinal) {
       this.item.setElementStyle(platform.Css.transition, '');
+    }
+
+    if (openAmount > 0) {
+      var state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
+        ? SlidingState.Right | SlidingState.SwipeRight
+        : SlidingState.Right;
+
+      this._setState(state);
+
+    } else if (openAmount < 0) {
+      var state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
+        ? SlidingState.Left | SlidingState.SwipeLeft
+        : SlidingState.Left;
+
+      this._setState(state);
 
     } else {
-      if (openAmount > 0) {
-        var state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
-          ? SlidingState.Right | SlidingState.SwipeRight
-          : SlidingState.Right;
-
-        this._setState(state);
-
-      } else if (openAmount < 0) {
-        var state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
-          ? SlidingState.Left | SlidingState.SwipeLeft
-          : SlidingState.Left;
-
-        this._setState(state);
-      }
-    }
-    if (openAmount === 0) {
+      assert(openAmount === 0, 'bad internal state');
       this._tmr = platform.timeout(() => {
         this._setState(SlidingState.Disabled);
         this._tmr = null;
@@ -371,7 +371,7 @@ export class ItemSliding {
     }
 
     this.item.setElementStyle(platform.Css.transform, `translate3d(${-openAmount}px,0,0)`);
-    let ionDrag = this.ionDrag;
+    const ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
       ionDrag.emit(this);
     }
