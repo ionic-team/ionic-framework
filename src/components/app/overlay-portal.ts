@@ -5,7 +5,6 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
-import { Keyboard } from '../../platform/keyboard';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
@@ -22,7 +21,6 @@ export class OverlayPortal extends NavControllerBase {
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
     plt: Platform,
-    keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
@@ -34,7 +32,7 @@ export class OverlayPortal extends NavControllerBase {
     domCtrl: DomController,
     errHandler: ErrorHandler
   ) {
-    super(null, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl, errHandler);
+    super(null, app, config, plt, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, domCtrl, errHandler);
     this._isPortal = true;
     this._init = true;
     this.setViewport(viewPort);
