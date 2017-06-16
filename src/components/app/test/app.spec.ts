@@ -127,8 +127,8 @@ describe('App', () => {
     });
 
     it('should pop a view from the nested nav that has more than 1 view', () => {
-      let rootNav = mockNavController();
-      let nestedNav = mockNavController();
+      const rootNav = mockNavController();
+      const nestedNav = mockNavController();
       app.registerRootNav(rootNav);
       rootNav.registerChildNav(nestedNav);
 
@@ -137,12 +137,12 @@ describe('App', () => {
       spyOn(nestedNav, 'pop');
       spyOn(portal, 'pop');
 
-      let rootView1 = mockView();
-      let rootView2 = mockView();
+      const rootView1 = mockView();
+      const rootView2 = mockView();
       mockViews(rootNav, [rootView1, rootView2]);
 
-      let nestedView1 = mockView();
-      let nestedView2 = mockView();
+      const nestedView1 = mockView();
+      const nestedView2 = mockView();
       mockViews(nestedNav, [nestedView1, nestedView2]);
 
       app.goBack();
@@ -154,18 +154,18 @@ describe('App', () => {
     });
 
     it('should pop the overlay in the portal of the root nav', (done: Function) => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop').and.returnValue(Promise.resolve());
 
-      let view1 = mockView();
-      let view2 = mockView();
+      const view1 = mockView();
+      const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      let overlay1 = mockView();
+      const overlay1 = mockView();
       mockViews(portal, [overlay1]);
 
       app.goBack().then(() => {
@@ -180,15 +180,15 @@ describe('App', () => {
     });
 
     it('should pop the second view in the root nav', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = mockView();
-      let view2 = mockView();
+      const view1 = mockView();
+      const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
       app.goBack();
@@ -199,14 +199,14 @@ describe('App', () => {
     });
 
     it('should exit app when only one view in the root nav', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = mockView();
+      const view1 = mockView();
       mockViews(nav, [view1]);
 
       expect(app.getActiveNav(nav.id)).toBe(nav);
@@ -220,7 +220,7 @@ describe('App', () => {
     });
 
     it('should not exit app when only one view in the root nav, but navExitApp config set', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
@@ -229,7 +229,7 @@ describe('App', () => {
 
       config.set('navExitApp', false);
 
-      let view1 = mockView();
+      const view1 = mockView();
       mockViews(nav, [view1]);
 
       expect(app.getActiveNav(nav.id)).toBe(nav);
@@ -243,14 +243,14 @@ describe('App', () => {
     });
 
     it('should not go back if app is not enabled', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
       spyOn(nav, 'pop');
       spyOn(portal, 'pop');
 
-      let view1 = mockView();
+      const view1 = mockView();
       mockViews(nav, [view1]);
 
       app.setEnabled(false, 10000);
@@ -275,18 +275,18 @@ describe('App', () => {
   describe('getActiveNav', () => {
 
     it('should get active NavController when using tabs with nested nav', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
-      let tabs = mockTabs();
-      let tab1 = mockTab(tabs);
-      let tab2 = mockTab(tabs);
+      const tabs = mockTabs();
+      const tab1 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
       nav.registerChildNav(tabs);
 
       tab2.setSelected(true);
-      let nav2 = mockNavController();
-      let nav3 = mockNavController();
-      let nav4 = mockNavController();
+      const nav2 = mockNavController();
+      const nav3 = mockNavController();
+      const nav4 = mockNavController();
       tab1.registerChildNav(nav4);
       tab2.registerChildNav(nav2);
       tab2.registerChildNav(nav3);
@@ -295,13 +295,13 @@ describe('App', () => {
     });
 
     it('should get active NavController when using tabs, nested in a root nav', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
 
-      let tabs = mockTabs();
+      const tabs = mockTabs();
       mockTab(tabs);
-      let tab2 = mockTab(tabs);
-      let tab3 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
+      const tab3 = mockTab(tabs);
       nav.registerChildNav(tabs);
 
       tab2.setSelected(true);
@@ -314,10 +314,10 @@ describe('App', () => {
     });
 
     it('should get active tab NavController when using tabs, and tabs is the root', () => {
-      let tabs = mockTabs();
+      const tabs = mockTabs();
       mockTab(tabs);
-      let tab2 = mockTab(tabs);
-      let tab3 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
+      const tab3 = mockTab(tabs);
       app.registerRootNav(tabs);
 
       tab2.setSelected(true);
@@ -330,9 +330,9 @@ describe('App', () => {
     });
 
     it('should get active NavController when nested 3 deep', () => {
-      let nav1 = mockNavController();
-      let nav2 = mockNavController();
-      let nav3 = mockNavController();
+      const nav1 = mockNavController();
+      const nav2 = mockNavController();
+      const nav3 = mockNavController();
       app.registerRootNav(nav1);
 
       nav1.registerChildNav(nav2);
@@ -342,8 +342,8 @@ describe('App', () => {
     });
 
     it('should get active NavController when nested 2 deep', () => {
-      let nav1 = mockNavController();
-      let nav2 = mockNavController();
+      const nav1 = mockNavController();
+      const nav2 = mockNavController();
       app.registerRootNav(nav1);
 
       nav1.registerChildNav(nav2);
@@ -354,13 +354,13 @@ describe('App', () => {
     });
 
     it('should get active NavController when only one nav controller', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
       expect(app.getActiveNav(nav.id)).toBe(nav);
     });
 
     it('should set/get the root nav controller', () => {
-      let nav = mockNavController();
+      const nav = mockNavController();
       app.registerRootNav(nav);
       expect(app.getRootNavById(nav.id)).toBe(nav);
     });
@@ -413,7 +413,7 @@ describe('App', () => {
 
     it('should enable click block when false is passed with duration', () => {
       // arrange
-      let mockClickBlock: any = {
+      const mockClickBlock: any = {
         activate: () => {}
       };
 
@@ -430,7 +430,7 @@ describe('App', () => {
 
     it('should enable click block when false is passed w/o duration', () => {
       // arrange
-      let mockClickBlock: any = {
+      const mockClickBlock: any = {
         activate: () => {}
       };
 
@@ -448,7 +448,7 @@ describe('App', () => {
 
     it('should enable click block when false is passed with a duration of 0 and with a minDuration', () => {
       // arrange
-      let mockClickBlock: any = {
+      const mockClickBlock: any = {
         activate: () => {}
       };
 
@@ -465,7 +465,7 @@ describe('App', () => {
 
     it('should enable click block when false is passed with a null duration and a minDuration', () => {
       // arrange
-      let mockClickBlock: any = {
+      const mockClickBlock: any = {
         activate: () => {}
       };
 
@@ -482,7 +482,7 @@ describe('App', () => {
 
     it('should enable click block when false is passed with a duration and a minDuration', () => {
       // arrange
-      let mockClickBlock: any = {
+      const mockClickBlock: any = {
         activate: () => {}
       };
 
@@ -498,10 +498,10 @@ describe('App', () => {
     });
   });
 
-  var app: App;
-  var config: Config;
-  var plt: MockPlatform;
-  var portal: OverlayPortal;
+  let app: App;
+  let config: Config;
+  let plt: MockPlatform;
+  let portal: OverlayPortal;
 
   beforeEach(() => {
     config = mockConfig();

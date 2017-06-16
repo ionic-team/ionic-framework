@@ -1,10 +1,12 @@
 import { NavOptions } from './nav-util';
+import { ViewController } from './view-controller';
 
 export interface Nav {
   goToRoot(opts: NavOptions): Promise<any>;
 }
 
 export interface Tabs {
+  viewCtrl: ViewController;
   _tabs: Tab[];
   select(tabOrIndex: number | Tab, opts: NavOptions): void;
   _top: number;

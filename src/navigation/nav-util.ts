@@ -104,7 +104,7 @@ export function linkToSegment(navId: string, type: string, secondaryId: string, 
   const segment = <NavSegment> Object.assign({}, link);
   segment.navId = navId;
   segment.type = type;
-  segment.secondaryIdentifier = secondaryId;
+  segment.secondaryId = secondaryId;
   return segment;
 }
 
@@ -169,8 +169,16 @@ export interface NavSegment {
   data: any;
   type: string;
   navId: string;
-  secondaryIdentifier: string;
+  secondaryId: string;
   defaultHistory?: NavSegment[];
+}
+
+export interface NavGroup {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  segmentPieces?: string[];
+  tabSegmentPieces?: string[];
 }
 
 export interface NavOptions {
