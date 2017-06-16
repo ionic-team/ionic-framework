@@ -69,7 +69,13 @@ ion-spinner.spinner-paused svg {
 }
 
 .spinner-crescent svg {
-  animation: spinner-rotate 1s linear infinite;
+  @include ltr(){
+    animation: spinner-rotate 1s linear infinite;
+  }
+
+  @include rtl(){
+    animation: spinner-rotate-rtl 1s linear infinite;
+  }
 }
 
 
@@ -103,6 +109,11 @@ ion-spinner.spinner-paused svg {
 @keyframes spinner-rotate {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@keyframes spinner-rotate-rtl {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
 }
 
 @keyframes spinner-dots {

@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEn
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
+import { Platform } from '../../platform/platform';
 
 /**
  * @name Spinner
@@ -120,6 +121,7 @@ export class Spinner extends Ion {
   _dur: number = null;
   _init: boolean;
   _paused: boolean = false;
+  _plt: any;
 
   /**
    * @input {string} SVG spinner name.
@@ -156,8 +158,9 @@ export class Spinner extends Ion {
     this._paused = isTrueProperty(val);
   }
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, plt: Platform) {
     super(config, elementRef, renderer, 'spinner');
+    this._plt = plt;
   }
 
   /**
@@ -178,6 +181,111 @@ export class Spinner extends Ion {
 
       var name = this._name || this._config.get('spinner', 'ios');
 
+      const SPINNERS: any = {
+
+        ios: {
+          dur: 1000,
+          lines: 12,
+          fn: function (dur: number, index: number, total: number, isRtl: boolean) {
+            const transform = 'rotate(' + ((index < 6 ? 180 : -180) + (isRtl ? -(30 * index) : (30 * index))) + 'deg)';
+            const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
+            return {
+              y1: 17,
+              y2: 29,
+              style: {
+                transform: transform,
+                webkitTransform: transform,
+                animationDelay: animationDelay,
+                webkitAnimationDelay: animationDelay
+              }
+            };
+          }
+        },
+
+        'ios-small': {
+          dur: 1000,
+          lines: 12,
+          fn: function (dur: number, index: number, total: number, isRtl: boolean) {
+            const transform = 'rotate(' + ((index < 6 ? 180 : -180) + (isRtl ? -(30 * index) : (30 * index))) + 'deg)';
+            const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
+            return {
+              y1: 12,
+              y2: 20,
+              style: {
+                transform: transform,
+                webkitTransform: transform,
+                animationDelay: animationDelay,
+                webkitAnimationDelay: animationDelay
+              }
+            };
+          }
+        },
+
+        bubbles: {
+          dur: 1000,
+          circles: 9,
+          fn: function (dur: number, index: number, total: number, isRtl: boolean) {
+            const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
+            return {
+              r: 5,
+              style: {
+                top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
+                left: (isRtl ? 'initial' : (9 * Math.cos(2 * Math.PI * index / total)) + 'px'),
+                right: (isRtl ? (9 * Math.cos(2 * Math.PI * index / total)) + 'px' : 'initial'),
+                animationDelay: animationDelay,
+                webkitAnimationDelay: animationDelay
+              }
+            };
+          }
+        },
+
+        circles: {
+          dur: 1000,
+          circles: 8,
+          fn: function (dur: number, index: number, total: number, isRtl: boolean) {
+            const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
+            return {
+              r: 5,
+              style: {
+                top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
+                left: (isRtl ? 'initial' : (9 * Math.cos(2 * Math.PI * index / total)) + 'px'),
+                right: (isRtl ? (9 * Math.cos(2 * Math.PI * index / total)) + 'px' : 'initial'),
+                animationDelay: animationDelay,
+                webkitAnimationDelay: animationDelay
+              }
+            };
+          }
+        },
+
+        crescent: {
+          dur: 750,
+          circles: 1,
+          fn: function () {
+            return {
+              r: 26,
+              style: {}
+            };
+          }
+        },
+
+        dots: {
+          dur: 750,
+          circles: 3,
+          fn: function (dur: number, index: number, total: number, isRtl: boolean) {
+            const animationDelay = -(110 * index) + 'ms';
+            return {
+              r: 6,
+              style: {
+                left: (isRtl ? 'initial' : (9 - (9 * index)) + 'px'),
+                right: (isRtl ? (9 - (9 * index)) + 'px' : 'initial'),
+                animationDelay: animationDelay,
+                webkitAnimationDelay: animationDelay
+              }
+            };
+          }
+        }
+
+      };
       const spinner = SPINNERS[name];
       if (spinner) {
         if (spinner.lines) {
@@ -199,112 +307,8 @@ export class Spinner extends Ion {
 
   _loadEle(spinner: any, index: number, total: number) {
     let duration = this._dur || spinner.dur;
-    let data = spinner.fn(duration, index, total);
+    let data = spinner.fn(duration, index, total, this._plt.isRTL);
     data.style.animationDuration = duration + 'ms';
     return data;
   }
-
 }
-
-const SPINNERS: any = {
-
-  ios: {
-    dur: 1000,
-    lines: 12,
-    fn: function (dur: number, index: number, total: number) {
-      const transform = 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)';
-      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
-      return {
-        y1: 17,
-        y2: 29,
-        style: {
-          transform: transform,
-          webkitTransform: transform,
-          animationDelay: animationDelay,
-          webkitAnimationDelay: animationDelay
-        }
-      };
-    }
-  },
-
-  'ios-small': {
-    dur: 1000,
-    lines: 12,
-    fn: function (dur: number, index: number, total: number) {
-      const transform = 'rotate(' + (30 * index + (index < 6 ? 180 : -180)) + 'deg)';
-      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
-      return {
-        y1: 12,
-        y2: 20,
-        style: {
-          transform: transform,
-          webkitTransform: transform,
-          animationDelay: animationDelay,
-          webkitAnimationDelay: animationDelay
-        }
-      };
-    }
-  },
-
-  bubbles: {
-    dur: 1000,
-    circles: 9,
-    fn: function (dur: number, index: number, total: number) {
-      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
-      return {
-        r: 5,
-        style: {
-          top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
-          left: (9 * Math.cos(2 * Math.PI * index / total)) + 'px',
-          animationDelay: animationDelay,
-          webkitAnimationDelay: animationDelay
-        }
-      };
-    }
-  },
-
-  circles: {
-    dur: 1000,
-    circles: 8,
-    fn: function (dur: number, index: number, total: number) {
-      const animationDelay = -(dur - ((dur / total) * index)) + 'ms';
-      return {
-        r: 5,
-        style: {
-          top: (9 * Math.sin(2 * Math.PI * index / total)) + 'px',
-          left: (9 * Math.cos(2 * Math.PI * index / total)) + 'px',
-          animationDelay: animationDelay,
-          webkitAnimationDelay: animationDelay
-        }
-      };
-    }
-  },
-
-  crescent: {
-    dur: 750,
-    circles: 1,
-    fn: function () {
-      return {
-        r: 26,
-        style: {}
-      };
-    }
-  },
-
-  dots: {
-    dur: 750,
-    circles: 3,
-    fn: function (dur: number, index: number) {
-      const animationDelay = -(110 * index) + 'ms';
-      return {
-        r: 6,
-        style: {
-          left: (9 - (9 * index)) + 'px',
-          animationDelay: animationDelay,
-          webkitAnimationDelay: animationDelay
-        }
-      };
-    }
-  }
-
-};
