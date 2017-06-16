@@ -69,8 +69,6 @@ import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
-import { NativeInput } from './components/input/native-input';
-import { NextInput } from './components/input/next-input';
 import { TextInput } from './components/input/input';
 import { Item } from './components/item/item';
 import { ItemContent } from './components/item/item-content';
@@ -221,8 +219,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     ListHeader,
     Reorder,
     LoadingCmp,
-    NativeInput,
-    NextInput,
     Menu,
     MenuClose,
     MenuToggle,
@@ -324,8 +320,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     ListHeader,
     Reorder,
     LoadingCmp,
-    NativeInput,
-    NextInput,
     Menu,
     MenuClose,
     MenuToggle,

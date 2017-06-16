@@ -12,7 +12,6 @@ import { GestureController } from '../gestures/gesture-controller';
 import { isBlank, isNumber, isPresent, isTrueProperty, assert, removeArrayItem } from '../util/util';
 import { isViewController, ViewController } from './view-controller';
 import { Ion } from '../components/ion';
-import { Keyboard } from '../platform/keyboard';
 import { NavController } from './nav-controller';
 import { NavParams } from './nav-params';
 import { Platform } from '../platform/platform';
@@ -63,7 +62,6 @@ export class NavControllerBase extends Ion implements NavController {
     public _app: App,
     public config: Config,
     public plt: Platform,
-    public _keyboard: Keyboard,
     elementRef: ElementRef,
     public _zone: NgZone,
     renderer: Renderer,
@@ -760,7 +758,7 @@ export class NavControllerBase extends Ion implements NavController {
       if (opts.keyboardClose !== false) {
         // the keyboard is still open!
         // no problem, let's just close for them
-        this._keyboard.close();
+        this.plt.focusOutActiveElement();
       }
     }
 

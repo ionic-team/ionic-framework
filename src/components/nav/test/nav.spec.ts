@@ -1,7 +1,6 @@
 import { Nav } from '../nav';
 
 import { GestureController } from '../../../gestures/gesture-controller';
-import { Keyboard } from '../../../platform/keyboard';
 import {
   mockApp,
   mockConfig,
@@ -88,7 +87,6 @@ function getNav() {
   const app = mockApp(config, platform);
   const zone = mockZone();
   const dom = mockDomController(platform);
-  const keyboard = new Keyboard(config, platform, zone, dom);
   const elementRef = mockElementRef();
   const renderer = mockRenderer();
   const componentFactoryResolver: any = null;
@@ -101,7 +99,6 @@ function getNav() {
     app,
     config,
     platform,
-    keyboard,
     elementRef,
     zone,
     renderer,

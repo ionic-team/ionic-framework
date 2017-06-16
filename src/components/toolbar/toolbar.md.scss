@@ -13,7 +13,7 @@ $toolbar-order-md: (
   buttons-end: 5,
   buttons-right: 6,
   menu-toggle-end: 7,
-);
+) !default;
 
 /// @prop - Font size of the toolbar title
 $toolbar-md-title-font-size:             2rem !default;
