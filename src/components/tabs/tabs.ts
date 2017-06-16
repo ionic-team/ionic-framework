@@ -299,7 +299,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     const tabsSegment = this._linker.getSegmentByNavId(this.id);
     if (tabsSegment && isBlank(tabsSegment.component)) {
       // we found a segment which probably represents which tab to select
-      selectedIndex = this._getSelectedTabIndex(tabsSegment.secondaryIdentifier, selectedIndex);
+      selectedIndex = this._getSelectedTabIndex(tabsSegment.secondaryId, selectedIndex);
     }
 
     // get the selectedIndex and ensure it isn't hidden or disabled

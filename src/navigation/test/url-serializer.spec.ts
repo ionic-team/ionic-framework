@@ -243,12 +243,12 @@ describe('UrlSerializer', () => {
       expect(segments[0].navId).toEqual('t1');
       expect(segments[0].data.id).toEqual('123');
       expect(segments[0].data.name).toEqual('Stanley');
-      expect(segments[0].secondaryIdentifier).toEqual('tab-one');
+      expect(segments[0].secondaryId).toEqual('tab-one');
       expect(segments[1].name).toEqual('viewtwo');
       expect(segments[1].navId).toEqual('t2');
       expect(segments[1].data.id).toEqual('456');
       expect(segments[1].data.food).toEqual('tacos');
-      expect(segments[1].secondaryIdentifier).toEqual('tab-three');
+      expect(segments[1].secondaryId).toEqual('tab-three');
     });
 
     it('should return the segments from a mixed nav/tabs url', () => {
@@ -262,20 +262,20 @@ describe('UrlSerializer', () => {
       expect(segments[0].navId).toEqual('t1');
       expect(segments[0].data.id).toEqual('123');
       expect(segments[0].data.name).toEqual('Stanley');
-      expect(segments[0].secondaryIdentifier).toEqual('tab-one');
+      expect(segments[0].secondaryId).toEqual('tab-one');
       expect(segments[1].name).toEqual('viewtwo');
       expect(segments[1].navId).toEqual('n1');
       expect(segments[1].data.id).toEqual('456');
       expect(segments[1].data.food).toEqual('tacos');
-      expect(segments[1].secondaryIdentifier).toEqual(null);
+      expect(segments[1].secondaryId).toEqual(null);
     });
   });
 
   describe('serialize', () => {
     it('should serialize multiple segments into a url', () => {
       let paths: NavSegment[] = [
-        { type: 'nav', navId: 'n1', secondaryIdentifier: null, id: 'some/url/chunks', name: 'viewOne', component: MockView1, data: null },
-        { type: 'tabs', navId: 't1', secondaryIdentifier: 'tab-one', id: 'some/more/url/chunks', name: 'viewTwo', component: MockView1, data: null }
+        { type: 'nav', navId: 'n1', secondaryId: null, id: 'some/url/chunks', name: 'viewOne', component: MockView1, data: null },
+        { type: 'tabs', navId: 't1', secondaryId: 'tab-one', id: 'some/more/url/chunks', name: 'viewTwo', component: MockView1, data: null }
       ];
       const result = serializer.serialize(paths);
       expect(result).toEqual('/nav/n1/some/url/chunks/tabs/t1/tab-one/some/more/url/chunks');
@@ -373,7 +373,7 @@ describe('UrlSerializer', () => {
       expect(segments[0].loadChildren).toEqual(configLink.loadChildren);
       expect(segments[0].type).toEqual(navGroup.type);
       expect(segments[0].navId).toEqual(navGroup.navId);
-      expect(segments[0].secondaryIdentifier).toEqual(navGroup.secondaryId);
+      expect(segments[0].secondaryId).toEqual(navGroup.secondaryId);
     });
 
     it('should return single matching segment for tabs', () => {
@@ -405,7 +405,7 @@ describe('UrlSerializer', () => {
       expect(segments[0].loadChildren).toEqual(configLink.loadChildren);
       expect(segments[0].type).toEqual(navGroup.type);
       expect(segments[0].navId).toEqual(navGroup.navId);
-      expect(segments[0].secondaryIdentifier).toEqual(navGroup.secondaryId);
+      expect(segments[0].secondaryId).toEqual(navGroup.secondaryId);
       expect(segments[0].data.someVariable).toEqual('part');
       expect(segments[0].data.someVariable2).toEqual('url');
     });
@@ -470,7 +470,7 @@ describe('UrlSerializer', () => {
       expect(segments[0].loadChildren).toEqual(configLink.loadChildren);
       expect(segments[0].type).toEqual(navGroup.type);
       expect(segments[0].navId).toEqual(navGroup.navId);
-      expect(segments[0].secondaryIdentifier).toEqual(navGroup.secondaryId);
+      expect(segments[0].secondaryId).toEqual(navGroup.secondaryId);
       expect(segments[0].data.someVariable).toEqual('part');
       expect(segments[0].data.someVariable2).toEqual('url');
 
@@ -480,7 +480,7 @@ describe('UrlSerializer', () => {
       expect(segments[1].loadChildren).toEqual(configLinkTwo.loadChildren);
       expect(segments[1].type).toEqual(navGroupTwo.type);
       expect(segments[1].navId).toEqual(navGroupTwo.navId);
-      expect(segments[1].secondaryIdentifier).toEqual(navGroupTwo.secondaryId);
+      expect(segments[1].secondaryId).toEqual(navGroupTwo.secondaryId);
       expect(segments[1].data.userId).toEqual('123');
       expect(segments[1].data.name).toEqual('Stanley Hudson');
     });

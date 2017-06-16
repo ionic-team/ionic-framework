@@ -63,7 +63,7 @@ export class UrlSerializer {
     }
     const sections = segments.map(segment => {
       if (segment.type === 'tabs') {
-        return `/${segment.type}/${segment.navId}/${segment.secondaryIdentifier}/${segment.id}`;
+        return `/${segment.type}/${segment.navId}/${segment.secondaryId}/${segment.id}`;
       }
       return `/${segment.type}/${segment.navId}/${segment.id}`;
     });
@@ -119,7 +119,7 @@ export class UrlSerializer {
       defaultHistory: configLink.defaultHistory,
       navId: navGroup.navId,
       type: navGroup.type,
-      secondaryIdentifier: navGroup.secondaryId
+      secondaryId: navGroup.secondaryId
     };
   }
 }
@@ -165,7 +165,7 @@ export const parseUrlParts = (navGroups: NavGroup[], configLinks: NavLink[]): Na
             defaultHistory: link.defaultHistory,
             navId: navGroup.navId,
             type: navGroup.type,
-            secondaryIdentifier: navGroup.secondaryId
+            secondaryId: navGroup.secondaryId
           });
         }
       }

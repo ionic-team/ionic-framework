@@ -3,7 +3,7 @@ import { NavSegment } from '../nav-util';
 import { UrlSerializer } from '../url-serializer';
 import { mockApp, mockDeepLinkConfig, mockNavController, mockLocation,
          mockModuleLoader, mockTab, mockTabs, mockViews, mockView, noop,
-         MockView1, MockView2, MockView3 } from '../../util/mock-providers';
+         MockView1, MockView2 } from '../../util/mock-providers';
 
 
 describe('DeepLinker', () => {
@@ -75,7 +75,7 @@ describe('DeepLinker', () => {
         data: null,
         type: 'nav',
         navId: 'n1',
-        secondaryIdentifier: null,
+        secondaryId: null,
       };
 
       spyOn(nav, 'push');
@@ -101,7 +101,7 @@ describe('DeepLinker', () => {
         data: null,
         type: 'nav',
         navId: 'n1',
-        secondaryIdentifier: null,
+        secondaryId: null,
       };
 
       spyOn(nav, 'push');
@@ -121,7 +121,7 @@ describe('DeepLinker', () => {
         data: null,
         type: 'nav',
         navId: 'n1',
-        secondaryIdentifier: null,
+        secondaryId: null,
       };
 
       spyOn(nav, 'push');
@@ -144,7 +144,7 @@ describe('DeepLinker', () => {
         data: null,
         type: 'tabs',
         navId: tabs.id,
-        secondaryIdentifier: 'tab-one',
+        secondaryId: 'tab-one',
       };
 
       spyOn(tabs, 'select');
@@ -200,7 +200,7 @@ describe('DeepLinker', () => {
         data: {},
         type: 'nav',
         navId: 'n1',
-        secondaryIdentifier: null
+        secondaryId: null
       };
       const promise = linker.initViews(knownSegment);
 

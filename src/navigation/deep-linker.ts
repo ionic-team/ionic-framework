@@ -123,33 +123,39 @@ export class DeepLinker {
   navChange(navId: string, direction: string) {
     if (direction) {
       const rootNavContainers = this._app.getActiveNavContainers();
-      const segments = rootNavContainers.map(rootNavContainer => {
-        if (isNav(rootNavContainer)) {
-          return this.getSegmentFromNav(<NavController> <any> rootNavContainer, null, null);
-        } else {
-          return this.getSegmentFromTab(rootNavContainer, null, null);
-        }
-      }).filter(segment => !!segment);
+      let segments: NavSegment[] = [];
+      for (const rootNavContainer of rootNavContainers) {
+        const segmentsForNav = this.getSegmentsFromNav(rootNavContainer, null, null);
+        segments = segments.concat(segmentsForNav);
+      }
+      segments = segments.filter(segment => !!segment);
       const browserUrl = this._serializer.serialize(segments);
       this._updateLocation(browserUrl, direction);
     }
   }
 
-  getSegmentFromNav(nav: NavController, component?: any, data?: any): NavSegment {
+  getSegmentsFromNav(nav: NavigationContainer, component?: any, data?: any): NavSegment[] {
+    const segments: NavSegment[] = [];
     while (nav) {
-      if (!component) {
-        const viewController = nav.getActive(true);
-        if (viewController) {
-          component = viewController.component;
-          data = viewController.data;
-        }
+      if (isNav(nav)) {
+        segments.push(this.getSegmentFromNav(nav as NavController));
+        nav = nav.parent;
+      } else {
+        segments.push(this.getSegmentFromTab(nav));
+        nav = nav.parent && nav.parent.parent;
       }
-      if (!nav.parent) {
-        break;
-      }
-      nav = nav.parent;
     }
+    return segments.reverse();
+  }
 
+  getSegmentFromNav(nav: NavController, component?: any, data?: any): NavSegment {
+     if (!component) {
+      const viewController = nav.getActive(true);
+      if (viewController) {
+        component = viewController.component;
+        data = viewController.data;
+      }
+    }
     return this._serializer.serializeComponent({ navId: nav.id, secondaryId: null, type: 'nav'}, component, data);
   }
 
