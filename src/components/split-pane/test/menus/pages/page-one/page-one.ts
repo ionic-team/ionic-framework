@@ -9,34 +9,41 @@ export class PageOne {
     public navCtrl: NavController,
     public menuCtrl: MenuController,
   ) {
-    this.menuCtrl.enable(false, 'menu4');
+    this.disableAll();
+    this.menuCtrl.enable(false);
   }
 
   push() {
     this.navCtrl.push('PageTwo');
   }
 
-  menu1Active() {
-    this.menuCtrl.enable(false, 'menu4');
-    this.menuCtrl.enable(true, 'menu1');
+  menuDefault() {
+    this.disableAll();
+    this.menuCtrl.enable(true, 'menu_default');
   }
-  menu2Active() {
-    this.menuCtrl.enable(false, 'menu4');
-    this.menuCtrl.enable(true, 'menu2');
-  }
-  menu3Active() {
-    this.menuCtrl.enable(false, 'menu4');
-    this.menuCtrl.enable(true, 'menu3');
-  }
-  menu4Active() {
-    this.menuCtrl.enable(false, 'menu1');
-    this.menuCtrl.enable(false, 'menu2');
-    this.menuCtrl.enable(false, 'menu3');
 
-    this.menuCtrl.enable(true, 'menu4');
+  menuStart() {
+    this.disableAll();
+    this.menuCtrl.enable(true, 'menu_start');
+  }
+
+  menuEnd() {
+    this.disableAll();
+    this.menuCtrl.enable(true, 'menu_end');
+  }
+
+  menuLeft() {
+    this.disableAll();
+    this.menuCtrl.enable(true, 'menu_left');
+  }
+
+  menuRight() {
+    this.disableAll();
+    this.menuCtrl.enable(true, 'menu_right');
   }
 
   disableAll() {
     this.menuCtrl.enable(false);
+
   }
 }
