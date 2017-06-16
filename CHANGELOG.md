@@ -15,19 +15,19 @@
   "@angular/http": "4.1.3",
   "@angular/platform-browser": "4.1.3",
   "@angular/platform-browser-dynamic": "4.1.3",
-  "@ionic-native/core": "3.10.2",
-  "@ionic-native/splash-screen": "3.10.2",
-  "@ionic-native/status-bar": "3.10.2",
+  "@ionic-native/core": "3.12.1",
+  "@ionic-native/splash-screen": "3.12.1",
+  "@ionic-native/status-bar": "3.12.1",
   "@ionic/storage": "2.0.1",
-  "ionic-angular": "3.3.4",
+  "ionic-angular": "3.4.0",
   "ionicons": "3.0.0",
-  "rxjs": "5.1.1",
+  "rxjs": "5.4.0",
   "sw-toolbox": "3.6.0",
-  "zone.js": "0.8.11"
+  "zone.js": "0.8.12"
 },
 "devDependencies": {
   "@ionic/app-scripts": "1.3.7",
-  "typescript": "2.3.3"
+  "typescript": "2.3.4"
 }
 ```
 
