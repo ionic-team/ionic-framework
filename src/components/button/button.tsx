@@ -48,8 +48,8 @@ import { CssClassObject } from '../../util/interfaces';
   *    <ion-icon slot="end" name="star"></ion-icon>
   *  </ion-button>
   *
-  *  <ion-button icon-only>
-  *    <ion-icon name="star"></ion-icon>
+  *  <ion-button>
+  *    <ion-icon slot="icon-only" name="star"></ion-icon>
   *  </ion-button>
   *
   *  <!-- Sizes -->
@@ -299,6 +299,7 @@ export class Button {
     return (
       <TagType class={buttonClasses} disabled={this.disabled}>
         <span class='button-inner'>
+          <slot name='icon-only'></slot>
           <slot name='start'></slot>
           <slot></slot>
           <slot name='end'></slot>

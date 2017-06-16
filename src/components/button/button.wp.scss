@@ -266,7 +266,7 @@ $button-wp-strong-font-weight:                            bold !default;
   }
 }
 
-[icon-only] .button-small-wp ion-icon {
+.button-small-wp ion-icon[slot="icon-only"] {
   font-size: $button-wp-small-icon-font-size;
 }
 
@@ -380,7 +380,7 @@ $button-wp-strong-font-weight:                            bold !default;
   }
 }
 
-[icon-only] .button-wp {
+.button-wp ion-icon[slot="icon-only"] {
   @include padding(0);
 }
 

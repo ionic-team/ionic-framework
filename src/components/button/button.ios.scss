@@ -268,7 +268,7 @@ $button-ios-strong-font-weight:                     600 !default;
   }
 }
 
-[icon-only] .button-small-ios ion-icon {
+.button-small-ios ion-icon[slot="icon-only"] {
   font-size: $button-ios-small-icon-font-size;
 }
 

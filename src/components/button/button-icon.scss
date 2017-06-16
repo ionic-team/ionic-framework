@@ -1,31 +1,28 @@
 @import "../../themes/ionic.globals";
 
+
 // Button Icons
 // --------------------------------------------------
 
-.button ion-icon[slot="start"] {
+.button ion-icon {
+  pointer-events: none;
+}
+
+ion-icon[slot="start"] {
   @include button-icon();
 
   @include padding-horizontal(null, .3em);
 }
 
-.button ion-icon[slot="end"] {
+ion-icon[slot="end"] {
   @include button-icon();
 
   @include padding-horizontal(.4em, null);
 }
 
-[icon-only] .button {
+ion-icon[slot="icon-only"] {
   @include padding(0);
-
-  min-width: .9em;
-}
-
-[icon-only] ion-icon {
-  @include padding(0, .5em);
 
   font-size: 1.8em;
   line-height: .67;
-
-  pointer-events: none;
 }
