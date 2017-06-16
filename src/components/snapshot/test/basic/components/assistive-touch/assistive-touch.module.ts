@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AssistiveTouchComponent } from './assistive-touch';
 import { IonicPageModule } from '../../../../../../module';
-import { AssistiveTouchProvider } from '../../providers/assistive-touch/assistive-touch';
+import { AssistivePopoverModule } from './assistive-popover/assistive-popover.module';
 
 @NgModule({
   declarations: [
@@ -9,12 +9,10 @@ import { AssistiveTouchProvider } from '../../providers/assistive-touch/assistiv
   ],
   imports: [
     IonicPageModule.forChild(AssistiveTouchComponent),
+    AssistivePopoverModule
   ],
   exports: [
     AssistiveTouchComponent
-  ],
-  providers: [
-    AssistiveTouchProvider
   ]
 })
 export class AssistiveTouchComponentModule {

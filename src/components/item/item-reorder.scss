@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-reorder {
+  @include transform(translate3d(160%, 0, 0));
+
   display: none;
 
   flex: 1;
@@ -16,7 +18,6 @@ ion-reorder {
   font-size: 1.7em;
   opacity: .25;
 
-  transform: translate3d(160%, 0, 0);
 
   transition: transform 140ms ease-in;
 
@@ -33,7 +34,7 @@ ion-reorder ion-icon {
 }
 
 .reorder-visible ion-reorder {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }
 
 .reorder-list-active .item,

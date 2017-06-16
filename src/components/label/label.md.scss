@@ -56,13 +56,10 @@ $label-md-margin-start:               0 !default;
 }
 
 .label-md[floating] {
-  transform: translate3d(0, 27px, 0);
-  transform-origin: left top;
-  transition: transform 150ms ease-in-out;
-}
+  @include transform(translate3d(0, 27px, 0));
+  @include transform-origin(start, top);
 
-[dir="rtl"] .label-md[floating] {
-  transform-origin: right top;
+  transition: transform 150ms ease-in-out;
 }
 
 .label-md[stacked],
@@ -83,7 +80,7 @@ $label-md-margin-start:               0 !default;
 .input-has-focus .label-md[floating],
 .item-input-has-value .label-md[floating],
 .input-has-value .label-md[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 .item-md.item-label-stacked [item-right], // deprecated

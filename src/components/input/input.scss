@@ -154,6 +154,7 @@ input.text-input:-webkit-autofill {
 .text-input-clear-icon {
   @include margin(0);
   @include padding(0);
+  @include background-position(center);
 
   position: absolute;
   top: 0;
@@ -162,7 +163,6 @@ input.text-input:-webkit-autofill {
   height: 100%;
 
   background-repeat: no-repeat;
-  background-position: center;
 }
 
 // TODO remove all uses of input-has-focus in v4
