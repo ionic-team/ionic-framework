@@ -2,20 +2,20 @@
 
   <ion-navbar color="primary">
     <ion-buttons left>
-      <ion-button icon-only (click)="presentRadioPopover($event)">
-        <ion-icon name="person"></ion-icon>
+      <ion-button (click)="presentRadioPopover($event)">
+        <ion-icon slot="icon-only" name="person"></ion-icon>
       </ion-button>
-      <ion-button icon-only (click)="presentLongListPopover($event)">
-        <ion-icon name="search"></ion-icon>
+      <ion-button (click)="presentLongListPopover($event)">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Popover</ion-title>
     <ion-buttons end>
-      <ion-button icon-only (click)="presentListPopover($event)">
-        <ion-icon name="options"></ion-icon>
+      <ion-button (click)="presentListPopover($event)">
+        <ion-icon slot="icon-only" name="options"></ion-icon>
       </ion-button>
-      <ion-button icon-only (click)="presentRadioPopover($event)">
-        <ion-icon name="more"></ion-icon>
+      <ion-button (click)="presentRadioPopover($event)">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-navbar>
@@ -75,11 +75,11 @@
   <ion-toolbar>
     <ion-title>Popover</ion-title>
     <ion-buttons start>
-      <ion-button icon-only (click)="presentListPopover($event)">
-        <ion-icon name="more"></ion-icon>
+      <ion-button (click)="presentListPopover($event)">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
       </ion-button>
-      <ion-button icon-only (click)="presentLongListPopover($event)">
-        <ion-icon name="search"></ion-icon>
+      <ion-button (click)="presentLongListPopover($event)">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

@@ -20,8 +20,12 @@
     <ion-item>
       <ion-label stacked>Label 2</ion-label>
       <ion-input value="Text 2"></ion-input>
-      <ion-button icon-only item-end clear><ion-icon name="heart-outline"></ion-icon></ion-button>
-      <ion-button icon-only item-end clear><ion-icon ios="ios-call-outline" md="md-call"></ion-icon></ion-button>
+      <ion-button item-end clear>
+        <ion-icon slot="icon-only" name="heart-outline"></ion-icon>
+      </ion-button>
+      <ion-button item-end clear>
+        <ion-icon slot="icon-only" ios="ios-call-outline" md="md-call"></ion-icon>
+      </ion-button>
     </ion-item>
 
     <ion-item>

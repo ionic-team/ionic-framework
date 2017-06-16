@@ -48,8 +48,8 @@
         Two options, one dynamic option and text
       </ion-item>
       <ion-item-options side="left">
-        <ion-button icon-only color="primary">
-          <ion-icon name="more"></ion-icon>
+        <ion-button color="primary">
+          <ion-icon slot="icon-only" name="more"></ion-icon>
         </ion-button>
       </ion-item-options>
       <ion-item-options side="right" *ngIf="showOptions">
@@ -80,11 +80,11 @@
         </ion-button>
       </ion-item-options>
       <ion-item-options side="right">
-        <ion-button icon-only color="danger" (click)="unread(item100)">
-          <ion-icon name="trash"></ion-icon>
+        <ion-button color="danger" (click)="unread(item100)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-button>
-        <ion-button icon-only (click)="unread(item100)">
-          <ion-icon name="star"></ion-icon>
+        <ion-button (click)="unread(item100)">
+          <ion-icon slot="icon-only" name="star"></ion-icon>
         </ion-button>
       </ion-item-options>
 

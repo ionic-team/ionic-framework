@@ -5,16 +5,16 @@
 
   <ion-toolbar color="primary">
     <ion-buttons start>
-      <ion-button icon-only>
-        <ion-icon name="contact"></ion-icon>
+      <ion-button>
+        <ion-icon slot="icon-only" name="contact"></ion-icon>
       </ion-button>
-      <ion-button icon-only>
-        <ion-icon name="search"></ion-icon>
+      <ion-button>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-buttons end>
-      <ion-button icon-only color="secondary">
-        <ion-icon name="more"></ion-icon>
+      <ion-button color="secondary">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Subheader</ion-title>
@@ -90,8 +90,8 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons end>
-      <ion-button icon-only #button2>
-        <ion-icon name="search"></ion-icon>
+      <ion-button #button2>
+        <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-searchbar>

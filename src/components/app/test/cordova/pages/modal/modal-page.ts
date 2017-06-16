@@ -10,13 +10,13 @@ import { IonicPage, ViewController } from '../../../../../..';
     <ion-toolbar>
       <ion-title>This is a modal</ion-title>
       <ion-buttons left>
-        <ion-button icon-only (click)="dismissModal()" class="e2eCordovaCloseModal">
-          <ion-icon name="close"></ion-icon>
+        <ion-button (click)="dismissModal()" class="e2eCordovaCloseModal">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-buttons end>
-        <ion-button icon-only>
-          <ion-icon name="funnel"></ion-icon>
+        <ion-button>
+          <ion-icon slot="icon-only" name="funnel"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>

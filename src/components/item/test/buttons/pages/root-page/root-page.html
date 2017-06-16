@@ -64,12 +64,12 @@
   </ion-item>
 
   <ion-item>
-    <ion-button icon-only clear item-start default (click)="testClick($event)">
-      <ion-icon name="navigate"></ion-icon>
+    <ion-button clear item-start default (click)="testClick($event)">
+      <ion-icon slot="icon-only" name="navigate"></ion-icon>
     </ion-button>
     icon only buttons default
-    <ion-button icon-only clear item-end default (click)="testClick($event)">
-      <ion-icon name="navigate"></ion-icon>
+    <ion-button clear item-end default (click)="testClick($event)">
+      <ion-icon slot="icon-only" name="navigate"></ion-icon>
     </ion-button>
   </ion-item>
 
@@ -113,11 +113,11 @@
 
   <ion-item (click)="testClickOutsize($event)">
     <div>
-      <ion-button icon-only clear item-end (click)="testClick($event)">
-          <ion-icon name="remove-circle"></ion-icon>
+      <ion-button clear item-end (click)="testClick($event)">
+        <ion-icon slot="icon-only" name="remove-circle"></ion-icon>
       </ion-button>
-      <ion-button icon-only clear item-end (click)="testClick($event)">
-          <ion-icon name="add-circle"></ion-icon>
+      <ion-button clear item-end (click)="testClick($event)">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
       </ion-button>
     </div>
   </ion-item>

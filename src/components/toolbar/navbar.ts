@@ -23,8 +23,8 @@ import { ViewController } from '../../navigation/view-controller';
  * <ion-header>
  *
  *   <ion-navbar>
- *     <ion-button icon-only menuToggle>
- *       <ion-icon name="menu"></ion-icon>
+ *     <ion-button menuToggle>
+ *       <ion-icon slot="icon-only" name="menu"></ion-icon>
  *     </ion-button>
  *
  *     <ion-title>
@@ -32,8 +32,8 @@ import { ViewController } from '../../navigation/view-controller';
  *     </ion-title>
  *
  *     <ion-buttons end>
- *       <ion-button icon-only (click)="openModal()">
- *         <ion-icon name="options"></ion-icon>
+ *       <ion-button (click)="openModal()">
+ *         <ion-icon slot="icon-only" name="options"></ion-icon>
  *       </ion-button>
  *     </ion-buttons>
  *   </ion-navbar>
