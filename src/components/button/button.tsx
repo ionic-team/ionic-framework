@@ -70,6 +70,8 @@ import { CssClassObject } from '../../util/interfaces';
   }
 })
 export class Button {
+  $el: HTMLElement;
+
   @Prop() itemButton: boolean = false;
 
   @Prop() href: string;
@@ -162,8 +164,10 @@ export class Button {
 
   /**
    * @hidden
+   * Get the classes based on the button type
+   * e.g. alert-button, action-sheet-button
    */
-  getElementClassList(buttonType: string, mode: string): string[] {
+  getButtonClassList(buttonType: string, mode: string): string[] {
     if (!buttonType) {
       return [];
     }
@@ -176,6 +180,8 @@ export class Button {
 
   /**
    * @hidden
+   * Get the classes based on the type
+   * e.g. block, full, round, large
    */
   getClassList(buttonType: string, type: string, mode: string): string[] {
     if (!type) {
@@ -190,6 +196,7 @@ export class Button {
 
   /**
    * @hidden
+   * Get the classes for the color
    */
   getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
     style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
@@ -216,6 +223,8 @@ export class Button {
 
   /**
    * @hidden
+   * Get the classes for the style
+   * e.g. outline, clear, solid
    */
   getStyleClassList(buttonType: string): string[] {
     let classList = [].concat(
@@ -233,11 +242,23 @@ export class Button {
 
   /**
    * @hidden
-   * Whether or not to add the item-button class
+   * Get the item classes for the button
    */
   getItemClassList(size: string) {
     let classList = [].concat(
       this.itemButton && !size ? 'item-button' : []
+    );
+
+    return classList;
+  }
+
+  /**
+   * @hidden
+   * Get the element classes to add to the child element
+   */
+  getElementClassList() {
+    let classList = [].concat(
+      this.$el.className.length ? this.$el.className.split(' ') : []
     );
 
     return classList;
@@ -259,13 +280,14 @@ export class Button {
 
     const buttonClasses: CssClassObject = []
       .concat(
-        this.getElementClassList(this.buttonType, this.mode),
+        this.getButtonClassList(this.buttonType, this.mode),
         this.getClassList(this.buttonType, shape, this.mode),
         this.getClassList(this.buttonType, display, this.mode),
         this.getClassList(this.buttonType, size, this.mode),
         this.getClassList(this.buttonType, decorator, this.mode),
         this.getStyleClassList(this.buttonType),
-        this.getItemClassList(size)
+        this.getItemClassList(size),
+        this.getElementClassList()
       )
       .reduce((prevValue, cssClass) => {
         prevValue[cssClass] = true;
