@@ -69,11 +69,11 @@ ion-spinner.spinner-paused svg {
 }
 
 .spinner-crescent svg {
-  @include ltr(){
+  @include ltr() {
     animation: spinner-rotate 1s linear infinite;
   }
 
-  @include rtl(){
+  @include rtl() {
     animation: spinner-rotate-rtl 1s linear infinite;
   }
 }
