@@ -85,7 +85,7 @@ ion-input :focus {
 
 @each $dir in ltr, rtl {
   [dir="#{$dir}"] .direction-enforcer {
-    @if $app-direction != $dir and $app-direction != null {
+    @if $app-direction != $dir and $app-direction != multi {
       display: block;
     }
   }
