@@ -1,3 +1,23 @@
+<a name="3.4.2"></a>
+## [3.4.2](https://github.com/ionic-team/ionic/compare/v3.4.1...v3.4.2) (2017-06-16)
+
+
+### Bug Fixes
+
+* **rtl:** use multi direction in order to override the default ltr ([548e182](https://github.com/ionic-team/ionic/commit/548e182))
+
+
+
+<a name="3.4.1"></a>
+## [3.4.1](https://github.com/ionic-team/ionic/compare/v3.4.0...v3.4.1) (2017-06-16)
+
+
+### Bug Fixes
+
+* **themes:** change default app-direction ([ce92be0](https://github.com/ionic-team/ionic/commit/ce92be0))
+
+
+
 <a name="3.4.0"></a>
 # [3.4.0](https://github.com/ionic-team/ionic/compare/v3.3.0...v3.4.0) (2017-06-15)
 
@@ -19,7 +39,7 @@
   "@ionic-native/splash-screen": "3.12.1",
   "@ionic-native/status-bar": "3.12.1",
   "@ionic/storage": "2.0.1",
-  "ionic-angular": "3.4.0",
+  "ionic-angular": "3.4.2",
   "ionicons": "3.0.0",
   "rxjs": "5.4.0",
   "sw-toolbox": "3.6.0",
