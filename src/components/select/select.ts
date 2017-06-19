@@ -496,6 +496,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
     }
 
     this._text = this._texts.join(', ');
+    super._inputUpdated();
   }
 
 }
