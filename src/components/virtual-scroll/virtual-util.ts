@@ -497,8 +497,6 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
       }
     }
   }
-
-  // console.log(`adjustRendered topCell: ${data.topCell}, bottomCell: ${data.bottomCell}, cellsRenderHeight: ${cellsRenderHeight}, data.renderHeight: ${data.renderHeight}`);
 }
 
 

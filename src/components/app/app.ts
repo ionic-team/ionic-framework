@@ -6,7 +6,7 @@ import * as Constants from './app-constants';
 import { ClickBlock } from './click-block';
 import { runInDev, assert } from '../../util/util';
 import { Config } from '../../config/config';
-import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK, isTabs } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
 import { NavigationContainer } from '../../navigation/navigation-container';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
@@ -273,7 +273,7 @@ export class App {
     }
 
     const navPromise = this.navPop();
-    if (navPromise === null) {
+    if (!navPromise) {
       // no views to go back to
       // let's exit the app
       if (this._config.getBoolean('navExitApp', true)) {
@@ -302,29 +302,41 @@ export class App {
     let mostRecentVC: ViewController = null;
     this._rootNavs.forEach((navContainer: NavigationContainer) => {
       const activeNav = this.getActiveNav(navContainer.id);
-      const topViewController = activeNav.last();
-      if (topViewController && (!mostRecentVC || topViewController._ts >=  mostRecentVC._ts)) {
-        mostRecentVC = topViewController;
-        navToPop = activeNav;
+      const poppable = getPoppableNav(activeNav);
+      if (poppable) {
+        console.log('poppable: ', poppable.id);
+        const topViewController = poppable.last();
+        if (poppable._isPortal || (topViewController && poppable.length() > 1 && (!mostRecentVC || topViewController._ts >=  mostRecentVC._ts))) {
+          mostRecentVC = topViewController;
+          navToPop = poppable;
+        }
       }
     });
-    return recursivePop(navToPop);
+    console.log('navToPop: ', navToPop ? navToPop.id : 'its null')
+    if (navToPop) {
+      return navToPop.pop();
+    }
   }
 }
 
-function recursivePop(nav: NavControllerBase): Promise<any> {
+
+function getPoppableNav(nav: NavControllerBase): NavControllerBase {
   if (!nav) {
     return null;
+  }
+
+  if (isTabs(nav)) {
+    // tabs aren't a nav, so just call this function again immediately on the parent on tabs
+    return getPoppableNav(nav.parent);
   }
   const len = nav.length();
   if (len > 1 || (nav._isPortal && len > 0)) {
     // this nav controller has more than one view
-    // pop the current view on this nav and we're done here
-    console.debug('app, goBack pop nav');
-    return nav.pop();
+    // use this nav!
+    return nav;
   }
   // try again using the parent nav (if there is one)
-  return recursivePop(nav.parent);
+  return getPoppableNav(nav.parent);
 }
 
 function findTopNav(nav: NavigationContainer): NavigationContainer {

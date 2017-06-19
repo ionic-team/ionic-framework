@@ -95,7 +95,7 @@ export class DeepLinker {
         }
 
         // normal url
-        const segments = this._serializer.parse(browserUrl);
+        const segments = this.getCurrentSegments(browserUrl);
         segments
           .map(segment => {
             // find the matching nav container
@@ -114,6 +114,13 @@ export class DeepLinker {
           });
       }
     }
+  }
+
+  getCurrentSegments(browserUrl?: string) {
+    if (!browserUrl) {
+      browserUrl = normalizeUrl(this._location.path());
+    }
+    return this._serializer.parse(browserUrl);
   }
 
   /**
@@ -245,11 +252,16 @@ export class DeepLinker {
    */
   createUrl(navContainer: NavigationContainer, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
-    console.log('createUrl: ');
     const segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent);
+    const allSegments = this.getCurrentSegments();
     if (segment) {
-      const url = this._serializer.serialize([segment]);
-      return prepareExternalUrl ? this._location.prepareExternalUrl(url) : url;
+      for (let i = 0; i < allSegments.length; i++) {
+        if (allSegments[i].navId === navContainer.id) {
+          allSegments[i] = segment;
+          const url = this._serializer.serialize(allSegments);
+          return prepareExternalUrl ? this._location.prepareExternalUrl(url) : url;
+        }
+      }
     }
     return '';
   }

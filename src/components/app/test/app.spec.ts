@@ -101,10 +101,11 @@ describe('App', () => {
 
     it('should pop the root nav when nested nav has less than 2 views', () => {
       const rootNav = mockNavController();
-      const nestedNav = mockNavController();
-      rootNav.registerChildNav(nestedNav);
-      nestedNav.parent = rootNav;
       app.registerRootNav(rootNav);
+
+      const nestedNav = mockNavController();
+      nestedNav.parent = rootNav;
+      rootNav.registerChildNav(nestedNav);
 
       spyOn(plt, 'exitApp');
       spyOn(rootNav, 'pop').and.returnValue(Promise.resolve());
@@ -134,7 +135,7 @@ describe('App', () => {
 
       spyOn(plt, 'exitApp');
       spyOn(rootNav, 'pop');
-      spyOn(nestedNav, 'pop');
+      spyOn(nestedNav, 'pop').and.returnValue(Promise.resolve());
       spyOn(portal, 'pop');
 
       const rootView1 = mockView();
@@ -184,7 +185,7 @@ describe('App', () => {
       app.registerRootNav(nav);
 
       spyOn(plt, 'exitApp');
-      spyOn(nav, 'pop');
+      spyOn(nav, 'pop').and.returnValue(Promise.resolve());
       spyOn(portal, 'pop');
 
       const view1 = mockView();
@@ -270,6 +271,45 @@ describe('App', () => {
       expect(plt.exitApp).not.toHaveBeenCalled();
     });
 
+    it('should first pop the from the nav controller with the most recent view, then pop subsequent views, and eventually exit the app when there isnt anything left to pop', () => {
+      const nav = mockNavController();
+      app.registerRootNav(nav);
+
+      const navTwo = mockNavController();
+      app.registerRootNav(navTwo);
+
+      spyOn(plt, 'exitApp');
+      spyOn(nav, 'pop').and.returnValue(Promise.resolve());
+      spyOn(navTwo, 'pop').and.returnValue(Promise.resolve());
+      spyOn(portal, 'pop');
+
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const view3 = mockView();
+      view3._ts = view3._ts + 1000;
+      const view4 = mockView();
+      view4._ts = view4._ts + 1000;
+      mockViews(navTwo, [view3, view4]);
+
+      app.goBack();
+
+      mockViews(navTwo, [view3]);
+
+      expect(portal.pop).not.toHaveBeenCalled();
+      expect(nav.pop).not.toHaveBeenCalled();
+      expect(navTwo.pop).toHaveBeenCalled();
+      expect(plt.exitApp).not.toHaveBeenCalled();
+
+      app.goBack();
+      expect(nav.pop).toHaveBeenCalled();
+
+      mockViews(nav, [view1]);
+
+      app.goBack();
+      expect(plt.exitApp).toHaveBeenCalled();
+    });
   });
 
   describe('getActiveNav', () => {
