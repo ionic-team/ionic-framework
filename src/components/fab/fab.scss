@@ -79,14 +79,13 @@ ion-fab {
 
   &[center] {
     @include position(null, null, null, 50%);
-
     @include margin-horizontal(-$fab-size / 2, null);
   }
 
   &[middle] {
-    top: 50%;
+    @include margin(-$fab-size / 2, null, null, null);
 
-    margin-top: -$fab-size / 2;
+    top: 50%;
   }
 
   &[top] {
@@ -95,7 +94,9 @@ ion-fab {
 
   &[right] {
     // scss-lint:disable PropertySpelling
-    right: $fab-content-margin;
+    @include multi-dir() {
+      right: $fab-content-margin;
+    }
   }
 
   &[end] {
@@ -108,7 +109,9 @@ ion-fab {
 
   &[left] {
     // scss-lint:disable PropertySpelling
-    left: $fab-content-margin;
+    @include multi-dir() {
+      left: $fab-content-margin;
+    }
   }
 
   &[start] {

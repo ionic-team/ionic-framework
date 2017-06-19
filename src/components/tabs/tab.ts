@@ -6,7 +6,6 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { Keyboard } from '../../platform/keyboard';
 import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
@@ -71,8 +70,8 @@ import { ViewController } from '../../navigation/view-controller';
  *
  *   // set some user information on chatParams
  *   chatParams = {
- *     user1: "admin",
- *     user2: "ionic"
+ *     user1: 'admin',
+ *     user2: 'ionic'
  *   };
  *
  *   constructor() {
@@ -86,7 +85,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```ts
  * export class ChatPage {
  *   constructor(navParams: NavParams) {
- *     console.log("Passed params", navParams.data);
+ *     console.log('Passed params', navParams.data);
  *   }
  * }
  * ```
@@ -267,7 +266,6 @@ export class Tab extends NavControllerBase implements ITab {
     app: App,
     config: Config,
     plt: Platform,
-    keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
@@ -280,7 +278,7 @@ export class Tab extends NavControllerBase implements ITab {
     errHandler: ErrorHandler
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler);
+    super(parent, app, config, plt, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');

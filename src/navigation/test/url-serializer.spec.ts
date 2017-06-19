@@ -11,7 +11,7 @@ import {
   UrlSerializer,
   urlToNavGroupStrings,
   } from '../url-serializer';
-import { mockNavController, mockDeepLinkConfig, noop, MockView1, MockView2, MockView3, MockView4, MockView5 } from '../../util/mock-providers';
+import { mockNavController, mockDeepLinkConfig, noop, MockView1, MockView2, MockView3 } from '../../util/mock-providers';
 
 
 describe('UrlSerializer', () => {

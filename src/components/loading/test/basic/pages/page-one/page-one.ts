@@ -268,4 +268,17 @@ export class PageOne {
     loading2.present();
     loading2.dismiss();
   }
+
+  presentLoadingBackdropDismiss() {
+    const loading = this.loadingCtrl.create({
+      content: 'Tap on backdrop to dismiss',
+      enableBackdropDismiss: true
+    });
+
+    loading.onDidDismiss(() => {
+      console.log('Dismissed loading');
+    });
+
+    loading.present();
+  }
 }

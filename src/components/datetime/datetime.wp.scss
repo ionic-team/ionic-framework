@@ -12,7 +12,7 @@ $datetime-wp-padding-top:         $item-wp-padding-top !default;
 // deprecated
 $datetime-wp-padding-right:       ($item-wp-padding-end / 2) !default;
 /// @prop - Padding end of the DateTime component
-$datetime-wp-padding-end:         $datetime-wp-padding-right;
+$datetime-wp-padding-end:         $datetime-wp-padding-right !default;
 
 /// @prop - Padding bottom of the DateTime component
 $datetime-wp-padding-bottom:      $item-wp-padding-bottom !default;
@@ -20,7 +20,7 @@ $datetime-wp-padding-bottom:      $item-wp-padding-bottom !default;
 // deprecated
 $datetime-wp-padding-left:        $item-wp-padding-start !default;
 /// @prop - Padding start of the DateTime component
-$datetime-wp-padding-start:       $datetime-wp-padding-left;
+$datetime-wp-padding-start:       $datetime-wp-padding-left !default;
 
 /// @prop - Border width of the DateTime component
 $datetime-wp-border-width:        2px !default;
@@ -48,7 +48,7 @@ $datetime-wp-placeholder-color:   $input-wp-border-color !default;
 }
 
 .item-datetime .datetime-wp ion-label[floating] {
-  transform: translate3d(8px, 41px, 0);
+  @include transform(translate3d(8px, 41px, 0));
 }
 
 .datetime-wp .datetime-placeholder {

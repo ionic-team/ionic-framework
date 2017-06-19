@@ -470,8 +470,8 @@ $button-md-strong-font-weight:                  bold !default;
 // it's display none, and .md sets to display block.
 
 .button-effect {
-  @include position(0, null, null, 0);
   @include border-radius(50%);
+  @include transform-origin(center, center);
 
   position: absolute;
   z-index: 0;
@@ -480,13 +480,19 @@ $button-md-strong-font-weight:                  bold !default;
   background-color: $button-md-ripple-background-color;
   opacity: .2;
 
-  transform-origin: center center;
   transition-timing-function: ease-in-out;
 
   pointer-events: none;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    top: 0;
+
+    left: 0;
+  }
 }
 
-.md .button-effect {
+.md button .button-effect {
   display: block;
 }
 

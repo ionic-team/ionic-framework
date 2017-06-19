@@ -72,7 +72,7 @@ export class Searchbar extends BaseInput<string> {
   @Input() cancelButtonText: string = 'Cancel';
 
   /**
-   * @input {boolean} If true, show the cancel button.
+   * @input {boolean} If true, show the cancel button. Default `false`.
    */
   @Input()
   get showCancelButton(): boolean {
@@ -129,7 +129,7 @@ export class Searchbar extends BaseInput<string> {
   @Input() type: string = 'search';
 
   /**
-   * @input {boolean} If true, enable searchbar animation.
+   * @input {boolean} If true, enable searchbar animation. Default `false`.
    */
   @Input()
   get animated(): boolean {
@@ -188,8 +188,11 @@ export class Searchbar extends BaseInput<string> {
    */
   _inputUpdated() {
     const ele = this._searchbarInput.nativeElement;
-    if (ele) {
-      ele.value = this.value;
+    const value = this._value;
+    // It is important not to re-assign the value if it is the same, because,
+    // otherwise, the caret is moved to the end of the input
+    if (ele.value !== value) {
+      ele.value = value;
     }
     this.positionElements();
   }
@@ -238,11 +241,19 @@ export class Searchbar extends BaseInput<string> {
 
       // Set the input padding start
       var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
-      inputEle.style.paddingLeft = inputLeft;
+      if (this._plt.isRTL) {
+        inputEle.style.paddingRight = inputLeft;
+      } else {
+        inputEle.style.paddingLeft = inputLeft;
+      }
 
       // Set the icon margin start
       var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
-      iconEle.style.marginLeft = iconLeft;
+      if (this._plt.isRTL) {
+        iconEle.style.marginRight = iconLeft;
+      } else {
+        iconEle.style.marginLeft = iconLeft;
+      }
     }
   }
 
@@ -257,11 +268,19 @@ export class Searchbar extends BaseInput<string> {
       var cancelStyle = cancelStyleEle.style;
       this._isCancelVisible = showShowCancel;
       if (showShowCancel) {
-        cancelStyle.marginRight = '0';
+        if (this._plt.isRTL) {
+          cancelStyle.marginLeft = '0';
+        } else {
+          cancelStyle.marginRight = '0';
+        }
       } else {
         var offset = cancelStyleEle.offsetWidth;
         if (offset > 0) {
-          cancelStyle.marginRight = -offset + 'px';
+          if (this._plt.isRTL) {
+            cancelStyle.marginLeft = -offset + 'px';
+          } else {
+            cancelStyle.marginRight = -offset + 'px';
+          }
         }
       }
     }
@@ -313,7 +332,7 @@ export class Searchbar extends BaseInput<string> {
   clearInput(ev: UIEvent) {
     this.ionClear.emit(ev);
 
-    // setTimeout() fixes https://github.com/driftyco/ionic/issues/7527
+    // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
     setTimeout(() => {
       let value = this._value;

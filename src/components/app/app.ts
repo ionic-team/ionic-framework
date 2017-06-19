@@ -31,6 +31,7 @@ export class App {
   private _titleSrv: Title = new Title(DOCUMENT);
   private _rootNavs = new Map<string, NavigationContainer>();
   private _disableScrollAssist: boolean;
+  private _didScroll = false;
 
   /**
    * @hidden
@@ -87,6 +88,11 @@ export class App {
     // register this back button action with a default priority
     _plt.registerBackButtonAction(this.goBack.bind(this));
     this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
+
+    const blurring = _config.getBoolean('inputBlurring', false);
+    if (blurring) {
+      this._enableInputBlurring();
+    }
 
     runInDev(() => {
       // During developement, navPop can be triggered by calling
@@ -180,6 +186,7 @@ export class App {
    */
   setScrolling() {
     this._scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
+    this._didScroll = true;
   }
 
   /**
@@ -247,7 +254,6 @@ export class App {
     // TODO: move _setNav() to the earlier stages of NavController. _queueTrns()
     enteringView._setNav(portal);
 
-    opts.keyboardClose = false;
     opts.direction = DIRECTION_FORWARD;
 
     if (!opts.animation) {
@@ -255,7 +261,7 @@ export class App {
     }
 
     enteringView.setLeavingOpts({
-      keyboardClose: false,
+      keyboardClose: opts.keyboardClose,
       direction: DIRECTION_BACK,
       animation: enteringView.getTransitionName(DIRECTION_BACK),
       ev: opts.ev
@@ -304,7 +310,6 @@ export class App {
       const activeNav = this.getActiveNav(navContainer.id);
       const poppable = getPoppableNav(activeNav);
       if (poppable) {
-        console.log('poppable: ', poppable.id);
         const topViewController = poppable.last();
         if (poppable._isPortal || (topViewController && poppable.length() > 1 && (!mostRecentVC || topViewController._ts >=  mostRecentVC._ts))) {
           mostRecentVC = topViewController;
@@ -312,11 +317,65 @@ export class App {
         }
       }
     });
-    console.log('navToPop: ', navToPop ? navToPop.id : 'its null')
     if (navToPop) {
       return navToPop.pop();
     }
   }
+
+  /**
+   * @hidden
+   */
+  _enableInputBlurring() {
+    console.debug('App: _enableInputBlurring');
+    let focused = true;
+    const self = this;
+    const platform = this._plt;
+
+    platform.registerListener(platform.doc(), 'focusin', onFocusin, { capture: true, zone: false, passive: true });
+    platform.registerListener(platform.doc(), 'touchend', onTouchend, { capture: false, zone: false, passive: true });
+
+    function onFocusin(ev: any) {
+      focused = true;
+    }
+    function onTouchend(ev: any) {
+      // if app did scroll return early
+      if (self._didScroll) {
+        self._didScroll = false;
+        return;
+      }
+      const active = <HTMLElement> self._plt.getActiveElement();
+      if (!active) {
+        return;
+      }
+      // only blur if the active element is a text-input or a textarea
+      if (SKIP_BLURRING.indexOf(active.tagName) === -1) {
+        return;
+      }
+
+      // if the selected target is the active element, do not blur
+      const tapped = ev.target;
+      if (tapped === active) {
+        return;
+      }
+      if (SKIP_BLURRING.indexOf(tapped.tagName) >= 0) {
+        return;
+      }
+
+      // skip if div is a cover
+      if (tapped.classList.contains('input-cover')) {
+        return;
+      }
+
+      focused = false;
+      // TODO: find a better way, why 50ms?
+      platform.timeout(() => {
+        if (!focused) {
+          active.blur();
+        }
+      }, 50);
+    }
+  }
+
 }
 
 
@@ -350,5 +409,6 @@ function findTopNav(nav: NavigationContainer): NavigationContainer {
   return nav;
 }
 
+const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
 const ACTIVE_SCROLLING_TIME = 100;
 const CLICK_BLOCK_BUFFER_IN_MILLIS = 64;

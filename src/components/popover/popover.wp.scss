@@ -30,6 +30,7 @@ $popover-wp-background:                $background-wp-color !default;
 
 .popover-wp .popover-content {
   @include border-radius($popover-wp-border-radius);
+  @include transform-origin(start, top);
 
   width: $popover-wp-width;
   min-width: $popover-wp-min-width;
@@ -39,8 +40,6 @@ $popover-wp-background:                $background-wp-color !default;
   border: $popover-wp-border;
   color: $popover-wp-text-color;
   background: $popover-wp-background;
-
-  transform-origin: top left;
 }
 
 .popover-wp .popover-viewport {

@@ -4,7 +4,7 @@ export interface LoadingOptions {
   content?: string;
   cssClass?: string;
   showBackdrop?: boolean;
+  enableBackdropDismiss?: boolean;
   dismissOnPageChange?: boolean;
-  delay?: number;
   duration?: number;
 }

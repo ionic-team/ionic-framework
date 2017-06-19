@@ -91,11 +91,11 @@ const enum SlidingState {
  * ### Button Layout
  * If an icon is placed with text in the option button, by default it will
  * display the icon on top of the text. This can be changed to display the icon
- * to the left of the text by setting `icon-left` as an attribute on the
+ * to the left of the text by setting `icon-start` as an attribute on the
  * `<ion-item-options>` element.
  *
  * ```html
- * <ion-item-options icon-left>
+ * <ion-item-options icon-start>
  *    <button ion-button (click)="archive(item)">
  *      <ion-icon name="archive"></ion-icon>
  *      Archive
@@ -104,6 +104,23 @@ const enum SlidingState {
  *
  * ```
  *
+ * ### Expandable Options
+ *
+ * Options can be expanded to take up the full width of the item if you swipe past
+ * a certain point. This can be combined with the `ionSwipe` event to call methods
+ * on the class.
+ *
+ * ```html
+ *
+ * <ion-item-sliding (ionSwipe)="delete(item)">
+ *   <ion-item>Item</ion-item>
+ *   <ion-item-options>
+ *     <button ion-button expandable (click)="delete(item)">Delete</button>
+ *   </ion-item-options>
+ * </ion-item-sliding>
+ * ```
+ *
+ * We can call `delete` by either clicking the button, or by doing a full swipe on the item.
  *
  * @demo /docs/demos/src/item-sliding/
  * @see {@link /docs/components#lists List Component Docs}
@@ -327,24 +344,24 @@ export class ItemSliding {
 
     if (isFinal) {
       this.item.setElementStyle(platform.Css.transition, '');
+    }
+
+    if (openAmount > 0) {
+      var state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
+        ? SlidingState.Right | SlidingState.SwipeRight
+        : SlidingState.Right;
+
+      this._setState(state);
+
+    } else if (openAmount < 0) {
+      var state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
+        ? SlidingState.Left | SlidingState.SwipeLeft
+        : SlidingState.Left;
+
+      this._setState(state);
 
     } else {
-      if (openAmount > 0) {
-        var state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
-          ? SlidingState.Right | SlidingState.SwipeRight
-          : SlidingState.Right;
-
-        this._setState(state);
-
-      } else if (openAmount < 0) {
-        var state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
-          ? SlidingState.Left | SlidingState.SwipeLeft
-          : SlidingState.Left;
-
-        this._setState(state);
-      }
-    }
-    if (openAmount === 0) {
+      assert(openAmount === 0, 'bad internal state');
       this._tmr = platform.timeout(() => {
         this._setState(SlidingState.Disabled);
         this._tmr = null;
@@ -354,7 +371,7 @@ export class ItemSliding {
     }
 
     this.item.setElementStyle(platform.Css.transform, `translate3d(${-openAmount}px,0,0)`);
-    let ionDrag = this.ionDrag;
+    const ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
       ionDrag.emit(this);
     }
