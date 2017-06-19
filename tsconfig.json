@@ -14,7 +14,7 @@
     "target": "es2015",
     "typeRoots": [
       "./node_modules/@types"
-    ],    
+    ],
     "types": ["jasmine", "systemjs"]
   },
   "include": [
@@ -28,6 +28,7 @@
   },
   "angularCompilerOptions": {
     "annotationsAs": "static fields",
-    "annotateForClosureCompiler": true
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true
   }
 }
