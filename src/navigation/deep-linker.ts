@@ -433,7 +433,7 @@ export class DeepLinker {
 
     // ok, so they must be pushing a new view to the stack
     // since we didn't find this same component already in the stack
-    nav.push(segment.component, segment.data, {
+    nav.push(segment.name, segment.data, {
       id: segment.id, animate: false, updateUrl: false
     }, done);
   }
