@@ -1,5 +1,4 @@
 import { Renderer, TypeDecorator } from '@angular/core';
-
 import { DeepLinker } from './deep-linker';
 import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
@@ -98,7 +97,15 @@ export function isTab(nav: any): boolean {
 
 export function isNav(nav: any): boolean {
   // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
-  return !!nav && !!nav.push;
+  return !!nav && !!nav.push && nav.getType() === 'nav';
+}
+
+export function linkToSegment(navId: string, type: string, secondaryId: string, link: NavLink): NavSegment {
+  const segment = <NavSegment> Object.assign({}, link);
+  segment.navId = navId;
+  segment.type = type;
+  segment.secondaryId = secondaryId;
+  return segment;
 }
 
 /**
@@ -138,8 +145,8 @@ export interface NavLink {
   loadChildren?: string;
   name?: string;
   segment?: string;
-  parts?: string[];
-  partsLen?: number;
+  segmentParts?: string[];
+  segmentPartsLen?: number;
   staticLen?: number;
   dataLen?: number;
   dataKeys?: {[key: string]: boolean};
@@ -160,8 +167,18 @@ export interface NavSegment {
   component?: any;
   loadChildren?: string;
   data: any;
-  navId?: string;
+  type: string;
+  navId: string;
+  secondaryId: string;
   defaultHistory?: NavSegment[];
+}
+
+export interface NavGroup {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  segmentPieces?: string[];
+  tabSegmentPieces?: string[];
 }
 
 export interface NavOptions {
@@ -217,3 +234,6 @@ export const INIT_ZINDEX = 100;
 export const DIRECTION_BACK = 'back';
 export const DIRECTION_FORWARD = 'forward';
 export const DIRECTION_SWITCH = 'switch';
+
+export const NAV = 'nav';
+export const TABS = 'tabs';

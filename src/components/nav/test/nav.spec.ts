@@ -22,14 +22,14 @@ describe('Nav', () => {
         component: knownComponent
       };
       const knownViews = {};
-      spyOn(nav._linker, 'initNav').and.returnValue(knownSegment);
+      spyOn(nav._linker, 'getSegmentByNavId').and.returnValue(knownSegment);
       spyOn(nav._linker, 'initViews').and.returnValue(Promise.resolve(knownViews));
       spyOn(nav, 'setPages');
 
       const promise = nav.ngAfterViewInit();
 
       promise.then(() => {
-        expect(nav._linker.initViews).toHaveBeenCalledWith(knownSegment);
+        expect(nav._linker.getSegmentByNavId).toHaveBeenCalledWith(nav.id);
         expect(nav.setPages).toHaveBeenCalledWith(knownViews, null, null);
         done();
       }).catch((err: Error) => {
@@ -45,7 +45,7 @@ describe('Nav', () => {
         loadChildren: knownLoadChildren
       };
       const knownViews = {};
-      spyOn(nav._linker, 'initNav').and.returnValue(knownSegment);
+      spyOn(nav._linker, 'getSegmentByNavId').and.returnValue(knownSegment);
       spyOn(nav._linker, 'initViews').and.returnValue(Promise.resolve(knownViews));
       spyOn(nav, 'setPages');
 

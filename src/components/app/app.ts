@@ -6,9 +6,10 @@ import * as Constants from './app-constants';
 import { ClickBlock } from './click-block';
 import { runInDev, assert } from '../../util/util';
 import { Config } from '../../config/config';
-import { isNav, NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../../navigation/nav-util';
+import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK, isTabs } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
-import { NavController } from '../../navigation/nav-controller';
+import { NavigationContainer } from '../../navigation/navigation-container';
+import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { IOSTransition } from '../../transitions/transition-ios';
@@ -28,7 +29,7 @@ export class App {
   private _scrollTime: number = 0;
   private _title: string = '';
   private _titleSrv: Title = new Title(DOCUMENT);
-  private _rootNav: NavController = null;
+  private _rootNavs = new Map<string, NavigationContainer>();
   private _disableScrollAssist: boolean;
   private _didScroll = false;
 
@@ -207,26 +208,38 @@ export class App {
   /**
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
-  getActiveNav(): NavController {
+  getActiveNav(navId: string): NavControllerBase {
     const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
-      return findTopNav(portal);
+      return <NavControllerBase> findTopNav(portal);
     }
-    return findTopNav(this._rootNav || null);
+    if (!this._rootNavs || !this._rootNavs.size || !this._rootNavs.has(navId)) {
+      return null;
+    }
+    return <NavControllerBase> findTopNav(this.getRootNavById(navId));
   }
 
   /**
    * @return {NavController} Returns the root NavController
    */
-  getRootNav(): NavController {
-    return this._rootNav;
+  getRootNavById(navId: string): NavigationContainer {
+    return this._rootNavs.get(navId);
   }
 
   /**
    * @hidden
    */
-  _setRootNav(nav: any) {
-    this._rootNav = nav;
+  registerRootNav(nav: NavigationContainer) {
+    this._rootNavs.set(nav.id, nav);
+  }
+
+  getActiveNavContainers(): NavigationContainer[] {
+    // for each root nav container, get it's active nav
+    const list: NavigationContainer[] = [];
+    this._rootNavs.forEach((container: NavigationContainer) => {
+      list.push(findTopNav(container));
+    });
+    return list;
   }
 
   /**
@@ -266,7 +279,7 @@ export class App {
     }
 
     const navPromise = this.navPop();
-    if (navPromise === null) {
+    if (!navPromise) {
       // no views to go back to
       // let's exit the app
       if (this._config.getBoolean('navExitApp', true)) {
@@ -281,7 +294,7 @@ export class App {
    * @hidden
    */
   navPop(): Promise<any> {
-    if (!this._rootNav || !this.isEnabled()) {
+    if (!this._rootNavs || this._rootNavs.size === 0 || !this.isEnabled()) {
       return Promise.resolve();
     }
 
@@ -290,9 +303,23 @@ export class App {
     if (portal.length() > 0) {
       return Promise.resolve();
     }
-    // next get the active nav, check itself and climb up all
-    // of its parent navs until it finds a nav that can pop
-    return recursivePop(this.getActiveNav());
+
+    let navToPop: NavControllerBase = null;
+    let mostRecentVC: ViewController = null;
+    this._rootNavs.forEach((navContainer: NavigationContainer) => {
+      const activeNav = this.getActiveNav(navContainer.id);
+      const poppable = getPoppableNav(activeNav);
+      if (poppable) {
+        const topViewController = poppable.last();
+        if (poppable._isPortal || (topViewController && poppable.length() > 1 && (!mostRecentVC || topViewController._ts >=  mostRecentVC._ts))) {
+          mostRecentVC = topViewController;
+          navToPop = poppable;
+        }
+      }
+    });
+    if (navToPop) {
+      return navToPop.pop();
+    }
   }
 
   /**
@@ -351,34 +378,34 @@ export class App {
 
 }
 
-function recursivePop(nav: any): Promise<any> {
+
+function getPoppableNav(nav: NavControllerBase): NavControllerBase {
   if (!nav) {
     return null;
   }
-  if (isNav(nav)) {
-    var len = nav.length();
-    if (len > 1 || (nav._isPortal && len > 0)) {
-      // this nav controller has more than one view
-      // pop the current view on this nav and we're done here
-      console.debug('app, goBack pop nav');
-      return nav.pop();
-    }
+
+  if (isTabs(nav)) {
+    // tabs aren't a nav, so just call this function again immediately on the parent on tabs
+    return getPoppableNav(nav.parent);
+  }
+  const len = nav.length();
+  if (len > 1 || (nav._isPortal && len > 0)) {
+    // this nav controller has more than one view
+    // use this nav!
+    return nav;
   }
   // try again using the parent nav (if there is one)
-  return recursivePop(nav.parent);
+  return getPoppableNav(nav.parent);
 }
 
-function findTopNav(nav: NavController) {
-  var activeChildNav: any;
-
+function findTopNav(nav: NavigationContainer): NavigationContainer {
   while (nav) {
-    activeChildNav = nav.getActiveChildNav();
-    if (!activeChildNav) {
+    const childNav = nav.getActiveChildNav();
+    if (!childNav) {
       break;
     }
-    nav = activeChildNav;
+    nav = childNav;
   }
-
   return nav;
 }
 

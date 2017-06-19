@@ -46,6 +46,7 @@ export class ViewController {
   _zIndex: number;
   _state: number = STATE_NEW;
   _cssClass: string;
+  _ts: number;
 
   /**
    * Observable to be subscribed to when the current component will become active
@@ -111,6 +112,7 @@ export class ViewController {
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
     this._cssClass = rootCssClass;
+    this._ts = Date.now();
   }
 
   /**
@@ -118,7 +120,7 @@ export class ViewController {
    */
   init(componentRef: ComponentRef<any>) {
     assert(componentRef, 'componentRef can not be null');
-
+    this._ts = Date.now();
     this._cmp = componentRef;
     this.instance = this.instance || componentRef.instance;
     this._detached = false;
