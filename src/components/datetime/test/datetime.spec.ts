@@ -335,6 +335,57 @@ describe('DateTime', () => {
       expect(columns[0].options[10].value).toEqual(2000);
     });
 
+    it('should generate an hour label column', () => {
+      datetime.pickerFormat = 'h';
+      datetime.hourLabel = 'hours';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(2);
+      expect(columns[1].options.length).toEqual(1);
+      expect(columns[1].options[0].value).toEqual('hours');
+      expect(columns[1].options[0].text).toEqual('hours');
+    });
+
+    it('should generate a minute label column', () => {
+      datetime.pickerFormat = 'm';
+      datetime.minuteLabel = 'minutes';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(2);
+      expect(columns[1].options.length).toEqual(1);
+      expect(columns[1].options[0].value).toEqual('minutes');
+      expect(columns[1].options[0].text).toEqual('minutes');
+    });
+
+    it('should generate a second label column', () => {
+      datetime.pickerFormat = 's';
+      datetime.secondLabel = 'seconds';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(2);
+      expect(columns[1].options.length).toEqual(1);
+      expect(columns[1].options[0].value).toEqual('seconds');
+      expect(columns[1].options[0].text).toEqual('seconds');
+    });
+
+    it('should not generate label columns if attribute is not being formatted', () => {
+      datetime.pickerFormat = 'YYYY';
+      datetime.hourLabel = 'hours';
+      datetime.minuteLabel = 'minutes';
+      datetime.secondLabel = 'seconds';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      expect(columns.length).toEqual(1);
+    });
+
   });
 
   describe('calcMinMax', () => {
