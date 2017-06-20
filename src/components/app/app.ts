@@ -208,15 +208,35 @@ export class App {
   /**
    * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
    */
-  getActiveNav(navId: string): NavControllerBase {
+  getActiveNav(navId?: string): NavControllerBase {
     const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
       return <NavControllerBase> findTopNav(portal);
     }
-    if (!this._rootNavs || !this._rootNavs.size || !this._rootNavs.has(navId)) {
+    if (!this._rootNavs || !this._rootNavs.size) {
       return null;
     }
+    if (this._rootNavs.size === 1) {
+      return <NavControllerBase> findTopNav(this._rootNavs.values().next().value);
+    }
     return <NavControllerBase> findTopNav(this.getRootNavById(navId));
+  }
+
+  getRootNav(): any {
+    console.warn('(getRootNav) is deprecated and will be removed in the next major release. Use getRootNavById instead.');
+    const rootNavs = this.getRootNavs();
+    if (rootNavs.length === 0) {
+      return null;
+    } else if (rootNavs.length > 1) {
+      console.warn('(getRootNav) there are multiple root navs, use getRootNavs instead');
+    }
+    return rootNavs[0];
+  }
+
+  getRootNavs(): any[] {
+    const navs: NavigationContainer[] = [];
+    this._rootNavs.forEach(nav => navs.push(nav));
+    return navs;
   }
 
   /**
@@ -232,6 +252,7 @@ export class App {
   registerRootNav(nav: NavigationContainer) {
     this._rootNavs.set(nav.id, nav);
   }
+
 
   getActiveNavContainers(): NavigationContainer[] {
     // for each root nav container, get it's active nav

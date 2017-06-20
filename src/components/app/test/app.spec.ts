@@ -431,6 +431,49 @@ describe('App', () => {
       expect(activeNavOne).toBe(childNavOne);
       expect(activeNavTwo).toBe(childNavTwo);
     });
+
+    it('should get the active nav when no id is provided assuming there is one nav', () => {
+      const rootNavOne = mockNavController();
+      app.registerRootNav(rootNavOne);
+
+      const childNavOne = mockNavController();
+      rootNavOne.registerChildNav(childNavOne);
+
+      const result = app.getActiveNav();
+
+      expect(result).toEqual(childNavOne);
+    });
+  });
+
+  describe('getRootNavs', () => {
+    it('should return an array of navs', () => {
+      const rootNavOne = mockNavController();
+      app.registerRootNav(rootNavOne);
+      const rootNavTwo = mockNavController();
+      app.registerRootNav(rootNavTwo);
+
+      const results = app.getRootNavs();
+      expect(results.length).toEqual(2);
+    });
+  });
+
+  describe('getRootNav', () => {
+    it('should return the single root nav', () => {
+      const rootNavOne = mockNavController();
+      app.registerRootNav(rootNavOne);
+      const result = app.getRootNav();
+      expect(result).toEqual(rootNavOne);
+    });
+
+    it('should return the first nav in the list for backwards compatibility', () => {
+      const rootNavOne = mockNavController();
+      app.registerRootNav(rootNavOne);
+      const rootNavTwo = mockNavController();
+      app.registerRootNav(rootNavTwo);
+
+      const result = app.getRootNav();
+      expect(result).toEqual(rootNavOne);
+    });
   });
 
   describe('setEnabled', () => {
