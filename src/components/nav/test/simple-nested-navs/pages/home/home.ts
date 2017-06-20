@@ -26,7 +26,6 @@ import { IonicPage, NavController } from '../../../../../..';
 export class HomePage {
 
   constructor(public navCtrl: NavController) {
-
   }
 
   clickMe() {
