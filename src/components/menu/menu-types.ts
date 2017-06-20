@@ -103,10 +103,9 @@ class MenuSplitType extends MenuType {
     constructor(menu: Menu, plt: Platform) {
         super(plt);
 
-        const openedX = (menu.width() * (menu.isRightSide ? -1 : 1));
         const contentOpen = new Animation(plt, menu.getContentElement());
-        contentOpen.fromTo('translateX', '0px', openedX + 'px');
-        contentOpen.fromTo('width', '100%', `calc(100% - ${Math.abs(openedX)}px)`);
+        contentOpen.fromTo('width', '100%', 'calc(100% - ' + menu.width() + 'px');
+        contentOpen.fromTo(menu.isRightSide ? 'right' : 'left', '0px', menu.width()+ 'px');
         this.ani.add(contentOpen);
     }
 }
