@@ -428,7 +428,7 @@ export function _loadViewForSegment(navContainer: NavigationContainer, segment: 
   }
   // ok, so they must be pushing a new view to the stack
   // since we didn't find this same component already in the stack
-  return navController.push(segment.component, segment.data, {
+  return navController.push(segment.component || segment.name, segment.data, {
     id: segment.id, animate: false, updateUrl: false
   }, done);
 }
