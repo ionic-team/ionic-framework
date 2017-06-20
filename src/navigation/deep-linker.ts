@@ -147,9 +147,11 @@ export class DeepLinker {
       if (isNav(nav)) {
         segments.push(this.getSegmentFromNav(nav as NavController));
         nav = nav.parent;
-      } else {
+      } else if (isTab(nav)) {
         segments.push(this.getSegmentFromTab(nav));
         nav = nav.parent && nav.parent.parent;
+      } else {
+        nav = nav.parent;
       }
     }
     return segments.reverse();
