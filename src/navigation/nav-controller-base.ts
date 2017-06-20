@@ -959,7 +959,7 @@ export class NavControllerBase extends Ion implements NavController {
     return !!this._child;
   }
 
-  getActiveChildNav(): NavigationContainer {
+  getActiveChildNav(): any {
     return this._child;
   }
 
