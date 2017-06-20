@@ -4,7 +4,7 @@
 
 ### Bug Fixes
 
-* **rtl:** use multi direction in order to override the default ltr ([548e182](https://github.com/ionic-team/ionic/commit/548e182))
+* **rtl:** use multi direction in order to override the default ltr ([70b5b6](https://github.com/ionic-team/ionic/commit/70b5b6))
 
 
 
@@ -14,7 +14,7 @@
 
 ### Bug Fixes
 
-* **themes:** change default app-direction ([ce92be0](https://github.com/ionic-team/ionic/commit/ce92be0))
+* **themes:** change default app-direction ([1ca7df](https://github.com/ionic-team/ionic/commit/1ca7df))
 
 
 
