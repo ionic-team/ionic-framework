@@ -1,5 +1,4 @@
-import { Component, h } from '../index';
-import { VNodeData } from '../../util/interfaces';
+import { Component, h, VNodeData } from '@stencil/core';
 
  /**
   * @name Slide

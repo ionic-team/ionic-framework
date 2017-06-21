@@ -1,6 +1,7 @@
-import { Component, h, Ionic, Listen, Prop } from '../index';
-import { AnimationBuilder, Animation, Modal as IModal, ModalEvent } from '../../util/interfaces';
-import { createThemedClasses } from '../../util/theme';
+import { Component, h, Listen, Prop } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
+import { AnimationBuilder, Animation, Modal as IModal, ModalEvent } from '../../utils/interfaces';
+import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';

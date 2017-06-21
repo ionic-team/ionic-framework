@@ -1,6 +1,6 @@
-import { Component, h, Ionic, Prop } from '../index';
-import { createThemedClasses } from '../../util/theme';
-import { VNodeData } from '../../util/interfaces';
+import { Component, h, Prop, VNodeData } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
+import { createThemedClasses } from '../../utils/theme';
 
 
 /**

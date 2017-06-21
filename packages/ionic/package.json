@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
+  "dependencies": {
+    "@stencil/core": "^0.0.1"
+  },
   "author": "Ionic Team",
   "license": "MIT",
   "bugs": {

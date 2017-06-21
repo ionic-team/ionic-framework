@@ -1,5 +1,5 @@
-import { Animation, Menu, MenuType as IMenuType } from '../../util/interfaces';
-import { Ionic } from '../index';
+import { Animation, Menu, MenuType as IMenuType } from '../../utils/interfaces';
+import { Ionic } from '../../utils/interfaces';
 
 
 /**

@@ -1,6 +1,6 @@
-import { Component, Prop, h, Listen } from '../index';
-import { CssClassObject } from '../../util/interfaces';
-import { createThemedClasses } from '../../util/theme';
+import { Component, Prop, h, Listen } from '@stencil/core';
+import { CssClassObject } from '../../utils/interfaces';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({

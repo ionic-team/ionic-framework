@@ -1,4 +1,4 @@
-import { Component, h } from '../index';
+import { Component, h } from '@stencil/core';
 
 @Component({
   tag: 'ion-list',

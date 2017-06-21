@@ -1,5 +1,6 @@
-import { Component, Ionic, Listen } from '../index';
-import { GlobalNamespace, ModalEvent, ModalOptions, Modal, IonicControllerApi } from '../../util/interfaces';
+import { Component, Listen } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
+import { GlobalNamespace, ModalEvent, ModalOptions, Modal, IonicControllerApi } from '../../utils/interfaces';
 
 
 @Component({

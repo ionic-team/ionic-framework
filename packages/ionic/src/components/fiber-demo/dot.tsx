@@ -1,5 +1,5 @@
-import { Component, Prop, h, State } from '../index';
-import { VNodeData } from '../../util/interfaces';
+import { Component, Prop, h, State } from '@stencil/core';
+import { VNodeData } from '../../utils/interfaces';
 
 @Component({
   tag: 'fiber-dot'

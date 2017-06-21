@@ -1,5 +1,5 @@
-import { Component, Prop, h } from '../index';
-import { createThemedClasses } from '../../util/theme';
+import { Component, Prop, h } from '@stencil/core';
+import { createThemedClasses } from '../../utils/theme';
 
 /**
  * @name Title

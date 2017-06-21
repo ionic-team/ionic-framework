@@ -1,7 +1,8 @@
-import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../util/helpers';
 import { BlockerDelegate } from './gesture-controller';
-import { Component, Ionic, Listen, Prop, Watch } from '../index';
-import { GestureCallback, GestureDetail, GlobalNamespace } from '../../util/interfaces';
+import { Component, Listen, Prop, Watch } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
+import { GestureCallback, GestureDetail, GlobalNamespace } from '../../utils/interfaces';
+import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../utils/helpers';
 import { GestureController, GestureDelegate, BLOCK_ALL } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
 

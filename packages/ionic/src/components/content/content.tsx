@@ -1,8 +1,8 @@
-import { Component, h, Ionic, Prop } from '../index';
-import { createThemedClasses } from '../../util/theme';
-import { getParentElement } from '../../util/helpers';
+import { Component, h, Ionic, Prop } from '@stencil/core';
+import { createThemedClasses } from '../../utils/theme';
+import { getParentElement } from '../../utils/helpers';
 import { Scroll } from '../scroll/scroll-interface';
-import { ScrollDetail } from '../../util/interfaces';
+import { ScrollDetail } from '../../utils/interfaces';
 
 
 @Component({

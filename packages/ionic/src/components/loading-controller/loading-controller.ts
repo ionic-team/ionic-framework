@@ -1,5 +1,6 @@
-import { Component, Ionic, Listen } from '../index';
-import { GlobalNamespace, LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../util/interfaces';
+import { Component, Listen } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
+import { GlobalNamespace, LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../utils/interfaces';
 
 
 @Component({

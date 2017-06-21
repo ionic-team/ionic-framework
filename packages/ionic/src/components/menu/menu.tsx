@@ -1,5 +1,6 @@
-import { Component, h, Ionic, Prop, Watch } from '../index';
-import { VNodeData, GlobalNamespace, Menu as IMenu } from '../../util/interfaces';
+import { Component, h, Prop, Watch } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
+import { VNodeData, GlobalNamespace, Menu as IMenu } from '../../utils/interfaces';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 

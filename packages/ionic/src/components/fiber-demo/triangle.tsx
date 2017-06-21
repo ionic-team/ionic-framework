@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '../index';
+import { Component, Prop, h } from '@stencil/core';
 
 var targetSize = 25;
 

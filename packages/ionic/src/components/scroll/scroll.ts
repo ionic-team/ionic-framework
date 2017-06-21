@@ -1,6 +1,7 @@
-import { Component, Listen, Ionic, Prop } from '../index';
+import { Component, Listen, Prop } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
 import { GestureController, GestureDelegate } from '../gesture/gesture-controller';
-import { GlobalNamespace, ScrollCallback, ScrollDetail } from '../../util/interfaces';
+import { GlobalNamespace, ScrollCallback, ScrollDetail } from '../../utils/interfaces';
 import { Scroll as IScroll } from './scroll-interface';
 
 

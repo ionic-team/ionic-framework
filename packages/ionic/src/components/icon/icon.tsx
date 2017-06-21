@@ -1,5 +1,6 @@
-import { Component, h, Ionic, Prop, State } from '../index';
-import { CssClassObject, VNodeData } from '../../util/interfaces';
+import { Component, h, Prop, State, VNodeData } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
+import { CssClassObject } from '../../utils/interfaces';
 
 @Component({
   tag: 'ion-icon',

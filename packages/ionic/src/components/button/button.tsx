@@ -1,5 +1,4 @@
-import { Component, h, Prop } from '../index';
-import { CssClassObject } from '../../util/interfaces';
+import { Component, h, Prop, CssClassObject } from '@stencil/core';
 
 /**
   * @name Button

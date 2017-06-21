@@ -1,7 +1,7 @@
-import { Component, h, Ionic, Prop } from '../index';
+import { Component, h, Prop, VNodeData } from '@stencil/core';
+import { Ionic } from '../../utils/interfaces';
 import { SPINNERS, SpinnerConfig } from './spinner-configs';
-import { createThemedClasses } from '../../util/theme';
-import { VNodeData } from '../../util/interfaces';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
