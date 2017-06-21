@@ -12,7 +12,8 @@
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
   "dependencies": {
-    "@stencil/core": "^0.0.1"
+    "@stencil/core": "^0.0.1",
+    "ionicons": "3.0.0"
   },
   "author": "Ionic Team",
   "license": "MIT",
