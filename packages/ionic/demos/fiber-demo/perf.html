@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html style="width: 100%; height: 100%; overflow: hidden">
+  <head>
+    <meta charset="utf-8">
+    <title>Ionic Perf Demo</title>
+    <script src="/dist/ionic-web/ionic.js"></script>
+    <style>
+      body {
+        background: #fff;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 15px;
+        line-height: 1.7;
+        margin: 0;
+        padding: 30px;
+      }
+
+      a {
+        color: #4183c4;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      h1 {
+        border-bottom: 1px solid #ddd;
+        font-size: 2.0em;
+        font-weight: bold;
+        margin: 0 0 15px;
+        padding: 0;
+      }
+
+      button {
+        font-weight: bold;
+        line-height: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ionic Perf Demo</h1>
+
+    <fiber-demo></fiber-demo>
+
+    <script type="text/javascript">
+      var start = Date.now();
+      var baseEl = document.querySelector('fiber-demo');
+
+      function update() {
+        baseEl.elapsed = Date.now() - start;
+        requestAnimationFrame(update);
+      }
+
+      requestAnimationFrame(update);
+    </script>
+  </body>
+</html>

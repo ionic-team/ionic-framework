@@ -1,0 +1,12 @@
+{
+  "name": "universal-demo",
+  "private": true,
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "serve": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}

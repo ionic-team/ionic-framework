@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic-web/ionic.js"></script>
+</head>
+<body>
+
+  <ion-app>
+
+    <ion-page>
+
+      <button-bar></button-bar>
+
+      <script>
+        class ButtonBar extends HTMLElement {
+          constructor() {
+            super();
+
+            const shadowRoot = this.attachShadow({ mode: 'open' });
+            shadowRoot.innerHTML = `
+              <style>
+                :host {
+
+                };
+              </style>
+
+              <ion-toolbar>
+                <ion-button>News</ion-button>
+              </ion-toolbar>
+              `;
+          }
+        }
+
+        customElements.define('button-bar', ButtonBar)
+      </script>
+
+    </ion-content>
+
+   </ion-page>
+
+  </ion-app>
+
+</body>
+</html>
