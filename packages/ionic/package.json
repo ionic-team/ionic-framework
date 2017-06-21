@@ -1,0 +1,19 @@
+{
+  "name": "@ionic/ionic",
+  "version": "0.0.1",
+  "description": "Base components for Ionic",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic.git"
+  },
+  "author": "Ionic Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://github.com/ionic-team/ionic#readme"
+}

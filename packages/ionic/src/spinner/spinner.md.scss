@@ -1,0 +1,67 @@
+@import "../../themes/ionic.globals.md";
+@import "./spinner";
+
+
+// Material Design Spinner
+// --------------------------------------------------
+
+/// @prop - Color of the ios spinner
+$spinner-md-ios-color:            #69717d !default;
+
+/// @prop - Color of the bubbles spinner
+$spinner-md-bubbles-color:        #000 !default;
+
+/// @prop - Color of the circles spinner
+$spinner-md-circles-color:        #69717d !default;
+
+/// @prop - Color of the crescent spinner
+$spinner-md-crescent-color:       #000 !default;
+
+/// @prop - Color of the dots spinner
+$spinner-md-dots-color:           #444 !default;
+
+
+.spinner-lines-md line,
+.spinner-lines-sm-md line {
+  stroke: $spinner-md-ios-color;
+}
+
+.spinner-bubbles-md circle {
+  fill: $spinner-md-bubbles-color;
+}
+
+.spinner-circles-md circle {
+  fill: $spinner-md-circles-color;
+}
+
+.spinner-crescent-md circle {
+  stroke: $spinner-md-crescent-color;
+}
+
+.spinner-dots-md circle {
+  fill: $spinner-md-dots-color;
+}
+
+
+// Generate Material Design Spinner Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .spinner-md-#{$color-name} {
+
+    &.spinner-lines line,
+    &.spinner-lines-sm line,
+    &.spinner-crescent circle {
+      stroke: $color-base;
+    }
+
+    &.spinner-bubbles circle,
+    &.spinner-circles circle,
+    &.spinner-dots circle {
+      fill: $color-base;
+    }
+
+  }
+
+}

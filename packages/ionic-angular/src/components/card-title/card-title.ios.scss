@@ -1,0 +1,84 @@
+@import "../../themes/ionic.globals.ios";
+@import "./card-title";
+
+
+// iOS Card Title
+// --------------------------------------------------
+
+/// @prop - Font size of the card title
+$card-ios-title-font-size:             1.8rem !default;
+
+// deprecated
+$card-ios-title-padding:               null !default;
+
+/// @prop - Padding top of the card title
+$card-ios-title-padding-top:           8px !default;
+
+/// @prop - Padding end of the card title
+$card-ios-title-padding-end:           0 !default;
+
+/// @prop - Padding bottom of the card title
+$card-ios-title-padding-bottom:        8px !default;
+
+/// @prop - Padding start of the card title
+$card-ios-title-padding-start:         0 !default;
+
+// deprecated
+$card-ios-title-margin:                null !default;
+
+/// @prop - Margin top of the card title
+$card-ios-title-margin-top:            2px !default;
+
+/// @prop - Margin end of the card title
+$card-ios-title-margin-end:            0 !default;
+
+/// @prop - Margin bottom of the card title
+$card-ios-title-margin-bottom:         2px !default;
+
+/// @prop - Margin start of the card title
+$card-ios-title-margin-start:          0 !default;
+
+/// @prop - Color of the card title
+$card-ios-title-text-color:            #222 !default;
+
+
+.card-title-ios {
+  display: block;
+
+  font-size: $card-ios-title-font-size;
+  line-height: 1.2;
+  color: $card-ios-title-text-color;
+
+  @include deprecated-variable(margin, $card-ios-title-margin) {
+    @include margin($card-ios-title-margin-top, $card-ios-title-margin-end, $card-ios-title-margin-bottom, $card-ios-title-margin-start);
+  }
+
+  @include deprecated-variable(padding, $card-ios-title-padding) {
+    @include padding($card-ios-title-padding-top, $card-ios-title-padding-end, $card-ios-title-padding-bottom, $card-ios-title-padding-start);
+  }
+}
+
+
+// Generate iOS Card Title Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .card-ios-#{$color-name} {
+
+    .card-title-ios {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+      .card-title-ios-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-title-ios-#{$color-name} {
+    color: $color-base;
+  }
+
+}

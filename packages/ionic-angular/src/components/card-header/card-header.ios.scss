@@ -1,0 +1,66 @@
+@import "../../themes/ionic.globals.ios";
+@import "./card-header";
+
+
+// iOS Card Header
+// --------------------------------------------------
+
+/// @prop - Font size of the card header
+$card-ios-header-font-size:            1.6rem !default;
+
+/// @prop - Font weight of the card header
+$card-ios-header-font-weight:          500 !default;
+
+// deprecated
+$card-ios-header-padding:              null !default;
+
+/// @prop - Padding top of the card header
+$card-ios-header-padding-top:          16px !default;
+
+/// @prop - Padding end of the card header
+$card-ios-header-padding-end:          $card-ios-header-padding-top !default;
+
+/// @prop - Padding bottom of the card header
+$card-ios-header-padding-bottom:       $card-ios-header-padding-top !default;
+
+/// @prop - Padding start of the card header
+$card-ios-header-padding-start:        $card-ios-header-padding-end !default;
+
+/// @prop - Color of the card header
+$card-ios-header-color:                #333 !default;
+
+
+.card-header-ios {
+  font-size: $card-ios-header-font-size;
+  font-weight: $card-ios-header-font-weight;
+  color: $card-ios-header-color;
+
+  @include deprecated-variable(padding, $card-ios-header-padding) {
+    @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
+  }
+}
+
+
+// Generate iOS Card Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .card-ios-#{$color-name} {
+
+    .card-header-ios {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+      .card-header-ios-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-header-ios-#{$color-name} {
+    color: $color-base;
+  }
+
+}

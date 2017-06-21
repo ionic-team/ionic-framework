@@ -1,0 +1,53 @@
+@import "../../themes/ionic.globals.md";
+@import "./item-divider";
+
+// Material Design Item Divider
+// --------------------------------------------------
+
+/// @prop - Color for the divider
+$item-md-divider-color:              #858585 !default;
+
+/// @prop - Background for the divider
+$item-md-divider-background:         #fff !default;
+
+/// @prop - Font size for the divider
+$item-md-divider-font-size:          1.4rem !default;
+
+/// @prop - Border bottom for the divider
+$item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
+
+/// @prop - Padding start for the divider
+$item-md-divider-padding-start:      $item-md-padding-start !default;
+
+
+// Material Design Item Divider
+// --------------------------------------------------
+
+.item-divider-md {
+  @include padding-horizontal($item-md-divider-padding-start, null);
+
+  border-bottom: $item-md-divider-border-bottom;
+  font-size: $item-md-divider-font-size;
+
+  color: $item-md-divider-color;
+  background-color: $item-md-divider-background;
+}
+
+
+// Generate Material Design Item Divider Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  .item-divider-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+
+    p {
+      color: $color-contrast;
+    }
+
+    &.activated {
+      background-color: color-shade($color-base);
+    }
+  }
+}

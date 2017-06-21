@@ -1,0 +1,84 @@
+@import "../../themes/ionic.globals.md";
+@import "./card-title";
+
+
+// Material Design Card Title
+// --------------------------------------------------
+
+/// @prop - Font size of the card title
+$card-md-title-font-size:             2.4rem !default;
+
+// deprecated
+$card-md-title-padding:               null !default;
+
+/// @prop - Padding top of the card title
+$card-md-title-padding-top:           8px !default;
+
+/// @prop - Padding end of the card title
+$card-md-title-padding-end:           0 !default;
+
+/// @prop - Padding bottom of the card title
+$card-md-title-padding-bottom:        8px !default;
+
+/// @prop - Padding start of the card title
+$card-md-title-padding-start:         0 !default;
+
+// deprecated
+$card-md-title-margin:                null !default;
+
+/// @prop - Margin top of the card title
+$card-md-title-margin-top:            2px !default;
+
+/// @prop - Margin end of the card title
+$card-md-title-margin-end:            0 !default;
+
+/// @prop - Margin bottom of the card title
+$card-md-title-margin-bottom:         2px !default;
+
+/// @prop - Margin start of the card title
+$card-md-title-margin-start:          $card-md-title-margin-end !default;
+
+/// @prop - Color of the card title
+$card-md-title-text-color:            #222 !default;
+
+
+.card-title-md {
+  display: block;
+
+  font-size: $card-md-title-font-size;
+  line-height: 1.2;
+  color: $card-md-title-text-color;
+
+  @include deprecated-variable(margin, $card-md-title-margin) {
+    @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
+  }
+
+  @include deprecated-variable(padding, $card-md-title-padding) {
+    @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
+  }
+}
+
+
+// Generate Material Design Card Title Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .card-md-#{$color-name} {
+
+    .card-title-md {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+      .card-title-md-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-title-md-#{$color-name} {
+    color: $color-base;
+  }
+
+}

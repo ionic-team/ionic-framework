@@ -1,0 +1,12 @@
+@import "../../themes/ionic.globals.md";
+@import "./app";
+
+
+// Material Design App
+// --------------------------------------------------
+
+.app-md {
+  font-family: $font-family-md-base;
+  font-size: $font-size-md-base;
+  background-color: $background-md-color;
+}

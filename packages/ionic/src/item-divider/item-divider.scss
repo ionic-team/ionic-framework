@@ -1,0 +1,26 @@
+@import "../../themes/ionic.globals";
+
+
+// Item Divider
+// --------------------------------------------------
+
+ion-item-divider {
+  @include margin(0);
+  @include padding(0);
+
+  z-index: $z-index-item-divider;
+  display: flex;
+  overflow: hidden;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  min-height: 30px;
+}
+
+ion-item-divider[sticky] {
+  position: sticky;
+  top: 0;
+}

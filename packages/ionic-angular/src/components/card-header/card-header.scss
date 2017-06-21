@@ -1,0 +1,14 @@
+@import "../../themes/ionic.globals";
+
+
+// Card Header
+// --------------------------------------------------
+
+
+ion-card-header {
+  display: block;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

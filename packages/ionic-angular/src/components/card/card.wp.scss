@@ -1,0 +1,159 @@
+@import "../../themes/ionic.globals.wp";
+@import "./card";
+
+
+// Windows Card
+// --------------------------------------------------
+
+/// @prop - Margin top of the card
+$card-wp-margin-top:                  8px !default;
+
+// deprecated
+$card-wp-margin-right:                8px !default;
+/// @prop - Margin end of the card
+$card-wp-margin-end:                  $card-wp-margin-right !default;
+
+/// @prop - Margin bottom of the card
+$card-wp-margin-bottom:               8px !default;
+
+// deprecated
+$card-wp-margin-left:                 8px !default;
+/// @prop - Margin start of the card
+$card-wp-margin-start:                $card-wp-margin-left !default;
+
+/// @prop - Padding top of the media on the card
+$card-wp-padding-media-top:           10px !default;
+
+/// @prop - Padding bottom of the media on the card
+$card-wp-padding-media-bottom:        10px !default;
+
+/// @prop - Size of the card avatar
+$card-wp-avatar-size:                 4rem !default;
+
+/// @prop - Size of the card thumbnail
+$card-wp-thumbnail-size:              8rem !default;
+
+/// @prop - Background color of the card
+$card-wp-background-color:            $list-wp-background-color !default;
+
+/// @prop - Box shadow color of the card
+$card-wp-box-shadow-color:            rgba(0, 0, 0, .2) !default;
+
+/// @prop - Box shadow of the card
+$card-wp-box-shadow:                  0 1px 1px 1px $card-wp-box-shadow-color !default;
+
+/// @prop - Border radius of the card
+$card-wp-border-radius:               1px !default;
+
+/// @prop - Font size of the card
+$card-wp-font-size:                   1.4rem !default;
+
+/// @prop - Line height of the card
+$card-wp-line-height:                 1.5 !default;
+
+/// @prop - Color of the card text
+$card-wp-text-color:                  #222 !default;
+
+
+.card-wp {
+  @include margin($card-wp-margin-top, $card-wp-margin-end, $card-wp-margin-bottom, $card-wp-margin-start);
+  @include border-radius($card-wp-border-radius);
+
+  width: calc(100% - #{($card-wp-margin-end + $card-wp-margin-start)});
+
+  font-size: $card-wp-font-size;
+
+  background: $card-wp-background-color;
+  box-shadow: $card-wp-box-shadow;
+}
+
+.card-wp ion-list {
+  @include margin(null, null, 0, null);
+}
+
+.card-wp > .item:last-child,
+.card-wp > .item:last-child .item-inner,
+.card-wp > .item-wrapper:last-child .item {
+  border-bottom: 0;
+}
+
+.card-wp .item-wp.item-block .item-inner {
+  border: 0;
+}
+
+.card .note-wp {
+  font-size: 1.3rem;
+}
+
+.card-wp h1 {
+  @include margin(0, 0, 2px);
+
+  font-size: 2.4rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp h2 {
+  @include margin(2px, 0);
+
+  font-size: 1.6rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp h3,
+.card-wp h4,
+.card-wp h5,
+.card-wp h6 {
+  @include margin(2px, 0);
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp p {
+  @include margin(0, 0, 2px);
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1.5;
+  color: $card-wp-text-color;
+}
+
+.card-wp + ion-card {
+  @include margin(0, null, null, null);
+}
+
+
+// Generate Windows Card Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .card-wp .text-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+  .card-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+      .text-wp-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+}

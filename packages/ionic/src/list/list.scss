@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals";
+
+
+// List
+// --------------------------------------------------
+
+ion-list {
+  @include margin(0);
+  @include padding(0);
+
+  display: block;
+
+  contain: content;
+
+  list-style-type: none;
+}
+
+ion-list[inset] {
+  overflow: hidden;
+
+  transform: translateZ(0);
+}

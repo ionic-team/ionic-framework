@@ -1,0 +1,29 @@
+@import "../../themes/ionic.globals.md";
+@import "./title";
+
+
+// Material Design Title
+// --------------------------------------------------
+
+/// @prop - Font size of the toolbar title
+$toolbar-md-title-font-size:             2rem !default;
+
+/// @prop - Text color of the toolbar title
+$toolbar-md-title-text-color:            color-contrast($colors-md, $toolbar-md-background, md) !default;
+
+
+.toolbar-title-md {
+  @include padding(0, 12px);
+
+  font-size: $toolbar-md-title-font-size;
+  font-weight: 500;
+  color: $toolbar-md-title-text-color;
+}
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .toolbar-#{$color-name} .toolbar-title-md {
+    color: $color-contrast;
+  }
+
+}

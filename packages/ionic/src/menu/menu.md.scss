@@ -1,0 +1,32 @@
+@import "../../themes/ionic.globals.md";
+@import "./menu";
+
+
+// Material Design Menu
+// --------------------------------------------------
+
+/// @prop - Background of the menu
+$menu-md-background:            $background-md-color !default;
+
+/// @prop - Box shadow color of the menu
+$menu-md-box-shadow-color:      rgba(0, 0, 0, .25) !default;
+
+/// @prop - Box shadow of the menu
+$menu-md-box-shadow:            0 0 10px $menu-md-box-shadow-color !default;
+
+
+.menu-md {
+  background: $menu-md-background;
+}
+
+.menu-md .menu-content-reveal {
+  box-shadow: $menu-md-box-shadow;
+}
+
+.menu-md .menu-content-push {
+  box-shadow: $menu-md-box-shadow;
+}
+
+ion-menu[type=overlay] .menu-md {
+  box-shadow: $menu-md-box-shadow;
+}

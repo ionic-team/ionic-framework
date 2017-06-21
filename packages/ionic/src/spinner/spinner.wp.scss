@@ -1,0 +1,67 @@
+@import "../../themes/ionic.globals.wp";
+@import "./spinner";
+
+
+// Windows Spinner
+// --------------------------------------------------
+
+/// @prop - Color of the ios spinner
+$spinner-wp-ios-color:            #69717d !default;
+
+/// @prop - Color of the bubbles spinner
+$spinner-wp-bubbles-color:        #000 !default;
+
+/// @prop - Color of the circles spinner
+$spinner-wp-circles-color:        #69717d !default;
+
+/// @prop - Color of the crescent spinner
+$spinner-wp-crescent-color:       #000 !default;
+
+/// @prop - Color of the dots spinner
+$spinner-wp-dots-color:           #444 !default;
+
+
+.spinner-lines-wp line,
+.spinner-lines-sm-wp line {
+  stroke: $spinner-wp-ios-color;
+}
+
+.spinner-bubbles-wp circle {
+  fill: $spinner-wp-bubbles-color;
+}
+
+.spinner-circles-wp circle {
+  fill: $spinner-wp-circles-color;
+}
+
+.spinner-crescent-wp circle {
+  stroke: $spinner-wp-crescent-color;
+}
+
+.spinner-dots-wp circle {
+  fill: $spinner-wp-dots-color;
+}
+
+
+// Generate Windows Spinner Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .spinner-wp-#{$color-name} {
+
+    &.spinner-lines line,
+    &.spinner-lines-sm line,
+    &.spinner-crescent circle {
+      stroke: $color-base;
+    }
+
+    &.spinner-bubbles circle,
+    &.spinner-circles circle,
+    &.spinner-dots circle {
+      fill: $color-base;
+    }
+
+  }
+
+}

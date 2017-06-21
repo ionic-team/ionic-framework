@@ -1,0 +1,44 @@
+@import "../../themes/ionic.globals.ios";
+@import "./item-divider";
+
+// iOS Item Divider
+// --------------------------------------------------
+
+/// @prop - Background for the divider
+$item-ios-divider-background:             #f7f7f7 !default;
+
+/// @prop - Color for the divider
+$item-ios-divider-color:                  #222 !default;
+
+/// @prop - Padding start for the divider
+$item-ios-divider-padding-start:          $item-ios-padding-start !default;
+
+
+// iOS Item Divider
+// --------------------------------------------------
+
+.item-divider-ios {
+  @include padding-horizontal($item-ios-divider-padding-start, null);
+
+  color: $item-ios-divider-color;
+  background-color: $item-ios-divider-background;
+}
+
+
+// Generate iOS Item Divider Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+  .item-divider-ios-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+
+    p {
+      color: $color-contrast;
+    }
+
+    &.activated {
+      background-color: color-shade($color-base);
+    }
+  }
+}

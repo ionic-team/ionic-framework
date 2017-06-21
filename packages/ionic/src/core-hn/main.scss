@@ -1,0 +1,97 @@
+ion-label {
+  white-space: normal !important;
+}
+
+ion-toolbar ion-button.header-button button {
+  color: white !important;
+}
+
+.points {
+  color: #327eff;
+  font-weight: bold;
+  width: 45px;
+}
+
+.header-icon {
+  color: white;
+  font-size: 3.4rem !important;
+  margin-left: 15px !important;
+  width: 3.4rem;
+}
+
+.page-number {
+  line-height: 3;
+}
+
+.pager {
+  text-align: center;
+}
+
+ion-footer ion-toolbar div.toolbar-background {
+  background: white;
+}
+
+ion-footer {
+  height: 48px;
+}
+
+ion-footer ion-toolbar {
+  min-height: 48px !important;
+}
+
+.comments-text {
+  color: #717883;
+  cursor: pointer;
+}
+
+.list-header a {
+  color: #202939;
+  text-decoration: none;
+}
+
+.item-content {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.comments-title {
+  line-height: 2.1;
+}
+
+.header-button {
+  opacity: 0.6;
+  width: 7rem;
+}
+
+.header-button-selected {
+  opacity: 1;
+}
+
+.header-button-selected button {
+  font-weight: bold;
+}
+
+.tabs-bar {
+  display: flex;
+}
+
+.no-back button {
+  opacity: 0.3;
+}
+
+.yes-back button {
+  opacity: 1;
+  color: #327eff !important;
+}
+
+.close-button ion-icon {
+  color: white;
+  font-size: 2.3rem;
+  margin-left: 15px;
+}
+
+.ionic-icon {
+  height: 40px;
+  float: left;
+  margin-left: 10px;
+}

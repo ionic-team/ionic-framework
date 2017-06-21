@@ -1,0 +1,185 @@
+@import "../../themes/ionic.globals";
+
+// Content
+// --------------------------------------------------
+
+ion-content {
+  @include position(0, null, null, 0);
+
+  position: relative;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  contain: layout size style;
+}
+
+.ion-page > ion-content {
+  position: absolute;
+}
+
+a {
+  color: $link-color;
+}
+
+
+// Scrollable Content
+// --------------------------------------------------
+
+ion-scroll {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+  z-index: $z-index-scroll-content;
+  display: block;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+
+  contain: size style layout;
+}
+
+ion-content.js-scroll ion-scroll {
+  position: relative;
+
+  min-height: 100%;
+
+  overflow-x: initial;
+  overflow-y: initial;
+  -webkit-overflow-scrolling: auto;
+  will-change: initial;
+}
+
+.disable-scroll .ion-page {
+  pointer-events: none;
+  touch-action: none;
+}
+
+ion-content.has-refresher ion-scroll {
+  background-color: inherit;
+}
+
+// Fixed Content (ion-fixed and ion-fab)
+// --------------------------------------------------
+
+.fixed-content {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+  display: block;
+}
+
+[ion-fixed] {
+  position: absolute;
+
+  z-index: $z-index-fixed-content;
+
+  transform: translateZ(0);
+}
+
+
+// Content Padding
+// --------------------------------------------------
+
+ion-app [no-padding],
+ion-app [no-padding] ion-scroll {
+  @include padding(0);
+}
+
+@mixin content-padding($mode, $content-padding) {
+  ion-app.#{$mode} [padding],
+  ion-app.#{$mode} [padding] ion-scroll {
+    @include padding($content-padding);
+  }
+
+  ion-app.#{$mode} [padding-top],
+  ion-app.#{$mode} [padding-top] ion-scroll {
+    @include padding($content-padding, null, null, null);
+  }
+
+  ion-app.#{$mode} [padding-left],
+  ion-app.#{$mode} [padding-left] ion-scroll {
+    @include padding-horizontal($content-padding, null);
+  }
+
+  ion-app.#{$mode} [padding-right],
+  ion-app.#{$mode} [padding-right] ion-scroll {
+    @include padding-horizontal(null, $content-padding);
+  }
+
+  ion-app.#{$mode} [padding-bottom],
+  ion-app.#{$mode} [padding-bottom] ion-scroll {
+    @include padding(null, null, $content-padding, null);
+  }
+
+  ion-app.#{$mode} [padding-vertical],
+  ion-app.#{$mode} [padding-vertical] ion-scroll {
+    @include padding($content-padding, null, $content-padding, null);
+  }
+
+  ion-app.#{$mode} [padding-horizontal],
+  ion-app.#{$mode} [padding-horizontal] ion-scroll {
+    @include padding-horizontal($content-padding);
+  }
+}
+
+
+// Content Margin
+// --------------------------------------------------
+
+ion-app [no-margin],
+ion-app [no-margin] ion-scroll {
+  @include margin(0);
+}
+
+@mixin content-margin($mode, $content-margin) {
+  ion-app.#{$mode} [margin],
+  ion-app.#{$mode} [margin] ion-scroll {
+    @include margin($content-margin);
+  }
+
+  ion-app.#{$mode} [margin-top],
+  ion-app.#{$mode} [margin-top] ion-scroll {
+    @include margin($content-margin, null, null, null);
+  }
+
+  ion-app.#{$mode} [margin-left],
+  ion-app.#{$mode} [margin-left] ion-scroll {
+    // scss-lint:disable PropertySpelling
+    margin-left: $content-margin;
+  }
+
+  ion-app.#{$mode} [margin-start],
+  ion-app.#{$mode} [margin-start] ion-scroll {
+    @include margin-horizontal($content-margin, null);
+  }
+
+  ion-app.#{$mode} [margin-right],
+  ion-app.#{$mode} [margin-right] ion-scroll {
+    // scss-lint:disable PropertySpelling
+    margin-right: $content-margin;
+  }
+
+  ion-app.#{$mode} [margin-end],
+  ion-app.#{$mode} [margin-end] ion-scroll {
+    @include margin-horizontal(null, $content-margin);
+  }
+
+  ion-app.#{$mode} [margin-bottom],
+  ion-app.#{$mode} [margin-bottom] ion-scroll {
+    @include margin(null, null, $content-margin, null);
+  }
+
+  ion-app.#{$mode} [margin-vertical],
+  ion-app.#{$mode} [margin-vertical] ion-scroll {
+    @include margin($content-margin, null, $content-margin, null);
+  }
+
+  ion-app.#{$mode} [margin-horizontal],
+  ion-app.#{$mode} [margin-horizontal] ion-scroll {
+    @include margin-horizontal($content-margin);
+  }
+}

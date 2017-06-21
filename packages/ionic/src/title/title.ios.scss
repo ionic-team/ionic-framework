@@ -1,0 +1,51 @@
+@import "../../themes/ionic.globals.ios";
+@import "./title";
+
+
+// iOS Title
+// --------------------------------------------------
+
+/// @prop - Font size of the toolbar title
+$toolbar-ios-title-font-size:               1.7rem !default;
+
+/// @prop - Font weight of the toolbar title
+$toolbar-ios-title-font-weight:             600 !default;
+
+/// @prop - Text alignment of the toolbar title
+$toolbar-ios-title-text-align:              center !default;
+
+/// @prop - Text color of the toolbar title
+$toolbar-ios-title-text-color:              color-contrast($colors-ios, $toolbar-ios-background) !default;
+
+
+.toolbar-ios ion-title {
+  @include position(0, null, null, 0);
+  @include padding(0, 90px, 1px);
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  transform: translateZ(0);
+
+  pointer-events: none;
+}
+
+.toolbar-title-ios {
+  @include text-align($toolbar-ios-title-text-align);
+
+  font-size: $toolbar-ios-title-font-size;
+  font-weight: $toolbar-ios-title-font-weight;
+  color: $toolbar-ios-title-text-color;
+
+  pointer-events: auto;
+}
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .toolbar-#{$color-name} .toolbar-title-ios {
+    color: $color-contrast;
+  }
+
+}
