@@ -4,6 +4,7 @@
   "description": "Base components for Ionic",
   "main": "dist/index.js",
   "scripts": {
+    "build": "stencil build",
     "test": "jest"
   },
   "repository": {
