@@ -1,4 +1,4 @@
-import { CssClassObject } from '../util/interfaces';
+import { CssClassObject } from '@stencil/core';
 
 export function createThemedClasses(mode: string, color: string, classList: string): CssClassObject {
   let allClassObj: CssClassObject = {};
