@@ -1,5 +1,5 @@
 {
-  "name": "@ionic/core",
+  "name": "@ionic/vanilla",
   "version": "0.0.1",
   "description": "Base components for Ionic",
   "main": "dist/index.js",
