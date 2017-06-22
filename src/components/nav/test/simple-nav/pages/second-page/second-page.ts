@@ -15,4 +15,8 @@ export class SecondPage {
     this.userId = this.params.data.userId;
     this.name = this.params.data.name;
   }
+
+  goToNextPage() {
+    this.nav.push('ThirdPage', { paramOne: 'Hello', paramTwo: 'Its me'});
+  }
 }
