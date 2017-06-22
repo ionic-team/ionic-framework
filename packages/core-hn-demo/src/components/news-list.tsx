@@ -1,5 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
-import { Ionic } from '../../utils/interfaces';
+import { Component, h, Prop, State, Ionic } from '@stencil/core';
 
 
 @Component({

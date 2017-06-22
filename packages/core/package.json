@@ -1,22 +1,23 @@
 {
-  "name": "@ionic/vanilla-hn-demo",
+  "name": "@ionic/core",
   "version": "0.0.1",
-  "description": "Hacker News PWA demo of Stencil app using Ionic components",
-  "main": "index.js",
+  "description": "Base components for Ionic",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "npm run clean && stencil build",
+    "build": "npm run clean && npm run copy.vendor && stencil build",
     "clean": "rm -Rf ./dist/*",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "copy.vendor": "mkdir -p ./dist/vendor && cp -Rf ./src/vendor ./dist",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
   "dependencies": {
-    "@ionic/core": "^0.0.1",
-    "@stencil/core": "^0.0.1"
+    "@stencil/core": "^0.0.1",
+    "ionicons": "3.0.0"
   },
-  "author": "",
+  "author": "Ionic Team",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
