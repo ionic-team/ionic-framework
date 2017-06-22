@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, } from '../../../../../..';
+import { IonicPage, NavController, } from '../../../../../../..';
 
 @IonicPage()
 @Component({
@@ -10,6 +10,6 @@ export class FirstPage {
   }
 
   clickMe() {
-    this.nav.push('ThirdPage');
+    this.nav.push('SecondPage', { userId: '123', name: 'Hans Gruber'});
   }
 }

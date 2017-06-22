@@ -1109,6 +1109,18 @@ export class NavControllerBase extends Ion implements NavController {
     return this._views;
   }
 
+  /**
+   * Return a view controller
+   */
+  getViewById(id: string): ViewController {
+    for (const vc of this._views) {
+      if (vc && vc.id === id) {
+        return vc;
+      }
+    }
+    return null;
+  }
+
   isSwipeBackEnabled(): boolean {
     return this._sbEnabled;
   }
