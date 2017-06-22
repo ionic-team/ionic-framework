@@ -4,7 +4,9 @@
   "description": "Base components for Ionic",
   "main": "dist/index.js",
   "scripts": {
-    "build": "stencil build",
+    "build": "npm run clean && npm run copy.vendor && stencil build",
+    "clean": "rm -Rf ./dist/*",
+    "copy.vendor": "mkdir -p ./dist/vendor && cp -Rf ./src/vendor ./dist",
     "test": "jest"
   },
   "repository": {

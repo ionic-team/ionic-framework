@@ -4,7 +4,8 @@
   "description": "Hacker News PWA demo of Stencil app using Ionic components",
   "main": "index.js",
   "scripts": {
-    "build": "stencil build",
+    "build": "npm run clean && stencil build",
+    "clean": "rm -Rf ./dist/*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
