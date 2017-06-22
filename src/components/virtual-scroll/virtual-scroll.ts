@@ -465,7 +465,11 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     } else {
       needClean = true;
     }
-    this._recordSize = this._records.length;
+    if (this._records) {
+      this._recordSize = this._records.length;
+    } else {
+      this._recordSize = 0;
+    }
 
     this.readUpdate(needClean);
     this.writeUpdate(needClean);
@@ -521,7 +525,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   private _changes(): IterableChanges<any> {
-    if (isPresent(this._records) && isPresent(this._differ)) {
+    if (isPresent(this._differ)) {
       return this._differ.diff(this._records);
     }
     return null;
@@ -627,14 +631,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   private _stepDOMWrite() {
     const cells = this._cells;
     const nodes = this._nodes;
-    const recordsLength = this._records.length;
 
     // ******** DOM WRITE ****************
     writeToNodes(this._plt, nodes, cells, recordsLength);
 
     // ******** DOM WRITE ****************
     this._setHeight(
-      estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
+      estimateHeight(this._recordSize, cells[cells.length - 1], this._vHeight, 0.25)
     );
 
     // we're done here, good work
