@@ -14,6 +14,8 @@ exports.config = {
     { components: ['ion-modal', 'ion-modal-controller'] },
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
-    { components: ['ion-toggle'] }
+    { components: ['ion-toggle'] },
+    { components: ['fiber-demo', 'fiber-triangle', 'fiber-dot'] },
+    { components: ['news-list', 'news-container', 'comments-page', 'comments-list'] }
   ]
 };
