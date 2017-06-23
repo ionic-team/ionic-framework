@@ -12,5 +12,5 @@ import { IonicPage, } from '../../../../../..';
 })
 export class TabsPage {
   tab1 = 'FirstPage';
-  tab2 = 'SecondPage';
+  tab2 = 'FourthPage';
 }

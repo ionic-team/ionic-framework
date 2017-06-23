@@ -134,8 +134,13 @@ export class DeepLinker {
       const rootNavContainers = this._app.getActiveNavContainers();
       let segments: NavSegment[] = [];
       for (const rootNavContainer of rootNavContainers) {
-        const segmentsForNav = this.getSegmentsFromNav(rootNavContainer, null, null);
-        segments = segments.concat(segmentsForNav);
+        // the only time you'll ever get a TABS here is when loading directly from a URL
+        // this method will be calleda again when the TAB is loaded
+        // so just don't worry about the TABS for now
+        if (!isTabs(rootNavContainer)) {
+          const segmentsForNav = this.getSegmentsFromNav(rootNavContainer, null, null);
+          segments = segments.concat(segmentsForNav);
+        }
       }
       segments = segments.filter(segment => !!segment);
       if (segments.length) {
@@ -452,4 +457,3 @@ export function getNavFromTree(nav: NavigationContainer, id: string) {
   }
   return null;
 }
-

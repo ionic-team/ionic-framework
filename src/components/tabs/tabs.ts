@@ -490,9 +490,6 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
         return tabs[i];
       }
     }
-    if (tabs.length) {
-      return tabs[0];
-    }
     return null;
   }
 

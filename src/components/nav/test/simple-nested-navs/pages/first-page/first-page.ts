@@ -7,10 +7,11 @@ import { IonicPage, NavController } from '../../../../../..';
   template: `
   <ion-header>
     <ion-navbar>
-      <ion-title>Tab 1</ion-title>
+      <ion-title>First Page</ion-title>
     </ion-navbar>
   </ion-header>
   <ion-content>
+    First Page
     <button ion-button (click)="goToNextPage()">Go to Next Page</button>
   </ion-content>
   `
@@ -22,6 +23,6 @@ export class FirstPage {
   }
 
   goToNextPage() {
-    this.navCtrl.push('ThirdNav');
+    this.navCtrl.push('SecondPage', { userId: 123, name: 'Dwight K Schrute'});
   }
 }
