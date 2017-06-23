@@ -94,7 +94,9 @@
 
 * **item-sliding:** remove duplicate class ([#11829](https://github.com/ionic-team/ionic/issues/11829)) ([c9cb9ae](https://github.com/ionic-team/ionic/commit/c9cb9ae))
 
+### BREAKING CHANGES
 
+* **scss:** we moved ltr selectors to be under `[dir="ltr"]`. To disable it and keep stuff unchanged, set `$app-direction: ltr` ([#11635](https://github.com/ionic-team/ionic/issues/11635)) ([f0c6948](https://github.com/ionic-team/ionic/commit/f0c6948))
 
 <a name="3.3.0"></a>
 # [3.3.0](https://github.com/ionic-team/ionic/compare/v3.2.1...v3.3.0) (2017-05-24)
