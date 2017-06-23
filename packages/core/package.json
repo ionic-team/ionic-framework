@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run clean && npm run copy.vendor && stencil build",
     "clean": "rm -Rf ./dist/*",
-    "copy.vendor": "mkdir -p ./dist/vendor && cp -Rf ./src/vendor ./dist",
+    "copy.vendor": "mkdir -p ./temp/vendor && cp -Rf ./src/vendor ./temp",
     "test": "jest"
   },
   "repository": {
