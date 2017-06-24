@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { NavParams } from '../../navigation/nav-params';
@@ -49,15 +49,15 @@ export class ToastCmp implements AfterViewInit {
     public _config: Config,
     public _elementRef: ElementRef,
     params: NavParams,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
-    renderer.setElementClass(_elementRef.nativeElement, `toast-${_config.get('mode')}`, true);
+    renderer.addClass(_elementRef.nativeElement, `toast-${_config.get('mode')}`);
     this.d = params.data;
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions
-        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+        if (cssClass.trim() !== '') renderer.addClass(_elementRef.nativeElement, cssClass);
       });
     }
 

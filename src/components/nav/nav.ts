@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, ErrorHandler, forwardRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, ErrorHandler, forwardRef, Input, Optional, NgZone, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -67,7 +67,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
     plt: Platform,
     elementRef: ElementRef,
     zone: NgZone,
-    renderer: Renderer,
+    renderer: Renderer2,
     cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
     transCtrl: TransitionController,

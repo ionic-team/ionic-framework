@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, forwardRef, Inject, Input, NgZone, Optional, Renderer2, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
 import { Config } from '../../config/config';
@@ -24,7 +24,7 @@ export class OverlayPortal extends NavControllerBase implements NavigationContai
     plt: Platform,
     elementRef: ElementRef,
     zone: NgZone,
-    renderer: Renderer,
+    renderer: Renderer2,
     cfr: ComponentFactoryResolver,
     gestureCtrl: GestureController,
     transCtrl: TransitionController,

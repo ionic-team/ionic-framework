@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, OpaqueToken, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
 import { assert } from '../../util/util';
@@ -37,7 +37,7 @@ export class IonicApp extends Ion implements OnInit {
     @Inject(AppRootToken) private _userCmp: any,
     private _cfr: ComponentFactoryResolver,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     config: Config,
     private _plt: Platform,
     app: App
@@ -53,7 +53,7 @@ export class IonicApp extends Ion implements OnInit {
     // into Ionic's root component
     const factory = this._cfr.resolveComponentFactory(this._userCmp);
     const componentRef = this._viewport.createComponent(factory);
-    this._renderer.setElementClass(componentRef.location.nativeElement, 'app-root', true);
+    this._renderer.addClass(componentRef.location.nativeElement, 'app-root');
     componentRef.changeDetectorRef.detectChanges();
 
     // set the mode class name

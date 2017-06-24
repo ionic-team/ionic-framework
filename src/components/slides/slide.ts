@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Slides } from './slides';
 
@@ -27,10 +27,10 @@ export class Slide {
 
   constructor(
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     private _slides: Slides
   ) {
-    renderer.setElementClass(elementRef.nativeElement, 'swiper-slide', true);
+    renderer.addClass(elementRef.nativeElement, 'swiper-slide');
     _slides.update(10);
   }
 

@@ -1,4 +1,4 @@
-import { ElementRef, Renderer, Input } from '@angular/core';
+import { ElementRef, Renderer2, Input } from '@angular/core';
 
 import { Config } from '../config/config';
 
@@ -16,7 +16,7 @@ export class Ion {
   _elementRef: ElementRef;
 
   /** @hidden */
-  _renderer: Renderer;
+  _renderer: Renderer2;
 
   /** @hidden */
   _color: string;
@@ -53,7 +53,7 @@ export class Ion {
     return this._mode;
   }
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, componentName?: string) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer2, componentName?: string) {
     this._config = config;
     this._elementRef = elementRef;
     this._renderer = renderer;
@@ -67,17 +67,21 @@ export class Ion {
 
   /** @hidden */
   setElementClass(className: string, isAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, isAdd);
+    if (isAdd) {
+      this._renderer.addClass(this._elementRef.nativeElement, className);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, className);
+    }
   }
 
   /** @hidden */
   setElementAttribute(attributeName: string, attributeValue: any) {
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, attributeValue);
+    this._renderer.setAttribute(this._elementRef.nativeElement, attributeName, attributeValue);
   }
 
   /** @hidden */
   setElementStyle(property: string, value: string) {
-    this._renderer.setElementStyle(this._elementRef.nativeElement, property, value);
+    this._renderer.setStyle(this._elementRef.nativeElement, property, value);
   }
 
   /** @hidden */

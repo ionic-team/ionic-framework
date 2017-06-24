@@ -1,4 +1,4 @@
-import { ComponentRef, Input, ComponentFactoryResolver, ElementRef, ErrorHandler, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Input, ComponentFactoryResolver, ElementRef, ErrorHandler, EventEmitter, NgZone, ReflectiveInjector, Renderer2, ViewContainerRef } from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
@@ -65,7 +65,7 @@ export class NavControllerBase extends Ion implements NavController {
     public plt: Platform,
     elementRef: ElementRef,
     public _zone: NgZone,
-    renderer: Renderer,
+    renderer: Renderer2,
     public _cfr: ComponentFactoryResolver,
     public _gestureCtrl: GestureController,
     public _trnsCtrl: TransitionController,
@@ -527,7 +527,7 @@ export class NavControllerBase extends Ion implements NavController {
       var pageElement = componentRef.location.nativeElement;
 
       // ******** DOM WRITE ****************
-      this._renderer.setElementClass(pageElement, view._cssClass, true);
+      this._renderer.addClass(pageElement, view._cssClass);
     }
 
     componentRef.changeDetectorRef.detectChanges();

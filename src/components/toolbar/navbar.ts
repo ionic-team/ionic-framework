@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Optional, Renderer } from '@angular/core';
+import { Component, ElementRef, Input, Optional, Renderer2 } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -103,7 +103,7 @@ export class Navbar extends ToolbarBase {
     @Optional() private navCtrl: NavController,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
     super(config, elementRef, renderer);
 

@@ -1,4 +1,4 @@
-import { ContentChildren, QueryList, Directive, ElementRef, Renderer } from '@angular/core';
+import { ContentChildren, QueryList, Directive, ElementRef, Renderer2 } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { isTrueProperty } from '../../util/util';
@@ -40,7 +40,7 @@ export class FabList {
 
   constructor(
     private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     config: Config,
     private _plt: Platform
   ) {
@@ -84,6 +84,10 @@ export class FabList {
    * @internal
    */
   setElementClass(className: string, add: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
+    if (add) {
+      this._renderer.addClass(this._elementRef.nativeElement, className);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, className);
+    }
   }
 }

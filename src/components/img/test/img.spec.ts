@@ -1,4 +1,4 @@
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, Renderer2 } from '@angular/core';
 import { Content } from '../../content/content';
 import { DomController } from '../../../platform/dom-controller';
 import { Img } from '../img';
@@ -51,7 +51,7 @@ describe('Img', () => {
   let contentElementRef: any;
   let img: Img;
   let elementRef: ElementRef;
-  let renderer: Renderer;
+  let renderer: Renderer2;
   let plt: Platform;
   let content: Content;
   let dom: DomController;

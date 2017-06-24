@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostBinding, Input, Renderer } from '@angular/core';
+import { Directive, ElementRef, HostBinding, Input, Renderer2 } from '@angular/core';
 
 import { isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
@@ -59,7 +59,7 @@ export class Icon extends Ion {
   constructor(
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
     super(config, elementRef, renderer, 'icon');
     this._iconMode = config.get('iconMode');

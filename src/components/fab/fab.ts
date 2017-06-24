@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ElementRef, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -64,7 +64,7 @@ export class FabButton extends Ion {
   constructor(
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
   ) {
     super(config, elementRef, renderer, 'fab');
   }

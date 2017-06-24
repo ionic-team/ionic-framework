@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ComponentRef, ElementRef, NgZone, Renderer, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, ComponentRef, ElementRef, NgZone, Renderer2, ViewContainerRef } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { AnimationOptions } from '../animations/animation';
@@ -329,26 +329,25 @@ export function mockElementRefEle(ele: any): ElementRef {
 }
 
 export class MockRenderer {
-  setElementAttribute(renderElement: MockElement, name: string, val: any) {
+  setAttribute(renderElement: MockElement, name: string, val: any) {
     if (name === null) {
       renderElement.removeAttribute(name);
     } else {
       renderElement.setAttribute(name, val);
     }
   }
-  setElementClass(renderElement: MockElement, className: string, isAdd: boolean) {
-    if (isAdd) {
+  addClass(renderElement: MockElement, className: string) {
       renderElement.classList.add(className);
-    } else {
-      renderElement.classList.remove(className);
-    }
   }
-  setElementStyle(renderElement: MockElement, styleName: string, styleValue: string) {
+  removeClass(renderElement: MockElement, className: string) {
+    renderElement.classList.remove(className);
+  }
+  setStyle(renderElement: MockElement, styleName: string, styleValue: string) {
     renderElement.style[styleName] = styleValue;
   }
 }
 
-export function mockRenderer(): Renderer {
+export function mockRenderer(): Renderer2 {
   const renderer: any = new MockRenderer();
   return renderer;
 }

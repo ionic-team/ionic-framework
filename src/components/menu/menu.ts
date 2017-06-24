@@ -1,4 +1,4 @@
-import { OnInit, OnDestroy, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { OnInit, OnDestroy, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
@@ -330,7 +330,7 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
     private _elementRef: ElementRef,
     private _config: Config,
     private _plt: Platform,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     private _keyboard: Keyboard,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
@@ -704,14 +704,18 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
    * @hidden
    */
   setElementClass(className: string, add: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
+    if (add) {
+      this._renderer.addClass(this._elementRef.nativeElement, className);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, className);
+    }
   }
 
   /**
    * @hidden
    */
   setElementAttribute(attributeName: string, value: string) {
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, attributeName, value);
+    this._renderer.setAttribute(this._elementRef.nativeElement, attributeName, value);
   }
 
   /**

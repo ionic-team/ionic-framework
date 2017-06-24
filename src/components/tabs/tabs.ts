@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -236,7 +236,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     config: Config,
     elementRef: ElementRef,
     private _plt: Platform,
-    renderer: Renderer,
+    renderer: Renderer2,
     private _linker: DeepLinker,
     keyboard?: Keyboard
   ) {

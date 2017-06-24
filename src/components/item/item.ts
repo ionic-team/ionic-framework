@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList, Renderer2, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Config } from '../../config/config';
@@ -315,7 +315,7 @@ export class Item extends Ion {
     form: Form,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     @Optional() reorder: ItemReorder
   ) {
     super(config, elementRef, renderer, 'item');
@@ -328,7 +328,7 @@ export class Item extends Ion {
     // auto add "tappable" attribute to ion-item components that have a click listener
     if (!(<any>renderer).orgListen) {
       (<any>renderer).orgListen = renderer.listen;
-      renderer.listen = function(renderElement: HTMLElement, name: string, callback: Function): Function {
+      renderer.listen = function(renderElement: HTMLElement, name: string, callback: Function): () => void {
         if (name === 'click' && renderElement.setAttribute) {
           renderElement.setAttribute('tappable', '');
         }
