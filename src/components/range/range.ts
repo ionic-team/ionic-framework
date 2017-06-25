@@ -173,7 +173,6 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     return this._step;
   }
   set step(val: number) {
-    val = Math.round(val);
     if (!isNaN(val) && val > 0) {
       this._step = val;
     }
