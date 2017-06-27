@@ -8,6 +8,7 @@ import { ViewController } from '../../navigation/view-controller';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
 import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
+import { PopoverOptions } from './popover-options';
 
 /**
  * @hidden
@@ -29,11 +30,8 @@ export class PopoverCmp {
 
   @ViewChild('viewport', {read: ViewContainerRef}) _viewport: ViewContainerRef;
 
-  d: {
-    cssClass?: string;
-    showBackdrop?: boolean;
-    enableBackdropDismiss?: boolean;
-  };
+  d: PopoverOptions;
+  mode: string;
 
   _enabled: boolean;
   _gestureBlocker: BlockerDelegate;
@@ -53,8 +51,9 @@ export class PopoverCmp {
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = _navParams.data.opts;
+    this.mode = this.d.mode || _config.get('mode');
 
-    _renderer.setElementClass(_elementRef.nativeElement, `popover-${_config.get('mode')}`, true);
+    _renderer.setElementClass(_elementRef.nativeElement, `popover-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
