@@ -132,15 +132,17 @@ export class DeepLinker {
   navChange(navId: string, direction: string) {
     if (direction) {
       const rootNavContainers = this._app.getActiveNavContainers();
+      // the only time you'll ever get a TABS here is when loading directly from a URL
+      // this method will be called again when the TAB is loaded
+      // so just don't worry about the TABS for now
+      // if you encounter a TABS, just return
       let segments: NavSegment[] = [];
       for (const rootNavContainer of rootNavContainers) {
-        // the only time you'll ever get a TABS here is when loading directly from a URL
-        // this method will be calleda again when the TAB is loaded
-        // so just don't worry about the TABS for now
-        if (!isTabs(rootNavContainer)) {
-          const segmentsForNav = this.getSegmentsFromNav(rootNavContainer, null, null);
-          segments = segments.concat(segmentsForNav);
+        if (isTabs(rootNavContainer) || (rootNavContainer as NavController).isTransitioning()) {
+          return;
         }
+        const segmentsForNav = this.getSegmentsFromNav(rootNavContainer);
+        segments = segments.concat(segmentsForNav);
       }
       segments = segments.filter(segment => !!segment);
       if (segments.length) {
@@ -150,7 +152,7 @@ export class DeepLinker {
     }
   }
 
-  getSegmentsFromNav(nav: NavigationContainer, component?: any, data?: any): NavSegment[] {
+  getSegmentsFromNav(nav: NavigationContainer): NavSegment[] {
     const segments: NavSegment[] = [];
     while (nav) {
       if (isNav(nav)) {

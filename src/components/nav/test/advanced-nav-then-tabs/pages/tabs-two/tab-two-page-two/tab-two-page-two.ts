@@ -19,6 +19,7 @@ import { IonicPage, NavController, NavParams } from '../../../../../../..';
   <div>
   Name: {{name}}
   </div>
+  <button ion-button (click)="next()">Next</button>
 </ion-content>
   `
 })
@@ -28,5 +29,9 @@ export class TabsTwoTabTwoPageTwo {
   constructor(public nav: NavController, navParams: NavParams) {
     this.userId = navParams.data.userId;
     this.name = navParams.data.name;
+  }
+
+  next() {
+    this.nav.push('TabsTwoTabTwoPageThree', { paramOne: 'Albany', paramTwo: 'NY'});
   }
 }

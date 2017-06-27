@@ -10,6 +10,6 @@ import { Component } from '@angular/core';
   `
 })
 export class AppComponent {
-  rootOne = 'NonTabOne';
-  rootTwo = 'NonTabTwo';
+  rootOne = 'NestedNavOnePageTwo';
+  rootTwo = 'NestedNavTwoPageTwo';
 }

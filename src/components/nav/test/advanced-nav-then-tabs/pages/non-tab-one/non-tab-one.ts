@@ -21,6 +21,6 @@ export class NonTabOne {
   }
 
   goToTabs() {
-    this.nav.push('TabOnePage');
+    this.nav.push('TabsOnePage');
   }
 }

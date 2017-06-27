@@ -124,12 +124,12 @@ describe('DeepLinker', () => {
         secondaryId: null,
       };
 
-      spyOn(nav, 'push');
+      spyOn(nav, 'setRoot');
       spyOn(nav, 'popTo');
 
       _loadViewForSegment(nav, segment, noop);
 
-      expect(nav.push).toHaveBeenCalled();
+      expect(nav.setRoot).toHaveBeenCalled();
       expect(nav.popTo).not.toHaveBeenCalled();
     });
 

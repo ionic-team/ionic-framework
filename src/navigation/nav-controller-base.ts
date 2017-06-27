@@ -222,9 +222,8 @@ export class NavControllerBase extends Ion implements NavController {
     this._init = true;
     this._trnsId = null;
 
-    // let's see if there's another to kick off
-    this.setTransitioning(false);
     this._swipeBackCheck();
+    // let's see if there's another to kick off
     this._nextTrns();
 
     if (ti.done) {
@@ -749,6 +748,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       // it's safe to enable the app again
       this._app.setEnabled(true);
+      this.setTransitioning(false);
 
       if (!this.hasChild() && opts.updateUrl !== false) {
         // notify deep linker of the nav change
