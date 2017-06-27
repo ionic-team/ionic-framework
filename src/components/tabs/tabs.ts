@@ -325,7 +325,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
 
     // now see if the deep linker can find a tab index
     const tabsSegment = this._linker.getSegmentByNavId(this.id);
-    if (tabsSegment && isBlank(tabsSegment.component)) {
+    if (tabsSegment) {
       // we found a segment which probably represents which tab to select
       selectedIndex = this._getSelectedTabIndex(tabsSegment.secondaryId, selectedIndex);
     }
