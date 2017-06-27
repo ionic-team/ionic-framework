@@ -3,5 +3,8 @@ exports.config = {
   dest: 'dist',
   bundles: [
     { components: ['news-list', 'news-container', 'comments-page', 'comments-list'] }
+  ],
+  collections: [
+    '@ionic/core'
   ]
 };

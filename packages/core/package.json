@@ -2,11 +2,11 @@
   "name": "@ionic/core",
   "version": "0.0.1",
   "description": "Base components for Ionic",
-  "main": "dist/index.js",
+  "main": "dist/manifest.json",
   "scripts": {
-    "build": "npm run clean && npm run copy.vendor && stencil build",
-    "clean": "rm -Rf ./dist/*",
-    "copy.vendor": "mkdir -p ./temp/vendor && cp -Rf ./src/vendor ./temp",
+    "build": "npm run clean && npm run copy.vendor && stencil collection",
+    "clean": "rm -Rf ./dist",
+    "copy.vendor": "mkdir -p ./dist/vendor && cp -Rf ./src/vendor ./dist",
     "test": "jest"
   },
   "repository": {
@@ -14,7 +14,9 @@
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
   "dependencies": {
-    "@stencil/core": "^0.0.1",
+    "@stencil/core": "^0.0.1"
+  },
+  "devDependencies": {
     "ionicons": "3.0.0"
   },
   "author": "Ionic Team",

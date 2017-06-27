@@ -3,5 +3,10 @@
   "packages": [
     "packages/*"
   ],
+  "commands": {
+    "bootstrap": {
+      "ignore": "@stencil/*"
+    }
+  },
   "version": "0.0.0"
 }
