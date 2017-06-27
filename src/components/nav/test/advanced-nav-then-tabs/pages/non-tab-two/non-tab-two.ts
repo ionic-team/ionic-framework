@@ -20,6 +20,6 @@ export class NonTabTwo {
   }
 
   goToTabs() {
-    this.nav.push('TabTwoPage');
+    this.nav.push('TabsTwoPage');
   }
 }

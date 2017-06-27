@@ -124,12 +124,12 @@ describe('DeepLinker', () => {
         secondaryId: null,
       };
 
-      spyOn(nav, 'push');
+      spyOn(nav, 'setRoot');
       spyOn(nav, 'popTo');
 
       _loadViewForSegment(nav, segment, noop);
 
-      expect(nav.push).toHaveBeenCalled();
+      expect(nav.setRoot).toHaveBeenCalled();
       expect(nav.popTo).not.toHaveBeenCalled();
     });
 
@@ -327,6 +327,34 @@ describe('DeepLinker', () => {
       expect(normalizeUrl('')).toEqual('/');
     });
 
+  });
+
+  describe('navChange', () => {
+    it('should immediately return when an active nav container is a tabs component', () => {
+      linker._app.getActiveNavContainers = () => {
+        return [mockTabs()];
+      };
+
+      spyOn(linker, 'getSegmentsFromNav');
+
+      linker.navChange('1', 'forward');
+
+      expect(linker.getSegmentsFromNav).not.toHaveBeenCalled();
+    });
+
+    it('should immediately return when an active nav container is transitioning', () => {
+      const mockNav = mockNavController();
+      mockNav.setTransitioning(true);
+      linker._app.getActiveNavContainers = () => {
+        return [mockNav];
+      };
+
+      spyOn(linker, 'getSegmentsFromNav');
+
+      linker.navChange('1', 'forward');
+
+      expect(linker.getSegmentsFromNav).not.toHaveBeenCalled();
+    });
   });
 
   var linker: DeepLinker;

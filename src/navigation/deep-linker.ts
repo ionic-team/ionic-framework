@@ -2,7 +2,7 @@ import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, DIRECTION_BACK, isNav, isTab, NavLink, NavSegment } from './nav-util';
+import { convertToViews, DIRECTION_BACK, isNav, isTab, isTabs, NavLink, NavSegment } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Tab, Tabs } from './nav-interfaces';
@@ -54,7 +54,7 @@ export class DeepLinker {
   _urlChange(browserUrl: string) {
     // do nothing if this url is the same as the current one
     if (!this._isCurrentUrl(browserUrl)) {
-
+      let isGoingBack = true;
       if (this._isBackUrl(browserUrl)) {
         // scenario 2: user clicked the browser back button
         // scenario 4: user changed the browser URL to what was the back url was
@@ -66,13 +66,14 @@ export class DeepLinker {
         // scenario 3: user click forward button
         // scenario 4: user changed browser URL that wasn't the back url
         // scenario 5: user clicked a link href that wasn't the back url
+        isGoingBack = false;
         console.debug(`DeepLinker, browser urlChange, forward to: ${browserUrl}`);
         this._historyPush(browserUrl);
       }
 
       // get the app's root nav container
-      const rootNavContainers = this._app.getActiveNavContainers();
-      if (rootNavContainers && rootNavContainers.length) {
+      const activeNavContainers = this._app.getActiveNavContainers();
+      if (activeNavContainers && activeNavContainers.length) {
         if (browserUrl === '/') {
           // a url change to the index url
           if (isPresent(this._indexAliasUrl)) {
@@ -84,7 +85,7 @@ export class DeepLinker {
             // the url change is to the root but we don't
             // already know the url used. So let's just
             // reset the root nav to its root page
-            rootNavContainers.forEach((navContainer: NavController) => {
+            activeNavContainers.forEach((navContainer: NavController) => {
               navContainer.goToRoot({
                 updateUrl: false,
                 isNavRoot: true
@@ -99,11 +100,12 @@ export class DeepLinker {
         segments
           .map(segment => {
             // find the matching nav container
-            for (const navContainer of rootNavContainers) {
-              if (navContainer.id === segment.navId || (isTab(navContainer) && navContainer.parent && navContainer.parent.id === segment.navId)) {
+            for (const navContainer of activeNavContainers) {
+              const nav = getNavFromTree(navContainer, segment.navId);
+              if (nav) {
                 return {
                   segment: segment,
-                  navContainer: navContainer
+                  navContainer: nav
                 };
               }
             }
@@ -130,18 +132,27 @@ export class DeepLinker {
   navChange(navId: string, direction: string) {
     if (direction) {
       const rootNavContainers = this._app.getActiveNavContainers();
+      // the only time you'll ever get a TABS here is when loading directly from a URL
+      // this method will be called again when the TAB is loaded
+      // so just don't worry about the TABS for now
+      // if you encounter a TABS, just return
       let segments: NavSegment[] = [];
       for (const rootNavContainer of rootNavContainers) {
-        const segmentsForNav = this.getSegmentsFromNav(rootNavContainer, null, null);
+        if (isTabs(rootNavContainer) || (rootNavContainer as NavController).isTransitioning()) {
+          return;
+        }
+        const segmentsForNav = this.getSegmentsFromNav(rootNavContainer);
         segments = segments.concat(segmentsForNav);
       }
       segments = segments.filter(segment => !!segment);
-      const browserUrl = this._serializer.serialize(segments);
-      this._updateLocation(browserUrl, direction);
+      if (segments.length) {
+        const browserUrl = this._serializer.serialize(segments);
+        this._updateLocation(browserUrl, direction);
+      }
     }
   }
 
-  getSegmentsFromNav(nav: NavigationContainer, component?: any, data?: any): NavSegment[] {
+  getSegmentsFromNav(nav: NavigationContainer): NavSegment[] {
     const segments: NavSegment[] = [];
     while (nav) {
       if (isNav(nav)) {
@@ -393,13 +404,16 @@ export function _loadViewForSegment(navContainer: NavigationContainer, segment: 
     return done();
   }
 
-  if (isTab(navContainer) && navContainer.parent) {
-    const tabs = (<Tabs> <any> navContainer.parent);
-    const selectedIndex = tabs._getSelectedTabIndex(segment.name);
-    tabs.select(selectedIndex, {
+  if (isTabs(navContainer) || (isTab(navContainer) && navContainer.parent)) {
+    const tabs = <Tabs> <any> (isTabs(navContainer) ? navContainer : navContainer.parent);
+    const selectedIndex = tabs._getSelectedTabIndex(segment.secondaryId);
+    const tab = tabs.getByIndex(selectedIndex);
+    tab._lazyRootFromUrl = segment.name;
+    tab._lazyRootFromUrlData = segment.data;
+    tabs.select(tab, {
       updateUrl: false,
       animate: false
-    });
+    }, true);
     return done();
   }
 
@@ -409,7 +423,7 @@ export function _loadViewForSegment(navContainer: NavigationContainer, segment: 
   // is already in the stack that we can just pop back to
   for (let i = numViews; i >= 0; i--) {
     const viewController = navController.getByIndex(i);
-    if (viewController && viewController.id === segment.id) {
+    if (viewController && (viewController.id === segment.id || viewController.id === segment.name)) {
       // hooray! we've already got a view loaded in the stack
       // matching the view they wanted to show
       if (i === numViews) {
@@ -426,10 +440,22 @@ export function _loadViewForSegment(navContainer: NavigationContainer, segment: 
       }
     }
   }
-  // ok, so they must be pushing a new view to the stack
-  // since we didn't find this same component already in the stack
-  return navController.push(segment.component || segment.name, segment.data, {
+
+  // ok, so we don't know about a view that they're navigating to
+  // so we might as well just call setRoot and make tthe view the first view
+  // this seems like the least bad option
+  return navController.setRoot(segment.component || segment.name, segment.data, {
     id: segment.id, animate: false, updateUrl: false
   }, done);
+
 }
 
+export function getNavFromTree(nav: NavigationContainer, id: string) {
+  while (nav) {
+    if (nav.id === id) {
+      return nav;
+    }
+    nav = nav.parent;
+  }
+  return null;
+}

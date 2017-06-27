@@ -374,7 +374,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: number | Tab, opts: NavOptions = {}) {
+  select(tabOrIndex: number | Tab, opts: NavOptions = {}, fromUrl: boolean = false) {
     const selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
       return;
@@ -383,7 +383,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     // If the selected tab is the current selected tab, we do not switch
     const currentTab = this.getSelected();
     if (selectedTab === currentTab && currentTab.getActive()) {
-      return this._touchActive(selectedTab);
+      return this._updateCurrentTab(selectedTab, fromUrl);
     }
 
     // If the selected tab does not have a root, we do not switch (#9392)
@@ -518,11 +518,28 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  private _touchActive(tab: Tab) {
+  private _updateCurrentTab(tab: Tab, fromUrl: boolean) {
     const active = tab.getActive();
 
     if (active) {
-      if (active._cmp && active._cmp.instance.ionSelected) {
+      if (fromUrl && tab._lazyRootFromUrl) {
+        // see if the view controller exists
+        const vc = tab.getViewById(tab._lazyRootFromUrl);
+        if (vc) {
+          // the view is already in the stack
+          tab.popTo(vc, {
+            animate: false,
+            updateUrl: false,
+          });
+        } else {
+          tab.setRoot(tab._lazyRootFromUrl, tab._lazyRootFromUrlData, {
+            animate: false, updateUrl: false
+          });
+          tab._lazyRootFromUrl = null;
+          tab._lazyRootFromUrlData = null;
+        }
+
+      } else if (active._cmp && active._cmp.instance.ionSelected) {
         // if they have a custom tab selected handler, call it
         active._cmp.instance.ionSelected();
 

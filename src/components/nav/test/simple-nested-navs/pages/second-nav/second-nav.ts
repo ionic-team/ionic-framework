@@ -11,7 +11,7 @@ import { IonicPage, NavController } from '../../../../../..';
 })
 export class SecondNav {
 
-  rootPage: any = 'HomePage';
+  rootPage: any = 'ThirdNav';
   constructor(public navCtrl: NavController) {
 
   }

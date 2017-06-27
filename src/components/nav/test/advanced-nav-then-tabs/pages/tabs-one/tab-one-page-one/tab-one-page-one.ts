@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, } from '../../../../../../..';
 
-@IonicPage()
+@IonicPage({
+  segment: 'TabsOneTabOnePageOne'
+})
 @Component({
   template: `
 <ion-header>

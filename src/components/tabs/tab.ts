@@ -305,7 +305,7 @@ export class Tab extends NavControllerBase implements ITab {
    * @hidden
    */
   load(opts: NavOptions, done?: () => void) {
-    if (!this._loaded && this.root) {
+    if (this._lazyRootFromUrl || (!this._loaded && this.root)) {
       this.setElementClass('show-tab', true);
       if (this._lazyRootFromUrl) {
         this.push(this._lazyRootFromUrl, this._lazyRootFromUrlData, opts, done);
@@ -409,5 +409,9 @@ export class Tab extends NavControllerBase implements ITab {
    */
   getType() {
     return 'tab';
+  }
+
+  goToRoot(opts: NavOptions) {
+    return this.setRoot(this.root, this.rootParams, opts, null);
   }
 }

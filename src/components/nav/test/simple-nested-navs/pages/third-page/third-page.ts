@@ -1,24 +1,33 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from '../../../../../..';
+import { IonicPage, NavController, NavParams } from '../../../../../..';
 
-@IonicPage()
+@IonicPage({
+  segment: 'thirdPage/paramOne/:paramOne/paramTwo/:paramTwo'
+})
 @Component({
   selector: 'page-home',
   template: `
   <ion-header>
     <ion-navbar>
-      <ion-title>Tab 1</ion-title>
+      <ion-title>Third Page</ion-title>
     </ion-navbar>
   </ion-header>
   <ion-content>
     Third Page
+    Param One: {{paramOne}}
+    Param Two: {{paramTwo}}
   </ion-content>
   `
 })
 export class ThirdPage {
 
-  constructor(public navCtrl: NavController) {
-
+  paramOne: string;
+  paramTwo: string;
+  constructor(public navCtrl: NavController, public params: NavParams) {
   }
 
+  ionViewWillEnter() {
+    this.paramOne = this.params.data.paramOne;
+    this.paramTwo = this.params.data.paramTwo;
+  }
 }
