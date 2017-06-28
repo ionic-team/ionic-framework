@@ -1,3 +1,27 @@
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/ionic-team/ionic/compare/v3.4.2...v3.5.0) (2017-06-28)
+
+### Steps to Upgrade
+
+`ionic-angular` should be set to version `3.5.0`.
+
+```
+npm install ionic-angular@3.5.0 --save --save-exact
+```
+
+### Notes
+There were major improvements made to navigation in this release of `ionic-angular`. As a result, if you're using deep linking, the urls of the application will be different. These URLs will likely change again in the near future with the next round of navigation improvements. We don't recommend using `href` attributes in the application, rather use the `navPush` and `navPop` directives instead.
+
+### Bug Fixes
+
+* **navigation:** add isTab check to getSegmentsFromNav ([f39c381](https://github.com/ionic-team/ionic/commit/f39c381))
+* **navigation:** fallback to name if component does not exist on segment ([30f69c8](https://github.com/ionic-team/ionic/commit/30f69c8))
+* **select:** _inputUpdated should not be called manually ([8dc08f9](https://github.com/ionic-team/ionic/commit/8dc08f9))
+* **select:** floating label ([e3a8d27](https://github.com/ionic-team/ionic/commit/e3a8d27)), closes [#12068](https://github.com/ionic-team/ionic/issues/12068)
+* **tabs:** use segment if it exists even if component exists ([016b90d](https://github.com/ionic-team/ionic/commit/016b90d))
+
+
+
 <a name="3.4.2"></a>
 ## [3.4.2](https://github.com/ionic-team/ionic/compare/v3.4.1...v3.4.2) (2017-06-16)
 
