@@ -3,7 +3,7 @@ import { Component, h, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ion-skeleton-text',
-  styleUrls: 'skeleton-text.scss'
+  styleUrl: 'skeleton-text.scss'
 })
 export class SkeletonText {
   @Prop() width: string = '100%';

@@ -5,6 +5,6 @@ exports.config = {
     { components: ['news-list', 'news-container', 'comments-page', 'comments-list'] }
   ],
   collections: [
-    '@ionic/core'
+    '@ionic/core',
   ]
 };

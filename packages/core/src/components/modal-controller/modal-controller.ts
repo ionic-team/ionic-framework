@@ -4,7 +4,7 @@ import { GlobalNamespace, ModalEvent, ModalOptions, Modal, IonicControllerApi } 
 
 @Component({
   tag: 'ion-modal-controller',
-  styleUrls: 'modal-controller.scss'
+  styleUrl: 'modal-controller.scss'
 })
 export class ModalController implements IonicControllerApi {
   private ids = 0;

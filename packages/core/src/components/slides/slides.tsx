@@ -24,7 +24,7 @@ import { Swiper } from '../../vendor/swiper';
 
 @Component({
   tag: 'ion-slides',
-  styleUrls: 'slides.scss'
+  styleUrl: 'slides.scss'
 })
 export class Slides {
   swiper: any;

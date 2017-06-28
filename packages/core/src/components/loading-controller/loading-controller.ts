@@ -4,7 +4,7 @@ import { GlobalNamespace, LoadingEvent, LoadingOptions, Loading, IonicController
 
 @Component({
   tag: 'ion-loading-controller',
-  styleUrls: 'loading-controller.scss'
+  styleUrl: 'loading-controller.scss'
 })
 export class LoadingController implements IonicControllerApi {
   private ids = 0;

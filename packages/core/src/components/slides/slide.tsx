@@ -14,7 +14,7 @@ import { Component, h, VNodeData } from '@stencil/core';
   */
 @Component({
   tag: 'ion-slide',
-  styleUrls: 'slide.scss'
+  styleUrl: 'slide.scss'
 })
 export class Slide {
   hostData(): VNodeData {
