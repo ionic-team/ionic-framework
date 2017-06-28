@@ -10,7 +10,9 @@ npm install ionic-angular@3.5.0 --save --save-exact
 ```
 
 ### Notes
-There were major improvements made to navigation in this release of `ionic-angular`. As a result, if you're using deep linking, the urls of the application will be different. These URLs will likely change again in the near future with the next round of navigation improvements. We don't recommend using `href` attributes in the application, rather use the `navPush` and `navPop` directives instead.
+There were major improvements made to navigation in this release of `ionic-angular`. Specifically, we updated Ionic to support a concept of `n` root navigation elements, instead of just one. This will enable first-class url support for things `split-pane`. Before `3.5.0`, only one section of the screen could be represented in the URL. With these changes, multiple sections can be. Another large change was improving the behavior surrounding browser behaviors, such as the back-and-forward buttons, as well as refresh. In general, Ionic should work much more intuitively in a web browser now.
+
+As a result of these improvements, if you're using deep linking, the urls of the application will be different with `3.5.0` than they were with previous Ionic releases. The URLs will likely change again in the near future with the next round of navigation improvements too. For now, we don't recommend using `href` attributes in the application. Using the `navPush` and `navPop` directives is a better option for now while URL support is being built-out.
 
 ### Bug Fixes
 
