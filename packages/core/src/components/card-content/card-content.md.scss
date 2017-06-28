@@ -11,7 +11,7 @@ $card-md-padding-top:                 13px !default;
 // deprecated
 $card-md-padding-right:               16px !default;
 /// @prop - Padding right of the card
-$card-md-padding-end:                 $card-md-padding-right;
+$card-md-padding-end:                 $card-md-padding-right !default;
 
 /// @prop - Padding bottom of the card
 $card-md-padding-bottom:              13px !default;
@@ -19,7 +19,7 @@ $card-md-padding-bottom:              13px !default;
 // deprecated
 $card-md-padding-left:                16px !default;
 /// @prop - Padding start of the card
-$card-md-padding-start:               $card-md-padding-left;
+$card-md-padding-start:               $card-md-padding-left !default;
 
 /// @prop - Font size of the card
 $card-md-font-size:                   1.4rem !default;

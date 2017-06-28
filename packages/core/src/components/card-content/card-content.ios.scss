@@ -11,7 +11,7 @@ $card-ios-padding-top:                 13px !default;
 // deprecated
 $card-ios-padding-right:               16px !default;
 /// @prop - Padding end of the card
-$card-ios-padding-end:                 $card-ios-padding-right;
+$card-ios-padding-end:                 $card-ios-padding-right !default;
 
 /// @prop - Padding bottom of the card
 $card-ios-padding-bottom:              14px !default;
@@ -19,7 +19,7 @@ $card-ios-padding-bottom:              14px !default;
 // deprecated
 $card-ios-padding-left:                16px !default;
 /// @prop - Padding start of the card
-$card-ios-padding-start:               $card-ios-padding-left;
+$card-ios-padding-start:               $card-ios-padding-left !default;
 
 /// @prop - Font size of the card
 $card-ios-font-size:                   1.4rem !default;

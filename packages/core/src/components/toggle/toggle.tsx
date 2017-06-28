@@ -1,6 +1,5 @@
-import { Component, h, Listen, Prop, Watch, VNodeData, Ionic } from '@stencil/core';
+import { Component, h, Listen, Prop, VNodeData, Ionic } from '@stencil/core';
 import { BooleanInputComponent, GestureDetail } from '../../utils/interfaces';
-
 
 @Component({
   tag: 'ion-toggle',
@@ -24,22 +23,22 @@ export class Toggle implements BooleanInputComponent {
   @Prop() color: string;
   @Prop() mode: string;
 
-  @Prop({ twoWay: true }) checked: boolean = false;
-  @Prop({ twoWay: true }) disabled: boolean = false;
-  @Prop({ twoWay: true }) value: string;
+  @Prop({ state: true }) checked: boolean = false;
+  @Prop({ state: true }) disabled: boolean = false;
+  @Prop({ state: true }) value: string;
 
 
   ionViewWillLoad() {
     this.emitStyle();
   }
 
-  @Watch('checked')
+  @PropDidChange('checked')
   changed(val: boolean) {
     Ionic.emit(this, 'ionChange', { detail: { checked: val } });
     this.emitStyle();
   }
 
-  @Watch('disabled')
+  @PropDidChange('disabled')
   disableChanged() {
     this.emitStyle();
   }

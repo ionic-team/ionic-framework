@@ -489,6 +489,7 @@ $button-md-strong-font-weight:                  bold !default;
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     top: 0;
+
     left: 0;
   }
 }

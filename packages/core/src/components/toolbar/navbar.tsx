@@ -55,12 +55,18 @@ export class Navbar {
   @Prop() backButtonIcon: string = Ionic.config.get('backButtonIcon');
   @Prop() hidden: boolean = false;
 
-
   backButtonClick(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
 
     console.log('back button click');
+  }
+
+  ionViewDidLoad() {
+    const buttons = this.$el.querySelectorAll('ion-button') as any;
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].setAttribute('button-type', 'bar-button');
+    }
   }
 
   hostData(): VNodeData {

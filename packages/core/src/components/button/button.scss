@@ -27,12 +27,11 @@ $button-round-border-radius:      64px !default;
   @include text-align(center);
   @include appearance(none);
 
-  visibility: visible;
-  border: 0;
-
   position: relative;
   z-index: 0;
   display: inline-block;
+
+  border: 0;
 
   text-overflow: ellipsis;
   text-transform: none;
@@ -41,6 +40,8 @@ $button-round-border-radius:      64px !default;
   cursor: pointer;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+
+  visibility: visible;
 
   transition: background-color, opacity 100ms linear;
 

@@ -1,4 +1,4 @@
-import { Component, h, Prop, Watch, Ionic } from '@stencil/core';
+import { Component, h, Prop, Ionic } from '@stencil/core';
 import { VNodeData, GlobalNamespace, Menu as IMenu } from '../../utils/interfaces';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
@@ -78,7 +78,7 @@ export class Menu implements IMenu {
    */
   @Prop() swipeEnabled: boolean;
 
-  @Watch('swipeEnabled')
+  @PropDidChange('swipeEnabled')
   swipeEnabledChange(isEnabled: boolean) {
     this.swipeEnable(isEnabled);
   }

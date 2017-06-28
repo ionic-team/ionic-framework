@@ -216,6 +216,7 @@ export class Button {
     }
 
     return [`${className}-${mode}`].concat(
+        style !== 'default' ? `${className}` : [],
         color ? `${className}-${mode}-${color}` : []
       );
   }
