@@ -3,8 +3,7 @@ exports.config = {
   dest: 'dist',
   bundles: [
     { components: ['ion-app', 'ion-content', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
-    { components: ['ion-avatar', 'ion-thumbnail'] },
-    { components: ['ion-badge'] },
+    { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-button', 'ion-buttons', 'ion-icon'] },
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title'] },
     { components: ['ion-gesture', 'ion-scroll'], priority: 'low' },
