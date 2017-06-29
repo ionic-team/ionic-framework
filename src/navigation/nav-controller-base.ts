@@ -223,6 +223,8 @@ export class NavControllerBase extends Ion implements NavController {
     this._init = true;
     this._trnsId = null;
 
+    // ensure we're not transitioning here
+    this.setTransitioning(false);
     this._swipeBackCheck();
     // let's see if there's another to kick off
     this._nextTrns();
@@ -749,6 +751,8 @@ export class NavControllerBase extends Ion implements NavController {
 
       // it's safe to enable the app again
       this._app.setEnabled(true);
+      // mark ourselves as not transitioning - `deepLinker navchange` requires this
+      // TODO - probably could be resolved in a better way
       this.setTransitioning(false);
 
       if (!this.hasChild() && opts.updateUrl !== false) {
