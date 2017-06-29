@@ -7,6 +7,7 @@
     "build": "npm run clean && npm run copy.vendor && stencil collection",
     "clean": "rm -Rf ./dist",
     "copy.vendor": "mkdir -p ./dist/vendor && cp -Rf ./src/vendor ./dist",
+    "link.stencil": "npm link @stencil/core",
     "test": "jest"
   },
   "repository": {

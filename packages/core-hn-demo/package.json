@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npm run clean && stencil build",
     "clean": "rm -Rf ./dist/*",
+    "link.stencil": "npm link @stencil/core",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
