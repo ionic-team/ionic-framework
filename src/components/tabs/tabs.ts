@@ -184,6 +184,12 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /** @internal */
   _onDestroy = new Subject<void>();
 
+
+  /**
+   * @input {string} A unique name for the tabs
+   */
+  @Input() name: string;
+
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
    */
@@ -324,7 +330,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(<any>this.selectedIndex, 10));
 
     // now see if the deep linker can find a tab index
-    const tabsSegment = this._linker.getSegmentByNavId(this.id);
+    const tabsSegment = this._linker.getSegmentByNavIdOrName(this.id, this.name);
     if (tabsSegment) {
       // we found a segment which probably represents which tab to select
       selectedIndex = this._getSelectedTabIndex(tabsSegment.secondaryId, selectedIndex);

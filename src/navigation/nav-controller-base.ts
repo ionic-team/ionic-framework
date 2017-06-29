@@ -48,6 +48,7 @@ export class NavControllerBase extends Ion implements NavController {
   viewWillUnload: EventEmitter<any> = new EventEmitter();
 
   id: string;
+  name: string;
 
   @Input()
   get swipeBackEnabled(): boolean {

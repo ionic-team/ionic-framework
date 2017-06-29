@@ -274,11 +274,11 @@ describe('UrlSerializer', () => {
   describe('serialize', () => {
     it('should serialize multiple segments into a url', () => {
       let paths: NavSegment[] = [
-        { type: 'nav', navId: 'n1', secondaryId: null, id: 'some/url/chunks', name: 'viewOne', component: MockView1, data: null },
+        { type: 'nav', navId: 'whatup', secondaryId: null, id: 'some/url/chunks', name: 'viewOne', component: MockView1, data: null },
         { type: 'tabs', navId: 't1', secondaryId: 'tab-one', id: 'some/more/url/chunks', name: 'viewTwo', component: MockView1, data: null }
       ];
       const result = serializer.serialize(paths);
-      expect(result).toEqual('/nav/n1/some/url/chunks/tabs/t1/tab-one/some/more/url/chunks');
+      expect(result).toEqual('/nav/whatup/some/url/chunks/tabs/t1/tab-one/some/more/url/chunks');
     });
 
     it('should return default url when given empty list of segments', () => {

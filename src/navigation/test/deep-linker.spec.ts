@@ -1,4 +1,4 @@
-import { DeepLinker, _loadViewForSegment, normalizeUrl } from '../deep-linker';
+import * as deepLinker from '../deep-linker';
 import { NavSegment } from '../nav-util';
 import { UrlSerializer } from '../url-serializer';
 import { mockApp, mockDeepLinkConfig, mockNavController, mockLocation,
@@ -81,7 +81,7 @@ describe('DeepLinker', () => {
       spyOn(nav, 'push');
       spyOn(nav, 'popTo');
 
-      _loadViewForSegment(nav, segment, noop);
+      linker._loadViewForSegment(nav, segment, noop);
 
       expect(nav.push).not.toHaveBeenCalled();
       expect(nav.popTo).not.toHaveBeenCalled();
@@ -107,7 +107,7 @@ describe('DeepLinker', () => {
       spyOn(nav, 'push');
       spyOn(nav, 'popTo');
 
-      _loadViewForSegment(nav, segment, noop);
+      linker._loadViewForSegment(nav, segment, noop);
 
       expect(nav.push).not.toHaveBeenCalled();
       expect(nav.popTo).toHaveBeenCalled();
@@ -127,7 +127,7 @@ describe('DeepLinker', () => {
       spyOn(nav, 'setRoot');
       spyOn(nav, 'popTo');
 
-      _loadViewForSegment(nav, segment, noop);
+      linker._loadViewForSegment(nav, segment, noop);
 
       expect(nav.setRoot).toHaveBeenCalled();
       expect(nav.popTo).not.toHaveBeenCalled();
@@ -149,7 +149,7 @@ describe('DeepLinker', () => {
 
       spyOn(tabs, 'select');
 
-      _loadViewForSegment(tabOne, segment, noop);
+      linker._loadViewForSegment(tabOne, segment, noop);
 
       expect(tabs.select).toHaveBeenCalled();
     });
@@ -159,7 +159,7 @@ describe('DeepLinker', () => {
       let done = () => { calledDone = true; };
       let nav = mockNavController();
 
-      _loadViewForSegment(nav, null, done);
+      linker._loadViewForSegment(nav, null, done);
 
       expect(calledDone).toEqual(true);
     });
@@ -263,6 +263,84 @@ describe('DeepLinker', () => {
       expect(linker._historyPush).not.toHaveBeenCalled();
     });
 
+    it('should go to root when url is /', () => {
+      linker._history = ['/some/fake/url'];
+      spyOn(linker, '_historyPush');
+
+      const navControllerOne = mockNavController();
+      const navControllerTwo = mockNavController();
+
+      linker._app.getActiveNavContainers = () => {
+        return [navControllerOne, navControllerTwo];
+      };
+
+      spyOn(navControllerOne, 'goToRoot');
+      spyOn(navControllerTwo, 'goToRoot');
+
+      linker._urlChange('/');
+
+      expect(navControllerOne.goToRoot).toHaveBeenCalled();
+      expect(navControllerTwo.goToRoot).toHaveBeenCalled();
+    });
+
+    it('should not do anything when there arent any segments', () => {
+      linker._history = ['/some/fake/url'];
+      spyOn(linker, '_historyPush');
+
+      const navControllerOne = mockNavController();
+      const navControllerTwo = mockNavController();
+
+      linker._app.getActiveNavContainers = () => {
+        return [navControllerOne, navControllerTwo];
+      };
+
+      spyOn(linker, 'getCurrentSegments').and.returnValue([]);
+      spyOn(linker, '_loadViewForSegment');
+
+      linker._urlChange('/some/irrelevant/fake/url');
+
+      expect(linker._loadViewForSegment).not.toHaveBeenCalled();
+    });
+
+    it('should load the views for the segments', () => {
+      linker._history = ['/some/fake/url'];
+      spyOn(linker, '_historyPush');
+
+      const navControllerOne = mockNavController();
+      const navControllerTwo = mockNavController();
+
+      const childNavOne = mockNavController();
+      childNavOne.parent = navControllerOne;
+      navControllerOne.registerChildNav(childNavOne);
+
+      const childNavTwo = mockTabs();
+      childNavTwo.parent = navControllerTwo;
+      const tabOne = mockTab(childNavTwo);
+      tabOne.setSelected(true);
+      mockTab(childNavTwo);
+      navControllerTwo.registerChildNav(childNavTwo);
+
+      linker._app.getActiveNavContainers = () => {
+        return [childNavOne, tabOne];
+      };
+
+      const segments = [];
+      segments.push({
+        navId: childNavOne.id
+      });
+      segments.push({
+        navId: tabOne.id
+      });
+      spyOn(linker, 'getCurrentSegments').and.returnValue(segments);
+      const loadViewSpy = spyOn(linker, '_loadViewForSegment');
+
+      linker._urlChange('/some/irrelevant/fake/url');
+
+      expect(loadViewSpy.calls.first().args[0]).toEqual(childNavOne);
+      expect(loadViewSpy.calls.first().args[1]).toEqual(segments[0]);
+      expect(loadViewSpy.calls.mostRecent().args[0]).toEqual(tabOne);
+      expect(loadViewSpy.calls.mostRecent().args[1]).toEqual(segments[1]);
+    });
   });
 
   describe('isBackUrl', () => {
@@ -304,27 +382,27 @@ describe('DeepLinker', () => {
   describe('normalizeUrl', () => {
 
     it('should parse multiple segment with leading and following / path', () => {
-      expect(normalizeUrl('   /MockPage1/MockPage2/   ')).toEqual('/MockPage1/MockPage2');
+      expect(deepLinker.normalizeUrl('   /MockPage1/MockPage2/   ')).toEqual('/MockPage1/MockPage2');
     });
 
     it('should parse following / path', () => {
-      expect(normalizeUrl('MockPage1/')).toEqual('/MockPage1');
+      expect(deepLinker.normalizeUrl('MockPage1/')).toEqual('/MockPage1');
     });
 
     it('should parse leading / path', () => {
-      expect(normalizeUrl('/MockPage1')).toEqual('/MockPage1');
+      expect(deepLinker.normalizeUrl('/MockPage1')).toEqual('/MockPage1');
     });
 
     it('should parse / path', () => {
-      expect(normalizeUrl('/')).toEqual('/');
+      expect(deepLinker.normalizeUrl('/')).toEqual('/');
     });
 
     it('should parse empty path with padding', () => {
-      expect(normalizeUrl('    ')).toEqual('/');
+      expect(deepLinker.normalizeUrl('    ')).toEqual('/');
     });
 
     it('should parse empty path', () => {
-      expect(normalizeUrl('')).toEqual('/');
+      expect(deepLinker.normalizeUrl('')).toEqual('/');
     });
 
   });
@@ -357,7 +435,241 @@ describe('DeepLinker', () => {
     });
   });
 
-  var linker: DeepLinker;
+  describe('getSegmentFromNav', () => {
+    it('should use the name of the nav when it exists', () => {
+      const mockNav = mockNavController();
+      mockNav.name = 'superduper';
+      const view1 = mockView(MockView1);
+      mockViews(mockNav, [view1]);
+
+      const spy = spyOn(serializer, 'serializeComponent');
+
+      linker.getSegmentFromNav(mockNav, null, null);
+
+      expect(spy.calls.first().args[0].navId).toEqual(mockNav.name);
+      expect(spy.calls.first().args[0].secondaryId).toBeFalsy();
+      expect(spy.calls.first().args[0].type).toEqual('nav');
+    });
+
+    it('should use the id of the nav when name doesnt exists', () => {
+      const mockNav = mockNavController();
+      mockNav.id = 'someId';
+      const view1 = mockView(MockView1);
+      mockViews(mockNav, [view1]);
+
+      const spy = spyOn(serializer, 'serializeComponent');
+
+      linker.getSegmentFromNav(mockNav, null, null);
+
+      expect(spy.calls.first().args[0].navId).toEqual(mockNav.id);
+      expect(spy.calls.first().args[0].secondaryId).toBeFalsy();
+      expect(spy.calls.first().args[0].type).toEqual('nav');
+    });
+  });
+
+  describe('getSegmentFromTab', () => {
+    it('should use the parent tabs name when it exists', () => {
+      const tabs = mockTabs();
+      tabs.name = 'super-tabs';
+      const tabOne = mockTab(tabs);
+      tabOne.setSelected(true);
+      mockTab(tabs);
+
+      tabs.select(tabOne);
+
+      const spy = spyOn(serializer, 'serializeComponent');
+
+      linker.getSegmentFromTab(tabOne, null, null);
+
+      expect(spy).toHaveBeenCalled();
+      expect(spy.calls.first().args[0].navId).toEqual(tabs.name);
+
+    });
+
+    it('should use the parent tabs id when name doesnt exists', () => {
+      const tabs = mockTabs();
+      tabs.id = 'super-tabs';
+      const tabOne = mockTab(tabs);
+      tabOne.setSelected(true);
+      mockTab(tabs);
+
+      tabs.select(tabOne);
+
+      const spy = spyOn(serializer, 'serializeComponent');
+
+      linker.getSegmentFromTab(tabOne, null, null);
+
+      expect(spy).toHaveBeenCalled();
+      expect(spy.calls.first().args[0].navId).toEqual(tabs.id);
+
+    });
+  });
+
+  describe('_loadViewForSegment', () => {
+    it('should call done if segment is null', () => {
+      const wrapper = {
+        done: () => {}
+      };
+      spyOn(wrapper, wrapper.done.name);
+
+      linker._loadViewForSegment(null, null, wrapper.done);
+
+      expect(wrapper.done).toHaveBeenCalled();
+    });
+
+    it('should set the selected tab from the segment', () => {
+      const wrapper = {
+        done: () => {}
+      };
+      spyOn(wrapper, wrapper.done.name);
+
+      const tabs = mockTabs();
+      const tabOne = mockTab(tabs);
+      tabOne.parent = tabs;
+      mockTab(tabs);
+
+      const segment: NavSegment = {
+        id: 'someId',
+        type: 'tab',
+        navId: tabOne.id,
+        secondaryId: 'secondaryId',
+        name: 'name',
+        data: { }
+      };
+
+      spyOn(tabs, '_getSelectedTabIndex').and.returnValue(0);
+      const selectSpy = spyOn(tabs, 'select');
+
+      linker._loadViewForSegment(tabs, segment, wrapper.done);
+
+      expect(selectSpy.calls.first().args[0]).toEqual(tabOne);
+      expect(selectSpy.calls.first().args[0]._lazyRootFromUrl).toEqual(segment.name);
+      expect(selectSpy.calls.first().args[0]._lazyRootFromUrlData).toEqual(segment.data);
+      expect(wrapper.done).toHaveBeenCalled();
+    });
+
+    it('should remain on the last view in the stack if its found', () => {
+      const wrapper = {
+        done: () => {}
+      };
+      spyOn(wrapper, wrapper.done.name);
+
+      const navCtrl = mockNavController();
+      const view1 = mockView(MockView1);
+      view1.id = 'MockPage1';
+      const view2 = mockView(MockView1);
+      view2.id = 'MockPage2';
+
+      mockViews(navCtrl, [view1, view2]);
+
+      spyOn(navCtrl, 'popTo');
+      spyOn(navCtrl, 'setRoot');
+
+      const segment: NavSegment = {
+        id: view2.id,
+        type: 'nav',
+        navId: view2.id,
+        secondaryId: null,
+        name: 'name',
+        data: { }
+      };
+
+      linker._loadViewForSegment(navCtrl, segment, wrapper.done);
+
+      expect(wrapper.done).toHaveBeenCalled();
+      expect(navCtrl.popTo).not.toHaveBeenCalled();
+      expect(navCtrl.setRoot).not.toHaveBeenCalled();
+    });
+
+    it('should popTo the view if its in the stack', () => {
+      const wrapper = {
+        done: () => {}
+      };
+      spyOn(wrapper, wrapper.done.name);
+
+      const navCtrl = mockNavController();
+      const view1 = mockView(MockView1);
+      view1.id = 'MockPage1';
+      const view2 = mockView(MockView1);
+      view2.id = 'MockPage2';
+
+      mockViews(navCtrl, [view1, view2]);
+
+      spyOn(navCtrl, 'popTo');
+      spyOn(navCtrl, 'setRoot');
+
+      const segment: NavSegment = {
+        id: view1.id,
+        type: 'nav',
+        navId: view1.id,
+        secondaryId: null,
+        name: 'name',
+        data: { }
+      };
+
+      linker._loadViewForSegment(navCtrl, segment, wrapper.done);
+
+      expect(wrapper.done).not.toHaveBeenCalled();
+      expect(navCtrl.popTo).toHaveBeenCalled();
+      expect(navCtrl.setRoot).not.toHaveBeenCalled();
+    });
+
+    it('should set the component to root if a view controller doesnt yet exist', () => {
+      const wrapper = {
+        done: () => {}
+      };
+      spyOn(wrapper, wrapper.done.name);
+
+      const navCtrl = mockNavController();
+
+      spyOn(navCtrl, 'popTo');
+      const setRootSpy = spyOn(navCtrl, 'setRoot');
+
+      const segment: NavSegment = {
+        id: 'who cares',
+        type: 'nav',
+        navId: 'irrelevant data',
+        secondaryId: null,
+        name: 'name',
+        data: { }
+      };
+
+      linker._loadViewForSegment(navCtrl, segment, wrapper.done);
+
+      expect(wrapper.done).not.toHaveBeenCalled();
+      expect(navCtrl.popTo).not.toHaveBeenCalled();
+      expect(setRootSpy.calls.first().args[0]).toEqual(segment.name);
+      expect(setRootSpy.calls.first().args[1]).toEqual(segment.data);
+    });
+  });
+
+  describe('createUrl', () => {
+    it('should get the current segments, then replace with whatever data needed, and then create a url from that', () => {
+      const name = 'Some Name';
+      const nav = mockNavController();
+      const mockSegment = { };
+      const existingSegments = [];
+      existingSegments.push({
+        navId: nav.id
+      });
+      existingSegments.push({
+        navId: 'blah'
+      });
+      const url = 'someUrl';
+      spyOn(serializer, 'createSegmentFromName').and.returnValue(mockSegment);
+      const serializeSpy = spyOn(serializer, 'serialize');
+      spyOn(linker, 'getCurrentSegments').and.returnValue(existingSegments);
+      spyOn(linker._location, 'prepareExternalUrl').and.returnValue(url);
+
+      const result = linker.createUrl(nav, name, null);
+      expect(result).toEqual(url);
+      expect(serializer.createSegmentFromName).toHaveBeenCalledWith(nav, name);
+      expect(serializeSpy.calls.first().args[0][0]).toEqual(mockSegment);
+      expect(serializeSpy.calls.first().args[0][1]).toEqual(existingSegments[1]);
+    });
+  });
+
+  var linker: deepLinker.DeepLinker;
   var serializer: UrlSerializer;
 
   beforeEach(() => {
@@ -367,7 +679,7 @@ describe('DeepLinker', () => {
     let moduleLoader = mockModuleLoader();
     let baseCfr: any = null;
 
-    linker = new DeepLinker(mockApp(), serializer, mockLocation(), moduleLoader as any, baseCfr);
+    linker = new deepLinker.DeepLinker(mockApp(), serializer, mockLocation(), moduleLoader as any, baseCfr);
   });
 
 });

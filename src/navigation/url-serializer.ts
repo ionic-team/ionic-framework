@@ -330,6 +330,7 @@ export function navGroupStringtoObjects(navGroupStrings: string[]): NavGroup[] {
       return {
         type: 'nav',
         navId: sections[1],
+        niceId: sections[1],
         secondaryId: null,
         segmentPieces: sections.splice(2)
       };
@@ -337,6 +338,7 @@ export function navGroupStringtoObjects(navGroupStrings: string[]): NavGroup[] {
     return {
       type: 'tabs',
       navId: sections[1],
+      niceId: sections[1],
       secondaryId: sections[2],
       segmentPieces: sections.splice(3)
     };
