@@ -3,7 +3,7 @@ import { Component, h, State, Ionic } from '@stencil/core';
 
 @Component({
   tag: 'news-container',
-  styleUrls: 'main.scss'
+  styleUrl: 'main.scss'
 })
 export class NewsContainer {
 
