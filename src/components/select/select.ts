@@ -244,6 +244,9 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
+    if (ev.detail == 0) {
+      return;
+    }
     ev.preventDefault();
     ev.stopPropagation();
     this.open(ev);
