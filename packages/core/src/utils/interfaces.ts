@@ -211,6 +211,13 @@ export interface GestureCallback {
 }
 
 
+export interface SegmentButtonEvent {
+  detail: {
+    segmentButton: any;
+  };
+}
+
+
 export interface ScrollDetail extends GestureDetail {
   scrollTop?: number;
   scrollLeft?: number;
