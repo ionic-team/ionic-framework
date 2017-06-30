@@ -1,7 +1,7 @@
 import { Component, h, Ionic, Prop, State } from '@stencil/core';
 
-import { CssClassObject } from '../../util/interfaces';
-import { createThemedClasses } from '../../util/theme';
+import { CssClassObject } from '../../utils/interfaces';
+import { createThemedClasses } from '../../utils/theme';
 
 
 /**

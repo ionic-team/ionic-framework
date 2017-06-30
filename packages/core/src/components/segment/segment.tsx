@@ -1,5 +1,5 @@
 import { Component, h, Listen, Prop, PropDidChange } from '@stencil/core';
-import { SegmentButtonEvent, VNodeData } from '../../util/interfaces';
+import { SegmentButtonEvent, VNodeData } from '../../utils/interfaces';
 
 
 /**
