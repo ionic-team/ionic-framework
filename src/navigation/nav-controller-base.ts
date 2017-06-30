@@ -26,7 +26,7 @@ import { TransitionController } from '../transitions/transition-controller';
  */
 export class NavControllerBase extends Ion implements NavController {
 
-  _child: NavigationContainer;
+  _children: NavigationContainer[];
   _ids: number = -1;
   _init = false;
   _isPortal: boolean;
@@ -77,7 +77,7 @@ export class NavControllerBase extends Ion implements NavController {
     super(config, elementRef, renderer);
 
     this._sbEnabled = config.getBoolean('swipeBackEnabled');
-
+    this._children = [];
     this.id = 'n' + (++ctrlIds);
   }
 
@@ -755,7 +755,7 @@ export class NavControllerBase extends Ion implements NavController {
       // TODO - probably could be resolved in a better way
       this.setTransitioning(false);
 
-      if (!this.hasChild() && opts.updateUrl !== false) {
+      if (!this.hasChildren() && opts.updateUrl !== false) {
         // notify deep linker of the nav change
         // if a direction was provided and should update url
         this._linker.navChange(this.id, opts.direction);
@@ -960,20 +960,20 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  hasChild(): boolean {
-    return !!this._child;
+  hasChildren(): boolean {
+    return this._children && this._children.length > 0;
   }
 
-  getActiveChildNav(): any {
-    return this._child;
+  getActiveChildNavs(): any[] {
+    return this._children;
   }
 
   registerChildNav(container: NavigationContainer) {
-    this._child = container;
+    this._children.push(container);
   }
 
   unregisterChildNav(nav: any) {
-    this._child = null;
+    this._children = this._children.filter(child => child !== nav);
   }
 
   destroy() {
@@ -1048,7 +1048,7 @@ export class NavControllerBase extends Ion implements NavController {
   canSwipeBack(): boolean {
     return (this._sbEnabled &&
             !this._isPortal &&
-            !this._child &&
+            !this._children.length &&
             !this.isTransitioning() &&
             this._app.isEnabled() &&
             this.canGoBack());

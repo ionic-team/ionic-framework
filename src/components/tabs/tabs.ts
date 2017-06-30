@@ -502,8 +502,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @internal
    */
-  getActiveChildNav(): Tab {
-    return this.getSelected();
+  getActiveChildNavs(): Tab[] {
+    const selected = this.getSelected();
+    return selected ? [selected] : [];
   }
 
   /**
@@ -624,9 +625,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    * @private
    */
   getSecondaryIdentifier(): string {
-    const tab = this.getActiveChildNav();
-    if (tab) {
-      return this._linker._getTabSelector(tab);
+    const tabs = this.getActiveChildNavs();
+    if (tabs && tabs.length) {
+      return this._linker._getTabSelector(tabs[0]);
     }
     return '';
   }

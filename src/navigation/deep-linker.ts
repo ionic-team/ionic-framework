@@ -182,14 +182,16 @@ export class DeepLinker {
   getSegmentFromTab(navContainer: NavigationContainer, component?: any, data?: any): NavSegment {
     if (navContainer && navContainer.parent) {
       const tabsNavContainer = navContainer.parent as NavigationContainer;
-      const activeChildNav = tabsNavContainer.getActiveChildNav();
-      // since it's a tabs, we know that the activeChildNav is a tab
-      const viewController = (activeChildNav as NavController).getActive(true);
-      if (viewController) {
-        component = viewController.component;
-        data = viewController.data;
+      const activeChildNavs = tabsNavContainer.getActiveChildNavs();
+      if (activeChildNavs && activeChildNavs.length) {
+        const activeChildNav = activeChildNavs[0];
+        const viewController = (activeChildNav as NavController).getActive(true);
+        if (viewController) {
+          component = viewController.component;
+          data = viewController.data;
+        }
+        return this._serializer.serializeComponent({ navId: tabsNavContainer.name || tabsNavContainer.id, secondaryId: tabsNavContainer.getSecondaryIdentifier(), type: 'tabs'}, component, data);
       }
-      return this._serializer.serializeComponent({ navId: tabsNavContainer.name || tabsNavContainer.id, secondaryId: tabsNavContainer.getSecondaryIdentifier(), type: 'tabs'}, component, data);
     }
   }
 

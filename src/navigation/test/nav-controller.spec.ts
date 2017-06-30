@@ -1128,7 +1128,7 @@ describe('NavController', () => {
 
     it('should not swipe back if it has a child nav', () => {
       nav._sbEnabled = true;
-      nav._child = mockNavController();
+      nav.registerChildNav(mockNavController());
 
       const view1 = mockView();
       const view2 = mockView();
