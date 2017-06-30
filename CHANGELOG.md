@@ -1,3 +1,127 @@
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/ionic-team/ionic/compare/v3.4.2...v3.5.0) (2017-06-28)
+
+### Steps to Upgrade
+
+`ionic-angular` should be set to version `3.5.0`.
+
+```
+npm install ionic-angular@3.5.0 --save --save-exact
+```
+
+### Notes
+There were major improvements made to navigation in this release of `ionic-angular`. Specifically, we updated Ionic to support a concept of `n` root navigation elements, instead of just one. This will enable first-class url support for things `split-pane`. Before `3.5.0`, only one section of the screen could be represented in the URL. With these changes, multiple sections can be. Another large change was improving the behavior surrounding browser behaviors, such as the back-and-forward buttons, as well as refresh. In general, Ionic should work much more intuitively in a web browser now.
+
+As a result of these improvements, if you're using deep linking, the urls of the application will be different with `3.5.0` than they were with previous Ionic releases. The URLs will likely change again in the near future with the next round of navigation improvements too. For now, we don't recommend using `href` attributes in the application. Using the `navPush` and `navPop` directives is a better option for now while URL support is being built-out.
+
+### Bug Fixes
+
+* **navigation:** add isTab check to getSegmentsFromNav ([f39c381](https://github.com/ionic-team/ionic/commit/f39c381))
+* **navigation:** fallback to name if component does not exist on segment ([30f69c8](https://github.com/ionic-team/ionic/commit/30f69c8))
+* **select:** _inputUpdated should not be called manually ([8dc08f9](https://github.com/ionic-team/ionic/commit/8dc08f9))
+* **select:** floating label ([e3a8d27](https://github.com/ionic-team/ionic/commit/e3a8d27)), closes [#12068](https://github.com/ionic-team/ionic/issues/12068)
+* **tabs:** use segment if it exists even if component exists ([016b90d](https://github.com/ionic-team/ionic/commit/016b90d))
+
+
+
+<a name="3.4.2"></a>
+## [3.4.2](https://github.com/ionic-team/ionic/compare/v3.4.1...v3.4.2) (2017-06-16)
+
+
+### Bug Fixes
+
+* **rtl:** use multi direction in order to override the default ltr ([70b5b6](https://github.com/ionic-team/ionic/commit/70b5b6))
+
+
+
+<a name="3.4.1"></a>
+## [3.4.1](https://github.com/ionic-team/ionic/compare/v3.4.0...v3.4.1) (2017-06-16)
+
+
+### Bug Fixes
+
+* **themes:** change default app-direction ([1ca7df](https://github.com/ionic-team/ionic/commit/1ca7df))
+
+
+
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/ionic-team/ionic/compare/v3.3.0...v3.4.0) (2017-06-15)
+
+### Steps to Upgrade
+
+`ionic-angular` should be set to version `3.4.0` in the package.json dependency list. The latest `@angular` release `4.1.3` is also supported. Feel free to update apps by updating the `package.json` dependencies to match below.
+
+```
+"dependencies": {
+  "@angular/common": "4.1.3",
+  "@angular/compiler": "4.1.3",
+  "@angular/compiler-cli": "4.1.3",
+  "@angular/core": "4.1.3",
+  "@angular/forms": "4.1.3",
+  "@angular/http": "4.1.3",
+  "@angular/platform-browser": "4.1.3",
+  "@angular/platform-browser-dynamic": "4.1.3",
+  "@ionic-native/core": "3.12.1",
+  "@ionic-native/splash-screen": "3.12.1",
+  "@ionic-native/status-bar": "3.12.1",
+  "@ionic/storage": "2.0.1",
+  "ionic-angular": "3.4.2",
+  "ionicons": "3.0.0",
+  "rxjs": "5.4.0",
+  "sw-toolbox": "3.6.0",
+  "zone.js": "0.8.12"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "1.3.7",
+  "typescript": "2.3.4"
+}
+```
+
+### Bug Fixes
+
+* **button:** rtl fix for md ripple effect ([#11842](https://github.com/ionic-team/ionic/issues/11842)) ([bb966e5](https://github.com/ionic-team/ionic/commit/bb966e5))
+* **content:** scroll content should inherit background ([#11467](https://github.com/ionic-team/ionic/issues/11467)) ([6256b0f](https://github.com/ionic-team/ionic/commit/6256b0f))
+* **datetime:** set datetime direction the same on ltr and rtl ([#11992](https://github.com/ionic-team/ionic/issues/11992)) ([20c9dd7](https://github.com/ionic-team/ionic/commit/20c9dd7))
+* **gesture:** RTL fix for slide-gesture ([#11822](https://github.com/ionic-team/ionic/issues/11822)) ([59a1e3d](https://github.com/ionic-team/ionic/commit/59a1e3d))
+* **input:** add correct translate3d for rtl ([ef85ba6](https://github.com/ionic-team/ionic/commit/ef85ba6)), closes [#11745](https://github.com/ionic-team/ionic/issues/11745) [#11211](https://github.com/ionic-team/ionic/issues/11211)
+* **input:** better handling of attributes ([9f86e10](https://github.com/ionic-team/ionic/commit/9f86e10))
+* **input:** slightly longer delay for autofocus ([#12037](https://github.com/ionic-team/ionic/issues/12037)) ([54ac2e3](https://github.com/ionic-team/ionic/commit/54ac2e3))
+* **input:** use all supported attributes on both textareas and inputs ([#12028](https://github.com/ionic-team/ionic/issues/12028)) ([8041eed](https://github.com/ionic-team/ionic/commit/8041eed))
+* **item-sliding:** RTL fix for item sliding ([#11825](https://github.com/ionic-team/ionic/issues/11825)) ([10f4df4](https://github.com/ionic-team/ionic/commit/10f4df4))
+* **keyboard:** big keyboard/input refactor ([c10f72b](https://github.com/ionic-team/ionic/commit/c10f72b)), closes [#9699](https://github.com/ionic-team/ionic/issues/9699) [#11484](https://github.com/ionic-team/ionic/issues/11484) [#11389](https://github.com/ionic-team/ionic/issues/11389) [#11325](https://github.com/ionic-team/ionic/issues/11325) [#11291](https://github.com/ionic-team/ionic/issues/11291) [#10828](https://github.com/ionic-team/ionic/issues/10828) [#11291](https://github.com/ionic-team/ionic/issues/11291) [#10393](https://github.com/ionic-team/ionic/issues/10393) [#10257](https://github.com/ionic-team/ionic/issues/10257) [#9434](https://github.com/ionic-team/ionic/issues/9434) [#8933](https://github.com/ionic-team/ionic/issues/8933) [#7178](https://github.com/ionic-team/ionic/issues/7178) [#7047](https://github.com/ionic-team/ionic/issues/7047) [#10552](https://github.com/ionic-team/ionic/issues/10552) [#10393](https://github.com/ionic-team/ionic/issues/10393) [#10183](https://github.com/ionic-team/ionic/issues/10183) [#10187](https://github.com/ionic-team/ionic/issues/10187) [#10852](https://github.com/ionic-team/ionic/issues/10852) [#11578](https://github.com/ionic-team/ionic/issues/11578)
+* **menu:** rtl gesture for menu ([#11830](https://github.com/ionic-team/ionic/issues/11830)) ([30047f0](https://github.com/ionic-team/ionic/commit/30047f0))
+* **refresher:** border should only show when pulled ([#12015](https://github.com/ionic-team/ionic/issues/12015)) ([47e3c70](https://github.com/ionic-team/ionic/commit/47e3c70)), closes [#10994](https://github.com/ionic-team/ionic/issues/10994)
+* **rtl:** add icon-start and icon-end attributes ([#11737](https://github.com/ionic-team/ionic/issues/11737)) ([a40b872](https://github.com/ionic-team/ionic/commit/a40b872))
+* **sass:** add default flag to variables ([#11779](https://github.com/ionic-team/ionic/issues/11779)) ([f14d7d6](https://github.com/ionic-team/ionic/commit/f14d7d6))
+* **searchbar:** caret moving to the end when typing ([261bc4d](https://github.com/ionic-team/ionic/commit/261bc4d))
+* **segment:** fix border-radius logic for RTL ([#11981](https://github.com/ionic-team/ionic/issues/11981)) ([6db8c14](https://github.com/ionic-team/ionic/commit/6db8c14))
+* **select:** add cssClass for popover interface ([#11769](https://github.com/ionic-team/ionic/issues/11769)) ([1c25acb](https://github.com/ionic-team/ionic/commit/1c25acb))
+* **select:** return undefined when there are no options ([#11968](https://github.com/ionic-team/ionic/issues/11968)) ([dc6c586](https://github.com/ionic-team/ionic/commit/dc6c586)), closes [#10435](https://github.com/ionic-team/ionic/issues/10435)
+* **split-pane:** correct split-pane menu side order ([30dc247](https://github.com/ionic-team/ionic/commit/30dc247))
+* **textarea:** apply classes properly ([dc958c3](https://github.com/ionic-team/ionic/commit/dc958c3))
+* **toggle:** RTL fix for toggle ([2afb936](https://github.com/ionic-team/ionic/commit/2afb936))
+* **toolbar:** get the correct contrast color for md mode ([0f4ed1c](https://github.com/ionic-team/ionic/commit/0f4ed1c)), closes [#11848](https://github.com/ionic-team/ionic/issues/11848)
+* **toolbar:** use the correct contrast color for MD toolbar ([041689b](https://github.com/ionic-team/ionic/commit/041689b)), closes [#11848](https://github.com/ionic-team/ionic/issues/11848)
+* **transition:** RTL fix for transition on ios ([#11820](https://github.com/ionic-team/ionic/issues/11820)) ([6322134](https://github.com/ionic-team/ionic/commit/6322134))
+
+
+### Features
+
+* **background-position:** add background position support for rtl ([#11946](https://github.com/ionic-team/ionic/issues/11946)) ([305c306](https://github.com/ionic-team/ionic/commit/305c306))
+* **loading:** add enableBackdropDismiss to Loading ([#11937](https://github.com/ionic-team/ionic/issues/11937)) ([d0ae810](https://github.com/ionic-team/ionic/commit/d0ae810)), closes [#7975](https://github.com/ionic-team/ionic/issues/7975)
+* **loading:** add margin start variable ([#11980](https://github.com/ionic-team/ionic/issues/11980)) ([3e0d43e](https://github.com/ionic-team/ionic/commit/3e0d43e))
+* **rtl:** add transform and transform-origin support for rtl ([#11649](https://github.com/ionic-team/ionic/issues/11649)) ([2273fb5](https://github.com/ionic-team/ionic/commit/2273fb5))
+* **rtl:** optimize the new mixins for smaller bundle, ltr separation ([#11635](https://github.com/ionic-team/ionic/issues/11635)) ([f0c6948](https://github.com/ionic-team/ionic/commit/f0c6948))
+* **rtl:** support flipped svg background images on rtl ([#11945](https://github.com/ionic-team/ionic/issues/11945)) ([f4452b5](https://github.com/ionic-team/ionic/commit/f4452b5))
+* **slides:** support centering slides and using decimal numbers ([e3c60c5](https://github.com/ionic-team/ionic/commit/e3c60c5)), closes [#10361](https://github.com/ionic-team/ionic/issues/10361)
+
+
+### Performance Improvements
+
+* **item-sliding:** remove duplicate class ([#11829](https://github.com/ionic-team/ionic/issues/11829)) ([c9cb9ae](https://github.com/ionic-team/ionic/commit/c9cb9ae))
+
+
+
 <a name="3.3.0"></a>
 # [3.3.0](https://github.com/ionic-team/ionic/compare/v3.2.1...v3.3.0) (2017-05-24)
 

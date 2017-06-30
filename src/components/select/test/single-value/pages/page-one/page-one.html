@@ -10,7 +10,7 @@
 <ion-content class="outer-content">
 
   <ion-item>
-    <ion-label>Gender</ion-label>
+    <ion-label stacked>Gender</ion-label>
     <ion-select [(ngModel)]="gender" class="e2eSelectGender">
       <ion-option value="f">Female</ion-option>
       <ion-option value="m">Male</ion-option>
@@ -39,7 +39,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Operating System</ion-label>
+    <ion-label floating>Operating System</ion-label>
     <ion-select [(ngModel)]="os" interface="alert" submitText="Okay" cancelText="Nah">
       <ion-option value="dos">DOS</ion-option>
       <ion-option value="lunix">Linux</ion-option>

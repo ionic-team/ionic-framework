@@ -117,8 +117,6 @@ export class ActionSheetCmp {
   }
 
   ionViewDidEnter() {
-    this._plt.focusOutActiveElement();
-
     const focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {
       focusableEle.focus();

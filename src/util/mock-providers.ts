@@ -10,7 +10,6 @@ import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
 import { Haptic } from '../tap-click/haptic';
 import { IonicApp } from '../components/app/app-root';
-import { Keyboard } from '../platform/keyboard';
 import { Menu } from '../components/menu/menu';
 import { NavOptions } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
@@ -359,7 +358,8 @@ export function mockLocation(): Location {
     path: () => { return ''; },
     subscribe: () => {},
     go: () => {},
-    back: () => {}
+    back: () => {},
+    prepareExternalUrl: () => {}
   };
   return location;
 }
@@ -403,7 +403,6 @@ export function mockNavController(): NavControllerBase {
   let app = mockApp(config, platform);
   let zone = mockZone();
   let dom = mockDomController(platform);
-  let keyboard = new Keyboard(config, platform, zone, dom);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let componentFactoryResolver: any = null;
@@ -415,7 +414,6 @@ export function mockNavController(): NavControllerBase {
     app,
     config,
     platform,
-    keyboard,
     elementRef,
     zone,
     renderer,
@@ -447,7 +445,6 @@ export function mockNavController(): NavControllerBase {
 export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): OverlayPortal {
   let zone = mockZone();
   let dom = mockDomController(plt);
-  let keyboard = new Keyboard(config, plt, zone, dom);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let componentFactoryResolver: any = null;
@@ -460,7 +457,6 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
     app,
     config,
     plt,
-    keyboard,
     elementRef,
     zone,
     renderer,
@@ -480,7 +476,6 @@ export function mockTab(parentTabs: Tabs): Tab {
   let app = (<any>parentTabs)._app || mockApp(config, platform);
   let zone = mockZone();
   let dom = mockDomController(platform);
-  let keyboard = new Keyboard(config, platform, zone, dom);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let changeDetectorRef = mockChangeDetectorRef();
@@ -493,7 +488,6 @@ export function mockTab(parentTabs: Tabs): Tab {
     app,
     config,
     platform,
-    keyboard,
     elementRef,
     zone,
     renderer,

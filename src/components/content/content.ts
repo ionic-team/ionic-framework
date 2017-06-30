@@ -167,7 +167,8 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
-    '[class.statusbar-padding]': 'statusbarPadding'
+    '[class.statusbar-padding]': 'statusbarPadding',
+    '[class.has-refresher]': '_hasRefresher'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -211,6 +212,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   _scLsn: Function;
   /** @internal */
   _fullscreen: boolean;
+  /** @internal */
+  _hasRefresher: boolean = false;
   /** @internal */
   _footerEle: HTMLElement;
   /** @internal */
@@ -780,6 +783,11 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
 
     } else if (this._tabsPlacement === 'bottom') {
       this._cBottom += this._tabbarHeight;
+    }
+
+    // Refresher uses a border which should be hidden unless pulled
+    if (this._hasRefresher) {
+      this._cTop -= 1;
     }
 
     // Fixed content shouldn't include content padding

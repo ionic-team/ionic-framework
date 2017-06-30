@@ -20,13 +20,14 @@
     </button>
 
     <ion-item>
-      <ion-label>DateTime</ion-label>
+      <ion-label floating>DateTime</ion-label>
       <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" displayFormat="MM/DD/YYYY" required [disabled]='disabled'></ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label>Select</ion-label>
+      <ion-label floating>Select</ion-label>
       <ion-select [(ngModel)]="select" [disabled]='strDisabled()'>
+        <ion-option value="">No Game Console</ion-option>
         <ion-option value="nes">NES</ion-option>
         <ion-option value="n64">Nintendo64</ion-option>
         <ion-option value="ps">PlayStation</ion-option>
@@ -42,7 +43,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Input (text)</ion-label>
+      <ion-label floating>Input (text)</ion-label>
       <ion-input [(ngModel)]="text" [disabled]='disabled'></ion-input>
     </ion-item>
 

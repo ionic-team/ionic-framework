@@ -126,7 +126,7 @@ import {AppModule as NavChildNavs} from '../../../../../nav/test/child-navs/app/
 import {AppModule as NavInitAsync} from '../../../../../nav/test/init-async/app.module';
 import {AppModule as NavInsertViews} from '../../../../../nav/test/insert-views/app.module';
 import {AppModule as NavMemory} from '../../../../../nav/test/memory/app.module';
-import {AppModule as NavNavPushPop} from '../../../../../nav/test/nav-push-pop/app.module';
+import {AppModule as NavNavPushPop} from '../../../../../nav/test/nav-push-pop/app/app.module';
 import {AppModule as NavWorstCase} from '../../../../../nav/test/worst-case/app.module';
 
 import {AppModule as PickerBasic} from '../../../../../picker/test/basic/app/app.module';

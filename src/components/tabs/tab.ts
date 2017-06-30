@@ -6,7 +6,6 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { Keyboard } from '../../platform/keyboard';
 import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
@@ -175,6 +174,16 @@ export class Tab extends NavControllerBase implements ITab {
   _tabsHideOnSubPages: boolean;
 
   /**
+   * @hidden
+   */
+  _lazyRootFromUrl: any;
+
+  /**
+   * @hidden
+   */
+  _lazyRootFromUrlData: any;
+
+  /**
    * @input {Page} Set the root page for this tab.
    */
   @Input() root: any;
@@ -250,12 +259,13 @@ export class Tab extends NavControllerBase implements ITab {
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
+
+
   constructor(
     parent: Tabs,
     app: App,
     config: Config,
     plt: Platform,
-    keyboard: Keyboard,
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
@@ -268,7 +278,7 @@ export class Tab extends NavControllerBase implements ITab {
     errHandler: ErrorHandler
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, plt, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler);
+    super(parent, app, config, plt, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');
@@ -295,9 +305,16 @@ export class Tab extends NavControllerBase implements ITab {
    * @hidden
    */
   load(opts: NavOptions, done?: () => void) {
-    if (!this._loaded && this.root) {
+    if (this._lazyRootFromUrl || (!this._loaded && this.root)) {
       this.setElementClass('show-tab', true);
-      this.push(this.root, this.rootParams, opts, done);
+      if (this._lazyRootFromUrl) {
+        this.push(this._lazyRootFromUrl, this._lazyRootFromUrlData, opts, done);
+        this._lazyRootFromUrl = null;
+        this._lazyRootFromUrlData = null;
+      } else {
+        this.push(this.root, this.rootParams, opts, done);
+      }
+
       this._loaded = true;
 
     } else {
@@ -375,7 +392,7 @@ export class Tab extends NavControllerBase implements ITab {
    */
   updateHref(component: any, data: any) {
     if (this.btn && this.linker) {
-      let href = this.linker.createUrl(this, component, data) || '#';
+      let href = this.linker.createUrl(this.parent, component, data) || '#';
       this.btn.updateHref(href);
     }
   }
@@ -387,4 +404,14 @@ export class Tab extends NavControllerBase implements ITab {
     this.destroy();
   }
 
+  /**
+   * @hidden
+   */
+  getType() {
+    return 'tab';
+  }
+
+  goToRoot(opts: NavOptions) {
+    return this.setRoot(this.root, this.rootParams, opts, null);
+  }
 }

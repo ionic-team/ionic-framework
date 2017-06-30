@@ -11,14 +11,14 @@ task('demos.watch', ['demos.prepare'], (done: Function) => {
     done(new Error(`Usage: gulp e2e.watch --folder modal`));
   }
 
-  serveDemo(folderInfo.componentName).then(() => {
+  serveDemo(folderInfo.componentName, folderInfo.devApp).then(() => {
     done();
   }).catch((err: Error) => {
     done(err);
   });
 });
 
-function serveDemo(folderName: any) {
+function serveDemo(folderName: any, devApp: boolean) {
 
   const ionicAngularDir = join(PROJECT_ROOT, 'src');
   const srcTestRoot = join(DEMOS_ROOT, 'src', folderName);
@@ -40,5 +40,5 @@ function serveDemo(folderName: any) {
   const appNgModulePath = join(srcTestRoot, 'app', 'app.module.ts');
   const distDir = join(distDemoRoot, 'www');
 
-  return runAppScriptsServe(folderName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, watchConfigPath);
+  return runAppScriptsServe(folderName, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, watchConfigPath, devApp);
 }
