@@ -218,7 +218,7 @@
   background: #000;
   opacity: .2;
 
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 button.swiper-pagination-bullet {
@@ -231,6 +231,7 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-pagination-clickable .swiper-pagination-bullet {
+  pointer-events: auto;
   cursor: pointer;
 }
 
