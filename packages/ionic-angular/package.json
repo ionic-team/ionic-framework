@@ -23,7 +23,8 @@
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link",
-    "link.stencil": "npm link @stencil/core"
+    "link.stencil": "npm link @stencil/core",
+    "build.stencil": "stencil build"
   },
   "dependencies": {
     "@angular/common": "4.1.3",

@@ -1,5 +1,6 @@
 import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
+import { spawnSync } from 'child_process';
 
 import { task } from 'gulp';
 
@@ -24,12 +25,14 @@ function serveTest(folderInfo: any) {
   const testOrDemoName = join(folderInfo.componentName, folderInfo.componentTest);
   const ionicAngularDir = join(PROJECT_ROOT, 'src');
   const coreCompilerFilePath = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiler');
-  const coreDir = join(PROJECT_ROOT, '..', 'ionic-core', 'dist', 'compiled-ionic-angular');
+  const coreDir = join(PROJECT_ROOT, 'dist', 'core');
   const srcTestRoot = join(PROJECT_ROOT, 'src', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
   const distTestRoot = join(PROJECT_ROOT, 'dist', 'e2e', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
   const includeGlob = [ join(ionicAngularDir, '**', '*.ts')];
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
   const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
+
+  spawnSync('npm', ['run', 'build.stencil']);
 
   createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
 

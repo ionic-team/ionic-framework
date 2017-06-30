@@ -1,5 +1,5 @@
 exports.config = {
-  dest: 'dist',
+  dest: 'dist/core',
   collections: [
     '@ionic/core'
   ]
