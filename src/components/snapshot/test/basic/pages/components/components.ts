@@ -48,6 +48,7 @@ import { AppComponent as ContentBasic } from '../../../../../content/test/basic/
 import { AppComponent as ContentFullscreen } from '../../../../../content/test/fullscreen/app/app.component';
 import { AppComponent as ContentHeaderScroll } from '../../../../../content/test/header-scroll/app.module';
 import { AppComponent as ContentNoBounce } from '../../../../../content/test/no-bounce/app/app.component';
+import { AppComponent as ContentNoScroll } from '../../../../../content/test/no-scroll/app/app.component';
 import { AppComponent as ContentScrollDownOnLoad } from '../../../../../content/test/scroll-down-on-load/app/app.component';
 
 import { AppComponent as DatetimeBasic } from '../../../../../datetime/test/basic/app/app.component';
@@ -289,6 +290,7 @@ export class ComponentsPage {
         {name: 'fullscreen', component: ContentFullscreen},
         {name: 'header-scroll', component: ContentHeaderScroll},
         {name: 'no-bounce', component: ContentNoBounce},
+        {name: 'no-scroll', component: ContentNoScroll},
         {name: 'scroll-down-on-load', component: ContentScrollDownOnLoad}
       ]
     }, {

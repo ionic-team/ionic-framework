@@ -155,6 +155,15 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  * }
  * ```
  *
+ * ### Disable scrolling
+ *
+ * In case some pages should not be scrollable, you can use the `[no-scroll]` attribute for this.
+ *
+ * ```html
+ * <ion-content no-scroll>
+ * </ion-content>
+ * ```
+ *
  */
 @Component({
   selector: 'ion-content',

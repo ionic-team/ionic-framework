@@ -53,6 +53,13 @@ ion-content.js-scroll > .scroll-content {
   will-change: initial;
 }
 
+ion-content[no-scroll] > .scroll-content {
+  overflow-x: initial;
+  overflow-y: initial;
+  -webkit-overflow-scrolling: auto;
+  will-change: initial;
+}
+
 .disable-scroll .ion-page {
   pointer-events: none;
   touch-action: none;

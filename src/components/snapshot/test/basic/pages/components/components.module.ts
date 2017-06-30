@@ -47,6 +47,7 @@ import {AppModule as ContentBasic} from '../../../../../content/test/basic/app/a
 import {AppModule as ContentFullscreen} from '../../../../../content/test/fullscreen/app/app.module';
 import {AppModule as ContentHeaderScroll} from '../../../../../content/test/header-scroll/app.module';
 import {AppModule as ContentNoBounce} from '../../../../../content/test/no-bounce/app/app.module';
+import {AppModule as ContentNoScroll} from '../../../../../content/test/no-scroll/app/app.module';
 import {AppModule as ContentScrollDownOnLoad} from '../../../../../content/test/scroll-down-on-load/app/app.module';
 
 import {AppModule as DatetimeBasic} from '../../../../../datetime/test/basic/app/app.module';
@@ -254,6 +255,7 @@ import {AppModule as VirtualScrollVariableSize} from '../../../../../virtual-scr
     ContentFullscreen,
     ContentHeaderScroll,
     ContentNoBounce,
+    ContentNoScroll,
     ContentScrollDownOnLoad,
 
     DatetimeBasic,
