@@ -4,9 +4,11 @@
   "description": "Base components for Ionic",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run clean && stencil build",
+    "build": "npm run clean && npm run prod",
     "clean": "rm -Rf ./dist",
+    "dev": "stencil build",
     "link.stencil": "npm link @stencil/core",
+    "prod": "stencil build --prod",
     "test": "jest"
   },
   "repository": {
