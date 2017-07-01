@@ -15,13 +15,13 @@ export class LoadingController implements IonicControllerApi {
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
-    (<GlobalNamespace>Ionic).loadController('loading', this);
+    (Ionic as GlobalNamespace).loadController('loading', this);
   }
 
 
   load(opts?: LoadingOptions) {
     // create ionic's wrapping ion-loading component
-    const loading: Loading = document.createElement<any>('ion-loading');
+    const loading: Loading = document.createElement('ion-loading') as any;
 
     const id = this.ids++;
 
@@ -34,7 +34,7 @@ export class LoadingController implements IonicControllerApi {
     Object.assign(loading, opts);
 
     // append the loading element to the document body
-    this.appRoot.appendChild(<any>loading);
+    this.appRoot.appendChild(loading as any);
 
     // store the resolve function to be called later up when the loading loads
     return new Promise<Loading>(resolve => {

@@ -15,13 +15,13 @@ export class ModalController implements IonicControllerApi {
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
-    (<GlobalNamespace>Ionic).loadController('modal', this);
+    (Ionic as GlobalNamespace).loadController('modal', this);
   }
 
 
   load(opts?: ModalOptions) {
     // create ionic's wrapping ion-modal component
-    const modal: Modal = document.createElement<any>('ion-modal');
+    const modal: Modal = document.createElement('ion-modal') as any;
 
     const id = this.ids++;
 
@@ -34,7 +34,7 @@ export class ModalController implements IonicControllerApi {
     Object.assign(modal, opts);
 
     // append the modal element to the document body
-    this.appRoot.appendChild(<any>modal);
+    this.appRoot.appendChild(modal as any);
 
     // store the resolve function to be called later up when the modal loads
     return new Promise<Modal>(resolve => {
