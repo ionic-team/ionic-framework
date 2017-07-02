@@ -60,10 +60,10 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 
 .item-ios {
   @include padding-horizontal($item-ios-padding-start, null);
+  @include border-radius(0);
 
   position: relative;
 
-  border-radius: 0;
   font-size: $item-ios-body-text-font-size;
   color: $list-ios-text-color;
   background-color: $list-ios-background-color;
@@ -119,7 +119,7 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 .item-ios h5:last-child,
 .item-ios h6:last-child,
 .item-ios p:last-child {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .item-ios.item-block .item-inner {
@@ -187,12 +187,12 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 
 .item-ios ion-avatar ion-img,
 .item-ios ion-avatar img {
-  width: $item-ios-avatar-size;
-  height: $item-ios-avatar-size;
-
-  border-radius: $item-ios-avatar-border-radius;
+  @include border-radius($item-ios-avatar-border-radius);
 
   overflow: hidden;
+
+  width: $item-ios-avatar-size;
+  height: $item-ios-avatar-size;
 }
 
 
@@ -219,12 +219,11 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   .item-ios[detail-push] .item-inner,
   button.item-ios:not([detail-none]) .item-inner,
   a.item-ios:not([detail-none]) .item-inner {
-    @include svg-background-image($item-ios-detail-push-svg);
-
+    @include svg-background-image($item-ios-detail-push-svg, true);
     @include padding-horizontal(null, 32px);
+    @include background-position(end, $item-ios-padding-end - 2, center);
 
     background-repeat: no-repeat;
-    background-position: right ($item-ios-padding-end - 2) center;
     background-size: 14px 14px;
   }
 }
@@ -274,7 +273,7 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
     }
 
     &.activated {
-     background-color: color-shade($color-base);
+      background-color: color-shade($color-base);
     }
   }
 }

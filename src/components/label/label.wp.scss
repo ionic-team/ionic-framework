@@ -36,13 +36,8 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 }
 
 .label-wp[floating] {
-  transform: translate3d(8px, 34px, 0);
-  transform-origin: left top;
-}
-
-[dir="rtl"] .label-wp[floating] {
-  transform: translate3d(-8px, 34px, 0);
-  transform-origin: right top;
+  @include transform(translate3d(8px, 34px, 0));
+  @include transform-origin(start, top);
 }
 
 .label-wp[stacked],
@@ -50,22 +45,27 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
   @include margin(null, null, 0, 0);
 }
 
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus .label-wp[stacked],
 .input-has-focus .label-wp[stacked],
+.item-input-has-focus .label-wp[floating],
 .input-has-focus .label-wp[floating] {
   color: $label-wp-text-color-focused;
 }
 
+.item-input-has-focus .label-wp[floating],
 .input-has-focus .label-wp[floating],
+.item-input-has-value .label-wp[floating],
 .input-has-value .label-wp[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 .item-wp.item-label-stacked [item-right], // deprecated
 .item-wp.item-label-floating [item-right], // deprecated
 .item-wp.item-label-stacked [item-end],
 .item-wp.item-label-floating [item-end] {
-  margin-top: $item-wp-padding-media-top + 4;
-  margin-bottom: $item-wp-padding-media-top + 4;
+  @include margin($item-wp-padding-media-top + 4, null, $item-wp-padding-media-top + 4, null);
 }
 
 

@@ -35,9 +35,9 @@ ion-alert {
 }
 
 ion-alert.alert-top {
-  align-items: flex-start;
+  @include padding(50px, null, null, null);
 
-  padding-top: 50px;
+  align-items: flex-start;
 }
 
 ion-alert input {

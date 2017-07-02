@@ -58,6 +58,10 @@ ion-content.js-scroll > .scroll-content {
   touch-action: none;
 }
 
+ion-content.has-refresher > .scroll-content {
+  background-color: inherit;
+}
+
 
 // Fixed Content (ion-fixed and ion-fab)
 // --------------------------------------------------
@@ -94,7 +98,7 @@ ion-app [no-padding] .scroll-content {
 
   ion-app.#{$mode} [padding-top],
   ion-app.#{$mode} [padding-top] .scroll-content {
-    padding-top: $content-padding;
+    @include padding($content-padding, null, null, null);
   }
 
   ion-app.#{$mode} [padding-left],
@@ -109,13 +113,12 @@ ion-app [no-padding] .scroll-content {
 
   ion-app.#{$mode} [padding-bottom],
   ion-app.#{$mode} [padding-bottom] .scroll-content {
-    padding-bottom: $content-padding;
+    @include padding(null, null, $content-padding, null);
   }
 
   ion-app.#{$mode} [padding-vertical],
   ion-app.#{$mode} [padding-vertical] .scroll-content {
-    padding-top: $content-padding;
-    padding-bottom: $content-padding;
+    @include padding($content-padding, null, $content-padding, null);
   }
 
   ion-app.#{$mode} [padding-horizontal],
@@ -141,7 +144,7 @@ ion-app [no-margin] .scroll-content {
 
   ion-app.#{$mode} [margin-top],
   ion-app.#{$mode} [margin-top] .scroll-content {
-    margin-top: $content-margin;
+    @include margin($content-margin, null, null, null);
   }
 
   ion-app.#{$mode} [margin-left],
@@ -168,13 +171,12 @@ ion-app [no-margin] .scroll-content {
 
   ion-app.#{$mode} [margin-bottom],
   ion-app.#{$mode} [margin-bottom] .scroll-content {
-    margin-bottom: $content-margin;
+    @include margin(null, null, $content-margin, null);
   }
 
   ion-app.#{$mode} [margin-vertical],
   ion-app.#{$mode} [margin-vertical] .scroll-content {
-    margin-top: $content-margin;
-    margin-bottom: $content-margin;
+    @include margin($content-margin, null, $content-margin, null);
   }
 
   ion-app.#{$mode} [margin-horizontal],

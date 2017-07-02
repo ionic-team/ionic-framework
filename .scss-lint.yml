@@ -2,12 +2,9 @@
 
 # See config at https://github.com/brigade/scss-lint/blob/master/config/default.yml
 
+plugin_directories: ['.scss-linters']
+
 exclude:
-  - 'src/components/item/item.ios.scss'
-  - 'src/components/item/item.md.scss'
-  - 'src/components/list/list.ios.scss'
-  - 'src/components/show-hide-when/**'
-  - 'src/components/slides/**'
   - 'src/themes/ionic.mixins.scss'
   - 'src/themes/license.scss'
   - 'src/themes/util.scss'
@@ -18,6 +15,9 @@ exclude:
 linters:
   ColorVariable:
     enabled: false
+
+  DefaultRule:
+    enabled: true
 
   DuplicateProperty:
     enabled: false
@@ -55,11 +55,6 @@ linters:
       - align-self
       - justify-content
       - order
-      -
-      - margin-top
-      - margin-bottom
-      - padding-top
-      - padding-bottom
       -
       - width
       - min-width
@@ -140,7 +135,6 @@ linters:
       - background-color
       - background-image
       - background-repeat
-      - background-position
       - background-size
 
       # Other
@@ -163,7 +157,6 @@ linters:
 
       - transform
       - transform-box
-      - transform-origin
       - transform-style
 
       - transition
@@ -188,27 +181,33 @@ linters:
     enabled: true
     style: double_quotes
 
+  SelectorDepth:
+    enabled: true
+    max_depth: 5
+
   PropertySpelling:
     extra_properties:
       - contain
     disabled_properties:
+      - background-position
+      - direction
       - right
       - left
-
       - float
-
       - padding
       - padding-left
       - padding-right
-
+      - padding-top
+      - padding-bottom
       - margin
       - margin-left
       - margin-right
-
+      - margin-top
+      - margin-bottom
       - border-radius
       - border-top-left-radius
       - border-top-right-radius
       - border-bottom-right-radius
       - border-bottom-left-radius
-
       - text-align
+      - transform-origin

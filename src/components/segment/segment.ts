@@ -11,7 +11,7 @@ import { SegmentButton } from './segment-button';
  * @description
  * A Segment is a group of buttons, sometimes known as Segmented Controls, that allow the user to interact with a compact group of a number of controls.
  * Segments provide functionality similar to tabs, selecting one will unselect all others. You should use a tab bar instead of a segmented control when you want to let the user move back and forth between distinct pages in your app.
- * You could use Angular 2's `ngModel` or `FormBuilder` API. For an overview on how `FormBuilder` works, checkout [Angular 2 Forms](http://learnangular2.com/forms/), or [Angular FormBuilder](https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html)
+ * You could use Angular's `ngModel` or `FormBuilder` API. For an overview on how `FormBuilder` works, checkout [Angular Forms](http://learnangular2.com/forms/), or [Angular FormBuilder](https://angular.io/docs/ts/latest/api/forms/index/FormBuilder-class.html)
  *
  *
  * ```html
@@ -60,7 +60,7 @@ import { SegmentButton } from './segment-button';
  *
  * @demo /docs/demos/src/segment/
  * @see {@link /docs/components#segment Segment Component Docs}
- * @see [Angular 2 Forms](http://learnangular2.com/forms/)
+ * @see [Angular Forms](http://learnangular2.com/forms/)
  */
 @Directive({
   selector: 'ion-segment',

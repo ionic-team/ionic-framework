@@ -23,6 +23,7 @@
   <button ion-button block (click)="presentLoadingMultipleNav()" color="danger">Multiple Nav Loading</button>
   <button ion-button block (click)="presentLoadingDismissNav()">Dismiss Page Change</button>
   <button ion-button block (click)="presentLoadingOpenDismiss()">Open->Dismiss (x2)</button>
+  <button ion-button block (click)="presentLoadingBackdropDismiss()">Backdrop Dismiss</button>
 
 </ion-content>
 
@@ -31,7 +32,7 @@
 
   <ion-toolbar>
     <ion-buttons end>
-      <button ion-button icon-right (click)="goToPage2()">
+      <button ion-button icon-end (click)="goToPage2()">
         Navigate
         <ion-icon name="arrow-forward"></ion-icon>
       </button>

@@ -99,7 +99,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 
 .searchbar-wp .searchbar-search-icon {
   @include position(5px, $searchbar-wp-input-padding-horizontal, null, null);
-  @include svg-background-image($searchbar-wp-input-search-icon-svg);
+  @include svg-background-image($searchbar-wp-input-search-icon-svg, true);
 
   position: absolute;
 
@@ -122,6 +122,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   @include placeholder($searchbar-wp-input-placeholder-color);
   @include padding($searchbar-wp-input-padding-vertical, $searchbar-wp-input-padding-horizontal);
   @include border-radius($searchbar-wp-input-border-radius);
+  @include background-position(start, $searchbar-wp-input-padding-horizontal, center);
 
   height: $searchbar-wp-input-height;
 
@@ -132,7 +133,6 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   color: $searchbar-wp-input-text-color;
 
   background-color: $searchbar-wp-input-background-color;
-  background-position: $searchbar-wp-input-padding-horizontal center;
 }
 
 
@@ -143,6 +143,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   @include position(0, $searchbar-wp-input-padding-horizontal, null, null);
   @include svg-background-image($searchbar-wp-input-clear-icon-svg);
   @include padding(0);
+  @include background-position(center);
 
   position: absolute;
 
@@ -150,7 +151,6 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   height: 100%;
 
   background-repeat: no-repeat;
-  background-position: center;
   background-size: $searchbar-wp-input-clear-icon-size;
 }
 
