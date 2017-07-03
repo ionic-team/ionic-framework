@@ -25,8 +25,8 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>step="0.1" min="0.5" max="1.5"</ion-label>
-      <ion-range step="0.1" min="0.5" max="1.5"></ion-range>
+      <ion-label>step="0.1" min="0.5" max="1.5" pin="true"</ion-label>
+      <ion-range step="0.1" min="0.5" max="1.5" pin="true" (ionChange)="rangeChange($event)"></ion-range>
     </ion-item>
 
     <ion-item>
