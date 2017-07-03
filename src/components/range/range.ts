@@ -143,7 +143,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     return this._min;
   }
   set min(val: number) {
-    val = Math.round(val);
+    val = Number(val);
     if (!isNaN(val)) {
       this._min = val;
       this._inputUpdated();
@@ -158,7 +158,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     return this._max;
   }
   set max(val: number) {
-    val = Math.round(val);
+    val = Number(val);
     if (!isNaN(val)) {
       this._max = val;
       this._inputUpdated();
@@ -173,6 +173,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     return this._step;
   }
   set step(val: number) {
+    val = Number(val);
     if (!isNaN(val) && val > 0) {
       this._step = val;
     }
