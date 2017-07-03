@@ -307,14 +307,33 @@ export class Tab extends NavControllerBase implements ITab {
   load(opts: NavOptions, done?: () => void) {
     if (this._lazyRootFromUrl || (!this._loaded && this.root)) {
       this.setElementClass('show-tab', true);
-      if (this._lazyRootFromUrl) {
-        this.push(this._lazyRootFromUrl, this._lazyRootFromUrlData, opts, done);
-        this._lazyRootFromUrl = null;
-        this._lazyRootFromUrlData = null;
-      } else {
-        this.push(this.root, this.rootParams, opts, done);
+      // okay, first thing we need to do if check if the view already exists
+      const nameToUse = this._lazyRootFromUrl ? this._lazyRootFromUrl : this.root;
+      const dataToUse = this._lazyRootFromUrlData ? this._lazyRootFromUrlData : this.rootParams;
+      const numViews = this.length() - 1;
+      for (let i = numViews; i >= 0; i--) {
+        const viewController = this.getByIndex(i);
+        if (viewController && (viewController.id === nameToUse || viewController.component === nameToUse)) {
+          if (i === numViews) {
+            // this is the last view in the stack and it's the same
+            // as the segment so there's no change needed
+            return done();
+          } else {
+            // it's not the exact view as the end
+            // let's have this nav go back to this exact view
+            return this.popTo(viewController, {
+              animate: false,
+              updateUrl: false,
+            }, done);
+          }
+        }
       }
 
+      this.push(nameToUse, dataToUse, opts, done);
+
+
+      this._lazyRootFromUrl = null;
+      this._lazyRootFromUrlData = null;
       this._loaded = true;
 
     } else {
@@ -324,7 +343,7 @@ export class Tab extends NavControllerBase implements ITab {
       this._dom.read(() => {
         this.resize();
       });
-      done();
+      return done();
     }
   }
 

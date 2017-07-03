@@ -470,7 +470,7 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   );
 }
 
-export function mockTab(parentTabs: Tabs): Tab {
+export function mockTab(parentTabs: Tabs, overrideLoad: boolean = true): Tab {
   let platform = mockPlatform();
   let config = mockConfig(null, '/', platform);
   let app = (<any>parentTabs)._app || mockApp(config, platform);
@@ -500,9 +500,11 @@ export function mockTab(parentTabs: Tabs): Tab {
     null
   );
 
-  tab.load = (opts: any, cb: Function) => {
-    cb();
-  };
+  if (overrideLoad) {
+    tab.load = (opts: any, cb: Function) => {
+      cb();
+    };
+  }
 
   return tab;
 }
