@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer2, TrackByFn } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
@@ -383,7 +383,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   constructor(
     private _iterableDiffers: IterableDiffers,
     private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     private _zone: NgZone,
     private _cd: ChangeDetectorRef,
     private _content: Content,
@@ -782,7 +782,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   private _setHeight(newVirtualHeight: number) {
     if (newVirtualHeight !== this._vHeight) {
       // ******** DOM WRITE ****************
-      this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
+      this._renderer.setStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
 
       this._vHeight = newVirtualHeight;
       console.debug('VirtualScroll, height', newVirtualHeight);
@@ -805,7 +805,11 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @hidden
    */
   setElementClass(className: string, add: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
+    if (add) {
+      this._renderer.addClass(this._elementRef.nativeElement, className);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, className);
+    }
   }
 
   /**

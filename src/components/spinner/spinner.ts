@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -156,7 +156,7 @@ export class Spinner extends Ion {
     this._paused = isTrueProperty(val);
   }
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer2) {
     super(config, elementRef, renderer, 'spinner');
   }
 

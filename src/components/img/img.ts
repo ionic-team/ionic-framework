@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, Optional, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Img as IImg } from './img-interface';
 import { Content } from '../content/content';
@@ -132,7 +132,7 @@ export class Img implements OnDestroy, IImg {
 
   constructor(
     private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     private _plt: Platform,
     @Optional() private _content: Content,
     private _dom: DomController
@@ -232,8 +232,10 @@ export class Img implements OnDestroy, IImg {
   _isLoaded(isLoaded: boolean) {
     const renderer = this._renderer;
     const ele = this._elementRef.nativeElement;
-    renderer.setElementClass(ele, 'img-loaded', isLoaded);
-    renderer.setElementClass(ele, 'img-unloaded', !isLoaded);
+    if (isLoaded) {
+      renderer.addClass(ele, 'img-loaded');
+      renderer.removeClass(ele, 'img-unloaded');
+    }
   }
 
   /**
@@ -244,8 +246,8 @@ export class Img implements OnDestroy, IImg {
     const renderer = this._renderer;
 
     if (imgEle && imgEle.src !== srcAttr) {
-      renderer.setElementAttribute(this._img, 'src', srcAttr);
-      renderer.setElementAttribute(this._img, 'alt', this.alt);
+      renderer.setAttribute(this._img, 'src', srcAttr);
+      renderer.setAttribute(this._img, 'alt', this.alt);
     }
   }
 
@@ -338,11 +340,11 @@ export class Img implements OnDestroy, IImg {
       this._dom.write(() => {
         if (this._w !== this._wQ) {
           this._w = this._wQ;
-          renderer.setElementStyle(wrapperEle, 'width', this._w);
+          renderer.setStyle(wrapperEle, 'width', this._w);
         }
         if (this._h !== this._hQ) {
           this._h = this._hQ;
-          renderer.setElementStyle(wrapperEle, 'height', this._h);
+          renderer.setStyle(wrapperEle, 'height', this._h);
         }
       });
     }

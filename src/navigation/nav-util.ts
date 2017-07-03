@@ -1,4 +1,4 @@
-import { Renderer, TypeDecorator } from '@angular/core';
+import { Renderer2, TypeDecorator } from '@angular/core';
 import { DeepLinker } from './deep-linker';
 import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
@@ -61,7 +61,7 @@ export function convertToViews(linker: DeepLinker, pages: any[]): Promise<ViewCo
 
 let portalZindex = 9999;
 
-export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
+export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer2) {
   if (enteringView) {
     if (nav._isPortal) {
       if (direction === DIRECTION_FORWARD) {

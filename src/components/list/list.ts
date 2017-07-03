@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Renderer } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { DomController } from '../../platform/dom-controller';
@@ -54,7 +54,7 @@ export class List extends Ion {
   constructor(
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     private _plt: Platform,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,

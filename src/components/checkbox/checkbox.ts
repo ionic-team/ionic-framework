@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer2, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -113,7 +113,7 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, OnDes
     form: Form,
     @Optional() item: Item,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
     super(config, elementRef, renderer, 'checkbox', false, form, item, null);
   }

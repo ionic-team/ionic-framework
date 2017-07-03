@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
@@ -41,18 +41,18 @@ export class LoadingCmp {
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
     assert(params.data, 'params data must be valid');
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
 
-    renderer.setElementClass(_elementRef.nativeElement, `loading-${_config.get('mode')}`, true);
+    renderer.addClass(_elementRef.nativeElement, `loading-${_config.get('mode')}`);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions
-        if (cssClass.trim() !== '') renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+        if (cssClass.trim() !== '') renderer.addClass(_elementRef.nativeElement, cssClass);
       });
     }
 

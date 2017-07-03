@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, QueryList, Renderer, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, QueryList, Renderer2, ViewChildren, ViewEncapsulation } from '@angular/core';
 
 import { isNumber, isPresent, isString, assert } from '../../util/util';
 import { Config } from '../../config/config';
@@ -56,16 +56,16 @@ export class PickerCmp {
     private _plt: Platform,
     gestureCtrl: GestureController,
     params: NavParams,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
     this.mode = config.get('mode');
-    renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
+    renderer.addClass(_elementRef.nativeElement, `picker-${this.mode}`);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
-        renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+        renderer.addClass(_elementRef.nativeElement, cssClass);
       });
     }
 

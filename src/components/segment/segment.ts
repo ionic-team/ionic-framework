@@ -1,4 +1,4 @@
-import { AfterContentInit, ContentChildren, Directive, ElementRef, Optional, QueryList, Renderer } from '@angular/core';
+import { AfterContentInit, ContentChildren, Directive, ElementRef, Optional, QueryList, Renderer2 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -78,7 +78,7 @@ export class Segment extends BaseInput<string> implements AfterContentInit {
   constructor(
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     @Optional() ngControl: NgControl
   ) {
     super(config, elementRef, renderer, 'segment', null, null, null, ngControl);

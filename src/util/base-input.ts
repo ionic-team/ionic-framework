@@ -1,4 +1,4 @@
-import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
+import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
@@ -72,7 +72,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   constructor(
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     name: string,
     private _defaultValue: T,
     public _form: Form,

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Renderer } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Renderer2 } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { ToolbarBase } from './toolbar-base';
@@ -115,7 +115,7 @@ export class Toolbar extends ToolbarBase {
   constructor(
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
     super(config, elementRef, renderer);
     this._sbPadding = config.getBoolean('statusbarPadding');

@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, Optional, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { clamp, isTrueProperty } from '../../util/util';
@@ -257,7 +257,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     config: Config,
     private _plt: Platform,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     private _dom: DomController,
     private _cd: ChangeDetectorRef
   ) {

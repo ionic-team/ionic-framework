@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -380,7 +380,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
     private _plt: Platform,
     private _dom: DomController,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     public _app: App,
     public _keyboard: Keyboard,
     public _zone: NgZone,

@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, Renderer2, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -415,7 +415,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     form: Form,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     @Optional() item: Item,
     @Optional() private _pickerCtrl: PickerController
   ) {

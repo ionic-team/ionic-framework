@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Form, IonicTapInput } from '../../util/form';
@@ -113,7 +113,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
     private _form: Form,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     @Optional() private _item: Item,
     @Optional() private _group: RadioGroup
   ) {

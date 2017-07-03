@@ -1,6 +1,6 @@
 import {
   Component, ChangeDetectionStrategy, Optional, ElementRef, EventEmitter,
-  Input, Output, Renderer, ViewChild, ViewEncapsulation
+  Input, Output, Renderer2, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
@@ -253,7 +253,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     private form: Form,
     private _app: App,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     @Optional() private _content: Content,
     @Optional() private item: Item,
     @Optional() public ngControl: NgControl,

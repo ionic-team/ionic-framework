@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer2, Optional, Output } from '@angular/core';
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
@@ -172,7 +172,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     private _plt: Platform,
     private _dom: DomController,
     elementRef: ElementRef,
-    private _rendered: Renderer,
+    private _rendered: Renderer2,
     private _zone: NgZone,
     @Optional() private _content: Content
   ) {
@@ -300,7 +300,11 @@ export class ItemReorder implements ItemReorderGestureDelegate {
    * @hidden
    */
   setElementClass(classname: string, add: boolean) {
-    this._rendered.setElementClass(this._element, classname, add);
+    if (add) {
+      this._rendered.addClass(this._element, classname);
+    } else {
+      this._rendered.removeClass(this._element, classname);
+    }
   }
 
   /**

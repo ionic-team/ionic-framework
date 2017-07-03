@@ -1,4 +1,4 @@
-import { AfterContentInit, NgZone, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, NgZone, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer2, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -96,7 +96,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
     config: Config,
     private _plt: Platform,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
     private _haptic: Haptic,
     @Optional() item: Item,
     private _gestureCtrl: GestureController,

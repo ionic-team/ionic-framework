@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, ElementRef, EventEmitter, forwardRef, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, ElementRef, EventEmitter, forwardRef, Optional, Output, QueryList, Renderer2, ViewEncapsulation, NgZone } from '@angular/core';
 
 import { swipeShouldReset, assert } from '../../util/util';
 import { Item } from './item';
@@ -180,7 +180,7 @@ export class ItemSliding {
   constructor(
     @Optional() list: List,
     private _plt: Platform,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     private _elementRef: ElementRef,
     private _zone: NgZone
   ) {
@@ -431,7 +431,11 @@ export class ItemSliding {
   /**
    * @hidden
    */
-  setElementClass(cssClass: string, shouldAdd: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, shouldAdd);
+  setElementClass(cssClass: string, add: boolean) {
+    if (add) {
+      this._renderer.addClass(this._elementRef.nativeElement, cssClass);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, cssClass);
+    }
   }
 }

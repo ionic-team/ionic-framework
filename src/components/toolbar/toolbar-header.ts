@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Optional, Renderer } from '@angular/core';
+import { Directive, ElementRef, Optional, Renderer2 } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -33,7 +33,7 @@ import { ViewController } from '../../navigation/view-controller';
 })
 export class Header extends Ion implements IHeader {
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer, @Optional() viewCtrl: ViewController) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer2, @Optional() viewCtrl: ViewController) {
     super(config, elementRef, renderer, 'header');
     viewCtrl && viewCtrl._setHeader(this);
   }

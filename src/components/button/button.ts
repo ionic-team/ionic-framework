@@ -1,4 +1,4 @@
-import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer, ViewEncapsulation } from '@angular/core';
+import { Attribute, ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -283,7 +283,7 @@ export class Button extends Ion {
     @Attribute('ion-button') ionButton: string,
     config: Config,
     elementRef: ElementRef,
-    renderer: Renderer
+    renderer: Renderer2
   ) {
     super(config, elementRef, renderer);
     this._mode = config.get('mode');

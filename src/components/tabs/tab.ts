@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer2, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -268,7 +268,7 @@ export class Tab extends NavControllerBase implements ITab {
     plt: Platform,
     elementRef: ElementRef,
     zone: NgZone,
-    renderer: Renderer,
+    renderer: Renderer2,
     cfr: ComponentFactoryResolver,
     private _cd: ChangeDetectorRef,
     gestureCtrl: GestureController,
@@ -375,7 +375,7 @@ export class Tab extends NavControllerBase implements ITab {
       // add the .tab-subpage css class to tabs pages that should act like subpages
       const pageEleRef = viewCtrl.pageRef();
       if (pageEleRef) {
-        this._renderer.setElementClass(pageEleRef.nativeElement, 'tab-subpage', true);
+        this._renderer.addClass(pageEleRef.nativeElement, 'tab-subpage');
       }
     }
   }

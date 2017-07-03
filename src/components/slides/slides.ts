@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer2, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { enableKeyboardControl } from './swiper/swiper-keyboard';
@@ -870,7 +870,7 @@ export class Slides extends Ion {
     zone: NgZone,
     @Optional() viewCtrl: ViewController,
     elementRef: ElementRef,
-    renderer: Renderer,
+    renderer: Renderer2,
   ) {
     super(config, elementRef, renderer, 'slides');
 

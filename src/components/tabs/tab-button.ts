@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
@@ -41,7 +41,7 @@ export class TabButton extends Ion implements OnInit {
 
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
-  constructor(config: Config, elementRef: ElementRef, renderer: Renderer) {
+  constructor(config: Config, elementRef: ElementRef, renderer: Renderer2) {
     super(config, elementRef, renderer);
 
     this.disHover = (config.get('hoverCSS') === false);

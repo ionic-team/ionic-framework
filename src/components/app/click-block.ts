@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Inject, Renderer } from '@angular/core';
+import { Directive, ElementRef, forwardRef, Inject, Renderer2 } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -23,7 +23,7 @@ export class ClickBlock {
     config: Config,
     private plt: Platform,
     private elementRef: ElementRef,
-    private renderer: Renderer
+    private renderer: Renderer2
   ) {
     app._clickBlock = this;
 
@@ -68,7 +68,11 @@ export class ClickBlock {
   }
 
   private _setElementClass(className: string, add: boolean) {
-    this.renderer.setElementClass(this.elementRef.nativeElement, className, add);
+    if (add) {
+      this.renderer.addClass(this.elementRef.nativeElement, className);
+    } else {
+      this.renderer.removeClass(this.elementRef.nativeElement, className);
+    }
   }
 
 }
