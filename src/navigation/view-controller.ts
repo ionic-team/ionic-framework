@@ -197,7 +197,7 @@ export class ViewController {
   /**
    * @hidden
    */
-  getTransitionName(direction: string): string {
+  getTransitionName(_direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 

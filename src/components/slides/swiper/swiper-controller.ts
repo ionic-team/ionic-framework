@@ -10,7 +10,7 @@ import { updateProgress } from './swiper-progress';
   Controller
   ===========================*/
 export const SWIPER_CONTROLLER = {
-  LinearSpline: function (s: Slides, plt: Platform, x: any, y: any) {
+  LinearSpline: function (_s: Slides, _platform: Platform, x: any, y: any) {
     this.x = x;
     this.y = y;
     this.lastIndex = x.length - 1;

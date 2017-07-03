@@ -250,16 +250,16 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   constructor(
     config: Config,
     private _plt: Platform,
-    private form: Form,
+    _form: Form,
     private _app: App,
     elementRef: ElementRef,
     renderer: Renderer,
     @Optional() private _content: Content,
-    @Optional() private item: Item,
+    @Optional() _item: Item,
     @Optional() public ngControl: NgControl,
     private _dom: DomController
   ) {
-    super(config, elementRef, renderer, 'input', '', form, item, ngControl);
+    super(config, elementRef, renderer, 'input', '', _form, _item, ngControl);
 
     this.autocomplete = config.get('autocomplete', 'off');
     this.autocorrect = config.get('autocorrect', 'off');
@@ -267,8 +267,8 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     this._keyboardHeight = config.getNumber('keyboardHeight');
     this._isTextarea = !!(elementRef.nativeElement.tagName === 'ION-TEXTAREA');
 
-    if (this._isTextarea && item) {
-      item.setElementClass('item-textarea', true);
+    if (this._isTextarea && _item) {
+      _item.setElementClass('item-textarea', true);
     }
     // If not inside content, let's disable all the hacks
     if (!_content) {
@@ -450,7 +450,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   * Check if we need to clear the text input if clearOnEdit is enabled
   * @hidden
   */
-  checkClearOnEdit(inputValue: string) {
+  checkClearOnEdit(_: string) {
     if (!this._clearOnEdit) {
       return;
     }

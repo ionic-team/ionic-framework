@@ -237,7 +237,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
       var zFactor = (isSafari(plt) || isIosUIWebView(plt)) ? (-s._renderedSize / 2) : 0;
       transform(s._wrapper, 'translate3d(0px,0,' + zFactor + 'px) rotateX(' + (isHorizontal(s) ? 0 : wrapperRotate) + 'deg) rotateY(' + (isHorizontal(s) ? -wrapperRotate : 0) + 'deg)');
     },
-    setTransition: function (s, plt, duration) {
+    setTransition: function (s, _plt, duration) {
       for (var i = 0; i < s._slides.length; i++) {
         var slide = s._slides[i];
         transition(slide, duration);
@@ -315,7 +315,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
         }
       }
     },
-    setTransition: function (s, plt, duration) {
+    setTransition: function (s, _plt, duration) {
       for (var i = 0; i < s._slides.length; i++) {
         var slide = s._slides[i];
         transition(slide, duration);

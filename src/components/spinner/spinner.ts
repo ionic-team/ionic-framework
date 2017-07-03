@@ -294,7 +294,7 @@ const SPINNERS: any = {
   dots: {
     dur: 750,
     circles: 3,
-    fn: function (dur: number, index: number) {
+    fn: function (_dur: number, index: number) {
       const animationDelay = -(110 * index) + 'ms';
       return {
         r: 6,

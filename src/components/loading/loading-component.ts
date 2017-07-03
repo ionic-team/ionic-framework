@@ -6,7 +6,6 @@ import { isDefined, isUndefined, assert } from '../../util/util';
 import { KEY_ESCAPE } from '../../platform/key';
 import { LoadingOptions } from './loading-options';
 import { NavParams } from '../../navigation/nav-params';
-import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
@@ -37,8 +36,7 @@ export class LoadingCmp {
   constructor(
     private _viewCtrl: ViewController,
     private _config: Config,
-    private _plt: Platform,
-    private _elementRef: ElementRef,
+    _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer

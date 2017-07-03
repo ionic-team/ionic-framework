@@ -52,7 +52,7 @@ export class RootPage {
     console.log('UNREAD', item);
   }
 
-  didClick(item: ItemSliding) {
+  didClick(_: ItemSliding) {
     console.log('Clicked, ion-item');
 
     let alert = this.alertCtrl.create({

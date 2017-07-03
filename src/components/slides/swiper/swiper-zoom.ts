@@ -69,7 +69,7 @@ function getDistanceBetweenTouches(ev: TouchEvent) {
 
 
 // Events
-function onGestureStart(s: Slides, plt: Platform, ev: TouchEvent) {
+function onGestureStart(s: Slides, _plt: Platform, ev: TouchEvent) {
   const z = s._zoom;
   s.originalEvent = ev;
 
@@ -105,7 +105,7 @@ function onGestureStart(s: Slides, plt: Platform, ev: TouchEvent) {
 }
 
 
-function onGestureChange(s: Slides, plt: Platform, ev: TouchEvent) {
+function onGestureChange(s: Slides, _plt: Platform, ev: TouchEvent) {
   const z = s._zoom;
   s.originalEvent = ev;
 
@@ -137,7 +137,7 @@ function onGestureChange(s: Slides, plt: Platform, ev: TouchEvent) {
 }
 
 
-function onGestureEnd(s: Slides, plt: Platform, ev: TouchEvent) {
+function onGestureEnd(s: Slides, _plt: Platform, ev: TouchEvent) {
   const z = s._zoom;
   s.originalEvent = ev;
 

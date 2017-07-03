@@ -42,7 +42,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
     );
   }
 
-  onSlideBeforeStart(ev: any) {
+  onSlideBeforeStart(_ev: any) {
     this._nav.swipeBackStart();
   }
 
@@ -54,7 +54,7 @@ export class SwipeBackGesture extends SlideEdgeGesture {
     this._nav.swipeBackProgress(stepValue);
   }
 
-  onSlideEnd(slide: SlideData, ev: any) {
+  onSlideEnd(slide: SlideData, _ev: any) {
     const velocity = slide.velocity;
     const currentStepValue = (slide.distance / slide.max);
     const isResetDirecction = velocity < 0;

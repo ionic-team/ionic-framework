@@ -127,7 +127,7 @@ function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, t
 /**
  * NO DOM
  */
-export function populateNodeData(startCellIndex: number, endCellIndex: number, viewportWidth: number, scrollingDown: boolean,
+export function populateNodeData(startCellIndex: number, endCellIndex: number, scrollingDown: boolean,
                                  cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
                                  itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>,
                                  initialLoad: boolean): boolean {
@@ -599,7 +599,7 @@ function calcWidth(viewportWidth: number, approxWidth: string): number {
 /**
  * NO DOM
  */
-function calcHeight(viewportHeight: number, approxHeight: string): number {
+function calcHeight(_viewportHeight: number, approxHeight: string): number {
   if (approxHeight.indexOf('px') > 0) {
     return parseFloat(approxHeight);
   }

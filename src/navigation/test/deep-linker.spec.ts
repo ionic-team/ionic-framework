@@ -415,7 +415,7 @@ describe('DeepLinker', () => {
 
       spyOn(linker, 'getSegmentsFromNav');
 
-      linker.navChange('1', 'forward');
+      linker.navChange('forward');
 
       expect(linker.getSegmentsFromNav).not.toHaveBeenCalled();
     });
@@ -429,7 +429,7 @@ describe('DeepLinker', () => {
 
       spyOn(linker, 'getSegmentsFromNav');
 
-      linker.navChange('1', 'forward');
+      linker.navChange('forward');
 
       expect(linker.getSegmentsFromNav).not.toHaveBeenCalled();
     });

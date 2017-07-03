@@ -414,7 +414,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
       selectedTab.load(opts, () => {
         this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
         if (opts.updateUrl !== false) {
-          this._linker.navChange(this.id, DIRECTION_SWITCH);
+          this._linker.navChange(DIRECTION_SWITCH);
         }
         assert(this.getSelected() === selectedTab, 'selected tab does not match');
         this._fireChangeEvent(selectedTab);

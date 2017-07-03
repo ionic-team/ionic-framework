@@ -129,7 +129,7 @@ export class DeepLinker {
    * Update the deep linker using the NavController's current active view.
    * @internal
    */
-  navChange(navId: string, direction: string) {
+  navChange(direction: string) {
     if (direction) {
       const rootNavContainers = this._app.getActiveNavContainers();
       // the only time you'll ever get a TABS here is when loading directly from a URL
@@ -265,7 +265,7 @@ export class DeepLinker {
   /**
    * @internal
    */
-  createUrl(navContainer: NavigationContainer, nameOrComponent: any, data: any, prepareExternalUrl: boolean = true): string {
+  createUrl(navContainer: NavigationContainer, nameOrComponent: any, _data: any, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
     const segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent);
     const allSegments = this.getCurrentSegments();

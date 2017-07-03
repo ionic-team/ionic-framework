@@ -67,7 +67,7 @@ export function normalizeURL(url: string): string {
  * the first object.
  * @param {any} dest the destination to apply defaults to.
  */
-export function defaults(dest: any, ...args: any[]) {
+export function defaults(dest: any, ..._args: any[]) {
   for (var i = arguments.length - 1; i >= 1; i--) {
     var source = arguments[i];
     if (source) {

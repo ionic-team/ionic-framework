@@ -556,7 +556,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this._zone.run(() => {
         populateNodeData(
           data.topCell, data.bottomCell,
-          data.viewWidth, true,
+          true,
           cells, records, nodes,
           this._itmTmp.viewContainer,
           this._itmTmp.templateRef,
@@ -694,7 +694,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     var hasChanges = populateNodeData(
       data.topCell, data.bottomCell,
-      data.viewWidth, diff > 0,
+      diff > 0,
       cells, records, nodes,
       this._itmTmp.viewContainer,
       this._itmTmp.templateRef,

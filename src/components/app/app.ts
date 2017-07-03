@@ -355,9 +355,10 @@ export class App {
     platform.registerListener(platform.doc(), 'focusin', onFocusin, { capture: true, zone: false, passive: true });
     platform.registerListener(platform.doc(), 'touchend', onTouchend, { capture: false, zone: false, passive: true });
 
-    function onFocusin(ev: any) {
+    function onFocusin() {
       focused = true;
     }
+
     function onTouchend(ev: any) {
       // if app did scroll return early
       if (self._didScroll) {
