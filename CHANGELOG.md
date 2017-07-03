@@ -1,3 +1,29 @@
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/ionic-team/ionic/compare/v3.4.2...v3.5.0) (2017-06-28)
+
+### Steps to Upgrade
+
+`ionic-angular` should be set to version `3.5.0`.
+
+```
+npm install ionic-angular@3.5.0 --save --save-exact
+```
+
+### Notes
+There were major improvements made to navigation in this release of `ionic-angular`. Specifically, we updated Ionic to support a concept of `n` root navigation elements, instead of just one. This will enable first-class url support for things `split-pane`. Before `3.5.0`, only one section of the screen could be represented in the URL. With these changes, multiple sections can be. Another large change was improving the behavior surrounding browser behaviors, such as the back-and-forward buttons, as well as refresh. In general, Ionic should work much more intuitively in a web browser now.
+
+As a result of these improvements, if you're using deep linking, the urls of the application will be different with `3.5.0` than they were with previous Ionic releases. The URLs will likely change again in the near future with the next round of navigation improvements too. For now, we don't recommend using `href` attributes in the application. Using the `navPush` and `navPop` directives is a better option for now while URL support is being built-out.
+
+### Bug Fixes
+
+* **navigation:** add isTab check to getSegmentsFromNav ([f39c381](https://github.com/ionic-team/ionic/commit/f39c381))
+* **navigation:** fallback to name if component does not exist on segment ([30f69c8](https://github.com/ionic-team/ionic/commit/30f69c8))
+* **select:** _inputUpdated should not be called manually ([8dc08f9](https://github.com/ionic-team/ionic/commit/8dc08f9))
+* **select:** floating label ([e3a8d27](https://github.com/ionic-team/ionic/commit/e3a8d27)), closes [#12068](https://github.com/ionic-team/ionic/issues/12068)
+* **tabs:** use segment if it exists even if component exists ([016b90d](https://github.com/ionic-team/ionic/commit/016b90d))
+
+
+
 <a name="3.4.2"></a>
 ## [3.4.2](https://github.com/ionic-team/ionic/compare/v3.4.1...v3.4.2) (2017-06-16)
 

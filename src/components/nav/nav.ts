@@ -110,7 +110,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
   ngAfterViewInit() {
     this._hasInit = true;
 
-    const segment = this._linker.getSegmentByNavId(this.id);
+    const segment = this._linker.getSegmentByNavIdOrName(this.id, this.name);
 
     if (segment && (segment.component || segment.loadChildren)) {
       return this._linker.initViews(segment).then(views => {
@@ -145,6 +145,11 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
    * @input {object} Any nav-params to pass to the root page of this nav.
    */
   @Input() rootParams: any;
+
+  /**
+   * @input {string} a unique name for the nav element
+   */
+  @Input() name: string;
 
   /**
    * @hidden

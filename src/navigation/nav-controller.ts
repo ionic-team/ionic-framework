@@ -390,6 +390,11 @@ export abstract class NavController implements NavigationContainer {
   id: string;
 
   /**
+   * @hidden
+   */
+  name: string;
+
+  /**
    * The parent navigation instance. If this is the root nav, then
    * it'll be `null`. A `Tab` instance's parent is `Tabs`, otherwise
    * the parent would be another nav, if it's not already the root nav.

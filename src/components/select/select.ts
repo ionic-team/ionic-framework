@@ -460,7 +460,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
       // we use writeValue() because we don't want to update ngModel
       this.writeValue(val.filter(o => o.selected).map(o => o.value));
     } else {
-      this._inputUpdated();
+      this._updateText();
     }
   }
 
@@ -479,7 +479,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
   /**
    * @hidden
    */
-  _inputUpdated() {
+  _updateText() {
     this._texts.length = 0;
 
     if (this._options) {
@@ -496,6 +496,13 @@ export class Select extends BaseInput<any> implements OnDestroy {
     }
 
     this._text = this._texts.join(', ');
+  }
+
+  /**
+   * @hidden
+   */
+  _inputUpdated() {
+    this._updateText();
     super._inputUpdated();
   }
 

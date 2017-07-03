@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   template: `
-  <ion-tabs>
+  <ion-tabs name="simple">
     <ion-tab tabIcon="heart" [root]="tab1" tabTitle="Taco Burrito Enchilada"></ion-tab>
     <ion-tab tabIcon="star" [root]="tab2"></ion-tab>
   </ion-tabs>
@@ -10,5 +10,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   tab1 = 'FirstPage';
-  tab2 = 'SecondPage';
+  tab2 = 'FourthPage';
 }

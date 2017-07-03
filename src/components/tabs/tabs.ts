@@ -184,6 +184,12 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /** @internal */
   _onDestroy = new Subject<void>();
 
+
+  /**
+   * @input {string} A unique name for the tabs
+   */
+  @Input() name: string;
+
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
    */
@@ -324,8 +330,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(<any>this.selectedIndex, 10));
 
     // now see if the deep linker can find a tab index
-    const tabsSegment = this._linker.getSegmentByNavId(this.id);
-    if (tabsSegment && isBlank(tabsSegment.component)) {
+    const tabsSegment = this._linker.getSegmentByNavIdOrName(this.id, this.name);
+    if (tabsSegment) {
       // we found a segment which probably represents which tab to select
       selectedIndex = this._getSelectedTabIndex(tabsSegment.secondaryId, selectedIndex);
     }
@@ -374,7 +380,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: number | Tab, opts: NavOptions = {}) {
+  select(tabOrIndex: number | Tab, opts: NavOptions = {}, fromUrl: boolean = false) {
     const selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
       return;
@@ -383,7 +389,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     // If the selected tab is the current selected tab, we do not switch
     const currentTab = this.getSelected();
     if (selectedTab === currentTab && currentTab.getActive()) {
-      return this._touchActive(selectedTab);
+      return this._updateCurrentTab(selectedTab, fromUrl);
     }
 
     // If the selected tab does not have a root, we do not switch (#9392)
@@ -518,11 +524,28 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  private _touchActive(tab: Tab) {
+  private _updateCurrentTab(tab: Tab, fromUrl: boolean) {
     const active = tab.getActive();
 
     if (active) {
-      if (active._cmp && active._cmp.instance.ionSelected) {
+      if (fromUrl && tab._lazyRootFromUrl) {
+        // see if the view controller exists
+        const vc = tab.getViewById(tab._lazyRootFromUrl);
+        if (vc) {
+          // the view is already in the stack
+          tab.popTo(vc, {
+            animate: false,
+            updateUrl: false,
+          });
+        } else {
+          tab.setRoot(tab._lazyRootFromUrl, tab._lazyRootFromUrlData, {
+            animate: false, updateUrl: false
+          });
+          tab._lazyRootFromUrl = null;
+          tab._lazyRootFromUrlData = null;
+        }
+
+      } else if (active._cmp && active._cmp.instance.ionSelected) {
         // if they have a custom tab selected handler, call it
         active._cmp.instance.ionSelected();
 

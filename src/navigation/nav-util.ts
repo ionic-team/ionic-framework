@@ -16,7 +16,9 @@ export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?:
 
   if (typeof nameOrPageOrView === 'string') {
     return linker.getComponentFromName(nameOrPageOrView).then((component) => {
-      return new ViewController(component, params);
+      const vc = new ViewController(component, params);
+      vc.id = nameOrPageOrView;
+      return vc;
     });
   }
 

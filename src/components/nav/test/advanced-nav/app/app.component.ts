@@ -10,5 +10,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   root = 'FirstPage';
-  root2 = 'ThirdPage';
+  root2 = 'FourthPage';
 }

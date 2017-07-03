@@ -358,7 +358,8 @@ export function mockLocation(): Location {
     path: () => { return ''; },
     subscribe: () => {},
     go: () => {},
-    back: () => {}
+    back: () => {},
+    prepareExternalUrl: () => {}
   };
   return location;
 }
