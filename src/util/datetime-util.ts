@@ -390,6 +390,20 @@ export function convertDataToISO(data: DateTimeData): string {
   return rtn;
 }
 
+export function nowDateTimeData(): DateTimeData {
+  const now = new Date();
+  return {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1,
+    day: now.getDate(),
+    hour: now.getHours(),
+    minute: now.getMinutes(),
+    second: now.getSeconds(),
+    millisecond: now.getMilliseconds(),
+    tzOffset: now.getTimezoneOffset(),
+  };
+}
+
 function twoDigit(val: number): string {
   return ('0' + (isPresent(val) ? Math.abs(val) : '0')).slice(-2);
 }

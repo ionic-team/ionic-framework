@@ -9,7 +9,7 @@ import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
 import { deepCopy, isBlank, isPresent, isArray, isObject, isString, assert, clamp } from '../../util/util';
-import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
+import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData, nowDateTimeData } from '../../util/datetime-util';
 
 /**
  * @name DateTime
@@ -581,7 +581,11 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
 
         // cool, we've loaded up the columns with options
         // preselect the option for this column
-        const optValue = getValueFromFormat(this.getValue(), format);
+        let optValue = getValueFromFormat(this.getValue(), format);
+        if (!isPresent(optValue)) {
+          // Default to current date/time
+          optValue = getValueFromFormat(nowDateTimeData(), format);
+        }
         const selectedIndex = column.options.findIndex(opt => opt.value === optValue);
         if (selectedIndex >= 0) {
           // set the select index for this column's options

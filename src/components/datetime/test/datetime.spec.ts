@@ -335,6 +335,22 @@ describe('DateTime', () => {
       expect(columns[0].options[10].value).toEqual(2000);
     });
 
+    it('should default to current date/time if there is no selected value', () => {
+      datetime.max = '2100-01-01';
+      datetime.min = '2000-01-01';
+      datetime.pickerFormat = 'YYYY MM DD HH mm';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      var now = new Date();
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(now.getFullYear());
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(now.getMonth() + 1);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(now.getDate());
+      expect(columns[3].options[columns[3].selectedIndex].value).toEqual(now.getHours());
+      expect(columns[4].options[columns[4].selectedIndex].value).toEqual(now.getMinutes());
+    });
+
   });
 
   describe('calcMinMax', () => {
