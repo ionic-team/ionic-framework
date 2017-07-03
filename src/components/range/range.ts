@@ -117,7 +117,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
   _min = 0;
   _max = 100;
   _step = 1;
-  _accuracy = 0;
+  _resolution = 0;
   _snaps: boolean;
 
   _valA = 0;
@@ -177,8 +177,8 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     val = Number(val);
     if (!isNaN(val) && val > 0) {
       this._step = val;
-      // Need to also add "accuracy" to prevent binary/decimal conversion edge cases like 1.2000000000000002
-      this._accuracy = this._calcAccuracy(this._step);
+      // Need to also add "resolution" to prevent binary/decimal conversion edge cases like 1.2000000000000002
+      this._resolution = this._calcResolution(this._step);
     }
   }
 
@@ -363,13 +363,13 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
   }
 
   /** @internal */
-  _calcAccuracy(num: number) {
+  _calcResolution(num: number) {
     return String(num).replace(/^-?\d*\.?|0+$/g, '').length;
   }
 
   /** @internal */
   _round(num: number) {
-    return Number(num.toFixed(this._accuracy));
+    return Number(num.toFixed(this._resolution));
   }
 
   /** @internal */
