@@ -92,6 +92,7 @@
     "gulp-scss-lint": "0.4.0",
     "gulp-shell": "0.5.2",
     "gulp-strip-debug": "1.1.0",
+    "gulp-transform": "^2.0.0",
     "gulp-tslint": "6.1.1",
     "gulp-typescript": "2.13.6",
     "gulp-uglify": "2.0.0",
