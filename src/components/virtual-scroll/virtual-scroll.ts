@@ -250,7 +250,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input()
   set virtualScroll(val: any) {
     this._records = val;
-    this._updateDiffer();
   }
 
   /**
@@ -373,7 +372,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   set virtualTrackBy(val: TrackByFn) {
     if (isPresent(val)) {
       this._virtualTrackBy = val;
-      this._updateDiffer();
     }
   }
   get virtualTrackBy(): TrackByFn {
@@ -428,6 +426,12 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     return (cells.length > 0) ? cells[cells.length - 1].record : 0;
   }
 
+  ngOnChanges(changes: any) {
+    if (changes.virtualScroll && !this._differ && this._records) {
+      this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
+    }
+  }
+
   /**
    * @hidden
    */
@@ -465,7 +469,10 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     } else {
       needClean = true;
     }
-    this._recordSize = this._records.length;
+
+    if (this._records) {
+      this._recordSize = this._records.length;
+    }
 
     this.readUpdate(needClean);
     this.writeUpdate(needClean);
@@ -521,16 +528,10 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   private _changes(): IterableChanges<any> {
-    if (isPresent(this._records) && isPresent(this._differ)) {
+    if (isPresent(this._differ)) {
       return this._differ.diff(this._records);
     }
     return null;
-  }
-
-  private _updateDiffer() {
-    if (isPresent(this._records)) {
-      this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
-    }
   }
 
   /**
@@ -538,72 +539,70 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * DOM WRITE
    */
   renderVirtual(needClean: boolean) {
-    this._plt.raf(() => {
-      const nodes = this._nodes;
-      const cells = this._cells;
-      const data = this._data;
-      const records = this._records;
+    const nodes = this._nodes;
+    const cells = this._cells;
+    const data = this._data;
+    const records = this._records;
 
-      if (needClean) {
+    if (needClean) {
+      // ******** DOM WRITE ****************
+      updateDimensions(this._plt, nodes, cells, data, true);
+      data.topCell = 0;
+      data.bottomCell = (cells.length - 1);
+    }
+
+    adjustRendered(cells, data);
+
+    this._zone.run(() => {
+      populateNodeData(
+        data.topCell, data.bottomCell,
+        data.viewWidth, true,
+        cells, records, nodes,
+        this._itmTmp.viewContainer,
+        this._itmTmp.templateRef,
+        this._hdrTmp && this._hdrTmp.templateRef,
+        this._ftrTmp && this._ftrTmp.templateRef, needClean
+      );
+    });
+
+    if (needClean) {
+      this._cd.detectChanges();
+    }
+
+    // at this point, this fn was called from within another
+    // requestAnimationFrame, so the next dom reads/writes within the next frame
+    // wait a frame before trying to read and calculate the dimensions
+
+    // ******** DOM READ ****************
+    this._dom.read(() => initReadNodes(this._plt, nodes, cells, data));
+
+    this._dom.write(() => {
+      // update the bound context for each node
+      updateNodeContext(nodes, cells, data);
+
+      // ******** DOM WRITE ****************
+      this._stepChangeDetection();
+      // ******** DOM WRITE ****************
+      this._stepDOMWrite();
+      // ******** DOM WRITE ****************
+      this._content.imgsUpdate();
+
+      // First time load
+      if (!this._lastEle) {
+        // add an element at the end so :last-child css doesn't get messed up
         // ******** DOM WRITE ****************
-        updateDimensions(this._plt, nodes, cells, data, true);
-        data.topCell = 0;
-        data.bottomCell = (cells.length - 1);
+        var ele = this._elementRef.nativeElement;
+        var lastEle: HTMLElement = this._renderer.createElement(ele, 'div');
+        lastEle.className = 'virtual-last';
+        this._lastEle = true;
+
+        // ******** DOM WRITE ****************
+        this.setElementClass('virtual-scroll', true);
+
+        // ******** DOM WRITE ****************
+        this.setElementClass('virtual-loading', false);
       }
-
-      adjustRendered(cells, data);
-
-      this._zone.run(() => {
-        populateNodeData(
-          data.topCell, data.bottomCell,
-          data.viewWidth, true,
-          cells, records, nodes,
-          this._itmTmp.viewContainer,
-          this._itmTmp.templateRef,
-          this._hdrTmp && this._hdrTmp.templateRef,
-          this._ftrTmp && this._ftrTmp.templateRef, needClean
-        );
-      });
-
-      if (needClean) {
-        this._cd.detectChanges();
-      }
-
-      // at this point, this fn was called from within another
-      // requestAnimationFrame, so the next dom reads/writes within the next frame
-      // wait a frame before trying to read and calculate the dimensions
-
-      // ******** DOM READ ****************
-      this._dom.read(() => initReadNodes(this._plt, nodes, cells, data));
-
-      this._dom.write(() => {
-        // update the bound context for each node
-        updateNodeContext(nodes, cells, data);
-
-        // ******** DOM WRITE ****************
-        this._stepChangeDetection();
-        // ******** DOM WRITE ****************
-        this._stepDOMWrite();
-        // ******** DOM WRITE ****************
-        this._content.imgsUpdate();
-
-        // First time load
-        if (!this._lastEle) {
-          // add an element at the end so :last-child css doesn't get messed up
-          // ******** DOM WRITE ****************
-          var ele = this._elementRef.nativeElement;
-          var lastEle: HTMLElement = this._renderer.createElement(ele, 'div');
-          lastEle.className = 'virtual-last';
-          this._lastEle = true;
-
-          // ******** DOM WRITE ****************
-          this.setElementClass('virtual-scroll', true);
-
-          // ******** DOM WRITE ****************
-          this.setElementClass('virtual-loading', false);
-        }
-        assert(this._queue === SCROLL_QUEUE_NO_CHANGES, 'queue value should be NO_CHANGES');
-      });
+      assert(this._queue === SCROLL_QUEUE_NO_CHANGES, 'queue value should be NO_CHANGES');
     });
   }
 
@@ -627,7 +626,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   private _stepDOMWrite() {
     const cells = this._cells;
     const nodes = this._nodes;
-    const recordsLength = this._records.length;
+    const recordsLength = this._recordSize;
 
     // ******** DOM WRITE ****************
     writeToNodes(this._plt, nodes, cells, recordsLength);
