@@ -329,7 +329,6 @@ export class App {
     let mostRecentVC: ViewController = null;
     this._rootNavs.forEach((navContainer: NavigationContainer) => {
       const activeNavs = this.getActiveNavs(navContainer.id);
-      activeNavs.forEach(activeNav => console.log('navId: ', activeNav.id));
       const poppableNavs = activeNavs.map(activeNav => getPoppableNav(activeNav)).filter(nav => !!nav);
       poppableNavs.forEach(poppable => {
         const topViewController = poppable.last();
@@ -421,21 +420,16 @@ function getPoppableNav(nav: NavControllerBase): NavControllerBase {
 }
 
 export function findTopNavs(nav: NavigationContainer): NavigationContainer[] {
-  //console.log('findTopNavs: nav.id: ', nav.id);
   let containers: NavigationContainer[] = [];
   const childNavs = nav.getActiveChildNavs();
-  //console.log('findTopNavs: child navs: ', childNavs.length);
   if (!childNavs || !childNavs.length) {
-    //console.log('pushing a nav: ', nav.id);
     containers.push(nav);
   } else {
     childNavs.forEach(childNav => {
-      //console.log('calling findTopNavs with child: ', childNav.id);
       const topNavs = findTopNavs(childNav);
       containers = containers.concat(topNavs);
     });
   }
-  //console.log('returning container: ', containers.length);
   return containers;
 }
 

@@ -1,4 +1,4 @@
-import { App, findTopNavs } from '../app';
+import { App } from '../app';
 import { ClickBlock } from '../click-block';
 import { Config } from '../../../config/config';
 import { mockApp, mockConfig, mockElementRef, mockNavController, mockPlatform, MockPlatform, mockRenderer, mockTab, mockTabs, mockView, mockViews } from '../../../util/mock-providers';
