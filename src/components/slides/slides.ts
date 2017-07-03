@@ -139,7 +139,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Component({
   selector: 'ion-slides',
   template:
-    '<div class="swiper-container" [attr.dir]="_rtl? \'rtl\' : null">' +
+    '<div class="swiper-container">' +
       '<div class="swiper-wrapper">' +
         '<ng-content></ng-content>' +
       '</div>' +
@@ -248,14 +248,6 @@ export class Slides extends Ion {
     this._pager = isTrueProperty(val);
   }
   private _pager = false;
-
-/**
- * @input {string} If dir attribute is equal to rtl, set interal _rtl to true;
- */
-  @Input()
-  set dir(val: string) {
-    this._rtl = (val.toLowerCase() === 'rtl');
-  }
 
   /**
    * @input {string}  Type of pagination. Possible values are:
@@ -823,8 +815,6 @@ export class Slides extends Ion {
   /** @internal */
   _renderedSize: number;
   /** @internal */
-  _rtl: boolean;
-  /** @internal */
   _slides: SlideElement[];
   /** @internal */
   _snapGrid: any;
@@ -862,7 +852,15 @@ export class Slides extends Ion {
   /** @hidden */
   prevButton: HTMLElement;
 
+  /**
+   * @input {'ltr' | 'rtl'} Sets an explicit direction for slides
+   */
+  @Input() dir = 'ltr'; // deprecated
 
+  /**
+   * @input {boolean} If true, reverses the slides direction
+   */
+  @Input() reverse = false;
 
   constructor(
     config: Config,
@@ -888,6 +886,10 @@ export class Slides extends Ion {
         this._initSlides();
       });
     }
+  }
+
+  get isRTL() {
+    return this.dir === 'rtl' || this.reverse !== this._plt.isRTL;
   }
 
   private _initSlides() {

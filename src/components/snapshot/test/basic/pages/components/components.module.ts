@@ -162,7 +162,7 @@ import {AppModule as SlidesImages} from '../../../../../slides/test/images/app.m
 import {AppModule as SlidesIntro} from '../../../../../slides/test/intro/app.module';
 import {AppModule as SlidesLoop} from '../../../../../slides/test/loop/app.module';
 import {AppModule as SlidesOptions} from '../../../../../slides/test/options/app.module';
-import {AppModule as SlidesRTL} from '../../../../../slides/test/rtl/app.module';
+import {AppModule as SlidesReverse} from '../../../../../slides/test/reverse/app.module';
 import {AppModule as SlidesScroll} from '../../../../../slides/test/scroll/app.module';
 
 import {AppModule as SpinnerBasic} from '../../../../../spinner/test/basic/app.module';
@@ -369,7 +369,7 @@ import {AppModule as VirtualScrollVariableSize} from '../../../../../virtual-scr
     SlidesIntro,
     SlidesLoop,
     SlidesOptions,
-    SlidesRTL,
+    SlidesReverse,
     SlidesScroll,
 
     SpinnerBasic,

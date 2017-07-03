@@ -163,7 +163,7 @@ import { AppComponent as SlidesImages } from '../../../../../slides/test/images/
 import { AppComponent as SlidesIntro } from '../../../../../slides/test/intro/app.module';
 import { AppComponent as SlidesLoop } from '../../../../../slides/test/loop/app.module';
 import { AppComponent as SlidesOptions } from '../../../../../slides/test/options/app.module';
-import { E2EApp as SlidesRTL } from '../../../../../slides/test/rtl/app.module';
+import { AppComponent as SlidesReverse } from '../../../../../slides/test/reverse/app.module';
 import { AppComponent as SlidesScroll } from '../../../../../slides/test/scroll/app.module';
 
 import { AppComponent as SpinnerBasic } from '../../../../../spinner/test/basic/app.module';
@@ -197,11 +197,11 @@ import { AppComponent as TypographyBasic } from '../../../../../typography/test/
 import { AppComponent as VirtualScrollBasic } from '../../../../../virtual-scroll/test/basic/app.module';
 import { AppComponent as VirtualScrollCards } from '../../../../../virtual-scroll/test/cards/app.module';
 import { AppComponent as VirtualScrollImageGallery } from '../../../../../virtual-scroll/test/image-gallery/app.module';
-import { E2EApp as VirtualScrollInfiniteScroll } from '../../../../../virtual-scroll/test/infinite-scroll/app.module';
+import { AppComponent as VirtualScrollInfiniteScroll } from '../../../../../virtual-scroll/test/infinite-scroll/app.module';
 import { AppComponent as VirtualScrollList } from '../../../../../virtual-scroll/test/list/app.module';
 import { AppComponent as VirtualScrollMedia } from '../../../../../virtual-scroll/test/media/app/app.component';
 import { AppComponent as VirtualScrollSlidingItem } from '../../../../../virtual-scroll/test/sliding-item/app.module';
-import {  AppComponent as VirtualScrollVariableSize } from '../../../../../virtual-scroll/test/variable-size/app.module';
+import { AppComponent as VirtualScrollVariableSize } from '../../../../../virtual-scroll/test/variable-size/app.module';
 
 
 export type ComponentsGroup = { name: string, components: Array<{ name: string, component: any }> };
@@ -476,7 +476,7 @@ export class ComponentsPage {
         {name: 'basic', component: ShowHideWhenBasic}
       ]
     }, {
-      name: 'Show-hide-when',
+      name: 'Slides',
       components: [
         {name: 'basic', component: SlidesBasic},
         {name: 'control', component: SlidesControl},
@@ -485,7 +485,7 @@ export class ComponentsPage {
         {name: 'intro', component: SlidesIntro},
         {name: 'loop', component: SlidesLoop},
         {name: 'options', component: SlidesOptions},
-        {name: 'rtl', component: SlidesRTL},
+        {name: 'rtl', component: SlidesReverse},
         {name: 'scroll', component: SlidesScroll},
       ]
     }, {
@@ -520,11 +520,6 @@ export class ComponentsPage {
       components: []
     },  {
       name: 'Toast',
-      components: [
-        {name: 'basic', component: ToastBasic}
-      ]
-    },  {
-      name: 'Toggle',
       components: [
         {name: 'basic', component: ToastBasic}
       ]

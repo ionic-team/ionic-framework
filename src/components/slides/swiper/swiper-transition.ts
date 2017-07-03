@@ -11,7 +11,7 @@ import { SWIPER_EFFECTS } from './swiper-effects';
 export function setWrapperTranslate(s: Slides, plt: Platform, translate: any, shouldUpdateActiveIndex?: boolean, byController?: Slides) {
   var x = 0, y = 0, z = 0;
   if (isHorizontal(s)) {
-    x = s._rtl ? -translate : translate;
+    x = s.isRTL ? -translate : translate;
   } else {
     y = translate;
   }
@@ -72,7 +72,7 @@ export function getTranslate(s: Slides, plt: Platform, el: HTMLElement, axis: st
   }
 
   if (s.virtualTranslate) {
-    return s._rtl ? -s._translate : s._translate;
+    return s.isRTL ? -s._translate : s._translate;
   }
 
   curStyle = plt.getElementComputedStyle(el);
@@ -118,7 +118,7 @@ export function getTranslate(s: Slides, plt: Platform, el: HTMLElement, axis: st
     }
   }
 
-  if (s._rtl && curTransform) {
+  if (s.isRTL && curTransform) {
     curTransform = -curTransform;
   }
 

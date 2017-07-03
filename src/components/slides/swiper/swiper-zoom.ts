@@ -201,7 +201,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: TouchEvent) {
 
     transition(z.gesture.imageWrap, 0);
 
-    if (s._rtl) {
+    if (s.isRTL) {
       z.image.startX = -z.image.startX;
       z.image.startY = -z.image.startY;
     }

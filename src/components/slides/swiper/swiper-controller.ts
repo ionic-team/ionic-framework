@@ -60,7 +60,7 @@ export const SWIPER_CONTROLLER = {
       // x is the Grid of the scrolled scroller and y will be the controlled scroller
       // it makes sense to create this only once and recall it for the interpolation
       // the function does a lot of value caching for performance
-      translate = c._rtl && isHorizontal(c) ? -s._translate : s._translate;
+      translate = c.isRTL && isHorizontal(c) ? -s._translate : s._translate;
       if (s.controlBy === 'slide') {
         SWIPER_CONTROLLER.getInterpolateFunction(s, plt, c);
         // i am not sure why the values have to be multiplicated this way, tried to invert the snapGrid

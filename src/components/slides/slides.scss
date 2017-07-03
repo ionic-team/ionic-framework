@@ -25,6 +25,21 @@
 
   width: 100%;
   height: 100%;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    direction: ltr;
+  }
+}
+
+.swiper-container.swiper-container-rtl {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    direction: rtl;
+  }}
+
+.swiper-container ion-slide {
+  @include direction(ltr);
 }
 
 .swiper-container-no-flexbox .swiper-slide {

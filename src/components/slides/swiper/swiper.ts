@@ -115,8 +115,7 @@ export function initSwiper(s: Slides, plt: Platform) {
   // }
 
   // RTL
-  s._rtl = isHorizontal(s) && (s.container.dir.toLowerCase() === 'rtl' || s.container.style.direction === 'rtl');
-  if (s._rtl) {
+  if (s.isRTL) {
     s._classNames.push(containerModifierClass + 'rtl');
   }
 
@@ -372,7 +371,7 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
   s._virtualSize = -spaceBetween;
 
   // reset margins
-  if (s._rtl) {
+  if (s.isRTL) {
     inlineStyle(s._slides, { marginLeft: '', marginTop: '' });
   } else {
     inlineStyle(s._slides, { marginRight: '', marginBottom: '' });
@@ -492,7 +491,7 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
   var newSlidesGrid: any[];
 
   if (
-    s._rtl && (s.effect === 'slide' || s.effect === 'coverflow')) {
+    s.isRTL && (s.effect === 'slide' || s.effect === 'coverflow')) {
     inlineStyle(s._wrapper, {width: s._virtualSize + s.spaceBetween + 'px'});
   }
   if (s.setWrapperSize) {
@@ -537,7 +536,7 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
 
   if (s.spaceBetween !== 0) {
     if (isHorizontal(s)) {
-      if (s._rtl) {
+      if (s.isRTL) {
         inlineStyle(s._slides, {marginLeft: spaceBetween + 'px'});
       } else {
         inlineStyle(s._slides, {marginRight: spaceBetween + 'px'});
@@ -755,7 +754,7 @@ export function slideTo(s: Slides, plt: Platform, slideIndex?: number, speed?: n
   s._activeIndex = slideIndex;
   updateRealIndex(s);
 
-  if ((s._rtl && -translate === s._translate) || (!s._rtl && translate === s._translate)) {
+  if ((s.isRTL && -translate === s._translate) || (!s.isRTL && translate === s._translate)) {
     // Update Height
     if (s.autoHeight) {
       updateAutoHeight(s);
