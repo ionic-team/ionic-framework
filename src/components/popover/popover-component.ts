@@ -67,7 +67,6 @@ export class PopoverCmp {
   }
 
   ionViewPreLoad() {
-    this._plt.focusOutActiveElement();
     this._load(this._navParams.data.component);
   }
 

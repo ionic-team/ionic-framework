@@ -1,5 +1,6 @@
 import { OpaqueToken } from '@angular/core';
 
+import { NavigationContainer } from './navigation-container';
 import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
@@ -30,21 +31,19 @@ export class UrlSerializer {
 
     // trim off data after ? and #
     browserUrl = browserUrl.split('?')[0].split('#')[0];
-
-    return parseUrlParts(browserUrl.split('/'), this.links);
+    const navGroupStrings = urlToNavGroupStrings(browserUrl);
+    const navGroups = navGroupStringtoObjects(navGroupStrings);
+    return parseUrlParts(navGroups, this.links);
   }
 
-  createSegmentFromName(nameOrComponent: any): NavSegment {
-    const configLink = this.getLinkFromName(nameOrComponent);
 
-    return configLink ? {
-      id: configLink.name,
-      name: configLink.name,
-      component: configLink.component,
-      loadChildren: configLink.loadChildren,
-      data: null,
-      defaultHistory: configLink.defaultHistory
-    } : null;
+
+  createSegmentFromName(navContainer: NavigationContainer, nameOrComponent: any): NavSegment {
+    const configLink = this.getLinkFromName(nameOrComponent);
+    if (configLink) {
+      return this._createSegment({ navId: navContainer.id, secondaryId: navContainer.getSecondaryIdentifier(), type: 'tabs'}, configLink, null);
+    }
+    return null;
   }
 
   getLinkFromName(nameOrComponent: any) {
@@ -58,26 +57,35 @@ export class UrlSerializer {
    * Serialize a path, which is made up of multiple NavSegments,
    * into a URL string. Turn each segment into a string and concat them to a URL.
    */
-  serialize(path: NavSegment[]): string {
-    return '/' + path.map(segment => segment.id).join('/');
+  serialize(segments: NavSegment[]): string {
+    if (!segments || !segments.length) {
+      return '/';
+    }
+    const sections = segments.map(segment => {
+      if (segment.type === 'tabs') {
+        return `/${segment.type}/${segment.navId}/${segment.secondaryId}/${segment.id}`;
+      }
+      return `/${segment.type}/${segment.navId}/${segment.id}`;
+    });
+    return sections.join('');
   }
 
   /**
    * Serializes a component and its data into a NavSegment.
    */
-  serializeComponent(component: any, data: any): NavSegment {
+  serializeComponent(navGroup: NavGroup, component: any, data: any): NavSegment {
     if (component) {
       const link = findLinkByComponentData(this.links, component, data);
       if (link) {
-        return this._createSegment(link, data);
+        return this._createSegment(navGroup, link, data);
       }
     }
     return null;
   }
 
   /** @internal */
-  _createSegment(configLink: NavLink, data: any): NavSegment {
-    let urlParts = configLink.parts;
+  _createSegment(navGroup: NavGroup, configLink: NavLink, data: any): NavSegment {
+    let urlParts = configLink.segmentParts;
 
     if (isPresent(data)) {
       // create a copy of the original parts in the link config
@@ -108,92 +116,62 @@ export class UrlSerializer {
       component: configLink.component,
       loadChildren: configLink.loadChildren,
       data: data,
-      defaultHistory: configLink.defaultHistory
+      defaultHistory: configLink.defaultHistory,
+      navId: navGroup.navId,
+      type: navGroup.type,
+      secondaryId: navGroup.secondaryId
     };
   }
-
-  formatUrlPart(name: string): string {
-    name = name.replace(URL_REPLACE_REG, '-');
-    name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
-      return '-' + match.toLowerCase();
-    });
-    while (name.indexOf('--') > -1) {
-      name = name.replace('--', '-');
-    }
-    if (name.charAt(0) === '-') {
-      name = name.substring(1);
-    }
-    if (name.substring(name.length - 1) === '-') {
-      name = name.substring(0, name.length - 1);
-    }
-    return encodeURIComponent(name);
-  }
-
 }
 
-export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavSegment[] => {
-  const configLinkLen = configLinks.length;
-  const urlPartsLen = urlParts.length;
-  const segments: NavSegment[] = new Array(urlPartsLen);
-
-  for (var i = 0; i < configLinkLen; i++) {
-    // compare url parts to config link parts to create nav segments
-    var configLink = configLinks[i];
-    if (configLink.partsLen <= urlPartsLen) {
-      fillMatchedUrlParts(segments, urlParts, configLink);
-    }
+export function formatUrlPart(name: string): string {
+  name = name.replace(URL_REPLACE_REG, '-');
+  name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
+    return '-' + match.toLowerCase();
+  });
+  while (name.indexOf('--') > -1) {
+    name = name.replace('--', '-');
   }
+  if (name.charAt(0) === '-') {
+    name = name.substring(1);
+  }
+  if (name.substring(name.length - 1) === '-') {
+    name = name.substring(0, name.length - 1);
+  }
+  return encodeURIComponent(name);
+}
 
-  // remove all the undefined segments
-  for (var i = urlPartsLen - 1; i >= 0; i--) {
-    if (segments[i] === undefined) {
-      if (urlParts[i] === undefined) {
-        // not a used part, so remove it
-        segments.splice(i, 1);
-
-      } else {
-        // create an empty part
-        segments[i] = {
-          id: urlParts[i],
-          name: urlParts[i],
-          component: null,
-          loadChildren: null,
-          data: null
-        };
+export const parseUrlParts = (navGroups: NavGroup[], configLinks: NavLink[]): NavSegment[] => {
+  const segments: NavSegment[] = [];
+  for (const link of configLinks) {
+    for (const navGroup of navGroups) {
+      if (link.segmentPartsLen === navGroup.segmentPieces.length) {
+        // check if the segment pieces are a match
+        let allSegmentsMatch = true;
+        for (let i = 0; i < navGroup.segmentPieces.length; i++) {
+          if (!isPartMatch(navGroup.segmentPieces[i], link.segmentParts[i])) {
+            allSegmentsMatch = false;
+            break;
+          }
+        }
+        // sweet, we found a match!
+        if (allSegmentsMatch) {
+          segments.push({
+            id: link.segmentParts.join('/'),
+            name: link.name,
+            component: link.component,
+            loadChildren: link.loadChildren,
+            data: createMatchedData(navGroup.segmentPieces, link),
+            defaultHistory: link.defaultHistory,
+            navId: navGroup.navId,
+            type: navGroup.type,
+            secondaryId: navGroup.secondaryId
+          });
+        }
       }
     }
   }
-
   return segments;
-};
-
-export const fillMatchedUrlParts = (segments: NavSegment[], urlParts: string[], configLink: NavLink) => {
-  for (var i = 0; i < urlParts.length; i++) {
-    var urlI = i;
-
-    for (var j = 0; j < configLink.partsLen; j++) {
-      if (isPartMatch(urlParts[urlI], configLink.parts[j])) {
-        urlI++;
-      } else {
-        break;
-      }
-    }
-
-    if ((urlI - i) === configLink.partsLen) {
-      var matchedUrlParts = urlParts.slice(i, urlI);
-      for (var j = i; j < urlI; j++) {
-        urlParts[j] = undefined;
-      }
-      segments[i] = {
-        id: matchedUrlParts.join('/'),
-        name: configLink.name,
-        component: configLink.component,
-        loadChildren: configLink.loadChildren,
-        data: createMatchedData(matchedUrlParts, configLink),
-        defaultHistory: configLink.defaultHistory
-      };
-    }
-  }
 };
 
 export const isPartMatch = (urlPart: string, configLinkPart: string) => {
@@ -209,10 +187,10 @@ export const isPartMatch = (urlPart: string, configLinkPart: string) => {
 export const createMatchedData = (matchedUrlParts: string[], link: NavLink): any => {
   let data: any = null;
 
-  for (var i = 0; i < link.partsLen; i++) {
-    if (link.parts[i].charAt(0) === ':') {
+  for (var i = 0; i < link.segmentPartsLen; i++) {
+    if (link.segmentParts[i].charAt(0) === ':') {
       data = data || {};
-      data[link.parts[i].substring(1)] = decodeURIComponent(matchedUrlParts[i]);
+      data[link.segmentParts[i].substring(1)] = decodeURIComponent(matchedUrlParts[i]);
     }
   }
 
@@ -263,18 +241,18 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
     }
 
     link.dataKeys = {};
-    link.parts = link.segment.split('/');
-    link.partsLen = link.parts.length;
+    link.segmentParts = link.segment.split('/');
+    link.segmentPartsLen = link.segmentParts.length;
 
     // used for sorting
     link.staticLen = link.dataLen = 0;
     var stillCountingStatic = true;
 
-    for (var j = 0; j < link.partsLen; j++) {
-      if (link.parts[j].charAt(0) === ':') {
+    for (var j = 0; j < link.segmentPartsLen; j++) {
+      if (link.segmentParts[j].charAt(0) === ':') {
         link.dataLen++;
         stillCountingStatic = false;
-        link.dataKeys[link.parts[j].substring(1)] = true;
+        link.dataKeys[link.segmentParts[j].substring(1)] = true;
 
       } else if (stillCountingStatic) {
         link.staticLen++;
@@ -289,10 +267,10 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
 
 function sortConfigLinks(a: NavLink, b: NavLink) {
   // sort by the number of parts
-  if (a.partsLen > b.partsLen) {
+  if (a.segmentPartsLen > b.segmentPartsLen) {
     return -1;
   }
-  if (a.partsLen < b.partsLen) {
+  if (a.segmentPartsLen < b.segmentPartsLen) {
     return 1;
   }
 
@@ -324,4 +302,52 @@ export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
 
 export function setupUrlSerializer(userDeepLinkConfig: any): UrlSerializer {
   return new UrlSerializer(userDeepLinkConfig);
+}
+
+export function urlToNavGroupStrings(url: string): string[] {
+  const tokens = url.split('/');
+  const keywordIndexes = [];
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i] === 'nav' || tokens[i] === 'tabs') {
+      keywordIndexes.push(i);
+    }
+  }
+  const groupings: string[] = [];
+  for (let i = 0; i < keywordIndexes.length; i++) {
+    const startIndex = keywordIndexes[i];
+    const endIndex = keywordIndexes[i + 1 < keywordIndexes.length ? i + 1 : keywordIndexes.length];
+    const group = tokens.slice(startIndex, endIndex);
+    groupings.push(group.join('/'));
+  }
+  return groupings;
+}
+
+export function navGroupStringtoObjects(navGroupStrings: string[]): NavGroup[] {
+  // each string has a known format-ish, convert it to it
+  return navGroupStrings.map(navGroupString => {
+    const sections = navGroupString.split('/');
+    if (sections[0] === 'nav') {
+      return {
+        type: 'nav',
+        navId: sections[1],
+        niceId: sections[1],
+        secondaryId: null,
+        segmentPieces: sections.splice(2)
+      };
+    }
+    return {
+      type: 'tabs',
+      navId: sections[1],
+      niceId: sections[1],
+      secondaryId: sections[2],
+      segmentPieces: sections.splice(3)
+    };
+  });
+}
+
+export interface NavGroup {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  segmentPieces?: string[];
 }

@@ -15,37 +15,47 @@ $toast-ios-title-color:                           #fff !default;
 /// @prop - Font size of the toast title
 $toast-ios-title-font-size:                       1.4rem !default;
 
-/// @prop - Padding of the toast title
-$toast-ios-title-padding:                         1.5rem !default;
+// deprecated
+$toast-ios-title-padding:                         null !default;
+
+/// @prop - Padding top of the toast title
+$toast-ios-title-padding-top:                     1.5rem !default;
+
+/// @prop - Padding end of the toast title
+$toast-ios-title-padding-end:                     $toast-ios-title-padding-top !default;
+
+/// @prop - Padding bottom of the toast title
+$toast-ios-title-padding-bottom:                  $toast-ios-title-padding-top !default;
+
+/// @prop - Padding start of the toast title
+$toast-ios-title-padding-start:                   $toast-ios-title-padding-end !default;
 
 
 .toast-ios .toast-wrapper {
-  position: absolute;
-  right: 10px;
+  @include position-horizontal(10px, 10px);
+  @include margin(auto);
+  @include border-radius($toast-ios-border-radius);
 
-  left: 10px;
+  position: absolute;
+
   z-index: $z-index-overlay-wrapper;
   display: block;
 
-  margin: auto;
-
   max-width: $toast-max-width;
-
-  border-radius: $toast-ios-border-radius;
 
   background: $toast-ios-background;
 }
 
 .toast-ios .toast-wrapper.toast-top {
-  top: 0;
+  @include transform(translate3d(0, -100%, 0));
 
-  transform: translate3d(0, -100%, 0);
+  top: 0;
 }
 
 .toast-ios .toast-wrapper.toast-bottom {
-  bottom: 0;
+  @include transform(translate3d(0, 100%, 0));
 
-  transform: translate3d(0, 100%, 0);
+  bottom: 0;
 }
 
 .toast-ios .toast-wrapper.toast-middle {
@@ -53,9 +63,11 @@ $toast-ios-title-padding:                         1.5rem !default;
 }
 
 .toast-ios .toast-message {
-  padding: $toast-ios-title-padding;
-
   font-size: $toast-ios-title-font-size;
 
   color: $toast-ios-title-color;
+
+  @include deprecated-variable(padding, $toast-ios-title-padding) {
+    @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
+  }
 }

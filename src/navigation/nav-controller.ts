@@ -4,7 +4,7 @@ import { Config } from '../config/config';
 import { NavOptions } from './nav-util';
 import { Page } from './nav-util';
 import { ViewController } from './view-controller';
-
+import { NavigationContainer } from './navigation-container';
 
 /**
  * @name NavController
@@ -92,7 +92,7 @@ import { ViewController } from './view-controller';
  * })
  * export class MyApp {
  *    @ViewChild('myNav') nav: NavController
- *    public rootPage = TabsPage;
+ *    public rootPage: any = TabsPage;
  *
  *    // Wait for the components in MyApp's template to be initialized
  *    // In this case, we are waiting for the Nav with reference variable of "#myNav"
@@ -270,7 +270,7 @@ import { ViewController } from './view-controller';
  * ## Nav Guards
  *
  * In some cases, a developer should be able to control views leaving and entering. To allow for this, NavController has the `ionViewCanEnter` and `ionViewCanLeave` methods.
- * Similar to Angular 2 route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
+ * Similar to Angular route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
  *
  * ```ts
  * export class MyClass{
@@ -346,7 +346,7 @@ import { ViewController } from './view-controller';
  *
  * @see {@link /docs/components#navigation Navigation Component Docs}
  */
-export abstract class NavController {
+export abstract class NavController implements NavigationContainer {
 
   /**
    * Observable to be subscribed to when a component is loaded.
@@ -388,6 +388,11 @@ export abstract class NavController {
    * @hidden
    */
   id: string;
+
+  /**
+   * @hidden
+   */
+  name: string;
 
   /**
    * The parent navigation instance. If this is the root nav, then
@@ -505,12 +510,14 @@ export abstract class NavController {
 
   /**
    * Set the root for the current navigation stack.
-   * @param {Page|string|ViewController} page The name of the component you want to push on the navigation stack.
+   * @param {Page|string|ViewController} pageOrViewCtrl The name of the component you want to push on the navigation stack.
    * @param {object} [params={}] Any NavParams you want to pass along to the next view.
    * @param {object} [opts={}] Any options you want to use pass to transtion.
+   * @param {Function} done Callback function on done.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract goToRoot(options: NavOptions): Promise<any>;
 
   /**
    * Set the views of the current navigation stack and navigate to the
@@ -585,7 +592,7 @@ export abstract class NavController {
   /**
    * Returns the active child navigation.
    */
-  abstract getActiveChildNav(): any;
+  abstract getActiveChildNavs(): any[];
 
   /**
    * Returns if the nav controller is actively transitioning or not.
@@ -618,4 +625,17 @@ export abstract class NavController {
    * @hidden
    */
   abstract resize(): void;
+
+
+
+  /*
+   * @hidden
+   */
+  abstract getType(): string;
+
+  /*
+   * @hidden
+   */
+  abstract getSecondaryIdentifier(): string;
+
 }

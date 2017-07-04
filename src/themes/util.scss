@@ -52,22 +52,19 @@ ion-input :focus {
 }
 
 .click-block-enabled {
+  @include position(0, 0, 0, 0);
+  @include transform(translate3d(0, -100%, 0), translateY(1px));
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+
   z-index: $z-index-click-block;
   display: block;
 
   opacity: 0;
-  transform: translate3d(0, -100%, 0) translateY(1px);
 
-  // background: red;
-  // opacity: .3;
   contain: strict;
 }
 
 .click-block-active {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }

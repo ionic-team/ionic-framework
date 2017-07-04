@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, App, IonicPage, ModalController, Tabs } from '../../../../../..';
+import { AlertController, App, IonicPage, Tabs } from '../../../../../..';
 
 @IonicPage({
   name: 'tab-three'
@@ -31,7 +31,7 @@ import { AlertController, App, IonicPage, ModalController, Tabs } from '../../..
     `
 })
 export class Tab3 {
-  constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private tabs: Tabs, private app: App) {}
+  constructor(private alertCtrl: AlertController, private tabs: Tabs, private app: App) {}
 
   presentAlert() {
     let alert = this.alertCtrl.create({

@@ -16,6 +16,7 @@ export class Loading extends ViewController {
 
   constructor(app: App, opts: LoadingOptions = {}, config: Config) {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : false;
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
     super(LoadingCmp, opts, null);
@@ -39,7 +40,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @param {string} sets the html content for the loading indicator.
+   * @param {string} content sets the html content for the loading indicator.
    */
   setContent(content: string): Loading {
     this.data.content = content;
@@ -47,7 +48,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @param {string} sets the name of the SVG spinner for the loading indicator.
+   * @param {string} spinner sets the name of the SVG spinner for the loading indicator.
    */
   setSpinner(spinner: string): Loading {
     this.data.spinner = spinner;
@@ -55,7 +56,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @param {string} sets additional classes for custom styles, separated by spaces.
+   * @param {string} cssClass sets additional classes for custom styles, separated by spaces.
    */
   setCssClass(cssClass: string): Loading {
     this.data.cssClass = cssClass;
@@ -63,7 +64,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @param {string} sets whether to show the backdrop.
+   * @param {boolean} showBackdrop sets whether to show the backdrop.
    */
   setShowBackdrop(showBackdrop: boolean): Loading {
     this.data.showBackdrop = showBackdrop;
@@ -71,7 +72,7 @@ export class Loading extends ViewController {
   }
 
   /**
-   * @param {string} how many milliseconds to wait before hiding the indicator.
+   * @param {number} dur how many milliseconds to wait before hiding the indicator.
    */
   setDuration(dur: number): Loading {
     this.data.duration = dur;
@@ -81,7 +82,7 @@ export class Loading extends ViewController {
   /**
    * Present the loading instance.
    *
-   * @param {NavOptions} [opts={}] Nav options to go with this transition.
+   * @param {NavOptions} [navOptions={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   present(navOptions: NavOptions = {}): Promise<any> {

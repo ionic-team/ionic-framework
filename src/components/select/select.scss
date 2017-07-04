@@ -6,14 +6,18 @@
 /// @prop - Margin top of the select popover list
 $select-popover-list-margin-top:         -1px !default;
 
-/// @prop - Margin right of the select popover list
+// deprecated
 $select-popover-list-margin-right:       0 !default;
+/// @prop - Margin end of the select popover list
+$select-popover-list-margin-end:         $select-popover-list-margin-right !default;
 
 /// @prop - Margin bottom of the select popover list
 $select-popover-list-margin-bottom:      -1px !default;
 
-/// @prop - Margin left of the select popover list
+// deprecated
 $select-popover-list-margin-left:        0 !default;
+/// @prop - Margin start of the select popover list
+$select-popover-list-margin-start:       $select-popover-list-margin-left !default;
 
 
 ion-select {
@@ -47,5 +51,5 @@ ion-select {
 }
 
 .select-popover ion-list {
-  margin: $select-popover-list-margin-top $select-popover-list-margin-right $select-popover-list-margin-bottom $select-popover-list-margin-left;
+  @include margin($select-popover-list-margin-top, $select-popover-list-margin-end, $select-popover-list-margin-bottom, $select-popover-list-margin-start);
 }

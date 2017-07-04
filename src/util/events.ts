@@ -1,6 +1,6 @@
 import { DomController } from '../platform/dom-controller';
 import { Platform } from '../platform/platform';
-import { ScrollView } from '../util/scroll-view';
+import { ScrollView } from './scroll-view';
 
 /**
  * @name Events
@@ -12,19 +12,21 @@ import { ScrollView } from '../util/scroll-view';
  * ```ts
  * import { Events } from 'ionic-angular';
  *
- * constructor(public events: Events) {}
- *
  * // first page (publish an event when a user is created)
- * function createUser(user) {
+ * constructor(public events: Events) {}
+ * createUser(user) {
  *   console.log('User created!')
  *   events.publish('user:created', user, Date.now());
  * }
  *
- * // second page (listen for the user created event)
- * events.subscribe('user:created', (user, time) => {
- *   // user and time are the same arguments passed in `events.publish(user, time)`
- *   console.log('Welcome', user, 'at', time);
- * });
+ *
+ * // second page (listen for the user created event after function is called)
+ * constructor(public events: Events) {
+ *   events.subscribe('user:created', (user, time) => {
+ *     // user and time are the same arguments passed in `events.publish(user, time)`
+ *     console.log('Welcome', user, 'at', time);
+ *   });
+ * }
  *
  * ```
  * @demo /docs/demos/src/events/
@@ -129,7 +131,7 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
     });
 
     // When that status taps, we respond
-    win.addEventListener('statusTap', (ev) => {
+    win.addEventListener('statusTap', () => {
       // TODO: Make this more better
       let el = <HTMLElement>doc.elementFromPoint(plt.width() / 2, plt.height() / 2);
       if (!el) { return; }

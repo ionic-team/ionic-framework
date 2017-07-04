@@ -13,7 +13,7 @@ $toolbar-order-ios: (
   buttons-end: 5,
   buttons-right: 6,
   menu-toggle-end: 7,
-);
+) !default;
 
 /// @prop - Font size of the toolbar button
 $toolbar-ios-button-font-size:              1.7rem !default;
@@ -46,7 +46,7 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 
 
 .toolbar-ios {
-  padding: $toolbar-ios-padding;
+  @include padding($toolbar-ios-padding);
 
   min-height: $toolbar-ios-height;
 }
@@ -97,20 +97,20 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .toolbar-title-ios {
+  @include text-align($toolbar-ios-title-text-align);
+
   font-size: $toolbar-ios-title-font-size;
   font-weight: $toolbar-ios-title-font-weight;
-  text-align: $toolbar-ios-title-text-align;
   color: $toolbar-ios-title-text-color;
 
   pointer-events: auto;
 }
 
 .toolbar-ios ion-title {
-  position: absolute;
-  top: 0;
-  left: 0;
+  @include position(0, null, null, 0);
+  @include padding(0, 90px, 1px);
 
-  padding: 0 90px 1px;
+  position: absolute;
 
   width: 100%;
   height: 100%;
@@ -156,15 +156,15 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .bar-buttons-ios[end] {
-  order: map-get($toolbar-order-ios, buttons-end);
+  @include text-align(end);
 
-  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-end);
 }
 
 .bar-buttons-ios[right] {
-  order: map-get($toolbar-order-ios, buttons-right);
+  @include text-align(right);
 
-  text-align: right;
+  order: map-get($toolbar-order-ios, buttons-right);
 }
 
 
@@ -172,12 +172,12 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .bar-button-ios {
-  padding: 0 4px;
+  @include padding(0, 4px);
+  @include border-radius($toolbar-ios-button-border-radius);
 
   height: 32px;
 
   border: 0;
-  border-radius: $toolbar-ios-button-border-radius;
   font-size: $toolbar-ios-button-font-size;
 }
 
@@ -275,8 +275,8 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // iOS Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-ios.bar-button-icon-left ion-icon {
-  padding-right: .3em;
+.bar-button-ios.bar-button-icon-start ion-icon {
+  @include padding-horizontal(null, .3em);
 
   font-size: 1.4em;
   line-height: .67;
@@ -284,8 +284,8 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
   pointer-events: none;
 }
 
-.bar-button-ios.bar-button-icon-right ion-icon {
-  padding-left: .4em;
+.bar-button-ios.bar-button-icon-end ion-icon {
+  @include padding-horizontal(.4em, null);
 
   font-size: 1.4em;
   line-height: .67;
@@ -294,13 +294,13 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .bar-button-ios[icon-only] {
-  padding: 0;
+  @include padding(0);
 
   min-width: .9em;
 }
 
 .bar-button-ios[icon-only] ion-icon {
-  padding: 0 .1em;
+  @include padding(0, .1em);
 
   font-size: 1.8em;
   line-height: .67;
@@ -313,11 +313,12 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .back-button-ios {
+  @include margin(0);
+
+  z-index: 99;
   overflow: visible;
 
   order: map-get($toolbar-order-ios, back-button);
-
-  margin: 0;
 
   min-height: 3.2rem;
 
@@ -326,10 +327,9 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 }
 
 .back-button-icon-ios {
-  display: inherit;
+  @include margin(-1px, 0, 0, 0);
 
-  margin: 0;
-  margin-top: -1px;
+  display: inherit;
 
   min-width: 18px;
 
@@ -345,15 +345,15 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .bar-button-menutoggle-ios {
-  order: map-get($toolbar-order-ios, menu-toggle-start);
+  @include margin(0, 6px);
+  @include padding(0);
 
-  margin: 0 6px;
-  padding: 0;
+  order: map-get($toolbar-order-ios, menu-toggle-start);
 
   min-width: 36px;
 
   ion-icon {
-    padding: 0 6px;
+    @include padding(0, 6px);
 
     font-size: 2.8rem;
   }

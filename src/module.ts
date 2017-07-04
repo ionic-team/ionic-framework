@@ -69,8 +69,6 @@ import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
-import { NativeInput } from './components/input/native-input';
-import { NextInput } from './components/input/next-input';
 import { TextInput } from './components/input/input';
 import { Item } from './components/item/item';
 import { ItemContent } from './components/item/item-content';
@@ -221,8 +219,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     ListHeader,
     Reorder,
     LoadingCmp,
-    NativeInput,
-    NextInput,
     Menu,
     MenuClose,
     MenuToggle,
@@ -324,8 +320,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     ListHeader,
     Reorder,
     LoadingCmp,
-    NativeInput,
-    NextInput,
     Menu,
     MenuClose,
     MenuToggle,
@@ -419,7 +413,7 @@ export class IonicModule {
         // useFactory: ionic app initializers
         { provide: APP_INITIALIZER, useFactory: registerModeConfigs, deps: [ Config ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupProvideEvents, deps: [ Platform, DomController ], multi: true },
-        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, NgZone, GestureController ], multi: true },
+        { provide: APP_INITIALIZER, useFactory: setupTapClick, deps: [ Config, Platform, DomController, App, GestureController ], multi: true },
         { provide: APP_INITIALIZER, useFactory: setupPreloading, deps: [ Config, DeepLinkConfigToken, ModuleLoader, NgZone ], multi: true },
 
         // useClass

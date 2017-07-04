@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -15,7 +15,7 @@ import { Item } from '../item/item';
  * The Checkbox is a simple component styled based on the mode. It can be
  * placed in an `ion-item` or used as a stand-alone checkbox.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * See the [Angular Docs](https://angular.io/docs/ts/latest/guide/forms.html)
  * for more info on forms and inputs.
  *
  *
@@ -40,6 +40,34 @@ import { Item } from '../item/item';
  *    </ion-item>
  *
  *  </ion-list>
+ * ```
+ *
+ * @advanced
+ *
+ * ```html
+ *
+ * <!-- Call function when state changes -->
+ *  <ion-list>
+ *
+ *    <ion-item>
+ *      <ion-label>Cucumber</ion-label>
+ *      <ion-checkbox [(ngModel)]="cucumber" (ionChange)="updateCucumber()"></ion-checkbox>
+ *    </ion-item>
+ *
+ *  </ion-list>
+ * ```
+ *
+ * ```ts
+ * @Component({
+ *   templateUrl: 'main.html'
+ * })
+ * class SaladPage {
+ *   cucumber: boolean;
+ *
+ *   updateCucumber() {
+ *     console.log('Cucumbers new state:' + this.cucumber);
+ *   }
+ * }
  * ```
  *
  * @demo /docs/demos/src/checkbox/
@@ -85,17 +113,9 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, OnDes
     form: Form,
     @Optional() item: Item,
     elementRef: ElementRef,
-    renderer: Renderer,
-    private _cd: ChangeDetectorRef
+    renderer: Renderer
   ) {
     super(config, elementRef, renderer, 'checkbox', false, form, item, null);
-  }
-
-  /**
-   * @hidden
-   */
-  initFocus() {
-    this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**
@@ -118,8 +138,8 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, OnDes
   /**
    * @hidden
    */
-  _inputCheckHasValue(val: boolean) {
-    this._item && this._item.setElementClass('item-checkbox-checked', val);
+  _inputUpdated() {
+    this._item && this._item.setElementClass('item-checkbox-checked', this._value);
   }
 
 }

@@ -3,11 +3,35 @@
 // Material Design Button
 // --------------------------------------------------
 
-/// @prop - Margin of the button
-$button-md-margin:                         .4rem .2rem !default;
+// deprecated
+$button-md-margin:                         null !default;
 
-/// @prop - Padding of the button
-$button-md-padding:                        0 1.1em !default;
+/// @prop - Margin top of the button
+$button-md-margin-top:                     .4rem !default;
+
+/// @prop - Margin end of the button
+$button-md-margin-end:                     .2rem !default;
+
+/// @prop - Margin bottom of the button
+$button-md-margin-bottom:                  .4rem !default;
+
+/// @prop - Margin start of the button
+$button-md-margin-start:                   .2rem !default;
+
+// deprecated
+$button-md-padding:                        null !default;
+
+/// @prop - Padding top of the button
+$button-md-padding-top:                    0 !default;
+
+/// @prop - Padding end of the button
+$button-md-padding-end:                    1.1em !default;
+
+/// @prop - Padding bottom of the button
+$button-md-padding-bottom:                 $button-md-padding-top !default;
+
+/// @prop - Padding start of the button
+$button-md-padding-start:                  $button-md-padding-end !default;
 
 /// @prop - Height of the button
 $button-md-height:                         3.6rem !default;
@@ -49,7 +73,7 @@ $button-md-background-color-activated:     color-shade($button-md-background-col
 $button-md-opacity-activated:              1 !default;
 
 /// @prop - Box shadow of the activated button
-$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21) !default;
+$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21), 0 0 0 0 transparent !default;
 
 /// @prop - Background color of the ripple on the button
 $button-md-ripple-background-color:       #555 !default;
@@ -58,8 +82,20 @@ $button-md-ripple-background-color:       #555 !default;
 // Material Design Large Button
 // --------------------------------------------------
 
-/// @prop - Padding of the large button
-$button-md-large-padding:                  0 1em !default;
+// deprecated
+$button-md-large-padding:                  null !default;
+
+/// @prop - Padding top of the large button
+$button-md-large-padding-top:              0 !default;
+
+/// @prop - Padding end of the large button
+$button-md-large-padding-end:              1em !default;
+
+/// @prop - Padding bottom of the large button
+$button-md-large-padding-bottom:           $button-md-large-padding-top !default;
+
+/// @prop - Padding start of the large button
+$button-md-large-padding-start:            $button-md-large-padding-end !default;
 
 /// @prop - Height of the large button
 $button-md-large-height:                   2.8em !default;
@@ -71,8 +107,20 @@ $button-md-large-font-size:                2rem !default;
 // Material Design Small Button
 // --------------------------------------------------
 
-/// @prop - Padding of the small button
-$button-md-small-padding:                  0 .9em !default;
+// deprecated
+$button-md-small-padding:                  null !default;
+
+/// @prop - Padding top of the small button
+$button-md-small-padding-top:              0 !default;
+
+/// @prop - Padding end of the small button
+$button-md-small-padding-end:              .9em !default;
+
+/// @prop - Padding bottom of the small button
+$button-md-small-padding-bottom:           $button-md-small-padding-top !default;
+
+/// @prop - Padding start of the small button
+$button-md-small-padding-start:            $button-md-small-padding-end !default;
 
 /// @prop - Height of the small button
 $button-md-small-height:                   2.1em !default;
@@ -155,8 +203,20 @@ $button-md-clear-ripple-background-color:       #999 !default;
 // Material Design Round Button
 // --------------------------------------------------
 
-/// @prop - Padding of the round button
-$button-md-round-padding:                       $button-round-padding !default;
+// deprecated
+$button-md-round-padding:                       null !default;
+
+/// @prop - Padding top of the round button
+$button-md-round-padding-top:                   $button-round-padding-top !default;
+
+/// @prop - Padding end of the round button
+$button-md-round-padding-end:                   $button-round-padding-end !default;
+
+/// @prop - Padding bottom of the round button
+$button-md-round-padding-bottom:                $button-round-padding-bottom !default;
+
+/// @prop - Padding start of the round button
+$button-md-round-padding-start:                 $button-round-padding-start !default;
 
 /// @prop - Border radius of the round button
 $button-md-round-border-radius:                 $button-round-border-radius !default;
@@ -173,14 +233,11 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-md {
+  @include border-radius($button-md-border-radius);
+
   overflow: hidden;
 
-  margin: $button-md-margin;
-  padding: $button-md-padding;
-
   height: $button-md-height;
-
-  border-radius: $button-md-border-radius;
 
   font-size: $button-md-font-size;
   font-weight: $button-md-font-weight;
@@ -193,6 +250,14 @@ $button-md-strong-font-weight:                  bold !default;
   transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function;
+
+  @include deprecated-variable(margin, $button-md-margin) {
+    @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
+  }
+
+  @include deprecated-variable(padding, $button-md-padding) {
+    @include padding($button-md-padding-top, $button-md-padding-end, $button-md-padding-bottom, $button-md-padding-start);
+  }
 }
 
 .button-md:hover:not(.disable-hover) {
@@ -241,19 +306,23 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-large-md {
-  padding: $button-md-large-padding;
-
   height: $button-md-large-height;
 
   font-size: $button-md-large-font-size;
+
+  @include deprecated-variable(padding, $button-md-large-padding) {
+    @include padding($button-md-large-padding-top, $button-md-large-padding-end, $button-md-large-padding-bottom, $button-md-large-padding-start);
+  }
 }
 
 .button-small-md {
-  padding: $button-md-small-padding;
-
   height: $button-md-small-height;
 
   font-size: $button-md-small-font-size;
+
+  @include deprecated-variable(padding, $button-md-small-padding) {
+    @include padding($button-md-small-padding-top, $button-md-small-padding-end, $button-md-small-padding-bottom, $button-md-small-padding-start);
+  }
 }
 
 .button-small-md[icon-only] ion-icon {
@@ -264,20 +333,18 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-block-md {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 }
 
 // Material Design Full Button
 // --------------------------------------------------
 
 .button-full-md {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
+  @include border-radius(0);
 
   border-right-width: 0;
   border-left-width: 0;
-  border-radius: 0;
 }
 
 // Material Design Outline Button
@@ -385,13 +452,15 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-round-md {
-  padding: $button-md-round-padding;
+  @include border-radius($button-md-round-border-radius);
 
-  border-radius: $button-md-round-border-radius;
+  @include deprecated-variable(padding, $button-md-round-padding) {
+    @include padding($button-md-round-padding-top, $button-md-round-padding-end, $button-md-round-padding-bottom, $button-md-round-padding-start);
+  }
 }
 
 .button-md [icon-only] {
-  padding: 0;
+  @include padding(0);
 }
 
 
@@ -401,24 +470,29 @@ $button-md-strong-font-weight:                  bold !default;
 // it's display none, and .md sets to display block.
 
 .button-effect {
+  @include border-radius(50%);
+  @include transform-origin(center, center);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: 0;
   display: none;
-
-  border-radius: 50%;
 
   background-color: $button-md-ripple-background-color;
   opacity: .2;
 
-  transform-origin: center center;
   transition-timing-function: ease-in-out;
 
   pointer-events: none;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    top: 0;
+
+    left: 0;
+  }
 }
 
-.md .button-effect {
+.md button .button-effect {
   display: block;
 }
 

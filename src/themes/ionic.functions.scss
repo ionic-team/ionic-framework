@@ -2,6 +2,41 @@
 // Color Functions
 // --------------------------------------------------
 
+@function color-error($color-value, $color-name: null) {
+  $error-msg: "
+
+  The value `#{$color-value}` must be a color.
+  If you are setting the value as a map make sure
+  both the base and contrast are defined as colors.
+
+  For example:
+
+  $colors: (
+    primary:    #327eff,
+    secondary:  (base: #32db64, contrast: #000),
+  );";
+
+  // If there was a name passed it means the value doesn't exist
+  // so error that the value isn't defined
+  @if ($color-name) {
+    $error-msg: "
+
+    The map color `#{$color-name}` is not defined.
+    Please make sure the color exists in your
+    `$colors` map.
+
+    For example:
+
+    $colors: (
+      #{$color-name}:    #327eff
+    );";
+  }
+
+  @error $error-msg;
+
+  @return null;
+}
+
 @function color-brightness($color-value) {
   @if (type-of($color-value) != color) {
     @return color-error($color-value);
@@ -76,41 +111,6 @@
   @return mix($shade, $color-value, $amount);
 }
 
-@function color-error($color-value, $color-name: null) {
-  $error-msg: "
-
-  The value `#{$color-value}` must be a color.
-  If you are setting the value as a map make sure
-  both the base and contrast are defined as colors.
-
-  For example:
-
-  $colors: (
-    primary:    #327eff,
-    secondary:  (base: #32db64, contrast: #000),
-  );";
-
-  // If there was a name passed it means the value doesn't exist
-  // so error that the value isn't defined
-  @if ($color-name) {
-    $error-msg: "
-
-    The map color `#{$color-name}` is not defined.
-    Please make sure the color exists in your
-    `$colors` map.
-
-    For example:
-
-    $colors: (
-      #{$color-name}:    #327eff
-    );";
-  }
-
-  @error $error-msg;
-
-  @return null;
-}
-
 // Copy Colors Map
 // --------------------------------------------------
 
@@ -130,6 +130,51 @@
   }
 
   @return $string;
+}
+
+
+// String Split Function
+// --------------------------------------------------
+
+@function str-split($string, $separator) {
+  // empty array/list
+  $split-arr: ();
+  // first index of separator in string
+  $index: str-index($string, $separator);
+  // loop through string
+  @while $index != null {
+    // get the substring from the first character to the separator
+    $item: str-slice($string, 1, $index - 1);
+    // push item to array
+    $split-arr: append($split-arr, $item);
+    // remove item and separator from string
+    $string: str-slice($string, $index + 1);
+    // find new index of separator
+    $index: str-index($string, $separator);
+  }
+  // add the remaining string to list (the last item)
+  $split-arr: append($split-arr, $string);
+
+  @return $split-arr;
+}
+
+
+// Str extract between start and end
+// --------------------------------------------------
+
+@function str-extract($string, $start, $end) {
+  $start-index: str-index($string, $start);
+
+  @if $start-index {
+    $post: str-slice($string, $start-index + str-length($start));
+    $end-index: str-index($post, $end);
+
+    @if $end-index {
+      @return str-slice($post, 1, $end-index - 1);
+    }
+  }
+
+  @return null;
 }
 
 
@@ -271,7 +316,7 @@
 // @param {Map} $colors - colors map
 // @return {List} $color-name, $color-base, $color-contrast
 // ----------------------------------------------------------
-@function get-colors($colors) {
+@function get-colors($colors, $custom-contrast-mode: null) {
   $colors-list: ();
 
   @each $color-name, $color-value in $colors {
@@ -283,7 +328,7 @@
       $color-contrast: map-get($color-value, contrast);
     } @else {
       $color-base: $color-value;
-      $color-contrast: color-inverse($color-value);
+      $color-contrast: color-contrast($colors, $color-value, $custom-contrast-mode);
     }
 
     $colors-list: append($colors-list, ($color-name, $color-base, $color-contrast), comma);
@@ -291,3 +336,4 @@
 
   @return $colors-list;
 }
+

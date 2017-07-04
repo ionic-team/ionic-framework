@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { reorderArray } from '../../../../../..';
 
 @Component({
@@ -8,8 +8,8 @@ export class RootPage {
   items: any[] = [];
   isReordering: boolean = false;
 
-  constructor(private d: ChangeDetectorRef) {
-    let nu = 9;
+  constructor() {
+    let nu = 5;
     for (let i = 0; i < nu; i++) {
       this.items.push(i);
     }

@@ -7,7 +7,7 @@ All of these commands require you to run `npm install` first. To see a full list
 
 ### Committing
 
-Please follow the commit message format in [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
+Please follow the commit message format in [CONTRIBUTING.md](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
 
 
 ### Installing Nightly Version
@@ -86,11 +86,15 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Running Snapshot
 
-#### Setup
+Snapshot compares to a base snapshot made on Mac OS with retina screen (2560x1600).
+It does not work for windows, linux, or non retina macs.
 
-1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor@2.5.1`
-2. Run `webdriver-manager update`
-3. Export `IONIC_SNAPSHOT_KEY` (get from someone)
+#### Setup (Mac OS X Only)
+
+1. Install Java JDK: `brew cask install java`
+2. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor@2.5.1`
+3. Run `webdriver-manager update`
+4. Export `IONIC_SNAPSHOT_KEY` (get from someone)
 
 #### Commands
 
@@ -106,6 +110,12 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 - `--dev` runs a dev build when building the e2e tests. This build takes much less time than a production build, so it is advisable to use this when doing quick validation.
 
+#### Errors
+
+If you are having getting an error running snapshot such as `SessionNotCreatedError: session not created exception` or `UnknownError: Connection refused` the solution is to download the chromedriver from here: http://chromedriver.storage.googleapis.com/index.html?path=2.24/ and then move it into your `protractor/selenium` folder
+
+Running `webdriver-manager help` should show you what directory the webdriver is at under the options. For example, yours may be at `/usr/local/lib/node_modules/protractor/selenium` or if you use nvm `/Users/{username}/.nvm/versions/node/v7.5.0/lib/node_modules/protractor/selenium`.
+
 ### Running Tests
 
 1. `gulp validate`
@@ -115,7 +125,7 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 **Requires Ruby. Skip this step entirely if you are unable to install Ruby.**
 
-1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
+1. See the [Sass Guidelines](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
 2. Install the linter: `gem install scss_lint`
 3. Run `gulp lint.sass` and fix any linter errors.
 
@@ -156,13 +166,13 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Releasing Component Demos
 
-Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/driftyco/ionic-preview-app). No action is necessary.
+Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/ionic-team/ionic-preview-app). No action is necessary.
 
-If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/driftyco/ionic-preview-app#running-locally-on-the-site).
+If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/ionic-team/ionic-preview-app#running-locally-on-the-site).
 
 
 ### Releasing API Demos
 
 Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary.
 
-If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run `gulp demos` and then `gulp docs`, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.
+If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/ionic-team/ionic-site) repo as a sibling of `ionic`. From `ionic` run `gulp demos` and then `gulp docs`, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.

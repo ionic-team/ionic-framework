@@ -107,6 +107,7 @@ import { LoadingOptions } from './loading-options';
  * | content               |`string`    | The html content for the loading indicator.                                                                      |
  * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                       |
  * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
+ * | enableBackdropDismiss | `boolean`  | Whether the loading indicator should be dismissed by tapping the backdrop. Default false.                        |
  * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
  * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
  *
@@ -120,7 +121,7 @@ export class LoadingController {
 
   /**
    * Create a loading indicator. See below for options.
-   * @param {LoadingOptions} opts Loading options
+   * @param {LoadingOptions} [opts] Loading options
    * @returns {Loading} Returns a Loading Instance
    */
   create(opts: LoadingOptions = {}) {

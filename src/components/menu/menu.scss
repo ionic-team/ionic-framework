@@ -11,11 +11,9 @@ $menu-small-width:           $menu-width - 40px !default;
 
 
 ion-menu {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 
   display: none;
 
@@ -28,18 +26,15 @@ ion-menu.show-menu {
 
 
 .menu-inner {
+  @include position(0, auto, 0, 0);
+  @include transform(translate3d(-9999px, 0, 0));
+
   position: absolute;
-  top: 0;
-  right: auto;
-  bottom: 0;
-  left: 0;
 
   display: block;
 
   width: $menu-width;
   height: 100%;
-
-  transform: translate3d(-9999px, 0, 0);
 
   contain: strict;
 }
@@ -50,9 +45,24 @@ ion-menu.show-menu {
   position: absolute;
 }
 
+ion-menu[side=left] > .menu-inner {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: auto;
+    left: 0;
+  }
+}
+
 ion-menu[side=right] > .menu-inner {
-  right: 0;
-  left: auto;
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: 0;
+    left: auto;
+  }
+}
+
+ion-menu[side=end] > .menu-inner {
+  @include position-horizontal(auto, 0);
 }
 
 ion-menu ion-backdrop {
@@ -63,7 +73,7 @@ ion-menu ion-backdrop {
 }
 
 .menu-content {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }
 
 .menu-content-open {
@@ -100,7 +110,7 @@ ion-menu[type=reveal] {
 }
 
 ion-menu[type=reveal].show-menu .menu-inner {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }
 
 

@@ -97,7 +97,7 @@ export class Scroll {
   /** @internal */
   @ViewChild('scrollContent', { read: ElementRef }) _scrollContent: ElementRef;
 
-  constructor(private _elementRef: ElementRef) { }
+  constructor() { }
 
   /**
    * @hidden

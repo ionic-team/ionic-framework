@@ -622,6 +622,25 @@ describe('NavController', () => {
         });
     }, 10000);
 
+    it('should not pop first view if it\'s the only view', (done: Function) => {
+      let view1 = mockView(MockView1);
+      mockViews(nav, [view1]);
+
+      nav.popToRoot(null, trnsDone).then(() => {
+        let hasCompleted = true;
+        let requiresTransition = false;
+        expect(trnsDone).toHaveBeenCalledWith(
+          hasCompleted, requiresTransition, undefined, undefined, undefined
+        );
+        expect(nav.length()).toEqual(1);
+        expect(nav.getByIndex(0).component).toEqual(MockView1);
+        done();
+      }).catch((err: Error) => {
+        fail(err);
+        done(err);
+      });
+    }, 10000);
+
   });
 
   describe('remove', () => {
@@ -1081,7 +1100,53 @@ describe('NavController', () => {
         });
       nav.destroy();
     }, 10000);
+  });
 
+  describe('canSwipeBack', () => {
+    it('should not swipe back when its not enabled', () => {
+      nav._sbEnabled = false;
+
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(false);
+    });
+
+    it('should not swipe back if its the portal', () => {
+      nav._sbEnabled = true;
+      nav._isPortal = true;
+
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(false);
+    });
+
+    it('should not swipe back if it has a child nav', () => {
+      nav._sbEnabled = true;
+      nav.registerChildNav(mockNavController());
+
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(false);
+    });
+
+    it('should swipe back when has a view to go back to', () => {
+      nav._sbEnabled = true;
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(true);
+    });
   });
 
 

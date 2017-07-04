@@ -11,9 +11,9 @@ $action-sheet-max-width:                         500px !default;
 
 
 ion-action-sheet {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-overlay;
   display: block;
 
@@ -22,19 +22,16 @@ ion-action-sheet {
 }
 
 .action-sheet-wrapper {
+  @include position(null, 0, 0, 0);
+  @include margin(auto);
+  @include transform(translate3d(0, 100%, 0));
+
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;
 
-  margin: auto;
-
   width: $action-sheet-width;
   max-width: $action-sheet-max-width;
-
-  transform: translate3d(0, 100%, 0);
 }
 
 .action-sheet-button {

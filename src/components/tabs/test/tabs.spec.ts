@@ -170,6 +170,58 @@ describe('Tabs', () => {
 
   });
 
+  describe('getSelectedTabIndex', () => {
+
+    it('should select index from tab title', () => {
+      let tabs = mockTabs();
+      let tab1 = mockTab(tabs);
+      let tab2 = mockTab(tabs);
+      let tab3 = mockTab(tabs);
+
+      tab1.tabTitle = 'My Account';
+      tab2.tabTitle = 'My Contact';
+      tab3.tabTitle = 'My Settings!!';
+
+      let selectedIndex = tabs._getSelectedTabIndex('my-settings');
+      expect(selectedIndex).toEqual(2);
+    });
+
+    it('should select index from tab url path', () => {
+      let tabs = mockTabs();
+      let tab1 = mockTab(tabs);
+      let tab2 = mockTab(tabs);
+      let tab3 = mockTab(tabs);
+
+      tab1.tabUrlPath = 'account';
+      tab2.tabUrlPath = 'contact';
+      tab3.tabUrlPath = 'settings';
+
+      let selectedIndex = tabs._getSelectedTabIndex('settings');
+      expect(selectedIndex).toEqual(2);
+    });
+
+    it('should select index 2 from tab-2 format', () => {
+      let tabs = mockTabs();
+      mockTab(tabs);
+      mockTab(tabs);
+      mockTab(tabs);
+
+      let selectedIndex = tabs._getSelectedTabIndex('tab-2');
+      expect(selectedIndex).toEqual(2);
+    });
+
+    it('should select index 0 when not found', () => {
+      let tabs = mockTabs();
+      mockTab(tabs);
+      mockTab(tabs);
+      mockTab(tabs);
+
+      let selectedIndex = tabs._getSelectedTabIndex('notfound');
+      expect(selectedIndex).toEqual(0);
+    });
+
+  });
+
   describe('getSelected', () => {
 
     it('should get the selected tab', () => {

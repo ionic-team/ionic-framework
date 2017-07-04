@@ -13,13 +13,14 @@ $modal-inset-box-shadow-color:    rgba(0, 0, 0, .4) !default;
 $modal-inset-box-shadow:          0 28px 48px $modal-inset-box-shadow-color !default;
 
 .md .modal-wrapper {
+  @include transform(translate3d(0, 40px, 0));
+
   opacity: .01;
-  transform: translate3d(0, 40px, 0);
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-    overflow: hidden;
+    @include border-radius(2px);
 
-    border-radius: 2px;
+    overflow: hidden;
 
     box-shadow: $modal-inset-box-shadow;
   }

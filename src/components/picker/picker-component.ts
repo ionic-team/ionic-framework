@@ -161,8 +161,6 @@ export class PickerCmp {
   }
 
   ionViewDidEnter() {
-    this._plt.focusOutActiveElement();
-
     let focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {
       focusableEle.focus();
@@ -205,7 +203,7 @@ export class PickerCmp {
     }
   }
 
-  dismiss(role: any): Promise<any> {
+  dismiss(role: string): Promise<any> {
     return this._viewCtrl.dismiss(this.getSelected(), role);
   }
 

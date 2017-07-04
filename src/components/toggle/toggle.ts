@@ -1,4 +1,4 @@
-import { AfterContentInit, NgZone, ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, NgZone, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -21,7 +21,7 @@ import { ToggleGesture } from './toggle-gesture';
  * Toggles can also have colors assigned to them, by adding any color
  * attribute.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * See the [Angular Docs](https://angular.io/docs/ts/latest/guide/forms.html)
  * for more info on forms and inputs.
  *
  * @usage
@@ -77,7 +77,6 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
 
   _activated: boolean = false;
   _startX: number;
-  _msPrv: number = 0;
   _gesture: ToggleGesture;
 
   /**
@@ -102,7 +101,6 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
     @Optional() item: Item,
     private _gestureCtrl: GestureController,
     private _domCtrl: DomController,
-    private _cd: ChangeDetectorRef,
     private _zone: NgZone,
   ) {
     super(config, elementRef, renderer, 'toggle', false, form, item, null);
@@ -120,7 +118,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
   /**
    * @hidden
    */
-  _inputCheckHasValue() {}
+  _inputUpdated() {}
 
   /**
    * @hidden
@@ -152,28 +150,10 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
       return;
     }
 
-    let dirty = false;
-    let value: boolean;
-    let activated: boolean;
-
-    if (this._value) {
-      if (currentX + 15 < this._startX) {
-        dirty = true;
-        value = false;
-        activated = true;
-      }
-
-    } else if (currentX - 15 > this._startX) {
-      dirty = true;
-      value = true;
-      activated = (currentX < this._startX + 5);
-    }
-
-    if (dirty) {
+    if (this._shouldToggle(currentX, -15)) {
       this._zone.run(() => {
-        this.value = value;
+        this.value = !this.value;
         this._startX = currentX;
-        this._activated = activated;
         this._haptic.selection();
       });
     }
@@ -191,14 +171,8 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
     console.debug('toggle, _onDragEnd', endX);
 
     this._zone.run(() => {
-      if (this._value) {
-        if (this._startX + 4 > endX) {
-          this.value = false;
-          this._haptic.selection();
-        }
-
-      } else if (this._startX - 4 < endX) {
-        this.value = true;
+      if (this._shouldToggle(endX, 4)) {
+        this.value = !this.value;
         this._haptic.selection();
       }
 
@@ -211,20 +185,29 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
   /**
    * @hidden
    */
-  @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
-    if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
-      console.debug(`toggle, keyup: ${ev.keyCode}`);
-      ev.preventDefault();
-      ev.stopPropagation();
-      this.value = !this.value;
+  _shouldToggle(currentX: number, margin: number): boolean {
+    const isLTR = !this._plt.isRTL;
+    const startX = this._startX;
+    if (this._value) {
+      return (isLTR && (startX + margin > currentX)) ||
+        (!isLTR && (startX - margin < currentX));
+    } else {
+      return (isLTR && (startX - margin < currentX)) ||
+        (!isLTR && (startX + margin > currentX));
     }
   }
 
   /**
    * @hidden
    */
-  initFocus() {
-    this._elementRef.nativeElement.querySelector('button').focus();
+  @HostListener('keyup', ['$event'])
+  _keyup(ev: KeyboardEvent) {
+    if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
+      console.debug(`toggle, keyup: ${ev.keyCode}`);
+      ev.preventDefault();
+      ev.stopPropagation();
+      this.value = !this.value;
+    }
   }
 
   /**

@@ -8,7 +8,7 @@ import { isSafari, isIosUIWebView } from '../../../platform/platform-utils';
   ===========================*/
 export const SWIPER_EFFECTS: SlideEffects = {
   'fade': {
-    setTranslate: function (s, plt) {
+    setTranslate: function (s) {
       for (var i = 0; i < s._slides.length; i++) {
         var slide = s._slides[i];
         var offset = slide.swiperSlideOffset;
