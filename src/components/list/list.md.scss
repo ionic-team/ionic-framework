@@ -87,14 +87,14 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md ion-item-options .button {
-  @include margin(1px, 0);
+  @include margin(0);
   @include border-radius(0);
 
   display: inline-flex;
 
   align-items: center;
 
-  height: calc(100% - 2px);
+  height: 100%;
 
   border: 0;
 
