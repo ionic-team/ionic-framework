@@ -1,5 +1,5 @@
 exports.config = {
-  namespace: 'IonicVanilla',
+  namespace: 'Ionic',
   dest: 'dist',
   collections: [
     '@ionic/core'
