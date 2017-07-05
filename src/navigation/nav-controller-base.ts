@@ -343,7 +343,10 @@ export class NavControllerBase extends Ion implements NavController {
       }
       ti.enteringRequiresTransition = (ti.insertStart === viewsLength);
     }
-    this.setTransitioning(true);
+
+    if (ti.enteringRequiresTransition || ti.leavingRequiresTransition) {
+      this.setTransitioning(true);
+    }
     return Promise.resolve();
   }
 
