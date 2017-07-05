@@ -40,7 +40,7 @@ function run {
   fi
 
   # Update docs
-  ./scripts/docs/deploy.sh --version-name="$VERSION_NAME"
+  ./packages/ionic-angular/scripts/docs/deploy.sh --version-name="$VERSION_NAME"
 
 
 }

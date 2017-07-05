@@ -10,7 +10,7 @@ jobs:
          key: ionic-site
       - run:
          name: Prepare ionic-site repo
-         command: ./scripts/docs/prepare.sh
+         command: ./packages/ionic-angular/scripts/docs/prepare.sh
       - save_cache:
          key: ionic-site
          paths:
@@ -38,7 +38,7 @@ jobs:
           name: Update docs
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./scripts/ci/deploy.sh
+              ./packages/ionic-angular/scripts/ci/deploy.sh
             else
               echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
             fi
