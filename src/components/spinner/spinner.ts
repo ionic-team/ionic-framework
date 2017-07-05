@@ -181,12 +181,12 @@ export class Spinner extends Ion {
       const spinner = SPINNERS[name];
       if (spinner) {
         if (spinner.lines) {
-          for (var i = 0, l = spinner.lines; i < l; i++) {
+          for (let i = 0, l = spinner.lines; i < l; i++) {
             this._l.push(this._loadEle(spinner, i, l));
           }
 
         } else if (spinner.circles) {
-          for (var i = 0, l = spinner.circles; i < l; i++) {
+          for (let i = 0, l = spinner.circles; i < l; i++) {
             this._c.push(this._loadEle(spinner, i, l));
           }
         }

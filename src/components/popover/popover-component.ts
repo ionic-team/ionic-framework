@@ -4,7 +4,7 @@ import { Config } from '../../config/config';
 import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
 import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 

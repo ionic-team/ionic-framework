@@ -6,12 +6,12 @@ import { DomController } from '../../platform/dom-controller';
 import { Img } from '../img/img-interface';
 import { Ion } from '../ion';
 import { isTabs } from '../../navigation/nav-util';
-import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
+import { assert, isTrueProperty, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { Content as IContent, Tabs } from '../../navigation/nav-interfaces';
 import { Platform } from '../../platform/platform';
-import { ScrollView, ScrollEvent } from '../../util/scroll-view';
+import { ScrollEvent, ScrollView } from '../../util/scroll-view';
 import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';

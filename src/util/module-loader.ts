@@ -68,7 +68,7 @@ export function provideModuleLoader(ngModuleLoader: NgModuleLoader, injector: In
 export interface LoadedModule {
   componentFactoryResolver: ComponentFactoryResolver;
   component: Type<any>;
-};
+}
 
 
 /**

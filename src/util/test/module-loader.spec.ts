@@ -1,5 +1,5 @@
-import { ModuleLoader, LAZY_LOADED_TOKEN, setupPreloadingImplementation } from '../module-loader';
-import { mockModuleLoader, mockNgModuleLoader, mockConfig } from '../mock-providers';
+import { LAZY_LOADED_TOKEN, ModuleLoader, setupPreloadingImplementation } from '../module-loader';
+import { mockConfig, mockModuleLoader, mockNgModuleLoader } from '../mock-providers';
 import { NgModuleLoader } from '../ng-module-loader';
 import { Config } from '../../config/config';
 import { DeepLinkConfig } from '../../navigation/nav-util';

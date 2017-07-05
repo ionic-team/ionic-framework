@@ -1,12 +1,12 @@
 import { Component, ElementRef, HostListener, QueryList, Renderer, ViewChildren, ViewEncapsulation } from '@angular/core';
 
-import { isNumber, isPresent, isString, assert } from '../../util/util';
+import { assert, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { BLOCK_ALL, BlockerDelegate, GestureController, } from '../../gestures/gesture-controller';
 import { KEY_ENTER, KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
-import { PickerOptions, PickerColumnOption } from './picker-options';
+import { PickerColumnOption, PickerOptions } from './picker-options';
 import { ViewController } from '../../navigation/view-controller';
 
 import { PickerColumnCmp } from './picker-column';

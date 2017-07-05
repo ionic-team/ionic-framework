@@ -1,5 +1,5 @@
 import { PanGesture } from './pan-gesture';
-import { clamp, assert } from '../util/util';
+import { assert, clamp } from '../util/util';
 import { Platform } from '../platform/platform';
 import { pointerCoord } from '../util/dom';
 

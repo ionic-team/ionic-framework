@@ -573,7 +573,7 @@ export class MockView3 {}
 export class MockView4 {}
 export class MockView5 {}
 
-export function noop(): any { return 'noop'; };
+export function noop(): any { return 'noop'; }
 
 export function mockModuleLoader(ngModuleLoader?: NgModuleLoader): ModuleLoader {
   ngModuleLoader = ngModuleLoader || mockNgModuleLoader();

@@ -101,14 +101,14 @@ export function isBlank(val: any): val is null { return val === undefined || val
 /** @hidden */
 export function isObject(val: any): val is Object { return typeof val === 'object'; }
 /** @hidden */
-export function isArray(val: any): val is any[] { return Array.isArray(val); };
+export function isArray(val: any): val is any[] { return Array.isArray(val); }
 
 
 
 /** @hidden */
 export function isPrimitive(val: any) {
   return isString(val) || isBoolean(val) || (isNumber(val) && !isNaN(val));
-};
+}
 
 
 /** @hidden */
@@ -118,7 +118,7 @@ export function isTrueProperty(val: any): boolean {
     return (val === 'true' || val === 'on' || val === '');
   }
   return !!val;
-};
+}
 
 
 /** @hidden */
@@ -138,7 +138,7 @@ export function isCheckedProperty(a: any, b: any): boolean {
 
   // not using strict comparison on purpose
   return (a == b); // tslint:disable-line
-};
+}
 
 /** @hidden */
 export type Side = 'left' | 'right' | 'start' | 'end';

@@ -1,6 +1,14 @@
 import {
-  Component, ChangeDetectionStrategy, Optional, ElementRef, EventEmitter,
-  Input, Output, Renderer, ViewChild, ViewEncapsulation
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Optional,
+  Output,
+  Renderer,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
@@ -14,7 +22,7 @@ import { copyInputAttributes, hasPointerMoved, pointerCoord }  from '../../util/
 import { DomController } from '../../platform/dom-controller';
 import { Form, IonicFormInput } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isTrueProperty, assert } from '../../util/util';
+import { assert, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { Platform } from '../../platform/platform';
 

@@ -1,8 +1,8 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
-import { isDefined, isUndefined, assert } from '../../util/util';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
+import { assert, isDefined, isUndefined } from '../../util/util';
 import { KEY_ESCAPE } from '../../platform/key';
 import { LoadingOptions } from './loading-options';
 import { NavParams } from '../../navigation/nav-params';

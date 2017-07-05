@@ -1,7 +1,15 @@
-import { mockNavController, mockView, mockViews,
-         MockView1, MockView2, MockView3, MockView4, MockView5 } from '../../util/mock-providers';
+import {
+  MockView1,
+  MockView2,
+  MockView3,
+  MockView4,
+  MockView5,
+  mockNavController,
+  mockView,
+  mockViews
+} from '../../util/mock-providers';
 import { NavControllerBase } from '../nav-controller-base';
-import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../nav-util';
+import { DIRECTION_BACK, DIRECTION_FORWARD, NavOptions,  } from '../nav-util';
 import { ViewController } from '../view-controller';
 
 

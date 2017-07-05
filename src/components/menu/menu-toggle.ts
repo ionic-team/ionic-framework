@@ -1,4 +1,4 @@
-import { Directive, Input, HostListener, Optional } from '@angular/core';
+import { Directive, HostListener, Input, Optional } from '@angular/core';
 
 import { Button } from '../button/button';
 import { MenuController } from '../app/menu-controller';

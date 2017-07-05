@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, List, ItemSliding, ToastController } from '../../../../../../';
+import { AlertController, ItemSliding, List, ToastController } from '../../../../../../';
 
 @Component({
   templateUrl: 'root-page.html'

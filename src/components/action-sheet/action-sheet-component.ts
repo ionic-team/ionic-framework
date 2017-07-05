@@ -1,8 +1,8 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { ActionSheetOptions, ActionSheetButton } from './action-sheet-options';
+import { ActionSheetButton, ActionSheetOptions } from './action-sheet-options';
 import { assert } from '../../util/util';
-import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
 import { Config } from '../../config/config';
 import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';

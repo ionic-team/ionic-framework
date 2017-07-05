@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams, ModalController, Tabs, Tab } from '../../../../../..';
+import { AlertController, IonicPage, ModalController, NavController, NavParams, Tab, Tabs } from '../../../../../..';
 
 @IonicPage({
   name: 'tabs-page'

@@ -1,12 +1,12 @@
-import { OnInit, OnDestroy, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer, ViewChild, ViewEncapsulation, forwardRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../../gestures/gesture-controller';
-import { isTrueProperty, Side, isRightSide, assert } from '../../util/util';
+import { BlockerDelegate, GESTURE_GO_BACK_SWIPE, GestureController,  } from '../../gestures/gesture-controller';
+import { Side, assert, isRightSide, isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { Menu as MenuInterface } from '../app/menu-interface';

@@ -1,6 +1,6 @@
 import { SlideEffects } from './swiper-interfaces';
-import { isHorizontal, transform, transition, eachChild, triggerTransitionEnd, CLS } from './swiper-utils';
-import { isSafari, isIosUIWebView } from '../../../platform/platform-utils';
+import { CLS, eachChild, isHorizontal, transform, transition, triggerTransitionEnd } from './swiper-utils';
+import { isIosUIWebView, isSafari } from '../../../platform/platform-utils';
 
 
 /*=========================
@@ -37,7 +37,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
       if (s.virtualTranslate && duration !== 0) {
         var eventTriggered = false;
 
-        for (var i = 0; i < slides.length; i++) {
+        for (let i = 0; i < slides.length; i++) {
           plt.transitionEnd(slides[i], () => {
             if (eventTriggered || !s) return;
 

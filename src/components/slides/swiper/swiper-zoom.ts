@@ -1,6 +1,6 @@
 import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
-import { transition, transform, isHorizontal, offset, CLS } from './swiper-utils';
+import { CLS, isHorizontal, offset, transform, transition } from './swiper-utils';
 import { getTranslate } from './swiper-transition';
 import { SlideElement } from './swiper-interfaces';
 
@@ -481,7 +481,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
     }
 
   } else if (s._touchEvents.start === 'touchstart') {
-    for (var i = 0; i < slides.length; i++) {
+    for (let i = 0; i < slides.length; i++) {
       slide = slides[i];
       // touchstart
       plt.registerListener(slide, s._touchEvents.start, (ev: TouchEvent) => {
@@ -506,7 +506,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
   });
   unRegs.push(() => { touchStartSub.unsubscribe(); });
 
-  for (var i = 0; i < slides.length; i++) {
+  for (let i = 0; i < slides.length; i++) {
     slide = slides[i];
     if (slide.querySelector('.' + CLS.zoomContainer)) {
       plt.registerListener(slide, 's.touchEvents.move', (ev: TouchEvent) => {

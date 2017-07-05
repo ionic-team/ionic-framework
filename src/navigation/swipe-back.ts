@@ -1,6 +1,6 @@
 import { swipeShouldReset } from '../util/util';
 import { DomController } from '../platform/dom-controller';
-import { GestureController, GESTURE_PRIORITY_GO_BACK_SWIPE, GESTURE_GO_BACK_SWIPE } from '../gestures/gesture-controller';
+import { GESTURE_GO_BACK_SWIPE, GESTURE_PRIORITY_GO_BACK_SWIPE, GestureController } from '../gestures/gesture-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Platform } from '../platform/platform';
 import { SlideData } from '../gestures/slide-gesture';

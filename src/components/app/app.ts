@@ -1,12 +1,12 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
-import { Title, DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT, Title } from '@angular/platform-browser';
 
 import { IonicApp } from './app-root';
 import * as Constants from './app-constants';
 import { ClickBlock } from './click-block';
-import { runInDev, assert } from '../../util/util';
+import { assert, runInDev } from '../../util/util';
 import { Config } from '../../config/config';
-import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK, isTabs } from '../../navigation/nav-util';
+import { DIRECTION_BACK, DIRECTION_FORWARD, NavOptions, isTabs } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
 import { NavigationContainer } from '../../navigation/navigation-container';
 import { NavControllerBase } from '../../navigation/nav-controller-base';

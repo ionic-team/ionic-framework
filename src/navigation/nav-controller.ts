@@ -598,7 +598,7 @@ export abstract class NavController implements NavigationContainer {
    * Returns if the nav controller is actively transitioning or not.
    * @return {boolean}
    */
-  abstract isTransitioning(includeAncestors?: boolean): boolean
+  abstract isTransitioning(includeAncestors?: boolean): boolean;
 
   /**
    * If it's possible to use swipe back or not. If it's not possible

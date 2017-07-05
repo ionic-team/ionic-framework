@@ -1,5 +1,5 @@
-import { convertToView, convertToViews, DIRECTION_BACK, DIRECTION_FORWARD, setZIndex } from '../nav-util';
-import { mockDeepLinker, mockNavController, MockView, mockRenderer, mockView, mockViews } from '../../util/mock-providers';
+import { DIRECTION_BACK, DIRECTION_FORWARD, convertToView, convertToViews, setZIndex } from '../nav-util';
+import { MockView, mockDeepLinker, mockNavController, mockRenderer, mockView, mockViews } from '../../util/mock-providers';
 import { ViewController } from '../view-controller';
 
 

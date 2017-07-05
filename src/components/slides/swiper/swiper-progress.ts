@@ -1,5 +1,5 @@
 import { Slides } from '../slides';
-import { maxTranslate, minTranslate, removeClass, updateSlidesOffset, CLS } from './swiper-utils';
+import { CLS, maxTranslate, minTranslate, removeClass, updateSlidesOffset } from './swiper-utils';
 
 
 export function updateProgress(s: Slides, translate?: number) {

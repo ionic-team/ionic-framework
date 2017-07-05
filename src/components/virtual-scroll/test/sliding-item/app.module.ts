@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, NgModule } from '@angular/core';
+import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, Platform } from '../../../..';
 

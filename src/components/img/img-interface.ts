@@ -6,4 +6,4 @@ export interface Img {
   canRequest: boolean;
   reset(): void;
   update(): void;
-};
+}

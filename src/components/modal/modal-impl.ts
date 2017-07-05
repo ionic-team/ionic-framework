@@ -4,7 +4,7 @@ import { isPresent } from '../../util/util';
 import { PORTAL_MODAL } from '../app/app-constants';
 import { ModalCmp } from './modal-component';
 import { ModalOptions } from './modal-options';
-import { ModalSlideIn, ModalSlideOut, ModalMDSlideIn, ModalMDSlideOut } from './modal-transitions';
+import { ModalMDSlideIn, ModalMDSlideOut, ModalSlideIn, ModalSlideOut } from './modal-transitions';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 

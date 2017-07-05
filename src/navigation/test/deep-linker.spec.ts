@@ -1,9 +1,20 @@
 import * as deepLinker from '../deep-linker';
 import { NavSegment } from '../nav-util';
 import { UrlSerializer } from '../url-serializer';
-import { mockApp, mockDeepLinkConfig, mockNavController, mockLocation,
-         mockModuleLoader, mockTab, mockTabs, mockViews, mockView, noop,
-         MockView1, MockView2 } from '../../util/mock-providers';
+import {
+  MockView1,
+  MockView2,
+  mockApp,
+  mockDeepLinkConfig,
+  mockLocation,
+  mockModuleLoader,
+  mockNavController,
+  mockTab,
+  mockTabs,
+  mockView,
+  mockViews,
+  noop
+} from '../../util/mock-providers';
 
 
 describe('DeepLinker', () => {

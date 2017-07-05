@@ -27,7 +27,7 @@ export interface Menu {
   getBackdropElement(): HTMLElement;
   _canOpen(): boolean;
   persistent: boolean;
-};
+}
 
 export interface MenuType {
   ani: Animation;
@@ -37,4 +37,4 @@ export interface MenuType {
   setProgessStep(stepValue: number): void;
   setProgressEnd(shouldComplete: boolean, currentStepValue: number, velocity: number, done: Function): void;
   destroy(): void;
-};
+}

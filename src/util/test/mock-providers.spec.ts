@@ -1,6 +1,5 @@
-import { mockPlatform, MockPlatform } from '../mock-providers';
-import { mockDomController, MockDomController } from '../mock-providers';
-
+import { MockPlatform, mockPlatform } from '../mock-providers';
+import { MockDomController, mockDomController } from '../mock-providers';
 
 describe('mock-providers', () => {
 

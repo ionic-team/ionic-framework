@@ -8,7 +8,16 @@ import { initEvents } from './swiper/swiper-events';
 import { initZoom } from './swiper/swiper-zoom';
 import { Platform } from '../../platform/platform';
 import { SlideContainer, SlideElement, SlideTouchEvents, SlideTouches, SlideZoom } from './swiper/swiper-interfaces';
-import { slideTo, slideNext, slidePrev, update, initSwiper, destroySwiper, startAutoplay, stopAutoplay } from './swiper/swiper';
+import {
+  destroySwiper,
+  initSwiper,
+  slideNext,
+  slidePrev,
+  slideTo,
+  startAutoplay,
+  stopAutoplay,
+  update,
+} from './swiper/swiper';
 import { SWIPER_EFFECTS } from './swiper/swiper-effects';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -369,7 +378,7 @@ export class Slides extends Ion {
   }
   private _slidesPerView: number|string = 1;
 
-  /** 
+  /**
    * @input {boolean} Center a slide in the middle of the screen.
    */
   @Input()

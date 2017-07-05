@@ -1,7 +1,7 @@
 import { Range } from '../range';
-import { mockChangeDetectorRef, mockConfig, mockDomController, mockItem, mockElementRef, mockHaptic, mockPlatform, mockRenderer } from '../../../util/mock-providers';
+import { mockChangeDetectorRef, mockConfig, mockDomController, mockElementRef, mockHaptic, mockItem, mockPlatform, mockRenderer } from '../../../util/mock-providers';
 import { Form } from '../../../util/form';
-import { commonInputTest, NUMBER_CORPUS } from '../../../util/input-tester';
+import { NUMBER_CORPUS, commonInputTest } from '../../../util/input-tester';
 
 
 describe('Range', () => {

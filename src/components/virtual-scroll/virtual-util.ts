@@ -1,4 +1,4 @@
-import { ViewContainerRef, TemplateRef, EmbeddedViewRef } from '@angular/core';
+import { EmbeddedViewRef, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 
@@ -330,7 +330,7 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
       tmpl: -1
     };
 
-    for (var i = 0; i < totalCells; i++) {
+    for (let i = 0; i < totalCells; i++) {
       cell = cells[i];
 
       if (previousCell.left + previousCell.width + cell.width > data.viewWidth) {
@@ -481,7 +481,7 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
     data.bottomCell = Math.min(data.bottomViewCell + viewableRenderedPadding, totalCells - 1);
     data.topCell = Math.max(data.bottomCell - 2, 0);
 
-    for (var i = data.bottomCell; i >= 0; i--) {
+    for (let i = data.bottomCell; i >= 0; i--) {
       cell = cells[i];
       if (cell.row !== lastRow) {
         cellsRenderHeight += cell.height;
