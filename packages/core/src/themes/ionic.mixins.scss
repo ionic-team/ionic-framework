@@ -156,7 +156,7 @@
 }
 
 @mixin multi-dir() {
-  @if $app-direction == null {
+  @if $app-direction == multi {
     $root: #{&};
     @at-root [dir="ltr"], [dir="rtl"] {
       #{$root} {
@@ -169,7 +169,7 @@
 }
 
 @mixin rtl() {
-  @if $app-direction == null {
+  @if $app-direction == multi {
     $root: #{&};
     @at-root [dir="rtl"] {
       #{$root} {
@@ -182,7 +182,7 @@
 }
 
 @mixin ltr() {
-  @if $app-direction == null {
+  @if $app-direction == multi {
     $root: #{&};
     @at-root [dir="ltr"] {
       #{$root} {
