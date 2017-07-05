@@ -1,6 +1,6 @@
 import { Menu } from './menu';
 import { DomController } from '../../platform/dom-controller';
-import { GestureController, GESTURE_PRIORITY_MENU_SWIPE, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
+import { GESTURE_MENU_SWIPE, GESTURE_PRIORITY_MENU_SWIPE, GestureController } from '../../gestures/gesture-controller';
 import { Platform } from '../../platform/platform';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
@@ -46,7 +46,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts
-  onSlideBeforeStart(ev: any) {
+  onSlideBeforeStart() {
     console.debug('menu gesture, onSlideBeforeStart', this.menu.side);
     this.menu._swipeBeforeStart();
   }
@@ -56,14 +56,14 @@ export class MenuContentGesture extends SlideEdgeGesture {
     this.menu._swipeStart();
   }
 
-  onSlide(slide: SlideData, ev: any) {
+  onSlide(slide: SlideData) {
     const z = (this.menu.isRightSide !== this.plt.isRTL ? slide.min : slide.max);
     const stepValue = (slide.distance / z);
 
     this.menu._swipeProgress(stepValue);
   }
 
-  onSlideEnd(slide: SlideData, ev: any) {
+  onSlideEnd(slide: SlideData) {
     let z = (this.menu.isRightSide !== this.plt.isRTL ? slide.min : slide.max);
     const currentStepValue = (slide.distance / z);
     const velocity = slide.velocity;
@@ -87,7 +87,7 @@ export class MenuContentGesture extends SlideEdgeGesture {
     this.menu._swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
   }
 
-  getElementStartPos(slide: SlideData, ev: any) {
+  getElementStartPos(slide: SlideData) {
     const menu = this.menu;
     if (menu.isRightSide !== this.plt.isRTL) {
       return menu.isOpen ? slide.min : slide.max;

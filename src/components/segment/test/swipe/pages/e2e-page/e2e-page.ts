@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Slides, SegmentButton } from '../../../../../..';
+import { SegmentButton, Slides } from '../../../../../..';
 
 
 @Component({

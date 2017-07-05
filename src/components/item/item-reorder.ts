@@ -1,9 +1,9 @@
-import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer } from '@angular/core';
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
-import { ItemReorderGestureDelegate, ItemReorderGesture } from './item-reorder-gesture';
+import { ItemReorderGesture, ItemReorderGestureDelegate } from './item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
 
@@ -278,7 +278,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     /********* DOM WRITE ********* */
     let transform = this._plt.Css.transform;
     if (toIndex >= lastToIndex) {
-      for (var i = lastToIndex; i <= toIndex; i++) {
+      for (let i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i > fromIndex)
             ? `translateY(${-itemHeight}px)` : '';
@@ -287,7 +287,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     }
 
     if (toIndex <= lastToIndex) {
-      for (var i = toIndex; i <= lastToIndex; i++) {
+      for (let i = toIndex; i <= lastToIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i < fromIndex)
             ? `translateY(${itemHeight}px)` : '';

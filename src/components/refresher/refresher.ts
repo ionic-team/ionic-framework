@@ -1,7 +1,7 @@
 import { Directive, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { GestureController, GestureDelegate, GESTURE_PRIORITY_REFRESHER, GESTURE_REFRESHER } from '../../gestures/gesture-controller';
+import { GESTURE_PRIORITY_REFRESHER, GESTURE_REFRESHER, GestureController, GestureDelegate } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';

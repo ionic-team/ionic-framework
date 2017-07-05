@@ -1,7 +1,7 @@
 
 import { Checkbox } from '../checkbox';
-import { mockConfig, mockElementRef, mockRenderer, mockItem } from '../../../util/mock-providers';
-import { commonInputTest, BOOLEAN_CORPUS } from '../../../util/input-tester';
+import { mockConfig, mockElementRef, mockItem, mockRenderer } from '../../../util/mock-providers';
+import { BOOLEAN_CORPUS, commonInputTest } from '../../../util/input-tester';
 
 describe('Checkbox', () => {
 

@@ -4,7 +4,7 @@ import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { PopoverCmp } from './popover-component';
 import { PopoverOptions } from './popover-options';
-import { PopoverPopIn, PopoverPopOut, PopoverMdPopIn, PopoverMdPopOut } from './popover-transitions';
+import { PopoverMdPopIn, PopoverMdPopOut, PopoverPopIn, PopoverPopOut } from './popover-transitions';
 import { ViewController } from '../../navigation/view-controller';
 
 

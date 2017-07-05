@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
-import { KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN } from '../../platform/key';
+import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from '../../platform/key';
 
 /**
  * @hidden

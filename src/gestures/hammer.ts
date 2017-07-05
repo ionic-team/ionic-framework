@@ -706,7 +706,7 @@ var MOUSE_WINDOW_EVENTS = 'mousemove mouseup';
  * @constructor
  * @extends Input
  */
-function MouseInput(manager: any, handler: any) {
+function MouseInput(_manager: any, _handler: any) {
     this.evEl = MOUSE_ELEMENT_EVENTS;
     this.evWin = MOUSE_WINDOW_EVENTS;
 
@@ -923,7 +923,7 @@ var TOUCH_TARGET_EVENTS = 'touchstart touchmove touchend touchcancel';
  * @constructor
  * @extends Input
  */
-function TouchInput(manager: any, handler: any): void {
+function TouchInput(_manager: any, _handler: any): void {
     this.evTarget = TOUCH_TARGET_EVENTS;
     this.targetIds = {};
 
@@ -1476,7 +1476,7 @@ Recognizer.prototype = {
      * @param {Object} inputData
      * @returns {Const} STATE
      */
-    process: function(inputData: any) { }, // jshint ignore:line
+    process: function(_inputData: any) { }, // jshint ignore:line
 
     /**
      * return the preferred touch-action
@@ -2008,10 +2008,6 @@ function Hammer(element: any, options: any): any {
     return new (<any>Manager)(element, options);
 }
 
-/**
- * @const {string}
- */
-var VERSION = '2.0.6';
 
 /**
  * default settings

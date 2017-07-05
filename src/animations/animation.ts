@@ -1,6 +1,5 @@
-import { isDefined, assert } from '../util/util';
+import { assert, isDefined } from '../util/util';
 import { Platform } from '../platform/platform';
-
 
 /**
  * @hidden
@@ -48,12 +47,12 @@ export class Animation {
     if (ele) {
       if (typeof ele === 'string') {
         ele = this.plt.doc().querySelectorAll(ele);
-        for (var i = 0; i < ele.length; i++) {
+        for (let i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
 
       } else if (ele.length) {
-        for (var i = 0; i < ele.length; i++) {
+        for (let i = 0; i < ele.length; i++) {
           this._addEle(ele[i]);
         }
 
@@ -194,7 +193,7 @@ export class Animation {
 
     if (!fxProp) {
       // first time we've see this EffectProperty
-      var shouldTrans = (ANIMATION_TRANSFORMS[prop] === 1);
+      const shouldTrans = (ANIMATION_TRANSFORMS[prop] === 1);
       fxProp = {
         name: prop,
         trans: shouldTrans,
@@ -262,7 +261,7 @@ export class Animation {
    */
   beforeClearStyles(propertyNames: string[]): Animation {
     this._bfSty = this._bfSty || {};
-    for (var i = 0; i < propertyNames.length; i++) {
+    for (let i = 0; i < propertyNames.length; i++) {
       this._bfSty[propertyNames[i]] = '';
     }
     return this;
@@ -319,7 +318,7 @@ export class Animation {
    */
   afterClearStyles(propertyNames: string[]): Animation {
     this._afSty = this._afSty || {};
-    for (var i = 0; i < propertyNames.length; i++) {
+    for (let i = 0; i < propertyNames.length; i++) {
       this._afSty[propertyNames[i]] = '';
     }
     return this;
@@ -386,7 +385,7 @@ export class Animation {
     this._hasDur = (this.getDuration(opts) > ANIMATION_DURATION_MIN);
 
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i]._playInit(opts);
     }
@@ -441,7 +440,7 @@ export class Animation {
    */
   _playProgress(opts: PlayOptions) {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i]._playProgress(opts);
     }
@@ -474,7 +473,7 @@ export class Animation {
    */
   _playToStep(stepValue: number) {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i]._playToStep(stepValue);
     }
@@ -546,7 +545,7 @@ export class Animation {
    */
   _playEnd(stepValue?: number) {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i]._playEnd(stepValue);
     }
@@ -583,7 +582,7 @@ export class Animation {
     }
 
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       if (children[i]._hasDuration(opts)) {
         return true;
       }
@@ -602,7 +601,7 @@ export class Animation {
     }
 
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       if (children[i]._hasDomReads()) {
         return true;
       }
@@ -650,16 +649,16 @@ export class Animation {
     if (this._rv) {
       stepValue = ((stepValue * -1) + 1);
     }
-    var i: number, j: number;
-    var finalTransform: string = '';
-    var elements = this._e;
+    let i: number, j: number;
+    let finalTransform: string = '';
+    const elements = this._e;
     for (i = 0; i < effects.length; i++) {
-      var fx = effects[i];
+      const fx = effects[i];
 
       if (fx.from && fx.to) {
-        var fromNum = fx.from.num;
-        var toNum = fx.to.num;
-        var tweenEffect = (fromNum !== toNum);
+        const fromNum = fx.from.num;
+        const toNum = fx.to.num;
+        const tweenEffect = (fromNum !== toNum);
 
         assert(tweenEffect || !this._isAsync, 'in async animations to != from value');
         if (tweenEffect) {
@@ -676,8 +675,8 @@ export class Animation {
 
         } else if (tweenEffect) {
           // EVERYTHING IN BETWEEN
-          var valNum = (((toNum - fromNum) * stepValue) + fromNum);
-          var unit = fx.to.unit;
+          let valNum = (((toNum - fromNum) * stepValue) + fromNum);
+          const unit = fx.to.unit;
           if (unit === 'px') {
             valNum = Math.round(valNum);
           }
@@ -685,7 +684,7 @@ export class Animation {
         }
 
         if (val !== null) {
-          var prop = fx.name;
+          const prop = fx.name;
           if (fx.trans) {
             finalTransform += prop + '(' + val + ') ';
 
@@ -705,7 +704,7 @@ export class Animation {
         finalTransform += 'translateZ(0px)';
       }
 
-      var cssTransform = this.plt.Css.transform;
+      const cssTransform = this.plt.Css.transform;
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
         (<any>elements[i].style)[cssTransform] = finalTransform;
@@ -734,7 +733,7 @@ export class Animation {
     const cssTransitionTimingFn = Css.transitionTimingFn;
 
     let eleStyle: any;
-    for (var i = 0; i < this._eL; i++) {
+    for (let i = 0; i < this._eL; i++) {
       eleStyle = elements[i].style;
       if (dur > 0) {
         // ******** DOM WRITE ****************
@@ -836,14 +835,14 @@ export class Animation {
    */
   _fireBeforeReadFunc() {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM READ ****************
       children[i]._fireBeforeReadFunc();
     }
 
     const readFunctions = this._rdFn;
     if (readFunctions) {
-      for (var i = 0; i < readFunctions.length; i++) {
+      for (let i = 0; i < readFunctions.length; i++) {
         // ******** DOM READ ****************
         readFunctions[i]();
       }
@@ -857,14 +856,14 @@ export class Animation {
    */
   _fireBeforeWriteFunc() {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i]._fireBeforeWriteFunc();
     }
 
     const writeFunctions = this._wrFn;
     if (this._wrFn) {
-      for (var i = 0; i < writeFunctions.length; i++) {
+      for (let i = 0; i < writeFunctions.length; i++) {
         // ******** DOM WRITE ****************
         writeFunctions[i]();
       }
@@ -909,7 +908,7 @@ export class Animation {
 
         // inline styles that were added before the animation should be removed
         if (this._bfSty) {
-          for (var prop in this._bfSty) {
+          for (const prop in this._bfSty) {
             // ******** DOM WRITE ****************
             (<any>ele).style[prop] = '';
           }
@@ -936,7 +935,7 @@ export class Animation {
 
         // inline styles to add after the animation
         if (this._afSty) {
-          for (var prop in this._afSty) {
+          for (const prop in this._afSty) {
             // ******** DOM WRITE ****************
             (<any>ele).style[prop] = this._afSty[prop];
           }
@@ -956,8 +955,8 @@ export class Animation {
     let willChange: string;
     if (addWillChange && effects) {
       wc = [];
-      for (var i = 0; i < effects.length; i++) {
-        var propWC = effects[i].wc;
+      for (let i = 0; i < effects.length; i++) {
+        const propWC = effects[i].wc;
         if (propWC === 'webkitTransform') {
           wc.push('transform', '-webkit-transform');
 
@@ -969,7 +968,7 @@ export class Animation {
     } else {
       willChange = '';
     }
-    for (var i = 0; i < this._eL; i++) {
+    for (let i = 0; i < this._eL; i++) {
       // ******** DOM WRITE ****************
       (<any>this._e[i]).style.willChange = willChange;
     }
@@ -996,7 +995,7 @@ export class Animation {
    */
   _progressStart() {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i]._progressStart();
     }
@@ -1017,7 +1016,7 @@ export class Animation {
     stepValue = Math.min(1, Math.max(0, stepValue));
 
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i].progressStep(stepValue);
     }
@@ -1076,7 +1075,7 @@ export class Animation {
    */
   _progressEnd(shouldComplete: boolean, stepValue: number, dur: number, isAsync: boolean) {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       // ******** DOM WRITE ****************
       children[i]._progressEnd(shouldComplete, stepValue, dur, isAsync);
     }
@@ -1127,7 +1126,7 @@ export class Animation {
    */
   _didFinishAll(hasCompleted: boolean, finishAsyncAnimations: boolean, finishNoDurationAnimations: boolean) {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       children[i]._didFinishAll(hasCompleted, finishAsyncAnimations, finishNoDurationAnimations);
     }
 
@@ -1146,14 +1145,14 @@ export class Animation {
 
     if (this._fFn) {
       // run all finish callbacks
-      for (var i = 0; i < this._fFn.length; i++) {
+      for (let i = 0; i < this._fFn.length; i++) {
         this._fFn[i](this);
       }
     }
 
     if (this._fOneFn) {
       // run all "onetime" finish callbacks
-      for (var i = 0; i < this._fOneFn.length; i++) {
+      for (let i = 0; i < this._fOneFn.length; i++) {
         this._fOneFn[i](this);
       }
       this._fOneFn.length = 0;
@@ -1165,7 +1164,7 @@ export class Animation {
    */
   reverse(shouldReverse: boolean = true): Animation {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       children[i].reverse(shouldReverse);
     }
     this._rv = shouldReverse;
@@ -1177,7 +1176,7 @@ export class Animation {
    */
   destroy() {
     const children = this._c;
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       children[i].destroy();
     }
 
@@ -1202,9 +1201,9 @@ export class Animation {
    */
   _transEl(): HTMLElement {
     // get the lowest level element that has an Animation
-    var targetEl: HTMLElement;
+    let targetEl: HTMLElement;
 
-    for (var i = 0; i < this._cL; i++) {
+    for (let i = 0; i < this._cL; i++) {
       targetEl = this._c[i]._transEl();
       if (targetEl) {
         return targetEl;

@@ -1,6 +1,6 @@
 import { Activator } from '../activator';
 import { Config } from '../../config/config';
-import { mockDomController, MockDomController } from '../../util/mock-providers';
+import { MockDomController, mockDomController } from '../../util/mock-providers';
 
 
 describe('Activator', () => {

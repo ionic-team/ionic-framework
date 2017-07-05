@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, NgModule } from '@angular/core';
+import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, Platform } from '../../../..';
 
@@ -32,7 +32,7 @@ export class E2EPage {
     }
   }
 
-  headerFn(record: any, index: number, records: any[]) {
+  headerFn(_record: any, index: number) {
     if (index % 4 === 0) {
       return index + ' is divisible by 4';
     }

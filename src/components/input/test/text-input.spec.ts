@@ -1,7 +1,7 @@
-import { getScrollData, TextInput } from '../input';
+import { TextInput, getScrollData } from '../input';
 import { ContentDimensions } from '../../content/content';
-import { mockConfig, mockApp, mockPlatform, mockDomController, mockElementRef, mockElementRefEle, mockRenderer, mockItem, mockForm } from '../../../util/mock-providers';
-import { commonInputTest, TEXT_CORPUS } from '../../../util/input-tester';
+import { mockApp, mockConfig, mockDomController, mockElementRef, mockElementRefEle, mockForm, mockItem, mockPlatform, mockRenderer } from '../../../util/mock-providers';
+import { TEXT_CORPUS, commonInputTest } from '../../../util/input-tester';
 
 
 function newInput(): TextInput {

@@ -1,6 +1,6 @@
 import { Slides } from '../slides';
 import { Platform } from '../../../platform/platform';
-import { isHorizontal, offset, CLS } from './swiper-utils';
+import { CLS, isHorizontal, offset } from './swiper-utils';
 import { slideNext, slidePrev } from './swiper';
 
 

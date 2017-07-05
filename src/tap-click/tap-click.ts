@@ -8,8 +8,8 @@ import { Config } from '../config/config';
 import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
 import { Platform } from '../platform/platform';
-import { pointerCoord, hasPointerMoved } from '../util/dom';
-import { PointerEvents, POINTER_EVENT_TYPE_TOUCH } from '../gestures/pointer-events';
+import { hasPointerMoved, pointerCoord } from '../util/dom';
+import { POINTER_EVENT_TYPE_TOUCH, PointerEvents } from '../gestures/pointer-events';
 import { RippleActivator } from './ripple';
 import { UIEventManager } from '../gestures/ui-event-manager';
 
@@ -247,7 +247,7 @@ export function isActivatable(ele: HTMLElement) {
     }
   }
   return false;
-};
+}
 
 const ACTIVATABLE_ELEMENTS = ['A', 'BUTTON'];
 const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];

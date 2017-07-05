@@ -2,7 +2,7 @@ import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Rend
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
-import { isPresent, isString, isUndefined, isArray, isTrueProperty, deepCopy, assert } from './util';
+import { assert, deepCopy, isArray, isPresent, isString, isTrueProperty, isUndefined  } from './util';
 import { IonicFormInput } from './form';
 import { Ion } from '../components/ion';
 import { Config } from '../config/config';

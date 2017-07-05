@@ -1,4 +1,4 @@
-import { indexForItem, findReorderItem } from './item-reorder-util';
+import { findReorderItem, indexForItem } from './item-reorder-util';
 import { Platform } from '../../platform/platform';
 import { PointerCoordinates, pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';

@@ -8,7 +8,7 @@ import { OpaqueToken } from '@angular/core';
 * Config allows you to set the modes of your components
 */
 import { Platform } from '../platform/platform';
-import { isObject, isDefined, isFunction, isArray } from '../util/util';
+import { isArray, isDefined, isFunction, isObject } from '../util/util';
 
 /**
  * @name Config

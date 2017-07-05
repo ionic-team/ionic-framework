@@ -1,6 +1,6 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Nav, AlertController } from '../../../..';
+import { AlertController, IonicApp, IonicModule, Nav } from '../../../..';
 
 
 @Component({templateUrl: 'page1.html'})

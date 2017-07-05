@@ -1,6 +1,6 @@
 import { Menu, MenuType } from './menu-interface';
 import { Platform } from '../../platform/platform';
-import { removeArrayItem, assert } from '../../util/util';
+import { assert, removeArrayItem  } from '../../util/util';
 
 
 /**
