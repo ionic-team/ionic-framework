@@ -11,6 +11,7 @@ exports.config = {
     { components: ['ion-loading', 'ion-loading-controller'] },
     { components: ['ion-menu'], priority: 'low' },
     { components: ['ion-modal', 'ion-modal-controller'] },
+    { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },

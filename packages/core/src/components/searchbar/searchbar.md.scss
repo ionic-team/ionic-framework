@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals.md";
+@import "./searchbar";
 
 // Material Design Searchbar
 // --------------------------------------------------
@@ -140,7 +141,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-md .searchbar-clear-icon {
+.searchbar-md ion-button.searchbar-clear-icon {
   @include position(0, 13px, null, null);
   @include svg-background-image($searchbar-md-input-clear-icon-svg);
   @include padding(0);
@@ -155,7 +156,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   background-size: $searchbar-md-input-clear-icon-size;
 }
 
-.searchbar-md .searchbar-clear-icon.activated {
+.searchbar-md ion-button.searchbar-clear-icon.activated {
   background-color: transparent;
 }
 

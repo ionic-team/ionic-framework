@@ -1,10 +1,11 @@
 @import "../../themes/ionic.globals.ios";
+@import "./searchbar";
 
 // iOS Searchbar
 // --------------------------------------------------
 
 /// @prop - Padding top/bottom of the searchbar
-$searchbar-ios-padding-vertical:        0 !default;
+$searchbar-ios-padding-vertical:          0 !default;
 
 /// @prop - Padding start/end of the searchbar
 $searchbar-ios-padding-horizontal:        8px !default;
@@ -120,7 +121,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-ios .searchbar-clear-icon {
+.searchbar-ios ion-button.searchbar-clear-icon {
   @include position(0, 0, null, null);
   @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $searchbar-ios-input-clear-icon-color);
   @include background-position(center);
@@ -139,7 +140,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .searchbar-ios .searchbar-ios-cancel {
-  @include padding(0, 0, 0, 8px);
   @include margin-horizontal(0, null);
 
   display: none;
@@ -150,6 +150,12 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
   cursor: pointer;
 }
+
+.searchbar-ios button.searchbar-ios-cancel {
+  @include padding(0, 0, 0, 8px);
+  @include margin(0);
+}
+
 
 // Searchbar Left Aligned (iOS only)
 // -----------------------------------------

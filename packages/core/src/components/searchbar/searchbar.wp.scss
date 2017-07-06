@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals.wp";
+@import "./searchbar";
 
 // Windows Searchbar
 // --------------------------------------------------
@@ -139,7 +140,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-wp .searchbar-clear-icon {
+.searchbar-wp ion-button.searchbar-clear-icon {
   @include position(0, $searchbar-wp-input-padding-horizontal, null, null);
   @include svg-background-image($searchbar-wp-input-clear-icon-svg);
   @include padding(0);
@@ -154,7 +155,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
   background-size: $searchbar-wp-input-clear-icon-size;
 }
 
-.searchbar-wp .searchbar-clear-icon.activated {
+.searchbar-wp ion-button.searchbar-clear-icon.activated {
   background-color: transparent;
 }
 
