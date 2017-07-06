@@ -1,9 +1,6 @@
 exports.config = {
-  namespace: 'ionic',
-  src: 'src',
-  dest: 'dist',
-  collection: true,
-  collectionDest: 'collection',
+  namespace: 'Ionic',
+  generateCollection: true,
   bundles: [
     { components: ['ion-app', 'ion-content', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },

@@ -13,6 +13,7 @@ log.txt
 .sass-cache/
 .versions/
 coverage/
+collection/
 dist/
 node_modules/
 tmp/
