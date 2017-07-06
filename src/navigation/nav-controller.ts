@@ -590,9 +590,15 @@ export abstract class NavController implements NavigationContainer {
   abstract getViews(): Array<ViewController>;
 
   /**
-   * Returns the active child navigation.
+   * Returns a list of the active child navigation.
    */
   abstract getActiveChildNavs(): any[];
+
+  /**
+   * Returns the active child navigation.
+   */
+  abstract getActiveChildNav(): any;
+
 
   /**
    * Returns if the nav controller is actively transitioning or not.

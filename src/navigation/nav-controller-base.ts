@@ -1191,6 +1191,14 @@ export class NavControllerBase extends Ion implements NavController {
   getSecondaryIdentifier(): string {
     return null;
   }
+
+  /**
+   * Returns the active child navigation.
+   */
+  getActiveChildNav(): any {
+    console.warn('(getActiveChildNav) is deprecated and will be removed in the next major release. Use getActiveChildNavs instead.');
+    return this._children[this._children.length - 1];
+  }
 }
 
 let ctrlIds = -1;
