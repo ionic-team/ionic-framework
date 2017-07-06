@@ -50,7 +50,7 @@ import { OverlayPortal } from './components/app/overlay-portal';
 import { Avatar } from './components/avatar/avatar';
 import { Backdrop } from './components/backdrop/backdrop';
 import { Badge } from './components/badge/badge';
-import { Button } from './components/button/button';
+import { Button, ButtonCover } from './components/button/button';
 import { Card } from './components/card/card';
 import { CardContent } from './components/card/card-content';
 import { CardHeader } from './components/card/card-header';
@@ -190,6 +190,7 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     Backdrop,
     Badge,
     Button,
+    ButtonCover,
     Card,
     CardContent,
     CardHeader,
