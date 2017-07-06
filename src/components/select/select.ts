@@ -158,12 +158,12 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
     '<div class="select-icon">' +
       '<div class="select-icon-inner"></div>' +
     '</div>' +
-    '<button aria-haspopup="true" ' +
+    '<button class="item-cover" ' +
+            'role="select" ' +
+            'aria-haspopup="true" ' +
             '[id]="id" ' +
-            'ion-button="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
-            '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
+            '[attr.aria-disabled]="_disabled">' +
     '</button>',
   host: {
     '[class.select-disabled]': '_disabled'

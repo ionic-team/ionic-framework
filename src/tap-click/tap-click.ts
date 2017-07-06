@@ -37,7 +37,7 @@ export class TapClick {
   ) {
     this.events = new UIEventManager(plt);
 
-    let activator = config.get('activator');
+    const activator = config.get('activator');
     if (activator === 'ripple') {
       this.activator = new RippleActivator(app, config, dom);
 
