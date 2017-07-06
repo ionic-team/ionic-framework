@@ -71,7 +71,7 @@ import { SegmentButtonEvent, VNodeData } from '../../utils/interfaces';
 })
 export class Segment {
   buttons: any;
-  $el: any;
+  $el: HTMLElement;
 
   @Prop({ state: true }) disabled: boolean = false;
 
