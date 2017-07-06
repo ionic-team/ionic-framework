@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run copy.vendor && stencil build --prod",
     "dev": "npm run copy.vendor && stencil build --watch --debug",
-    "copy.vendor": "mkdir -p ./collection/vendor && cp -Rf ./src/vendor ./collection",
+    "copy.vendor": "mkdir -p ./dist/collection/vendor && cp -Rf ./src/vendor ./dist/collection",
     "link.stencil": "npm link @stencil/core",
     "test": "jest"
   },

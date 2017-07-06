@@ -1,5 +1,6 @@
 exports.config = {
   namespace: 'Ionic',
+  buildDest: 'dist',
   generateCollection: true,
   bundles: [
     { components: ['ion-app', 'ion-content', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
@@ -17,5 +18,5 @@ exports.config = {
     { components: ['ion-spinner'] },
     { components: ['ion-toggle'] }
   ],
-  preamble: '(C) Ionic Vanilla https://ionicframework.com - MIT License'
+  preamble: '(C) Ionic http://ionicframework.com - MIT License'
 };
