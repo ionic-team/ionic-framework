@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   templateUrl: 'page-one.html',
-  styles: [`
-    ion-progress{
-      margin:24px 0px;
-    }
-  `]
+  styles: ['page-one.scss']
 })
 export class PageOne {
   public value: number = 40;
