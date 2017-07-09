@@ -26,7 +26,7 @@ export class Progress extends Ion {
    * @input {'determinate' | 'indeterminate' | 'buffer' | 'query'} The current mode of the progress indicator
    */
   @Input()
-  indicator: progressIndicator =  'determinate';
+  indicator: progressIndicator = 'determinate';
   /**
    * @input {number} The value of the progress indicator, as a percentage (out of 100)
    */
