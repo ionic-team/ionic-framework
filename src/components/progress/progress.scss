@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+
 // Progress bar
 // --------------------------------------------------
 
@@ -90,8 +91,6 @@ ion-progress {
     background-image: linear-gradient(to right, rgba(255, 255, 255, .7), rgba(255, 255, 255, .7)), linear-gradient(to right, $progress-color, $progress-color);
 
     mask: url(#{$progress-buffer-circles-svg});
-    // scss-lint:disable PropertySpelling
-    left: 0;
   }
 
   .buffer {
@@ -140,6 +139,11 @@ ion-progress {
     display: block;
 
     animation: buffering $progress-buffer-circle-speed infinite;
+
+    @include rtl() {
+      animation-direction: reverse;
+    }
+
   }
 
 }
