@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, Events } from '../../../..';
+import { Events, IonicApp, IonicModule } from '../../../..';
 
 //
 // Tab 1

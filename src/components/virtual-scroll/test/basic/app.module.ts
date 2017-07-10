@@ -1,6 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, NavController, Platform } from '../../../..';
+import { IonicApp, IonicModule, NavController } from '../../../..';
 
 
 @Component({
@@ -11,7 +11,7 @@ export class E2EPage {
   webview: string = '';
   counter: number = 0;
 
-  constructor(plt: Platform, public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController) {}
 
   addItems() {
     if (this.items.length === 0) {
@@ -21,7 +21,7 @@ export class E2EPage {
     }
   }
 
-  headerFn(record: any, index: number, records: any[]) {
+  headerFn(_record: any, index: number, _records: any[]) {
     if (index % 4 === 0) {
       return index + ' is divisible by 4';
     }
@@ -59,7 +59,7 @@ export class E2EPage {
     this.items[index] = { value: Math.floor(Math.random() * 10000), someMethod: () => '!!' };
   }
 
-  trackByFn(index: number, item: any) {
+  trackByFn(_index: number, item: any) {
     return item.value;
   }
 

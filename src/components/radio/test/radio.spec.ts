@@ -1,7 +1,7 @@
 import { RadioGroup } from '../radio-group';
 import { RadioButton } from '../radio-button';
 import { Form } from '../../../util/form';
-import { mockChangeDetectorRef, mockConfig, mockRenderer, mockElementRef } from '../../../util/mock-providers';
+import { mockChangeDetectorRef, mockConfig, mockElementRef, mockRenderer } from '../../../util/mock-providers';
 
 
 describe('RadioGroup', () => {

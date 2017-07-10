@@ -2,7 +2,7 @@ import { Renderer, TypeDecorator } from '@angular/core';
 import { DeepLinker } from './deep-linker';
 import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
-import { isViewController, ViewController } from './view-controller';
+import { ViewController, isViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 

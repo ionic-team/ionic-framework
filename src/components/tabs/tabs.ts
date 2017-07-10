@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Optional, Output, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation, forwardRef } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -13,7 +13,7 @@ import { Tabs as ITabs } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavigationContainer } from '../../navigation/navigation-container';
-import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { DIRECTION_SWITCH, NavOptions, getComponent } from '../../navigation/nav-util';
 import { formatUrlPart } from '../../navigation/url-serializer';
 import { RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
@@ -414,7 +414,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
       selectedTab.load(opts, () => {
         this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
         if (opts.updateUrl !== false) {
-          this._linker.navChange(this.id, DIRECTION_SWITCH);
+          this._linker.navChange(DIRECTION_SWITCH);
         }
         assert(this.getSelected() === selectedTab, 'selected tab does not match');
         this._fireChangeEvent(selectedTab);
@@ -502,8 +502,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @internal
    */
-  getActiveChildNav(): Tab {
-    return this.getSelected();
+  getActiveChildNavs(): Tab[] {
+    const selected = this.getSelected();
+    return selected ? [selected] : [];
   }
 
   /**
@@ -624,9 +625,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    * @private
    */
   getSecondaryIdentifier(): string {
-    const tab = this.getActiveChildNav();
-    if (tab) {
-      return this._linker._getTabSelector(tab);
+    const tabs = this.getActiveChildNavs();
+    if (tabs && tabs.length) {
+      return this._linker._getTabSelector(tabs[0]);
     }
     return '';
   }

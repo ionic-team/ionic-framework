@@ -1,7 +1,15 @@
-import { mockNavController, mockView, mockViews,
-         MockView1, MockView2, MockView3, MockView4, MockView5 } from '../../util/mock-providers';
+import {
+  MockView1,
+  MockView2,
+  MockView3,
+  MockView4,
+  MockView5,
+  mockNavController,
+  mockView,
+  mockViews
+} from '../../util/mock-providers';
 import { NavControllerBase } from '../nav-controller-base';
-import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK } from '../nav-util';
+import { DIRECTION_BACK, DIRECTION_FORWARD, NavOptions,  } from '../nav-util';
 import { ViewController } from '../view-controller';
 
 
@@ -1100,7 +1108,53 @@ describe('NavController', () => {
         });
       nav.destroy();
     }, 10000);
+  });
 
+  describe('canSwipeBack', () => {
+    it('should not swipe back when its not enabled', () => {
+      nav._sbEnabled = false;
+
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(false);
+    });
+
+    it('should not swipe back if its the portal', () => {
+      nav._sbEnabled = true;
+      nav._isPortal = true;
+
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(false);
+    });
+
+    it('should not swipe back if it has a child nav', () => {
+      nav._sbEnabled = true;
+      nav.registerChildNav(mockNavController());
+
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(false);
+    });
+
+    it('should swipe back when has a view to go back to', () => {
+      nav._sbEnabled = true;
+      const view1 = mockView();
+      const view2 = mockView();
+      mockViews(nav, [view1, view2]);
+
+      const result = nav.canSwipeBack();
+      expect(result).toEqual(true);
+    });
   });
 
 

@@ -1,17 +1,17 @@
 import { NavLink, NavSegment } from '../nav-util';
 import {
+  NavGroup,
+  UrlSerializer,
   createMatchedData,
   findLinkByComponentData,
   formatUrlPart,
   isPartMatch,
-  NavGroup,
   navGroupStringtoObjects,
   normalizeLinks,
   parseUrlParts,
-  UrlSerializer,
   urlToNavGroupStrings,
   } from '../url-serializer';
-import { mockNavController, mockDeepLinkConfig, noop, MockView1, MockView2, MockView3 } from '../../util/mock-providers';
+import { MockView1, MockView2, MockView3, mockDeepLinkConfig, mockNavController,  noop } from '../../util/mock-providers';
 
 
 describe('UrlSerializer', () => {

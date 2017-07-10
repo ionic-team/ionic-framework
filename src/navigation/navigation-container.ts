@@ -4,7 +4,7 @@ export interface NavigationContainer {
   id: string;
   name: string;
   parent: NavController;
-  getActiveChildNav(): NavigationContainer;
+  getActiveChildNavs(): NavigationContainer[];
   getType(): string;
   getSecondaryIdentifier(): string;
 }

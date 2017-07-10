@@ -1,16 +1,39 @@
-import { ComponentRef, Input, ComponentFactoryResolver, ElementRef, ErrorHandler, EventEmitter, NgZone, ReflectiveInjector, Renderer, ViewContainerRef } from '@angular/core';
+import {
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  ErrorHandler,
+  EventEmitter,
+  Input,
+  NgZone,
+  ReflectiveInjector,
+  Renderer,
+  ViewContainerRef
+} from '@angular/core';
 
 import { AnimationOptions } from '../animations/animation';
 import { App } from '../components/app/app';
 import { Config } from '../config/config';
-import { convertToViews, NavOptions, NavResult, DIRECTION_BACK, DIRECTION_FORWARD, INIT_ZINDEX,
-         TransitionInstruction, STATE_NEW, STATE_INITIALIZED, STATE_ATTACHED, STATE_DESTROYED } from './nav-util';
+import {
+  DIRECTION_BACK,
+  DIRECTION_FORWARD,
+  INIT_ZINDEX,
+  NavOptions,
+  NavResult,
+  STATE_ATTACHED,
+  STATE_DESTROYED,
+  STATE_INITIALIZED,
+  STATE_NEW,
+  TransitionInstruction,
+  convertToViews,
+} from './nav-util';
+
 import { setZIndex } from './nav-util';
 import { DeepLinker } from './deep-linker';
 import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
-import { isBlank, isNumber, isPresent, isTrueProperty, assert } from '../util/util';
-import { isViewController, ViewController } from './view-controller';
+import { assert, isBlank, isNumber, isPresent, isTrueProperty } from '../util/util';
+import { ViewController, isViewController } from './view-controller';
 import { Ion } from '../components/ion';
 import { NavigationContainer } from './navigation-container';
 import { NavController } from './nav-controller';
@@ -26,7 +49,7 @@ import { TransitionController } from '../transitions/transition-controller';
  */
 export class NavControllerBase extends Ion implements NavController {
 
-  _child: NavigationContainer;
+  _children: NavigationContainer[];
   _ids: number = -1;
   _init = false;
   _isPortal: boolean;
@@ -77,7 +100,7 @@ export class NavControllerBase extends Ion implements NavController {
     super(config, elementRef, renderer);
 
     this._sbEnabled = config.getBoolean('swipeBackEnabled');
-
+    this._children = [];
     this.id = 'n' + (++ctrlIds);
   }
 
@@ -755,10 +778,10 @@ export class NavControllerBase extends Ion implements NavController {
       // TODO - probably could be resolved in a better way
       this.setTransitioning(false);
 
-      if (!this.hasChild() && opts.updateUrl !== false) {
+      if (!this.hasChildren() && opts.updateUrl !== false) {
         // notify deep linker of the nav change
         // if a direction was provided and should update url
-        this._linker.navChange(this.id, opts.direction);
+        this._linker.navChange(opts.direction);
       }
 
       if (opts.keyboardClose !== false) {
@@ -960,20 +983,20 @@ export class NavControllerBase extends Ion implements NavController {
     }
   }
 
-  hasChild(): boolean {
-    return !!this._child;
+  hasChildren(): boolean {
+    return this._children && this._children.length > 0;
   }
 
-  getActiveChildNav(): any {
-    return this._child;
+  getActiveChildNavs(): any[] {
+    return this._children;
   }
 
   registerChildNav(container: NavigationContainer) {
-    this._child = container;
+    this._children.push(container);
   }
 
   unregisterChildNav(nav: any) {
-    this._child = null;
+    this._children = this._children.filter(child => child !== nav);
   }
 
   destroy() {
@@ -1048,7 +1071,7 @@ export class NavControllerBase extends Ion implements NavController {
   canSwipeBack(): boolean {
     return (this._sbEnabled &&
             !this._isPortal &&
-            this._child &&
+            !this._children.length &&
             !this.isTransitioning() &&
             this._app.isEnabled() &&
             this.canGoBack());
@@ -1151,7 +1174,7 @@ export class NavControllerBase extends Ion implements NavController {
     content && content.resize();
   }
 
-  goToRoot(opts: NavOptions): Promise<any> {
+  goToRoot(_opts: NavOptions): Promise<any> {
     return Promise.reject(new Error('goToRoot needs to be implemented by child class'));
   }
 
@@ -1167,6 +1190,14 @@ export class NavControllerBase extends Ion implements NavController {
    */
   getSecondaryIdentifier(): string {
     return null;
+  }
+
+  /**
+   * Returns the active child navigation.
+   */
+  getActiveChildNav(): any {
+    console.warn('(getActiveChildNav) is deprecated and will be removed in the next major release. Use getActiveChildNavs instead.');
+    return this._children[this._children.length - 1];
   }
 }
 

@@ -1,8 +1,8 @@
 
 import { assert } from './util';
 import { App } from '../components/app/app';
-import { DomController, DomCallback } from '../platform/dom-controller';
-import { Platform, EventListenerOptions } from '../platform/platform';
+import { DomCallback, DomController } from '../platform/dom-controller';
+import { EventListenerOptions, Platform } from '../platform/platform';
 import { pointerCoord } from './dom';
 
 
@@ -181,7 +181,7 @@ export class ScrollView {
       // debounce for a moment after the last scroll event
       self._dom.cancel(self._endTmr);
       self._endTmr = self._dom.read(scrollEnd, SCROLL_END_DEBOUNCE_MS);
-    };
+    }
 
     // clear out any existing listeners (just to be safe)
     self._lsn && self._lsn();
@@ -225,7 +225,7 @@ export class ScrollView {
         // ******** DOM READ ****************
         max = ele.scrollHeight - ele.parentElement.offsetHeight + contentTop + contentBottom;
       }
-    };
+    }
 
     function jsScrollDecelerate(timeStamp: number) {
       ev.timeStamp = timeStamp;

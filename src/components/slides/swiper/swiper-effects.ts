@@ -1,6 +1,6 @@
 import { SlideEffects } from './swiper-interfaces';
-import { isHorizontal, transform, transition, eachChild, triggerTransitionEnd, CLS } from './swiper-utils';
-import { isSafari, isIosUIWebView } from '../../../platform/platform-utils';
+import { CLS, eachChild, isHorizontal, transform, transition, triggerTransitionEnd } from './swiper-utils';
+import { isIosUIWebView, isSafari } from '../../../platform/platform-utils';
 
 
 /*=========================
@@ -37,7 +37,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
       if (s.virtualTranslate && duration !== 0) {
         var eventTriggered = false;
 
-        for (var i = 0; i < slides.length; i++) {
+        for (let i = 0; i < slides.length; i++) {
           plt.transitionEnd(slides[i], () => {
             if (eventTriggered || !s) return;
 
@@ -237,7 +237,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
       var zFactor = (isSafari(plt) || isIosUIWebView(plt)) ? (-s._renderedSize / 2) : 0;
       transform(s._wrapper, 'translate3d(0px,0,' + zFactor + 'px) rotateX(' + (isHorizontal(s) ? 0 : wrapperRotate) + 'deg) rotateY(' + (isHorizontal(s) ? -wrapperRotate : 0) + 'deg)');
     },
-    setTransition: function (s, plt, duration) {
+    setTransition: function (s, _plt, duration) {
       for (var i = 0; i < s._slides.length; i++) {
         var slide = s._slides[i];
         transition(slide, duration);
@@ -315,7 +315,7 @@ export const SWIPER_EFFECTS: SlideEffects = {
         }
       }
     },
-    setTransition: function (s, plt, duration) {
+    setTransition: function (s, _plt, duration) {
       for (var i = 0; i < s._slides.length; i++) {
         var slide = s._slides[i];
         transition(slide, duration);

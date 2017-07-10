@@ -2,14 +2,14 @@ import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
-import { isPresent, assert } from '../../util/util';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
+import { assert, isPresent } from '../../util/util';
 import { KEY_ENTER, KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
+import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
 
 
 /**

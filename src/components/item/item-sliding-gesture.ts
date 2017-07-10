@@ -1,7 +1,7 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
 import { DomController } from '../../platform/dom-controller';
-import { GestureController, GESTURE_PRIORITY_SLIDING_ITEM, GESTURE_ITEM_SWIPE } from '../../gestures/gesture-controller';
+import { GESTURE_ITEM_SWIPE, GESTURE_PRIORITY_SLIDING_ITEM, GestureController } from '../../gestures/gesture-controller';
 import { PanGesture } from '../../gestures/pan-gesture';
 import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';

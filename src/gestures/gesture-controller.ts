@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, forwardRef } from '@angular/core';
 import { App } from '../components/app/app';
 import { assert } from '../util/util';
 

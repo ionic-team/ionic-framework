@@ -590,15 +590,21 @@ export abstract class NavController implements NavigationContainer {
   abstract getViews(): Array<ViewController>;
 
   /**
+   * Returns a list of the active child navigation.
+   */
+  abstract getActiveChildNavs(): any[];
+
+  /**
    * Returns the active child navigation.
    */
   abstract getActiveChildNav(): any;
+
 
   /**
    * Returns if the nav controller is actively transitioning or not.
    * @return {boolean}
    */
-  abstract isTransitioning(includeAncestors?: boolean): boolean
+  abstract isTransitioning(includeAncestors?: boolean): boolean;
 
   /**
    * If it's possible to use swipe back or not. If it's not possible

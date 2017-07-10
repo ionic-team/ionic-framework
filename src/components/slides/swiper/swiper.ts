@@ -14,9 +14,9 @@
 
 import { SlideElement } from './swiper-interfaces';
 import { Platform } from '../../../platform/platform';
-import { maxTranslate, minTranslate, addClass, eachChild, inlineStyle, removeClass, isHorizontal, round, updateSlidesOffset, CLS } from './swiper-utils';
+import { CLS, addClass, eachChild, inlineStyle, isHorizontal, maxTranslate, minTranslate, removeClass, round, updateSlidesOffset } from './swiper-utils';
 import { Slides } from '../slides';
-import { setWrapperTranslate, setWrapperTransition } from './swiper-transition';
+import { setWrapperTransition, setWrapperTranslate } from './swiper-transition';
 import { updateProgress } from './swiper-progress';
 import { updateClasses } from './swiper-classes';
 import { parallaxSetTranslate } from './swiper-parallax';
@@ -926,7 +926,7 @@ function cleanupStyles(s: Slides) {
   // Buttons
   removeClass(s.prevButton, CLS.buttonDisabled);
   removeClass(s.nextButton, CLS.buttonDisabled);
-};
+}
 
 
 // Destroy

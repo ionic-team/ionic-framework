@@ -4,7 +4,7 @@ import { clamp } from '../../util/util';
 import { Config } from '../../config/config';
 import { DomController, DomDebouncer } from '../../platform/dom-controller';
 import { Haptic } from '../../tap-click/haptic';
-import { PickerColumn, DECELERATION_FRICTION, FRAME_MS, MAX_PICKER_SPEED, PICKER_OPT_SELECTED } from './picker-options';
+import { DECELERATION_FRICTION, FRAME_MS, MAX_PICKER_SPEED, PICKER_OPT_SELECTED, PickerColumn } from './picker-options';
 import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
 import { UIEventManager } from '../../gestures/ui-event-manager';

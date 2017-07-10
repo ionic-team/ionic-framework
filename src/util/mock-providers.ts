@@ -30,7 +30,7 @@ import { Item } from '../components/item/item';
 import { Form } from './form';
 
 
-export function mockConfig(config?: any, url: string = '/', platform?: Platform) {
+export function mockConfig(config?: any, _url: string = '/', platform?: Platform) {
   const c = new Config();
   const p = platform || mockPlatform();
   c.init(config, p);
@@ -286,9 +286,9 @@ export class MockElement {
     this.attributes[name] = val;
   }
 
-  addEventListener(type: string, listener: Function, options?: any) { }
+  addEventListener(_type: string, _listener: Function, _options?: any) { }
 
-  removeEventListener(type: string, listener: Function, options?: any) { }
+  removeEventListener(_type: string, _listener: Function, _options?: any) { }
 
   removeAttribute(name: string) {
     delete this.attributes[name];
@@ -432,7 +432,7 @@ export function mockNavController(): NavControllerBase {
 
   (<any>nav)._orgViewInsert = nav._viewAttachToDOM;
 
-  nav._viewAttachToDOM = function(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+  nav._viewAttachToDOM = function(view: ViewController, componentRef: ComponentRef<any>, _viewport: ViewContainerRef) {
     let mockedViewport: any = {
       insert: () => { }
     };
@@ -470,7 +470,7 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   );
 }
 
-export function mockTab(parentTabs: Tabs): Tab {
+export function mockTab(parentTabs: Tabs, overrideLoad: boolean = true): Tab {
   let platform = mockPlatform();
   let config = mockConfig(null, '/', platform);
   let app = (<any>parentTabs)._app || mockApp(config, platform);
@@ -500,9 +500,11 @@ export function mockTab(parentTabs: Tabs): Tab {
     null
   );
 
-  tab.load = (opts: any, cb: Function) => {
-    cb();
-  };
+  if (overrideLoad) {
+    tab.load = (_opts: any, cb: Function) => {
+      cb();
+    };
+  }
 
   return tab;
 }
@@ -571,7 +573,7 @@ export class MockView3 {}
 export class MockView4 {}
 export class MockView5 {}
 
-export function noop(): any { return 'noop'; };
+export function noop(): any { return 'noop'; }
 
 export function mockModuleLoader(ngModuleLoader?: NgModuleLoader): ModuleLoader {
   ngModuleLoader = ngModuleLoader || mockNgModuleLoader();
@@ -584,9 +586,9 @@ export function mockNgModuleLoader(): NgModuleLoader {
 
 export function mockOverlay() {
   return {
-    present: (opts?: NavOptions) => { return Promise.resolve(); },
-    dismiss: (data?: any, role?: string, navOptions?: NavOptions) => { return Promise.resolve(); },
-    onDidDismiss: (callback: Function) => { },
-    onWillDismiss: (callback: Function) => { }
+    present: (_opts?: NavOptions) => { return Promise.resolve(); },
+    dismiss: (_data?: any, _role?: string, _navOptions?: NavOptions) => { return Promise.resolve(); },
+    onDidDismiss: (_callback: Function) => { },
+    onWillDismiss: (_callback: Function) => { }
   };
 }

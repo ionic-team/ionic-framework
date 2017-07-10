@@ -1,5 +1,5 @@
 import { PointerEvents, PointerEventsConfig } from './pointer-events';
-import { Platform, EventListenerOptions } from '../platform/platform';
+import { EventListenerOptions, Platform } from '../platform/platform';
 
 
 /**

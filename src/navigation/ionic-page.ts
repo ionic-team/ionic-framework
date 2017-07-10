@@ -263,7 +263,7 @@ export interface IonicPageMetadata {
  * the application.
  *
  */
-export function IonicPage(config?: IonicPageMetadata): ClassDecorator {
+export function IonicPage(_config?: IonicPageMetadata): ClassDecorator {
   return function(clazz: any) {
     return clazz;
   };

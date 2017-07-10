@@ -1,4 +1,4 @@
-import { GestureController, GESTURE_PRIORITY_TOGGLE, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
+import { GESTURE_PRIORITY_TOGGLE, GESTURE_TOGGLE, GestureController } from '../../gestures/gesture-controller';
 import { DomController } from '../../platform/dom-controller';
 import { PanGesture } from '../../gestures/pan-gesture';
 import { Platform } from '../../platform/platform';

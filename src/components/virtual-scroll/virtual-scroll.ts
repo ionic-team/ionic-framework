@@ -1,10 +1,10 @@
 import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
 
-import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
+import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, populateNodeData, processRecords, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
 import { Content, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { isFunction, isPresent, assert } from '../../util/util';
+import { assert, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
@@ -556,7 +556,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this._zone.run(() => {
         populateNodeData(
           data.topCell, data.bottomCell,
-          data.viewWidth, true,
+          true,
           cells, records, nodes,
           this._itmTmp.viewContainer,
           this._itmTmp.templateRef,
@@ -694,7 +694,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     var hasChanges = populateNodeData(
       data.topCell, data.bottomCell,
-      data.viewWidth, diff > 0,
+      diff > 0,
       cells, records, nodes,
       this._itmTmp.viewContainer,
       this._itmTmp.templateRef,

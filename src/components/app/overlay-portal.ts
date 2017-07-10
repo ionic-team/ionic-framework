@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef, forwardRef } from '@angular/core';
 
 import { App } from './app';
 import { Config } from '../../config/config';

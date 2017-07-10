@@ -1,4 +1,4 @@
-import { ElementRef, Renderer, Input } from '@angular/core';
+import { ElementRef, Input, Renderer } from '@angular/core';
 
 import { Config } from '../config/config';
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef,  Optional, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Config } from '../../config/config';
