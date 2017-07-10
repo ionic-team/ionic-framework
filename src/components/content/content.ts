@@ -63,7 +63,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  *
  * @advanced
  *
- * ### Sroll Events
+ * ### Scroll Events
  *
  * Scroll events happen outside of Angular's Zones. This is for performance reasons. So
  * if you're trying to bind a value to any scroll event, it will need to be wrapped in
