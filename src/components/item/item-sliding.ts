@@ -309,8 +309,8 @@ export class ItemSliding {
       restingPoint = 0;
     }
 
-    this._setOpenAmount(restingPoint, true);
     this.fireSwipeEvent();
+    this._setOpenAmount(restingPoint, true);
     return restingPoint;
   }
 
