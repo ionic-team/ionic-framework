@@ -1174,7 +1174,7 @@ export class NavControllerBase extends Ion implements NavController {
     content && content.resize();
   }
 
-  goToRoot(_opts: NavOptions) {
+  goToRoot(_opts: NavOptions): Promise<any> {
     return Promise.reject(new Error('goToRoot needs to be implemented by child class'));
   }
 
