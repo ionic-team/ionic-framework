@@ -83,6 +83,14 @@ export class UrlSerializer {
     return null;
   }
 
+  static encodeURIComponent(URIComponent: string): string {
+    ['%', '/'].forEach(char => {
+      URIComponent = URIComponent.replace(new RegExp(char, 'g'), encodeURIComponent(char));
+    });
+
+    return URIComponent;
+  }
+
   /** @internal */
   _createSegment(navGroup: NavGroup, configLink: NavLink, data: any): NavSegment {
     let urlParts = configLink.segmentParts;
@@ -101,7 +109,7 @@ export class UrlSerializer {
             for (var j = 0; j < keysLength; j++) {
               if (urlParts[i] === `:${keys[j]}`) {
                 // this data goes into the URL part (between slashes)
-                urlParts[i] = encodeURIComponent(data[keys[j]]);
+                urlParts[i] = UrlSerializer.encodeURIComponent(data[keys[j]]);
                 break;
               }
             }
@@ -138,7 +146,7 @@ export function formatUrlPart(name: string): string {
   if (name.substring(name.length - 1) === '-') {
     name = name.substring(0, name.length - 1);
   }
-  return encodeURIComponent(name);
+  return UrlSerializer.encodeURIComponent(name);
 }
 
 export const parseUrlParts = (navGroups: NavGroup[], configLinks: NavLink[]): NavSegment[] => {
