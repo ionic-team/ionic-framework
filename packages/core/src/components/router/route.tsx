@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, State } from '@stencil/core';
 
 /**
   * @name Route
@@ -24,15 +24,18 @@ export class Route {
   @State() match: any = {};
 
   ionViewWillLoad() {
+/*
     this.routerInstance = document.querySelector(this.router)
 
     // HACK
     this.routerInstance.addEventListener('ionRouterNavigation', (e) => {
       this.match = e.detail;
     })
+*/
   }
 
   render() {
+/*
     this.match.url = this.routerInstance.$instance.routeMatch.url;
     const match = this.match
     const ChildComponent = this.component
@@ -47,5 +50,6 @@ export class Route {
     } else {
       return null;
     }
+*/
   }
 }

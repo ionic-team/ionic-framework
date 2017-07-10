@@ -22,7 +22,7 @@ export class MenuType implements IMenuType {
       .duration(280);
   }
 
-  setOpen(shouldOpen: boolean, animated: boolean, done: Function) {
+  setOpen(shouldOpen: boolean, animated: boolean, done: (animation: Animation) => void) {
     const ani = this.ani
       .onFinish(done, {oneTimeCallback: true, clearExistingCallacks: true })
       .reverse(!shouldOpen);

@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 /**
   * @name Route
@@ -14,12 +14,15 @@ export class RouteLink {
   // The instance of the router
   @Prop() router: any;
 
-  handleClick(e) {
+  handleClick(e: any) {
     console.log('Route link click', e);
+    /*
     router.navigateTo(this.url)
+    */
   }
 
   render() {
+    /*
     const router = document.querySelector(this.router);
     const match = router.match
     console.log(`  <ion-route-link> Rendering route ${this.url}`, router, match);
@@ -27,5 +30,6 @@ export class RouteLink {
     return (
       <a onClick={this.handleClick.bind(this)}><slot></slot></a>
     );
+    */
   }
 }

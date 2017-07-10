@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, } from '@stencil/core';
 
 @Component({
   tag: 'site-header',

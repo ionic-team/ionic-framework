@@ -555,7 +555,6 @@ export interface ModeMeta {
   [1]?: string;
 }
 
-
 export interface HostMeta {
   [key: string]: any;
 }
@@ -896,55 +895,4 @@ export interface IdleOptions {
 
 export interface BundleCallbacks {
   [bundleId: string]: Function[];
-}
-
-
-export interface StencilSystem {
-  fs?: {
-    readFile(filename: string, encoding: string, callback: (err: NodeJS.ErrnoException, data: string) => void): void;
-    readFileSync(filename: string, encoding: string): string;
-    readdirSync(path: string | Buffer, options?: string | {}): string[];
-    statSync(path: string | Buffer): {
-      isFile(): boolean;
-      isDirectory(): boolean;
-    };
-  };
-  path?: {
-    join(...paths: string[]): string;
-  };
-  vm?: {
-    createContext(sandbox?: any): any;
-    runInContext(code: string, contextifiedSandbox: any, options?: any): any;
-  };
-  createDom?(): {
-    parse(hydrateOptions: HydrateOptions): Window;
-    serialize(): string;
-  };
-}
-
-
-export interface RendererOptions {
-  registry?: ComponentRegistry;
-  staticDir?: string;
-  debug?: boolean;
-  sys?: StencilSystem;
-}
-
-
-export interface HydrateOptions {
-  req?: {
-    protocol: string;
-    get: (key: string) => string;
-    originalUrl: string;
-    url: string;
-  };
-  html?: string;
-  url?: string;
-  referrer?: string;
-  userAgent?: string;
-  cookie?: string;
-  dir?: string;
-  lang?: string;
-  config?: Object;
-  removeUnusedCss?: boolean;
 }

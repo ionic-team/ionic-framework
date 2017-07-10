@@ -1,4 +1,4 @@
-import { Component, h, Ionic } from '@stencil/core';
+import { Component, h, Prop, State, Ionic } from '@stencil/core';
 import { VNodeData } from '../../utils/interfaces';
 
 

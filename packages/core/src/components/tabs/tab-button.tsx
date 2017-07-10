@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 import { VNodeData } from '../../utils/interfaces';
 
 @Component({
@@ -8,7 +8,7 @@ import { VNodeData } from '../../utils/interfaces';
   }
 })
 export class TabButton {
-  @Prop() tab: Tab;
+  @Prop() tab: any;
 
   @Prop() layout: string;
 
@@ -54,8 +54,10 @@ export class TabButton {
     const tab = this.tab
 
     // TODO: Apply these on host?
+    /*
     let { id, ariaControls, ariaSelected, hasTitle, hasIcon, hasTitleOnly,
     iconOnly, hasBadge, disableHover, tabDisabled, tabHidden } = {};
+    */
 
     const items = []
 

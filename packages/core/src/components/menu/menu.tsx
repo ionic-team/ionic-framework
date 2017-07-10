@@ -1,4 +1,4 @@
-import { Component, h, Prop, Ionic } from '@stencil/core';
+import { Component, h, Prop, Ionic, PropDidChange } from '@stencil/core';
 import { VNodeData, GlobalNamespace, Menu as IMenu } from '../../utils/interfaces';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';

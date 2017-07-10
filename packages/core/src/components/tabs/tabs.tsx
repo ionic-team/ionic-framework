@@ -1,4 +1,4 @@
-import { Component, h, Listen } from '@stencil/core';
+import { Component, h, State, Prop, Listen, PropDidChange } from '@stencil/core';
 
 @Component({
   tag: 'ion-tabs',
@@ -13,12 +13,12 @@ import { Component, h, Listen } from '@stencil/core';
 })
 export class Tabs {
   // Current list of tabs
-  @State() tabs: [Tab] = []
+  @State() tabs: any
 
   /**
    * @state {number} The selected tab
    */
-  @State() selectedTab: Tab;
+  @State() selectedTab: any;
 
   /**
    * @state {number} The selected tab index
@@ -55,7 +55,7 @@ export class Tabs {
   }
 
   @Listen('ionTabDidLoad')
-  tabDidLoad(ev) {
+  tabDidLoad(ev: any) {
     const tab = ev.detail.tab;
 
     // First tab? Select it
@@ -67,13 +67,13 @@ export class Tabs {
   }
 
   @Listen('ionTabDidUnload')
-  tabDidUnload(ev) {
-    this.tabs = this.tabs.filter(t => t !== ev.detail.tab)
+  tabDidUnload(ev: any) {
+    this.tabs = this.tabs.filter((t: any) => t !== ev.detail.tab)
   }
 
-  handleOnTabSelected(tab, index) {
+  handleOnTabSelected(tab: any, index: number) {
     // Select just this tab
-    this.tabs.forEach(t => t.isSelected = false);
+    this.tabs.forEach((t: any) => t.isSelected = false);
     tab.isSelected = true;
 
     // Store the selected tab and index

@@ -1,4 +1,4 @@
-import { ScrollCallback } from '../../util/interfaces';
+import { ScrollCallback } from '../../utils/interfaces';
 
 
 export interface Scroll {

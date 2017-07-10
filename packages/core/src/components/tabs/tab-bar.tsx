@@ -1,5 +1,4 @@
-import { Component, h } from '@stencil/core';
-import { VNodeData } from '../../utils/interfaces';
+import { Component, Prop } from '@stencil/core';
 
 
 
@@ -10,7 +9,7 @@ import { VNodeData } from '../../utils/interfaces';
   }
 })
 export class TabBar {
-  @Prop() tabs: [Tab] = [];
+  @Prop() tabs: any;
 
   @Prop() onTabSelected: Function;
 
@@ -20,6 +19,7 @@ export class TabBar {
    * @prop {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
   @Prop() tabsLayout: string = 'icon-top'
+  /*
 
   hostData(): VNodeData {
     return {
@@ -52,4 +52,5 @@ export class TabBar {
       </div>
     )
   }
+  */
 }

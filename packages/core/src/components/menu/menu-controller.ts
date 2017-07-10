@@ -1,4 +1,4 @@
-import { Menu, MenuController as IMenuController } from '../../util/interfaces';
+import { Menu, MenuController as IMenuController } from '../../utils/interfaces';
 import { MenuType, MenuRevealType, MenuPushType, MenuOverlayType } from './menu-types';
 
 

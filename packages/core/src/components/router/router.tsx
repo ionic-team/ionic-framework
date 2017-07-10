@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, Prop, State } from '@stencil/core';
 
 /**
   * @name Router
@@ -20,6 +20,7 @@ export class Router {
     return this.routeMatch
   }
 
+  /*
   @Prop()
   navigateTo(url, data={}) {
     window.history.pushState(null, null, url);
@@ -60,4 +61,5 @@ export class Router {
       <slot></slot>
     );
   }
+  */
 }

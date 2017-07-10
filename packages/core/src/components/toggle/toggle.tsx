@@ -1,4 +1,4 @@
-import { Component, h, Listen, Prop, VNodeData, Ionic } from '@stencil/core';
+import { Component, h, Listen, Prop, VNodeData, Ionic, PropDidChange } from '@stencil/core';
 import { BooleanInputComponent, GestureDetail } from '../../utils/interfaces';
 
 @Component({

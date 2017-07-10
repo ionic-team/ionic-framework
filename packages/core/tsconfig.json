@@ -22,9 +22,6 @@
     "pretty": true,
     "removeComments": false,
     "sourceMap": false,
-    "types": [
-      "node"
-    ],
     "jsx": "react",
     "jsxFactory": "h"
   },

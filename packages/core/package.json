@@ -2,7 +2,7 @@
   "name": "@ionic/core",
   "version": "0.0.1",
   "description": "Base components for Ionic",
-  "main": "dist/manifest.json",
+  "main": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "npm run copy.vendor && stencil build --prod",
     "dev": "npm run copy.vendor && stencil build --watch --debug",
