@@ -35,7 +35,7 @@ export class NewsList {
     Ionic.controller('loading', { content: 'fetching comments...' }).then(loading => {
       loading.present();
 
-      this.fakeFetch(`${this.apiRootUrl}/item/${story.id}`).then((data) => {
+      this.fakeFetch(`${this.apiRootUrl}/item/${story.id}`).then((data: { [key: string]: any }) => {
         setTimeout(() => {
           loading.dismiss().then(() => {
             Ionic.controller('modal', { component: 'comments-page', componentProps: { comments: data.comments, storyId: story.id } }).then(modal => {

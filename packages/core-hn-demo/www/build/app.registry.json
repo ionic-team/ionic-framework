@@ -2,6 +2,32 @@
   "namespace": "App",
   "components": [
     [
+      "COMMENTS-LIST",
+      "comments-list.comments-page.news-container.news-li",
+      {
+        "$": "comments-list.comments-page.news-container.news-li"
+      },
+      0,
+      [
+        [
+          "type"
+        ]
+      ]
+    ],
+    [
+      "COMMENTS-PAGE",
+      "comments-list.comments-page.news-container.news-li",
+      {
+        "$": "comments-list.comments-page.news-container.news-li"
+      },
+      0,
+      [
+        [
+          "comments"
+        ]
+      ]
+    ],
+    [
       "ION-APP",
       "ion-app.ion-content.ion-footer.ion-header.ion-navb",
       {
@@ -925,6 +951,26 @@
         "wp": "wp.ion-app.ion-content.ion-footer.ion-header.ion-n"
       },
       2
+    ],
+    [
+      "NEWS-CONTAINER",
+      "comments-list.comments-page.news-container.news-li",
+      {
+        "$": "comments-list.comments-page.news-container.news-li"
+      }
+    ],
+    [
+      "NEWS-LIST",
+      "comments-list.comments-page.news-container.news-li",
+      {
+        "$": "comments-list.comments-page.news-container.news-li"
+      },
+      0,
+      [
+        [
+          "type"
+        ]
+      ]
     ]
   ],
   "loader": "app",
