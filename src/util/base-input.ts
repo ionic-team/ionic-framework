@@ -229,6 +229,7 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     this._form && this._form.unsetAsFocused(this);
     this._setFocus(false);
     this.ionBlur.emit(this);
+    this._onTouched && this._onTouched();
   }
 
   /**
