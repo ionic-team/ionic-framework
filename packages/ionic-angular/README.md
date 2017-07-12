@@ -100,8 +100,137 @@ These have been renamed to the following, and moved from the button element to t
 </ion-button>
 ```
 
+#### FAB
+
+##### Markup Changed
+
+Buttons inside of an `<ion-fab>` container should now be written as an `<ion-fab-button>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute.
+
+**Old Usage Example:**
+
+```html
+<ion-fab top right edge>
+  <button ion-fab>
+    <ion-icon name="add"></ion-icon>
+  </button>
+  <ion-fab-list>
+    <button ion-fab>
+      <ion-icon name="logo-facebook"></ion-icon>
+    </button>
+    <button ion-fab>
+      <ion-icon name="logo-twitter"></ion-icon>
+    </button>
+    <button ion-fab>
+      <ion-icon name="logo-vimeo"></ion-icon>
+    </button>
+    <button ion-fab>
+      <ion-icon name="logo-googleplus"></ion-icon>
+    </button>
+  </ion-fab-list>
+</ion-fab>
+```
+
+**New Usage Example:**
+
+```html
+<ion-fab top right edge>
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list>
+    <ion-fab-button>
+      <ion-icon name="logo-facebook"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button>
+      <ion-icon name="logo-twitter"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button>
+      <ion-icon name="logo-vimeo"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button>
+      <ion-icon name="logo-googleplus"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+```
+
+##### Fixed Content
+
+The `<ion-fab>` container was previously placed inside of the fixed content by default. Now, any fixed content should go inside of the `<ion-fixed>` container.
+
+**Old Usage Example:**
+
+```html
+<ion-content>
+  <ion-fab top right edge>
+    <ion-fab-button>Main Button</ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button>List Button</ion-fab-button>
+      <ion-fab-button>List Button</ion-fab-button>
+      <ion-fab-button>List Button</ion-fab-button>
+      <ion-fab-button>List Button</ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  Scrollable Content
+</ion-content>
+```
+
+**New Usage Example:**
+
+```html
+<ion-fixed>
+  <ion-fab top right edge>
+    <ion-fab-button>Main Button</ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button>List Button</ion-fab-button>
+      <ion-fab-button>List Button</ion-fab-button>
+      <ion-fab-button>List Button</ion-fab-button>
+      <ion-fab-button>List Button</ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-fixed>
+<ion-content>
+  Scrollable Content
+</ion-content>
+```
 
 #### Item
+
+##### Markup Changed
+
+Item should now be written as an `<ion-item>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute, and a button tag based on the presence of a click. Otherwise, it will render a div.
+
+**Old Usage Example:**
+
+```html
+<ion-item>
+  Default Item
+</ion-item>
+
+<button ion-item (click)="doSomething()">
+  Button Item
+</button>
+
+<a ion-item href="#">
+  Anchor Item
+</a>
+```
+
+**New Usage Example:**
+
+```html
+<ion-item>
+  Default Item
+</ion-item>
+
+<ion-item (click)="doSomething()">
+  Button Item
+</ion-item>
+
+<ion-item href="#">
+  Anchor Item
+</ion-item>
+```
 
 ##### Label Required
 
