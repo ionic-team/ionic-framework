@@ -62,24 +62,6 @@ ion-content.has-refresher ion-scroll {
   background-color: inherit;
 }
 
-// Fixed Content (ion-fixed and ion-fab)
-// --------------------------------------------------
-
-.fixed-content {
-  @include position(0, 0, 0, 0);
-
-  position: absolute;
-  display: block;
-}
-
-[ion-fixed] {
-  position: absolute;
-
-  z-index: $z-index-fixed-content;
-
-  transform: translateZ(0);
-}
-
 
 // Content Padding
 // --------------------------------------------------

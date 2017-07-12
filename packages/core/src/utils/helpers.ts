@@ -93,3 +93,22 @@ export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: stri
     }
   }
 }
+
+export function getToolbarHeight(toolbarTagName: string, pageChildren: HTMLElement[], mode: string, iosHeight: string, defaultHeight: string) {
+  for (var i = 0; i < pageChildren.length; i++) {
+    if (pageChildren[i].tagName === toolbarTagName) {
+      var headerHeight = pageChildren[i].getAttribute(`${mode}-height`);
+      if (headerHeight) {
+        return headerHeight;
+      }
+
+      if (mode === 'ios') {
+        return iosHeight;
+      }
+
+      return defaultHeight;
+    }
+  }
+
+  return '';
+}

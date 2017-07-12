@@ -1,6 +1,6 @@
 import { Component, h, Ionic, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { getParentElement } from '../../utils/helpers';
+import { getParentElement, getToolbarHeight } from '../../utils/helpers';
 import { Scroll } from '../scroll/scroll-interface';
 import { ScrollDetail } from '../../utils/interfaces';
 
@@ -111,24 +111,4 @@ export class Content {
       </ion-scroll>
     );
   }
-}
-
-
-function getToolbarHeight(toolbarTagName: string, pageChildren: HTMLElement[], mode: string, iosHeight: string, defaultHeight: string) {
-  for (var i = 0; i < pageChildren.length; i++) {
-    if (pageChildren[i].tagName === toolbarTagName) {
-      var headerHeight = pageChildren[i].getAttribute(`${mode}-height`);
-      if (headerHeight) {
-        return headerHeight;
-      }
-
-      if (mode === 'ios') {
-        return iosHeight;
-      }
-
-      return defaultHeight;
-    }
-  }
-
-  return '';
 }

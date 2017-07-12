@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals";
+
+// Fixed Content (ion-fixed)
+// --------------------------------------------------
+
+ion-fixed {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+  display: block;
+}
+
+[ion-fixed] {
+  position: absolute;
+
+  z-index: $z-index-fixed-content;
+
+  transform: translateZ(0);
+}
