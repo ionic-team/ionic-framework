@@ -1,5 +1,6 @@
 import { Component, h, Listen, Prop, PropDidChange } from '@stencil/core';
-import { SegmentButtonEvent, VNodeData } from '../../utils/interfaces';
+
+import { HostElement, SegmentButtonEvent, VNodeData } from '../../utils/interfaces';
 
 
 /**
@@ -70,7 +71,7 @@ import { SegmentButtonEvent, VNodeData } from '../../utils/interfaces';
   }
 })
 export class Segment {
-  buttons: any;
+  buttons: NodeListOf<HostElement>;
   $el: HTMLElement;
 
   @Prop({ state: true }) disabled: boolean = false;
