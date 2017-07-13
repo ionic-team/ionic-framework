@@ -1,7 +1,7 @@
 import { Directive, EventEmitter, Host, Input, NgZone, Output } from '@angular/core';
 
 import { Content } from '../content/content';
-import { GestureController, GestureDelegate, GESTURE_PRIORITY_REFRESHER, GESTURE_REFRESHER } from '../../gestures/gesture-controller';
+import { GESTURE_PRIORITY_REFRESHER, GESTURE_REFRESHER, GestureController, GestureDelegate } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
@@ -202,7 +202,7 @@ export class Refresher {
 
   constructor(private _plt: Platform, @Host() private _content: Content, private _zone: NgZone, gestureCtrl: GestureController) {
     this._events = new UIEventManager(_plt);
-    _content.setElementClass('has-refresher', true);
+    _content._hasRefresher = true;
     this._gesture = gestureCtrl.createGesture({
       name: GESTURE_REFRESHER,
       priority: GESTURE_PRIORITY_REFRESHER

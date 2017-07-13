@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, List, ItemSliding, ToastController } from '../../../../../../';
+import { AlertController, ItemSliding, List, ToastController } from '../../../../../../';
 
 @Component({
   templateUrl: 'root-page.html'
@@ -52,7 +52,7 @@ export class RootPage {
     console.log('UNREAD', item);
   }
 
-  didClick(item: ItemSliding) {
+  didClick(_: ItemSliding) {
     console.log('Clicked, ion-item');
 
     let alert = this.alertCtrl.create({

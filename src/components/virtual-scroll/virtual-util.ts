@@ -1,4 +1,4 @@
-import { ViewContainerRef, TemplateRef, EmbeddedViewRef } from '@angular/core';
+import { EmbeddedViewRef, TemplateRef, ViewContainerRef } from '@angular/core';
 
 import { Platform } from '../../platform/platform';
 
@@ -127,7 +127,7 @@ function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, t
 /**
  * NO DOM
  */
-export function populateNodeData(startCellIndex: number, endCellIndex: number, viewportWidth: number, scrollingDown: boolean,
+export function populateNodeData(startCellIndex: number, endCellIndex: number, scrollingDown: boolean,
                                  cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
                                  itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>,
                                  initialLoad: boolean): boolean {
@@ -330,7 +330,7 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
       tmpl: -1
     };
 
-    for (var i = 0; i < totalCells; i++) {
+    for (let i = 0; i < totalCells; i++) {
       cell = cells[i];
 
       if (previousCell.left + previousCell.width + cell.width > data.viewWidth) {
@@ -481,7 +481,7 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
     data.bottomCell = Math.min(data.bottomViewCell + viewableRenderedPadding, totalCells - 1);
     data.topCell = Math.max(data.bottomCell - 2, 0);
 
-    for (var i = data.bottomCell; i >= 0; i--) {
+    for (let i = data.bottomCell; i >= 0; i--) {
       cell = cells[i];
       if (cell.row !== lastRow) {
         cellsRenderHeight += cell.height;
@@ -497,8 +497,6 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
       }
     }
   }
-
-  // console.log(`adjustRendered topCell: ${data.topCell}, bottomCell: ${data.bottomCell}, cellsRenderHeight: ${cellsRenderHeight}, data.renderHeight: ${data.renderHeight}`);
 }
 
 
@@ -601,7 +599,7 @@ function calcWidth(viewportWidth: number, approxWidth: string): number {
 /**
  * NO DOM
  */
-function calcHeight(viewportHeight: number, approxHeight: string): number {
+function calcHeight(_viewportHeight: number, approxHeight: string): number {
   if (approxHeight.indexOf('px') > 0) {
     return parseFloat(approxHeight);
   }

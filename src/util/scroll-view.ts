@@ -1,8 +1,8 @@
 
 import { assert } from './util';
 import { App } from '../components/app/app';
-import { DomController, DomCallback } from '../platform/dom-controller';
-import { Platform, EventListenerOptions } from '../platform/platform';
+import { DomCallback, DomController } from '../platform/dom-controller';
+import { EventListenerOptions, Platform } from '../platform/platform';
 import { pointerCoord } from './dom';
 
 
@@ -68,6 +68,20 @@ export class ScrollView {
     this._eventsEnabled = true;
   }
 
+  setScrolling(isScrolling: boolean, ev: ScrollEvent) {
+    if (this.isScrolling) {
+      if (isScrolling) {
+        this.onScroll && this.onScroll(ev);
+      } else {
+        this.isScrolling = false;
+        this.onScrollEnd && this.onScrollEnd(ev);
+      }
+    } else if (isScrolling) {
+      this.isScrolling = true;
+      this.onScrollStart && this.onScrollStart(ev);
+    }
+  }
+
   private enableNativeScrolling() {
     assert(this.onScrollStart, 'onScrollStart is not defined');
     assert(this.onScroll, 'onScroll is not defined');
@@ -94,6 +108,7 @@ export class ScrollView {
       }
 
       ev.timeStamp = scrollEvent.timeStamp;
+
       // Event.timeStamp is 0 in firefox
       if (!ev.timeStamp) {
         ev.timeStamp = Date.now();
@@ -108,9 +123,6 @@ export class ScrollView {
       ev.scrollLeft = self.getLeft();
 
       if (!self.isScrolling) {
-        // currently not scrolling, so this is a scroll start
-        self.isScrolling = true;
-
         // remember the start positions
         ev.startY = ev.scrollTop;
         ev.startX = ev.scrollLeft;
@@ -119,9 +131,6 @@ export class ScrollView {
         ev.velocityY = ev.velocityX = 0;
         ev.deltaY = ev.deltaX = 0;
         positions.length = 0;
-
-        // emit only on the first scroll event
-        self.onScrollStart(ev);
       }
 
       // actively scrolling
@@ -157,25 +166,22 @@ export class ScrollView {
       }
 
       function scrollEnd() {
-        // haven't scrolled in a while, so it's a scrollend
-        self.isScrolling = false;
-
         // reset velocity, do not reset the directions or deltas
         ev.velocityY = ev.velocityX = 0;
 
         // emit that the scroll has ended
-        self.onScrollEnd(ev);
+        self.setScrolling(false, ev);
 
         self._endTmr = null;
       }
 
       // emit on each scroll event
-      self.onScroll(ev);
+      self.setScrolling(true, ev);
 
       // debounce for a moment after the last scroll event
       self._dom.cancel(self._endTmr);
       self._endTmr = self._dom.read(scrollEnd, SCROLL_END_DEBOUNCE_MS);
-    };
+    }
 
     // clear out any existing listeners (just to be safe)
     self._lsn && self._lsn();
@@ -219,7 +225,7 @@ export class ScrollView {
         // ******** DOM READ ****************
         max = ele.scrollHeight - ele.parentElement.offsetHeight + contentTop + contentBottom;
       }
-    };
+    }
 
     function jsScrollDecelerate(timeStamp: number) {
       ev.timeStamp = timeStamp;
@@ -467,7 +473,7 @@ export class ScrollView {
       attempts++;
 
       if (!self._el || stopScroll || attempts > maxAttempts) {
-        self.isScrolling = false;
+        self.setScrolling(false, null);
         (<any>el.style)[transform] = '';
         done();
         return;
@@ -494,13 +500,14 @@ export class ScrollView {
 
       } else {
         stopScroll = true;
-        self.isScrolling = false;
+        self.setScrolling(false, null);
         (<any>el.style)[transform] = '';
         done();
       }
     }
 
     // start scroll loop
+    self.setScrolling(true, null);
     self.isScrolling = true;
 
     // chill out for a frame first
@@ -525,7 +532,7 @@ export class ScrollView {
   }
 
   stop() {
-    this.isScrolling = false;
+    this.setScrolling(false, null);
   }
 
   /**

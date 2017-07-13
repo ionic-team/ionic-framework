@@ -7,16 +7,13 @@ path: ""
 category: api
 id: api
 title: Javascript
-header_sub_title: Extend Ionic even further with the power of AngularJS
+header_sub_title: Extend Ionic even further with the power of Angular
 searchable: false
 ---
 
 # Ionic API Docs
 
 <img class="section-header" src="/img/docs/api-intro-header.png" />
-
-
-Ionic takes everything you know and loved about Ionic V1, and builds on top of it to provide a much more flexible framework.
 
 In the API docs, you'll find two kinds of doc pages: Component and Service APIs.
 

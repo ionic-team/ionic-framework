@@ -6,12 +6,12 @@ import { DomController } from '../../platform/dom-controller';
 import { Img } from '../img/img-interface';
 import { Ion } from '../ion';
 import { isTabs } from '../../navigation/nav-util';
-import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
+import { assert, isTrueProperty, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { Content as IContent, Tabs } from '../../navigation/nav-interfaces';
 import { Platform } from '../../platform/platform';
-import { ScrollView, ScrollEvent } from '../../util/scroll-view';
+import { ScrollEvent, ScrollView } from '../../util/scroll-view';
 import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';
@@ -63,7 +63,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  *
  * @advanced
  *
- * ### Sroll Events
+ * ### Scroll Events
  *
  * Scroll events happen outside of Angular's Zones. This is for performance reasons. So
  * if you're trying to bind a value to any scroll event, it will need to be wrapped in
@@ -167,7 +167,8 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
-    '[class.statusbar-padding]': 'statusbarPadding'
+    '[class.statusbar-padding]': 'statusbarPadding',
+    '[class.has-refresher]': '_hasRefresher'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -211,6 +212,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   _scLsn: Function;
   /** @internal */
   _fullscreen: boolean;
+  /** @internal */
+  _hasRefresher: boolean = false;
   /** @internal */
   _footerEle: HTMLElement;
   /** @internal */
@@ -780,6 +783,11 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
 
     } else if (this._tabsPlacement === 'bottom') {
       this._cBottom += this._tabbarHeight;
+    }
+
+    // Refresher uses a border which should be hidden unless pulled
+    if (this._hasRefresher) {
+      this._cTop -= 1;
     }
 
     // Fixed content shouldn't include content padding

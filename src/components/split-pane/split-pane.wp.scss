@@ -5,13 +5,13 @@
 // --------------------------------------------------
 
 /// @prop - Minimum width of the split-pane's side pane
-$split-pane-wp-side-min-width: $split-pane-side-min-width;
+$split-pane-wp-side-min-width:      $split-pane-side-min-width !default;
 
 /// @prop - Maximum width of the split-pane's side pane
-$split-pane-wp-side-max-width: $split-pane-side-max-width;
+$split-pane-wp-side-max-width:      $split-pane-side-max-width !default;
 
 /// @prop - Border style of the side pane
-$split-pane-wp-border: 1px solid $list-wp-border-color;
+$split-pane-wp-border:              1px solid $list-wp-border-color !default;
 
 .split-pane-wp.split-pane-visible >.split-pane-side {
   min-width: $split-pane-wp-side-min-width;

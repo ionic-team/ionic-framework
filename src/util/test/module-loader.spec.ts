@@ -1,5 +1,5 @@
-import { ModuleLoader, LAZY_LOADED_TOKEN, setupPreloadingImplementation } from '../module-loader';
-import { mockModuleLoader, mockNgModuleLoader, mockConfig } from '../mock-providers';
+import { LAZY_LOADED_TOKEN, ModuleLoader, setupPreloadingImplementation } from '../module-loader';
+import { mockConfig, mockModuleLoader, mockNgModuleLoader } from '../mock-providers';
 import { NgModuleLoader } from '../ng-module-loader';
 import { Config } from '../../config/config';
 import { DeepLinkConfig } from '../../navigation/nav-util';
@@ -121,7 +121,7 @@ describe('module-loader', () => {
 
     it('should return a promise', (done: Function) => {
       let promise = setupPreloadingImplementation(config, null, moduleLoader);
-      promise.then((response) => {
+      promise.then(() => {
         done();
       }).catch((err: Error) => {
         fail(err);
@@ -137,7 +137,7 @@ describe('module-loader', () => {
         links: []
       };
       let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
-      promise.then((response) => {
+      promise.then(() => {
         expect(moduleLoader.load).not.toHaveBeenCalled();
         done();
       }).catch((err: Error) => {
@@ -151,7 +151,7 @@ describe('module-loader', () => {
 
       config.set('preloadModules', true);
       let promise = setupPreloadingImplementation(config, null, moduleLoader);
-      promise.then((response) => {
+      promise.then(() => {
         expect(moduleLoader.load).not.toHaveBeenCalled();
         done();
       }).catch((err: Error) => {
@@ -171,7 +171,7 @@ describe('module-loader', () => {
         }]
       };
       let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
-      promise.then((response) => {
+      promise.then(() => {
         expect(moduleLoader.load).not.toHaveBeenCalled();
         done();
       }).catch((err: Error) => {
@@ -191,7 +191,7 @@ describe('module-loader', () => {
         }]
       };
       let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
-      promise.then((response) => {
+      promise.then(() => {
         expect(moduleLoader.load).toHaveBeenCalledWith('lowString');
         done();
       }).catch((err: Error) => {
@@ -211,7 +211,7 @@ describe('module-loader', () => {
         }]
       };
       let promise = setupPreloadingImplementation(config, deepLinkConfig, moduleLoader);
-      promise.then((response) => {
+      promise.then(() => {
         expect(moduleLoader.load).toHaveBeenCalledWith('highString');
         done();
       }).catch((err: Error) => {

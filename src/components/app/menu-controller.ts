@@ -1,6 +1,6 @@
 import { Menu, MenuType } from './menu-interface';
 import { Platform } from '../../platform/platform';
-import { removeArrayItem, assert, isRightSide } from '../../util/util';
+import { assert, isRightSide, removeArrayItem } from '../../util/util';
 import { Injectable } from '@angular/core';
 
 

@@ -1,4 +1,4 @@
-import { AfterContentInit, NgZone, Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -118,7 +118,7 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
   /**
    * @hidden
    */
-  _inputCheckHasValue() {}
+  _inputUpdated() {}
 
   /**
    * @hidden
@@ -208,13 +208,6 @@ export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterCo
       ev.stopPropagation();
       this.value = !this.value;
     }
-  }
-
-  /**
-   * @hidden
-   */
-  initFocus() {
-    this._elementRef.nativeElement.querySelector('button').focus();
   }
 
   /**

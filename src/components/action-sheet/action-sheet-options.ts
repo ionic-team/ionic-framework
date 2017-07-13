@@ -13,4 +13,4 @@ export interface ActionSheetButton {
   icon?: string;
   cssClass?: string;
   handler?: () => boolean|void;
-};
+}

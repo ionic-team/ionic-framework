@@ -38,7 +38,7 @@ export class RootPage {
     }
   }
 
-  submit(ev: UIEvent, value: any) {
+  submit(_: UIEvent, value: any) {
     console.log('Submitted', value);
     this.submitted = true;
   }

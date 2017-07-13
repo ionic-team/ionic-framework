@@ -1,4 +1,4 @@
-import { Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -9,7 +9,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual, assert } from '../../util/util';
+import { assert, deepCopy, deepEqual, isCheckedProperty, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { Option } from '../option/option';
 import { SelectPopover, SelectPopoverOption } from './select-popover-component';
@@ -123,6 +123,31 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
  * };
  * ```
  *
+ * ### Object Value References
+ *
+ * When using objects for select values, it is possible for the identities of these objects to
+ * change if they are coming from a server or database, while the selected value's identity
+ * remains the same. For example, this can occur when an existing record with the desired object value
+ * is loaded into the select, but the newly retrieved select options now have different identities. This will
+ * result in the select appearing to have no value at all, even though the original selection in still intact.
+ *
+ * Using the `compareWith` `Input` is the solution to this problem
+ *
+ * ```html
+ * <ion-item>
+ *   <ion-label>Employee</ion-label>
+ *   <ion-select [(ngModel)]="employee" [compareWith]="compareFn">
+ *     <ion-option *ngFor="let employee of employees" [value]="employee">{{employee.name}}</ion-option>
+ *   </ion-select>
+ * </ion-item>
+ * ```
+ *
+ * ```ts
+ * compareFn(e1: Employee, e2: Employee): boolean {
+ *   return e1 && e2 ? e1.id === e2.id : e1 === e2;
+ * }
+ * ```
+ *
  * @demo /docs/demos/src/select/
  */
 @Component({
@@ -134,6 +159,7 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
       '<div class="select-icon-inner"></div>' +
     '</div>' +
     '<button aria-haspopup="true" ' +
+            'type="button" ' +
             '[id]="id" ' +
             'ion-button="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
@@ -153,6 +179,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
   _overlay: ActionSheet | Alert | Popover;
   _texts: string[] = [];
   _text: string = '';
+  _compareWith: (o1: any, o2: any) => boolean = isCheckedProperty;
 
   /**
    * @input {string} The text to display on the cancel button. Default: `Cancel`.
@@ -188,6 +215,18 @@ export class Select extends BaseInput<any> implements OnDestroy {
   @Input() selectedText: string = '';
 
   /**
+   * @input {Function} The function that will be called to compare object values
+   */
+  @Input()
+  set compareWith(fn: (o1: any, o2: any) => boolean) {
+    if (typeof fn !== 'function') {
+      throw new Error(`compareWith must be a function, but received ${JSON.stringify(fn)}`);
+    }
+    this._compareWith = fn;
+  }
+
+
+  /**
    * @output {any} Emitted when the selection was cancelled.
    */
   @Output() ionCancel: EventEmitter<Select> = new EventEmitter();
@@ -206,10 +245,6 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
-    if (ev.detail === 0) {
-      // do not continue if the click event came from a form submit
-      return;
-    }
     ev.preventDefault();
     ev.stopPropagation();
     this.open(ev);
@@ -345,7 +380,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
         };
       });
 
-      var selectCssClass = 'select-alert';
+      let selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions
       overlay = new Alert(this._app, selectOptions, this.config);
@@ -426,7 +461,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
       // we use writeValue() because we don't want to update ngModel
       this.writeValue(val.filter(o => o.selected).map(o => o.value));
     } else {
-      this._inputUpdated();
+      this._updateText();
     }
   }
 
@@ -445,14 +480,14 @@ export class Select extends BaseInput<any> implements OnDestroy {
   /**
    * @hidden
    */
-  _inputUpdated() {
+  _updateText() {
     this._texts.length = 0;
 
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
         option.selected = this.getValues().some(selectValue => {
-          return isCheckedProperty(selectValue, option.value);
+          return this._compareWith(selectValue, option.value);
         });
 
         if (option.selected) {
@@ -462,6 +497,14 @@ export class Select extends BaseInput<any> implements OnDestroy {
     }
 
     this._text = this._texts.join(', ');
+  }
+
+  /**
+   * @hidden
+   */
+  _inputUpdated() {
+    this._updateText();
+    super._inputUpdated();
   }
 
 }

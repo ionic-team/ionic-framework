@@ -50,6 +50,15 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   if (config.compilerOptions && config.compilerOptions.outDir) {
     delete config.compilerOptions.outDir;
   }
+
+  // remove linting checks that we do not want in dist
+  if (config.compilerOptions.noUnusedLocals) {
+    delete config.compilerOptions.noUnusedLocals;
+  }
+  if (config.compilerOptions.noUnusedParameters) {
+    delete config.compilerOptions.noUnusedParameters;
+  }
+
   if (config.compilerOptions) {
     config.compilerOptions.module = moduleType;
     config.compilerOptions.target = target;
@@ -190,7 +199,7 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string) {
+export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string, devApp: boolean) {
   console.log('Running ionic-app-scripts serve with', testOrDemoName);
   const deepLinksDir = dirname(dirname(appNgModulePath));
   let scriptArgs = [
@@ -207,6 +216,9 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--copy', copyConfigPath,
     '--enableLint', 'false'
   ];
+  if (devApp) {
+    scriptArgs.push('--bonjour');
+  }
 
   if (watchConfigPath) {
     scriptArgs.push('--watch');
@@ -349,9 +361,11 @@ export function getFolderInfo() {
     componentName = folderSplit[0];
     componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
   }
+  const devApp = argv.devapp !== undefined;
   return {
     componentName: componentName,
-    componentTest: componentTest
+    componentTest: componentTest,
+    devApp: devApp
   };
 }
 

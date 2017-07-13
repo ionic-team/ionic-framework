@@ -73,7 +73,7 @@ export function ariaHidden(ele: HTMLElement, isHidden: boolean) {
   }
 }
 
-function onEnterKey(s: Slides, event: KeyboardEvent) {
+function onEnterKey(_: Slides, __: KeyboardEvent) {
   // if (event.keyCode !== 13) return;
 
   // const target: HTMLElement = <any>event.target;

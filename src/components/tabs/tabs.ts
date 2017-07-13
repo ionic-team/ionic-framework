@@ -1,14 +1,20 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, Output, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Optional, Output, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation, forwardRef } from '@angular/core';
+
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Ion } from '../ion';
-import { isBlank, assert } from '../../util/util';
+import { assert, isBlank, isPresent } from '../../util/util';
+import { Keyboard } from '../../platform/keyboard';
 import { Tabs as ITabs } from '../../navigation/nav-interfaces';
 import { NavController } from '../../navigation/nav-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { getComponent, NavOptions, DIRECTION_SWITCH } from '../../navigation/nav-util';
+import { NavigationContainer } from '../../navigation/navigation-container';
+import { DIRECTION_SWITCH, NavOptions, getComponent } from '../../navigation/nav-util';
+import { formatUrlPart } from '../../navigation/url-serializer';
 import { RootNode } from '../split-pane/split-pane';
 import { Platform } from '../../platform/platform';
 import { Tab } from './tab';
@@ -160,7 +166,7 @@ import { ViewController } from '../../navigation/view-controller';
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Tabs) }]
 })
-export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
+export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, NavigationContainer {
   /** @internal */
   _ids: number = -1;
   /** @internal */
@@ -176,7 +182,13 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
   /** @internal */
   _selectHistory: string[] = [];
   /** @internal */
-  _resizeObs: any;
+  _onDestroy = new Subject<void>();
+
+
+  /**
+   * @input {string} A unique name for the tabs
+   */
+  @Input() name: string;
 
   /**
    * @input {number} The default selected tab index when first loaded. If a selected index isn't provided then it will use `0`, the first tab.
@@ -231,7 +243,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     elementRef: ElementRef,
     private _plt: Platform,
     renderer: Renderer,
-    private _linker: DeepLinker
+    private _linker: DeepLinker,
+    keyboard?: Keyboard
   ) {
     super(config, elementRef, renderer, 'tabs');
 
@@ -251,7 +264,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
 
     } else if (this._app) {
       // this is the root navcontroller for the entire app
-      this._app._setRootNav(this);
+      this._app.registerRootNav(this);
     }
 
     // Tabs may also be an actual ViewController which was navigated to
@@ -261,10 +274,33 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
       viewCtrl._setContent(this);
       viewCtrl._setContentRef(elementRef);
     }
+
+    const keyboardResizes = config.getBoolean('keyboardResizes', false);
+    if (keyboard && keyboardResizes) {
+      keyboard.willHide
+        .takeUntil(this._onDestroy)
+        .subscribe(() => {
+          this._plt.timeout(() => this.setTabbarHidden(false), 50);
+        });
+      keyboard.willShow
+        .takeUntil(this._onDestroy)
+        .subscribe(() => this.setTabbarHidden(true));
+    }
   }
 
+  /**
+   * @internal
+   */
+  setTabbarHidden(tabbarHidden: boolean) {
+    this.setElementClass('tabbar-hidden', tabbarHidden);
+    this.resize();
+  }
+
+  /**
+   * @internal
+   */
   ngOnDestroy() {
-    this._resizeObs && this._resizeObs.unsubscribe();
+    this._onDestroy.next();
     this.parent.unregisterChildNav(this);
   }
 
@@ -277,9 +313,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     this._setConfig('tabsHighlight', this.tabsHighlight);
 
     if (this.tabsHighlight) {
-      this._resizeObs = this._plt.resize.subscribe(() => {
-        this._highlight.select(this.getSelected());
-      });
+      this._plt.resize
+        .takeUntil(this._onDestroy)
+        .subscribe(() => this._highlight.select(this.getSelected()));
     }
 
     this.initTabs();
@@ -294,10 +330,10 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(<any>this.selectedIndex, 10));
 
     // now see if the deep linker can find a tab index
-    const tabsSegment = this._linker.initNav(this);
-    if (tabsSegment && isBlank(tabsSegment.component)) {
+    const tabsSegment = this._linker.getSegmentByNavIdOrName(this.id, this.name);
+    if (tabsSegment) {
       // we found a segment which probably represents which tab to select
-      selectedIndex = this._linker.getSelectedTabIndex(this, tabsSegment.name, selectedIndex);
+      selectedIndex = this._getSelectedTabIndex(tabsSegment.secondaryId, selectedIndex);
     }
 
     // get the selectedIndex and ensure it isn't hidden or disabled
@@ -309,20 +345,11 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     }
 
     if (selectedTab) {
-      // we found a tab to select
-      // get the segment the deep linker says this tab should load with
-      let pageId: string = null;
       if (tabsSegment) {
-        let selectedTabSegment = this._linker.initNav(selectedTab);
-        if (selectedTabSegment && selectedTabSegment.component) {
-          selectedTab.root = selectedTabSegment.component;
-          selectedTab.rootParams = selectedTabSegment.data;
-          pageId = selectedTabSegment.id;
-        }
+        selectedTab._lazyRootFromUrl = tabsSegment.name;
+        selectedTab._lazyRootFromUrlData = tabsSegment.data;
       }
-      this.select(selectedTab, {
-        id: pageId
-      });
+      this.select(selectedTab);
     }
 
     // set the initial href attribute values for each tab
@@ -353,7 +380,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
   /**
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: number | Tab, opts: NavOptions = {}) {
+  select(tabOrIndex: number | Tab, opts: NavOptions = {}, fromUrl: boolean = false) {
     const selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
       return;
@@ -361,8 +388,8 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
 
     // If the selected tab is the current selected tab, we do not switch
     const currentTab = this.getSelected();
-    if (selectedTab === currentTab) {
-      return this._touchActive(selectedTab);
+    if (selectedTab === currentTab && currentTab.getActive()) {
+      return this._updateCurrentTab(selectedTab, fromUrl);
     }
 
     // If the selected tab does not have a root, we do not switch (#9392)
@@ -475,8 +502,9 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
   /**
    * @internal
    */
-  getActiveChildNav(): Tab {
-    return this.getSelected();
+  getActiveChildNavs(): Tab[] {
+    const selected = this.getSelected();
+    return selected ? [selected] : [];
   }
 
   /**
@@ -497,11 +525,28 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  private _touchActive(tab: Tab) {
+  private _updateCurrentTab(tab: Tab, fromUrl: boolean) {
     const active = tab.getActive();
 
     if (active) {
-      if (active._cmp && active._cmp.instance.ionSelected) {
+      if (fromUrl && tab._lazyRootFromUrl) {
+        // see if the view controller exists
+        const vc = tab.getViewById(tab._lazyRootFromUrl);
+        if (vc) {
+          // the view is already in the stack
+          tab.popTo(vc, {
+            animate: false,
+            updateUrl: false,
+          });
+        } else {
+          tab.setRoot(tab._lazyRootFromUrl, tab._lazyRootFromUrlData, {
+            animate: false, updateUrl: false
+          });
+          tab._lazyRootFromUrl = null;
+          tab._lazyRootFromUrlData = null;
+        }
+
+      } else if (active._cmp && active._cmp.instance.ionSelected) {
         // if they have a custom tab selected handler, call it
         active._cmp.instance.ionSelected();
 
@@ -563,6 +608,50 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs {
     }
   }
 
+  goToRoot(opts: NavOptions) {
+    if (this._tabs.length) {
+      return this.select(this._tabs[0], opts);
+    }
+  }
+
+  /*
+   * @private
+   */
+  getType() {
+    return 'tabs';
+  }
+
+  /*
+   * @private
+   */
+  getSecondaryIdentifier(): string {
+    const tabs = this.getActiveChildNavs();
+    if (tabs && tabs.length) {
+      return this._linker._getTabSelector(tabs[0]);
+    }
+    return '';
+  }
+
+  /**
+   * @private
+   */
+  _getSelectedTabIndex(secondaryId: string, fallbackIndex: number = 0): number {
+    // we found a segment which probably represents which tab to select
+    const indexMatch = secondaryId.match(/tab-(\d+)/);
+    if (indexMatch) {
+      // awesome, the segment name was something "tab-0", and
+      // the numbe represents which tab to select
+      return parseInt(indexMatch[1], 10);
+    }
+
+    // wasn't in the "tab-0" format so maybe it's using a word
+    const tab = this._tabs.find(t => {
+      return (isPresent(t.tabUrlPath) && t.tabUrlPath === secondaryId) ||
+             (isPresent(t.tabTitle) && formatUrlPart(t.tabTitle) === secondaryId);
+    });
+
+    return isPresent(tab) ? tab.index : fallbackIndex;
+  }
 }
 
 let tabIds = -1;

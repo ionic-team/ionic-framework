@@ -4,7 +4,7 @@ import { Config } from '../config/config';
 import { NavOptions } from './nav-util';
 import { Page } from './nav-util';
 import { ViewController } from './view-controller';
-
+import { NavigationContainer } from './navigation-container';
 
 /**
  * @name NavController
@@ -346,7 +346,7 @@ import { ViewController } from './view-controller';
  *
  * @see {@link /docs/components#navigation Navigation Component Docs}
  */
-export abstract class NavController {
+export abstract class NavController implements NavigationContainer {
 
   /**
    * Observable to be subscribed to when a component is loaded.
@@ -388,6 +388,11 @@ export abstract class NavController {
    * @hidden
    */
   id: string;
+
+  /**
+   * @hidden
+   */
+  name: string;
 
   /**
    * The parent navigation instance. If this is the root nav, then
@@ -512,6 +517,7 @@ export abstract class NavController {
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
   abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract goToRoot(options: NavOptions): Promise<any>;
 
   /**
    * Set the views of the current navigation stack and navigate to the
@@ -584,15 +590,21 @@ export abstract class NavController {
   abstract getViews(): Array<ViewController>;
 
   /**
+   * Returns a list of the active child navigation.
+   */
+  abstract getActiveChildNavs(): any[];
+
+  /**
    * Returns the active child navigation.
    */
   abstract getActiveChildNav(): any;
+
 
   /**
    * Returns if the nav controller is actively transitioning or not.
    * @return {boolean}
    */
-  abstract isTransitioning(includeAncestors?: boolean): boolean
+  abstract isTransitioning(includeAncestors?: boolean): boolean;
 
   /**
    * If it's possible to use swipe back or not. If it's not possible
@@ -619,4 +631,17 @@ export abstract class NavController {
    * @hidden
    */
   abstract resize(): void;
+
+
+
+  /*
+   * @hidden
+   */
+  abstract getType(): string;
+
+  /*
+   * @hidden
+   */
+  abstract getSecondaryIdentifier(): string;
+
 }

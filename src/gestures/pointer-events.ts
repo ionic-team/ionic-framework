@@ -1,5 +1,5 @@
 import { assert } from '../util/util';
-import { Platform, EventListenerOptions } from '../platform/platform';
+import { EventListenerOptions, Platform } from '../platform/platform';
 
 /**
  * @hidden

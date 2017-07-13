@@ -19,7 +19,7 @@
 
 For Ionic V1 issues - http://plnkr.co/edit/Xo1QyAUx35ny1Xf9ODHx?p=preview
 
-For Ionic issues - http://plnkr.co/edit/z0DzVL?p=preview
+For Ionic issues - http://plnkr.co/edit/cpeRJs?p=preview
 -->
 
 **Related code:**

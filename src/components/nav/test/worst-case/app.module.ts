@@ -125,7 +125,7 @@ export class Page4 extends Base {
   }
 
   doSomethingSync() {
-		// this is a long running synchronous task
+    // this is a long running synchronous task
     // (imagine that a huge data must be transformed here recuresively or something similar)
     console.log('START DOING SOMETHING');
     console.time('DO SOMETHING EXPENSIVE SYNCHRONOUSLY');

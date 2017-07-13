@@ -1,6 +1,19 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, ContentChild, ElementRef, EventEmitter, forwardRef, Optional, Output, QueryList, Renderer, ViewEncapsulation, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  NgZone,
+  Optional,
+  Output,
+  QueryList,
+  Renderer,
+  ViewEncapsulation,
+  forwardRef } from '@angular/core';
 
-import { swipeShouldReset, assert } from '../../util/util';
+import { assert, swipeShouldReset } from '../../util/util';
 import { Item } from './item';
 import { List } from '../list/list';
 import { Platform } from '../../platform/platform';
@@ -266,11 +279,11 @@ export class ItemSliding {
     }
 
     if (openAmount > this._optsWidthRightSide) {
-      var optsWidth = this._optsWidthRightSide;
+      const optsWidth = this._optsWidthRightSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
 
     } else if (openAmount < -this._optsWidthLeftSide) {
-      var optsWidth = -this._optsWidthLeftSide;
+      const optsWidth = -this._optsWidthLeftSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
     }
 
@@ -296,8 +309,8 @@ export class ItemSliding {
       restingPoint = 0;
     }
 
-    this._setOpenAmount(restingPoint, true);
     this.fireSwipeEvent();
+    this._setOpenAmount(restingPoint, true);
     return restingPoint;
   }
 
@@ -344,24 +357,24 @@ export class ItemSliding {
 
     if (isFinal) {
       this.item.setElementStyle(platform.Css.transition, '');
+    }
+
+    if (openAmount > 0) {
+      var state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
+        ? SlidingState.Right | SlidingState.SwipeRight
+        : SlidingState.Right;
+
+      this._setState(state);
+
+    } else if (openAmount < 0) {
+      const state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
+        ? SlidingState.Left | SlidingState.SwipeLeft
+        : SlidingState.Left;
+
+      this._setState(state);
 
     } else {
-      if (openAmount > 0) {
-        var state = (openAmount >= (this._optsWidthRightSide + SWIPE_MARGIN))
-          ? SlidingState.Right | SlidingState.SwipeRight
-          : SlidingState.Right;
-
-        this._setState(state);
-
-      } else if (openAmount < 0) {
-        var state = (openAmount <= (-this._optsWidthLeftSide - SWIPE_MARGIN))
-          ? SlidingState.Left | SlidingState.SwipeLeft
-          : SlidingState.Left;
-
-        this._setState(state);
-      }
-    }
-    if (openAmount === 0) {
+      assert(openAmount === 0, 'bad internal state');
       this._tmr = platform.timeout(() => {
         this._setState(SlidingState.Disabled);
         this._tmr = null;
@@ -371,7 +384,7 @@ export class ItemSliding {
     }
 
     this.item.setElementStyle(platform.Css.transform, `translate3d(${-openAmount}px,0,0)`);
-    let ionDrag = this.ionDrag;
+    const ionDrag = this.ionDrag;
     if (ionDrag.observers.length > 0) {
       ionDrag.emit(this);
     }

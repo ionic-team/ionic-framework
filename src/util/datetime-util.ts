@@ -10,8 +10,8 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
   let hasText = false;
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {
-      var token = '{' + index + '}';
-      var text = renderTextFormat(format.f, (<any>value)[format.k], value, locale);
+      const token = '{' + index + '}';
+      const text = renderTextFormat(format.f, (<any>value)[format.k], value, locale);
 
       if (!hasText && text && isPresent((<any>value)[format.k])) {
         hasText = true;
@@ -27,7 +27,7 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
     return '';
   }
 
-  for (var i = 0; i < tokens.length; i += 2) {
+  for (let i = 0; i < tokens.length; i += 2) {
     template = template.replace(tokens[i], tokens[i + 1]);
   }
 
@@ -198,11 +198,11 @@ export function parseDate(val: any): DateTimeData {
   }
 
   // ensure all the parse values exist with at least 0
-  for (var i = 1; i < 8; i++) {
+  for (let i = 1; i < 8; i++) {
     parse[i] = (parse[i] !== undefined ? parseInt(parse[i], 10) : null);
   }
 
-  var tzOffset = 0;
+  let tzOffset = 0;
   if (isPresent(parse[9]) && isPresent(parse[10])) {
     // hours
     tzOffset = parseInt(parse[10], 10) * 60;
@@ -258,7 +258,7 @@ export function updateDate(existingData: DateTimeData, newData: any): boolean {
 
       // merge new values from the picker's selection
       // to the existing DateTimeData values
-      for (var k in newData) {
+      for (const k in newData) {
         (<any>existingData)[k] = newData[k].value;
       }
 
@@ -270,7 +270,7 @@ export function updateDate(existingData: DateTimeData, newData: any): boolean {
 
   } else {
     // blank data, clear everything out
-    for (var k in existingData) {
+    for (const k in existingData) {
       delete (<any>existingData)[k];
     }
   }
@@ -324,7 +324,7 @@ export function getValueFromFormat(date: DateTimeData, format: string) {
 
 
 export function convertFormatToKey(format: string): string {
-  for (var k in FORMAT_KEYS) {
+  for (const k in FORMAT_KEYS) {
     if (FORMAT_KEYS[k].f === format) {
       return FORMAT_KEYS[k].k;
     }

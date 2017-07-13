@@ -1,5 +1,5 @@
 import { ariaDisable, ariaHidden } from './swiper-a11y';
-import { addClass, removeClass, queryChildren, CLS } from './swiper-utils';
+import { CLS, addClass, queryChildren, removeClass } from './swiper-utils';
 import { Slides } from '../slides';
 import { updatePaginationClasses } from './swiper-pagination';
 

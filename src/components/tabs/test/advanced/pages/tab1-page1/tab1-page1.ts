@@ -28,7 +28,7 @@ export class Tab1Page1 {
   }
 
   logout() {
-    this.app.getRootNav().setRoot('sign-in', null, { animate: true, direction: 'back' });
+    // this.app.getRootNavById().setRoot('sign-in', null, { animate: true, direction: 'back' });
   }
 
   ionViewWillEnter() {
