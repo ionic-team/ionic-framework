@@ -330,8 +330,12 @@ export class Tab extends NavControllerBase implements ITab {
       }
 
       // make sure the view can go back to tab root page
-      if (this._lazyRootFromUrl) {
-        this.push(this.root, this.rootParams, opts, null);
+      if (this._lazyRootFromUrl && this.root !== nameToUse) {
+        this.setRoot(this.root, this.rootParams, {
+          animate: false,
+          updateUrl: false,
+          isNavRoot: true
+        });
       }
 
       this.push(nameToUse, dataToUse, opts, done);
