@@ -164,14 +164,12 @@ export class Toggle implements BooleanInputComponent {
         </div>
         <div
           class='toggle-cover'
-          attrs={{
-            'id': this.id,
-            'aria-checked': this.checked ? 'true' : false,
-            'aria-disabled': this.disabled ? 'true' : false,
-            'aria-labelledby': this.labelId,
-            'role': 'checkbox',
-            'tabindex': 0
-          }}
+          id={this.id}
+          aria-checked={this.checked ? 'true' : false}
+          aria-disabled={this.disabled ? 'true' : false}
+          aria-labelledby={this.labelId}
+          role='checkbox'
+          tabIndex={0}
         >
         </div>
       </ion-gesture>

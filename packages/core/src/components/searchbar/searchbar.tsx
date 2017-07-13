@@ -350,27 +350,27 @@ export class Searchbar {
         <div class="searchbar-search-icon"></div>
         <input
           class="searchbar-input"
-          oninput={this.inputChanged.bind(this)}
-          onblur={this.inputBlurred.bind(this)}
-          onfocus={this.inputFocused.bind(this)}
+          onInput={this.inputChanged.bind(this)}
+          onBlur={this.inputBlurred.bind(this)}
+          onFocus={this.inputFocused.bind(this)}
           placeholder={this.placeholder}
           type={this.type}
           value={this.value}
-          autocomplete={this.autocomplete}
-          autocorrect={this.autocorrect}
-          spellcheck={this.spellcheck}/>
+          autoComplete={this.autocomplete}
+          autoCorrect={this.autocorrect}
+          spellCheck={this.spellcheck}/>
         <ion-button
           clear
           class="searchbar-clear-icon"
-          onclick={this.clearInput.bind(this)}
-          onmousedown={this.clearInput.bind(this)}>
+          onClick={this.clearInput.bind(this)}
+          onMousedown={this.clearInput.bind(this)}>
         </ion-button>
       </div>,
       <ion-button
         tabindex={this.activated ? 1 : -1}
         clear
-        onclick={this.cancelSearchbar.bind(this)}
-        onmousedown={this.cancelSearchbar.bind(this)}
+        onClick={this.cancelSearchbar.bind(this)}
+        onMousedown={this.cancelSearchbar.bind(this)}
         class="searchbar-ios-cancel">
           {this.cancelButtonText}
       </ion-button>
