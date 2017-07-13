@@ -540,9 +540,19 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
           });
         } else {
           // make sure the view can go back to tab root page
-          tab.push(tab._lazyRootFromUrl, tab._lazyRootFromUrlData, {
-            animate: false, updateUrl: false
+          tab.setRoot(tab.root, tab.rootParams, {
+            animate: false,
+            updateUrl: false,
+            isNavRoot: true
           });
+
+          if (tab._lazyRootFromUrl && tab.root !== tab._lazyRootFromUrl) {
+            tab.push(tab._lazyRootFromUrl, tab._lazyRootFromUrlData, {
+              animate: true,
+              updateUrl: false
+            });
+          }
+
           tab._lazyRootFromUrl = null;
           tab._lazyRootFromUrlData = null;
         }
