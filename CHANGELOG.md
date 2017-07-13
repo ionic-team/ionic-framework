@@ -1,3 +1,25 @@
+<a name="3.5.1"></a>
+## [3.5.1](https://github.com/ionic-team/ionic/compare/v3.5.0...v3.5.1) (2017-07-13)
+
+
+### Bug Fixes
+
+* **navigation:** fix swipe-to-go-back ([04e78d8](https://github.com/ionic-team/ionic/commit/04e78d8))
+* **navigation:** mark as not transitioning on success in addition to '_transitionFinish', provide no ([48b3243](https://github.com/ionic-team/ionic/commit/48b3243))
+* **navigation:** navs can have n child navs instead of just one ([fce4422](https://github.com/ionic-team/ionic/commit/fce4422))
+* **navigation:** restore getActiveChildNav method to maintain old API, add deprecation notice ([d22d77b](https://github.com/ionic-team/ionic/commit/d22d77b))
+* **navigation:** ts2.4 compatibility ([08be9dc](https://github.com/ionic-team/ionic/commit/08be9dc)), closes [#12233](https://github.com/ionic-team/ionic/issues/12233) [#12235](https://github.com/ionic-team/ionic/issues/12235)
+* **select:** not activated on enter in input field ([ad25cd1](https://github.com/ionic-team/ionic/commit/ad25cd1)), closes [#12202](https://github.com/ionic-team/ionic/issues/12202)
+* **sliding-item:** ionSwipe event is fired ([#12157](https://github.com/ionic-team/ionic/issues/12157)) ([b5aa304](https://github.com/ionic-team/ionic/commit/b5aa304)), closes [#12146](https://github.com/ionic-team/ionic/issues/12146)
+* **tabs:** have tabs behavior match nav when navigating back/forth via the url ([3f39e14](https://github.com/ionic-team/ionic/commit/3f39e14))
+
+
+### Features
+
+* **navigation:** support for named ion-nav/ion-tabs to improve url in the short term ([486bff0](https://github.com/ionic-team/ionic/commit/486bff0))
+
+
+
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/ionic-team/ionic/compare/v3.4.2...v3.5.0) (2017-06-28)
 
