@@ -99,12 +99,12 @@ describe('tab', () => {
       tab._lazyRootFromUrl = 'someValue';
       tab._lazyRootFromUrlData = { };
 
-      spyOn(tab, 'push');
+      spyOn(tab, 'setRoot');
       spyOn(tab, 'popTo');
 
       tab.load({}, spy);
 
-      expect(tab.push).toHaveBeenCalledTimes(2);
+      expect(tab.setRoot).toHaveBeenCalled();
       expect(tab.popTo).not.toHaveBeenCalled();
       expect(spy).not.toHaveBeenCalled();
     });
