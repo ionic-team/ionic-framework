@@ -133,19 +133,6 @@ export class UrlSerializer {
 }
 
 export function formatUrlPart(name: string): string {
-  name = name.replace(URL_REPLACE_REG, '-');
-  name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
-    return '-' + match.toLowerCase();
-  });
-  while (name.indexOf('--') > -1) {
-    name = name.replace('--', '-');
-  }
-  if (name.charAt(0) === '-') {
-    name = name.substring(1);
-  }
-  if (name.substring(name.length - 1) === '-') {
-    name = name.substring(0, name.length - 1);
-  }
   return UrlSerializer.encodeURIComponent(name);
 }
 
@@ -300,8 +287,6 @@ function sortConfigLinks(a: NavLink, b: NavLink) {
 
   return 0;
 }
-
-const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|>|<|;|:|@|&|=/g;
 
 /**
  * @hidden

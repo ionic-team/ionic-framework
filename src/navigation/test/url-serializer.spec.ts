@@ -582,7 +582,7 @@ describe('UrlSerializer', () => {
       expect(formatUrlPart('ContactDetailPage')).toEqual('contact-detail-page');
     });
 
-    it('should change to pascal case for one work', () => {
+    it('should change to pascal case for one word', () => {
       expect(formatUrlPart('View1')).toEqual('view1');
     });
 
