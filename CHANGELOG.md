@@ -42,7 +42,7 @@ After installing the update, you'll need to make a minor change to the `src/inde
 If you're customizing `@ionic/app-scripts`, we recommend you review the [changelog](https://github.com/ionic-team/ionic-app-scripts/blob/master/CHANGELOG.md), and update any of your configs accordingly.
 
 ## Notes
-`3.5.2` is 99% the same as `3.5.1`. We had a small publishing error.
+`3.5.2` is the same as `3.5.1`. We had a small publishing error.
 
 ### Bug Fixes
 
@@ -64,9 +64,7 @@ If you're customizing `@ionic/app-scripts`, we recommend you review the [changel
 <a name="3.5.1"></a>
 ## [3.5.1](https://github.com/ionic-team/ionic/compare/v3.5.0...v3.5.1) (2017-07-13)
 
-## Notes
-
-We accidentally had a publishing error. Please see the changelog for `3.5.2` for the release details.
+See the [3.5.2](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#352-2017-07-13) changelog. We had a publishing error here.
 
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/ionic-team/ionic/compare/v3.4.2...v3.5.0) (2017-06-28)
