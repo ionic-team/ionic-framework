@@ -20,6 +20,7 @@
     "@angular/http": "",
     "@angular/platform-browser": "",
     "@angular/platform-browser-dynamic": "",
+    "@angular/tsc-wrapped": "",
     "rxjs": "",
     "zone.js": ""
   }
