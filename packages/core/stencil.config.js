@@ -1,6 +1,7 @@
 exports.config = {
   namespace: 'Ionic',
   buildDest: 'dist',
+  staticBuildDir: '/dist',
   generateCollection: true,
   diagnosticsDest: 'demos/.dev-diagnostics.html',
   bundles: [
