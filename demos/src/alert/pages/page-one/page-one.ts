@@ -135,7 +135,9 @@ export class PageOne {
   }
 
   doCheckbox() {
-    let alert = this.alertCtrl.create();
+    let alert = this.alertCtrl.create({
+      enableSearch: true
+    });
     alert.setTitle('Which planets have you visited?');
 
     alert.addInput({

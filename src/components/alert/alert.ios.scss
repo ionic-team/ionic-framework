@@ -339,6 +339,12 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   color: $alert-ios-sub-title-text-color;
 }
 
+// iOS Alert Search Bar
+// --------------------------------------------------
+
+.alert-ios .alert-search-bar {
+  border-bottom: none;
+}
 
 // iOS Alert Message
 // --------------------------------------------------
