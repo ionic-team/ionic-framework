@@ -10,7 +10,7 @@ To upgrade to `@ionic/app-scripts`, run the following command:
 
 ```
 rm -rf node_modules
-npm install @ionic/app-scripts@2.0.2 --save --save-exact
+npm install @ionic/app-scripts@2.0.2 --save-dev --save-exact
 ```
 
 After installing the update, you'll need to make a minor change to the `src/index.html` file to include a new `<script>` tag for `build/vendor.js`. The reason for this breaking change in `@ionic/app-scripts` is for faster builds. By separating out the `node_modules` dependencies into a `vendor.js` file, the incremental build is faster.
