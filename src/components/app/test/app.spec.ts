@@ -312,7 +312,7 @@ describe('App', () => {
     });
   });
 
-  describe('getActiveNav', () => {
+  describe('getActiveNavs', () => {
 
     it('should get active NavController when using tabs with nested nav', () => {
       const nav = mockNavController();
@@ -340,6 +340,11 @@ describe('App', () => {
       expect(activeNavs.length).toEqual(2);
       expect(activeNavs[0]).toEqual(nav2);
       expect(activeNavs[1]).toEqual(nav3);
+
+      const activeNavsTwo = app.getActiveNavs();
+      expect(activeNavsTwo.length).toEqual(2);
+      expect(activeNavsTwo[0]).toEqual(nav2);
+      expect(activeNavsTwo[1]).toEqual(nav3);
     });
 
     it('should get active NavController when using tabs, nested in a root nav', () => {
@@ -355,10 +360,12 @@ describe('App', () => {
       tab2.setSelected(true);
 
       expect(app.getActiveNavs(nav.id)[0]).toBe(tab2);
+      expect(app.getActiveNavs()[0]).toBe(tab2);
 
       tab2.setSelected(false);
       tab3.setSelected(true);
       expect(app.getActiveNavs(nav.id)[0]).toBe(tab3);
+      expect(app.getActiveNavs()[0]).toBe(tab3);
     });
 
     it('should get active tab NavController when using tabs, and tabs is the root', () => {
@@ -371,10 +378,12 @@ describe('App', () => {
       tab2.setSelected(true);
 
       expect(app.getActiveNavs(tabs.id)[0]).toBe(tab2);
+      expect(app.getActiveNavs()[0]).toBe(tab2);
 
       tab2.setSelected(false);
       tab3.setSelected(true);
       expect(app.getActiveNavs(tabs.id)[0]).toBe(tab3);
+      expect(app.getActiveNavs()[0]).toBe(tab3);
     });
 
     it('should get active NavController when nested 3 deep', () => {
@@ -387,6 +396,8 @@ describe('App', () => {
       nav2.registerChildNav(nav3);
 
       expect(app.getActiveNavs(nav1.id)[0]).toBe(nav3);
+      expect(app.getActiveNavs()[0]).toBe(nav3);
+      expect(app.getActiveNavs().length).toBe(1);
     });
 
     it('should get active NavController when nested 2 deep', () => {
@@ -399,12 +410,15 @@ describe('App', () => {
       const activeNav = app.getActiveNavs(nav1.id)[0];
 
       expect(activeNav).toBe(nav2);
+
+      expect(app.getActiveNavs()[0]).toBe(nav2);
     });
 
     it('should get active NavController when only one nav controller', () => {
       const nav = mockNavController();
       app.registerRootNav(nav);
       expect(app.getActiveNavs(nav.id)[0]).toBe(nav);
+      expect(app.getActiveNavs()[0]).toBe(nav);
     });
 
     it('should set/get the root nav controller', () => {
@@ -414,9 +428,9 @@ describe('App', () => {
     });
 
     it('should not get an active NavController if there is not root set', () => {
-      const activeNav = app.getActiveNavs('');
+      const activeNavs = app.getActiveNavs();
       const rootNav = app.getRootNavById('');
-      expect(activeNav.length).toEqual(0);
+      expect(activeNavs.length).toEqual(0);
       expect(rootNav).toBeFalsy();
     });
 
@@ -438,6 +452,9 @@ describe('App', () => {
 
       expect(activeNavOne).toBe(childNavOne);
       expect(activeNavTwo).toBe(childNavTwo);
+
+      expect(app.getActiveNavs()[0]).toBe(childNavOne);
+      expect(app.getActiveNavs()[1]).toBe(childNavTwo);
     });
 
     it('should get the active nav when no id is provided assuming there is one nav', () => {
@@ -448,6 +465,167 @@ describe('App', () => {
       rootNavOne.registerChildNav(childNavOne);
 
       const result = app.getActiveNavs()[0];
+
+      expect(result).toEqual(childNavOne);
+    });
+
+    it('should return the all the active navs when there is not an id passed', () => {
+      const rootNavOne = mockNavController();
+      app.registerRootNav(rootNavOne);
+
+      const rootNavTwo = mockNavController();
+      app.registerRootNav(rootNavTwo);
+
+      const childNavOne = mockNavController();
+      rootNavOne.registerChildNav(childNavOne);
+
+      const childChildNavOne = mockNavController();
+      childNavOne.registerChildNav(childChildNavOne);
+
+      const childNavTwo = mockNavController();
+      rootNavTwo.registerChildNav(childNavTwo);
+
+      const childChildNavTwo = mockNavController();
+      childNavTwo.registerChildNav(childChildNavTwo);
+
+      const results = app.getActiveNavs();
+      expect(results.length).toEqual(2);
+      expect(results[0]).toEqual(childChildNavOne);
+      expect(results[1]).toEqual(childChildNavTwo);
+
+      const withIdResultsOne = app.getActiveNavs(rootNavOne.id);
+      expect(withIdResultsOne.length).toEqual(1);
+      expect(withIdResultsOne[0]).toEqual(childChildNavOne);
+
+      const withIdResultsTwo = app.getActiveNavs(rootNavTwo.id);
+      expect(withIdResultsTwo.length).toEqual(1);
+      expect(withIdResultsTwo[0]).toEqual(childChildNavTwo);
+    });
+  });
+
+  describe('getActiveNav', () => {
+    it('should get active NavController when using tabs with nested nav', () => {
+      const nav = mockNavController();
+      app.registerRootNav(nav);
+
+      const tabs = mockTabs();
+      const tab1 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
+      nav.registerChildNav(tabs);
+
+      tab2.setSelected(true);
+      const nav2 = mockNavController();
+      nav2.name = 'nav2';
+      const nav3 = mockNavController();
+      nav3.name = 'nav3';
+      const nav4 = mockNavController();
+      nav4.name = 'nav4';
+
+      tab1.registerChildNav(nav4);
+      // tab 2 registers two child navs!!
+      tab2.registerChildNav(nav2);
+      tab2.registerChildNav(nav3);
+
+      const activeNav = app.getActiveNav();
+      expect(activeNav).toEqual(nav2);
+    });
+
+    it('should get active NavController when using tabs, nested in a root nav', () => {
+      const nav = mockNavController();
+      app.registerRootNav(nav);
+
+      const tabs = mockTabs();
+      mockTab(tabs);
+      const tab2 = mockTab(tabs);
+      const tab3 = mockTab(tabs);
+      nav.registerChildNav(tabs);
+
+      tab2.setSelected(true);
+
+      expect(app.getActiveNav()).toBe(tab2);
+
+      tab2.setSelected(false);
+      tab3.setSelected(true);
+      expect(app.getActiveNav()).toBe(tab3);
+    });
+
+    it('should get active tab NavController when using tabs, and tabs is the root', () => {
+      const tabs = mockTabs();
+      mockTab(tabs);
+      const tab2 = mockTab(tabs);
+      const tab3 = mockTab(tabs);
+      app.registerRootNav(tabs);
+
+      tab2.setSelected(true);
+
+      expect(app.getActiveNav()).toBe(tab2);
+
+      tab2.setSelected(false);
+      tab3.setSelected(true);
+      expect(app.getActiveNav()).toBe(tab3);
+    });
+
+    it('should get active NavController when nested 3 deep', () => {
+      const nav1 = mockNavController();
+      const nav2 = mockNavController();
+      const nav3 = mockNavController();
+      app.registerRootNav(nav1);
+
+      nav1.registerChildNav(nav2);
+      nav2.registerChildNav(nav3);
+
+      expect(app.getActiveNav()).toBe(nav3);
+    });
+
+    it('should get active NavController when nested 2 deep', () => {
+      const nav1 = mockNavController();
+      const nav2 = mockNavController();
+      app.registerRootNav(nav1);
+
+      nav1.registerChildNav(nav2);
+
+      const activeNav = app.getActiveNav();
+
+      expect(activeNav).toBe(nav2);
+    });
+
+    it('should get active NavController when only one nav controller', () => {
+      const nav = mockNavController();
+      app.registerRootNav(nav);
+      expect(app.getActiveNav()).toBe(nav);
+    });
+
+    it('should not get an active NavController if there is not root set', () => {
+      const activeNav = app.getActiveNav();
+      expect(activeNav).toBeFalsy();
+    });
+
+    it('should just work when there are multiple active navs', () => {
+      const rootNavOne = mockNavController();
+      const rootNavTwo = mockNavController();
+
+      app.registerRootNav(rootNavOne);
+      app.registerRootNav(rootNavTwo);
+
+      const childNavOne = mockNavController();
+      const childNavTwo = mockNavController();
+
+      rootNavOne.registerChildNav(childNavOne);
+      rootNavTwo.registerChildNav(childNavTwo);
+
+      const activeNavOne = app.getActiveNav();
+
+      expect(activeNavOne).toBe(childNavOne);
+    });
+
+    it('should get the active nav when no id is provided assuming there is one nav', () => {
+      const rootNavOne = mockNavController();
+      app.registerRootNav(rootNavOne);
+
+      const childNavOne = mockNavController();
+      rootNavOne.registerChildNav(childNavOne);
+
+      const result = app.getActiveNav();
 
       expect(result).toEqual(childNavOne);
     });

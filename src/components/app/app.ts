@@ -206,9 +206,21 @@ export class App {
   }
 
   /**
-   * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
+   * @return {NavController} Returns the first Active Nav Controller from the list. This method is deprecated
    */
-  getActiveNavs(navId?: string): NavControllerBase[] {
+  getActiveNav(): NavControllerBase {
+    console.warn('(getActiveNav) is deprecated and will be removed in the next major release. Use getActiveNavs instead.');
+    const navs = this.getActiveNavs();
+    if (navs && navs.length) {
+      return navs[0];
+    }
+    return null;
+  }
+
+  /**
+   * @return {NavController[]} Returns the active NavControllers. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
+   */
+  getActiveNavs(rootNavId?: string): NavControllerBase[] {
     const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
       return <NavControllerBase[]> findTopNavs(portal);
@@ -219,7 +231,16 @@ export class App {
     if (this._rootNavs.size === 1) {
       return <NavControllerBase[]> findTopNavs(this._rootNavs.values().next().value);
     }
-    return <NavControllerBase[]> findTopNavs(this.getRootNavById(navId));
+    if (rootNavId) {
+      return <NavControllerBase[]> findTopNavs(this._rootNavs.get(rootNavId));
+    }
+    // fallback to just using all root names
+    let activeNavs: NavigationContainer[] = [];
+    this._rootNavs.forEach(nav => {
+      const topNavs = findTopNavs(nav);
+      activeNavs = activeNavs.concat(topNavs);
+    });
+    return <NavControllerBase[]> activeNavs;
   }
 
   getRootNav(): any {
