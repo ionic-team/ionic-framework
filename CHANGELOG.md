@@ -1,3 +1,15 @@
+<a name="3.5.3"></a>
+## [3.5.3](https://github.com/ionic-team/ionic/compare/v3.5.2...v3.5.3) (2017-07-14)
+
+## Upgrade Instructions
+`ionic-angular@3.5.3` is a drop-in replacement for `3.5.2`. To install it, simply run `npm install ionic-angular@3.5.3 --save --save-exact`.
+
+### Bug Fixes
+
+* **app:** restore getActiveNav api ([2d49e10](https://github.com/ionic-team/ionic/commit/2d49e10))
+
+
+
 <a name="3.5.2"></a>
 ## [3.5.2](https://github.com/ionic-team/ionic/compare/v3.5.1...v3.5.2) (2017-07-13)
 
