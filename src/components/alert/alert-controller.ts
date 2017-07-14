@@ -139,6 +139,7 @@ import { Config } from '../../config/config';
  *  | inputs                | `array`   | An array of inputs for the alert. See input options.                         |
  *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                      |
  *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop. Default true. |
+ *  | enableSearch          | `boolean` | Whether a searchbar should be used for radio/checkbox alerts. Default true.  |
  *
  *
  *  Input options
