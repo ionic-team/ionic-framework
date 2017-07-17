@@ -1,9 +1,8 @@
 exports.config = {
   namespace: 'Ionic',
-  buildDest: 'dist',
-  staticBuildDir: '/dist',
+  buildDir: 'dist',
+  publicPath: '/dist',
   generateCollection: true,
-  diagnosticsDest: 'demos/.dev-diagnostics.html',
   bundles: [
     { components: ['ion-app', 'ion-content', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
