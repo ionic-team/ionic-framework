@@ -84,7 +84,7 @@ export class Segment {
   }
 
   ionViewDidLoad() {
-    this.buttons = this.$el.querySelectorAll('ion-segment-button');
+    this.buttons = this.$el.querySelectorAll('ion-segment-button') as NodeListOf<HostElement>;
 
     for (var i = 0; i < this.buttons.length; i++) {
       const button = this.buttons[i].$instance;

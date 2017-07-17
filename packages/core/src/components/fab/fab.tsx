@@ -189,7 +189,7 @@ export class FabButton {
     fabClasses = Object.assign(fabClasses, themedClasses);
 
     return (
-      <TagType class={fabClasses} onclick={this.clickedFab.bind(this)} disabled={this.disabled}>
+      <TagType class={fabClasses} onClick={this.clickedFab.bind(this)} disabled={this.disabled}>
         <ion-icon name="close" class="fab-close-icon"></ion-icon>
         <span class='button-inner'>
           <slot></slot>
