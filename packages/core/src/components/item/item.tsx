@@ -17,6 +17,7 @@ export class Item {
 
   @Prop() mode: string;
   @Prop() color: string;
+  @Prop() href: string;
 
   @Listen('ionStyle')
   itemStyle(ev: UIEvent) {
@@ -51,8 +52,11 @@ export class Item {
       'item-block': true
     };
 
+    // TODO add support for button items
+    const TagType = this.href ? 'a' : 'div';
+
     return (
-      <div class={themedClasses}>
+      <TagType class={themedClasses}>
         <slot name='start'></slot>
         <div class='item-inner'>
           <div class='input-wrapper'>
@@ -60,7 +64,7 @@ export class Item {
           </div>
           <slot name='end'></slot>
         </div>
-      </div>
+      </TagType>
     );
 
     // template:
