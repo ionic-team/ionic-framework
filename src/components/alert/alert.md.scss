@@ -595,10 +595,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   @include text-align($alert-md-button-text-align);
   @include border-radius($alert-md-button-border-radius);
 
-  // necessary for ripple to work properly
-  position: relative;
-  overflow: hidden;
-
   font-weight: $alert-md-button-font-weight;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;
@@ -611,6 +607,13 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   @include deprecated-variable(padding, $alert-md-button-padding) {
     @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
   }
+}
+
+// Separate selector to support ripple in an md mode app with an ios mode alert
+.alert-button-md {
+  // necessary for ripple to work properly
+  position: relative;
+  overflow: hidden;
 }
 
 .alert-md .alert-button.activated {
