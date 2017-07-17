@@ -9,6 +9,11 @@ ion-icon {
   display: inline-block;
 
   font-size: 1.2em;
+
+  svg {
+    width: 1.2em;
+    height: 1.2em;
+  }
 }
 
 ion-icon[small] {
@@ -16,3 +21,4 @@ ion-icon[small] {
 
   font-size: 1.1em;
 }
+

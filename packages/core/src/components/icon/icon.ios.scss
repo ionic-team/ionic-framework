@@ -11,7 +11,7 @@
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
 
   .icon-ios-#{$color-name} {
-    color: $color-base;
+    fill: $color-base;
   }
 
 }
