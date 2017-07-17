@@ -5,7 +5,7 @@
   "main": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "npm run copy.vendor && stencil build --prod",
-    "dev": "npm run copy.vendor && concurrently \"stencil build --watch --debug\" \"stencil-dev-server\"",
+    "dev": "concurrently --raw \"stencil build --watch --debug\" \"stencil-dev-server\"",
     "copy.vendor": "mkdir -p ./dist/collection/vendor && cp -Rf ./src/vendor ./dist/collection",
     "link.stencil": "npm link @stencil/core",
     "test": "jest"
@@ -15,7 +15,7 @@
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
   "dependencies": {
-    "@stencil/core": "0.0.2-4"
+    "@stencil/core": "0.0.2-5"
   },
   "devDependencies": {
     "@stencil/dev-server": "0.0.9",

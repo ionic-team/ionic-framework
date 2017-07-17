@@ -23,6 +23,6 @@ exports.config = {
   preamble: '(C) Ionic http://ionicframework.com - MIT License'
 };
 
-exports.devServer = {
-  watchGlob: ['demos/**/*', '/dist/***/*', 'src/**/*.html']
-}
+exports.devServerConfig = {
+  watchGlob: ['dist/**/*.*', 'src/**/*.html']
+};
