@@ -1,5 +1,5 @@
 import { Animation, Menu, MenuType as IMenuType } from '../../utils/interfaces';
-import { Ionic } from '@stencil/core';
+const Ionic = (window as any).Ionic;
 
 
 /**
@@ -57,7 +57,7 @@ export class MenuType implements IMenuType {
     ani.onFinish(() => {
       this.isOpening = false;
       done(isOpen);
-    }, true);
+    }, { clearExistingCallacks: true });
 
     const factor = 1 - Math.min(Math.abs(velocity) / 4, 0.7);
     const dur = ani.getDuration() * factor;
