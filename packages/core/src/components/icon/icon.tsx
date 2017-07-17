@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, VNodeData } from '@stencil/core';
 
-export declare const publicPath: string;
+const publicPath = '';
 
 
 @Component({
@@ -12,7 +12,8 @@ export declare const publicPath: string;
   },
   host: {
     theme: 'icon'
-  }
+  },
+  assetsDir: './svg'
 })
 export class Icon {
   mode: string;

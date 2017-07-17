@@ -4,7 +4,7 @@
   "description": "Base components for Ionic",
   "main": "dist/collection/collection-manifest.json",
   "scripts": {
-    "build": "npm run copy.vendor && stencil build --prod",
+    "build": "stencil build --prod",
     "dev": "concurrently --raw \"stencil build --watch\" \"stencil-dev-server\"",
     "copy.vendor": "mkdir -p ./dist/collection/vendor && cp -Rf ./src/vendor ./dist/collection",
     "link.stencil": "npm link @stencil/core",
