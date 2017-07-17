@@ -256,7 +256,7 @@ export class Searchbar {
    * Positions the input placeholder
    */
   positionPlaceholder() {
-    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const inputEle = this.$el.querySelector('.searchbar-input') as HTMLElement;
     const iconEle = this.$el.querySelector('.searchbar-search-icon') as HTMLElement;
 
@@ -296,7 +296,7 @@ export class Searchbar {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   positionCancelButton() {
-    const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+    const isRTL = document.dir === 'rtl';
     const cancelButton = this.$el.querySelector('.searchbar-ios-cancel') as HTMLElement;
     const shouldShowCancel = this.focused;
 
