@@ -1,6 +1,16 @@
 exports.config = {
-  dest: 'dist/core',
+  namespace: 'IonicAngular',
+  buildDir: 'dist',
+  publicPath: '/dist',
+  bundles: [
+    { components: ['ion-badge'] }
+  ],
   collections: [
-    '@ionic/core'
-  ]
+    { name: '@ionic/core', includeBundledOnly: true }
+  ],
+  preamble: '(C) Ionic http://ionicframework.com - MIT License'
 };
+
+exports.devServer = {
+  watchGlob: ['demos/**/*', '/dist/***/*', 'src/**/*.html']
+}

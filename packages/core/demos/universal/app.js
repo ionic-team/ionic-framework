@@ -3,11 +3,13 @@ var app = express();
 var fs = require('fs');
 var path = require('path');
 
-
-var stencil = require('../../dist/stencil-server-renderer');
+console.log(path.join(__dirname, '../../dist/'))
+var stencil = require('@stencil/core');
 var renderer = stencil.createRenderer({
-  staticDir: path.join('../../dist/ionic-web'),
-  debug: true
+  rootDir: path.join(__dirname, '../../'),
+  buildDir: path.join(__dirname, '../../dist/'),
+  namespace: 'Ionic',
+  logLevel: 'debug'
 });
 
 
