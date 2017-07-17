@@ -1,7 +1,7 @@
 import { Component, h, Ionic, State } from '@stencil/core';
 
 import { GestureDetail, HostElement } from '../../utils/interfaces';
-import { swipeShouldReset } from '../../utils/util';
+import { swipeShouldReset } from '../../utils/helpers';
 
 // import { ItemOptions } from './item-options';
 

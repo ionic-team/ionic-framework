@@ -1,6 +1,6 @@
 import { Component, h, Ionic, Prop } from '@stencil/core';
 
-import { isRightSide, Side } from '../../utils/util';
+import { isRightSide, Side } from '../../utils/helpers';
 
 
 /**
