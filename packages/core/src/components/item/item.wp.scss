@@ -56,9 +56,6 @@ $item-wp-divider-font-size:          2rem !default;
 /// @prop - Padding for the divider
 $item-wp-divider-padding:            5px 15px !default;
 
-/// @prop - Background for the sliding content
-$item-wp-sliding-content-background: $list-wp-background-color !default;
-
 
 .item-wp {
   @include padding-horizontal($item-wp-padding-start, 0);
@@ -246,12 +243,4 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
       background-color: color-shade($color-base);
     }
   }
-}
-
-
-// Windows Item Sliding
-// --------------------------------------------------
-
-.list-wp ion-item-sliding {
-  background-color: $item-wp-sliding-content-background;
 }

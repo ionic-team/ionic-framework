@@ -128,12 +128,10 @@ const enum SlidingState {
  */
 @Component({
   tag: 'ion-item-sliding',
-  styleUrl: 'item-sliding.scss',
-  // TODO REMOVE
   styleUrls: {
-    ios: 'item-sliding.scss',
-    md: 'item-sliding.scss',
-    wp: 'item-sliding.scss'
+    ios: 'item-sliding.ios.scss',
+    md: 'item-sliding.md.scss',
+    wp: 'item-sliding.wp.scss'
   }
 })
 export class ItemSliding {
@@ -423,15 +421,6 @@ export class ItemSliding {
   }
 
   private setState(state: SlidingState) {
-    console.log('setState',
-    this.state + '\n',
-    'active-slide', (this.state !== SlidingState.Disabled),
-    'active-options-right', !!(this.state & SlidingState.Right),
-    'active-options-left', !!(this.state & SlidingState.Left),
-    'active-swipe-right', !!(this.state & SlidingState.SwipeRight),
-    'active-swipe-left', !!(this.state & SlidingState.SwipeLeft)
-    );
-
     if (state === this.state) {
       return;
     }
@@ -477,15 +466,6 @@ export class ItemSliding {
   }
 
   hostData() {
-    console.log('hostData',
-    this.state + '\n',
-    'active-slide', (this.state !== SlidingState.Disabled),
-    'active-options-right', !!(this.state & SlidingState.Right),
-    'active-options-left', !!(this.state & SlidingState.Left),
-    'active-swipe-right', !!(this.state & SlidingState.SwipeRight),
-    'active-swipe-left', !!(this.state & SlidingState.SwipeLeft)
-    );
-
     return {
       class: {
         'item-wrapper': true,

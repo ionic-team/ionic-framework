@@ -17,9 +17,9 @@ import { isRightSide, Side } from '../../utils/helpers';
  *     Item 1
  *   </ion-item>
  *   <ion-item-options side="right" (ionSwipe)="saveItem(item)">
- *     <ion-button expandable (click)="saveItem(item)">
+ *     <ion-item-option expandable (click)="saveItem(item)">
  *       <ion-icon name="star"></ion-icon>
- *     </ion-button>
+ *     </ion-item-option>
  *   </ion-item-options>
  * </ion-item-sliding>
  *```
