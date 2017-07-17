@@ -11,7 +11,7 @@ module.exports = {
     dest: '{{WWW}}'
   },
   copyFonts: {
-    src: [path.join(process.cwd(), 'node_modules', 'ionicons', 'dist', 'fonts', '**', '*'), path.join(process.cwd(), 'src', 'fonts', '**', '*')],
+    src: [path.join(process.cwd(), 'node_modules', 'dist', 'fonts', '**', '*'), path.join(process.cwd(), 'src', 'fonts', '**', '*')],
     dest: path.join('{{WWW}}', 'assets', 'fonts')
   },
   copyPolyfills: {

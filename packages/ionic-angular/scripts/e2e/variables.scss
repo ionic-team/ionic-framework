@@ -1,8 +1,7 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
-// Font path is used to include ionicons,
-// roboto, and noto sans fonts
+// Font path is used to include roboto and noto sans fonts
 $font-path: "../assets/fonts";
 
 @import "ionic.globals";
@@ -68,14 +67,6 @@ $colors: (
 // default are overridden.
 
 @import "ionic.theme.default";
-
-
-// Ionicons
-// --------------------------------------------------
-// The premium icon font for Ionic. For more info, please see:
-// http://ionicframework.com/docs/ionicons/
-
-@import "ionic.ionicons";
 
 
 // Fonts

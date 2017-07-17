@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
-    "declaration": false,
+    "alwaysStrict": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "jsxFactory": "h",
     "lib": [
       "dom",
       "es2015"
     ],
-    "moduleResolution": "node",
     "module": "es2015",
-    "target": "es2015",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -21,16 +21,14 @@
     "outDir": "dist",
     "pretty": true,
     "removeComments": false,
-    "sourceMap": false,
-    "jsx": "react",
-    "jsxFactory": "h"
+    "target": "es2015"
   },
   "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "types/jsx.d.ts"
+    "src/**/*.ts",
+    "src/**/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/animations"
   ]
 }

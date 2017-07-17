@@ -128,8 +128,7 @@ export function copyGlobToDest(sourceGlob: string[], destPath: string) {
 
 export function copyFonts(destinationPath: string) {
   return src([
-    'src/fonts/*.+(ttf|woff|woff2)',
-    'node_modules/ionicons/dist/fonts/*.+(ttf|woff|woff2)'
+    'src/fonts/*.+(ttf|woff|woff2)'
    ])
    .pipe(dest(destinationPath));
 }
@@ -141,14 +140,12 @@ export function compileSass(destinationPath: string) {
   let rename = require('gulp-rename');
   let buildConfig = require('../build/config');
 
-  let ioniconsPath = join(NODE_MODULES_ROOT, 'ionicons/dist/scss/');
-
   return src([
     join(SRC_ROOT, 'themes/ionic.build.default.scss'),
     join(SRC_ROOT, 'themes/ionic.build.dark.scss')
   ])
   .pipe(sass({
-      includePaths: [ioniconsPath]
+      includePaths: []
     }).on('error', sass.logError)
   )
   .pipe(autoprefixer(buildConfig.autoprefixer))
