@@ -145,7 +145,7 @@ export class ItemSliding {
   optsWidthRightSide: number = 0;
   optsWidthLeftSide: number = 0;
   sides: number;
-  tmr: number = null;
+  tmr: any = null;
 
   // TODO file with item sliding interfaces & item options implement
   // leftOptions: ItemOptions;
