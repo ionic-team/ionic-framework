@@ -10,6 +10,9 @@ $fab-ios-background-color:                        color($colors-ios, primary) !d
 /// @prop - Text color of the button
 $fab-ios-text-color:                              color-contrast($colors-ios, $fab-ios-background-color) !default;
 
+/// @prop - Color of the button icon
+$fab-ios-icon-color:                              color-contrast($colors-ios, $fab-ios-background-color) !default;
+
 /// @prop - Background color of the activated button
 $fab-ios-background-color-activated:              color-shade($fab-ios-background-color) !default;
 
@@ -53,6 +56,10 @@ $fab-ios-list-button-transition-delay:            10ms !default;
   background-color: $fab-ios-list-button-background-color-activated;
 }
 
+.fab-ios .icon {
+  fill: $fab-ios-icon-color;
+}
+
 
 // Generate iOS FAB colors
 // --------------------------------------------------
@@ -66,6 +73,10 @@ $fab-ios-list-button-transition-delay:            10ms !default;
   .fab-ios-#{$color-name} {
     color: $fg-color;
     background-color: $bg-color;
+  }
+
+  .fab-ios-#{$color-name} .icon {
+    fill: $fg-color;
   }
 
   .fab-ios-#{$color-name}.activated {

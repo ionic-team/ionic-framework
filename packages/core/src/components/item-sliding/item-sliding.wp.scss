@@ -17,6 +17,9 @@ $item-wp-sliding-button-background-color:    color($colors-wp, primary) !default
 /// @prop - Text color of the sliding option button
 $item-wp-sliding-button-text-color:          color-contrast($colors-wp, $item-wp-sliding-button-background-color) !default;
 
+/// @prop - Color of the sliding option button icon
+$item-wp-sliding-button-icon-color:          color-contrast($colors-wp, $item-wp-sliding-button-background-color) !default;
+
 
 .list-wp ion-item-sliding {
   background-color: $item-wp-sliding-content-background;
@@ -32,6 +35,9 @@ $item-wp-sliding-button-text-color:          color-contrast($colors-wp, $item-wp
   background-color: $item-wp-sliding-button-background-color;
 }
 
+.item-option-button-wp .icon {
+  fill: $item-wp-sliding-button-icon-color;
+}
 
 // Windows No Lines List
 // --------------------------------------------------
@@ -49,6 +55,10 @@ $item-wp-sliding-button-text-color:          color-contrast($colors-wp, $item-wp
   .item-option-button-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+  }
+
+  .item-option-button-wp-#{$color-name} .icon {
+    fill: $color-contrast;
   }
 
 }

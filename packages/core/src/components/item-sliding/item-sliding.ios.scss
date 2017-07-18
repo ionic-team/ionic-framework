@@ -17,6 +17,9 @@ $item-ios-sliding-button-background-color:   color($colors-ios, primary) !defaul
 /// @prop - Text color of the sliding option button
 $item-ios-sliding-button-text-color:         color-contrast($colors-ios, $item-ios-sliding-button-background-color) !default;
 
+/// @prop - color of the sliding option button icon
+$item-ios-sliding-button-icon-color:         color-contrast($colors-ios, $item-ios-sliding-button-background-color) !default;
+
 
 .list-ios ion-item-sliding {
   background-color: $item-ios-sliding-content-background;
@@ -30,6 +33,10 @@ $item-ios-sliding-button-text-color:         color-contrast($colors-ios, $item-i
   font-size: $item-ios-sliding-button-font-size;
   color: $item-ios-sliding-button-text-color;
   background-color: $item-ios-sliding-button-background-color;
+}
+
+.item-option-button-ios .icon {
+  fill: $item-ios-sliding-button-icon-color;
 }
 
 
@@ -49,6 +56,10 @@ $item-ios-sliding-button-text-color:         color-contrast($colors-ios, $item-i
   .item-option-button-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+  }
+
+  .item-option-button-ios-#{$color-name} .icon {
+    fill: $color-contrast;
   }
 
 }

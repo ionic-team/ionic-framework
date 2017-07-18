@@ -17,6 +17,9 @@ $item-md-sliding-button-background-color:    color($colors-md, primary) !default
 /// @prop - Text color of the sliding option button
 $item-md-sliding-button-text-color:          color-contrast($colors-md, $item-md-sliding-button-background-color) !default;
 
+/// @prop - color of the sliding option button icon
+$item-md-sliding-button-icon-color:          color-contrast($colors-md, $item-md-sliding-button-background-color) !default;
+
 
 .list-md ion-item-sliding {
   background-color: $item-md-sliding-content-background;
@@ -30,6 +33,10 @@ $item-md-sliding-button-text-color:          color-contrast($colors-md, $item-md
   font-size: $item-md-sliding-button-font-size;
   color: $item-md-sliding-button-text-color;
   background-color: $item-md-sliding-button-background-color;
+}
+
+.item-option-button-md .icon {
+  fill: $item-md-sliding-button-icon-color;
 }
 
 // Material Design No Lines List
@@ -48,6 +55,10 @@ $item-md-sliding-button-text-color:          color-contrast($colors-md, $item-md
   .item-option-button-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+  }
+
+  .item-option-button-md-#{$color-name} .icon {
+    fill: $color-contrast;
   }
 
 }
