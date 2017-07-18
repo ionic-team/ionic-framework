@@ -1,5 +1,5 @@
 import { Component, h, Prop, Ionic } from '@stencil/core';
-import { Swiper } from '../../vendor/swiper';
+import { Swiper } from './vendor/swiper';
 
 /**
  * @name Slides
@@ -24,7 +24,8 @@ import { Swiper } from '../../vendor/swiper';
 
 @Component({
   tag: 'ion-slides',
-  styleUrl: 'slides.scss'
+  styleUrl: 'slides.scss',
+  assetsDir: 'vendor'
 })
 export class Slides {
   swiper: any;
