@@ -1,6 +1,6 @@
 import { Component, h, Prop, State, VNodeData } from '@stencil/core';
 
-export declare const publicPath: string;
+const publicPath = '';
 
 
 @Component({

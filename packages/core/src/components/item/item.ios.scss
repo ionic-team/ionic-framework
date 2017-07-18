@@ -56,9 +56,6 @@ $item-ios-divider-color:                  #222 !default;
 /// @prop - Padding for the divider
 $item-ios-divider-padding:                5px 15px !default;
 
-/// @prop - Background for the sliding content
-$item-ios-sliding-content-background:     $list-ios-background-color !default;
-
 
 // iOS Item
 // --------------------------------------------------
@@ -264,10 +261,3 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
   }
 }
 
-
-// iOS Item Sliding
-// --------------------------------------------------
-
-.list-ios ion-item-sliding {
-  background-color: $item-ios-sliding-content-background;
-}

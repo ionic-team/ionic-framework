@@ -5,7 +5,7 @@
   "main": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build --prod",
-    "dev": "concurrently --raw \"stencil build --watch --debug\" \"stencil-dev-server\"",
+    "dev": "concurrently --raw \"stencil build --watch\" \"stencil-dev-server\"",
     "test": "jest"
   },
   "repository": {

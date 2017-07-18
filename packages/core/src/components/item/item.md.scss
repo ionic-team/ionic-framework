@@ -50,9 +50,6 @@ $item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
 /// @prop - Padding for the divider
 $item-md-divider-padding:            5px 15px !default;
 
-/// @prop - Background for the sliding content
-$item-md-sliding-content-background: $list-md-background-color !default;
-
 
 .item-md {
   @include padding-horizontal($item-md-padding-start, 0);
@@ -251,13 +248,6 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
   }
 }
 
-
-// Material Design Item Sliding
-// --------------------------------------------------
-
-.list-md ion-item-sliding {
-  background-color: $item-md-sliding-content-background;
-}
 
 // Item reorder
 // --------------------------------------------------
