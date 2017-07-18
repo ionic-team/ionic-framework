@@ -12,7 +12,8 @@ export declare const publicPath: string;
   },
   host: {
     theme: 'icon'
-  }
+  },
+  assetsDir: 'svg'
 })
 export class Icon {
   mode: string;
@@ -20,7 +21,7 @@ export class Icon {
   /**
    * @input {string} Specifies the label to use for accessibility. Defaults to the icon name.
    */
-  @State() label: string = '';
+  @State() ariaLabel: string = '';
 
   /**
    * @input {string} Specifies which icon to use. The appropriate icon will be used based on the mode.
@@ -38,11 +39,6 @@ export class Icon {
    */
   @Prop() md: string = '';
 
-  /**
-   * @input {boolean} If true, the icon is hidden.
-   */
-  @Prop() hidden: boolean = false;
-
 
   @State() svgContent: string = null;
 
@@ -58,21 +54,23 @@ export class Icon {
 
 
   get iconName() {
-    let iconName: string;
-
     // if no name was passed set iconName to null
     if (!this.name) {
       return null;
     }
 
-    if (!(/^md-|^ios-|^logo-/.test(this.name))) {
+    let iconName = this.name.toLowerCase();
+
+    const invalidChars = iconName.replace(/[a-z]|-/g, '');
+    if (invalidChars !== '') {
+      console.error(`invalid characters in ion-icon name: ${invalidChars}`);
+      return null;
+    }
+
+    if (!(/^md-|^ios-|^logo-/.test(iconName))) {
       // this does not have one of the defaults
       // so lets auto add in the mode prefix for them
-      iconName = this.mode + '-' + this.name;
-
-    } else if (this.name) {
-      // this icon already has a prefix
-      iconName = this.name;
+      iconName = this.mode + '-' + iconName;
     }
 
     // if an icon was passed in using the ios or md attributes
@@ -93,14 +91,9 @@ export class Icon {
       'role': 'img'
     };
 
-    if (this.hidden) {
-      // adds the hidden attribute
-      attrs['hidden'] = '';
-    }
-
-    if (this.label) {
+    if (this.ariaLabel) {
       // user provided label
-      attrs['aria-label'] = this.label;
+      attrs['aria-label'] = this.ariaLabel;
 
     } else {
       // come up with the label based on the icon name
@@ -109,7 +102,7 @@ export class Icon {
         attrs['aria-label'] = iconName
                                 .replace('ios-', '')
                                 .replace('md-', '')
-                                .replace('-', ' ');
+                                .replace(/\-/g, ' ');
       }
     }
 
@@ -142,15 +135,17 @@ export class Icon {
       // remove this url from the active requests
       delete IonIcon.activeRequests[svgUrl];
 
+      // this response is the content of the svg file we're looking for
+      let svgContent = this.responseText;
+
       if (this.status >= 400) {
         // ok, not awesome, something is up
         console.error('Icon could not be loaded:', svgUrl);
-        return;
+        svgContent = `<!-- error loading svg -->`;
       }
 
-      // this response is the content of the svg file we're looking for
       // cache it in the global IonIcon constant
-      IonIcon.svgContents[svgUrl] = this.responseText;
+      IonIcon.svgContents[svgUrl] = svgContent;
 
       // find any callbacks waiting on this url
       const svgLoadCallbacks = IonIcon.loadCallbacks[svgUrl];
@@ -158,13 +153,13 @@ export class Icon {
         // loop through all the callbacks that are waiting on the svg content
         for (var i = 0; i < svgLoadCallbacks.length; i++) {
           // fire off this callback which
-          svgLoadCallbacks[i](this.responseText);
+          svgLoadCallbacks[i](svgContent);
         }
         delete IonIcon.loadCallbacks[svgUrl];
       }
     });
 
-    xhr.addEventListener('error', function () {
+    xhr.addEventListener('error', () => {
       // umm, idk
       console.error('Icon could not be loaded:', svgUrl);
     });
@@ -179,7 +174,7 @@ export class Icon {
     const svgUrl = this.getSvgUrl();
     if (!svgUrl) {
       // we don't have good data
-      return(<div class="missing-svg"></div>);
+      return <div class="icon-inner">{/* invalid svg */}</div>;
     }
 
     const svgContent = IonIcon.svgContents[svgUrl];
@@ -187,9 +182,7 @@ export class Icon {
       // we've already loaded up this svg at one point
       // and the svg content we've loaded and assigned checks out
       // render this svg!!
-      return(
-        <div innerHTML={svgContent}></div>
-      );
+      return <div class="icon-inner" innerHTML={svgContent}></div>;
     }
 
     // haven't loaded this svg yet
@@ -201,7 +194,7 @@ export class Icon {
     });
 
     // actively requesting the svg, so let's just render a div for now
-    return(<div class="loading-svg"></div>);
+    return <div class="icon-inner">{/* loading svg */}</div>;
   }
 
 }
@@ -212,6 +205,7 @@ const IonIcon: GlobalIonIcon = {
   loadCallbacks: [] as any,
   svgContents: {}
 };
+
 
 interface GlobalIonIcon {
   activeRequests: {[url: string]: boolean};
