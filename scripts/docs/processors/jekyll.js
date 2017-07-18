@@ -34,7 +34,7 @@ module.exports = function jekyll(renderDocsProcessor) {
             const title = section.replace(/^(\#+\s?)/, '');
             const segment = title.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase();
 
-            return `\n<h3><a class="anchor" name="${segment}" href="#${segment}"></a>${title}</h3>\n`;
+            return `\n<h3><a class="anchor" name="${segment}" href="#${segment}">${title}</a></h3>\n`;
           });
         }
       });

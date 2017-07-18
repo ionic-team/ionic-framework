@@ -242,7 +242,7 @@ Improve this doc
 
 <!-- @usage tag -->
 <@ if doc.usage @>
-<h2><a class="anchor" name="usage" href="#usage"></a>Usage</h2>
+<h2><a class="anchor" name="usage" href="#usage">Usage</a></h2>
 <@ block usage @>
 <$ doc.usage | marked $>
 <@ endblock @>
@@ -250,7 +250,7 @@ Improve this doc
 
 <!-- @property tags -->
 <@ if doc.properties @>
-<h2><a class="anchor" name="attributes" href="#attributes"></a>Attributes:</h2>
+<h2><a class="anchor" name="attributes" href="#attributes">Attributes</a></h2>
 <table class="table" style="margin:0;">
 <thead>
 <tr>
@@ -293,10 +293,10 @@ Improve this doc
 
 
 <@- if doc.statics.length -@>
-<h2><a class="anchor" name="static-members" href="#static-members"></a>Static Members</h2>
+<h2><a class="anchor" name="static-members" href="#static-members">Static Members</a></h2>
 <@- for method in doc.statics @><@ if not method.internal @>
 <div id="<$ method.name $>"></div>
-<h3><a class="anchor" name="<$ method.name $>" href="#<$ method.name $>"></a><$ functionSyntax(method) $></h3>
+<h3><a class="anchor" name="<$ method.name $>" href="#<$ method.name $>"><$ functionSyntax(method) $></a></h3>
 
 <$ method.description $>
 
@@ -327,14 +327,15 @@ Improve this doc
 <!-- instance methods on the class -->
 <@- if doc.members and doc.members.length @>
 
-<h2><a class="anchor" name="instance-members" href="#instance-members"></a>Instance Members</h2>
+<h2><a class="anchor" name="instance-members" href="#instance-members">Instance Members</a></h2>
 <@- for method in doc.members @>
 
 <div id="<$ method.name $>"></div>
 
 <h3>
-<a class="anchor" name="<$ method.name $>" href="#<$ method.name $>"></a>
+<a class="anchor" name="<$ method.name $>" href="#<$ method.name $>">
 <$ functionSyntax(method) $>
+</a>
 </h3>
 
 <$ method.description $>
@@ -366,26 +367,26 @@ Improve this doc
 
 <@- if doc.inputs and doc.inputs.length @>
 <!-- input methods on the class -->
-<h2><a class="anchor" name="input-properties" href="#input-properties"></a>Input Properties</h2>
+<h2><a class="anchor" name="input-properties" href="#input-properties">Input Properties</a></h2>
 <$ inputTable(doc.inputs) $>
 <@- endif -@>
 
 <@- if doc.outputs and doc.outputs.length @>
 <!-- output events on the class -->
-<h2><a class="anchor" name="output-events" href="#output-events"></a>Output Events</h2>
+<h2><a class="anchor" name="output-events" href="#output-events">Output Events</a></h2>
 <$ outputTable(doc.outputs) $>
 <@- endif -@>
 
 
 <@ block advanced @>
 <@- if doc.advanced -@>
-<h2><a class="anchor" name="advanced" href="#advanced"></a>Advanced</h2>
+<h2><a class="anchor" name="advanced" href="#advanced">Advanced</a></h2>
 <$ doc.advanced | marked $>
 <@- endif -@>
 <@ endblock @>
 
 <@ if doc.sassVariables @>
-  <h2 id="sass-variable-header"><a class="anchor" name="sass-variables" href="#sass-variables"></a>Sass Variables</h2>
+  <h2 id="sass-variable-header"><a class="anchor" name="sass-variables" href="#sass-variables">Sass Variables</a></h2>
   <$ sassTable(doc.sassVariables) $>
 <@ endif @>
 
@@ -393,7 +394,7 @@ Improve this doc
 <!-- related link -->
 <@- if doc.see @>
 
-<h2><a class="anchor" name="related" href="#related"></a>Related</h2>
+<h2><a class="anchor" name="related" href="#related">Related</a></h2>
 <@ for s in doc.see @>
 <$ s | safe $> <@- if not loop.last @>,<@- endif -@>
 <@- endfor -@>
