@@ -576,6 +576,7 @@ export class NavControllerBase extends Ion implements NavController {
       // they're inserting/removing the views somewhere in the middle or
       // beginning, so visually nothing needs to animate/transition
       // resolve immediately because there's no animation that's happening
+      this.setTransitioning(false);
       return Promise.resolve({
         hasCompleted: true,
         requiresTransition: false
