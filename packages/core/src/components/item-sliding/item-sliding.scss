@@ -93,10 +93,6 @@ ion-item-options:not([icon-start]) .item-option-button:not([icon-only]) {
   .button-inner {
     flex-direction: column;
   }
-
-  ion-icon {
-    @include padding(null, 0, .3em, 0);
-  }
 }
 
 ion-item-sliding.active-slide {
