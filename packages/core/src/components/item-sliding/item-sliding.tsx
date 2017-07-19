@@ -1,4 +1,4 @@
-import { Component, h, Ionic, State } from '@stencil/core';
+import { Component, h, Ionic, Method, State } from '@stencil/core';
 
 import { GestureDetail, HostElement } from '../../utils/interfaces';
 import { swipeShouldReset } from '../../utils/helpers';
@@ -240,7 +240,10 @@ export class ItemSliding {
   }
 
   onDragEnd(gesture: GestureDetail) {
-    this.selectedContainer.endSliding(gesture.velocityX);
+    let coordX = gesture.currentX;
+    let deltaX = (coordX - this.firstCoordX);
+    let deltaT = (Date.now() - this.firstTimestamp);
+    this.selectedContainer.endSliding(deltaX / deltaT);
     this.selectedContainer = null;
     this.preSelectedContainer = null;
   }
@@ -461,6 +464,7 @@ export class ItemSliding {
    * }
    * ```
    */
+  @Method()
   close() {
     this.setOpenAmount(0, true);
   }
