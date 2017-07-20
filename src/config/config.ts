@@ -116,7 +116,9 @@ import { isArray, isDefined, isFunction, isObject } from '../util/util';
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
  * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                  |
- * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
+ * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed. 
+ * | `scrollAssist`           | `boolean`           | Used to avoid the input to be hidden by the keyboard if it's near the bottom of the page. 
+ * | `scrollPadding`          | `boolean`           | Used to remove the extra padding on ion-content when keyboard is displayed. 
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
  * | `swipeBackEnabled`       | `boolean`           | Whether native iOS swipe to go back functionality is enabled.                                                                                    |
  * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
