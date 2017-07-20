@@ -599,6 +599,11 @@ export abstract class NavController implements NavigationContainer {
    */
   abstract getActiveChildNav(): any;
 
+  /**
+   * Returns a list of all child navigation containers
+   */
+  abstract getAllChildNavs(): any[];
+
 
   /**
    * Returns if the nav controller is actively transitioning or not.

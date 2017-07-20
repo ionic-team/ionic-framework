@@ -685,7 +685,7 @@ describe('DeepLinker', () => {
 
   beforeEach(() => {
     let linkConfig = mockDeepLinkConfig();
-    serializer = new UrlSerializer(linkConfig);
+    serializer = new UrlSerializer(mockApp(), linkConfig);
 
     let moduleLoader = mockModuleLoader();
     let baseCfr: any = null;

@@ -991,6 +991,10 @@ export class NavControllerBase extends Ion implements NavController {
     return this._children;
   }
 
+  getAllChildNavs(): any[] {
+    return this._children;
+  }
+
   registerChildNav(container: NavigationContainer) {
     this._children.push(container);
   }

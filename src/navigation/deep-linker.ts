@@ -131,17 +131,17 @@ export class DeepLinker {
    */
   navChange(direction: string) {
     if (direction) {
-      const rootNavContainers = this._app.getActiveNavContainers();
+      const activeNavContainers = this._app.getActiveNavContainers();
       // the only time you'll ever get a TABS here is when loading directly from a URL
       // this method will be called again when the TAB is loaded
       // so just don't worry about the TABS for now
       // if you encounter a TABS, just return
       let segments: NavSegment[] = [];
-      for (const rootNavContainer of rootNavContainers) {
-        if (isTabs(rootNavContainer) || (rootNavContainer as NavController).isTransitioning()) {
+      for (const activeNavContainer of activeNavContainers) {
+        if (isTabs(activeNavContainer) || (activeNavContainer as NavController).isTransitioning()) {
           return;
         }
-        const segmentsForNav = this.getSegmentsFromNav(rootNavContainer);
+        const segmentsForNav = this.getSegmentsFromNav(activeNavContainer);
         segments = segments.concat(segmentsForNav);
       }
       segments = segments.filter(segment => !!segment);
@@ -176,7 +176,7 @@ export class DeepLinker {
         data = viewController.data;
       }
     }
-    return this._serializer.serializeComponent({ navId: nav.name && nav.name.length ? nav.name : nav.id, secondaryId: null, type: 'nav'}, component, data);
+    return this._serializer.serializeComponent(nav, component, data);
   }
 
   getSegmentFromTab(navContainer: NavigationContainer, component?: any, data?: any): NavSegment {
@@ -190,7 +190,7 @@ export class DeepLinker {
           component = viewController.component;
           data = viewController.data;
         }
-        return this._serializer.serializeComponent({ navId: tabsNavContainer.name || tabsNavContainer.id, secondaryId: tabsNavContainer.getSecondaryIdentifier(), type: 'tabs'}, component, data);
+        return this._serializer.serializeComponent(navContainer, component, data);
       }
     }
   }
@@ -415,7 +415,7 @@ export class DeepLinker {
           return navController.popTo(viewController, {
             animate: false,
             updateUrl: false,
-          }, done);
+          }, {}, done);
         }
       }
     }

@@ -510,6 +510,13 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @internal
    */
+  getAllChildNavs(): any[] {
+    return this._tabs;
+  }
+
+  /**
+   * @internal
+   */
   getIndex(tab: Tab): number {
     return this._tabs.indexOf(tab);
   }

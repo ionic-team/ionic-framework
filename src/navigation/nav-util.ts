@@ -163,16 +163,26 @@ export interface NavResult {
   direction?: string;
 }
 
-export interface NavSegment {
+export interface NavSegment extends DehydratedSegment {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  requiresExplicitNavPrefix?: boolean;
+}
+
+export interface DehydratedSegment {
   id: string;
   name: string;
   component?: any;
   loadChildren?: string;
   data: any;
-  type: string;
-  navId: string;
-  secondaryId: string;
   defaultHistory?: NavSegment[];
+  secondaryId?: string;
+}
+
+export interface DehydratedSegmentPair {
+  segments: DehydratedSegment[];
+  navGroup: NavGroup;
 }
 
 export interface NavGroup {

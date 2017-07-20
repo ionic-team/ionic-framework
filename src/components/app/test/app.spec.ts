@@ -767,6 +767,149 @@ describe('App', () => {
     });
   });
 
+  describe('getNavByIdOrName', () => {
+    it('should return a basic root nav', () => {
+      const nav = mockNavController();
+      app.registerRootNav(nav);
+      const result = app.getNavByIdOrName(nav.id);
+      expect(result).toEqual(nav);
+    });
+
+    it('should return a child nav', () => {
+      const rootNav = mockNavController();
+      app.registerRootNav(rootNav);
+
+      const childNav = mockNavController();
+      childNav.parent = rootNav;
+      rootNav.registerChildNav(childNav);
+
+      const childChildNav = mockNavController();
+      childChildNav.parent = childNav;
+      childNav.registerChildNav(childChildNav);
+
+
+      const expectedChildNav = app.getNavByIdOrName(childNav.id);
+      expect(expectedChildNav).toEqual(childNav);
+
+      const expectedChildChildNav = app.getNavByIdOrName(childChildNav.id);
+      expect(expectedChildChildNav).toEqual(childChildNav);
+    });
+
+    it('should return a child nav when there is a tabs in there', () => {
+      const rootNav = mockNavController();
+      app.registerRootNav(rootNav);
+
+      const tabs = mockTabs();
+      tabs.parent = rootNav;
+      rootNav.registerChildNav(tabs);
+
+      const tab1 = mockTab(tabs);
+      const tab2 = mockTab(tabs);
+      const tab3 = mockTab(tabs);
+
+      const tabChildNav = mockNavController();
+      tabChildNav.parent = tab2;
+      tab2.registerChildNav(tabChildNav);
+
+      const tabChildChildNav = mockNavController();
+      tabChildChildNav.parent = tabChildNav;
+      tabChildNav.registerChildNav(tabChildChildNav);
+
+      const expectedTab1 = app.getNavByIdOrName(tab1.id);
+      expect(expectedTab1).toEqual(tab1);
+
+      const expectedTab2 = app.getNavByIdOrName(tab2.id);
+      expect(expectedTab2).toEqual(tab2);
+
+      const expectedTab3 = app.getNavByIdOrName(tab3.id);
+      expect(expectedTab3).toEqual(tab3);
+
+      const expectedTabChildNav = app.getNavByIdOrName(tabChildNav.id);
+      expect(expectedTabChildNav).toEqual(tabChildNav);
+
+      const expectedTabChildChildNav = app.getNavByIdOrName(tabChildChildNav.id);
+      expect(expectedTabChildChildNav).toEqual(tabChildChildNav);
+    });
+
+    it('should return a basic root nav when the are multiple root navs', () => {
+      const rootNavOne = mockNavController();
+      const rootNavTwo = mockNavController();
+      const rootNavThree = mockNavController();
+      app.registerRootNav(rootNavOne);
+      app.registerRootNav(rootNavTwo);
+      app.registerRootNav(rootNavThree);
+
+      const expectedRootNavOne = app.getNavByIdOrName(rootNavOne.id);
+      expect(expectedRootNavOne).toEqual(rootNavOne);
+
+      const expectedRootNavTwo = app.getNavByIdOrName(rootNavTwo.id);
+      expect(expectedRootNavTwo).toEqual(rootNavTwo);
+
+      const expectedRootNavThree = app.getNavByIdOrName(rootNavThree.id);
+      expect(expectedRootNavThree).toEqual(rootNavThree);
+    });
+
+    it('should return a proper navs when there are multiple root navs with nested navs', () => {
+      const rootNavOne = mockNavController();
+      const rootNavTwo = mockNavController();
+      const rootNavThree = mockNavController();
+      app.registerRootNav(rootNavOne);
+      app.registerRootNav(rootNavTwo);
+      app.registerRootNav(rootNavThree);
+
+      const childNavOne = mockNavController();
+      childNavOne.parent = rootNavOne;
+      rootNavOne.registerChildNav(childNavOne);
+
+      const childChildNavOne = mockNavController();
+      childChildNavOne.parent = childNavOne;
+      childNavOne.registerChildNav(childChildNavOne);
+
+      const childNavTwo = mockNavController();
+      childNavOne.parent = rootNavTwo;
+      rootNavTwo.registerChildNav(childNavTwo);
+
+      const childChildNavTwo = mockNavController();
+      childChildNavTwo.parent = childNavTwo;
+      childNavTwo.registerChildNav(childChildNavTwo);
+
+      const childNavThree = mockNavController();
+      childNavThree.parent = rootNavThree;
+      rootNavThree.registerChildNav(childNavThree);
+
+      const childChildNavThree = mockNavController();
+      childChildNavThree.parent = childNavThree;
+      childNavThree.registerChildNav(childChildNavThree);
+
+      const expectedRootNavOne = app.getNavByIdOrName(rootNavOne.id);
+      expect(expectedRootNavOne).toEqual(rootNavOne);
+
+      const expectedChildNavOne = app.getNavByIdOrName(childNavOne.id);
+      expect(expectedChildNavOne).toEqual(childNavOne);
+
+      const expectedChildChildNavOne = app.getNavByIdOrName(childChildNavOne.id);
+      expect(expectedChildChildNavOne).toEqual(childChildNavOne);
+
+      const expectedRootNavTwo = app.getNavByIdOrName(rootNavTwo.id);
+      expect(expectedRootNavTwo).toEqual(rootNavTwo);
+
+      const expectedChildNavTwo = app.getNavByIdOrName(childNavTwo.id);
+      expect(expectedChildNavTwo).toEqual(childNavTwo);
+
+      const expectedChildChildNavTwo = app.getNavByIdOrName(childChildNavTwo.id);
+      expect(expectedChildChildNavTwo).toEqual(childChildNavTwo);
+
+      const expectedRootNavThree = app.getNavByIdOrName(rootNavThree.id);
+      expect(expectedRootNavThree).toEqual(rootNavThree);
+
+      const expectedChildNavThree = app.getNavByIdOrName(childNavThree.id);
+      expect(expectedChildNavThree).toEqual(childNavThree);
+
+      const expectedChildChildNavThree = app.getNavByIdOrName(childChildNavThree.id);
+      expect(expectedChildChildNavThree).toEqual(childChildNavThree);
+    });
+  });
+
   let app: App;
   let config: Config;
   let plt: MockPlatform;
