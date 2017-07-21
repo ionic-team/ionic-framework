@@ -1,5 +1,5 @@
 import { ConfigApi } from '../index';
-import { PlatformConfig } from './platform-controller';
+import { PlatformConfig } from './platform-configs';
 
 
 export function createConfigController(configObj: any, platforms: PlatformConfig[]): ConfigApi {

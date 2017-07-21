@@ -1,4 +1,4 @@
-import { Component, h, Method } from '@stencil/core';
+import { Component, Method } from '@stencil/core';
 
 
 /**

@@ -4,6 +4,7 @@ import { LoadingController } from './components/loading-controller/loading-contr
 import { GestureDetail, GestureCallback } from './components/gesture/gesture';
 import { GestureController, GestureDelegate } from './components/gesture/gesture-controller';
 import { Menu } from './components/menu/menu';
+import { MenuType } from './components/menu/menu-types';
 import { MenuController } from './components/menu/menu-controller';
 import { Modal, ModalOptions, ModalEvent } from './components/modal/modal';
 import { ModalController } from './components/modal-controller/modal-controller';
@@ -75,6 +76,7 @@ export {
   LoadingEvent,
   Menu,
   MenuController,
+  MenuType,
   Modal,
   ModalOptions,
   ModalEvent,

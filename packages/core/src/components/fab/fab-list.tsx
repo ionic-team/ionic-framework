@@ -1,6 +1,4 @@
-import { Component, h, PropDidChange, State, VNodeData } from '@stencil/core';
-
-import { HostElement } from '../../utils/interfaces';
+import { Component, HostElement, PropDidChange, State } from '@stencil/core';
 
 
 /**
@@ -47,7 +45,7 @@ export class FabList {
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'fab-list-active': this.activated

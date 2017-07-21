@@ -1,5 +1,4 @@
-import { Animation, Menu, MenuType as IMenuType } from '../../utils/interfaces';
-const Ionic = (window as any).Ionic;
+import { Animation, Menu } from '../../index';
 
 
 /**
@@ -9,7 +8,7 @@ const Ionic = (window as any).Ionic;
  * type will provide their own animations for open and close
  * and registers itself with Menu.
  */
-export class MenuType implements IMenuType {
+export class MenuType {
 
   ani: Animation;
   isOpening: boolean;

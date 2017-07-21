@@ -1,8 +1,8 @@
-import { Menu, MenuController as IMenuController } from '../../utils/interfaces';
-import { MenuType, MenuRevealType, MenuPushType, MenuOverlayType } from './menu-types';
+import { Menu, MenuType } from '../../index';
+import { MenuRevealType, MenuPushType, MenuOverlayType } from './menu-types';
 
 
-export class MenuController implements IMenuController {
+export class MenuController {
   private _menus: Array<Menu> = [];
   private _menuTypes: { [name: string]: new(...args: any[]) => MenuType } = {};
 

@@ -1,5 +1,5 @@
-import { Component, Prop, h } from '@stencil/core';
-import { VNodeData } from '../../utils/interfaces';
+import { Component, Prop } from '@stencil/core';
+
 
 @Component({
   tag: 'ion-tab-button',
@@ -16,7 +16,7 @@ export class TabButton {
 
   @Prop() index: number;
 
-  hostData(): VNodeData {
+  hostData() {
     const tab = this.tab;
     if(!tab) return {};
 
