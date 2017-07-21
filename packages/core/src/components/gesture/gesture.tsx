@@ -11,6 +11,7 @@ import { PanRecognizer } from './recognizers';
 })
 export class Gesture {
   private $el: HTMLElement;
+  private $emit: Function;
   private ctrl: GestureController;
   private detail: GestureDetail = {};
   private positions: number[] = [];
@@ -78,7 +79,7 @@ export class Gesture {
       this.blocker.destroy();
     }
     if (block) {
-      this.blocker = this.ctrl.createBlocker(block.split(','));
+      this.blocker = this.ctrl.createBlocker({ disable: block.split(',')});
     }
   }
 
@@ -185,7 +186,7 @@ export class Gesture {
             if (this.onMove) {
               this.onMove(detail);
             } else {
-              Ionic.emit(this, 'ionGestureMove', { detail: this.detail });
+              this.$emit('ionGestureMove', this.detail);
             }
           });
         }
@@ -249,7 +250,7 @@ export class Gesture {
     if (this.onStart) {
       this.onStart(this.detail);
     } else {
-      Ionic.emit(this, 'ionGestureStart', { detail: this.detail });
+      this.$emit('ionGestureStart', this.detail);
     }
 
     this.hasCapturedPan = true;
@@ -306,7 +307,7 @@ export class Gesture {
         if (this.onEnd) {
           this.onEnd(detail);
         } else {
-          Ionic.emit(this, 'ionGestureEnd', { detail: detail });
+          this.$emit('ionGestureEnd', detail);
         }
 
       } else if (this.hasPress) {
@@ -316,7 +317,7 @@ export class Gesture {
         if (this.notCaptured) {
           this.notCaptured(detail);
         } else {
-          Ionic.emit(this, 'ionGestureNotCaptured', { detail: detail });
+          this.$emit('ionGestureNotCaptured', detail);
         }
       }
 
@@ -338,7 +339,7 @@ export class Gesture {
       if (this.onPress) {
         this.onPress(detail);
       } else {
-        Ionic.emit(this, 'ionPress', { detail: detail });
+        this.$emit('ionPress', detail);
       }
     }
   }

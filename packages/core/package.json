@@ -1,6 +1,7 @@
 {
   "name": "@ionic/core",
   "version": "0.0.1",
+  "private": true,
   "description": "Base components for Ionic",
   "main": "dist/collection/collection-manifest.json",
   "scripts": {
@@ -12,9 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
-  "dependencies": {
-    "@stencil/core": "0.0.2-7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@stencil/dev-server": "0.0.9",
     "concurrently": "^3.5.0",

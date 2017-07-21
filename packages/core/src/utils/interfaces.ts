@@ -121,9 +121,7 @@ export interface ModalOptions {
 
 
 export interface ModalEvent {
-  detail: {
-    modal: Modal;
-  };
+  modal: Modal;
 }
 
 
@@ -152,9 +150,7 @@ export interface LoadingOptions {
 
 
 export interface LoadingEvent {
-  detail: {
-    loading: Loading;
-  };
+  loading: Loading;
 }
 
 

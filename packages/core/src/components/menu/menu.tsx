@@ -1,4 +1,5 @@
-import { Component, h, Prop, Ionic, PropDidChange } from '@stencil/core';
+import { Component, h, Prop, PropDidChange } from '@stencil/core';
+import { Ionic } from '../../index';
 import { VNodeData, GlobalNamespace, Menu as IMenu } from '../../utils/interfaces';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
@@ -17,6 +18,7 @@ import { MenuType } from './menu-types';
 })
 export class Menu implements IMenu {
   private $el: HTMLElement;
+  private $emit: Function;
   private _backdropElm: HTMLElement;
   private _ctrl: MenuController;
   private _unregCntClick: Function;
@@ -259,7 +261,7 @@ export class Menu implements IMenu {
 
     this._getType().setProgessStep(stepValue);
 
-    Ionic.emit(this, 'ionDrag', { detail: { menu: this } });
+    this.$emit('ionDrag', { menu: this });
   }
 
   _swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number, velocity: number) {
@@ -316,7 +318,7 @@ export class Menu implements IMenu {
       });
 
       // emit open event
-      Ionic.emit(this, 'ionOpen', { detail: { menu: this } });
+      this.$emit('ionOpen', { menu: this });
 
     } else {
       // enable swipe to go back gesture
@@ -330,7 +332,7 @@ export class Menu implements IMenu {
       });
 
       // emit close event
-      Ionic.emit(this, 'ionClose', { detail: { menu: this } });
+      this.$emit('ionClose', { menu: this });
     }
   }
 

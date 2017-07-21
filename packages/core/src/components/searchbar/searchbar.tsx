@@ -1,5 +1,6 @@
-import { Component, h, Ionic, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { VNodeData } from '../../utils/interfaces';
+
 
 /**
  * @name Searchbar
@@ -33,6 +34,7 @@ import { VNodeData } from '../../utils/interfaces';
 })
 export class Searchbar {
   $el: HTMLElement;
+  $emit: Function;
 
   _isCancelVisible: boolean = false;
   _shouldBlur: boolean = true;
@@ -137,7 +139,7 @@ export class Searchbar {
    * Clears the input field and triggers the control change.
    */
   clearInput(ev: UIEvent) {
-    Ionic.emit(this, 'ionClear', { detail: { event: ev } });
+    this.$emit('ionClear', { detail: { event: ev } });
 
     // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
@@ -145,7 +147,7 @@ export class Searchbar {
       let value = this.value;
       if (value !== undefined && value !== '') {
         this.value = '';
-        Ionic.emit(this, 'ionInput', { detail: { event: ev } });
+        this.$emit('ionInput', { event: ev });
       }
     }, 16 * 4);
     this._shouldBlur = false;
@@ -158,7 +160,7 @@ export class Searchbar {
    * then calls the custom cancel function if the user passed one in.
    */
   cancelSearchbar(ev: UIEvent) {
-    Ionic.emit(this, 'ionCancel', { detail: { event: ev } });
+    this.$emit('ionCancel', { event: ev });
 
     this.clearInput(ev);
     this._shouldBlur = true;
@@ -205,7 +207,7 @@ export class Searchbar {
     if (this._shouldBlur === false) {
       inputEle.focus();
       this._shouldBlur = true;
-      Ionic.emit(this, 'ionBlur', { detail: { this: this } });
+      this.$emit('ionBlur', { this: this });
       this.inputUpdated();
       return;
     }
@@ -222,7 +224,7 @@ export class Searchbar {
     this.activated = true;
 
     this.focused = true;
-    Ionic.emit(this, 'ionFocus', { detail: { this: this } });
+    this.$emit('ionFocus', { this: this });
     this.inputUpdated();
 
     this.positionElements();

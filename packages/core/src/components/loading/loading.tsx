@@ -1,4 +1,5 @@
-import { Component, h, Listen, Prop, State, Ionic } from '@stencil/core';
+import { Component, h, Listen, Prop, State } from '@stencil/core';
+import { Ionic } from '../../index';
 import { AnimationBuilder, Animation, Loading as ILoading, LoadingEvent } from '../../utils/interfaces';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -18,6 +19,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
 })
 export class Loading implements ILoading {
   $el: HTMLElement;
+  $emit: Function;
   animation: Animation;
   durationTimeout: any;
 
@@ -49,7 +51,7 @@ export class Loading implements ILoading {
     if (this.showSpinner === null || this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
-    Ionic.emit(this, 'ionLoadingDidLoad', { detail: { loading: this } } as LoadingEvent);
+    this.$emit('ionLoadingDidLoad', { loading: this } as LoadingEvent);
   }
 
   ionViewDidEnter() {
@@ -62,7 +64,7 @@ export class Loading implements ILoading {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
 
-    Ionic.emit(this, 'ionLoadingDidPresent', { detail: { loading: this } } as LoadingEvent);
+    this.$emit('ionLoadingDidPresent', { loading: this } as LoadingEvent);
   }
 
   present() {
@@ -77,7 +79,7 @@ export class Loading implements ILoading {
       this.animation = null;
     }
 
-    Ionic.emit(this, 'ionLoadingWillPresent', { detail: { loading: this } } as LoadingEvent);
+    this.$emit('ionLoadingWillPresent', { loading: this } as LoadingEvent);
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -108,7 +110,7 @@ export class Loading implements ILoading {
     }
 
     return new Promise<void>(resolve => {
-      Ionic.emit(this, 'ionLoadingWillDismiss', { detail: { loading: this } } as LoadingEvent);
+      this.$emit('ionLoadingWillDismiss', { loading: this } as LoadingEvent);
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -124,7 +126,7 @@ export class Loading implements ILoading {
       this.animation = animationBuilder(this.$el);
       this.animation.onFinish((a: any) => {
         a.destroy();
-        Ionic.emit(this, 'ionLoadingDidDismiss', { detail: { loading: this } } as LoadingEvent);
+        this.$emit('ionLoadingDidDismiss', { loading: this } as LoadingEvent);
         Ionic.dom.write(() => {
           this.$el.parentNode.removeChild(this.$el);
         });
@@ -134,7 +136,7 @@ export class Loading implements ILoading {
   }
 
   ionViewDidUnload() {
-    Ionic.emit(this, 'ionLoadingDidUnload', { detail: { loading: this } } as LoadingEvent);
+    this.$emit('ionLoadingDidUnload', { loading: this }as LoadingEvent);
   }
 
   render() {

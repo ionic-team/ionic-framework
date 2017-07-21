@@ -1,4 +1,4 @@
-import { Component, h, Ionic, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 
 import { CssClassObject } from '../../utils/interfaces';
 import { createThemedClasses } from '../../utils/theme';
@@ -44,6 +44,7 @@ import { createThemedClasses } from '../../utils/theme';
   tag: 'ion-segment-button'
 })
 export class SegmentButton {
+  $emit: Function;
   styleTmr: any;
 
   mode: string;
@@ -81,11 +82,7 @@ export class SegmentButton {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      Ionic.emit(this, 'ionClick', {
-        detail: {
-          'segmentButton': this,
-        }
-      });
+      this.$emit('ionClick', { 'segmentButton': this });
     });
   }
 

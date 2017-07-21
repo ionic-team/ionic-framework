@@ -16,6 +16,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
 })
 export class Modal implements IModal {
   $el: HTMLElement;
+  $emit: Function;
   animation: Animation;
 
   @Prop() mode: string;
@@ -38,7 +39,7 @@ export class Modal implements IModal {
   }
 
   ionViewDidLoad() {
-    Ionic.emit(this, 'ionModalDidLoad', { detail: { modal: this } } as ModalEvent);
+    this.$emit('ionModalDidLoad', { modal: this } as ModalEvent);
   }
 
   present() {
@@ -53,7 +54,7 @@ export class Modal implements IModal {
       this.animation = null;
     }
 
-    Ionic.emit(this, 'ionModalWillPresent', { detail: { modal: this } } as ModalEvent);
+    this.$emit('ionModalWillPresent', { modal: this } as ModalEvent);
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -70,7 +71,7 @@ export class Modal implements IModal {
 
     this.animation.onFinish((a: any) => {
       a.destroy();
-      Ionic.emit(this, 'ionModalDidPresent', { detail: { modal: this } } as ModalEvent);
+      this.$emit('ionModalDidPresent', { modal: this } as ModalEvent);
       resolve();
     }).play();
   }
@@ -82,7 +83,7 @@ export class Modal implements IModal {
     }
 
     return new Promise<void>(resolve => {
-      Ionic.emit(this, 'ionModalWillDismiss', { detail: { modal: this } } as ModalEvent);
+      this.$emit('ionModalWillDismiss', { modal: this } as ModalEvent);
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -98,7 +99,7 @@ export class Modal implements IModal {
       this.animation = animationBuilder(this.$el);
       this.animation.onFinish((a: any) => {
         a.destroy();
-        Ionic.emit(this, 'ionModalDidDismiss', { detail: { modal: this } } as ModalEvent);
+        this.$emit('ionModalDidDismiss', { modal: this } as ModalEvent);
         Ionic.dom.write(() => {
           this.$el.parentNode.removeChild(this.$el);
         });
@@ -108,7 +109,7 @@ export class Modal implements IModal {
   }
 
   ionViewDidUnload() {
-    Ionic.emit(this, 'ionModalDidUnload', { detail: { modal: this } } as ModalEvent);
+    this.$emit('ionModalDidUnload', { modal: this } as ModalEvent);
   }
 
   backdropClick() {

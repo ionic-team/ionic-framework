@@ -45,7 +45,7 @@ export class LoadingController implements IonicControllerApi {
 
   @Listen('body:ionLoadingDidLoad')
   viewDidLoad(ev: LoadingEvent) {
-    const loading = ev.detail.loading;
+    const loading = ev.loading;
     const loadingResolve = this.loadingResolves[loading.id];
     if (loadingResolve) {
       loadingResolve(loading);
@@ -56,13 +56,13 @@ export class LoadingController implements IonicControllerApi {
 
   @Listen('body:ionLoadingWillPresent')
   willPresent(ev: LoadingEvent) {
-    this.loadings.push(ev.detail.loading);
+    this.loadings.push(ev.loading);
   }
 
 
   @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
   willDismiss(ev: LoadingEvent) {
-    const index = this.loadings.indexOf(ev.detail.loading);
+    const index = this.loadings.indexOf(ev.loading);
     if (index > -1) {
       this.loadings.splice(index, 1);
     }

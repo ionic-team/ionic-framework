@@ -1,5 +1,6 @@
-import { Component, h, Prop, Ionic } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { Swiper } from './vendor/swiper';
+
 
 /**
  * @name Slides
@@ -30,6 +31,7 @@ import { Swiper } from './vendor/swiper';
 export class Slides {
   swiper: any;
   $el: HTMLElement;
+  $emit: Function;
 
   /**
    * @input {string} The animation effect of the slides.
@@ -168,7 +170,7 @@ export class Slides {
 
   emitEvent(eventName: string) {
     return (data: any) => {
-      Ionic.emit(this, eventName, data);
+      this.$emit(eventName, data);
     };
   }
 

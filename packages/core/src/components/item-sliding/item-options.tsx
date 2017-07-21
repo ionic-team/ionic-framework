@@ -1,4 +1,4 @@
-import { Component, h, Ionic, Prop } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 import { isRightSide, Side } from '../../utils/helpers';
 
@@ -53,7 +53,7 @@ export class ItemOptions {
    * @output {event} Emitted when the item has been fully swiped.
    */
   ionSwipe(itemSliding: any) {
-    Ionic.emit(itemSliding, 'ionSwipe');
+    itemSliding.$emit('ionSwipe');
   }
 
   /**

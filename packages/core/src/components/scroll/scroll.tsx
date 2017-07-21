@@ -9,24 +9,16 @@ import { Scroll as IScroll } from './scroll-interface';
 })
 export class Scroll implements IScroll {
   private $el: HTMLElement;
+  private $emit: Function;
   private gesture: GestureDelegate;
   private positions: number[] = [];
   private _l: number;
   private _t: number;
   private tmr: any;
   private queued = false;
-  private eventOpts: any;
 
   isScrolling: boolean = false;
   detail: ScrollDetail = {};
-
-  constructor() {
-    this.eventOpts = {
-      detail: this.detail,
-      bubbles: true,
-      composed: true
-    };
-  }
 
   @Prop() enabled: boolean = true;
   @Prop() jsScroll: boolean = false;
@@ -90,7 +82,7 @@ export class Scroll implements IScroll {
       if (self.ionScrollStart) {
         self.ionScrollStart(detail);
       } else {
-        Ionic.emit(this, 'ionScrollStart', this.eventOpts);
+        this.$emit('ionScrollStart', this.detail);
       }
     }
 
@@ -147,7 +139,7 @@ export class Scroll implements IScroll {
     if (self.ionScrollStart) {
       self.ionScroll(detail);
     } else {
-      Ionic.emit(this, 'ionScroll', this.eventOpts);
+      this.$emit('ionScroll', this.detail);
     }
   }
 
@@ -163,7 +155,7 @@ export class Scroll implements IScroll {
       self.ionScrollEnd(detail);
 
     } else {
-      Ionic.emit(this, 'ionScrollEnd', this.eventOpts);
+      this.$emit('ionScrollEnd', this.detail);
     }
   }
 

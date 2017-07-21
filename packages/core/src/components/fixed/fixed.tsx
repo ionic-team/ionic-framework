@@ -1,4 +1,5 @@
-import { Component, h, Ionic, VNodeData } from '@stencil/core';
+import { Component, h, VNodeData } from '@stencil/core';
+import { Ionic } from '../../index';
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
 
 

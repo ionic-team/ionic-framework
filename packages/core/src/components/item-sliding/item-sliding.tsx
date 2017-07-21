@@ -136,6 +136,7 @@ const enum SlidingState {
 })
 export class ItemSliding {
   $el: HTMLElement;
+  $emit: Function;
   item: HostElement;
 
   openAmount: number = 0;
@@ -183,7 +184,7 @@ export class ItemSliding {
    *
    */
   ionDrag() {
-    Ionic.emit(this, 'ionDrag');
+    this.$emit('ionDrag');
   }
 
   ionViewDidLoad() {

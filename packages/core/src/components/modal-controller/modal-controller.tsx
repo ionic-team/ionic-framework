@@ -45,7 +45,7 @@ export class ModalController implements IonicControllerApi {
 
   @Listen('body:ionModalDidLoad')
   viewDidLoad(ev: ModalEvent) {
-    const modal = ev.detail.modal;
+    const modal = ev.modal;
     const modalResolve = this.modalResolves[modal.id];
     if (modalResolve) {
       modalResolve(modal);
@@ -56,13 +56,13 @@ export class ModalController implements IonicControllerApi {
 
   @Listen('body:ionModalWillPresent')
   willPresent(ev: ModalEvent) {
-    this.modals.push(ev.detail.modal);
+    this.modals.push(ev.modal);
   }
 
 
   @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
   willDismiss(ev: ModalEvent) {
-    const index = this.modals.indexOf(ev.detail.modal);
+    const index = this.modals.indexOf(ev.modal);
     if (index > -1) {
       this.modals.splice(index, 1);
     }
