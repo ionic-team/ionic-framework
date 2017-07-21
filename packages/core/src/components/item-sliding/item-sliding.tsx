@@ -1,4 +1,4 @@
-import { Component, h, Ionic, State } from '@stencil/core';
+import { Component, h, Ionic, Method, State } from '@stencil/core';
 
 import { GestureDetail, HostElement } from '../../utils/interfaces';
 import { swipeShouldReset } from '../../utils/helpers';
@@ -138,6 +138,7 @@ export class ItemSliding {
   $el: HTMLElement;
   $emit: Function;
   item: HostElement;
+  list: HostElement;
 
   openAmount: number = 0;
   startX: number = 0;
@@ -210,6 +211,9 @@ export class ItemSliding {
     this.sides = sides;
 
     this.item = this.$el.querySelector('ion-item') as HostElement;
+
+    // Get the parent list to close open containers
+    this.list = this.$el.closest('ion-list') as HostElement;
   }
 
   canStart(gesture: GestureDetail): boolean {
@@ -220,7 +224,7 @@ export class ItemSliding {
     let container = this;
 
     // Close open container if it is not the selected one.
-    if (container !== this.openContainer) {
+    if (this.list && container !== this.list.$instance.openContainer) {
       this.closeOpened();
     }
 
@@ -232,7 +236,7 @@ export class ItemSliding {
   }
 
   onDragStart(gesture: GestureDetail) {
-    this.selectedContainer = this.openContainer = this.preSelectedContainer;
+    this.selectedContainer = this.list.$instance.openContainer = this.preSelectedContainer;
     this.selectedContainer.startSliding(gesture.currentX);
   }
 
@@ -241,7 +245,10 @@ export class ItemSliding {
   }
 
   onDragEnd(gesture: GestureDetail) {
-    this.selectedContainer.endSliding(gesture.velocityX);
+    let coordX = gesture.currentX;
+    let deltaX = (coordX - this.firstCoordX);
+    let deltaT = (Date.now() - this.firstTimestamp);
+    this.selectedContainer.endSliding(deltaX / deltaT);
     this.selectedContainer = null;
     this.preSelectedContainer = null;
   }
@@ -249,9 +256,8 @@ export class ItemSliding {
   closeOpened(): boolean {
     this.selectedContainer = null;
 
-    if (this.openContainer) {
-      this.openContainer.close();
-      this.openContainer = null;
+    if (this.list.$instance.openContainer) {
+      this.list.$instance.closeSlidingItems();
       return true;
     }
     return false;
@@ -408,10 +414,9 @@ export class ItemSliding {
       }
     }
     if (openAmount === 0) {
-      this.setState(SlidingState.Disabled);
       this.tmr = setTimeout(() => {
-        this.tmr = null;
         this.setState(SlidingState.Disabled);
+        this.tmr = null;
       }, 600);
       this.item.style.transform = '';
       return;
@@ -462,6 +467,7 @@ export class ItemSliding {
    * }
    * ```
    */
+  @Method()
   close() {
     this.setOpenAmount(0, true);
   }

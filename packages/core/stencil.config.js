@@ -10,6 +10,7 @@ exports.config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-gesture', 'ion-scroll'], priority: 'low' },
+    { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-item', 'ion-item-divider', 'ion-item-sliding', 'ion-item-options', 'ion-item-option', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
     { components: ['ion-loading', 'ion-loading-controller'] },
     { components: ['ion-menu'], priority: 'low' },
@@ -18,6 +19,7 @@ exports.config = {
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
+    { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] }
   ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',

@@ -1,4 +1,6 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Method, State } from '@stencil/core';
+
+import { ItemSliding } from '../item-sliding/item-sliding';
 
 @Component({
   tag: 'ion-list',
@@ -12,7 +14,18 @@ import { Component, h } from '@stencil/core';
   }
 })
 export class List {
+  @State() openContainer: ItemSliding;
+
   render() {
     return <slot></slot>;
+  }
+
+  /**
+   * Close any sliding items that are open.
+   */
+  @Method()
+  closeSlidingItems() {
+    this.openContainer.close();
+    this.openContainer = null;
   }
 }

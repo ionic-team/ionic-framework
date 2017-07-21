@@ -93,10 +93,6 @@ ion-item-options:not([icon-start]) .item-option-button:not([icon-only]) {
   .button-inner {
     flex-direction: column;
   }
-
-  ion-icon {
-    @include padding(null, 0, .3em, 0);
-  }
 }
 
 ion-item-sliding.active-slide {
@@ -136,7 +132,7 @@ ion-item-sliding.active-slide {
 // Item Expandable Animation
 // --------------------------------------------------
 
-.item-option-button[expandable] {
+ion-item-option[expandable] .item-option-button {
   flex-shrink: 0;
 
   transition-duration: 0;
@@ -144,7 +140,7 @@ ion-item-sliding.active-slide {
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
 
-ion-item-sliding.active-swipe-right .item-option-button[expandable] {
+ion-item-sliding.active-swipe-right ion-item-option[expandable] .item-option-button {
   transition-duration: .6s;
   transition-property: padding-left;
 
@@ -162,7 +158,7 @@ ion-item-sliding.active-swipe-right .item-option-button[expandable] {
   }
 }
 
-ion-item-sliding.active-swipe-left .item-option-button[expandable] {
+ion-item-sliding.active-swipe-left ion-item-option[expandable] .item-option-button {
   transition-duration: .6s;
   transition-property: padding-right;
 
