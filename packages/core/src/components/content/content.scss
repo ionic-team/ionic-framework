@@ -72,38 +72,38 @@ ion-app [no-padding] ion-scroll {
 }
 
 @mixin content-padding($mode, $content-padding) {
-  ion-app.#{$mode} [padding],
-  ion-app.#{$mode} [padding] ion-scroll {
+  .app-#{$mode} [padding],
+  .app-#{$mode} [padding] ion-scroll {
     @include padding($content-padding);
   }
 
-  ion-app.#{$mode} [padding-top],
-  ion-app.#{$mode} [padding-top] ion-scroll {
+  .app-#{$mode} [padding-top],
+  .app-#{$mode} [padding-top] ion-scroll {
     @include padding($content-padding, null, null, null);
   }
 
-  ion-app.#{$mode} [padding-left],
-  ion-app.#{$mode} [padding-left] ion-scroll {
+  .app-#{$mode} [padding-left],
+  .app-#{$mode} [padding-left] ion-scroll {
     @include padding-horizontal($content-padding, null);
   }
 
-  ion-app.#{$mode} [padding-right],
-  ion-app.#{$mode} [padding-right] ion-scroll {
+  .app-#{$mode} [padding-right],
+  .app-#{$mode} [padding-right] ion-scroll {
     @include padding-horizontal(null, $content-padding);
   }
 
-  ion-app.#{$mode} [padding-bottom],
-  ion-app.#{$mode} [padding-bottom] ion-scroll {
+  .app-#{$mode} [padding-bottom],
+  .app-#{$mode} [padding-bottom] ion-scroll {
     @include padding(null, null, $content-padding, null);
   }
 
-  ion-app.#{$mode} [padding-vertical],
-  ion-app.#{$mode} [padding-vertical] ion-scroll {
+  .app-#{$mode} [padding-vertical],
+  .app-#{$mode} [padding-vertical] ion-scroll {
     @include padding($content-padding, null, $content-padding, null);
   }
 
-  ion-app.#{$mode} [padding-horizontal],
-  ion-app.#{$mode} [padding-horizontal] ion-scroll {
+  .app-#{$mode} [padding-horizontal],
+  .app-#{$mode} [padding-horizontal] ion-scroll {
     @include padding-horizontal($content-padding);
   }
 }
@@ -118,50 +118,50 @@ ion-app [no-margin] ion-scroll {
 }
 
 @mixin content-margin($mode, $content-margin) {
-  ion-app.#{$mode} [margin],
-  ion-app.#{$mode} [margin] ion-scroll {
+  .app-#{$mode} [margin],
+  .app-#{$mode} [margin] ion-scroll {
     @include margin($content-margin);
   }
 
-  ion-app.#{$mode} [margin-top],
-  ion-app.#{$mode} [margin-top] ion-scroll {
+  .app-#{$mode} [margin-top],
+  .app-#{$mode} [margin-top] ion-scroll {
     @include margin($content-margin, null, null, null);
   }
 
-  ion-app.#{$mode} [margin-left],
-  ion-app.#{$mode} [margin-left] ion-scroll {
+  .app-#{$mode} [margin-left],
+  .app-#{$mode} [margin-left] ion-scroll {
     // scss-lint:disable PropertySpelling
     margin-left: $content-margin;
   }
 
-  ion-app.#{$mode} [margin-start],
-  ion-app.#{$mode} [margin-start] ion-scroll {
+  .app-#{$mode} [margin-start],
+  .app-#{$mode} [margin-start] ion-scroll {
     @include margin-horizontal($content-margin, null);
   }
 
-  ion-app.#{$mode} [margin-right],
-  ion-app.#{$mode} [margin-right] ion-scroll {
+  .app-#{$mode} [margin-right],
+  .app-#{$mode} [margin-right] ion-scroll {
     // scss-lint:disable PropertySpelling
     margin-right: $content-margin;
   }
 
-  ion-app.#{$mode} [margin-end],
-  ion-app.#{$mode} [margin-end] ion-scroll {
+  .app-#{$mode} [margin-end],
+  .app-#{$mode} [margin-end] ion-scroll {
     @include margin-horizontal(null, $content-margin);
   }
 
-  ion-app.#{$mode} [margin-bottom],
-  ion-app.#{$mode} [margin-bottom] ion-scroll {
+  .app-#{$mode} [margin-bottom],
+  .app-#{$mode} [margin-bottom] ion-scroll {
     @include margin(null, null, $content-margin, null);
   }
 
-  ion-app.#{$mode} [margin-vertical],
-  ion-app.#{$mode} [margin-vertical] ion-scroll {
+  .app-#{$mode} [margin-vertical],
+  .app-#{$mode} [margin-vertical] ion-scroll {
     @include margin($content-margin, null, $content-margin, null);
   }
 
-  ion-app.#{$mode} [margin-horizontal],
-  ion-app.#{$mode} [margin-horizontal] ion-scroll {
+  .app-#{$mode} [margin-horizontal],
+  .app-#{$mode} [margin-horizontal] ion-scroll {
     @include margin-horizontal($content-margin);
   }
 }
