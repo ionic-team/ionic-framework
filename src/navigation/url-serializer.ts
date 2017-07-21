@@ -2,7 +2,7 @@ import { OpaqueToken } from '@angular/core';
 
 import { App } from '../components/app/app';
 import { NavigationContainer } from './navigation-container';
-import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment, isTabs } from './nav-util';
+import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
@@ -40,7 +40,7 @@ export class UrlSerializer {
   createSegmentFromName(navContainer: NavigationContainer, nameOrComponent: any): NavSegment {
     const configLink = this.getLinkFromName(nameOrComponent);
     if (configLink) {
-      return this._createSegment(navContainer, configLink, null);
+      return this._createSegment(this._app, navContainer, configLink, null);
     }
     return null;
   }
@@ -83,14 +83,16 @@ export class UrlSerializer {
     if (component) {
       const link = findLinkByComponentData(this.links, component, data);
       if (link) {
-        return this._createSegment(navContainer, link, data);
+        return this._createSegment(this._app, navContainer, link, data);
       }
     }
     return null;
   }
 
-  /** @internal */
-  _createSegment(navContainer: NavigationContainer, configLink: NavLink, data: any): NavSegment {
+  /**
+ * @internal
+ */
+  _createSegment(app: App, navContainer: NavigationContainer, configLink: NavLink, data: any): NavSegment {
     let urlParts = configLink.segmentParts;
 
     if (isPresent(data)) {
@@ -116,7 +118,13 @@ export class UrlSerializer {
       }
     }
 
-    const requiresExplicitPrefix = navContainer.parent && navContainer.parent.getAllChildNavs().length > 1;
+    let requiresExplicitPrefix = true;
+    if (navContainer.parent) {
+      requiresExplicitPrefix = navContainer.parent && navContainer.parent.getAllChildNavs().length > 1;
+    } else {
+      // if it's a root nav, and there are multiple root navs, we need an explicit prefix
+      requiresExplicitPrefix = app.getRootNavById(navContainer.id) && app.getRootNavs().length > 1;
+    }
 
     return {
       id: urlParts.join('/'),
@@ -378,11 +386,7 @@ export function hydrateSegmentsWithNav(app: App, dehydratedSegmentPairs: Dehydra
         break;
         // throw new Error('Invalid URL - could not determine which nav to use');
       }
-      if (isTabs(navs[0])) {
-        navs = navs[0].getActiveChildNavs();
-      } else {
-        navs = navs[0].getAllChildNavs();
-      }
+      navs = navs[0].getActiveChildNavs();
     }
   }
   return segments;
@@ -390,7 +394,11 @@ export function hydrateSegmentsWithNav(app: App, dehydratedSegmentPairs: Dehydra
 
 export function getNavFromNavGroup(navGroup: NavGroup, app: App): NavigationContainer[] {
   if (navGroup.navId) {
-    return [app.getNavByIdOrName(navGroup.navId)];
+    const rootNav = app.getNavByIdOrName(navGroup.navId);
+    if (rootNav) {
+      return [rootNav];
+    }
+    return [];
   }
   // we don't know what nav to use, so just use the root nav.
   // if there is more than one root nav, throw an error
@@ -470,6 +478,11 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
       }
     }
     const cleanedSegments = segments.filter(segment => !!segment);
+    // if the nav group has a secondary id, make sure the first segment also has it set
+    if (navGroup.secondaryId && segments.length) {
+      cleanedSegments[0].secondaryId = navGroup.secondaryId;
+    }
+
     pairs.push({
       navGroup: navGroup,
       segments: cleanedSegments

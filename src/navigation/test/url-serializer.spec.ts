@@ -73,7 +73,7 @@ describe('UrlSerializer', () => {
       };
 
       const nav = mockNavController();
-      const segment = serializer._createSegment(nav, link, data);
+      const segment = serializer._createSegment(serializer._app, nav, link, data);
       expect(segment.id).toEqual('userId/8675309/name/jenny');
       expect(segment.component).toEqual(link.component);
       expect(segment.data.id).toEqual(data.id);
@@ -93,7 +93,7 @@ describe('UrlSerializer', () => {
         name: 'jenny'
       };
       const nav = mockNavController();
-      const segment = serializer._createSegment(nav, link, data);
+      const segment = serializer._createSegment(serializer._app, nav, link, data);
       expect(segment.id).toEqual(`userId/${encoded}/name/${data.name}`);
       expect(segment.component).toEqual(MockView1);
       expect(segment.data.id).toEqual(char);
@@ -105,7 +105,7 @@ describe('UrlSerializer', () => {
         component: MockView1
       };
       const nav = mockNavController();
-      const segment = serializer._createSegment(nav, link, null);
+      const segment = serializer._createSegment(serializer._app, nav, link, null);
       expect(segment.id).toEqual('settings-view');
       expect(segment.component).toEqual(MockView1);
       expect(segment.data).toEqual(null);

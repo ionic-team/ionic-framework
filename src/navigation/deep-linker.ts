@@ -136,13 +136,18 @@ export class DeepLinker {
       // this method will be called again when the TAB is loaded
       // so just don't worry about the TABS for now
       // if you encounter a TABS, just return
-      let segments: NavSegment[] = [];
       for (const activeNavContainer of activeNavContainers) {
         if (isTabs(activeNavContainer) || (activeNavContainer as NavController).isTransitioning()) {
           return;
         }
-        const segmentsForNav = this.getSegmentsFromNav(activeNavContainer);
-        segments = segments.concat(segmentsForNav);
+      }
+
+      // okay, get the root navs and build the segments up
+      let segments: NavSegment[] = [];
+      const navContainers: NavigationContainer[] = this._app.getRootNavs();
+      for (const navContainer of navContainers) {
+        const segmentsForNav = this.getSegmentsFromNav(navContainer);
+         segments = segments.concat(segmentsForNav);
       }
       segments = segments.filter(segment => !!segment);
       if (segments.length) {
@@ -153,19 +158,16 @@ export class DeepLinker {
   }
 
   getSegmentsFromNav(nav: NavigationContainer): NavSegment[] {
-    const segments: NavSegment[] = [];
-    while (nav) {
-      if (isNav(nav)) {
-        segments.push(this.getSegmentFromNav(nav as NavController));
-        nav = nav.parent;
-      } else if (isTab(nav)) {
-        segments.push(this.getSegmentFromTab(nav));
-        nav = nav.parent && nav.parent.parent;
-      } else {
-        nav = nav.parent;
-      }
+    let segments: NavSegment[] = [];
+    if (isNav(nav)) {
+      segments.push(this.getSegmentFromNav(nav as NavController));
+    } else if (isTab(nav)) {
+      segments.push(this.getSegmentFromTab(nav));
     }
-    return segments.reverse();
+    nav.getActiveChildNavs().forEach(child => {
+      segments = segments.concat(this.getSegmentsFromNav(child));
+    });
+    return segments;
   }
 
   getSegmentFromNav(nav: NavController, component?: any, data?: any): NavSegment {
