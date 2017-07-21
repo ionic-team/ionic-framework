@@ -1,7 +1,5 @@
-import { Component, CssClassObject, h, Method, Prop, State } from '@stencil/core';
-
+import { Component, CssClassObject, HostElement, Method, Prop, State } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { HostElement } from '../../utils/interfaces';
 
 
 /**

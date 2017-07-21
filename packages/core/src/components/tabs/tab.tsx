@@ -1,5 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
-import { VNodeData } from '../../utils/interfaces';
+import { Component, Prop, State } from '@stencil/core';
 
 
 @Component({
@@ -69,7 +68,7 @@ export class Tab {
    */
   @Prop() onSelected: Function;
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       style: {
         display: !this.isSelected && 'none' || ''

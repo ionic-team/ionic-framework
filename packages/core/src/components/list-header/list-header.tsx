@@ -1,4 +1,5 @@
-import { Component, h } from '@stencil/core';
+import { Component } from '@stencil/core';
+
 
 @Component({
   tag: 'ion-list-header',

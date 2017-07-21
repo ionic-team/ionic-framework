@@ -1,7 +1,6 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../utils/helpers';
 import { BlockerDelegate } from './gesture-controller';
-import { Component, Ionic, Listen, Prop, PropDidChange } from '@stencil/core';
-import { GestureCallback, GestureDetail, GlobalNamespace } from '../../utils/interfaces';
+import { Component, Listen, Prop, PropDidChange } from '@stencil/core';
 import { GestureController, GestureDelegate, BLOCK_ALL } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
 
@@ -45,7 +44,7 @@ export class Gesture {
 
 
   ionViewDidLoad() {
-    this.ctrl = (Ionic as GlobalNamespace).controllers.gesture = ((Ionic as GlobalNamespace).controllers.gesture || new GestureController());
+    this.ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
 
     this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
 
@@ -395,3 +394,27 @@ function now(ev: UIEvent) {
   return ev.timeStamp || Date.now();
 }
 
+
+export interface GestureDetail {
+  type?: string;
+  event?: UIEvent;
+  startX?: number;
+  startY?: number;
+  startTimeStamp?: number;
+  currentX?: number;
+  currentY?: number;
+  velocityX?: number;
+  velocityY?: number;
+  deltaX?: number;
+  deltaY?: number;
+  directionX?: 'left'|'right';
+  directionY?: 'up'|'down';
+  velocityDirectionX?: 'left'|'right';
+  velocityDirectionY?: 'up'|'down';
+  timeStamp?: number;
+}
+
+
+export interface GestureCallback {
+  (detail?: GestureDetail): boolean|void;
+}

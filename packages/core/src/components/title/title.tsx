@@ -1,5 +1,6 @@
-import { Component, h } from '@stencil/core';
+import { Component } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
+
 
 /**
  * @name Title

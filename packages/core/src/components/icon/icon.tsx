@@ -1,6 +1,4 @@
-import { Component, h, Prop, State, VNodeData } from '@stencil/core';
-
-declare const publicPath: string;
+import { Component, Prop, State } from '@stencil/core';
 
 
 @Component({
@@ -93,7 +91,7 @@ export class Icon {
   }
 
 
-  hostData(): VNodeData {
+  hostData() {
     const attrs: {[attrName: string]: string} = {
       'role': 'img'
     };

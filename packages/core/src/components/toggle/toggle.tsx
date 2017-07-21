@@ -1,5 +1,6 @@
-import { Component, h, Listen, Prop, PropDidChange, VNodeData } from '@stencil/core';
-import { BooleanInputComponent, GestureDetail } from '../../utils/interfaces';
+import { Component, Listen, Prop, PropDidChange } from '@stencil/core';
+import { BooleanInputComponent, GestureDetail } from '../../index';
+
 
 @Component({
   tag: 'ion-toggle',
@@ -133,7 +134,7 @@ export class Toggle implements BooleanInputComponent {
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'toggle-activated': this.activated,

@@ -1,6 +1,5 @@
-import { Component, h, Listen, Prop, State } from '@stencil/core';
-import { Ionic } from '../../index';
-import { AnimationBuilder, Animation, Loading as ILoading, LoadingEvent } from '../../utils/interfaces';
+import { Component, Listen, Prop, State } from '@stencil/core';
+import { AnimationBuilder, Animation, Ionic } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -17,7 +16,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
     theme: 'loading'
   }
 })
-export class Loading implements ILoading {
+export class Loading {
   $el: HTMLElement;
   $emit: Function;
   animation: Animation;
@@ -177,4 +176,19 @@ export class Loading implements ILoading {
       </div>
     ];
   }
+}
+
+
+export interface LoadingOptions {
+  spinner?: string;
+  content?: string;
+  cssClass?: string;
+  showBackdrop?: boolean;
+  dismissOnPageChange?: boolean;
+  duration?: number;
+}
+
+
+export interface LoadingEvent {
+  loading: Loading;
 }

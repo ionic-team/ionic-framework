@@ -1,4 +1,4 @@
-import { Component, Prop, h, VNodeData } from '@stencil/core';
+import { Component, Prop, VNodeData } from '@stencil/core';
 
 @Component({
   tag: 'fiber-demo'

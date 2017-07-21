@@ -1,13 +1,11 @@
-import { Component, Listen, h, Ionic, Prop } from '@stencil/core';
-import { GestureController, GestureDelegate } from '../gesture/gesture-controller';
-import { GlobalNamespace, ScrollCallback, ScrollDetail } from '../../utils/interfaces';
-import { Scroll as IScroll } from './scroll-interface';
+import { Component, Listen, Prop } from '@stencil/core';
+import { GestureController, GestureDelegate, GestureDetail, Ionic } from '../../index';
 
 
 @Component({
   tag: 'ion-scroll'
 })
-export class Scroll implements IScroll {
+export class Scroll {
   private $el: HTMLElement;
   private $emit: Function;
   private gesture: GestureDelegate;
@@ -30,7 +28,7 @@ export class Scroll implements IScroll {
   ionViewDidLoad() {
     if (Ionic.isServer) return;
 
-    const ctrl = (Ionic as GlobalNamespace).controllers.gesture = ((Ionic as GlobalNamespace).controllers.gesture || new GestureController());
+    const ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
 
     this.gesture = ctrl.createGesture('scroll', 100, false);
   }
@@ -364,3 +362,23 @@ export class Scroll implements IScroll {
 
 }
 
+export interface ScrollDetail extends GestureDetail {
+  scrollTop?: number;
+  scrollLeft?: number;
+  scrollHeight?: number;
+  scrollWidth?: number;
+  contentHeight?: number;
+  contentWidth?: number;
+  contentTop?: number;
+  contentBottom?: number;
+  contentElement?: HTMLElement;
+  fixedElement?: HTMLElement;
+  scrollElement?: HTMLElement;
+  headerElement?: HTMLElement;
+  footerElement?: HTMLElement;
+}
+
+
+export interface ScrollCallback {
+  (detail?: ScrollDetail): boolean|void;
+}

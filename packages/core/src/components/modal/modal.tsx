@@ -1,5 +1,5 @@
-import { Component, h, Listen, Prop, Ionic } from '@stencil/core';
-import { AnimationBuilder, Animation, Modal as IModal, ModalEvent } from '../../utils/interfaces';
+import { Component, Listen, Prop } from '@stencil/core';
+import { AnimationBuilder, Animation, Ionic } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -14,7 +14,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
     wp: 'modal.wp.scss'
   }
 })
-export class Modal implements IModal {
+export class Modal {
   $el: HTMLElement;
   $emit: Function;
   animation: Animation;
@@ -152,4 +152,20 @@ export class Modal implements IModal {
       </div>
     ];
   }
+}
+
+
+export interface ModalOptions {
+  component: string;
+  componentProps?: any;
+  showBackdrop?: boolean;
+  enableBackdropDismiss?: boolean;
+  enterAnimation?: AnimationBuilder;
+  exitAnimation?: AnimationBuilder;
+  cssClass?: string;
+}
+
+
+export interface ModalEvent {
+  modal: Modal;
 }

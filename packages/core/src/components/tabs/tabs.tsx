@@ -1,4 +1,5 @@
-import { Component, h, State, Prop, Listen, PropDidChange } from '@stencil/core';
+import { Component, State, Prop, Listen, PropDidChange } from '@stencil/core';
+
 
 @Component({
   tag: 'ion-tabs',

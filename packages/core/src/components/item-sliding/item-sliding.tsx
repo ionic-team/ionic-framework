@@ -1,6 +1,6 @@
-import { Component, h, Ionic, Method, State } from '@stencil/core';
+import { Component, HostElement, Method, State } from '@stencil/core';
 
-import { GestureDetail, HostElement } from '../../utils/interfaces';
+import { GestureDetail } from '../../index';
 import { swipeShouldReset } from '../../utils/helpers';
 
 // import { ItemOptions } from './item-options';

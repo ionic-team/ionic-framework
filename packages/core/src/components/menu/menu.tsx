@@ -1,6 +1,5 @@
-import { Component, h, Prop, PropDidChange } from '@stencil/core';
+import { Component, Prop, PropDidChange } from '@stencil/core';
 import { Ionic } from '../../index';
-import { VNodeData, GlobalNamespace, Menu as IMenu } from '../../utils/interfaces';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 
@@ -16,7 +15,7 @@ import { MenuType } from './menu-types';
     theme: 'menu'
   }
 })
-export class Menu implements IMenu {
+export class Menu {
   private $el: HTMLElement;
   private $emit: Function;
   private _backdropElm: HTMLElement;
@@ -98,7 +97,7 @@ export class Menu implements IMenu {
 
   constructor() {
     // get or create the MenuController singleton
-    this._ctrl = (Ionic as GlobalNamespace).controllers.menu = ((Ionic as GlobalNamespace).controllers.menu || new MenuController());
+    this._ctrl = Ionic.controllers.menu = (Ionic.controllers.menu || new MenuController());
   }
 
 
@@ -141,7 +140,7 @@ export class Menu implements IMenu {
     this.enable(isEnabled);
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       attrs: {
         'role': 'navigation',

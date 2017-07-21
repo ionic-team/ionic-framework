@@ -1,5 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
-import { VNodeData } from '../../utils/interfaces';
+import { Component, Prop, State } from '@stencil/core';
 
 
 /**
@@ -324,7 +323,7 @@ export class Searchbar {
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'searchbar-active': this.activated,

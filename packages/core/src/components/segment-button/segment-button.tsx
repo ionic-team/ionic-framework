@@ -1,6 +1,6 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, Prop, State } from '@stencil/core';
 
-import { CssClassObject } from '../../utils/interfaces';
+import { CssClassObject } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -82,7 +82,10 @@ export class SegmentButton {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      this.$emit('ionClick', { 'segmentButton': this });
+      const ev: SegmentButtonEvent = {
+        'segmentButton': this
+      };
+      this.$emit('ionClick', ev);
     });
   }
 
@@ -119,4 +122,9 @@ export class SegmentButton {
       </button>
     ];
   }
+}
+
+
+export interface SegmentButtonEvent {
+  segmentButton: SegmentButton;
 }
