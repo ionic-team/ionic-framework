@@ -2,7 +2,7 @@ import { OpaqueToken } from '@angular/core';
 
 import { App } from '../components/app/app';
 import { NavigationContainer } from './navigation-container';
-import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment } from './nav-util';
+import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment, isTabs } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
@@ -62,9 +62,16 @@ export class UrlSerializer {
     }
     const sections = segments.map(segment => {
       if (segment.type === 'tabs') {
-        return `/${segment.type}/${segment.navId}/${segment.secondaryId}/${segment.id}`;
+        if (segment.requiresExplicitNavPrefix) {
+          return `/${segment.type}/${segment.navId}/${segment.secondaryId}/${segment.id}`;
+        }
+        return `/${segment.secondaryId}/${segment.id}`;
       }
-      return `/${segment.type}/${segment.navId}/${segment.id}`;
+      // it's a nav
+      if (segment.requiresExplicitNavPrefix) {
+        return `/${segment.type}/${segment.navId}/${segment.id}`;
+      }
+      return `/${segment.id}`;
     });
     return sections.join('');
   }
@@ -359,7 +366,6 @@ export function convertUrlToDehydratedSegments(url: string, navLinks: NavLink[])
   return getSegmentsFromNavGroups(navGroups, navLinks);
 }
 
-
 export function hydrateSegmentsWithNav(app: App, dehydratedSegmentPairs: DehydratedSegmentPair[]) {
   const segments: NavSegment[] = [];
   for (let i = 0; i < dehydratedSegmentPairs.length; i++) {
@@ -368,12 +374,15 @@ export function hydrateSegmentsWithNav(app: App, dehydratedSegmentPairs: Dehydra
     for (const dehydratedSegment of dehydratedSegmentPairs[i].segments) {
       if (navs.length === 1) {
         segments.push(hydrateSegment(dehydratedSegment, navs[0]));
-      } else if (navs.length > 1) {
-        throw new Error('Invalid URL - could not determine which nav to use');
-      } else {
-        throw new Error('Invalid URL - could not find a nav to use');
+      } else if (navs.length > 1 || navs.length <= 0) {
+        break;
+        // throw new Error('Invalid URL - could not determine which nav to use');
       }
-      navs = navs[0].getAllChildNavs();
+      if (isTabs(navs[0])) {
+        navs = navs[0].getActiveChildNavs();
+      } else {
+        navs = navs[0].getAllChildNavs();
+      }
     }
   }
   return segments;
@@ -446,9 +455,24 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
         });
       }
     }
+
+    // okay, this is the lazy persons approach here.
+    // so here's the deal! Right now if section of the url is not a part of a segment
+    // it is almost certainly the secondaryId for a tabs component
+    // basically, knowing the segment for the `tab` itself is good, but we also need to know
+    // which tab is selected, so we have an identifer in the url that is associated with the tabs component
+    // telling us which tab is selected. With that in mind, we are going to go through and find the segments with only secondary identifiers,
+    // and simply add the secondaryId to the next segment, and then remove the empty segment from the list
+    for (let i = 0; i < segments.length; i++) {
+      if (segments[i].secondaryId && !segments[i].id) {
+        segments[i + 1].secondaryId = segments[i].secondaryId;
+        segments[i] = null;
+      }
+    }
+    const cleanedSegments = segments.filter(segment => !!segment);
     pairs.push({
       navGroup: navGroup,
-      segments: segments
+      segments: cleanedSegments
     });
   }
   return pairs;

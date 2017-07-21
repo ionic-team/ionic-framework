@@ -190,7 +190,7 @@ export class DeepLinker {
           component = viewController.component;
           data = viewController.data;
         }
-        return this._serializer.serializeComponent(navContainer, component, data);
+        return this._serializer.serializeComponent(tabsNavContainer, component, data);
       }
     }
   }

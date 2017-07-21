@@ -72,7 +72,8 @@ describe('UrlSerializer', () => {
         name: 'jenny'
       };
 
-      const segment = serializer._createSegment({ navId: '1', type: 'nav', secondaryId: null}, link, data);
+      const nav = mockNavController();
+      const segment = serializer._createSegment(nav, link, data);
       expect(segment.id).toEqual('userId/8675309/name/jenny');
       expect(segment.component).toEqual(link.component);
       expect(segment.data.id).toEqual(data.id);
@@ -91,7 +92,8 @@ describe('UrlSerializer', () => {
         id: char,
         name: 'jenny'
       };
-      const segment = serializer._createSegment({ navId: '1', type: 'nav', secondaryId: null}, link, data);
+      const nav = mockNavController();
+      const segment = serializer._createSegment(nav, link, data);
       expect(segment.id).toEqual(`userId/${encoded}/name/${data.name}`);
       expect(segment.component).toEqual(MockView1);
       expect(segment.data.id).toEqual(char);
@@ -102,7 +104,8 @@ describe('UrlSerializer', () => {
         segmentParts: ['settings-view'],
         component: MockView1
       };
-      const segment = serializer._createSegment({ navId: '1', type: 'nav', secondaryId: null}, link, null);
+      const nav = mockNavController();
+      const segment = serializer._createSegment(nav, link, null);
       expect(segment.id).toEqual('settings-view');
       expect(segment.component).toEqual(MockView1);
       expect(segment.data).toEqual(null);
@@ -823,7 +826,7 @@ describe('UrlSerializer', () => {
       expect(segmentPairs[2].segments[0].data.itemId).toEqual('12345');
     });
 
-    it('should return a data-driven set of segments where the root tabs is implied but the secondary identifier is actually grabed', () => {
+    fit('should return a data-driven set of segments where the root tabs is implied but the secondary identifier is actually grabed', () => {
       const link1 = { component: MockView1, name: 'viewone', segment: 'view-one/paramOne/:paramOne/paramTwo/:paramTwo' };
       const link2 = { component: MockView1, name: 'viewtwo', segment: 'view-two/user/:userId' };
       const link3 = { component: MockView1, name: 'viewthree', segment: 'view-three/:itemId' };
@@ -834,31 +837,22 @@ describe('UrlSerializer', () => {
 
       const segmentPairs = convertUrlToDehydratedSegments(url, links);
       expect(segmentPairs.length).toEqual(1);
-      expect(segmentPairs[0].segments.length).toEqual(6);
-      expect(segmentPairs[0].segments[0].id).toEqual(null);
-      expect(segmentPairs[0].segments[0].name).toEqual(null);
+      expect(segmentPairs[0].segments.length).toEqual(3);
+      expect(segmentPairs[0].segments[0].id).toEqual('view-two/user/fred');
+      expect(segmentPairs[0].segments[0].name).toEqual('viewtwo');
       expect(segmentPairs[0].segments[0].secondaryId).toEqual('tab-two');
+      expect(segmentPairs[0].segments[0].data.userId).toEqual('fred');
 
-      expect(segmentPairs[0].segments[1].id).toEqual('view-two/user/fred');
-      expect(segmentPairs[0].segments[1].name).toEqual('viewtwo');
-      expect(segmentPairs[0].segments[1].data.userId).toEqual('fred');
+      expect(segmentPairs[0].segments[1].id).toEqual('view-one/paramOne/taco/paramTwo/burrito');
+      expect(segmentPairs[0].segments[1].name).toEqual('viewone');
+      expect(segmentPairs[0].segments[1].data.paramOne).toEqual('taco');
+      expect(segmentPairs[0].segments[1].data.paramTwo).toEqual('burrito');
+      expect(segmentPairs[0].segments[1].secondaryId).toEqual('tab-three');
 
-      expect(segmentPairs[0].segments[2].id).toEqual(null);
-      expect(segmentPairs[0].segments[2].name).toEqual(null);
-      expect(segmentPairs[0].segments[2].secondaryId).toEqual('tab-three');
-
-      expect(segmentPairs[0].segments[3].id).toEqual('view-one/paramOne/taco/paramTwo/burrito');
-      expect(segmentPairs[0].segments[3].name).toEqual('viewone');
-      expect(segmentPairs[0].segments[3].data.paramOne).toEqual('taco');
-      expect(segmentPairs[0].segments[3].data.paramTwo).toEqual('burrito');
-
-      expect(segmentPairs[0].segments[4].id).toEqual(null);
-      expect(segmentPairs[0].segments[4].name).toEqual(null);
-      expect(segmentPairs[0].segments[4].secondaryId).toEqual('tab-four');
-
-      expect(segmentPairs[0].segments[5].id).toEqual('view-three/12345');
-      expect(segmentPairs[0].segments[5].name).toEqual('viewthree');
-      expect(segmentPairs[0].segments[5].data.itemId).toEqual('12345');
+      expect(segmentPairs[0].segments[2].id).toEqual('view-three/12345');
+      expect(segmentPairs[0].segments[2].name).toEqual('viewthree');
+      expect(segmentPairs[0].segments[2].data.itemId).toEqual('12345');
+      expect(segmentPairs[0].segments[2].secondaryId).toEqual('tab-four');
     });
 
     describe('convertUrlToSegments', () => {
