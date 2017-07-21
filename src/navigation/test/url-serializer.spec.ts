@@ -62,19 +62,19 @@ describe('UrlSerializer', () => {
       };
       const data = {
         id: 8675309,
-        name: 'jenny'
+        name: '道'
       };
 
       const segment = serializer._createSegment({ navId: '1', type: 'nav', secondaryId: null}, link, data);
-      expect(segment.id).toEqual('userId/8675309/name/jenny');
+      expect(segment.id).toEqual('userId/8675309/name/道');
       expect(segment.component).toEqual(link.component);
       expect(segment.data.id).toEqual(data.id);
       expect(segment.data.name).toEqual(data.name);
     });
 
     it('should create segement with encodeURIComponent data', () => {
-      const char = '道';
-      const encoded = encodeURIComponent(char);
+      const char = '/%20';
+      const encoded = UrlSerializer.encodeURIComponent(char);
 
       const link: NavLink = {
         segmentParts: ['userId', ':id', 'name', ':name'],
@@ -300,9 +300,9 @@ describe('UrlSerializer', () => {
     });
 
     it('should get data within the config link path', () => {
-      let char = '道';
+      let char = '/%20';
 
-      let matchedUrlParts = ['a', 'b', encodeURIComponent(char), 'd'];
+      let matchedUrlParts = ['a', 'b', UrlSerializer.encodeURIComponent(char), 'd'];
       let link: NavLink = {
         segmentParts: ['a', ':id', ':name', 'd'], segmentPartsLen: 4, component: MockView1
       };
@@ -321,9 +321,9 @@ describe('UrlSerializer', () => {
     });
 
     it('should get uri decode data', () => {
-      let char = '道';
+      let char = '/%20';
 
-      let matchedUrlParts = [`${encodeURIComponent(char)}`];
+      let matchedUrlParts = [`${UrlSerializer.encodeURIComponent(char)}`];
       let link: NavLink = {
         segmentParts: [':name'], segmentPartsLen: 1, component: MockView1
       };
@@ -561,8 +561,8 @@ describe('UrlSerializer', () => {
   describe('formatUrlPart', () => {
 
     it('should encodeURIComponent', () => {
-      let name = '你好';
-      let encoded = encodeURIComponent(name);
+      let name = '/%20';
+      let encoded = UrlSerializer.encodeURIComponent(name);
       expect(formatUrlPart(name)).toEqual(encoded);
     });
 
@@ -582,7 +582,7 @@ describe('UrlSerializer', () => {
       expect(formatUrlPart('ContactDetailPage')).toEqual('contact-detail-page');
     });
 
-    it('should change to pascal case for one work', () => {
+    it('should change to pascal case for one word', () => {
       expect(formatUrlPart('View1')).toEqual('view1');
     });
 

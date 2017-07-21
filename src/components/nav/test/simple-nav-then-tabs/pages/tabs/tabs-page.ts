@@ -5,7 +5,7 @@ import { IonicPage, } from '../../../../../..';
 @Component({
   template: `
   <ion-tabs name="app">
-    <ion-tab tabIcon="heart" [root]="tab1" tabTitle="Taco Burrito Enchilada"></ion-tab>
+    <ion-tab tabIcon="heart" [root]="tab1" tabTitle="Taco Burrito Enchilada 🎂"></ion-tab>
     <ion-tab tabIcon="star" [root]="tab2"></ion-tab>
   </ion-tabs>
   `
