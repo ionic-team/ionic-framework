@@ -1,4 +1,4 @@
-const Ionic = (window as any).Ionic;
+import { Ionic } from '../../../index';
 
 
 /**
