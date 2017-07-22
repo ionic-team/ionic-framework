@@ -419,8 +419,31 @@ export class App {
     }
   }
 
+  getNavByIdOrName(id: string) {
+    const navs = Array.from(this._rootNavs.values());
+    for (const navContainer of navs) {
+      const match = getNavByIdOrName(navContainer, id);
+      if (match) {
+        return match;
+      }
+    }
+    return null;
+  }
+
 }
 
+export function getNavByIdOrName(nav: NavigationContainer, id: string): NavigationContainer {
+  if (nav.id === id || nav.name === id) {
+    return nav;
+  }
+  for (const child of nav.getAllChildNavs()) {
+    const tmp = getNavByIdOrName(child, id);
+    if (tmp) {
+      return tmp;
+    }
+  }
+  return null;
+}
 
 function getPoppableNav(nav: NavControllerBase): NavControllerBase {
   if (!nav) {
@@ -454,6 +477,7 @@ export function findTopNavs(nav: NavigationContainer): NavigationContainer[] {
   }
   return containers;
 }
+
 
 const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
 const ACTIVE_SCROLLING_TIME = 100;

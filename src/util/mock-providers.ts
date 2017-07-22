@@ -221,7 +221,7 @@ export function mockContent(): Content {
 }
 
 export function mockZone(): NgZone {
-  return new NgZone(false);
+  return new NgZone({enableLongStackTrace: false});
 }
 
 export function mockChangeDetectorRef(): ChangeDetectorRef {
@@ -390,8 +390,8 @@ export function mockComponentRef(): ComponentRef<any> {
 }
 
 export function mockDeepLinker(linkConfig: DeepLinkConfig = null, app?: App) {
-  let serializer = new UrlSerializer(linkConfig);
-
+  app = app || mockApp(mockConfig(), mockPlatform());
+  let serializer = new UrlSerializer(app, linkConfig);
   let location = mockLocation();
 
   return new DeepLinker(app || mockApp(), serializer, location, null, null);
@@ -449,7 +449,7 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   let renderer = mockRenderer();
   let componentFactoryResolver: any = null;
   let gestureCtrl = new GestureController(app);
-  let serializer = new UrlSerializer(null);
+  let serializer = new UrlSerializer(app, null);
   let location = mockLocation();
   let deepLinker = new DeepLinker(app, serializer, location, null, null);
 
