@@ -457,9 +457,7 @@ describe('DeepLinker', () => {
 
       linker.getSegmentFromNav(mockNav, null, null);
 
-      expect(spy.calls.first().args[0].navId).toEqual(mockNav.name);
-      expect(spy.calls.first().args[0].secondaryId).toBeFalsy();
-      expect(spy.calls.first().args[0].type).toEqual('nav');
+      expect(spy.calls.first().args[0]).toEqual(mockNav);
     });
 
     it('should use the id of the nav when name doesnt exists', () => {
@@ -472,9 +470,7 @@ describe('DeepLinker', () => {
 
       linker.getSegmentFromNav(mockNav, null, null);
 
-      expect(spy.calls.first().args[0].navId).toEqual(mockNav.id);
-      expect(spy.calls.first().args[0].secondaryId).toBeFalsy();
-      expect(spy.calls.first().args[0].type).toEqual('nav');
+      expect(spy.calls.first().args[0]).toEqual(mockNav);
     });
   });
 
@@ -493,7 +489,7 @@ describe('DeepLinker', () => {
       linker.getSegmentFromTab(tabOne, null, null);
 
       expect(spy).toHaveBeenCalled();
-      expect(spy.calls.first().args[0].navId).toEqual(tabs.name);
+      expect(spy.calls.first().args[0]).toEqual(tabs);
 
     });
 
@@ -511,7 +507,7 @@ describe('DeepLinker', () => {
       linker.getSegmentFromTab(tabOne, null, null);
 
       expect(spy).toHaveBeenCalled();
-      expect(spy.calls.first().args[0].navId).toEqual(tabs.id);
+      expect(spy.calls.first().args[0]).toEqual(tabs);
 
     });
   });

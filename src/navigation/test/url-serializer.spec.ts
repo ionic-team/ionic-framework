@@ -1,4 +1,4 @@
-import { NavGroup, NavLink, NavSegment } from '../nav-util';
+import { NavLink, NavSegment } from '../nav-util';
 import {
   UrlSerializer,
   convertUrlToDehydratedSegments,
@@ -23,13 +23,12 @@ describe('UrlSerializer', () => {
       const link1 = { component: MockView1, name: 'viewone', segment: 'view' };
       const link2 = { component: MockView1, name: 'viewtwo', segment: 'view/:param1' };
       const link3 = { component: MockView1, name: 'viewthree', segment: 'view/:param1/:param2' };
-      const navGroup: NavGroup = { type: 'nav', navId: 'n1', secondaryId: null, segmentPieces: ['view']};
       serializer = mockSerializer([link1, link2, link3]);
       serializer._createSegment = noop;
       spyOn(serializer, '_createSegment');
       const nav = mockNavController();
       serializer.serializeComponent(nav, MockView1, null);
-      expect(serializer._createSegment).toHaveBeenCalledWith(navGroup, link1, null);
+      expect(serializer._createSegment).toHaveBeenCalledWith(serializer._app, nav, link1, null);
     });
 
     it('should create segment if component found in links', () => {
@@ -217,86 +216,23 @@ describe('UrlSerializer', () => {
     });
   });
 
-  describe('parse', () => {
-
-    it('should return empty list of segments for bogus url', () => {
-      serializer = mockSerializer([]);
-
-      const segments = serializer.parse('/some/bogus/url');
-      expect(segments.length).toEqual(0);
-    });
-
-    it('should return empty list of segments when there isnt a match', () => {
-      serializer = mockSerializer([
-        { segment: 'some/chunk/of/url', name: 'viewone', component: MockView1 },
-        { segment: 'another/section/of/url', name: 'viewtwo', component: MockView2 }
-      ]);
-      const segments = serializer.parse('/nav/n1/not/a/matching/url');
-      expect(segments.length).toEqual(0);
-    });
-
-    it('should return the segments from the url with multiple navs', () => {
-      serializer = mockSerializer([
-        { segment: 'userId/:id/name/:name', name: 'viewone', component: MockView1 },
-        { segment: 'selectedId/:id/food/:food', name: 'viewtwo', component: MockView2 }
-      ]);
-      const segments = serializer.parse('/nav/n1/userId/123/name/Stanley/nav/n2/selectedId/456/food/tacos');
-      expect(segments.length).toEqual(2);
-      expect(segments[0].name).toEqual('viewone');
-      expect(segments[0].data.id).toEqual('123');
-      expect(segments[0].data.name).toEqual('Stanley');
-      expect(segments[1].name).toEqual('viewtwo');
-      expect(segments[1].data.id).toEqual('456');
-      expect(segments[1].data.food).toEqual('tacos');
-    });
-
-    it('should return the segments from the url with multiple tabs', () => {
-      serializer = mockSerializer([
-        { segment: 'userId/:id/name/:name', name: 'viewone', component: MockView1 },
-        { segment: 'selectedId/:id/food/:food', name: 'viewtwo', component: MockView2 }
-      ]);
-      const segments = serializer.parse('/tabs/t1/tab-one/userId/123/name/Stanley/tabs/t2/tab-three/selectedId/456/food/tacos');
-      expect(segments.length).toEqual(2);
-      expect(segments[0].name).toEqual('viewone');
-      expect(segments[0].navId).toEqual('t1');
-      expect(segments[0].data.id).toEqual('123');
-      expect(segments[0].data.name).toEqual('Stanley');
-      expect(segments[0].secondaryId).toEqual('tab-one');
-      expect(segments[1].name).toEqual('viewtwo');
-      expect(segments[1].navId).toEqual('t2');
-      expect(segments[1].data.id).toEqual('456');
-      expect(segments[1].data.food).toEqual('tacos');
-      expect(segments[1].secondaryId).toEqual('tab-three');
-    });
-
-    it('should return the segments from a mixed nav/tabs url', () => {
-      serializer = mockSerializer([
-        { segment: 'userId/:id/name/:name', name: 'viewone', component: MockView1 },
-        { segment: 'selectedId/:id/food/:food', name: 'viewtwo', component: MockView2 }
-      ]);
-      const segments = serializer.parse('/tabs/t1/tab-one/userId/123/name/Stanley/nav/n1/selectedId/456/food/tacos');
-      expect(segments.length).toEqual(2);
-      expect(segments[0].name).toEqual('viewone');
-      expect(segments[0].navId).toEqual('t1');
-      expect(segments[0].data.id).toEqual('123');
-      expect(segments[0].data.name).toEqual('Stanley');
-      expect(segments[0].secondaryId).toEqual('tab-one');
-      expect(segments[1].name).toEqual('viewtwo');
-      expect(segments[1].navId).toEqual('n1');
-      expect(segments[1].data.id).toEqual('456');
-      expect(segments[1].data.food).toEqual('tacos');
-      expect(segments[1].secondaryId).toEqual(null);
-    });
-  });
-
   describe('serialize', () => {
+    it('should serialize multiple segments into a url with explicit prefixs', () => {
+      let paths: NavSegment[] = [
+        { type: 'nav', navId: 'whatup', secondaryId: null, id: 'some/url/chunks', name: 'viewOne', component: MockView1, data: null, requiresExplicitNavPrefix: true},
+        { type: 'tabs', navId: 't1', secondaryId: 'tab-one', id: 'some/more/url/chunks', name: 'viewTwo', component: MockView1, data: null, requiresExplicitNavPrefix: true }
+      ];
+      const result = serializer.serialize(paths);
+      expect(result).toEqual('/nav/whatup/some/url/chunks/tabs/t1/tab-one/some/more/url/chunks');
+    });
+
     it('should serialize multiple segments into a url', () => {
       let paths: NavSegment[] = [
         { type: 'nav', navId: 'whatup', secondaryId: null, id: 'some/url/chunks', name: 'viewOne', component: MockView1, data: null },
         { type: 'tabs', navId: 't1', secondaryId: 'tab-one', id: 'some/more/url/chunks', name: 'viewTwo', component: MockView1, data: null }
       ];
       const result = serializer.serialize(paths);
-      expect(result).toEqual('/nav/whatup/some/url/chunks/tabs/t1/tab-one/some/more/url/chunks');
+      expect(result).toEqual('/some/url/chunks/tab-one/some/more/url/chunks');
     });
 
     it('should return default url when given empty list of segments', () => {
@@ -826,7 +762,7 @@ describe('UrlSerializer', () => {
       expect(segmentPairs[2].segments[0].data.itemId).toEqual('12345');
     });
 
-    fit('should return a data-driven set of segments where the root tabs is implied but the secondary identifier is actually grabed', () => {
+    it('should return a data-driven set of segments where the root tabs is implied but the secondary identifier is actually grabed', () => {
       const link1 = { component: MockView1, name: 'viewone', segment: 'view-one/paramOne/:paramOne/paramTwo/:paramTwo' };
       const link2 = { component: MockView1, name: 'viewtwo', segment: 'view-two/user/:userId' };
       const link3 = { component: MockView1, name: 'viewthree', segment: 'view-three/:itemId' };
@@ -856,7 +792,7 @@ describe('UrlSerializer', () => {
     });
 
     describe('convertUrlToSegments', () => {
-      fit('it should return a vanilla single segment', () => {
+      it('it should return a vanilla single segment', () => {
 
         const link1 = { component: MockView1, name: 'login-page', segment: 'login-page' };
         const link2 = { component: MockView1, name: 'settings-page', segment: 'settings-page' };

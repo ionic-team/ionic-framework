@@ -390,8 +390,8 @@ export function mockComponentRef(): ComponentRef<any> {
 }
 
 export function mockDeepLinker(linkConfig: DeepLinkConfig = null, app?: App) {
+  app = app || mockApp(mockConfig(), mockPlatform());
   let serializer = new UrlSerializer(app, linkConfig);
-
   let location = mockLocation();
 
   return new DeepLinker(app || mockApp(), serializer, location, null, null);

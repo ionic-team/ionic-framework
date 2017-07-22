@@ -133,7 +133,7 @@ export class UrlSerializer {
       loadChildren: configLink.loadChildren,
       data: data,
       defaultHistory: configLink.defaultHistory,
-      navId: navContainer.id,
+      navId: navContainer.name || navContainer.id,
       type: navContainer.getType(),
       secondaryId: navContainer.getSecondaryIdentifier(),
       requiresExplicitNavPrefix: requiresExplicitPrefix
@@ -464,6 +464,8 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
       }
     }
 
+    segments.forEach(segment => console.log('segment: ', segment));
+
     // okay, this is the lazy persons approach here.
     // so here's the deal! Right now if section of the url is not a part of a segment
     // it is almost certainly the secondaryId for a tabs component
@@ -472,7 +474,7 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
     // telling us which tab is selected. With that in mind, we are going to go through and find the segments with only secondary identifiers,
     // and simply add the secondaryId to the next segment, and then remove the empty segment from the list
     for (let i = 0; i < segments.length; i++) {
-      if (segments[i].secondaryId && !segments[i].id) {
+      if (segments[i].secondaryId && !segments[i].id && ((i + 1) <= segments.length - 1)) {
         segments[i + 1].secondaryId = segments[i].secondaryId;
         segments[i] = null;
       }
