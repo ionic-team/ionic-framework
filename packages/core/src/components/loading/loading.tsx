@@ -1,5 +1,5 @@
 import { Component, Listen, Prop, State } from '@stencil/core';
-import { AnimationBuilder, Animation, Ionic } from '../../index';
+import { AnimationBuilder, Animation } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';

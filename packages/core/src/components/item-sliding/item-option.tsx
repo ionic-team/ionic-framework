@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
-
 import { createThemedClasses } from '../../utils/theme';
+
 
 /**
  * @name ItemOption

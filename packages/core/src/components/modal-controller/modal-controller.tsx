@@ -1,5 +1,5 @@
 import { Component, Listen } from '@stencil/core';
-import { Ionic, ModalEvent, ModalOptions, Modal, IonicControllerApi } from '../../index';
+import { ModalEvent, ModalOptions, Modal, IonicControllerApi } from '../../index';
 
 
 @Component({

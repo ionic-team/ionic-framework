@@ -1,4 +1,4 @@
-import { Ionic, Animation, Menu } from '../../index';
+import { Animation, Menu } from '../../index';
 
 
 /**

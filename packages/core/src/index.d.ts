@@ -13,7 +13,9 @@ import { SegmentButton, SegmentButtonEvent } from './components/segment-button/s
 import * as Stencil from '@stencil/core';
 
 
-export declare const Ionic: IonicGlobal;
+declare global {
+  const Ionic: IonicGlobal;
+}
 
 
 export interface IonicGlobal extends Stencil.ProjectGlobal {

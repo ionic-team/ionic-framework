@@ -1,5 +1,5 @@
 import { Component, Listen } from '@stencil/core';
-import { Ionic, LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../index';
+import { LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../index';
 
 
 @Component({

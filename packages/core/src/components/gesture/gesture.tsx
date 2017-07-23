@@ -2,7 +2,6 @@ import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '
 import { BlockerDelegate } from './gesture-controller';
 import { Component, Listen, Prop, PropDidChange } from '@stencil/core';
 import { GestureController, GestureDelegate, BLOCK_ALL } from './gesture-controller';
-import { Ionic } from '../../index';
 import { PanRecognizer } from './recognizers';
 
 

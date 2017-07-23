@@ -1,5 +1,4 @@
 import { Component, Prop, PropDidChange } from '@stencil/core';
-import { Ionic } from '../../index';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 

@@ -1,4 +1,3 @@
-import { Ionic } from '../../../index';
 
 
 /**

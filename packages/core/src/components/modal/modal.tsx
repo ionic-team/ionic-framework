@@ -1,5 +1,5 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { AnimationBuilder, Animation, Ionic } from '../../index';
+import { AnimationBuilder, Animation } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
