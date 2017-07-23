@@ -1,10 +1,11 @@
-import { CssClassObject } from '@stencil/core';
+import { CssClassMap } from '@stencil/core';
 
-export function createThemedClasses(mode: string, color: string, classList: string): CssClassObject {
-  let allClassObj: CssClassObject = {};
+
+export function createThemedClasses(mode: string, color: string, classList: string): CssClassMap {
+  let allClassObj: CssClassMap = {};
 
   return classList.split(' ')
-    .reduce((classObj: CssClassObject, classString: string): CssClassObject => {
+    .reduce((classObj: CssClassMap, classString: string): CssClassMap => {
       classObj[classString] = true;
 
       if (mode) {

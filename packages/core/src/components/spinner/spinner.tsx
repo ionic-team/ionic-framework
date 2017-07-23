@@ -1,4 +1,4 @@
-import { Component, Prop, VNodeData } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { Ionic } from '../../index';
 import { SPINNERS, SpinnerConfig } from './spinner-configs';
 import { createThemedClasses } from '../../utils/theme';
@@ -32,7 +32,7 @@ export class Spinner {
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     const spinnerThemedClasses = createThemedClasses(this.mode, this.color, `spinner spinner-${this.name}`);
     spinnerThemedClasses['spinner-paused'] = true;
 

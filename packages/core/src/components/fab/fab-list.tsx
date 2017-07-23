@@ -1,4 +1,4 @@
-import { Component, HostElement, PropDidChange, State } from '@stencil/core';
+import { Component, PropDidChange, State } from '@stencil/core';
 
 
 /**
@@ -35,7 +35,7 @@ export class FabList {
 
   @PropDidChange('activated')
   activatedChange(activated: boolean) {
-    const fabs = this.$el.querySelectorAll('ion-fab-button') as NodeListOf<HostElement>;
+    const fabs = this.$el.querySelectorAll('ion-fab-button') as NodeListOf<any>;
 
     // if showing the fabs add a timeout, else show immediately
     var timeout = activated ? 30 : 0;

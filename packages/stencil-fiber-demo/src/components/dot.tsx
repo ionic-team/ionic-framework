@@ -1,4 +1,4 @@
-import { Component, Prop, State, VNodeData } from '@stencil/core';
+import { Component, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'fiber-dot'
@@ -19,7 +19,7 @@ export class FiberDot {
     this.hover = false;
   }
 
-  hostData(): VNodeData {
+  hostData() {
     const s = this.size * 1.3;
     const style = {
       position: 'absolute',

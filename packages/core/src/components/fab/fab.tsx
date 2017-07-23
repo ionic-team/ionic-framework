@@ -1,4 +1,4 @@
-import { Component, CssClassObject, HostElement, Method, Prop, State } from '@stencil/core';
+import { Component, CssClassMap, Method, Prop, State } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -95,7 +95,7 @@ export class FabButton {
    * @hidden
    */
   setActiveLists(activated: boolean) {
-    const lists = this.$el.parentElement.querySelectorAll('ion-fab-list') as NodeListOf<HostElement>;
+    const lists = this.$el.parentElement.querySelectorAll('ion-fab-list') as NodeListOf<any>;
 
     if (lists.length > 0) {
       this.activated = activated;
@@ -170,7 +170,7 @@ export class FabButton {
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab');
 
-    var fabClasses: CssClassObject = []
+    var fabClasses: CssClassMap = []
       .concat(
         this.getElementClassList(),
         this.getFabListClassList(),

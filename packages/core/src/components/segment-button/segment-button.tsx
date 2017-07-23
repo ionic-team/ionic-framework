@@ -1,6 +1,6 @@
 import { Component, Prop, State } from '@stencil/core';
 
-import { CssClassObject } from '../../index';
+import { CssClassMap } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -105,7 +105,7 @@ export class SegmentButton {
   render() {
     const segmentButtonCss = createThemedClasses(this.mode, this.color, 'segment-button');
 
-    var segmentButtonClasses: CssClassObject = []
+    var segmentButtonClasses: CssClassMap = []
       .concat(
         this.getElementClassList()
       )

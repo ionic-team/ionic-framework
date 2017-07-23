@@ -1,4 +1,4 @@
-import { Component, Prop, CssClassObject } from '@stencil/core';
+import { Component, Prop, CssClassMap } from '@stencil/core';
 
 /**
   * @name Button
@@ -278,7 +278,7 @@ export class Button {
 
     const decorator = (this.strong ? 'strong' : null);
 
-    const buttonClasses: CssClassObject = []
+    const buttonClasses: CssClassMap = []
       .concat(
         this.getButtonClassList(this.buttonType, this.mode),
         this.getClassList(this.buttonType, shape, this.mode),

@@ -2,7 +2,6 @@ import { Animation, AnimationBuilder } from './animations/interfaces';
 import { Loading, LoadingEvent, LoadingOptions } from './components/loading/loading';
 import { LoadingController } from './components/loading-controller/loading-controller';
 import { GestureDetail, GestureCallback } from './components/gesture/gesture';
-import { GestureController, GestureDelegate } from './components/gesture/gesture-controller';
 import { Menu } from './components/menu/menu';
 import { MenuType } from './components/menu/menu-types';
 import { MenuController } from './components/menu/menu-controller';
@@ -14,11 +13,12 @@ import { SegmentButton, SegmentButtonEvent } from './components/segment-button/s
 import * as Stencil from '@stencil/core';
 
 
-export declare const Ionic: IonicInterface;
+export declare const Ionic: IonicGlobal;
 
 
-export interface IonicInterface extends Stencil.ProjectGlobal {
+export interface IonicGlobal extends Stencil.ProjectGlobal {
   Animation?: Animation;
+  controllers?: {[ctrlName: string]: any};
   controller?: IonicController;
   config: ConfigApi;
   loadController?: (ctrlName: string, ctrl: any) => void;
@@ -45,7 +45,7 @@ export interface ConfigApi {
 }
 
 
-export type CssClassObject = { [className: string]: boolean };
+export type CssClassMap = { [className: string]: boolean };
 
 
 export interface BaseInputComponent {
@@ -67,8 +67,6 @@ export interface BooleanInputComponent extends BaseInputComponent {
 export {
   Animation,
   AnimationBuilder,
-  GestureController,
-  GestureDelegate,
   GestureDetail,
   Loading,
   LoadingOptions,

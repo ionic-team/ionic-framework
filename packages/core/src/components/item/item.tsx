@@ -1,5 +1,5 @@
 import { Component, Prop, Listen } from '@stencil/core';
-import { CssClassObject } from '../../index';
+import { CssClassMap } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -13,7 +13,7 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class Item {
   $el: HTMLElement;
-  childStyles: CssClassObject = Object.create(null);
+  childStyles: CssClassMap = Object.create(null);
 
   @Prop() mode: string;
   @Prop() color: string;

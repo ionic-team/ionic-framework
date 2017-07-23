@@ -1,5 +1,6 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { GestureController, GestureDelegate, GestureDetail, Ionic } from '../../index';
+import { GestureDetail, Ionic } from '../../index';
+import { GestureController, GestureDelegate } from '../gesture/gesture-controller';
 
 
 @Component({

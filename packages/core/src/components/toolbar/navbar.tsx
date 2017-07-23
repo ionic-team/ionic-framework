@@ -1,4 +1,4 @@
-import { Component, Prop, VNodeData } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { Ionic } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -70,7 +70,7 @@ export class Navbar {
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'statusbar-padding': Ionic.config.getBoolean('statusbarPadding')
