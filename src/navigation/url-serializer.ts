@@ -37,10 +37,10 @@ export class UrlSerializer {
 
 
 
-  createSegmentFromName(navContainer: NavigationContainer, nameOrComponent: any): NavSegment {
+  createSegmentFromName(navContainer: NavigationContainer, nameOrComponent: any, data: any = null): NavSegment {
     const configLink = this.getLinkFromName(nameOrComponent);
     if (configLink) {
-      return this._createSegment(this._app, navContainer, configLink, null);
+      return this._createSegment(this._app, navContainer, configLink, data);
     }
     return null;
   }
