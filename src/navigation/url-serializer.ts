@@ -288,24 +288,6 @@ export function setupUrlSerializer(app: App, userDeepLinkConfig: any): UrlSerial
   return new UrlSerializer(app, userDeepLinkConfig);
 }
 
-export function urlToNavGroupStrings(url: string): string[] {
-  const tokens = url.split('/');
-  const keywordIndexes = [];
-  for (let i = 0; i < tokens.length; i++) {
-    if (tokens[i] === 'nav' || tokens[i] === 'tabs') {
-      keywordIndexes.push(i);
-    }
-  }
-  const groupings: string[] = [];
-  for (let i = 0; i < keywordIndexes.length; i++) {
-    const startIndex = keywordIndexes[i];
-    const endIndex = keywordIndexes[i + 1 < keywordIndexes.length ? i + 1 : keywordIndexes.length];
-    const group = tokens.slice(startIndex, endIndex);
-    groupings.push(group.join('/'));
-  }
-  return groupings;
-}
-
 export function navGroupStringtoObjects(navGroupStrings: string[]): NavGroup[] {
   // each string has a known format-ish, convert it to it
   return navGroupStrings.map(navGroupString => {
@@ -337,7 +319,7 @@ export function navGroupStringtoObjects(navGroupStrings: string[]): NavGroup[] {
   });
 }
 
-export function urlToNavGroupStringsTwo(url: string) {
+export function urlToNavGroupStrings(url: string) {
   const tokens = url.split('/');
   const keywordIndexes = [];
   for (let i = 0; i < tokens.length; i++) {
@@ -369,7 +351,7 @@ export function convertUrlToSegments(app: App, url: string, navLinks: NavLink[])
 }
 
 export function convertUrlToDehydratedSegments(url: string, navLinks: NavLink[]): DehydratedSegmentPair[] {
-  const navGroupStrings = urlToNavGroupStringsTwo(url);
+  const navGroupStrings = urlToNavGroupStrings(url);
   const navGroups = navGroupStringtoObjects(navGroupStrings);
   return getSegmentsFromNavGroups(navGroups, navLinks);
 }
@@ -410,52 +392,64 @@ export function getNavFromNavGroup(navGroup: NavGroup, app: App): NavigationCont
  * because we need to do a ton of crazy looping
  * the are chunks of a url that are totally irrelevant at this stage, such as the secondary identifier
  * stating which tab is selected, etc.
- * but is necessary. Ultimately, let's say that we have a url that looks like this
- * /the/dog/jumps/high
- * We need to check for a segment match this looping pattern
- * the
- * the dog
- * the dog jumps
- * the dog jumps high
- * dog
- * dog jumps
- * dog jumps high
- * jumps
- * jumps high
- * high
+ * but is necessary.
+ * We look at segment pieces in reverse order to try to build segments
+ * as in, if you had an array like this
+ * ['my', 'super', 'cool', 'url']
+ * we want to look at the pieces in reverse order:
+ * url
+ * cool url
+ * super cool url
+ * my super cool url
+ * cool
+ * super cool
+ * my super cool
+ * super
+ * my super
+ * my
  **/
 export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLink[]) {
   const pairs: DehydratedSegmentPair[] = [];
+  const usedNavLinks = new Set<string>();
   for (const navGroup of navGroups) {
     const segments: DehydratedSegment[] = [];
-    // loop over each nav segment piece
-    for (let i = 0; i < navGroup.segmentPieces.length; i++) {
-      // do a second loop the length - i times
+
+    const segmentPieces = navGroup.segmentPieces.concat([]);
+
+    for (let i = segmentPieces.length; i >= 0; i--) {
       let created = false;
-      for (let j = 0; j < navGroup.segmentPieces.length - i; j++) {
-        // grab the subsection of the url to match the pattern above
-        const endIndex = 1 + i + j;
-        const subsetOfUrl = navGroup.segmentPieces.slice(i, endIndex);
+      for (let j = 0; j < i; j++) {
+        const startIndex = i - j - 1;
+        const endIndex = i;
+        const subsetOfUrl = segmentPieces.slice(startIndex, endIndex);
         for (const navLink of navLinks) {
-          const segment = getSegmentsFromUrlPieces(subsetOfUrl, navLink);
-          if (segment) {
-            created = true;
-            // sweet, we found a segment
-            segments.push(segment);
-            // now we want to null out the url subsection in the segmentPieces
-            for (let k = i; k < endIndex; k++) {
-              navGroup.segmentPieces[k] = null;
+          if (!usedNavLinks.has(navLink.name)) {
+            const segment = getSegmentsFromUrlPieces(subsetOfUrl, navLink);
+
+            if (segment) {
+              i = startIndex + 1;
+              usedNavLinks.add(navLink.name);
+              created = true;
+              // sweet, we found a segment
+              segments.push(segment);
+              // now we want to null out the url subsection in the segmentPieces
+              for (let k = startIndex; k < endIndex; k++) {
+                segmentPieces[k] = null;
+              }
+              break;
             }
-            break;
           }
         }
+        if (created) {
+          break;
+        }
       }
-      if (!created && navGroup.segmentPieces[i]) {
+      if (!created && segmentPieces[i - 1]) {
         // this is very likely a tab's secondary identifier
         segments.push({
           id: null,
           name: null,
-          secondaryId: navGroup.segmentPieces[i],
+          secondaryId: segmentPieces[i - 1],
           component: null,
           loadChildren: null,
           data: null,
@@ -464,7 +458,10 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
       }
     }
 
-    segments.forEach(segment => console.log('segment: ', segment));
+    // since we're getting segments in from right-to-left in the url, reverse them
+    // so they're in the correct order. Also filter out and bogus segments
+    const orderedSegments = segments.reverse();
+
 
     // okay, this is the lazy persons approach here.
     // so here's the deal! Right now if section of the url is not a part of a segment
@@ -473,12 +470,13 @@ export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLin
     // which tab is selected, so we have an identifer in the url that is associated with the tabs component
     // telling us which tab is selected. With that in mind, we are going to go through and find the segments with only secondary identifiers,
     // and simply add the secondaryId to the next segment, and then remove the empty segment from the list
-    for (let i = 0; i < segments.length; i++) {
-      if (segments[i].secondaryId && !segments[i].id && ((i + 1) <= segments.length - 1)) {
-        segments[i + 1].secondaryId = segments[i].secondaryId;
-        segments[i] = null;
+    for (let i = 0; i < orderedSegments.length; i++) {
+      if (orderedSegments[i].secondaryId && !orderedSegments[i].id && ((i + 1) <= orderedSegments.length - 1)) {
+        orderedSegments[i + 1].secondaryId = orderedSegments[i].secondaryId;
+        orderedSegments[i] = null;
       }
     }
+
     const cleanedSegments = segments.filter(segment => !!segment);
     // if the nav group has a secondary id, make sure the first segment also has it set
     if (navGroup.secondaryId && segments.length) {
