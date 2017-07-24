@@ -1,0 +1,89 @@
+@import "../../themes/ionic.globals.ios";
+@import "./chip-button";
+
+// iOS Chip Button
+// --------------------------------------------------
+
+/// @prop - Background color of the chip button
+$chip-button-ios-background-color:          color($colors-ios, primary) !default;
+
+/// @prop - Fill color of the icon in the chip button
+$chip-button-ios-icon-fill-color:           color-contrast($colors-ios, $chip-button-ios-background-color) !default;
+
+/// @prop - Background color of the clear chip button
+$chip-button-ios-clear-background-color:    transparent !default;
+
+/// @prop - Text color of the clear chip button
+$chip-button-ios-clear-text-color:          color($colors-ios, primary) !default;
+
+/// @prop - Fill color of the icon in the clear chip button
+$chip-button-ios-clear-icon-fill-color:     color($colors-ios, primary) !default;
+
+
+.chip-button-ios {
+  background-color: $chip-button-ios-background-color;
+}
+
+.chip-button-ios .icon {
+  fill: $chip-button-ios-icon-fill-color;
+}
+
+
+// iOS Clear Chip Button
+// --------------------------------------------------
+
+.chip-button-clear-ios {
+  background-color: $chip-button-ios-clear-background-color;
+  color: $chip-button-ios-clear-text-color;
+}
+
+.chip-button-clear-ios .icon {
+  fill: $chip-button-ios-clear-icon-fill-color;
+}
+
+
+// Generate iOS Chip Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .chip-button-ios-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+
+    .icon {
+      fill: $color-contrast;
+    }
+  }
+
+  .chip-ios-#{$color-name} .chip-button-ios {
+    color: $color-base;
+    background-color: $color-contrast;
+
+    .icon {
+      fill: $color-base;
+    }
+  }
+
+  // Clear Chip Buttons
+  // --------------------------------------------------
+
+  .chip-button-clear-ios-#{$color-name} {
+    color: $color-base;
+    background-color: transparent;
+
+    .icon {
+      fill: $color-base;
+    }
+  }
+
+  .chip-ios-#{$color-name} .chip-button-clear-ios {
+    color: $color-contrast;
+    background-color: transparent;
+
+    .icon {
+      fill: $color-contrast;
+    }
+  }
+
+}

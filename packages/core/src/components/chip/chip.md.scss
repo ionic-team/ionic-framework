@@ -49,21 +49,6 @@ $chip-md-icon-background-color:            color($colors-md, primary) !default;
 /// @prop - Fill color of the icon in the chip
 $chip-md-icon-fill-color:                  color-contrast($colors-md, $chip-md-icon-background-color) !default;
 
-/// @prop - Background color of the chip button
-$chip-md-button-background-color:          color($colors-md, primary) !default;
-
-/// @prop - Fill color of the icon in the chip button
-$chip-md-button-icon-fill-color:           color-contrast($colors-md, $chip-md-button-background-color) !default;
-
-/// @prop - Background color of the clear chip button
-$chip-md-button-clear-background-color:    transparent !default;
-
-/// @prop - Text color of the clear chip button
-$chip-md-button-clear-text-color:          color($colors-md, primary) !default;
-
-/// @prop - Fill color of the icon in the clear chip button
-$chip-md-button-clear-icon-fill-color:     color($colors-md, primary) !default;
-
 
 .chip-md {
   @include border-radius($chip-md-border-radius);
@@ -88,57 +73,19 @@ $chip-md-button-clear-icon-fill-color:     color($colors-md, primary) !default;
 }
 
 
-// Material Design Chip Button
-// --------------------------------------------------
-
-.chip-button-md {
-  background-color: $chip-md-button-background-color;
-}
-
-.chip-button-md .icon {
-  fill: $chip-md-button-icon-fill-color;
-}
-
-
-// Material Design Clear Chip Button
-// --------------------------------------------------
-
-.chip-button-clear-md {
-  background-color: $chip-md-button-clear-background-color;
-  color: $chip-md-button-clear-text-color;
-}
-
-.chip-button-clear-md .icon {
-  fill: $chip-md-button-clear-icon-fill-color;
-}
-
-
 // Generate Material Design Chip Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .chip-md-#{$color-name},
-  .chip-button-md-#{$color-name} {
+  .chip-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
-  }
-
-  .chip-button-md-#{$color-name} .icon {
-    fill: $color-contrast;
   }
 
   .chip-md .icon-md-#{$color-name} {
     fill: $color-contrast;
     background-color: $color-base;
-  }
-
-  .chip-button-clear-md-#{$color-name} {
-    color: $color-base;
-  }
-
-  .chip-button-clear-md-#{$color-name} .icon {
-    fill: $color-base;
   }
 
 }

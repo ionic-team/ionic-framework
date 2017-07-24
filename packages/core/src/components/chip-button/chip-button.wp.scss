@@ -1,0 +1,68 @@
+@import "../../themes/ionic.globals.wp";
+@import "./chip-button";
+
+// Windows Chip Button
+// --------------------------------------------------
+
+/// @prop - Background color of the chip button
+$chip-button-wp-background-color:          color($colors-wp, primary) !default;
+
+/// @prop - Fill color of the icon in the chip button
+$chip-button-wp-icon-fill-color:           color-contrast($colors-wp, $chip-button-wp-background-color) !default;
+
+/// @prop - Background color of the clear chip button
+$chip-button-wp-clear-background-color:    transparent !default;
+
+/// @prop - Text color of the clear chip button
+$chip-button-wp-clear-text-color:          color($colors-wp, primary) !default;
+
+/// @prop - Fill color of the icon in the clear chip button
+$chip-button-wp-clear-icon-fill-color:     color($colors-wp, primary) !default;
+
+
+.chip-button-wp {
+  background-color: $chip-button-wp-background-color;
+}
+
+.chip-button-wp .icon {
+  fill: $chip-button-wp-icon-fill-color;
+}
+
+
+// Material Design Clear Chip Button
+// --------------------------------------------------
+
+.chip-button-clear-wp {
+  background-color: $chip-button-wp-clear-background-color;
+  color: $chip-button-wp-clear-text-color;
+}
+
+.chip-button-clear-wp .icon {
+  fill: $chip-button-wp-clear-icon-fill-color;
+}
+
+
+// Generate Windows Chip Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .chip-button-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+  .chip-button-wp-#{$color-name} .icon {
+    fill: $color-contrast;
+  }
+
+  .chip-button-clear-wp-#{$color-name} {
+    color: $color-base;
+
+    .icon {
+      fill: $color-base;
+    }
+  }
+
+
+}

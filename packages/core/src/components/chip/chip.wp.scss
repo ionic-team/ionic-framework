@@ -49,21 +49,6 @@ $chip-wp-icon-background-color:            color($colors-wp, primary) !default;
 /// @prop - Fill color of the icon in the chip
 $chip-wp-icon-fill-color:                  color-contrast($colors-wp, $chip-wp-icon-background-color) !default;
 
-/// @prop - Background color of the chip button
-$chip-wp-button-background-color:          color($colors-wp, primary) !default;
-
-/// @prop - Fill color of the icon in the chip button
-$chip-wp-button-icon-fill-color:           color-contrast($colors-wp, $chip-wp-button-background-color) !default;
-
-/// @prop - Background color of the clear chip button
-$chip-wp-button-clear-background-color:    transparent !default;
-
-/// @prop - Text color of the clear chip button
-$chip-wp-button-clear-text-color:          color($colors-wp, primary) !default;
-
-/// @prop - Fill color of the icon in the clear chip button
-$chip-wp-button-clear-icon-fill-color:     color($colors-wp, primary) !default;
-
 
 .chip-wp {
   @include border-radius($chip-wp-border-radius);
@@ -88,56 +73,19 @@ $chip-wp-button-clear-icon-fill-color:     color($colors-wp, primary) !default;
 }
 
 
-// Material Design Chip Button
-// --------------------------------------------------
-
-.chip-button-wp {
-  background-color: $chip-wp-button-background-color;
-}
-
-.chip-button-wp .icon {
-  fill: $chip-wp-button-icon-fill-color;
-}
-
-
-// Material Design Clear Chip Button
-// --------------------------------------------------
-
-.chip-button-clear-wp {
-  background-color: $chip-wp-button-clear-background-color;
-  color: $chip-wp-button-clear-text-color;
-}
-
-.chip-button-clear-wp .icon {
-  fill: $chip-wp-button-clear-icon-fill-color;
-}
-
 // Generate Windows Chip Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .chip-wp-#{$color-name},
-  .chip-button-wp-#{$color-name} {
+  .chip-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
-  }
-
-  .chip-button-wp-#{$color-name} .icon {
-    fill: $color-contrast;
   }
 
   .chip-wp .icon-wp-#{$color-name} {
     fill: $color-contrast;
     background-color: $color-base;
-  }
-
-  .chip-button-clear-wp-#{$color-name} {
-    color: $color-base;
-  }
-
-  .chip-button-clear-wp-#{$color-name} .icon {
-    fill: $color-base;
   }
 
 }

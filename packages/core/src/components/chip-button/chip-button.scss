@@ -1,0 +1,31 @@
+@import "../../themes/ionic.globals";
+
+// Chip Button
+// --------------------------------------------------
+
+/// @prop - Border radius of the button in the chip
+$chip-button-border-radius:     50% !default;
+
+/// @prop - Margin top of the button in the chip
+$chip-button-margin-top:        0 !default;
+
+/// @prop - Margin end of the button in the chip
+$chip-button-margin-end:        $chip-button-margin-top !default;
+
+/// @prop - Margin bottom of the button in the chip
+$chip-button-margin-bottom:     $chip-button-margin-top !default;
+
+/// @prop - Margin start of the button in the chip
+$chip-button-margin-start:      $chip-button-margin-end !default;
+
+/// @prop - Width and height of the button in the chip
+$chip-button-size:              32px !default;
+
+
+.chip-button {
+  @include border-radius($chip-button-border-radius);
+  @include margin($chip-button-margin-top, $chip-button-margin-end, $chip-button-margin-bottom, $chip-button-margin-start);
+
+  width: $chip-button-size;
+  height: $chip-button-size;
+}

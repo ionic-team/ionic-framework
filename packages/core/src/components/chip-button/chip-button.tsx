@@ -2,7 +2,12 @@ import { Component, CssClassObject, h, Prop } from '@stencil/core';
 
 
 @Component({
-  tag: 'ion-chip-button'
+  tag: 'ion-chip-button',
+  styleUrls: {
+    ios: 'chip-button.ios.scss',
+    md: 'chip-button.md.scss',
+    wp: 'chip-button.wp.scss'
+  },
 })
 export class ChipButton {
   $el: HTMLElement;

@@ -1,0 +1,67 @@
+@import "../../themes/ionic.globals.md";
+@import "./chip-button";
+
+// Material Design Chip Button
+// --------------------------------------------------
+
+/// @prop - Background color of the chip button
+$chip-button-md-background-color:          color($colors-md, primary) !default;
+
+/// @prop - Fill color of the icon in the chip button
+$chip-button-md-icon-fill-color:           color-contrast($colors-md, $chip-button-md-background-color) !default;
+
+/// @prop - Background color of the clear chip button
+$chip-button-md-clear-background-color:    transparent !default;
+
+/// @prop - Text color of the clear chip button
+$chip-button-md-clear-text-color:          color($colors-md, primary) !default;
+
+/// @prop - Fill color of the icon in the clear chip button
+$chip-button-md-clear-icon-fill-color:     color($colors-md, primary) !default;
+
+
+.chip-button-md {
+  background-color: $chip-button-md-background-color;
+}
+
+.chip-button-md .icon {
+  fill: $chip-button-md-icon-fill-color;
+}
+
+
+// Material Design Clear Chip Button
+// --------------------------------------------------
+
+.chip-button-clear-md {
+  background-color: $chip-button-md-clear-background-color;
+  color: $chip-button-md-clear-text-color;
+}
+
+.chip-button-clear-md .icon {
+  fill: $chip-button-md-clear-icon-fill-color;
+}
+
+
+// Generate Material Design Chip Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .chip-button-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+  .chip-button-md-#{$color-name} .icon {
+    fill: $color-contrast;
+  }
+
+  .chip-button-clear-md-#{$color-name} {
+    color: $color-base;
+  }
+
+  .chip-button-clear-md-#{$color-name} .icon {
+    fill: $color-base;
+  }
+
+}
