@@ -18,12 +18,13 @@ declare global {
 }
 
 
-export interface IonicGlobal extends Stencil.ProjectGlobal {
+export interface IonicGlobal extends Stencil.AppGlobal {
   Animation?: Animation;
   controllers?: {[ctrlName: string]: any};
   controller?: IonicController;
   config: ConfigApi;
   loadController?: (ctrlName: string, ctrl: any) => void;
+  mode: string;
 }
 
 

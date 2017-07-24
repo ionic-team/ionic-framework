@@ -27,7 +27,7 @@ export class Scroll {
 
 
   ionViewDidLoad() {
-    if (Ionic.isServer) return;
+    if (Core.isServer) return;
 
     const ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
 
@@ -162,9 +162,9 @@ export class Scroll {
   enableJsScroll(contentTop: number, contentBottom: number) {
     this.jsScroll = true;
 
-    Ionic.listener.enable(this, 'scroll', false);
+    Core.enableListener(this, 'scroll', false);
 
-    Ionic.listener.enable(this, 'touchstart', true);
+    Core.enableListener(this, 'touchstart', true);
 
     contentTop; contentBottom;
   }
@@ -178,8 +178,8 @@ export class Scroll {
       return;
     }
 
-    Ionic.listener.enable(this, 'touchmove', true);
-    Ionic.listener.enable(this, 'touchend', true);
+    Core.enableListener(this, 'touchmove', true);
+    Core.enableListener(this, 'touchend', true);
 
     throw 'jsScroll: TODO!';
   }
@@ -193,8 +193,8 @@ export class Scroll {
 
   @Listen('touchend', { passive: true, enabled: false })
   onTouchEnd() {
-    Ionic.listener.enable(this, 'touchmove', false);
-    Ionic.listener.enable(this, 'touchend', false);
+    Core.enableListener(this, 'touchmove', false);
+    Core.enableListener(this, 'touchend', false);
 
     if (!this.enabled) {
       return;

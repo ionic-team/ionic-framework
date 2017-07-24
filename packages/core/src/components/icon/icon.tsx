@@ -147,7 +147,7 @@ export class Icon {
       if (this.status >= 400) {
         // umm, not awesome, something is up
         console.error('Icon could not be loaded:', svgUrl);
-        svgContent = `<!-- error loading svg -->`;
+        svgContent = `<!--error loading svg-->`;
       }
 
       // cache the svg content in the global IonIcon constant

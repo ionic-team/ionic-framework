@@ -57,8 +57,8 @@ export class Gesture {
     this.hasPress = (types.indexOf('press') > -1);
 
     if (this.pan || this.hasPress) {
-      Ionic.listener.enable(this, 'touchstart', true, this.attachTo);
-      Ionic.listener.enable(this, 'mousedown', true, this.attachTo);
+      Core.enableListener(this, 'touchstart', true, this.attachTo);
+      Core.enableListener(this, 'mousedown', true, this.attachTo);
 
       Ionic.dom.write(() => {
         applyStyles(getElementReference(this.$el, this.attachTo), GESTURE_INLINE_STYLES);
@@ -348,17 +348,17 @@ export class Gesture {
 
   private enableMouse(shouldEnable: boolean) {
     if (this.requiresMove) {
-      Ionic.listener.enable(this, 'document:mousemove', shouldEnable);
+      Core.enableListener(this, 'document:mousemove', shouldEnable);
     }
-    Ionic.listener.enable(this, 'document:mouseup', shouldEnable);
+    Core.enableListener(this, 'document:mouseup', shouldEnable);
   }
 
 
   private enableTouch(shouldEnable: boolean) {
     if (this.requiresMove) {
-      Ionic.listener.enable(this, 'touchmove', shouldEnable);
+      Core.enableListener(this, 'touchmove', shouldEnable);
     }
-    Ionic.listener.enable(this, 'touchend', shouldEnable);
+    Core.enableListener(this, 'touchend', shouldEnable);
   }
 
 

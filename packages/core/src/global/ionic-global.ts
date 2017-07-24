@@ -10,7 +10,7 @@ const Ionic: IonicGlobal = (window as any)['Ionic'] = (window as any)['Ionic'] |
 Ionic.config = createConfigController(Ionic.config, PLATFORM_CONFIGS);
 
 // get the mode via config settings
-Ionic.mode = Ionic.config.get('mode');
+Core.mode = Ionic.mode = Ionic.config.get('mode', 'md');
 
 // used to store the queued controller promises to
 // be resolved when the controller finishes loading

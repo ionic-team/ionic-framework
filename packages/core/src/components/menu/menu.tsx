@@ -481,8 +481,8 @@ export class Menu {
     const onBackdropClick = this.onBackdropClick.bind(this);
 
     if (shouldAdd && !this._unregBdClick) {
-      this._unregBdClick = Ionic.listener.add(this._cntElm, 'click', onBackdropClick, { capture: true });
-      this._unregCntClick = Ionic.listener.add(this._cntElm, 'click', onBackdropClick, { capture: true });
+      this._unregBdClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
+      this._unregCntClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
 
     } else if (!shouldAdd && this._unregBdClick) {
       this._unregBdClick();
