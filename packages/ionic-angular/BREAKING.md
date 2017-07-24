@@ -5,6 +5,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 
 - [Dynamic Mode](#dynamic-mode)
 - [Button](#button)
+- [Chip](#chip)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
 - [Icon](#icon)
@@ -95,6 +96,34 @@ These have been renamed to the following, and moved from the button element to t
   Icon Right on LTR, Left on RTL
   <ion-icon slot="end" name="home"></ion-icon>
 </ion-button>
+```
+
+## Chip
+
+### Markup Changed
+
+Buttons inside of an `<ion-chip>` container should now be written as an `<ion-chip-button>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute.
+
+**Old Usage Example:**
+
+```html
+<ion-chip>
+  <ion-label>Default</ion-label>
+  <ion-button clear color="light">
+    <ion-icon name="close-circle"></ion-icon>
+  </ion-button>
+</ion-chip>
+```
+
+**New Usage Example:**
+
+```html
+<ion-chip>
+  <ion-label>Default</ion-label>
+  <ion-chip-button clear color="light">
+    <ion-icon name="close-circle"></ion-icon>
+  </ion-chip-button>
+</ion-chip>
 ```
 
 ## FAB
