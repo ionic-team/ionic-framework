@@ -16,6 +16,9 @@ Core.mode = Ionic.mode = Ionic.config.get('mode', 'md');
 // be resolved when the controller finishes loading
 const queuedCtrlResolves: {[ctrlName: string]: any[]} = {};
 
+// create a container for all of the controllers that get loaded
+Ionic.controllers = {};
+
 Ionic.controller = (ctrlName: string, opts?: any) => {
   // loading a controller is always async so return a promise
   return new Promise<any>((resolve: Function) => {

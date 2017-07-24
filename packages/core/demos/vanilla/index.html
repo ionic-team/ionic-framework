@@ -18,7 +18,285 @@
 
 <body>
 
-  <ion-app mode="ios">
+  <ion-app>
+
+    <ion-menu ssr="false" content="#menu-content">
+      <ion-header>
+        Menu Header
+      </ion-header>
+      <ion-content>
+        Menu Content
+      </ion-content>
+    </ion-menu>
+
+    <ion-page id="menu-content">
+
+      <ion-header md-height="77px" ios-height="61px">
+        <ion-toolbar>
+          <ion-title>Header</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="toggleMenu">Menu</ion-button>
+            <ion-button id="presentModal">Modal</ion-button>
+            <ion-button id="presentLoading">Loading</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-title>Buttons</ion-title>
+          <ion-buttons slot="mode-start">
+            <ion-button id="presentLoading">M.Start</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="mode-end">
+            <ion-button id="presentLoading">M.End</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="start">
+            <ion-button id="presentLoading">Start</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button id="presentLoading">End</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" fullscreen>
+
+        <ion-list>
+
+          <ion-item-divider>
+            <div slot="start">item start</div>
+            <div slot="end">item end</div>
+            <ion-label>Item Divider</ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <ion-button slot="start">Default</ion-button>
+            <div slot="end">item end</div>
+            <ion-label>Hello!</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label><b>Item Label</b></ion-label>
+            <ion-item slot="start">
+              <div slot="start">start</div>
+              <div slot="end">end</div>
+              <ion-label>Item Start</ion-label>
+            </ion-item>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Hello</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-avatar slot="start"><img src="http://placehold.it/150x150" /></ion-avatar>
+            <ion-label>Avatar</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle slot="start"></ion-toggle>
+            <ion-label>Toggle Enabled</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle slot="start" disabled></ion-toggle>
+            <ion-label>Toggle Disabled</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-toggle slot="end"></ion-toggle>
+            <ion-label>Toggle</ion-label>
+          </ion-item>
+
+          <ion-item-divider color="secondary">
+            <div slot="start">item start</div>
+            <div slot="end">item end</div>
+            <ion-label>Item Divider</ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <ion-thumbnail slot="end"><img src="http://placehold.it/150x150" /></ion-thumbnail>
+            <ion-label>Thumbnail</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Gender</ion-label>
+            <ion-select [(ngModel)]="login.gender" formControlName="gender">
+              <ion-option value="f">Female</ion-option>
+              <ion-option value="m">Male</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-card>
+          <ion-card-header>
+            Card Header
+          </ion-card-header>
+          <ion-card-content>
+            Card Content
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+          </ion-card-content>
+        </ion-card>
+
+        <p>
+          <ion-toggle checked></ion-toggle>Toggle
+        </p>
+        <p>
+          <ion-toggle disabled></ion-toggle>Toggle Disabled
+        </p>
+
+        <p>
+          <ion-badge></ion-badge>
+          <ion-badge>default</ion-badge>
+          <ion-badge color="secondary">secondary</ion-badge>
+          <ion-badge color="danger">danger</ion-badge>
+          <ion-badge color="light">light</ion-badge>
+          <ion-badge color="dark">dark</ion-badge>
+        </p>
+
+        <p>
+          <ion-badge id="dynamicProp">dynamic property</ion-badge>
+          <ion-badge id="dynamicAttr">dynamic attribute</ion-badge>
+        </p>
+
+        <p id="dynamicBadges"></p>
+
+        <ion-button>Default</ion-button>
+
+        <script>
+
+          var content = document.getElementById('content');
+          content.addEventListener('ionScrollStart', function(ev) {
+            console.log('ionScrollStart', ev.detail.directionY);
+          });
+          content.addEventListener('ionScroll', function(ev) {
+            console.log('ionScroll', ev.detail.directionY);
+          });
+          content.addEventListener('ionScrollEnd', function(ev) {
+            console.log('ionScrollEnd', ev.detail.directionY);
+          });
+
+
+          var dynamicProp = document.getElementById('dynamicProp');
+          var dynamicAttr = document.getElementById('dynamicAttr');
+
+          setInterval(function () {
+            if (dynamicProp.color === 'secondary') {
+              dynamicProp.color = 'danger';
+              dynamicAttr.setAttribute('color', 'danger');
+
+            } else if (dynamicProp.color === 'danger') {
+              dynamicProp.color = 'light';
+              dynamicAttr.setAttribute('color', 'light');
+
+            } else if (dynamicProp.color === 'light') {
+              dynamicProp.color = 'dark';
+              dynamicAttr.setAttribute('color', 'dark');
+
+            } else if (dynamicProp.color === 'dark') {
+              dynamicProp.color = 'primary';
+              dynamicAttr.setAttribute('color', 'primary');
+
+            } else {
+              dynamicProp.color = 'secondary';
+              dynamicAttr.setAttribute('color', 'secondary');
+            }
+          }, 1000);
+
+
+          var dynamicBadges = document.getElementById('dynamicBadges');
+          for (var i = 0; i < 100; i++) {
+            var div = document.createElement('div');
+            div.innerHTML = '<ion-badge>' + i + '</ion-badge>';
+            dynamicBadges.appendChild(div);
+          }
+
+
+          document.getElementById('presentModal').addEventListener('click', function() {
+            var userId = Math.round(Math.random() * 10000);
+
+            console.log('open profile modal for userId:', userId);
+
+            Ionic.controller('modal', { component: 'profile-page', componentProps: { userId: userId } }).then(modal => {
+              console.log('start presenting modal, userId:', modal.componentProps.userId);
+
+              modal.present().then(() => {
+                console.log('finished presenting modal, userId:', modal.componentProps.userId);
+              });
+            });
+          });
+
+          class ProfilePage extends HTMLElement {
+
+            constructor() {
+              super();
+
+              const shadowRoot = this.attachShadow({mode: 'open'});
+
+              shadowRoot.innerHTML = `
+                <ion-header>
+                  <ion-toolbar>
+                    My Profile
+                  </ion-toolbar>
+                </ion-header>
+
+                <ion-content padding>
+                  <p>User Id: <span id="userId"></span></p>
+                  <p>
+                    <ion-button>Dismiss</ion-button>
+                  </p>
+                </ion-content>
+              `;
+            }
+
+            connectedCallback() {
+              var btn = this.shadowRoot.querySelector('ion-button');
+
+              btn.addEventListener('click', (uiEvent) => {
+                console.log('dismiss profile page for userId:', this.userId);
+                var ev = new CustomEvent('ionDismiss', { composed: true, bubbles: true });
+                uiEvent.target.dispatchEvent(ev);
+              });
+
+              this.shadowRoot.getElementById('userId').textContent = this.userId;
+            }
+
+          }
+          customElements.define('profile-page', ProfilePage);
+
+
+          document.getElementById('presentLoading').addEventListener('click', function() {
+            console.log('open loading');
+
+            Ionic.controller('loading', { duration: 1000 }).then(loading => {
+              console.log('start presenting loading');
+
+              loading.present().then(() => {
+                console.log('finished presenting loading');
+              });
+            });
+          });
+
+
+          document.getElementById('toggleMenu').addEventListener('click', function() {
+            console.log('toggle menu');
+
+            Ionic.controller('menu').then(menuCtrl => {
+              console.log('start menu toggle');
+
+              menuCtrl.toggle().then(() => {
+                console.log('finished menu toggle');
+              });
+            });
+          });
+
+          document.addEventListener('ionLoad', function() {
+            console.timeEnd('app-load');
+          });
+        </script>
+
+      </ion-content>
+
+    </ion-page>
 
   </ion-app>
 
