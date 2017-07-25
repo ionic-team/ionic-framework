@@ -354,7 +354,7 @@ var Gesture = (function () {
         if (this.pan || this.hasPress) {
             Ionic.listener.enable(this, 'touchstart', true, this.attachTo);
             Ionic.listener.enable(this, 'mousedown', true, this.attachTo);
-            Ionic.dom.write(function () {
+            Core.dom.write(function () {
                 applyStyles(getElementReference(_this.$el, _this.attachTo), GESTURE_INLINE_STYLES);
             });
         }
@@ -435,7 +435,7 @@ var Gesture = (function () {
             if (this.hasCapturedPan) {
                 if (!this.isMoveQueued) {
                     this.isMoveQueued = true;
-                    Ionic.dom.write(function () {
+                    Core.dom.write(function () {
                         _this.isMoveQueued = false;
                         detail.type = 'pan';
                         if (_this.onMove) {
@@ -630,7 +630,7 @@ var Scroll = (function () {
         var self = this;
         if (!self.queued && self.enabled) {
             self.queued = true;
-            Ionic.dom.read(function (timeStamp) {
+            Core.dom.read(function (timeStamp) {
                 self.queued = false;
                 self.onScroll(timeStamp || Date.now());
             });
@@ -695,7 +695,7 @@ var Scroll = (function () {
         self.tmr = setTimeout(function () {
             // haven't scrolled in a while, so it's a scrollend
             self.isScrolling = false;
-            Ionic.dom.read(function (timeStamp) {
+            Core.dom.read(function (timeStamp) {
                 if (!self.isScrolling) {
                     self.onEnd(timeStamp);
                 }
@@ -843,7 +843,7 @@ var Scroll = (function () {
             if (easedT < 1) {
                 // do not use DomController here
                 // must use nativeRaf in order to fire in the next frame
-                Ionic.dom.raf(step);
+                Core.dom.raf(step);
             }
             else {
                 stopScroll = true;
@@ -855,8 +855,8 @@ var Scroll = (function () {
         // start scroll loop
         self.isScrolling = true;
         // chill out for a frame first
-        Ionic.dom.write(function () {
-            Ionic.dom.write(function (timeStamp) {
+        Core.dom.write(function () {
+            Core.dom.write(function (timeStamp) {
                 startTime = timeStamp;
                 step(timeStamp);
             });

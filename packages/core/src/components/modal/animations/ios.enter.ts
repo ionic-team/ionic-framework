@@ -1,4 +1,3 @@
-const Ionic = (window as any).Ionic;
 
 
 /**

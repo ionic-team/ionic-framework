@@ -1,5 +1,5 @@
-import { Component, h, Ionic, Prop, State } from '@stencil/core';
-import { VNodeData } from '../../utils/interfaces';
+import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+
 
 /**
  * @name Searchbar
@@ -32,13 +32,14 @@ import { VNodeData } from '../../utils/interfaces';
   }
 })
 export class Searchbar {
-  $el: HTMLElement;
+  private _isCancelVisible: boolean = false;
+  private _shouldBlur: boolean = true;
+  private _shouldAlignLeft: boolean = true;
 
-  _isCancelVisible: boolean = false;
-  _shouldBlur: boolean = true;
-  _shouldAlignLeft: boolean = true;
+  @Element() el: HTMLElement;
 
   @Prop() mode: string;
+
   @Prop() color: string;
 
   @State() activated: boolean = false;
@@ -46,20 +47,30 @@ export class Searchbar {
   @State() focused: boolean = false;
 
 
-//   /**
-//    * @output {event} Emitted when the Searchbar input has changed, including when it's cleared.
-//    */
-//   @Output() ionInput: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
+  /**
+   * @output {event} Emitted when the Searchbar input has changed, including when it's cleared.
+   */
+  @Event() ionInput: EventEmitter;
 
-//   /**
-//    * @output {event} Emitted when the cancel button is clicked.
-//    */
-//   @Output() ionCancel: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
+  /**
+   * @output {event} Emitted when the cancel button is clicked.
+   */
+  @Event() ionCancel: EventEmitter;
 
-//   /**
-//    * @output {event} Emitted when the clear input button is clicked.
-//    */
-//   @Output() ionClear: EventEmitter<UIEvent> = new EventEmitter<UIEvent>();
+  /**
+   * @output {event} Emitted when the clear input button is clicked.
+   */
+  @Event() ionClear: EventEmitter;
+
+  /**
+   * @output {event}
+   */
+  @Event() ionBlur: EventEmitter;
+
+  /**
+   * @output {event}
+   */
+  @Event() ionFocus: EventEmitter;
 
 
   /**
@@ -137,7 +148,7 @@ export class Searchbar {
    * Clears the input field and triggers the control change.
    */
   clearInput(ev: UIEvent) {
-    Ionic.emit(this, 'ionClear', { detail: { event: ev } });
+    this.ionClear.emit({event: ev});
 
     // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
@@ -145,7 +156,7 @@ export class Searchbar {
       let value = this.value;
       if (value !== undefined && value !== '') {
         this.value = '';
-        Ionic.emit(this, 'ionInput', { detail: { event: ev } });
+        this.ionInput.emit({event: ev});
       }
     }, 16 * 4);
     this._shouldBlur = false;
@@ -158,7 +169,7 @@ export class Searchbar {
    * then calls the custom cancel function if the user passed one in.
    */
   cancelSearchbar(ev: UIEvent) {
-    Ionic.emit(this, 'ionCancel', { detail: { event: ev } });
+    this.ionCancel.emit({event: ev});
 
     this.clearInput(ev);
     this._shouldBlur = true;
@@ -180,7 +191,7 @@ export class Searchbar {
    * @hidden
    */
   inputUpdated() {
-    // const inputEle = this.$el.querySelector('.searchbar-input') as HTMLInputElement;
+    // const inputEle = this.el.querySelector('.searchbar-input') as HTMLInputElement;
 
     // It is important not to re-assign the value if it is the same, because,
     // otherwise, the caret is moved to the end of the input
@@ -198,14 +209,14 @@ export class Searchbar {
    * based on whether there is a value in the searchbar or not.
    */
   inputBlurred() {
-    const inputEle = this.$el.querySelector('.searchbar-input') as HTMLElement;
+    const inputEle = this.el.querySelector('.searchbar-input') as HTMLElement;
 
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this._shouldBlur === false) {
       inputEle.focus();
       this._shouldBlur = true;
-      Ionic.emit(this, 'ionBlur', { detail: { this: this } });
+      this.ionBlur.emit({this: this});
       this.inputUpdated();
       return;
     }
@@ -222,7 +233,7 @@ export class Searchbar {
     this.activated = true;
 
     this.focused = true;
-    Ionic.emit(this, 'ionFocus', { detail: { this: this } });
+    this.ionFocus.emit({this: this});
     this.inputUpdated();
 
     this.positionElements();
@@ -257,8 +268,8 @@ export class Searchbar {
    */
   positionPlaceholder() {
     const isRTL = document.dir === 'rtl';
-    const inputEle = this.$el.querySelector('.searchbar-input') as HTMLElement;
-    const iconEle = this.$el.querySelector('.searchbar-search-icon') as HTMLElement;
+    const inputEle = this.el.querySelector('.searchbar-input') as HTMLElement;
+    const iconEle = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this._shouldAlignLeft) {
       inputEle.removeAttribute('style');
@@ -297,7 +308,7 @@ export class Searchbar {
    */
   positionCancelButton() {
     const isRTL = document.dir === 'rtl';
-    const cancelButton = this.$el.querySelector('.searchbar-ios-cancel') as HTMLElement;
+    const cancelButton = this.el.querySelector('.searchbar-ios-cancel') as HTMLElement;
     const shouldShowCancel = this.focused;
 
     if (shouldShowCancel !== this._isCancelVisible) {
@@ -322,7 +333,7 @@ export class Searchbar {
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'searchbar-active': this.activated,

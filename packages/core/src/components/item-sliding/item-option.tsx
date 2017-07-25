@@ -1,6 +1,6 @@
-import { Component, CssClassObject, h, Method, Prop, State } from '@stencil/core';
-
+import { Component, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
+
 
 /**
  * @name ItemOption
@@ -23,7 +23,7 @@ export class ItemOption {
    */
   @Prop() disabled: boolean = false;
 
-  notCaptured(ev: any) {
+  notCaptured() {
     // if (!clickedOptionButton(ev)) {
     //   this.closeOpened();
     // }

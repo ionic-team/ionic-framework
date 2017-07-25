@@ -1,5 +1,4 @@
-import { Component, h, Prop, Ionic, PropDidChange } from '@stencil/core';
-import { VNodeData, GlobalNamespace, Menu as IMenu } from '../../utils/interfaces';
+import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 
@@ -15,8 +14,8 @@ import { MenuType } from './menu-types';
     theme: 'menu'
   }
 })
-export class Menu implements IMenu {
-  private $el: HTMLElement;
+export class Menu {
+  @Element() private el: HTMLElement;
   private _backdropElm: HTMLElement;
   private _ctrl: MenuController;
   private _unregCntClick: Function;
@@ -30,6 +29,10 @@ export class Menu implements IMenu {
 
   mode: string;
   color: string;
+
+  @Event() ionDrag: EventEmitter;
+  @Event() ionOpen: EventEmitter;
+  @Event() ionClose: EventEmitter;
 
   /**
    * @hidden
@@ -96,7 +99,7 @@ export class Menu implements IMenu {
 
   constructor() {
     // get or create the MenuController singleton
-    this._ctrl = (Ionic as GlobalNamespace).controllers.menu = ((Ionic as GlobalNamespace).controllers.menu || new MenuController());
+    this._ctrl = Ionic.controllers.menu = (Ionic.controllers.menu || new MenuController());
   }
 
 
@@ -104,7 +107,7 @@ export class Menu implements IMenu {
    * @hidden
    */
   ionViewDidLoad() {
-    this._backdropElm = this.$el.querySelector('.menu-backdrop') as HTMLElement;
+    this._backdropElm = this.el.querySelector('.menu-backdrop') as HTMLElement;
 
     this._init = true;
 
@@ -139,7 +142,7 @@ export class Menu implements IMenu {
     this.enable(isEnabled);
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       attrs: {
         'role': 'navigation',
@@ -259,7 +262,7 @@ export class Menu implements IMenu {
 
     this._getType().setProgessStep(stepValue);
 
-    Ionic.emit(this, 'ionDrag', { detail: { menu: this } });
+    this.ionDrag.emit({ menu: this });
   }
 
   _swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number, velocity: number) {
@@ -283,7 +286,7 @@ export class Menu implements IMenu {
   private _before() {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    this.$el.classList.add('show-menu');
+    this.el.classList.add('show-menu');
     this._backdropElm.classList.add('show-backdrop');
 
     this.resize();
@@ -311,26 +314,26 @@ export class Menu implements IMenu {
       this._activeBlock = GESTURE_BLOCKER;
 
       // add css class
-      Ionic.dom.write(() => {
+      Core.dom.write(() => {
         this._cntElm.classList.add('menu-content-open');
       });
 
       // emit open event
-      Ionic.emit(this, 'ionOpen', { detail: { menu: this } });
+      this.ionOpen.emit({ menu: this });
 
     } else {
       // enable swipe to go back gesture
       this._activeBlock = null;
 
       // remove css classes
-      Ionic.dom.write(() => {
+      Core.dom.write(() => {
         this._cntElm.classList.remove('menu-content-open');
         this._cntElm.classList.remove('show-menu');
         this._backdropElm.classList.remove('show-menu');
       });
 
       // emit close event
-      Ionic.emit(this, 'ionClose', { detail: { menu: this } });
+      this.ionClose.emit({ menu: this });
     }
   }
 
@@ -446,7 +449,7 @@ export class Menu implements IMenu {
    * @hidden
    */
   getMenuElement(): HTMLElement {
-    return this.$el.querySelector('.menu-inner') as HTMLElement;
+    return this.el.querySelector('.menu-inner') as HTMLElement;
   }
 
   /**
@@ -481,8 +484,8 @@ export class Menu implements IMenu {
     const onBackdropClick = this.onBackdropClick.bind(this);
 
     if (shouldAdd && !this._unregBdClick) {
-      this._unregBdClick = Ionic.listener.add(this._cntElm, 'click', onBackdropClick, { capture: true });
-      this._unregCntClick = Ionic.listener.add(this._cntElm, 'click', onBackdropClick, { capture: true });
+      this._unregBdClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
+      this._unregCntClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
 
     } else if (!shouldAdd && this._unregBdClick) {
       this._unregBdClick();

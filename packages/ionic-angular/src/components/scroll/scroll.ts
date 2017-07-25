@@ -44,7 +44,7 @@ export class Scroll implements IScroll {
     if (!self.queued && self.enabled) {
       self.queued = true;
 
-      Ionic.dom.read(function(timeStamp) {
+      Core.dom.read(function(timeStamp) {
         self.queued = false;
         self.onScroll(timeStamp || Date.now());
       });
@@ -127,7 +127,7 @@ export class Scroll implements IScroll {
       // haven't scrolled in a while, so it's a scrollend
       self.isScrolling = false;
 
-      Ionic.dom.read(function(timeStamp) {
+      Core.dom.read(function(timeStamp) {
         if (!self.isScrolling) {
           self.onEnd(timeStamp);
         }
@@ -315,7 +315,7 @@ export class Scroll implements IScroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        Ionic.dom.raf(step);
+        Core.dom.raf(step);
 
       } else {
         stopScroll = true;
@@ -329,8 +329,8 @@ export class Scroll implements IScroll {
     self.isScrolling = true;
 
     // chill out for a frame first
-    Ionic.dom.write(() => {
-      Ionic.dom.write(timeStamp => {
+    Core.dom.write(() => {
+      Core.dom.write(timeStamp => {
         startTime = timeStamp;
         step(timeStamp);
       });

@@ -1,4 +1,4 @@
-import { Component, h, Prop, CssClassObject } from '@stencil/core';
+import { Component, Element, Prop, CssClassMap } from '@stencil/core';
 
 /**
   * @name Button
@@ -69,7 +69,7 @@ import { Component, h, Prop, CssClassObject } from '@stencil/core';
   }
 })
 export class Button {
-  $el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   @Prop() itemButton: boolean = false;
 
@@ -166,7 +166,7 @@ export class Button {
    * Get the classes based on the button type
    * e.g. alert-button, action-sheet-button
    */
-  getButtonClassList(buttonType: string, mode: string): string[] {
+  private getButtonClassList(buttonType: string, mode: string): string[] {
     if (!buttonType) {
       return [];
     }
@@ -182,7 +182,7 @@ export class Button {
    * Get the classes based on the type
    * e.g. block, full, round, large
    */
-  getClassList(buttonType: string, type: string, mode: string): string[] {
+  private getClassList(buttonType: string, type: string, mode: string): string[] {
     if (!type) {
       return [];
     }
@@ -197,7 +197,7 @@ export class Button {
    * @hidden
    * Get the classes for the color
    */
-  getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
+  private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
     style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
     let className =
       buttonType +
@@ -226,7 +226,7 @@ export class Button {
    * Get the classes for the style
    * e.g. outline, clear, solid
    */
-  getStyleClassList(buttonType: string): string[] {
+  private getStyleClassList(buttonType: string): string[] {
     let classList = [].concat(
       this.outline ? this.getColorClassList(this.color, buttonType, 'outline', this.mode) : [],
       this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : [],
@@ -244,7 +244,7 @@ export class Button {
    * @hidden
    * Get the item classes for the button
    */
-  getItemClassList(size: string) {
+  private getItemClassList(size: string) {
     let classList = [].concat(
       this.itemButton && !size ? 'item-button' : []
     );
@@ -256,9 +256,9 @@ export class Button {
    * @hidden
    * Get the element classes to add to the child element
    */
-  getElementClassList() {
+  private getElementClassList() {
     let classList = [].concat(
-      this.$el.className.length ? this.$el.className.split(' ') : []
+      this.el.className.length ? this.el.className.split(' ') : []
     );
 
     return classList;
@@ -278,7 +278,7 @@ export class Button {
 
     const decorator = (this.strong ? 'strong' : null);
 
-    const buttonClasses: CssClassObject = []
+    const buttonClasses: CssClassMap = []
       .concat(
         this.getButtonClassList(this.buttonType, this.mode),
         this.getClassList(this.buttonType, shape, this.mode),

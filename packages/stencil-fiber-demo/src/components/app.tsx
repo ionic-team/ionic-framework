@@ -1,4 +1,4 @@
-import { Component, Prop, h, VNodeData } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'fiber-demo'
@@ -17,7 +17,7 @@ export class FiberDemo {
     this.seconds = (this.seconds % 10) + 1;
   }
 
-  hostData(): VNodeData {
+  hostData() {
     const elapsed = this.elapsed;
     const t = (elapsed / 1000) % 10;
     const scale = 1 + (t > 5 ? 10 - t : t) / 10;

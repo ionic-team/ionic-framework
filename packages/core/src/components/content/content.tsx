@@ -1,8 +1,7 @@
-import { Component, h, Ionic, Prop } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
+import { Scroll, ScrollDetail } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
-import { Scroll } from '../scroll/scroll-interface';
-import { ScrollDetail } from '../../utils/interfaces';
 
 
 @Component({
@@ -16,7 +15,8 @@ import { ScrollDetail } from '../../utils/interfaces';
 export class Content {
   private mode: string;
   private color: string;
-  $el: HTMLElement;
+  @Element() private el: HTMLElement;
+
   $scroll: Scroll;
   $scrollDetail: ScrollDetail = {};
   $fixed: HTMLElement;
@@ -81,7 +81,7 @@ export class Content {
     const props: any = {};
     const scrollStyle: any = {};
 
-    const pageChildren: HTMLElement[] = getParentElement(this.$el).children;
+    const pageChildren: HTMLElement[] = getParentElement(this.el).children;
     const headerHeight = getToolbarHeight('ION-HEADER', pageChildren, this.mode, '44px', '56px');
     const footerHeight = getToolbarHeight('ION-FOOTER', pageChildren, this.mode, '50px', '48px');
 

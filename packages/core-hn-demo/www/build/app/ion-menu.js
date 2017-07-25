@@ -565,7 +565,7 @@ var Menu = (function () {
             // disable swipe to go back gesture
             this._activeBlock = GESTURE_BLOCKER;
             // add css class
-            Ionic.dom.write(function () {
+            Core.dom.write(function () {
                 _this._cntElm.classList.add('menu-content-open');
             });
             // emit open event
@@ -575,7 +575,7 @@ var Menu = (function () {
             // enable swipe to go back gesture
             this._activeBlock = null;
             // remove css classes
-            Ionic.dom.write(function () {
+            Core.dom.write(function () {
                 _this._cntElm.classList.remove('menu-content-open');
                 _this._cntElm.classList.remove('show-menu');
                 _this._backdropElm.classList.remove('show-menu');

@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, Element } from '@stencil/core';
 
 
 @Component({
@@ -8,10 +8,10 @@ import { Component, h } from '@stencil/core';
   }
 })
 export class Buttons {
-  $el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   ionViewDidLoad() {
-    const buttons = this.$el.querySelectorAll('ion-button') as any;
+    const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
     }

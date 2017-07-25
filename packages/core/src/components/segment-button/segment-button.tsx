@@ -1,6 +1,6 @@
-import { Component, h, Ionic, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 
-import { CssClassObject } from '../../utils/interfaces';
+import { CssClassMap } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -49,6 +49,8 @@ export class SegmentButton {
   mode: string;
   color: string;
 
+  @Event() ionClick: EventEmitter;
+
   @State() activated: boolean = false;
 
   /*
@@ -81,11 +83,10 @@ export class SegmentButton {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      Ionic.emit(this, 'ionClick', {
-        detail: {
-          'segmentButton': this,
-        }
-      });
+      const ev: SegmentButtonEvent = {
+        'segmentButton': this
+      };
+      this.ionClick.emit(ev);
     });
   }
 
@@ -105,7 +106,7 @@ export class SegmentButton {
   render() {
     const segmentButtonCss = createThemedClasses(this.mode, this.color, 'segment-button');
 
-    var segmentButtonClasses: CssClassObject = []
+    var segmentButtonClasses: CssClassMap = []
       .concat(
         this.getElementClassList()
       )
@@ -122,4 +123,9 @@ export class SegmentButton {
       </button>
     ];
   }
+}
+
+
+export interface SegmentButtonEvent {
+  segmentButton: SegmentButton;
 }

@@ -1,32 +1,23 @@
-import { Component, Listen, h, Ionic, Prop } from '@stencil/core';
+import { Component, Element, Listen, Prop } from '@stencil/core';
+import { GestureDetail } from '../../index';
 import { GestureController, GestureDelegate } from '../gesture/gesture-controller';
-import { GlobalNamespace, ScrollCallback, ScrollDetail } from '../../utils/interfaces';
-import { Scroll as IScroll } from './scroll-interface';
 
 
 @Component({
   tag: 'ion-scroll'
 })
-export class Scroll implements IScroll {
-  private $el: HTMLElement;
+export class Scroll {
+  @Element() private el: HTMLElement;
+
   private gesture: GestureDelegate;
   private positions: number[] = [];
   private _l: number;
   private _t: number;
   private tmr: any;
   private queued = false;
-  private eventOpts: any;
 
   isScrolling: boolean = false;
   detail: ScrollDetail = {};
-
-  constructor() {
-    this.eventOpts = {
-      detail: this.detail,
-      bubbles: true,
-      composed: true
-    };
-  }
 
   @Prop() enabled: boolean = true;
   @Prop() jsScroll: boolean = false;
@@ -34,11 +25,10 @@ export class Scroll implements IScroll {
   @Prop() ionScroll: ScrollCallback;
   @Prop() ionScrollEnd: ScrollCallback;
 
-
   ionViewDidLoad() {
-    if (Ionic.isServer) return;
+    if (Core.isServer) return;
 
-    const ctrl = (Ionic as GlobalNamespace).controllers.gesture = ((Ionic as GlobalNamespace).controllers.gesture || new GestureController());
+    const ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
 
     this.gesture = ctrl.createGesture('scroll', 100, false);
   }
@@ -53,7 +43,7 @@ export class Scroll implements IScroll {
     if (!self.queued && self.enabled) {
       self.queued = true;
 
-      Ionic.dom.read(function(timeStamp) {
+      Core.dom.read(function(timeStamp) {
         self.queued = false;
         self.onScroll(timeStamp || Date.now());
       });
@@ -89,8 +79,6 @@ export class Scroll implements IScroll {
       // emit only on the first scroll event
       if (self.ionScrollStart) {
         self.ionScrollStart(detail);
-      } else {
-        Ionic.emit(this, 'ionScrollStart', this.eventOpts);
       }
     }
 
@@ -136,7 +124,7 @@ export class Scroll implements IScroll {
       // haven't scrolled in a while, so it's a scrollend
       self.isScrolling = false;
 
-      Ionic.dom.read(function(timeStamp) {
+      Core.dom.read(function(timeStamp) {
         if (!self.isScrolling) {
           self.onEnd(timeStamp);
         }
@@ -146,8 +134,6 @@ export class Scroll implements IScroll {
     // emit on each scroll event
     if (self.ionScrollStart) {
       self.ionScroll(detail);
-    } else {
-      Ionic.emit(this, 'ionScroll', this.eventOpts);
     }
   }
 
@@ -161,9 +147,6 @@ export class Scroll implements IScroll {
     // emit that the scroll has ended
     if (self.ionScrollEnd) {
       self.ionScrollEnd(detail);
-
-    } else {
-      Ionic.emit(this, 'ionScrollEnd', this.eventOpts);
     }
   }
 
@@ -171,9 +154,9 @@ export class Scroll implements IScroll {
   enableJsScroll(contentTop: number, contentBottom: number) {
     this.jsScroll = true;
 
-    Ionic.listener.enable(this, 'scroll', false);
+    Core.enableListener(this, 'scroll', false);
 
-    Ionic.listener.enable(this, 'touchstart', true);
+    Core.enableListener(this, 'touchstart', true);
 
     contentTop; contentBottom;
   }
@@ -187,8 +170,8 @@ export class Scroll implements IScroll {
       return;
     }
 
-    Ionic.listener.enable(this, 'touchmove', true);
-    Ionic.listener.enable(this, 'touchend', true);
+    Core.enableListener(this, 'touchmove', true);
+    Core.enableListener(this, 'touchend', true);
 
     throw 'jsScroll: TODO!';
   }
@@ -202,8 +185,8 @@ export class Scroll implements IScroll {
 
   @Listen('touchend', { passive: true, enabled: false })
   onTouchEnd() {
-    Ionic.listener.enable(this, 'touchmove', false);
-    Ionic.listener.enable(this, 'touchend', false);
+    Core.enableListener(this, 'touchmove', false);
+    Core.enableListener(this, 'touchend', false);
 
     if (!this.enabled) {
       return;
@@ -218,7 +201,7 @@ export class Scroll implements IScroll {
     if (this.jsScroll) {
       return this._t;
     }
-    return this._t = this.$el.scrollTop;
+    return this._t = this.el.scrollTop;
   }
 
   /**
@@ -228,7 +211,7 @@ export class Scroll implements IScroll {
     if (this.jsScroll) {
       return 0;
     }
-    return this._l = this.$el.scrollLeft;
+    return this._l = this.el.scrollLeft;
   }
 
   /**
@@ -238,10 +221,10 @@ export class Scroll implements IScroll {
     this._t = top;
 
     if (this.jsScroll) {
-      this.$el.style.transform = this.$el.style.webkitTransform = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
+      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
 
     } else {
-      this.$el.scrollTop = top;
+      this.el.scrollTop = top;
     }
   }
 
@@ -252,10 +235,10 @@ export class Scroll implements IScroll {
     this._l = left;
 
     if (this.jsScroll) {
-      this.$el.style.transform = this.$el.style.webkitTransform = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
+      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
 
     } else {
-      this.$el.scrollLeft = left;
+      this.el.scrollLeft = left;
     }
   }
 
@@ -273,7 +256,7 @@ export class Scroll implements IScroll {
     }
 
     const self = this;
-    const el = self.$el;
+    const el = self.el;
     if (!el) {
       // invalid element
       done();
@@ -300,7 +283,7 @@ export class Scroll implements IScroll {
     function step(timeStamp: number) {
       attempts++;
 
-      if (!self.$el || stopScroll || attempts > maxAttempts) {
+      if (!self.el || stopScroll || attempts > maxAttempts) {
         self.isScrolling = false;
         el.style.transform = el.style.webkitTransform = '';
         done();
@@ -324,7 +307,7 @@ export class Scroll implements IScroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        Ionic.dom.raf(step);
+        Core.dom.raf(step);
 
       } else {
         stopScroll = true;
@@ -338,8 +321,8 @@ export class Scroll implements IScroll {
     self.isScrolling = true;
 
     // chill out for a frame first
-    Ionic.dom.write(() => {
-      Ionic.dom.write(timeStamp => {
+    Core.dom.write(() => {
+      Core.dom.write(timeStamp => {
         startTime = timeStamp;
         step(timeStamp);
       });
@@ -354,8 +337,8 @@ export class Scroll implements IScroll {
 
   scrollToBottom(duration: number): Promise<void> {
     let y = 0;
-    if (this.$el) {
-      y = this.$el.scrollHeight - this.$el.clientHeight;
+    if (this.el) {
+      y = this.el.scrollHeight - this.el.clientHeight;
     }
     return this.scrollTo(0, y, duration);
   }
@@ -372,3 +355,23 @@ export class Scroll implements IScroll {
 
 }
 
+export interface ScrollDetail extends GestureDetail {
+  scrollTop?: number;
+  scrollLeft?: number;
+  scrollHeight?: number;
+  scrollWidth?: number;
+  contentHeight?: number;
+  contentWidth?: number;
+  contentTop?: number;
+  contentBottom?: number;
+  contentElement?: HTMLElement;
+  fixedElement?: HTMLElement;
+  scrollElement?: HTMLElement;
+  headerElement?: HTMLElement;
+  footerElement?: HTMLElement;
+}
+
+
+export interface ScrollCallback {
+  (detail?: ScrollDetail): boolean|void;
+}

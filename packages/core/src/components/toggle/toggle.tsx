@@ -1,5 +1,6 @@
-import { Component, h, Listen, Prop, VNodeData, Ionic, PropDidChange } from '@stencil/core';
-import { BooleanInputComponent, GestureDetail } from '../../utils/interfaces';
+import { Component, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+import { BooleanInputComponent, GestureDetail } from '../../index';
+
 
 @Component({
   tag: 'ion-toggle',
@@ -20,6 +21,11 @@ export class Toggle implements BooleanInputComponent {
   startX: number;
   styleTmr: any;
 
+  @Event() ionChange: EventEmitter;
+  @Event() ionStyle: EventEmitter;
+  @Event() ionFocus: EventEmitter;
+  @Event() ionBlur: EventEmitter;
+
   @Prop() color: string;
   @Prop() mode: string;
 
@@ -34,7 +40,7 @@ export class Toggle implements BooleanInputComponent {
 
   @PropDidChange('checked')
   changed(val: boolean) {
-    Ionic.emit(this, 'ionChange', { detail: { checked: val } });
+    this.ionChange.emit({ checked: val });
     this.emitStyle();
   }
 
@@ -47,13 +53,11 @@ export class Toggle implements BooleanInputComponent {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      Ionic.emit(this, 'ionStyle', {
-        detail: {
-          'toggle-disabled': this.disabled,
-          'toggle-checked': this.checked,
-          'toggle-activated': this.activated,
-          'toggle-focus': this.hasFocus
-        }
+      this.ionStyle.emit({
+        'toggle-disabled': this.disabled,
+        'toggle-checked': this.checked,
+        'toggle-activated': this.activated,
+        'toggle-focus': this.hasFocus
       });
     });
   }
@@ -120,7 +124,7 @@ export class Toggle implements BooleanInputComponent {
   fireFocus() {
     if (!this.hasFocus) {
       this.hasFocus = true;
-      Ionic.emit(this, 'ionFocus');
+      this.ionFocus.emit();
       this.emitStyle();
     }
   }
@@ -129,12 +133,12 @@ export class Toggle implements BooleanInputComponent {
   fireBlur() {
     if (this.hasFocus) {
       this.hasFocus = false;
-      Ionic.emit(this, 'ionBlur');
+      this.ionBlur.emit();
       this.emitStyle();
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'toggle-activated': this.activated,

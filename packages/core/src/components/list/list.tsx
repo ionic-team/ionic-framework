@@ -1,6 +1,7 @@
-import { Component, h, Method, State } from '@stencil/core';
+import { Component, Method, State } from '@stencil/core';
 
 import { ItemSliding } from '../item-sliding/item-sliding';
+
 
 @Component({
   tag: 'ion-list',

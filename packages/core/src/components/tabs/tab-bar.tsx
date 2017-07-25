@@ -21,7 +21,7 @@ export class TabBar {
   @Prop() tabsLayout: string = 'icon-top'
   /*
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       attrs: {
         'role': 'tablist'

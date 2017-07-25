@@ -129,7 +129,7 @@ var Loading = (function () {
             _this.animation.onFinish(function (a) {
                 a.destroy();
                 Ionic.emit(_this, 'ionLoadingDidDismiss', { detail: { loading: _this } });
-                Ionic.dom.write(function () {
+                Core.dom.write(function () {
                     _this.$el.parentNode.removeChild(_this.$el);
                 });
                 resolve();

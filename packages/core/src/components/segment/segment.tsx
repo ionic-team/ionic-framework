@@ -1,6 +1,6 @@
-import { Component, h, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, HostElement, Listen, Prop, PropDidChange } from '@stencil/core';
 
-import { HostElement, SegmentButtonEvent, VNodeData } from '../../utils/interfaces';
+import { SegmentButtonEvent } from '../../index';
 
 
 /**
@@ -72,7 +72,7 @@ import { HostElement, SegmentButtonEvent, VNodeData } from '../../utils/interfac
 })
 export class Segment {
   buttons: NodeListOf<HostElement>;
-  $el: HTMLElement;
+  @Element() el: HTMLElement;
 
   @Prop({ state: true }) disabled: boolean = false;
 
@@ -84,7 +84,7 @@ export class Segment {
   }
 
   ionViewDidLoad() {
-    this.buttons = this.$el.querySelectorAll('ion-segment-button') as NodeListOf<HostElement>;
+    this.buttons = this.el.querySelectorAll('ion-segment-button') as NodeListOf<HostElement>;
 
     for (var i = 0; i < this.buttons.length; i++) {
       const button = this.buttons[i].$instance;
@@ -101,7 +101,7 @@ export class Segment {
 
   @Listen('ionClick')
   segmentClick(ev: SegmentButtonEvent) {
-    let selectedButton = ev.detail.segmentButton;
+    let selectedButton = ev.segmentButton;
 
     this.value = selectedButton.value;
     this.selectButton(this.value);
@@ -117,7 +117,7 @@ export class Segment {
     return true;
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'segment-disabled': this.disabled

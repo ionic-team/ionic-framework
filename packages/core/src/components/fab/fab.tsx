@@ -1,7 +1,5 @@
-import { Component, CssClassObject, h, Method, Prop, State } from '@stencil/core';
-
+import { Component, Element, CssClassMap, Method, Prop, State } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { HostElement } from '../../utils/interfaces';
 
 
 /**
@@ -58,21 +56,16 @@ import { HostElement } from '../../utils/interfaces';
   }
 })
 export class FabButton {
-  $el: HTMLElement;
-  mode: string;
-  color: string;
-
-  @State() activated: boolean = false;
-
-  @State() closeActivated: boolean = false;
-
-  @State() show: boolean = false;
-
-  @State() inContainer: boolean = false;
-
-  @State() inList: boolean = false;
+  @Element() private el: HTMLElement;
+  private mode: string;
+  private color: string;
 
   @Prop() href: string;
+
+  @State() private activated: boolean = false;
+  @State() private show: boolean = false;
+  @State() private inContainer: boolean = false;
+  @State() private inList: boolean = false;
 
   /**
    * @Prop {boolean} If true, sets the button into a disabled state.
@@ -80,7 +73,7 @@ export class FabButton {
   @Prop() disabled: boolean = false;
 
   ionViewDidLoad() {
-    const parentNode = this.$el.parentNode.nodeName;
+    const parentNode = this.el.parentNode.nodeName;
 
     this.inList = (parentNode === 'ION-FAB-LIST');
     this.inContainer = (parentNode === 'ION-FAB');
@@ -97,7 +90,7 @@ export class FabButton {
    * @hidden
    */
   setActiveLists(activated: boolean) {
-    const lists = this.$el.parentElement.querySelectorAll('ion-fab-list') as NodeListOf<HostElement>;
+    const lists = this.el.parentElement.querySelectorAll('ion-fab-list') as NodeListOf<any>;
 
     if (lists.length > 0) {
       this.activated = activated;
@@ -123,7 +116,7 @@ export class FabButton {
    */
   getElementClassList() {
     let classList = [].concat(
-      this.$el.className.length ? this.$el.className.split(' ') : []
+      this.el.className.length ? this.el.className.split(' ') : []
     );
 
     return classList;
@@ -172,7 +165,7 @@ export class FabButton {
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab');
 
-    var fabClasses: CssClassObject = []
+    var fabClasses: CssClassMap = []
       .concat(
         this.getElementClassList(),
         this.getFabListClassList(),

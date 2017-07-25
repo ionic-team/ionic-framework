@@ -1,6 +1,4 @@
-import { Component, h, PropDidChange, State, VNodeData } from '@stencil/core';
-
-import { HostElement } from '../../utils/interfaces';
+import { Component, Element, PropDidChange, State } from '@stencil/core';
 
 
 /**
@@ -31,13 +29,13 @@ import { HostElement } from '../../utils/interfaces';
   tag: 'ion-fab-list',
 })
 export class FabList {
-  $el: HTMLElement;
+  @Element() private el: HTMLElement;
 
-  @State() activated: boolean = false;
+  @State() private activated: boolean = false;
 
   @PropDidChange('activated')
   activatedChange(activated: boolean) {
-    const fabs = this.$el.querySelectorAll('ion-fab-button') as NodeListOf<HostElement>;
+    const fabs = this.el.querySelectorAll('ion-fab-button') as NodeListOf<any>;
 
     // if showing the fabs add a timeout, else show immediately
     var timeout = activated ? 30 : 0;
@@ -47,7 +45,7 @@ export class FabList {
     }
   }
 
-  hostData(): VNodeData {
+  hostData() {
     return {
       class: {
         'fab-list-active': this.activated

@@ -23,7 +23,8 @@ exports.config = {
     { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] }
   ],
-  preamble: '(C) Ionic http://ionicframework.com - MIT License'
+  preamble: '(C) Ionic http://ionicframework.com - MIT License',
+  global: 'src/global/ionic-global.ts'
 };
 
 exports.devServerConfig = {

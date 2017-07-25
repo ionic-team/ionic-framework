@@ -1,4 +1,5 @@
-import { Component, h, VNodeData } from '@stencil/core';
+import { Component } from '@stencil/core';
+
 
  /**
   * @name Slide
@@ -17,7 +18,8 @@ import { Component, h, VNodeData } from '@stencil/core';
   styleUrl: 'slide.scss'
 })
 export class Slide {
-  hostData(): VNodeData {
+
+  hostData() {
     return {
       class: {
         'slide-zoom': true,

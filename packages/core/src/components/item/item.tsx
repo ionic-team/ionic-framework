@@ -1,5 +1,5 @@
-import { Component, Prop, h, Listen } from '@stencil/core';
-import { CssClassObject } from '../../utils/interfaces';
+import { Component, Element, Prop, Listen } from '@stencil/core';
+import { CssClassMap } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -12,8 +12,9 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Item {
-  $el: HTMLElement;
-  childStyles: CssClassObject = Object.create(null);
+  private childStyles: CssClassMap = Object.create(null);
+
+  @Element() private el: HTMLElement;
 
   @Prop() mode: string;
   @Prop() color: string;
@@ -39,7 +40,7 @@ export class Item {
 
   ionViewDidLoad() {
     // Add item-button classes to each ion-button in the item
-    const buttons = this.$el.querySelectorAll('ion-button') as any;
+    const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].itemButton = true;
     }

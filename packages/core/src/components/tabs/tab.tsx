@@ -1,5 +1,4 @@
-import { Component, h, Prop, State, Ionic } from '@stencil/core';
-import { VNodeData } from '../../utils/interfaces';
+import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 
 @Component({
@@ -9,6 +8,7 @@ import { VNodeData } from '../../utils/interfaces';
   }
 })
 export class Tab {
+
   /**
    * @prop {Page} Set the root component for this tab.
    */
@@ -67,7 +67,9 @@ export class Tab {
    */
   @Prop() onSelected: Function;
 
-  hostData(): VNodeData {
+  @Event() ionTabDidLoad: EventEmitter;
+
+  hostData() {
     return {
       style: {
         display: !this.isSelected && 'none' || ''
@@ -84,20 +86,12 @@ export class Tab {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      Ionic.emit(this, 'ionTabDidLoad', {
-        detail: {
-          tab: this
-        }
-      })
+      this.ionTabDidLoad.emit({ tab: this })
     }, 0)
   }
 
   ionViewDidUnload() {
-    Ionic.emit(this, 'ionTabDidLoad', {
-      detail: {
-        tab: this
-      }
-    })
+    this.ionTabDidLoad.emit({ tab: this })
   }
 
   render() {

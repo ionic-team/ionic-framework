@@ -1,6 +1,4 @@
-import { Component, h, Prop, State, VNodeData } from '@stencil/core';
-
-declare const publicPath: string;
+import { Component, Prop, State } from '@stencil/core';
 
 
 @Component({
@@ -61,32 +59,39 @@ export class Icon {
 
     let iconName = this.name.toLowerCase();
 
+    // default to "md" if somehow the mode wasn't set
+    const mode = this.mode || 'md';
+
+    if (!(/^md-|^ios-|^logo-/.test(iconName))) {
+      // this does not have one of the defaults
+      // so lets auto add in the mode prefix for them
+      iconName = mode + '-' + iconName;
+
+    } else if (this.ios && mode === 'ios') {
+      // if an icon was passed in using the ios or md attributes
+      // set the iconName to whatever was passed in
+      // when we're also on that mode
+      // basically, use the ios attribute when you're on ios
+      iconName = this.ios;
+
+    } else if (this.md && mode === 'md') {
+      // use the md attribute when you're in md mode
+      // and the md attribute has been set
+      iconName = this.md;
+    }
+
+    // only allow alpha characters and dash
     const invalidChars = iconName.replace(/[a-z]|-/g, '');
     if (invalidChars !== '') {
       console.error(`invalid characters in ion-icon name: ${invalidChars}`);
       return null;
     }
 
-    if (!(/^md-|^ios-|^logo-/.test(iconName))) {
-      // this does not have one of the defaults
-      // so lets auto add in the mode prefix for them
-      iconName = this.mode + '-' + iconName;
-    }
-
-    // if an icon was passed in using the ios or md attributes
-    // set the iconName to whatever was passed in
-    if (this.ios && this.mode === 'ios') {
-      iconName = this.ios;
-
-    } else if (this.md && this.mode === 'md') {
-      iconName = this.md;
-    }
-
     return iconName;
   }
 
 
-  hostData(): VNodeData {
+  hostData() {
     const attrs: {[attrName: string]: string} = {
       'role': 'img'
     };
@@ -128,6 +133,7 @@ export class Icon {
     // add this url to our list of active requests
     IonIcon.activeRequests[svgUrl] = true;
 
+    // kick off the request for the external svg file
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function() {
       // awesome, we've finished loading the svg file
@@ -139,12 +145,12 @@ export class Icon {
       let svgContent = this.responseText;
 
       if (this.status >= 400) {
-        // ok, not awesome, something is up
+        // umm, not awesome, something is up
         console.error('Icon could not be loaded:', svgUrl);
-        svgContent = `<!-- error loading svg -->`;
+        svgContent = `<!--error loading svg-->`;
       }
 
-      // cache it in the global IonIcon constant
+      // cache the svg content in the global IonIcon constant
       IonIcon.svgContents[svgUrl] = svgContent;
 
       // find any callbacks waiting on this url
@@ -152,7 +158,7 @@ export class Icon {
       if (svgLoadCallbacks) {
         // loop through all the callbacks that are waiting on the svg content
         for (var i = 0; i < svgLoadCallbacks.length; i++) {
-          // fire off this callback which
+          // fire off this callback which was provided by an instance
           svgLoadCallbacks[i](svgContent);
         }
         delete IonIcon.loadCallbacks[svgUrl];

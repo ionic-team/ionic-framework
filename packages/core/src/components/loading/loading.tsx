@@ -1,5 +1,5 @@
-import { Component, h, Listen, Prop, State, Ionic } from '@stencil/core';
-import { AnimationBuilder, Animation, Loading as ILoading, LoadingEvent } from '../../utils/interfaces';
+import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
+import { AnimationBuilder, Animation } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -16,10 +16,21 @@ import iOSLeaveAnimation from './animations/ios.leave';
     theme: 'loading'
   }
 })
-export class Loading implements ILoading {
-  $el: HTMLElement;
-  animation: Animation;
-  durationTimeout: any;
+export class Loading {
+  private animation: Animation;
+  private durationTimeout: any;
+
+  @Element() private el: HTMLElement;
+
+  @Event() private ionLoadingDidLoad: EventEmitter;
+  @Event() private ionLoadingDidPresent: EventEmitter;
+  @Event() private ionLoadingWillPresent: EventEmitter;
+  @Event() private ionLoadingWillDismiss: EventEmitter;
+  @Event() private ionLoadingDidDismiss: EventEmitter;
+  @Event() private ionLoadingDidUnload: EventEmitter;
+
+  @State() private showSpinner: boolean = null;
+  @State() private spinner: string;
 
   @Prop() cssClass: string;
   @Prop() content: string;
@@ -28,10 +39,7 @@ export class Loading implements ILoading {
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() id: string;
-  @State() showSpinner: boolean = null;
-  @State() spinner: string;
   @Prop() showBackdrop: boolean = true;
-
 
   @Listen('ionDismiss')
   onDismiss(ev: UIEvent) {
@@ -49,7 +57,7 @@ export class Loading implements ILoading {
     if (this.showSpinner === null || this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
-    Ionic.emit(this, 'ionLoadingDidLoad', { detail: { loading: this } } as LoadingEvent);
+    this.ionLoadingDidLoad.emit({ loading: this } as LoadingEvent);
   }
 
   ionViewDidEnter() {
@@ -62,7 +70,7 @@ export class Loading implements ILoading {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
 
-    Ionic.emit(this, 'ionLoadingDidPresent', { detail: { loading: this } } as LoadingEvent);
+    this.ionLoadingDidPresent.emit({ loading: this } as LoadingEvent);
   }
 
   present() {
@@ -77,7 +85,7 @@ export class Loading implements ILoading {
       this.animation = null;
     }
 
-    Ionic.emit(this, 'ionLoadingWillPresent', { detail: { loading: this } } as LoadingEvent);
+    this.ionLoadingWillPresent.emit({ loading: this } as LoadingEvent);
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -90,7 +98,7 @@ export class Loading implements ILoading {
     }
 
     // build the animation and kick it off
-    this.animation = animationBuilder(this.$el);
+    this.animation = animationBuilder(this.el);
 
     this.animation.onFinish((a: any) => {
       a.destroy();
@@ -108,7 +116,7 @@ export class Loading implements ILoading {
     }
 
     return new Promise<void>(resolve => {
-      Ionic.emit(this, 'ionLoadingWillDismiss', { detail: { loading: this } } as LoadingEvent);
+      this.ionLoadingWillDismiss.emit({ loading: this } as LoadingEvent);
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -121,20 +129,22 @@ export class Loading implements ILoading {
       }
 
       // build the animation and kick it off
-      this.animation = animationBuilder(this.$el);
+      this.animation = animationBuilder(this.el);
       this.animation.onFinish((a: any) => {
         a.destroy();
-        Ionic.emit(this, 'ionLoadingDidDismiss', { detail: { loading: this } } as LoadingEvent);
-        Ionic.dom.write(() => {
-          this.$el.parentNode.removeChild(this.$el);
+        this.ionLoadingDidDismiss.emit({ loading: this } as LoadingEvent);
+
+        Core.dom.write(() => {
+          this.el.parentNode.removeChild(this.el);
         });
+
         resolve();
       }).play();
     });
   }
 
   ionViewDidUnload() {
-    Ionic.emit(this, 'ionLoadingDidUnload', { detail: { loading: this } } as LoadingEvent);
+    this.ionLoadingDidUnload.emit({ loading: this }as LoadingEvent);
   }
 
   render() {
@@ -175,4 +185,19 @@ export class Loading implements ILoading {
       </div>
     ];
   }
+}
+
+
+export interface LoadingOptions {
+  spinner?: string;
+  content?: string;
+  cssClass?: string;
+  showBackdrop?: boolean;
+  dismissOnPageChange?: boolean;
+  duration?: number;
+}
+
+
+export interface LoadingEvent {
+  loading: Loading;
 }

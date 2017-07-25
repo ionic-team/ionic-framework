@@ -1,5 +1,5 @@
-import { Component, Listen, Ionic } from '@stencil/core';
-import { GlobalNamespace, LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../utils/interfaces';
+import { Component, Listen } from '@stencil/core';
+import { LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../index';
 
 
 @Component({
@@ -15,19 +15,19 @@ export class LoadingController implements IonicControllerApi {
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
-    (Ionic as GlobalNamespace).loadController('loading', this);
+    Ionic.loadController('loading', this);
   }
 
 
   load(opts?: LoadingOptions) {
     // create ionic's wrapping ion-loading component
-    const loading: Loading = document.createElement('ion-loading') as any;
+    const loading = document.createElement('ion-loading');
 
     const id = this.ids++;
 
     // give this loading a unique id
     loading.id = `loading-${id}`;
-    loading.style.zIndex = (20000 + id);
+    loading.style.zIndex = (20000 + id).toString();
 
     // convert the passed in loading options into props
     // that get passed down into the new loading
@@ -45,7 +45,7 @@ export class LoadingController implements IonicControllerApi {
 
   @Listen('body:ionLoadingDidLoad')
   viewDidLoad(ev: LoadingEvent) {
-    const loading = ev.detail.loading;
+    const loading = ev.loading;
     const loadingResolve = this.loadingResolves[loading.id];
     if (loadingResolve) {
       loadingResolve(loading);
@@ -56,13 +56,13 @@ export class LoadingController implements IonicControllerApi {
 
   @Listen('body:ionLoadingWillPresent')
   willPresent(ev: LoadingEvent) {
-    this.loadings.push(ev.detail.loading);
+    this.loadings.push(ev.loading);
   }
 
 
   @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
   willDismiss(ev: LoadingEvent) {
-    const index = this.loadings.indexOf(ev.detail.loading);
+    const index = this.loadings.indexOf(ev.loading);
     if (index > -1) {
       this.loadings.splice(index, 1);
     }

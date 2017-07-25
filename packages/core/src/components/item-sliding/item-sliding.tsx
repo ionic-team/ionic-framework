@@ -1,6 +1,6 @@
-import { Component, h, Ionic, Method, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, HostElement, Method, State } from '@stencil/core';
 
-import { GestureDetail, HostElement } from '../../utils/interfaces';
+import { GestureDetail } from '../../index';
 import { swipeShouldReset } from '../../utils/helpers';
 
 // import { ItemOptions } from './item-options';
@@ -135,32 +135,33 @@ const enum SlidingState {
   }
 })
 export class ItemSliding {
-  $el: HTMLElement;
-  item: HostElement;
-  list: HostElement;
+  @Element() private el: HTMLElement;
 
-  openAmount: number = 0;
-  startX: number = 0;
-  optsWidthRightSide: number = 0;
-  optsWidthLeftSide: number = 0;
-  sides: number;
-  tmr: any = null;
+  private item: HostElement;
+  private list: HostElement;
+
+  private openAmount: number = 0;
+  private startX: number = 0;
+  private optsWidthRightSide: number = 0;
+  private optsWidthLeftSide: number = 0;
+  private sides: number;
+  private tmr: any = null;
 
   // TODO file with item sliding interfaces & item options implement
   // leftOptions: ItemOptions;
   // rightOptions: ItemOptions;
-  leftOptions: any;
-  rightOptions: any;
+  private leftOptions: any;
+  private rightOptions: any;
 
-  optsDirty: boolean = true;
+  private optsDirty: boolean = true;
 
   @State() state: SlidingState = SlidingState.Disabled;
 
-  preSelectedContainer: ItemSliding = null;
-  selectedContainer: ItemSliding = null;
+  private preSelectedContainer: ItemSliding = null;
+  private selectedContainer: ItemSliding = null;
   openContainer: ItemSliding = null;
-  firstCoordX: number;
-  firstTimestamp: number;
+  private firstCoordX: number;
+  private firstTimestamp: number;
 
   /**
    * @output {event} Emitted when the sliding position changes.
@@ -183,12 +184,10 @@ export class ItemSliding {
    * ```
    *
    */
-  ionDrag() {
-    Ionic.emit(this, 'ionDrag');
-  }
+  @Event() ionDrag: EventEmitter;
 
   ionViewDidLoad() {
-    const options = this.$el.querySelectorAll('ion-item-options') as NodeListOf<HostElement>;
+    const options = this.el.querySelectorAll('ion-item-options') as NodeListOf<HostElement>;
 
     let sides = 0;
 
@@ -209,10 +208,10 @@ export class ItemSliding {
     this.optsDirty = true;
     this.sides = sides;
 
-    this.item = this.$el.querySelector('ion-item') as HostElement;
+    this.item = this.el.querySelector('ion-item') as HostElement;
 
     // Get the parent list to close open containers
-    this.list = this.$el.closest('ion-list') as HostElement;
+    this.list = this.el.closest('ion-list') as HostElement;
   }
 
   canStart(gesture: GestureDetail): boolean {
@@ -422,7 +421,7 @@ export class ItemSliding {
     }
 
     this.item.style.transform = `translate3d(${-openAmount}px,0,0)`;
-    this.ionDrag();
+    this.ionDrag.emit();
   }
 
   private setState(state: SlidingState) {

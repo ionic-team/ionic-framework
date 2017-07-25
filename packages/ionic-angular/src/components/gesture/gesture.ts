@@ -60,7 +60,7 @@ export class Gesture {
       Ionic.listener.enable(this, 'touchstart', true, this.attachTo);
       Ionic.listener.enable(this, 'mousedown', true, this.attachTo);
 
-      Ionic.dom.write(() => {
+      Core.dom.write(() => {
         applyStyles(getElementReference(this.$el, this.attachTo), GESTURE_INLINE_STYLES);
       });
     }
@@ -178,7 +178,7 @@ export class Gesture {
         if (!this.isMoveQueued) {
           this.isMoveQueued = true;
 
-          Ionic.dom.write(() => {
+          Core.dom.write(() => {
             this.isMoveQueued = false;
             detail.type = 'pan';
 
