@@ -8,7 +8,7 @@ import { GestureController, GestureDelegate } from '../gesture/gesture-controlle
 })
 export class Scroll {
   @Element() private el: HTMLElement;
-  private $emit: Function;
+
   private gesture: GestureDelegate;
   private positions: number[] = [];
   private _l: number;
@@ -24,7 +24,6 @@ export class Scroll {
   @Prop() ionScrollStart: ScrollCallback;
   @Prop() ionScroll: ScrollCallback;
   @Prop() ionScrollEnd: ScrollCallback;
-
 
   ionViewDidLoad() {
     if (Core.isServer) return;
@@ -80,8 +79,6 @@ export class Scroll {
       // emit only on the first scroll event
       if (self.ionScrollStart) {
         self.ionScrollStart(detail);
-      } else {
-        this.$emit('ionScrollStart', this.detail);
       }
     }
 
@@ -137,8 +134,6 @@ export class Scroll {
     // emit on each scroll event
     if (self.ionScrollStart) {
       self.ionScroll(detail);
-    } else {
-      this.$emit('ionScroll', this.detail);
     }
   }
 
@@ -152,9 +147,6 @@ export class Scroll {
     // emit that the scroll has ended
     if (self.ionScrollEnd) {
       self.ionScrollEnd(detail);
-
-    } else {
-      this.$emit('ionScrollEnd', this.detail);
     }
   }
 

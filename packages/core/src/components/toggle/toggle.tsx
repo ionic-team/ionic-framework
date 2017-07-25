@@ -1,4 +1,4 @@
-import { Component, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 import { BooleanInputComponent, GestureDetail } from '../../index';
 
 
@@ -14,13 +14,17 @@ import { BooleanInputComponent, GestureDetail } from '../../index';
   }
 })
 export class Toggle implements BooleanInputComponent {
-  $emit: Function;
   activated: boolean = false;
   hasFocus: boolean = false;
   id: string;
   labelId: string;
   startX: number;
   styleTmr: any;
+
+  @Event() ionChange: EventEmitter;
+  @Event() ionStyle: EventEmitter;
+  @Event() ionFocus: EventEmitter;
+  @Event() ionBlur: EventEmitter;
 
   @Prop() color: string;
   @Prop() mode: string;
@@ -36,7 +40,7 @@ export class Toggle implements BooleanInputComponent {
 
   @PropDidChange('checked')
   changed(val: boolean) {
-    this.$emit('ionChange', { checked: val });
+    this.ionChange.emit({ checked: val });
     this.emitStyle();
   }
 
@@ -49,7 +53,7 @@ export class Toggle implements BooleanInputComponent {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      this.$emit('ionStyle', {
+      this.ionStyle.emit({
         'toggle-disabled': this.disabled,
         'toggle-checked': this.checked,
         'toggle-activated': this.activated,
@@ -120,7 +124,7 @@ export class Toggle implements BooleanInputComponent {
   fireFocus() {
     if (!this.hasFocus) {
       this.hasFocus = true;
-      this.$emit('ionFocus');
+      this.ionFocus.emit();
       this.emitStyle();
     }
   }
@@ -129,7 +133,7 @@ export class Toggle implements BooleanInputComponent {
   fireBlur() {
     if (this.hasFocus) {
       this.hasFocus = false;
-      this.$emit('ionBlur');
+      this.ionBlur.emit();
       this.emitStyle();
     }
   }

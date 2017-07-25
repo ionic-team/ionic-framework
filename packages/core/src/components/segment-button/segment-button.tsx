@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 import { CssClassMap } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
@@ -44,11 +44,12 @@ import { createThemedClasses } from '../../utils/theme';
   tag: 'ion-segment-button'
 })
 export class SegmentButton {
-  $emit: Function;
   styleTmr: any;
 
   mode: string;
   color: string;
+
+  @Event() ionClick: EventEmitter;
 
   @State() activated: boolean = false;
 
@@ -85,7 +86,7 @@ export class SegmentButton {
       const ev: SegmentButtonEvent = {
         'segmentButton': this
       };
-      this.$emit('ionClick', ev);
+      this.ionClick.emit(ev);
     });
   }
 

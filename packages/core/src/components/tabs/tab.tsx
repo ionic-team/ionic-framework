@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 
 @Component({
@@ -8,7 +8,6 @@ import { Component, Prop, State } from '@stencil/core';
   }
 })
 export class Tab {
-  $emit: Function;
 
   /**
    * @prop {Page} Set the root component for this tab.
@@ -68,6 +67,8 @@ export class Tab {
    */
   @Prop() onSelected: Function;
 
+  @Event() ionTabDidLoad: EventEmitter;
+
   hostData() {
     return {
       style: {
@@ -85,12 +86,12 @@ export class Tab {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.$emit('ionTabDidLoad', { tab: this })
+      this.ionTabDidLoad.emit({ tab: this })
     }, 0)
   }
 
   ionViewDidUnload() {
-    this.$emit('ionTabDidLoad', { tab: this })
+    this.ionTabDidLoad.emit({ tab: this })
   }
 
   render() {

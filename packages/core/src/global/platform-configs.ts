@@ -9,44 +9,44 @@ const WINDOWS_PHONE = ['windows phone'];
 export const PLATFORM_CONFIGS: PlatformConfig[] = [
 
   {
-    'name': IPAD,
-    'isMatch': (url, userAgent) => isPlatformMatch(url, userAgent, IPAD, [IPAD], WINDOWS_PHONE)
+    name: IPAD,
+    isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IPAD, [IPAD], WINDOWS_PHONE)
   },
 
   {
-    'name': IPHONE,
-    'isMatch': (url, userAgent) => isPlatformMatch(url, userAgent, IPHONE, [IPHONE], WINDOWS_PHONE)
+    name: IPHONE,
+    isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IPHONE, [IPHONE], WINDOWS_PHONE)
   },
 
   {
-    'name': IOS,
-    'settings': {
-      'mode': IOS,
+    name: IOS,
+    settings: {
+      mode: IOS,
     },
-    'isMatch': (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
+    isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
   },
 
   {
-    'name': 'android',
-    'settings': {
-      'activator': 'ripple',
-      'mode': 'md',
+    name: 'android',
+    settings: {
+      activator: 'ripple',
+      mode: 'md',
     },
-    'isMatch': (url, userAgent) => isPlatformMatch(url, userAgent, 'android', ['android', 'silk'], WINDOWS_PHONE)
+    isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, 'android', ['android', 'silk'], WINDOWS_PHONE)
   },
 
   {
-    'name': 'windows',
-    'settings': {
-      'mode': 'wp'
+    name: 'windows',
+    settings: {
+      mode: 'wp'
     },
-    'isMatch': (url, userAgent) => isPlatformMatch(url, userAgent, 'windows', WINDOWS_PHONE, [])
+    isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, 'windows', WINDOWS_PHONE, [])
   },
 
   {
-    'name': 'core',
-    'settings': {
-      'mode': 'md'
+    name: 'core',
+    settings: {
+      mode: 'md'
     }
   },
 
@@ -55,10 +55,10 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
 
 export function detectPlatforms(url: string, userAgent: string, platforms: PlatformConfig[], defaultPlatform: string) {
   // bracket notation to ensure they're not property renamed
-  let validPlatforms = platforms.filter(p => p['isMatch'] && p['isMatch'](url, userAgent));
+  let validPlatforms = platforms.filter(p => p.isMatch && p.isMatch(url, userAgent));
 
   if (!validPlatforms.length) {
-    validPlatforms = platforms.filter(p => p['name'] === defaultPlatform);
+    validPlatforms = platforms.filter(p => p.name === defaultPlatform);
   }
 
   return validPlatforms;

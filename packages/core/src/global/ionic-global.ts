@@ -1,13 +1,16 @@
 import { createConfigController } from './config-controller';
+import { detectPlatforms, PLATFORM_CONFIGS } from './platform-configs';
 import { IonicControllerApi, IonicGlobal } from '../index';
-import { PLATFORM_CONFIGS } from './platform-configs';
 
 
 // create the Ionic global (if one doesn't exist)
 const Ionic: IonicGlobal = (window as any)['Ionic'] = (window as any)['Ionic'] || {};
 
 // create the Ionic.config from raw config data
-Ionic.config = createConfigController(Ionic.config, PLATFORM_CONFIGS);
+Ionic.config = createConfigController(
+  Ionic.config,
+  detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core')
+);
 
 // get the mode via config settings
 Core.mode = Ionic.mode = Ionic.config.get('mode', 'md');
