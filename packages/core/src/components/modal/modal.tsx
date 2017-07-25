@@ -1,4 +1,4 @@
-import { Component, Listen, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 import { AnimationBuilder, Animation } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -15,9 +15,14 @@ import iOSLeaveAnimation from './animations/ios.leave';
   }
 })
 export class Modal {
-  $el: HTMLElement;
-  $emit: Function;
-  animation: Animation;
+  @Element() private el: HTMLElement;
+
+  @Event() ionModalDidLoad: EventEmitter;
+  @Event() ionModalWillPresent: EventEmitter;
+  @Event() ionModalDidPresent: EventEmitter;
+  @Event() ionModalWillDismiss: EventEmitter;
+  @Event() ionModalDidDismiss: EventEmitter;
+  @Event() ionModalDidUnload: EventEmitter;
 
   @Prop() mode: string;
   @Prop() color: string;
@@ -30,6 +35,10 @@ export class Modal {
   @Prop() id: string;
   @Prop() showBackdrop: boolean = true;
 
+
+
+  private animation: Animation;
+
   @Listen('ionDismiss')
   onDismiss(ev: UIEvent) {
     ev.stopPropagation();
@@ -39,7 +48,7 @@ export class Modal {
   }
 
   ionViewDidLoad() {
-    this.$emit('ionModalDidLoad', { modal: this } as ModalEvent);
+    this.ionModalDidLoad.emit({ modal: this });
   }
 
   present() {
@@ -54,7 +63,7 @@ export class Modal {
       this.animation = null;
     }
 
-    this.$emit('ionModalWillPresent', { modal: this } as ModalEvent);
+    this.ionModalWillPresent.emit({ modal: this } as ModalEvent);
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -67,11 +76,11 @@ export class Modal {
     }
 
     // build the animation and kick it off
-    this.animation = animationBuilder(this.$el);
+    this.animation = animationBuilder(this.el);
 
     this.animation.onFinish((a: any) => {
       a.destroy();
-      this.$emit('ionModalDidPresent', { modal: this } as ModalEvent);
+      this.ionModalDidPresent.emit({ modal: this });
       resolve();
     }).play();
   }
@@ -83,7 +92,7 @@ export class Modal {
     }
 
     return new Promise<void>(resolve => {
-      this.$emit('ionModalWillDismiss', { modal: this } as ModalEvent);
+      this.ionModalWillDismiss.emit({ modal: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -96,12 +105,13 @@ export class Modal {
       }
 
       // build the animation and kick it off
-      this.animation = animationBuilder(this.$el);
+      this.animation = animationBuilder(this.el);
       this.animation.onFinish((a: any) => {
         a.destroy();
-        this.$emit('ionModalDidDismiss', { modal: this } as ModalEvent);
+        this.ionModalDidDismiss.emit({ modal: this });
+
         Ionic.dom.write(() => {
-          this.$el.parentNode.removeChild(this.$el);
+          this.el.parentNode.removeChild(this.el);
         });
         resolve();
       }).play();
@@ -109,7 +119,7 @@ export class Modal {
   }
 
   ionViewDidUnload() {
-    this.$emit('ionModalDidUnload', { modal: this } as ModalEvent);
+    this.ionModalDidUnload.emit({ modal: this });
   }
 
   backdropClick() {

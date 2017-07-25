@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, Element } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -102,12 +102,12 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Toolbar {
-  $el: HTMLElement;
+  @Element() el: HTMLElement;
   mode: string;
   color: string;
 
   ionViewDidLoad() {
-    const buttons = this.$el.querySelectorAll('ion-button') as any;
+    const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
     }

@@ -1,5 +1,4 @@
-import { Component, Prop } from '@stencil/core';
-
+import { Component, Element, Prop } from '@stencil/core';
 import { isRightSide, Side } from '../../utils/helpers';
 
 
@@ -28,7 +27,7 @@ import { isRightSide, Side } from '../../utils/helpers';
   tag: 'ion-item-options'
 })
 export class ItemOptions {
-  $el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   /**
    * @input {string} The side the option button should be on. Defaults to `"right"`.
@@ -39,7 +38,7 @@ export class ItemOptions {
   /**
    * @output {event} Emitted when the item has been fully swiped.
    */
-  // @Output() ionSwipe: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
+  // @Event() ionSwipe: EventEmitter;
 
   /**
    * @hidden
@@ -50,17 +49,10 @@ export class ItemOptions {
   }
 
   /**
-   * @output {event} Emitted when the item has been fully swiped.
-   */
-  ionSwipe(itemSliding: any) {
-    itemSliding.$emit('ionSwipe');
-  }
-
-  /**
    * @hidden
    */
   width(): number {
-    return this.$el.offsetWidth;
+    return this.el.offsetWidth;
   }
 
   render() {

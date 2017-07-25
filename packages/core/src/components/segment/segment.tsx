@@ -1,4 +1,4 @@
-import { Component, HostElement, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, HostElement, Listen, Prop, PropDidChange } from '@stencil/core';
 
 import { SegmentButtonEvent } from '../../index';
 
@@ -72,7 +72,7 @@ import { SegmentButtonEvent } from '../../index';
 })
 export class Segment {
   buttons: NodeListOf<HostElement>;
-  $el: HTMLElement;
+  @Element() el: HTMLElement;
 
   @Prop({ state: true }) disabled: boolean = false;
 
@@ -84,7 +84,7 @@ export class Segment {
   }
 
   ionViewDidLoad() {
-    this.buttons = this.$el.querySelectorAll('ion-segment-button') as NodeListOf<HostElement>;
+    this.buttons = this.el.querySelectorAll('ion-segment-button') as NodeListOf<HostElement>;
 
     for (var i = 0; i < this.buttons.length; i++) {
       const button = this.buttons[i].$instance;

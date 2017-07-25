@@ -1,6 +1,6 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../utils/helpers';
 import { BlockerDelegate } from './gesture-controller';
-import { Component, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 import { GestureController, GestureDelegate, BLOCK_ALL } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
 
@@ -9,8 +9,7 @@ import { PanRecognizer } from './recognizers';
   tag: 'ion-gesture'
 })
 export class Gesture {
-  private $el: HTMLElement;
-  private $emit: Function;
+  @Element() private el: HTMLElement;
   private ctrl: GestureController;
   private detail: GestureDetail = {};
   private positions: number[] = [];
@@ -23,6 +22,12 @@ export class Gesture {
   private requiresMove = false;
   private isMoveQueued = false;
   private blocker: BlockerDelegate;
+
+  @Event() private ionGestureMove: EventEmitter;
+  @Event() private ionGestureStart: EventEmitter;
+  @Event() private ionGestureEnd: EventEmitter;
+  @Event() private ionGestureNotCaptured: EventEmitter;
+  @Event() private ionPress: EventEmitter;
 
   @Prop() attachTo: string = 'child';
   @Prop() autoBlockAll: boolean = false;
@@ -61,7 +66,7 @@ export class Gesture {
       Core.enableListener(this, 'mousedown', true, this.attachTo);
 
       Ionic.dom.write(() => {
-        applyStyles(getElementReference(this.$el, this.attachTo), GESTURE_INLINE_STYLES);
+        applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
       });
     }
 
@@ -185,7 +190,7 @@ export class Gesture {
             if (this.onMove) {
               this.onMove(detail);
             } else {
-              this.$emit('ionGestureMove', this.detail);
+              this.ionGestureMove.emit(this.detail);
             }
           });
         }
@@ -249,7 +254,7 @@ export class Gesture {
     if (this.onStart) {
       this.onStart(this.detail);
     } else {
-      this.$emit('ionGestureStart', this.detail);
+      this.ionGestureStart.emit(this.detail);
     }
 
     this.hasCapturedPan = true;
@@ -306,7 +311,7 @@ export class Gesture {
         if (this.onEnd) {
           this.onEnd(detail);
         } else {
-          this.$emit('ionGestureEnd', detail);
+          this.ionGestureEnd.emit(detail);
         }
 
       } else if (this.hasPress) {
@@ -316,7 +321,7 @@ export class Gesture {
         if (this.notCaptured) {
           this.notCaptured(detail);
         } else {
-          this.$emit('ionGestureNotCaptured', detail);
+          this.ionGestureNotCaptured.emit(detail);
         }
       }
 
@@ -338,7 +343,7 @@ export class Gesture {
       if (this.onPress) {
         this.onPress(detail);
       } else {
-        this.$emit('ionPress', detail);
+        this.ionPress.emit(detail);
       }
     }
   }

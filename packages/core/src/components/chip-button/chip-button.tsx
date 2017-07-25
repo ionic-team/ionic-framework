@@ -1,13 +1,13 @@
-import { Component, CssClassObject, h, Prop } from '@stencil/core';
+import { Component, CssClassMap, Element, Prop } from '@stencil/core';
 
 
 @Component({
   tag: 'ion-chip-button'
 })
 export class ChipButton {
-  $el: HTMLElement;
-  mode: string;
-  color: string;
+  @Element() private el: HTMLElement;
+  private mode: string;
+  private color: string;
 
   @Prop() href: string;
 
@@ -26,7 +26,7 @@ export class ChipButton {
    * Get the classes based on the button type
    * e.g. alert-button, action-sheet-button
    */
-  getButtonClassList(buttonType: string, mode: string): string[] {
+  private getButtonClassList(buttonType: string, mode: string): string[] {
     if (!buttonType) {
       return [];
     }
@@ -40,7 +40,7 @@ export class ChipButton {
    * @hidden
    * Get the classes for the color
    */
-  getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
+  private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
     let className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
 
     return [`${className}-${mode}`].concat(
@@ -54,7 +54,7 @@ export class ChipButton {
    * Get the classes for the style
    * Chip buttons can only be clear or default (solid)
    */
-  getStyleClassList(buttonType: string): string[] {
+  private getStyleClassList(buttonType: string): string[] {
     let classList = [].concat(
       this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : []
     );
@@ -70,9 +70,9 @@ export class ChipButton {
    * @hidden
    * Get the element classes to add to the child element
    */
-  getElementClassList() {
+  private getElementClassList() {
     let classList = [].concat(
-      this.$el.className.length ? this.$el.className.split(' ') : []
+      this.el.className.length ? this.el.className.split(' ') : []
     );
 
     return classList;
@@ -81,7 +81,7 @@ export class ChipButton {
   render() {
     const buttonType = 'chip-button';
 
-    var buttonClasses: CssClassObject = []
+    var buttonClasses: CssClassMap = []
       .concat(
         this.getButtonClassList(buttonType, this.mode),
         this.getElementClassList(),

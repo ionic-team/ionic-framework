@@ -1,4 +1,4 @@
-import { Component, Listen, Prop } from '@stencil/core';
+import { Component, Element, Listen, Prop } from '@stencil/core';
 import { GestureDetail } from '../../index';
 import { GestureController, GestureDelegate } from '../gesture/gesture-controller';
 
@@ -7,7 +7,7 @@ import { GestureController, GestureDelegate } from '../gesture/gesture-controlle
   tag: 'ion-scroll'
 })
 export class Scroll {
-  private $el: HTMLElement;
+  @Element() private el: HTMLElement;
   private $emit: Function;
   private gesture: GestureDelegate;
   private positions: number[] = [];
@@ -209,7 +209,7 @@ export class Scroll {
     if (this.jsScroll) {
       return this._t;
     }
-    return this._t = this.$el.scrollTop;
+    return this._t = this.el.scrollTop;
   }
 
   /**
@@ -219,7 +219,7 @@ export class Scroll {
     if (this.jsScroll) {
       return 0;
     }
-    return this._l = this.$el.scrollLeft;
+    return this._l = this.el.scrollLeft;
   }
 
   /**
@@ -229,10 +229,10 @@ export class Scroll {
     this._t = top;
 
     if (this.jsScroll) {
-      this.$el.style.transform = this.$el.style.webkitTransform = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
+      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
 
     } else {
-      this.$el.scrollTop = top;
+      this.el.scrollTop = top;
     }
   }
 
@@ -243,10 +243,10 @@ export class Scroll {
     this._l = left;
 
     if (this.jsScroll) {
-      this.$el.style.transform = this.$el.style.webkitTransform = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
+      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
 
     } else {
-      this.$el.scrollLeft = left;
+      this.el.scrollLeft = left;
     }
   }
 
@@ -264,7 +264,7 @@ export class Scroll {
     }
 
     const self = this;
-    const el = self.$el;
+    const el = self.el;
     if (!el) {
       // invalid element
       done();
@@ -291,7 +291,7 @@ export class Scroll {
     function step(timeStamp: number) {
       attempts++;
 
-      if (!self.$el || stopScroll || attempts > maxAttempts) {
+      if (!self.el || stopScroll || attempts > maxAttempts) {
         self.isScrolling = false;
         el.style.transform = el.style.webkitTransform = '';
         done();
@@ -345,8 +345,8 @@ export class Scroll {
 
   scrollToBottom(duration: number): Promise<void> {
     let y = 0;
-    if (this.$el) {
-      y = this.$el.scrollHeight - this.$el.clientHeight;
+    if (this.el) {
+      y = this.el.scrollHeight - this.el.clientHeight;
     }
     return this.scrollTo(0, y, duration);
   }

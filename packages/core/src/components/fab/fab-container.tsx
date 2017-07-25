@@ -1,4 +1,4 @@
-import { Component, Method } from '@stencil/core';
+import { Component, Element, Method } from '@stencil/core';
 
 
 /**
@@ -87,14 +87,14 @@ import { Component, Method } from '@stencil/core';
   tag: 'ion-fab',
 })
 export class FabContainer {
-  $el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   /**
    * Close an active FAB list container
    */
   @Method()
   close() {
-    const fab: any = this.$el.querySelector('ion-fab-button');
+    const fab: any = this.el.querySelector('ion-fab-button');
     fab.close();
   }
 

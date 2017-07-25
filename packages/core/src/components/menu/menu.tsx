@@ -1,4 +1,4 @@
-import { Component, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 
@@ -15,8 +15,7 @@ import { MenuType } from './menu-types';
   }
 })
 export class Menu {
-  private $el: HTMLElement;
-  private $emit: Function;
+  @Element() private el: HTMLElement;
   private _backdropElm: HTMLElement;
   private _ctrl: MenuController;
   private _unregCntClick: Function;
@@ -30,6 +29,10 @@ export class Menu {
 
   mode: string;
   color: string;
+
+  @Event() ionDrag: EventEmitter;
+  @Event() ionOpen: EventEmitter;
+  @Event() ionClose: EventEmitter;
 
   /**
    * @hidden
@@ -104,7 +107,7 @@ export class Menu {
    * @hidden
    */
   ionViewDidLoad() {
-    this._backdropElm = this.$el.querySelector('.menu-backdrop') as HTMLElement;
+    this._backdropElm = this.el.querySelector('.menu-backdrop') as HTMLElement;
 
     this._init = true;
 
@@ -259,7 +262,7 @@ export class Menu {
 
     this._getType().setProgessStep(stepValue);
 
-    this.$emit('ionDrag', { menu: this });
+    this.ionDrag.emit({ menu: this });
   }
 
   _swipeEnd(shouldCompleteLeft: boolean, shouldCompleteRight: boolean, stepValue: number, velocity: number) {
@@ -283,7 +286,7 @@ export class Menu {
   private _before() {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
-    this.$el.classList.add('show-menu');
+    this.el.classList.add('show-menu');
     this._backdropElm.classList.add('show-backdrop');
 
     this.resize();
@@ -316,7 +319,7 @@ export class Menu {
       });
 
       // emit open event
-      this.$emit('ionOpen', { menu: this });
+      this.ionOpen.emit({ menu: this });
 
     } else {
       // enable swipe to go back gesture
@@ -330,7 +333,7 @@ export class Menu {
       });
 
       // emit close event
-      this.$emit('ionClose', { menu: this });
+      this.ionClose.emit({ menu: this });
     }
   }
 
@@ -446,7 +449,7 @@ export class Menu {
    * @hidden
    */
   getMenuElement(): HTMLElement {
-    return this.$el.querySelector('.menu-inner') as HTMLElement;
+    return this.el.querySelector('.menu-inner') as HTMLElement;
   }
 
   /**
