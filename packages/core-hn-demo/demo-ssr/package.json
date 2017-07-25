@@ -1,9 +1,0 @@
-{
-  "name": "core-hn-ssr",
-  "private": true,
-  "version": "0.0.1",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.15.2"
-  }
-}
