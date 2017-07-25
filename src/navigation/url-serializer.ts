@@ -364,11 +364,19 @@ export function hydrateSegmentsWithNav(app: App, dehydratedSegmentPairs: Dehydra
     for (const dehydratedSegment of dehydratedSegmentPairs[i].segments) {
       if (navs.length === 1) {
         segments.push(hydrateSegment(dehydratedSegment, navs[0]));
-      } else if (navs.length > 1 || navs.length <= 0) {
+        navs = navs[0].getActiveChildNavs();
+      } else if (navs.length > 1) {
+        // this is almost certainly an async race condition bug in userland
+        // if you're in this state, it would be nice to just bail here
+        // but alas we must perservere and handle the issue
+        // the simple solution is to just use the last child
+        // because that is probably what the user wants anyway
+        // remember, do not harm, even if it makes our shizzle ugly
+        segments.push(hydrateSegment(dehydratedSegment, navs[navs.length - 1]));
+        navs = navs[navs.length - 1].getActiveChildNavs();
+      } else {
         break;
-        // throw new Error('Invalid URL - could not determine which nav to use');
       }
-      navs = navs[0].getActiveChildNavs();
     }
   }
   return segments;
@@ -514,7 +522,7 @@ export function getSegmentsFromUrlPieces(urlSections: string[], navLink: NavLink
 export function hydrateSegment(segment: DehydratedSegment, nav: NavigationContainer) {
   const hydratedSegment = Object.assign({}, segment) as NavSegment;
   hydratedSegment.type = nav.getType();
-  hydratedSegment.navId = nav.id;
+  hydratedSegment.navId = nav.name || nav.id;
   // secondaryId is set on an empty dehydrated segment in the case of tabs to identify which tab is selected
   hydratedSegment.secondaryId = segment.secondaryId;
   return hydratedSegment;
