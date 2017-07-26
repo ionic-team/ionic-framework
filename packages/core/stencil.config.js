@@ -28,5 +28,5 @@ exports.config = {
 };
 
 exports.devServerConfig = {
-  watchGlob: ['dist/**/*.*', 'src/**/*.html']
+  watchGlob: ['dist/*.*', 'dist/ionic/**/**', 'src/**/*.html']
 };
