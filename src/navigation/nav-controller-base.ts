@@ -62,6 +62,7 @@ export class NavControllerBase extends Ion implements NavController {
   _viewport: ViewContainerRef;
   _views: ViewController[] = [];
   _zIndexOffset: number = 0;
+  _destroyed: boolean;
 
   viewDidLoad: EventEmitter<any> = new EventEmitter();
   viewWillEnter: EventEmitter<any> = new EventEmitter();
@@ -102,6 +103,7 @@ export class NavControllerBase extends Ion implements NavController {
     this._sbEnabled = config.getBoolean('swipeBackEnabled');
     this._children = [];
     this.id = 'n' + (++ctrlIds);
+    this._destroyed = false;
   }
 
   push(page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
@@ -284,7 +286,7 @@ export class NavControllerBase extends Ion implements NavController {
     if (ti.done) {
       ti.done(false, false, rejectReason);
     }
-    if (ti.reject) {
+    if (ti.reject && !this._destroyed) {
       ti.reject(rejectReason);
     } else {
       ti.resolve(false);
@@ -594,7 +596,6 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _transition(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): Promise<NavResult> {
-
     if (!ti.requiresTransition) {
       // transition is not required, so we are already done!
       // they're inserting/removing the views somewhere in the middle or
@@ -856,35 +857,38 @@ export class NavControllerBase extends Ion implements NavController {
   _cleanup(activeView: ViewController) {
     // ok, cleanup time!! Destroy all of the views that are
     // INACTIVE and come after the active view
-    const activeViewIndex = this._views.indexOf(activeView);
-    const views = this._views;
-    let reorderZIndexes = false;
-    let view: ViewController;
-    let i: number;
+    // only do this if the views exist, though
+    if (!this._destroyed) {
+      const activeViewIndex = this._views.indexOf(activeView);
+      const views = this._views;
+      let reorderZIndexes = false;
+      let view: ViewController;
+      let i: number;
 
-    for (i = views.length - 1; i >= 0; i--) {
-      view = views[i];
-      if (i > activeViewIndex) {
-        // this view comes after the active view
-        // let's unload it
-        this._willUnload(view);
-        this._destroyView(view);
-
-      } else if (i < activeViewIndex && !this._isPortal) {
-        // this view comes before the active view
-        // and it is not a portal then ensure it is hidden
-        view._domShow(false, this._renderer);
-      }
-      if (view._zIndex <= 0) {
-        reorderZIndexes = true;
-      }
-    }
-
-    if (!this._isPortal && reorderZIndexes) {
-      for (i = 0; i < views.length; i++) {
+      for (i = views.length - 1; i >= 0; i--) {
         view = views[i];
-        // ******** DOM WRITE ****************
-        view._setZIndex(view._zIndex + INIT_ZINDEX + 1, this._renderer);
+        if (i > activeViewIndex) {
+          // this view comes after the active view
+          // let's unload it
+          this._willUnload(view);
+          this._destroyView(view);
+
+        } else if (i < activeViewIndex && !this._isPortal) {
+          // this view comes before the active view
+          // and it is not a portal then ensure it is hidden
+          view._domShow(false, this._renderer);
+        }
+        if (view._zIndex <= 0) {
+          reorderZIndexes = true;
+        }
+      }
+
+      if (!this._isPortal && reorderZIndexes) {
+        for (i = 0; i < views.length; i++) {
+          view = views[i];
+          // ******** DOM WRITE ****************
+          view._setZIndex(view._zIndex + INIT_ZINDEX + 1, this._renderer);
+        }
       }
     }
   }
@@ -1021,6 +1025,8 @@ export class NavControllerBase extends Ion implements NavController {
     if (this.parent && this.parent.unregisterChildNav) {
       this.parent.unregisterChildNav(this);
     }
+
+    this._destroyed = true;
   }
 
   swipeBackStart() {
