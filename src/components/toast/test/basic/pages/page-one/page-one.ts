@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController } from '../../../../../..';
+import { ToastCustomCmp } from '../../toast-custom/toast-custom-component';
 
 @IonicPage()
 @Component({
@@ -59,12 +60,48 @@ export class PageOne {
     toast.present();
   }
 
+  showToastWithCloseEvent(positionString: string) {
+    const toast = this.toastCtrl.create({
+      message: 'This is a toast with custom close click',
+      closeButtonText: 'Ok',
+      position: positionString,
+      closeClick: () => {
+        console.log('CUSTOM ACTION WHEN CLICK!!');
+
+        /**
+         * Optional: Cancel the default dismiss with the
+         * callback parameter.
+         * 
+         * toastComponent.enabled = false;
+         */
+      }
+    });
+
+    toast.present();
+  }
+
+  showToastWithHtmlMessage() {
+    const toast = this.toastCtrl.create({
+      messageHtml: '<b>TEST HTML</b> custom',
+      closeButtonText: 'Ok'
+    });
+    toast.present();
+  }
+
+  showToastWithoutFocus() {
+    const toast = this.toastCtrl.create({
+      autoFocus: false,
+      messageHtml: 'Not focus on close button',
+      closeButtonText: 'Ok'
+    });
+    toast.present();
+  }
+
   showDismissPageChangeToast() {
     const toast = this.toastCtrl.create({
       message: 'I am dismissed on page change',
       dismissOnPageChange: true
     });
-    toast.onDidDismiss(this.dismissHandler);
     toast.present();
 
     setTimeout(() => {
