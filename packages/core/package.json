@@ -16,8 +16,8 @@
     "@stencil/core": "0.0.3"
   },
   "devDependencies": {
-    "@stencil/dev-server": "0.0.9",
-    "@stencil/utils": "0.0.2",
+    "@stencil/dev-server": "0.0.11",
+    "@stencil/utils": "0.0.3",
     "ionicons": "3.0.0"
   },
   "author": "Ionic Team",

@@ -27,6 +27,7 @@ exports.config = {
   global: 'src/global/ionic-global.ts'
 };
 
-exports.devServerConfig = {
+exports.devServer = {
+  root: '.',
   watchGlob: ['dist/*.*', 'dist/ionic/**/**', 'src/**/*.html']
 };
