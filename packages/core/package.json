@@ -5,7 +5,7 @@
   "main": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build --prod",
-    "dev": "concurrently --raw \"stencil build --watch\" \"stencil-dev-server\"",
+    "dev": "sd concurrent \"stencil build --watch\" \"stencil-dev-server\"",
     "test": "jest"
   },
   "repository": {
@@ -13,11 +13,11 @@
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
   "dependencies": {
-    "@stencil/core": "0.0.2-7"
+    "@stencil/core": "0.0.2"
   },
   "devDependencies": {
     "@stencil/dev-server": "0.0.9",
-    "concurrently": "^3.5.0",
+    "@stencil/utils": "0.0.2",
     "ionicons": "3.0.0"
   },
   "author": "Ionic Team",
