@@ -14,6 +14,11 @@ npm install @ionic/app-scripts@latest --save-dev
 npm install ionic-angular@latest --save
 ```
 
+### Notes
+
+The URL when using deep linking is shortened and improved in this release. Due to a limitation in our nav system, if you're using `ion-tabs` and have a tab name that matches a segment, meaning you have a tab name of `schedule` and a segment of `schedule`, there could potentially be issues. To mitigate these issues, make sure you set the `tabUrlPath` property on the `ion-tab` and give it a unique name. This limitation will require an API change to fix so it will be resolved in `ionic-angular` 4.x.
+
+
 The upgrades include necessary changes to generators that add back lazy loading functionality, as well as an improved way of generating component/directives/and pipes.
 
 ### New Generators
