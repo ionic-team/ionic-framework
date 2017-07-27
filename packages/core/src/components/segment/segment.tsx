@@ -100,8 +100,8 @@ export class Segment {
   }
 
   @Listen('ionClick')
-  segmentClick(ev: SegmentButtonEvent) {
-    let selectedButton = ev.segmentButton;
+  segmentClick(ev: CustomEvent) {
+    let selectedButton = (ev.detail as SegmentButtonEvent).segmentButton;
 
     this.value = selectedButton.value;
     this.selectButton(this.value);
