@@ -1,5 +1,6 @@
 @import "../../themes/ionic.globals";
 
+$item-block-min-height:   4.4rem !default;
 // Item
 // --------------------------------------------------
 // Core structure only, dimensions belong in specific modes
@@ -30,7 +31,7 @@
   justify-content: space-between;
 
   width: 100%;
-  min-height: 4.4rem;
+  min-height: $item-block-min-height;
 
   border: 0;
 
