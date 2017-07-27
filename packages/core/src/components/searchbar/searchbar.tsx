@@ -183,7 +183,8 @@ export class Searchbar {
   inputChanged(ev: any) {
     this.value = ev.target.value;
     // this._inputDebouncer.debounce(() => {
-    //   this.ionInput.emit(ev);
+    // TODO fix to be inside debounce
+    this.ionInput.emit(ev);
     // });
   }
 
