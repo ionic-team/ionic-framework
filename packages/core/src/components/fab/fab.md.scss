@@ -16,6 +16,9 @@ $fab-md-background-color:                         color($colors-md, primary) !de
 /// @prop - Text color of the button
 $fab-md-text-color:                               color-contrast($colors-md, $fab-md-background-color) !default;
 
+/// @prop - Color of the button icon
+$fab-md-icon-fill-color:                          $fab-md-text-color !default;
+
 /// @prop - Background color of the activated button
 $fab-md-background-color-activated:               color-shade($fab-md-background-color) !default;
 
@@ -24,6 +27,9 @@ $fab-md-list-button-background-color:             $fab-list-button-background-co
 
 /// @prop - Text color of the button in a list
 $fab-md-list-button-text-color:                   color-contrast($colors-md, $fab-md-list-button-background-color) !default;
+
+/// @prop - Color of the button icon in a list
+$fab-md-list-icon-fill-color:                     $fab-md-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
 $fab-md-list-button-background-color-activated:   color-shade($fab-md-list-button-background-color) !default;
@@ -37,9 +43,11 @@ $fab-md-list-button-transition-timing-function:   ease !default;
 /// @prop - Transition delay of the transform and opacity of the button in a list
 $fab-md-list-button-transition-delay:             10ms !default;
 
+/// @prop - Transition duration of the box-shadow and background-color of the button
 $fab-button-md-transition-duration:               300ms !default;
 
-$fab-button-md-transition-timing-function:     cubic-bezier(.4, 0, .2, 1) !default;
+/// @prop - Speed curve of the transition of the box-shadow and background-color of the button
+$fab-button-md-transition-timing-function:        cubic-bezier(.4, 0, .2, 1) !default;
 
 
 .fab-md {
@@ -58,6 +66,14 @@ $fab-button-md-transition-timing-function:     cubic-bezier(.4, 0, .2, 1) !defau
   box-shadow: $fab-md-box-shadow-activated;
 }
 
+.fab-md .icon {
+  fill: $fab-md-icon-fill-color;
+}
+
+
+// FAB buttons in a list
+// --------------------------------------------------
+
 .fab-md-in-list {
   color: $fab-md-list-button-text-color;
   background-color: $fab-md-list-button-background-color;
@@ -72,6 +88,11 @@ $fab-button-md-transition-timing-function:     cubic-bezier(.4, 0, .2, 1) !defau
 .fab-md-in-list.activated {
   background-color: $fab-md-list-button-background-color-activated;
 }
+
+.fab-md-in-list .icon {
+  fill: $fab-md-list-icon-fill-color;
+}
+
 
 // Material Design FAB Ripple
 // --------------------------------------------------
@@ -93,6 +114,10 @@ $fab-button-md-transition-timing-function:     cubic-bezier(.4, 0, .2, 1) !defau
   .fab-md-#{$color-name} {
     color: $fg-color;
     background-color: $bg-color;
+  }
+
+  .fab-md-#{$color-name} .icon {
+    fill: $fg-color;
   }
 
   .fab-md-#{$color-name}.activated {
