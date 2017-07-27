@@ -1,6 +1,8 @@
 @import "../../themes/ionic.globals";
 
 $item-block-min-height:   4.4rem !default;
+$item-block-font-weight:  normal !default;
+
 // Item
 // --------------------------------------------------
 // Core structure only, dimensions belong in specific modes
@@ -35,7 +37,7 @@ $item-block-min-height:   4.4rem !default;
 
   border: 0;
 
-  font-weight: normal;
+  font-weight: $item-block-font-weight;
   line-height: normal;
   text-decoration: none;
   color: inherit;
