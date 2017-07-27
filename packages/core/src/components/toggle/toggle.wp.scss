@@ -62,9 +62,6 @@ $toggle-wp-transition-duration:          300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-wp-disabled-opacity:             .3 !default;
 
-// deprecated
-$toggle-wp-item-left-padding:            null !default;
-
 /// @prop - Padding top of the toggle positioned on the start in an item
 $toggle-wp-item-start-padding-top:       12px !default;
 
@@ -76,9 +73,6 @@ $toggle-wp-item-start-padding-bottom:    12px !default;
 
 /// @prop - Padding start the toggle positioned on the start in an item
 $toggle-wp-item-start-padding-start:     2px !default;
-
-// deprecated
-$toggle-wp-item-right-padding:           null !default;
 
 /// @prop - Padding top of the toggle positioned on the end in an item
 $toggle-wp-item-end-padding-top:         12px !default;
@@ -186,20 +180,15 @@ $toggle-wp-item-end-padding-start:       $item-wp-padding-start !default;
 // Windows Toggle Within An Item
 // -----------------------------------------
 
-.item-wp .toggle-wp {
+.item-wp .toggle-wp[slot] {
   @include margin($toggle-wp-media-margin);
+  @include padding($toggle-wp-item-end-padding-top, $toggle-wp-item-end-padding-end, $toggle-wp-item-end-padding-bottom, $toggle-wp-item-end-padding-start);
 
   cursor: pointer;
-
-  @include deprecated-variable(padding, $toggle-wp-item-right-padding) {
-    @include padding($toggle-wp-item-end-padding-top, $toggle-wp-item-end-padding-end, $toggle-wp-item-end-padding-bottom, $toggle-wp-item-end-padding-start);
-  }
 }
 
 .item-wp .toggle-wp[slot="start"] {
-  @include deprecated-variable(padding, $toggle-wp-item-left-padding) {
-    @include padding($toggle-wp-item-start-padding-top, $toggle-wp-item-start-padding-end, $toggle-wp-item-start-padding-bottom, $toggle-wp-item-start-padding-start);
-  }
+  @include padding($toggle-wp-item-start-padding-top, $toggle-wp-item-start-padding-end, $toggle-wp-item-start-padding-bottom, $toggle-wp-item-start-padding-start);
 }
 
 .item-wp.item-toggle ion-label {

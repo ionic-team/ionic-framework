@@ -50,9 +50,6 @@ $toggle-ios-transition-duration:       300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-ios-disabled-opacity:          .3 !default;
 
-// deprecated
-$toggle-ios-item-left-padding:         null !default;
-
 /// @prop - Padding top of the toggle positioned on the start in an item
 $toggle-ios-item-start-padding-top:    6px !default;
 
@@ -64,9 +61,6 @@ $toggle-ios-item-start-padding-bottom: 5px !default;
 
 /// @prop - Padding start of the toggle positioned on the start in an item
 $toggle-ios-item-start-padding-start:  0 !default;
-
-// deprecated
-$toggle-ios-item-right-padding:        null !default;
 
 /// @prop - Padding top of the toggle positioned on the end in an item
 $toggle-ios-item-end-padding-top:      6px !default;
@@ -218,18 +212,13 @@ $toggle-ios-item-end-padding-start:    $item-ios-padding-start !default;
 // iOS Toggle Within An Item
 // -----------------------------------------
 
-.item-ios .toggle-ios {
+.item-ios .toggle-ios[slot] {
   @include margin($toggle-ios-media-margin);
-
-  @include deprecated-variable(padding, $toggle-ios-item-right-padding) {
-    @include padding($toggle-ios-item-end-padding-top, $toggle-ios-item-end-padding-end, $toggle-ios-item-end-padding-bottom, $toggle-ios-item-end-padding-start);
-  }
+  @include padding($toggle-ios-item-end-padding-top, $toggle-ios-item-end-padding-end, $toggle-ios-item-end-padding-bottom, $toggle-ios-item-end-padding-start);
 }
 
 .item-ios .toggle-ios[slot="start"] {
-  @include deprecated-variable(padding, $toggle-ios-item-left-padding) {
-    @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
-  }
+  @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
 }
 
 

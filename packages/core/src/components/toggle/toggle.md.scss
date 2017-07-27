@@ -38,9 +38,6 @@ $toggle-md-handle-background-color-off:  $background-md-color !default;
 /// @prop - Background color of the checked toggle handle
 $toggle-md-handle-background-color-on:   $toggle-md-active-color !default;
 
-// deprecated
-$toggle-md-media-margin:                 null !default;
-
 /// @prop - Margin top of the toggle
 $toggle-md-media-margin-top:             0 !default;
 
@@ -59,9 +56,6 @@ $toggle-md-transition-duration:          300ms !default;
 /// @prop - Opacity of the disabled toggle
 $toggle-md-disabled-opacity:             .3 !default;
 
-// deprecated
-$toggle-md-padding:                      null !default;
-
 /// @prop - Padding top of standalone toggle
 $toggle-md-padding-top:                  12px !default;
 
@@ -74,9 +68,6 @@ $toggle-md-padding-bottom:               $toggle-md-padding-top !default;
 /// @prop - Padding start of standalone toggle
 $toggle-md-padding-start:                $toggle-md-padding-end !default;
 
-// deprecated
-$toggle-md-item-left-padding:            null !default;
-
 /// @prop - Padding top of the toggle positioned on the start in an item
 $toggle-md-item-start-padding-top:       12px !default;
 
@@ -88,9 +79,6 @@ $toggle-md-item-start-padding-bottom:    12px !default;
 
 /// @prop - Padding start the toggle positioned on the start in an item
 $toggle-md-item-start-padding-start:     2px !default;
-
-// deprecated
-$toggle-md-item-right-padding:           null !default;
 
 /// @prop - Padding top of the toggle positioned on the end in an item
 $toggle-md-item-end-padding-top:         12px !default;
@@ -108,6 +96,8 @@ $toggle-md-item-end-padding-start:       $item-md-padding-start !default;
 // -----------------------------------------
 
 .toggle-md {
+  @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
+
   position: relative;
 
   width: $toggle-md-track-width;
@@ -116,10 +106,6 @@ $toggle-md-item-end-padding-start:       $item-md-padding-start !default;
   box-sizing: content-box;
 
   contain: strict;
-
-  @include deprecated-variable(padding, $toggle-md-padding) {
-    @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
-  }
 }
 
 
@@ -204,22 +190,15 @@ $toggle-md-item-end-padding-start:       $item-md-padding-start !default;
 // Material Design Toggle Within An Item
 // -----------------------------------------
 
-.item-md .toggle-md {
+.item-md .toggle-md[slot] {
+  @include margin($toggle-md-media-margin-top, $toggle-md-media-margin-end, $toggle-md-media-margin-bottom, $toggle-md-media-margin-start);
+  @include padding($toggle-md-item-end-padding-top, $toggle-md-item-end-padding-end, $toggle-md-item-end-padding-bottom, $toggle-md-item-end-padding-start);
+
   cursor: pointer;
-
-  @include deprecated-variable(margin, $toggle-md-media-margin) {
-    @include margin($toggle-md-media-margin-top, $toggle-md-media-margin-end, $toggle-md-media-margin-bottom, $toggle-md-media-margin-start);
-  }
-
-  @include deprecated-variable(padding, $toggle-md-item-right-padding) {
-    @include padding($toggle-md-item-end-padding-top, $toggle-md-item-end-padding-end, $toggle-md-item-end-padding-bottom, $toggle-md-item-end-padding-start);
-  }
 }
 
 .item-md .toggle-md[slot="start"] {
-  @include deprecated-variable(padding, $toggle-md-item-left-padding) {
-    @include padding($toggle-md-item-start-padding-top, $toggle-md-item-start-padding-end, $toggle-md-item-start-padding-bottom, $toggle-md-item-start-padding-start);
-  }
+  @include padding($toggle-md-item-start-padding-top, $toggle-md-item-start-padding-end, $toggle-md-item-start-padding-bottom, $toggle-md-item-start-padding-start);
 }
 
 .item-md.item-toggle ion-label {
