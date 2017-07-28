@@ -13,7 +13,7 @@
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
   "dependencies": {
-    "@stencil/core": "0.0.4-0"
+    "@stencil/core": "0.0.4-2"
   },
   "devDependencies": {
     "@stencil/dev-server": "0.0.11",
