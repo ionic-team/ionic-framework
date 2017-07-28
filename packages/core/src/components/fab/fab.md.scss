@@ -29,7 +29,7 @@ $fab-md-list-button-background-color:             $fab-list-button-background-co
 $fab-md-list-button-text-color:                   color-contrast($colors-md, $fab-md-list-button-background-color) !default;
 
 /// @prop - Color of the button icon in a list
-$fab-md-list-icon-fill-color:                     $fab-md-list-button-text-color !default;
+$fab-md-list-button-icon-fill-color:              $fab-md-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
 $fab-md-list-button-background-color-activated:   color-shade($fab-md-list-button-background-color) !default;
@@ -90,7 +90,7 @@ $fab-button-md-transition-timing-function:        cubic-bezier(.4, 0, .2, 1) !de
 }
 
 .fab-md-in-list .icon {
-  fill: $fab-md-list-icon-fill-color;
+  fill: $fab-md-list-button-icon-fill-color;
 }
 
 

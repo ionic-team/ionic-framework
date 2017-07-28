@@ -6,7 +6,7 @@
 /// @prop - Width and height of the FAB button
 $fab-size:                              56px !default;
 
-/// @prop - Width and height of the FAB button mini
+/// @prop - Width and height of the mini FAB button
 $fab-mini-size:                         40px !default;
 
 /// @prop - Margin of the FAB Container
@@ -51,12 +51,13 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   flex: 1;
 
   font-size: 2.4rem;
+  line-height: 1.8rem;
 }
 
-// FAB mini
+// FAB Mini
 // --------------------------------------------------
 
-.fab[mini] {
+ion-fab-button[mini] .fab {
   @include margin(($fab-size - $fab-mini-size) / 2);
 
   width: $fab-mini-size;
@@ -65,12 +66,8 @@ $fab-list-button-background-color:      #f4f4f4 !default;
   line-height: $fab-mini-size;
 }
 
-.fab[mini] .fab-close-icon {
-  line-height: $fab-mini-size;
-}
 
-
-// FAB container
+// FAB Container
 // --------------------------------------------------
 
 ion-fab {
@@ -128,7 +125,7 @@ ion-fab {
 }
 
 
-// FAB list (speed dial)
+// FAB List (Speed Dial)
 // --------------------------------------------------
 
 ion-fab-list {
@@ -189,23 +186,34 @@ ion-fab-list[side=right] {
 }
 
 
-// FAB animation
+// FAB Close Icon
 // --------------------------------------------------
-
-.fab-list-active {
-  display: flex;
-}
 
 .fab-close-icon {
   @include position(0, 0, null, 0);
 
   position: absolute;
+  height: 100%;
 
-  line-height: $fab-size;
   opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
+}
+
+.fab-close-icon .icon-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+// FAB Animation
+// --------------------------------------------------
+
+.fab-list-active {
+  display: flex;
 }
 
 .fab .button-inner {

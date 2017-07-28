@@ -23,7 +23,7 @@ $fab-ios-list-button-background-color:            $fab-list-button-background-co
 $fab-ios-list-button-text-color:                  color-contrast($colors-ios, $fab-ios-list-button-background-color) !default;
 
 /// @prop - Color of the button icon in a list
-$fab-ios-list-icon-fill-color:                    $fab-ios-list-button-text-color !default;
+$fab-ios-list-button-icon-fill-color:             $fab-ios-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
 $fab-ios-list-button-background-color-activated:  color-shade($fab-ios-list-button-background-color) !default;
@@ -67,7 +67,7 @@ $fab-ios-list-button-transition-delay:            10ms !default;
 }
 
 .fab-ios-in-list .icon {
-  fill: $fab-ios-list-icon-fill-color;
+  fill: $fab-ios-list-button-icon-fill-color;
 }
 
 

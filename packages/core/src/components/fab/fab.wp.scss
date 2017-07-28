@@ -23,7 +23,7 @@ $fab-wp-list-button-background-color:             $fab-list-button-background-co
 $fab-wp-list-button-text-color:                   color-contrast($colors-wp, $fab-wp-list-button-background-color) !default;
 
 /// @prop - Color of the button icon in a list
-$fab-wp-list-icon-fill-color:                     $fab-wp-list-button-text-color !default;
+$fab-wp-list-button-icon-fill-color:              $fab-wp-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
 $fab-wp-list-button-background-color-activated:   color-shade($fab-wp-list-button-background-color) !default;
@@ -68,7 +68,7 @@ $fab-wp-list-button-transition-delay:             10ms !default;
 }
 
 .fab-wp-in-list .icon {
-  fill: $fab-wp-list-icon-fill-color;
+  fill: $fab-wp-list-button-icon-fill-color;
 }
 
 
