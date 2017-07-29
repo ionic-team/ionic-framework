@@ -1,6 +1,6 @@
 import { dest, src, start, task } from 'gulp';
 import { prompt } from 'inquirer';
-import {readFileSync, readJsonSync, writeFileSync } from 'fs-extra';
+import { readFileSync, readJsonSync, writeFileSync } from 'fs-extra';
 import * as path from 'path';
 import * as changelog from 'conventional-changelog';
 import * as GithubApi from 'github';
