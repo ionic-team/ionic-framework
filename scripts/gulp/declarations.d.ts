@@ -22,6 +22,7 @@ declare module 'rollup-plugin-commonjs';
 declare module 'rollup-plugin-multi-entry';
 declare module 'rollup-plugin-node-resolve';
 declare module 'rollup-plugin-uglify';
+declare module 'rollup-plugin-sourcemaps'
 declare module 'through2';
 declare module 'semver';
 declare module 'vinyl';

@@ -257,10 +257,13 @@ export function getBinaryPath(packageName: string, executable = packageName): st
   return resolveBin.sync(packageName, {executable});
 }
 
-export function deleteFiles(glob: string[], done: Function) {
+export function deleteFiles(glob: string[], done?: Function) {
   let del = require('del');
   del.sync(glob);
-  done();
+
+  if (done) {
+    done();
+  }
 }
 
 export function createTimestamp() {
