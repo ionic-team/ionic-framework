@@ -7,7 +7,7 @@ export function buildIonicAngularUmdTsc(excludeSpec: boolean, stripDebug: boolea
   const stream = copySourceToDest(DIST_BUILD_UMD_ROOT, excludeSpec, true, stripDebug);
   stream.on('end', () => {
     // the source files are copied, copy over a tsconfig from
-    createTempTsConfig([join('.', '**', '*.ts')], ES5, UMD_MODULE, join(PROJECT_ROOT, 'tsconfig.json'), join(DIST_BUILD_UMD_ROOT, 'tsconfig.json'));
+    createTempTsConfig([join('.', '**', '*.ts')], ES5, UMD_MODULE, join(PROJECT_ROOT, 'tsconfig.json'), join(DIST_BUILD_UMD_ROOT, 'tsconfig.json'), { importHelpers: false });
     runTsc(join(DIST_BUILD_UMD_ROOT, 'tsconfig.json'), (err) => {
       if (err) {
         done(err);

@@ -2,6 +2,7 @@ import { dest, src, start, task } from 'gulp';
 import { prompt } from 'inquirer';
 import { readFileSync, readJsonSync, writeFileSync } from 'fs-extra';
 import * as path from 'path';
+import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as changelog from 'conventional-changelog';
 import * as GithubApi from 'github';
 import { exec, spawnSync } from 'child_process';
@@ -222,8 +223,11 @@ task('release.cleanTemp', (done: Function) => {
 
 task('release.createBundlesAndFESM', async (done: Function) => {
   const pkg = readJsonSync('./package.json');
+  const libraries = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
+  delete libraries['tslib'];
+
   const external = [
-    ...Object.keys({ ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies }),
+    ...Object.keys(libraries),
     'rxjs/Subject',
     'rxjs/add/operator/takeUntil'
   ];
@@ -232,6 +236,11 @@ task('release.createBundlesAndFESM', async (done: Function) => {
     sourceMap: true,
     external,
     plugins: [
+      nodeResolve({
+        module: true,
+        jsnext: true,
+        main: true
+      }),
       sourcemaps()
     ]
   };
