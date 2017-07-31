@@ -6,8 +6,13 @@ export interface ToastOptions {
   messageHtml?: string;
   cssClass?: string;
   duration?: number;
+  closeButton?: {
+    text?: string;
+    color?: string;
+  };
   showCloseButton?: boolean;
   closeButtonText?: string;
+  closeButtonColor?: string;
   dismissOnPageChange?: boolean;
   position?: string;
   closeClick?: (component: ToastCmp) => void;

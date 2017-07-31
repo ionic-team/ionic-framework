@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController } from '../../../../../..';
-import { ToastCustomCmp } from '../../toast-custom/toast-custom-component';
 
 @IonicPage()
 @Component({
@@ -54,6 +53,21 @@ export class PageOne {
       message: 'Your internet connection appears to be offline. Data integrity is not gauranteed.',
       showCloseButton: true,
       closeButtonText: 'Ok',
+      closeButtonColor: 'danger',
+      position: positionString
+    });
+    toast.onDidDismiss(this.dismissHandler);
+    toast.present();
+  }
+
+  showToastWithCloseButtonUnifiedOption(positionString: string) {
+    const toast = this.toastCtrl.create({
+      message: 'You can pass all close button options with key "closeButton"',
+      closeButton: {
+        show: true,
+        text: 'OK',
+        color: 'danger'
+      },
       position: positionString
     });
     toast.onDidDismiss(this.dismissHandler);
@@ -67,11 +81,10 @@ export class PageOne {
       position: positionString,
       closeClick: () => {
         console.log('CUSTOM ACTION WHEN CLICK!!');
-
         /**
          * Optional: Cancel the default dismiss with the
          * callback parameter.
-         * 
+         *
          * toastComponent.enabled = false;
          */
       }

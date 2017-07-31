@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, Renderer, Output, EventEmitter, OnInit } from '@angular/core';
-import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, Renderer } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { Config } from '../../config/config';
 import { NavParams } from '../../navigation/nav-params';
@@ -19,7 +19,7 @@ import { ViewController } from '../../navigation/view-controller';
     '<div class="toast-container"> ' +
       '<div *ngIf="d.messageHtml" [innerHTML]="d.message" class="toast-message" id="{{hdrId}}"></div> ' +
       '<div *ngIf="d.message && !d.messageHtml" class="toast-message" id="{{hdrId}}">{{d.message}}</div> ' +
-      '<button ion-button clear class="danger toast-button" *ngIf="showCloseButton" (click)="cbClick()"> ' +
+      '<button ion-button clear [color]="d.closeButtonColor" class="toast-button" [ngClass]="{\'toast-button-color\': !d.closeButtonColor}" *ngIf="showCloseButton" (click)="cbClick()"> ' +
           '{{ d.closeButtonText || \'Close\' }} ' +
       '</button> ' +
     '</div> ' +
@@ -43,8 +43,13 @@ export class ToastCmp implements OnInit, AfterViewInit {
     messageHtml?: SafeHtml;
     cssClass?: string;
     duration?: number;
+    closeButton?: {
+      text: string;
+      color: string;
+    };
     showCloseButton?: boolean;
     closeButtonText?: string;
+    closeButtonColor?: string;
     dismissOnPageChange?: boolean;
     position?: string;
     closeClick?: () => void;
@@ -66,6 +71,11 @@ export class ToastCmp implements OnInit, AfterViewInit {
     renderer.setElementClass(_elementRef.nativeElement, `toast-${_config.get('mode')}`, true);
     this.d = params.data;
     this.d.autoFocus = 'autoFocus' in this.d ? this.d.autoFocus : true;
+    if (this.d.closeButton) {
+      this.d.showCloseButton = true;
+      this.d.closeButtonText = this.d.closeButton.text;
+      this.d.closeButtonColor = this.d.closeButton.color;
+    }
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
@@ -117,7 +127,7 @@ export class ToastCmp implements OnInit, AfterViewInit {
   }
 
   get showCloseButton(): boolean {
-    return (this.d.showCloseButton || typeof this.d.closeButtonText == 'string');
+    return (this.d.showCloseButton || typeof this.d.closeButtonText === 'string');
   }
 
   cbClick() {
