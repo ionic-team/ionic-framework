@@ -4,8 +4,8 @@
   "description": "Base components for Ionic",
   "main": "dist/collection/collection-manifest.json",
   "scripts": {
-    "build": "stencil build --prod",
-    "dev": "sd concurrent \"stencil build --watch\" \"stencil-dev-server\"",
+    "build": "stencil build",
+    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
     "test": "(jest --no-cache || true)"
   },
   "repository": {
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
   "dependencies": {
-    "@stencil/core": "0.0.4-2"
+    "@stencil/core": "0.0.4-3"
   },
   "devDependencies": {
     "@stencil/dev-server": "0.0.11",
