@@ -10,8 +10,17 @@ export interface ToastOptions {
     text?: string;
     color?: string;
   };
+  /**
+   * @deprecated
+   */
   showCloseButton?: boolean;
+  /**
+   * @deprecated
+   */
   closeButtonText?: string;
+  /**
+   * @deprecated
+   */
   closeButtonColor?: string;
   dismissOnPageChange?: boolean;
   position?: string;

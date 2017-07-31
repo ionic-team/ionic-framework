@@ -47,8 +47,17 @@ export class ToastCmp implements OnInit, AfterViewInit {
       text: string;
       color: string;
     };
+    /**
+     * @deprecated
+     */
     showCloseButton?: boolean;
+    /**
+     * @deprecated
+     */
     closeButtonText?: string;
+    /**
+     * @deprecated
+     */
     closeButtonColor?: string;
     dismissOnPageChange?: boolean;
     position?: string;
@@ -71,6 +80,11 @@ export class ToastCmp implements OnInit, AfterViewInit {
     renderer.setElementClass(_elementRef.nativeElement, `toast-${_config.get('mode')}`, true);
     this.d = params.data;
     this.d.autoFocus = 'autoFocus' in this.d ? this.d.autoFocus : true;
+
+    if (this.d.closeButtonColor || this.d.closeButtonText) {
+      console.warn('ToastOptions "closeButtonColor", "closeButtonText" and "showCloseButton" are deprecated. Use close "closeButton.color" or "closeButton.text" instead');
+    }
+
     if (this.d.closeButton) {
       this.d.showCloseButton = true;
       this.d.closeButtonText = this.d.closeButton.text;
