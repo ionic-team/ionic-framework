@@ -46,7 +46,7 @@ async function compile(target: string, moduleType: string, dest: string): Promis
     stream.on('end', () => {
       // the source files are copied, copy over a tsconfig from
       createTempTsConfig(
-        ['./index.ts'],
+        ['./public-api.ts'],
         target,
         moduleType,
         join(PROJECT_ROOT, 'tsconfig.json'),
