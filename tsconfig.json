@@ -12,7 +12,9 @@
     "noUnusedParameters": true,
     "outDir": "dist/tmp",
     "removeComments": false,
+    "importHelpers": true,
     "sourceMap": true,
+    "inlineSources": true,
     "target": "es2015",
     "typeRoots": [
       "./node_modules/@types"
@@ -31,6 +33,9 @@
   "angularCompilerOptions": {
     "annotationsAs": "static fields",
     "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "ionic-angular"
   }
 }

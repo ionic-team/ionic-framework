@@ -1,57 +1,58 @@
-import { exec, spawnSync } from 'child_process';
-import { spawn } from 'cross-spawn';
-import { writeFileSync } from 'fs';
-import * as changelog from 'conventional-changelog';
-import * as GithubApi from 'github';
 import { dest, src, start, task } from 'gulp';
 import { prompt } from 'inquirer';
-import { rollup } from 'rollup';
-import * as commonjs from 'rollup-plugin-commonjs';
+import { readFileSync, readJsonSync, writeFileSync } from 'fs-extra';
+import * as path from 'path';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
+import * as changelog from 'conventional-changelog';
+import * as GithubApi from 'github';
+import { exec, spawnSync } from 'child_process';
+import { spawn } from 'cross-spawn';
+import { rollup } from 'rollup';
+import * as sourcemaps from 'rollup-plugin-sourcemaps';
 import * as runSequence from 'run-sequence';
 import * as semver from 'semver';
 import { obj } from 'through2';
 
-import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
-import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
+import { DIST_BUILD_ES5_ENTRYPOINT, DIST_BUILD_ES_2015_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
+import { compileSass, copyFonts, createTimestamp, deleteFiles, setSassIonicVersion, writePolyfills } from '../util';
 
 var promptAnswers;
 
 // Nightly: releases a nightly version
 task('nightly', (done: (err: any) => void) => {
   runSequence('release.pullLatest',
-              'validate',
-              'release.prepareReleasePackage',
-              'release.publishNightly',
-              done);
+    'validate',
+    'release.prepareReleasePackage',
+    'release.publishNightly',
+    done);
 });
 
 // Release: prompt, update, publish
 task('release', (done: (err: any) => void) => {
   runSequence('release.pullLatest',
-              'validate',
-              'release.prepareReleasePackage',
-              'release.promptVersion',
-              'release.update',
-              'release.publish',
-              done);
+    'validate',
+    'release.prepareReleasePackage',
+    'release.promptVersion',
+    'release.update',
+    'release.publish',
+    done);
 });
 
 // Release.test: prompt and update
 task('release.test', (done: (err: any) => void) => {
   runSequence('validate',
-              'release.prepareReleasePackage',
-              'release.promptVersion',
-              'release.update',
-              done);
+    'release.prepareReleasePackage',
+    'release.promptVersion',
+    'release.update',
+    done);
 });
 
 // Release.update: update package.json and changelog
 task('release.update', (done: (err: any) => void) => {
   if (promptAnswers.confirmRelease === 'yes') {
     runSequence('release.copyProdVersion',
-                'release.prepareChangelog',
-                done);
+      'release.prepareChangelog',
+      done);
   } else {
     console.log('Did not run release.update tasks, aborted release');
     done(null);
@@ -62,8 +63,8 @@ task('release.update', (done: (err: any) => void) => {
 task('release.publish', (done: (err: any) => void) => {
   if (promptAnswers.confirmRelease === 'yes') {
     runSequence('release.publishNpmRelease',
-                'release.publishGithubRelease',
-                done);
+      'release.publishGithubRelease',
+      done);
   } else {
     console.log('Did not run release.publish tasks, aborted release');
     done(null);
@@ -85,17 +86,17 @@ task('release.publishGithubRelease', (done: Function) => {
   return changelog({
     preset: 'angular'
   })
-  .pipe(obj(function(file, enc, cb){
-    github.releases.createRelease({
-      owner: 'ionic-team',
-      repo: 'ionic',
-      target_commitish: 'master',
-      tag_name: 'v' + packageJSON.version,
-      name: packageJSON.version,
-      body: file.toString(),
-      prerelease: false
-    }, done);
-  }));
+    .pipe(obj(function (file, enc, cb) {
+      github.releases.createRelease({
+        owner: 'ionic-team',
+        repo: 'ionic',
+        target_commitish: 'master',
+        tag_name: 'v' + packageJSON.version,
+        name: packageJSON.version,
+        body: file.toString(),
+        prerelease: false
+      }, done);
+    }));
 });
 
 task('release.publishNpmRelease', (done: Function) => {
@@ -108,7 +109,7 @@ task('release.publishNpmRelease', (done: Function) => {
     console.log('npm err: ' + data.toString());
   });
 
-  npmCmd.on('close', function() {
+  npmCmd.on('close', function () {
     done();
   });
 });
@@ -156,7 +157,7 @@ task('release.promptVersion', (done: Function) => {
           value: 'no'
         }
       ],
-      message: function(answers) {
+      message: function (answers) {
         var SEP = '---------------------------------';
         console.log('\n' + SEP + '\n' + getVersion(answers) + '\n' + SEP + '\n');
         return 'Are you sure you want to proceed with the release version above?';
@@ -195,37 +196,83 @@ task('release.copyProdVersion', () => {
 
 task('release.prepareReleasePackage', (done: (err: any) => void) => {
   runSequence('clean',
-          'release.polyfill',
-          'compile.release',
-          'release.copyTemplates',
-          'release.copyNpmInfo',
-          'release.preparePackageJsonTemplate',
-          'release.nightlyPackageJson',
-          'release.compileSass',
-          'release.fonts',
-          'release.sass',
-          'release.createUmdBundle',
-          done);
+    'release.polyfill',
+    'compile.release',
+    'release.copyTemplates',
+    'release.copyNpmInfo',
+    'release.preparePackageJsonTemplate',
+    'release.nightlyPackageJson',
+    'release.compileSass',
+    'release.fonts',
+    'release.sass',
+    'release.createBundlesAndFESM',
+    'release.cleanTemp',
+    done);
 });
 
-task('release.createUmdBundle', (done: Function) => {
-  return rollup({
-    entry: DIST_BUILD_UMD_BUNDLE_ENTRYPOINT,
+task('release.cleanTemp', (done: Function) => {
+  deleteFiles([
+    `${DIST_BUILD_ROOT}/**/*.js`,
+    `${DIST_BUILD_ROOT}/**/*.map`,
+    `${DIST_BUILD_ROOT}/es2015/**/*`,
+    `!${DIST_BUILD_ROOT}/**/index.js`,
+    `!${DIST_BUILD_ROOT}/**/index.js.map`,
+    `!${DIST_BUILD_ROOT}/bundles/**/*`
+  ], done);
+});
+
+task('release.createBundlesAndFESM', async (done: Function) => {
+  const pkg = readJsonSync('./package.json');
+  const libraries = { ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies };
+  delete libraries['tslib'];
+
+  const external = [
+    ...Object.keys(libraries),
+    'rxjs/Subject',
+    'rxjs/add/operator/takeUntil'
+  ];
+
+  const config = {
+    sourceMap: true,
+    external,
     plugins: [
       nodeResolve({
         module: true,
         jsnext: true,
         main: true
       }),
-      commonjs()
+      sourcemaps()
     ]
-  }).then((bundle) => {
-    return bundle.write({
+  };
+
+  try {
+    const [es5, es_2015] = await Promise.all([
+      rollup({ ...config, entry: DIST_BUILD_ES5_ENTRYPOINT }),
+      rollup({ ...config, entry: DIST_BUILD_ES_2015_ENTRYPOINT })
+    ]);
+
+    es_2015.write({
+      format: 'es',
+      sourceMap: true,
+      dest: DIST_BUILD_ES_2015_ENTRYPOINT
+    });
+
+    es5.write({
       format: 'umd',
+      sourceMap: true,
       moduleName: 'ionicBundle',
       dest: `${DIST_BUNDLE_ROOT}/ionic.umd.js`
     });
-  });
+
+    es5.write({
+      format: 'es',
+      sourceMap: true,
+      dest: DIST_BUILD_ES5_ENTRYPOINT
+    });
+
+  } catch (error) {
+    done(error);
+  }
 });
 
 task('release.polyfill', (done: Function) => {
@@ -246,7 +293,7 @@ task('release.publishNightly', (done: Function) => {
     console.log('npm err: ' + data.toString());
   });
 
-  npmCmd.on('close', function() {
+  npmCmd.on('close', function () {
     done();
   });
 });
@@ -267,7 +314,7 @@ task('release.pullLatest', (done: Function) => {
   exec('git status --porcelain', (err: Error, stdOut: string) => {
     if (err) {
       done(err);
-    } else if ( stdOut && stdOut.length > 0) {
+    } else if (stdOut && stdOut.length > 0) {
       done(new Error('There are uncommited changes. Please commit or stash changes.'));
     } else {
       const gitPullResult = spawnSync('git', ['pull', 'origin', 'master']);
@@ -321,9 +368,9 @@ task('release.nightlyPackageJson', () => {
   const packageJson: any = require(`${DIST_BUILD_ROOT}/package.json`);
 
   packageJson.version = packageJson.version.split('-')
-                                   .slice(0, 2)
-                                   .concat(createTimestamp())
-                                   .join('-');
+    .slice(0, 2)
+    .concat(createTimestamp())
+    .join('-');
 
   writeFileSync(`${DIST_BUILD_ROOT}/package.json`, JSON.stringify(packageJson, null, 2));
   setSassIonicVersion(packageJson.version);
