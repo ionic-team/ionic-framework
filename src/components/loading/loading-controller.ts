@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -124,8 +124,8 @@ export class LoadingController {
    * @param {LoadingOptions} [opts] Loading options
    * @returns {Loading} Returns a Loading Instance
    */
-  create(opts: LoadingOptions = {}) {
-    return new Loading(this._app, opts, this.config);
+  create(opts: LoadingOptions = {}, component?: Type<any>) {
+    return new Loading(this._app, opts, this.config, component);
   }
 
 }

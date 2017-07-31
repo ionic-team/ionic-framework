@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController } from '../../../../../..';
+import { ToastCustomCmp } from '../../../../toast-custom/toast-custom-component';
 
 @IonicPage()
 @Component({
@@ -70,6 +71,17 @@ export class PageOne {
     setTimeout(() => {
       this.navCtrl.push('PageTwo');
     }, 1000);
+  }
+
+  showCustomToastComponent() {
+    const toast = this.toastCtrl.create({
+      message: 'I am custom toast component',
+      showCloseButton: true
+    }, ToastCustomCmp);
+
+
+    toast.present();
+
   }
 
   private dismissHandler() {

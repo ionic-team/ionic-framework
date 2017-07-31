@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 
 import { Alert } from './alert';
 import { App } from '../app/app';
@@ -226,8 +226,8 @@ export class AlertController {
    * Display an alert with a title, inputs, and buttons
    * @param {AlertOptions} opts Alert. See the table below
    */
-  create(opts: AlertOptions = {}): Alert {
-    return new Alert(this._app, opts, this.config);
+  create(opts: AlertOptions = {}, component?: Type<any>): Alert {
+    return new Alert(this._app, opts, this.config, component);
   }
 
 }

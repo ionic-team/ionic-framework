@@ -1,11 +1,12 @@
-import { NavParams } from './../../../../../navigation/nav-params';
-import { Config } from './../../../../../config/config';
-import { ViewController } from './../../../../../navigation/view-controller';
-import { ToastCmp } from './../../../toast-component';
+import { NavParams } from '../../../navigation/nav-params';
+import { Config } from '../../../config/config';
+import { ViewController } from '../../../navigation/view-controller';
+import { ToastCmp } from '../toast-component';
 import { Component, ElementRef, Renderer } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 
-
+/**
+ * @hidden
+ */
 @Component({
   selector: 'custom-toast',
   template:
@@ -15,12 +16,12 @@ import { DomSanitizer } from '@angular/platform-browser';
     '[class.toast-top]="d.position === \'top\'"> ' +
     '<div class="toast-container"> ' +
       '<div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div> ' +
+      '<!--Custom Button only this component --> ' +
+      '<button ion-button clear color="secondary"> ' +
+        'OTHER' +
+      '</button> ' +
       '<button ion-button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()"> ' +
         '{{ d.closeButtonText || \'Close\' }} ' +
-      '</button> ' +
-      '<!--Custom Button only this component --> ' +
-      '<button ion-button clear class="toast-button" (click)="cbClickOther()"> ' +
-        'OTHER' +
       '</button> ' +
     '</div> ' +
   '</div>',
@@ -36,7 +37,6 @@ export class ToastCustomCmp extends ToastCmp {
         public _viewCtrl: ViewController,
         public _config: Config,
         public _elementRef: ElementRef,
-        public _sanitize: DomSanitizer,
         params: NavParams,
         renderer: Renderer
     ) {
@@ -44,10 +44,8 @@ export class ToastCustomCmp extends ToastCmp {
             _viewCtrl,
             _config,
             _elementRef,
-            _sanitize,
             params,
             renderer
         );
     }
-
 }
