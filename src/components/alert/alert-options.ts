@@ -1,4 +1,4 @@
-import { ValidatorFn, AsyncValidatorFn } from '@angular/forms';
+import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 
 export interface AlertOptions {
   /** The title for the alert. */

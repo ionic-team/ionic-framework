@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostBinding, HostListener, Renderer, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, ElementRef, HostBinding, HostListener, OnDestroy, Renderer, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
@@ -105,7 +105,7 @@ export class AlertCmp implements OnDestroy {
     params: NavParams,
     private _renderer: Renderer,
     private _plt: Platform,
-    private _fb: FormBuilder
+    _fb: FormBuilder
   ) {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
