@@ -64,7 +64,8 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
         </form>
       </div>
       <div class="alert-button-group" [ngClass]="{'alert-button-group-vertical':d.buttons.length>2}">
-        <button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">
+        <button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass"
+          [disabled]="b.role === 'submit' && formGroup.invalid">
           {{b.text}}
         </button>
       </div>
@@ -149,6 +150,13 @@ export class AlertCmp implements OnDestroy {
       }
       return button;
     });
+    if (
+      data.buttons.length > 0 &&
+      data.buttons.find(button => button.role === 'submit') == null &&
+      !isPresent(data.buttons[data.buttons.length - 1].role)
+    ) {
+      data.buttons[data.buttons.length - 1].role = 'submit';
+    }
 
     data.inputs = data.inputs.map((input, index) => {
       const r: AlertInputOptions = {

@@ -54,7 +54,7 @@ export interface AlertButton {
   /** The buttons displayed text. */
   text?: string;
   /** The buttons role, `null` or `'cancel'`. */
-  role?: 'cancel' | null;
+  role?: 'cancel' | 'submit' | null;
   /** An additional CSS class for the button. */
   cssClass?: string;
   /** Emitted when the button is pressed. */
