@@ -57,6 +57,9 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
             <div class="alert-input-group" *ngIf="inputType">
               <div *ngFor="let i of d.inputs" class="alert-input-wrapper">
                 <input [placeholder]="i.placeholder" [formControlName]="i.name" [type]="i.type" [attr.id]="i.id" class="alert-input">
+                <ng-container *ngFor="let error of i.errors">
+                  <p *ngIf="formGroup.controls[i.name].hasError(error.error)" class="alert-error-msg">{{error.message}}</p>
+                </ng-container>
               </div>
             </div>
           </ng-template>
@@ -170,7 +173,8 @@ export class AlertCmp implements OnDestroy {
         id: isPresent(input.id) ? input.id : `alert-input-${this.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
         validators: isPresent(input.validators) ? input.validators : [],
-        asyncValidators: isPresent(input.asyncValidators) ? input.asyncValidators : []
+        asyncValidators: isPresent(input.asyncValidators) ? input.asyncValidators : [],
+        errors: isPresent(input.errors) ? input.errors : []
       };
 
       if (isPresent(input.min)) {

@@ -48,6 +48,7 @@ export interface AlertInputOptions {
   max?: number;
   validators?: ValidatorFn[];
   asyncValidators?: AsyncValidatorFn[];
+  errors?: {error: string; message: string}[];
 }
 
 export interface AlertButton {
