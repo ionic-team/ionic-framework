@@ -190,6 +190,12 @@
 "../components/slides/slides";
 
 @import
+"../components/split-pane/split-pane",
+"../components/split-pane/split-pane.ios",
+"../components/split-pane/split-pane.md",
+"../components/split-pane/split-pane.wp";
+
+@import
 "../components/spinner/spinner",
 "../components/spinner/spinner.ios",
 "../components/spinner/spinner.md",
@@ -220,7 +226,6 @@
 "../components/toolbar/toolbar.wp";
 
 @import
-"../components/typography/typography",
 "../components/typography/typography.ios",
 "../components/typography/typography.md",
 "../components/typography/typography.wp";

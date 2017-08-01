@@ -1,6 +1,7 @@
 *~
 *.sw[mnpcod]
 *.log
+*.lock
 *.tmp
 *.tmp.*
 log.txt
@@ -21,6 +22,7 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+.env
 
 .package.tmp.json
 
@@ -34,7 +36,8 @@ demos/node_modules
 demos/polyfills
 demos/css
 demos/fonts
-demos/src/**/*.js*
+demos/src/**/*.js
+demos/src/**/*.map
 demos/src/**/*.ngfactory.ts
 demos/src/**/*.d.ts
 demos/src/**/*.metadata.json

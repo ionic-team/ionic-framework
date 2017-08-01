@@ -1,21 +1,38 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
-import { Ion } from '../ion';
 import { Config } from '../../config/config';
-import { Keyboard } from '../../util/keyboard';
-import { nativeRaf, nativeTimeout, transitionEnd } from '../../util/dom';
-import { ScrollView } from '../../util/scroll-view';
-import { Tabs } from '../tabs/tabs';
+import { DomController } from '../../platform/dom-controller';
+import { Img } from '../img/img-interface';
+import { Ion } from '../ion';
+import { isTabs } from '../../navigation/nav-util';
+import { assert, isTrueProperty, removeArrayItem } from '../../util/util';
+import { Keyboard } from '../../platform/keyboard';
+import { NavController } from '../../navigation/nav-controller';
+import { Content as IContent, Tabs } from '../../navigation/nav-interfaces';
+import { Platform } from '../../platform/platform';
+import { ScrollEvent, ScrollView } from '../../util/scroll-view';
 import { ViewController } from '../../navigation/view-controller';
-import { isTrueProperty, assert } from '../../util/util';
 
+export { ScrollEvent } from '../../util/scroll-view';
+
+
+export class EventEmitterProxy<T> extends EventEmitter<T> {
+  onSubscribe: Function;
+  subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
+    this.onSubscribe();
+    return super.subscribe(generatorOrNext, error, complete);
+  }
+}
 
 /**
  * @name Content
  * @description
  * The Content component provides an easy to use content area with
- * some useful methods to control the scrollable area.
+ * some useful methods to control the scrollable area. There should
+ * only be one content in a single view component. If additional scrollable
+ * elements are need, use [ionScroll](../../scroll/Scroll).
+ *
  *
  * The content area can also implement pull-to-refresh with the
  * [Refresher](../../refresher/Refresher) component.
@@ -46,7 +63,46 @@ import { isTrueProperty, assert } from '../../util/util';
  *
  * @advanced
  *
- * Resizing the content
+ * ### Scroll Events
+ *
+ * Scroll events happen outside of Angular's Zones. This is for performance reasons. So
+ * if you're trying to bind a value to any scroll event, it will need to be wrapped in
+ * a `zone.run()`
+ *
+ * ```ts
+ * import { Component, NgZone } from '@angular/core';
+ * @Component({
+ *   template: `
+ *     <ion-header>
+ *       <ion-navbar>
+ *         <ion-title>{{scrollAmount}}</ion-title>
+ *       </ion-navbar>
+ *     </ion-header>
+ *     <ion-content (ionScroll)="scrollHandler($event)">
+ *        <p> Some realllllllly long content </p>
+ *     </ion-content>
+ * `})
+ * class E2EPage {
+ *  public scrollAmount = 0;
+ *  constructor( public zone: NgZone){}
+ *  scrollHandler(event) {
+ *    console.log(`ScrollEvent: ${event}`)
+ *    this.zone.run(()=>{
+ *      // since scrollAmount is data-binded,
+ *      // the update needs to happen in zone
+ *      this.scrollAmount++
+ *    })
+ *  }
+ * }
+ * ```
+ *
+ * This goes for any scroll event, not just `ionScroll`.
+ *
+ * ### Resizing the content
+ *
+ * If the height of `ion-header`, `ion-footer` or `ion-tabbar`
+ * changes dynamically, `content.resize()` has to be called in order to update the
+ * layout of `Content`.
  *
  *
  * ```ts
@@ -103,218 +159,348 @@ import { isTrueProperty, assert } from '../../util/util';
 @Component({
   selector: 'ion-content',
   template:
-    '<div class="fixed-content">' +
+    '<div class="fixed-content" #fixedContent>' +
       '<ng-content select="[ion-fixed],ion-fab"></ng-content>' +
     '</div>' +
-    '<div class="scroll-content">' +
+    '<div class="scroll-content" #scrollContent>' +
       '<ng-content></ng-content>' +
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
-    '[class.statusbar-padding]': '_sbPadding'
+    '[class.statusbar-padding]': 'statusbarPadding',
+    '[class.has-refresher]': '_hasRefresher'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion {
-  _paddingTop: number;
-  _paddingRight: number;
-  _paddingBottom: number;
-  _paddingLeft: number;
+export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
+  /** @internal */
+  _cTop: number;
+  /** @internal */
+  _cBottom: number;
+  /** @internal */
+  _pTop: number;
+  /** @internal */
+  _pRight: number;
+  /** @internal */
+  _pBottom: number;
+  /** @internal */
+  _pLeft: number;
+  /** @internal */
   _scrollPadding: number = 0;
-  _headerHeight: number;
-  _footerHeight: number;
+  /** @internal */
+  _hdrHeight: number;
+  /** @internal */
+  _ftrHeight: number;
+  /** @internal */
+  _tabs: Tabs;
+  /** @internal */
   _tabbarHeight: number;
+  /** @internal */
   _tabsPlacement: string;
+  /** @internal */
+  _tTop: number;
+  /** @internal */
+  _fTop: number;
+  /** @internal */
+  _fBottom: number;
+  /** @internal */
   _inputPolling: boolean = false;
+  /** @internal */
   _scroll: ScrollView;
+  /** @internal */
   _scLsn: Function;
-  _sbPadding: boolean;
+  /** @internal */
   _fullscreen: boolean;
+  /** @internal */
+  _hasRefresher: boolean = false;
+  /** @internal */
   _footerEle: HTMLElement;
+  /** @internal */
+  _dirty: boolean;
+  /** @internal */
+  _imgs: Img[] = [];
+  /** @internal */
+  _viewCtrlReadSub: any;
+  /** @internal */
+  _viewCtrlWriteSub: any;
+  /** @internal */
+  _scrollDownOnLoad: boolean = false;
 
-  /*
-   * @private
-   */
-  _scrollEle: HTMLElement;
+  private _imgReqBfr: number;
+  private _imgRndBfr: number;
+  private _imgVelMax: number;
 
-  /*
-   * @private
+  /** @hidden */
+  statusbarPadding: boolean;
+
+  /** @internal */
+  @ViewChild('fixedContent', { read: ElementRef }) _fixedContent: ElementRef;
+
+  /** @internal */
+  @ViewChild('scrollContent', { read: ElementRef }) _scrollContent: ElementRef;
+
+  /**
+   * Content height of the viewable area. This does not include content
+   * which is outside the overflow area, or content area which is under
+   * headers and footers. Read-only.
+   *
+   * @return {number}
    */
-  _fixedEle: HTMLElement;
+  get contentHeight(): number {
+    return this._scroll.ev.contentHeight;
+  }
+
+  /**
+   * Content width including content which is not visible on the screen
+   * due to overflow. Read-only.
+   *
+   * @return {number}
+   */
+  get contentWidth(): number {
+    return this._scroll.ev.contentWidth;
+  }
 
   /**
    * A number representing how many pixels the top of the content has been
-   * adjusted, which could be by either padding or margin.
+   * adjusted, which could be by either padding or margin. This adjustment
+   * is to account for the space needed for the header.
+   *
+   * @return {number}
    */
   contentTop: number;
 
   /**
    * A number representing how many pixels the bottom of the content has been
-   * adjusted, which could be by either padding or margin.
+   * adjusted, which could be by either padding or margin. This adjustment
+   * is to account for the space needed for the footer.
+   *
+   * @return {number}
    */
   contentBottom: number;
 
+  /**
+   * Content height including content which is not visible on the screen
+   * due to overflow. Read-only.
+   *
+   * @return {number}
+   */
+  get scrollHeight(): number {
+    return this._scroll.ev.scrollHeight;
+  }
+
+  /**
+   * Content width including content which is not visible due to
+   * overflow. Read-only.
+   *
+   * @return {number}
+   */
+  get scrollWidth(): number {
+    return this._scroll.ev.scrollWidth;
+  }
+
+  /**
+   * The distance of the content's top to its topmost visible content.
+   *
+   * @return {number}
+   */
+  get scrollTop(): number {
+    return this._scroll.ev.scrollTop;
+  }
+  /**
+   * @param {number} top
+   */
+  set scrollTop(top: number) {
+    this._scroll.setTop(top);
+  }
+
+  /**
+   * The distance of the content's left to its leftmost visible content.
+   *
+   * @return {number}
+   */
+  get scrollLeft(): number {
+    return this._scroll.ev.scrollLeft;
+  }
+
+  /**
+   * @param {number} top
+   */
+  set scrollLeft(top: number) {
+    this._scroll.setLeft(top);
+  }
+
+  /**
+   * If the content is actively scrolling or not.
+   *
+   * @return {boolean}
+   */
+  get isScrolling(): boolean {
+    return this._scroll.isScrolling;
+  }
+
+  /**
+   * The current, or last known, vertical scroll direction. Possible
+   * string values include `down` and `up`.
+   *
+   * @return {string}
+   */
+  get directionY(): string {
+    return this._scroll.ev.directionY;
+  }
+
+  /**
+   * The current, or last known, horizontal scroll direction. Possible
+   * string values include `right` and `left`.
+   *
+   * @return {string}
+   */
+  get directionX(): string {
+    return this._scroll.ev.directionX;
+  }
+
+  /**
+   * @output {ScrollEvent} Emitted when the scrolling first starts.
+   */
+  @Output() ionScrollStart: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
+
+  /**
+   * @output {ScrollEvent} Emitted on every scroll event.
+   */
+  @Output() ionScroll: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
+
+  /**
+   * @output {ScrollEvent} Emitted when scrolling ends.
+   */
+  @Output() ionScrollEnd: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
+
+
   constructor(
     config: Config,
+    private _plt: Platform,
+    private _dom: DomController,
     elementRef: ElementRef,
     renderer: Renderer,
     public _app: App,
     public _keyboard: Keyboard,
     public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
-    @Optional() public _tabs: Tabs
+    @Optional() navCtrl: NavController
   ) {
     super(config, elementRef, renderer, 'content');
 
-    this._sbPadding = config.getBoolean('statusbarPadding', false);
+    const enableScrollListener = () => this._scroll.enableEvents();
+    this.ionScroll.onSubscribe = enableScrollListener;
+    this.ionScrollStart.onSubscribe = enableScrollListener;
+    this.ionScrollEnd.onSubscribe = enableScrollListener;
+
+    this.statusbarPadding = config.getBoolean('statusbarPadding', false);
+    this._imgReqBfr = config.getNumber('imgRequestBuffer', 1400);
+    this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
+    this._imgVelMax = config.getNumber('imgVelocityMax', 3);
+
+    this._scroll = new ScrollView(_app, _plt, _dom);
+
+    while (navCtrl) {
+      if (isTabs(<any>navCtrl)) {
+        this._tabs = <any>navCtrl;
+        break;
+      }
+      navCtrl = navCtrl.parent;
+    }
 
     if (viewCtrl) {
+      // content has a view controller
       viewCtrl._setIONContent(this);
       viewCtrl._setIONContentRef(elementRef);
+
+      this._viewCtrlReadSub = viewCtrl.readReady.subscribe(() => {
+        this._viewCtrlReadSub.unsubscribe();
+        this._readDimensions();
+      });
+
+      this._viewCtrlWriteSub = viewCtrl.writeReady.subscribe(() => {
+        this._viewCtrlWriteSub.unsubscribe();
+        this._writeDimensions();
+      });
+
+    } else {
+      // content does not have a view controller
+      _dom.read(this._readDimensions.bind(this));
+      _dom.write(this._writeDimensions.bind(this));
     }
   }
 
   /**
-   * @private
+   * @hidden
    */
-  ngOnInit() {
-    let children = this._elementRef.nativeElement.children;
-    assert(children && children.length >= 2, 'content needs at least two children');
+  ngAfterViewInit() {
+    assert(this.getFixedElement(), 'fixed element was not found');
+    assert(this.getScrollElement(), 'scroll element was not found');
 
-    this._fixedEle = children[0];
-    this._scrollEle = children[1];
+    const scroll = this._scroll;
+    scroll.ev.fixedElement = this.getFixedElement();
+    scroll.ev.scrollElement = this.getScrollElement();
 
-    this._zone.runOutsideAngular(() => {
-      this._scroll = new ScrollView(this._scrollEle);
-      this._scLsn = this.addScrollListener(this._app.setScrolling.bind(this._app));
-    });
-  }
+    // subscribe to the scroll start
+    scroll.onScrollStart = (ev) => {
+      this.ionScrollStart.emit(ev);
+    };
 
-  /**
-   * @private
-   */
-  ngOnDestroy() {
-    this._scLsn && this._scLsn();
-    this._scroll && this._scroll.destroy();
-    this._scrollEle = this._footerEle = this._scLsn = this._scroll = null;
-  }
+    // subscribe to every scroll move
+    scroll.onScroll = (ev) => {
+      // emit to all of our other friends things be scrolling
+      this.ionScroll.emit(ev);
 
-  /**
-   * @private
-   */
-  addScrollListener(handler: any) {
-    return this._addListener('scroll', handler);
-  }
+      this.imgsUpdate();
+    };
 
-  /**
-   * @private
-   */
-  addTouchStartListener(handler: any) {
-    return this._addListener('touchstart', handler);
-  }
+    // subscribe to the scroll end
+    scroll.onScrollEnd = (ev) => {
+      this.ionScrollEnd.emit(ev);
 
-  /**
-   * @private
-   */
-  addTouchMoveListener(handler: any) {
-    return this._addListener('touchmove', handler);
-  }
-
-  /**
-   * @private
-   */
-  addTouchEndListener(handler: any) {
-    return this._addListener('touchend', handler);
-  }
-
-  /**
-   * @private
-   */
-  addMouseDownListener(handler: any) {
-    return this._addListener('mousedown', handler);
-  }
-
-  /**
-   * @private
-   */
-  addMouseUpListener(handler: any) {
-    return this._addListener('mouseup', handler);
-  }
-
-  /**
-   * @private
-   */
-  addMouseMoveListener(handler: any) {
-    return this._addListener('mousemove', handler);
-  }
-
-  /**
-   * @private
-   */
-  _addListener(type: string, handler: any): Function {
-    assert(handler, 'handler must be valid');
-    assert(this._scrollEle, '_scrollEle must be valid');
-
-    // ensure we're not creating duplicates
-    this._scrollEle.removeEventListener(type, handler);
-    this._scrollEle.addEventListener(type, handler);
-
-    return () => {
-      if (this._scrollEle) {
-        this._scrollEle.removeEventListener(type, handler);
-      }
+      this.imgsUpdate();
     };
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  enableJsScroll() {
+    this._scroll.enableJsScroll(this._cTop, this._cBottom);
+  }
+
+  /**
+   * @hidden
+   */
+  ngOnDestroy() {
+    this._scLsn && this._scLsn();
+    this._viewCtrlReadSub && this._viewCtrlReadSub.unsubscribe();
+    this._viewCtrlWriteSub && this._viewCtrlWriteSub.unsubscribe();
+    this._viewCtrlReadSub = this._viewCtrlWriteSub = null;
+    this._scroll && this._scroll.destroy();
+    this._footerEle = this._scLsn = this._scroll = null;
+  }
+
+  /**
+   * @hidden
    */
   getScrollElement(): HTMLElement {
-    return this._scrollEle;
-  }
-
-  /**
-   * @private
-   * Call a method when scrolling has stopped
-   * @param {Function} callback The method you want perform when scrolling has ended
-   */
-  onScrollEnd(callback: Function) {
-    let lastScrollTop: number = null;
-    let framesUnchanged: number = 0;
-    let _scrollEle = this._scrollEle;
-
-    function next() {
-      let currentScrollTop = _scrollEle.scrollTop;
-      if (lastScrollTop !== null) {
-
-        if (Math.round(lastScrollTop) === Math.round(currentScrollTop)) {
-          framesUnchanged++;
-
-        } else {
-          framesUnchanged = 0;
-        }
-
-        if (framesUnchanged > 9) {
-          return callback();
-        }
-      }
-
-      lastScrollTop = currentScrollTop;
-
-      nativeRaf(() => {
-        nativeRaf(next);
-      });
-    }
-
-    nativeTimeout(next, 100);
+    return this._scrollContent.nativeElement;
   }
 
   /**
    * @private
    */
-  onScrollElementTransitionEnd(callback: Function) {
-    transitionEnd(this._scrollEle, callback);
+  getFixedElement(): HTMLElement {
+    return this._fixedContent.nativeElement;
+  }
+
+  /**
+   * @hidden
+   */
+  onScrollElementTransitionEnd(callback: {(ev: TransitionEvent): void}) {
+    this._plt.transitionEnd(this.getScrollElement(), callback);
   }
 
   /**
@@ -342,24 +528,8 @@ export class Content extends Ion {
   }
 
   /**
-   * Get the `scrollTop` property of the content's scrollable element.
-   * @returns {number}
-   */
-  getScrollTop(): number {
-    return this._scroll.getTop();
-  }
-
-  /**
-   * Set the `scrollTop` property of the content's scrollable element.
-   * @param {number} top
-   */
-  setScrollTop(top: number) {
-    console.debug(`content, setScrollTop, top: ${top}`);
-    this._scroll.setTop(top);
-  }
-
-  /**
    * Scroll to the bottom of the content component.
+   *
    * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
@@ -369,34 +539,56 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
-   */
-  jsScroll(onScrollCallback: Function): Function {
-    return this._scroll.jsScroll(onScrollCallback);
-  }
-
-  /**
-   * @input {boolean} By default, content is positioned between the headers
-   * and footers. However, using `fullscreen="true"`, the content will be
-   * able to scroll "under" the headers and footers. At first glance the
-   * fullscreen option may not look any different than the default, however,
-   * by adding a transparency effect to a header then the content can be
-   * seen under the header as the user scrolls.
+   * @input {boolean} If true, the content will scroll behind the headers
+   * and footers. This effect can easily be seen by setting the toolbar
+   * to transparent.
    */
   @Input()
   get fullscreen(): boolean {
-    return !!this._fullscreen;
+    return this._fullscreen;
   }
+
   set fullscreen(val: boolean) {
     this._fullscreen = isTrueProperty(val);
   }
 
   /**
+   * @input {boolean} If true, the content will scroll down on load.
+   */
+  @Input()
+  get scrollDownOnLoad(): boolean {
+    return this._scrollDownOnLoad;
+  }
+
+  set scrollDownOnLoad(val: boolean) {
+    this._scrollDownOnLoad = isTrueProperty(val);
+  }
+
+  /**
    * @private
+   */
+  addImg(img: Img) {
+    this._imgs.push(img);
+  }
+
+  /**
+   * @hidden
+   */
+  removeImg(img: Img) {
+    removeArrayItem(this._imgs, img);
+  }
+
+  /**
+   * @hidden
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
-    (<any>this._scrollEle.style)[prop] = val;
+    const scrollEle = this.getScrollElement();
+    if (scrollEle) {
+      this._dom.write(() => {
+        (<any>scrollEle.style)[prop] = val;
+      });
+    }
   }
 
   /**
@@ -416,13 +608,13 @@ export class Content extends Ion {
    * {number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
   getContentDimensions(): ContentDimensions {
-    const scrollEle = this._scrollEle;
+    const scrollEle = this.getScrollElement();
     const parentElement = scrollEle.parentElement;
 
     return {
-      contentHeight: parentElement.offsetHeight - this.contentTop - this.contentBottom,
-      contentTop: this.contentTop,
-      contentBottom: this.contentBottom,
+      contentHeight: parentElement.offsetHeight - this._cTop - this._cBottom,
+      contentTop: this._cTop,
+      contentBottom: this._cBottom,
 
       contentWidth: parentElement.offsetWidth,
       contentLeft: parentElement.offsetLeft,
@@ -436,7 +628,7 @@ export class Content extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
@@ -447,12 +639,17 @@ export class Content extends Ion {
       console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
       this._scrollPadding = newPadding;
-      this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
+      var scrollEle = this.getScrollElement();
+      if (scrollEle) {
+        this._dom.write(() => {
+          scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
+        });
+      }
     }
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   clearScrollPaddingFocusOut() {
@@ -471,30 +668,47 @@ export class Content extends Ion {
 
   /**
    * Tell the content to recalculate its dimensions. This should be called
-   * after dynamically adding headers, footers, or tabs.
-   *
+   * after dynamically adding/removing headers, footers, or tabs.
    */
   resize() {
-    nativeRaf(() => {
-      this.readDimensions();
-      this.writeDimensions();
-    });
+    this._dom.read(this._readDimensions.bind(this));
+    this._dom.write(this._writeDimensions.bind(this));
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    */
-  readDimensions() {
-    this._paddingTop = 0;
-    this._paddingRight = 0;
-    this._paddingBottom = 0;
-    this._paddingLeft = 0;
-    this._headerHeight = 0;
-    this._footerHeight = 0;
+  private _readDimensions() {
+    const cachePaddingTop = this._pTop;
+    const cachePaddingRight = this._pRight;
+    const cachePaddingBottom = this._pBottom;
+    const cachePaddingLeft = this._pLeft;
+    const cacheHeaderHeight = this._hdrHeight;
+    const cacheFooterHeight = this._ftrHeight;
+    const cacheTabsPlacement = this._tabsPlacement;
+    let tabsTop = 0;
+    let scrollEvent: ScrollEvent;
+    this._pTop = 0;
+    this._pRight = 0;
+    this._pBottom = 0;
+    this._pLeft = 0;
+    this._hdrHeight = 0;
+    this._ftrHeight = 0;
     this._tabsPlacement = null;
+    this._tTop = 0;
+    this._fTop = 0;
+    this._fBottom = 0;
 
-    let ele: HTMLElement = this._elementRef.nativeElement;
+    // In certain cases this._scroll is undefined
+    // if that is the case then we should just return
+    if (!this._scroll) {
+      return;
+    }
+
+    scrollEvent = this._scroll.ev;
+
+    let ele: HTMLElement = this.getNativeElement();
     if (!ele) {
       assert(false, 'ele should be valid');
       return;
@@ -508,19 +722,28 @@ export class Content extends Ion {
       ele = <HTMLElement>children[i];
       tagName = ele.tagName;
       if (tagName === 'ION-CONTENT') {
+        scrollEvent.contentElement = ele;
+
         if (this._fullscreen) {
+          // ******** DOM READ ****************
           computedStyle = getComputedStyle(ele);
-          this._paddingTop = parsePxUnit(computedStyle.paddingTop);
-          this._paddingBottom = parsePxUnit(computedStyle.paddingBottom);
-          this._paddingRight = parsePxUnit(computedStyle.paddingRight);
-          this._paddingLeft = parsePxUnit(computedStyle.paddingLeft);
+          this._pTop = parsePxUnit(computedStyle.paddingTop);
+          this._pBottom = parsePxUnit(computedStyle.paddingBottom);
+          this._pRight = parsePxUnit(computedStyle.paddingRight);
+          this._pLeft = parsePxUnit(computedStyle.paddingLeft);
         }
 
       } else if (tagName === 'ION-HEADER') {
-        this._headerHeight = ele.clientHeight;
+        scrollEvent.headerElement = ele;
+
+        // ******** DOM READ ****************
+        this._hdrHeight = ele.clientHeight;
 
       } else if (tagName === 'ION-FOOTER') {
-        this._footerHeight = ele.clientHeight;
+        scrollEvent.footerElement = ele;
+
+        // ******** DOM READ ****************
+        this._ftrHeight = ele.clientHeight;
         this._footerEle = ele;
       }
     }
@@ -532,6 +755,7 @@ export class Content extends Ion {
 
       if (ele.tagName === 'ION-TABS') {
         tabbarEle = <HTMLElement>ele.firstElementChild;
+        // ******** DOM READ ****************
         this._tabbarHeight = tabbarEle.clientHeight;
 
         if (this._tabsPlacement === null) {
@@ -542,99 +766,281 @@ export class Content extends Ion {
 
       ele = ele.parentElement;
     }
+
+    // Tabs top
+    if (this._tabs && this._tabsPlacement === 'top') {
+      this._tTop = this._hdrHeight;
+      tabsTop = this._tabs._top;
+    }
+
+    // Toolbar height
+    this._cTop = this._hdrHeight;
+    this._cBottom = this._ftrHeight;
+
+    // Tabs height
+    if (this._tabsPlacement === 'top') {
+      this._cTop += this._tabbarHeight;
+
+    } else if (this._tabsPlacement === 'bottom') {
+      this._cBottom += this._tabbarHeight;
+    }
+
+    // Refresher uses a border which should be hidden unless pulled
+    if (this._hasRefresher) {
+      this._cTop -= 1;
+    }
+
+    // Fixed content shouldn't include content padding
+    this._fTop = this._cTop;
+    this._fBottom = this._cBottom;
+
+    // Handle fullscreen viewport (padding vs margin)
+    if (this._fullscreen) {
+      this._cTop += this._pTop;
+      this._cBottom += this._pBottom;
+    }
+
+    // ******** DOM READ ****************
+    const contentDimensions = this.getContentDimensions();
+    scrollEvent.scrollHeight = contentDimensions.scrollHeight;
+    scrollEvent.scrollWidth = contentDimensions.scrollWidth;
+    scrollEvent.contentHeight = contentDimensions.contentHeight;
+    scrollEvent.contentWidth = contentDimensions.contentWidth;
+    scrollEvent.contentTop = contentDimensions.contentTop;
+    scrollEvent.contentBottom = contentDimensions.contentBottom;
+
+    this._dirty = (
+      cachePaddingTop !== this._pTop ||
+      cachePaddingBottom !== this._pBottom ||
+      cachePaddingLeft !== this._pLeft ||
+      cachePaddingRight !== this._pRight ||
+      cacheHeaderHeight !== this._hdrHeight ||
+      cacheFooterHeight !== this._ftrHeight ||
+      cacheTabsPlacement !== this._tabsPlacement ||
+      tabsTop !== this._tTop ||
+      this._cTop !== this.contentTop ||
+      this._cBottom !== this.contentBottom
+    );
+
+    this._scroll.init(this.getScrollElement(), this._cTop, this._cBottom);
+
+    // initial imgs refresh
+    this.imgsUpdate();
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
-  writeDimensions() {
-
-    let scrollEle = this._scrollEle as any;
-    if (!scrollEle) {
-      assert(false, 'this._scrollEle should be valid');
+  private _writeDimensions() {
+    if (!this._dirty) {
+      console.debug('Skipping writeDimensions');
       return;
     }
 
-    let fixedEle = this._fixedEle;
+    const scrollEle = this.getScrollElement();
+    if (!scrollEle) {
+      assert(false, 'this.getScrollElement() should be valid');
+      return;
+    }
+
+    const fixedEle = this.getFixedElement();
     if (!fixedEle) {
       assert(false, 'this._fixedEle should be valid');
       return;
     }
 
-    // Toolbar height
-    let contentTop = this._headerHeight;
-    let contentBottom = this._footerHeight;
-
     // Tabs height
-    if (this._tabsPlacement === 'top') {
-      assert(this._tabbarHeight >= 0, '_tabbarHeight has to be positive');
-      contentTop += this._tabbarHeight;
-
-    } else if (this._tabsPlacement === 'bottom') {
-      assert(this._tabbarHeight >= 0, '_tabbarHeight has to be positive');
-      contentBottom += this._tabbarHeight;
-
-      // Update footer position
-      if (contentBottom > 0 && this._footerEle) {
-        let footerPos = contentBottom - this._footerHeight;
-        assert(footerPos >= 0, 'footerPos has to be positive');
-
-        this._footerEle.style.bottom = cssFormat(footerPos);
-      }
+    if (this._tabsPlacement === 'bottom' && this._cBottom > 0 && this._footerEle) {
+      var footerPos = this._cBottom - this._ftrHeight;
+      assert(footerPos >= 0, 'footerPos has to be positive');
+      // ******** DOM WRITE ****************
+      this._footerEle.style.bottom = cssFormat(footerPos);
     }
 
     // Handle fullscreen viewport (padding vs margin)
     let topProperty = 'marginTop';
     let bottomProperty = 'marginBottom';
-    let fixedTop: number = contentTop;
-    let fixedBottom: number = contentBottom;
+    let fixedTop: number = this._fTop;
+    let fixedBottom: number = this._fBottom;
+
     if (this._fullscreen) {
-      assert(this._paddingTop >= 0, '_paddingTop has to be positive');
-      assert(this._paddingBottom >= 0, '_paddingBottom has to be positive');
+      assert(this._pTop >= 0, '_paddingTop has to be positive');
+      assert(this._pBottom >= 0, '_paddingBottom has to be positive');
 
       // adjust the content with padding, allowing content to scroll under headers/footers
       // however, on iOS you cannot control the margins of the scrollbar (last tested iOS9.2)
       // only add inline padding styles if the computed padding value, which would
       // have come from the app's css, is different than the new padding value
-      contentTop += this._paddingTop;
-      contentBottom += this._paddingBottom;
       topProperty = 'paddingTop';
       bottomProperty = 'paddingBottom';
     }
 
     // Only update top margin if value changed
-    if (contentTop !== this.contentTop) {
-      assert(contentTop >= 0, 'contentTop has to be positive');
+    if (this._cTop !== this.contentTop) {
+      assert(this._cTop >= 0, 'contentTop has to be positive');
       assert(fixedTop >= 0, 'fixedTop has to be positive');
 
-      scrollEle.style[topProperty] = cssFormat(contentTop);
+      // ******** DOM WRITE ****************
+      (<any>scrollEle.style)[topProperty] = cssFormat(this._cTop);
+      // ******** DOM WRITE ****************
       fixedEle.style.marginTop = cssFormat(fixedTop);
-      this.contentTop = contentTop;
+
+      this.contentTop = this._cTop;
     }
 
     // Only update bottom margin if value changed
-    if (contentBottom !== this.contentBottom) {
-      assert(contentBottom >= 0, 'contentBottom has to be positive');
+    if (this._cBottom !== this.contentBottom) {
+      assert(this._cBottom >= 0, 'contentBottom has to be positive');
       assert(fixedBottom >= 0, 'fixedBottom has to be positive');
 
-      scrollEle.style[bottomProperty] = cssFormat(contentBottom);
+      // ******** DOM WRITE ****************
+      (<any>scrollEle.style)[bottomProperty] = cssFormat(this._cBottom);
+      // ******** DOM WRITE ****************
       fixedEle.style.marginBottom = cssFormat(fixedBottom);
-      this.contentBottom = contentBottom;
+
+      this.contentBottom = this._cBottom;
     }
 
     if (this._tabsPlacement !== null && this._tabs) {
       // set the position of the tabbar
       if (this._tabsPlacement === 'top') {
-        this._tabs.setTabbarPosition(this._headerHeight, -1);
+        // ******** DOM WRITE ****************
+        this._tabs.setTabbarPosition(this._tTop, -1);
 
       } else {
         assert(this._tabsPlacement === 'bottom', 'tabsPlacement should be bottom');
+        // ******** DOM WRITE ****************
         this._tabs.setTabbarPosition(-1, 0);
       }
     }
+
+    // Scroll the page all the way down after setting dimensions
+    if (this._scrollDownOnLoad) {
+      this.scrollToBottom(0);
+      this._scrollDownOnLoad = false;
+    }
   }
 
+  /**
+   * @hidden
+   */
+  imgsUpdate() {
+    if (this._scroll.initialized && this._imgs.length && this.isImgsUpdatable()) {
+      updateImgs(this._imgs, this.scrollTop, this.contentHeight, this.directionY, this._imgReqBfr, this._imgRndBfr);
+    }
+  }
+
+  /**
+   * @hidden
+   */
+  isImgsUpdatable() {
+    // an image is only "updatable" if the content isn't scrolling too fast
+    // if scroll speed is above the maximum velocity, then let current
+    // requests finish, but do not start new requets or render anything
+    // if scroll speed is below the maximum velocity, then it's ok
+    // to start new requests and render images
+    return Math.abs(this._scroll.ev.velocityY) < this._imgVelMax;
+  }
+
+}
+
+export function updateImgs(imgs: Img[], viewableTop: number, contentHeight: number, scrollDirectionY: string, requestableBuffer: number, renderableBuffer: number) {
+  // ok, so it's time to see which images, if any, should be requested and rendered
+  // ultimately, if we're scrolling fast then don't bother requesting or rendering
+  // when scrolling is done, then it needs to do a check to see which images are
+  // important to request and render, and which image requests should be aborted.
+  // Additionally, images which are not near the viewable area should not be
+  // rendered at all in order to save browser resources.
+  const viewableBottom = (viewableTop + contentHeight);
+  const priority1: Img[] = [];
+  const priority2: Img[] = [];
+  let img: Img;
+
+  // all images should be paused
+  for (var i = 0, ilen = imgs.length; i < ilen; i++) {
+    img = imgs[i];
+
+    if (scrollDirectionY === 'up') {
+      // scrolling up
+      if (img.top < viewableBottom && img.bottom > viewableTop - renderableBuffer) {
+        // scrolling up, img is within viewable area
+        // or about to be viewable area
+        img.canRequest = img.canRender = true;
+        priority1.push(img);
+        continue;
+      }
+
+      if (img.bottom <= viewableTop && img.bottom > viewableTop - requestableBuffer) {
+        // scrolling up, img is within requestable area
+        img.canRequest = true;
+        img.canRender = false;
+        priority2.push(img);
+        continue;
+      }
+
+      if (img.top >= viewableBottom && img.top < viewableBottom + renderableBuffer) {
+        // scrolling up, img below viewable area
+        // but it's still within renderable area
+        // don't allow a reset
+        img.canRequest = img.canRender = false;
+        continue;
+      }
+
+    } else {
+      // scrolling down
+
+      if (img.bottom > viewableTop && img.top < viewableBottom + renderableBuffer) {
+        // scrolling down, img is within viewable area
+        // or about to be viewable area
+        img.canRequest = img.canRender = true;
+        priority1.push(img);
+        continue;
+      }
+
+      if (img.top >= viewableBottom && img.top < viewableBottom + requestableBuffer) {
+        // scrolling down, img is within requestable area
+        img.canRequest = true;
+        img.canRender = false;
+        priority2.push(img);
+        continue;
+      }
+
+      if (img.bottom <= viewableTop && img.bottom > viewableTop - renderableBuffer) {
+        // scrolling down, img above viewable area
+        // but it's still within renderable area
+        // don't allow a reset
+        img.canRequest = img.canRender = false;
+        continue;
+      }
+    }
+
+    img.canRequest = img.canRender = false;
+    img.reset();
+  }
+
+  // update all imgs which are viewable
+  priority1.sort(sortTopToBottom).forEach(i => i.update());
+
+  if (scrollDirectionY === 'up') {
+    // scrolling up
+    priority2.sort(sortTopToBottom).reverse().forEach(i => i.update());
+
+  } else {
+    // scrolling down
+    priority2.sort(sortTopToBottom).forEach(i => i.update());
+  }
+}
+
+
+function sortTopToBottom(a: Img, b: Img) {
+  if (a.top < b.top) {
+    return -1;
+  }
+  if (a.top > b.top) {
+    return 1;
+  }
+  return 0;
 }
 
 function parsePxUnit(val: string): number {

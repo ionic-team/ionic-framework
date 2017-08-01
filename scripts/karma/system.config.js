@@ -4,7 +4,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
 // disable console debugs/errors/warns from printing out
 console.debug = () => {};
-console.error = () => {};
+// console.error = () => {};
 console.warn = () => {};
 
 __karma__.loaded = function () {};

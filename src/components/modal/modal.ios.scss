@@ -11,11 +11,11 @@ $modal-ios-border-radius:             10px !default;
 
 .ios .modal-wrapper {
   // hidden by default to prevent flickers, the animation will show it
-  transform: translate3d(0, 100%, 0);
+  @include transform(translate3d(0, 100%, 0));
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-    overflow: hidden;
+    @include border-radius($modal-ios-border-radius);
 
-    border-radius: $modal-ios-border-radius;
+    overflow: hidden;
   }
 }

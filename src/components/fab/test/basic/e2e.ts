@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should open fab lists ', function() {
   element(by.css('.e2eFabTopRight')).click();

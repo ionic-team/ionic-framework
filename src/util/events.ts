@@ -1,6 +1,6 @@
-import { nativeTimeout, nativeRaf } from '../util/dom';
+import { DomController } from '../platform/dom-controller';
 import { Platform } from '../platform/platform';
-import { ScrollView } from '../util/scroll-view';
+import { ScrollView } from './scroll-view';
 
 /**
  * @name Events
@@ -12,25 +12,27 @@ import { ScrollView } from '../util/scroll-view';
  * ```ts
  * import { Events } from 'ionic-angular';
  *
- * constructor(public events: Events) {}
- *
  * // first page (publish an event when a user is created)
- * function createUser(user) {
+ * constructor(public events: Events) {}
+ * createUser(user) {
  *   console.log('User created!')
- *   events.publish('user:created', user);
+ *   this.events.publish('user:created', user, Date.now());
  * }
  *
- * // second page (listen for the user created event)
- * events.subscribe('user:created', (userEventData) => {
- *   // userEventData is an array of parameters, so grab our first and only arg
- *   console.log('Welcome', userEventData[0]);
- * });
+ *
+ * // second page (listen for the user created event after function is called)
+ * constructor(public events: Events) {
+ *   events.subscribe('user:created', (user, time) => {
+ *     // user and time are the same arguments passed in `events.publish(user, time)`
+ *     console.log('Welcome', user, 'at', time);
+ *   });
+ * }
  *
  * ```
- * @demo /docs/v2/demos/src/events/
+ * @demo /docs/demos/src/events/
  */
 export class Events {
-  private _channels: Array<any> = [];
+  private _channels: any = [];
 
   /**
    * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
@@ -100,69 +102,69 @@ export class Events {
 
     let responses: any[] = [];
     t.forEach((handler: any) => {
-      responses.push(handler(args));
+      responses.push(handler(...args));
     });
     return responses;
   }
 }
 
 /**
- * @private
+ * @hidden
  */
-export function setupEvents(platform: Platform): Events {
+export function setupEvents(plt: Platform, dom: DomController): Events {
   const events = new Events();
+  const win = plt.win();
+  const doc = plt.doc();
 
   // start listening for resizes XXms after the app starts
-  nativeTimeout(() => {
-    window.addEventListener('online', (ev) => {
+  plt.timeout(() => {
+    win.addEventListener('online', (ev) => {
       events.publish('app:online', ev);
     }, false);
 
-    window.addEventListener('offline', (ev) => {
+    win.addEventListener('offline', (ev) => {
       events.publish('app:offline', ev);
     }, false);
 
-    window.addEventListener('orientationchange', (ev) => {
+    win.addEventListener('orientationchange', (ev) => {
       events.publish('app:rotated', ev);
     });
 
     // When that status taps, we respond
-    window.addEventListener('statusTap', (ev) => {
+    win.addEventListener('statusTap', () => {
       // TODO: Make this more better
-      let el = <HTMLElement>document.elementFromPoint(platform.width() / 2, platform.height() / 2);
+      let el = <HTMLElement>doc.elementFromPoint(plt.width() / 2, plt.height() / 2);
       if (!el) { return; }
 
-      let content = <HTMLElement>el.closest('.scroll-content');
-      if (content) {
-        var scroll = new ScrollView(content);
+      let contentEle = <any>el.closest('.scroll-content');
+      if (contentEle) {
+        var style = contentEle.style;
+        var scroll = new ScrollView(null, plt, dom);
+        scroll._el = contentEle;
           // We need to stop scrolling if it's happening and scroll up
 
-        content.style['WebkitBackfaceVisibility'] = 'hidden';
-        content.style['WebkitTransform'] = 'translate3d(0,0,0)';
+        style['WebkitBackfaceVisibility'] = 'hidden';
+        style['WebkitTransform'] = 'translate3d(0,0,0)';
 
-        nativeRaf(function() {
-          content.style.overflow = 'hidden';
+        dom.write(function() {
+          style.overflow = 'hidden';
 
           function finish() {
-            content.style.overflow = '';
-            content.style['WebkitBackfaceVisibility'] = '';
-            content.style['WebkitTransform'] = '';
+            style.overflow = '';
+            style['WebkitBackfaceVisibility'] = '';
+            style['WebkitTransform'] = '';
           }
 
-          let didScrollTimeout = setTimeout(() => {
+          let didScrollTimeout = plt.timeout(() => {
             finish();
           }, 400);
 
           scroll.scrollTo(0, 0, 300).then(() => {
-            clearTimeout(didScrollTimeout);
+            plt.cancelTimeout(didScrollTimeout);
             finish();
           });
         });
       }
-    });
-
-    window.addEventListener('resize', () => {
-      platform.windowResize();
     });
 
   }, 2000);
@@ -171,10 +173,10 @@ export function setupEvents(platform: Platform): Events {
 }
 
 /**
- * @private
+ * @hidden
  */
-export function setupProvideEvents(platform: Platform) {
+export function setupProvideEvents(plt: Platform, dom: DomController) {
   return function() {
-    return setupEvents(platform);
+    return setupEvents(plt, dom);
   };
 }

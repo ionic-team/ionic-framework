@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Img: Long List</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item *ngFor="let item of items">
+
+      <ion-avatar item-start>
+        <ion-img [src]="item.avatar"></ion-img>
+      </ion-avatar>
+
+      Item: {{ item.id }}
+
+      <ion-thumbnail item-end>
+        <ion-img [src]="item.thumbnail"></ion-img>
+      </ion-thumbnail>
+
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

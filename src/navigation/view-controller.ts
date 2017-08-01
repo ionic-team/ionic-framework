@@ -1,12 +1,10 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { Footer, Header } from '../components/toolbar/toolbar';
-import { isPresent, assign } from '../util/util';
-import { Navbar } from '../components/navbar/navbar';
-import { NavControllerBase } from './nav-controller-base';
-import { NavOptions, ViewState } from './nav-util';
+import { assert, isPresent } from '../util/util';
+import { NavController } from './nav-controller';
+import { NavOptions, STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED, STATE_NEW } from './nav-util';
 import { NavParams } from './nav-params';
-import { Content } from '../components/content/content';
+import { Content, Footer, Header, Navbar } from './nav-interfaces';
 
 
 /**
@@ -27,6 +25,7 @@ import { Content } from '../components/content/content';
  * ```
  */
 export class ViewController {
+
   private _cntDir: any;
   private _cntRef: ElementRef;
   private _ionCntDir: Content;
@@ -36,115 +35,114 @@ export class ViewController {
   private _isHidden: boolean = false;
   private _leavingOpts: NavOptions;
   private _nb: Navbar;
-  private _onDidDismiss: Function;
-  private _onWillDismiss: Function;
+  private _onDidDismiss: (data: any, role: string) => void;
+  private _onWillDismiss: (data: any, role: string) => void;
+  private _dismissData: any;
+  private _dismissRole: string;
   private _detached: boolean;
+
+  _cmp: ComponentRef<any>;
+  _nav: NavController;
+  _zIndex: number;
+  _state: number = STATE_NEW;
+  _cssClass: string;
+  _ts: number;
 
   /**
    * Observable to be subscribed to when the current component will become active
    * @returns {Observable} Returns an observable
    */
-  willEnter: EventEmitter<any>;
+  willEnter: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component has become active
    * @returns {Observable} Returns an observable
    */
-  didEnter: EventEmitter<any>;
+  didEnter: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component will no longer be active
    * @returns {Observable} Returns an observable
    */
-  willLeave: EventEmitter<any>;
+  willLeave: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component is no long active
    * @returns {Observable} Returns an observable
    */
-  didLeave: EventEmitter<any>;
+  didLeave: EventEmitter<any> = new EventEmitter();
 
   /**
    * Observable to be subscribed to when the current component has been destroyed
    * @returns {Observable} Returns an observable
    */
-  willUnload: EventEmitter<any>;
+  willUnload: EventEmitter<any> = new EventEmitter();
 
-  /** @private */
+  /**
+   * @hidden
+   */
+  readReady: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * @hidden
+   */
+  writeReady: EventEmitter<any> = new EventEmitter<any>();
+
+  /** @hidden */
   data: any;
 
-  /** @private */
+  /** @hidden */
   instance: any;
 
-  /** @private */
+  /** @hidden */
   id: string;
 
-  /** @private */
+  /** @hidden */
   isOverlay: boolean = false;
 
-  /** @private */
-  _cmp: ComponentRef<any>;
-
-  /** @private */
-  _nav: NavControllerBase;
-
-  /** @private */
-  _zIndex: number;
-
-  /** @private */
-  _state: ViewState;
-
-  /** @private */
-  _cssClass: string;
-
-  /** @private */
+  /** @hidden */
   @Output() private _emitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public component?: any, data?: any, rootCssClass: string = DEFAULT_CSS_CLASS) {
+  constructor(
+    public component?: any,
+    data?: any,
+    rootCssClass: string = DEFAULT_CSS_CLASS
+  ) {
     // passed in data could be NavParams, but all we care about is its data object
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
     this._cssClass = rootCssClass;
-
-    this.willEnter = new EventEmitter();
-    this.didEnter = new EventEmitter();
-    this.willLeave = new EventEmitter();
-    this.didLeave = new EventEmitter();
-    this.willUnload = new EventEmitter();
+    this._ts = Date.now();
   }
 
   /**
-   * @private
+   * @hidden
    */
   init(componentRef: ComponentRef<any>) {
+    assert(componentRef, 'componentRef can not be null');
+    this._ts = Date.now();
     this._cmp = componentRef;
     this.instance = this.instance || componentRef.instance;
     this._detached = false;
   }
 
-  /**
-   * @private
-   */
-  _setNav(navCtrl: NavControllerBase) {
+  _setNav(navCtrl: NavController) {
     this._nav = navCtrl;
   }
 
-  /**
-   * @private
-   */
   _setInstance(instance: any) {
     this.instance = instance;
   }
 
   /**
-   * @private
+   * @hidden
    */
   subscribe(generatorOrNext?: any): any {
     return this._emitter.subscribe(generatorOrNext);
   }
 
   /**
-   * @private
+   * @hidden
    */
   emit(data?: any) {
     this._emitter.emit(data);
@@ -153,14 +151,14 @@ export class ViewController {
   /**
    * Called when the current viewController has be successfully dismissed
    */
-  onDidDismiss(callback: Function) {
+  onDidDismiss(callback: (data: any, role: string) => void) {
     this._onDidDismiss = callback;
   }
 
   /**
    * Called when the current viewController will be dismissed
    */
-  onWillDismiss(callback: Function) {
+  onWillDismiss(callback: (data: any, role: string) => void) {
     this._onWillDismiss = callback;
   }
 
@@ -168,47 +166,50 @@ export class ViewController {
    * Dismiss the current viewController
    * @param {any} [data] Data that you want to return when the viewController is dismissed.
    * @param {any} [role ]
-   * @param {NavOptions} NavOptions Options for the dismiss navigation.
+   * @param {NavOptions} navOptions Options for the dismiss navigation.
    * @returns {any} data Returns the data passed in, if any.
-   *
    */
-  dismiss(data?: any, role?: any, navOptions: NavOptions = {}): Promise<any> {
+  dismiss(data?: any, role?: string, navOptions: NavOptions = {}): Promise<any> {
     if (!this._nav) {
+      assert(this._state === STATE_DESTROYED, 'ViewController does not have a valid _nav');
       return Promise.resolve(false);
     }
+    if (this.isOverlay && !navOptions.minClickBlockDuration) {
+      // This is a Modal being dismissed so we need
+      // to add the minClickBlockDuration option
+      // for UIWebView
+      navOptions.minClickBlockDuration = 400;
+    }
+    this._dismissData = data;
+    this._dismissRole = role;
 
-    let options = assign({}, this._leavingOpts, navOptions);
-    this._onWillDismiss && this._onWillDismiss(data, role);
-    return this._nav.removeView(this, options).then(() => {
-      this._onDidDismiss && this._onDidDismiss(data, role);
-      this._onDidDismiss = null;
-      return data;
-    });
+    const options = Object.assign({}, this._leavingOpts, navOptions);
+    return this._nav.removeView(this, options).then(() => data);
   }
 
   /**
-   * @private
+   * @hidden
    */
-  getNav() {
+  getNav(): NavController {
     return this._nav;
   }
 
   /**
-   * @private
+   * @hidden
    */
-  getTransitionName(direction: string): string {
+  getTransitionName(_direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNavParams(): NavParams {
     return new NavParams(this.data);
   }
 
   /**
-   * @private
+   * @hidden
    */
   setLeavingOpts(opts: NavOptions) {
     this._leavingOpts = opts;
@@ -220,20 +221,20 @@ export class ViewController {
    */
   enableBack(): boolean {
     // update if it's possible to go back from this nav item
-    if (this._nav) {
-      let previousItem = this._nav.getPrevious(this);
-      // the previous view may exist, but if it's about to be destroyed
-      // it shouldn't be able to go back to
-      return !!(previousItem);
+    if (!this._nav) {
+      return false;
     }
-    return false;
+    // the previous view may exist, but if it's about to be destroyed
+    // it shouldn't be able to go back to
+    const previousItem = this._nav.getPrevious(this);
+    return !!(previousItem);
   }
 
   /**
-   * @private
+   * @hidden
    */
   get name(): string {
-    return this.component ? this.component.name : '';
+    return (this.component ? this.component.name : '');
   }
 
   /**
@@ -259,7 +260,7 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _domShow(shouldShow: boolean, renderer: Renderer) {
@@ -267,19 +268,24 @@ export class ViewController {
     // _hidden value of '' means the hidden attribute will be added
     // _hidden value of null means the hidden attribute will be removed
     // doing checks to make sure we only update the DOM when actually needed
-    if (this._cmp) {
-      // if it should render, then the hidden attribute should not be on the element
-      if (shouldShow === this._isHidden) {
-        this._isHidden = !shouldShow;
-        let value = (shouldShow ? null : '');
-        // ******** DOM WRITE ****************
-        renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', value);
-      }
+    // if it should render, then the hidden attribute should not be on the element
+    if (this._cmp && shouldShow === this._isHidden) {
+      this._isHidden = !shouldShow;
+      let value = (shouldShow ? null : '');
+      // ******** DOM WRITE ****************
+      renderer.setElementAttribute(this.pageRef().nativeElement, 'hidden', value);
     }
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  getZIndex(): number {
+    return this._zIndex;
+  }
+
+  /**
+   * @hidden
    * DOM WRITE
    */
   _setZIndex(zIndex: number, renderer: Renderer) {
@@ -300,9 +306,6 @@ export class ViewController {
     return this._cmp && this._cmp.location;
   }
 
-  /**
-   * @private
-   */
   _setContent(directive: any) {
     this._cntDir = directive;
   }
@@ -314,9 +317,6 @@ export class ViewController {
     return this._cntDir;
   }
 
-  /**
-   * @private
-   */
   _setContentRef(elementRef: ElementRef) {
     this._cntRef = elementRef;
   }
@@ -328,73 +328,58 @@ export class ViewController {
     return this._cntRef;
   }
 
-  /**
-   * @private
-   */
   _setIONContent(content: Content) {
     this._setContent(content);
     this._ionCntDir = content;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getIONContent(): Content {
     return this._ionCntDir;
   }
 
-  /**
-   * @private
-   */
   _setIONContentRef(elementRef: ElementRef) {
     this._setContentRef(elementRef);
     this._ionCntRef = elementRef;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getIONContentRef(): ElementRef {
     return this._ionCntRef;
   }
 
-  /**
-   * @private
-   */
   _setHeader(directive: Header) {
     this._hdrDir = directive;
   }
 
   /**
-   * @private
+   * @hidden
    */
-  getHeader() {
+  getHeader(): Header {
     return this._hdrDir;
   }
 
-  /**
-   * @private
-   */
   _setFooter(directive: Footer) {
     this._ftrDir = directive;
   }
 
   /**
-   * @private
+   * @hidden
    */
-  getFooter() {
+  getFooter(): Footer {
     return this._ftrDir;
   }
 
-  /**
-   * @private
-   */
   _setNavbar(directive: Navbar) {
     this._nb = directive;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNavbar(): Navbar {
     return this._nb;
@@ -413,7 +398,7 @@ export class ViewController {
   /**
    * Change the title of the back-button. Be sure to call this
    * after `ionViewWillEnter` to make sure the  DOM has been rendered.
-   * @param {string} backButtonText Set the back button text.
+   * @param {string} val Set the back button text.
    */
   setBackButtonText(val: string) {
     this._nb && this._nb.setBackButtonText(val);
@@ -430,24 +415,23 @@ export class ViewController {
     }
   }
 
-  /**
-   * @private
-   */
   _preLoad() {
+    assert(this._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
     this._lifecycle('PreLoad');
   }
 
   /**
-   * @private
+   * @hidden
    * The view has loaded. This event only happens once per view will be created.
    * This event is fired before the component and his children have been initialized.
    */
   _willLoad() {
+    assert(this._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
     this._lifecycle('WillLoad');
   }
 
   /**
-   * @private
+   * @hidden
    * The view has loaded. This event only happens once per view being
    * created. If a view leaves but is cached, then this will not
    * fire again on a subsequent viewing. This method is a good place
@@ -455,14 +439,17 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   _didLoad() {
+    assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
     this._lifecycle('DidLoad');
   }
 
   /**
-   * @private
+   * @hidden
    * The view is about to enter and become the active view.
    */
   _willEnter() {
+    assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
+
     if (this._detached && this._cmp) {
       // ensure this has been re-attached to the change detector
       this._cmp.changeDetectorRef.reattach();
@@ -474,27 +461,34 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    * The view has fully entered and is now the active view. This
    * will fire, whether it was the first load or loaded from the cache.
    */
   _didEnter() {
+    assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
+
     this._nb && this._nb.didEnter();
     this.didEnter.emit(null);
     this._lifecycle('DidEnter');
   }
 
   /**
-   * @private
-   * The view has is about to leave and no longer be the active view.
+   * @hidden
+   * The view is about to leave and no longer be the active view.
    */
-  _willLeave() {
+  _willLeave(willUnload: boolean) {
     this.willLeave.emit(null);
     this._lifecycle('WillLeave');
+
+    if (willUnload && this._onWillDismiss) {
+      this._onWillDismiss(this._dismissData, this._dismissRole);
+      this._onWillDismiss = null;
+    }
   }
 
   /**
-   * @private
+   * @hidden
    * The view has finished leaving and is no longer the active view. This
    * will fire, whether it is cached or unloaded.
    */
@@ -511,23 +505,30 @@ export class ViewController {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _willUnload() {
     this.willUnload.emit(null);
     this._lifecycle('WillUnload');
+
+    this._onDidDismiss && this._onDidDismiss(this._dismissData, this._dismissRole);
+    this._onDidDismiss = null;
+    this._dismissData = null;
+    this._dismissRole = null;
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   _destroy(renderer: Renderer) {
+    assert(this._state !== STATE_DESTROYED, 'view state must be ATTACHED');
+
     if (this._cmp) {
       if (renderer) {
         // ensure the element is cleaned up for when the view pool reuses this element
         // ******** DOM WRITE ****************
-        const cmpEle = this._cmp.location.nativeElement;
+        var cmpEle = this._cmp.location.nativeElement;
         renderer.setElementAttribute(cmpEle, 'class', null);
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
@@ -536,50 +537,47 @@ export class ViewController {
       this._cmp.destroy();
     }
 
-    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._hdrDir = this._ftrDir = this._nb = this._onWillDismiss = null;
+    this._nav = this._cmp = this.instance = this._cntDir = this._cntRef = this._leavingOpts = this._hdrDir = this._ftrDir = this._nb = this._onDidDismiss = this._onWillDismiss = null;
+    this._state = STATE_DESTROYED;
   }
 
   /**
-   * @private
+   * @hidden
    */
-  _lifecycleTest(lifecycle: string): boolean | Promise<any> {
-    let instance = this.instance;
-    let methodName = 'ionViewCan' + lifecycle;
+  _lifecycleTest(lifecycle: string): Promise<boolean> {
+    const instance = this.instance;
+    const methodName = 'ionViewCan' + lifecycle;
     if (instance && instance[methodName]) {
       try {
-        let result = instance[methodName]();
-        if (result === false) {
-          return false;
-        } else if (result instanceof Promise) {
+        var result = instance[methodName]();
+        if (result instanceof Promise) {
           return result;
         } else {
-          return true;
+          // Any value but explitic false, should be true
+          return Promise.resolve(result !== false);
         }
 
       } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-        return false;
+        return Promise.reject(`${this.name} ${methodName} error: ${e.message}`);
       }
     }
-    return true;
+    return Promise.resolve(true);
   }
 
+  /**
+   * @hidden
+   */
   _lifecycle(lifecycle: string) {
-    let instance = this.instance;
-    let methodName = 'ionView' + lifecycle;
+    const instance = this.instance;
+    const methodName = 'ionView' + lifecycle;
     if (instance && instance[methodName]) {
-      try {
-        instance[methodName]();
-
-      } catch (e) {
-        console.error(`${this.name} ${methodName} error: ${e.message}`);
-      }
+      instance[methodName]();
     }
   }
 
 }
 
-export function isViewController(viewCtrl: any) {
+export function isViewController(viewCtrl: any): boolean {
   return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
 }
 

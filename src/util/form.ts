@@ -1,49 +1,53 @@
 import { Injectable } from '@angular/core';
+import { removeArrayItem } from './util';
 
 
 /**
- * @private
+ * @hidden
  */
 @Injectable()
 export class Form {
-  private _focused: any = null;
-  private _ids: number = -1;
-  private _inputs: any[] = [];
 
-  register(input: any) {
+  private _focused: IonicFormInput = null;
+  private _ids: number = -1;
+  private _inputs: IonicFormInput[] = [];
+
+  register(input: IonicFormInput) {
     this._inputs.push(input);
   }
 
-  deregister(input: any) {
-    let index = this._inputs.indexOf(input);
-    if (index > -1) {
-      this._inputs.splice(index, 1);
-    }
+  deregister(input: IonicFormInput) {
+    removeArrayItem(this._inputs, input);
+    this.unsetAsFocused(input);
+  }
+
+  setAsFocused(input: IonicFormInput) {
+    this._focused = input;
+  }
+
+  unsetAsFocused(input: IonicFormInput) {
     if (input === this._focused) {
       this._focused = null;
     }
   }
 
-  setAsFocused(input: any) {
-    this._focused = input;
-  }
-
   /**
    * Focuses the next input element, if it exists.
    */
-  tabFocus(currentInput: any) {
-    let index = this._inputs.indexOf(currentInput);
-    if (index > -1 && (index + 1) < this._inputs.length) {
-      let nextInput = this._inputs[index + 1];
+  tabFocus(currentInput: IonicFormInput) {
+    const inputs = this._inputs;
+    let index = inputs.indexOf(currentInput) + 1;
+    if (index > 0 && index < inputs.length) {
+      var nextInput = inputs[index];
       if (nextInput !== this._focused) {
         console.debug('tabFocus, next');
         return nextInput.initFocus();
       }
     }
 
-    index = this._inputs.indexOf(this._focused);
+    index = inputs.indexOf(this._focused);
     if (index > 0) {
-      let previousInput = this._inputs[index - 1];
+      var previousInput = inputs[index - 1];
       if (previousInput) {
         console.debug('tabFocus, previous');
         previousInput.initFocus();
@@ -57,10 +61,12 @@ export class Form {
 
 }
 
-
+/**
+ * @hidden
+ */
 export abstract class IonicTapInput implements IonicFormInput {
 
-  abstract initFocus();
+  abstract initFocus(): void;
 
   abstract get checked(): boolean;
 
@@ -72,8 +78,11 @@ export abstract class IonicTapInput implements IonicFormInput {
 
 }
 
+/**
+ * @hidden
+ */
 export abstract class IonicFormInput {
 
-  abstract initFocus();
+  abstract initFocus(): void;
 
 }

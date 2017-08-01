@@ -10,7 +10,7 @@ task('clean', (done: Function) => {
 });
 
 task('clean.src', (done: Function) => {
-  del(['src/**/*.js', 'src/**/*.d.ts', '!src/components/slides/swiper-widget.*']).then(() => {
+  del(['src/**/*.js', 'src/**/*.d.ts']).then(() => {
     done();
   }).catch(err => {
     done(err);

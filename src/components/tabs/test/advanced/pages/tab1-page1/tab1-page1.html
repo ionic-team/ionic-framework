@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Tabs 1, Page 1</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <p><button ion-button class="e2eGoToTab1Page2" [navPush]="tab1Page2">Go to Tab 1, Page 2</button></p>
+  <p><button ion-button (click)="logout()">Logout</button></p>
+  <p><button ion-button (click)="favoritesTab()">Favorites Tab</button></p>
+  <p><button ion-button (click)="goBack()">Go Back</button></p>
+  <p><button ion-button (click)="color = !color" [color]="color ? 'primary':'secondary'">Change color</button></p>
+  <p>"Change color" should continue working after clicking Logout in the tabbar and cancelling (No in the alert)</p>
+  <p>UserId: {{userId}}</p>
+  <p><ion-input></ion-input></p>
+  <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
+  <div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div><div f></div>
+
+</ion-content>

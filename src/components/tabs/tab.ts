@@ -1,18 +1,19 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
+import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
+import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { NavOptions } from '../../navigation/nav-util';
+import { Platform } from '../../platform/platform';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
-
 
 /**
  * @name Tab
@@ -34,7 +35,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```html
  * <ion-tabs>
- *  <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chat"><ion-tab>
+ *  <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chat"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -59,7 +60,7 @@ import { ViewController } from '../../navigation/view-controller';
  *
  * ```html
  * <ion-tabs>
- *  <ion-tab [root]="chatRoot" [rootParams]="chatParams" tabTitle="Chat" tabIcon="chat"><ion-tab>
+ *  <ion-tab [root]="chatRoot" [rootParams]="chatParams" tabTitle="Chat" tabIcon="chat"></ion-tab>
  * </ion-tabs>
  * ```
  *
@@ -69,8 +70,8 @@ import { ViewController } from '../../navigation/view-controller';
  *
  *   // set some user information on chatParams
  *   chatParams = {
- *     user1: "admin",
- *     user2: "ionic"
+ *     user1: 'admin',
+ *     user2: 'ionic'
  *   };
  *
  *   constructor() {
@@ -84,7 +85,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```ts
  * export class ChatPage {
  *   constructor(navParams: NavParams) {
- *     console.log("Passed params", navParams.data);
+ *     console.log('Passed params', navParams.data);
  *   }
  * }
  * ```
@@ -114,8 +115,8 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  *
- * @demo /docs/v2/demos/src/tabs/
- * @see {@link /docs/v2/components#tabs Tabs Component Docs}
+ * @demo /docs/demos/src/tabs/
+ * @see {@link /docs/components#tabs Tabs Component Docs}
  * @see {@link ../../tabs/Tabs Tabs API Docs}
  * @see {@link ../../nav/Nav Nav API Docs}
  * @see {@link ../../nav/NavController NavController API Docs}
@@ -131,46 +132,56 @@ import { ViewController } from '../../navigation/view-controller';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class Tab extends NavControllerBase {
+export class Tab extends NavControllerBase implements ITab {
   /**
-   * @private
+   * @hidden
    */
   _isInitial: boolean;
   /**
-   * @private
+   * @hidden
    */
   _isEnabled: boolean = true;
   /**
-   * @private
+   * @hidden
    */
   _isShown: boolean = true;
   /**
-   * @private
+   * @hidden
    */
   _tabId: string;
   /**
-   * @private
+   * @hidden
    */
   _btnId: string;
   /**
-   * @private
+   * @hidden
    */
   _loaded: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   isSelected: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   btn: TabButton;
 
   /**
-   * @private
+   * @hidden
    */
   _tabsHideOnSubPages: boolean;
+
+  /**
+   * @hidden
+   */
+  _lazyRootFromUrl: any;
+
+  /**
+   * @hidden
+   */
+  _lazyRootFromUrlData: any;
 
   /**
    * @input {Page} Set the root page for this tab.
@@ -208,10 +219,9 @@ export class Tab extends NavControllerBase {
   @Input() tabBadgeStyle: string;
 
   /**
-   * @input {boolean} If the tab is enabled or not. If the tab
-   * is not enabled then the tab button will still show, however,
-   * the button will appear grayed out and will not be clickable.
-   * Defaults to `true`.
+   * @input {boolean} If true, enable the tab. If false,
+   * the user cannot interact with this element.
+   * Default: `true`.
    */
   @Input()
   get enabled(): boolean {
@@ -222,8 +232,8 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @input {boolean} If the tab button is visible within the
-   * tabbar or not. Defaults to `true`.
+   * @input {boolean} If true, the tab button is visible within the
+   * tabbar. Default: `true`.
    */
   @Input()
   get show(): boolean {
@@ -234,18 +244,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @input {boolean} Whether it's possible to swipe-to-go-back on this tab or not.
-   */
-  @Input()
-  get swipeBackEnabled(): boolean {
-    return this._sbEnabled;
-  }
-  set swipeBackEnabled(val: boolean) {
-    this._sbEnabled = isTrueProperty(val);
-  }
-
-  /**
-   * @input {boolean} Whether it's possible to swipe-to-go-back on this tab or not.
+   * @input {boolean} If true, hide the tabs on child pages.
    */
   @Input()
   get tabsHideOnSubPages(): boolean {
@@ -256,15 +255,17 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @output {Tab} Method to call when the current tab is selected
+   * @output {Tab} Emitted when the current tab is selected.
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
+
+
 
   constructor(
     parent: Tabs,
     app: App,
     config: Config,
-    keyboard: Keyboard,
+    plt: Platform,
     elementRef: ElementRef,
     zone: NgZone,
     renderer: Renderer,
@@ -272,10 +273,12 @@ export class Tab extends NavControllerBase {
     private _cd: ChangeDetectorRef,
     gestureCtrl: GestureController,
     transCtrl: TransitionController,
-    @Optional() private linker: DeepLinker
+    @Optional() private linker: DeepLinker,
+    private _dom: DomController,
+    errHandler: ErrorHandler
   ) {
     // A Tab is a NavController for its child pages
-    super(parent, app, config, keyboard, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker);
+    super(parent, app, config, plt, elementRef, zone, renderer, cfr, gestureCtrl, transCtrl, linker, _dom, errHandler);
 
     this.id = parent.add(this);
     this._tabsHideOnSubPages = config.getBoolean('tabsHideOnSubPages');
@@ -284,7 +287,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @ViewChild('viewport', {read: ViewContainerRef})
   set _vp(val: ViewContainerRef) {
@@ -292,27 +295,72 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     this.tabBadgeStyle = this.tabBadgeStyle ? this.tabBadgeStyle : 'default';
   }
 
   /**
-   * @private
+   * @hidden
    */
-  load(opts: NavOptions, done?: Function) {
-    if (!this._loaded && this.root) {
-      this.push(this.root, this.rootParams, opts, done);
+  load(opts: NavOptions, done?: () => void) {
+    if (this._lazyRootFromUrl || (!this._loaded && this.root)) {
+      this.setElementClass('show-tab', true);
+      // okay, first thing we need to do if check if the view already exists
+      const nameToUse = this._lazyRootFromUrl ? this._lazyRootFromUrl : this.root;
+      const dataToUse = this._lazyRootFromUrlData ? this._lazyRootFromUrlData : this.rootParams;
+      const numViews = this.length() - 1;
+      for (let i = numViews; i >= 0; i--) {
+        const viewController = this.getByIndex(i);
+        if (viewController && (viewController.id === nameToUse || viewController.component === nameToUse)) {
+          if (i === numViews) {
+            // this is the last view in the stack and it's the same
+            // as the segment so there's no change needed
+            return done();
+          } else {
+            // it's not the exact view as the end
+            // let's have this nav go back to this exact view
+            return this.popTo(viewController, {
+              animate: false,
+              updateUrl: false,
+            }, done);
+          }
+        }
+      }
+
+      this.push(nameToUse, dataToUse, opts, done);
+
+
+      this._lazyRootFromUrl = null;
+      this._lazyRootFromUrlData = null;
       this._loaded = true;
 
     } else {
-      done(true);
+      // if this is not the Tab's initial load then we need
+      // to refresh the tabbar and content dimensions to be sure
+      // they're lined up correctly
+      this._dom.read(() => {
+        this.resize();
+      });
+      return done();
     }
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  resize() {
+    const active = this.getActive();
+    if (!active) {
+      return;
+    }
+    const content = active.getIONContent();
+    content && content.resize();
+  }
+
+  /**
+   * @hidden
    */
   _viewAttachToDOM(viewCtrl: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
     const isTabSubPage = (this._tabsHideOnSubPages && viewCtrl.index > 0);
@@ -333,7 +381,7 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setSelected(isSelected: boolean) {
     this.isSelected = isSelected;
@@ -352,27 +400,37 @@ export class Tab extends NavControllerBase {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get index(): number {
     return this.parent.getIndex(this);
   }
 
   /**
-   * @private
+   * @hidden
    */
   updateHref(component: any, data: any) {
     if (this.btn && this.linker) {
-      let href = this.linker.createUrl(this, component, data) || '#';
+      let href = this.linker.createUrl(this.parent, component, data) || '#';
       this.btn.updateHref(href);
     }
   }
 
   /**
-   * @private
+   * @hidden
    */
-  destroy() {
+  ngOnDestroy() {
     this.destroy();
   }
 
+  /**
+   * @hidden
+   */
+  getType() {
+    return 'tab';
+  }
+
+  goToRoot(opts: NavOptions) {
+    return this.setRoot(this.root, this.rootParams, opts, null);
+  }
 }

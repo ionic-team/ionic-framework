@@ -38,7 +38,7 @@ weak maps / weak sets
 
 ## polyfills.ng.js
 
-Only the required polyfill for Angular 2. This does not come with any ES6 polyfills. Note that all polyfill files listed here included the required polyfills for Angular 2 to work correctly.
+Only the required polyfill for Angular. This does not come with any ES6 polyfills. Note that all polyfill files listed here included the required polyfills for Angular to work correctly.
 
 ### Targets:
 

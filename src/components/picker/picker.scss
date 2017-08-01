@@ -3,14 +3,17 @@
 // Picker
 // --------------------------------------------------
 
+/// @prop - Width of the picker
 $picker-width:                             100% !default;
+
+/// @prop - Max width of the picker
 $picker-max-width:                         500px !default;
 
 
 ion-picker-cmp {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-overlay;
   display: block;
 
@@ -29,10 +32,11 @@ ion-picker-cmp {
 }
 
 .picker-wrapper {
+  @include position(null, 0, 0, 0);
+  @include margin(auto);
+  @include transform(translate3d(0, 100%, 0));
+
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-overlay-wrapper;
   display: flex;
 
@@ -40,12 +44,8 @@ ion-picker-cmp {
 
   flex-direction: column;
 
-  margin: auto;
-
   width: $picker-width;
   max-width: $picker-max-width;
-
-  transform: translate3d(0, 100%, 0);
 
   contain: strict;
 }
@@ -59,6 +59,11 @@ ion-picker-cmp {
   justify-content: center;
 
   contain: strict;
+
+  @include rtl() {
+    // Date is the same format in both directions
+    flex-direction: row-reverse;
+  }
 }
 
 .picker-col {
@@ -84,6 +89,8 @@ ion-picker-cmp {
 }
 
 .picker-prefix {
+  @include text-align(end);
+
   position: relative;
 
   flex: 2;
@@ -91,11 +98,12 @@ ion-picker-cmp {
   min-width: 45%;
   max-width: 50%;
 
-  text-align: right;
   white-space: nowrap;
 }
 
 .picker-suffix {
+  @include text-align(start);
+
   position: relative;
 
   flex: 2;
@@ -103,24 +111,23 @@ ion-picker-cmp {
   min-width: 45%;
   max-width: 50%;
 
-  text-align: left;
   white-space: nowrap;
 }
 
 // contain property is supported by Chrome
 .picker-opt {
+  @include position(0, null, null, 0);
+  @include text-align(center);
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   display: block;
   overflow: hidden;
 
   width: 100%;
 
-  text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #000;
 
   will-change: transform;
   contain: strict;
@@ -135,11 +142,23 @@ ion-picker-cmp {
 }
 
 .picker-opts-left {
-  justify-content: flex-start;
+  @include ltr() {
+    justify-content: flex-start;
+  }
+
+  @include rtl() {
+    justify-content: flex-end;
+  }
 }
 
 .picker-opts-right {
-  justify-content: flex-end;
+  @include ltr() {
+    justify-content: flex-end;
+  }
+
+  @include rtl() {
+    justify-content: flex-start;
+  }
 }
 
 .picker-above-highlight,

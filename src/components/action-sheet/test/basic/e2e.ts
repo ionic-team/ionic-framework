@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should open action sheet', function() {
   element(by.css('.e2eOpenActionSheet')).click();

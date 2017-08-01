@@ -1,33 +1,21 @@
-<ion-header>
 
-  <ion-toolbar>
-    <ion-title>Infinite Scroll</ion-title>
-  </ion-toolbar>
+<p>
+  InfiniteScroll is enabled: {{enabled}}
+</p>
 
-</ion-header>
+<button ion-button (click)="toggleInfiniteScroll()" block>
+  Toggle InfiniteScroll Enabled
+</button>
 
-
-<ion-content>
-
-  <p>
-    InfiniteScroll is enabled: {{enabled}}
-  </p>
-
-  <button ion-button (click)="toggleInfiniteScroll()" block>
-    Toggle InfiniteScroll Enabled
+<ion-list>
+  <button ion-item (click)="goToPage2()" *ngFor="let item of items">
+    {{ item }}
   </button>
+</ion-list>
 
-  <ion-list>
-    <button ion-item (click)="goToPage2()" *ngFor="let item of items">
-      {{ item }}
-    </button>
-  </ion-list>
-
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="enabled" threshold="100px">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-
-</ion-content>
+<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())" [enabled]="enabled" threshold="100px">
+  <ion-infinite-scroll-content
+    loadingSpinner="bubbles"
+    loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>

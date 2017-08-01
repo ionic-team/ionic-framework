@@ -1,10 +1,10 @@
-import { Component, Directive, ElementRef, EventEmitter, forwardRef, HostListener, Input, NgZone, Renderer, Inject, Optional, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer } from '@angular/core';
 
 import { Content } from '../content/content';
-import { CSS, zoneRafFrames } from '../../util/dom';
-import { Item } from './item';
-import { ItemReorderGesture } from '../item/item-reorder-gesture';
+import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
+import { ItemReorderGesture, ItemReorderGestureDelegate } from './item-reorder-gesture';
+import { Platform } from '../../platform/platform';
 
 
 export class ReorderIndexes {
@@ -132,8 +132,8 @@ export class ReorderIndexes {
  * </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/item-reorder/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/item-reorder/
+ * @see {@link /docs/components#lists List Component Docs}
  * @see {@link ../../list/List List API Docs}
  * @see {@link ../Item Item API Docs}
  */
@@ -142,32 +142,45 @@ export class ReorderIndexes {
   host: {
     '[class.reorder-enabled]': '_enableReorder',
     '[class.reorder-visible]': '_visibleReorder',
+    '[class.reorder-side-start]': '_isStart'
   }
 })
-export class ItemReorder {
+export class ItemReorder implements ItemReorderGestureDelegate {
 
   _enableReorder: boolean = false;
   _visibleReorder: boolean = false;
+  _isStart: boolean = false;
   _reorderGesture: ItemReorderGesture;
   _lastToIndex: number = -1;
   _element: HTMLElement;
 
   /**
-   * @output {object} The expression to evaluate when the item is reordered. Emits an object
+   * @output {object} Emitted when the item is reordered. Emits an object
    * with `from` and `to` properties.
    */
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
 
+  /**
+   * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
+   */
+  @Input('side')
+  set side(side: 'start' | 'end') {
+    this._isStart = side === 'start';
+  }
+
   constructor(
+    private _plt: Platform,
+    private _dom: DomController,
     elementRef: ElementRef,
     private _rendered: Renderer,
     private _zone: NgZone,
-    @Optional() private _content: Content) {
+    @Optional() private _content: Content
+  ) {
     this._element = elementRef.nativeElement;
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     this._element = null;
@@ -175,7 +188,7 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @Input()
   get reorder(): boolean {
@@ -193,10 +206,15 @@ export class ItemReorder {
 
     } else if (enabled && !this._reorderGesture) {
       console.debug('enableReorderItems');
-      this._reorderGesture = new ItemReorderGesture(this);
+      this._reorderGesture = new ItemReorderGesture(this._plt, this);
 
       this._enableReorder = true;
-      zoneRafFrames(2, () => this._visibleReorder = true);
+
+      this._dom.write(() => {
+        this._zone.run(() => {
+          this._visibleReorder = true;
+        });
+      }, 16);
     }
   }
 
@@ -225,7 +243,7 @@ export class ItemReorder {
   }
 
   _scrollContent(scroll: number) {
-    let scrollTop = this._content.getScrollTop() + scroll;
+    const scrollTop = this._content.scrollTop + scroll;
     if (scroll !== 0) {
       this._content.scrollTo(0, scrollTop, 0);
     }
@@ -237,7 +255,7 @@ export class ItemReorder {
     let len = children.length;
 
     this.setElementClass('reorder-list-active', false);
-    let transform = CSS.transform;
+    let transform = this._plt.Css.transform;
     for (let i = 0; i < len; i++) {
       (<any>children[i]).style[transform] = '';
     }
@@ -258,9 +276,9 @@ export class ItemReorder {
     let children = this._element.children;
 
     /********* DOM WRITE ********* */
-    let transform = CSS.transform;
+    let transform = this._plt.Css.transform;
     if (toIndex >= lastToIndex) {
-      for (var i = lastToIndex; i <= toIndex; i++) {
+      for (let i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i > fromIndex)
             ? `translateY(${-itemHeight}px)` : '';
@@ -269,7 +287,7 @@ export class ItemReorder {
     }
 
     if (toIndex <= lastToIndex) {
-      for (var i = toIndex; i <= lastToIndex; i++) {
+      for (let i = toIndex; i <= lastToIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i < fromIndex)
             ? `translateY(${itemHeight}px)` : '';
@@ -279,76 +297,16 @@ export class ItemReorder {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setElementClass(classname: string, add: boolean) {
     this._rendered.setElementClass(this._element, classname, add);
   }
 
   /**
-   * @private
+   * @hidden
    */
   getNativeElement(): HTMLElement {
     return this._element;
   }
-}
-
-/**
- * @private
- */
-@Component({
-  selector: 'ion-reorder',
-  template: `<ion-icon name="reorder"></ion-icon>`
-})
-export class Reorder {
-  constructor(
-    @Inject(forwardRef(() => Item)) private item: ItemReorder,
-    private elementRef: ElementRef) {
-    elementRef.nativeElement['$ionComponent'] = this;
-  }
-
-  getReorderNode(): HTMLElement {
-    let node = <any>this.item.getNativeElement();
-    return findReorderItem(node, null);
-  }
-
-  @HostListener('click', ['$event'])
-  onClick(ev) {
-    // Stop propagation if click event reaches ion-reorder
-    ev.preventDefault();
-    ev.stopPropagation();
-  }
-
-}
-
-/**
- * @private
- */
-export function findReorderItem(node: any, listNode: any): HTMLElement {
-  let nested = 0;
-  while (node && nested < 4) {
-    if (indexForItem(node) !== undefined) {
-      if (listNode && node.parentNode !== listNode) {
-        return null;
-      }
-      return node;
-    }
-    node = node.parentNode;
-    nested++;
-  }
-  return null;
-}
-
-/**
- * @private
- */
-export function indexForItem(element: any): number {
-  return element['$ionIndex'];
-}
-
-/**
- * @private
- */
-export function reorderListForItem(element: any): any {
-  return element['$ionReorderList'];
 }

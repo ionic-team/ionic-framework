@@ -17,13 +17,25 @@ module.exports = function jekyll(renderDocsProcessor) {
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
       docs.forEach(function(doc, i) {
-        docs[i].URL = doc.outputPath.replace('docs/v2//', 'docs/v2/')
+        docs[i].URL = doc.outputPath.replace('docs//', 'docs/')
                                     .replace('/index.md', '')
                                     .replace('//home/ubuntu/ionic/src', '')
-                                    .replace('//', '/');
+                                    .replace('//', '/')
+                                    .replace('content/', '');
         if (docs[i].relativePath) {
           docs[i].relativePath = doc.relativePath
                                     .replace('/home/ubuntu/ionic', '');
+        }
+        if (docs[i].href) {
+          docs[i].href = doc.href.replace('content/', '');
+        }
+        if (docs[i].description) {
+          docs[i].description = docs[i].description.replace(/(\#\#\#).+/g, (section) => {
+            const title = section.replace(/^(\#+\s?)/, '');
+            const segment = title.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase();
+
+            return `\n<h3><a class="anchor" name="${segment}" href="#${segment}">${title}</a></h3>\n`;
+          });
         }
       });
 
@@ -31,20 +43,20 @@ module.exports = function jekyll(renderDocsProcessor) {
         docType: 'api-menu',
         id: 'api-menu',
         template: 'api_menu.template.html',
-        outputPath: '_includes/v2_fluid/api_menu.html'
+        outputPath: 'content/_includes/fluid/api_menu.html'
       });
       docs.push({
         docType: 'api-menu-flat-version',
         id: 'api-menu-flat-version',
         template: 'api_menu_flat_version.template.html',
-        outputPath: '_includes/v2_fluid/api_menu_flat_' + currentVersion +
+        outputPath: 'content/_includes/fluid/api_menu_flat_' + currentVersion +
                     '.html'
       });
       docs.push({
         docType: 'api-version-select',
         id: 'api-version-select',
         template: 'api_version_select.template.html',
-        outputPath: '_includes/v2_fluid/api_version_select.html'
+        outputPath: 'content/_includes/fluid/api_version_select.html'
       });
 
       // returning docs will replace docs object in the next process

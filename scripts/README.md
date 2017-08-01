@@ -7,7 +7,7 @@ All of these commands require you to run `npm install` first. To see a full list
 
 ### Committing
 
-Please follow the commit message format in [CONTRIBUTING.md](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
+Please follow the commit message format in [CONTRIBUTING.md](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#commit-message-format).
 
 
 ### Installing Nightly Version
@@ -28,22 +28,40 @@ Run `gulp build` or `gulp watch` to watch for changes.
 
 #### Development
 
-1. Run `gulp e2e` or `gulp e2e.watch` to watch for changes.
-2. Navigate to `http://localhost:8000/dist/e2e`
+1. Run `gulp e2e.watch --folder nav/basic` to watch for changes, where `nav` is the component, and `basic` is the test name
+2. The browser will launch just like when using `ionic serve`. Make changes to an app in the `src` directory and the app will rebuild.
 
 #### Validation
 
 The following commands take longer to run because they use AoT compilation. They should really only be used to validate that our components work with AoT, and fix them if not.
 
-1. Run `gulp e2e.prod` to bundle all e2e tests, or pass a folder for a specific test. For example, `gulp e2e.prod --f=alert/basic` will build the test in `src/components/alert/test/basic`.
-2. Run `gulp e2e.watchProd` with a folder passed to watch a test. For example, `gulp e2e.watchProd --f=select/single-value` will watch the test in `src/components/select/test/single-value`.
-3. Navigate to `http://localhost:8000/dist/e2e`
+1. Run `gulp e2e.prod` to bundle all e2e tests.
+
+##### Flags
+
+- `--f | -folder` will run the command with a test folder.
+- `--debug` will run the `ionic-app-scripts` command with debug output printed.
 
 
 ### Building & Running API Demos
 
+#### Development
+
 1. Run `gulp demos` or `gulp demos.watch` to watch for changes.
 2. Navigate to `http://localhost:8000/dist/demos`
+
+#### Validation
+
+The following commands take longer to run because they use AoT compilation. They should really only be used to validate that our components work with AoT, and fix them if not.
+
+1. Run `gulp demos.prod` to bundle all demos tests. Folder is optional, see the flags section below.
+2. Run `gulp demos.watchProd` with a folder passed to watch a test. Folder is required, see the flags section below.
+3. Navigate to `http://localhost:8000/dist/demos`
+
+##### Flags
+
+- `--f | -folder` will run the command with a test folder. For example, `gulp demos.watchProd --f=alert` will build the test in `demos/alert/`.
+- `--debug` will run the `ionic-app-scripts` command with debug output printed.
 
 
 ### Building API Docs
@@ -68,22 +86,35 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Running Snapshot
 
-#### Setup
+Snapshot compares to a base snapshot made on Mac OS with retina screen (2560x1600).
+It does not work for windows, linux, or non retina macs.
 
-1. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor@2.5.1`
-2. Run `webdriver-manager update`
-3. Export `IONIC_SNAPSHOT_KEY` (get from someone)
+#### Setup (Mac OS X Only)
+
+1. Install Java JDK: `brew cask install java`
+2. Install [Protractor](https://angular.github.io/protractor/#/): `npm install -g protractor@2.5.1`
+3. Run `webdriver-manager update`
+4. Export `IONIC_SNAPSHOT_KEY` (get from someone)
 
 #### Commands
 
 - `gulp snapshot` will run the `gulp e2e.prod` task with AoT compilation.
 - `gulp snapshot.skipBuild` will skip the `gulp e2e.prod` task with AoT compilation.
-- `gulp snapshot.dev` will run a development build using the `gulp e2e` task.
-- `gulp snapshot.quick` will skip the build and run snapshot without uploading to the server.
+- `gulp e2e.prod` followed by `gulp snapshot.skipBuild` is considered best practice
 
 #### Flags
 
 - `--f | -folder` will run the command with a test folder. For example, `gulp snapshot --f=action-sheet/basic` will run snapshot for the test at `src/components/action-sheet/test/basic`.
+
+- `--concurrency` determines the number of tests to build at a time. By default, 2 tests are built concurrently. If using a quad-core (or more) CPU, it is often beneficial to run with `--concurrency 8` for example.
+
+- `--dev` runs a dev build when building the e2e tests. This build takes much less time than a production build, so it is advisable to use this when doing quick validation.
+
+#### Errors
+
+If you are having getting an error running snapshot such as `SessionNotCreatedError: session not created exception` or `UnknownError: Connection refused` the solution is to download the chromedriver from here: http://chromedriver.storage.googleapis.com/index.html?path=2.24/ and then move it into your `protractor/selenium` folder
+
+Running `webdriver-manager help` should show you what directory the webdriver is at under the options. For example, yours may be at `/usr/local/lib/node_modules/protractor/selenium` or if you use nvm `/Users/{username}/.nvm/versions/node/v7.5.0/lib/node_modules/protractor/selenium`.
 
 ### Running Tests
 
@@ -94,7 +125,7 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 **Requires Ruby. Skip this step entirely if you are unable to install Ruby.**
 
-1. See the [Sass Guidelines](https://github.com/driftyco/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
+1. See the [Sass Guidelines](https://github.com/ionic-team/ionic/blob/master/.github/CONTRIBUTING.md#sass-changes) for editing the Sass.
 2. Install the linter: `gem install scss_lint`
 3. Run `gulp lint.sass` and fix any linter errors.
 
@@ -135,13 +166,13 @@ To remove the linked version of `ionic-angular` do `npm rm ionic-angular`, and t
 
 ### Releasing Component Demos
 
-Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/driftyco/ionic-preview-app). No action is necessary.
+Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/ionic-team/ionic-preview-app). No action is necessary.
 
-If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/driftyco/ionic-preview-app#running-locally-on-the-site).
+If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/ionic-team/ionic-preview-app#running-locally-on-the-site).
 
 
 ### Releasing API Demos
 
 Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary.
 
-If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/driftyco/ionic-site) repo as a sibling of `ionic`. From `ionic` run `gulp demos` and then `gulp docs`, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.
+If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/ionic-team/ionic-site) repo as a sibling of `ionic`. From `ionic` run `gulp demos` and then `gulp docs`, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.

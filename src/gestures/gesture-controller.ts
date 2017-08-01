@@ -1,38 +1,41 @@
-import { forwardRef, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, forwardRef } from '@angular/core';
 import { App } from '../components/app/app';
 import { assert } from '../util/util';
 
-/** @private */
+/** @hidden */
 export const GESTURE_GO_BACK_SWIPE = 'goback-swipe';
 
-/** @private */
+/** @hidden */
 export const GESTURE_MENU_SWIPE = 'menu-swipe';
 
-/** @private */
+/** @hidden */
 export const GESTURE_ITEM_SWIPE = 'item-swipe';
 
-/** @private */
+/** @hidden */
 export const GESTURE_REFRESHER = 'refresher';
 
-/**
-* @private
-*/
-export const enum GesturePriority {
-  Minimun = -10000,
-  VeryLow = -20,
-  Low = -10,
-  Normal = 0,
-  High = 10,
-  VeryHigh = 20,
+/** @hidden */
+export const GESTURE_TOGGLE = 'toggle';
 
-  SlidingItem = Low,
-  MenuSwipe = High,
-  GoBackSwipe = VeryHigh,
-  Refresher = Normal,
-}
+
+/** @hidden */
+export const GESTURE_PRIORITY_SLIDING_ITEM = -10;
+
+/** @hidden */
+export const GESTURE_PRIORITY_REFRESHER = 0;
+
+/** @hidden */
+export const GESTURE_PRIORITY_MENU_SWIPE = 10;
+
+/** @hidden */
+export const GESTURE_PRIORITY_GO_BACK_SWIPE = 20;
+
+/** @hidden */
+export const GESTURE_PRIORITY_TOGGLE = 30;
+
 
 /**
-* @private
+* @hidden
 */
 export interface GestureOptions {
   name: string;
@@ -41,7 +44,7 @@ export interface GestureOptions {
 }
 
 /**
-* @private
+* @hidden
 */
 export interface BlockerOptions {
   disableScroll?: boolean;
@@ -49,7 +52,7 @@ export interface BlockerOptions {
 }
 
 /**
-* @private
+* @hidden
 */
 export const BLOCK_ALL: BlockerOptions = {
   disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE],
@@ -57,7 +60,7 @@ export const BLOCK_ALL: BlockerOptions = {
 };
 
 /**
-* @private
+* @hidden
 */
 @Injectable()
 export class GestureController {
@@ -107,7 +110,7 @@ export class GestureController {
       return false;
     }
     let requestedStart = this.requestedStart;
-    let maxPriority = GesturePriority.Minimun;
+    let maxPriority = -10000;
     for (let gestureID in requestedStart) {
       maxPriority = Math.max(maxPriority, requestedStart[gestureID]);
     }
@@ -115,6 +118,7 @@ export class GestureController {
     if (maxPriority === priority) {
       this.capturedID = id;
       this.requestedStart = {};
+      console.debug(`${gestureName} captured!`);
       return true;
     }
     delete requestedStart[id];
@@ -150,7 +154,7 @@ export class GestureController {
     this.disabledScroll.add(id);
     if (this._app && isEnabled && this.isScrollDisabled()) {
       console.debug('GestureController: Disabling scrolling');
-      this._app.setScrollDisabled(true);
+      this._app._setDisableScroll(true);
     }
   }
 
@@ -159,18 +163,19 @@ export class GestureController {
     this.disabledScroll.delete(id);
     if (this._app && isDisabled && !this.isScrollDisabled()) {
       console.debug('GestureController: Enabling scrolling');
-      this._app.setScrollDisabled(false);
+      this._app._setDisableScroll(false);
     }
   }
 
   canStart(gestureName: string): boolean {
     if (this.capturedID) {
+      console.debug(`${gestureName} can not start becuse gesture was already captured`);
       // a gesture already captured
       return false;
     }
 
     if (this.isDisabled(gestureName)) {
-      console.debug('GestureController: Disabled', gestureName);
+      console.debug(`${gestureName} is disabled`);
       return false;
     }
     return true;
@@ -186,16 +191,13 @@ export class GestureController {
 
   isDisabled(gestureName: string): boolean {
     let disabled = this.disabledGestures[gestureName];
-    if (disabled && disabled.size > 0) {
-      return true;
-    }
-    return false;
+    return !!(disabled && disabled.size > 0);
   }
 
 }
 
 /**
-* @private
+* @hidden
 */
 export class GestureDelegate {
 
@@ -253,7 +255,7 @@ export class GestureDelegate {
 }
 
 /**
-* @private
+* @hidden
 */
 export class BlockerDelegate {
 

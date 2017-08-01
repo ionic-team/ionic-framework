@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Stopwatch</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Tab 3</h2>
+  <p>
+    <button ion-button (click)="presentAlert()">Present Alert</button>
+    <button ion-button (click)="presentModal()">Present Modal</button>
+  </p>
+  <p>
+    <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
+    <button ion-button (click)="appNavPop()">App Nav Pop</button>
+  </p>
+
+  <ion-list [virtualScroll]="items">
+
+    <ion-item *virtualItem="let item">
+      Item: {{item}}
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

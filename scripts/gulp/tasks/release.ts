@@ -1,10 +1,10 @@
-import { exec, spawnSync, spawn } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
-
+import { exec, spawnSync } from 'child_process';
+import { spawn } from 'cross-spawn';
+import { writeFileSync } from 'fs';
 import * as changelog from 'conventional-changelog';
 import * as GithubApi from 'github';
-import * as glob from 'glob';
-import { dest, src, task } from 'gulp';
+import { dest, src, start, task } from 'gulp';
+import { prompt } from 'inquirer';
 import { rollup } from 'rollup';
 import * as commonjs from 'rollup-plugin-commonjs';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
@@ -15,7 +15,9 @@ import { obj } from 'through2';
 import { DIST_BUILD_UMD_BUNDLE_ENTRYPOINT, DIST_BUILD_ROOT, DIST_BUNDLE_ROOT, PROJECT_ROOT, SCRIPTS_ROOT, SRC_ROOT } from '../constants';
 import { compileSass, copyFonts, createTimestamp, setSassIonicVersion, writePolyfills } from '../util';
 
+var promptAnswers;
 
+// Nightly: releases a nightly version
 task('nightly', (done: (err: any) => void) => {
   runSequence('release.pullLatest',
               'validate',
@@ -24,27 +26,51 @@ task('nightly', (done: (err: any) => void) => {
               done);
 });
 
+// Release: prompt, update, publish
 task('release', (done: (err: any) => void) => {
   runSequence('release.pullLatest',
               'validate',
               'release.prepareReleasePackage',
-              'release.copyProdVersion',
-              'release.prepareChangelog',
-              'release.publishNpmRelease',
-              'release.publishGithubRelease',
+              'release.promptVersion',
+              'release.update',
+              'release.publish',
               done);
 });
 
+// Release.test: prompt and update
 task('release.test', (done: (err: any) => void) => {
   runSequence('validate',
               'release.prepareReleasePackage',
-              'release.copyProdVersion',
+              'release.promptVersion',
+              'release.update',
               done);
 });
 
+// Release.update: update package.json and changelog
+task('release.update', (done: (err: any) => void) => {
+  if (promptAnswers.confirmRelease === 'yes') {
+    runSequence('release.copyProdVersion',
+                'release.prepareChangelog',
+                done);
+  } else {
+    console.log('Did not run release.update tasks, aborted release');
+    done(null);
+  }
+});
+
+// Release.publish: publish to GitHub and npm
+task('release.publish', (done: (err: any) => void) => {
+  if (promptAnswers.confirmRelease === 'yes') {
+    runSequence('release.publishNpmRelease',
+                'release.publishGithubRelease',
+                done);
+  } else {
+    console.log('Did not run release.publish tasks, aborted release');
+    done(null);
+  }
+});
 
 task('release.publishGithubRelease', (done: Function) => {
-
   const packageJSON = require('../../../package.json');
 
   const github = new GithubApi({
@@ -61,7 +87,7 @@ task('release.publishGithubRelease', (done: Function) => {
   })
   .pipe(obj(function(file, enc, cb){
     github.releases.createRelease({
-      owner: 'driftyco',
+      owner: 'ionic-team',
       repo: 'ionic',
       target_commitish: 'master',
       tag_name: 'v' + packageJSON.version,
@@ -87,11 +113,73 @@ task('release.publishNpmRelease', (done: Function) => {
   });
 });
 
+task('release.promptVersion', (done: Function) => {
+  prompt([
+    {
+      type: 'list',
+      name: 'release',
+      message: 'What type of release is this?',
+      choices: [
+        {
+          name: 'Major:    Incompatible API changes',
+          value: 'major'
+        }, {
+          name: 'Minor:    Backwards-compatible functionality',
+          value: 'minor'
+        }, {
+          name: 'Patch:    Backwards-compatible bug fixes',
+          value: 'patch'
+        }, {
+          name: 'Premajor',
+          value: 'premajor'
+        }, {
+          name: 'Preminor',
+          value: 'preminor'
+        }, {
+          name: 'Prepatch',
+          value: 'prepatch'
+        }, {
+          name: 'Prerelease',
+          value: 'prerelease'
+        }
+      ]
+    }, {
+      type: 'list',
+      name: 'confirmRelease',
+      default: 'no',
+      choices: [
+        {
+          name: 'Yes',
+          value: 'yes'
+        }, {
+          name: 'Abort release',
+          value: 'no'
+        }
+      ],
+      message: function(answers) {
+        var SEP = '---------------------------------';
+        console.log('\n' + SEP + '\n' + getVersion(answers) + '\n' + SEP + '\n');
+        return 'Are you sure you want to proceed with the release version above?';
+      }
+    }
+  ]).then(function (answers) {
+    // Continue with the release if version was confirmed
+    promptAnswers = answers;
+    done();
+  });
+});
+
+function getVersion(answers) {
+  const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
+
+  return semver.inc(sourcePackageJSON.version, answers.release, true);
+}
+
 task('release.copyProdVersion', () => {
   // Increment the version and update the source package file
   const sourcePackageJSON = require(`${PROJECT_ROOT}/package.json`);
 
-  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, 'prerelease', true);
+  sourcePackageJSON.version = semver.inc(sourcePackageJSON.version, promptAnswers.release, true);
 
   const sourcePrettyPrintedJson = JSON.stringify(sourcePackageJSON, null, 2);
   writeFileSync(`${PROJECT_ROOT}/package.json`, sourcePrettyPrintedJson);

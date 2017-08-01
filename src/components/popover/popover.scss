@@ -5,11 +5,10 @@
 
 
 ion-popover {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+
   z-index: $z-index-overlay;
 
   display: flex;
@@ -33,6 +32,11 @@ ion-popover {
   overflow: auto;
 
   flex-direction: column;
+}
+
+.popover-content ion-content,
+.popover-content .scroll-content {
+  contain: none;
 }
 
 .popover-content .scroll-content {

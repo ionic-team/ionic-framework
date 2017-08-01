@@ -1,10 +1,11 @@
 import { task, src, dest } from 'gulp';
 import { writePolyfills } from '../util';
+import { join } from 'path';
 
 task('polyfill', ['polyfill.copy-readme', 'polyfill.write']);
 
 task('polyfill.write', (done: Function) => {
-  writePolyfills('dist/ionic-angular/polyfills').then(() => {
+  writePolyfills(join('dist', 'ionic-angular', 'polyfills')).then(() => {
     done();
   }).catch(err => {
     done(err);
@@ -12,6 +13,6 @@ task('polyfill.write', (done: Function) => {
 });
 
 task('polyfill.copy-readme', (done: Function) => {
-  return src('scripts/polyfill/readme.md')
-    .pipe(dest('dist/ionic-angular/polyfills/'), done);
+  return src(join('scripts', 'polyfill', 'readme.md'))
+    .pipe(dest(join('dist', 'ionic-angular', 'polyfills')), done);
 });

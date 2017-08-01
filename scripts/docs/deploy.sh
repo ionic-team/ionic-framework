@@ -19,8 +19,9 @@ function run {
   cd ..
   VERSION=$(readJsonProp "package.json" "version")
 
-  #compile API Demos
-  #./node_modules/.bin/gulp docs.demos --production=true
+  # download and copy over API Demos
+  ./node_modules/.bin/gulp demos.download
+  ./node_modules/.bin/gulp docs.demos --production=true
 
   # if release, copy old version to seperate folder and blow out docs root api
   if $IS_RELEASE; then
@@ -37,6 +38,8 @@ function run {
     ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME" --initial-build true
     ./node_modules/.bin/gulp docs.dgeni --doc-version="$VERSION_NAME"
     ./node_modules/.bin/gulp docs.dgeni --doc-version="nightly"
+
+    ./node_modules/.bin/gulp docs.homepageVersionUpdate
 
   else
 
@@ -60,10 +63,10 @@ function run {
   # if no changes, don't commit
   if [[ "$CHANGES" == "" ]]; then
     echo "-- No changes detected for the following commit, docs not updated."
-    echo "https://github.com/driftyco/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1"
+    echo "https://github.com/ionic-team/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1"
   else
     git add -A
-    git commit -am "Automated build of ionic  v$VERSION driftyco/$CIRCLE_PROJECT_REPONAME@$CIRCLE_SHA1"
+    git commit -am "Automated build of ionic  v$VERSION ionic-team/$CIRCLE_PROJECT_REPONAME@$CIRCLE_SHA1"
     # in case a different commit was pushed to ionic-site during doc/demo gen,
     # try to rebase around it before pushing
     git fetch

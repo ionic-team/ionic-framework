@@ -1,0 +1,199 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Select</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-list>
+    <ion-list-header>Single Value Select</ion-list-header>
+
+    <ion-item>
+      <ion-label>Gender</ion-label>
+      <ion-select [(ngModel)]="gender">
+        <ion-option value="f">Female</ion-option>
+        <ion-option value="m">Male</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Hair Color</ion-label>
+      <ion-select [(ngModel)]="hairColor" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
+        <ion-option *ngFor="let o of hairColorData" [value]="o">{{o.text}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gaming</ion-label>
+      <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss">
+        <ion-option value="nes">NES</ion-option>
+        <ion-option value="n64">Nintendo64</ion-option>
+        <ion-option value="ps">PlayStation</ion-option>
+        <ion-option value="genesis">Sega Genesis</ion-option>
+        <ion-option value="saturn">Sega Saturn</ion-option>
+        <ion-option value="snes">SNES</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-select (ionChange)="monthChange($event)">
+        <ion-option value="01">January</ion-option>
+        <ion-option value="02">February</ion-option>
+        <ion-option value="03" selected="true">March</ion-option>
+        <ion-option value="04">April</ion-option>
+        <ion-option value="05">May</ion-option>
+        <ion-option value="06">June</ion-option>
+        <ion-option value="07">July</ion-option>
+        <ion-option value="08">August</ion-option>
+        <ion-option value="09">September</ion-option>
+        <ion-option value="10">October</ion-option>
+        <ion-option value="11">November</ion-option>
+        <ion-option value="12">December</ion-option>
+      </ion-select>
+      <ion-select (ionChange)="yearChange($event)">
+        <ion-option>1989</ion-option>
+        <ion-option>1990</ion-option>
+        <ion-option>1991</ion-option>
+        <ion-option>1992</ion-option>
+        <ion-option>1993</ion-option>
+        <ion-option selected="true">1994</ion-option>
+        <ion-option>1995</ion-option>
+        <ion-option>1996</ion-option>
+        <ion-option>1997</ion-option>
+        <ion-option>1998</ion-option>
+        <ion-option>1999</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Popover Interface Select</ion-list-header>
+
+    <ion-item>
+      <ion-label>Gender</ion-label>
+      <ion-select [(ngModel)]="gender" interface="popover">
+        <ion-option value="f">Female</ion-option>
+        <ion-option value="m">Male</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Gaming</ion-label>
+      <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss" interface="popover">
+        <ion-option value="nes">NES</ion-option>
+        <ion-option value="n64">Nintendo64</ion-option>
+        <ion-option value="ps">PlayStation</ion-option>
+        <ion-option value="genesis">Sega Genesis</ion-option>
+        <ion-option value="saturn">Sega Saturn</ion-option>
+        <ion-option value="snes">SNES</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-select (ionChange)="monthChange($event)" interface="popover">
+        <ion-option value="01">January</ion-option>
+        <ion-option value="02">February</ion-option>
+        <ion-option value="03" selected="true">March</ion-option>
+        <ion-option value="04">April</ion-option>
+        <ion-option value="05">May</ion-option>
+        <ion-option value="06">June</ion-option>
+        <ion-option value="07">July</ion-option>
+        <ion-option value="08">August</ion-option>
+        <ion-option value="09">September</ion-option>
+        <ion-option value="10">October</ion-option>
+        <ion-option value="11">November</ion-option>
+        <ion-option value="12">December</ion-option>
+      </ion-select>
+      <ion-select (ionChange)="yearChange($event)" interface="popover">
+        <ion-option>1989</ion-option>
+        <ion-option>1990</ion-option>
+        <ion-option>1991</ion-option>
+        <ion-option>1992</ion-option>
+        <ion-option>1993</ion-option>
+        <ion-option selected="true">1994</ion-option>
+        <ion-option>1995</ion-option>
+        <ion-option>1996</ion-option>
+        <ion-option>1997</ion-option>
+        <ion-option>1998</ion-option>
+        <ion-option>1999</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Multiple Value Select</ion-list-header>
+
+    <ion-item>
+      <ion-label>Toppings</ion-label>
+      <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
+        <ion-option value="bacon">Bacon</ion-option>
+        <ion-option value="olives">Black Olives</ion-option>
+        <ion-option value="xcheese">Extra Cheese</ion-option>
+        <ion-option value="peppers">Green Peppers</ion-option>
+        <ion-option value="mushrooms">Mushrooms</ion-option>
+        <ion-option value="onions">Onions</ion-option>
+        <ion-option value="pepperoni">Pepperoni</ion-option>
+        <ion-option value="pineapple">Pineapple</ion-option>
+        <ion-option value="sausage">Sausage</ion-option>
+        <ion-option value="Spinach">Spinach</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Pets</ion-label>
+      <ion-select [(ngModel)]="pets" multiple="true" [selectOptions]="petAlertOpts">
+        <ion-option *ngFor="let o of petData" [value]="o.value">{{o.text}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Skittles</ion-label>
+      <ion-select [(ngModel)]="skittles" multiple="true" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
+        <ion-option *ngFor="let o of skittlesData" [value]="o">{{o.text}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Disabled</ion-label>
+      <ion-select multiple disabled="true">
+        <ion-option checked="true">Selected Text</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Action Sheet Interface Select</ion-list-header>
+
+    <ion-item>
+      <ion-label>Mute Notifications</ion-label>
+      <ion-select [(ngModel)]="notifications" interface="action-sheet">
+        <ion-option value="mute_15">For 15 Minutes</ion-option>
+        <ion-option value="mute_1">For 1 Hour</ion-option>
+        <ion-option value="mute_23">For 24 Hours</ion-option>
+        <ion-option value="mute_inf">Until I turn it back on</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Rating</ion-label>
+      <ion-select [(ngModel)]="rating" interface="action-sheet">
+        <ion-option value="1">1 Star</ion-option>
+        <ion-option value="2">2 Stars</ion-option>
+        <ion-option value="3">3 Stars</ion-option>
+        <ion-option value="4">4 Stars</ion-option>
+        <ion-option value="5">5 Stars</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

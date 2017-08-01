@@ -1,8 +1,37 @@
-import { getScrollData } from '../input-base';
+import { TextInput, getScrollData } from '../input';
 import { ContentDimensions } from '../../content/content';
+import { mockApp, mockConfig, mockDomController, mockElementRef, mockElementRefEle, mockForm, mockItem, mockPlatform, mockRenderer } from '../../../util/mock-providers';
+import { TEXT_CORPUS, commonInputTest } from '../../../util/input-tester';
 
+
+function newInput(): TextInput {
+  const platform = mockPlatform();
+  const config = mockConfig();
+  const app = mockApp(config, platform);
+  const elementRef = mockElementRef();
+  const renderer = mockRenderer();
+  const item: any = mockItem();
+  const form = mockForm();
+  const dom = mockDomController(platform);
+  const input = new TextInput(config, platform, form, app, elementRef, renderer, null, item, null, dom);
+  input._native = mockElementRefEle(document.createElement('input'));
+  return input;
+}
 
 describe('text input', () => {
+
+  it('should pass common test', () => {
+    const textInput = newInput();
+    const ele = textInput._native.nativeElement;
+    textInput._item._elementRef = mockElementRefEle(document.createElement('div'));
+    commonInputTest(textInput, {
+      defaultValue: '',
+      corpus: TEXT_CORPUS,
+      onValueChange: (value) => ele.value === value,
+    });
+
+  });
+
 
   describe('getScrollData', () => {
 

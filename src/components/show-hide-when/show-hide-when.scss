@@ -5,10 +5,12 @@
 
 // Applied by the showWhen directive
 .hidden-show-when {
+  // scss-lint:disable ImportantRule
   display: none !important;
 }
 
 // Applied by the hideWhen directive
 .hidden-hide-when {
+  // scss-lint:disable ImportantRule
   display: none !important;
 }

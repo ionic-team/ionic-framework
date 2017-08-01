@@ -8,22 +8,22 @@
  * @usage
  * ```ts
  * export class MyClass{
- *  constructor(public params: NavParams){
+ *  constructor(public navParams: NavParams){
  *    // userParams is an object we have in our nav-parameters
- *    this.params.get('userParams');
+ *    this.navParams.get('userParams');
  *  }
  * }
  * ```
- * @demo /docs/v2/demos/src/nav-params/
- * @see {@link /docs/v2/components#navigation Navigation Component Docs}
+ * @demo /docs/demos/src/nav-params/
+ * @see {@link /docs/components#navigation Navigation Component Docs}
  * @see {@link ../NavController/ NavController API Docs}
- * @see {@link ../Nav/ Nav API Docs}
- * @see {@link ../NavPush/ NavPush API Docs}
+ * @see {@link /docs/api/components/nav/Nav/ Nav API Docs}
+ * @see {@link /docs/api/components/nav/NavPush/ NavPush API Docs}
  */
 export class NavParams {
 
   /**
-   * @private
+   * @hidden
    * @param {TODO} data  TODO
    */
   constructor(public data: any = {}) {}
@@ -33,15 +33,15 @@ export class NavParams {
    *
    * ```ts
    * export class MyClass{
-   *  constructor(public params: NavParams){
+   *  constructor(public navParams: NavParams){
    *    // userParams is an object we have in our nav-parameters
-   *    this.params.get('userParams');
+   *    this.navParams.get('userParams');
    *  }
    * }
    * ```
    *
    *
-   * @param {string} parameter Which param you want to look up
+   * @param {string} param Which param you want to look up
    */
   get(param: string): any {
     return this.data[param];

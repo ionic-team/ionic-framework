@@ -5,7 +5,7 @@ import { InfiniteScroll } from './infinite-scroll';
 
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-infinite-scroll-content',
@@ -36,7 +36,7 @@ export class InfiniteScrollContent {
   constructor(public inf: InfiniteScroll, private _config: Config) {}
 
   /**
-   * @private
+   * @hidden
    */
   ngOnInit() {
     if (!this.loadingSpinner) {

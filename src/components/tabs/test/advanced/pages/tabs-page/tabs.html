@@ -1,0 +1,8 @@
+
+<ion-tabs preloadTabs="false" (ionChange)="onTabChange($event)">
+  <ion-tab tabTitle="Recents" tabIcon="call" [root]="rootPage1" swipeBackEnabled="true"></ion-tab>
+  <ion-tab tabTitle="Favorites" tabIcon="star" [root]="rootPage2" tabsHideOnSubPages="false"></ion-tab>
+  <ion-tab tabTitle="Settings" tabIcon="settings" [root]="rootPage3"></ion-tab>
+  <ion-tab tabTitle="Chat" tabIcon="chatbubbles" (ionSelect)="chat()" [show]="showTab"></ion-tab>
+  <ion-tab tabTitle="Logout" tabIcon="exit" (ionSelect)="logout()"></ion-tab>
+</ion-tabs>

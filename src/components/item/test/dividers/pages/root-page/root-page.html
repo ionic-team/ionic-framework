@@ -1,0 +1,108 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Item Divider</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+  <ion-item-divider>
+    Divider by itself
+  </ion-item-divider>
+
+  <ion-list>
+    <ion-item-divider>
+      Divider in List
+    </ion-item-divider>
+    <ion-item-divider color="danger">
+      Danger Divider in List
+    </ion-item-divider>
+  </ion-list>
+
+  <ion-item-group>
+    <ion-item-divider>
+      Divider in Item Group
+    </ion-item-divider>
+    <ion-item-divider color="secondary">
+      Secondary Divider in Item Group
+    </ion-item-divider>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item>
+      <h3 ion-text color="secondary">Secondary header</h3>
+      Plain Ol' div with some text
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider>
+      Item Divider <span ion-text color="danger">Danger Span</span>
+      <button ion-button item-end>button</button>
+    </ion-item-divider>
+
+    <ion-item text-wrap class="custom-item">
+      Multiline text that should wrap when it is too long
+      to fit on one line in the item. Attribute on .item
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="dark">
+      <button ion-button item-start clear>
+        <ion-icon name="cloudy"></ion-icon>
+      </button>
+      <button ion-button item-start clear color="light">
+        <ion-icon name="rainy"></ion-icon>
+      </button>
+      Dark <h5 ion-text color="primary">Primary h5</h5>
+    </ion-item-divider>
+
+    <ion-item text-wrap>
+      <h1>H1 Title Text</h1>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">
+      <ion-avatar item-start>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      Light
+      <button ion-button item-end clear color="danger">
+        <ion-icon name="sunny"></ion-icon>
+      </button>
+    </ion-item-divider>
+
+    <ion-item-divider color="primary">
+      Primary
+      <ion-thumbnail item-end>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-thumbnail>
+    </ion-item-divider>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="secondary">Secondary</ion-item-divider>
+
+    <ion-item>
+      <ion-label>
+        Column 1
+      </ion-label>
+      <ion-label>
+        Column 2
+      </ion-label>
+      <ion-label>
+        Column 3
+      </ion-label>
+    </ion-item>
+  </ion-item-group>
+</ion-content>
+
+<style>
+  img {
+    height: 100px;
+  }
+</style>

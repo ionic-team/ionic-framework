@@ -1,0 +1,224 @@
+<ion-header>
+
+  <ion-toolbar color="primary">
+    <ion-title>Inset Focus</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="reload()">
+        Reload
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <p>Paragraph text with a <a href="#">link</a>.</p>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>Text 1:</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item>
+      Item with button right
+      <button ion-button item-end>Button 1</button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label id="my-label1">Text 2:</ion-label>
+      <ion-input value="value"></ion-input>
+    </ion-item>
+
+    <button ion-item>
+      Button Item
+    </button>
+
+    <ion-item>
+      <ion-label>Text 3:</ion-label>
+      <ion-input></ion-input>
+      <button ion-button clear item-end>
+        <ion-icon name="power"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Comments:</ion-label>
+      <ion-textarea>Comment value</ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="globe" item-start></ion-icon>
+      <ion-label>Website:</ion-label>
+      <ion-input value="http://ionic.io/" type="url"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="mail" item-start></ion-icon>
+      <ion-label>Email:</ion-label>
+      <ion-input value="email6@email.com" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="create" item-start></ion-icon>
+      <ion-label>Feedback:</ion-label>
+      <ion-textarea placeholder="Placeholder Text"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Toggle</ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>More Info:</ion-label>
+      <ion-input placeholder="Placeholder Text"></ion-input>
+      <ion-icon name="flag" item-end></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Checkbox</ion-label>
+      <ion-checkbox></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Score:</ion-label>
+      <ion-input value="10" type="number"></ion-input>
+      <button ion-button outline item-end>Update</button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>First Name:</ion-label>
+      <ion-input value="Lightning"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Last Name:</ion-label>
+      <ion-input value="McQueen"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Message:</ion-label>
+      <ion-textarea value="KA-CHOW!"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      Item
+    </ion-item>
+
+    <ion-item>
+      Item
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list radio-group>
+
+    <ion-list-header>
+      Radio Group
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Radio Button 1</ion-label>
+      <ion-radio value="1"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Radio Button 2</ion-label>
+      <ion-radio value="2"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Radio Button 3</ion-label>
+      <ion-radio value="3"></ion-radio>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label fixed>fixed input 16:</ion-label>
+      <ion-input value="fixed input 16"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>fixed input 15:</ion-label>
+      <ion-input value="fixed input 15"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="placeholder extarea 14"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>floating input 13:</ion-label>
+      <ion-input value=""></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input value="placeholder input 12"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>fixed textarea 11:</ion-label>
+      <ion-textarea></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>stacked input 10:</ion-label>
+      <ion-input value="stacked input 10"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>inline input 9:</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>stacked textarea 8:</ion-label>
+      <ion-textarea value="stacked textarea 8"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>fixed input 7:</ion-label>
+      <ion-input value="fixed input 7"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input value="inline input 6"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="placeholder textarea 5"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Bottom input 4:</ion-label>
+      <ion-input value="bottom input 4"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="placeholder input 3"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="placeholder textarea 2"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>inline input 1:</ion-label>
+      <ion-input value="inline input 1"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Disabled Input:</ion-label>
+      <ion-input disabled value="disabled input 1"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

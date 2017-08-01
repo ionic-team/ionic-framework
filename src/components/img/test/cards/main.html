@@ -1,0 +1,38 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Img Cards</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card *ngFor="let item of items">
+    <ion-card-header>
+      Item {{ item }}
+    </ion-card-header>
+
+    <ion-item *ngIf="item % 2 == 0">
+      <ion-img width="68px" height="50px" item-start src="assets/img/ghostbusters.jpg"></ion-img>
+      <h2>Item thumbnail right</h2>
+      <h3>ion-img left</h3>
+      <ion-thumbnail item-end>
+        <ion-img src="assets/img/bandit.jpg"></ion-img>
+      </ion-thumbnail>
+    </ion-item>
+
+    <ion-item *ngIf="item % 2 == 1">
+      <ion-avatar item-start>
+        <ion-img src="assets/img/blues-brothers.jpg"></ion-img>
+      </ion-avatar>
+      <h2>Item avatar left</h2>
+      <h3>ion-img right</h3>
+      <p>Isn't it beautiful.</p>
+      <ion-img width="68px" height="50px" item-end src="assets/img/ghostbusters.jpg"></ion-img>
+    </ion-item>
+
+  </ion-card>
+
+</ion-content>

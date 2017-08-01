@@ -1,0 +1,124 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>List Headers</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <div>
+    <ion-fab top center>
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </div>
+  <ion-fab bottom center>
+    <button ion-fab><ion-icon name="close"></ion-icon></button>
+  </ion-fab>
+
+  <ion-list>
+
+    <ion-list-header>
+      List Header
+      <ion-icon item-end name="star" color="primary"></ion-icon>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon name="wifi" item-start></ion-icon>
+      <ion-label>Wifi</ion-label>
+      <ion-toggle></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="heart" item-start></ion-icon>
+      Affection
+      <ion-note item-end>
+        Very Little
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="home" item-start></ion-icon>
+      Home
+      <ion-note item-end color="danger">
+        Where the heart is
+      </ion-note>
+    </ion-item>
+
+  </ion-list>
+
+
+  <ion-list>
+
+    <ion-list-header>
+      List Header
+      <button ion-button item-end outline>Info</button>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon name="color-wand" item-start></ion-icon>
+      <ion-label>Magic</ion-label>
+      <ion-toggle checked="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="star" item-start></ion-icon>
+      Star status
+      <ion-note item-end>
+        Super
+      </ion-note>
+    </ion-item>
+
+  </ion-list>
+
+
+  <ion-list>
+
+    <ion-list-header>
+      List Header with text that is too long to fit inside the list header
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon name="pizza" item-start></ion-icon>
+      Pizza
+      <ion-note item-end>
+        Always
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="beer" item-start></ion-icon>
+      Beer
+      <ion-note item-end>
+        Yes Plz
+      </ion-note>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="wine" item-start></ion-icon>
+      Wine
+      <ion-note item-end>
+        All the time
+      </ion-note>
+    </ion-item>
+
+  </ion-list>
+
+
+  <ion-list>
+
+    <ion-item>
+      <ion-icon name="chatboxes" item-start></ion-icon>
+      New List, no header, Item 1
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="chatboxes" item-start></ion-icon>
+      New List, no header, Item 2
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

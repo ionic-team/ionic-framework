@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Img: Basic</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list no-margin>
+
+    <ion-item>
+
+      <ion-avatar item-start>
+        <ion-img></ion-img>
+      </ion-avatar>
+
+      Unloaded Avatar
+
+      <ion-avatar item-end>
+        <ion-img></ion-img>
+      </ion-avatar>
+
+    </ion-item>
+
+    <ion-item>
+
+      <ion-avatar item-start>
+        <ion-img src="assets/img/blues-brothers.jpg"></ion-img>
+      </ion-avatar>
+
+      Loaded Avatar
+
+      <ion-avatar item-end>
+        <ion-img src="assets/img/bueller.jpg"></ion-img>
+      </ion-avatar>
+
+    </ion-item>
+
+    <ion-item>
+
+      <ion-thumbnail item-start>
+        <ion-img></ion-img>
+      </ion-thumbnail>
+
+      Unloaded Thumbnail
+
+      <ion-thumbnail item-end>
+        <ion-img></ion-img>
+      </ion-thumbnail>
+
+    </ion-item>
+
+    <ion-item>
+
+      <ion-avatar item-start>
+        <ion-img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="></ion-img>
+      </ion-avatar>
+
+      Datauri
+
+      <ion-thumbnail item-end>
+        <ion-img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="></ion-img>
+      </ion-thumbnail>
+
+    </ion-item>
+
+    <ion-item>
+
+      <ion-thumbnail item-start>
+        <ion-img src="assets/img/delorean.jpg"></ion-img>
+      </ion-thumbnail>
+
+      Loaded Thumbnail
+
+      <ion-thumbnail item-end>
+        <ion-img src="assets/img/batmobile.jpg"></ion-img>
+      </ion-thumbnail>
+
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    Default ion-img w/in content, display: inline-block.
+    <ion-img alt="Smokey" width="150" height="112" src="assets/img/bandit.jpg"></ion-img>
+    has width, height and alt set.
+  </div>
+
+  <p margin>
+    custom component <code>&lt;my-img&gt;</code> inside of a loop of <code>&lt;ion-col&gt;</code> elements
+    which passes the width, height, and img src from an array of data to the <code>&lt;ion-img&gt;</code>
+  </p>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let image of images">
+        <my-img [width]="image.width" [height]="image.height" [src]="image.src"></my-img>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

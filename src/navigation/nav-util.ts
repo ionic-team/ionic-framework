@@ -1,37 +1,45 @@
 import { Renderer, TypeDecorator } from '@angular/core';
-
 import { DeepLinker } from './deep-linker';
+import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
-import { isViewController, ViewController } from './view-controller';
+import { ViewController, isViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 
 
-export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any): ViewController {
+export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?: any): Promise<ViewController> {
+  if (typeof nameOrPageOrView === 'function') {
+    return Promise.resolve(
+      new ViewController(nameOrPageOrView, params)
+    );
+  }
+
+  if (typeof nameOrPageOrView === 'string') {
+    return linker.getComponentFromName(nameOrPageOrView).then((component) => {
+      const vc = new ViewController(component, params);
+      vc.id = nameOrPageOrView;
+      return vc;
+    });
+  }
+
+  return Promise.resolve(null);
+}
+
+export function convertToView(linker: DeepLinker, nameOrPageOrView: any, params: any): Promise<ViewController> {
   if (nameOrPageOrView) {
     if (isViewController(nameOrPageOrView)) {
       // is already a ViewController
-      return nameOrPageOrView;
+      return Promise.resolve(<ViewController>nameOrPageOrView);
     }
-    if (typeof nameOrPageOrView === 'function') {
-      // is a page component, now turn it into a ViewController
-      return new ViewController(nameOrPageOrView, params);
-    }
-    if (typeof nameOrPageOrView === 'string') {
-      // is a string, see if it matches a
-      const component = linker.getComponentFromName(nameOrPageOrView);
-      if (component) {
-        // found a page component in the link config by name
-        return new ViewController(component, params);
-      }
-    }
+
+    return getComponent(linker, nameOrPageOrView, params);
   }
-  console.error(`invalid page component: ${nameOrPageOrView}`);
-  return null;
+
+  return Promise.resolve(null);
 }
 
-export function convertToViews(linker: DeepLinker, pages: any[]): ViewController[] {
-  const views: ViewController[] = [];
+export function convertToViews(linker: DeepLinker, pages: any[]): Promise<ViewController[]> {
+  const views: Promise<ViewController>[] = [];
   if (isArray(pages)) {
     for (var i = 0; i < pages.length; i++) {
       var page = pages[i];
@@ -48,7 +56,7 @@ export function convertToViews(linker: DeepLinker, pages: any[]): ViewController
       }
     }
   }
-  return views;
+  return Promise.all(views);
 }
 
 let portalZindex = 9999;
@@ -56,7 +64,9 @@ let portalZindex = 9999;
 export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string, renderer: Renderer) {
   if (enteringView) {
     if (nav._isPortal) {
-      enteringView._setZIndex(nav._zIndexOffset + portalZindex, renderer);
+      if (direction === DIRECTION_FORWARD) {
+        enteringView._setZIndex(nav._zIndexOffset + portalZindex, renderer);
+      }
       portalZindex++;
       return;
     }
@@ -77,52 +87,55 @@ export function setZIndex(nav: NavControllerBase, enteringView: ViewController, 
   }
 }
 
-export function isTabs(nav: any) {
+export function isTabs(nav: any): boolean {
   // Tabs (ion-tabs)
   return !!nav && !!nav.getSelected;
 }
 
-export function isTab(nav: any) {
+export function isTab(nav: any): boolean {
   // Tab (ion-tab)
   return !!nav && isPresent(nav._tabId);
 }
 
-export function isNav(nav: any) {
+export function isNav(nav: any): boolean {
   // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
-  return !!nav && !!nav.push;
+  return !!nav && !!nav.push && nav.getType() === 'nav';
 }
 
-// public link interface
-export interface DeepLinkMetadataType {
-  name: string;
-  segment?: string;
-  defaultHistory?: any[];
+export function linkToSegment(navId: string, type: string, secondaryId: string, link: NavLink): NavSegment {
+  const segment = <NavSegment> Object.assign({}, link);
+  segment.navId = navId;
+  segment.type = type;
+  segment.secondaryId = secondaryId;
+  return segment;
 }
 
 /**
- * @private
+ * @hidden
  */
-export class DeepLinkMetadata implements DeepLinkMetadataType {
-  component: any;
-  name: string;
+export class DeepLinkMetadata implements IonicPageMetadata {
+  component?: any;
+  loadChildren?: string;
+  name?: string;
   segment?: string;
-  defaultHistory?: any[];
+  defaultHistory?: string[] | any[];
+  priority?: string;
 }
 
 export interface DeepLinkDecorator extends TypeDecorator {}
 
 export interface DeepLinkMetadataFactory {
-  (obj: DeepLinkMetadataType): DeepLinkDecorator;
-  new (obj: DeepLinkMetadataType): DeepLinkMetadata;
+  (obj: IonicPageMetadata): DeepLinkDecorator;
+  new (obj: IonicPageMetadata): DeepLinkMetadata;
 }
 
 /**
- * @private
+ * @hidden
  */
-export var DeepLink: DeepLinkMetadataFactory;
+export var DeepLinkMetadataFactory: DeepLinkMetadataFactory;
 
 /**
- * @private
+ * @hidden
  */
 export interface DeepLinkConfig {
   links: DeepLinkMetadata[];
@@ -130,24 +143,54 @@ export interface DeepLinkConfig {
 
 // internal link interface, not exposed publicly
 export interface NavLink {
-  component: any;
+  component?: any;
+  loadChildren?: string;
   name?: string;
   segment?: string;
-  parts?: string[];
-  partsLen?: number;
+  segmentParts?: string[];
+  segmentPartsLen?: number;
   staticLen?: number;
   dataLen?: number;
   dataKeys?: {[key: string]: boolean};
   defaultHistory?: any[];
 }
 
-export interface NavSegment {
+export interface NavResult {
+  hasCompleted: boolean;
+  requiresTransition: boolean;
+  enteringName?: string;
+  leavingName?: string;
+  direction?: string;
+}
+
+export interface NavSegment extends DehydratedSegment {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  requiresExplicitNavPrefix?: boolean;
+}
+
+export interface DehydratedSegment {
   id: string;
   name: string;
-  component: any;
+  component?: any;
+  loadChildren?: string;
   data: any;
-  navId?: string;
   defaultHistory?: NavSegment[];
+  secondaryId?: string;
+}
+
+export interface DehydratedSegmentPair {
+  segments: DehydratedSegment[];
+  navGroup: NavGroup;
+}
+
+export interface NavGroup {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  segmentPieces?: string[];
+  tabSegmentPieces?: string[];
 }
 
 export interface NavOptions {
@@ -160,9 +203,14 @@ export interface NavOptions {
   keyboardClose?: boolean;
   progressAnimation?: boolean;
   disableApp?: boolean;
+  minClickBlockDuration?: number;
   ev?: any;
   updateUrl?: boolean;
   isNavRoot?: boolean;
+}
+
+export interface Page extends Function {
+  new (...args: any[]): any;
 }
 
 export interface TransitionResolveFn {
@@ -176,24 +224,28 @@ export interface TransitionRejectFn {
 export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
-  insertViews?: ViewController[];
+  insertViews?: any[];
   removeView?: ViewController;
   removeStart?: number;
   removeCount?: number;
-  resolve?: TransitionResolveFn;
-  reject?: TransitionRejectFn;
+  resolve?: (hasCompleted: boolean) => void;
+  reject?: (rejectReason: string) => void;
+  done?: Function;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
+  requiresTransition?: boolean;
 }
 
-export enum ViewState {
-  INITIALIZED,
-  PRE_RENDERED,
-  LOADED,
-}
+export const STATE_NEW = 1;
+export const STATE_INITIALIZED = 2;
+export const STATE_ATTACHED = 3;
+export const STATE_DESTROYED = 4;
 
 export const INIT_ZINDEX = 100;
 
 export const DIRECTION_BACK = 'back';
 export const DIRECTION_FORWARD = 'forward';
 export const DIRECTION_SWITCH = 'switch';
+
+export const NAV = 'nav';
+export const TABS = 'tabs';

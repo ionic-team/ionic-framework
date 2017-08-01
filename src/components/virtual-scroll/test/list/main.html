@@ -15,16 +15,25 @@
   <div padding>
     <button ion-button (click)="fillList()">Fill List</button>
     <button ion-button (click)="emptyList()">Empty List</button>
+    <button ion-button (click)="toggleGifs()">Gifs</button>
+  </div>
+
+  <div padding>
+    <code>gulp test.imageserver</code>
   </div>
 
   <ion-list [virtualScroll]="items">
 
-    <ion-item class="item-text-wrap" *virtualItem="let item" (click)="itemTapped(item)">
-      <ion-thumbnail item-left>
-        <ion-img src="http://loremflickr.com/80/80/dog?{{item.id}}"></ion-img>
+    <ion-item class="item-text-wrap" *virtualItem="let item; let itemBounds = bounds;">
+      <ion-thumbnail item-start>
+        <ion-img [src]="item.url" [bounds]="itemBounds"></ion-img>
       </ion-thumbnail>
 
-      <h2 class="text-wrap">{{item.title}}</h2>
+      <h2 class="text-wrap">{{item.id}}, top: {{itemBounds.top}}, bottom: {{itemBounds.bottom}}, height: {{itemBounds.height}}</h2>
+
+      <!--<ion-thumbnail item-end>
+        <ion-img [src]="item.gif" [bounds]="itemBounds"></ion-img>
+      </ion-thumbnail>-->
     </ion-item>
 
   </ion-list>

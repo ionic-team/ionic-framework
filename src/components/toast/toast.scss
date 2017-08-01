@@ -4,14 +4,18 @@
 // Toast
 // --------------------------------------------------
 
+/// @prop - Width of the toast
 $toast-width:                             100% !default;
+
+/// @prop - Max width of the toast
 $toast-max-width:                         700px !default;
 
 
 ion-toast {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   z-index: $z-index-overlay;
 
   display: block;
@@ -35,7 +39,7 @@ ion-toast {
 }
 
 .toast-button {
-  padding: 19px 16px 17px;
+  @include padding(19px, 16px, 17px);
 
   font-size: 1.5rem;
 }

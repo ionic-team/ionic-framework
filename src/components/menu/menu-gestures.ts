@@ -1,9 +1,9 @@
 import { Menu } from './menu';
+import { DomController } from '../../platform/dom-controller';
+import { GESTURE_MENU_SWIPE, GESTURE_PRIORITY_MENU_SWIPE, GestureController } from '../../gestures/gesture-controller';
+import { Platform } from '../../platform/platform';
 import { SlideEdgeGesture } from '../../gestures/slide-edge-gesture';
 import { SlideData } from '../../gestures/slide-gesture';
-import { assign } from '../../util/util';
-import { GestureController, GesturePriority, GESTURE_MENU_SWIPE } from '../../gestures/gesture-controller';
-import { NativeRafDebouncer } from '../../util/debouncer';
 
 /**
  * Gesture attached to the content which the menu is assigned to
@@ -11,29 +11,29 @@ import { NativeRafDebouncer } from '../../util/debouncer';
 export class MenuContentGesture extends SlideEdgeGesture {
 
   constructor(
+    plt: Platform,
     public menu: Menu,
-    contentEle: HTMLElement,
     gestureCtrl: GestureController,
-    options: any = {}
+    domCtrl: DomController,
   ) {
-    super(contentEle, assign({
+    super(plt, plt.doc().body, {
       direction: 'x',
       edge: menu.side,
-      threshold: 0,
+      threshold: 5,
       maxEdgeStart: menu.maxEdgeStart || 50,
       zone: false,
       passive: true,
-      debouncer: new NativeRafDebouncer(),
+      domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_MENU_SWIPE,
-        priority: GesturePriority.MenuSwipe,
+        priority: GESTURE_PRIORITY_MENU_SWIPE,
         disableScroll: true
       })
-    }, options));
+    });
   }
 
   canStart(ev: any): boolean {
-    let menu = this.menu;
+    const menu = this.menu;
     if (!menu.canSwipe()) {
       return false;
     }
@@ -46,32 +46,32 @@ export class MenuContentGesture extends SlideEdgeGesture {
   }
 
   // Set CSS, then wait one frame for it to apply before sliding starts
-  onSlideBeforeStart(ev: any) {
+  onSlideBeforeStart() {
     console.debug('menu gesture, onSlideBeforeStart', this.menu.side);
-    this.menu.swipeBeforeStart();
+    this.menu._swipeBeforeStart();
   }
 
   onSlideStart() {
     console.debug('menu gesture, onSlideStart', this.menu.side);
-    this.menu.swipeStart();
+    this.menu._swipeStart();
   }
 
-  onSlide(slide: SlideData, ev: any) {
-    let z = (this.menu.side === 'right' ? slide.min : slide.max);
-    let stepValue = (slide.distance / z);
+  onSlide(slide: SlideData) {
+    const z = (this.menu.isRightSide !== this.plt.isRTL ? slide.min : slide.max);
+    const stepValue = (slide.distance / z);
 
-    this.menu.swipeProgress(stepValue);
+    this.menu._swipeProgress(stepValue);
   }
 
-  onSlideEnd(slide: SlideData, ev: any) {
-    let z = (this.menu.side === 'right' ? slide.min : slide.max);
-    let currentStepValue = (slide.distance / z);
-    let velocity = slide.velocity;
+  onSlideEnd(slide: SlideData) {
+    let z = (this.menu.isRightSide !== this.plt.isRTL ? slide.min : slide.max);
+    const currentStepValue = (slide.distance / z);
+    const velocity = slide.velocity;
     z = Math.abs(z * 0.5);
-    let shouldCompleteRight = (velocity >= 0)
+    const shouldCompleteRight = (velocity >= 0)
       && (velocity > 0.2 || slide.delta > z);
 
-    let shouldCompleteLeft = (velocity <= 0)
+    const shouldCompleteLeft = (velocity <= 0)
       && (velocity < -0.2 || slide.delta < -z);
 
     console.debug('menu gesture, onSlideEnd', this.menu.side,
@@ -84,28 +84,30 @@ export class MenuContentGesture extends SlideEdgeGesture {
       'shouldCompleteRight', shouldCompleteRight,
       'currentStepValue', currentStepValue);
 
-    this.menu.swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
+    this.menu._swipeEnd(shouldCompleteLeft, shouldCompleteRight, currentStepValue, velocity);
   }
 
-  getElementStartPos(slide: SlideData, ev: any) {
-    if (this.menu.side === 'right') {
-      return this.menu.isOpen ? slide.min : slide.max;
+  getElementStartPos(slide: SlideData) {
+    const menu = this.menu;
+    if (menu.isRightSide !== this.plt.isRTL) {
+      return menu.isOpen ? slide.min : slide.max;
     }
     // left menu
-    return this.menu.isOpen ? slide.max : slide.min;
+    return menu.isOpen ? slide.max : slide.min;
   }
 
-  getSlideBoundaries(): {min: number, max: number} {
-    if (this.menu.side === 'right') {
+  getSlideBoundaries(): { min: number, max: number } {
+    const menu = this.menu;
+    if (menu.isRightSide !== this.plt.isRTL) {
       return {
-        min: -this.menu.width(),
+        min: -menu.width(),
         max: 0
       };
     }
     // left menu
     return {
       min: 0,
-      max: this.menu.width()
+      max: menu.width()
     };
   }
 }

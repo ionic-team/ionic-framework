@@ -8,15 +8,15 @@
 
   <div [virtualScroll]="items" approxItemHeight="320px">
 
-    <ion-card *virtualItem="let item">
+    <ion-card *virtualItem="let item; let itemBounds = bounds;">
 
       <div>
-        <ion-img [src]="item.imgSrc" [height]="item.imgHeight" [alt]="item.name"></ion-img>
+        <ion-img [src]="item.imgSrc" [height]="item.imgHeight" [alt]="item.name" [bounds]="itemBounds"></ion-img>
       </div>
 
       <ion-item>
-        <ion-avatar item-left>
-          <ion-img [src]="item.avatarSrc" height="40" width="40"></ion-img>
+        <ion-avatar item-start>
+          <ion-img [src]="item.avatarSrc" height="40" width="40" [bounds]="itemBounds"></ion-img>
         </ion-avatar>
         <h2>{{ item.name }}</h2>
       </ion-item>

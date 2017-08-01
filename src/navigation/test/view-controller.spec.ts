@@ -1,69 +1,72 @@
 import { mockNavController, mockView, mockViews } from '../../util/mock-providers';
-
+import { STATE_ATTACHED } from '../nav-util';
 
 describe('ViewController', () => {
 
   describe('willEnter', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.willEnter.subscribe((event) => {
+      subscription = viewController.willEnter.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
+      viewController._state = STATE_ATTACHED;
       viewController._willEnter();
     }, 10000);
   });
 
   describe('didEnter', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.didEnter.subscribe((event) => {
+      subscription = viewController.didEnter.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
+      viewController._state = STATE_ATTACHED;
       viewController._didEnter();
     }, 10000);
   });
 
   describe('willLeave', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.willLeave.subscribe((event) => {
+      subscription = viewController.willLeave.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
-      viewController._willLeave();
+      viewController._state = STATE_ATTACHED;
+      viewController._willLeave(false);
     }, 10000);
   });
 
   describe('didLeave', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.didLeave.subscribe((event) => {
+      subscription = viewController.didLeave.subscribe((event: any) => {
         // assert
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
@@ -72,14 +75,14 @@ describe('ViewController', () => {
   });
 
   describe('willUnload', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
-      subscription = viewController.willUnload.subscribe((event) => {
+      subscription = viewController.willUnload.subscribe((event: any) => {
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
@@ -92,6 +95,7 @@ describe('ViewController', () => {
       // arrange
       let viewController = mockView();
       let navControllerBase = mockNavController();
+      navControllerBase._isPortal = true;
       mockViews(navControllerBase, [viewController]);
 
       viewController.onWillDismiss((data: any) => {

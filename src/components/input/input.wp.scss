@@ -15,14 +15,18 @@ $text-input-wp-border-width:                2px !default;
 /// @prop - Margin top of the input
 $text-input-wp-margin-top:                  $item-wp-padding-top !default;
 
-/// @prop - Margin right of the input
-$text-input-wp-margin-right:                ($item-wp-padding-right / 2) !default;
+// deprecated
+$text-input-wp-margin-right:                ($item-wp-padding-end / 2) !default;
+/// @prop - Margin end of the input
+$text-input-wp-margin-end:                  $text-input-wp-margin-right !default;
 
 /// @prop - Margin bottom of the input
 $text-input-wp-margin-bottom:               $item-wp-padding-bottom !default;
 
-/// @prop - Margin left of the input
-$text-input-wp-margin-left:                 ($item-wp-padding-left / 2) !default;
+// deprecated
+$text-input-wp-margin-left:                 ($item-wp-padding-start / 2) !default;
+/// @prop - Margin start of the input
+$text-input-wp-margin-start:                $text-input-wp-margin-left !default;
 
 /// @prop - Vertical padding of the input
 $text-input-wp-padding-vertical:            0 !default;
@@ -68,10 +72,10 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .text-input-wp {
-  margin: $text-input-wp-margin-top $text-input-wp-margin-right $text-input-wp-margin-bottom $text-input-wp-margin-left;
-  padding: $text-input-wp-padding-vertical $text-input-wp-padding-horizontal;
+  @include margin($text-input-wp-margin-top, $text-input-wp-margin-end, $text-input-wp-margin-bottom, $text-input-wp-margin-start);
+  @include padding($text-input-wp-padding-vertical, $text-input-wp-padding-horizontal);
 
-  width: calc(100% - #{$text-input-wp-margin-right} - #{$text-input-wp-margin-left});
+  width: calc(100% - #{$text-input-wp-margin-end} - #{$text-input-wp-margin-start});
 
   border: $text-input-wp-border-width solid $text-input-wp-border-color;
   line-height: $text-input-wp-line-height;
@@ -82,8 +86,8 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 // --------------------------------------------------
 
 .item-wp .inset-input {
-  margin: ($item-wp-padding-top / 2) $item-wp-padding-right ($item-wp-padding-bottom / 2) $item-wp-padding-left;
-  padding: ($item-wp-padding-top / 2) ($item-wp-padding-right / 2) ($item-wp-padding-bottom / 2) ($item-wp-padding-left / 2);
+  @include padding(($item-wp-padding-top / 2), ($item-wp-padding-end / 2), ($item-wp-padding-bottom / 2), ($item-wp-padding-start / 2));
+  @include margin(($item-wp-padding-top / 2), $item-wp-padding-end, ($item-wp-padding-bottom / 2), $item-wp-padding-start);
 }
 
 
@@ -92,6 +96,9 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 // Show the focus highlight when the input has focus
 @if ($text-input-wp-show-focus-highlight) {
+  // TODO remove all uses of input-has-focus in v4
+  // TODO remove all uses of input-has-value in v4
+  .item-wp.item-input.item-input-has-focus .text-input,
   .item-wp.item-input.input-has-focus .text-input {
     border-color: $text-input-wp-highlight-color;
   }
@@ -99,14 +106,15 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($text-input-wp-show-valid-highlight) {
-  .item-wp.item-input.ng-valid.input-has-value:not(.input-has-focus) .text-input {
+  .item-wp.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input,
+  .item-wp.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input {
     border-color: $text-input-wp-highlight-color-valid;
   }
 }
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-wp-show-invalid-highlight) {
-  .item-wp.item-input.ng-invalid.ng-touched:not(.input-has-focus) .text-input {
+  .item-wp.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .text-input {
     border-color: $text-input-wp-highlight-color-invalid;
   }
 }
@@ -119,15 +127,15 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 .item-label-floating .text-input-wp,
 .item-label-stacked .select-wp,
 .item-label-floating .select-wp {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  margin-left: 0;
+  @include margin(8px, null, 8px, 0);
 
-  width: calc(100% - #{$text-input-wp-margin-right});
+  width: calc(100% - #{$text-input-wp-margin-end});
 }
 
-.item-wp.item-label-stacked [item-right],
-.item-wp.item-label-floating [item-right] {
+.item-wp.item-label-stacked [item-right], // deprecated
+.item-wp.item-label-floating [item-right], // deprecated
+.item-wp.item-label-stacked [item-end],
+.item-wp.item-label-floating [item-end] {
   align-self: flex-end;
 }
 
@@ -139,13 +147,12 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 }
 
 .input-wp[clearInput] .text-input {
-  padding-right: $text-input-wp-input-clear-icon-width;
+  @include padding-horizontal(null, $text-input-wp-input-clear-icon-width);
 }
 
 .input-wp .text-input-clear-icon {
+  @include position-horizontal(null, ($item-wp-padding-end / 2));
   @include svg-background-image($text-input-wp-input-clear-icon-svg);
-
-  right: ($item-wp-padding-right / 2);
 
   width: $text-input-wp-input-clear-icon-width;
 

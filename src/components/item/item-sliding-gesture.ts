@@ -1,13 +1,13 @@
 import { ItemSliding } from './item-sliding';
 import { List } from '../list/list';
-
-import { GestureController, GesturePriority, GESTURE_ITEM_SWIPE } from '../../gestures/gesture-controller';
-import { PanGesture } from '../../gestures/drag-gesture';
+import { DomController } from '../../platform/dom-controller';
+import { GESTURE_ITEM_SWIPE, GESTURE_PRIORITY_SLIDING_ITEM, GestureController } from '../../gestures/gesture-controller';
+import { PanGesture } from '../../gestures/pan-gesture';
+import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
-import { NativeRafDebouncer } from '../../util/debouncer';
 
 /**
- * @private
+ * @hidden
  */
 export class ItemSlidingGesture extends PanGesture {
 
@@ -17,15 +17,22 @@ export class ItemSlidingGesture extends PanGesture {
   private firstCoordX: number;
   private firstTimestamp: number;
 
-  constructor(public list: List, gestureCtrl: GestureController) {
-    super(list.getNativeElement(), {
+  constructor(
+    plt: Platform,
+    public list: List,
+    gestureCtrl: GestureController,
+    domCtrl: DomController
+  ) {
+    super(
+      plt,
+      list.getNativeElement(), {
       maxAngle: 20,
-      threshold: 10,
+      threshold: 5,
       zone: false,
-      debouncer: new NativeRafDebouncer(),
+      domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_ITEM_SWIPE,
-        priority: GesturePriority.SlidingItem,
+        priority: GESTURE_PRIORITY_SLIDING_ITEM,
         disableScroll: true
       })
     });
@@ -64,8 +71,7 @@ export class ItemSlidingGesture extends PanGesture {
   onDragMove(ev: any) {
     ev.preventDefault();
 
-    let coordX = pointerCoord(ev).x;
-    this.selectedContainer.moveSliding(coordX);
+    this.selectedContainer.moveSliding(pointerCoord(ev).x);
   }
 
   onDragEnd(ev: any) {

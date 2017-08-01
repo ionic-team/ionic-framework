@@ -29,6 +29,14 @@ $toolbar-md-active-color:             $toolbar-active-color !default;
 $toolbar-md-inactive-color:           $toolbar-inactive-color !default;
 
 
+// Material Design Tabs
+// --------------------------------------------------
+
+$tabs-md-background:                  $tabs-background !default;
+$tabs-md-tab-color-inactive:          #3c3c3c !default;
+$tabs-md-tab-color-active:            $tabs-tab-color-active !default;
+
+
 // Material Design List
 // --------------------------------------------------
 
@@ -42,9 +50,13 @@ $list-md-activated-background-color:  #f1f1f1 !default;
 // --------------------------------------------------
 
 $item-md-padding-top:                 13px !default;
+// deprecated
 $item-md-padding-right:               16px !default;
+$item-md-padding-end:                 $item-md-padding-right !default;
 $item-md-padding-bottom:              13px !default;
+// deprecated
 $item-md-padding-left:                16px !default;
+$item-md-padding-start:               $item-md-padding-left !default;
 $item-md-padding-media-top:           9px !default;
 $item-md-padding-media-bottom:        9px !default;
 $item-md-padding-icon-top:            11px !default;

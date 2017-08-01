@@ -2,8 +2,20 @@
 // iOS Chip
 // --------------------------------------------------
 
-/// @prop - Margin of the chip
-$chip-ios-margin:                     2px 0 !default;
+// deprecated
+$chip-ios-margin:                     null !default;
+
+/// @prop - Margin top of the chip
+$chip-ios-margin-top:                 2px !default;
+
+/// @prop - Margin end of the chip
+$chip-ios-margin-end:                 0 !default;
+
+/// @prop - Margin bottom of the chip
+$chip-ios-margin-bottom:              $chip-ios-margin-top !default;
+
+/// @prop - Margin start of the chip
+$chip-ios-margin-start:               $chip-ios-margin-end !default;
 
 /// @prop - Height of the chip
 $chip-ios-height:                     32px !default;
@@ -20,8 +32,20 @@ $chip-ios-text-color:                 rgba(0, 0, 0, .87) !default;
 /// @prop - Background color of the chip
 $chip-ios-background-color:           rgba(0, 0, 0, .12) !default;
 
-/// @prop - Margin of the label in the chip
-$chip-ios-label-margin:               0 10px !default;
+// deprecated
+$chip-ios-label-margin:               null !default;
+
+/// @prop - Margin top of the label in the chip
+$chip-ios-label-margin-top:           0 !default;
+
+/// @prop - Margin end of the label in the chip
+$chip-ios-label-margin-end:           10px !default;
+
+/// @prop - Margin bottom of the label in the chip
+$chip-ios-label-margin-bottom:        $chip-ios-label-margin-top !default;
+
+/// @prop - Margin start of the label in the chip
+$chip-ios-label-margin-start:         $chip-ios-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
 $chip-ios-icon-background-color:      color($colors-ios, primary) !default;
@@ -31,19 +55,24 @@ $chip-ios-icon-text-color:            color-contrast($colors-ios, $chip-ios-icon
 
 
 .chip-ios {
-  margin: $chip-ios-margin;
+  @include border-radius($chip-ios-border-radius);
 
   height: $chip-ios-height;
 
-  border-radius: $chip-ios-border-radius;
   font-size: $chip-ios-font-size;
   line-height: $chip-ios-height;
   color: $chip-ios-text-color;
   background: $chip-ios-background-color;
+
+  @include deprecated-variable(margin, $chip-ios-margin) {
+    @include margin($chip-ios-margin-top, $chip-ios-margin-end, $chip-ios-margin-bottom, $chip-ios-margin-start);
+  }
 }
 
 .chip-ios > ion-label {
-  margin: $chip-ios-label-margin;
+  @include deprecated-variable(margin, $chip-ios-label-margin) {
+    @include margin($chip-ios-label-margin-top, $chip-ios-label-margin-end, $chip-ios-label-margin-bottom, $chip-ios-label-margin-start);
+  }
 }
 
 .chip-ios > ion-icon {

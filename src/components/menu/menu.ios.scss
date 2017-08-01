@@ -3,8 +3,13 @@
 // iOS Menu
 // --------------------------------------------------
 
+/// @prop - Background of the menu
 $menu-ios-background:            $background-ios-color !default;
+
+/// @prop - Box shadow color of the menu
 $menu-ios-box-shadow-color:      rgba(0, 0, 0, .25) !default;
+
+/// @prop - Box shadow of the menu
 $menu-ios-box-shadow:            0 0 10px $menu-ios-box-shadow-color !default;
 
 

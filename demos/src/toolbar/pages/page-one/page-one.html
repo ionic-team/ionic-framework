@@ -1,0 +1,132 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{demo}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-toolbar no-border-top>
+    <ion-title>Long title that never ends. It just goes on and on my friend.</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top>
+    <ion-buttons start>
+      <button ion-button icon-only>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Default Buttons</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top>
+    <ion-buttons start>
+      <button ion-button icon-only color="danger">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+      <button ion-button icon-only color="secondary">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only color="dark">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Colored Buttons</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top>
+    <ion-buttons start>
+      <button  ion-button icon-only solid>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Solid</ion-title>
+    <ion-buttons end>
+      <button  ion-button icon-end solid color="secondary">
+        Help
+        <ion-icon name="help-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top>
+    <ion-buttons start>
+      <button  ion-button icon-only outline>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button  ion-button icon-end outline color="secondary">
+        Help
+        <ion-icon name="help-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Outline</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top>
+    <button  ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Left Menu</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top>
+    <ion-title>Right Menu</ion-title>
+    <button  ion-button menuToggle right>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top *ngIf="demo != 'Title'">
+    <ion-buttons end>
+      <button  ion-button icon-only #button2 (click)="buttonClick(button2)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-segment color="danger" [(ngModel)]="favorites">
+      <ion-segment-button value="featured">
+        Featured
+      </ion-segment-button>
+      <ion-segment-button value="recent">
+        Recent
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top *ngIf="demo != 'Title'">
+    <ion-segment [(ngModel)]="apps">
+      <ion-segment-button value="paid">
+        Paid
+      </ion-segment-button>
+      <ion-segment-button value="free">
+        Free
+      </ion-segment-button>
+      <ion-segment-button value="top">
+        Top
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top *ngIf="demo != 'Title'">
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-toolbar no-border-top color="primary" *ngIf="demo != 'Title'">
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+
+</ion-content>

@@ -21,6 +21,15 @@ $fab-wp-list-button-text-color:                   color-contrast($colors-wp, $fa
 /// @prop - Background color of the activated button in a list
 $fab-wp-list-button-background-color-activated:   color-shade($fab-wp-list-button-background-color) !default;
 
+/// @prop - Transition duration of the transform and opacity of the button in a list
+$fab-wp-list-button-transition-duration:          200ms !default;
+
+/// @prop - Speed curve of the transition of the transform and opacity of the button in a list
+$fab-wp-list-button-transition-timing-function:   ease !default;
+
+/// @prop - Transition delay of the transform and opacity of the button in a list
+$fab-wp-list-button-transition-delay:             10ms !default;
+
 
 .fab-wp {
   color: $fab-wp-text-color;
@@ -34,6 +43,9 @@ $fab-wp-list-button-background-color-activated:   color-shade($fab-wp-list-butto
 .fab-wp-in-list {
   color: $fab-wp-list-button-text-color;
   background-color: $fab-wp-list-button-background-color;
+
+  transition: transform $fab-wp-list-button-transition-duration $fab-wp-list-button-transition-timing-function $fab-wp-list-button-transition-delay,
+              opacity $fab-wp-list-button-transition-duration $fab-wp-list-button-transition-timing-function $fab-wp-list-button-transition-delay;
 }
 
 .fab-wp-in-list.activated {

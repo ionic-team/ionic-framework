@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Floating Action Buttons</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding fullscreen>
+  <div f></div>
+  <div f></div>
+
+  <pre ion-fixed style="right:10px; bottom:20px; text-shadow: 0 0 2px rgba(0, 0, 0, 0.24);">{{log}}</pre>
+  <button ion-button>Test</button>
+  <div f *ngFor="let a of array"></div>
+
+  <ion-fab top right edge #fab1>
+    <button ion-fab mini (click)="clickMainFAB()" class="e2eFabTopRight"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab (click)="openSocial('facebook', fab1)"><ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-fab (click)="openSocial('twitter', fab1)"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab (click)="openSocial('vimeo', fab1)"><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab (click)="openSocial('googleplus', fab1)"><ion-icon name="logo-googleplus"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab bottom right edge #fab2>
+    <button ion-fab color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="openSocial('facebook', fab2)"><ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-fab (click)="openSocial('twitter', fab2)"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab (click)="openSocial('vimeo', fab2)"><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab (click)="openSocial('googleplus', fab2)"><ion-icon name="logo-googleplus"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab top left #fab3>
+    <button ion-fab color="secondary" class="e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></button>
+    <ion-fab-list side="right">
+      <button ion-fab (click)="openSocial('facebook', fab3)"><ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-fab (click)="openSocial('twitter', fab3)"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab (click)="openSocial('vimeo', fab3)"><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab (click)="openSocial('googleplus', fab3)"><ion-icon name="logo-googleplus"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab bottom left #fab4>
+    <button ion-fab color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="openSocial('facebook', fab4)"><ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-fab (click)="openSocial('twitter', fab4)"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab (click)="openSocial('vimeo', fab4)"><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab (click)="openSocial('googleplus', fab4)"><ion-icon name="logo-googleplus"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab center middle #fab5>
+    <a ion-fab color="danger" (click)="clickMainFAB()" class="e2eFabCenter"><ion-icon name="md-share"></ion-icon></a>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="openSocial('vimeo', fab5)" color="primary"><ion-icon name="logo-vimeo"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="bottom">
+      <button ion-fab (click)="openSocial('facebook', fab5)" color="secondary"><ion-icon name="logo-facebook"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="openSocial('googleplus', fab5)" color="light"><ion-icon name="logo-googleplus"></ion-icon></button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button ion-fab (click)="openSocial('twitter', fab5)" color="dark"><ion-icon name="logo-twitter"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab right middle>
+    <a ion-fab color="danger" (click)="add()"><ion-icon name="add"></ion-icon></a>
+  </ion-fab>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>

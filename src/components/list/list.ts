@@ -1,10 +1,12 @@
 import { Directive, ElementRef, Input, Renderer } from '@angular/core';
 
 import { Config } from '../../config/config';
+import { DomController } from '../../platform/dom-controller';
+import { GestureController } from '../../gestures/gesture-controller';
 import { Ion } from '../ion';
 import { isTrueProperty } from '../../util/util';
 import { ItemSlidingGesture } from '../item/item-sliding-gesture';
-import { GestureController } from '../../gestures/gesture-controller';
+import { Platform } from '../../platform/platform';
 
 /**
  * The List is a widely used interface element in almost any mobile app,
@@ -18,8 +20,8 @@ import { GestureController } from '../../gestures/gesture-controller';
  * interaction modes such as swipe to edit, drag to reorder, and
  * removing items.
  *
- * @demo /docs/v2/demos/src/list/
- * @see {@link /docs/v2/components#lists List Component Docs}
+ * @demo /docs/demos/src/list/
+ * @see {@link /docs/components#lists List Component Docs}
  * @advanced
  *
  * Enable the sliding items.
@@ -53,21 +55,15 @@ export class List extends Ion {
     config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
-    public _gestureCtrl: GestureController
+    private _plt: Platform,
+    private _gestureCtrl: GestureController,
+    private _domCtrl: DomController,
   ) {
     super(config, elementRef, renderer, 'list');
   }
 
   /**
-   * @input {string} The mode to apply to this component.
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
-   * @input {boolean} shouldEnable whether the item-sliding should be enabled or not
+   * @input {boolean} If true, the sliding items will be enabled.
    */
   @Input()
   get sliding(): boolean {
@@ -79,7 +75,7 @@ export class List extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   containsSlidingItem(contains: boolean) {
     this._containsSlidingItems = contains;
@@ -95,7 +91,7 @@ export class List extends Ion {
 
     } else if (!this._slidingGesture) {
       console.debug('enableSlidingItems');
-      this._slidingGesture = new ItemSlidingGesture(this, this._gestureCtrl);
+      this._slidingGesture = new ItemSlidingGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
       this._slidingGesture.listen();
     }
   }
@@ -108,7 +104,7 @@ export class List extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   destroy() {
     this._slidingGesture && this._slidingGesture.destroy();

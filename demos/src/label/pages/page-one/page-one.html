@@ -1,0 +1,63 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Label</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="label-demo">
+
+  <ion-list>
+    <ion-item no-lines>
+      <ion-avatar item-start>
+        <img src="./assets/ionic.svg">
+      </ion-avatar>
+      <ion-label>Ionic</ion-label>
+    </ion-item>
+
+    <!-- TODO the styling of the icons can be removed when #5319 is done -->
+    <ion-item>
+      <ion-label stacked color="primary">Mobile</ion-label>
+      <ion-input type="tel" value="+1 (555) 123-1234"></ion-input>
+      <ion-icon color="primary" item-end ios="ios-chatbubbles-outline" md="md-chatbubbles"></ion-icon>
+      <ion-icon color="primary" item-end ios="ios-call-outline" md="md-call"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked color="primary">Email</ion-label>
+      <ion-input type="email" value="hi@ionic.io"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked color="primary">Birthday</ion-label>
+      <ion-input type="text" value="November 21, 2013"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked color="primary">Address</ion-label>
+      <ion-textarea
+        value="121 S Pinckney St
+Madison WI 53703
+United States">
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked color="dark">Notes</ion-label>
+      <ion-textarea></ion-textarea>
+    </ion-item>
+
+    <button ion-item detail-none>
+      <ion-label color="primary">Send Message</ion-label>
+    </button>
+    <button ion-item detail-none>
+      <ion-label color="primary">Share Contact</ion-label>
+    </button>
+    <button ion-item detail-none>
+      <ion-label color="primary">Add to Favorites</ion-label>
+    </button>
+  </ion-list>
+
+</ion-content>

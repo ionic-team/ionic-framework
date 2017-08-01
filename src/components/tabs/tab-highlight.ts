@@ -1,10 +1,10 @@
 import { Directive, ElementRef } from '@angular/core';
 
-import { rafFrames } from '../../util/dom';
+import { DomController } from '../../platform/dom-controller';
 import { Tab } from './tab';
 
 /**
- * @private
+ * @hidden
  */
 @Directive({
   selector: '.tab-highlight'
@@ -12,21 +12,31 @@ import { Tab } from './tab';
 export class TabHighlight {
   private _init: boolean;
 
-  constructor(private _elementRef: ElementRef) {}
+  constructor(private _elementRef: ElementRef, private _dom: DomController) {}
 
   select(tab: Tab) {
-    rafFrames(3, () => {
-      let d = tab.btn.getDimensions();
-      let ele = this._elementRef.nativeElement;
-      ele.style.transform = 'translate3d(' + d.left + 'px,0,0) scaleX(' + d.width + ')';
+    if (!tab) {
+      return;
+    }
+    const dom = this._dom;
 
-      if (!this._init) {
-        this._init = true;
-        rafFrames(6, () => {
-          ele.classList.add('animate');
-        });
-      }
-    });
+    dom.read(() => {
+      const btnEle: HTMLElement = tab.btn.getNativeElement();
+      const transform = `translate3d(${btnEle.offsetLeft}px,0,0) scaleX(${btnEle.offsetWidth})`;
+
+      dom.write(() => {
+        const ele = this._elementRef.nativeElement;
+        (<any>ele.style)[dom.plt.Css.transform] = transform;
+
+        if (!this._init) {
+          this._init = true;
+          dom.write(() => {
+            ele.classList.add('animate');
+          }, 80);
+        }
+
+      });
+    }, 32);
   }
 
 }

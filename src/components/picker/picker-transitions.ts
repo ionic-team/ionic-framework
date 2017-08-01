@@ -8,8 +8,8 @@ import { Transition } from '../../transitions/transition';
 export class PickerSlideIn extends Transition {
   init() {
     let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.picker-wrapper'));
 
     backdrop.fromTo('opacity', 0.01, 0.26);
     wrapper.fromTo('translateY', '100%', '0%');
@@ -22,8 +22,8 @@ export class PickerSlideIn extends Transition {
 export class PickerSlideOut extends Transition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.picker-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.picker-wrapper'));
 
     backdrop.fromTo('opacity', 0.26, 0);
     wrapper.fromTo('translateY', '0%', '100%');

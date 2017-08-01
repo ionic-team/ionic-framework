@@ -42,12 +42,12 @@ import { isTrueProperty } from '../../util/util';
   *  <button ion-button round outline>Outline + Round</button>
   *
   *  <!-- Icons -->
-  *  <button ion-button icon-left>
+  *  <button ion-button icon-start>
   *    <ion-icon name="star"></ion-icon>
   *    Left Icon
   *  </button>
   *
-  *  <button ion-button icon-right>
+  *  <button ion-button icon-end>
   *    Right Icon
   *    <ion-icon name="star"></ion-icon>
   *  </button>
@@ -88,6 +88,10 @@ import { isTrueProperty } from '../../util/util';
   *   Dark (Solid + Round)
   * </button>
   *
+  * <!-- Bind the click event to a method -->
+  * <button ion-button (click)="logEvent($event)">
+  *   Click me!
+  * </button>
   * ```
   *
   * ```ts
@@ -102,13 +106,17 @@ import { isTrueProperty } from '../../util/util';
   *   isClear: boolean = true;
   *   myColor: string = 'secondary';
   *   myColor2: string = 'dark';
+  *
+  *   logEvent(event) {
+  *     console.log(event)
+  *   }
   * }
   *
   * ```
   *
-  * @demo /docs/v2/demos/src/button/
-  * @see {@link /docs/v2/components#buttons Button Component Docs}
-  * @see {@link /docs/v2/components#fabs FabButton Docs}
+  * @demo /docs/demos/src/button/
+  * @see {@link /docs/components#buttons Button Component Docs}
+  * @see {@link /docs/components#fabs FabButton Docs}
   * @see {@link ../../fab/FabButton FabButton API Docs}
   * @see {@link ../../fab/FabContainer FabContainer API Docs}
  */
@@ -123,26 +131,29 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Button extends Ion {
-  /** @private */
+  /** @hidden */
   _role: string = 'button'; // bar-button
 
-  /** @private */
+  /** @hidden */
   _size: string; // large/small/default
 
-  /** @private */
+  /** @hidden */
   _style: string = 'default'; // outline/clear/solid
 
-  /** @private */
+  /** @hidden */
   _shape: string; // round/fab
 
-  /** @private */
+  /** @hidden */
   _display: string; // block/full
 
-  /** @private */
+  /** @hidden */
+  _decorator: string; // strong
+
+  /** @hidden */
   _init: boolean;
 
   /**
-   * @input {boolean} Large button.
+   * @input {boolean} If true, activates the large button size.
    */
   @Input()
   set large(val: boolean) {
@@ -150,7 +161,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Small button.
+   * @input {boolean} If true, activates the small button size.
    */
   @Input()
   set small(val: boolean) {
@@ -158,7 +169,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Default button.
+   * @input {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
    */
   @Input()
   set default(val: boolean) {
@@ -166,7 +177,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A transparent button with a border.
+   * @input {boolean} If true, activates a transparent button style with a border.
    */
   @Input()
   set outline(val: boolean) {
@@ -174,7 +185,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A transparent button without a border.
+   * @input {boolean} If true, activates a transparent button style without a border.
    */
   @Input()
   set clear(val: boolean) {
@@ -182,7 +193,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} Force a solid button. Useful for buttons within an item.
+   * @input {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
    */
   @Input()
   set solid(val: boolean) {
@@ -190,7 +201,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button with rounded corners.
+   * @input {boolean} If true, activates a button with rounded corners.
    */
   @Input()
   set round(val: boolean) {
@@ -198,7 +209,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that fills its parent container with a border-radius.
+   * @input {boolean} If true, activates a button style that fills the available width.
    */
   @Input()
   set block(val: boolean) {
@@ -206,7 +217,8 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {boolean} A button that fills its parent container without a border-radius or borders on the left/right.
+   * @input {boolean} If true, activates a button style that fills the available width without
+   * a left and right border.
    */
   @Input()
   set full(val: boolean) {
@@ -214,7 +226,17 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {boolean} If true, activates a button with a heavier font weight.
+   */
+  @Input()
+  set strong(val: boolean) {
+    this._attr('_decorator', 'strong', val);
+  }
+
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Input()
   set mode(val: string) {
@@ -223,7 +245,7 @@ export class Button extends Ion {
     this._assignCss(true);
   }
 
-  /** @private */
+  /** @hidden */
   _attr(type: string, attrName: string, attrValue: boolean) {
     if (type === '_style') {
       this._updateColor(this._color, false);
@@ -245,7 +267,9 @@ export class Button extends Ion {
   }
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -273,14 +297,14 @@ export class Button extends Ion {
     }
   }
 
-  /** @private */
+  /** @hidden */
   ngAfterContentInit() {
     this._init = true;
     this._assignCss(true);
   }
 
   /**
-   * @private
+   * @hidden
    */
   setRole(val: string) {
     this._assignCss(false);
@@ -289,7 +313,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _assignCss(assignCssClass: boolean) {
     let role = this._role;
@@ -301,12 +325,13 @@ export class Button extends Ion {
       this._setClass(this._shape, assignCssClass); // button-round
       this._setClass(this._display, assignCssClass); // button-full
       this._setClass(this._size, assignCssClass); // button-small
+      this._setClass(this._decorator, assignCssClass); // button-strong
       this._updateColor(this._color, assignCssClass); // button-secondary, bar-button-secondary
     }
   }
 
   /**
-   * @private
+   * @hidden
    */
   _setClass(type: string, assignCssClass: boolean) {
     if (type && this._init) {
@@ -317,7 +342,7 @@ export class Button extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   _updateColor(color: string, isAdd: boolean) {
     if (color && this._init) {

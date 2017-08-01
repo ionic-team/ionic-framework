@@ -1,5 +1,6 @@
 
 /**
+ * @hidden
  * Given a min and max, restrict the given number
  * to the range.
  * @param min the minimum
@@ -10,54 +11,20 @@ export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }
 
-/**
- * The assign() method is used to copy the values of all enumerable own
- * properties from one or more source objects to a target object. It will
- * return the target object. When available, this method will use
- * `Object.assign()` under-the-hood.
- * @param target  The target object
- * @param source(s)  The source object
- */
-export function assign(...args: any[]): any {
-  if (typeof Object.assign !== 'function') {
-    // use the old-school shallow extend method
-    return _baseExtend(args[0], [].slice.call(args, 1), false);
+/** @hidden */
+export function deepCopy(obj: any) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+/** @hidden */
+export function deepEqual(a: any, b: any) {
+  if (a === b) {
+    return true;
   }
-
-  // use the built in ES6 Object.assign method
-  return Object.assign.apply(null, args);
+  return JSON.stringify(a) === JSON.stringify(b);
 }
 
-/**
- * Do a deep extend (merge).
- * @param dst the destination
- * @param ... the param objects
- */
-export function merge(dst: any, ...args: any[]) {
-  return _baseExtend(dst, [].slice.call(arguments, 1), true);
-}
-
-function _baseExtend(dst: any, objs: any, deep: boolean) {
-  for (var i = 0, ii = objs.length; i < ii; ++i) {
-    var obj = objs[i];
-    if (!obj || !isObject(obj) && !isFunction(obj)) continue;
-    var keys = Object.keys(obj);
-    for (var j = 0, jj = keys.length; j < jj; j++) {
-      var key = keys[j];
-      var src = obj[key];
-
-      if (deep && isObject(src)) {
-        if (!isObject(dst[key])) dst[key] = isArray(src) ? [] : {};
-        _baseExtend(dst[key], [src], true);
-      } else {
-        dst[key] = src;
-      }
-    }
-  }
-
-  return dst;
-}
-
+/** @hidden */
 export function debounce(fn: Function, wait: number, immediate: boolean = false): any {
  var timeout: number, args: any, context: any, timestamp: number, result: any;
  return function() {
@@ -82,13 +49,25 @@ export function debounce(fn: Function, wait: number, immediate: boolean = false)
  };
 }
 
+/**
+ * @hidden
+ * Rewrites an absolute URL so it works across file and http based engines
+ */
+export function normalizeURL(url: string): string {
+  const ionic = (<any>window)['Ionic'];
+  if (ionic && ionic.normalizeURL) {
+    return ionic.normalizeURL(url);
+  }
+  return url;
+}
 
 /**
+ * @hidden
  * Apply default arguments if they don't exist in
  * the first object.
- * @param the destination to apply defaults to.
+ * @param {any} dest the destination to apply defaults to.
  */
-export function defaults(dest: any, ...args: any[]) {
+export function defaults(dest: any, ..._args: any[]) {
   for (var i = arguments.length - 1; i >= 1; i--) {
     var source = arguments[i];
     if (source) {
@@ -102,30 +81,48 @@ export function defaults(dest: any, ...args: any[]) {
   return dest;
 }
 
-export const isBoolean = (val: any) => typeof val === 'boolean';
-export const isString = (val: any) => typeof val === 'string';
-export const isNumber = (val: any) => typeof val === 'number';
-export const isFunction = (val: any) => typeof val === 'function';
-export const isDefined = (val: any) => typeof val !== 'undefined';
-export const isUndefined = (val: any) => typeof val === 'undefined';
-export const isPresent = (val: any) => val !== undefined && val !== null;
-export const isBlank = (val: any) => val === undefined || val === null;
-export const isObject = (val: any) => typeof val === 'object';
-export const isArray = Array.isArray;
 
-export const isPrimitive = function(val: any) {
+/** @hidden */
+export function isBoolean(val: any): val is boolean { return typeof val === 'boolean'; }
+/** @hidden */
+export function isString(val: any): val is string { return typeof val === 'string'; }
+/** @hidden */
+export function isNumber(val: any): val is number { return typeof val === 'number'; }
+/** @hidden */
+export function isFunction(val: any): val is Function { return typeof val === 'function'; }
+/** @hidden */
+export function isDefined(val: any): boolean { return typeof val !== 'undefined'; }
+/** @hidden */
+export function isUndefined(val: any): val is undefined { return typeof val === 'undefined'; }
+/** @hidden */
+export function isPresent(val: any): val is any { return val !== undefined && val !== null; }
+/** @hidden */
+export function isBlank(val: any): val is null { return val === undefined || val === null; }
+/** @hidden */
+export function isObject(val: any): val is Object { return typeof val === 'object'; }
+/** @hidden */
+export function isArray(val: any): val is any[] { return Array.isArray(val); }
+
+
+
+/** @hidden */
+export function isPrimitive(val: any) {
   return isString(val) || isBoolean(val) || (isNumber(val) && !isNaN(val));
-};
+}
 
-export const isTrueProperty = function(val: any): boolean {
+
+/** @hidden */
+export function isTrueProperty(val: any): boolean {
   if (typeof val === 'string') {
     val = val.toLowerCase().trim();
     return (val === 'true' || val === 'on' || val === '');
   }
   return !!val;
-};
+}
 
-export const isCheckedProperty = function(a: any, b: any): boolean {
+
+/** @hidden */
+export function isCheckedProperty(a: any, b: any): boolean {
   if (a === undefined || a === null || a === '') {
     return (b === undefined || b === null || b === '');
 
@@ -141,22 +138,47 @@ export const isCheckedProperty = function(a: any, b: any): boolean {
 
   // not using strict comparison on purpose
   return (a == b); // tslint:disable-line
-};
+}
 
+/** @hidden */
+export type Side = 'left' | 'right' | 'start' | 'end';
 
 /**
- * @private
+ * @hidden
+ * Given a side, return if it should be on the right
+ * based on the value of dir
+ * @param side the side
+ * @param isRTL whether the application dir is rtl
+ * @param defaultRight whether the default side is right
  */
+export function isRightSide(side: Side, isRTL: boolean, defaultRight: boolean = false): boolean {
+  switch (side) {
+    case 'right': return true;
+    case 'left': return false;
+    case 'end': return !isRTL;
+    case 'start': return isRTL;
+    default: return defaultRight ? !isRTL : isRTL;
+  }
+}
+
+
+/** @hidden */
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
-  let element = array[indexes.from];
+  const element = array[indexes.from];
   array.splice(indexes.from, 1);
   array.splice(indexes.to, 0, element);
   return array;
 }
 
-/**
- * @private
- */
+
+/** @hidden */
+export function removeArrayItem(array: any[], item: any) {
+  const index = array.indexOf(item);
+  return !!~index && !!array.splice(index, 1);
+}
+
+
+/** @hidden */
 export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
@@ -177,11 +199,20 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
 }
 
 
+/** @hidden */
 const ASSERT_ENABLED = true;
-/**
- * @private
- */
-function _assert(actual: any, reason?: string) {
+
+
+/** @hidden */
+function _runInDev(fn: Function) {
+  if (ASSERT_ENABLED === true) {
+    return fn();
+  }
+}
+
+
+/** @hidden */
+function _assert(actual: any, reason: string) {
   if (!actual && ASSERT_ENABLED === true) {
     let message = 'IONIC ASSERT: ' + reason;
     console.error(message);
@@ -190,4 +221,17 @@ function _assert(actual: any, reason?: string) {
   }
 }
 
+/** @hidden */
+export function requestIonicCallback(functionToLazy: any) {
+  if ('requestIdleCallback' in window) {
+    return (window as any).requestIdleCallback(functionToLazy);
+  } else {
+    return setTimeout(functionToLazy, 500);
+  }
+}
+
+/** @hidden */
 export { _assert as assert};
+
+/** @hidden */
+export { _runInDev as runInDev};

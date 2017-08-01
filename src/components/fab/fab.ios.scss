@@ -21,6 +21,15 @@ $fab-ios-list-button-text-color:                  color-contrast($colors-ios, $f
 /// @prop - Background color of the activated button in a list
 $fab-ios-list-button-background-color-activated:  color-shade($fab-ios-list-button-background-color) !default;
 
+/// @prop - Transition duration of the transform and opacity of the button in a list
+$fab-ios-list-button-transition-duration:         200ms !default;
+
+/// @prop - Speed curve of the transition of the transform and opacity of the button in a list
+$fab-ios-list-button-transition-timing-function:  ease !default;
+
+/// @prop - Transition delay of the transform and opacity of the button in a list
+$fab-ios-list-button-transition-delay:            10ms !default;
+
 
 .fab-ios {
   color: $fab-ios-text-color;
@@ -34,6 +43,9 @@ $fab-ios-list-button-background-color-activated:  color-shade($fab-ios-list-butt
 .fab-ios-in-list {
   color: $fab-ios-list-button-text-color;
   background-color: $fab-ios-list-button-background-color;
+
+  transition: transform $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay,
+              opacity $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay;
 }
 
 .fab-ios-in-list.activated {

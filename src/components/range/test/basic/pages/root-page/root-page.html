@@ -1,0 +1,128 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Range
+    </ion-title>
+    <button ion-button menuToggle="right" right>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>step="5199" max="5199" min="2499" snaps="true"</ion-label>
+      <ion-range step="5199" max="5199" min="2499" snaps="true"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-range [(ngModel)]="singleValue" color="danger" pin="true" (ionChange)="rangeChange($event)" [debounce]="100"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>no init value, default min/max, {{singleValue}}</ion-label>
+      <ion-range [(ngModel)]="singleValue"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>init=150, min=-200, max=200</ion-label>
+      <ion-range min="-200" max="200" [(ngModel)]="singleValue2" color="secondary">
+        <ion-label range-left>-200</ion-label>
+        <ion-label range-right>200</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=2, {{singleValue3}}</ion-label>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3">
+        <ion-icon small range-left name="sunny"></ion-icon>
+        <ion-icon range-right name="sunny"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>disabled</ion-label>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3" disabled="true">
+        <ion-icon small range-left name="sunny"></ion-icon>
+        <ion-icon range-right name="sunny"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=100, snaps, {{singleValue4}}</ion-label>
+      <ion-range min="1000" max="2000" step="100" snaps="true" color="secondary" [(ngModel)]="singleValue4"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, {{dualValue | json}}</ion-label>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue" color="danger"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, step=3, snaps, {{dualValue2 | json}}</ion-label>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>pin, {{singleValue}}</ion-label>
+      <ion-range [(ngModel)]="singleValue" color="danger" pin="true"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>init=150, min=-200, max=200, {{singleValue2}}</ion-label>
+      <ion-range min="-200" max="200" [(ngModel)]="singleValue2"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=2, {{singleValue3}}</ion-label>
+      <ion-range min="20" max="80" step="2" [(ngModel)]="singleValue3"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>step=100, snaps, pin, {{singleValue4}}</ion-label>
+      <ion-range min="1000" max="2000" step="100" pin="true" snaps="true" [(ngModel)]="singleValue4"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dynamic min and max</ion-label>
+      <ion-range [min]="min" [max]="max" [(ngModel)]="singeValue5">
+        <ion-label range-left><input type="text" style="width: 50px;" [(ngModel)]="min" /></ion-label>
+        <ion-label range-right><input type="text" style="width: 50px;" [(ngModel)]="max" /></ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, pin, {{dualValue | json}}</ion-label>
+      <ion-range dualKnobs="true" pin="true" [(ngModel)]="dualValue"></ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>dual, step=3, snaps, {{dualValue2 | json}}</ion-label>
+      <ion-range dualKnobs="true" [(ngModel)]="dualValue2" min="21" max="72" step="3" snaps="true"></ion-range>
+    </ion-item>
+  </ion-list>
+
+  <form [formGroup]="rangeForm">
+    <ion-list>
+      <ion-item>
+        <ion-label>disabled, range, formControlName</ion-label>
+        <ion-range formControlName="range"></ion-range>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>dual, disabled, formControlName</ion-label>
+        <ion-range dualKnobs="true" formControlName="dualRange"></ion-range>
+      </ion-item>
+    </ion-list>
+  </form>
+
+</ion-content>

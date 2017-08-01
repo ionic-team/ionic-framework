@@ -1,0 +1,89 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Toggles</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <form (submit)="doSubmit($event)" [formGroup]="fruitsForm">
+
+    <ion-list>
+
+      <ion-item>
+        Left side default icon, really long text that should ellipsis ellipsis ellipsis
+        <ion-icon name="information-circle" item-start></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-toggle item-start></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple, formControlName</ion-label>
+        <ion-toggle formControlName="apple" (ionChange)="appleChange($event)"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Banana, formControlName</ion-label>
+        <ion-toggle formControlName="banana" (ionChange)="bananaChange($event)"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Cherry, formControlName, disabled</ion-label>
+        <ion-toggle formControlName="cherry"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Grape, formControlName, checked, disabled</ion-label>
+        <ion-toggle [checked]="grapeChecked" formControlName="grape"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
+        <ion-toggle color="secondary" (ionChange)="kiwiChange($event)"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Strawberry, (ionChange) [checked]="true"</ion-label>
+        <ion-toggle color="danger" (ionChange)="strawberryChange($event)" [checked]="true"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>disabled="true"</ion-label>
+        <ion-toggle disabled="true"></ion-toggle>
+      </ion-item>
+
+    </ion-list>
+
+    <p padding>
+      <ion-toggle></ion-toggle>
+    </p>
+  </form>
+
+  <p aria-hidden="true" text-center>
+    <button ion-button (click)="toggleGrapeChecked()" outline small class="e2eGrapeChecked">Grape Checked</button>
+    <button ion-button (click)="toggleGrapeDisabled()" outline small class="e2eGrapeDisabled">Grape Disabled</button>
+    <button ion-button (click)="doSubmit($event)" outline small class="e2eSubmit">Submit</button>
+  </p>
+
+  <p aria-hidden="true" padding>
+    <code>appleCtrl.dirty: {{appleCtrl.dirty}}</code><br>
+    <code>appleCtrl.value: {{appleCtrl.value}}</code><br>
+    <code>bananaCtrl.dirty: {{bananaCtrl.dirty}}</code><br>
+    <code>bananaCtrl.value: {{bananaCtrl.value}}</code><br>
+    <code>cherryCtrl.dirty: {{cherryCtrl.dirty}}</code><br>
+    <code>cherryCtrl.value: {{cherryCtrl.value}}</code><br>
+    <code>grapeCtrl.dirty: {{grapeCtrl.dirty}}</code><br>
+    <code>grapeCtrl.value: {{grapeCtrl.value}}</code><br>
+    <code>kiwiValue: {{kiwiValue}}</code><br>
+    <code>strawberryValue: {{strawberryValue}}</code><br>
+  </p>
+
+  <pre aria-hidden="true" padding>{{formResults}}</pre>
+
+</ion-content>
