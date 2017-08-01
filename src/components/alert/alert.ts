@@ -32,8 +32,8 @@ export class Alert extends ViewController {
   }
 
   /**
-  * @hidden
-  */
+   * @hidden
+   */
   getTransitionName(direction: string): string {
     const key = (direction === 'back' ? 'alertLeave' : 'alertEnter');
     return this._nav && this._nav.config.get(key);

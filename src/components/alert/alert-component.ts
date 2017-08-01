@@ -182,7 +182,7 @@ export class AlertCmp implements OnDestroy {
     const hasTextInput = (this.d.inputs.length && this.d.inputs.some(i => !(NON_TEXT_INPUT_REGEX.test(i.type))));
     if (!this.keyboardResizes && hasTextInput && this._plt.is('mobile')) {
       // this alert has a text input and it's on a mobile device so we should align
-      // the alert up high because we need to leave space for the virtual keboard
+      // the alert up high because we need to leave space for the virtual keyboard
       // this also helps prevent the layout getting all messed up from
       // the browser trying to scroll the input into a safe area
       this._renderer.setElementClass(this._elementRef.nativeElement, 'alert-top', true);
