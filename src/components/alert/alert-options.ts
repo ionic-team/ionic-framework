@@ -1,3 +1,4 @@
+import { ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 
 export interface AlertOptions {
   /** The title for the alert. */
@@ -40,6 +41,8 @@ export interface AlertInputOptions {
   handler?: Function;
   min?: string | number;
   max?: string | number;
+  validators?: ValidatorFn[];
+  asyncValidators?: AsyncValidatorFn[];
 }
 
 export interface AlertButton {
