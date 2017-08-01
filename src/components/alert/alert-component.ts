@@ -178,10 +178,16 @@ export class AlertCmp implements OnDestroy {
       };
 
       if (isPresent(input.min)) {
-        r.validators.push(Validators.minLength(input.min));
+        const min = input.min;
+        r.validators.push((control) =>
+          +control.value >= min ? null : {min: { requiredValue: min, actualValue: control.value }}
+        );
       }
       if (isPresent(input.max)) {
-        r.validators.push(Validators.maxLength(input.max));
+        const max = input.max;
+        r.validators.push((control) =>
+          +control.value <= max ? null : {max: { requiredValue: max, actualValue: control.value }}
+        );
       }
 
       return r;
