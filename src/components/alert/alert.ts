@@ -1,6 +1,6 @@
 import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
-import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
+import { AlertButton, AlertInputOptions, AlertOptionsParam } from './alert-options';
 import { AlertMdPopIn, AlertMdPopOut, AlertPopIn, AlertPopOut, AlertWpPopIn, AlertWpPopOut } from './alert-transitions';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
@@ -14,7 +14,7 @@ import { ViewController } from '../../navigation/view-controller';
 export class Alert extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: AlertOptions = {}, config: Config) {
+  constructor(app: App, opts: AlertOptionsParam = {}, config: Config) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;

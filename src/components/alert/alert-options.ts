@@ -13,13 +13,18 @@ export interface AlertOptions {
   /** An array of inputs for the alert. See input options. */
   inputs?: AlertInputOptions[];
   /** An array of buttons for the alert. See buttons options. */
-  buttons?: (AlertButton|string)[];
+  buttons?: AlertButton[];
   /**
    * Whether the alert should be dismissed by tapping the backdrop.
    *
    * @default true
    */
   enableBackdropDismiss?: boolean;
+}
+
+export interface AlertOptionsParam extends AlertOptions {
+  /** An array of buttons for the alert. See buttons options. */
+  buttons?: (AlertButton | string)[];
 }
 
 export interface AlertInputOptions {
