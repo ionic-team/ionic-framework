@@ -377,12 +377,12 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   border: $alert-ios-input-border;
   background-color: $alert-ios-input-background-color;
 
-  &.ng-invalid {
-    border-bottom-color: color($colors, danger);
-  }
-
   @include deprecated-variable(padding, $alert-ios-input-padding) {
     @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
+  }
+
+  &.ng-invalid {
+    border-bottom-color: color($colors, danger);
   }
 }
 

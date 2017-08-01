@@ -85,9 +85,10 @@ ion-alert input {
 }
 
 .alert-error-msg {
-  color: color($colors, danger);
-  margin: 3px 0px;
+  @include margin(3px 0);
+
   font-size: 12px;
+  color: color($colors, danger);
 }
 
 .alert-button-group {
