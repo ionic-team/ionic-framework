@@ -50,6 +50,7 @@ import { Config } from '../../config/config';
  * @usage
  * ```ts
  * import { AlertController } from 'ionic-angular';
+ * import { Validators } from '@angular/forms';
  *
  * constructor(private alertCtrl: AlertController) {
  *
@@ -98,7 +99,11 @@ import { Config } from '../../config/config';
  *       {
  *         name: 'password',
  *         placeholder: 'Password',
- *         type: 'password'
+ *         type: 'password',
+ *         validators: [Validators.required, Validators.minLength(10)],
+ *         errors: [{
+ *           {error: 'minlength', message: 'Error: Must be at least 10 characters'}
+ *         }]
  *       }
  *     ],
  *     buttons: [
