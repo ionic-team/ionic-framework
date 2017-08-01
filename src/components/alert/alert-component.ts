@@ -105,7 +105,7 @@ export class AlertCmp implements OnDestroy {
     params: NavParams,
     private _renderer: Renderer,
     private _plt: Platform,
-    _fb: FormBuilder
+    fb: FormBuilder
   ) {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
@@ -140,7 +140,7 @@ export class AlertCmp implements OnDestroy {
       this.d.message = '';
     }
 
-    this.formGroup = _fb.group({});
+    this.formGroup = fb.group({});
   }
 
   ionViewDidLoad() {
