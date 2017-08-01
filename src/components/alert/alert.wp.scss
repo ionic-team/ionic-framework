@@ -422,6 +422,10 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   line-height: $alert-wp-input-line-height;
   color: $alert-wp-input-text-color;
 
+  &.ng-invalid {
+    border-color: color($colors, danger);
+  }
+
   @include deprecated-variable(margin, $alert-wp-input-margin) {
     @include margin($alert-wp-input-margin-top, $alert-wp-input-margin-end, $alert-wp-input-margin-bottom, $alert-wp-input-margin-start);
   }
@@ -433,6 +437,10 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-wp .alert-input:focus {
   border-color: $alert-wp-input-border-color-focused;
+
+  &.ng-invalid {
+    border-color: color($colors, danger);
+  }
 }
 
 

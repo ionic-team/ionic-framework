@@ -411,12 +411,20 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;
+
+  &.ng-invalid {
+    border-bottom-color: color($colors, danger);
+  }
 }
 
 .alert-md .alert-input:focus {
   @include margin(null, null, $alert-md-input-margin-bottom - 1, null);
 
   border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
+
+  &.ng-invalid {
+    border-bottom-color: color($colors, danger);
+  }
 }
 
 
