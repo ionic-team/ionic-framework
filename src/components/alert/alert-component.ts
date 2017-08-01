@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostBinding, HostListener, Renderer, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
@@ -25,41 +26,42 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
         <h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>
       </div>
       <div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>
-      <div *ngIf="d.inputs.length" [ngSwitch]="inputType">
+      <div *ngIf="d.inputs.length">
+        <form [formGroup]="formGroup" [ngSwitch]="inputType">
 
-        <ng-template ngSwitchCase="radio">
-          <div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">
-            <button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked"
-              [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">
-              <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
-              <div class="alert-radio-label">
-                {{i.label}}
-              </div>
-            </button>
-          </div>
-        </ng-template>
-
-        <ng-template ngSwitchCase="checkbox">
-          <div class="alert-checkbox-group">
-            <button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked"
-              [attr.id]="i.id" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">
-              <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
-              <div class="alert-checkbox-label">
-                {{i.label}}
-              </div>
-            </button>
-          </div>
-        </ng-template>
-
-        <ng-template ngSwitchDefault>
-          <div class="alert-input-group">
-            <div *ngFor="let i of d.inputs" class="alert-input-wrapper">
-              <input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" [min]="i.min" [max]="i.max" [attr.id]="i.id"
-                class="alert-input">
+          <ng-template ngSwitchCase="radio">
+            <div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">
+              <button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked"
+                [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">
+                <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
+                <div class="alert-radio-label">
+                  {{i.label}}
+                </div>
+              </button>
             </div>
-          </div>
-        </ng-template>
+          </ng-template>
 
+          <ng-template ngSwitchCase="checkbox">
+            <div class="alert-checkbox-group">
+              <button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked"
+                [attr.id]="i.id" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">
+                <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
+                <div class="alert-checkbox-label">
+                  {{i.label}}
+                </div>
+              </button>
+            </div>
+          </ng-template>
+
+          <ng-template ngSwitchDefault>
+            <div class="alert-input-group" *ngIf="inputType">
+              <div *ngFor="let i of d.inputs" class="alert-input-wrapper">
+                <input [placeholder]="i.placeholder" [formControlName]="i.name" [type]="i.type" [attr.id]="i.id" class="alert-input">
+              </div>
+            </div>
+          </ng-template>
+
+        </form>
       </div>
       <div class="alert-button-group" [ngClass]="{'alert-button-group-vertical':d.buttons.length>2}">
         <button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">
@@ -89,6 +91,8 @@ export class AlertCmp implements OnDestroy {
   keyboardResizes: boolean;
   gestureBlocker: BlockerDelegate;
 
+  formGroup: FormGroup;
+
   constructor(
     public _viewCtrl: ViewController,
     public _elementRef: ElementRef,
@@ -96,7 +100,8 @@ export class AlertCmp implements OnDestroy {
     gestureCtrl: GestureController,
     params: NavParams,
     private _renderer: Renderer,
-    private _plt: Platform
+    private _plt: Platform,
+    private _fb: FormBuilder
   ) {
     // gesture blocker is used to disable gestures dynamically
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
@@ -130,6 +135,8 @@ export class AlertCmp implements OnDestroy {
     if (!this.d.message) {
       this.d.message = '';
     }
+
+    this.formGroup = _fb.group({});
   }
 
   ionViewDidLoad() {
@@ -144,7 +151,7 @@ export class AlertCmp implements OnDestroy {
     });
 
     data.inputs = data.inputs.map((input, index) => {
-      let r: AlertInputOptions = {
+      const r: AlertInputOptions = {
         type: input.type || 'text',
         name: isPresent(input.name) ? input.name : index + '',
         placeholder: isPresent(input.placeholder) ? input.placeholder : '',
@@ -154,9 +161,17 @@ export class AlertCmp implements OnDestroy {
         disabled: !!input.disabled,
         id: isPresent(input.id) ? input.id : `alert-input-${this.id}-${index}`,
         handler: isPresent(input.handler) ? input.handler : null,
-        min: isPresent(input.min) ? input.min : null,
-        max: isPresent(input.max) ? input.max : null
+        validators: isPresent(input.validators) ? input.validators : [],
+        asyncValidators: isPresent(input.asyncValidators) ? input.asyncValidators : []
       };
+
+      if (isPresent(input.min)) {
+        r.validators.push(Validators.minLength(input.min));
+      }
+      if (isPresent(input.max)) {
+        r.validators.push(Validators.maxLength(input.max));
+      }
+
       return r;
     });
 
@@ -175,6 +190,12 @@ export class AlertCmp implements OnDestroy {
     }
 
     this.inputType = inputTypes.length ? inputTypes[0] : null;
+
+    if (this.inputType !== 'checkbox' && this.inputType !== 'radio') {
+      data.inputs.forEach(input => {
+        this.formGroup.addControl(input.name as string, new FormControl(input.value, input.validators, input.asyncValidators));
+      });
+    }
 
     const checkedInput = this.d.inputs.find(input => input.checked);
     if (checkedInput) {
