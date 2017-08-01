@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation, OnDestroy } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
@@ -71,7 +71,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
   },
   encapsulation: ViewEncapsulation.None,
 })
-export class AlertCmp {
+export class AlertCmp implements OnDestroy {
 
   activeId: string;
   descId: string;
@@ -219,7 +219,7 @@ export class AlertCmp {
           // key to click the button. However, both the click handler and
           // this keyup event will fire, so only allow one of them to go.
           console.debug(`alert, enter button`);
-          let button = this.d.buttons[this.d.buttons.length - 1];
+          const button = this.d.buttons[this.d.buttons.length - 1];
           this.btnClick(button);
         }
 
