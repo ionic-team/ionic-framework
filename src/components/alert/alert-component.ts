@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, Renderer, ViewEncapsulation, OnDestroy } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
@@ -64,14 +64,12 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
         '</button>' +
       '</div>' +
     '</div>',
-  host: {
-    'role': 'dialog',
-    '[attr.aria-labelledby]': 'hdrId',
-    '[attr.aria-describedby]': 'descId'
-  },
   encapsulation: ViewEncapsulation.None,
 })
 export class AlertCmp implements OnDestroy {
+  @HostBinding('attr.role') role = 'dialog';
+  @HostBinding('attr.aria-labelledby') labelledby = 'hdrId';
+  @HostBinding('attr.aria-describedby') describedby = 'descId';
 
   activeId: string;
   descId: string;
