@@ -358,11 +358,7 @@ export class AlertCmp implements OnDestroy {
 
     // this is an alert with text inputs
     // return an object of all the values with the input name as the key
-    const values: {[k: string]: string} = {};
-    this.d.inputs.forEach(i => {
-      values[i.name] = i.value;
-    });
-    return values;
+    return this.formGroup.value;
   }
 
   ngOnDestroy() {
