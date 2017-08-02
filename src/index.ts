@@ -7,7 +7,7 @@ export { ActionSheetButton, ActionSheetOptions } from './components/action-sheet
 export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
 export { Alert } from './components/alert/alert';
 export { AlertController } from './components/alert/alert-controller';
-export { AlertOptions } from './components/alert/alert-options';
+export { AlertButton, AlertOptions } from './components/alert/alert-options';
 export { AlertCmp } from './components/alert/alert-component';
 export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';
