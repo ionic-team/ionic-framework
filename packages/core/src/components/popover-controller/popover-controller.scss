@@ -1,0 +1,36 @@
+@import "../../themes/ionic.globals";
+
+
+// Popover Controller
+// --------------------------------------------------
+
+ion-popover-controller {
+  display: none;
+}
+
+
+// Popover Controller Backdrop
+// --------------------------------------------------
+
+/// @prop - Color of the backdrop
+$popover-backdrop-color: #000 !default;
+
+
+.popover-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-backdrop;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: $popover-backdrop-color;
+  opacity: .01;
+  transform: translateZ(0);
+}
+
+.popover-backdrop.backdrop-no-tappable {
+  cursor: auto;
+}

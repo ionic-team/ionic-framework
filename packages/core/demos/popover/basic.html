@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Slides Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-content>
+      <ion-button id="presentPopover">Show Popover</ion-button>
+    </ion-content>
+  </ion-app>
+  <script>
+    document.getElementById('presentPopover').addEventListener('click', function(clickEvt) {
+      Ionic.controller('popover', {
+        component: 'profile-page',
+        ev: clickEvt
+      }).then(popover => {
+        popover.present()
+      });
+    });
+
+    class ProfilePage extends HTMLElement {
+      constructor() {
+        super();
+        const shadowRoot = this.attachShadow({
+          mode: 'open'
+        });
+        shadowRoot.innerHTML =
+          `
+                <ion-header>
+                  <ion-toolbar>
+                    My Profile
+                  </ion-toolbar>
+                </ion-header>
+                <ion-content padding>
+                  <p>
+                    <ion-button>Dismiss</ion-button>
+                  </p>
+                </ion-content>
+              `;
+      }
+      connectedCallback() {
+        var btn = this.shadowRoot.querySelector('ion-button');
+        btn.addEventListener('click', (uiEvent) => {
+          var ev = new CustomEvent('ionDismiss', {
+            composed: true,
+            bubbles: true
+          });
+          uiEvent.target.dispatchEvent(ev);
+        });
+      }
+    }
+    customElements.define('profile-page', ProfilePage);
+  </script>
+</body>
+
+</html>

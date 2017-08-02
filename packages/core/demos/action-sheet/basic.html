@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Slides Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-content>
+      <ion-button id="presentActionSheet">Show ActionSheet</ion-button>
+    </ion-content>
+  </ion-app>
+  <script>
+    document.getElementById('presentActionSheet')
+      .addEventListener('click', function(clickEvt) {
+        Ionic.controller('action-sheet', {
+            title: "Hello World",
+            subTitle: 'Sub Title',
+            buttons: [{
+              text: 'Destructive',
+              role: 'destructive',
+              handler: () => {
+                console.log('Destructive clicked');
+              }
+            }, {
+              text: 'Archive',
+              handler: () => {
+                console.log('Archive clicked');
+              }
+            }, {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            }]
+          })
+          .then(actionSheet => {
+            actionSheet.present()
+          });
+      });
+  </script>
+</body>
+
+</html>

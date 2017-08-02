@@ -1,0 +1,32 @@
+@import "../../themes/ionic.globals";
+
+
+// Loading Controller
+// --------------------------------------------------
+
+ion-loading-controller {
+  display: none;
+}
+
+
+// Loading Controller Backdrop
+// --------------------------------------------------
+
+/// @prop - Color of the backdrop
+$loading-backdrop-color: #000 !default;
+
+
+.loading-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-backdrop;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: $loading-backdrop-color;
+  opacity: .01;
+  transform: translateZ(0);
+}

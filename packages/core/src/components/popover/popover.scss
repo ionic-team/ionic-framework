@@ -1,0 +1,55 @@
+@import "../../themes/ionic.globals";
+
+// Popover
+// --------------------------------------------------
+
+ion-popover {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  z-index: $z-index-overlay;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  .popover-backdrop {
+    left: 0;
+    top: 0;
+    position: absolute;
+    bottom: 0px;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    background-color: #000;
+    opacity: 0.3;
+  }
+}
+
+.popover-wrapper {
+  z-index: $z-index-overlay-wrapper;
+
+  // opacity: 0;
+  opacity: 1;
+}
+
+.popover-content {
+  position: absolute;
+  z-index: $z-index-overlay-wrapper;
+
+  display: flex;
+
+  overflow: auto;
+
+  flex-direction: column;
+}
+
+.popover-content ion-content, .popover-content .scroll-content {
+  contain: none;
+}
+
+.popover-content .scroll-content {
+  position: relative;
+}

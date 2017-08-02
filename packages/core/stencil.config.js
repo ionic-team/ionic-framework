@@ -6,6 +6,7 @@ exports.config = {
   bundles: [
     { components: ['ion-animation'] },
     { components: ['ion-app', 'ion-content', 'ion-fixed', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-button', 'ion-buttons', 'ion-icon'] },
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title'] },
@@ -18,6 +19,7 @@ exports.config = {
     { components: ['ion-loading', 'ion-loading-ctrl'] },
     { components: ['ion-menu'], priority: 'low' },
     { components: ['ion-modal', 'ion-modal-ctrl'] },
+    { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-slides', 'ion-slide'] },

@@ -1,0 +1,37 @@
+@import "../../themes/ionic.globals";
+
+
+// Loading Indicator
+// --------------------------------------------------
+
+ion-loading {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+  z-index: $z-index-overlay;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  contain: strict;
+}
+
+ion-loading ion-gesture {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  visibility: inherit;
+}
+
+.loading-wrapper {
+  z-index: $z-index-overlay-wrapper;
+  display: flex;
+
+  align-items: center;
+
+  opacity: 0;
+}
