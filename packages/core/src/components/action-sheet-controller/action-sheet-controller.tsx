@@ -43,7 +43,7 @@ export class ActionSheetController implements IonicControllerApi {
 
 
   @Listen('body:ionActionSheetDidLoad')
-  viewDidLoad(ev) {
+  viewDidLoad(ev: ActionSheetEvent) {
     const actionsheet = ev.detail.actionsheet;
     const actionsheetResolve = this.actionsheetResolves[actionsheet.id];
     if (actionsheetResolve) {
@@ -55,13 +55,13 @@ export class ActionSheetController implements IonicControllerApi {
 
   @Listen('body:ionActionSheetWillPresent')
   willPresent(ev: ActionSheetEvent) {
-    this.actionsheets.push(ev.actionsheet);
+    this.actionsheets.push(ev.detail.actionsheet);
   }
 
 
   @Listen('body:ionActionSheetWillDismiss, body:ionActionSheetDidUnload')
   willDismiss(ev: ActionSheetEvent) {
-    const index = this.actionsheets.indexOf(ev.actionsheet);
+    const index = this.actionsheets.indexOf(ev.detail.actionsheet);
     if (index > -1) {
       this.actionsheets.splice(index, 1);
     }

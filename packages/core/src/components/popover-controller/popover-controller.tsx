@@ -43,7 +43,7 @@ export class PopoverController implements IonicControllerApi {
 
 
   @Listen('body:ionPopoverDidLoad')
-  viewDidLoad(ev) {
+  viewDidLoad(ev: PopoverEvent) {
     const popover = ev.detail.popover;
     const popoverResolve = this.popoverResolves[popover.id];
     if (popoverResolve) {
@@ -55,13 +55,13 @@ export class PopoverController implements IonicControllerApi {
 
   @Listen('body:ionPopoverWillPresent')
   willPresent(ev: PopoverEvent) {
-    this.popovers.push(ev.popover);
+    this.popovers.push(ev.detail.popover);
   }
 
 
   @Listen('body:ionPopoverWillDismiss, body:ionPopoverDidUnload')
   willDismiss(ev: PopoverEvent) {
-    const index = this.popovers.indexOf(ev.popover);
+    const index = this.popovers.indexOf(ev.detail.popover);
     if (index > -1) {
       this.popovers.splice(index, 1);
     }

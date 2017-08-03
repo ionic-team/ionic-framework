@@ -176,5 +176,7 @@ export interface PopoverOptions {
 
 
 export interface PopoverEvent {
-  popover: Popover;
+  detail: {
+    popover: Popover;
+  }
 }

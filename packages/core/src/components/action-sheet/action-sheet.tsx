@@ -70,9 +70,7 @@ export class ActionSheet {
     //   this.animation.destroy();
     //   this.animation = null;
     // }
-    this.ionActionSheetWillPresent.emit(
-      { actionsheet: this } as ActionSheetEvent
-    );
+    this.ionActionSheetWillPresent.emit({ actionsheet: this });
 
     // let animationBuilder = this.enterAnimation
     // ? this.enterAnimation
@@ -96,12 +94,8 @@ export class ActionSheet {
     // }
 
     return new Promise<void>(resolve => {
-      this.ionActionSheetWillDismiss.emit(
-        { actionsheet: this } as ActionSheetEvent
-      );
+      this.ionActionSheetWillDismiss.emit({ actionsheet: this });
 
-      // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
 
       // let animationBuilder = this.exitAnimation
       // ? this.exitAnimation
@@ -111,9 +105,7 @@ export class ActionSheet {
       // this.animation = animationBuilder(this.el);
       // this.animation.onFinish((a: any) => {
       //   a.destroy();
-      this.ionActionSheetDidDismiss.emit(
-        { actionsheet: this } as ActionSheetEvent
-      );
+      this.ionActionSheetDidDismiss.emit({ actionsheet: this });
 
       Core.dom.write(() => {
         this.el.parentNode.removeChild(this.el);
@@ -125,9 +117,7 @@ export class ActionSheet {
   }
 
   ionViewDidUnload() {
-    this.ionActionSheetDidUnload.emit(
-      { actionsheet: this } as ActionSheetEvent
-    );
+    this.ionActionSheetDidUnload.emit({ actionsheet: this });
   }
 
   backdropClick() {
@@ -175,7 +165,7 @@ export interface ActionSheetOptions {
   title?: string;
   subTitle?: string;
   cssClass?: string;
-  buttons?: (ActionSheetButton | string)[];
+  buttons?: (ActionSheetButtons | string)[];
   enableBackdropDismiss?: boolean;
 }
 
@@ -188,5 +178,7 @@ export interface ActionSheetButtons {
 }
 
 export interface ActionSheetEvent {
-  actionsheet: ActionSheet;
+  detail: {
+    actionsheet: ActionSheet;
+  };
 }
