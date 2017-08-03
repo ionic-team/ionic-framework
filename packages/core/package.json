@@ -19,7 +19,7 @@
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "publish": "np",
+    "publish": "../../node_modules/.bin/np --any-branch",
     "test": "(jest --no-cache || true)"
   },
   "author": "Ionic Team",
