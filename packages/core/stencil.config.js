@@ -4,6 +4,7 @@ exports.config = {
   publicPath: '/dist',
   generateCollection: true,
   bundles: [
+    { components: ['ion-animation-controller'] },
     { components: ['ion-app', 'ion-content', 'ion-fixed', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
     { components: ['ion-button', 'ion-buttons', 'ion-icon'] },

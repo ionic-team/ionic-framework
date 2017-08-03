@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
+import { Ionic } from '../../index';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 
@@ -95,12 +96,6 @@ export class Menu {
    * @hidden
    */
   @Prop() maxEdgeStart: number;
-
-
-  constructor() {
-    // get or create the MenuController singleton
-    this._ctrl = Ionic.controllers.menu = (Ionic.controllers.menu || new MenuController());
-  }
 
 
   /**

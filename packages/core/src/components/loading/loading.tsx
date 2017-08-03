@@ -1,5 +1,5 @@
+import { Animation, AnimationBuilder, Ionic } from '../../index';
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-import { AnimationBuilder, Animation } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -98,13 +98,17 @@ export class Loading {
     }
 
     // build the animation and kick it off
-    this.animation = animationBuilder(this.el);
+    Ionic.controller('animation').then(Animation => {
+      this.animation = new Animation();
 
-    this.animation.onFinish((a: any) => {
-      a.destroy();
-      this.ionViewDidEnter();
-      resolve();
-    }).play();
+      this.animation.onFinish((a: any) => {
+        a.destroy();
+        this.ionViewDidEnter();
+        resolve();
+
+      }).play();
+
+    });
   }
 
   dismiss() {
@@ -115,31 +119,34 @@ export class Loading {
       this.animation = null;
     }
 
-    return new Promise<void>(resolve => {
-      this.ionLoadingWillDismiss.emit({ loading: this } as LoadingEvent);
+    return Ionic.controller('animation').then(Animation => {
+      return new Promise(resolve => {
+        this.ionLoadingWillDismiss.emit({ loading: this } as LoadingEvent);
 
-      // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
+        // get the user's animation fn if one was provided
+        let animationBuilder = this.exitAnimation;
 
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        // TODO!!
-        animationBuilder = iOSLeaveAnimation;
-      }
+        if (!animationBuilder) {
+          // user did not provide a custom animation fn
+          // decide from the config which animation to use
+          // TODO!!
+          animationBuilder = iOSLeaveAnimation;
+        }
 
-      // build the animation and kick it off
-      this.animation = animationBuilder(this.el);
-      this.animation.onFinish((a: any) => {
-        a.destroy();
-        this.ionLoadingDidDismiss.emit({ loading: this } as LoadingEvent);
+        // build the animation and kick it off
+        this.animation = animationBuilder(Animation, this.el);
+        this.animation.onFinish((a: any) => {
+          a.destroy();
+          this.ionLoadingDidDismiss.emit({ loading: this } as LoadingEvent);
 
-        Core.dom.write(() => {
-          this.el.parentNode.removeChild(this.el);
-        });
+          Core.dom.write(() => {
+            this.el.parentNode.removeChild(this.el);
+          });
 
-        resolve();
-      }).play();
+          resolve();
+
+        }).play();
+      });
     });
   }
 

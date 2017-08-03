@@ -1,16 +1,17 @@
-import { AnimationOptions, EffectProperty, EffectState, PlayOptions } from './interfaces';
+import { AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animation-interface';
 import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSITION_END_FALLBACK_PADDING_MS, TRANSFORM_PROPS } from './constants';
 import { transitionEnd } from './transition-end';
 
 
-export class Animation {
+
+export class Animator {
   private _afterAddClasses: string[];
   private _afterRemoveClasses: string[];
   private _afterStyles: { [property: string]: any; };
   private _beforeAddClasses: string[];
   private _beforeRemoveClasses: string[];
   private _beforeStyles: { [property: string]: any; };
-  private _childAnimations: Animation[];
+  private _childAnimations: Animator[];
   private _childAnimationTotal: number;
   private _duration: number = null;
   private _easingName: string = null;
@@ -30,22 +31,17 @@ export class Animation {
   private _writeCallbacks: Function[];
   private _destroyed: boolean = false;
 
-  parent: Animation;
+  parent: Animator;
   opts: AnimationOptions;
   hasChildren: boolean = false;
   isPlaying: boolean = false;
   hasCompleted: boolean = false;
 
-
-  constructor(elm?: Node|Node[]|NodeList) {
-    this.addElement(elm);
-  }
-
-  addElement(elm: Node|Node[]|NodeList): Animation {
+  addElement(elm: Node|Node[]|NodeList): Animator {
     if (elm) {
-      if ((<NodeList>elm).length) {
-        for (var i = 0; i < (<NodeList>elm).length; i++) {
-          this._addElm((<any>elm)[i]);
+      if ((elm as NodeList).length) {
+        for (var i = 0; i < (elm as NodeList).length; i++) {
+          this._addElm((elm as any)[i]);
         }
 
       } else {
@@ -68,7 +64,7 @@ export class Animation {
   /**
    * Add a child animation to this animation.
    */
-  add(childAnimation: Animation): Animation {
+  add(childAnimation: Animator): Animator {
     childAnimation.parent = this;
     this.hasChildren = true;
     this._childAnimationTotal = (this._childAnimations = this._childAnimations || []).push(childAnimation);
@@ -100,7 +96,7 @@ export class Animation {
   /**
    * Set the duration for this animation.
    */
-  duration(milliseconds: number): Animation {
+  duration(milliseconds: number): Animator {
     this._duration = milliseconds;
     return this;
   }
@@ -119,7 +115,7 @@ export class Animation {
   /**
    * Set the easing for this animation.
    */
-  easing(name: string): Animation {
+  easing(name: string) {
     this._easingName = name;
     return this;
   }
@@ -127,7 +123,7 @@ export class Animation {
   /**
    * Set the easing for this reversed animation.
    */
-  easingReverse(name: string): Animation {
+  easingReverse(name: string) {
     this._reversedEasingName = name;
     return this;
   }
@@ -135,7 +131,7 @@ export class Animation {
   /**
    * Add the "from" value for a specific property.
    */
-  from(prop: string, val: any): Animation {
+  from(prop: string, val: any): Animator {
     this._addProp('from', prop, val);
     return this;
   }
@@ -143,7 +139,7 @@ export class Animation {
   /**
    * Add the "to" value for a specific property.
    */
-  to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animation {
+  to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animator {
     var fx = this._addProp('to', prop, val);
 
     if (clearProperyAfterTransition) {
@@ -158,7 +154,7 @@ export class Animation {
   /**
    * Shortcut to add both the "from" and "to" for the same property.
    */
-  fromTo(prop: string, fromVal: any, toVal: any, clearProperyAfterTransition?: boolean): Animation {
+  fromTo(prop: string, fromVal: any, toVal: any, clearProperyAfterTransition?: boolean): Animator {
     return this.from(prop, fromVal).to(prop, toVal, clearProperyAfterTransition);
   }
 
@@ -183,13 +179,13 @@ export class Animation {
     if (!fxProp) {
       // first time we've see this EffectProperty
       var shouldTrans = (TRANSFORM_PROPS[prop] === 1);
-      fxProp = <EffectProperty>{
+      fxProp = {
         effectName: prop,
         trans: shouldTrans,
 
         // add the will-change property for transforms or opacity
         wc: (shouldTrans ? CSS_PROP.transformProp : prop)
-      };
+      } as EffectProperty;
       this._fxProperties.push(fxProp);
     }
 
@@ -221,7 +217,7 @@ export class Animation {
    * Add CSS class to this animation's elements
    * before the animation begins.
    */
-  beforeAddClass(className: string): Animation {
+  beforeAddClass(className: string): Animator {
     (this._beforeAddClasses = this._beforeAddClasses || []).push(className);
     return this;
   }
@@ -230,7 +226,7 @@ export class Animation {
    * Remove CSS class from this animation's elements
    * before the animation begins.
    */
-  beforeRemoveClass(className: string): Animation {
+  beforeRemoveClass(className: string): Animator {
     (this._beforeRemoveClasses = this._beforeRemoveClasses || []).push(className);
     return this;
   }
@@ -239,7 +235,7 @@ export class Animation {
    * Set CSS inline styles to this animation's elements
    * before the animation begins.
    */
-  beforeStyles(styles: { [property: string]: any; }): Animation {
+  beforeStyles(styles: { [property: string]: any; }): Animator {
     this._beforeStyles = styles;
     return this;
   }
@@ -248,7 +244,7 @@ export class Animation {
    * Clear CSS inline styles from this animation's elements
    * before the animation begins.
    */
-  beforeClearStyles(propertyNames: string[]): Animation {
+  beforeClearStyles(propertyNames: string[]): Animator {
     this._beforeStyles = this._beforeStyles || {};
     for (var i = 0; i < propertyNames.length; i++) {
       this._beforeStyles[propertyNames[i]] = '';
@@ -260,7 +256,7 @@ export class Animation {
    * Add a function which contains DOM reads, which will run
    * before the animation begins.
    */
-  beforeAddRead(domReadFn: Function): Animation {
+  beforeAddRead(domReadFn: Function): Animator {
     (this._readCallbacks = this._readCallbacks || []).push(domReadFn);
     return this;
   }
@@ -269,7 +265,7 @@ export class Animation {
    * Add a function which contains DOM writes, which will run
    * before the animation begins.
    */
-  beforeAddWrite(domWriteFn: Function): Animation {
+  beforeAddWrite(domWriteFn: Function): Animator {
     (this._writeCallbacks = this._writeCallbacks || []).push(domWriteFn);
     return this;
   }
@@ -278,7 +274,7 @@ export class Animation {
    * Add CSS class to this animation's elements
    * after the animation finishes.
    */
-  afterAddClass(className: string): Animation {
+  afterAddClass(className: string): Animator {
     (this._afterAddClasses = this._afterAddClasses || []).push(className);
     return this;
   }
@@ -287,7 +283,7 @@ export class Animation {
    * Remove CSS class from this animation's elements
    * after the animation finishes.
    */
-  afterRemoveClass(className: string): Animation {
+  afterRemoveClass(className: string): Animator {
     (this._afterRemoveClasses = this._afterRemoveClasses || []).push(className);
     return this;
   }
@@ -296,7 +292,7 @@ export class Animation {
    * Set CSS inline styles to this animation's elements
    * after the animation finishes.
    */
-  afterStyles(styles: { [property: string]: any; }): Animation {
+  afterStyles(styles: { [property: string]: any; }): Animator {
     this._afterStyles = styles;
     return this;
   }
@@ -305,7 +301,7 @@ export class Animation {
    * Clear CSS inline styles from this animation's elements
    * after the animation finishes.
    */
-  afterClearStyles(propertyNames: string[]): Animation {
+  afterClearStyles(propertyNames: string[]): Animator {
     this._afterStyles = this._afterStyles || {};
     for (var i = 0; i < propertyNames.length; i++) {
       this._afterStyles[propertyNames[i]] = '';
@@ -689,7 +685,7 @@ export class Animation {
           } else {
             for (j = 0; j < nuElements; j++) {
               // ******** DOM WRITE ****************
-              (<any>elements[j].style)[prop] = val;
+              (elements[j].style as any)[prop] = val;
             }
           }
         }
@@ -704,7 +700,7 @@ export class Animation {
 
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
-        (<any>elements[i].style)[CSS_PROP.transformProp] = finalTransform;
+        (elements[i].style as any)[CSS_PROP.transformProp] = finalTransform;
       }
     }
   }
@@ -818,7 +814,7 @@ export class Animation {
       if (this._beforeStyles) {
         for (prop in this._beforeStyles) {
           // ******** DOM WRITE ****************
-          (<any>elm).style[prop] = this._beforeStyles[prop];
+          (elm as any).style[prop] = this._beforeStyles[prop];
         }
       }
     }
@@ -887,7 +883,7 @@ export class Animation {
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      (<any>elm).style[CSS_PROP.transitionDurationProp] = (<any>elm).style[CSS_PROP.transitionTimingFnProp] = '';
+      (elm as any).style[CSS_PROP.transitionDurationProp] = (elm as any).style[CSS_PROP.transitionTimingFnProp] = '';
 
       if (this._isReverse) {
         // finished in reverse direction
@@ -912,7 +908,7 @@ export class Animation {
         if (this._beforeStyles) {
           for (prop in this._beforeStyles) {
             // ******** DOM WRITE ****************
-            (<any>elm).style[prop] = '';
+            (elm as any).style[prop] = '';
           }
         }
 
@@ -939,7 +935,7 @@ export class Animation {
         if (this._afterStyles) {
           for (prop in this._afterStyles) {
             // ******** DOM WRITE ****************
-            (<any>elm).style[prop] = this._afterStyles[prop];
+            (elm as any).style[prop] = this._afterStyles[prop];
           }
         }
       }
@@ -976,7 +972,7 @@ export class Animation {
 
     for (i = 0; i < this._elementTotal; i++) {
       // ******** DOM WRITE ****************
-      (<any>this._elements[i]).style.willChange = willChange;
+      (this._elements[i] as any).style.willChange = willChange;
     }
   }
 
@@ -1117,7 +1113,7 @@ export class Animation {
   /**
    * Add a callback to fire when the animation has finished.
    */
-  onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animation {
+  onFinish(callback: (animation?: any) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animator {
     if (opts && opts.clearExistingCallacks) {
       this._onFinishCallbacks = this._onFinishOneTimeCallbacks = undefined;
     }
@@ -1176,7 +1172,7 @@ export class Animation {
   /**
    * Reverse the animation.
    */
-  reverse(shouldReverse?: boolean): Animation {
+  reverse(shouldReverse?: boolean): Animator {
     if (shouldReverse === undefined) {
       shouldReverse = true;
     }
