@@ -1,4 +1,5 @@
 import { Component, Listen } from '@stencil/core';
+import { Ionic } from '../../index';
 import { ModalEvent, ModalOptions, Modal, IonicControllerApi } from '../../index';
 
 
@@ -15,7 +16,7 @@ export class ModalController implements IonicControllerApi {
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
-    Ionic.loadController('modal', this);
+    Ionic.registerController('modal', this);
   }
 
 
@@ -44,8 +45,8 @@ export class ModalController implements IonicControllerApi {
 
 
   @Listen('body:ionModalDidLoad')
-  viewDidLoad(ev: ModalEvent) {
-    const modal = ev.modal;
+  modalDidLoad(ev: ModalEvent) {
+    const modal = ev.detail.modal;
     const modalResolve = this.modalResolves[modal.id];
     if (modalResolve) {
       modalResolve(modal);
@@ -55,14 +56,14 @@ export class ModalController implements IonicControllerApi {
 
 
   @Listen('body:ionModalWillPresent')
-  willPresent(ev: ModalEvent) {
-    this.modals.push(ev.modal);
+  modalWillPresent(ev: ModalEvent) {
+    this.modals.push(ev.detail.modal);
   }
 
 
   @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
-  willDismiss(ev: ModalEvent) {
-    const index = this.modals.indexOf(ev.modal);
+  modalWillDismiss(ev: ModalEvent) {
+    const index = this.modals.indexOf(ev.detail.modal);
     if (index > -1) {
       this.modals.splice(index, 1);
     }

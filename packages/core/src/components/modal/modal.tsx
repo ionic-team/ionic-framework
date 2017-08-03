@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { AnimationBuilder, Animation } from '../../index';
+import { AnimationBuilder, Animation, Ionic } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -63,7 +63,7 @@ export class Modal {
       this.animation = null;
     }
 
-    this.ionModalWillPresent.emit({ modal: this } as ModalEvent);
+    this.ionModalWillPresent.emit({ modal: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -75,14 +75,16 @@ export class Modal {
       animationBuilder = iOSEnterAnimation;
     }
 
-    // build the animation and kick it off
-    this.animation = animationBuilder(this.el);
+    Ionic.controller('animation').then(Animation => {
+      // build the animation and kick it off
+      this.animation = animationBuilder(Animation, this.el);
 
-    this.animation.onFinish((a: any) => {
-      a.destroy();
-      this.ionModalDidPresent.emit({ modal: this });
-      resolve();
-    }).play();
+      this.animation.onFinish((a: any) => {
+        a.destroy();
+        this.ionModalDidPresent.emit({ modal: this });
+        resolve();
+      }).play();
+    });
   }
 
   dismiss() {
@@ -105,16 +107,18 @@ export class Modal {
       }
 
       // build the animation and kick it off
-      this.animation = animationBuilder(this.el);
-      this.animation.onFinish((a: any) => {
-        a.destroy();
-        this.ionModalDidDismiss.emit({ modal: this });
+      Ionic.controller('animation').then(Animation => {
+        this.animation = animationBuilder(Animation, this.el);
+        this.animation.onFinish((a: any) => {
+          a.destroy();
+          this.ionModalDidDismiss.emit({ modal: this });
 
-        Core.dom.write(() => {
-          this.el.parentNode.removeChild(this.el);
-        });
-        resolve();
-      }).play();
+          Core.dom.write(() => {
+            this.el.parentNode.removeChild(this.el);
+          });
+          resolve();
+        }).play();
+      });
     });
   }
 
@@ -176,6 +180,8 @@ export interface ModalOptions {
 }
 
 
-export interface ModalEvent {
-  modal: Modal;
+export interface ModalEvent extends Event {
+  detail: {
+    modal: Modal;
+  }
 }

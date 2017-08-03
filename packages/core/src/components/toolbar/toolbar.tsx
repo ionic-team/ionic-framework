@@ -1,5 +1,6 @@
 import { Component, Element } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
+import { Ionic } from '../../index';
 
 
 /**

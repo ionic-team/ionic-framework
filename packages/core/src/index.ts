@@ -1,4 +1,5 @@
-import { Animation, AnimationBuilder } from './animations/interfaces';
+import { AnimationController } from './components/animation-controller/animation-controller';
+import { Animation, AnimationBuilder } from './components/animation-controller/animation-interface';
 import { Loading, LoadingEvent, LoadingOptions } from './components/loading/loading';
 import { LoadingController } from './components/loading-controller/loading-controller';
 import { GestureDetail, GestureCallback } from './components/gesture/gesture';
@@ -13,22 +14,20 @@ import { SegmentButton, SegmentButtonEvent } from './components/segment-button/s
 import * as Stencil from '@stencil/core';
 
 
-declare global {
-  const Ionic: IonicGlobal;
-}
+export const Ionic: IonicGlobal = (window as any).Ionic;
 
 
 export interface IonicGlobal extends Stencil.AppGlobal {
-  Animation?: Animation;
   controllers?: {[ctrlName: string]: any};
   controller?: IonicController;
   config: ConfigApi;
-  loadController?: (ctrlName: string, ctrl: any) => void;
+  registerController?: (ctrlName: string, ctrl: any) => void;
   mode: string;
 }
 
 
 export interface IonicController {
+  <AnimationController>(ctrlName: 'animation'): Promise<Animation>;
   <LoadingController>(ctrlName: 'loading', opts: LoadingOptions): Promise<Loading>;
   <MenuController>(ctrlName: 'menu'): Promise<MenuController>;
   <ModalController>(ctrlName: 'modal', opts: ModalOptions): Promise<Modal>;
@@ -70,6 +69,8 @@ export interface BooleanInputComponent extends BaseInputComponent {
 export {
   Animation,
   AnimationBuilder,
+  AnimationController,
+  GestureCallback,
   GestureDetail,
   Loading,
   LoadingOptions,
@@ -79,6 +80,7 @@ export {
   MenuController,
   MenuType,
   Modal,
+  ModalController,
   ModalOptions,
   ModalEvent,
   Scroll,

@@ -4,28 +4,16 @@ import { IonicControllerApi, IonicGlobal } from '../index';
 
 
 // create the Ionic global (if one doesn't exist)
-const Ionic: IonicGlobal = (window as any)['Ionic'] = (window as any)['Ionic'] || {};
-
-// create the Ionic.config from raw config object (if it exists)
-// and convert Ionic.config into a ConfigApi that has a get() fn
-Ionic.config = createConfigController(
-  Ionic.config,
-  detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core')
-);
-
-// get the mode via config settings and set it to
-// both Ionic and the Core global
-Core.mode = Ionic.mode = Ionic.config.get('mode', 'md');
-
+const Ionic: IonicGlobal = (window as any).Ionic = (window as any).Ionic || {};
 
 // used to store the queued controller promises to
 // be resolved when the controller finishes loading
 const queuedCtrlResolves: {[ctrlName: string]: any[]} = {};
 
-
 // create a container for all of the controllers that get loaded
 Ionic.controllers = {};
 
+// create the public method to load controllers
 Ionic.controller = (ctrlName: string, opts?: any) => {
   // loading a controller is always async so return a promise
   return new Promise<any>((resolve: Function) => {
@@ -59,8 +47,8 @@ Ionic.controller = (ctrlName: string, opts?: any) => {
   });
 };
 
-
-Ionic.loadController = (ctrlName: string, ctrl: IonicControllerApi) => {
+// create the method controllers will call once their instance has loaded
+Ionic.registerController = (ctrlName: string, ctrl: IonicControllerApi) => {
   // this method is called when the singleton
   // instance of our controller initially loads
 
@@ -97,3 +85,16 @@ function resolveController(ctrl: IonicControllerApi, resolve: Function, opts: an
     resolve(ctrl);
   }
 }
+
+
+// create the Ionic.config from raw config object (if it exists)
+// and convert Ionic.config into a ConfigApi that has a get() fn
+Ionic.config = createConfigController(
+  Ionic.config,
+  detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core')
+);
+
+
+// get the mode via config settings and set it to
+// both Ionic and the Core global
+Core.mode = Ionic.mode = Ionic.config.get('mode', 'md');

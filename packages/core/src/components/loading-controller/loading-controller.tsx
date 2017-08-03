@@ -1,4 +1,5 @@
 import { Component, Listen } from '@stencil/core';
+import { Ionic } from '../../index';
 import { LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../index';
 
 
@@ -15,7 +16,7 @@ export class LoadingController implements IonicControllerApi {
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
-    Ionic.loadController('loading', this);
+    Ionic.registerController('loading', this);
   }
 
 

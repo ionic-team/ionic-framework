@@ -1,5 +1,6 @@
 import { Component, Element } from '@stencil/core';
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
+import { Ionic } from '../../index';
 
 
 @Component({

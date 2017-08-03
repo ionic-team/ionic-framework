@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Scroll, ScrollDetail } from '../../index';
+import { Ionic, Scroll, ScrollDetail } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
 

@@ -2,6 +2,7 @@ import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '
 import { BlockerDelegate } from './gesture-controller';
 import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 import { GestureController, GestureDelegate, BLOCK_ALL } from './gesture-controller';
+import { Ionic } from '../../index';
 import { PanRecognizer } from './recognizers';
 
 
@@ -49,6 +50,9 @@ export class Gesture {
 
 
   ionViewDidLoad() {
+    // in this case, we already know the GestureController and Gesture are already
+    // apart of the same bundle, so it's safe to load it this way
+    // only create one instance of GestureController, and reuse the same one later
     this.ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
 
     this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
