@@ -2,8 +2,8 @@
   "name": "@ionic/core",
   "version": "0.0.2-0",
   "description": "Base components for Ionic",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/collection/index.js",
+  "types": "dist/collection/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/",
