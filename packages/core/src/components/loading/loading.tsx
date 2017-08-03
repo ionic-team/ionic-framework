@@ -57,7 +57,7 @@ export class Loading {
     if (this.showSpinner === null || this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
-    this.ionLoadingDidLoad.emit({ loading: this } as LoadingEvent);
+    this.ionLoadingDidLoad.emit({ loading: this });
   }
 
   ionViewDidEnter() {
@@ -70,7 +70,7 @@ export class Loading {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
 
-    this.ionLoadingDidPresent.emit({ loading: this } as LoadingEvent);
+    this.ionLoadingDidPresent.emit({ loading: this });
   }
 
   present() {
@@ -85,7 +85,7 @@ export class Loading {
       this.animation = null;
     }
 
-    this.ionLoadingWillPresent.emit({ loading: this } as LoadingEvent);
+    this.ionLoadingWillPresent.emit({ loading: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -121,7 +121,7 @@ export class Loading {
 
     return Ionic.controller('animation').then(Animation => {
       return new Promise(resolve => {
-        this.ionLoadingWillDismiss.emit({ loading: this } as LoadingEvent);
+        this.ionLoadingWillDismiss.emit({ loading: this });
 
         // get the user's animation fn if one was provided
         let animationBuilder = this.exitAnimation;
@@ -137,7 +137,7 @@ export class Loading {
         this.animation = animationBuilder(Animation, this.el);
         this.animation.onFinish((a: any) => {
           a.destroy();
-          this.ionLoadingDidDismiss.emit({ loading: this } as LoadingEvent);
+          this.ionLoadingDidDismiss.emit({ loading: this });
 
           Core.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -151,7 +151,7 @@ export class Loading {
   }
 
   ionViewDidUnload() {
-    this.ionLoadingDidUnload.emit({ loading: this }as LoadingEvent);
+    this.ionLoadingDidUnload.emit({ loading: this });
   }
 
   render() {
@@ -205,6 +205,8 @@ export interface LoadingOptions {
 }
 
 
-export interface LoadingEvent {
-  loading: Loading;
+export interface LoadingEvent extends Event {
+  detail: {
+    loading: Loading;
+  }
 }
