@@ -12,6 +12,9 @@ import iOSLeaveAnimation from './animations/ios.leave';
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
     wp: 'modal.wp.scss'
+  },
+  host: {
+    theme: 'modal'
   }
 })
 export class Modal {
@@ -34,7 +37,6 @@ export class Modal {
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() id: string;
   @Prop() showBackdrop: boolean = true;
-
 
 
   private animation: Animation;

@@ -7,7 +7,7 @@ export function transitionEnd(elm: HTMLElement, callback: {(ev?: TransitionEvent
 
   function unregister() {
     unRegWKTrans && unRegWKTrans();
-    unRegWKTrans && unRegTrans();
+    unRegTrans && unRegTrans();
   }
 
   function onTransitionEnd(ev: TransitionEvent) {
@@ -24,7 +24,7 @@ export function transitionEnd(elm: HTMLElement, callback: {(ev?: TransitionEvent
     };
 
     elm.addEventListener('transitionend', onTransitionEnd, opts);
-    unRegWKTrans = function() {
+    unRegTrans = function() {
       elm.removeEventListener('transitionend', onTransitionEnd, opts);
     };
   }
