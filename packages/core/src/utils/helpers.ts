@@ -17,6 +17,12 @@ export function isFunction(v: any): v is (Function) { return typeof v === 'funct
 
 export function isStringOrNumber(v: any): v is (string | number) { return isString(v) || isNumber(v); }
 
+export function assert(bool: boolean, msg: string) {
+  if (!bool) {
+    console.error(msg);
+  }
+};
+
 export function toDashCase(str: string) {
   return str.replace(/([A-Z])/g, (g) => '-' + g[0].toLowerCase());
 }
