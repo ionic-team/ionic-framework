@@ -2,27 +2,33 @@
   "name": "@ionic/core",
   "version": "0.0.1",
   "description": "Base components for Ionic",
-  "main": "dist/collection/collection-manifest.json",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "dependencies": {
+    "@stencil/core": "^0.0.4-3"
+  },
+  "devDependencies": {
+    "@stencil/dev-server": "^0.0.11",
+    "@stencil/utils": "^0.0.4",
+    "jest": "^20.0.4"
+  },
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
+    "publish": "np",
     "test": "(jest --no-cache || true)"
   },
+  "author": "Ionic Team",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ionic-team/ionic.git"
   },
-  "dependencies": {
-    "@stencil/core": "0.0.4-3"
-  },
-  "devDependencies": {
-    "@stencil/dev-server": "0.0.11",
-    "@stencil/utils": "0.0.3",
-    "ionicons": "3.0.0",
-    "jest": "^20.0.4"
-  },
-  "author": "Ionic Team",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
