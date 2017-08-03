@@ -1,3 +1,4 @@
+import { ActionSheetCustomCmp } from './../../../../action-sheet-custom/action-sheet-custom.component';
 import { Component } from '@angular/core';
 import { ActionSheetController, AlertController, IonicPage, ModalController, Platform } from '../../../../../..';
 
@@ -10,7 +11,11 @@ import { ModalPage } from '../modal-page/modal-page';
 export class PageOne {
   result: string = '';
 
-  constructor(public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public modalCtrl: ModalController, public plt: Platform) {}
+  constructor(
+    public actionSheetCtrl: ActionSheetController,
+    public alertCtrl: AlertController,
+    public modalCtrl: ModalController,
+    public plt: Platform) {}
 
   presentBasic() {
     this.result = '';
@@ -310,6 +315,16 @@ export class PageOne {
         }
       ]
     });
+
+    actionSheet.present();
+  }
+
+  presentActionSheetCustom() {
+    this.result = '';
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Custom Action Sheet'
+    }, ActionSheetCustomCmp);
 
     actionSheet.present();
   }

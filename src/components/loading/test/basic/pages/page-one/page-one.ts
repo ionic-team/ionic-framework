@@ -1,3 +1,4 @@
+import { LoadingCustomCmp } from './../../../../loading-custom/loading-custom-component';
 import { Component } from '@angular/core';
 import { IonicPage, LoadingController, NavController } from '../../../../../..';
 
@@ -165,6 +166,22 @@ export class PageOne {
     setTimeout(() => {
       loading.setContent('Loaded!');
     }, 1000);
+    setTimeout(() => {
+      loading.dismiss();
+    }, 2000);
+  }
+
+  presentLoadingCustomComponent() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: `
+        <div class="custom-spinner-container">
+          <div class="custom-spinner-box"></div>
+        </div>`
+    }, LoadingCustomCmp);
+
+    loading.present();
+
     setTimeout(() => {
       loading.dismiss();
     }, 2000);
