@@ -1,4 +1,4 @@
-import { Component, Element, HostElement, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, HostElement, Listen, Prop, PropDidChange, EventEmitter, Event } from '@stencil/core';
 
 import { SegmentButtonEvent } from '../../index';
 
@@ -74,6 +74,8 @@ export class Segment {
   buttons: NodeListOf<HostElement>;
   @Element() el: HTMLElement;
 
+  @Event() ionChange: EventEmitter;
+
   @Prop({ state: true }) disabled: boolean = false;
 
   @Prop({ state: true }) value: string;
@@ -105,6 +107,11 @@ export class Segment {
 
     this.value = selectedButton.value;
     this.selectButton(this.value);
+
+    const event: SegmentEvent = {
+      'segment': this
+    };
+    this.ionChange.emit(event);
   }
 
   selectButton(val: string) {
@@ -128,4 +135,8 @@ export class Segment {
   render() {
     return <slot></slot>;
   }
+}
+
+export interface SegmentEvent {
+  segment: Segment;
 }
