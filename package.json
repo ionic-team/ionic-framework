@@ -1,5 +1,10 @@
 {
+  "name": "@ionic/source",
+  "version": "0.0.1",
+  "private": true,
   "devDependencies": {
-    "lerna": "^2.0.0-rc.5"
+    "lerna": "^2.0.0-rc.5",
+    "jest": "^20.0.4",
+    "np": "^2.16.0"
   }
 }
