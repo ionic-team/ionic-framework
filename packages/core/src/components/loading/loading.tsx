@@ -93,13 +93,12 @@ export class Loading {
     if (!animationBuilder) {
       // user did not provide a custom animation fn
       // decide from the config which animation to use
-      // TODO!!
       animationBuilder = iOSEnterAnimation;
     }
 
     // build the animation and kick it off
     Ionic.controller('animation').then(Animation => {
-      this.animation = new Animation();
+      this.animation = animationBuilder(Animation, this.el);
 
       this.animation.onFinish((a: any) => {
         a.destroy();
@@ -129,7 +128,6 @@ export class Loading {
         if (!animationBuilder) {
           // user did not provide a custom animation fn
           // decide from the config which animation to use
-          // TODO!!
           animationBuilder = iOSLeaveAnimation;
         }
 
