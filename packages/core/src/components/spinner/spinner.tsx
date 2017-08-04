@@ -10,12 +10,15 @@ import { SPINNERS, SpinnerConfig } from './spinner-configs';
     ios: 'spinner.ios.scss',
     md: 'spinner.md.scss',
     wp: 'spinner.wp.scss'
+  },
+  host: {
+    theme: 'spinner'
   }
 })
 export class Spinner {
+  mode: string;
+  color: string;
 
-  @Prop() mode: string;
-  @Prop() color: string;
   @Prop() duration: number = null;
   @Prop() name: string;
   @Prop() paused: boolean = false;
