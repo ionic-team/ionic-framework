@@ -44,8 +44,8 @@ export interface AlertInputOptions {
   /** The input's id. */
   id?: string;
   handler?: Function;
-  min?: number;
-  max?: number;
+  min?: number | string;
+  max?: number | string;
   validators?: ValidatorFn[];
   asyncValidators?: AsyncValidatorFn[];
   errors?: {error: string; message: string}[];
