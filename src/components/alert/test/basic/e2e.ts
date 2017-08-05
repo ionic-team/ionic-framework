@@ -44,6 +44,12 @@ it('should open prompt alert', function() {
   element(by.css('.e2eOpenPrompt')).click();
 });
 
+it('should set validated input values', async function(done) {
+  await element(by.name('name4')).sendKeys('06012017');
+  await element(by.name('name6')).sendKeys('5');
+  done();
+});
+
 it('should close with button click', function() {
   element(by.css('.alert-button:last-child')).click();
 });
