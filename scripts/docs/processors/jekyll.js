@@ -22,6 +22,7 @@ module.exports = function jekyll(renderDocsProcessor) {
                                     .replace('//home/ubuntu/ionic/src', '')
                                     .replace('//', '/')
                                     .replace('content/', '');
+        docs[i].URL = docs[i].URL+'/'; // add trailing slash
         if (docs[i].relativePath) {
           docs[i].relativePath = doc.relativePath
                                     .replace('/home/ubuntu/ionic', '');
