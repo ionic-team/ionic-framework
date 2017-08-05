@@ -35,7 +35,7 @@ export interface AlertInputOptions {
   /** The input's placeholder (for textual/numeric inputs) */
   placeholder?: string;
   /** The input's value. */
-  value?: string;
+  value?: string | number;
   /** The input's label (only for radio/checkbox inputs) */
   label?: string;
   /** Whether or not the input is checked. */
