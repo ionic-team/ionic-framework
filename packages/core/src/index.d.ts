@@ -2,6 +2,7 @@ import { AnimationController } from './components/animation/animation';
 import { Animation, AnimationBuilder } from './components/animation/animation-interface';
 import { ActionSheet, ActionSheetButtons, ActionSheetEvent, ActionSheetOptions } from './components/action-sheet/action-sheet';
 import { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
+import { Backdrop } from './components/backdrop/backdrop'
 import { Loading, LoadingEvent, LoadingOptions } from './components/loading/loading';
 import { LoadingController } from './components/loading-controller/loading-controller';
 import { GestureDetail, GestureCallback } from './components/gesture/gesture';
@@ -55,6 +56,7 @@ export {
   Animation,
   AnimationBuilder,
   AnimationController,
+  Backdrop,
   GestureCallback,
   GestureDetail,
   Loading,

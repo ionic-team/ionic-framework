@@ -7,18 +7,18 @@ import {
   Prop,
   State
 } from '@stencil/core';
-import { AnimationBuilder, Animation } from '../../index';
+import { AnimationBuilder, Animation, Ionic } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
 @Component({
   tag: 'ion-action-sheet',
-  // styleUrls: {
-  //   ios: 'action-sheet.ios.scss',
-  //   md: 'action-sheet.md.scss',
-  //   wp: 'action-sheet.wp.scss'
-  // },
+  styleUrls: {
+    //   ios: 'action-sheet.ios.scss',
+    md: 'action-sheet.md.scss'
+    //   wp: 'action-sheet.wp.scss'
+  },
   host: {
     theme: 'action-sheet'
   }
@@ -66,53 +66,54 @@ export class ActionSheet {
   }
 
   private _present(resolve: Function) {
-    // if (this.animation) {
-    //   this.animation.destroy();
-    //   this.animation = null;
-    // }
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
     this.ionActionSheetWillPresent.emit({ actionsheet: this });
 
-    // let animationBuilder = this.enterAnimation
-    // ? this.enterAnimation
-    // : iOSEnterAnimation;
+    let animationBuilder = this.enterAnimation
+      ? this.enterAnimation
+      : iOSEnterAnimation;
 
     // build the animation and kick it off
-    // this.animation = animationBuilder(this.el);
-
-    // this.animation.onFinish((a: any) => {
-    // a.destroy();
-    // this.ionViewDidLoad();
-    resolve();
-    // }).play();
+    Ionic.controller('animation').then(Animation => {
+      this.animation = animationBuilder(Animation, this.el);
+      this.animation
+        .onFinish((a: any) => {
+          a.destroy();
+          this.ionActionSheetDidLoad.emit({ actionsheet: this });
+          resolve();
+        })
+        .play();
+    });
   }
 
   dismiss() {
-    //
-    // if (this.animation) {
-    //   this.animation.destroy();
-    //   this.animation = null;
-    // }
-
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
     return new Promise<void>(resolve => {
       this.ionActionSheetWillDismiss.emit({ actionsheet: this });
-
-
-      // let animationBuilder = this.exitAnimation
-      // ? this.exitAnimation
-      // : iOSLeaveAnimation;
+      let animationBuilder = this.exitAnimation
+        ? this.exitAnimation
+        : iOSLeaveAnimation;
 
       // build the animation and kick it off
-      // this.animation = animationBuilder(this.el);
-      // this.animation.onFinish((a: any) => {
-      //   a.destroy();
-      this.ionActionSheetDidDismiss.emit({ actionsheet: this });
-
-      Core.dom.write(() => {
-        this.el.parentNode.removeChild(this.el);
+      Ionic.controller('animation').then(Animation => {
+        this.animation = animationBuilder(Animation, this.el);
+        this.animation
+          .onFinish((a: any) => {
+            a.destroy();
+            this.ionActionSheetDidDismiss.emit({ actionsheet: this });
+            Core.dom.write(() => {
+              this.el.parentNode.removeChild(this.el);
+            });
+            resolve();
+          })
+          .play();
       });
-
-      resolve();
-      // }).play();
     });
   }
 
@@ -129,18 +130,27 @@ export class ActionSheet {
     }
   }
 
+  click(button: ActionSheetButtons) {
+    let shouldDismiss = true;
+    if (button.handler) {
+      if (button.handler() === false) {
+        shouldDismiss = false;
+      }
+    }
+    if (shouldDismiss) {
+      this.dismiss();
+    }
+  }
+
   render() {
     let userCssClass = 'action-sheet-content';
     if (this.cssClass) {
       userCssClass += ' ' + this.cssClass;
     }
     return [
-      <div
+      <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class={{
-          'action-sheet-backdrop': true,
-          'hide-backdrop': !this.showBackdrop
-        }}
+        class="action-sheet-backdrop"
       />,
       <div class="action-sheet-wrapper" role="dialog">
         <div class="action-sheet-container">
@@ -152,7 +162,12 @@ export class ActionSheet {
               ? <div class="action-sheet-sub-title">{this.subTitle}</div>
               : null}
             {this.buttons.map(b =>
-              <ion-button onClick={() => b.handler()}>{b.text}</ion-button>
+              <button class="action-sheet-button" onClick={() => this.click(b)}>
+                {b.icon
+                  ? <ion-icon name={b.icon} class="action-sheet-icon" />
+                  : null}
+                {b.text}
+              </button>
             )}
           </div>
         </div>

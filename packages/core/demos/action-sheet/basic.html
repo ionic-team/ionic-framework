@@ -28,11 +28,14 @@
                 console.log('Destructive clicked');
               }
             }, {
+              icon: 'trash',
               text: 'Archive',
               handler: () => {
                 console.log('Archive clicked');
+                return false
               }
             }, {
+              icon: 'close',
               text: 'Cancel',
               role: 'cancel',
               handler: () => {

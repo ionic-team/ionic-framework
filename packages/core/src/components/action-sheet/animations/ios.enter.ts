@@ -7,20 +7,19 @@ export default function(Animation: Animation, baseElm: HTMLElement) {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.loading-backdrop'));
+  backdropAnimation.addElement(baseElm.querySelector('.action-sheet-backdrop'));
 
   const wrapperAnimation = new Animation();
-  wrapperAnimation.addElement(baseElm.querySelector('.loading-wrapper'));
+  wrapperAnimation.addElement(baseElm.querySelector('.action-sheet-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.01, 0.3);
+  backdropAnimation.fromTo('opacity', 0.01, 0.26);
 
-  wrapperAnimation.fromTo('opacity', 0.01, 1)
-                  .fromTo('scale', 1.1, 1);
+  wrapperAnimation.fromTo('translateY', '100%', '0%');
 
   return baseAnimation
     .addElement(baseElm)
-    .easing('ease-in-out')
-    .duration(200)
+    .easing('cubic-bezier(.36,.66,.04,1)')
+    .duration(400)
     .add(backdropAnimation)
     .add(wrapperAnimation);
 }
