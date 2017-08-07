@@ -1,6 +1,6 @@
-import { Directive, ElementRef, EventEmitter, Input, NgZone, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer } from '@angular/core';
 
-import { Content, ScrollEvent } from '../content/content';
+import { Content, ContentDimensions, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { assert } from '../../util/util';
 
@@ -150,6 +150,7 @@ export class InfiniteScroll {
   _thrPc: number = 0.15;
   _position: string = POSITION_BOTTOM;
   _init: boolean = false;
+  _prevDim: ContentDimensions;
 
 
   /**
@@ -222,7 +223,8 @@ export class InfiniteScroll {
     private _content: Content,
     private _zone: NgZone,
     private _elementRef: ElementRef,
-    private _dom: DomController
+    private _dom: DomController,
+    private _renderer: Renderer
   ) {
     _content.setElementClass('has-infinite-scroll', true);
   }
@@ -246,9 +248,8 @@ export class InfiniteScroll {
     }
 
     // ******** DOM READ ****************
-    const d = this._content.getContentDimensions();
+    const d = this._content.getContentDimensions()
     const height = d.contentHeight;
-
     const threshold = this._thrPc ? (height * this._thrPc) : this._thrPx;
 
     // ******** DOM READS ABOVE / DOM WRITES BELOW ****************
@@ -267,6 +268,7 @@ export class InfiniteScroll {
       this._dom.write(() => {
         this._zone.run(() => {
           if (this.state !== STATE_LOADING && this.state !== STATE_DISABLED) {
+            this._prevDim = d;
             this.state = STATE_LOADING;
             this.ionInfinite.emit(this);
           }
@@ -299,45 +301,33 @@ export class InfiniteScroll {
     }
 
     assert(this._position === POSITION_TOP, 'position should be top');
-    /* New content is being added at the top, but the scrollTop position stays the same,
-      which causes a scroll jump visually. This algorithm makes sure to prevent this.
+    this._updateScrollTopPosition();
+  }
 
-      (Frame 1)
-        complete() is called, but the UI hasn't had time to update yet.
-        Save the current content dimensions.
-        Wait for the next frame using _dom.read, so the UI will be updated.
-
-      (Frame 2)
-        Read the new content dimensions.
-        Calculate the height difference and the new scroll position.
-        Delay the scroll position change until other possible dom reads are done using _dom.write to be performant.
-
-      (Still frame 2, if I'm correct)
-        Change the scroll position (= visually maintain the scroll position).
-        Change the state to re-enable the InfiniteScroll. This should be after changing the scroll position, or it could cause the InfiniteScroll to be triggered again immediately.
-
-      (Frame 3)
-        Done.
-    */
-
-    // ******** DOM READ ****************
-    // Save the current content dimensions before the UI updates
-    const prevDim = this._content.getContentDimensions();
-
+  /**
+   * @hidden
+   *
+   * Updates `scrollTop` position of `Content with respect to the last received `ScrollEvent`
+   */
+  _updateScrollTopPosition() {
     // ******** DOM READ ****************
     this._dom.read(() => {
-      // UI has updated, save the new content dimensions
+      const scrollEl = this._content.getScrollElement();
       const newDim = this._content.getContentDimensions();
-
-      // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
-      const newScrollTop = newDim.scrollHeight - (prevDim.scrollHeight - prevDim.scrollTop);
+      const scrollTop = this._prevDim.scrollTop < 0 ? 0 : this._prevDim.scrollTop;
+      const newScrollTop = scrollTop + newDim.scrollHeight - this._prevDim.scrollHeight;
 
       // ******** DOM WRITE ****************
       this._dom.write(() => {
+        this._renderer.setElementStyle(scrollEl, '-webkit-overflow-scrolling', 'auto');
         this._content.scrollTop = newScrollTop;
+      });
+
+      this._dom.write(() => {
+        this._renderer.setElementStyle(scrollEl, '-webkit-overflow-scrolling', '');
         this.state = STATE_ENABLED;
       });
-    });
+    })
   }
 
   /**
