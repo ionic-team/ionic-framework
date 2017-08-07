@@ -1,5 +1,5 @@
 import { Component, Listen } from '@stencil/core';
-import { ActionSheetEvent, ActionSheetOptions, ActionSheet, IonicControllerApi } from '../../index';
+import { ActionSheetEvent, ActionSheetOptions, ActionSheet, IonicControllerApi, Ionic } from '../../index';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class ActionSheetController implements IonicControllerApi {
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
-    Ionic.loadController('action-sheet', this);
+    Ionic.registerController('action-sheet', this);
   }
 
 

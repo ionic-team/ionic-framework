@@ -1,5 +1,5 @@
 import { Component, Listen } from '@stencil/core';
-import { PopoverEvent, PopoverOptions, Popover, IonicControllerApi } from '../../index';
+import { PopoverEvent, PopoverOptions, Popover, IonicControllerApi, Ionic } from '../../index';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class PopoverController implements IonicControllerApi {
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
-    Ionic.loadController('popover', this);
+    Ionic.registerController('popover', this);
   }
 
 

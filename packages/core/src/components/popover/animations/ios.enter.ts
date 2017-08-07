@@ -1,11 +1,12 @@
+import { Animation } from '../../../index';
 
-export default function(baseElm: HTMLElement) {
-  const baseAnimation = new Ionic.Animation();
+export default function(Animation: Animation, baseElm: HTMLElement) {
+  const baseAnimation = new Animation();
 
-  const backdropAnimation = new Ionic.Animation();
+  const backdropAnimation = new Animation();
   backdropAnimation.addElement(baseElm.querySelector('.popover-backdrop'));
 
-  const wrapperAnimation = new Ionic.Animation();
+  const wrapperAnimation = new Animation();
   wrapperAnimation.addElement(baseElm.querySelector('.popover-wrapper'));
 
   backdropAnimation.fromTo('opacity', 0.01, 0.3);
