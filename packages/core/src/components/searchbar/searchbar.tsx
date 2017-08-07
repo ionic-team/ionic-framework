@@ -352,8 +352,8 @@ export class Searchbar {
       <div class='searchbar-input-container'>
         <ion-button
           mode="md"
-          onclick={this.cancelSearchbar.bind(this)}
-          onmousedown={this.cancelSearchbar.bind(this)}
+          onClick={this.cancelSearchbar.bind(this)}
+          onMousedown={this.cancelSearchbar.bind(this)}
           clear
           color="dark"
           class="searchbar-md-cancel">
