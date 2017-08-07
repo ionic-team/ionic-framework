@@ -1,6 +1,6 @@
-import { AnimationController } from './components/animation/animation';
-import { Animation, AnimationBuilder } from './components/animation/animation-interface';
-import { ActionSheet, ActionSheetButtons, ActionSheetEvent, ActionSheetOptions } from './components/action-sheet/action-sheet';
+import { AnimationController } from './components/animation-controller/animation-controller';
+import { Animation, AnimationBuilder } from './components/animation-controller/animation-interface';
+import { ActionSheet, ActionSheetButton, ActionSheetEvent, ActionSheetOptions } from './components/action-sheet/action-sheet';
 import { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
 import { Backdrop } from './components/backdrop/backdrop'
 import { Loading, LoadingEvent, LoadingOptions } from './components/loading/loading';
@@ -49,7 +49,7 @@ export interface BooleanInputComponent extends BaseInputComponent {
 
 export {
   ActionSheet,
-  ActionSheetButtons,
+  ActionSheetButton,
   ActionSheetEvent,
   ActionSheetOptions,
   ActionSheetController,

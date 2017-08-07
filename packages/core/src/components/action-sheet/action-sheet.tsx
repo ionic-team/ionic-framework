@@ -15,9 +15,9 @@ import iOSLeaveAnimation from './animations/ios.leave';
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
-    //   ios: 'action-sheet.ios.scss',
-    md: 'action-sheet.md.scss'
-    //   wp: 'action-sheet.wp.scss'
+    ios: 'action-sheet.ios.scss',
+    md: 'action-sheet.md.scss',
+    wp: 'action-sheet.wp.scss'
   },
   host: {
     theme: 'action-sheet'
@@ -39,7 +39,7 @@ export class ActionSheet {
   @Prop() cssClass: string;
   @Prop() title: string;
   @Prop() subTitle: string;
-  @Prop() buttons: ActionSheetButtons[];
+  @Prop() buttons: ActionSheetButton[];
   @Prop() enableBackdropDismiss: boolean = true;
   @Prop() showBackdrop: boolean = true;
 
@@ -130,7 +130,7 @@ export class ActionSheet {
     }
   }
 
-  click(button: ActionSheetButtons) {
+  click(button: ActionSheetButton) {
     let shouldDismiss = true;
     if (button.handler) {
       if (button.handler() === false) {
@@ -180,11 +180,11 @@ export interface ActionSheetOptions {
   title?: string;
   subTitle?: string;
   cssClass?: string;
-  buttons?: (ActionSheetButtons | string)[];
+  buttons?: (ActionSheetButton | string)[];
   enableBackdropDismiss?: boolean;
 }
 
-export interface ActionSheetButtons {
+export interface ActionSheetButton {
   text?: string;
   role?: string;
   icon?: string;

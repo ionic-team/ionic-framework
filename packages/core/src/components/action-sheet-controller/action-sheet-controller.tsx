@@ -1,6 +1,11 @@
 import { Component, Listen } from '@stencil/core';
-import { ActionSheetEvent, ActionSheetOptions, ActionSheet, IonicControllerApi, Ionic } from '../../index';
-
+import {
+  ActionSheetEvent,
+  ActionSheetOptions,
+  ActionSheet,
+  IonicControllerApi,
+  Ionic
+} from '../../index';
 
 @Component({
   tag: 'ion-action-sheet-controller',
@@ -8,16 +13,14 @@ import { ActionSheetEvent, ActionSheetOptions, ActionSheet, IonicControllerApi, 
 })
 export class ActionSheetController implements IonicControllerApi {
   private ids = 0;
-  private actionsheetResolves: {[actionsheetId: string]: Function} = {};
+  private actionsheetResolves: { [actionsheetId: string]: Function } = {};
   private actionsheets: ActionSheet[] = [];
   private appRoot: Element;
-
 
   ionViewDidLoad() {
     this.appRoot = document.querySelector('ion-app') || document.body;
     Ionic.registerController('action-sheet', this);
   }
-
 
   load(opts?: ActionSheetOptions) {
     // create ionic's wrapping ion-actionsheet component
@@ -41,7 +44,6 @@ export class ActionSheetController implements IonicControllerApi {
     });
   }
 
-
   @Listen('body:ionActionSheetDidLoad')
   viewDidLoad(ev: ActionSheetEvent) {
     const actionsheet = ev.detail.actionsheet;
@@ -52,12 +54,10 @@ export class ActionSheetController implements IonicControllerApi {
     }
   }
 
-
   @Listen('body:ionActionSheetWillPresent')
   willPresent(ev: ActionSheetEvent) {
     this.actionsheets.push(ev.detail.actionsheet);
   }
-
 
   @Listen('body:ionActionSheetWillDismiss, body:ionActionSheetDidUnload')
   willDismiss(ev: ActionSheetEvent) {
@@ -67,7 +67,6 @@ export class ActionSheetController implements IonicControllerApi {
     }
   }
 
-
   @Listen('body:keyup.escape')
   escapeKeyUp() {
     const lastActionSheet = this.actionsheets[this.actionsheets.length - 1];
@@ -75,5 +74,4 @@ export class ActionSheetController implements IonicControllerApi {
       lastActionSheet.dismiss();
     }
   }
-
 }
