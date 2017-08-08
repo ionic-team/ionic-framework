@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Listen,
   Prop,
-  State
+  CssClassMap
 } from '@stencil/core';
 import { AnimationBuilder, Animation, Ionic } from '../../index';
 
@@ -25,7 +25,6 @@ import iOSLeaveAnimation from './animations/ios.leave';
 })
 export class ActionSheet {
   private animation: Animation;
-  private durationTimeout: any;
 
   @Element() private el: HTMLElement;
 
@@ -162,7 +161,8 @@ export class ActionSheet {
               ? <div class="action-sheet-sub-title">{this.subTitle}</div>
               : null}
             {this.buttons.map(b =>
-              <button class="action-sheet-button" onClick={() => this.click(b)}>
+              <button class={this.buttonClass(b)}
+                onClick={() => this.click(b)}>
                 {b.icon
                   ? <ion-icon name={b.icon} class="action-sheet-icon" />
                   : null}
@@ -174,6 +174,17 @@ export class ActionSheet {
       </div>
     ];
   }
+
+  buttonClass(button: ActionSheetButton): CssClassMap {
+    let buttonClass: string[] = !button.role
+      ? ['action-sheet-button']
+      : [`action-sheet-button`, `action-sheet-${button.role}`]
+    return buttonClass.reduce((prevValue: any, cssClass: any) => {
+      prevValue[cssClass] = true;
+      return prevValue;
+    }, {});
+  }
+
 }
 
 export interface ActionSheetOptions {
