@@ -211,12 +211,12 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   @ViewChild('textInput', { read: ElementRef }) _native: ElementRef;
 
   /**
-   * @input {string} Instructional text that shows before the input has a value.
+   * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`.
    */
   @Input() autocomplete: string = '';
 
   /**
-   * @input {string} Instructional text that shows before the input has a value.
+   * @input {string} Set the input's autocorrect property. Values: `"on"`, `"off"`.
    */
   @Input() autocorrect: string = '';
 
