@@ -10,14 +10,14 @@
   </p>
 
   <h5 padding-left> Search - Custom Placeholder </h5>
-  <ion-searchbar [autocorrect]="isAutocorrect" showCancelButton="true" [autocomplete]="isAutocomplete" [spellcheck]="isSpellcheck" type="number" placeholder="Filter Schedules" [(ngModel)]="customPlaceholder" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+  <ion-searchbar [autocorrect]="isAutocorrect" showCancelButton="true" [autocomplete]="isAutocomplete" [autocapitalize]="isAutocapitalize" [spellcheck]="isSpellcheck" type="number" placeholder="Filter Schedules" [(ngModel)]="customPlaceholder" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
 
   <p padding-left>
     customPlaceholder: <b>{{ customPlaceholder }}</b>
   </p>
 
   <h5 padding-left> Search - No Cancel Button </h5>
-  <ion-searchbar autocorrect="off" autocomplete="off" spellcheck="true" type="text" [(ngModel)]="defaultCancel" showCancelButton="false" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+  <ion-searchbar autocorrect="off" autocomplete="off" autocapitalize="none" spellcheck="true" type="text" [(ngModel)]="defaultCancel" showCancelButton="false" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
 
   <p padding-left>
     defaultCancel: <b>{{ defaultCancel }}</b>

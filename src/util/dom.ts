@@ -94,7 +94,7 @@ export function isTextInput(ele: any) {
 export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
 
 
-const SKIP_INPUT_ATTR = ['value', 'checked', 'disabled', 'readonly', 'placeholder', 'type', 'class', 'style', 'id', 'autofocus', 'autocomplete', 'autocorrect'];
+const SKIP_INPUT_ATTR = ['value', 'checked', 'disabled', 'readonly', 'placeholder', 'type', 'class', 'style', 'id', 'autofocus', 'autocomplete', 'autocorrect', 'autocapitalize'];
 export function copyInputAttributes(srcElement: HTMLElement, destElement: HTMLElement) {
   // copy attributes from one element to another
   // however, skip over a few of them as they're already

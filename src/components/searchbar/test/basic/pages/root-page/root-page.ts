@@ -12,6 +12,7 @@ export class RootPage {
 
   isAutocorrect: string = 'on';
   isAutocomplete: string = 'on';
+  isAutocapitalize: string = 'sentences';
   isSpellcheck: boolean = true;
   activeTab = '';
 
