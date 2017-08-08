@@ -7,22 +7,19 @@ export default function(Animation: Animation, baseElm: HTMLElement) {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.modal-backdrop'));
+  backdropAnimation.addElement(baseElm.querySelector('.popover-backdrop'));
 
   const wrapperAnimation = new Animation();
-  const wrapperElm = baseElm.querySelector('.modal-wrapper');
-  wrapperAnimation.addElement(wrapperElm);
-  const wrapperElmRect = wrapperElm.getBoundingClientRect();
+  const wrapperElm = baseElm.querySelector('.popover-wrapper');
 
-  wrapperAnimation.beforeStyles({ 'opacity': 1 })
-                  .fromTo('translateY', '0%', `${window.innerHeight - wrapperElmRect.top}px`);
+  wrapperAnimation.fromTo('opacity', 0.99, 0);
+  backdropAnimation.fromTo('opacity', 0.08, 0);
 
-  backdropAnimation.fromTo('opacity', 0.4, 0.0);
 
   return baseAnimation
     .addElement(baseElm)
-    .easing('ease-out')
-    .duration(250)
+    .easing('ease')
+    .duration(500)
     .add(backdropAnimation)
     .add(wrapperAnimation);
 }

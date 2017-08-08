@@ -3,6 +3,7 @@
 // Popover
 // --------------------------------------------------
 
+
 ion-popover {
   @include position(0, 0, 0, 0);
 
@@ -14,25 +15,12 @@ ion-popover {
 
   align-items: center;
   justify-content: center;
-
-  .popover-backdrop {
-    left: 0;
-    top: 0;
-    position: absolute;
-    bottom: 0px;
-    z-index: 2;
-    display: block;
-    width: 100%;
-    background-color: #000;
-    opacity: 0.3;
-  }
 }
 
 .popover-wrapper {
   z-index: $z-index-overlay-wrapper;
 
-  // opacity: 0;
-  opacity: 1;
+  opacity: 0;
 }
 
 .popover-content {
@@ -46,7 +34,8 @@ ion-popover {
   flex-direction: column;
 }
 
-.popover-content ion-content, .popover-content .scroll-content {
+.popover-content ion-content,
+.popover-content .scroll-content {
   contain: none;
 }
 

@@ -1,5 +1,6 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/ionic.globals.md";
 @import "./popover";
+
 // Material Design Popover
 // --------------------------------------------------
 
@@ -19,12 +20,10 @@ $popover-md-max-height:                90% !default;
 $popover-md-border-radius:             2px !default;
 
 /// @prop - Text color of the popover content
-// $popover-md-text-color:                $text-md-color !default;
-$popover-md-text-color:                black !default;
+$popover-md-text-color:                $text-md-color !default;
 
 /// @prop - Background of the popover content
-// $popover-md-background:                $background-md-color !default;
-$popover-md-background:                black !default;
+$popover-md-background:                $background-md-color !default;
 
 /// @prop - Box shadow color of the popover content
 $popover-md-box-shadow-color:          rgba(0, 0, 0, .3) !default;
@@ -43,8 +42,7 @@ $popover-md-box-shadow:                0 3px 12px 2px $popover-md-box-shadow-col
   max-height: $popover-md-max-height;
 
   color: $popover-md-text-color;
-  // background: $popover-md-background;
-  background: #ffffff;
+  background: $popover-md-background;
   box-shadow: $popover-md-box-shadow;
 }
 

@@ -1,17 +1,23 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { AnimationBuilder, Animation } from '../../index';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  Listen,
+  Prop
+} from '@stencil/core';
+import { AnimationBuilder, Animation, Ionic } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
-
 @Component({
   tag: 'ion-popover',
   styleUrls: {
-    // ios: 'popover.ios.scss',
+    ios: 'popover.ios.scss',
     md: 'popover.md.scss',
-    // wp: 'popover.wp.scss'
+    wp: 'popover.wp.scss'
   },
   host: {
     theme: 'popover'
@@ -38,8 +44,6 @@ export class Popover {
   @Prop() ev: Event;
   @Prop() id: string;
   @Prop() showBackdrop: boolean = true;
-
-
 
   private animation: Animation;
 
@@ -69,50 +73,49 @@ export class Popover {
     this.ionPopoverWillPresent.emit({ popover: this });
 
     // get the user's animation fn if one was provided
-    // let animationBuilder = this.enterAnimation
-    // ? this.enterAnimation
-    // : iOSEnterAnimation;
+    let animationBuilder = this.enterAnimation
+      ? this.enterAnimation
+      : iOSEnterAnimation;
     //
     // build the animation and kick it off
-    // this.animation = animationBuilder(this.el);
-
-    // this.animation.onFinish((a: any) => {
-    //   a.destroy();
-    //   this.ionPopoverDidPresent.emit({ popover: this });
-      resolve();
-    // }).play();
+    Ionic.controller('animation').then(Animation => {
+      this.animation = animationBuilder(Animation, this.el, this.ev);
+      this.animation
+        .onFinish((a: any) => {
+          a.destroy();
+          this.ionPopoverDidPresent.emit({ popover: this });
+          resolve();
+        })
+        .play();
+    });
   }
 
   dismiss() {
-    // if (this.animation) {
-    //   this.animation.destroy();
-    //   this.animation = null;
-    // }
-
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
     return new Promise<void>(resolve => {
       this.ionPopoverWillDismiss.emit({ popover: this });
 
-      // get the user's animation fn if one was provided
-      // let animationBuilder = this.exitAnimation;
-      //
-      // if (!animationBuilder) {
-      //   // user did not provide a custom animation fn
-      //   // decide from the config which animation to use
-      //   // TODO!!
-      //   animationBuilder = iOSLeaveAnimation;
-      // }
+      let animationBuilder = this.exitAnimation
+        ? this.exitAnimation
+        : iOSLeaveAnimation;
 
       // build the animation and kick it off
-      // this.animation = animationBuilder(this.el);
-      // this.animation.onFinish((a: any) => {
-      //   a.destroy();
-        this.ionPopoverDidDismiss.emit({ popover: this });
-
-        Core.dom.write(() => {
-          this.el.parentNode.removeChild(this.el);
-        });
-        resolve();
-      // }).play();
+      Ionic.controller('animation').then(Animation => {
+        this.animation = animationBuilder(Animation, this.el);
+        this.animation
+          .onFinish((a: any) => {
+            a.destroy();
+            this.ionPopoverDidDismiss.emit({ popover: this });
+            Core.dom.write(() => {
+              this.el.parentNode.removeChild(this.el);
+            });
+            resolve();
+          })
+          .play();
+      });
     });
   }
 
@@ -137,31 +140,36 @@ export class Popover {
       userCssClasses += ` ${this.cssClass}`;
     }
 
-    const dialogClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
-    const thisComponentClasses = createThemedClasses(this.mode, this.color, userCssClasses);
+    const dialogClasses = createThemedClasses(
+      this.mode,
+      this.color,
+      'popover-wrapper'
+    );
+    const thisComponentClasses = createThemedClasses(
+      this.mode,
+      this.color,
+      userCssClasses
+    );
 
     return [
-      <div
+      <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class={{
-          'popover-backdrop': true,
-          'hide-backdrop': !this.showBackdrop
-        }}
-      ></div>,
-      <div
-        role='dialog'
-        class={dialogClasses}
-      >
-        <ThisComponent
-          props={this.componentProps}
-          class={thisComponentClasses}
-        >
-        </ThisComponent>
+        class="popover-backdrop"
+      />,
+      <div class={dialogClasses}>
+        <div class="popover-arrow" />
+        <div class="popover-content">
+          <div class="popover-viewport">
+            <ThisComponent
+              props={this.componentProps}
+              class={thisComponentClasses}
+            />
+          </div>
+        </div>
       </div>
     ];
   }
 }
-
 
 export interface PopoverOptions {
   component: string;
@@ -174,9 +182,8 @@ export interface PopoverOptions {
   ev: Event;
 }
 
-
 export interface PopoverEvent {
   detail: {
     popover: Popover;
-  }
+  };
 }
