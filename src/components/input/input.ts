@@ -107,6 +107,7 @@ import { Platform } from '../../platform/platform';
     '[attr.step]="step" ' +
     '[attr.autocomplete]="autocomplete" ' +
     '[attr.autocorrect]="autocorrect" ' +
+    '[attr.autocapitalize]="autocapitalize" ' +
     '[placeholder]="placeholder" ' +
     '[disabled]="_disabled" ' +
     '[readonly]="_readonly">' +
@@ -120,6 +121,7 @@ import { Platform } from '../../platform/platform';
     '[attr.aria-labelledby]="_labelId" ' +
     '[attr.autocomplete]="autocomplete" ' +
     '[attr.autocorrect]="autocorrect" ' +
+    '[attr.autocapitalize]="autocapitalize" ' +
     '[placeholder]="placeholder" ' +
     '[disabled]="_disabled" ' +
     '[readonly]="_readonly"></textarea>' +
@@ -221,6 +223,11 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
   @Input() autocorrect: string = '';
 
   /**
+   * @input {string} Set the input's autocapitalize property. Values: `"none"`, `"sentences"`, `"words"`, `"characters"`. Default `"sentences"`.
+   */
+  @Input() autocapitalize: string = 'sentences';
+
+  /**
    * @input {string} Instructional text that shows before the input has a value.
    */
   @Input() placeholder: string = '';
@@ -271,6 +278,7 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
 
     this.autocomplete = config.get('autocomplete', 'off');
     this.autocorrect = config.get('autocorrect', 'off');
+    this.autocapitalize = config.get('autocapitalize', 'sentences');
     this._autoFocusAssist = config.get('autoFocusAssist', 'delay');
     this._keyboardHeight = config.getNumber('keyboardHeight');
     this._isTextarea = !!(elementRef.nativeElement.tagName === 'ION-TEXTAREA');
