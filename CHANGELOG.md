@@ -1,3 +1,71 @@
+<a name="3.6.0"></a>
+# [3.6.0](https://github.com/ionic-team/ionic/compare/v3.5.3...v3.6.0) (2017-07-27)
+
+
+### Upgrade Instructions
+
+`ionic-angular` 3.6.0 requires developer's to update to the latest version of the `Ionic CLI` and `@ionic/app-scripts`.
+
+To upgrade, please run
+
+```
+npm install -g ionic@latest
+npm install @ionic/app-scripts@latest --save-dev
+npm install ionic-angular@latest --save
+```
+
+### Notes
+
+The URL when using deep linking is shortened and improved in this release. Due to a limitation in our nav system, if you're using `ion-tabs` and have a tab name that matches a segment, meaning you have a tab name of `schedule` and a segment of `schedule`, there could potentially be issues. To mitigate these issues, make sure you set the `tabUrlPath` property on the `ion-tab` and give it a unique name. This limitation will require an API change to fix so it will be resolved in `ionic-angular` 4.x.
+
+
+The upgrades include necessary changes to generators that add back lazy loading functionality, as well as an improved way of generating component/directives/and pipes.
+
+### New Generators
+
+The release adds back the functionality to generate lazy loaded pages.
+To generate a lazy loaded page, run:
+
+```bash
+ionic g page <Page-Name>
+```
+
+This will include a `.module.ts` file in the page directory created. If you do not want to generate a lazy loaded page, you can run:
+
+```bash
+ionic g page <Page-Name> --no-module
+```
+
+This will also generate lazy loaded tabs as well, accepting the `--no-module` flag as well to disable it.
+
+
+For pipes/components/components, we now generate a shared common module for each of these.
+
+So running:
+
+```bash
+ionic g component music-card
+```
+
+Will create a `components/components.module.ts` file that declares and exports the `music-card` component.
+We think that this will allow developers to get up and running with custom components much faster and will less overhead.
+
+### Bug Fixes
+
+* **list:** remove margin of MD buttons in ion-item-options ([#12263](https://github.com/ionic-team/ionic/issues/12263)) ([97f9522](https://github.com/ionic-team/ionic/commit/97f9522))
+* **nav:** make call to setPages return the promise so if it rejects it doesn't get lost ([de0f9d5](https://github.com/ionic-team/ionic/commit/de0f9d5))
+* **navigation:** account for race conditions in developer's code ([4596dbe](https://github.com/ionic-team/ionic/commit/4596dbe))
+* **navigation:** fix bug where that occurred when tab identifier and segment had the exact same string ([add0c4e](https://github.com/ionic-team/ionic/commit/add0c4e))
+* **navigation:** fix null pointer exceptions that would occur when destroying a nav controller while its transitioning ([584afd0](https://github.com/ionic-team/ionic/commit/584afd0))
+* **navigation:** reduce urls to minimum set of fields ([a8ceee4](https://github.com/ionic-team/ionic/commit/a8ceee4))
+
+
+### Features
+
+* **generators:** refactor generators ([400aa54](https://github.com/ionic-team/ionic/commit/400aa54))
+
+
+
 <a name="3.5.3"></a>
 ## [3.5.3](https://github.com/ionic-team/ionic/compare/v3.5.2...v3.5.3) (2017-07-14)
 

@@ -1099,13 +1099,13 @@ describe('NavController', () => {
 
     it('should not crash when destroyed while transitioning', (done) => {
       let view1 = mockView(MockView1);
-      nav.push(view1).then(() => {
-        fail('it should not succeed');
+      nav.push(view1).then((succeded: boolean) => {
+        expect(succeded).toEqual(false);
         done();
-      }).catch((err: any) => {
-        expect(err).toEqual('nav controller was destroyed');
+      }).catch(() => {
+        fail('should never get here');
         done();
-        });
+      });
       nav.destroy();
     }, 10000);
   });

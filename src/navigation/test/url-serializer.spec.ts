@@ -10,7 +10,6 @@ import {
   navGroupStringtoObjects,
   normalizeLinks,
   urlToNavGroupStrings,
-  urlToNavGroupStringsTwo,
   } from '../url-serializer';
 import { MockView1, MockView2, MockView3, mockApp, mockDeepLinkConfig, mockNavController, mockTab, mockTabs, noop } from '../../util/mock-providers';
 
@@ -112,85 +111,11 @@ describe('UrlSerializer', () => {
 
   });
 
-  describe('urlToNavGroupStrings', () => {
-    it('should return an empty array of groups when there isnt a nav/tabs keyword', () => {
-      const url = 'some/bogus/url';
-      const result = urlToNavGroupStrings(url);
-      expect(result.length).toEqual(0);
-    });
-
-    it('should return a single nav group', () => {
-      const url = 'nav/23/chunk/of/segment';
-      const result = urlToNavGroupStrings(url);
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(url);
-    });
-
-    it('should return multiple nav groups', () => {
-      const urlGroupOne = 'nav/1/chunk/of/segment';
-      const urlGroupTwo = 'nav/2/chunk/two';
-      const urlGroupThree = 'nav/3/chunk/three';
-      const url = `${urlGroupOne}/${urlGroupTwo}/${urlGroupThree}`;
-      const result = urlToNavGroupStrings(url);
-      expect(result.length).toEqual(3);
-      expect(result[0]).toEqual(urlGroupOne);
-      expect(result[1]).toEqual(urlGroupTwo);
-      expect(result[2]).toEqual(urlGroupThree);
-    });
-
-    it('should return a single tabs group', () => {
-      const url = 'tabs/1/tab-one/chunk/of/segment';
-      const result = urlToNavGroupStrings(url);
-      expect(result.length).toEqual(1);
-      expect(result[0]).toEqual(url);
-    });
-
-    it('should return multiple tabs groups', () => {
-      const urlGroupOne = 'tabs/1/tab-one/chunk/of/segment';
-      const urlGroupTwo = 'tabs/2/tab-one/chunk/two';
-      const urlGroupThree = 'tabs/3/tab-two/chunk/three';
-      const url = `${urlGroupOne}/${urlGroupTwo}/${urlGroupThree}`;
-      const result = urlToNavGroupStrings(url);
-      expect(result.length).toEqual(3);
-      expect(result[0]).toEqual(urlGroupOne);
-      expect(result[1]).toEqual(urlGroupTwo);
-      expect(result[2]).toEqual(urlGroupThree);
-    });
-
-    it('should return groups when url has both nav and tabs and starts with tabs', () => {
-      const urlGroupOne = 'tabs/1/tab-one/chunk/of/segment';
-      const urlGroupTwo = 'nav/2/chunk/two';
-      const urlGroupThree = 'tabs/3/tab-two/chunk/three';
-      const urlGroupFour = 'nav/4/chunk/four';
-      const url = `${urlGroupOne}/${urlGroupTwo}/${urlGroupThree}/${urlGroupFour}`;
-      const result = urlToNavGroupStrings(url);
-      expect(result.length).toEqual(4);
-      expect(result[0]).toEqual(urlGroupOne);
-      expect(result[1]).toEqual(urlGroupTwo);
-      expect(result[2]).toEqual(urlGroupThree);
-      expect(result[3]).toEqual(urlGroupFour);
-    });
-
-    it('should return groups when url has both nav and tabs and starts with nav', () => {
-      const urlGroupOne = 'nav/1/chunk/of/segment';
-      const urlGroupTwo = 'tabs/1/tab-one/chunk/of/segment';
-      const urlGroupThree = 'tabs/3/tab-two/chunk/three';
-      const urlGroupFour = 'nav/4/chunk/four';
-      const url = `${urlGroupOne}/${urlGroupTwo}/${urlGroupThree}/${urlGroupFour}`;
-      const result = urlToNavGroupStrings(url);
-      expect(result.length).toEqual(4);
-      expect(result[0]).toEqual(urlGroupOne);
-      expect(result[1]).toEqual(urlGroupTwo);
-      expect(result[2]).toEqual(urlGroupThree);
-      expect(result[3]).toEqual(urlGroupFour);
-    });
-  });
-
   describe('navGroupStringtoObjects', () => {
     it('should convert the nav group strings to objects', () => {
-      const urlChunks = ['taco/burrito/pizza/nachos', 'nav/1/chunk/of/segment', 'tabs/1/tab-one/chunk/of/segment'];
+      const urlChunks = ['taco/burrito/pizza/nachos', 'nav/1/chunk/of/segment', 'tabs/1/tab-one/chunk/of/segment', 'schedule', 'taco/burrito'];
       const objects = navGroupStringtoObjects(urlChunks);
-      expect(objects.length).toEqual(3);
+      expect(objects.length).toEqual(5);
       expect(objects[0].type).toEqual(null);
       expect(objects[0].navId).toEqual(null);
       expect(objects[0].secondaryId).toEqual(null);
@@ -213,6 +138,19 @@ describe('UrlSerializer', () => {
       expect(objects[2].segmentPieces[0]).toEqual('chunk');
       expect(objects[2].segmentPieces[1]).toEqual('of');
       expect(objects[2].segmentPieces[2]).toEqual('segment');
+
+      expect(objects[3].type).toEqual(null);
+      expect(objects[3].navId).toEqual(null);
+      expect(objects[3].secondaryId).toEqual(null);
+      expect(objects[3].segmentPieces.length).toEqual(1);
+      expect(objects[3].segmentPieces[0]).toEqual('schedule');
+
+      expect(objects[4].type).toEqual(null);
+      expect(objects[4].navId).toEqual(null);
+      expect(objects[4].secondaryId).toEqual(null);
+      expect(objects[4].segmentPieces.length).toEqual(2);
+      expect(objects[4].segmentPieces[0]).toEqual('taco');
+      expect(objects[4].segmentPieces[1]).toEqual('burrito');
     });
   });
 
@@ -530,38 +468,38 @@ describe('UrlSerializer', () => {
 
   });
 
-  describe('urlToNavGroupStringsTwo', () => {
+  describe('urlToNavGroupStrings', () => {
     it('should get an array with a single piece url back', () => {
       const url = 'test';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual('test');
     });
 
     it('should get an array with multiple pieces back', () => {
       const url = 'the/dog/jumps/high';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual('the/dog/jumps/high');
     });
 
     it('should return a single entry with the nav prefix', () => {
       const url = 'nav/myApp/the/dog/jumps/high';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual('nav/myApp/the/dog/jumps/high');
     });
 
     it('should return a single entry with the tabs prefix', () => {
       const url = 'tabs/myApp/tab-one/the/dog/jumps/high';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(1);
       expect(result[0]).toEqual('tabs/myApp/tab-one/the/dog/jumps/high');
     });
 
     it('should return multiple entries with the nav prefix', () => {
       const url = 'nav/myApp/the/dog/jumps/high/nav/someSubNav/taco/burrito/nav/thirdNav/banana/apple/orange';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(3);
       expect(result[0]).toEqual('nav/myApp/the/dog/jumps/high');
       expect(result[1]).toEqual('nav/someSubNav/taco/burrito');
@@ -570,7 +508,7 @@ describe('UrlSerializer', () => {
 
     it('should return multiple entries with the tabs prefix', () => {
       const url = 'tabs/myApp/tab-one/the/dog/jumps/high/tabs/someSubNav/tab-two/taco/burrito/tabs/thirdNav/tab-three/banana/apple/orange';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(3);
       expect(result[0]).toEqual('tabs/myApp/tab-one/the/dog/jumps/high');
       expect(result[1]).toEqual('tabs/someSubNav/tab-two/taco/burrito');
@@ -579,7 +517,7 @@ describe('UrlSerializer', () => {
 
     it('should handle a nav in the middle of the url', () => {
       const url = 'the/dog/jumps/high/nav/someSubNav/taco/burrito/nav/thirdNav/banana/apple/orange';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(3);
       expect(result[0]).toEqual('the/dog/jumps/high');
       expect(result[1]).toEqual('nav/someSubNav/taco/burrito');
@@ -588,7 +526,7 @@ describe('UrlSerializer', () => {
 
     it('should handle a tabs in the middle of the url', () => {
       const url = 'the/dog/jumps/high/tabs/someSubNav/tab-two/taco/burrito/tabs/thirdNav/tab-three/banana/apple/orange';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(3);
       expect(result[0]).toEqual('the/dog/jumps/high');
       expect(result[1]).toEqual('tabs/someSubNav/tab-two/taco/burrito');
@@ -597,7 +535,7 @@ describe('UrlSerializer', () => {
 
     it('should handle a mixed url', () => {
       const url = 'the/dog/jumps/high/tabs/someSubNav/tab-two/taco/burrito/nav/thirdNav/banana/apple/orange';
-      const result = urlToNavGroupStringsTwo(url);
+      const result = urlToNavGroupStrings(url);
       expect(result.length).toEqual(3);
       expect(result[0]).toEqual('the/dog/jumps/high');
       expect(result[1]).toEqual('tabs/someSubNav/tab-two/taco/burrito');
@@ -769,7 +707,7 @@ describe('UrlSerializer', () => {
       const link4 = { component: MockView1, name: 'viewfour', segment: 'view-four' };
 
       const links = normalizeLinks([link1, link2, link3, link4]);
-      const url = 'tab-two/view-two/user/fred/tab-three/view-one/paramOne/taco/paramTwo/burrito/tab-four/view-three/12345';
+      const url = 'tab-two/view-two/user/fred' + '/tab-three/view-one/paramOne/taco/paramTwo/burrito' + '/tab-four/view-three/12345';
 
       const segmentPairs = convertUrlToDehydratedSegments(url, links);
       expect(segmentPairs.length).toEqual(1);
@@ -791,25 +729,94 @@ describe('UrlSerializer', () => {
       expect(segmentPairs[0].segments[2].secondaryId).toEqual('tab-four');
     });
 
-    describe('convertUrlToSegments', () => {
-      it('it should return a vanilla single segment', () => {
+    it('should return a segment w/ secondary id even if it has the same name as a router link basic', () => {
+      const link1 = { component: MockView1, name: 'viewone', segment: 'view-one/paramOne/:paramOne/paramTwo/:paramTwo' };
+      const link2 = { component: MockView1, name: 'viewtwo', segment: 'view-two/user/:userId' };
+      const link3 = { component: MockView1, name: 'viewthree', segment: 'view-three/:itemId' };
+      const link4 = { component: MockView1, name: 'schedule', segment: 'schedule' };
 
-        const link1 = { component: MockView1, name: 'login-page', segment: 'login-page' };
-        const link2 = { component: MockView1, name: 'settings-page', segment: 'settings-page' };
-        const link3 = { component: MockView1, name: 'details-page', segment: 'details-page' };
+      const links = normalizeLinks([link1, link2, link3, link4]);
+      const url = 'schedule/schedule';
 
-        const mockNav = mockNavController();
-        serializer._app.registerRootNav(mockNav);
+      const segmentPairs = convertUrlToDehydratedSegments(url, links);
+      expect(segmentPairs.length).toEqual(1);
+      expect(segmentPairs[0].segments.length).toEqual(1);
+      expect(segmentPairs[0].segments[0].id).toEqual('schedule');
+      expect(segmentPairs[0].segments[0].name).toEqual('schedule');
+      expect(segmentPairs[0].segments[0].secondaryId).toEqual('schedule');
+    });
 
-        const links = normalizeLinks([link1, link2, link3]);
-        const url = 'settings-page';
+    it('should return a segment for the secondary id even if it has the same name as a router link advanced', () => {
+      const link1 = { component: MockView1, name: 'about', segment: 'about/:id' };
+      const link2 = { component: MockView1, name: 'schedule', segment: 'schedule/paramOne/:paramOne/paramTwo/:paramTwo' };
+      const link3 = { component: MockView1, name: 'ThirdPage', segment: 'third-page' };
+      const link4 = { component: MockView1, name: 'FourthPage', segment: 'fourth-page/object/:objectId' };
+      const link5 = { component: MockView1, name: 'taco-page', segment: 'taco-page' };
+
+      const links = normalizeLinks([link1, link2, link3, link4, link5]);
+      const url = 'schedule/schedule/paramOne/hello/paramTwo/goodbye'
+                  + '/about/about/123'
+                  + '/tabs/t1/tab-one/third-page'
+                  + '/tabs/t2/tab-two/fourth-page/object/456'
+                  + '/fifth-page/taco-page';
+
+      const segmentPairs = convertUrlToDehydratedSegments(url, links);
+      expect(segmentPairs.length).toEqual(3);
+
+      expect(segmentPairs[0].segments.length).toEqual(2);
+
+      expect(segmentPairs[0].segments[0].id).toEqual('schedule/paramOne/hello/paramTwo/goodbye');
+      expect(segmentPairs[0].segments[0].name).toEqual('schedule');
+      expect(segmentPairs[0].segments[0].secondaryId).toEqual('schedule');
+      expect(segmentPairs[0].segments[0].data.paramOne).toEqual('hello');
+      expect(segmentPairs[0].segments[0].data.paramTwo).toEqual('goodbye');
+
+      expect(segmentPairs[0].segments[1].id).toEqual('about/123');
+      expect(segmentPairs[0].segments[1].name).toEqual('about');
+      expect(segmentPairs[0].segments[1].secondaryId).toEqual('about');
+      expect(segmentPairs[0].segments[1].data.id).toEqual('123');
+
+      expect(segmentPairs[1].segments.length).toEqual(1);
+
+      expect(segmentPairs[1].navGroup.navId).toEqual('t1');
+      expect(segmentPairs[1].navGroup.type).toEqual('tabs');
+      expect(segmentPairs[1].segments[0].id).toEqual('third-page');
+      expect(segmentPairs[1].segments[0].name).toEqual('ThirdPage');
+      expect(segmentPairs[1].segments[0].secondaryId).toEqual('tab-one');
+
+      expect(segmentPairs[2].segments.length).toEqual(2);
+
+      expect(segmentPairs[2].navGroup.navId).toEqual('t2');
+      expect(segmentPairs[2].navGroup.type).toEqual('tabs');
+      expect(segmentPairs[2].segments[0].id).toEqual('fourth-page/object/456');
+      expect(segmentPairs[2].segments[0].name).toEqual('FourthPage');
+      expect(segmentPairs[2].segments[0].secondaryId).toEqual('tab-two');
+      expect(segmentPairs[2].segments[0].data.objectId).toEqual('456');
+
+      expect(segmentPairs[2].segments[1].id).toEqual('taco-page');
+      expect(segmentPairs[2].segments[1].name).toEqual('taco-page');
+      expect(segmentPairs[2].segments[1].secondaryId).toEqual('fifth-page');
+    });
+  });
+
+  describe('convertUrlToSegments', () => {
+    it('it should return a vanilla single segment', () => {
+
+      const link1 = { component: MockView1, name: 'login-page', segment: 'login-page' };
+      const link2 = { component: MockView1, name: 'settings-page', segment: 'settings-page' };
+      const link3 = { component: MockView1, name: 'details-page', segment: 'details-page' };
+
+      const mockNav = mockNavController();
+      serializer._app.registerRootNav(mockNav);
+
+      const links = normalizeLinks([link1, link2, link3]);
+      const url = 'settings-page';
 
 
-        const segments = convertUrlToSegments(serializer._app, url, links);
-        expect(segments.length).toEqual(1);
-        expect(segments[0].type).toEqual('nav');
-        expect(segments[0].navId).toEqual(mockNav.id);
-      });
+      const segments = convertUrlToSegments(serializer._app, url, links);
+      expect(segments.length).toEqual(1);
+      expect(segments[0].type).toEqual('nav');
+      expect(segments[0].navId).toEqual(mockNav.id);
     });
   });
 
