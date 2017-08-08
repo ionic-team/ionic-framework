@@ -14,7 +14,7 @@ exports.config = {
     { components: ['ion-gesture', 'ion-scroll'], priority: 'low' },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-item', 'ion-item-divider', 'ion-item-sliding', 'ion-item-options', 'ion-item-option', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
-    { components: ['ion-input'] },
+    { components: ['ion-input', 'ion-textarea'] },
     { components: ['ion-loading', 'ion-loading-controller'] },
     { components: ['ion-menu'], priority: 'low' },
     { components: ['ion-modal', 'ion-modal-controller'] },

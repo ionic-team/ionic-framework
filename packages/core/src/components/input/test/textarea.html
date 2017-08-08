@@ -2,7 +2,7 @@
 <html dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Ionic Inputs</title>
+  <title>Ionic Textareas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
@@ -10,54 +10,54 @@
   <ion-app>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Basic Form</ion-title>
+        <ion-title>Textareas</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
+
       <ion-list>
         <ion-item>
-          <ion-label>Default</ion-label>
-          <ion-input></ion-input>
+          <ion-label color="primary">Inline Label</ion-label>
+          <ion-textarea placeholder="Textarea"></ion-textarea>
         </ion-item>
 
         <ion-item>
-          <ion-label floating>Floating</ion-label>
-          <ion-input checked></ion-input>
+          <ion-label color="primary" fixed>Fixed Label</ion-label>
+          <ion-textarea placeholder="Textarea"></ion-textarea>
         </ion-item>
 
         <ion-item>
-          <ion-label fixed>Type #</ion-label>
-          <ion-input type="number" value="333"></ion-input>
+          <ion-textarea placeholder="Textarea with no label"></ion-textarea>
         </ion-item>
 
         <ion-item>
-          <ion-label stacked>Password</ion-label>
-          <ion-input type="password"></ion-input>
+          <ion-label color="primary" stacked>Stacked Label</ion-label>
+          <ion-textarea placeholder="Textarea"></ion-textarea>
         </ion-item>
 
         <ion-item>
-          <ion-label stacked>Placeholder</ion-label>
-          <ion-input placeholder="Enter Something"></ion-input>
+          <ion-label color="primary" floating>Floating Label</ion-label>
+          <ion-textarea></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label>Disabled</ion-label>
-          <ion-input id="dynamicDisabled" value="Disabled" disabled></ion-input>
+          <ion-textarea id="dynamicDisabled" value="Disabled" disabled></ion-textarea>
         </ion-item>
 
         <ion-item>
           <ion-label>Readonly</ion-label>
-          <ion-input id="dynamicReadonly" value="Readonly" readonly></ion-input>
+          <ion-textarea id="dynamicReadonly" value="Readonly" readonly></ion-textarea>
         </ion-item>
 
         <ion-item>
-          <ion-label>Slot</ion-label>
-          <ion-input slot="start" value="Start"></ion-input>
+          <ion-label color="primary">Clear on Edit</ion-label>
+          <ion-textarea clear-on-edit="true"></ion-textarea>
         </ion-item>
 
         <ion-item>
-          <ion-label>Toggle</ion-label>
-          <ion-toggle checked slot="end"></ion-toggle>
+          <ion-label color="primary">Clear on Edit</ion-label>
+          <ion-input clear-on-edit="true"></ion-input>
         </ion-item>
       </ion-list>
 
@@ -70,7 +70,6 @@
           Toggle Readonly
         </ion-button>
       </div>
-
     </ion-content>
 
     <script>
