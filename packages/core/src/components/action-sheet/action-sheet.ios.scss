@@ -58,6 +58,9 @@ $action-sheet-ios-button-padding:                       18px !default;
 /// @prop - Text color of the action sheet button
 $action-sheet-ios-button-text-color:                    #007aff !default;
 
+/// @prop - Fill color of the action sheet button icon
+$action-sheet-ios-button-icon-fill-color:               $action-sheet-ios-button-text-color !default;
+
 /// @prop - Font size of the action sheet button
 $action-sheet-ios-button-font-size:                     2rem !default;
 
@@ -78,6 +81,9 @@ $action-sheet-ios-button-background-activated:          #ebebeb !default;
 
 /// @prop - Destructive text color of the action sheet button
 $action-sheet-ios-button-destructive-text-color:        #f53d3d !default;
+
+/// @prop - Destructive fill color of the action sheet button icon
+$action-sheet-ios-button-destructive-icon-fill-color:   $action-sheet-ios-button-destructive-text-color !default;
 
 /// @prop - Background color of the action sheet cancel button
 $action-sheet-ios-button-cancel-background:             #fff !default;
@@ -132,6 +138,10 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   background: $action-sheet-ios-button-background;
 }
 
+.action-sheet-ios .action-sheet-button {
+  fill: $action-sheet-ios-button-icon-fill-color;
+}
+
 .action-sheet-ios .action-sheet-button:last-child {
   border-bottom-color: transparent;
 }
@@ -151,6 +161,10 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 
 .action-sheet-ios .action-sheet-destructive {
   color: $action-sheet-ios-button-destructive-text-color;
+}
+
+.action-sheet-ios .action-sheet-destructive .action-sheet-icon {
+  fill: $action-sheet-ios-button-destructive-icon-fill-color;
 }
 
 .action-sheet-ios .action-sheet-cancel {

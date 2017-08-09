@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Action Sheet Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Action Sheet</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      <ion-button block onclick="presentActionSheet1()">Present Action Sheet 1</ion-button>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    function presentActionSheet1() {
+      console.log('presenting');
+
+      Ionic.controller('action-sheet', {
+        title: "Albums",
+        buttons: [{
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'arrow-dropright-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      .then(actionSheet => {
+        actionSheet.present()
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -146,6 +146,7 @@ export class ActionSheet {
     if (this.cssClass) {
       userCssClass += ' ' + this.cssClass;
     }
+
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
