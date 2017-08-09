@@ -186,6 +186,20 @@ export class Input implements InputComponent {
    */
   @Prop({ state: true }) value: string;
 
+
+  /**
+   * @hidden
+   * Update the native input element when the value changes
+   */
+  @PropDidChange('value')
+  setValue() {
+    const inputEl = this.el.querySelector('input');
+    if (inputEl.value !== this.value) {
+      inputEl.value = this.value;
+    }
+  }
+
+
   ionViewDidLoad() {
     this.emitStyle();
 
@@ -285,7 +299,6 @@ export class Input implements InputComponent {
    * @hidden
    */
   clearTextInput() {
-    console.debug('Should clear input', this.el);
     this.value = '';
   }
 
@@ -310,7 +323,7 @@ export class Input implements InputComponent {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
     // TODO aria-labelledby={this.item.labelId}
 
-    return (
+    return [
       <input
         aria-disabled={this.disabled ? 'true' : false}
         accept={this.accept}
@@ -342,7 +355,13 @@ export class Input implements InputComponent {
         onInput={this.inputChanged.bind(this)}
         onFocus={this.inputFocused.bind(this)}
         onKeyDown={this.inputKeydown.bind(this)}
-      />
-    )
+      />,
+      <button
+        hidden={this.clearInput !== true}
+        class="text-input-clear-icon"
+        onClick={this.clearTextInput.bind(this)}
+        onMouseDown={this.clearTextInput.bind(this)}>
+      </button>
+    ]
   }
 }

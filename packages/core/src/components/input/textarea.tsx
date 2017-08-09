@@ -170,6 +170,17 @@ export class Textarea implements TextareaComponent {
    */
   @Prop({ state: true }) value: string;
 
+  /**
+   * @hidden
+   * Update the native input element when the value changes
+   */
+  @PropDidChange('value')
+  setValue() {
+    const inputEl = this.el.querySelector('textarea');
+    if (inputEl.value !== this.value) {
+      inputEl.value = this.value;
+    }
+  }
 
   ionViewDidLoad() {
     this.emitStyle();
@@ -197,7 +208,6 @@ export class Textarea implements TextareaComponent {
    * @hidden
    */
   clearTextInput() {
-    console.debug('Should clear input', this.el);
     this.value = '';
   }
 
