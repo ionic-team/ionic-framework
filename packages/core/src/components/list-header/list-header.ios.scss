@@ -5,10 +5,8 @@
 // iOS List Header
 // --------------------------------------------------
 
-// deprecated
-$list-ios-header-padding-left:        $item-ios-padding-start !default;
 /// @prop - Padding start of the header in a list
-$list-ios-header-padding-start:       $list-ios-header-padding-left !default;
+$list-ios-header-padding-start:       $item-ios-padding-start !default;
 
 /// @prop - Border bottom of the header in a list
 $list-ios-header-border-bottom:       $hairlines-width solid $list-ios-border-color !default;

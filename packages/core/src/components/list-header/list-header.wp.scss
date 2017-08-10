@@ -4,10 +4,8 @@
 // Windows List Header
 // --------------------------------------------------
 
-// deprecated
-$list-wp-header-padding-left:    $item-wp-padding-start !default;
 /// @prop - Padding start of the header in a list
-$list-wp-header-padding-start:   $list-wp-header-padding-left !default;
+$list-wp-header-padding-start:   $item-wp-padding-start !default;
 
 /// @prop - Border bottom of the header in a list
 $list-wp-header-border-bottom:   1px solid $list-wp-border-color !default;
