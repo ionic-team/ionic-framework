@@ -147,6 +147,22 @@ export class ActionSheet {
       userCssClass += ' ' + this.cssClass;
     }
 
+    let cancelButton: ActionSheetButton;
+    let buttons = this.buttons
+      .map(b => {
+        if (typeof b === 'string') {
+          b = { text: b };
+        }
+        if (!b.cssClass) {
+          b.cssClass = '';
+        }
+        if (b.role === 'cancel') {
+          cancelButton = b;
+          return null;
+        }
+        return b;
+      })
+      .filter(b => b !== null);
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
@@ -161,9 +177,8 @@ export class ActionSheet {
             {this.subTitle
               ? <div class="action-sheet-sub-title">{this.subTitle}</div>
               : null}
-            {this.buttons.map(b =>
-              <button class={this.buttonClass(b)}
-                onClick={() => this.click(b)}>
+            {buttons.map(b =>
+              <button class={this.buttonClass(b)} onClick={() => this.click(b)}>
                 {b.icon
                   ? <ion-icon name={b.icon} class="action-sheet-icon" />
                   : null}
@@ -171,6 +186,23 @@ export class ActionSheet {
               </button>
             )}
           </div>
+          {cancelButton
+            ? <div class="action-sheet-group">
+                <button
+                  class={this.buttonClass(cancelButton)}
+                  onClick={() => this.click(cancelButton)}
+                >
+                  {cancelButton.icon
+                    ? <ion-icon
+                        name={cancelButton.icon}
+                        class="action-sheet-icon"
+                      />
+                    : null}
+                  {cancelButton.text}
+                </button>
+
+              </div>
+            : null}
         </div>
       </div>
     ];
@@ -179,13 +211,12 @@ export class ActionSheet {
   buttonClass(button: ActionSheetButton): CssClassMap {
     let buttonClass: string[] = !button.role
       ? ['action-sheet-button']
-      : [`action-sheet-button`, `action-sheet-${button.role}`]
+      : [`action-sheet-button`, `action-sheet-${button.role}`];
     return buttonClass.reduce((prevValue: any, cssClass: any) => {
       prevValue[cssClass] = true;
       return prevValue;
     }, {});
   }
-
 }
 
 export interface ActionSheetOptions {
