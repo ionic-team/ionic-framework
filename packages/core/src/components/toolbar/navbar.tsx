@@ -1,6 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { Ionic } from '../../index';
+import { Config } from '../../index';
 
 
 /**
@@ -49,11 +49,11 @@ export class Navbar {
   @Element() el: HTMLElement;
   mode: string;
   color: string;
-  sbPadding: boolean = Ionic.config.getBoolean('statusbarPadding');
 
+  @Prop({ context: 'config' }) config: Config;
   @Prop() hideBackButton: boolean = false;
-  @Prop() backButtonText: string = Ionic.config.get('backButtonText', 'Back');
-  @Prop() backButtonIcon: string = Ionic.config.get('backButtonIcon');
+  @Prop() backButtonText: string;
+  @Prop() backButtonIcon: string;
   @Prop() hidden: boolean = false;
 
   backButtonClick(ev: UIEvent) {
@@ -73,12 +73,15 @@ export class Navbar {
   hostData() {
     return {
       class: {
-        'statusbar-padding': Ionic.config.getBoolean('statusbarPadding')
+        'statusbar-padding': this.config.getBoolean('statusbarPadding')
       }
     };
   }
 
   render() {
+    const backButtonIcon = this.backButtonIcon || this.config.get('backButtonText', 'Back');
+    const backButtonText = this.backButtonText || this.config.get('backButtonIcon', 'Back');
+
     const backgroundCss = createThemedClasses(this.mode, this.color, 'toolbar-background');
     const contentCss = createThemedClasses(this.mode, this.color, 'toolbar-content');
     const backButtonCss = createThemedClasses(this.mode, this.color, 'back-button');
@@ -88,8 +91,10 @@ export class Navbar {
     return [
       <div class={backgroundCss}></div>,
       <button onClick={this.backButtonClick.bind(this)} class={backButtonCss} hidden={this.hideBackButton}>
-        <ion-icon class={backButtonIconCss} name={this.backButtonIcon}></ion-icon>
-        <span class={backButtonTextCss}>{this.backButtonText}</span>
+        if (backButtonIcon) {
+          <ion-icon class={backButtonIconCss} name={backButtonIcon}></ion-icon>
+        }
+        <span class={backButtonTextCss}>{backButtonText}</span>
       </button>,
       <slot name='start'></slot>,
       <slot name='mode-start'></slot>,

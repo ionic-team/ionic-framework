@@ -1,5 +1,5 @@
-import { AnimationController } from './components/animation-controller/animation-controller';
-import { Animation, AnimationBuilder } from './components/animation-controller/animation-interface';
+import { AnimationController } from './components/animation/animation';
+import { Animation, AnimationBuilder } from './components/animation/animation-interface';
 import { Loading, LoadingEvent, LoadingOptions } from './components/loading/loading';
 import { LoadingController } from './components/loading-controller/loading-controller';
 import { GestureDetail, GestureCallback } from './components/gesture/gesture';
@@ -14,33 +14,7 @@ import { SegmentButton, SegmentButtonEvent } from './components/segment-button/s
 import * as Stencil from '@stencil/core';
 
 
-export const Ionic: IonicGlobal = (window as any).Ionic;
-
-
-export interface IonicGlobal extends Stencil.AppGlobal {
-  controllers?: {[ctrlName: string]: any};
-  controller?: IonicController;
-  config: ConfigApi;
-  registerController?: (ctrlName: string, ctrl: any) => void;
-  mode: string;
-}
-
-
-export interface IonicController {
-  <AnimationController>(ctrlName: 'animation'): Promise<Animation>;
-  <LoadingController>(ctrlName: 'loading', opts: LoadingOptions): Promise<Loading>;
-  <MenuController>(ctrlName: 'menu'): Promise<MenuController>;
-  <ModalController>(ctrlName: 'modal', opts: ModalOptions): Promise<Modal>;
-  (ctrlName: string, opts?: any): Promise<IonicControllerApi>;
-}
-
-
-export interface IonicControllerApi {
-  load?: (opts?: any) => Promise<any>;
-}
-
-
-export interface ConfigApi {
+export interface Config {
   get: (key: string, fallback?: any) => any;
   getBoolean: (key: string, fallback?: boolean) => boolean;
   getNumber: (key: string, fallback?: number) => number;

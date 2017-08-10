@@ -162,6 +162,9 @@
 
         <ion-button>Default</ion-button>
 
+        <ion-loading-ctrl></ion-loading-ctrl>
+        <ion-modal-ctrl></ion-modal-ctrl>
+
         <script>
 
           var content = document.getElementById('content');
@@ -216,7 +219,8 @@
 
             console.log('open profile modal for userId:', userId);
 
-            Ionic.controller('modal', { component: 'profile-page', componentProps: { userId: userId } }).then(modal => {
+            var modalCtrl = document.querySelector('ion-modal-ctrl');
+            modalCtrl.create({ component: 'profile-page', componentProps: { userId: userId } }).then(modal => {
               console.log('start presenting modal, userId:', modal.componentProps.userId);
 
               modal.present().then(() => {
@@ -267,7 +271,8 @@
           document.getElementById('presentLoading').addEventListener('click', function() {
             console.log('open loading');
 
-            Ionic.controller('loading', { duration: 1000 }).then(loading => {
+            var loadingCtrl = document.querySelector('ion-loading-ctrl');
+            loadingCtrl.create({ duration: 1000 }).then(loading => {
               console.log('start presenting loading');
 
               loading.present().then(() => {

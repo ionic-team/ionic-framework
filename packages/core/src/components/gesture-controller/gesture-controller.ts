@@ -1,5 +1,9 @@
+import { Component } from '@stencil/core';
 
 
+@Component({
+  tag: 'ion-gesture-ctrl'
+})
 export class GestureController {
   private id: number = 0;
   private requestedStart: { [eventId: number]: number } = {};

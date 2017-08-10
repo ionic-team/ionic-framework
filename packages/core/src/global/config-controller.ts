@@ -1,8 +1,8 @@
-import { ConfigApi } from '../index';
+import { Config } from '../index';
 import { PlatformConfig } from './platform-configs';
 
 
-export function createConfigController(configObj: any, platforms: PlatformConfig[]): ConfigApi {
+export function createConfigController(configObj: any, platforms: PlatformConfig[]): Config {
   configObj = configObj || {};
 
   function get(key: string, fallback?: any): any {

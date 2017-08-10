@@ -1,4 +1,4 @@
-import { Animation, AnimationBuilder, Ionic } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -32,6 +32,8 @@ export class Loading {
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;
 
+  @Prop({ connect: 'ion-animation' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
   @Prop() cssClass: string;
   @Prop() content: string;
   @Prop() dismissOnPageChange: boolean = false;
@@ -40,38 +42,6 @@ export class Loading {
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() id: string;
   @Prop() showBackdrop: boolean = true;
-
-  @Listen('ionDismiss')
-  onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  ionViewDidLoad() {
-    if (!this.spinner) {
-      this.spinner = Ionic.config.get('loadingSpinner', Ionic.config.get('spinner', 'lines'));
-    }
-
-    if (this.showSpinner === null || this.showSpinner === undefined) {
-      this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
-    }
-    this.ionLoadingDidLoad.emit({ loading: this });
-  }
-
-  ionViewDidEnter() {
-    // blur the currently active element
-    const activeElement: any = document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
-
-    // If there is a duration, dismiss after that amount of time
-    if (typeof this.duration === 'number' && this.duration > 10) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
-    }
-
-    this.ionLoadingDidPresent.emit({ loading: this });
-  }
 
   present() {
     return new Promise<void>(resolve => {
@@ -97,16 +67,15 @@ export class Loading {
     }
 
     // build the animation and kick it off
-    Ionic.controller('animation').then(Animation => {
-      this.animation = animationBuilder(Animation, this.el);
+    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
 
-      this.animation.onFinish((a: any) => {
+      animation.onFinish((a: any) => {
         a.destroy();
         this.ionViewDidEnter();
         resolve();
 
       }).play();
-
     });
   }
 
@@ -118,26 +87,27 @@ export class Loading {
       this.animation = null;
     }
 
-    return Ionic.controller('animation').then(Animation => {
-      return new Promise(resolve => {
-        this.ionLoadingWillDismiss.emit({ loading: this });
+    return new Promise(resolve => {
+      this.ionLoadingWillDismiss.emit({ loading: this });
 
-        // get the user's animation fn if one was provided
-        let animationBuilder = this.exitAnimation;
+      // get the user's animation fn if one was provided
+      let animationBuilder = this.exitAnimation;
 
-        if (!animationBuilder) {
-          // user did not provide a custom animation fn
-          // decide from the config which animation to use
-          animationBuilder = iOSLeaveAnimation;
-        }
+      if (!animationBuilder) {
+        // user did not provide a custom animation fn
+        // decide from the config which animation to use
+        animationBuilder = iOSLeaveAnimation;
+      }
 
-        // build the animation and kick it off
-        this.animation = animationBuilder(Animation, this.el);
-        this.animation.onFinish((a: any) => {
+      // build the animation and kick it off
+      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+        this.animation = animation;
+
+        animation.onFinish((a: any) => {
           a.destroy();
           this.ionLoadingDidDismiss.emit({ loading: this });
 
-          Core.dom.write(() => {
+          Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
           });
 
@@ -148,11 +118,43 @@ export class Loading {
     });
   }
 
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this.ionLoadingDidUnload.emit({ loading: this });
   }
 
-  render() {
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  protected ionViewDidLoad() {
+    if (!this.spinner) {
+      this.spinner = this.config.get('loadingSpinner', this.config.get('spinner', 'lines'));
+    }
+
+    if (this.showSpinner === null || this.showSpinner === undefined) {
+      this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
+    }
+    this.ionLoadingDidLoad.emit({ loading: this });
+  }
+
+  protected ionViewDidEnter() {
+    // blur the currently active element
+    const activeElement: any = document.activeElement;
+    activeElement && activeElement.blur && activeElement.blur();
+
+    // If there is a duration, dismiss after that amount of time
+    if (typeof this.duration === 'number' && this.duration > 10) {
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+    }
+
+    this.ionLoadingDidPresent.emit({ loading: this });
+  }
+
+  protected render() {
     let userCssClass = 'loading-content';
     if (this.cssClass) {
       userCssClass += ' ' + this.cssClass;

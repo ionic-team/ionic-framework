@@ -1,7 +1,6 @@
-import { Component, Element } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { Ionic } from '../../index';
-
+import { Config } from '../../index';
 
 /**
  * @name Toolbar
@@ -104,6 +103,7 @@ import { Ionic } from '../../index';
 })
 export class Toolbar {
   @Element() el: HTMLElement;
+  @Prop({ context: 'config' }) config: Config;
   mode: string;
   color: string;
 
@@ -117,7 +117,7 @@ export class Toolbar {
   hostData() {
     return {
       class: {
-        'statusbar-padding': Ionic.config.getBoolean('statusbarPadding')
+        'statusbar-padding': this.config.getBoolean('statusbarPadding')
       }
     };
   }

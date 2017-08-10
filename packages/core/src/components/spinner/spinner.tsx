@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { Ionic } from '../../index';
+import { Config } from '../../index';
 import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
 
@@ -19,6 +19,7 @@ export class Spinner {
   mode: string;
   color: string;
 
+  @Prop({ context: 'config' }) config: Config;
   @Prop() duration: number = null;
   @Prop() name: string;
   @Prop() paused: boolean = false;
@@ -45,7 +46,7 @@ export class Spinner {
   }
 
   render() {
-    let name = this.name || Ionic.config.get('spinner', 'lines');
+    let name = this.name || this.config.get('spinner', 'lines');
     if (name === 'ios') {
       name = this.name = 'lines';
 

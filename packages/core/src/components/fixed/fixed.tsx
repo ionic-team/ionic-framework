@@ -1,6 +1,6 @@
-import { Component, Element } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
-import { Ionic } from '../../index';
+import { Config } from '../../index';
 
 
 @Component({
@@ -15,6 +15,7 @@ import { Ionic } from '../../index';
 })
 export class Fixed {
   @Element() private el: HTMLElement;
+  @Prop({ context: 'config' }) config: Config;
   mode: string;
 
   hostData() {
@@ -24,7 +25,7 @@ export class Fixed {
 
     return {
       class: {
-        'statusbar-padding': Ionic.config.getBoolean('statusbarPadding')
+        'statusbar-padding': this.config.getBoolean('statusbarPadding')
       },
       style: {
         'margin-top': headerHeight,
