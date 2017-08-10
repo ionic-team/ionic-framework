@@ -2,7 +2,6 @@ version: 2
 branches:
   ignore:
     - mono-refactor
-    - core
 jobs:
   build:
     working_directory: ~/ionic/
