@@ -13,6 +13,9 @@ export class Transition extends Animation {
     super();
   }
 
+  init() {
+  }
+
   registerStart(transitionStart: Function) {
     this.transitionStart = transitionStart;
   }

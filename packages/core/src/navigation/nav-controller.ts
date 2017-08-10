@@ -1,8 +1,16 @@
 import { ViewController } from './view-controller';
+import { Transition } from './transitions/transition';
 
 export interface NavController {
-  id: string;
-  getViews(): ViewController[];
+  id: number;
+  element: HTMLElement;
+  views?: ViewController[];
+  transitioning?: boolean;
+  destroyed?: boolean;
+  transitionId?: number;
+  isViewInitialized?: boolean;
+  isPortal?: boolean;
+  swipeToGoBackTransition?: Transition;
   getParent(): NavController;
-  setParent(nav: NavController): void;
+  childNavs?: NavController[]; // TODO - make nav container
 }

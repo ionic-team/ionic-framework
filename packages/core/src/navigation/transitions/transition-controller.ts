@@ -1,15 +1,14 @@
 import { NavController } from '../nav-controller';
-import { NavControllerData } from '../nav-utils';
 import { ViewController } from '../view-controller';
 import { AnimationOptions } from '../../animations/interfaces';
 
 import { Transition } from './transition';
 import { isDef } from '../../utils/helpers';
 
-export function getRootTransitionId(nav: NavController, stateData: NavControllerData): number {
+export function getRootTransitionId(nav: NavController): number {
   nav = nav.getParent();
   while (nav) {
-    const transitionId = stateData.transitionId;
+    const transitionId = nav.transitionId;
     if (isDef(transitionId)) {
       return transitionId;
     }
@@ -30,7 +29,7 @@ export function destroy(transitionId: number) {
   }
 }
 
-export function get(transitionId: number, viewController: ViewController, opts: AnimationOptions): Transition {
+export function getTransition(transitionId: number, viewController: ViewController, opts: AnimationOptions): Transition {
   const TransitionConstructor: any = Ionic.config.get(opts.animation) || Ionic.config.get('ios-transition');
 
   const transition = new TransitionConstructor(viewController.element) as Transition;
