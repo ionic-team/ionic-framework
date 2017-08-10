@@ -35,21 +35,6 @@ $item-md-detail-push-color:          $list-md-border-color !default;
 /// @prop - Icon for the detail arrow
 $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
 
-/// @prop - Color for the divider
-$item-md-divider-color:              #858585 !default;
-
-/// @prop - Background for the divider
-$item-md-divider-background:         #fff !default;
-
-/// @prop - Font size for the divider
-$item-md-divider-font-size:          $item-md-body-text-font-size !default;
-
-/// @prop - Border bottom for the divider
-$item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
-
-/// @prop - Padding for the divider
-$item-md-divider-padding:            5px 15px !default;
-
 
 .item-md {
   @include padding-horizontal($item-md-padding-start, 0);
