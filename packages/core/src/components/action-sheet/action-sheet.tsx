@@ -179,10 +179,12 @@ export class ActionSheet {
               : null}
             {buttons.map(b =>
               <button class={this.buttonClass(b)} onClick={() => this.click(b)}>
-                {b.icon
-                  ? <ion-icon name={b.icon} class="action-sheet-icon" />
-                  : null}
-                {b.text}
+                <span class="button-inner">
+                  {b.icon
+                    ? <ion-icon name={b.icon} class="action-sheet-icon" />
+                    : null}
+                  {b.text}
+                </span>
               </button>
             )}
           </div>

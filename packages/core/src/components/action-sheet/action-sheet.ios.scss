@@ -61,6 +61,18 @@ $action-sheet-ios-button-text-color:                    #007aff !default;
 /// @prop - Fill color of the action sheet button icon
 $action-sheet-ios-button-icon-fill-color:               $action-sheet-ios-button-text-color !default;
 
+/// @prop - Font size of the action sheet button icon
+$action-sheet-ios-button-icon-font-size:                1.4em !default;
+
+/// @prop - Padding right of the action sheet button icon
+$action-sheet-ios-button-icon-padding-right:            0.1em !default;
+
+/// @prop - Height of the action sheet button icon
+$action-sheet-ios-button-icon-height:                   .7em !default;
+
+/// @prop - Margin top of the action sheet button icon
+$action-sheet-ios-button-icon-margin-top:               -10px !default;
+
 /// @prop - Font size of the action sheet button
 $action-sheet-ios-button-font-size:                     2rem !default;
 
@@ -138,8 +150,12 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   background: $action-sheet-ios-button-background;
 }
 
-.action-sheet-ios .action-sheet-button {
+.action-sheet-ios .action-sheet-button .action-sheet-icon {
   fill: $action-sheet-ios-button-icon-fill-color;
+  font-size: $action-sheet-ios-button-icon-font-size;
+  padding-right: $action-sheet-ios-button-icon-padding-right;
+  height: $action-sheet-ios-button-icon-height;
+  margin-top: $action-sheet-ios-button-icon-margin-top;
 }
 
 .action-sheet-ios .action-sheet-button:last-child {

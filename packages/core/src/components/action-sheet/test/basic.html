@@ -18,12 +18,15 @@
 
     <ion-content padding>
       <ion-button block onclick="presentActionSheet1()">Present Action Sheet 1</ion-button>
+      <ion-button block onclick="presentActionSheet2()">Present Action Sheet 2</ion-button>
+      <ion-button block onclick="presentActionSheet3()">Present Action Sheet 3</ion-button>
     </ion-content>
   </ion-app>
 
   <script>
+
     function presentActionSheet1() {
-      console.log('presenting');
+      var mode = Ionic.mode;
 
       Ionic.controller('action-sheet', {
         title: "Albums",
@@ -48,8 +51,56 @@
           }
         }, {
           text: 'Favorite',
+          icon: mode !== 'ios' ? 'heart' : null,
           handler: () => {
             console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: mode !== 'ios' ? 'close' : null,
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      .then(actionSheet => {
+        actionSheet.present()
+      });
+    }
+
+    function presentActionSheet2() {
+      Ionic.controller('action-sheet', {
+        buttons: [{
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        }, {
+          text: 'Destructive',
+          role: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      .then(actionSheet => {
+        actionSheet.present()
+      });
+    }
+
+    function presentActionSheet3() {
+      Ionic.controller('action-sheet', {
+        buttons: [{
+          text: 'Open Alert',
+          handler: () => {
+            console.log('Open Alert clicked');
           }
         }, {
           text: 'Cancel',

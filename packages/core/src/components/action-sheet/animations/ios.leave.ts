@@ -1,7 +1,7 @@
 import { Animation } from '../../../index';
 
 /**
- * iOS Loading Leave Animation
+ * iOS Action Sheet Leave Animation
  */
 export default function(Animation: Animation, baseElm: HTMLElement) {
   const baseAnimation = new Animation();
@@ -12,7 +12,7 @@ export default function(Animation: Animation, baseElm: HTMLElement) {
   const wrapperAnimation = new Animation();
   wrapperAnimation.addElement(baseElm.querySelector('.action-sheet-wrapper'));
 
-  backdropAnimation.fromTo('opacity', 0.26, 0);
+  backdropAnimation.fromTo('opacity', 0.4, 0);
 
   wrapperAnimation.fromTo('translateY', '0%', '100%');
 
