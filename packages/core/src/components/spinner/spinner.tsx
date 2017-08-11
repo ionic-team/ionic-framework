@@ -37,11 +37,11 @@ export class Spinner {
   }
 
   hostData() {
-    const spinnerThemedClasses = createThemedClasses(this.mode, this.color, `spinner spinner-${this.name}`);
-    spinnerThemedClasses['spinner-paused'] = true;
+    const themedClasses = createThemedClasses(this.mode, this.color, `spinner spinner-${this.name}`);
+    themedClasses['spinner-paused'] = true;
 
     return {
-      class: spinnerThemedClasses
+      class: themedClasses
     };
   }
 

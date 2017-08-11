@@ -1,5 +1,6 @@
 import { Component, CssClassMap, Element, Prop } from '@stencil/core';
 
+import { getElementClassObject } from '../../utils/theme';
 
 @Component({
   tag: 'ion-chip-button',
@@ -71,25 +72,14 @@ export class ChipButton {
     return classList;
   }
 
-  /**
-   * @hidden
-   * Get the element classes to add to the child element
-   */
-  private getElementClassList() {
-    let classList = [].concat(
-      this.el.className.length ? this.el.className.split(' ') : []
-    );
-
-    return classList;
-  }
-
   render() {
     const buttonType = 'chip-button';
 
-    var buttonClasses: CssClassMap = []
+    const hostClasses = getElementClassObject(this.el.classList);
+
+    const elementClasses: CssClassMap = []
       .concat(
         this.getButtonClassList(buttonType, this.mode),
-        this.getElementClassList(),
         this.getStyleClassList(buttonType)
       )
       .reduce((prevValue, cssClass) => {
@@ -98,6 +88,11 @@ export class ChipButton {
       }, {});
 
     const TagType = this.href ? 'a' : 'button';
+
+    const buttonClasses = {
+      ...hostClasses,
+      ...elementClasses
+    }
 
     return (
       <TagType class={buttonClasses} disabled={this.disabled}>

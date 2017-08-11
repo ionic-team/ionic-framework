@@ -1,7 +1,7 @@
-import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 import { CssClassMap } from '../../index';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 
 
 /**
@@ -49,6 +49,8 @@ export class SegmentButton {
   mode: string;
   color: string;
 
+  @Element() el: HTMLElement;
+
   @Event() ionClick: EventEmitter;
 
   @State() activated: boolean = false;
@@ -92,7 +94,7 @@ export class SegmentButton {
 
   /**
    * @hidden
-   * Get the element classes to add to the child element
+   * Get the classes for the segment button state
    */
   getElementClassList() {
     let classList = [].concat(
@@ -104,9 +106,10 @@ export class SegmentButton {
   }
 
   render() {
-    const segmentButtonCss = createThemedClasses(this.mode, this.color, 'segment-button');
+    const themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
+    const hostClasses = getElementClassObject(this.el.classList);
 
-    var segmentButtonClasses: CssClassMap = []
+    const elementClasses: CssClassMap = []
       .concat(
         this.getElementClassList()
       )
@@ -115,10 +118,14 @@ export class SegmentButton {
         return prevValue;
       }, {});
 
-    segmentButtonClasses = Object.assign(segmentButtonClasses, segmentButtonCss);
+    const buttonClasses = {
+      ...themedClasses,
+      ...hostClasses,
+      ...elementClasses
+    };
 
     return [
-      <button onClick={this.segmentButtonClick.bind(this)} class={segmentButtonClasses} aria-pressed={this.activated}>
+      <button onClick={this.segmentButtonClick.bind(this)} class={buttonClasses} aria-pressed={this.activated}>
         <slot></slot>
       </button>
     ];

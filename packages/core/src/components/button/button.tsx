@@ -1,5 +1,7 @@
 import { Component, Element, Prop, CssClassMap } from '@stencil/core';
 
+import { getElementClassObject } from '../../utils/theme';
+
 /**
   * @name Button
   * @module ionic
@@ -178,7 +180,9 @@ export class Button {
 
     const decorator = (this.strong ? 'strong' : null);
 
-    const buttonClasses: CssClassMap = []
+    const hostClasses = getElementClassObject(this.el.classList);
+
+    const elementClasses: CssClassMap = []
       .concat(
         getButtonClassList(buttonType, mode),
         getClassList(buttonType, shape, mode),
@@ -186,8 +190,7 @@ export class Button {
         getClassList(buttonType, size, mode),
         getClassList(buttonType, decorator, mode),
         getStyleClassList(mode, this.color, buttonType, this.outline, this.clear, this.solid),
-        getItemClassList(this.itemButton, size),
-        getElementClassList(this.el.classList)
+        getItemClassList(this.itemButton, size)
       )
       .reduce((prevValue, cssClass) => {
         prevValue[cssClass] = true;
@@ -195,6 +198,11 @@ export class Button {
       }, {});
 
     const TagType = this.href ? 'a' : 'button';
+
+    const buttonClasses = {
+      ...hostClasses,
+      ...elementClasses
+    }
 
     return (
       <TagType class={buttonClasses} disabled={this.disabled}>
@@ -291,15 +299,4 @@ function getStyleClassList(mode: string, color: string, buttonType: string, outl
  */
 function getItemClassList(itemButton: boolean, size: string) {
   return itemButton && !size ? ['item-button'] : [];
-}
-
-/**
- * Get the element classes to add to the child element
- */
-function getElementClassList(elmClassList: DOMTokenList) {
-  const classList: string[] = [];
-  for (var i = 0; i < elmClassList.length; i++) {
-    classList.push(elmClassList.item(i));
-  }
-  return classList;
 }
