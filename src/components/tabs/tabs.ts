@@ -642,9 +642,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @private
    */
-  _getSelectedTabIndex(secondaryId: string, fallbackIndex: number = 0): number {
-    secondaryId = secondaryId || '';
-
+  _getSelectedTabIndex(secondaryId: string = '', fallbackIndex: number = 0): number {
     // we found a segment which probably represents which tab to select
     const indexMatch = secondaryId.match(/tab-(\d+)/);
     if (indexMatch) {
