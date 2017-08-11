@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-3",
+  "version": "0.0.2-4",
   "description": "Base components for Ionic",
   "main": "dist/collection/index.js",
   "types": "dist/collection/index.d.ts",
@@ -10,16 +10,16 @@
     "README.md"
   ],
   "dependencies": {
-    "@stencil/core": "^0.0.4-3"
+    "@stencil/core": "0.0.4-14"
   },
   "devDependencies": {
-    "@stencil/dev-server": "^0.0.11",
-    "@stencil/utils": "^0.0.4"
+    "@stencil/dev-server": "latest",
+    "@stencil/utils": "latest"
   },
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "publish": "../../node_modules/.bin/np --any-branch",
+    "publish": "npm run build && node scripts/publish.js && node scripts/publish.js && ../../node_modules/.bin/np --any-branch",
     "test": "(jest --no-cache || true)"
   },
   "author": "Ionic Team",
