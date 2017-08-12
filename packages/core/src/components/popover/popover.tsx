@@ -29,7 +29,7 @@ export class Popover {
   @Event() private ionPopoverDidDismiss: EventEmitter;
   @Event() private ionPopoverDidUnload: EventEmitter;
 
-  @Prop({ connect: 'ion-animation' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
 
   @Prop() mode: string;

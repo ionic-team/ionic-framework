@@ -27,7 +27,7 @@ export class Modal {
   @Event() ionModalDidDismiss: EventEmitter;
   @Event() ionModalDidUnload: EventEmitter;
 
-  @Prop({ connect: 'ion-animation' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop() mode: string;
   @Prop() color: string;
   @Prop() component: string;

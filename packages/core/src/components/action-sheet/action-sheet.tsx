@@ -27,7 +27,7 @@ export class ActionSheet {
   @Event() private ionActionSheetDidDismiss: EventEmitter;
   @Event() private ionActionSheetDidUnload: EventEmitter;
 
-  @Prop({ connect: 'ion-animation' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
 
   @Prop() cssClass: string;
