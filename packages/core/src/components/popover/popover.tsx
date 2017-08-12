@@ -1,12 +1,6 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Listen,
-  Prop
-} from '@stencil/core';
-import { AnimationBuilder, Animation, Ionic } from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { AnimationBuilder, Animation, AnimationController, Config } from '../../index';
+
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -24,14 +18,19 @@ import iOSLeaveAnimation from './animations/ios.leave';
   }
 })
 export class Popover {
+  private animation: Animation;
+
   @Element() private el: HTMLElement;
 
-  @Event() ionPopoverDidLoad: EventEmitter;
-  @Event() ionPopoverWillPresent: EventEmitter;
-  @Event() ionPopoverDidPresent: EventEmitter;
-  @Event() ionPopoverWillDismiss: EventEmitter;
-  @Event() ionPopoverDidDismiss: EventEmitter;
-  @Event() ionPopoverDidUnload: EventEmitter;
+  @Event() private ionPopoverDidLoad: EventEmitter;
+  @Event() private ionPopoverDidPresent: EventEmitter;
+  @Event() private ionPopoverWillPresent: EventEmitter;
+  @Event() private ionPopoverWillDismiss: EventEmitter;
+  @Event() private ionPopoverDidDismiss: EventEmitter;
+  @Event() private ionPopoverDidUnload: EventEmitter;
+
+  @Prop({ connect: 'ion-animation' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
 
   @Prop() mode: string;
   @Prop() color: string;
@@ -45,19 +44,6 @@ export class Popover {
   @Prop() id: string;
   @Prop() showBackdrop: boolean = true;
 
-  private animation: Animation;
-
-  @Listen('ionDismiss')
-  onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  ionViewDidLoad() {
-    this.ionPopoverDidLoad.emit({ popover: this });
-  }
 
   present() {
     return new Promise<void>(resolve => {
@@ -73,20 +59,23 @@ export class Popover {
     this.ionPopoverWillPresent.emit({ popover: this });
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation
-      ? this.enterAnimation
-      : iOSEnterAnimation;
-    //
+    let animationBuilder = this.enterAnimation;
+
+    if (!animationBuilder) {
+      // user did not provide a custom animation fn
+      // decide from the config which animation to use
+      animationBuilder = iOSEnterAnimation;
+    }
+
     // build the animation and kick it off
-    Ionic.controller('animation').then(Animation => {
-      this.animation = animationBuilder(Animation, this.el, this.ev);
-      this.animation
-        .onFinish((a: any) => {
-          a.destroy();
-          this.ionPopoverDidPresent.emit({ popover: this });
-          resolve();
-        })
-        .play();
+    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+
+      animation.onFinish((a: any) => {
+        a.destroy();
+        this.ionViewDidEnter();
+        resolve();
+      }).play();
     });
   }
 
@@ -95,35 +84,56 @@ export class Popover {
       this.animation.destroy();
       this.animation = null;
     }
-    return new Promise<void>(resolve => {
+    return new Promise(resolve => {
       this.ionPopoverWillDismiss.emit({ popover: this });
 
-      let animationBuilder = this.exitAnimation
-        ? this.exitAnimation
-        : iOSLeaveAnimation;
+      // get the user's animation fn if one was provided
+      let animationBuilder = this.exitAnimation;
+      if (!animationBuilder) {
+        // user did not provide a custom animation fn
+        // decide from the config which animation to use
+        animationBuilder = iOSLeaveAnimation;
+      }
 
       // build the animation and kick it off
-      Ionic.controller('animation').then(Animation => {
-        this.animation = animationBuilder(Animation, this.el);
-        this.animation
-          .onFinish((a: any) => {
-            a.destroy();
-            this.ionPopoverDidDismiss.emit({ popover: this });
-            Core.dom.write(() => {
-              this.el.parentNode.removeChild(this.el);
-            });
-            resolve();
-          })
-          .play();
+      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+        this.animation = animation;
+
+        animation.onFinish((a: any) => {
+          a.destroy();
+          this.ionPopoverDidDismiss.emit({ popover: this });
+
+          Context.dom.write(() => {
+            this.el.parentNode.removeChild(this.el);
+          });
+
+          resolve();
+        }).play();
       });
     });
   }
 
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this.ionPopoverDidUnload.emit({ popover: this });
   }
 
-  backdropClick() {
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  protected ionViewDidLoad() {
+    this.ionPopoverDidLoad.emit({ popover: this });
+  }
+
+  protected ionViewDidEnter() {
+    this.ionPopoverDidPresent.emit({ popover: this });
+  }
+
+  protected backdropClick() {
     if (this.enableBackdropDismiss) {
       // const opts: NavOptions = {
       //   minClickBlockDuration: 400

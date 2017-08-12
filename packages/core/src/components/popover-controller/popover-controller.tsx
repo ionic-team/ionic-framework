@@ -1,25 +1,17 @@
-import { Component, Listen } from '@stencil/core';
-import { PopoverEvent, PopoverOptions, Popover, IonicControllerApi, Ionic } from '../../index';
+import { Component, Listen, Method } from '@stencil/core';
+import { PopoverEvent, PopoverOptions, Popover } from '../../index';
 
 
 @Component({
-  tag: 'ion-popover-controller',
-  // styleUrl: 'popover-controller.scss'
+  tag: 'ion-popover-controller'
 })
-export class PopoverController implements IonicControllerApi {
+export class PopoverController {
   private ids = 0;
   private popoverResolves: {[popoverId: string]: Function} = {};
   private popovers: Popover[] = [];
-  private appRoot: Element;
 
-
-  ionViewDidLoad() {
-    this.appRoot = document.querySelector('ion-app') || document.body;
-    Ionic.registerController('popover', this);
-  }
-
-
-  load(opts?: PopoverOptions) {
+  @Method()
+  create(opts?: PopoverOptions) {
     // create ionic's wrapping ion-popover component
     const popover = document.createElement('ion-popover');
     const id = this.ids++;
@@ -33,7 +25,8 @@ export class PopoverController implements IonicControllerApi {
     Object.assign(popover, opts);
 
     // append the popover element to the document body
-    this.appRoot.appendChild(popover as any);
+    const appRoot = document.querySelector('ion-app') || document.body;
+    appRoot.appendChild(popover as any);
 
     // store the resolve function to be called later up when the popover loads
     return new Promise<Popover>(resolve => {
@@ -43,7 +36,7 @@ export class PopoverController implements IonicControllerApi {
 
 
   @Listen('body:ionPopoverDidLoad')
-  viewDidLoad(ev: PopoverEvent) {
+  protected viewDidLoad(ev: PopoverEvent) {
     const popover = ev.detail.popover;
     const popoverResolve = this.popoverResolves[popover.id];
     if (popoverResolve) {
@@ -54,13 +47,13 @@ export class PopoverController implements IonicControllerApi {
 
 
   @Listen('body:ionPopoverWillPresent')
-  willPresent(ev: PopoverEvent) {
+  protected willPresent(ev: PopoverEvent) {
     this.popovers.push(ev.detail.popover);
   }
 
 
   @Listen('body:ionPopoverWillDismiss, body:ionPopoverDidUnload')
-  willDismiss(ev: PopoverEvent) {
+  protected willDismiss(ev: PopoverEvent) {
     const index = this.popovers.indexOf(ev.detail.popover);
     if (index > -1) {
       this.popovers.splice(index, 1);
@@ -69,7 +62,7 @@ export class PopoverController implements IonicControllerApi {
 
 
   @Listen('body:keyup.escape')
-  escapeKeyUp() {
+  protected escapeKeyUp() {
     const lastPopover = this.popovers[this.popovers.length - 1];
     if (lastPopover) {
       lastPopover.dismiss();

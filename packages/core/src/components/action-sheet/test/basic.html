@@ -17,6 +17,8 @@
     </ion-header>
 
     <ion-content padding>
+      <ion-action-sheet-controller></ion-action-sheet-controller>
+
       <ion-button block onclick="presentActionSheet1()">Present Action Sheet 1</ion-button>
       <ion-button block onclick="presentActionSheet2()">Present Action Sheet 2</ion-button>
       <ion-button block onclick="presentActionSheet3()">Present Action Sheet 3</ion-button>
@@ -28,7 +30,8 @@
     function presentActionSheet1() {
       var mode = Ionic.mode;
 
-      Ionic.controller('action-sheet', {
+      var actionSheetController = document.querySelector('ion-action-sheet-controller');
+      actionSheetController.create({
         title: "Albums",
         buttons: [{
           text: 'Delete',
@@ -70,7 +73,8 @@
     }
 
     function presentActionSheet2() {
-      Ionic.controller('action-sheet', {
+      var actionSheetController = document.querySelector('ion-action-sheet-controller');
+      actionSheetController.create({
         buttons: [{
           text: 'Archive',
           handler: () => {
@@ -96,7 +100,8 @@
     }
 
     function presentActionSheet3() {
-      Ionic.controller('action-sheet', {
+      var actionSheetController = document.querySelector('ion-action-sheet-controller');
+      actionSheetController.create({
         buttons: [{
           text: 'Open Alert',
           handler: () => {

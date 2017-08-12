@@ -1,7 +1,7 @@
 import { Animation } from '../../../index';
 
 /**
- * iOS Modal Leave Animation
+ * iOS Popover Leave Animation
  */
 export default function(Animation: Animation, baseElm: HTMLElement) {
   const baseAnimation = new Animation();
@@ -10,11 +10,10 @@ export default function(Animation: Animation, baseElm: HTMLElement) {
   backdropAnimation.addElement(baseElm.querySelector('.popover-backdrop'));
 
   const wrapperAnimation = new Animation();
-  const wrapperElm = baseElm.querySelector('.popover-wrapper');
+  wrapperAnimation.addElement(baseElm.querySelector('.popover-wrapper'));
 
   wrapperAnimation.fromTo('opacity', 0.99, 0);
   backdropAnimation.fromTo('opacity', 0.08, 0);
-
 
   return baseAnimation
     .addElement(baseElm)

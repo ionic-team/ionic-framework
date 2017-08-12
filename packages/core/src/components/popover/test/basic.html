@@ -12,40 +12,43 @@
   <ion-app>
 
     <ion-content>
-      <ion-button id="presentPopover">Show Popover</ion-button>
+      <ion-button onclick="presentPopover(event)">Show Popover</ion-button>
+
+      <ion-popover-controller></ion-popover-controller>
     </ion-content>
   </ion-app>
   <script>
-    document.getElementById('presentPopover').addEventListener('click', function(clickEvt) {
-      Ionic.controller('popover', {
+    function presentPopover(event) {
+      var popoverController = document.querySelector('ion-popover-controller');
+      popoverController.create({
         component: 'profile-page',
-        ev: clickEvt
+        ev: event
       }).then(popover => {
-        console.log(popover)
-        popover.present()
+        popover.present();
       });
-    });
+    }
 
     class ProfilePage extends HTMLElement {
       constructor() {
         super();
+
         const shadowRoot = this.attachShadow({
           mode: 'open'
         });
-        shadowRoot.innerHTML =
-          `
-                <ion-header>
-                  <ion-toolbar>
-                    My Profile
-                  </ion-toolbar>
-                </ion-header>
-                <ion-content padding>
-                  <p>
-                    <ion-button>Dismiss</ion-button>
-                  </p>
-                </ion-content>
-              `;
+
+        shadowRoot.innerHTML = `
+          <ion-header>
+            <ion-toolbar>
+              My Profile
+            </ion-toolbar>
+          </ion-header>
+          <ion-content padding>
+            <p>
+              <ion-button>Dismiss</ion-button>
+            </p>
+          </ion-content>`;
       }
+
       connectedCallback() {
         var btn = this.shadowRoot.querySelector('ion-button');
         btn.addEventListener('click', (uiEvent) => {
@@ -57,6 +60,7 @@
         });
       }
     }
+
     customElements.define('profile-page', ProfilePage);
   </script>
 </body>

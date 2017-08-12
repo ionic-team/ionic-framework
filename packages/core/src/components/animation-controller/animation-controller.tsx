@@ -4,7 +4,7 @@ import { Animator } from './animator';
 
 
 @Component({
-  tag: 'ion-animation'
+  tag: 'ion-animation-controller'
 })
 export class AnimationController {
 

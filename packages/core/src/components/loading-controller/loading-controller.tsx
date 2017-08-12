@@ -1,9 +1,9 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { LoadingEvent, LoadingOptions, Loading } from '../../index';
+import { Loading, LoadingEvent, LoadingOptions } from '../../index';
 
 
 @Component({
-  tag: 'ion-loading-ctrl'
+  tag: 'ion-loading-controller'
 })
 export class LoadingController {
   private ids = 0;

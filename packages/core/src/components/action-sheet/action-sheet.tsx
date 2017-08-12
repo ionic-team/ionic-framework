@@ -1,13 +1,5 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Listen,
-  Prop,
-  CssClassMap
-} from '@stencil/core';
-import { AnimationBuilder, Animation, Ionic } from '../../index';
+import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { AnimationBuilder, Animation, AnimationController, Config } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -28,12 +20,15 @@ export class ActionSheet {
 
   @Element() private el: HTMLElement;
 
-  @Event() ionActionSheetDidLoad: EventEmitter;
-  @Event() ionActionSheetWillPresent: EventEmitter;
-  @Event() ionActionSheetDidPresent: EventEmitter;
-  @Event() ionActionSheetWillDismiss: EventEmitter;
-  @Event() ionActionSheetDidDismiss: EventEmitter;
-  @Event() ionActionSheetDidUnload: EventEmitter;
+  @Event() private ionActionSheetDidLoad: EventEmitter;
+  @Event() private ionActionSheetDidPresent: EventEmitter;
+  @Event() private ionActionSheetWillPresent: EventEmitter;
+  @Event() private ionActionSheetWillDismiss: EventEmitter;
+  @Event() private ionActionSheetDidDismiss: EventEmitter;
+  @Event() private ionActionSheetDidUnload: EventEmitter;
+
+  @Prop({ connect: 'ion-animation' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
 
   @Prop() cssClass: string;
   @Prop() title: string;
@@ -46,17 +41,6 @@ export class ActionSheet {
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() id: string;
 
-  @Listen('ionDismiss')
-  onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  ionViewDidLoad() {
-    this.ionActionSheetDidLoad.emit({ actionsheet: this });
-  }
 
   present() {
     return new Promise<void>(resolve => {
@@ -69,22 +53,26 @@ export class ActionSheet {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionActionSheetWillPresent.emit({ actionsheet: this });
+    this.ionActionSheetWillPresent.emit({ actionSheet: this });
 
-    let animationBuilder = this.enterAnimation
-      ? this.enterAnimation
-      : iOSEnterAnimation;
+    // get the user's animation fn if one was provided
+    let animationBuilder = this.enterAnimation;
+
+    if (!animationBuilder) {
+      // user did not provide a custom animation fn
+      // decide from the config which animation to use
+      animationBuilder = iOSEnterAnimation;
+    }
 
     // build the animation and kick it off
-    Ionic.controller('animation').then(Animation => {
-      this.animation = animationBuilder(Animation, this.el);
-      this.animation
-        .onFinish((a: any) => {
-          a.destroy();
-          this.ionActionSheetDidLoad.emit({ actionsheet: this });
-          resolve();
-        })
-        .play();
+    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+
+      animation.onFinish((a: any) => {
+        a.destroy();
+        this.ionViewDidEnter();
+        resolve();
+      }).play();
     });
   }
 
@@ -93,34 +81,56 @@ export class ActionSheet {
       this.animation.destroy();
       this.animation = null;
     }
-    return new Promise<void>(resolve => {
-      this.ionActionSheetWillDismiss.emit({ actionsheet: this });
-      let animationBuilder = this.exitAnimation
-        ? this.exitAnimation
-        : iOSLeaveAnimation;
+    return new Promise(resolve => {
+      this.ionActionSheetWillDismiss.emit({ actionSheet: this });
+
+      // get the user's animation fn if one was provided
+      let animationBuilder = this.exitAnimation;
+      if (!animationBuilder) {
+        // user did not provide a custom animation fn
+        // decide from the config which animation to use
+        animationBuilder = iOSLeaveAnimation;
+      }
 
       // build the animation and kick it off
-      Ionic.controller('animation').then(Animation => {
-        this.animation = animationBuilder(Animation, this.el);
-        this.animation
-          .onFinish((a: any) => {
-            a.destroy();
-            this.ionActionSheetDidDismiss.emit({ actionsheet: this });
-            Core.dom.write(() => {
-              this.el.parentNode.removeChild(this.el);
-            });
-            resolve();
-          })
-          .play();
+      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+        this.animation = animation;
+
+        animation.onFinish((a: any) => {
+          a.destroy();
+          this.ionActionSheetDidDismiss.emit({ actionSheet: this });
+
+          Context.dom.write(() => {
+            this.el.parentNode.removeChild(this.el);
+          });
+
+          resolve();
+        }).play();
       });
     });
   }
 
-  ionViewDidUnload() {
-    this.ionActionSheetDidUnload.emit({ actionsheet: this });
+  protected ionViewDidUnload() {
+    this.ionActionSheetDidUnload.emit({ actionSheet: this });
   }
 
-  backdropClick() {
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  protected ionViewDidLoad() {
+    this.ionActionSheetDidLoad.emit({ actionSheet: this });
+  }
+
+  protected ionViewDidEnter() {
+    this.ionActionSheetDidPresent.emit({ loading: this });
+  }
+
+  protected backdropClick() {
     if (this.enableBackdropDismiss) {
       // const opts: NavOptions = {
       //   minClickBlockDuration: 400
@@ -129,7 +139,7 @@ export class ActionSheet {
     }
   }
 
-  click(button: ActionSheetButton) {
+  protected click(button: ActionSheetButton) {
     let shouldDismiss = true;
     if (button.handler) {
       if (button.handler() === false) {
@@ -141,7 +151,7 @@ export class ActionSheet {
     }
   }
 
-  render() {
+  protected render() {
     let userCssClass = 'action-sheet-content';
     if (this.cssClass) {
       userCssClass += ' ' + this.cssClass;
@@ -239,6 +249,6 @@ export interface ActionSheetButton {
 
 export interface ActionSheetEvent {
   detail: {
-    actionsheet: ActionSheet;
+    actionSheet: ActionSheet;
   };
 }

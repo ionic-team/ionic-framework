@@ -162,8 +162,8 @@
 
         <ion-button>Default</ion-button>
 
-        <ion-loading-ctrl></ion-loading-ctrl>
-        <ion-modal-ctrl></ion-modal-ctrl>
+        <ion-loading-controller></ion-loading-controller>
+        <ion-modal-controller></ion-modal-controller>
 
         <script>
 
@@ -219,8 +219,8 @@
 
             console.log('open profile modal for userId:', userId);
 
-            var modalCtrl = document.querySelector('ion-modal-ctrl');
-            modalCtrl.create({ component: 'profile-page', componentProps: { userId: userId } }).then(modal => {
+            var modalController = document.querySelector('ion-modal-controller');
+            modalController.create({ component: 'profile-page', componentProps: { userId: userId } }).then(modal => {
               console.log('start presenting modal, userId:', modal.componentProps.userId);
 
               modal.present().then(() => {
@@ -271,8 +271,8 @@
           document.getElementById('presentLoading').addEventListener('click', function() {
             console.log('open loading');
 
-            var loadingCtrl = document.querySelector('ion-loading-ctrl');
-            loadingCtrl.create({ duration: 1000 }).then(loading => {
+            var loadingController = document.querySelector('ion-loading-controller');
+            loadingController.create({ duration: 1000 }).then(loading => {
               console.log('start presenting loading');
 
               loading.present().then(() => {
@@ -285,10 +285,10 @@
           document.getElementById('toggleMenu').addEventListener('click', function() {
             console.log('toggle menu');
 
-            Ionic.controller('menu').then(menuCtrl => {
+            Ionic.controller('menu').then(menucontroller => {
               console.log('start menu toggle');
 
-              menuCtrl.toggle().then(() => {
+              menucontroller.toggle().then(() => {
                 console.log('finished menu toggle');
               });
             });

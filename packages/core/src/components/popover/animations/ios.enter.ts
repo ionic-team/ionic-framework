@@ -1,14 +1,13 @@
-import { Animation, PopoverOptions } from '../../../index';
+import { Animation } from '../../../index';
 
-export default function popoverEnter(
-  Animation: Animation,
-  baseElm: HTMLElement,
-  evtSource: Event
-) {
+
+/**
+ * iOS Popover Enter Animation
+ */
+export default function(Animation: Animation, baseElm: HTMLElement) {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-
   backdropAnimation.addElement(baseElm.querySelector('.popover-backdrop'));
 
   const wrapperAnimation = new Animation();

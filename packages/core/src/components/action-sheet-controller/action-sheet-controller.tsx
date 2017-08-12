@@ -1,75 +1,66 @@
-import { Component, Listen } from '@stencil/core';
-import {
-  ActionSheetEvent,
-  ActionSheetOptions,
-  ActionSheet,
-  IonicControllerApi,
-  Ionic
-} from '../../index';
+import { Component, Listen, Method } from '@stencil/core';
+import { ActionSheet, ActionSheetEvent, ActionSheetOptions  } from '../../index';
+
 
 @Component({
-  tag: 'ion-action-sheet-controller',
-  styleUrl: 'action-sheet-controller.scss'
+  tag: 'ion-action-sheet-controller'
 })
-export class ActionSheetController implements IonicControllerApi {
+export class ActionSheetController {
   private ids = 0;
-  private actionsheetResolves: { [actionsheetId: string]: Function } = {};
-  private actionsheets: ActionSheet[] = [];
-  private appRoot: Element;
+  private actionSheetResolves: { [actionSheetId: string]: Function } = {};
+  private actionSheets: ActionSheet[] = [];
 
-  ionViewDidLoad() {
-    this.appRoot = document.querySelector('ion-app') || document.body;
-    Ionic.registerController('action-sheet', this);
-  }
+  @Method()
+  create(opts?: ActionSheetOptions) {
+    // create ionic's wrapping ion-action-sheet component
+    const actionSheet = document.createElement('ion-action-sheet');
 
-  load(opts?: ActionSheetOptions) {
-    // create ionic's wrapping ion-actionsheet component
-    const actionsheet = document.createElement('ion-action-sheet');
     const id = this.ids++;
 
-    // give this actionsheet a unique id
-    actionsheet.id = `action-sheet-${id}`;
-    actionsheet.style.zIndex = (20000 + id).toString();
+    // give this action sheet a unique id
+    actionSheet.id = `action-sheet-${id}`;
+    actionSheet.style.zIndex = (20000 + id).toString();
 
-    // convert the passed in actionsheet options into props
-    // that get passed down into the new actionsheet
-    Object.assign(actionsheet, opts);
+    // convert the passed in action sheet options into props
+    // that get passed down into the new action sheet
+    Object.assign(actionSheet, opts);
 
-    // append the actionsheet element to the document body
-    this.appRoot.appendChild(actionsheet as any);
+    // append the action sheet element to the document body
+    const appRoot = document.querySelector('ion-app') || document.body;
+    appRoot.appendChild(actionSheet as any);
 
-    // store the resolve function to be called later up when the actionsheet loads
+    // store the resolve function to be called later up when the action sheet loads
     return new Promise<ActionSheet>(resolve => {
-      this.actionsheetResolves[actionsheet.id] = resolve;
+      this.actionSheetResolves[actionSheet.id] = resolve;
     });
   }
 
   @Listen('body:ionActionSheetDidLoad')
-  viewDidLoad(ev: ActionSheetEvent) {
-    const actionsheet = ev.detail.actionsheet;
-    const actionsheetResolve = this.actionsheetResolves[actionsheet.id];
-    if (actionsheetResolve) {
-      actionsheetResolve(actionsheet);
-      delete this.actionsheetResolves[actionsheet.id];
+  protected viewDidLoad(ev: ActionSheetEvent) {
+    const actionSheet = ev.detail.actionSheet;
+    const actionSheetResolve = this.actionSheetResolves[actionSheet.id];
+    if (actionSheetResolve) {
+      actionSheetResolve(actionSheet);
+      delete this.actionSheetResolves[actionSheet.id];
     }
   }
 
   @Listen('body:ionActionSheetWillPresent')
-  willPresent(ev: ActionSheetEvent) {
-    this.actionsheets.push(ev.detail.actionsheet);
+  protected willPresent(ev: ActionSheetEvent) {
+    this.actionSheets.push(ev.detail.actionSheet);
   }
 
   @Listen('body:ionActionSheetWillDismiss, body:ionActionSheetDidUnload')
-  willDismiss(ev: ActionSheetEvent) {
-    const index = this.actionsheets.indexOf(ev.detail.actionsheet);
+  protected willDismiss(ev: ActionSheetEvent) {
+    const index = this.actionSheets.indexOf(ev.detail.actionSheet);
     if (index > -1) {
-      this.actionsheets.splice(index, 1);
+      this.actionSheets.splice(index, 1);
     }
   }
 
   @Listen('body:keyup.escape')
-  escapeKeyUp() {
-    const lastActionSheet = this.actionsheets[this.actionsheets.length - 1];
+  protected escapeKeyUp() {
+    const lastActionSheet = this.actionSheets[this.actionSheets.length - 1];
     if (lastActionSheet) {
       lastActionSheet.dismiss();
     }
