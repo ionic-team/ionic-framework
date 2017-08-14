@@ -26,6 +26,17 @@
 
       <ion-popover-controller></ion-popover-controller>
     </ion-content>
+
+    <ion-footer>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="end">
+          <ion-button onclick="presentPopover('profile-page', event)">
+            <ion-icon slot="icon-only" name="person"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Popover</ion-title>
+      </ion-toolbar>
+    </ion-footer>
   </ion-app>
   <script>
     function presentPopover(componentName, event) {
@@ -61,7 +72,8 @@
           composed: true,
           bubbles: true
         });
-        event.target.dispatchEvent(ev);
+        console.log('event', event);
+        // event.target.dispatchEvent(ev);
       }
     }
 
