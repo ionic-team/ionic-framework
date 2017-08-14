@@ -3,25 +3,35 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Ionic Slides Basic</title>
+  <title>Ionic Popover</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
 
 <body>
   <ion-app>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-button onclick="presentPopover('profile-page', event)">
+            <ion-icon slot="icon-only" name="person"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Popover</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-    <ion-content>
-      <ion-button onclick="presentPopover(event)">Show Popover</ion-button>
+    <ion-content padding>
+      <ion-button block onclick="presentPopover('profile-page', event)">Show Popover</ion-button>
 
       <ion-popover-controller></ion-popover-controller>
     </ion-content>
   </ion-app>
   <script>
-    function presentPopover(event) {
+    function presentPopover(componentName, event) {
       var popoverController = document.querySelector('ion-popover-controller');
       popoverController.create({
-        component: 'profile-page',
+        component: componentName,
         ev: event
       }).then(popover => {
         popover.present();
@@ -37,27 +47,21 @@
         });
 
         shadowRoot.innerHTML = `
-          <ion-header>
-            <ion-toolbar>
-              My Profile
-            </ion-toolbar>
-          </ion-header>
-          <ion-content padding>
-            <p>
-              <ion-button>Dismiss</ion-button>
-            </p>
+          <ion-content>
+            <ion-list>
+              <ion-list-header>Ionic</ion-list-header>
+              <ion-item onclick="connectedCallback(event)">Dismiss</ion-item>
+              <ion-item><ion-label>Item 0</ion-label></ion-item>
+            </ion-list>
           </ion-content>`;
       }
 
-      connectedCallback() {
-        var btn = this.shadowRoot.querySelector('ion-button');
-        btn.addEventListener('click', (uiEvent) => {
-          var ev = new CustomEvent('ionDismiss', {
-            composed: true,
-            bubbles: true
-          });
-          uiEvent.target.dispatchEvent(ev);
+      connectedCallback(event) {
+        var ev = new CustomEvent('ionDismiss', {
+          composed: true,
+          bubbles: true
         });
+        event.target.dispatchEvent(ev);
       }
     }
 

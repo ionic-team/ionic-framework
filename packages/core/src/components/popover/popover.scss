@@ -38,11 +38,11 @@ ion-popover {
 }
 
 .popover-content ion-content,
-.popover-content .scroll-content {
+.popover-content ion-scroll {
   contain: none;
 }
 
-.popover-content .scroll-content {
+.popover-content ion-scroll {
   position: relative;
 }
 

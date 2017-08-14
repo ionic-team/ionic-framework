@@ -51,6 +51,96 @@ export class Popover {
     });
   }
 
+
+  // TODO currently only positions iOS
+  private positionView(nativeEle: HTMLElement, ev: any, mode: string) {
+    // Default to material design mode unless mode is ios
+    const popoverMode = (mode === 'ios') ? mode : 'md';
+    const popoverProps = popoverViewProps[popoverMode];
+    const popoverPadding = popoverProps.bodyPadding;
+
+    // Declare the popover elements
+    let popoverWrapperEle = nativeEle.querySelector('.popover-wrapper') as HTMLElement;
+    let popoverContentEle = nativeEle.querySelector('.popover-content') as HTMLElement;
+    let popoverArrowEle = nativeEle.querySelector('.popover-arrow') as HTMLElement;
+
+    // Grab the default origin from the properties
+    let originY = 'top';
+    let originX = 'left';
+
+    // Popover content width and height
+    let popoverDim = popoverContentEle.getBoundingClientRect();
+    let popoverWidth = popoverDim.width;
+    let popoverHeight = popoverDim.height;
+
+    // Window body width and height
+    // TODO need to check if portrait/landscape?
+    let bodyWidth = window.screen.width;
+    let bodyHeight = window.screen.height;
+
+    // If ev was passed, use that for target element
+    let targetDim = ev && ev.target && ev.target.getBoundingClientRect();
+
+    let targetTop = (targetDim && 'top' in targetDim) ? targetDim.top : (bodyHeight / 2) - (popoverHeight / 2);
+    let targetLeft = (targetDim && 'left' in targetDim) ? targetDim.left : (bodyWidth / 2);
+    let targetWidth = targetDim && targetDim.width || 0;
+    let targetHeight = targetDim && targetDim.height || 0;
+
+    // The arrow that shows above the popover on iOS
+    let arrowDim = popoverArrowEle.getBoundingClientRect();
+    var arrowWidth = arrowDim.width;
+    var arrowHeight = arrowDim.height;
+
+    // If no ev was passed, hide the arrow
+    if (!targetDim) {
+      popoverArrowEle.style.display = 'none';
+    }
+
+    let arrowCSS = {
+      top: targetTop + targetHeight,
+      left: targetLeft + (targetWidth / 2) - (arrowWidth / 2)
+    };
+
+    let popoverCSS = {
+      top: targetTop + targetHeight + (arrowHeight - 1),
+      left: targetLeft + (targetWidth / 2) - (popoverWidth / 2)
+    };
+
+    // If the popover left is less than the padding it is off screen
+    // to the left so adjust it, else if the width of the popover
+    // exceeds the body width it is off screen to the right so adjust
+    if (popoverCSS.left < popoverPadding) {
+      popoverCSS.left = popoverPadding;
+    } else if (popoverWidth + popoverPadding + popoverCSS.left > bodyWidth) {
+      popoverCSS.left = bodyWidth - popoverWidth - popoverPadding;
+      originX = 'right';
+    }
+
+    // If the popover when popped down stretches past bottom of screen,
+    // make it pop up if there's room above
+    if (targetTop + targetHeight + popoverHeight > bodyHeight && targetTop - popoverHeight > 0) {
+      arrowCSS.top = targetTop - (arrowHeight + 1);
+      popoverCSS.top = targetTop - popoverHeight - (arrowHeight - 1);
+      nativeEle.className = nativeEle.className + ' popover-bottom';
+      originY = 'bottom';
+      // If there isn't room for it to pop up above the target cut it off
+    } else if (targetTop + targetHeight + popoverHeight > bodyHeight) {
+      popoverContentEle.style.bottom = popoverPadding + '%';
+    }
+
+    popoverArrowEle.style.top = arrowCSS.top + 'px';
+    popoverArrowEle.style.left = arrowCSS.left + 'px';
+
+    popoverContentEle.style.top = popoverCSS.top + 'px';
+    popoverContentEle.style.left = popoverCSS.left + 'px';
+
+    popoverContentEle.style.transformOrigin = originY + ' ' + originX;
+
+    // Since the transition starts before styling is done we
+    // want to wait for the styles to apply before showing the wrapper
+    popoverWrapperEle.style.opacity = '1';
+  }
+
   private _present(resolve: Function) {
     if (this.animation) {
       this.animation.destroy();
@@ -74,6 +164,7 @@ export class Popover {
       animation.onFinish((a: any) => {
         a.destroy();
         this.ionViewDidEnter();
+        this.positionView(this.el, this.ev, this.mode);
         resolve();
       }).play();
     });
@@ -145,20 +236,10 @@ export class Popover {
   render() {
     const ThisComponent = this.component;
 
-    let userCssClasses = 'popover-content';
-    if (this.cssClass) {
-      userCssClasses += ` ${this.cssClass}`;
-    }
-
     const dialogClasses = createThemedClasses(
       this.mode,
       this.color,
       'popover-wrapper'
-    );
-    const thisComponentClasses = createThemedClasses(
-      this.mode,
-      this.color,
-      userCssClasses
     );
 
     return [
@@ -172,7 +253,7 @@ export class Popover {
           <div class="popover-viewport">
             <ThisComponent
               props={this.componentProps}
-              class={thisComponentClasses}
+              class={this.cssClass}
             />
           </div>
         </div>
@@ -197,3 +278,17 @@ export interface PopoverEvent {
     popover: Popover;
   };
 }
+
+export const popoverViewProps: any = {
+  ios: {
+    bodyPadding: 2,
+    showArrow: true
+  },
+  md: {
+    bodyPadding: 12,
+    showArrow: false
+  }
+}
+
+// TODO FIX
+const POPOVER_MD_BODY_PADDING = 12;
