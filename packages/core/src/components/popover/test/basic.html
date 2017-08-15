@@ -23,6 +23,7 @@
 
     <ion-content padding>
       <ion-button block onclick="presentPopover('profile-page', event)">Show Popover</ion-button>
+      <ion-button block onclick="presentPopover('list-page', event)">Show Long List Popover</ion-button>
 
       <ion-popover-controller></ion-popover-controller>
     </ion-content>
@@ -52,32 +53,50 @@
     class ProfilePage extends HTMLElement {
       constructor() {
         super();
+      }
 
-        const shadowRoot = this.attachShadow({
-          mode: 'open'
-        });
-
-        shadowRoot.innerHTML = `
+      connectedCallback() {
+        this.innerHTML = `
           <ion-content>
             <ion-list>
               <ion-list-header>Ionic</ion-list-header>
-              <ion-item onclick="connectedCallback(event)">Dismiss</ion-item>
               <ion-item><ion-label>Item 0</ion-label></ion-item>
+              <ion-item><ion-label>Item 1</ion-label></ion-item>
+              <ion-item><ion-label>Item 2</ion-label></ion-item>
+              <ion-item><ion-label>Item 3</ion-label></ion-item>
             </ion-list>
-          </ion-content>`;
-      }
-
-      connectedCallback(event) {
-        var ev = new CustomEvent('ionDismiss', {
-          composed: true,
-          bubbles: true
-        });
-        console.log('event', event);
-        // event.target.dispatchEvent(ev);
+          </ion-content>
+        `;
       }
     }
 
     customElements.define('profile-page', ProfilePage);
+
+    class ListPage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        let items = '';
+        for (var i = 0; i < 30; i++) {
+          items += '<ion-item><ion-label>Item ' + i + '</ion-label></ion-item>';
+        }
+
+        console.log(items);
+
+        this.innerHTML = `
+          <ion-content>
+            <ion-list>
+              <ion-list-header>Ionic</ion-list-header>
+              ` + items + `
+            </ion-list>
+          </ion-content>
+        `;
+      }
+    }
+
+    customElements.define('list-page', ListPage);
   </script>
 </body>
 
