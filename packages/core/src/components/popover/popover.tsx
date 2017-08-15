@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
 import { AnimationBuilder, Animation, AnimationController, Config } from '../../index';
 
 import { createThemedClasses } from '../../utils/theme';
@@ -19,6 +19,8 @@ import iOSLeaveAnimation from './animations/ios.leave';
 })
 export class Popover {
   private animation: Animation;
+
+  @State() positioned: boolean = false;
 
   @Element() private el: HTMLElement;
 
@@ -52,12 +54,18 @@ export class Popover {
   }
 
 
-  private positionPopover(nativeEl: HTMLElement, ev: any, props: any) {
-    console.debug('Position popover', nativeEl, ev, props);
+  private positionPopover() {
+    const props = POPOVER_POSITION_PROPERTIES[this.mode];
+    console.debug('Position popover', this.el, this.ev, props);
 
     // Declare the popover elements
-    let contentEl = nativeEl.querySelector('.popover-content') as HTMLElement;
-    let arrowEl = nativeEl.querySelector('.popover-arrow') as HTMLElement;
+    let contentEl = this.el.querySelector('.popover-content') as HTMLElement;
+    let arrowEl = this.el.querySelector('.popover-arrow') as HTMLElement;
+
+    // If no event was passed, hide the arrow
+    if (!this.ev) {
+      arrowEl.style.display = 'none';
+    }
 
     // Set the default transform origin direction
     let origin = {
@@ -79,7 +87,7 @@ export class Popover {
     }
 
     // If ev was passed, use that for target element
-    let targetDim = ev && ev.target && ev.target.getBoundingClientRect();
+    let targetDim = this.ev && this.ev.target && (this.ev.target as HTMLElement).getBoundingClientRect();
 
     // The target is the object that dispatched the event that was passed
     let target = {
@@ -100,11 +108,6 @@ export class Popover {
     const arrow = {
       width: arrowDim.width,
       height: arrowDim.height
-    }
-
-    // If no ev was passed, hide the arrow
-    if (!targetDim) {
-      arrowEl.style.display = 'none';
     }
 
     let arrowCSS = {
@@ -135,7 +138,7 @@ export class Popover {
     // If the popover when popped down stretches past bottom of screen,
     // make it pop up if there's room above
     if (this.showFromBottom(target, popover, body)) {
-      nativeEl.className = nativeEl.className + ' popover-bottom';
+      this.el.className = this.el.className + ' popover-bottom';
       origin.y = 'bottom';
 
       popoverCSS.top = target.top - popover.height;
@@ -160,7 +163,7 @@ export class Popover {
 
     // Since the transition starts before styling is done we
     // want to wait for the styles to apply before showing the wrapper
-    this.displayWrapper();
+    this.positioned = true;
   }
 
   private showFromBottom(target: any, popover: any, body: any): boolean {
@@ -169,11 +172,6 @@ export class Popover {
 
   private exceedsViewport(target: any, popover: any, body: any): boolean {
     return target.top + target.height + popover.height > body.height;
-  }
-
-  private displayWrapper() {
-    let popoverWrapperEle = this.el.querySelector('.popover-wrapper') as HTMLElement;
-    popoverWrapperEle.style.opacity = '1';
   }
 
   private _present(resolve: Function) {
@@ -199,7 +197,7 @@ export class Popover {
       animation.onFinish((a: any) => {
         a.destroy();
         this.ionViewDidEnter();
-        this.positionPopover(this.el, this.ev, POPOVER_POSITION_PROPERTIES[this.mode]);
+        this.positionPopover();
         resolve();
       }).play();
     });
@@ -271,19 +269,17 @@ export class Popover {
   render() {
     const ThisComponent = this.component;
 
-    const dialogClasses = createThemedClasses(
-      this.mode,
-      this.color,
-      'popover-wrapper'
-    );
+    const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
+
+    const wrapperStyle = this.positioned ? { 'opacity' : '1' } : {};
 
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
         class="popover-backdrop"
       />,
-      <div class={dialogClasses}>
-        <div class="popover-arrow" />
+      <div class={wrapperClasses} style={wrapperStyle}>
+        <div class="popover-arrow"/>
         <div class="popover-content">
           <div class="popover-viewport">
             <ThisComponent

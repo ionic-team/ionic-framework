@@ -24,6 +24,7 @@
     <ion-content padding>
       <ion-button block onclick="presentPopover('profile-page', event)">Show Popover</ion-button>
       <ion-button block onclick="presentPopover('list-page', event)">Show Long List Popover</ion-button>
+      <ion-button block onclick="presentPopover('profile-page')">No Event Popover</ion-button>
 
       <ion-popover-controller></ion-popover-controller>
     </ion-content>
@@ -82,8 +83,6 @@
         for (var i = 0; i < 30; i++) {
           items += '<ion-item><ion-label>Item ' + i + '</ion-label></ion-item>';
         }
-
-        console.log(items);
 
         this.innerHTML = `
           <ion-content>
