@@ -3,7 +3,7 @@ import { Modal, ModalEvent, ModalOptions } from '../../index';
 
 
 @Component({
-  tag: 'ion-modal-ctrl'
+  tag: 'ion-modal-controller'
 })
 export class ModalController {
   private ids = 0;

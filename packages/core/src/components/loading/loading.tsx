@@ -32,7 +32,7 @@ export class Loading {
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;
 
-  @Prop({ connect: 'ion-animation' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
   @Prop() cssClass: string;
   @Prop() content: string;

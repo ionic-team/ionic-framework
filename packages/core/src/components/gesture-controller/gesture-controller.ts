@@ -2,7 +2,7 @@ import { Component } from '@stencil/core';
 
 
 @Component({
-  tag: 'ion-gesture-ctrl'
+  tag: 'ion-gesture-controller'
 })
 export class GestureController {
   private id: number = 0;
