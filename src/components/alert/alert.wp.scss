@@ -430,7 +430,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
     @include padding($alert-wp-input-padding-top, $alert-wp-input-padding-end, $alert-wp-input-padding-bottom, $alert-wp-input-padding-start);
   }
 
-  &.ng-invalid {
+  &.ng-dirty.ng-invalid {
     border-color: color($colors, danger);
   }
 }
@@ -438,7 +438,7 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 .alert-wp .alert-input:focus {
   border-color: $alert-wp-input-border-color-focused;
 
-  &.ng-invalid {
+  &.ng-dirty.ng-invalid {
     border-color: color($colors, danger);
   }
 }

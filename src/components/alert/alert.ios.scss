@@ -382,7 +382,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
     @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
   }
 
-  &.ng-invalid {
+  &.ng-dirty.ng-invalid {
     background-color: lighten(color($colors, danger), 55%);
   }
 }
