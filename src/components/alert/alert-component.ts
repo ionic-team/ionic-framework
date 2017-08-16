@@ -57,8 +57,10 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
             <div class="alert-input-group" *ngIf="inputType">
               <div *ngFor="let i of d.inputs" class="alert-input-wrapper">
                 <input [placeholder]="i.placeholder" [formControlName]="i.name" [type]="i.type" [attr.id]="i.id" class="alert-input">
-                <ng-container *ngFor="let error of i.errors">
-                  <p *ngIf="formGroup.controls[i.name].hasError(error.error)" class="alert-error-msg">{{error.message}}</p>
+                <ng-container *ngIf="formGroup.controls[i.name].dirty">
+                  <ng-container *ngFor="let error of i.errors">
+                    <p *ngIf="formGroup.controls[i.name].hasError(error.error)" class="alert-error-msg">{{error.message}}</p>
+                  </ng-container>
                 </ng-container>
               </div>
             </div>
