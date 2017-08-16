@@ -1,5 +1,4 @@
-import { AnimationController } from './components/animation-controller/animation-controller';
-import { Animation, AnimationBuilder } from './components/animation-controller/animation-interface';
+import { Animation, AnimationBuilder, AnimationController } from './components/animation-controller/animation-interface';
 import { ActionSheet, ActionSheetButton, ActionSheetEvent, ActionSheetOptions } from './components/action-sheet/action-sheet';
 import { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
 import { Backdrop } from './components/backdrop/backdrop'

@@ -1,3 +1,6 @@
+export interface AnimationController {
+  create(animationBuilder?: AnimationBuilder, baseElm?: any): Promise<Animation>;
+}
 
 export interface Animation {
   new (): Animation;

@@ -1,12 +1,12 @@
 import { Component, Method } from '@stencil/core';
-import { Animation, AnimationBuilder } from './animation-interface';
+import { Animation, AnimationBuilder, AnimationController } from './animation-interface';
 import { Animator } from './animator';
 
 
 @Component({
   tag: 'ion-animation-controller'
 })
-export class AnimationController {
+export class AnimationControllerImpl implements AnimationController {
 
   @Method()
   create(animationBuilder?: AnimationBuilder, baseElm?: any): Promise<Animation> {

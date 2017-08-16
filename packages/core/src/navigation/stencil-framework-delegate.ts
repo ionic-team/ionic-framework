@@ -1,5 +1,4 @@
-import { NavController } from './nav-controller';
-import { ViewController } from './view-controller';
+import { NavController, ViewController } from './nav-interfaces';
 
 export function attachViewToDom(nav: NavController, enteringView: ViewController): Promise<any> {
   return new Promise((resolve) => {

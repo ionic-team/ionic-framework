@@ -1,11 +1,7 @@
 import { Component, Element, Method, Prop } from '@stencil/core';
-import { Transition } from '../../navigation/transitions/transition';
-import { NavController } from '../../navigation/nav-controller';
+import { FrameworkDelegate, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
 import { getNextNavId, getViews, pop, push, setRoot } from '../../navigation/nav-controller-functions';
-import { NavOptions } from '../../navigation/nav-utils';
-import { ViewController } from '../../navigation/view-controller';
 
-import { FrameworkDelegate } from '../../navigation/framework-delegate';
 import { delegate as defaultStencilDelegate } from '../../navigation/stencil-framework-delegate';
 
 @Component({
@@ -21,7 +17,7 @@ export class Nav implements NavController {
   transitionId?: number;
   isViewInitialized?: boolean;
   isPortal: boolean;
-  swipeToGoBackTransition: Transition;
+  swipeToGoBackTransition: any; // TODO Transition
   childNavs?: NavController[];
 
   @Prop() root: any;

@@ -1,6 +1,13 @@
-import { AnimationOptions } from '../animations/interfaces';
-import { FrameworkDelegate } from './framework-delegate';
-import { NavController } from './nav-controller';
+import { AnimationOptions } from '../components/animation-controller/animation-interface';
+import {
+  ComponentDataPair,
+  FrameworkDelegate,
+  NavController,
+  NavOptions,
+  NavResult,
+  TransitionInstruction,
+  ViewController
+} from './nav-interfaces';
 
 import {
   DIRECTION_BACK,
@@ -8,25 +15,16 @@ import {
   STATE_ATTACHED,
   STATE_DESTROYED,
   STATE_INITIALIZED,
-  ComponentDataPair,
-  NavOptions,
-  NavResult,
-  TransitionInstruction,
   isViewController,
   setZIndex,
   toggleHidden
 } from './nav-utils';
 
 
-import { ViewController } from './view-controller';
 import { ViewControllerImpl } from './view-controller-impl';
 
 import { assert, isDef, isNumber } from '../utils/helpers';
 import { NAV_ID_START, VIEW_ID_START } from '../utils/ids';
-
-import { DanTransition } from './transitions/dan-transition';
-import { Transition } from './transitions/transition';
-import { destroy, getRootTransitionId, nextId } from './transitions/transition-controller';
 
 const queueMap = new Map<number, TransitionInstruction[]>();
 
@@ -302,7 +300,8 @@ export function loadViewAndTransition(nav: NavController, enteringView: ViewCont
     });
   }
 
-  nav.transitionId = getRootTransitionId(nav) || nextId();
+  // TODO - transitionId
+  nav.transitionId = 1; //getRootTransitionId(nav) || nextId();
 
   // create the transition options
   const animationOpts: AnimationOptions = {
@@ -314,7 +313,10 @@ export function loadViewAndTransition(nav: NavController, enteringView: ViewCont
     ev: ti.opts.event,
   };
 
-  const transition = new DanTransition(enteringView, leavingView, animationOpts);
+  // TODO - need transition here
+  const transition: any = {
+    opts: animationOpts
+  };// new DanTransition(enteringView, leavingView, animationOpts);
 
   //const transition = getTransition(stateData.transitionId, enteringView, animationOpts);
 
@@ -342,11 +344,13 @@ export function loadViewAndTransition(nav: NavController, enteringView: ViewCont
     }
     return promiseToReturn;
   }).then(() => {
-    return executeAsyncTransition(nav, transition, enteringView, leavingView, ti.opts);
+    // TODO - get the shouldAnimate param from the config
+    return executeAsyncTransition(nav, transition, enteringView, leavingView, ti.opts, false);
   });
 }
 
-export function executeAsyncTransition(nav: NavController, transition: Transition, enteringView: ViewController, leavingView: ViewController, opts: NavOptions): Promise<NavResult> {
+// TODO - transition type
+export function executeAsyncTransition(nav: NavController, transition: any, enteringView: ViewController, leavingView: ViewController, opts: NavOptions, configShouldAnimate: boolean): Promise<NavResult> {
   assert(nav.transitioning, 'must be transitioning');
   nav.transitionId = null;
   setZIndex(nav.isPortal, enteringView, leavingView, opts.direction);
@@ -364,7 +368,7 @@ export function executeAsyncTransition(nav: NavController, transition: Transitio
   transition.init()
 
   const shouldNotAnimate = (!nav.isViewInitialized && nav.views.length === 1) && !nav.isPortal;
-  if (Ionic.config.get('animate') === false || shouldNotAnimate) {
+  if (configShouldAnimate === false || shouldNotAnimate) {
     opts.animate = false;
   }
 
@@ -412,7 +416,8 @@ export function executeAsyncTransition(nav: NavController, transition: Transitio
   });
 }
 
-export function transitionFinish(nav: NavController, transition: Transition, opts: NavOptions): NavResult {
+// TODO - transition type
+export function transitionFinish(nav: NavController, transition: any, opts: NavOptions): NavResult {
   if (transition.hasCompleted) {
     transition.enteringView && transition.enteringView.didEnter();
     transition.leavingView && transition.leavingView.didLeave();
@@ -423,7 +428,9 @@ export function transitionFinish(nav: NavController, transition: Transition, opt
   }
 
   if (transition.isRoot())  {
-    destroy(transition.transitionId);
+
+    // TODO - destroy the transition object
+    //destroy(transition.transitionId);
 
     // TODO - enable app
 
