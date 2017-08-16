@@ -554,22 +554,18 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
     // batch all of lifecycles together
     if (destroyQueue && destroyQueue.length) {
       // TODO, figure out how the zone stuff should work in angular
-      const lifeCyclePromises: Promise<any>[] = [];
       for (let i = 0; i < destroyQueue.length; i++) {
         const view = destroyQueue[i];
-        lifeCyclePromises.push(view.willLeave(true));
-        lifeCyclePromises.push(view.didLeave());
-        lifeCyclePromises.push(view.willUnload());
+        view.willLeave(true);
+        view.didLeave();
+        view.willUnload();
       }
 
-      // once all lifecycle events has been delivered, we can safely detroy the views
-      return Promise.all(lifeCyclePromises).then(() => {
-        const destroyQueuePromises: Promise<any>[] = [];
-        for (const viewController of destroyQueue) {
-          destroyQueuePromises.push(destroyView(ti.nav, viewController));
-        }
-        return Promise.all(destroyQueuePromises);
-      });
+      const destroyQueuePromises: Promise<any>[] = [];
+      for (const viewController of destroyQueue) {
+        destroyQueuePromises.push(destroyView(ti.nav, viewController));
+      }
+      return Promise.all(destroyQueuePromises);
     }
     return null;
   }).then(() => {

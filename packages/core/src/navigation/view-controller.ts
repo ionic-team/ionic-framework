@@ -11,11 +11,18 @@ export interface ViewController {
   nav: NavController;
   frameworkDelegate: FrameworkDelegate;
   dismissProxy?: any;
-  willLeave(unload: boolean): Promise<any>;
-  willEnter(): Promise<any>;
-  didLeave(): Promise<any>;
-  didEnter(): Promise<any>;
-  willUnload(): Promise<any>;
+
+  // life cycle events
+  willLeave(unload: boolean): void;
+  didLeave(): void;
+  willEnter(): void;
+  didEnter(): void;
+  willLoad(): void;
+  didLoad(): void;
+  willUnload():void;
+
   destroy(): Promise<any>;
   getTransitionName(direction: string): string;
+  onDidDismiss: (data: any, role: string) => void;
+  onWillDismiss: (data: any, role: string) => void;
 }
