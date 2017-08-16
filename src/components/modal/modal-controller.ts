@@ -43,12 +43,13 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *  }
  *
  *  presentProfileModal() {
- *    let profileModal = this.modalCtrl.create(Profile, { userId: 8675309 });
+ *    let profileModal = this.modalCtrl.create('Profile', { userId: 8675309 });
  *    profileModal.present();
  *  }
  *
  * }
- *
+ * 
+ * @IonicPage()
  * @Component(...)
  * class Profile {
  *
@@ -84,12 +85,12 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *  }
  *
  *  presentContactModal() {
- *    let contactModal = this.modalCtrl.create(ContactUs);
+ *    let contactModal = this.modalCtrl.create('ContactUs');
  *    contactModal.present();
  *  }
  *
  *  presentProfileModal() {
- *    let profileModal = this.modalCtrl.create(Profile, { userId: 8675309 });
+ *    let profileModal = this.modalCtrl.create('Profile', { userId: 8675309 });
  *    profileModal.onDidDismiss(data => {
  *      console.log(data);
  *    });
@@ -98,6 +99,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *
  * }
  *
+ * @IonicPage
  * @Component(...)
  * class Profile {
  *
