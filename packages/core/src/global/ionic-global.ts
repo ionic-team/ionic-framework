@@ -15,4 +15,4 @@ Context.config = createConfigController(
 
 // get the mode via config settings and set it to
 // both Ionic and the Core global
-Context.mode = Context.config.get('mode', 'md');
+Context.mode = Context.mode || Context.config.get('mode', 'md');
