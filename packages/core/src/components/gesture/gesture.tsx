@@ -1,7 +1,6 @@
 import { applyStyles, getElementReference, pointerCoordX, pointerCoordY } from '../../utils/helpers';
-import { BlockerDelegate } from './gesture-controller';
+import { BlockerDelegate, GestureController, GestureDelegate, BLOCK_ALL } from '../gesture-controller/gesture-controller';
 import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
-import { GestureController, GestureDelegate, BLOCK_ALL } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
 
 
@@ -10,9 +9,9 @@ import { PanRecognizer } from './recognizers';
 })
 export class Gesture {
   @Element() private el: HTMLElement;
-  private ctrl: GestureController;
   private detail: GestureDetail = {};
   private positions: number[] = [];
+  private ctrl: GestureController;
   private gesture: GestureDelegate;
   private lastTouch = 0;
   private pan: PanRecognizer;
@@ -49,8 +48,10 @@ export class Gesture {
 
 
   ionViewDidLoad() {
-    this.ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
-
+    // in this case, we already know the GestureController and Gesture are already
+    // apart of the same bundle, so it's safe to load it this way
+    // only create one instance of GestureController, and reuse the same one later
+    this.ctrl = Context.gesture = Context.gesture || new GestureController;
     this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
 
     const types = this.type.replace(/\s/g, '').toLowerCase().split(',');
@@ -62,10 +63,10 @@ export class Gesture {
     this.hasPress = (types.indexOf('press') > -1);
 
     if (this.pan || this.hasPress) {
-      Core.enableListener(this, 'touchstart', true, this.attachTo);
-      Core.enableListener(this, 'mousedown', true, this.attachTo);
+      Context.enableListener(this, 'touchstart', true, this.attachTo);
+      Context.enableListener(this, 'mousedown', true, this.attachTo);
 
-      Core.dom.write(() => {
+      Context.dom.write(() => {
         applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
       });
     }
@@ -183,7 +184,7 @@ export class Gesture {
         if (!this.isMoveQueued) {
           this.isMoveQueued = true;
 
-          Core.dom.write(() => {
+          Context.dom.write(() => {
             this.isMoveQueued = false;
             detail.type = 'pan';
 
@@ -353,17 +354,17 @@ export class Gesture {
 
   private enableMouse(shouldEnable: boolean) {
     if (this.requiresMove) {
-      Core.enableListener(this, 'document:mousemove', shouldEnable);
+      Context.enableListener(this, 'document:mousemove', shouldEnable);
     }
-    Core.enableListener(this, 'document:mouseup', shouldEnable);
+    Context.enableListener(this, 'document:mouseup', shouldEnable);
   }
 
 
   private enableTouch(shouldEnable: boolean) {
     if (this.requiresMove) {
-      Core.enableListener(this, 'touchmove', shouldEnable);
+      Context.enableListener(this, 'touchmove', shouldEnable);
     }
-    Core.enableListener(this, 'touchend', shouldEnable);
+    Context.enableListener(this, 'touchend', shouldEnable);
   }
 
 

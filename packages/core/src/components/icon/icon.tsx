@@ -19,7 +19,7 @@ export class Icon {
   /**
    * @input {string} Specifies the label to use for accessibility. Defaults to the icon name.
    */
-  @State() ariaLabel: string = '';
+  @Prop() ariaLabel: string = '';
 
   /**
    * @input {string} Specifies which icon to use. The appropriate icon will be used based on the mode.
@@ -38,20 +38,13 @@ export class Icon {
   @Prop() md: string = '';
 
 
-  @State() svgContent: string = null;
+  @Prop({ context: 'isServer'}) private isServer: boolean;
 
 
-  getSvgUrl() {
-    const iconName = this.iconName;
-    if (iconName !== null) {
-      return `${publicPath}svg/${iconName}.svg`;
-    }
-
-    return null;
-  }
+  @State() private svgContent: string = null;
 
 
-  get iconName() {
+  private get iconName() {
     // if no name was passed set iconName to null
     if (!this.name) {
       return null;
@@ -117,73 +110,18 @@ export class Icon {
   }
 
 
-  static loadSvgContent(svgUrl: string, callback: {(loadedSvgContent: string): void}) {
-    // static since all IonIcons use this same function and pointing at global/shared data
-    // passed in callback will have instance info
-
-    // add to the list of callbacks to fiure when this url is finished loading
-    IonIcon.loadCallbacks[svgUrl] = IonIcon.loadCallbacks[svgUrl] || [];
-    IonIcon.loadCallbacks[svgUrl].push(callback);
-
-    if (IonIcon.activeRequests[svgUrl]) {
-      // already requesting this url, don't bother again kicking off another
-      return;
+  render() {
+    if (this.isServer) {
+      return <div class="icon-inner">{/* ssr */}</div>;
     }
 
-    // add this url to our list of active requests
-    IonIcon.activeRequests[svgUrl] = true;
-
-    // kick off the request for the external svg file
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', function() {
-      // awesome, we've finished loading the svg file
-
-      // remove this url from the active requests
-      delete IonIcon.activeRequests[svgUrl];
-
-      // this response is the content of the svg file we're looking for
-      let svgContent = this.responseText;
-
-      if (this.status >= 400) {
-        // umm, not awesome, something is up
-        console.error('Icon could not be loaded:', svgUrl);
-        svgContent = `<!--error loading svg-->`;
-      }
-
-      // cache the svg content in the global IonIcon constant
-      IonIcon.svgContents[svgUrl] = svgContent;
-
-      // find any callbacks waiting on this url
-      const svgLoadCallbacks = IonIcon.loadCallbacks[svgUrl];
-      if (svgLoadCallbacks) {
-        // loop through all the callbacks that are waiting on the svg content
-        for (var i = 0; i < svgLoadCallbacks.length; i++) {
-          // fire off this callback which was provided by an instance
-          svgLoadCallbacks[i](svgContent);
-        }
-        delete IonIcon.loadCallbacks[svgUrl];
-      }
-    });
-
-    xhr.addEventListener('error', () => {
-      // umm, idk
-      console.error('Icon could not be loaded:', svgUrl);
-    });
-
-    // let's do this!
-    xhr.open('GET', svgUrl, true);
-    xhr.send();
-  }
-
-
-  render() {
-    const svgUrl = this.getSvgUrl();
+    const svgUrl = getSvgUrl(this.iconName);
     if (!svgUrl) {
       // we don't have good data
       return <div class="icon-inner">{/* invalid svg */}</div>;
     }
 
-    const svgContent = IonIcon.svgContents[svgUrl];
+    const svgContent = svgContents[svgUrl];
     if (svgContent === this.svgContent) {
       // we've already loaded up this svg at one point
       // and the svg content we've loaded and assigned checks out
@@ -193,7 +131,7 @@ export class Icon {
 
     // haven't loaded this svg yet
     // start the request
-    Icon.loadSvgContent(svgUrl, loadedSvgContent => {
+    loadSvgContent(svgUrl, loadedSvgContent => {
       // we're finished loading the svg content!
       // set to this.svgContent so we do another render
       this.svgContent = loadedSvgContent;
@@ -206,15 +144,73 @@ export class Icon {
 }
 
 
-const IonIcon: GlobalIonIcon = {
-  activeRequests: {},
-  loadCallbacks: [] as any,
-  svgContents: {}
-};
-
-
-interface GlobalIonIcon {
-  activeRequests: {[url: string]: boolean};
-  loadCallbacks: {[url: string]: {(loadedSvgContent: string): void}[]};
-  svgContents: {[url: string]: string};
+function getSvgUrl(iconName: string) {
+  if (iconName !== null) {
+    return `${publicPath}svg/${iconName}.svg`;
+  }
+  return null;
 }
+
+
+function loadSvgContent(svgUrl: string, callback: {(loadedSvgContent: string): void}) {
+  // static since all IonIcons use this same function and pointing at global/shared data
+  // passed in callback will have instance info
+
+  // add to the list of callbacks to fiure when this url is finished loading
+  loadCallbacks[svgUrl] = loadCallbacks[svgUrl] || [];
+  loadCallbacks[svgUrl].push(callback);
+
+  if (activeRequests[svgUrl]) {
+    // already requesting this url, don't bother again kicking off another
+    return;
+  }
+
+  // add this url to our list of active requests
+  activeRequests[svgUrl] = true;
+
+  // kick off the request for the external svg file
+  const xhr = new XMLHttpRequest();
+  xhr.addEventListener('load', function() {
+    // awesome, we've finished loading the svg file
+
+    // remove this url from the active requests
+    delete activeRequests[svgUrl];
+
+    // this response is the content of the svg file we're looking for
+    let svgContent = this.responseText;
+
+    if (this.status >= 400) {
+      // umm, not awesome, something is up
+      console.error('Icon could not be loaded:', svgUrl);
+      svgContent = `<!--error loading svg-->`;
+    }
+
+    // cache the svg content in the global IonIcon constant
+    svgContents[svgUrl] = svgContent;
+
+    // find any callbacks waiting on this url
+    const svgLoadCallbacks = loadCallbacks[svgUrl];
+    if (svgLoadCallbacks) {
+      // loop through all the callbacks that are waiting on the svg content
+      svgLoadCallbacks.forEach(cb => {
+        // fire off this callback which was provided by an instance
+        cb(svgContent);
+      });
+      delete loadCallbacks[svgUrl];
+    }
+  });
+
+  xhr.addEventListener('error', () => {
+    // umm, idk
+    console.error('Icon could not be loaded:', svgUrl);
+  });
+
+  // let's do this!
+  xhr.open('GET', svgUrl, true);
+  xhr.send();
+}
+
+
+const activeRequests: {[url: string]: boolean} = {};
+const loadCallbacks: {[url: string]: {(loadedSvgContent: string): void}[]} = [] as any;
+const svgContents: {[url: string]: string} = {};

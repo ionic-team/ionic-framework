@@ -1,5 +1,5 @@
 import { Component, Element, CssClassMap, Method, Prop, State } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 
 
 /**
@@ -112,18 +112,6 @@ export class FabButton {
 
   /**
    * @hidden
-   * Get the element classes to add to the child element
-   */
-  getElementClassList() {
-    let classList = [].concat(
-      this.el.className.length ? this.el.className.split(' ') : []
-    );
-
-    return classList;
-  }
-
-  /**
-   * @hidden
    * Get the classes for fab buttons in lists
    */
   getFabListClassList() {
@@ -164,10 +152,10 @@ export class FabButton {
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab');
+    const hostClasses = getElementClassObject(this.el.classList);
 
-    var fabClasses: CssClassMap = []
+    const elementClasses: CssClassMap = []
       .concat(
-        this.getElementClassList(),
         this.getFabListClassList(),
         this.getFabActiveClassList(),
         this.getFabShowClassList()
@@ -179,7 +167,11 @@ export class FabButton {
 
     const TagType = this.href ? 'a' : 'button';
 
-    fabClasses = Object.assign(fabClasses, themedClasses);
+    const fabClasses = {
+      ...themedClasses,
+      ...hostClasses,
+      ...elementClasses
+    }
 
     return (
       <TagType class={fabClasses} onClick={this.clickedFab.bind(this)} disabled={this.disabled}>

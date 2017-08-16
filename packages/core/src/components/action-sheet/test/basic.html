@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Action Sheet Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Action Sheet</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      <ion-action-sheet-controller></ion-action-sheet-controller>
+
+      <ion-button block onclick="presentActionSheet1()">Present Action Sheet 1</ion-button>
+      <ion-button block onclick="presentActionSheet2()">Present Action Sheet 2</ion-button>
+      <ion-button block onclick="presentActionSheet3()">Present Action Sheet 3</ion-button>
+    </ion-content>
+  </ion-app>
+
+  <script>
+
+    function presentActionSheet1() {
+      var mode = Ionic.mode;
+
+      var actionSheetController = document.querySelector('ion-action-sheet-controller');
+      actionSheetController.create({
+        title: "Albums",
+        buttons: [{
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'arrow-dropright-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          icon: mode !== 'ios' ? 'heart' : null,
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          icon: mode !== 'ios' ? 'close' : null,
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      .then(actionSheet => {
+        actionSheet.present()
+      });
+    }
+
+    function presentActionSheet2() {
+      var actionSheetController = document.querySelector('ion-action-sheet-controller');
+      actionSheetController.create({
+        buttons: [{
+          text: 'Archive',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        }, {
+          text: 'Destructive',
+          role: 'destructive',
+          handler: () => {
+            console.log('Destructive clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      .then(actionSheet => {
+        actionSheet.present()
+      });
+    }
+
+    function presentActionSheet3() {
+      var actionSheetController = document.querySelector('ion-action-sheet-controller');
+      actionSheetController.create({
+        buttons: [{
+          text: 'Open Alert',
+          handler: () => {
+            console.log('Open Alert clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      .then(actionSheet => {
+        actionSheet.present()
+      });
+    }
+  </script>
+</body>
+
+</html>

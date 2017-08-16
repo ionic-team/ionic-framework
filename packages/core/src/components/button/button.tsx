@@ -1,5 +1,7 @@
 import { Component, Element, Prop, CssClassMap } from '@stencil/core';
 
+import { getElementClassObject } from '../../utils/theme';
+
 /**
   * @name Button
   * @module ionic
@@ -161,110 +163,10 @@ export class Button {
    */
   @Prop() color: string;
 
-  /**
-   * @hidden
-   * Get the classes based on the button type
-   * e.g. alert-button, action-sheet-button
-   */
-  private getButtonClassList(buttonType: string, mode: string): string[] {
-    if (!buttonType) {
-      return [];
-    }
-    return [
-      buttonType,
-      `${buttonType}-${mode}`
-    ];
-  }
-
-
-  /**
-   * @hidden
-   * Get the classes based on the type
-   * e.g. block, full, round, large
-   */
-  private getClassList(buttonType: string, type: string, mode: string): string[] {
-    if (!type) {
-      return [];
-    }
-    type = type.toLocaleLowerCase();
-    return [
-      `${buttonType}-${type}`,
-      `${buttonType}-${type}-${mode}`
-    ];
-  }
-
-  /**
-   * @hidden
-   * Get the classes for the color
-   */
-  private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
-    style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
-    let className =
-      buttonType +
-      ((style && style !== 'default') ?
-        '-' + style.toLowerCase() :
-        '');
-
-    // special case for a default bar button
-    // if the bar button is default it should get the style
-    // but if a color is passed the style shouldn't be added
-    if (buttonType === 'bar-button' && style === 'default') {
-      className = buttonType;
-      if (!color) {
-        className += '-' + style.toLowerCase();
-      }
-    }
-
-    return [`${className}-${mode}`].concat(
-        style !== 'default' ? `${className}` : [],
-        color ? `${className}-${mode}-${color}` : []
-      );
-  }
-
-  /**
-   * @hidden
-   * Get the classes for the style
-   * e.g. outline, clear, solid
-   */
-  private getStyleClassList(buttonType: string): string[] {
-    let classList = [].concat(
-      this.outline ? this.getColorClassList(this.color, buttonType, 'outline', this.mode) : [],
-      this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : [],
-      this.solid ? this.getColorClassList(this.color, buttonType, 'solid', this.mode) : []
-    );
-
-    if (classList.length === 0) {
-      classList = this.getColorClassList(this.color, buttonType, 'default', this.mode);
-    }
-
-    return classList;
-  }
-
-  /**
-   * @hidden
-   * Get the item classes for the button
-   */
-  private getItemClassList(size: string) {
-    let classList = [].concat(
-      this.itemButton && !size ? 'item-button' : []
-    );
-
-    return classList;
-  }
-
-  /**
-   * @hidden
-   * Get the element classes to add to the child element
-   */
-  private getElementClassList() {
-    let classList = [].concat(
-      this.el.className.length ? this.el.className.split(' ') : []
-    );
-
-    return classList;
-  }
-
   render() {
+    const buttonType = this.buttonType;
+    const mode = this.mode;
+
     const size =
       (this.large ? 'large' : null) ||
       (this.small ? 'small' : null) ||
@@ -278,16 +180,17 @@ export class Button {
 
     const decorator = (this.strong ? 'strong' : null);
 
-    const buttonClasses: CssClassMap = []
+    const hostClasses = getElementClassObject(this.el.classList);
+
+    const elementClasses: CssClassMap = []
       .concat(
-        this.getButtonClassList(this.buttonType, this.mode),
-        this.getClassList(this.buttonType, shape, this.mode),
-        this.getClassList(this.buttonType, display, this.mode),
-        this.getClassList(this.buttonType, size, this.mode),
-        this.getClassList(this.buttonType, decorator, this.mode),
-        this.getStyleClassList(this.buttonType),
-        this.getItemClassList(size),
-        this.getElementClassList()
+        getButtonClassList(buttonType, mode),
+        getClassList(buttonType, shape, mode),
+        getClassList(buttonType, display, mode),
+        getClassList(buttonType, size, mode),
+        getClassList(buttonType, decorator, mode),
+        getStyleClassList(mode, this.color, buttonType, this.outline, this.clear, this.solid),
+        getItemClassList(this.itemButton, size)
       )
       .reduce((prevValue, cssClass) => {
         prevValue[cssClass] = true;
@@ -295,6 +198,11 @@ export class Button {
       }, {});
 
     const TagType = this.href ? 'a' : 'button';
+
+    const buttonClasses = {
+      ...hostClasses,
+      ...elementClasses
+    }
 
     return (
       <TagType class={buttonClasses} disabled={this.disabled}>
@@ -308,4 +216,87 @@ export class Button {
       </TagType>
     );
   }
+}
+
+/**
+ * Get the classes based on the button type
+ * e.g. alert-button, action-sheet-button
+ */
+function getButtonClassList(buttonType: string, mode: string): string[] {
+  if (!buttonType) {
+    return [];
+  }
+  return [
+    buttonType,
+    `${buttonType}-${mode}`
+  ];
+}
+
+
+/**
+ * Get the classes based on the type
+ * e.g. block, full, round, large
+ */
+function getClassList(buttonType: string, type: string, mode: string): string[] {
+  if (!type) {
+    return [];
+  }
+  type = type.toLocaleLowerCase();
+  return [
+    `${buttonType}-${type}`,
+    `${buttonType}-${type}-${mode}`
+  ];
+}
+
+/**
+ * Get the classes for the color
+ */
+function getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
+  style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
+
+  let className =
+    buttonType +
+    ((style && style !== 'default') ?
+      '-' + style.toLowerCase() :
+      '');
+
+  // special case for a default bar button
+  // if the bar button is default it should get the style
+  // but if a color is passed the style shouldn't be added
+  if (buttonType === 'bar-button' && style === 'default') {
+    className = buttonType;
+    if (!color) {
+      className += '-' + style.toLowerCase();
+    }
+  }
+
+  return [`${className}-${mode}`].concat(
+      style !== 'default' ? `${className}` : [],
+      color ? `${className}-${mode}-${color}` : []
+    );
+}
+
+/**
+ * Get the classes for the style
+ * e.g. outline, clear, solid
+ */
+function getStyleClassList(mode: string, color: string, buttonType: string, outline: boolean, clear: boolean, solid: boolean): string[] {
+  let classList = [].concat(
+    outline ? getColorClassList(color, buttonType, 'outline', mode) : [],
+    clear ? getColorClassList(color, buttonType, 'clear', mode) : [],
+    solid ? getColorClassList(color, buttonType, 'solid', mode) : []
+  );
+
+  if (classList.length === 0) {
+    classList = getColorClassList(color, buttonType, 'default', mode);
+  }
+
+  return classList;
+}
+
+/**
+ * Get the item classes for the button
+ */
+function getItemClassList(itemButton: boolean, size: string) {
+  return itemButton && !size ? ['item-button'] : [];
 }

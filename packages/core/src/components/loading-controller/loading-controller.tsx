@@ -1,25 +1,17 @@
-import { Component, Listen } from '@stencil/core';
-import { LoadingEvent, LoadingOptions, Loading, IonicControllerApi } from '../../index';
+import { Component, Listen, Method } from '@stencil/core';
+import { Loading, LoadingEvent, LoadingOptions } from '../../index';
 
 
 @Component({
-  tag: 'ion-loading-controller',
-  styleUrl: 'loading-controller.scss'
+  tag: 'ion-loading-controller'
 })
-export class LoadingController implements IonicControllerApi {
+export class LoadingController {
   private ids = 0;
   private loadingResolves: {[loadingId: string]: Function} = {};
   private loadings: Loading[] = [];
-  private appRoot: Element;
 
-
-  ionViewDidLoad() {
-    this.appRoot = document.querySelector('ion-app') || document.body;
-    Ionic.loadController('loading', this);
-  }
-
-
-  load(opts?: LoadingOptions) {
+  @Method()
+  create(opts?: LoadingOptions) {
     // create ionic's wrapping ion-loading component
     const loading = document.createElement('ion-loading');
 
@@ -34,7 +26,8 @@ export class LoadingController implements IonicControllerApi {
     Object.assign(loading, opts);
 
     // append the loading element to the document body
-    this.appRoot.appendChild(loading as any);
+    const appRoot = document.querySelector('ion-app') || document.body;
+    appRoot.appendChild(loading as any);
 
     // store the resolve function to be called later up when the loading loads
     return new Promise<Loading>(resolve => {
@@ -44,8 +37,8 @@ export class LoadingController implements IonicControllerApi {
 
 
   @Listen('body:ionLoadingDidLoad')
-  viewDidLoad(ev: LoadingEvent) {
-    const loading = ev.loading;
+  protected viewDidLoad(ev: LoadingEvent) {
+    const loading = ev.detail.loading;
     const loadingResolve = this.loadingResolves[loading.id];
     if (loadingResolve) {
       loadingResolve(loading);
@@ -55,14 +48,14 @@ export class LoadingController implements IonicControllerApi {
 
 
   @Listen('body:ionLoadingWillPresent')
-  willPresent(ev: LoadingEvent) {
-    this.loadings.push(ev.loading);
+  protected willPresent(ev: LoadingEvent) {
+    this.loadings.push(ev.detail.loading);
   }
 
 
   @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
-  willDismiss(ev: LoadingEvent) {
-    const index = this.loadings.indexOf(ev.loading);
+  protected willDismiss(ev: LoadingEvent) {
+    const index = this.loadings.indexOf(ev.detail.loading);
     if (index > -1) {
       this.loadings.splice(index, 1);
     }
@@ -70,7 +63,7 @@ export class LoadingController implements IonicControllerApi {
 
 
   @Listen('body:keyup.escape')
-  escapeKeyUp() {
+  protected escapeKeyUp() {
     const lastLoading = this.loadings[this.loadings.length - 1];
     if (lastLoading) {
       lastLoading.dismiss();

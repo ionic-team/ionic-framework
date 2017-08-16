@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { AnimationBuilder, Animation } from '../../index';
+import { AnimationBuilder, AnimationController, Animation } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -12,6 +12,9 @@ import iOSLeaveAnimation from './animations/ios.leave';
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
     wp: 'modal.wp.scss'
+  },
+  host: {
+    theme: 'modal'
   }
 })
 export class Modal {
@@ -24,6 +27,7 @@ export class Modal {
   @Event() ionModalDidDismiss: EventEmitter;
   @Event() ionModalDidUnload: EventEmitter;
 
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop() mode: string;
   @Prop() color: string;
   @Prop() component: string;
@@ -35,21 +39,8 @@ export class Modal {
   @Prop() id: string;
   @Prop() showBackdrop: boolean = true;
 
-
-
   private animation: Animation;
 
-  @Listen('ionDismiss')
-  onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  ionViewDidLoad() {
-    this.ionModalDidLoad.emit({ modal: this });
-  }
 
   present() {
     return new Promise<void>(resolve => {
@@ -63,7 +54,7 @@ export class Modal {
       this.animation = null;
     }
 
-    this.ionModalWillPresent.emit({ modal: this } as ModalEvent);
+    this.ionModalWillPresent.emit({ modal: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -76,13 +67,15 @@ export class Modal {
     }
 
     // build the animation and kick it off
-    this.animation = animationBuilder(this.el);
+    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
 
-    this.animation.onFinish((a: any) => {
-      a.destroy();
-      this.ionModalDidPresent.emit({ modal: this });
-      resolve();
-    }).play();
+      animation.onFinish((a: any) => {
+        a.destroy();
+        this.ionModalDidPresent.emit({ modal: this });
+        resolve();
+      }).play();
+    });
   }
 
   dismiss() {
@@ -105,24 +98,39 @@ export class Modal {
       }
 
       // build the animation and kick it off
-      this.animation = animationBuilder(this.el);
-      this.animation.onFinish((a: any) => {
-        a.destroy();
-        this.ionModalDidDismiss.emit({ modal: this });
+      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+        this.animation = animation;
 
-        Core.dom.write(() => {
-          this.el.parentNode.removeChild(this.el);
-        });
-        resolve();
-      }).play();
+        animation.onFinish((a: any) => {
+          a.destroy();
+          this.ionModalDidDismiss.emit({ modal: this });
+
+          Context.dom.write(() => {
+            this.el.parentNode.removeChild(this.el);
+          });
+          resolve();
+        }).play();
+      });
     });
   }
 
-  ionViewDidUnload() {
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  protected ionViewDidLoad() {
+    this.ionModalDidLoad.emit({ modal: this });
+  }
+
+  protected ionViewDidUnload() {
     this.ionModalDidUnload.emit({ modal: this });
   }
 
-  backdropClick() {
+  protected backdropClick() {
     if (this.enableBackdropDismiss) {
       // const opts: NavOptions = {
       //   minClickBlockDuration: 400
@@ -131,7 +139,7 @@ export class Modal {
     }
   }
 
-  render() {
+  protected render() {
     const ThisComponent = this.component;
 
     let userCssClasses = 'modal-content';
@@ -176,6 +184,8 @@ export interface ModalOptions {
 }
 
 
-export interface ModalEvent {
-  modal: Modal;
+export interface ModalEvent extends Event {
+  detail: {
+    modal: Modal;
+  }
 }

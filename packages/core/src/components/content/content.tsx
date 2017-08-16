@@ -1,6 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Scroll, ScrollDetail } from '../../index';
-import { createThemedClasses } from '../../utils/theme';
+import { Config, Scroll, ScrollDetail } from '../../index';
+import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 import { getParentElement, getToolbarHeight } from '../../utils/helpers';
 
 
@@ -16,6 +16,7 @@ export class Content {
   private mode: string;
   private color: string;
   @Element() private el: HTMLElement;
+  @Prop({ context: 'config' }) config: Config;
 
   $scroll: Scroll;
   $scrollDetail: ScrollDetail = {};
@@ -102,11 +103,18 @@ export class Content {
     if (this.ionScrollEnd) {
       props['ionScrollEnd'] = this.ionScrollEnd.bind(this);
     }
+
     const themedClasses = createThemedClasses(this.mode, this.color, 'content');
-    themedClasses['statusbar-padding'] = Ionic.config.getBoolean('statusbarPadding');
+    const hostClasses = getElementClassObject(this.el.classList);
+
+    const scrollClasses = {
+      ...themedClasses,
+      ...hostClasses,
+      'statusbar-padding': this.config.getBoolean('statusbarPadding')
+    }
 
     return (
-      <ion-scroll style={scrollStyle} props={props} class={themedClasses}>
+      <ion-scroll style={scrollStyle} props={props} class={scrollClasses}>
         <slot></slot>
       </ion-scroll>
     );

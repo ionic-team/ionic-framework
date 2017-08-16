@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@s
 
 import { createThemedClasses } from '../../utils/theme';
 
+import { InputComponent } from './input-base';
 
 @Component({
   tag: 'ion-input',
@@ -14,11 +15,12 @@ import { createThemedClasses } from '../../utils/theme';
     theme: 'input'
   }
 })
-export class Input {
-  mode: any;
-  color: any;
-  styleTmr: any;
+export class Input implements InputComponent {
+  mode: string;
+  color: string;
+
   didBlurAfterEdit: boolean;
+  styleTmr: number;
 
   @Element() el: HTMLElement;
 
@@ -38,6 +40,16 @@ export class Input {
   @Event() ionFocus: EventEmitter;
 
   /**
+   * @input {string} If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
+   */
+  @Prop() accept: string;
+
+  /**
+   * @input {string} Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+   */
+  @Prop() autocapitalize: string = 'none';
+
+  /**
    * @input {string} Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
    */
   @Prop() autocomplete: string = 'off';
@@ -50,7 +62,7 @@ export class Input {
   /**
    * @input {string} This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
    */
-  @Prop() autofocus: boolean;
+  @Prop() autofocus: boolean = false;
 
   /**
    * @input {boolean} If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
@@ -72,9 +84,9 @@ export class Input {
   @Prop() clearInput: boolean = false;
 
   /**
-   * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types. Defaults to `false`.
+   * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({state: true}) clearOnEdit: boolean;
+  @Prop({ state: true }) clearOnEdit: boolean;
 
   /**
    * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
@@ -90,14 +102,44 @@ export class Input {
   }
 
   /**
-   * @input {any} The minimum value, which must not be greater than its maximum (max attribute) value.
+   * @input {string} A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+   */
+  @Prop() inputmode: string;
+
+  /**
+   * @input {string} The maximum value, which must not be less than its minimum (min attribute) value.
+   */
+  @Prop() max: string;
+
+  /**
+   * @input {number} If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+   */
+  @Prop() maxlength: number;
+
+  /**
+   * @input {string} The minimum value, which must not be greater than its maximum (max attribute) value.
    */
   @Prop() min: string;
 
   /**
-   * @input {any} The maximum value, which must not be less than its minimum (min attribute) value.
+   * @input {number} If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
    */
-  @Prop() max: string;
+  @Prop() minlength: number;
+
+  /**
+   * @input {boolean} If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+   */
+  @Prop() multiple: boolean;
+
+  /**
+   * @input {string} The name of the control, which is submitted with the form data.
+   */
+  @Prop() name: string;
+
+  /**
+   * @input {string} A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+   */
+  @Prop() pattern: string;
 
   /**
    * @input {string} Instructional text that shows before the input has a value.
@@ -110,14 +152,29 @@ export class Input {
   @Prop() readonly: boolean = false;
 
   /**
+   * @input {boolean} If true, the user must fill in a value before submitting a form.
+   */
+  @Prop() required: boolean = false;
+
+  /**
+   * @input {number} This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
+   */
+  @Prop() results: number;
+
+  /**
    * @input {string} If true, the element will have its spelling and grammar checked. Defaults to `false`.
    */
   @Prop() spellcheck: boolean = false;
 
   /**
-   * @input {any} Works with the min and max attributes to limit the increments at which a value can be set.
+   * @input {string} Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
    */
   @Prop() step: string;
+
+  /**
+   * @input {number} The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+   */
+  @Prop() size: number;
 
   /**
    * @input {string} The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
@@ -128,6 +185,19 @@ export class Input {
    * @input {string} The text value of the input.
    */
   @Prop({ state: true }) value: string;
+
+
+  /**
+   * @hidden
+   * Update the native input element when the value changes
+   */
+  @PropDidChange('value')
+  setValue() {
+    const inputEl = this.el.querySelector('input');
+    if (inputEl.value !== this.value) {
+      inputEl.value = this.value;
+    }
+  }
 
 
   ionViewDidLoad() {
@@ -153,13 +223,6 @@ export class Input {
     this.styleTmr = setTimeout(() => {
       this.ionStyle.emit(styles);
     });
-  }
-
-  /**
-   * @hidden
-   */
-  hasValue(): boolean {
-    return (this.value !== null && this.value !== undefined && this.value !== '');
   }
 
 
@@ -191,15 +254,6 @@ export class Input {
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
-  }
-
-
-  /**
-   * @hidden
-   */
-  hasFocus(): boolean {
-    // check if an input has focus or not
-    return this.el && (this.el.querySelector(':focus') === this.el.querySelector('input'));
   }
 
 
@@ -241,13 +295,27 @@ export class Input {
     this.didBlurAfterEdit = false;
   }
 
-
   /**
    * @hidden
    */
   clearTextInput() {
-    console.debug('Should clear input', this.el);
     this.value = '';
+  }
+
+  /**
+   * @hidden
+   */
+  hasFocus(): boolean {
+    // check if an input has focus or not
+    return this.el && (this.el.querySelector(':focus') === this.el.querySelector('input'));
+  }
+
+
+  /**
+   * @hidden
+   */
+  hasValue(): boolean {
+    return (this.value !== null && this.value !== undefined && this.value !== '');
   }
 
 
@@ -255,27 +323,31 @@ export class Input {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
     // TODO aria-labelledby={this.item.labelId}
 
-    // OLD RENDER
-    // '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
-    // '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
-    // '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
-    // '<ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></ion-button>' +
-    // '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
-
-    return (
+    return [
       <input
         aria-disabled={this.disabled ? 'true' : false}
+        accept={this.accept}
+        autoCapitalize={this.autocapitalize}
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
         checked={this.checked}
         disabled={this.disabled}
+        inputMode={this.inputmode}
         min={this.min}
         max={this.max}
+        minLength={this.minlength}
+        maxLength={this.maxlength}
+        multiple={this.multiple}
+        name={this.name}
+        pattern={this.pattern}
         placeholder={this.placeholder}
+        results={this.results}
         readOnly={this.readonly}
+        required={this.required}
         spellCheck={this.spellcheck}
         step={this.step}
+        size={this.size}
         type={this.type}
         value={this.value}
         class={themedClasses}
@@ -283,7 +355,13 @@ export class Input {
         onInput={this.inputChanged.bind(this)}
         onFocus={this.inputFocused.bind(this)}
         onKeyDown={this.inputKeydown.bind(this)}
-      />
-    )
+      />,
+      <button
+        hidden={this.clearInput !== true}
+        class="text-input-clear-icon"
+        onClick={this.clearTextInput.bind(this)}
+        onMouseDown={this.clearTextInput.bind(this)}>
+      </button>
+    ]
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { GestureDetail } from '../../index';
-import { GestureController, GestureDelegate } from '../gesture/gesture-controller';
+import { Config, GestureDetail } from '../../index';
+import { GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 
 
 @Component({
@@ -19,6 +19,7 @@ export class Scroll {
   isScrolling: boolean = false;
   detail: ScrollDetail = {};
 
+  @Prop({ context: 'config'}) config: Config;
   @Prop() enabled: boolean = true;
   @Prop() jsScroll: boolean = false;
   @Prop() ionScrollStart: ScrollCallback;
@@ -26,11 +27,10 @@ export class Scroll {
   @Prop() ionScrollEnd: ScrollCallback;
 
   ionViewDidLoad() {
-    if (Core.isServer) return;
+    if (Context.isServer) return;
 
-    const ctrl = Ionic.controllers.gesture = (Ionic.controllers.gesture || new GestureController());
-
-    this.gesture = ctrl.createGesture('scroll', 100, false);
+    const gestureCtrl = Context.gesture = Context.gesture || new GestureController;
+    this.gesture = gestureCtrl.createGesture('scroll', 100, false);
   }
 
 
@@ -43,7 +43,7 @@ export class Scroll {
     if (!self.queued && self.enabled) {
       self.queued = true;
 
-      Core.dom.read(function(timeStamp) {
+      Context.dom.read(function(timeStamp) {
         self.queued = false;
         self.onScroll(timeStamp || Date.now());
       });
@@ -124,7 +124,7 @@ export class Scroll {
       // haven't scrolled in a while, so it's a scrollend
       self.isScrolling = false;
 
-      Core.dom.read(function(timeStamp) {
+      Context.dom.read(function(timeStamp) {
         if (!self.isScrolling) {
           self.onEnd(timeStamp);
         }
@@ -154,9 +154,8 @@ export class Scroll {
   enableJsScroll(contentTop: number, contentBottom: number) {
     this.jsScroll = true;
 
-    Core.enableListener(this, 'scroll', false);
-
-    Core.enableListener(this, 'touchstart', true);
+    Context.enableListener(this, 'scroll', false);
+    Context.enableListener(this, 'touchstart', true);
 
     contentTop; contentBottom;
   }
@@ -170,8 +169,8 @@ export class Scroll {
       return;
     }
 
-    Core.enableListener(this, 'touchmove', true);
-    Core.enableListener(this, 'touchend', true);
+    Context.enableListener(this, 'touchmove', true);
+    Context.enableListener(this, 'touchend', true);
 
     throw 'jsScroll: TODO!';
   }
@@ -185,8 +184,8 @@ export class Scroll {
 
   @Listen('touchend', { passive: true, enabled: false })
   onTouchEnd() {
-    Core.enableListener(this, 'touchmove', false);
-    Core.enableListener(this, 'touchend', false);
+    Context.enableListener(this, 'touchmove', false);
+    Context.enableListener(this, 'touchend', false);
 
     if (!this.enabled) {
       return;
@@ -307,7 +306,7 @@ export class Scroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        Core.dom.raf(step);
+        Context.dom.raf(step);
 
       } else {
         stopScroll = true;
@@ -321,8 +320,8 @@ export class Scroll {
     self.isScrolling = true;
 
     // chill out for a frame first
-    Core.dom.write(() => {
-      Core.dom.write(timeStamp => {
+    Context.dom.write(() => {
+      Context.dom.write(timeStamp => {
         startTime = timeStamp;
         step(timeStamp);
       });

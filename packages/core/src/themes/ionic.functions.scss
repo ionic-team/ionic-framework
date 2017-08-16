@@ -12,7 +12,7 @@
   For example:
 
   $colors: (
-    primary:    #327eff,
+    primary:    #488aff,
     secondary:  (base: #32db64, contrast: #000),
   );";
 
@@ -28,7 +28,7 @@
     For example:
 
     $colors: (
-      #{$color-name}:    #327eff
+      #{$color-name}:    #488aff
     );";
   }
 
@@ -253,7 +253,7 @@
 //
 // Example values
 // --------------------------------------------------
-// primary | #327eff   | #444
+// primary | #488aff   | #444
 // map key | map value | hex color not in map
 // --------------------------------------------------
 //
@@ -278,7 +278,7 @@
   }
 
   // If the value is a map then get the contrast
-  // from the map (e.g. (base: #327eff, contrast: blue))
+  // from the map (e.g. (base: #488aff, contrast: blue))
   @if (type-of($color-value) == map) {
     // If the map has the contrast key then use that
     // otherwise it is a map with just a base so get

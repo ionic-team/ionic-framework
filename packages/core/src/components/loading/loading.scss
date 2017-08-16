@@ -1,8 +1,12 @@
 @import "../../themes/ionic.globals";
 
 
-// Loading Indicator
+// Loading
 // --------------------------------------------------
+
+/// @prop - Color of the backdrop
+$loading-backdrop-color: #000 !default;
+
 
 ion-loading {
   @include position(0, 0, 0, 0);
@@ -25,6 +29,25 @@ ion-loading ion-gesture {
   height: 100%;
 
   visibility: inherit;
+}
+
+ion-loading-controller {
+  display: none;
+}
+
+.loading-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $z-index-backdrop;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: $loading-backdrop-color;
+  opacity: .01;
+  transform: translateZ(0);
 }
 
 .loading-wrapper {

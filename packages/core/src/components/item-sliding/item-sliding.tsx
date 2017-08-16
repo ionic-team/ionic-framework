@@ -358,9 +358,9 @@ export class ItemSliding {
    */
   fireSwipeEvent() {
     if (this.state & SlidingState.SwipeRight) {
-      this.rightOptions.ionSwipe(this);
+      this.rightOptions.ionSwipe.emit(this);
     } else if (this.state & SlidingState.SwipeLeft) {
-      this.leftOptions.ionSwipe(this);
+      this.leftOptions.ionSwipe.emit(this);
     }
   }
 

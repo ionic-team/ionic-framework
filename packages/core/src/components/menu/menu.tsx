@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
+import { Config } from '../../index';
 import { MenuController } from './menu-controller';
 import { MenuType } from './menu-types';
 
@@ -33,6 +34,8 @@ export class Menu {
   @Event() ionDrag: EventEmitter;
   @Event() ionOpen: EventEmitter;
   @Event() ionClose: EventEmitter;
+
+  @Prop({ context: 'config' }) config: Config;
 
   /**
    * @hidden
@@ -97,12 +100,6 @@ export class Menu {
   @Prop() maxEdgeStart: number;
 
 
-  constructor() {
-    // get or create the MenuController singleton
-    this._ctrl = Ionic.controllers.menu = (Ionic.controllers.menu || new MenuController());
-  }
-
-
   /**
    * @hidden
    */
@@ -158,7 +155,7 @@ export class Menu {
   render() {
     // normalize the "type"
     if (!this.type) {
-      this.type = Ionic.config.get('menuType', 'overlay');
+      this.type = this.config.get('menuType', 'overlay');
     }
 
     return [
@@ -198,7 +195,7 @@ export class Menu {
     if (!this._type) {
       this._type = this._ctrl.create(this.type, this);
 
-      if (Ionic.config.getBoolean('animate') === false) {
+      if (this.config.getBoolean('animate') === false) {
         this._type.ani.duration(0);
       }
     }
@@ -314,7 +311,7 @@ export class Menu {
       this._activeBlock = GESTURE_BLOCKER;
 
       // add css class
-      Core.dom.write(() => {
+      Context.dom.write(() => {
         this._cntElm.classList.add('menu-content-open');
       });
 
@@ -326,7 +323,7 @@ export class Menu {
       this._activeBlock = null;
 
       // remove css classes
-      Core.dom.write(() => {
+      Context.dom.write(() => {
         this._cntElm.classList.remove('menu-content-open');
         this._cntElm.classList.remove('show-menu');
         this._backdropElm.classList.remove('show-menu');
@@ -484,8 +481,8 @@ export class Menu {
     const onBackdropClick = this.onBackdropClick.bind(this);
 
     if (shouldAdd && !this._unregBdClick) {
-      this._unregBdClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
-      this._unregCntClick = Core.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
+      this._unregBdClick = Context.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
+      this._unregCntClick = Context.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
 
     } else if (!shouldAdd && this._unregBdClick) {
       this._unregBdClick();

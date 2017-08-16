@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals.ios";
+@import "../../themes/ionic.globals.md";
 @import "./list-header";
 
 // Material Design List Header
@@ -7,10 +7,8 @@
 /// @prop - Margin bottom of the header in a list
 $list-md-header-margin-bottom:   13px !default;
 
-// deprecated
-$list-md-header-padding-left:   $item-md-padding-start !default;
 /// @prop - Padding start of the header in a list
-$list-md-header-padding-start:   $list-md-header-padding-left !default;
+$list-md-header-padding-start:   $item-md-padding-start !default;
 
 /// @prop - Minimum height of the header in a list
 $list-md-header-min-height:      4.5rem !default;
