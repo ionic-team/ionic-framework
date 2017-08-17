@@ -13,6 +13,10 @@ Context.config = createConfigController(
 );
 
 
-// get the mode via config settings and set it to
-// both Ionic and the Core global
-Context.mode = Context.mode || Context.config.get('mode', 'md');
+// first see if the mode was set as an attribute on <html>
+// which could have been set by the user, or by prerendering
+// otherwise get the mode via config settings, and fallback to md
+Context.mode = document.documentElement.getAttribute('mode') || Context.config.get('mode', 'md');
+
+// ensure we've got the mode attribute set on <html>
+document.documentElement.setAttribute('mode', Context.mode);
