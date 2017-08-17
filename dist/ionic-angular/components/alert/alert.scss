@@ -1,0 +1,119 @@
+@import "../../themes/ionic.globals";
+
+// Alerts
+// --------------------------------------------------
+
+/// @prop - Minimum width of the alert
+$alert-min-width:                 250px !default;
+
+/// @prop - Maximum height of the alert
+$alert-max-height:                90% !default;
+
+/// @prop - Line height of the alert button
+$alert-button-line-height:        20px !default;
+
+/// @prop - Font size of the alert button
+$alert-button-font-size:          14px !default;
+
+/// @prop - Color of the alert input placeholder
+$alert-input-placeholder-color:   #999 !default;
+
+
+ion-alert {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  z-index: $z-index-overlay;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  contain: strict;
+}
+
+ion-alert.alert-top {
+  @include padding(50px, null, null, null);
+
+  align-items: flex-start;
+}
+
+ion-alert input {
+  width: 100%;
+}
+
+.alert-wrapper {
+  z-index: $z-index-overlay-wrapper;
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: $alert-min-width;
+  max-height: $alert-max-height;
+
+  opacity: 0;
+
+  contain: content;
+}
+
+.alert-title {
+  @include margin(0);
+  @include padding(0);
+}
+
+.alert-sub-title {
+  @include margin(5px, 0, 0);
+  @include padding(0);
+
+  font-weight: normal;
+}
+
+.alert-message {
+  overflow-y: scroll;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.alert-input {
+  @include placeholder($alert-input-placeholder-color);
+  @include padding(10px, 0);
+
+  border: 0;
+  background: inherit;
+}
+
+.alert-button-group {
+  display: flex;
+
+  flex-direction: row;
+}
+
+.alert-button-group-vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.alert-button {
+  @include margin(0);
+
+  z-index: 0;
+  display: block;
+
+  font-size: $alert-button-font-size;
+  line-height: $alert-button-line-height;
+}
+
+.alert-tappable {
+  @include text-align(start);
+  @include appearance(none);
+  @include margin(0);
+  @include padding(0);
+
+  width: 100%;
+
+  font-size: inherit;
+  line-height: initial;
+  background: transparent;
+}

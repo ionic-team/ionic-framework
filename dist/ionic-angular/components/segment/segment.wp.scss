@@ -1,0 +1,132 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows Segment
+// --------------------------------------------------
+
+/// @prop - Background of the segment button
+$segment-button-wp-background-color:           transparent !default;
+
+/// @prop - Text color of the activated segment button
+$segment-button-wp-text-color-activated:       $toolbar-wp-text-color !default;
+
+// deprecated
+$segment-button-wp-padding:                    null !default;
+
+/// @prop - Padding top of the segment button
+$segment-button-wp-padding-top:                0 !default;
+
+/// @prop - Padding end of the segment button
+$segment-button-wp-padding-end:                6px !default;
+
+/// @prop - Padding bottom of the segment button
+$segment-button-wp-padding-bottom:             $segment-button-wp-padding-top !default;
+
+/// @prop - Padding start of the segment button
+$segment-button-wp-padding-start:              $segment-button-wp-padding-end !default;
+
+/// @prop - Height of the segment button
+$segment-button-wp-height:                     4rem !default;
+
+/// @prop - Line height of the segment button
+$segment-button-wp-line-height:                4rem !default;
+
+/// @prop - Font size of the segment button
+$segment-button-wp-font-size:                  1.3rem !default;
+
+/// @prop - Text transform of the segment button
+$segment-button-wp-text-transform:             uppercase !default;
+
+/// @prop - Font weight of the segment button
+$segment-button-wp-font-weight:                bold !default;
+
+/// @prop - Opacity of the segment button
+$segment-button-wp-opacity:                    .5 !default;
+
+/// @prop - Opacity of the activated segment button
+$segment-button-wp-opacity-activated:          1 !default;
+
+/// @prop - Opacity of the disabled segment button
+$segment-button-wp-opacity-disabled:           .3 !default;
+
+/// @prop - Size of an icon in the segment button
+$segment-button-wp-icon-size:                  2.6rem !default;
+
+/// @prop - Line height of an icon in the segment button
+$segment-button-wp-icon-line-height:           $segment-button-wp-line-height !default;
+
+/// @prop - Position of the buttons in the segment
+$segment-button-wp-buttons-justify-content:    flex-start !default;
+
+
+.segment-wp {
+  justify-content: $segment-button-wp-buttons-justify-content;
+}
+
+.segment-wp .segment-button {
+  height: $segment-button-wp-height;
+
+  font-size: $segment-button-wp-font-size;
+  font-weight: $segment-button-wp-font-weight;
+  line-height: $segment-button-wp-line-height;
+
+  text-transform: $segment-button-wp-text-transform;
+
+  color: $segment-button-wp-text-color-activated;
+  background-color: $segment-button-wp-background-color;
+  opacity: $segment-button-wp-opacity;
+
+  @include deprecated-variable(padding, $segment-button-wp-padding) {
+    @include padding($segment-button-wp-padding-top, $segment-button-wp-padding-end, $segment-button-wp-padding-bottom, $segment-button-wp-padding-start);
+  }
+
+  &.segment-activated {
+    opacity: $segment-button-wp-opacity-activated;
+  }
+
+  ion-icon {
+    font-size: $segment-button-wp-icon-size;
+    line-height: $segment-button-wp-icon-line-height;
+  }
+}
+
+.segment-wp.segment-disabled,
+.segment-wp .segment-button-disabled {
+  opacity: $segment-button-wp-opacity-disabled;
+
+  pointer-events: none;
+}
+
+.toolbar {
+
+  .segment-wp {
+    @include margin(0, auto);
+  }
+
+}
+
+
+// Windows Segment Button Mixin
+// --------------------------------------------------
+
+@mixin wp-segment-button($color-name, $color-base) {
+
+  .segment-wp-#{$color-name} .segment-button {
+    color: $color-base;
+
+    &.activated,
+    &.segment-activated {
+      border-color: $color-base;
+      color: $color-base;
+      opacity: $segment-button-wp-opacity-activated;
+    }
+  }
+
+}
+
+
+// Windows Segment Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  @include wp-segment-button($color-name, $color-base);
+}

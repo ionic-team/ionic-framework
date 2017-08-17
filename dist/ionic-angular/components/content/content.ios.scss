@@ -1,0 +1,88 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Content
+// --------------------------------------------------
+
+/// @prop - Background color of the outer content
+$content-ios-outer-background:          #efeff4 !default;
+
+/// @prop - Background color of the content when making transition
+$content-ios-transition-background:     #000 !default;
+
+
+.content-ios {
+  color: $text-ios-color;
+  background-color: $background-ios-color;
+}
+
+.content-ios.outer-content {
+  background: $content-ios-outer-background;
+}
+
+.content-ios hr {
+  height: $hairlines-width;
+
+  background-color: rgba(0, 0, 0, .12);
+}
+
+.ios .ion-page.show-page ~ .nav-decor {
+  @include position(0, null, null, 0);
+
+  // when ios pages transition, the leaving page grays out
+  // this is the black square behind all pages so they gray out
+  position: absolute;
+  z-index: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background: $content-ios-transition-background;
+
+  pointer-events: none;
+}
+
+
+// iOS Content Padding
+// --------------------------------------------------
+
+@include content-padding('ios', $content-ios-padding);
+
+
+// iOS Content Margin
+// --------------------------------------------------
+
+@include content-margin('ios', $content-ios-margin);
+
+
+// iOS Content Scroll
+// --------------------------------------------------
+
+.content-ios:not([no-bounce]) > .scroll-content::before,
+.content-ios:not([no-bounce]) > .scroll-content::after {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  content: "";
+}
+
+.content-ios:not([no-bounce]) > .scroll-content::before {
+  bottom: -1px;
+}
+
+.content-ios:not([no-bounce]) > .scroll-content::after {
+  top: -1px;
+}
+
+.platform-core .content-ios .scroll-content::after,
+.platform-core .content-ios .scroll-content::before {
+  position: initial;
+
+  top: initial;
+  bottom: initial;
+
+  width: initial;
+  height: initial;
+}

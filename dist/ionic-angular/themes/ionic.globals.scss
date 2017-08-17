@@ -1,0 +1,50 @@
+
+// Ionic Version
+@import "./version";
+
+
+// Global Functions
+@import "./ionic.functions";
+
+
+// Global Mixins
+@import "./ionic.mixins";
+
+
+// Global app direction
+$app-direction: ltr !default;
+
+
+// Global font path
+$font-path: "../fonts" !default;
+
+
+// Ionicons font path
+$ionicons-font-path: $font-path !default;
+
+
+// Hairline width
+$hairlines-width: .55px !default;
+
+
+// Z-Index
+// --------------------------------------------------
+// Grouped by elements which would be siblings
+
+$z-index-menu-overlay:           80; // scss-lint:disable DefaultRule
+$z-index-overlay:                1000; // scss-lint:disable DefaultRule
+$z-index-click-block:            99999; // scss-lint:disable DefaultRule
+
+$z-index-fixed-content:          999; // scss-lint:disable DefaultRule
+$z-index-scroll-content:         1; // scss-lint:disable DefaultRule
+$z-index-refresher:              0; // scss-lint:disable DefaultRule
+
+$z-index-page-container:         0; // scss-lint:disable DefaultRule
+$z-index-toolbar:                10; // scss-lint:disable DefaultRule
+$z-index-toolbar-background:     -1; // scss-lint:disable DefaultRule
+
+$z-index-backdrop:               2; // scss-lint:disable DefaultRule
+$z-index-overlay-wrapper:        10; // scss-lint:disable DefaultRule
+
+$z-index-item-options:           1; // scss-lint:disable DefaultRule
+$z-index-item-divider:          100; // scss-lint:disable DefaultRule

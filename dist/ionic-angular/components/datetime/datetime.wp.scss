@@ -1,0 +1,57 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows DateTime
+// --------------------------------------------------
+
+/// @prop - Min width of the DateTime component
+$datetime-wp-min-width:           45% !default;
+
+/// @prop - Padding top of the DateTime component
+$datetime-wp-padding-top:         $item-wp-padding-top !default;
+
+// deprecated
+$datetime-wp-padding-right:       ($item-wp-padding-end / 2) !default;
+/// @prop - Padding end of the DateTime component
+$datetime-wp-padding-end:         $datetime-wp-padding-right !default;
+
+/// @prop - Padding bottom of the DateTime component
+$datetime-wp-padding-bottom:      $item-wp-padding-bottom !default;
+
+// deprecated
+$datetime-wp-padding-left:        $item-wp-padding-start !default;
+/// @prop - Padding start of the DateTime component
+$datetime-wp-padding-start:       $datetime-wp-padding-left !default;
+
+/// @prop - Border width of the DateTime component
+$datetime-wp-border-width:        2px !default;
+
+/// @prop - Border color of the DateTime component
+$datetime-wp-border-color:        $input-wp-border-color !default;
+
+/// @prop - Color of the DateTime placeholder
+$datetime-wp-placeholder-color:   $input-wp-border-color !default;
+
+
+.datetime-wp {
+  @include padding($datetime-wp-padding-top, $datetime-wp-padding-end, $datetime-wp-padding-bottom, $datetime-wp-padding-start);
+
+  min-width: $datetime-wp-min-width;
+}
+
+.datetime-wp .datetime-text {
+  @include padding(0, 8px);
+
+  min-height: 3.4rem;
+
+  border: $datetime-wp-border-width solid $datetime-wp-border-color;
+  line-height: 3rem;
+}
+
+.item-datetime .datetime-wp ion-label[floating] {
+  @include transform(translate3d(8px, 41px, 0));
+}
+
+.datetime-wp .datetime-placeholder {
+  color: $datetime-wp-placeholder-color;
+}
+

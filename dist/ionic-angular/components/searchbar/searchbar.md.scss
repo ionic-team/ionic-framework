@@ -1,0 +1,192 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Searchbar
+// --------------------------------------------------
+
+// deprecated
+$searchbar-md-padding:                   null !default;
+
+/// @prop - Padding top of the searchbar
+$searchbar-md-padding-top:               8px !default;
+
+/// @prop - Padding end of the searchbar
+$searchbar-md-padding-end:               $searchbar-md-padding-top !default;
+
+/// @prop - Padding bottom of the searchbar
+$searchbar-md-padding-bottom:            $searchbar-md-padding-top !default;
+
+/// @prop - Padding start of the searchbar
+$searchbar-md-padding-start:             $searchbar-md-padding-end !default;
+
+/// @prop - Background of the searchbar
+$searchbar-md-background-color:          inherit !default;
+
+/// @prop - Color of the searchbar input search icon
+$searchbar-md-input-search-icon-color:   #5b5b5b !default;
+
+/// @prop - Svg for the searchbar input search icon
+$searchbar-md-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $searchbar-md-input-search-icon-color + "' d='M337.509,305.372h-17.501l-6.571-5.486c20.791-25.232,33.922-57.054,33.922-93.257C347.358,127.632,283.896,64,205.135,64C127.452,64,64,127.632,64,206.629s63.452,142.628,142.225,142.628c35.011,0,67.831-13.167,92.991-34.008l6.561,5.487v17.551L415.18,448L448,415.086L337.509,305.372z M206.225,305.372c-54.702,0-98.463-43.887-98.463-98.743c0-54.858,43.761-98.742,98.463-98.742c54.7,0,98.462,43.884,98.462,98.742C304.687,261.485,260.925,305.372,206.225,305.372z'/></svg>" !default;
+
+/// @prop - Size of the searchbar input search icon
+$searchbar-md-input-search-icon-size:    20px !default;
+
+/// @prop - Height of the searchbar input
+$searchbar-md-input-height:              auto !default;
+
+/// @prop - Line height of the searchbar input
+$searchbar-md-input-line-height:         3rem !default;
+
+/// @prop - Box shadow of the searchbar input
+$searchbar-md-input-box-shadow:          0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
+
+/// @prop - Color of the searchbar input placeholder
+$searchbar-md-input-placeholder-color:   #aeaeae !default;
+
+/// @prop - Color of the searchbar input text
+$searchbar-md-input-text-color:          #141414 !default;
+
+/// @prop - Background of the searchbar input
+$searchbar-md-input-background-color:    #fff !default;
+
+/// @prop - Border radius of the searchbar input
+$searchbar-md-input-border-radius:       2px !default;
+
+/// @prop - Color of the searchbar input clear icon
+$searchbar-md-input-clear-icon-color:    #5b5b5b !default;
+
+/// @prop - Svg for the searchbar input clear icon
+$searchbar-md-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $searchbar-md-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
+
+/// @prop - Size of the searchbar input clear icon
+$searchbar-md-input-clear-icon-size:     22px !default;
+
+
+// Searchbar
+// -----------------------------------------
+
+.searchbar-md {
+  background: $searchbar-md-background-color;
+
+  @include deprecated-variable(padding, $searchbar-md-padding) {
+    @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
+  }
+}
+
+
+// Searchbar Search Icon
+// -----------------------------------------
+
+.searchbar-md .searchbar-search-icon {
+  @include position(11px, null, null, 16px);
+  @include svg-background-image($searchbar-md-input-search-icon-svg, true);
+
+  width: $searchbar-md-input-search-icon-size + 1;
+  height: $searchbar-md-input-search-icon-size + 1;
+}
+
+
+// Searchbar Cancel Icon (MD only)
+// -----------------------------------------
+
+.searchbar-md .searchbar-md-cancel {
+  @include position(0, null, null, 10px);
+  @include margin(0);
+
+  display: none;
+
+  width: $searchbar-md-input-search-icon-size + 1;
+  height: 100%;
+}
+
+// Searchbar Search & Cancel Icon
+// -----------------------------------------
+
+.searchbar-md .searchbar-search-icon,
+.searchbar-md .searchbar-md-cancel {
+  position: absolute;
+
+  background-repeat: no-repeat;
+  background-size: $searchbar-md-input-search-icon-size;
+}
+
+.searchbar-md .searchbar-search-icon.activated,
+.searchbar-md .searchbar-md-cancel.activated {
+  background-color: transparent;
+}
+
+
+// Searchbar Input Field
+// -----------------------------------------
+
+.searchbar-md .searchbar-input {
+  @include placeholder($searchbar-md-input-placeholder-color);
+  @include padding(6px, 55px);
+  @include border-radius($searchbar-md-input-border-radius);
+  @include background-position(start, 8px, center);
+
+  height: $searchbar-md-input-height;
+
+  font-size: 1.6rem;
+  font-weight: 400;
+
+  line-height: $searchbar-md-input-line-height;
+  color: $searchbar-md-input-text-color;
+
+  background-color: $searchbar-md-input-background-color;
+  box-shadow: $searchbar-md-input-box-shadow;
+}
+
+
+// Searchbar Clear Input Icon
+// -----------------------------------------
+
+.searchbar-md .searchbar-clear-icon {
+  @include position(0, 13px, null, null);
+  @include svg-background-image($searchbar-md-input-clear-icon-svg);
+  @include padding(0);
+  @include background-position(center);
+
+  position: absolute;
+
+  width: $searchbar-md-input-clear-icon-size;
+  height: 100%;
+
+  background-repeat: no-repeat;
+  background-size: $searchbar-md-input-clear-icon-size;
+}
+
+.searchbar-md .searchbar-clear-icon.activated {
+  background-color: transparent;
+}
+
+
+// Searchbar Focused
+// -----------------------------------------
+
+.searchbar-md.searchbar-has-focus.searchbar-show-cancel .searchbar-search-icon {
+  display: none;
+}
+
+.searchbar-md.searchbar-has-focus.searchbar-show-cancel .searchbar-md-cancel {
+  display: inline-flex;
+}
+
+
+// Searchbar in Toolbar
+// -----------------------------------------
+
+.toolbar .searchbar-md {
+  @include padding(3px);
+}
+
+.toolbar .searchbar-md .searchbar-md-cancel {
+  @include position-horizontal(14px, null);
+}
+
+
+// Searchbar Cancel Icon (iOS only)
+// -----------------------------------------
+
+.searchbar-md .searchbar-ios-cancel {
+  display: none;
+}

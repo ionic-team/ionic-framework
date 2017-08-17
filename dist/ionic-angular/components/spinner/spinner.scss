@@ -1,0 +1,112 @@
+@import "../../themes/ionic.globals";
+
+// Spinners
+// --------------------------------------------------
+
+ion-spinner {
+  position: relative;
+  display: inline-block;
+
+  width: 28px;
+  height: 28px;
+}
+
+ion-spinner svg {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  transform: translateZ(0);
+}
+
+ion-spinner.spinner-paused svg {
+  animation-play-state: paused;
+}
+
+
+// Spinner: ios / ios-small
+// --------------------------------------------------
+
+.spinner-ios line,
+.spinner-ios-small line {
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.spinner-ios svg,
+.spinner-ios-small svg {
+  animation: spinner-fade-out 1s linear infinite;
+}
+
+
+// Spinner: bubbles
+// --------------------------------------------------
+
+.spinner-bubbles svg {
+  animation: spinner-scale-out 1s linear infinite;
+}
+
+
+// Spinner: circles
+// --------------------------------------------------
+
+.spinner-circles svg {
+  animation: spinner-fade-out 1s linear infinite;
+}
+
+
+// Spinner: crescent
+// --------------------------------------------------
+
+.spinner-crescent circle {
+  fill: transparent;
+  stroke-width: 4px;
+  stroke-dasharray: 128px;
+  stroke-dashoffset: 82px;
+}
+
+.spinner-crescent svg {
+  animation: spinner-rotate 1s linear infinite;
+}
+
+
+// Spinner: dots
+// --------------------------------------------------
+
+.spinner-dots circle {
+  stroke-width: 0;
+}
+
+.spinner-dots svg {
+  @include transform-origin(center);
+
+  animation: spinner-dots 1s linear infinite;
+}
+
+
+// Animation Keyframes
+// --------------------------------------------------
+
+@keyframes spinner-fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes spinner-scale-out {
+  0% { transform: scale(1, 1); }
+  100% { transform: scale(0, 0); }
+}
+
+@keyframes spinner-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinner-dots {
+  0% { opacity: .9; transform: scale(1, 1); }
+  50% { opacity: .3; transform: scale(.4, .4); }
+  100% { opacity: .9; transform: scale(1, 1); }
+}

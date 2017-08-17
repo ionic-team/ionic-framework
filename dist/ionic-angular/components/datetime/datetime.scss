@@ -1,0 +1,37 @@
+@import "../../themes/ionic.globals";
+
+// DateTime
+// --------------------------------------------------
+
+ion-datetime {
+  display: flex;
+  overflow: hidden;
+}
+
+.datetime-text {
+  overflow: hidden;
+
+  flex: 1;
+
+  min-width: 16px;
+  min-height: 1.2em;
+
+  font-size: inherit;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.datetime-disabled,
+.item-datetime-disabled ion-label {
+  opacity: .4;
+
+  pointer-events: none;
+}
+
+.item-label-stacked ion-datetime,
+.item-label-floating ion-datetime {
+  @include padding-horizontal(0, null);
+
+  width: 100%;
+}

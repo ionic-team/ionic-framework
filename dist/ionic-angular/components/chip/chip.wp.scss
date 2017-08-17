@@ -1,0 +1,99 @@
+
+// Windows Chip
+// --------------------------------------------------
+
+// deprecated
+$chip-wp-margin:                     null !default;
+
+/// @prop - Margin top of the chip
+$chip-wp-margin-top:                 2px !default;
+
+/// @prop - Margin end of the chip
+$chip-wp-margin-end:                 0 !default;
+
+/// @prop - Margin bottom of the chip
+$chip-wp-margin-bottom:              $chip-wp-margin-top !default;
+
+/// @prop - Margin start of the chip
+$chip-wp-margin-start:               $chip-wp-margin-end !default;
+
+/// @prop - Height of the chip
+$chip-wp-height:                     32px !default;
+
+/// @prop - Border radius of the chip
+$chip-wp-border-radius:              16px !default;
+
+/// @prop - Font size of the chip
+$chip-wp-font-size:                  13px !default;
+
+/// @prop - Text color of the chip
+$chip-wp-text-color:                 rgba(0, 0, 0, .87) !default;
+
+/// @prop - Background color of the chip
+$chip-wp-background-color:           rgba(0, 0, 0, .12) !default;
+
+// deprecated
+$chip-wp-label-margin:               null !default;
+
+/// @prop - Margin top of the label in the chip
+$chip-wp-label-margin-top:           0 !default;
+
+/// @prop - Margin end of the label in the chip
+$chip-wp-label-margin-end:           10px !default;
+
+/// @prop - Margin bottom of the label in the chip
+$chip-wp-label-margin-bottom:        $chip-wp-label-margin-top !default;
+
+/// @prop - Margin start of the label in the chip
+$chip-wp-label-margin-start:         $chip-wp-label-margin-end !default;
+
+/// @prop - Background color of the icon in the chip
+$chip-wp-icon-background-color:      color($colors-wp, primary) !default;
+
+/// @prop - Text color of the icon in the chip
+$chip-wp-icon-text-color:            color-contrast($colors-wp, $chip-wp-icon-background-color) !default;
+
+
+.chip-wp {
+  @include border-radius($chip-wp-border-radius);
+
+  height: $chip-wp-height;
+
+  font-size: $chip-wp-font-size;
+  line-height: $chip-wp-height;
+  color: $chip-wp-text-color;
+  background: $chip-wp-background-color;
+
+  @include deprecated-variable(margin, $chip-wp-margin) {
+    @include margin($chip-wp-margin-top, $chip-wp-margin-end, $chip-wp-margin-bottom, $chip-wp-margin-start);
+  }
+}
+
+.chip-wp > ion-label {
+  @include deprecated-variable(margin, $chip-wp-label-margin) {
+    @include margin($chip-wp-label-margin-top, $chip-wp-label-margin-end, $chip-wp-label-margin-bottom, $chip-wp-label-margin-start);
+  }
+}
+
+.chip-wp > ion-icon {
+  color: $chip-wp-icon-text-color;
+  background-color: $chip-wp-icon-background-color;
+}
+
+.chip-wp .button {
+  border: 0;
+}
+
+
+// Generate Windows Chip Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .chip-wp-#{$color-name},
+  .chip-wp .icon-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+}

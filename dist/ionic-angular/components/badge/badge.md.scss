@@ -1,0 +1,34 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Badge
+// --------------------------------------------------
+
+/// @prop - Border radius of the badge
+$badge-md-border-radius:            4px !default;
+
+/// @prop - Background color of the badge
+$badge-md-background-color:         color($colors-md, primary) !default;
+
+/// @prop - Text color of the badge
+$badge-md-text-color:               color-contrast($colors-md, $badge-md-background-color) !default;
+
+
+.badge-md {
+  @include border-radius($badge-md-border-radius);
+
+  color: $badge-md-text-color;
+  background-color: $badge-md-background-color;
+}
+
+
+// Generate Material Design Badge Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .badge-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+}

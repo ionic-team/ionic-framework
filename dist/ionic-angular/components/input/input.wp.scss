@@ -1,0 +1,160 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows Input
+// --------------------------------------------------
+
+/// @prop - Background color of the input
+$text-input-wp-background-color:            $list-wp-background-color !default;
+
+/// @prop - Border color of the input
+$text-input-wp-border-color:                $input-wp-border-color !default;
+
+/// @prop - Border width of the input
+$text-input-wp-border-width:                2px !default;
+
+/// @prop - Margin top of the input
+$text-input-wp-margin-top:                  $item-wp-padding-top !default;
+
+// deprecated
+$text-input-wp-margin-right:                ($item-wp-padding-end / 2) !default;
+/// @prop - Margin end of the input
+$text-input-wp-margin-end:                  $text-input-wp-margin-right !default;
+
+/// @prop - Margin bottom of the input
+$text-input-wp-margin-bottom:               $item-wp-padding-bottom !default;
+
+// deprecated
+$text-input-wp-margin-left:                 ($item-wp-padding-start / 2) !default;
+/// @prop - Margin start of the input
+$text-input-wp-margin-start:                $text-input-wp-margin-left !default;
+
+/// @prop - Vertical padding of the input
+$text-input-wp-padding-vertical:            0 !default;
+
+/// @prop - Horizontal padding of the input
+$text-input-wp-padding-horizontal:          8px !default;
+
+/// @prop - Line height of the input
+$text-input-wp-line-height:                 3rem !default;
+
+/// @prop - Width of the icon used to clear the input
+$text-input-wp-input-clear-icon-width:      30px !default;
+
+/// @prop - Color of the icon used to clear the input
+$text-input-wp-input-clear-icon-color:      $input-wp-border-color !default;
+
+/// @prop - Icon used to clear the input
+$text-input-wp-input-clear-icon-svg:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $text-input-wp-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
+
+/// @prop - Size of the icon used to clear the input
+$text-input-wp-input-clear-icon-size:       22px !default;
+
+/// @prop - Show the focus highlight when the input has focus
+$text-input-wp-show-focus-highlight:        true !default;
+
+/// @prop - Show the valid highlight when it is valid and has a value
+$text-input-wp-show-valid-highlight:        $text-input-wp-show-focus-highlight !default;
+
+/// @prop - Show the invalid highlight when it is invalid and has value
+$text-input-wp-show-invalid-highlight:      $text-input-wp-show-focus-highlight !default;
+
+/// @prop - Color of the input highlight
+$text-input-wp-highlight-color:             color($colors-wp, primary) !default;
+
+/// @prop - Color of the input highlight when valid
+$text-input-wp-highlight-color-valid:       $text-input-highlight-color-valid !default;
+
+/// @prop - Color of the input highlight when invalid
+$text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid !default;
+
+
+// Windows Default Input
+// --------------------------------------------------
+
+.text-input-wp {
+  @include margin($text-input-wp-margin-top, $text-input-wp-margin-end, $text-input-wp-margin-bottom, $text-input-wp-margin-start);
+  @include padding($text-input-wp-padding-vertical, $text-input-wp-padding-horizontal);
+
+  width: calc(100% - #{$text-input-wp-margin-end} - #{$text-input-wp-margin-start});
+
+  border: $text-input-wp-border-width solid $text-input-wp-border-color;
+  line-height: $text-input-wp-line-height;
+}
+
+
+// Windows Inset Input
+// --------------------------------------------------
+
+.item-wp .inset-input {
+  @include padding(($item-wp-padding-top / 2), ($item-wp-padding-end / 2), ($item-wp-padding-bottom / 2), ($item-wp-padding-start / 2));
+  @include margin(($item-wp-padding-top / 2), $item-wp-padding-end, ($item-wp-padding-bottom / 2), $item-wp-padding-start);
+}
+
+
+// Windows Highlighted Input
+// --------------------------------------------------
+
+// Show the focus highlight when the input has focus
+@if ($text-input-wp-show-focus-highlight) {
+  // TODO remove all uses of input-has-focus in v4
+  // TODO remove all uses of input-has-value in v4
+  .item-wp.item-input.item-input-has-focus .text-input,
+  .item-wp.item-input.input-has-focus .text-input {
+    border-color: $text-input-wp-highlight-color;
+  }
+}
+
+// Show the valid highlight when it has the .ng-valid class and a value
+@if ($text-input-wp-show-valid-highlight) {
+  .item-wp.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input,
+  .item-wp.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input {
+    border-color: $text-input-wp-highlight-color-valid;
+  }
+}
+
+// Show the invalid highlight when it has the invalid class and has been touched
+@if ($text-input-wp-show-invalid-highlight) {
+  .item-wp.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .text-input {
+    border-color: $text-input-wp-highlight-color-invalid;
+  }
+}
+
+
+// Windows Stacked & Floating Inputs
+// --------------------------------------------------
+
+.item-label-stacked .text-input-wp,
+.item-label-floating .text-input-wp,
+.item-label-stacked .select-wp,
+.item-label-floating .select-wp {
+  @include margin(8px, null, 8px, 0);
+
+  width: calc(100% - #{$text-input-wp-margin-end});
+}
+
+.item-wp.item-label-stacked [item-right], // deprecated
+.item-wp.item-label-floating [item-right], // deprecated
+.item-wp.item-label-stacked [item-end],
+.item-wp.item-label-floating [item-end] {
+  align-self: flex-end;
+}
+
+// Windows Clear Input Icon
+// --------------------------------------------------
+
+.input-wp[clearInput] {
+  position: relative;
+}
+
+.input-wp[clearInput] .text-input {
+  @include padding-horizontal(null, $text-input-wp-input-clear-icon-width);
+}
+
+.input-wp .text-input-clear-icon {
+  @include position-horizontal(null, ($item-wp-padding-end / 2));
+  @include svg-background-image($text-input-wp-input-clear-icon-svg);
+
+  width: $text-input-wp-input-clear-icon-width;
+
+  background-size: $text-input-wp-input-clear-icon-size;
+}
