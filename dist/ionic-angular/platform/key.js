@@ -1,9 +1,0 @@
-export var /** @type {?} */ KEY_LEFT = 37;
-export var /** @type {?} */ KEY_UP = 38;
-export var /** @type {?} */ KEY_RIGHT = 39;
-export var /** @type {?} */ KEY_DOWN = 40;
-export var /** @type {?} */ KEY_ENTER = 13;
-export var /** @type {?} */ KEY_ESCAPE = 27;
-export var /** @type {?} */ KEY_SPACE = 32;
-export var /** @type {?} */ KEY_TAB = 9;
-//# sourceMappingURL=key.js.map
