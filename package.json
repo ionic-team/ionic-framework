@@ -23,7 +23,7 @@
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link",
-    "compile": "gulp release.prepareReleasePackage && ln -s dist/ionic-angular/fonts ./fonts && ln -s dist/ionic-angular/themes ./themes",
+    "compile": "gulp release.prepareReleasePackage && cp -R dist/ionic-angular/fonts ./ && cp -R dist/ionic-angular/themes ./ && cp -R dist/ionic-angular/polyfills ./",
     "tsc": "tsc --outdir .tmp"
   },
   "dependencies": {
