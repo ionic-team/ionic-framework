@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-7",
+  "version": "0.0.2-8",
   "description": "Base components for Ionic",
   "main": "dist/collection/index.js",
   "types": "dist/collection/index.d.ts",
@@ -10,7 +10,7 @@
     "README.md"
   ],
   "devDependencies": {
-    "@stencil/core": "next",
+    "@stencil/core": "^0.0.5-7",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest"
   },
