@@ -1,0 +1,28 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Modals
+// --------------------------------------------------
+
+/// @prop - Background color for the modal
+$modal-md-background-color:       $background-md-color !default;
+
+/// @prop - Box shadow color of the alert
+$modal-inset-box-shadow-color:    rgba(0, 0, 0, .4) !default;
+
+/// @prop - Box shadow of the alert
+$modal-inset-box-shadow:          0 28px 48px $modal-inset-box-shadow-color !default;
+
+.md .modal-wrapper {
+  @include transform(translate3d(0, 40px, 0));
+
+  opacity: .01;
+
+  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    @include border-radius(2px);
+
+    overflow: hidden;
+
+    box-shadow: $modal-inset-box-shadow;
+  }
+
+}

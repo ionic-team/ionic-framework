@@ -1,0 +1,210 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows Picker
+// --------------------------------------------------
+
+/// @prop - Height of the picker wrapper
+$picker-wp-height:                            260px !default;
+
+/// @prop - Border color of the picker wrapper
+$picker-wp-border-color:                      $list-wp-border-color !default;
+
+/// @prop - Background of the picker wrapper
+$picker-wp-background-color:                  $list-wp-background-color !default;
+
+/// @prop - Height of the picker toolbar
+$picker-wp-toolbar-height:                    44px !default;
+
+/// @prop - Background of the picker toolbar
+$picker-wp-toolbar-background-color:          $picker-wp-background-color !default;
+
+/// @prop - Height of the picker button
+$picker-wp-button-height:                     $picker-wp-toolbar-height !default;
+
+/// @prop - Text color of the picker button
+$picker-wp-button-text-color:                 color($colors-wp, primary) !default;
+
+/// @prop - Background of the picker button
+$picker-wp-button-background-color:           transparent !default;
+
+// deprecated
+$picker-wp-column-padding:                    null !default;
+
+/// @prop - Padding top of the picker column
+$picker-wp-column-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker column
+$picker-wp-column-padding-end:                4px !default;
+
+/// @prop - Padding bottom of the picker column
+$picker-wp-column-padding-bottom:             $picker-wp-column-padding-top !default;
+
+/// @prop - Padding start of the picker column
+$picker-wp-column-padding-start:              $picker-wp-column-padding-end !default;
+
+// deprecated
+$picker-wp-option-padding:                    null !default;
+
+/// @prop - Padding top of the picker option
+$picker-wp-option-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker option
+$picker-wp-option-padding-end:                $picker-wp-option-padding-top !default;
+
+/// @prop - Padding bottom of the picker option
+$picker-wp-option-padding-bottom:             $picker-wp-option-padding-top !default;
+
+/// @prop - Padding start of the picker option
+$picker-wp-option-padding-start:              $picker-wp-option-padding-end !default;
+
+/// @prop - Text color of the picker option
+$picker-wp-option-text-color:                 $list-wp-text-color !default;
+
+/// @prop - Font size of the picker option
+$picker-wp-option-font-size:                  22px !default;
+
+/// @prop - Height of the picker option
+$picker-wp-option-height:                     42px !default;
+
+/// @prop - Offset y of the picker option
+$picker-wp-option-offset-y:                   (($picker-wp-height - $picker-wp-toolbar-height) / 2) - ($picker-wp-option-height / 2) - 10 !default;
+
+/// @prop - Text color of the selected picker option
+$picker-wp-option-selected-color:             color($colors-wp, primary) !default;
+
+
+.picker-wp .picker-wrapper {
+  height: $picker-wp-height;
+
+  border-top: $hairlines-width solid $picker-wp-border-color;
+
+  background: $picker-wp-background-color;
+}
+
+.picker-wp .picker-toolbar {
+  display: flex;
+
+  justify-content: flex-end;
+
+  height: $picker-wp-toolbar-height;
+
+  border-width: $hairlines-width;
+
+  background: $picker-wp-toolbar-background-color;
+}
+
+.picker-wp .picker-toolbar-button {
+  @include text-align(end);
+
+  flex: 1;
+}
+
+.picker-wp .picker-toolbar-cancel {
+  @include text-align(start);
+
+  font-weight: normal;
+}
+
+.picker-wp .picker-button,
+.picker-wp .picker-button.activated {
+  @include margin(0);
+
+  height: $picker-wp-button-height;
+
+  color: $picker-wp-button-text-color;
+  background: $picker-wp-button-background-color;
+
+  box-shadow: none;
+}
+
+.picker-wp .picker-columns {
+  height: $picker-wp-height - $picker-wp-toolbar-height;
+
+  perspective: 1800px;
+}
+
+.picker-wp .picker-col {
+  transform-style: preserve-3d;
+
+  @include deprecated-variable(padding, $picker-wp-column-padding) {
+    @include padding($picker-wp-column-padding-top, $picker-wp-column-padding-end, $picker-wp-column-padding-bottom, $picker-wp-column-padding-start);
+  }
+}
+
+.picker-wp .picker-prefix,
+.picker-wp .picker-suffix,
+.picker-wp .picker-opts {
+  top: $picker-wp-option-offset-y;
+
+  font-size: $picker-wp-option-font-size;
+  line-height: $picker-wp-option-height;
+  color: $picker-wp-option-text-color;
+
+  transform-style: preserve-3d;
+
+  pointer-events: none;
+}
+
+.picker-wp .picker-opt {
+  @include margin(0);
+
+  height: 4.2rem;
+
+  font-size: $picker-wp-option-font-size;
+  line-height: $picker-wp-option-height;
+  color: $picker-wp-option-text-color;
+
+  background: transparent;
+
+  transition-timing-function: ease-out;
+
+  backface-visibility: hidden;
+
+  pointer-events: auto;
+
+  @include deprecated-variable(padding, $picker-wp-option-padding) {
+    @include padding($picker-wp-option-padding-top, $picker-wp-option-padding-end, $picker-wp-option-padding-bottom, $picker-wp-option-padding-start);
+  }
+}
+
+.picker-wp .picker-prefix,
+.picker-wp .picker-suffix,
+.picker-wp .picker-opt-selected {
+  color: $picker-wp-option-selected-color;
+}
+
+.picker-wp .picker-above-highlight {
+  @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  position: absolute;
+
+  z-index: 10;
+
+  width: 100%;
+  height: $picker-wp-option-offset-y + 4px;
+
+  border-bottom: 1px solid $picker-wp-border-color;
+
+  background: linear-gradient(to bottom,
+                            rgba($picker-wp-background-color, 1) 20%,
+                            rgba($picker-wp-background-color, .7) 100%);
+}
+
+.picker-wp .picker-below-highlight {
+  @include position($picker-wp-option-offset-y + $picker-wp-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  position: absolute;
+
+  z-index: 11;
+
+  width: 100%;
+  height: $picker-wp-option-offset-y + $picker-wp-option-height;
+
+  border-top: 1px solid $picker-wp-border-color;
+
+  background: linear-gradient(to top,
+                           rgba($picker-wp-background-color, 1) 30%,
+                           rgba($picker-wp-background-color, .7) 100%);
+}

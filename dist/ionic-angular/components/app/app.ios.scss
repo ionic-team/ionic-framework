@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS App
+// --------------------------------------------------
+
+ion-app.ios {
+  font-family: $font-family-ios-base;
+  font-size: $font-size-ios-base;
+  background-color: $background-ios-color;
+}

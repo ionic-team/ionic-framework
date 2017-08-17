@@ -1,0 +1,24 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Note
+// --------------------------------------------------
+
+/// @prop - Text color of the note
+$note-md-color:      darken($list-md-border-color, 10%) !default;
+
+
+.note-md {
+  color: $note-md-color;
+}
+
+
+// Generate Material Design Note Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .note-md-#{$color-name} {
+    color: $color-base;
+  }
+
+}

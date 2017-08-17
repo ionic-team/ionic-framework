@@ -1,0 +1,96 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows Select
+// --------------------------------------------------
+
+/// @prop - Padding top and bottom of the select
+$select-wp-padding-vertical:    0 !default;
+
+/// @prop - Padding start/end of the select
+$select-wp-padding-horizontal:  ($item-wp-padding-end / 2) !default;
+
+/// @prop - Margin top of the select
+$select-wp-margin-top:          $item-wp-padding-top !default;
+
+// deprecated
+$select-wp-margin-right:        ($item-wp-padding-end / 2) !default;
+/// @prop - Margin end of the select
+$select-wp-margin-end:          $select-wp-margin-right !default;
+
+/// @prop - Margin bottom of the select
+$select-wp-margin-bottom:       $item-wp-padding-bottom !default;
+
+// deprecated
+$select-wp-margin-left:         ($item-wp-padding-start / 2) !default;
+/// @prop - Margin start of the select
+$select-wp-margin-start:        $select-wp-margin-left !default;
+
+/// @prop - Border width of the select
+$select-wp-border-width:        2px !default;
+
+/// @prop - Border color of the select
+$select-wp-border-color:        $input-wp-border-color !default;
+
+/// @prop - Width of the select icon
+$select-wp-icon-width:          18px !default;
+
+/// @prop - Width of the select icon arrow
+$select-wp-icon-arrow-width:    2px !default;
+
+/// @prop - Color of the select icon
+$select-wp-icon-color:          $select-wp-border-color !default;
+
+/// @prop - Color of the select placeholder
+$select-wp-placeholder-color:   $select-wp-icon-color !default;
+
+
+.select-wp {
+  @include margin($select-wp-margin-top, $select-wp-margin-end, $select-wp-margin-bottom, $select-wp-margin-start);
+  @include padding($select-wp-padding-vertical, $select-wp-padding-horizontal);
+
+  flex: 1;
+
+  max-width: 100%;
+
+  border: $select-wp-border-width solid $select-wp-border-color;
+  line-height: 3rem;
+}
+
+.select-wp .select-placeholder {
+  color: $select-wp-placeholder-color;
+}
+
+.item-wp.item-select ion-label {
+  @include margin-horizontal(0, null);
+}
+
+.select-wp .select-icon {
+  position: relative;
+
+  align-self: center;
+
+  width: $select-wp-icon-width;
+  height: $select-wp-icon-width;
+}
+
+.select-wp .select-icon .select-icon-inner {
+  @include position(3px, null, null, 5px);
+
+  position: absolute;
+
+  display: block;
+
+  width: ($select-wp-icon-width / 2);
+  height: ($select-wp-icon-width / 2);
+
+  border-top: $select-wp-icon-arrow-width solid $select-wp-icon-color;
+  border-right: $select-wp-icon-arrow-width solid $select-wp-icon-color;
+
+  transform: rotate(135deg);
+
+  pointer-events: none;
+}
+
+.select-wp .select-text {
+  min-height: 3rem;
+}

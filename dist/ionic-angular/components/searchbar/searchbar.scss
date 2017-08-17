@@ -1,0 +1,51 @@
+@import "../../themes/ionic.globals";
+
+// Search Bar
+// --------------------------------------------------
+
+ion-searchbar {
+  position: relative;
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+}
+
+.searchbar-icon {
+  // Don't let them tap on the icon
+  pointer-events: none;
+}
+
+.searchbar-input-container {
+  position: relative;
+  display: block;
+
+  flex-shrink: 1;
+
+  width: 100%;
+}
+
+.searchbar-input {
+  @include appearance(none);
+  display: block;
+
+  width: 100%;
+
+  border: 0;
+  font-family: inherit;
+}
+
+.searchbar-clear-icon {
+  @include margin(0);
+  @include padding(0);
+
+  display: none;
+
+  min-height: 0;
+}
+
+.searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
+  display: block;
+}
+

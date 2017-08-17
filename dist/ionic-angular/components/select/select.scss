@@ -1,0 +1,55 @@
+@import "../../themes/ionic.globals";
+
+// Select
+// --------------------------------------------------
+
+/// @prop - Margin top of the select popover list
+$select-popover-list-margin-top:         -1px !default;
+
+// deprecated
+$select-popover-list-margin-right:       0 !default;
+/// @prop - Margin end of the select popover list
+$select-popover-list-margin-end:         $select-popover-list-margin-right !default;
+
+/// @prop - Margin bottom of the select popover list
+$select-popover-list-margin-bottom:      -1px !default;
+
+// deprecated
+$select-popover-list-margin-left:        0 !default;
+/// @prop - Margin start of the select popover list
+$select-popover-list-margin-start:       $select-popover-list-margin-left !default;
+
+
+ion-select {
+  display: flex;
+  overflow: hidden;
+
+  max-width: 45%;
+}
+
+.select-text {
+  overflow: hidden;
+
+  flex: 1;
+
+  min-width: 16px;
+
+  font-size: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-multiple-inputs ion-select {
+  position: relative;
+}
+
+.select-disabled,
+.item-select-disabled ion-label {
+  opacity: .4;
+
+  pointer-events: none;
+}
+
+.select-popover ion-list {
+  @include margin($select-popover-list-margin-top, $select-popover-list-margin-end, $select-popover-list-margin-bottom, $select-popover-list-margin-start);
+}

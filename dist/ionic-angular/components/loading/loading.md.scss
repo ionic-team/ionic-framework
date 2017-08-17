@@ -1,0 +1,111 @@
+@import "../../themes/ionic.globals";
+
+// Material Design Loading Indicator
+// --------------------------------------------------
+
+// deprecated
+$loading-md-padding:                   null !default;
+
+/// @prop - Padding top of the loading wrapper
+$loading-md-padding-top:               24px !default;
+
+/// @prop - Padding end of the loading wrapper
+$loading-md-padding-end:               $loading-md-padding-top !default;
+
+/// @prop - Padding bottom of the loading wrapper
+$loading-md-padding-bottom:            $loading-md-padding-top !default;
+
+/// @prop - Padding start of the loading wrapper
+$loading-md-padding-start:             $loading-md-padding-end !default;
+
+/// @prop - Max width of the loading wrapper
+$loading-md-max-width:                 280px !default;
+
+/// @prop - Maximum height of the loading wrapper
+$loading-md-max-height:                90% !default;
+
+/// @prop - Border radius of the loading wrapper
+$loading-md-border-radius:             2px !default;
+
+/// @prop - Text color of the loading wrapper
+$loading-md-text-color:                rgba(0, 0, 0, .5) !default;
+
+/// @prop - Background of the loading wrapper
+$loading-md-background:                #fafafa !default;
+
+/// @prop - Box shadow color of the loading wrapper
+$loading-md-box-shadow-color:          rgba(0, 0, 0, .4) !default;
+
+/// @prop - Box shadow of the loading wrapper
+$loading-md-box-shadow:                0 16px 20px $loading-md-box-shadow-color !default;
+
+/// @prop - Margin start of the loading content next to a spinner
+$loading-md-content-margin-start:      $content-md-margin !default;
+
+/// @prop - Color of the loading spinner
+$loading-md-spinner-color:             color($colors-md, primary) !default;
+
+/// @prop - Color of the ios loading spinner
+$loading-md-spinner-ios-color:         $loading-md-spinner-color !default;
+
+/// @prop - Color of the bubbles loading spinner
+$loading-md-spinner-bubbles-color:     $loading-md-spinner-color !default;
+
+/// @prop - Color of the circles loading spinner
+$loading-md-spinner-circles-color:     $loading-md-spinner-color !default;
+
+/// @prop - Color of the crescent loading spinner
+$loading-md-spinner-crescent-color:    $loading-md-spinner-color !default;
+
+/// @prop - Color of the dots loading spinner
+$loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
+
+
+.loading-md .loading-wrapper {
+  @include border-radius($loading-md-border-radius);
+
+  max-width: $loading-md-max-width;
+  max-height: $loading-md-max-height;
+
+  color: $loading-md-text-color;
+  background: $loading-md-background;
+
+  box-shadow: $loading-md-box-shadow;
+
+  @include deprecated-variable(padding, $loading-md-padding) {
+    @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
+  }
+}
+
+
+// Material Design Loading Content
+// -----------------------------------------
+
+.loading-md .loading-spinner + .loading-content {
+  @include margin-horizontal($loading-md-content-margin-start, null);
+}
+
+
+// Material Design Loading Spinner fill colors
+// -----------------------------------------
+
+.loading-md .spinner-ios line,
+.loading-md .spinner-ios-small line {
+  stroke: $loading-md-spinner-ios-color;
+}
+
+.loading-md .spinner-bubbles circle {
+  fill: $loading-md-spinner-bubbles-color;
+}
+
+.loading-md .spinner-circles circle {
+  fill: $loading-md-spinner-circles-color;
+}
+
+.loading-md .spinner-crescent circle {
+  stroke: $loading-md-spinner-crescent-color;
+}
+
+.loading-md .spinner-dots circle {
+  fill: $loading-md-spinner-dots-color;
+}

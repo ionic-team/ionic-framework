@@ -1,0 +1,32 @@
+@import "../../themes/ionic.globals";
+
+ion-scroll {
+  position: relative;
+  display: block;
+}
+
+ion-scroll.scroll-x .scroll-content {
+  overflow-x: auto;
+}
+
+ion-scroll.scroll-y .scroll-content {
+  overflow-y: auto;
+}
+
+ion-scroll[center] .scroll-content {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+ion-scroll .scroll-content {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  overflow-y: hidden;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+}

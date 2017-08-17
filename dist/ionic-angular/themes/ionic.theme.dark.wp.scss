@@ -1,0 +1,85 @@
+@import "./ionic.theme.dark";
+
+// Windows Dark Theme
+// ----------------------------------
+
+$colors-wp: copy-colors($colors) !default;
+
+
+$text-wp-color:                       $text-color !default;
+$background-wp-color:                 $background-color !default;
+$subdued-text-wp-color:               $subdued-text-color !default;
+
+$font-family-wp-base:                 "Segoe UI", "Noto Sans", sans-serif !default;
+$font-size-wp-base:                   $font-size-base !default;
+
+
+// Windows Outer content
+// --------------------------------------------------
+$outer-content-wp-background-color:   $background-color !default;
+
+
+// Windows Toolbar
+// --------------------------------------------------
+
+$toolbar-wp-background:               $toolbar-background !default;
+$toolbar-wp-border-color:             $toolbar-border-color !default;
+$toolbar-wp-text-color:               #fff !default;
+$toolbar-wp-active-color:             $toolbar-active-color !default;
+$toolbar-wp-inactive-color:           $toolbar-inactive-color !default;
+
+
+// Windows Tabs
+// --------------------------------------------------
+
+$tabs-wp-background:                  $tabs-background !default;
+$tabs-wp-border-color:                transparent !default;
+$tabs-wp-tab-color-inactive:          $tabs-tab-color-inactive !default;
+$tabs-wp-tab-color-active:            $tabs-tab-color-active !default;
+
+
+// Windows Card
+// --------------------------------------------------
+
+$card-wp-header-color:                #ddd !default;
+$card-wp-title-text-color:            #fff !default;
+$card-wp-text-color:                  #ddd !default;
+
+
+// Windows List
+// --------------------------------------------------
+
+$list-wp-text-color:                  $list-text-color !default;
+$list-wp-border-color:                transparent !default;
+$list-wp-background-color:            $list-background-color !default;
+$list-wp-activated-background-color:  #d9d9d9 !default;
+
+
+// Windows Item
+// --------------------------------------------------
+
+$item-wp-padding-top:                 13px !default;
+// deprecated
+$item-wp-padding-right:               16px !default;
+$item-wp-padding-end:                 $item-wp-padding-right !default;
+$item-wp-padding-bottom:              13px !default;
+// deprecated
+$item-wp-padding-left:                16px !default;
+$item-wp-padding-start:               $item-wp-padding-left !default;
+$item-wp-padding-media-top:           9px !default;
+$item-wp-padding-media-bottom:        9px !default;
+$item-wp-padding-icon-top:            11px !default;
+$item-wp-padding-icon-bottom:         10px !default;
+$item-wp-divider-background:          #151515 !default;
+$item-wp-divider-color:               #f4f4f4 !default;
+
+
+// Windows Toggle
+// ---------------------------------------------------
+$toggle-wp-handle-background-color-off: #f4f4f4 !default;
+
+
+// Windows Input
+// --------------------------------------------------
+
+$input-wp-border-color:                 rgba(0, 0, 0, .5) !default;

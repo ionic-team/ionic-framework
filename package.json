@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "ionic2",
+  "name": "ionic-angular",
   "version": "3.6.0",
   "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular",
   "keywords": [
@@ -17,12 +17,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/ionic.git"
+    "url": "https://github.com/ChezRD/ionic.git"
   },
   "scripts": {
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link",
+    "compile": "gulp release.prepareReleasePackage && cp -R dist/ionic-angular/fonts ./ && cp -R dist/ionic-angular/themes ./ && cp -R dist/ionic-angular/polyfills ./",
     "tsc": "tsc --outdir .tmp"
   },
   "dependencies": {
@@ -144,8 +145,5 @@
       "path": "node_modules/ionic-cz-conventional-changelog"
     },
     "ionic_copy": "./scripts/demos/copy.config.js"
-  },
-  "pre-push#master": [
-    "test"
-  ]
+  }
 }
