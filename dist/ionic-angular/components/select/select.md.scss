@@ -1,0 +1,63 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Select
+// --------------------------------------------------
+
+/// @prop - Padding top of the select
+$select-md-padding-top:         $item-md-padding-top !default;
+
+// deprecated
+$select-md-padding-right:       ($item-md-padding-end / 2) !default;
+/// @prop - Padding end of the select
+$select-md-padding-end:         $select-md-padding-right !default;
+
+/// @prop - Padding bottom of the select
+$select-md-padding-bottom:      $item-md-padding-bottom !default;
+
+// deprecated
+$select-md-padding-left:        $item-md-padding-start !default;
+/// @prop - Padding start of the select
+$select-md-padding-start:       $select-md-padding-left !default;
+
+/// @prop - Color of the select icon
+$select-md-icon-color:          #999 !default;
+
+/// @prop - Color of the select placeholder
+$select-md-placeholder-color:   $select-md-icon-color !default;
+
+
+.select-md {
+  @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
+}
+
+.select-md .select-placeholder {
+  color: $select-md-placeholder-color;
+}
+
+.select-md .item-select ion-label {
+  @include margin-horizontal(0, null);
+}
+
+.select-md .select-icon {
+  position: relative;
+
+  width: 12px;
+  height: 19px;
+}
+
+.select-md .select-icon .select-icon-inner {
+  @include position(50%, null, null, 5px);
+  @include margin(-3px, null, null, null);
+
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  border-top: 5px solid;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  color: $select-md-icon-color;
+
+  pointer-events: none;
+}

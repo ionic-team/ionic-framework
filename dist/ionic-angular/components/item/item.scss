@@ -1,0 +1,106 @@
+@import "../../themes/ionic.globals";
+
+// Item
+// --------------------------------------------------
+// Core structure only, dimensions belong in specific modes
+//
+// ".item" includes elements:
+//   ion-item
+//   [ion-item]
+//   ion-item-divider
+//   ion-list-header
+//
+// ".item-block" includes elements:
+//   ion-item
+//   [ion-item]
+
+.item {
+  contain: content;
+}
+
+.item-block {
+  @include margin(0);
+  @include padding(0);
+  @include text-align(initial);
+
+  display: flex;
+  overflow: hidden;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 4.4rem;
+
+  border: 0;
+
+  font-weight: normal;
+  line-height: normal;
+  text-decoration: none;
+  color: inherit;
+}
+
+.item-inner {
+  @include margin(0);
+  @include padding(0);
+
+  display: flex;
+  overflow: hidden;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  min-height: inherit;
+
+  border: 0;
+}
+
+.input-wrapper {
+  display: flex;
+  overflow: hidden;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  text-overflow: ellipsis;
+}
+
+.item[no-lines],
+.item.item[no-lines] .item-inner {
+  border: 0;
+}
+
+ion-item-group {
+  display: block;
+}
+
+ion-item-divider {
+  @include margin(0);
+  @include padding(0);
+
+  z-index: $z-index-item-divider;
+  display: flex;
+  overflow: hidden;
+
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  min-height: 30px;
+}
+
+ion-item-divider[sticky] {
+  position: sticky;
+  top: 0;
+}
+
+[vertical-align-top],
+ion-input.item {
+  align-items: flex-start;
+}
+

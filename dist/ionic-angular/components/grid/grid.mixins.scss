@@ -1,0 +1,258 @@
+@import "../../themes/ionic.globals";
+@import "../../themes/ionic.mixins";
+
+// Responsive Mixins
+// --------------------------------------------------
+
+// Creates a grid with padding
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid($padding-width: $grid-padding-width) {
+  @include padding($padding-width / 2);
+  @include margin-horizontal(auto);
+
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  // Remove the padding from the grid and all immediate children columns
+  &[no-padding] {
+    @include padding(0);
+
+    > .row > .col {
+      @include padding(0);
+    }
+  }
+}
+
+// Creates maximum widths for the grid based on screen size
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid-max-widths($max-widths: $grid-max-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      width: $container-max-width;
+      max-width: 100%;
+    }
+  }
+}
+
+// Creates a row used to align columns
+// ---------------------------------------------------------------------------------
+
+@mixin make-row() {
+  display: flex;
+  flex-wrap: wrap;
+
+  &[nowrap] {
+    flex-wrap: nowrap;
+  }
+
+  &[wrap-reverse] {
+    flex-wrap: wrap-reverse;
+  }
+
+  &[align-items-start] {
+    align-items: flex-start;
+  }
+
+  &[align-items-center] {
+    align-items: center;
+  }
+
+  &[align-items-end] {
+    align-items: flex-end;
+  }
+
+  &[align-items-stretch] {
+    align-items: stretch;
+  }
+
+  &[align-items-baseline] {
+    align-items: baseline;
+  }
+
+  &[justify-content-start] {
+    justify-content: flex-start;
+  }
+
+  &[justify-content-center] {
+    justify-content: center;
+  }
+
+  &[justify-content-end] {
+    justify-content: flex-end;
+  }
+
+  &[justify-content-around] {
+    justify-content: space-around;
+  }
+
+  &[justify-content-between] {
+    justify-content: space-between;
+  }
+}
+
+
+// Creates the base column which has shared styles among all columns
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-base($padding-width: $grid-padding-width) {
+  @include padding($padding-width / 2);
+
+  position: relative;
+
+  width: 100%;
+  @include margin(0);
+  min-height: 1px; // Prevent columns from collapsing when empty
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+
+  &[align-self-start] {
+    align-self: flex-start;
+  }
+
+  &[align-self-end] {
+    align-self: flex-end;
+  }
+
+  &[align-self-center] {
+    align-self: center;
+  }
+
+  &[align-self-stretch] {
+    align-self: stretch;
+  }
+
+  &[align-self-baseline] {
+    align-self: baseline;
+  }
+}
+
+
+// Create an individual column
+// ---------------------------------------------------------------------------------
+
+@mixin make-column($size, $columns: $grid-columns) {
+  flex: 0 0 percentage($size / $columns);
+  width: percentage($size / $columns);
+  // Add a `max-width` to ensure content within each column does not blow out
+  // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
+  // do not appear to require this.
+  max-width: percentage($size / $columns);
+}
+
+
+// Adds padding to the column
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-padding($padding-widths: $grid-padding-widths) {
+  @each $breakpoint in map-keys($padding-widths) {
+    @include media-breakpoint-up($breakpoint) {
+      $padding-width: map-get($padding-widths, $breakpoint);
+      @include padding($padding-width / 2);
+    }
+  }
+}
+
+
+// Offset the column using margin-start
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-offset($size, $columns: $grid-columns) {
+  @include margin-horizontal(percentage($size / $columns), null);
+}
+
+
+// Push the column using left
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-push($size, $columns: $grid-columns) {
+  @include position(null, null, null, if($size > 0, percentage($size / $columns), auto));
+}
+
+
+// Pull the column using right
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-pull($size, $columns: $grid-columns) {
+  @include position(null, if($size > 0, percentage($size / $columns), auto), null, null);
+}
+
+
+// Determine which modifier to add
+// ---------------------------------------------------------------------------------
+
+@mixin make-column-modifier($type, $size, $columns) {
+  // Work around the lack of dynamic mixin @include support (https://github.com/sass/sass/issues/626)
+  @if $type == push {
+    @include make-column-push($size, $columns);
+  } @else if $type == pull {
+    @include make-column-pull($size, $columns);
+  } @else if $type == offset {
+    @include make-column-offset($size, $columns);
+  }
+}
+
+
+// Create the responsive grid columns
+// --------------------------------------------------
+
+@mixin make-grid-columns($columns: $grid-columns, $padding-widths: $grid-padding-widths, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    // Allow columns to stretch full width below their breakpoints
+    @for $i from 1 through $columns {
+      [col#{$infix}-#{$i}] {
+        @include make-column-padding($padding-widths);
+      }
+    }
+
+    [col#{$infix}] {
+      @include make-column-padding($padding-widths);
+    }
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      // Provide basic `[col-{bp}]` attributes for equal-width flexbox columns
+      [col#{$infix}] {
+        flex-basis: 0;
+        flex-grow: 1;
+
+        max-width: 100%;
+      }
+
+      [col#{$infix}-auto] {
+        flex: 0 0 auto;
+
+        width: auto;
+      }
+
+      @for $i from 1 through $columns {
+        [col#{$infix}-#{$i}] {
+          @include make-column($i, $columns);
+        }
+      }
+
+      @each $modifier in (pull, push) {
+        @for $i from 0 through $columns {
+          [#{$modifier}#{$infix}-#{$i}] {
+            @include make-column-modifier($modifier, $i, $columns)
+          }
+        }
+      }
+
+      // `$columns - 1` because offsetting by the width of an entire row isn't possible
+      @for $i from 0 through ($columns - 1) {
+        @if not ($infix == "" and $i == 0) { // Avoid emitting useless [offset-xs-0]
+          [offset#{$infix}-#{$i}] {
+            @include make-column-modifier(offset, $i, $columns)
+          }
+        }
+      }
+    }
+  }
+}

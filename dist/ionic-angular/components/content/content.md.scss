@@ -1,0 +1,25 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Content
+// --------------------------------------------------
+
+.content-md {
+  color: $text-md-color;
+  background-color: $background-md-color;
+}
+
+.content-md hr {
+  background-color: rgba(0, 0, 0, .08);
+}
+
+
+// Material Design Content Padding
+// --------------------------------------------------
+
+@include content-padding('md', $content-md-padding);
+
+
+// Material Design Content Margin
+// --------------------------------------------------
+
+@include content-margin('md', $content-md-margin);

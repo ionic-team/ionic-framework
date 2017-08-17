@@ -23,6 +23,7 @@
     "test": "gulp validate",
     "test:generators": "jasmine-node ./tooling/spec",
     "link": "gulp release.prepareReleasePackage && cd dist/ionic-angular && npm link",
+    "compile": "gulp release.prepareReleasePackage",
     "tsc": "tsc --outdir .tmp"
   },
   "dependencies": {

@@ -1,0 +1,139 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Segment
+// --------------------------------------------------
+
+/// @prop - Text color of the activated segment button
+$segment-button-md-text-color-activated:       $toolbar-md-active-color !default;
+
+/// @prop - Border color of the activated segment button
+$segment-button-md-border-color-activated:     $toolbar-md-active-color !default;
+
+/// @prop - Width of the bottom border on the segment button
+$segment-button-md-border-bottom-width:        2px !default;
+
+/// @prop - Color of the bottom border on the segment button
+$segment-button-md-border-bottom-color:        rgba(#000, .10) !default;
+
+/// @prop - Opacity of the segment button
+$segment-button-md-opacity:                    .7 !default;
+
+/// @prop - Opacity of the activated segment button
+$segment-button-md-opacity-activated:          1 !default;
+
+/// @prop - Opacity of the disabled segment button
+$segment-button-md-opacity-disabled:           .3 !default;
+
+// deprecated
+$segment-button-md-padding:                    null !default;
+
+/// @prop - Padding top of the segment button
+$segment-button-md-padding-top:                0 !default;
+
+/// @prop - Padding end of the segment button
+$segment-button-md-padding-end:                6px !default;
+
+/// @prop - Padding bottom of the segment button
+$segment-button-md-padding-bottom:             $segment-button-md-padding-top !default;
+
+/// @prop - Padding start of the segment button
+$segment-button-md-padding-start:              $segment-button-md-padding-end !default;
+
+/// @prop - Height of the segment button
+$segment-button-md-height:                     4.2rem !default;
+
+/// @prop - Line height of the segment button
+$segment-button-md-line-height:                4rem !default;
+
+/// @prop - Font size of the segment button
+$segment-button-md-font-size:                  1.2rem !default;
+
+/// @prop - Size of an icon in the segment button
+$segment-button-md-icon-size:                  2.6rem !default;
+
+/// @prop - Line height of an icon in the segment button
+$segment-button-md-icon-line-height:           $segment-button-md-line-height !default;
+
+
+.segment-md .segment-button {
+  flex: 1;
+
+  width: 0;
+  height: $segment-button-md-height;
+
+  border-bottom-width: $segment-button-md-border-bottom-width;
+  border-bottom-style: solid;
+  border-bottom-color: $segment-button-md-border-bottom-color;
+
+  font-size: $segment-button-md-font-size;
+  font-weight: 500;
+  line-height: $segment-button-md-line-height;
+  text-transform: uppercase;
+
+  color: $segment-button-md-text-color-activated;
+  background-color: transparent;
+  opacity: $segment-button-md-opacity;
+  transition: 100ms all linear;
+
+  @include deprecated-variable(padding, $segment-button-md-padding) {
+    @include padding($segment-button-md-padding-top, $segment-button-md-padding-end, $segment-button-md-padding-bottom, $segment-button-md-padding-start);
+  }
+
+  ion-icon {
+    font-size: $segment-button-md-icon-size;
+    line-height: $segment-button-md-icon-line-height;
+  }
+
+  &.activated,
+  &.segment-activated {
+    border-color: $segment-button-md-border-color-activated;
+    opacity: $segment-button-md-opacity-activated;
+  }
+}
+
+.segment-md.segment-disabled,
+.segment-md .segment-button-disabled {
+  opacity: $segment-button-md-opacity-disabled;
+
+  pointer-events: none;
+}
+
+.toolbar {
+
+  .segment-md {
+    @include margin(0, auto);
+  }
+
+  .segment-md .segment-button.activated,
+  .segment-md .segment-button.segment-activated {
+    opacity: 1;
+  }
+
+}
+
+
+// Material Design Segment Button Mixin
+// --------------------------------------------------
+
+@mixin md-segment-button($color-name, $color-base, $color-contrast) {
+
+  .segment-md-#{$color-name} .segment-button {
+    color: $color-base;
+
+    &.activated,
+    &.segment-activated {
+      border-color: $color-base;
+      color: $color-base;
+      opacity: 1;
+    }
+  }
+
+}
+
+
+// Material Design Segment Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  @include md-segment-button($color-name, $color-base, $color-contrast);
+}

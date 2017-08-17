@@ -1,0 +1,9 @@
+export const /** @type {?} */ KEY_LEFT = 37;
+export const /** @type {?} */ KEY_UP = 38;
+export const /** @type {?} */ KEY_RIGHT = 39;
+export const /** @type {?} */ KEY_DOWN = 40;
+export const /** @type {?} */ KEY_ENTER = 13;
+export const /** @type {?} */ KEY_ESCAPE = 27;
+export const /** @type {?} */ KEY_SPACE = 32;
+export const /** @type {?} */ KEY_TAB = 9;
+//# sourceMappingURL=key.js.map

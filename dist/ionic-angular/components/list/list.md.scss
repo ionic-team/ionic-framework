@@ -1,0 +1,196 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design List
+// --------------------------------------------------
+
+/// @prop - Margin top of the list
+$list-md-margin-top:             16px !default;
+
+// deprecated
+$list-md-margin-right:           0 !default;
+/// @prop - Margin end of the list
+$list-md-margin-end:             $list-md-margin-right !default;
+
+/// @prop - Margin bottom of the list
+$list-md-margin-bottom:          16px !default;
+
+// deprecated
+$list-md-margin-left:            0 !default;
+/// @prop - Margin start of the list
+$list-md-margin-start:           $list-md-margin-left !default;
+
+/// @prop - Margin top of the inset list
+$list-inset-md-margin-top:       16px !default;
+
+// deprecated
+$list-inset-md-margin-right:     16px !default;
+/// @prop - Margin end of the inset list
+$list-inset-md-margin-end:       $list-inset-md-margin-right !default;
+
+/// @prop - Margin bottom of the inset list
+$list-inset-md-margin-bottom:    16px !default;
+
+// deprecated
+$list-inset-md-margin-left:      16px !default;
+/// @prop - Margin start of the inset list
+$list-inset-md-margin-start:     $list-inset-md-margin-left !default;
+
+/// @prop - Border radius of the inset list
+$list-inset-md-border-radius:    2px !default;
+
+/// @prop - Margin bottom of the header in a list
+$list-md-header-margin-bottom:   13px !default;
+
+// deprecated
+$list-md-header-padding-left:   $item-md-padding-start !default;
+/// @prop - Padding start of the header in a list
+$list-md-header-padding-start:   $list-md-header-padding-left !default;
+
+/// @prop - Minimum height of the header in a list
+$list-md-header-min-height:      4.5rem !default;
+
+/// @prop - Border top of the header in a list
+$list-md-header-border-top:      1px solid $list-md-border-color !default;
+
+/// @prop - Font size of the header in a list
+$list-md-header-font-size:       1.4rem !default;
+
+/// @prop - Text color of the header in a list
+$list-md-header-color:           #757575 !default;
+
+
+// Material Design Default List
+// --------------------------------------------------
+
+.list-md {
+  @include margin(-1px, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
+}
+
+.list-md .item-block .item-inner {
+  border-bottom: 1px solid $list-md-border-color;
+}
+
+.list-md > .item-block:last-child,
+.list-md > .item-wrapper:last-child {
+  ion-label,
+  .item-inner {
+    border-bottom: 0;
+  }
+}
+
+.list-md > ion-input:last-child::after {
+  @include position-horizontal(0, null);
+}
+
+.list-md ion-item-options {
+  border-bottom: 1px solid $list-md-border-color;
+}
+
+.list-md ion-item-options .button {
+  @include margin(0);
+  @include border-radius(0);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  height: 100%;
+
+  border: 0;
+
+  box-shadow: none;
+
+  box-sizing: border-box;
+}
+
+.list-md ion-item-options .button::before {
+  @include margin(0, auto);
+}
+
+// If the item has the no-lines attribute remove the bottom border from:
+// the item itself (for last-child items)
+// the item-inner class (if it is not last)
+.list-md .item[no-lines],
+.list-md .item[no-lines] .item-inner {
+  border-width: 0;
+}
+
+.list-md + ion-list ion-list-header {
+  @include margin(-$list-md-margin-top, null, null, null);
+}
+
+
+// Material Design Inset List
+// --------------------------------------------------
+
+.list-md[inset] {
+  @include margin($list-inset-md-margin-top, $list-inset-md-margin-end, $list-inset-md-margin-bottom, $list-inset-md-margin-start);
+  @include border-radius($list-inset-md-border-radius);
+}
+
+.list-md[inset] .item:first-child {
+  @include border-radius($list-inset-md-border-radius, $list-inset-md-border-radius, null, null);
+
+  border-top-width: 0;
+}
+
+.list-md[inset] .item:last-child {
+  @include border-radius(null, null, $list-inset-md-border-radius, $list-inset-md-border-radius);
+
+  border-bottom-width: 0;
+}
+
+.list-md[inset] .item-input {
+  @include padding-horizontal(0);
+}
+
+.list-md[inset] + ion-list[inset] {
+  @include margin(0, null, null, null);
+}
+
+.list-md[inset] ion-list-header {
+  background-color: $list-md-background-color;
+}
+
+
+// Material Design No Lines List
+// --------------------------------------------------
+
+.list-md[no-lines] .item-block,
+.list-md[no-lines] ion-item-options,
+.list-md[no-lines] .item .item-inner {
+  border-width: 0;
+}
+
+
+// Material Design List Header
+// --------------------------------------------------
+
+.list-header-md {
+  @include padding-horizontal($list-md-header-padding-start, null);
+  @include margin(null, null, $list-md-header-margin-bottom, null);
+
+  min-height: $list-md-header-min-height;
+
+  border-top: $list-md-header-border-top;
+  font-size: $list-md-header-font-size;
+  color: $list-md-header-color;
+}
+
+// Generate Material Design List Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  .list-header-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+}
+
+
+// Material Design List inputs
+// --------------------------------------------------
+
+.list-md .item-input:last-child {
+  border-bottom: 1px solid $list-md-border-color;
+}

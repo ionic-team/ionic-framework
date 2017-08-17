@@ -1,0 +1,177 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Input
+// --------------------------------------------------
+
+/// @prop - Background color of the input
+$text-input-md-background-color:            $list-md-background-color !default;
+
+/// @prop - Margin top of the input
+$text-input-md-margin-top:                  $item-md-padding-top !default;
+
+// deprecated
+$text-input-md-margin-right:                ($item-md-padding-end / 2) !default;
+/// @prop - Margin end of the input
+$text-input-md-margin-end:                  $text-input-md-margin-right !default;
+
+/// @prop - Margin bottom of the input
+$text-input-md-margin-bottom:               $item-md-padding-bottom !default;
+
+// deprecated
+$text-input-md-margin-left:                 ($item-md-padding-start / 2) !default;
+/// @prop - Margin start of the input
+$text-input-md-margin-start:                $text-input-md-margin-left !default;
+
+/// @prop - Width of the icon used to clear the input
+$text-input-md-input-clear-icon-width:      30px !default;
+
+/// @prop - Color of the icon used to clear the input
+$text-input-md-input-clear-icon-color:      #5b5b5b !default;
+
+/// @prop - Icon used to clear the input
+$text-input-md-input-clear-icon-svg:        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $text-input-md-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
+
+/// @prop - Size of the icon used to clear the input
+$text-input-md-input-clear-icon-size:       22px !default;
+
+/// @prop - Show the focus highlight when the input has focus
+$text-input-md-show-focus-highlight:        true !default;
+
+/// @prop - Show the valid highlight when it is valid and has a value
+$text-input-md-show-valid-highlight:        $text-input-md-show-focus-highlight !default;
+
+/// @prop - Show the invalid highlight when it is invalid and has value
+$text-input-md-show-invalid-highlight:      $text-input-md-show-focus-highlight !default;
+
+/// @prop - Color of the input highlight
+$text-input-md-highlight-color:             color($colors-md, primary) !default;
+
+/// @prop - Color of the input highlight when valid
+$text-input-md-highlight-color-valid:       $text-input-highlight-color-valid !default;
+
+/// @prop - Color of the input highlight when invalid
+$text-input-md-highlight-color-invalid:     $text-input-highlight-color-invalid !default;
+
+
+// Material Design Default Input
+// --------------------------------------------------
+
+.text-input-md {
+  @include margin($text-input-md-margin-top, $text-input-md-margin-end, $text-input-md-margin-bottom, $text-input-md-margin-start);
+  @include padding(0);
+
+  width: calc(100% - #{$text-input-md-margin-end} - #{$text-input-md-margin-start});
+}
+
+
+// Material Design Inset Input
+// --------------------------------------------------
+
+.input-md .inset-input {
+  @include padding(($item-md-padding-top / 2), ($item-md-padding-end / 2), ($item-md-padding-bottom / 2), ($item-md-padding-start / 2));
+  @include margin(($item-md-padding-top / 2), $item-md-padding-end, ($item-md-padding-bottom / 2), $item-md-padding-start);
+}
+
+
+// Material Design Highlighted Input
+// --------------------------------------------------
+
+// Input highlight mixin for focus, valid, and invalid states
+@mixin md-input-highlight($highlight-color) {
+  border-bottom-color: $highlight-color;
+  box-shadow: inset 0 -1px 0 0 $highlight-color;
+}
+
+// Show the focus highlight when the input has focus
+@if ($text-input-md-show-focus-highlight) {
+  // In order to get a 2px border we need to add an inset
+  // box-shadow 1px (this is to avoid the div resizing)
+
+  // TODO remove all uses of input-has-focus in v4
+  .item-md.item-input.item-input-has-focus .item-inner,
+  .item-md.item-input.input-has-focus .item-inner {
+    @include md-input-highlight($text-input-md-highlight-color);
+  }
+
+  // The last item in a list has a border on the item, not the
+  // inner item, so add it to the item itself
+  .list-md .item-input.item-input-has-focus:last-child,
+  .list-md .item-input.input-has-focus:last-child {
+    @include md-input-highlight($text-input-md-highlight-color);
+
+    .item-inner {
+      box-shadow: none;
+    }
+  }
+}
+
+// Show the valid highlight when it has the .ng-valid class and a value
+@if ($text-input-md-show-valid-highlight) {
+  // TODO remove all uses of input-has-focus in v4
+  // TODO remove all uses of input-has-value in v4
+  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
+  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    @include md-input-highlight($text-input-md-highlight-color-valid);
+  }
+
+  .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
+  .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    @include md-input-highlight($text-input-md-highlight-color-valid);
+
+    .item-inner {
+      box-shadow: none;
+    }
+  }
+}
+
+// Show the invalid highlight when it has the invalid class and has been touched
+@if ($text-input-md-show-invalid-highlight) {
+  .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+    @include md-input-highlight($text-input-md-highlight-color-invalid);
+  }
+
+  .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
+    @include md-input-highlight($text-input-md-highlight-color-invalid);
+
+    .item-inner {
+      box-shadow: none;
+    }
+  }
+}
+
+
+// Material Design Stacked & Floating Inputs
+// --------------------------------------------------
+
+.item-label-stacked .text-input-md,
+.item-label-floating .text-input-md {
+  @include margin(8px, null, 8px, 0);
+
+  width: calc(100% - #{$text-input-md-margin-end});
+}
+
+.item-label-stacked .select-md,
+.item-label-floating .select-md {
+  @include padding(8px, null, 8px, 0);
+}
+
+
+// Material Design Clear Input Icon
+// --------------------------------------------------
+
+.input-md[clearInput] {
+  position: relative;
+}
+
+.input-md[clearInput] .text-input {
+  @include padding-horizontal(null, $text-input-md-input-clear-icon-width);
+}
+
+.input-md .text-input-clear-icon {
+  @include position-horizontal(null, ($item-md-padding-end / 2));
+  @include svg-background-image($text-input-md-input-clear-icon-svg);
+
+  width: $text-input-md-input-clear-icon-width;
+
+  background-size: $text-input-md-input-clear-icon-size;
+}
