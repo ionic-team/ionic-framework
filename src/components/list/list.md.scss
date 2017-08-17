@@ -191,6 +191,7 @@ $list-md-header-color:           #757575 !default;
 // Material Design List inputs
 // --------------------------------------------------
 
-.list-md .item-input:last-child {
+.list-md .item-input:last-child,
+.list-md .item-select:last-child {
   border-bottom: 1px solid $list-md-border-color;
 }
