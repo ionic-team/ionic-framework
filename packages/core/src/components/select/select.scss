@@ -17,6 +17,8 @@ $select-popover-list-margin-start:       0 !default;
 
 
 ion-select {
+  position: relative;
+
   display: flex;
   overflow: hidden;
 
@@ -51,6 +53,6 @@ ion-select {
 }
 
 // TODO remove
-.select .option {
+.select-option {
   display: none;
 }

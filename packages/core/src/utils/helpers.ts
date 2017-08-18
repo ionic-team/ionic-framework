@@ -158,3 +158,8 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
   let shouldClose = (!isMovingFast && isOnResetZone) || (isResetDirection && isMovingFast);
   return shouldClose;
 }
+
+/** @hidden */
+export function deepCopy(obj: any) {
+  return JSON.parse(JSON.stringify(obj));
+}

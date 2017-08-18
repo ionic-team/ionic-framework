@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
 
 @Component({
@@ -14,6 +14,8 @@ import { Component, Event, EventEmitter, Prop } from '@stencil/core';
 })
 export class Label {
   styleTmr: any;
+
+  @Element() el: HTMLElement;
 
   /**
    * @output {event} Emitted when the styles change.
@@ -34,6 +36,14 @@ export class Label {
    * @output {event} If true, the label will be stacked above an input. Defaults to `false`.
    */
   @Prop() stacked: boolean = false;
+
+  /**
+   * @hidden
+   */
+  @Method()
+  getText(): string {
+    return this.el.textContent || '';
+  }
 
   ionViewDidLoad() {
     this.emitStyle();
