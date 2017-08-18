@@ -11,7 +11,7 @@ export default function(
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();
-  const wrapperEle = <HTMLElement> baseElm.querySelector('.toast-wrapper');
+  const wrapperEle = baseElm.querySelector('.toast-wrapper') as HTMLElement
   wrapperAnimation.addElement(wrapperEle);
   switch (position) {
     case 'top':
