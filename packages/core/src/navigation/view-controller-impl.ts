@@ -1,4 +1,4 @@
-import { FrameworkDelegate, NavController, ViewController } from './nav-interfaces';
+import { FrameworkDelegate, Nav, ViewController } from './nav-interfaces';
 import { STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED } from './nav-utils';
 
 import { assert } from '../utils/helpers';
@@ -10,8 +10,9 @@ export class ViewControllerImpl implements ViewController {
   element: HTMLElement;
   instance: any;
   state: number;
-  nav: NavController;
+  nav: Nav;
   overlay: boolean;
+  zIndex: number;
   dismissProxy: any;
   frameworkDelegate: FrameworkDelegate;
 

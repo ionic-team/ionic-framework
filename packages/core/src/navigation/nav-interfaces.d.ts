@@ -1,10 +1,17 @@
+import {
+  Animation,
+  AnimationController,
+  AnimationOptions,
+  Config
+} from '..';
+
 export interface FrameworkDelegate {
-  attachViewToDom(navController: NavController, enteringView: ViewController): Promise<any>;
-  removeViewFromDom(navController: NavController, leavingView: ViewController): Promise<any>;
+  attachViewToDom(navController: Nav, enteringView: ViewController): Promise<any>;
+  removeViewFromDom(navController: Nav, leavingView: ViewController): Promise<any>;
   destroy(viewController: ViewController): Promise<any>;
 }
 
-export interface NavController {
+export interface Nav {
   id: number;
   element: HTMLElement;
   views?: ViewController[];
@@ -13,9 +20,14 @@ export interface NavController {
   transitionId?: number;
   isViewInitialized?: boolean;
   isPortal?: boolean;
+  zIndexOffset?: number;
   swipeToGoBackTransition?: any; // TODO Transition
-  getParent(): NavController;
-  childNavs?: NavController[]; // TODO - make nav container
+  getParent(): Nav;
+  getActive(): ViewController;
+  getPrevious(view?: ViewController): ViewController;
+  childNavs?: Nav[]; // TODO - make nav container
+  animationCtrl?: AnimationController;
+  config?: Config;
 }
 
 export interface ViewController {
@@ -25,9 +37,10 @@ export interface ViewController {
   element: HTMLElement;
   instance: any;
   state: number;
-  nav: NavController;
+  nav: Nav;
   frameworkDelegate: FrameworkDelegate;
   dismissProxy?: any;
+  zIndex: number;
 
   // life cycle events
   willLeave(unload: boolean): void;
@@ -81,7 +94,7 @@ export interface TransitionInstruction {
   enteringRequiresTransition?: boolean;
   requiresTransition?: boolean;
   id?: number;
-  nav?: NavController;
+  nav?: Nav;
   delegate?: FrameworkDelegate;
 }
 
@@ -94,4 +107,18 @@ export interface NavResult {
 export interface ComponentDataPair {
   page: any;
   params: any;
+}
+
+export interface Transition extends Animation {
+  enteringView?: ViewController;
+  leavingView?: ViewController;
+  transitionStartFunction?: Function;
+  transitionId?: number;
+  registerTransitionStart(callback: Function): void;
+  start(): void;
+  originalDestroy(): void; // this is intended to be private, don't use this bad boy
+}
+
+export interface TransitionBuilder {
+  (rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions ): Transition;
 }

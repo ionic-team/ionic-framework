@@ -1240,4 +1240,7 @@ export class Animator {
     return (this._hasTweenEffect && this._hasDur && this._elementTotal ? this._elements[0] : null);
   }
 
+  create() {
+    return new Animator();
+  }
 }

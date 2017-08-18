@@ -1,5 +1,6 @@
 import { Component, Element, Method, Prop } from '@stencil/core';
-import { FrameworkDelegate, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
+import { AnimationController, Config } from '../..';
+import { FrameworkDelegate, Nav as INav, NavOptions, ViewController } from '../../navigation/nav-interfaces';
 import { getNextNavId, getViews, pop, push, setRoot } from '../../navigation/nav-controller-functions';
 
 import { delegate as defaultStencilDelegate } from '../../navigation/stencil-framework-delegate';
@@ -7,7 +8,7 @@ import { delegate as defaultStencilDelegate } from '../../navigation/stencil-fra
 @Component({
   tag: 'ion-nav',
 })
-export class Nav implements NavController {
+export class Nav implements INav {
 
   @Element() element: HTMLElement;
   id: number;
@@ -18,10 +19,12 @@ export class Nav implements NavController {
   isViewInitialized?: boolean;
   isPortal: boolean;
   swipeToGoBackTransition: any; // TODO Transition
-  childNavs?: NavController[];
+  childNavs?: Nav[];
 
   @Prop() root: any;
   @Prop() delegate: FrameworkDelegate;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
 
   constructor() {
     init(this);
@@ -35,7 +38,7 @@ export class Nav implements NavController {
     return getViews(this);
   }
 
-  getParent(): NavController {
+  getParent(): Nav {
     return null; // TODO
   }
 
@@ -56,9 +59,28 @@ export class Nav implements NavController {
   render() {
     return <slot></slot>;
   }
+
+  getActive() {
+    return getActiveImpl(this);
+  }
+
+  getPrevious(view?: ViewController) {
+    return getPreviousImpl(this, view);
+  }
 }
 
-export function init(nav: NavController) {
+export function init(nav: Nav) {
   nav.id = getNextNavId();
   nav.views = [];
+}
+
+export function getActiveImpl(nav: Nav): ViewController {
+  return nav.views && nav.views.length > 0 ? nav.views[nav.views.length - 1] : null;
+}
+
+export function getPreviousImpl(nav: Nav, viewController: ViewController): ViewController {
+  if (!viewController) {
+    viewController = nav.getActive();
+  }
+  return nav.views[nav.views.indexOf(viewController) - 1];
 }

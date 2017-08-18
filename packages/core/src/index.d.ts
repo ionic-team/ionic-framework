@@ -1,4 +1,6 @@
-import { Animation, AnimationBuilder, AnimationController } from './components/animation-controller/animation-interface';
+import * as Stencil from '@stencil/core';
+
+import { Animation, AnimationBuilder, AnimationController, AnimationOptions } from './components/animation-controller/animation-interface';
 import { ActionSheet, ActionSheetButton, ActionSheetEvent, ActionSheetOptions } from './components/action-sheet/action-sheet';
 import { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
 import { Backdrop } from './components/backdrop/backdrop'
@@ -17,8 +19,8 @@ import { PopoverController } from './components/popover-controller/popover-contr
 import { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 import { Segment } from './components/segment/segment';
 import { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
-import * as Stencil from '@stencil/core';
 
+import { TransitionBuilder } from './navigation/nav-interfaces';
 
 export interface Config {
   get: (key: string, fallback?: any) => any;
@@ -55,6 +57,7 @@ export {
   Animation,
   AnimationBuilder,
   AnimationController,
+  AnimationOptions,
   Backdrop,
   GestureCallback,
   GestureDetail,
@@ -78,5 +81,6 @@ export {
   ScrollDetail,
   Segment,
   SegmentButton,
-  SegmentButtonEvent
+  SegmentButtonEvent,
+  TransitionBuilder
 }
