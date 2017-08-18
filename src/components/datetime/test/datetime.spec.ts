@@ -251,9 +251,9 @@ describe('DateTime', () => {
 
       datetime.generate();
       var columns = picker.getColumns();
-
-      expect(columns.length).toEqual(2);
-      expect(columns[0].name).toEqual('month');
+      
+            expect(columns.length).toEqual(2);
+            expect(columns[0].name).toEqual('month');
       expect(columns[0].options[0].value).toEqual(1);
       expect(columns[0].options[0].text).toEqual('jan');
     }));
@@ -297,6 +297,20 @@ describe('DateTime', () => {
       expect(columns[0].name).toEqual('day');
       expect(columns[0].options[0].value).toEqual(1);
       expect(columns[0].options[0].text).toEqual('1');
+    }));
+
+    it('should use pickerDefault if has no value', zoned(() => {
+      datetime.setValue(null);
+      datetime.max = '2100-12-31';
+      datetime.pickerFormat = 'DD MMMM YYYY';
+      datetime.pickerDefault = '2004-08-06';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(6);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(8);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(2004);
     }));
 
     it('should generate MM DD YYYY pickerFormat with min/max', () => {
