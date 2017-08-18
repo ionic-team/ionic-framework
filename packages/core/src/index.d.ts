@@ -17,6 +17,10 @@ import { PopoverController } from './components/popover-controller/popover-contr
 import { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 import { Segment } from './components/segment/segment';
 import { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
+
+import { Toast, ToastEvent, ToastOptions } from './components/toast/toast'
+import { ToastController } from './components/toast-controller/toast-controller'
+
 import * as Stencil from '@stencil/core';
 
 
@@ -78,5 +82,9 @@ export {
   ScrollDetail,
   Segment,
   SegmentButton,
-  SegmentButtonEvent
+  SegmentButtonEvent,
+  Toast,
+  ToastEvent,
+  ToastOptions,
+  ToastController
 }

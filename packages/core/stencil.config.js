@@ -27,6 +27,7 @@ exports.config = {
     { components: ['ion-spinner'] },
     { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] },
+    { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-nav', 'page-one', 'page-two', 'page-three'] }
   ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',

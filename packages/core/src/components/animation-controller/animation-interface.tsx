@@ -1,5 +1,5 @@
 export interface AnimationController {
-  create(animationBuilder?: AnimationBuilder, baseElm?: any): Promise<Animation>;
+  create(animationBuilder?: AnimationBuilder, baseElm?: any, opts?: any): Promise<Animation>;
 }
 
 export interface Animation {
@@ -38,7 +38,7 @@ export interface Animation {
 
 
 export interface AnimationBuilder {
-  (Animation: Animation, baseElm?: HTMLElement): Animation;
+  (Animation: Animation, baseElm?: HTMLElement, opts?: any): Animation;
 }
 
 
