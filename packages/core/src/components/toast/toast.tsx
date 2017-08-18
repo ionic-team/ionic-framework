@@ -136,19 +136,6 @@ export class Toast {
     }
   }
 
-  protected click(button: HTMLElement) {
-    console.log(button)
-    // let shouldDismiss = true;
-    // if (button.handler) {
-    //   if (button.handler() === false) {
-    //     shouldDismiss = false;
-    //   }
-    // }
-    // if (shouldDismiss) {
-    //   this.dismiss();
-    // }
-  }
-
   protected render() {
     let userCssClass = 'toast-content';
     if (this.cssClass) {
@@ -171,7 +158,6 @@ export class Toast {
     );
   }
 
-
   wrapperClass(): CssClassMap {
     let wrapperClass: string[] = !this.position
       ? ['toast-wrapper','toast-bottom']
@@ -181,6 +167,7 @@ export class Toast {
       return prevValue;
     }, {});
   }
+
 }
 
 export interface ToastOptions {
