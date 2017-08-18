@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "ionic-angular",
-  "version": "3.6.0",
+  "version": "3.6.0-clone",
   "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular",
   "keywords": [
     "ionic",
@@ -140,6 +140,9 @@
     "webpack": "^2.1.0-beta.27",
     "yargs": "5.0.0"
   },
+  "main": "dist/ionic-angular/umd/index.js",
+  "module": "dist/ionic-angular/index.js",
+  "es2015": "dist/ionic-angular/es2015/index.js",
   "config": {
     "commitizen": {
       "path": "node_modules/ionic-cz-conventional-changelog"
