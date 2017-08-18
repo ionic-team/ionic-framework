@@ -251,7 +251,7 @@ describe('DateTime', () => {
 
       datetime.generate();
       var columns = picker.getColumns();
-      
+
       expect(columns.length).toEqual(2);
       expect(columns[0].name).toEqual('month');
       expect(columns[0].options[0].value).toEqual(1);
