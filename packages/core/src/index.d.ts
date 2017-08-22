@@ -1,6 +1,8 @@
 import { Animation, AnimationBuilder, AnimationController } from './components/animation-controller/animation-interface';
 import { ActionSheet, ActionSheetButton, ActionSheetEvent, ActionSheetOptions } from './components/action-sheet/action-sheet';
 import { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
+import { Alert, AlertButton, AlertEvent, AlertInput, AlertOptions } from './components/alert/alert';
+import { AlertController } from './components/alert-controller/alert-controller';
 import { Backdrop } from './components/backdrop/backdrop'
 import { Loading, LoadingEvent, LoadingOptions } from './components/loading/loading';
 import { LoadingController } from './components/loading-controller/loading-controller';
@@ -56,6 +58,12 @@ export {
   ActionSheetEvent,
   ActionSheetOptions,
   ActionSheetController,
+  Alert,
+  AlertButton,
+  AlertEvent,
+  AlertInput,
+  AlertOptions,
+  AlertController,
   Animation,
   AnimationBuilder,
   AnimationController,
