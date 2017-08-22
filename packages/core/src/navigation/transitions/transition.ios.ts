@@ -15,12 +15,16 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 export function buildIOSTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
 
+  rootTransition.enteringView = enteringView;
+  rootTransition.leavingView = leavingView;
+
   const isRTL = document.dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
   const OFF_LEFT = isRTL ? '33%' : '-33%';
 
   rootTransition.duration(isDef(opts.duration) ? opts.duration : DURATION);
   rootTransition.easing(isDef(opts.easing) ? opts.easing : EASING);
+
 
   rootTransition.addElement(enteringView.element);
   rootTransition.beforeAddClass('show-page');
@@ -29,6 +33,8 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
   if (enteringView) {
     const enteringContent = rootTransition.create();
+    const headerElement = enteringView.element.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *');
+    console.log('headerElement: ', headerElement);
     enteringContent.addElement(enteringView.element.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
 
     rootTransition.add(enteringContent);

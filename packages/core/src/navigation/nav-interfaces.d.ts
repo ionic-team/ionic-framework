@@ -8,7 +8,6 @@ import {
 export interface FrameworkDelegate {
   attachViewToDom(navController: Nav, enteringView: ViewController): Promise<any>;
   removeViewFromDom(navController: Nav, leavingView: ViewController): Promise<any>;
-  destroy(viewController: ViewController): Promise<any>;
 }
 
 export interface Nav {
@@ -22,12 +21,26 @@ export interface Nav {
   isPortal?: boolean;
   zIndexOffset?: number;
   swipeToGoBackTransition?: any; // TODO Transition
+  navController: NavController;
   getParent(): Nav;
   getActive(): ViewController;
   getPrevious(view?: ViewController): ViewController;
   childNavs?: Nav[]; // TODO - make nav container
   animationCtrl?: AnimationController;
   config?: Config;
+}
+
+export interface NavController {
+  push(nav: Nav, component: any, data: any, opts: NavOptions): Promise<any>;
+  pop(nav: Nav, opts: NavOptions): Promise<any>;
+  setRoot(nav: Nav, component: any, data: any, opts: NavOptions): Promise<any>;
+  insert(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions): Promise<any>;
+  insertPages(nav: Nav, insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any>;
+  popToRoot(nav: Nav, opts: NavOptions): Promise<any>;
+  popTo(nav: Nav, indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
+  remove(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions): Promise<any>;
+  removeView(nav: Nav, viewController: ViewController, opts?: NavOptions): Promise<any>;
+  setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
 }
 
 export interface ViewController {
@@ -38,7 +51,6 @@ export interface ViewController {
   instance: any;
   state: number;
   nav: Nav;
-  frameworkDelegate: FrameworkDelegate;
   dismissProxy?: any;
   zIndex: number;
 
@@ -51,7 +63,7 @@ export interface ViewController {
   didLoad(): void;
   willUnload():void;
 
-  destroy(): Promise<any>;
+  destroy(delegate?: FrameworkDelegate): Promise<any>;
   getTransitionName(direction: string): string;
   onDidDismiss: (data: any, role: string) => void;
   onWillDismiss: (data: any, role: string) => void;

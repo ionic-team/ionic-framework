@@ -37,6 +37,7 @@ export interface Animation {
   destroy(): void;
   isRoot(): boolean;
   create(): Animation;
+  hasCompleted: boolean;
 }
 
 

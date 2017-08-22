@@ -17,6 +17,9 @@ export const DIRECTION_SWITCH = 'switch';
 export const NAV = 'nav';
 export const TABS = 'tabs';
 
+export let NAV_ID_START = 1000;
+export let VIEW_ID_START = 2000;
+
 let transitionIds = 0;
 let activeTransitions = new Map<number, any>();
 
@@ -119,7 +122,7 @@ export function getNextTransitionId() {
   return transitionIds++;
 }
 
-export function destroy(transitionId: number) {
+export function destroyTransition(transitionId: number) {
   const transition = activeTransitions.get(transitionId);
   if (transition) {
     transition.destroy();
@@ -144,3 +147,45 @@ export function getHydratedTransition(name: string, config: Config, transitionId
 
   return hydratedTransition;
 }
+
+export function canGoBack(nav: Nav) {
+  return nav.views && nav.views.length > 0;
+}
+
+export function canSwipeBack(_nav: Nav) {
+  return true;
+}
+
+export function getFirstView(nav: Nav): ViewController {
+  return nav.views && nav.views.length > 0 ? nav.views[0] : null;
+}
+
+export function getActiveChildNavs(nav: Nav): Nav[] {
+  return nav.childNavs ? nav.childNavs : [];
+}
+
+export function getViews(nav: Nav): ViewController[] {
+  return nav.views ? nav.views : [];
+}
+
+export function init(nav: Nav) {
+  nav.id = getNextNavId();
+  nav.views = [];
+}
+
+export function getActiveImpl(nav: Nav): ViewController {
+  return nav.views && nav.views.length > 0 ? nav.views[nav.views.length - 1] : null;
+}
+
+export function getPreviousImpl(nav: Nav, viewController: ViewController): ViewController {
+  if (!viewController) {
+    viewController = nav.getActive();
+  }
+  return nav.views[nav.views.indexOf(viewController) - 1];
+}
+
+export function getNextNavId() {
+  return navControllerIds++;
+}
+
+let navControllerIds = NAV_ID_START;
