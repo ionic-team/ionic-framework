@@ -1,7 +1,7 @@
 import { Animation } from '../../../index';
 
 /**
- * iOS Action Sheet Animation
+ * iOS Action Sheet Enter Animation
  */
 export default function(Animation: Animation, baseElm: HTMLElement) {
   const baseAnimation = new Animation();
