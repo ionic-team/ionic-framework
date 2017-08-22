@@ -7,7 +7,7 @@ import { Alert } from '../alert/alert';
 import { Popover } from '../popover/popover';
 
 import { ActionSheetController } from '../action-sheet-controller/action-sheet-controller';
-// import { AlertController } from '../alert-controller/alert-controller';
+import { AlertController } from '../alert-controller/alert-controller';
 import { PopoverController } from '../popover-controller/popover-controller';
 
 
@@ -32,7 +32,7 @@ export class Select {
   overlay: ActionSheet | Alert | Popover;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
-  // @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
+  @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
 
   @Element() el: HTMLElement;
@@ -194,18 +194,18 @@ export class Select {
 
     // user cannot provide inputs from selectOptions
     // alert inputs must be created by ionic from ion-select-options
-    selectOptions.inputs = Array.from(this.options).map((input: any) => {
+    selectOptions.inputs = Array.from(this.options).map((option: any) => {
       return {
         type: (this.multiple ? 'checkbox' : 'radio'),
-        label: input.text,
-        value: input.value,
-        checked: input.selected,
-        disabled: input.disabled,
+        label: option.getText(),
+        value: option.value,
+        checked: option.selected,
+        disabled: option.disabled,
         handler: (selectedOption: any) => {
           // Only emit the select event if it is being checked
           // For multi selects this won't emit when unchecking
           if (selectedOption.checked) {
-            input.ionSelect.emit(input.value);
+            option.ionSelect.emit(option.value);
           }
         }
       };
@@ -218,17 +218,17 @@ export class Select {
     selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
     // create the alert instance from our built up selectOptions
-    // overlay = new Alert(this._app, selectOptions, this.config);
+    const alertOptions = {
+      cssClass: selectCssClass,
+      buttons: [{
+        text: this.okText,
+        handler: (selectedValues: any) => this.value = selectedValues
+      }],
+      ...selectOptions
+    }
 
-    // overlay.setCssClass(selectCssClass);
-
-    // overlay.addButton({
-    //   text: this.okText,
-    //   handler: (selectedValues) => this.value = selectedValues
-    // });
-
-    console.debug('Built Select: Alert with', selectOptions, selectCssClass);
-    // return overlay;
+    console.debug('Built Select: Alert with', alertOptions);
+    return this.alertCtrl.create(alertOptions);
   }
 
   buildActionSheet(selectOptions: any) {
@@ -251,10 +251,13 @@ export class Select {
     // If the user passed a cssClass for the select, add it
     selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
-    selectOptions.cssClass = selectCssClass;
+    const actionSheetOptions = {
+      cssClass: selectCssClass,
+      ...selectOptions
+    }
 
-    console.debug('Built Select: Action Sheet with', selectOptions, selectCssClass);
-    return this.actionSheetCtrl.create(selectOptions);
+    console.debug('Built Select: Action Sheet with', actionSheetOptions);
+    return this.actionSheetCtrl.create(actionSheetOptions);
   }
 
   buildPopover(selectOptions: any) {
@@ -278,16 +281,17 @@ export class Select {
     // If the user passed a cssClass for the select, add it
     selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
-    console.debug('Built Select: Popover with', selectOptions, selectCssClass);
-
-    return this.popoverCtrl.create({
+    const popoverOptions = {
       component: 'ion-select-popover',
       componentProps: {
         options: selectOptions
       },
       cssClass: selectCssClass,
       ev: event
-    });
+    }
+
+    console.debug('Built Select: Popover with', popoverOptions);
+    return this.popoverCtrl.create(popoverOptions);
   }
 
   open(ev: UIEvent) {
@@ -319,7 +323,7 @@ export class Select {
     } else if (selectInterface === 'popover') {
       controller = this.buildPopover(selectOptions);
     } else {
-      this.buildAlert(selectOptions);
+      controller = this.buildAlert(selectOptions);
     }
 
     controller.then((component: any) => {
