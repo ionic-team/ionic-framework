@@ -73,7 +73,7 @@ export class Input implements InputComponent {
    * @hidden
    */
   @PropDidChange('checked')
-  setChecked() {
+  checkedChanged() {
     this.emitStyle();
   }
 
@@ -97,7 +97,7 @@ export class Input implements InputComponent {
    * @hidden
    */
   @PropDidChange('disabled')
-  setDisabled() {
+  disabledChanged() {
     this.emitStyle();
   }
 
@@ -192,7 +192,7 @@ export class Input implements InputComponent {
    * Update the native input element when the value changes
    */
   @PropDidChange('value')
-  setValue() {
+  valueChanged() {
     const inputEl = this.el.querySelector('input');
     if (inputEl.value !== this.value) {
       inputEl.value = this.value;

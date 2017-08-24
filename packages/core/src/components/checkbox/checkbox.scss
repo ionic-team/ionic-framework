@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals";
+
+// Checkbox
+// --------------------------------------------------
+
+
+ion-checkbox {
+  position: relative;
+  display: inline-block;
+}
+
+.checkbox-cover {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  background: transparent;
+  cursor: pointer;
+}

@@ -31,8 +31,8 @@ export interface InputBaseComponent {
   inputFocused: (ev: any) => void;
   inputKeydown: (ev: any) => void;
 
-  setDisabled: (ev: any) => void;
-  setValue: (ev: any) => void;
+  disabledChanged: (ev: any) => void;
+  valueChanged: (ev: any) => void;
 }
 
 export interface InputComponent extends InputBaseComponent {
@@ -51,7 +51,7 @@ export interface InputComponent extends InputBaseComponent {
   size: number;
   type: string;
 
-  setChecked: (ev: any) => void;
+  checkedChanged: (ev: any) => void;
 }
 
 export interface TextareaComponent extends InputBaseComponent {

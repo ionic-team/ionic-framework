@@ -39,13 +39,13 @@ export class Toggle implements BooleanInputComponent {
   }
 
   @PropDidChange('checked')
-  changed(val: boolean) {
+  checkedChanged(val: boolean) {
     this.ionChange.emit({ checked: val });
     this.emitStyle();
   }
 
   @PropDidChange('disabled')
-  disableChanged() {
+  disabledChanged() {
     this.emitStyle();
   }
 

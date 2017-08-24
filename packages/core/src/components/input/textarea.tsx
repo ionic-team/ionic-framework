@@ -111,7 +111,7 @@ export class Textarea implements TextareaComponent {
    * @hidden
    */
   @PropDidChange('disabled')
-  setDisabled() {
+  disabledChanged() {
     this.emitStyle();
   }
 
@@ -175,7 +175,7 @@ export class Textarea implements TextareaComponent {
    * Update the native input element when the value changes
    */
   @PropDidChange('value')
-  setValue() {
+  valueChanged() {
     const inputEl = this.el.querySelector('textarea');
     if (inputEl.value !== this.value) {
       inputEl.value = this.value;

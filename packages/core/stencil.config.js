@@ -12,6 +12,7 @@ exports.config = {
     { components: ['ion-backdrop'] },
     { components: ['ion-button', 'ion-buttons', 'ion-icon'] },
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title'] },
+    { components: ['ion-checkbox'] },
     { components: ['ion-chip', 'ion-chip-button'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-gesture', 'ion-scroll'], priority: 'low' },
