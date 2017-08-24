@@ -19,6 +19,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
 export class Loading {
   private animation: Animation;
   private durationTimeout: any;
+  private mode: string;
 
   @Element() private el: HTMLElement;
 
@@ -132,7 +133,15 @@ export class Loading {
 
   protected ionViewDidLoad() {
     if (!this.spinner) {
-      this.spinner = this.config.get('loadingSpinner', this.config.get('spinner', 'lines'));
+      let defaultSpinner = 'lines';
+
+      if (this.mode === 'md') {
+        defaultSpinner = 'crescent';
+      } else if (this.mode === 'wp') {
+        defaultSpinner = 'circles';
+      }
+
+      this.spinner = this.config.get('loadingSpinner') || defaultSpinner;
     }
 
     if (this.showSpinner === null || this.showSpinner === undefined) {

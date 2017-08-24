@@ -2,6 +2,7 @@
 export { IonicApp } from './components/app/app-root';
 export { MenuController } from './components/app/menu-controller';
 export { ActionSheet } from './components/action-sheet/action-sheet';
+export { ActionSheetButton } from './components/action-sheet/action-sheet-options'
 export { ActionSheetController } from './components/action-sheet/action-sheet-controller';
 export { ActionSheetOptions } from './components/action-sheet/action-sheet-options';
 export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';

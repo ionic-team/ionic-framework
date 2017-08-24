@@ -35,7 +35,6 @@ export class ActionSheet {
   @Prop() subTitle: string;
   @Prop() buttons: ActionSheetButton[];
   @Prop() enableBackdropDismiss: boolean = true;
-  @Prop() showBackdrop: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
@@ -173,6 +172,7 @@ export class ActionSheet {
         return b;
       })
       .filter(b => b !== null);
+
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}

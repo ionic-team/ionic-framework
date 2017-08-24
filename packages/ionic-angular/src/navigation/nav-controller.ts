@@ -464,17 +464,13 @@ export abstract class NavController {
    * Pop to a specific view in the history stack. If an already created
    * instance of the page is not found in the stack, then it'll `setRoot`
    * to the nav stack by removing all current pages and pushing on a
-   * new instance of the given page. Note that any params passed to
-   * this method are not used when an existing page instance has already
-   * been found in the stack. Nav params are only used by this method
-   * when a new instance needs to be created.
+   * new instance of the given page.
    *
    * @param {Page|string|ViewController} page The component class or deeplink name you want to push onto the navigation stack.
-   * @param {object} [params={}] Any NavParams to be used when a new view instance is created at the root.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popTo(page: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popTo(page: Page | string | ViewController, opts?: NavOptions, done?: Function): Promise<any>;
 
   /**
    * @hidden

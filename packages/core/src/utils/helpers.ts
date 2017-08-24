@@ -166,4 +166,8 @@ export function isReady(element: HTMLElement) {
       resolve(elm);
     });
   });
+
+/** @hidden */
+export function deepCopy(obj: any) {
+  return JSON.parse(JSON.stringify(obj));
 }

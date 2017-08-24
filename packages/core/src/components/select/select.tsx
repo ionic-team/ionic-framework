@@ -1,4 +1,14 @@
-import { Component, CssClassMap, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, HostElement, Prop } from '@stencil/core';
+
+import { deepCopy } from '../../utils/helpers';
+
+import { ActionSheet } from '../action-sheet/action-sheet';
+import { Alert } from '../alert/alert';
+import { Popover } from '../popover/popover';
+
+import { ActionSheetController } from '../action-sheet-controller/action-sheet-controller';
+import { AlertController } from '../alert-controller/alert-controller';
+import { PopoverController } from '../popover-controller/popover-controller';
 
 
 @Component({
@@ -14,8 +24,18 @@ import { Component, CssClassMap, Event, EventEmitter, Prop } from '@stencil/core
 })
 export class Select {
   text: any;
-  id: any;
-  labelId: any;
+  texts: any;
+  id: string;
+  labelId: string;
+  item: any;
+  options: any;
+  overlay: ActionSheet | Alert | Popover;
+
+  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
+  @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
+  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
+
+  @Element() el: HTMLElement;
 
   /**
    * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
@@ -48,7 +68,7 @@ export class Select {
   /**
    * @input {string} The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
    */
-  @Prop() interface: string = '';
+  @Prop() interface: string = 'alert';
 
   /**
    * @input {string} The text to display instead of the selected option's value.
@@ -61,284 +81,9 @@ export class Select {
   @Prop() multiple: boolean;
 
   /**
-   * @output {EventEmitter} Emitted when the selection is cancelled.
+   * @input {string} the value of the select.
    */
-  @Event() ionCancel: EventEmitter;
-
-
-  hostData() {
-    return {
-      class: {
-        'select-disabled': this.disabled
-      }
-    };
-  }
-
-  render() {
-    let addPlaceholderClass = false
-
-    let selectText = this.selectedText || this.text;
-    if (!selectText && this.placeholder) {
-      selectText = this.placeholder;
-      addPlaceholderClass = true;
-    }
-
-    const selectTextClasses: CssClassMap = {
-      'select-text': true,
-      'select-placeholder': addPlaceholderClass
-    };
-
-    return [
-      // add placeholder class
-      <div class={selectTextClasses}>{ selectText }</div>,
-      <div class="select-icon">
-        <div class="select-icon-inner"></div>
-      </div>,
-      <button
-        aria-haspopup="true"
-        id={this.id}
-        aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? "true" : false}
-        class="item-cover">
-      </button>
-    ];
-  }
-
-}
-
-// export class Select extends BaseInput<any> implements OnDestroy {
-
-//   _options: QueryList<Option>;
-//   _overlay: ActionSheet | Alert | Popover;
-//   _texts: string[] = [];
-//   _text: string = '';
-
-
-//   @HostListener('click', ['$event'])
-//   _click(ev: UIEvent) {
-//     if (ev.detail === 0) {
-//       // do not continue if the click event came from a form submit
-//       return;
-//     }
-//     ev.preventDefault();
-//     ev.stopPropagation();
-//     this.open(ev);
-//   }
-
-//   @HostListener('keyup.space')
-//   _keyup() {
-//     this.open();
-//   }
-
-//   /**
-//    * @hidden
-//    */
-//   getValues(): any[] {
-//     const values = Array.isArray(this._value) ? this._value : [this._value];
-//     assert(this._multi || values.length <= 1, 'single only can have one value');
-//     return values;
-//   }
-
-//   /**
-//    * Open the select interface.
-//    */
-//   open(ev?: UIEvent) {
-//     if (this.isFocus() || this._disabled) {
-//       return;
-//     }
-
-//     console.debug('select, open alert');
-
-//     // the user may have assigned some options specifically for the alert
-//     const selectOptions = deepCopy(this.selectOptions);
-
-//     // make sure their buttons array is removed from the options
-//     // and we create a new array for the alert's two buttons
-//     selectOptions.buttons = [{
-//       text: this.cancelText,
-//       role: 'cancel',
-//       handler: () => {
-//         this.ionCancel.emit(this);
-//       }
-//     }];
-
-//     // if the selectOptions didn't provide a title then use the label's text
-//     if (!selectOptions.title && this._item) {
-//       selectOptions.title = this._item.getLabelText();
-//     }
-
-//     let options = this._options.toArray();
-//     if (this.interface === 'action-sheet' && options.length > 6) {
-//       console.warn('Interface cannot be "action-sheet" with more than 6 options. Using the "alert" interface.');
-//       this.interface = 'alert';
-//     }
-
-//     if ((this.interface === 'action-sheet' || this.interface === 'popover') && this._multi) {
-//       console.warn('Interface cannot be "' + this.interface + '" with a multi-value select. Using the "alert" interface.');
-//       this.interface = 'alert';
-//     }
-
-//     if (this.interface === 'popover' && !ev) {
-//       console.warn('Interface cannot be "popover" without UIEvent.');
-//       this.interface = 'alert';
-//     }
-
-//     let overlay: ActionSheet | Alert | Popover;
-
-//     if (this.interface === 'action-sheet') {
-//       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
-//         return {
-//           role: (input.selected ? 'selected' : ''),
-//           text: input.text,
-//           handler: () => {
-//             this.value = input.value;
-//             input.ionSelect.emit(input.value);
-//           }
-//         };
-//       }));
-//       var selectCssClass = 'select-action-sheet';
-
-//       // If the user passed a cssClass for the select, add it
-//       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-
-//       selectOptions.cssClass = selectCssClass;
-//       overlay = new ActionSheet(this._app, selectOptions, this.config);
-
-//     } else if (this.interface === 'popover') {
-//       let popoverOptions: SelectPopoverOption[] = options.map(input => ({
-//         text: input.text,
-//         checked: input.selected,
-//         disabled: input.disabled,
-//         value: input.value,
-//         handler: () => {
-//           this.value = input.value;
-//           input.ionSelect.emit(input.value);
-//         }
-//       }));
-
-//       var popoverCssClass = 'select-popover';
-
-//       // If the user passed a cssClass for the select, add it
-//       popoverCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-
-//       overlay = new Popover(this._app, SelectPopover, {
-//         options: popoverOptions
-//       }, {
-//         cssClass: popoverCssClass
-//       }, this.config, this.deepLinker);
-
-//       // ev.target is readonly.
-//       // place popover regarding to ion-select instead of .button-inner
-//       Object.defineProperty(ev, 'target', { value: ev.currentTarget });
-//       selectOptions.ev = ev;
-
-//     } else {
-//       // default to use the alert interface
-//       this.interface = 'alert';
-
-//       // user cannot provide inputs from selectOptions
-//       // alert inputs must be created by ionic from ion-options
-//       selectOptions.inputs = this._options.map(input => {
-//         return {
-//           type: (this._multi ? 'checkbox' : 'radio'),
-//           label: input.text,
-//           value: input.value,
-//           checked: input.selected,
-//           disabled: input.disabled,
-//           handler: (selectedOption: any) => {
-//             // Only emit the select event if it is being checked
-//             // For multi selects this won't emit when unchecking
-//             if (selectedOption.checked) {
-//               input.ionSelect.emit(input.value);
-//             }
-//           }
-//         };
-//       });
-
-//       var selectCssClass = 'select-alert';
-
-//       // create the alert instance from our built up selectOptions
-//       overlay = new Alert(this._app, selectOptions, this.config);
-
-//       if (this._multi) {
-//         // use checkboxes
-//         selectCssClass += ' multiple-select-alert';
-//       } else {
-//         // use radio buttons
-//         selectCssClass += ' single-select-alert';
-//       }
-
-//       // If the user passed a cssClass for the select, add it
-//       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-//       overlay.setCssClass(selectCssClass);
-
-//       overlay.addButton({
-//         text: this.okText,
-//         handler: (selectedValues) => this.value = selectedValues
-//       });
-
-//     }
-
-//     overlay.present(selectOptions);
-
-//     this._fireFocus();
-
-//     overlay.onDidDismiss(() => {
-//       this._fireBlur();
-//       this._overlay = undefined;
-//     });
-
-//     this._overlay = overlay;
-//   }
-
-//   /**
-//    * Close the select interface.
-//    */
-//   close(): Promise<any> {
-//     if (!this._overlay || !this.isFocus()) {
-//       return;
-//     }
-
-//     return this._overlay.dismiss();
-//   }
-
-
-//   /**
-//    * @hidden
-//    */
-//   get text() {
-//     return (this._multi ? this._texts : this._texts.join());
-//   }
-
-
-//   /**
-//    * @private
-//    */
-//   @ContentChildren(Option)
-//   set options(val: QueryList<Option>) {
-//     this._options = val;
-//     const values = this.getValues();
-//     if (values.length === 0) {
-//       // there are no values set at this point
-//       // so check to see who should be selected
-//       // we use writeValue() because we don't want to update ngModel
-//       this.writeValue(val.filter(o => o.selected).map(o => o.value));
-//     } else {
-//       this._inputUpdated();
-//     }
-//   }
-
-//   _inputShouldChange(val: string[]|string): boolean {
-//     return !deepEqual(this._value, val);
-//   }
-
-//   /**
-//    * TODO: REMOVE THIS
-//    * @hidden
-//    */
-//   _inputChangeEvent(): any {
-//     return this.value;
-//   }
+  @Prop({ state: true }) value: string;
 
 //   /**
 //    * @hidden
@@ -362,4 +107,272 @@ export class Select {
 //     this._text = this._texts.join(', ');
 //   }
 
-// }
+  /**
+   * @output {EventEmitter} Emitted when the selection is cancelled.
+   */
+  @Event() ionCancel: EventEmitter;
+
+
+  ionViewWillLoad() {
+    // Get the parent item
+    this.item = this.el.closest('ion-item') as HostElement;
+
+    this.setOptions();
+  }
+
+
+  setOptions() {
+    // Get the options
+    this.options = this.el.querySelectorAll('ion-select-option') as NodeListOf<HostElement>;
+
+    const values = this.getValues();
+    if (values.length === 0) {
+      // there are no values set at this point
+      // so check to see who should be selected
+      // we use writeValue() because we don't want to update ngModel
+      // this.writeValue(val.filter(o => o.selected).map(o => o.value));
+    }
+  }
+
+
+  /**
+   * @hidden
+   */
+  getValues(): any[] {
+    const values = Array.isArray(this.value) ? this.value : [this.value];
+    return values;
+  }
+
+
+  /**
+   * Close the select interface.
+   */
+  close(): Promise<any> | void {
+    // TODO check !this.overlay || !this.isFocus()
+    if (!this.overlay) {
+      return;
+    }
+
+    return this.overlay.dismiss();
+  }
+
+
+  /**
+   * @hidden
+   */
+  getText() {
+    return (this.multiple ? this.texts : this.texts.join());
+  }
+
+  /**
+   * @hidden
+   */
+  resetInterface(ev: Event): string {
+    let selectInterface = this.interface;
+
+    if (selectInterface === 'action-sheet' && this.options.length > 6) {
+      console.warn('Interface cannot be "' + selectInterface + '" with more than 6 options. Using the "alert" interface instead.');
+      selectInterface = 'alert';
+    }
+
+    if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
+      console.warn('Interface cannot be "' + selectInterface + '" with a multi-value select. Using the "alert" interface instead.');
+      selectInterface = 'alert';
+    }
+
+    if (selectInterface === 'popover' && !ev) {
+      console.warn('Interface cannot be "' + selectInterface + '" without passing an event. Using the "alert" interface instead.');
+      selectInterface = 'alert';
+    }
+
+    return selectInterface;
+  }
+
+  // TODO add Alert to finish this
+  buildAlert(selectOptions: any) {
+    console.debug('Build Select: Alert with', selectOptions, this.options);
+
+    // user cannot provide inputs from selectOptions
+    // alert inputs must be created by ionic from ion-select-options
+    selectOptions.inputs = Array.from(this.options).map((option: any) => {
+      return {
+        type: (this.multiple ? 'checkbox' : 'radio'),
+        label: option.getText(),
+        value: option.value,
+        checked: option.selected,
+        disabled: option.disabled,
+        handler: (selectedOption: any) => {
+          // Only emit the select event if it is being checked
+          // For multi selects this won't emit when unchecking
+          if (selectedOption.checked) {
+            option.ionSelect.emit(option.value);
+          }
+        }
+      };
+    });
+
+    // If multiple is true use checkboxes, else use radio buttons
+    var selectCssClass = 'select-alert ' + this.multiple ? 'multiple-select-alert' : 'single-select-alert';
+
+    // If the user passed a cssClass for the select, add it
+    selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
+
+    // create the alert instance from our built up selectOptions
+    const alertOptions = {
+      cssClass: selectCssClass,
+      buttons: [{
+        text: this.okText,
+        handler: (selectedValues: any) => this.value = selectedValues
+      }],
+      ...selectOptions
+    }
+
+    console.debug('Built Select: Alert with', alertOptions);
+    return this.alertCtrl.create(alertOptions);
+  }
+
+  buildActionSheet(selectOptions: any) {
+    console.debug('Building Select: Action Sheet with', selectOptions, this.options);
+
+    selectOptions.buttons = selectOptions.buttons.concat(Array.from(this.options).map((option: any) => {
+      return {
+        role: (option.selected ? 'selected' : ''),
+        text: option.getText(),
+        handler: () => {
+          this.value = option.value;
+          // TODO remove $instance
+          option.$instance.ionSelect.emit(option.value);
+        }
+      };
+    }));
+
+    var selectCssClass = 'select-action-sheet';
+
+    // If the user passed a cssClass for the select, add it
+    selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
+
+    const actionSheetOptions = {
+      cssClass: selectCssClass,
+      ...selectOptions
+    }
+
+    console.debug('Built Select: Action Sheet with', actionSheetOptions);
+    return this.actionSheetCtrl.create(actionSheetOptions);
+  }
+
+  buildPopover(selectOptions: any) {
+    console.debug('Building Select: Popover with', selectOptions, this.options);
+
+    selectOptions = Array.from(this.options).map((option: any) => {
+      return {
+        text: option.getText(),
+        checked: option.selected,
+        disabled: option.disabled,
+        value: option.value,
+        handler: () => {
+          this.value = option.value;
+          option.ionSelect.emit(option.value);
+        }
+      };
+    });
+
+    var selectCssClass = 'select-popover';
+
+    // If the user passed a cssClass for the select, add it
+    selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
+
+    const popoverOptions = {
+      component: 'ion-select-popover',
+      componentProps: {
+        options: selectOptions
+      },
+      cssClass: selectCssClass,
+      ev: event
+    }
+
+    console.debug('Built Select: Popover with', popoverOptions);
+    return this.popoverCtrl.create(popoverOptions);
+  }
+
+  open(ev: UIEvent) {
+    // the user may have assigned some options specifically for the alert
+    const selectOptions = deepCopy(this.selectOptions);
+
+    // make sure their buttons array is removed from the options
+    // and we create a new array for the alert's two buttons
+    selectOptions.buttons = [{
+      text: this.cancelText,
+      role: 'cancel',
+      handler: () => {
+        this.ionCancel.emit(this);
+      }
+    }];
+
+    // if the selectOptions didn't provide a title then use the label's text
+    if (!selectOptions.title && this.item) {
+      selectOptions.title = this.item.getLabelText();
+    }
+
+    // If the user passed in an invalid interface we need to reset it to alert
+    let selectInterface = this.resetInterface(ev);
+
+    let controller: Promise<any>;
+
+    if (selectInterface === 'action-sheet') {
+      controller = this.buildActionSheet(selectOptions);
+    } else if (selectInterface === 'popover') {
+      controller = this.buildPopover(selectOptions);
+    } else {
+      controller = this.buildAlert(selectOptions);
+    }
+
+    controller.then((component: any) => {
+      component.present();
+
+      // component.onDidDismiss(() => {
+      //   this.overlay = undefined;
+      // })
+
+      // this.overlay = component;
+    });
+  }
+
+  hostData() {
+    return {
+      class: {
+        'select-disabled': this.disabled
+      }
+    };
+  }
+
+  render() {
+    let addPlaceholderClass = false;
+
+    // If selected text has been passed in, use that first
+    let selectText = this.selectedText || this.text;
+    if (!selectText && this.placeholder) {
+      selectText = this.placeholder;
+      addPlaceholderClass = true;
+    }
+
+    const selectTextClasses: CssClassMap = {
+      'select-text': true,
+      'select-placeholder': addPlaceholderClass
+    };
+
+    return [
+      <div class={ selectTextClasses }>{ selectText }</div>,
+      <div class="select-icon">
+        <div class="select-icon-inner"></div>
+      </div>,
+      <button
+        aria-haspopup="true"
+        id={this.id}
+        aria-labelledby={this.labelId}
+        aria-disabled={this.disabled ? "true" : false}
+        onClick={this.open.bind(this)}
+        class="item-cover">
+      </button>
+    ];
+  }
+}

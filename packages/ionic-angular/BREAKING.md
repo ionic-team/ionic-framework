@@ -10,6 +10,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Fixed Content](#fixed-content)
 - [Icon](#icon)
 - [Item](#item)
+- [Option](#option)
 - [Segment](#segment)
 - [Toolbar](#toolbar)
 
@@ -317,6 +318,36 @@ These have been renamed to the following:
   <div slot="end">Right on LTR, Left on RTL</div>
 </ion-item>
 ```
+
+## Option
+
+### Markup Changed
+
+Select's option element should now be written as `<ion-select-option>`. This makes it more obvious that the element should only be used with a Select.
+
+**Old Usage Example:**
+
+```html
+<ion-select>
+  <ion-option>Option 1</ion-option>
+  <ion-option>Option 2</ion-option>
+  <ion-option>Option 3</ion-option>
+</ion-select>
+```
+
+**New Usage Example:**
+
+```html
+<ion-select>
+  <ion-select-option>Option 1</ion-select-option>
+  <ion-select-option>Option 2</ion-select-option>
+  <ion-select-option>Option 3</ion-select-option>
+</ion-select>
+```
+
+### Class Changed
+
+The class has been renamed from `Option` to `SelectOption` to keep it consistent with the element tag name.
 
 ## Segment
 

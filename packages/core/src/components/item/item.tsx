@@ -1,4 +1,4 @@
-import { Component, Element, Prop, Listen } from '@stencil/core';
+import { Component, Element, HostElement, Method, Prop, Listen } from '@stencil/core';
 import { CssClassMap } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -13,6 +13,7 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class Item {
   private childStyles: CssClassMap = Object.create(null);
+  private label: any;
 
   @Element() private el: HTMLElement;
 
@@ -38,12 +39,28 @@ export class Item {
     return hasChildStyleChange;
   }
 
+  @Method()
+  getLabelText(): string {
+    return this.label ? this.label.getText() : '';
+  }
+
   ionViewDidLoad() {
     // Add item-button classes to each ion-button in the item
     const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].itemButton = true;
     }
+
+    this.label = this.el.querySelector('ion-label') as HostElement;
+
+    // if (label) {
+    //   this.label = label;
+    //   this.labelId = label.id = ('lbl-' + this.id);
+    //   if (label.type) {
+    //     this.setElementClass('item-label-' + label.type, true);
+    //   }
+    //   this.viewLabel = false;
+    // }
   }
 
   render() {
@@ -168,12 +185,6 @@ export class Item {
   //   }
   // }
 
-  // /**
-  //  * @hidden
-  //  */
-  // getLabelText(): string {
-  //   return this._label ? this._label.text : '';
-  // }
 
   // /**
   //  * @hidden

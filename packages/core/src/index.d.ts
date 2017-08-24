@@ -3,6 +3,8 @@ import * as Stencil from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, AnimationOptions } from './components/animation-controller/animation-interface';
 import { ActionSheet, ActionSheetButton, ActionSheetEvent, ActionSheetOptions } from './components/action-sheet/action-sheet';
 import { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
+import { Alert, AlertButton, AlertEvent, AlertInput, AlertOptions } from './components/alert/alert';
+import { AlertController } from './components/alert-controller/alert-controller';
 import { Backdrop } from './components/backdrop/backdrop'
 import { Loading, LoadingEvent, LoadingOptions } from './components/loading/loading';
 import { LoadingController } from './components/loading-controller/loading-controller';
@@ -19,6 +21,10 @@ import { PopoverController } from './components/popover-controller/popover-contr
 import { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 import { Segment } from './components/segment/segment';
 import { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
+import { Toast, ToastEvent, ToastOptions } from './components/toast/toast'
+import { ToastController } from './components/toast-controller/toast-controller'
+
+import * as Stencil from '@stencil/core';
 
 import { TransitionBuilder } from './navigation/nav-interfaces';
 
@@ -54,6 +60,12 @@ export {
   ActionSheetEvent,
   ActionSheetOptions,
   ActionSheetController,
+  Alert,
+  AlertButton,
+  AlertEvent,
+  AlertInput,
+  AlertOptions,
+  AlertController,
   Animation,
   AnimationBuilder,
   AnimationController,
@@ -82,7 +94,11 @@ export {
   Segment,
   SegmentButton,
   SegmentButtonEvent,
-  TransitionBuilder
+  TransitionBuilder,
+  Toast,
+  ToastEvent,
+  ToastOptions,
+  ToastController
 }
 
 export interface StencilElement extends HTMLElement {
