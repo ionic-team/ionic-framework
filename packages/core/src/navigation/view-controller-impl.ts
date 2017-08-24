@@ -1,5 +1,5 @@
-import { FrameworkDelegate, NavController, ViewController } from './nav-interfaces';
-import { STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED } from './nav-utils';
+import { FrameworkDelegate, Nav, ViewController } from './nav-interfaces';
+import { STATE_ATTACHED, STATE_DESTROYED, STATE_NEW, STATE_INITIALIZED } from './nav-utils';
 
 import { assert } from '../utils/helpers';
 
@@ -10,16 +10,17 @@ export class ViewControllerImpl implements ViewController {
   element: HTMLElement;
   instance: any;
   state: number;
-  nav: NavController;
+  nav: Nav;
   overlay: boolean;
+  zIndex: number;
   dismissProxy: any;
-  frameworkDelegate: FrameworkDelegate;
+
 
   onDidDismiss: (data: any, role: string) => void;
   onWillDismiss: (data: any, role: string) => void;
 
   constructor(public component: any, data?: any) {
-    this.data = data || {};
+    initializeNewViewController(this, data);
   }
 
   /**
@@ -62,8 +63,8 @@ export class ViewControllerImpl implements ViewController {
     willUnloadImpl(this);
   }
 
-  destroy(): Promise<any> {
-    return destroy(this);
+  destroy(delegate?: FrameworkDelegate): Promise<any> {
+    return destroy(this, delegate);
   }
 
   getTransitionName(_direction: string): string {
@@ -96,21 +97,15 @@ export function dismiss(navCtrl: any, dismissProxy: any, data?: any, role?: stri
   return navCtrl.removeView(this, options).then(() => data);
 }
 
-export function destroy(viewController: ViewController): Promise<any> {
-  return Promise.resolve().then(() => {
-    assert(viewController.state !== STATE_DESTROYED, 'view state must be attached');
+export function destroy(viewController: ViewController, delegate?: FrameworkDelegate): Promise<any> {
+  assert(viewController.state !== STATE_DESTROYED, 'view state must be attached');
+  return delegate ? delegate.removeViewFromDom(viewController.nav, viewController) : Promise.resolve().then(() => {
 
     if (viewController.component) {
       // TODO - consider removing classes and styles as thats what we do in ionic-angular
     }
 
-    if (viewController.frameworkDelegate) {
-      return viewController.frameworkDelegate.destroy(viewController);
-    }
-
-    return null;
-  }).then(() => {
-    viewController.id = viewController.data = viewController.element = viewController.instance = viewController.nav = viewController.dismissProxy = viewController.frameworkDelegate = null;
+    viewController.id = viewController.data = viewController.element = viewController.instance = viewController.nav = viewController.dismissProxy = null;
     viewController.state = STATE_DESTROYED;
   });
 }
@@ -161,4 +156,9 @@ export function willUnloadImpl(viewController: ViewController) {
 export function didLoadImpl(viewController: ViewController) {
   assert(viewController.state === STATE_ATTACHED, 'view state must be ATTACHED');
   callLifeCycleFunction(viewController.instance, 'ionViewDidLoad');
+}
+
+export function initializeNewViewController(viewController: ViewController, data: any) {
+  viewController.state = STATE_NEW;
+  viewController.data = data || {};
 }

@@ -1,21 +1,47 @@
+import {
+  Animation,
+  AnimationController,
+  AnimationOptions,
+  Config
+} from '..';
+
 export interface FrameworkDelegate {
-  attachViewToDom(navController: NavController, enteringView: ViewController): Promise<any>;
-  removeViewFromDom(navController: NavController, leavingView: ViewController): Promise<any>;
-  destroy(viewController: ViewController): Promise<any>;
+  attachViewToDom(navController: Nav, enteringView: ViewController): Promise<any>;
+  removeViewFromDom(navController: Nav, leavingView: ViewController): Promise<any>;
 }
 
-export interface NavController {
-  id: number;
-  element: HTMLElement;
+export interface Nav {
+  id?: number;
+  element?: HTMLElement;
   views?: ViewController[];
   transitioning?: boolean;
   destroyed?: boolean;
   transitionId?: number;
   isViewInitialized?: boolean;
   isPortal?: boolean;
+  zIndexOffset?: number;
   swipeToGoBackTransition?: any; // TODO Transition
-  getParent(): NavController;
-  childNavs?: NavController[]; // TODO - make nav container
+  navController?: NavController;
+  parent?: Nav;
+  getActive(): ViewController;
+  getPrevious(view?: ViewController): ViewController;
+  childNavs?: Nav[]; // TODO - make nav container
+  animationCtrl?: AnimationController;
+  config?: Config;
+}
+
+export interface NavController {
+  push(nav: Nav, component: any, data: any, opts: NavOptions): Promise<any>;
+  pop(nav: Nav, opts: NavOptions): Promise<any>;
+  setRoot(nav: Nav, component: any, data: any, opts: NavOptions): Promise<any>;
+  insert(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions): Promise<any>;
+  insertPages(nav: Nav, insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any>;
+  popToRoot(nav: Nav, opts: NavOptions): Promise<any>;
+  popTo(nav: Nav, indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
+  remove(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions): Promise<any>;
+  removeView(nav: Nav, viewController: ViewController, opts?: NavOptions): Promise<any>;
+  setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
+  delegate?: FrameworkDelegate;
 }
 
 export interface ViewController {
@@ -25,9 +51,9 @@ export interface ViewController {
   element: HTMLElement;
   instance: any;
   state: number;
-  nav: NavController;
-  frameworkDelegate: FrameworkDelegate;
+  nav: Nav;
   dismissProxy?: any;
+  zIndex: number;
 
   // life cycle events
   willLeave(unload: boolean): void;
@@ -38,7 +64,7 @@ export interface ViewController {
   didLoad(): void;
   willUnload():void;
 
-  destroy(): Promise<any>;
+  destroy(delegate?: FrameworkDelegate): Promise<any>;
   getTransitionName(direction: string): string;
   onDidDismiss: (data: any, role: string) => void;
   onWillDismiss: (data: any, role: string) => void;
@@ -81,7 +107,7 @@ export interface TransitionInstruction {
   enteringRequiresTransition?: boolean;
   requiresTransition?: boolean;
   id?: number;
-  nav?: NavController;
+  nav?: Nav;
   delegate?: FrameworkDelegate;
 }
 
@@ -94,4 +120,18 @@ export interface NavResult {
 export interface ComponentDataPair {
   page: any;
   params: any;
+}
+
+export interface Transition extends Animation {
+  enteringView?: ViewController;
+  leavingView?: ViewController;
+  transitionStartFunction?: Function;
+  transitionId?: number;
+  registerTransitionStart(callback: Function): void;
+  start(): void;
+  originalDestroy(): void; // this is intended to be private, don't use this bad boy
+}
+
+export interface TransitionBuilder {
+  (rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions ): Transition;
 }

@@ -5,6 +5,7 @@ export interface AnimationController {
 export interface Animation {
   new (): Animation;
   parent: Animation;
+  hasChildren: boolean;
   addElement(elm: Node|Node[]|NodeList): Animation;
   add(childAnimation: Animation): Animation;
   duration(milliseconds: number): Animation;
@@ -34,11 +35,14 @@ export interface Animation {
   progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number): void;
   onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animation;
   destroy(): void;
+  isRoot(): boolean;
+  create(): Animation;
+  hasCompleted: boolean;
 }
 
 
 export interface AnimationBuilder {
-  (Animation: Animation, baseElm?: HTMLElement, opts?: any): Animation;
+(Animation: Animation, baseElm?: HTMLElement, opts?: any): Animation;
 }
 
 
