@@ -1,4 +1,4 @@
-import { Component, Element, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 import { AnimationController, Config } from '../..';
 import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
 
@@ -11,6 +11,8 @@ import { isReady } from '../../utils/helpers';
 export class IonNav implements Nav {
 
   @Element() element: HTMLElement;
+  @Event() navInit: EventEmitter;
+
   id: number;
   parent: Nav;
   views: ViewController[];
@@ -33,7 +35,8 @@ export class IonNav implements Nav {
   }
 
   ionViewDidLoad() {
-    this.setRoot(this.root);
+    ionViewDidLoadImpl(this);
+
   }
 
   getViews(): ViewController[] {
@@ -41,52 +44,52 @@ export class IonNav implements Nav {
   }
 
   @Method()
-  push(component: any, data?: any, opts?: NavOptions) {
+  push(component: any, data?: any, opts?: NavOptions): Promise<any> {
     return pushImpl(this, component, data, opts);
   }
 
   @Method()
-  pop(opts?: NavOptions) {
+  pop(opts?: NavOptions): Promise<any> {
     return popImpl(this, opts);
   }
 
   @Method()
-  setRoot(component: any, data?: any, opts?: NavOptions) {
+  setRoot(component: any, data?: any, opts?: NavOptions): Promise<any> {
     return setRootImpl(this, component, data, opts);
   }
 
   @Method()
-  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions) {
+  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions): Promise<any> {
     return insertImpl(this, insertIndex, page, params, opts);
   }
 
   @Method()
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions) {
+  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any> {
     return insertPagesImpl(this, insertIndex, insertPages, opts);
   }
 
   @Method()
-  popToRoot(opts?: NavOptions) {
+  popToRoot(opts?: NavOptions): Promise<any> {
     return popToRootImpl(this, opts);
   }
 
   @Method()
-  popTo(indexOrViewCtrl: any, opts?: NavOptions) {
+  popTo(indexOrViewCtrl: any, opts?: NavOptions): Promise<any> {
     return popToImpl(this, indexOrViewCtrl, opts);
   }
 
   @Method()
-  remove(startIndex: number, removeCount?: number, opts?: NavOptions) {
+  remove(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any> {
     return removeImpl(this, startIndex, removeCount, opts);
   }
 
   @Method()
-  removeView(viewController: ViewController, opts?: NavOptions) {
+  removeView(viewController: ViewController, opts?: NavOptions): Promise<any> {
     return removeViewImpl(this, viewController, opts);
   }
 
   @Method()
-  setPages(componentDataPairs: ComponentDataPair[], opts? : NavOptions) {
+  setPages(componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any> {
     return setPagesImpl(this, componentDataPairs, opts);
   }
 
@@ -117,6 +120,13 @@ export class IonNav implements Nav {
 
   render() {
     return <slot></slot>;
+  }
+}
+
+export function ionViewDidLoadImpl(nav: Nav) {
+  nav.
+  if (nav.root) {
+    nav.setRoot(nav.root);
   }
 }
 

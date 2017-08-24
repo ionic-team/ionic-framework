@@ -23,11 +23,22 @@ export interface Nav {
   swipeToGoBackTransition?: any; // TODO Transition
   navController?: NavController;
   parent?: Nav;
+  childNavs?: Nav[]; // TODO - make nav container
+  root?: any;
+
   getActive(): ViewController;
   getPrevious(view?: ViewController): ViewController;
-  childNavs?: Nav[]; // TODO - make nav container
-  animationCtrl?: AnimationController;
-  config?: Config;
+  getViews(): ViewController[];
+  push(component: any, data?: any, opts?: NavOptions): Promise<any>;
+  pop(opts?: NavOptions): Promise<any>;
+  setRoot(component: any, data?: any, opts?: NavOptions): Promise<any>;
+  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions): Promise<any>;
+  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any>;
+  popToRoot(opts?: NavOptions): Promise<any>;
+  popTo(indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
+  remove(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any>;
+  removeView(viewController: ViewController, opts?: NavOptions): Promise<any>;
+  setPages(componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
 }
 
 export interface NavController {
