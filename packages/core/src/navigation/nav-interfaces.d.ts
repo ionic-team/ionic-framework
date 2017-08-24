@@ -1,3 +1,5 @@
+import { EventEmitter } from '@stencil/core';
+
 import {
   Animation,
   AnimationController,
@@ -25,7 +27,11 @@ export interface Nav {
   parent?: Nav;
   childNavs?: Nav[]; // TODO - make nav container
   root?: any;
+  navInit?: EventEmitter;
+  config?: Config;
+  animationCtrl?: AnimationController;
 
+  // public methods
   getActive(): ViewController;
   getPrevious(view?: ViewController): ViewController;
   getViews(): ViewController[];

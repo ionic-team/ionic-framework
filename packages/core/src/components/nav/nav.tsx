@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { AnimationController, Config } from '../..';
 import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
 
@@ -118,16 +118,23 @@ export class IonNav implements Nav {
     return getFirstView(this);
   }
 
+  @Listen('navInit')
+  navInitialized(event: any) {
+    console.log('got the event: ', event);
+  }
+
+
   render() {
     return <slot></slot>;
   }
 }
 
 export function ionViewDidLoadImpl(nav: Nav) {
-  nav.
+  nav.navInit.emit(nav);
   if (nav.root) {
     nav.setRoot(nav.root);
   }
+
 }
 
 export function pushImpl(nav: Nav, component: any, data: any, opts: NavOptions) {

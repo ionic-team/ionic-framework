@@ -166,6 +166,7 @@ export function isReady(element: HTMLElement) {
       resolve(elm);
     });
   });
+}
 
 /** @hidden */
 export function deepCopy(obj: any) {

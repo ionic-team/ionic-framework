@@ -24,8 +24,6 @@ import { SegmentButton, SegmentButtonEvent } from './components/segment-button/s
 import { Toast, ToastEvent, ToastOptions } from './components/toast/toast'
 import { ToastController } from './components/toast-controller/toast-controller'
 
-import * as Stencil from '@stencil/core';
-
 import { TransitionBuilder } from './navigation/nav-interfaces';
 
 export interface Config {
