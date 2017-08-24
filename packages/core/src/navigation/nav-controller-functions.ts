@@ -1,4 +1,4 @@
-import { Animation, AnimationOptions } from '../components/animation-controller/animation-interface';
+import { Animation, AnimationOptions, Config } from '..';
 import {
   ComponentDataPair,
   FrameworkDelegate,
@@ -173,6 +173,10 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
 
 
 
+
+
+
+
 // private api, exported for testing
 export function queueTransaction(ti: TransitionInstruction, done: () => void): Promise<boolean> {
   const promise = new Promise<boolean>((resolve, reject) => {
@@ -312,8 +316,10 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
     ev: ti.opts.event,
   };
 
+
+
   const emptyTransition = transitionFactory(ti.animation);
-  transition = getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, buildMdTransition);
+  transition = getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, getDefaultTransition(nav.config));
 
   if (nav.swipeToGoBackTransition) {
     nav.swipeToGoBackTransition.destroy();
@@ -775,6 +781,10 @@ export function getTopTransaction(id: number) {
   const toReturn = tmp.shift();
   queueMap.set(id, tmp);
   return toReturn;
+}
+
+export function getDefaultTransition(config: Config) {
+  return config.get('mode') === 'md' ? buildMdTransition : buildIOSTransition;
 }
 
 
