@@ -84,3 +84,7 @@ export {
   SegmentButtonEvent,
   TransitionBuilder
 }
+
+export interface StencilElement extends HTMLElement {
+  componentOnReady?: (cb: (elm?: StencilElement) => void) => void;
+}

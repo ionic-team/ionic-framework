@@ -244,7 +244,6 @@ export function successfullyTransitioned(result: NavResult, ti: TransitionInstru
     );
   }
   ti.resolve(result.hasCompleted);
-  console.log('success');
 }
 
 export function transitionFailed(error: Error, ti: TransitionInstruction) {
@@ -265,7 +264,6 @@ export function transitionFailed(error: Error, ti: TransitionInstruction) {
   nextTransaction(ti.nav);
 
   fireError(error, ti);
-  console.log('fail');
 }
 
 export function fireError(error: Error, ti: TransitionInstruction) {
@@ -307,6 +305,8 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
 
   return nav.animationCtrl.create().then((animation: Animation) => {
     const emptyTransition = transitionFactory(animation);
+    console.log('nav.config: ', nav.config);
+    console.log('mode: ', nav.config.get('mode'));
     transition = getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, buildMdTransition);
 
     if (nav.swipeToGoBackTransition) {

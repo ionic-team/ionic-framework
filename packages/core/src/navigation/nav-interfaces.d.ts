@@ -11,8 +11,8 @@ export interface FrameworkDelegate {
 }
 
 export interface Nav {
-  id: number;
-  element: HTMLElement;
+  id?: number;
+  element?: HTMLElement;
   views?: ViewController[];
   transitioning?: boolean;
   destroyed?: boolean;
@@ -21,8 +21,8 @@ export interface Nav {
   isPortal?: boolean;
   zIndexOffset?: number;
   swipeToGoBackTransition?: any; // TODO Transition
-  navController: NavController;
-  getParent(): Nav;
+  navController?: NavController;
+  parent?: Nav;
   getActive(): ViewController;
   getPrevious(view?: ViewController): ViewController;
   childNavs?: Nav[]; // TODO - make nav container
@@ -41,6 +41,7 @@ export interface NavController {
   remove(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions): Promise<any>;
   removeView(nav: Nav, viewController: ViewController, opts?: NavOptions): Promise<any>;
   setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
+  delegate?: FrameworkDelegate;
 }
 
 export interface ViewController {

@@ -33,8 +33,6 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
   if (enteringView) {
     const enteringContent = rootTransition.create();
-    const headerElement = enteringView.element.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *');
-    console.log('headerElement: ', headerElement);
     enteringContent.addElement(enteringView.element.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
 
     rootTransition.add(enteringContent);

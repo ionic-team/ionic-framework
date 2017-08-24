@@ -107,13 +107,13 @@ export function transitionDestroyImpl(transition: Transition) {
 }
 
 export function getParentTransitionId(nav: Nav) {
-  nav = nav.getParent();
+  nav = nav.parent
   while (nav) {
     const transitionId = nav.transitionId;
     if (isDef(transitionId)) {
       return transitionId;
     }
-    nav = nav.getParent();
+    nav = nav.parent
   }
   return -1;
 }

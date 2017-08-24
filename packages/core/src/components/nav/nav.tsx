@@ -3,6 +3,7 @@ import { AnimationController, Config } from '../..';
 import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
 
 import { getActiveImpl, getFirstView, getPreviousImpl, getViews, init } from '../../navigation/nav-utils';
+import { isReady } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-nav',
@@ -11,6 +12,7 @@ export class IonNav implements Nav {
 
   @Element() element: HTMLElement;
   id: number;
+  parent: Nav;
   views: ViewController[];
   transitioning?: boolean;
   destroyed?: boolean;
@@ -19,11 +21,11 @@ export class IonNav implements Nav {
   isPortal: boolean;
   swipeToGoBackTransition: any; // TODO Transition
   childNavs?: Nav[];
+  navController?: NavController;
 
   @Prop() root: any;
   @Prop() delegate: FrameworkDelegate;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ connect: 'ion-nav-controller' }) navController: NavController;
   @Prop({ context: 'config' }) config: Config;
 
   constructor() {
@@ -36,10 +38,6 @@ export class IonNav implements Nav {
 
   getViews(): ViewController[] {
     return getViews(this);
-  }
-
-  getParent(): Nav {
-    return null; // TODO
   }
 
   @Method()
@@ -123,41 +121,69 @@ export class IonNav implements Nav {
 }
 
 export function pushImpl(nav: Nav, component: any, data: any, opts: NavOptions) {
-  return nav.navController.push(nav, component, data, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.push(nav, component, data, opts);
+  });
 }
 
 export function popImpl(nav: Nav, opts: NavOptions) {
-  return nav.navController.pop(nav, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.pop(nav, opts);
+  });
 }
 
 export function setRootImpl(nav: Nav, component: any, data: any, opts: NavOptions) {
-  return nav.navController.setRoot(nav, component, data, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.setRoot(nav, component, data, opts);
+  });
 }
 
 export function insertImpl(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions) {
-  return nav.navController.insert(nav, insertIndex, page, params, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.insert(nav, insertIndex, page, params, opts);
+  });
 }
 
 export function insertPagesImpl(nav: Nav, insertIndex: number, insertPages: any[], opts: NavOptions) {
-  return nav.navController.insertPages(nav, insertIndex, insertPages, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.insertPages(nav, insertIndex, insertPages, opts);
+  });
 }
 
 export function popToRootImpl(nav: Nav, opts: NavOptions) {
-  return nav.navController.popToRoot(nav, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.popToRoot(nav, opts);
+  });
 }
 
 export function popToImpl(nav: Nav, indexOrViewCtrl: any, opts: NavOptions) {
-  return nav.navController.popTo(nav, indexOrViewCtrl, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.popTo(nav, indexOrViewCtrl, opts);
+  });
 }
 
 export function removeImpl(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions) {
-  return nav.navController.remove(nav, startIndex, removeCount, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.remove(nav, startIndex, removeCount, opts);
+  });
 }
 
 export function removeViewImpl(nav: Nav, viewController: ViewController, opts?: NavOptions) {
-  return nav.navController.removeView(nav, viewController, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.removeView(nav, viewController, opts);
+  });
 }
 
 export function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions) {
-  return nav.navController.setPages(nav, componentDataPairs, opts);
+  return getNavController(nav).then(() => {
+    return nav.navController.setPages(nav, componentDataPairs, opts);
+  });
+}
+
+export function getNavController(nav: Nav): Promise<any> {
+  if (nav.navController) {
+    return Promise.resolve();
+  }
+  nav.navController = document.querySelector('ion-nav-controller') as any as NavController;
+  return isReady(nav.navController as any as HTMLElement);
 }
