@@ -39,69 +39,75 @@ const queueMap = new Map<number, TransitionInstruction[]>();
 
 // public api
 
-export function push(nav: Nav, delegate: FrameworkDelegate, component: any, data?: any, opts?: NavOptions, done? : () => void): Promise<any> {
+export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data?: any, opts?: NavOptions, done? : () => void): Promise<any> {
   return queueTransaction({
     insertStart: -1,
     insertViews: [{page: component, params: data}],
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
-export function insert(nav: Nav, delegate: FrameworkDelegate, insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
+export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     insertStart: insertIndex,
     insertViews: [{ page: page, params: params }],
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
-export function insertPages(nav: Nav, delegate: FrameworkDelegate, insertIndex: number, insertPages: any[], opts?: NavOptions, done?: () => void): Promise<any> {
+export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     insertStart: insertIndex,
     insertViews: insertPages,
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
-export function pop(nav: Nav, delegate: FrameworkDelegate, opts?: NavOptions, done?: () => void): Promise<any> {
+export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     removeStart: -1,
     removeCount: 1,
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
-export function popToRoot(nav: Nav, delegate: FrameworkDelegate, opts?: NavOptions, done?: () => void): Promise<any> {
+export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     removeStart: 1,
     removeCount: -1,
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
-export function popTo(nav: Nav, delegate: FrameworkDelegate, indexOrViewCtrl: any, opts?: NavOptions, done?: () => void): Promise<any> {
+export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animation, indexOrViewCtrl: any, opts?: NavOptions, done?: () => void): Promise<any> {
   const config: TransitionInstruction = {
     removeStart: -1,
     removeCount: -1,
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   };
   if (isViewController(indexOrViewCtrl)) {
     config.removeView = indexOrViewCtrl;
@@ -112,18 +118,19 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, indexOrViewCtrl: an
   return queueTransaction(config, done);
 }
 
-export function remove(nav: Nav, delegate: FrameworkDelegate, startIndex: number, removeCount: number = 1, opts?: NavOptions, done?: () => void): Promise<any> {
+export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount: number = 1, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     removeStart: startIndex,
     removeCount: removeCount,
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
-export function removeView(nav: Nav, delegate: FrameworkDelegate, viewController: ViewController, opts?: NavOptions, done?: () => void): Promise<any> {
+export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     removeView: viewController,
     removeStart: 0,
@@ -131,15 +138,16 @@ export function removeView(nav: Nav, delegate: FrameworkDelegate, viewController
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
-export function setRoot(nav: Nav, delegate: FrameworkDelegate, page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
-  return setPages(nav, delegate, [{ page: page, params: params }], opts, done);
+export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
+  return setPages(nav, delegate, animation, [{ page: page, params: params }], opts, done);
 }
 
-export function setPages(nav: Nav, delegate: FrameworkDelegate, componentDataPars: ComponentDataPair[], opts? : NavOptions, done?: () => void): Promise<any> {
+export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPars: ComponentDataPair[], opts? : NavOptions, done?: () => void): Promise<any> {
   if (!isDef(opts)) {
     opts = {};
   }
@@ -154,7 +162,8 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, componentDataPar
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id
+    id: nav.id,
+    animation: animation
   }, done);
 }
 
@@ -303,26 +312,22 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
     ev: ti.opts.event,
   };
 
-  return nav.animationCtrl.create().then((animation: Animation) => {
-    const emptyTransition = transitionFactory(animation);
-    console.log('nav.config: ', nav.config);
-    console.log('mode: ', nav.config.get('mode'));
-    transition = getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, buildMdTransition);
+  const emptyTransition = transitionFactory(ti.animation);
+  transition = getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, buildMdTransition);
 
-    if (nav.swipeToGoBackTransition) {
-      nav.swipeToGoBackTransition.destroy();
-      nav.swipeToGoBackTransition = null;
-    }
+  if (nav.swipeToGoBackTransition) {
+    nav.swipeToGoBackTransition.destroy();
+    nav.swipeToGoBackTransition = null;
+  }
 
-    // it's a swipe to go back transition
-    if (transition.isRoot() && ti.opts.progressAnimation) {
-      nav.swipeToGoBackTransition = transition;
-    }
+  // it's a swipe to go back transition
+  if (transition.isRoot() && ti.opts.progressAnimation) {
+    nav.swipeToGoBackTransition = transition;
+  }
 
-    transition.start();
-  }).then(() => {
-    return executeAsyncTransition(nav, transition, enteringView, leavingView, ti.delegate, ti.opts, ti.nav.config.getBoolean('animate'));
-  });
+  transition.start();
+
+  return executeAsyncTransition(nav, transition, enteringView, leavingView, ti.delegate, ti.opts, ti.nav.config.getBoolean('animate'));
 }
 
 // TODO - transition type

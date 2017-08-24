@@ -29,7 +29,7 @@ export interface Nav {
   root?: any;
   navInit?: EventEmitter;
   config?: Config;
-  animationCtrl?: AnimationController;
+  mode?: string;
 
   // public methods
   getActive(): ViewController;
@@ -58,7 +58,9 @@ export interface NavController {
   remove(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions): Promise<any>;
   removeView(nav: Nav, viewController: ViewController, opts?: NavOptions): Promise<any>;
   setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
+
   delegate?: FrameworkDelegate;
+  animationCtrl?: AnimationController;
 }
 
 export interface ViewController {
@@ -126,6 +128,7 @@ export interface TransitionInstruction {
   id?: number;
   nav?: Nav;
   delegate?: FrameworkDelegate;
+  animation?: Animation;
 }
 
 export interface NavResult {

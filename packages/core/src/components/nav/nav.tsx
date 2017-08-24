@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { AnimationController, Config } from '../..';
+import { Config } from '../..';
 import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
 
 import { getActiveImpl, getFirstView, getPreviousImpl, getViews, init } from '../../navigation/nav-utils';
@@ -25,9 +25,9 @@ export class IonNav implements Nav {
   childNavs?: Nav[];
   navController?: NavController;
 
+  @Prop() mode: string;
   @Prop() root: any;
   @Prop() delegate: FrameworkDelegate;
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
 
   constructor() {
@@ -119,8 +119,8 @@ export class IonNav implements Nav {
   }
 
   @Listen('navInit')
-  navInitialized(event: any) {
-    console.log('got the event: ', event);
+  navInitialized(event: CustomEvent) {
+    navInitializedImpl(this, event);
   }
 
 
@@ -203,4 +203,14 @@ export function getNavController(nav: Nav): Promise<any> {
   }
   nav.navController = document.querySelector('ion-nav-controller') as any as NavController;
   return isReady(nav.navController as any as HTMLElement);
+}
+
+export function navInitializedImpl(nav: Nav, event: CustomEvent) {
+  if (nav.element !== event.target) {
+    console.log('nav.id is parent of: ', (event as any).detail.id);
+    // set the parent on the child nav that dispatched the event
+    (event.detail as Nav).parent = nav;
+    // kill the event so it doesn't propagate further
+    event.stopPropagation();
+  }
 }

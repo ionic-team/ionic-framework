@@ -1,4 +1,5 @@
 import { Component, Element, Method, Prop } from '@stencil/core';
+import { Animation, AnimationController } from '../..';
 import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
 
 import { isReady } from '../../utils/helpers';
@@ -25,78 +26,79 @@ export class NavControllerImpl implements NavController {
 
   @Element() element: HTMLElement;
   @Prop() delegate: FrameworkDelegate;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+
 
   constructor() {
   }
 
   @Method()
   push(nav: Nav, component: any, data?: any, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return pushImpl(nav, delegate, component, data, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return pushImpl(nav, delegate, animation, component, data, opts);
     });
   }
 
   @Method()
   pop(nav: Nav, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return popImpl(nav, delegate, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return popImpl(nav, delegate, animation, opts);
     });
-
   }
 
   @Method()
   setRoot(nav: Nav, component: any, data?: any, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return setRootImpl(nav, delegate, component, data, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return setRootImpl(nav, delegate, animation, component, data, opts);
     });
   }
 
   @Method()
   insert(nav: Nav, insertIndex: number, page: any, params?: any, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return insertImpl(nav, delegate, insertIndex, page, params, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return insertImpl(nav, delegate, animation, insertIndex, page, params, opts);
     });
   }
 
   @Method()
   insertPages(nav: Nav, insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return insertPagesImpl(nav, delegate, insertIndex, insertPages, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return insertPagesImpl(nav, delegate, animation, insertIndex, insertPages, opts);
     });
   }
 
   @Method()
   popToRoot(nav: Nav, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return popToRootImpl(nav, delegate, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return popToRootImpl(nav, delegate, animation, opts);
     });
   }
 
   @Method()
   popTo(nav: Nav, indexOrViewCtrl: any, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return popToImpl(nav, delegate, indexOrViewCtrl, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return popToImpl(nav, delegate, animation, indexOrViewCtrl, opts);
     });
   }
 
   @Method()
   remove(nav: Nav, startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return removeImpl(nav, delegate, startIndex, removeCount, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return removeImpl(nav, delegate, animation, startIndex, removeCount, opts);
     });
   }
 
   @Method()
   removeView(nav: Nav, viewController: ViewController, opts?: NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return removeViewImpl(nav, delegate, viewController, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return removeViewImpl(nav, delegate, animation, viewController, opts);
     });
   }
 
   @Method()
   setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any> {
-    return getDelegate(this).then((delegate) => {
-      return setPagesImpl(nav, delegate, componentDataPairs, opts);
+    return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
+      return setPagesImpl(nav, delegate, animation, componentDataPairs, opts);
     });
   }
 
@@ -105,7 +107,11 @@ export class NavControllerImpl implements NavController {
   }
 }
 
-export function getDelegate(navController: NavController): Promise<FrameworkDelegate> {
+export function hydrateDelegateAndAnimation(navController: NavController): Promise<any> {
+  return Promise.all([hydrateDelegate(navController), hydrateAnimationController(navController.animationCtrl)]);
+}
+
+export function hydrateDelegate(navController: NavController): Promise<FrameworkDelegate> {
   if (navController.delegate) {
     return Promise.resolve(navController.delegate);
   }
@@ -115,5 +121,9 @@ export function getDelegate(navController: NavController): Promise<FrameworkDele
   return isReady(element).then(() => {
     defaultDelegate = element as any as FrameworkDelegate;
     return defaultDelegate;
-  })
+  });
+}
+
+export function hydrateAnimationController(animationController: AnimationController): Promise<Animation> {
+  return animationController.create();
 }
