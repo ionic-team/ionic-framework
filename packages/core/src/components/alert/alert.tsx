@@ -18,6 +18,8 @@ import iOSLeaveAnimation from './animations/ios.leave';
 })
 export class Alert {
   private animation: Animation;
+  private activeId: string;
+  private inputType: string;
 
   @Element() private el: HTMLElement;
 
@@ -36,7 +38,7 @@ export class Alert {
   @Prop() subTitle: string;
   @Prop() message: string;
   @Prop() buttons: AlertButton[] = [];
-  @Prop() inputs: AlertInput[] = [];
+  @Prop({state: true}) inputs: AlertInput[] = [];
   @Prop() enableBackdropDismiss: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -142,38 +144,29 @@ export class Alert {
   }
 
   rbClick(button: any) {
-    console.log('rbClick', button);
-    // if (this.enabled) {
-    //   this.d.inputs.forEach(input => {
-    //     input.checked = (button === input);
-    //   });
-    //   this.activeId = button.id;
+    this.inputs.forEach(input => {
+      input.checked = (button === input);
+      return input;
+    });
+    this.activeId = button.id;
 
-    //   if (button.handler) {
-    //     button.handler(button);
-    //   }
-    // }
+    if (button.handler) {
+      button.handler(button);
+    }
   }
 
   cbClick(button: any) {
-    console.log('cbClick', button);
-    // if (this.enabled) {
-    //   button.checked = !button.checked;
+    button.checked = !button.checked;
 
-    //   if (button.handler) {
-    //     button.handler(button);
-    //   }
-    // }
+    if (button.handler) {
+      button.handler(button);
+    }
   }
 
   btnClick(button: any) {
     console.log('btnClick', button);
 
-    // if (!this.enabled) {
-    //   return;
-    // }
-
-    // keep the time of the most recent button click
+    // TODO keep the time of the most recent button click
     // this.lastClick = Date.now();
 
     let shouldDismiss = true;
@@ -181,15 +174,48 @@ export class Alert {
     if (button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
-      // if (button.handler(this.getValues()) === false) {
-      //   // if the return value of the handler is false then do not dismiss
-      //   shouldDismiss = false;
-      // }
+      if (button.handler(this.getValues()) === false) {
+        // if the return value of the handler is false then do not dismiss
+        shouldDismiss = false;
+      }
     }
 
     if (shouldDismiss) {
       this.dismiss();
     }
+  }
+
+  getValues(): any {
+    if (this.inputType === 'radio') {
+      // this is an alert with radio buttons (single value select)
+      // return the one value which is checked, otherwise undefined
+      const checkedInput = this.inputs.find(i => i.checked);
+      console.debug('returning', checkedInput ? checkedInput.value : undefined);
+      return checkedInput ? checkedInput.value : undefined;
+    }
+
+    if (this.inputType === 'checkbox') {
+      // this is an alert with checkboxes (multiple value select)
+      // return an array of all the checked values
+      console.debug('returning', this.inputs.filter(i => i.checked).map(i => i.value));
+      return this.inputs.filter(i => i.checked).map(i => i.value);
+    }
+
+    if (this.inputs.length === 0) {
+      // this is an alert without any options/inputs at all
+      console.debug('returning', 'undefined');
+      return undefined;
+    }
+
+    // this is an alert with text inputs
+    // return an object of all the values with the input name as the key
+    const values: {[k: string]: string} = {};
+    this.inputs.forEach(i => {
+      values[i.name] = i.value;
+    });
+
+    console.debug('returning', values);
+    return values;
   }
 
   buttonClass(button: AlertButton): CssClassMap {
@@ -224,12 +250,11 @@ export class Alert {
 
   renderRadio(inputs: AlertInput[]) {
     const hdrId = 'TODO';
-    const activeId = 'TODO';
 
     if (inputs.length === 0) return null;
 
     return (
-      <div class="alert-radio-group" role="radiogroup" aria-labelledby={hdrId} aria-activedescendant={activeId}>
+      <div class="alert-radio-group" role="radiogroup" aria-labelledby={hdrId} aria-activedescendant={this.activeId}>
         { inputs.map(i => (
           <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} class="alert-radio-button alert-tappable alert-radio" role="radio">
             <div class="button-inner">
@@ -288,13 +313,26 @@ export class Alert {
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes: string[] = [];
 
-    let inputs = this.inputs
-      .map(i => {
-        return i;
+    this.inputs = this.inputs
+      .map((i, index) => {
+        let r: AlertInput = {
+          type: i.type || 'text',
+          name: i.name ? i.name : index + '',
+          placeholder: i.placeholder ? i.placeholder : '',
+          value: i.value ? i.value : '',
+          label: i.label,
+          checked: !!i.checked,
+          disabled: !!i.disabled,
+          id: i.id ? i.id : `alert-input-${this.id}-${index}`,
+          handler: i.handler ? i.handler : null,
+          min: i.min ? i.min : null,
+          max: i.max ? i.max : null
+        };
+        return r;
       })
       .filter(i => i !== null);
 
-    inputs.forEach(i => {
+    this.inputs.forEach(i => {
       if (inputTypes.indexOf(i.type) < 0) {
         inputTypes.push(i.type);
       }
@@ -304,7 +342,7 @@ export class Alert {
       console.warn(`Alert cannot mix input types: ${(inputTypes.join('/'))}. Please see alert docs for more info.`);
     }
 
-    let inputType = inputTypes.length ? inputTypes[0] : null;
+    this.inputType = inputTypes.length ? inputTypes[0] : null;
 
     return [
       <ion-backdrop
@@ -323,15 +361,15 @@ export class Alert {
         <div id={msgId} class="alert-message" innerHTML={this.message}></div>
 
         {(() => {
-          switch(inputType) {
+          switch(this.inputType) {
             case 'checkbox':
-              return this.renderCheckbox(inputs);
+              return this.renderCheckbox(this.inputs);
 
             case 'radio':
-              return this.renderRadio(inputs);
+              return this.renderRadio(this.inputs);
 
             default:
-              return this.renderInput(inputs);
+              return this.renderInput(this.inputs);
           };
         })()}
 
