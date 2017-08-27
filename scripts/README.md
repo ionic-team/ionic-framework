@@ -21,7 +21,7 @@ The latest nightly version can be installed via npm.
 
 ### Building Ionic Source
 
-Run `gulp build` or `gulp watch` to watch for changes.
+Run `gulp compile.release` or `gulp watch` to watch for changes.
 
 
 ### Building & Running e2e Tests
