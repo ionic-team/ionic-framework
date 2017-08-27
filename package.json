@@ -1,23 +1,21 @@
 {
   "private": true,
-  "name": "ionic2",
-  "version": "3.6.0",
-  "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular",
+  "name": "ion-lite",
+  "version": "0.0.1",
+  "description": "A lightweight framework based on Ionic UI.",
   "keywords": [
-    "ionic",
+    "ui",
     "framework",
     "mobile",
     "app",
     "hybrid",
     "webapp",
-    "cordova",
-    "progressive web app",
-    "pwa"
+    "cordova"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/ionic.git"
+    "url": "https://github.com/todrules/ionic.git"
   },
   "scripts": {
     "test": "gulp validate",
@@ -26,14 +24,14 @@
     "tsc": "tsc --outdir .tmp"
   },
   "dependencies": {
-    "@angular/common": "4.1.3",
-    "@angular/compiler": "4.1.3",
-    "@angular/compiler-cli": "4.1.3",
-    "@angular/core": "4.1.3",
-    "@angular/forms": "4.1.3",
-    "@angular/http": "4.1.3",
-    "@angular/platform-browser": "4.1.3",
-    "@angular/platform-browser-dynamic": "4.1.3",
+    "@angular/common": "4.3.6",
+    "@angular/compiler": "4.3.6",
+    "@angular/compiler-cli": "4.3.6",
+    "@angular/core": "4.3.6",
+    "@angular/forms": "4.3.6",
+    "@angular/http": "4.3.6",
+    "@angular/platform-browser": "4.3.6",
+    "@angular/platform-browser-dynamic": "4.3.6",
     "ionicons": "~3.0.0",
     "rxjs": "5.4.0",
     "zone.js": "0.8.12"
@@ -134,9 +132,9 @@
     "ts-node": "1.3.0",
     "tslint": "^5.4.3",
     "tslint-ionic-rules": "0.0.11",
-    "typescript": "~2.3.3",
+    "typescript": "~2.4.2",
     "vinyl": "1.2.0",
-    "webpack": "^2.1.0-beta.27",
+    "webpack": "^3.5.5",
     "yargs": "5.0.0"
   },
   "config": {
