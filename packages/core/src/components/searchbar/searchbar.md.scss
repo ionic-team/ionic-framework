@@ -4,9 +4,6 @@
 // Material Design Searchbar
 // --------------------------------------------------
 
-// deprecated
-$searchbar-md-padding:                   null !default;
-
 /// @prop - Padding top of the searchbar
 $searchbar-md-padding-top:               8px !default;
 
@@ -68,9 +65,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 .searchbar-md {
   background: $searchbar-md-background-color;
 
-  @include deprecated-variable(padding, $searchbar-md-padding) {
-    @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
-  }
+  @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
 }
 
 

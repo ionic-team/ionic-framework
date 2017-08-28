@@ -7,9 +7,6 @@
 /// @prop - Text align of the action sheet
 $action-sheet-ios-text-align:                           center !default;
 
-// deprecated
-$action-sheet-ios-padding:                              null !default;
-
 /// @prop - Padding top of the action sheet
 $action-sheet-ios-padding-top:                          0 !default;
 
@@ -109,9 +106,7 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 }
 
 .action-sheet-ios .action-sheet-container {
-  @include deprecated-variable(padding, $action-sheet-ios-padding) {
-    @include padding($action-sheet-ios-padding-top, $action-sheet-ios-padding-end, $action-sheet-ios-padding-bottom, $action-sheet-ios-padding-start);
-  }
+  @include padding($action-sheet-ios-padding-top, $action-sheet-ios-padding-end, $action-sheet-ios-padding-bottom, $action-sheet-ios-padding-start);
 }
 
 .action-sheet-ios .action-sheet-group {

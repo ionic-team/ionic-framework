@@ -8,9 +8,6 @@
 /// @prop - Font size of the card header
 $card-wp-header-font-size:            1.6rem !default;
 
-// deprecated
-$card-wp-header-padding:              null !default;
-
 /// @prop - Padding top of the card header
 $card-wp-header-padding-top:          16px !default;
 
@@ -32,9 +29,7 @@ $card-wp-header-color:                #222 !default;
 
   color: $card-wp-header-color;
 
-  @include deprecated-variable(padding, $card-wp-header-padding) {
-    @include padding($card-wp-header-padding-top, $card-wp-header-padding-end, $card-wp-header-padding-bottom, $card-wp-header-padding-start);
-  }
+  @include padding($card-wp-header-padding-top, $card-wp-header-padding-end, $card-wp-header-padding-bottom, $card-wp-header-padding-start);
 }
 
 

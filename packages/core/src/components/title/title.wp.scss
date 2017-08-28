@@ -5,9 +5,6 @@
 // Windows Title
 // --------------------------------------------------
 
-// deprecated
-$toolbar-wp-title-padding:               null !default;
-
 /// @prop - Padding top of the toolbar title
 $toolbar-wp-title-padding-top:           0 !default;
 
@@ -39,9 +36,7 @@ $toolbar-wp-title-text-color:            color-contrast($colors-wp, $toolbar-wp-
   text-transform: $toolbar-wp-title-text-transform;
   color: $toolbar-wp-title-text-color;
 
-  @include deprecated-variable(padding, $toolbar-wp-title-padding) {
-    @include padding($toolbar-wp-title-padding-top, $toolbar-wp-title-padding-end, $toolbar-wp-title-padding-bottom, $toolbar-wp-title-padding-start);
-  }
+  @include padding($toolbar-wp-title-padding-top, $toolbar-wp-title-padding-end, $toolbar-wp-title-padding-bottom, $toolbar-wp-title-padding-start);
 }
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {

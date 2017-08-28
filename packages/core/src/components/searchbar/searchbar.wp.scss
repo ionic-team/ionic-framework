@@ -4,9 +4,6 @@
 // Windows Searchbar
 // --------------------------------------------------
 
-// deprecated
-$searchbar-wp-padding:                   null !default;
-
 /// @prop - Padding top of the searchbar
 $searchbar-wp-padding-top:               8px !default;
 
@@ -86,9 +83,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 .searchbar-wp {
   background: $searchbar-wp-background-color;
 
-  @include deprecated-variable(padding, $searchbar-wp-padding) {
-    @include padding($searchbar-wp-padding-top, $searchbar-wp-padding-end, $searchbar-wp-padding-bottom, $searchbar-wp-padding-start);
-  }
+  @include padding($searchbar-wp-padding-top, $searchbar-wp-padding-end, $searchbar-wp-padding-bottom, $searchbar-wp-padding-start);
 }
 
 .searchbar-wp .searchbar-input-container {

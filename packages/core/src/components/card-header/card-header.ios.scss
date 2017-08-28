@@ -11,9 +11,6 @@ $card-ios-header-font-size:            1.6rem !default;
 /// @prop - Font weight of the card header
 $card-ios-header-font-weight:          500 !default;
 
-// deprecated
-$card-ios-header-padding:              null !default;
-
 /// @prop - Padding top of the card header
 $card-ios-header-padding-top:          16px !default;
 
@@ -35,9 +32,7 @@ $card-ios-header-color:                #333 !default;
   font-weight: $card-ios-header-font-weight;
   color: $card-ios-header-color;
 
-  @include deprecated-variable(padding, $card-ios-header-padding) {
-    @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
-  }
+  @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
 }
 
 

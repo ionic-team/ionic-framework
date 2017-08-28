@@ -8,18 +8,14 @@
 /// @prop - Margin top of the card
 $card-md-margin-top:                  10px !default;
 
-// deprecated
-$card-md-margin-right:                10px !default;
 /// @prop - Margin end of the card
-$card-md-margin-end:                  $card-md-margin-right !default;
+$card-md-margin-end:                  10px !default;
 
 /// @prop - Margin bottom of the card
 $card-md-margin-bottom:               10px !default;
 
-// deprecated
-$card-md-margin-left:                 10px !default;
 /// @prop - Margin start of the card
-$card-md-margin-start:                $card-md-margin-left !default;
+$card-md-margin-start:                10px !default;
 
 /// @prop - Padding top of the media on the card
 $card-md-padding-media-top:           10px !default;

@@ -8,18 +8,14 @@
 /// @prop - Margin top of the card
 $card-wp-margin-top:                  8px !default;
 
-// deprecated
-$card-wp-margin-right:                8px !default;
 /// @prop - Margin end of the card
-$card-wp-margin-end:                  $card-wp-margin-right !default;
+$card-wp-margin-end:                  8px !default;
 
 /// @prop - Margin bottom of the card
 $card-wp-margin-bottom:               8px !default;
 
-// deprecated
-$card-wp-margin-left:                 8px !default;
 /// @prop - Margin start of the card
-$card-wp-margin-start:                $card-wp-margin-left !default;
+$card-wp-margin-start:                 8px !default;
 
 /// @prop - Padding top of the media on the card
 $card-wp-padding-media-top:           10px !default;

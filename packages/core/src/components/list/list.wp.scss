@@ -8,34 +8,26 @@
 /// @prop - Margin top of the list
 $list-wp-margin-top:             16px !default;
 
-// deprecated
-$list-wp-margin-right:           0 !default;
 /// @prop - Margin end of the list
-$list-wp-margin-end:             $list-wp-margin-right !default;
+$list-wp-margin-end:             0 !default;
 
 /// @prop - Margin bottom of the list
 $list-wp-margin-bottom:          16px !default;
 
-// deprecated
-$list-wp-margin-left:            0 !default;
 /// @prop - Margin start of the list
-$list-wp-margin-start:           $list-wp-margin-left !default;
+$list-wp-margin-start:           0 !default;
 
 /// @prop - Margin top of the inset list
 $list-inset-wp-margin-top:       16px !default;
 
-// deprecated
-$list-inset-wp-margin-right:     16px !default;
 /// @prop - Margin end of the inset list
-$list-inset-wp-margin-end:       $list-inset-wp-margin-right !default;
+$list-inset-wp-margin-end:       16px !default;
 
 /// @prop - Margin bottom of the inset list
 $list-inset-wp-margin-bottom:    16px !default;
 
-// deprecated
-$list-inset-wp-margin-left:      16px !default;
 /// @prop - Margin start of the inset list
-$list-inset-wp-margin-start:     $list-inset-wp-margin-left !default;
+$list-inset-wp-margin-start:     16px !default;
 
 /// @prop - Border radius of the inset list
 $list-inset-wp-border-radius:    2px !default;

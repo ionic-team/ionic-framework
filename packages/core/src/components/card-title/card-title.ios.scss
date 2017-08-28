@@ -8,9 +8,6 @@
 /// @prop - Font size of the card title
 $card-ios-title-font-size:             1.8rem !default;
 
-// deprecated
-$card-ios-title-padding:               null !default;
-
 /// @prop - Padding top of the card title
 $card-ios-title-padding-top:           8px !default;
 
@@ -22,9 +19,6 @@ $card-ios-title-padding-bottom:        8px !default;
 
 /// @prop - Padding start of the card title
 $card-ios-title-padding-start:         0 !default;
-
-// deprecated
-$card-ios-title-margin:                null !default;
 
 /// @prop - Margin top of the card title
 $card-ios-title-margin-top:            2px !default;
@@ -49,13 +43,9 @@ $card-ios-title-text-color:            #222 !default;
   line-height: 1.2;
   color: $card-ios-title-text-color;
 
-  @include deprecated-variable(margin, $card-ios-title-margin) {
-    @include margin($card-ios-title-margin-top, $card-ios-title-margin-end, $card-ios-title-margin-bottom, $card-ios-title-margin-start);
-  }
+  @include margin($card-ios-title-margin-top, $card-ios-title-margin-end, $card-ios-title-margin-bottom, $card-ios-title-margin-start);
 
-  @include deprecated-variable(padding, $card-ios-title-padding) {
-    @include padding($card-ios-title-padding-top, $card-ios-title-padding-end, $card-ios-title-padding-bottom, $card-ios-title-padding-start);
-  }
+  @include padding($card-ios-title-padding-top, $card-ios-title-padding-end, $card-ios-title-padding-bottom, $card-ios-title-padding-start);
 }
 
 

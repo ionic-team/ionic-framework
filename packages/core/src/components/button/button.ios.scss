@@ -4,9 +4,6 @@
 // iOS Button
 // --------------------------------------------------
 
-// deprecated
-$button-ios-margin:                                 null !default;
-
 /// @prop - Margin top of the button
 $button-ios-margin-top:                             .4rem !default;
 
@@ -18,9 +15,6 @@ $button-ios-margin-bottom:                          .4rem !default;
 
 /// @prop - Margin start of the button
 $button-ios-margin-start:                           .2rem !default;
-
-// deprecated
-$button-ios-padding:                                null !default;
 
 /// @prop - Padding top of the button
 $button-ios-padding-top:                            0 !default;
@@ -62,9 +56,6 @@ $button-ios-opacity-hover:                          .8 !default;
 // iOS Large Button
 // --------------------------------------------------
 
-// deprecated
-$button-ios-large-padding:                          null !default;
-
 /// @prop - Padding top of the large button
 $button-ios-large-padding-top:                      0 !default;
 
@@ -86,9 +77,6 @@ $button-ios-large-font-size:                        2rem !default;
 
 // iOS Small Button
 // --------------------------------------------------
-
-// deprecated
-$button-ios-small-padding:                          null !default;
 
 /// @prop - Padding top of the small button
 $button-ios-small-padding-top:                      0 !default;
@@ -168,9 +156,6 @@ $button-ios-clear-opacity-hover:                    .6 !default;
 // iOS Round Button
 // --------------------------------------------------
 
-// deprecated
-$button-ios-round-padding:                          null !default;
-
 /// @prop - Padding top of the round button
 $button-ios-round-padding-top:                      $button-round-padding-top !default;
 
@@ -207,13 +192,9 @@ $button-ios-strong-font-weight:                     600 !default;
   color: $button-ios-text-color;
   background-color: $button-ios-background-color;
 
-  @include deprecated-variable(margin, $button-ios-margin) {
-    @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
-  }
+  @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
 
-  @include deprecated-variable(padding, $button-ios-padding) {
-    @include padding($button-ios-padding-top, $button-ios-padding-end, $button-ios-padding-bottom, $button-ios-padding-start);
-  }
+  @include padding($button-ios-padding-top, $button-ios-padding-end, $button-ios-padding-bottom, $button-ios-padding-start);
 }
 
 .button-ios.activated {
@@ -253,9 +234,7 @@ $button-ios-strong-font-weight:                     600 !default;
 
   font-size: $button-ios-large-font-size;
 
-  @include deprecated-variable(padding, $button-ios-large-padding) {
-    @include padding($button-ios-large-padding-top, $button-ios-large-padding-end, $button-ios-large-padding-bottom, $button-ios-large-padding-start);
-  }
+  @include padding($button-ios-large-padding-top, $button-ios-large-padding-end, $button-ios-large-padding-bottom, $button-ios-large-padding-start);
 }
 
 .button-small-ios {
@@ -263,9 +242,7 @@ $button-ios-strong-font-weight:                     600 !default;
 
   font-size: $button-ios-small-font-size;
 
-  @include deprecated-variable(padding, $button-ios-small-padding) {
-    @include padding($button-ios-small-padding-top, $button-ios-small-padding-end, $button-ios-small-padding-bottom, $button-ios-small-padding-start);
-  }
+  @include padding($button-ios-small-padding-top, $button-ios-small-padding-end, $button-ios-small-padding-bottom, $button-ios-small-padding-start);
 }
 
 .button-small-ios ion-icon[slot="icon-only"] {
@@ -376,9 +353,7 @@ $button-ios-strong-font-weight:                     600 !default;
 .button-round-ios {
   @include border-radius($button-ios-round-border-radius);
 
-  @include deprecated-variable(padding, $button-ios-round-padding) {
-    @include padding($button-ios-round-padding-top, $button-ios-round-padding-end, $button-ios-round-padding-bottom, $button-ios-round-padding-start);
-  }
+  @include padding($button-ios-round-padding-top, $button-ios-round-padding-end, $button-ios-round-padding-bottom, $button-ios-round-padding-start);
 }
 
 

@@ -8,18 +8,14 @@
 /// @prop - Padding top of the card
 $card-wp-padding-top:                 13px !default;
 
-// deprecated
-$card-wp-padding-right:               16px !default;
 /// @prop - Padding end of the card
-$card-wp-padding-end:                 $card-wp-padding-right !default;
+$card-wp-padding-end:                 16px !default;
 
 /// @prop - Padding bottom of the card
 $card-wp-padding-bottom:              13px !default;
 
-// deprecated
-$card-wp-padding-left:                16px !default;
 /// @prop - Padding start of the card
-$card-wp-padding-start:               $card-wp-padding-left !default;
+$card-wp-padding-start:               16px !default;
 
 /// @prop - Font size of the card
 $card-wp-font-size:                   1.4rem !default;

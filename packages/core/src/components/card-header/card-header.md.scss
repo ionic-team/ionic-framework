@@ -8,9 +8,6 @@
 /// @prop - Font size of the card header
 $card-md-header-font-size:            1.6rem !default;
 
-// deprecated
-$card-md-header-padding:              null !default;
-
 /// @prop - Padding top of the card header
 $card-md-header-padding-top:          16px !default;
 
@@ -31,9 +28,7 @@ $card-md-header-color:                #222 !default;
   font-size: $card-md-header-font-size;
   color: $card-md-header-color;
 
-  @include deprecated-variable(padding, $card-md-header-padding) {
-    @include padding($card-md-header-padding-top, $card-md-header-padding-end, $card-md-header-padding-bottom, $card-md-header-padding-start);
-  }
+  @include padding($card-md-header-padding-top, $card-md-header-padding-end, $card-md-header-padding-bottom, $card-md-header-padding-start);
 }
 
 

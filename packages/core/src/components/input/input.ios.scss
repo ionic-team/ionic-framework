@@ -11,18 +11,14 @@ $text-input-ios-background-color:          $list-ios-background-color !default;
 /// @prop - Margin top of the input
 $text-input-ios-margin-top:                $item-ios-padding-top !default;
 
-// deprecated
-$text-input-ios-margin-right:              ($item-ios-padding-end / 2) !default;
 /// @prop - Margin end of the input
-$text-input-ios-margin-end:                $text-input-ios-margin-right !default;
+$text-input-ios-margin-end:                ($item-ios-padding-end / 2) !default;
 
 /// @prop - Margin bottom of the input
 $text-input-ios-margin-bottom:             $item-ios-padding-bottom !default;
 
-// deprecated
-$text-input-ios-margin-left:               0 !default;
 /// @prop - Margin start of the input
-$text-input-ios-margin-start:              $text-input-ios-margin-left !default;
+$text-input-ios-margin-start:              0 !default;
 
 /// @prop - Width of the icon used to clear the input
 $text-input-ios-input-clear-icon-width:    30px !default;

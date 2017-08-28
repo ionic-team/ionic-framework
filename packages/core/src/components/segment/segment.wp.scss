@@ -10,9 +10,6 @@ $segment-button-wp-background-color:           transparent !default;
 /// @prop - Text color of the activated segment button
 $segment-button-wp-text-color-activated:       $toolbar-wp-text-color !default;
 
-// deprecated
-$segment-button-wp-padding:                    null !default;
-
 /// @prop - Padding top of the segment button
 $segment-button-wp-padding-top:                0 !default;
 
@@ -76,9 +73,7 @@ $segment-button-wp-buttons-justify-content:    flex-start !default;
   background-color: $segment-button-wp-background-color;
   opacity: $segment-button-wp-opacity;
 
-  @include deprecated-variable(padding, $segment-button-wp-padding) {
-    @include padding($segment-button-wp-padding-top, $segment-button-wp-padding-end, $segment-button-wp-padding-bottom, $segment-button-wp-padding-start);
-  }
+  @include padding($segment-button-wp-padding-top, $segment-button-wp-padding-end, $segment-button-wp-padding-bottom, $segment-button-wp-padding-start);
 
   &.segment-activated {
     opacity: $segment-button-wp-opacity-activated;

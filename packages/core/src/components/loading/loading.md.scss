@@ -5,9 +5,6 @@
 // Material Design Loading Indicator
 // --------------------------------------------------
 
-// deprecated
-$loading-md-padding:                   null !default;
-
 /// @prop - Padding top of the loading wrapper
 $loading-md-padding-top:               24px !default;
 
@@ -71,9 +68,7 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 
   box-shadow: $loading-md-box-shadow;
 
-  @include deprecated-variable(padding, $loading-md-padding) {
-    @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
-  }
+  @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
 }
 
 

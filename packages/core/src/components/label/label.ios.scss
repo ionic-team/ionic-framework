@@ -11,9 +11,6 @@ $label-ios-text-color:                 null !default;
 /// @prop - Text color of the stacked/floating label when it is focused
 $label-ios-text-color-focused:         null !default;
 
-// deprecated
-$label-ios-margin:             null !default;
-
 /// @prop - Margin top of the label
 $label-ios-margin-top:         $item-ios-padding-top !default;
 
@@ -31,9 +28,7 @@ $label-ios-margin-start:       0 !default;
 // --------------------------------------------------
 
 .label-ios {
-  @include deprecated-variable(margin, $label-ios-margin) {
-    @include margin($label-ios-margin-top, $label-ios-margin-end, $label-ios-margin-bottom, $label-ios-margin-start);
-  }
+  @include margin($label-ios-margin-top, $label-ios-margin-end, $label-ios-margin-bottom, $label-ios-margin-start);
 }
 
 

@@ -8,18 +8,14 @@
 /// @prop - Margin top of the card
 $card-ios-margin-top:                  12px !default;
 
-// deprecated
-$card-ios-margin-right:                12px !default;
 /// @prop - Margin end of the card
-$card-ios-margin-end:                  $card-ios-margin-right !default;
+$card-ios-margin-end:                  12px !default;
 
 /// @prop - Margin bottom of the card
 $card-ios-margin-bottom:               12px !default;
 
-// deprecated
-$card-ios-margin-left:                 12px !default;
 /// @prop - Margin start of the card
-$card-ios-margin-start:                $card-ios-margin-left !default;
+$card-ios-margin-start:                12px !default;
 
 /// @prop - Padding top of the media on the card
 $card-ios-padding-media-top:           10px !default;

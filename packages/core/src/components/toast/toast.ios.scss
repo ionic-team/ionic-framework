@@ -16,9 +16,6 @@ $toast-ios-title-color:                           #fff !default;
 /// @prop - Font size of the toast title
 $toast-ios-title-font-size:                       1.4rem !default;
 
-// deprecated
-$toast-ios-title-padding:                         null !default;
-
 /// @prop - Padding top of the toast title
 $toast-ios-title-padding-top:                     1.5rem !default;
 
@@ -68,7 +65,5 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
 
   color: $toast-ios-title-color;
 
-  @include deprecated-variable(padding, $toast-ios-title-padding) {
-    @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
-  }
+  @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
 }

@@ -11,18 +11,14 @@ $text-input-md-background-color:            $list-md-background-color !default;
 /// @prop - Margin top of the input
 $text-input-md-margin-top:                  $item-md-padding-top !default;
 
-// deprecated
-$text-input-md-margin-right:                ($item-md-padding-end / 2) !default;
 /// @prop - Margin end of the input
-$text-input-md-margin-end:                  $text-input-md-margin-right !default;
+$text-input-md-margin-end:                  ($item-md-padding-end / 2) !default;
 
 /// @prop - Margin bottom of the input
 $text-input-md-margin-bottom:               $item-md-padding-bottom !default;
 
-// deprecated
-$text-input-md-margin-left:                 ($item-md-padding-start / 2) !default;
 /// @prop - Margin start of the input
-$text-input-md-margin-start:                $text-input-md-margin-left !default;
+$text-input-md-margin-start:                ($item-md-padding-start / 2) !default;
 
 /// @prop - Width of the icon used to clear the input
 $text-input-md-input-clear-icon-width:      30px !default;

@@ -5,9 +5,6 @@
 // iOS Loading Indicator
 // --------------------------------------------------
 
-// deprecated
-$loading-ios-padding:                   null !default;
-
 /// @prop - Padding top of the loading wrapper
 $loading-ios-padding-top:               24px !default;
 
@@ -66,9 +63,7 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
   color: $loading-ios-text-color;
   background: $loading-ios-background;
 
-  @include deprecated-variable(padding, $loading-ios-padding) {
-    @include padding($loading-ios-padding-top, $loading-ios-padding-end, $loading-ios-padding-bottom, $loading-ios-padding-start);
-  }
+  @include padding($loading-ios-padding-top, $loading-ios-padding-end, $loading-ios-padding-bottom, $loading-ios-padding-start);
 }
 
 

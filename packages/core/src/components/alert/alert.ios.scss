@@ -16,9 +16,6 @@ $alert-ios-background:                          #f8f8f8 !default;
 /// @prop - Box shadow of the alert
 $alert-ios-box-shadow:                          none !default;
 
-// deprecated
-$alert-ios-head-padding:                        null !default;
-
 /// @prop - Padding top of the alert head
 $alert-ios-head-padding-top:                    12px !default;
 
@@ -49,9 +46,6 @@ $alert-ios-sub-title-font-size:                 14px !default;
 /// @prop - Text color of the alert sub title
 $alert-ios-sub-title-text-color:                #666 !default;
 
-// deprecated
-$alert-ios-message-padding:                     null !default;
-
 /// @prop - Padding top of the alert message
 $alert-ios-message-padding-top:                 0 !default;
 
@@ -74,9 +68,6 @@ $alert-ios-message-text-align:                  center !default;
 /// @prop - Text color of the alert message
 $alert-ios-message-text-color:                  inherit !default;
 
-// deprecated
-$alert-ios-message-padding-empty:               null !default;
-
 /// @prop - Padding top of the alert empty message
 $alert-ios-message-empty-padding-top:           0 !default;
 
@@ -94,9 +85,6 @@ $alert-ios-content-max-height:                  240px !default;
 
 /// @prop - Margin top of the alert input
 $alert-ios-input-margin-top:                    10px !default;
-
-// deprecated
-$alert-ios-input-padding:                       null !default;
 
 /// @prop - Padding top on the alert input
 $alert-ios-input-padding-top:                   6px !default;
@@ -167,9 +155,6 @@ $alert-ios-button-main-font-weight:             bold !default;
 /// @prop - Border top of the alert list
 $alert-ios-list-border-top:                     $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color !default;
 
-// deprecated
-$alert-ios-radio-label-padding:                 null !default;
-
 /// @prop - Padding top on the label for the radio alert
 $alert-ios-radio-label-padding-top:             13px !default;
 
@@ -194,10 +179,8 @@ $alert-ios-radio-min-width:                     30px !default;
 /// @prop - Top of the icon in the radio alert
 $alert-ios-radio-icon-top:                      -7px !default;
 
-// deprecated
-$alert-ios-radio-icon-left:                     7px !default;
 /// @prop - Start of the icon in the radio alert
-$alert-ios-radio-icon-start:                    $alert-ios-radio-icon-left !default;
+$alert-ios-radio-icon-start:                    7px !default;
 
 /// @prop - Width of the icon in the radio alert
 $alert-ios-radio-icon-width:                    6px !default;
@@ -217,9 +200,6 @@ $alert-ios-radio-icon-border-color:             $alert-ios-button-text-color !de
 /// @prop - Transform of the icon in the radio alert
 $alert-ios-radio-icon-transform:                rotate(45deg) !default;
 
-// deprecated
-$alert-ios-checkbox-label-padding:              null !default;
-
 /// @prop - Padding top of the label for the checkbox in the alert
 $alert-ios-checkbox-label-padding-top:          13px !default;
 
@@ -237,9 +217,6 @@ $alert-ios-checkbox-label-text-color:           initial !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-ios-checkbox-label-text-color-checked:   initial !default;
-
-// deprecated
-$alert-ios-checkbox-margin:                     null !default;
 
 /// @prop - Margin top of the checkbox in the alert
 $alert-ios-checkbox-margin-top:                 10px !default;
@@ -280,10 +257,8 @@ $alert-ios-checkbox-background-color-on:        color($colors-ios, primary) !def
 /// @prop - Top of the icon in the checkbox alert
 $alert-ios-checkbox-icon-top:                   4px !default;
 
-// deprecated
-$alert-ios-checkbox-icon-left:                  7px !default;
 /// @prop - Start of the icon in the checkbox alert
-$alert-ios-checkbox-icon-start:                 $alert-ios-checkbox-icon-left !default;
+$alert-ios-checkbox-icon-start:                 7px !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-ios-checkbox-icon-width:                 4px !default;
@@ -323,9 +298,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 .alert-ios .alert-head {
   @include text-align($alert-ios-head-text-align);
 
-  @include deprecated-variable(padding, $alert-ios-head-padding) {
-    @include padding($alert-ios-head-padding-top, $alert-ios-head-padding-end, $alert-ios-head-padding-bottom, $alert-ios-head-padding-start);
-  }
+  @include padding($alert-ios-head-padding-top, $alert-ios-head-padding-end, $alert-ios-head-padding-bottom, $alert-ios-head-padding-start);
 }
 
 .alert-ios .alert-title {
@@ -351,9 +324,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   font-size: $alert-ios-message-font-size;
   color: $alert-ios-message-text-color;
 
-  @include deprecated-variable(padding, $alert-ios-message-padding) {
-    @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
-  }
+  @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
 }
 
 .alert-ios .alert-message {
@@ -361,9 +332,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-ios .alert-message:empty {
-  @include deprecated-variable(padding, $alert-ios-message-padding-empty) {
-    @include padding($alert-ios-message-empty-padding-top, $alert-ios-message-empty-padding-end, $alert-ios-message-empty-padding-bottom, $alert-ios-message-empty-padding-start);
-  }
+  @include padding($alert-ios-message-empty-padding-top, $alert-ios-message-empty-padding-end, $alert-ios-message-empty-padding-bottom, $alert-ios-message-empty-padding-start);
 }
 
 
@@ -378,9 +347,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   border: $alert-ios-input-border;
   background-color: $alert-ios-input-background-color;
 
-  @include deprecated-variable(padding, $alert-ios-input-padding) {
-    @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
-  }
+  @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
 }
 
 
@@ -421,9 +388,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
   color: $alert-ios-radio-label-text-color;
 
-  @include deprecated-variable(padding, $alert-ios-radio-label-padding) {
-    @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
-  }
+  @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
 }
 
 
@@ -480,9 +445,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
   color: $alert-ios-checkbox-label-text-color;
 
-  @include deprecated-variable(padding, $alert-ios-checkbox-label-padding) {
-    @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
-  }
+  @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
 }
 
 .alert-ios [aria-checked=true] .alert-checkbox-label {
@@ -505,9 +468,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   border-color: $alert-ios-checkbox-border-color-off;
   background-color: $alert-ios-checkbox-background-color-off;
 
-  @include deprecated-variable(margin, $alert-ios-checkbox-margin) {
-    @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
-  }
+  @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
 }
 
 

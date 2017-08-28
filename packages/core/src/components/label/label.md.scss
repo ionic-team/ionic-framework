@@ -11,9 +11,6 @@ $label-md-text-color:                 #999 !default;
 /// @prop - Text color of the stacked/floating label when it is focused
 $label-md-text-color-focused:         color($colors-md, primary) !default;
 
-// deprecated
-$label-md-margin:                     null !default;
-
 /// @prop - Margin top of the label
 $label-md-margin-top:                 $item-md-padding-top !default;
 
@@ -31,9 +28,7 @@ $label-md-margin-start:               0 !default;
 // --------------------------------------------------
 
 .label-md {
-  @include deprecated-variable(margin, $label-md-margin) {
-    @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
-  }
+  @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
 }
 
 // TODO uncomment this and get working

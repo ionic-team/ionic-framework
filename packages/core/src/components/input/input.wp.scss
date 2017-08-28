@@ -17,18 +17,14 @@ $text-input-wp-border-width:                2px !default;
 /// @prop - Margin top of the input
 $text-input-wp-margin-top:                  $item-wp-padding-top !default;
 
-// deprecated
-$text-input-wp-margin-right:                ($item-wp-padding-end / 2) !default;
 /// @prop - Margin end of the input
-$text-input-wp-margin-end:                  $text-input-wp-margin-right !default;
+$text-input-wp-margin-end:                  ($item-wp-padding-end / 2) !default;
 
 /// @prop - Margin bottom of the input
 $text-input-wp-margin-bottom:               $item-wp-padding-bottom !default;
 
-// deprecated
-$text-input-wp-margin-left:                 ($item-wp-padding-start / 2) !default;
 /// @prop - Margin start of the input
-$text-input-wp-margin-start:                $text-input-wp-margin-left !default;
+$text-input-wp-margin-start:                ($item-wp-padding-start / 2) !default;
 
 /// @prop - Vertical padding of the input
 $text-input-wp-padding-vertical:            0 !default;
@@ -134,8 +130,6 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   width: calc(100% - #{$text-input-wp-margin-end});
 }
 
-.item-wp.item-label-stacked [item-right], // deprecated
-.item-wp.item-label-floating [item-right], // deprecated
 .item-wp.item-label-stacked [item-end],
 .item-wp.item-label-floating [item-end] {
   align-self: flex-end;

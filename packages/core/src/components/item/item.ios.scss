@@ -8,9 +8,6 @@
 /// @prop - Font size of the item text
 $item-ios-body-text-font-size:            1.7rem !default;
 
-// deprecated
-$item-ios-paragraph-margin:               null !default;
-
 /// @prop - Margin top of the item paragraph
 $item-ios-paragraph-margin-top:           0 !default;
 
@@ -101,9 +98,7 @@ $item-ios-detail-push-svg:                "<svg xmlns='http://www.w3.org/2000/sv
   text-overflow: inherit;
   color: $item-ios-paragraph-text-color;
 
-  @include deprecated-variable(margin, $item-ios-paragraph-margin) {
-    @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
-  }
+  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
 }
 
 .item-ios h2:last-child,
