@@ -160,7 +160,7 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
   return (!isMovingFast && isOnResetZone) || (isResetDirection && isMovingFast);
 }
 
-export function isReady(element: HTMLElement) {
+export function isReady(element: Element): Promise<any> {
   return new Promise((resolve) => {
     (element as StencilElement).componentOnReady((elm: HTMLElement) => {
       resolve(elm);

@@ -12,6 +12,16 @@ export interface FrameworkDelegate {
   removeViewFromDom(navController: Nav, leavingView: ViewController): Promise<any>;
 }
 
+export interface NavContainer {
+  id?: number;
+  name?: string;
+  parent?: Nav;
+  getActiveChildNavs?(): NavContainer[];
+  getAllChildNavs?(): NavContainer[];
+  getType?(): string;
+  getSecondaryIdentifier?(): string;
+}
+
 export interface Nav {
   id?: number;
   element?: HTMLElement;
@@ -32,19 +42,24 @@ export interface Nav {
   mode?: string;
 
   // public methods
-  getActive(): ViewController;
-  getPrevious(view?: ViewController): ViewController;
-  getViews(): ViewController[];
-  push(component: any, data?: any, opts?: NavOptions): Promise<any>;
-  pop(opts?: NavOptions): Promise<any>;
-  setRoot(component: any, data?: any, opts?: NavOptions): Promise<any>;
-  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions): Promise<any>;
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any>;
-  popToRoot(opts?: NavOptions): Promise<any>;
-  popTo(indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
-  remove(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any>;
-  removeView(viewController: ViewController, opts?: NavOptions): Promise<any>;
-  setPages(componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
+  getActive?(): ViewController;
+  getPrevious?(view?: ViewController): ViewController;
+  getViews?(): ViewController[];
+  push?(component: any, data?: any, opts?: NavOptions): Promise<any>;
+  pop?(opts?: NavOptions): Promise<any>;
+  setRoot?(component: any, data?: any, opts?: NavOptions): Promise<any>;
+  insert?(insertIndex: number, page: any, params?: any, opts?: NavOptions): Promise<any>;
+  insertPages?(insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any>;
+  popToRoot?(opts?: NavOptions): Promise<any>;
+  popTo?(indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
+  remove?(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any>;
+  removeView?(viewController: ViewController, opts?: NavOptions): Promise<any>;
+  setPages?(componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
+}
+
+export interface OverlayPortal extends Nav {
+  type?: string;
+  registerPortal?: EventEmitter;
 }
 
 export interface NavController {
@@ -62,6 +77,7 @@ export interface NavController {
   delegate?: FrameworkDelegate;
   animationCtrl?: AnimationController;
 }
+
 
 export interface ViewController {
   id: string;

@@ -34,8 +34,8 @@ export class IonNav implements Nav {
     init(this);
   }
 
-  ionViewDidLoad() {
-    ionViewDidLoadImpl(this);
+  componentDidLoad() {
+    componentDidLoadImpl(this);
 
   }
 
@@ -129,7 +129,7 @@ export class IonNav implements Nav {
   }
 }
 
-export function ionViewDidLoadImpl(nav: Nav) {
+export function componentDidLoadImpl(nav: Nav) {
   nav.navInit.emit(nav);
   if (nav.root) {
     nav.setRoot(nav.root);
@@ -205,11 +205,14 @@ export function getNavController(nav: Nav): Promise<any> {
   return isReady(nav.navController as any as HTMLElement);
 }
 
-export function navInitializedImpl(nav: Nav, event: CustomEvent) {
-  if (nav.element !== event.target) {
-    console.log('nav.id is parent of: ', (event as any).detail.id);
+export function navInitializedImpl(potentialParent: Nav, event: CustomEvent) {
+  if (potentialParent.element !== event.target) {
     // set the parent on the child nav that dispatched the event
-    (event.detail as Nav).parent = nav;
+    (event.detail as Nav).parent = potentialParent;
+    if (!potentialParent.childNavs) {
+      potentialParent.childNavs = [];
+    }
+    potentialParent.childNavs.push((event.detail as Nav));
     // kill the event so it doesn't propagate further
     event.stopPropagation();
   }
