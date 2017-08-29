@@ -167,7 +167,7 @@ import {
  * ## Min and Max Datetimes
  *
  * Dates are infinite in either direction, so for a user's selection there should be at
- * least some form of restricting the dates that can be selected. Be default, the maximum
+ * least some form of restricting the dates that can be selected. By default, the maximum
  * date is to the end of the current year, and the minimum date is from the beginning
  * of the year that was 100 years ago.
  *
