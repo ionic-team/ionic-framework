@@ -1,3 +1,6 @@
+**Resources:**
+Before submitting an issue, please consult our troubleshooting guide (http://ionicframework.com/docs/troubleshooting/) and developer resources (http://ionicframework.com/docs/developer-resources/)
+
 **Ionic version:**  (check one with "x")
 [ ] **1.x** (For Ionic 1.x issues, please use https://github.com/ionic-team/ionic-v1)
 [ ] **2.x**
