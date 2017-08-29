@@ -168,7 +168,50 @@ export function isReady(element: Element): Promise<any> {
   });
 }
 
+export function getOrAppendElement(tagName: string): Element {
+  const element = document.querySelector(tagName);
+  if (element) {
+    return element;
+  }
+  const tmp = document.createElement(tagName);
+  document.body.appendChild(tmp);
+  return tmp;
+}
+
 /** @hidden */
 export function deepCopy(obj: any) {
   return JSON.parse(JSON.stringify(obj));
+}
+
+export function getWindow() {
+  return window;
+}
+
+export function getDocument() {
+  return document;
+}
+
+export function getActiveElement(): HTMLElement {
+  return getDocument()['activeElement'] as HTMLElement;
+}
+
+export function focusOutActiveElement() {
+  const activeElement = getActiveElement();
+  activeElement && activeElement.blur && activeElement.blur();
+}
+
+export function isTextInput(ele: any) {
+  return !!ele &&
+      (ele.tagName === 'TEXTAREA'
+      || ele.contentEditable === 'true'
+      || (ele.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(ele.type))));
+}
+export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
+
+export function hasFocusedTextInput() {
+  const activeElement = getActiveElement();
+  if (isTextInput(activeElement)) {
+    return activeElement.parentElement.querySelector(':focus') === activeElement;
+  }
+  return false;
 }

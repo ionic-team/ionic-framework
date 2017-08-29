@@ -30,7 +30,7 @@ import {
 
 import { ViewControllerImpl } from './view-controller-impl';
 
-import { assert, isDef, isNumber } from '../utils/helpers';
+import { assert, focusOutActiveElement, isDef, isNumber } from '../utils/helpers';
 
 import { buildIOSTransition } from './transitions/transition.ios';
 import { buildMdTransition } from './transitions/transition.md';
@@ -425,8 +425,8 @@ export function transitionFinish(nav: Nav, transition: Transition, delegate: Fra
 
       // TODO - navChange on the deep linker used to be called here
 
-      if (opts.keyboardClose) {
-        // TODO - close the keyboard
+      if (opts.keyboardClose !== false) {
+        focusOutActiveElement();
       }
     }
 
