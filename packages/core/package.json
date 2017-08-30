@@ -17,7 +17,7 @@
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "publish": "npm run build && node scripts/publish.js && node scripts/publish.js && ../../node_modules/.bin/np --any-branch",
+    "publish": "npm run build && node scripts/publish.js && ../../node_modules/.bin/np --any-branch",
     "test": "jest --no-cache"
   },
   "author": "Ionic Team",

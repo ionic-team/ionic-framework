@@ -1,3 +1,4 @@
+console.log('Publish Script Starting ...');
 var fs = require('fs');
 var path = require('path');
 
@@ -15,3 +16,5 @@ fs.writeFileSync(INDEX_JS_DIST, '');
 console.log('publish: create', INDEX_DTS_DIST);
 var srcIndexDTS = fs.readFileSync(INDEX_DTS_SRC, 'utf-8');
 fs.writeFileSync(INDEX_DTS_DIST, srcIndexDTS);
+
+console.log('Publish Script ... Complete');
