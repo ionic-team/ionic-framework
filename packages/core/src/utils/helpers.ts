@@ -1,5 +1,9 @@
 import { StencilElement } from '..';
 
+export function clamp(min: number, n: number, max: number) {
+  return Math.max(min, Math.min(n, max));
+}
+
 export function isDef(v: any): boolean { return v !== undefined && v !== null; }
 
 export function isUndef(v: any): boolean { return v === undefined || v === null; }

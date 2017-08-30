@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Range</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Range</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-range value="40" id="range">
+            <ion-icon small name="sunny" slot="range-start"></ion-icon>
+            <ion-icon name="sunny" slot="range-end"></ion-icon>
+          </ion-range>
+        </ion-item>
+      </ion-list>
+    <button onClick='elFunction()'> Helllo</button>
+    </ion-content>
+  </ion-app>
+  <script>
+    function elFunction(){
+    var range = document.querySelector('ion-range');
+    console.log(range.ratio())
+    }
+  </script>
+</body>
+
+</html>
