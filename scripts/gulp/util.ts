@@ -325,7 +325,7 @@ export function writePolyfills(outputDirectory: string) {
   promises.push(bundlePolyfill(NG_ENTRIES, join(outputDirectory, 'polyfills.ng.js')));
 
   return Promise.all(promises);
-};
+}
 
 function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) {
   return rollup({

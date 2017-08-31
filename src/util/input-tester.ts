@@ -56,7 +56,7 @@ export function commonInputTest<T>(input: BaseInput<T>, config: TestConfig) {
   // TODO test form register/deregister
   // TODO test item classes
   // TODO test disable
-  const zone = new NgZone(true);
+  const zone = new NgZone({ enableLongStackTrace: true });
   zone.run(() => {
     if (config.testItem === true && !input._item) {
       assert(false, 'input is invalid');

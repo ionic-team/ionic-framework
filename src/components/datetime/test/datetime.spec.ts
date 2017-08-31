@@ -736,7 +736,7 @@ describe('DateTime', () => {
 
 function zoned(fn: () => any): (done: DoneFn) => void {
   return () => {
-    const zone = new NgZone(false);
+    const zone = new NgZone({enableLongStackTrace: false});
     zone.run(fn);
   };
 }
