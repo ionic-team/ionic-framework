@@ -2,7 +2,7 @@ import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { DIRECTION_BACK, NavLink, NavSegment, convertToViews, isNav, isTab, isTabs, TransitionDoneFn } from './nav-util';
+import { DIRECTION_BACK, NavLink, NavSegment, TransitionDoneFn, convertToViews, isNav, isTab, isTabs } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Tab, Tabs } from './nav-interfaces';
