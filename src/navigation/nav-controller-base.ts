@@ -24,6 +24,7 @@ import {
   STATE_DESTROYED,
   STATE_INITIALIZED,
   STATE_NEW,
+  TransitionDoneFn,
   TransitionInstruction,
   convertToViews,
 } from './nav-util';
@@ -106,7 +107,7 @@ export class NavControllerBase extends Ion implements NavController {
     this._destroyed = false;
   }
 
-  push(page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
+  push(page: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       insertStart: -1,
       insertViews: [{ page: page, params: params }],
@@ -114,7 +115,7 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
-  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
+  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       insertStart: insertIndex,
       insertViews: [{ page: page, params: params }],
@@ -122,7 +123,7 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: () => void): Promise<any> {
+  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       insertStart: insertIndex,
       insertViews: insertPages,
@@ -130,7 +131,7 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
-  pop(opts?: NavOptions, done?: () => void): Promise<any> {
+  pop(opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       removeStart: -1,
       removeCount: 1,
@@ -138,7 +139,7 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
-  popTo(indexOrViewCtrl: any, opts?: NavOptions, done?: () => void): Promise<any> {
+  popTo(indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     let config: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
@@ -153,7 +154,7 @@ export class NavControllerBase extends Ion implements NavController {
     return this._queueTrns(config, done);
   }
 
-  popToRoot(opts?: NavOptions, done?: () => void): Promise<any> {
+  popToRoot(opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       removeStart: 1,
       removeCount: -1,
@@ -169,7 +170,7 @@ export class NavControllerBase extends Ion implements NavController {
     return Promise.all(promises);
   }
 
-  remove(startIndex: number, removeCount: number = 1, opts?: NavOptions, done?: () => void): Promise<any> {
+  remove(startIndex: number, removeCount: number = 1, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       removeStart: startIndex,
       removeCount: removeCount,
@@ -177,7 +178,7 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
-  removeView(viewController: ViewController, opts?: NavOptions, done?: () => void): Promise<any> {
+  removeView(viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       removeView: viewController,
       removeStart: 0,
@@ -186,12 +187,12 @@ export class NavControllerBase extends Ion implements NavController {
     }, done);
   }
 
-  setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
+  setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this.setPages([{ page: pageOrViewCtrl, params: params }], opts, done);
   }
 
 
-  setPages(viewControllers: any[], opts?: NavOptions, done?: () => void): Promise<any> {
+  setPages(viewControllers: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     if (isBlank(opts)) {
       opts = {};
     }
@@ -218,7 +219,7 @@ export class NavControllerBase extends Ion implements NavController {
   // 7. _transitionStart(): called once the transition actually starts, it initializes the Animation underneath.
   // 8. _transitionFinish(): called once the transition finishes
   // 9. _cleanup(): syncs the navigation internal state with the DOM. For example it removes the pages from the DOM or hides/show them.
-  _queueTrns(ti: TransitionInstruction, done: () => void): Promise<boolean> {
+  _queueTrns(ti: TransitionInstruction, done: TransitionDoneFn): Promise<boolean> {
     const promise = new Promise<boolean>((resolve, reject) => {
       ti.resolve = resolve;
       ti.reject = reject;

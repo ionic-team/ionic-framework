@@ -8,7 +8,7 @@ import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavOptions } from '../../navigation/nav-util';
+import { NavOptions, TransitionDoneFn } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
@@ -304,7 +304,7 @@ export class Tab extends NavControllerBase implements ITab {
   /**
    * @hidden
    */
-  load(opts: NavOptions, done?: () => void) {
+  load(opts: NavOptions, done?: TransitionDoneFn) {
     if (this._lazyRootFromUrl || (!this._loaded && this.root)) {
       this.setElementClass('show-tab', true);
       // okay, first thing we need to do if check if the view already exists
@@ -317,7 +317,10 @@ export class Tab extends NavControllerBase implements ITab {
           if (i === numViews) {
             // this is the last view in the stack and it's the same
             // as the segment so there's no change needed
-            return done();
+            if (done) {
+              done(false, false);
+            }
+            return;
           } else {
             // it's not the exact view as the end
             // let's have this nav go back to this exact view
@@ -343,7 +346,10 @@ export class Tab extends NavControllerBase implements ITab {
       this._dom.read(() => {
         this.resize();
       });
-      return done();
+      if (done) {
+        done(false, false);
+      }
+      return;
     }
   }
 

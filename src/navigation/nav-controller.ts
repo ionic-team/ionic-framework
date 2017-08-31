@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 
 import { Config } from '../config/config';
-import { NavOptions } from './nav-util';
+import { NavOptions, TransitionDoneFn } from './nav-util';
 import { Page } from './nav-util';
 import { ViewController } from './view-controller';
 import { NavigationContainer } from './navigation-container';
@@ -420,7 +420,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract push(page: Page | string, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract push(page: Page | string, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Inserts a component into the nav stack at the specified index. This is useful if
@@ -433,7 +433,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract insert(insertIndex: number, page: Page | string, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract insert(insertIndex: number, page: Page | string, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Inserts an array of components into the nav stack at the specified index.
@@ -445,7 +445,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract insertPages(insertIndex: number, insertPages: Array<{page: Page | string, params?: any}>, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract insertPages(insertIndex: number, insertPages: Array<{page: Page | string, params?: any}>, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Call to navigate back from a current component. Similar to `push()`, you
@@ -454,7 +454,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract pop(opts?: NavOptions, done?: Function): Promise<any>;
+  abstract pop(opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Navigate back to the root of the stack, no matter how far back that is.
@@ -462,7 +462,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popToRoot(opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popToRoot(opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * @hidden
@@ -479,7 +479,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popTo(page: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popTo(page: Page | string | ViewController, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * @hidden
@@ -497,7 +497,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract remove(startIndex: number, removeCount?: number, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract remove(startIndex: number, removeCount?: number, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Removes the specified view controller from the nav stack.
@@ -506,7 +506,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract removeView(viewController: ViewController, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract removeView(viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Set the root for the current navigation stack.
@@ -516,7 +516,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {Function} done Callback function on done.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
   abstract goToRoot(options: NavOptions): Promise<any>;
 
   /**
@@ -529,7 +529,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {Object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setPages(pages: ({page: Page | string, params?: any} | ViewController)[], opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setPages(pages: ({page: Page | string, params?: any} | ViewController)[], opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * @param {number} index The index of the page to get.

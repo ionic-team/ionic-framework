@@ -221,6 +221,10 @@ export interface TransitionRejectFn {
   (rejectReason: any, transition?: Transition): void;
 }
 
+export interface TransitionDoneFn {
+  (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string): void;
+}
+
 export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
@@ -230,7 +234,7 @@ export interface TransitionInstruction {
   removeCount?: number;
   resolve?: (hasCompleted: boolean) => void;
   reject?: (rejectReason: string) => void;
-  done?: Function;
+  done?: TransitionDoneFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
   requiresTransition?: boolean;
