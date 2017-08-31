@@ -254,7 +254,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   private onChange() {
     this._onChanged && this._onChanged(this._inputNgModelEvent());
-    this._onTouched && this._onTouched();
   }
 
   /**
