@@ -12,7 +12,7 @@ import { Haptic } from '../tap-click/haptic';
 import { IonicApp } from '../components/app/app-root';
 import { Keyboard } from '../platform/keyboard';
 import { Menu } from '../components/menu/menu';
-import { NavOptions } from '../navigation/nav-util';
+import { NavOptions, TransitionDoneFn } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
 import { OverlayPortal } from '../components/app/overlay-portal';
 import { PageTransition } from '../transitions/page-transition';
@@ -506,8 +506,9 @@ export function mockTab(parentTabs: Tabs): Tab {
     null
   );
 
-  tab.load = (opts: any, cb: Function) => {
-    cb();
+  tab.load = (_opts: any, cb: TransitionDoneFn) => {
+    cb(false, false);
+    return Promise.resolve();
   };
 
   return tab;

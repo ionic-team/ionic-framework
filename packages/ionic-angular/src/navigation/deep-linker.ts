@@ -2,7 +2,7 @@ import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { convertToViews, DIRECTION_BACK, isNav, isTab, isTabs, NavLink, NavSegment } from './nav-util';
+import { convertToViews, DIRECTION_BACK, isNav, isTab, isTabs, NavLink, NavSegment, TransitionDoneFn } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Nav, Tab, Tabs } from './nav-interfaces';
@@ -368,9 +368,9 @@ export class DeepLinker {
    *
    * @internal
    */
-  _loadNavFromPath(nav: NavController, done?: Function) {
+  _loadNavFromPath(nav: NavController, done?: TransitionDoneFn) {
     if (!nav) {
-      done && done();
+      done && done(false, false);
 
     } else {
       this._loadViewFromSegment(nav, () => {
@@ -382,11 +382,11 @@ export class DeepLinker {
   /**
    * @internal
    */
-  _loadViewFromSegment(navInstance: any, done: Function) {
+  _loadViewFromSegment(navInstance: any, done: TransitionDoneFn) {
     // load up which nav ids belong to its nav segment
     let segment = this.initNav(navInstance);
     if (!segment) {
-      done();
+      done(false, false);
       return;
     }
 
@@ -398,7 +398,7 @@ export class DeepLinker {
           animate: false
         }
       );
-      done();
+      done(false, false);
       return;
     }
 
@@ -417,7 +417,7 @@ export class DeepLinker {
         if (i === count) {
           // this is the last view in the stack and it's the same
           // as the segment so there's no change needed
-          done();
+          done(false, false);
 
         } else {
           // it's not the exact view as the end
