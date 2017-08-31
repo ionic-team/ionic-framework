@@ -9,7 +9,7 @@ import { isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavOptions } from '../../navigation/nav-util';
+import { NavOptions, TransitionDoneFn } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
@@ -294,7 +294,7 @@ export class Tab extends NavControllerBase implements ITab {
   /**
    * @hidden
    */
-  load(opts: NavOptions, done?: () => void) {
+  load(opts: NavOptions, done?: TransitionDoneFn) {
     if (!this._loaded && this.root) {
       this.setElementClass('show-tab', true);
       this.push(this.root, this.rootParams, opts, done);
@@ -307,7 +307,7 @@ export class Tab extends NavControllerBase implements ITab {
       this._dom.read(() => {
         this.resize();
       });
-      done();
+      done && done(false, false);
     }
   }
 
