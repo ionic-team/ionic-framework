@@ -29,9 +29,9 @@ export class Toggle implements BooleanInputComponent {
   @Prop() color: string;
   @Prop() mode: string;
 
-  @Prop({ state: true }) checked: boolean = false;
-  @Prop({ state: true }) disabled: boolean = false;
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) value: string;
 
 
   ionViewWillLoad() {

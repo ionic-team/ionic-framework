@@ -15,7 +15,7 @@ export interface SelectPopoverOption {
 export class SelectPopover {
   @Prop() options: SelectPopoverOption[];
 
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
   @PropDidChange('value')
   valueChanged(val: string) {

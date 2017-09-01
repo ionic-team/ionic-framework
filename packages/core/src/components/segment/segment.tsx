@@ -76,9 +76,9 @@ export class Segment {
 
   @Event() ionChange: EventEmitter;
 
-  @Prop({ state: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) disabled: boolean = false;
 
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
   @PropDidChange('value')
   changed(val: string) {

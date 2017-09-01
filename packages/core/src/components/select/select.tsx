@@ -83,7 +83,7 @@ export class Select {
   /**
    * @input {string} the value of the select.
    */
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
 //   /**
 //    * @hidden
