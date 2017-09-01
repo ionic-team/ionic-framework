@@ -1,5 +1,7 @@
 
-import { Component, Prop, PropDidChange } from '@stencil/core';
+import { Component, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+
+import { createThemedClasses } from '../../utils/theme';
 
 export interface SelectPopoverOption {
   text: string;
@@ -10,16 +12,24 @@ export interface SelectPopoverOption {
 }
 
 @Component({
-  tag: 'ion-select-popover'
-})
+  tag: 'ion-select-popover',
+  host: {
+    theme: 'select-popover'
+  }}
+)
 export class SelectPopover {
+  mode: string;
+  color: string;
+
+  @Event() ionDismiss: EventEmitter;
+
   @Prop() options: SelectPopoverOption[];
 
   @Prop({ mutable: true }) value: string;
 
-  @PropDidChange('value')
-  valueChanged(val: string) {
-    console.log('Select popover value', val);
+  @Listen('ionChange')
+  onChange(ev: CustomEvent) {
+    this.value = ev.detail.value;
   }
 
   // public get value() {
@@ -28,25 +38,36 @@ export class SelectPopover {
   //   return checkedOption ? checkedOption.value : undefined;
   // }
 
-  // public set value(value: any) {
-  //   let checkedOption = this.options.find(option => option.value === value);
-  //   if (checkedOption && checkedOption.handler) {
-  //     checkedOption.handler();
-  //   }
-  //   this.viewController.dismiss(value);
-  // }
+  dismiss(value: any) {
+    this.ionDismiss.emit(value);
+  }
+
+  @PropDidChange('value')
+  valueChanged(value: string) {
+    let checkedOption = this.options.find(option => option.value === value);
+    if (checkedOption && checkedOption.handler) {
+      checkedOption.handler();
+    }
+    this.dismiss(value);
+  }
 
   render() {
-    console.log(this.options);
-
     return (
-      <ion-list radio-group value="{this.value}">
-        {this.options.map(option =>
-          <ion-item>
-            <ion-label>{option.text}</ion-label>
-            <ion-radio checked={option.checked} value={option.value} disabled={option.disabled}></ion-radio>
-          </ion-item>
-        )}
+      <ion-list>
+        <ion-radio-group value={this.value}>
+          {this.options.map(option =>
+            <ion-item>
+              <ion-label>
+                {option.text}
+              </ion-label>
+              <ion-radio
+                checked={option.checked}
+                value={option.value}
+                disabled={option.disabled}>
+              </ion-radio>
+            </ion-item>
+          )}
+        </ion-radio-group>
       </ion-list>
     );
   }

@@ -29,7 +29,7 @@
         <ion-item>
           <ion-label>Hair Color</ion-label>
           <ion-select name="hairColor" ok-text="Okay" cancel-text="Dismiss">
-            <ion-select-option value="brown">Brown</ion-select-option>
+            <ion-select-option value="brown" selected>Brown</ion-select-option>
             <ion-select-option value="blonde">Blonde</ion-select-option>
             <ion-select-option value="black">Black</ion-select-option>
             <ion-select-option value="red">Red</ion-select-option>
@@ -50,7 +50,7 @@
 
         <ion-item>
           <ion-label>Date</ion-label>
-          <ion-select (ionChange)="monthChange($event)" placeholder="Month">
+          <ion-select placeholder="Month">
             <ion-select-option value="01">January</ion-select-option>
             <ion-select-option value="02">February</ion-select-option>
             <ion-select-option value="03" selected="true">March</ion-select-option>
@@ -64,7 +64,7 @@
             <ion-select-option value="11">November</ion-select-option>
             <ion-select-option value="12">December</ion-select-option>
           </ion-select>
-          <ion-select (ionChange)="yearChange($event)" placeholder="Year">
+          <ion-select placeholder="Year">
             <ion-select-option>1989</ion-select-option>
             <ion-select-option>1990</ion-select-option>
             <ion-select-option>1991</ion-select-option>
@@ -94,7 +94,7 @@
 
         <ion-item>
           <ion-label>Gaming</ion-label>
-          <ion-select name="gaming" ok-text="Okay" cancel-text="Dismiss" selected-text="Nintendo 64" interface="popover">
+          <ion-select name="gaming" ok-text="Okay" cancel-text="Dismiss" value="n64" interface="popover">
             <ion-select-option value="nes">NES</ion-select-option>
             <ion-select-option value="n64">Nintendo64</ion-select-option>
             <ion-select-option value="ps">PlayStation</ion-select-option>
@@ -106,7 +106,7 @@
 
         <ion-item>
           <ion-label>Date</ion-label>
-          <ion-select (ionChange)="monthChange($event)" placeholder="Month" interface="popover">
+          <ion-select placeholder="Month" interface="popover">
             <ion-select-option value="01">January</ion-select-option>
             <ion-select-option value="02">February</ion-select-option>
             <ion-select-option value="03" selected="true">March</ion-select-option>
@@ -120,7 +120,7 @@
             <ion-select-option value="11">November</ion-select-option>
             <ion-select-option value="12">December</ion-select-option>
           </ion-select>
-          <ion-select (ionChange)="yearChange($event)" placeholder="Year" interface="popover">
+          <ion-select placeholder="Year" interface="popover">
             <ion-select-option>1989</ion-select-option>
             <ion-select-option>1990</ion-select-option>
             <ion-select-option>1991</ion-select-option>
