@@ -12,6 +12,9 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Item {
+  private ids: number = -1;
+  private id: string;
+
   private childStyles: CssClassMap = Object.create(null);
   private label: any;
 
@@ -61,6 +64,15 @@ export class Item {
     //   }
     //   this.viewLabel = false;
     // }
+  }
+
+  /**
+   * @hidden
+   */
+  @Method()
+  registerInput(type: string) {
+    // this.inputs.push(type);
+    return this.id + '-' + (++this.ids);
   }
 
   render() {

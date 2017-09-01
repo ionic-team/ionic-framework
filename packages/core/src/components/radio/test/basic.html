@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Radio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Radios</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="outer-content">
+      <ion-radio-group>
+        <ion-list>
+          <ion-list-header>
+            Fruits
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Apple</ion-label>
+            <ion-radio slot="start" name="apple" checked></ion-radio>
+            <ion-icon slot="end" name="ionic"></ion-icon>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Banana</ion-label>
+            <ion-radio slot="start" name="banana" checked></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Cherry</ion-label>
+            <ion-radio slot="start" color="danger" name="cherry"></ion-radio>
+          </ion-item>
+        </ion-list>
+      </ion-radio-group>
+
+      <ion-list>
+        <ion-list-header>
+          Mo Fruits
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Grape, checked, disabled</ion-label>
+          <ion-radio slot="start" id="grapeChecked" name="grape" checked disabled></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
+          <ion-radio slot="start" color="secondary" (ionChange)="kiwiChange($event)"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Strawberry, (ionChange) checked="true"</ion-label>
+          <ion-radio slot="start" color="light" (ionChange)="strawberryChange($event)" checked="true"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
+          <ion-radio slot="end" color="danger" checked></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Checkbox right side</ion-label>
+          <ion-radio slot="end" checked></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Button w/ right side default icon, really long text that should ellipsis</ion-label>
+          <ion-icon name="information-circle" slot="end"></ion-icon>
+        </ion-item>
+
+      </ion-list>
+
+
+      <p aria-hidden="true" text-center>
+        <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
+        <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
+        <ion-button onClick="printForm()" outline small>Print Form</ion-button>
+      </p>
+
+      <p>
+        <ion-radio id="standAloneChecked"></ion-radio>
+        Stand-alone checkbox: <span id="standAloneCheckedSpan"></span>
+      </p>
+
+      <p aria-hidden="true" padding>
+        <code>appleCtrl.value: <span id="appleCtrlValue"></span></code><br>
+        <code>bananaCtrl.value: <span id="bananaCtrlValue"></span></code><br>
+        <code>cherry.value: <span id="cherryCtrlValue"></span></code><br>
+        <code>grape.value: <span id="grapeCtrlValue"></span></code><br>
+        <code>kiwiValue: <spa id="kiwiValue"></span></code><br>
+        <code>strawberryValue: <span id="strawberryValue">y</span></code><br>
+      </p>
+
+      <pre aria-hidden="true" padding id="formResults"></pre>
+
+      <ion-item>
+        <ion-label>Checkbox / Toggle</ion-label>
+        <ion-radio slot="start" id="checked"></ion-radio>
+        <ion-toggle id="checked"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Checked</ion-label>
+        <ion-radio slot="start" checked></ion-radio>
+        <ion-toggle checked></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Disabled</ion-label>
+        <ion-radio slot="start" disabled></ion-radio>
+        <ion-toggle disabled></ion-toggle>
+      </ion-item>
+
+    </ion-content>
+
+    <script>
+      function printForm(ev) {
+        console.log('TODO get working with forms');
+      }
+
+      function toggleBoolean(id, prop) {
+        var ele = document.getElementById(id);
+
+        var isTrue = ele[prop] ? false : true;
+        ele[prop] = isTrue;
+        console.log('in toggleBoolean, setting', prop, 'to', isTrue);
+      }
+    </script>
+
+  </ion-app>
+</body>
+</html>
+
+
+

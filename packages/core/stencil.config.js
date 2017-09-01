@@ -23,6 +23,7 @@ exports.config = {
     { components: ['ion-menu'], priority: 'low' },
     { components: ['ion-modal', 'ion-modal-controller'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
+    { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },

@@ -18,6 +18,25 @@ export function isFunction(v: any): v is (Function) { return typeof v === 'funct
 
 export function isStringOrNumber(v: any): v is (string | number) { return isString(v) || isNumber(v); }
 
+/** @hidden */
+export function isCheckedProperty(a: any, b: any): boolean {
+  if (a === undefined || a === null || a === '') {
+    return (b === undefined || b === null || b === '');
+
+  } else if (a === true || a === 'true') {
+    return (b === true || b === 'true');
+
+  } else if (a === false || a === 'false') {
+    return (b === false || b === 'false');
+
+  } else if (a === 0 || a === '0') {
+    return (b === 0 || b === '0');
+  }
+
+  // not using strict comparison on purpose
+  return (a == b); // tslint:disable-line
+};
+
 export function assert(bool: boolean, msg: string) {
   if (!bool) {
     console.error(msg);
