@@ -1,8 +1,6 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
-
 import { createThemedClasses } from '../../utils/theme';
 
-import { RadioGroup } from './radio-group';
 
 /**
  * @description
@@ -76,17 +74,17 @@ export class Radio {
   /*
    * @input {boolean} If true, the radio is checked. Default false.
    */
-  @Prop({ state: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked: boolean = false;
 
   /*
     * @input {boolean} If true, the user cannot interact with this element. Default false.
     */
-  @Prop({ state: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) disabled: boolean = false;
 
   /**
    * @input {string} the value of the radio.
    */
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
 
   ionViewWillLoad() {

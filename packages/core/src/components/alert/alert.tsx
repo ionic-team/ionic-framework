@@ -38,7 +38,7 @@ export class Alert {
   @Prop() subTitle: string;
   @Prop() message: string;
   @Prop() buttons: AlertButton[] = [];
-  @Prop({ mutable: true}) inputs: AlertInput[] = [];
+  @Prop({ mutable: true }) inputs: AlertInput[] = [];
   @Prop() enableBackdropDismiss: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
