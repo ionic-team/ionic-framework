@@ -10,7 +10,7 @@
     "README.md"
   ],
   "devDependencies": {
-    "@stencil/core": "^0.0.5-10",
+    "@stencil/core": "0.0.5-11",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest"
   },
