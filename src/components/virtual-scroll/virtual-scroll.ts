@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFunction } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, populateNodeData, processRecords, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
@@ -235,7 +235,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   };
   _queue: number = SCROLL_QUEUE_NO_CHANGES;
 
-  _virtualTrackBy: TrackByFn;
+  _virtualTrackBy: TrackByFunction;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
@@ -370,13 +370,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @input {function} Same as `ngForTrackBy` which can be used on `ngFor`.
    */
   @Input()
-  set virtualTrackBy(val: TrackByFn) {
+  set virtualTrackBy(val: TrackByFunction) {
     if (isPresent(val)) {
       this._virtualTrackBy = val;
       this._updateDiffer();
     }
   }
-  get virtualTrackBy(): TrackByFn {
+  get virtualTrackBy(): TrackByFunction {
     return this._virtualTrackBy;
   }
 
