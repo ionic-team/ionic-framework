@@ -386,4 +386,5 @@ The properties have been renamed to the following:
 Deprecated variables and styles have been removed.
 
 - [e0a29db](https://github.com/ionic-team/ionic/commit/e0a29db)
+- [07e4330](https://github.com/ionic-team/ionic/commit/07e4330)
 - TODO continue to add what is removed here
