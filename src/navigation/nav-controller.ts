@@ -479,7 +479,7 @@ export abstract class NavController implements NavigationContainer {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popTo(page: Page | string | ViewController, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
+  abstract popTo(page: Page | string | ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * @hidden
