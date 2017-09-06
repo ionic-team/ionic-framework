@@ -1,0 +1,51 @@
+@import "../../themes/ionic.globals";
+
+// Material Design Popover
+// --------------------------------------------------
+
+/// @prop - Width of the popover content
+$popover-md-width:                     250px !default;
+
+/// @prop - Min width of the popover content
+$popover-md-min-width:                 0 !default;
+
+/// @prop - Minimum height of the popover content
+$popover-md-min-height:                0 !default;
+
+/// @prop - Maximum height of the popover content
+$popover-md-max-height:                90% !default;
+
+/// @prop - Border radius of the popover content
+$popover-md-border-radius:             2px !default;
+
+/// @prop - Text color of the popover content
+$popover-md-text-color:                $text-md-color !default;
+
+/// @prop - Background of the popover content
+$popover-md-background:                $background-md-color !default;
+
+/// @prop - Box shadow color of the popover content
+$popover-md-box-shadow-color:          rgba(0, 0, 0, .3) !default;
+
+/// @prop - Box shadow of the popover content
+$popover-md-box-shadow:                0 3px 12px 2px $popover-md-box-shadow-color !default;
+
+
+.popover-md .popover-content {
+  @include border-radius($popover-md-border-radius);
+  @include transform-origin(start, top);
+
+  width: $popover-md-width;
+  min-width: $popover-md-min-width;
+  min-height: $popover-md-min-height;
+  max-height: $popover-md-max-height;
+
+  color: $popover-md-text-color;
+  background: $popover-md-background;
+  box-shadow: $popover-md-box-shadow;
+}
+
+.popover-md .popover-viewport {
+  opacity: 0;
+  transition-delay: 100ms;
+}

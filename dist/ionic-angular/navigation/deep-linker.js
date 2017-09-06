@@ -1,0 +1,530 @@
+import { DIRECTION_BACK, convertToViews, isNav, isTab, isTabs, } from './nav-util';
+import { isArray, isPresent } from '../util/util';
+import { formatUrlPart } from './url-serializer';
+import { ViewController } from './view-controller';
+/**
+ * @hidden
+ */
+var DeepLinker = (function () {
+    /**
+     * @param {?} _app
+     * @param {?} _serializer
+     * @param {?} _location
+     * @param {?} _moduleLoader
+     * @param {?} _baseCfr
+     */
+    function DeepLinker(_app, _serializer, _location, _moduleLoader, _baseCfr) {
+        this._app = _app;
+        this._serializer = _serializer;
+        this._location = _location;
+        this._moduleLoader = _moduleLoader;
+        this._baseCfr = _baseCfr;
+        /**
+         * \@internal
+         */
+        this._history = [];
+    }
+    /**
+     * \@internal
+     * @return {?}
+     */
+    DeepLinker.prototype.init = function () {
+        var _this = this;
+        // scenario 1: Initial load of all navs from the initial browser URL
+        var /** @type {?} */ browserUrl = normalizeUrl(this._location.path());
+        (void 0) /* console.debug */;
+        // remember this URL in our internal history stack
+        this._historyPush(browserUrl);
+        // listen for browser URL changes
+        this._location.subscribe(function (locationChg) {
+            _this._urlChange(normalizeUrl(locationChg.url));
+        });
+    };
+    /**
+     * The browser's location has been updated somehow.
+     * \@internal
+     * @param {?} browserUrl
+     * @return {?}
+     */
+    DeepLinker.prototype._urlChange = function (browserUrl) {
+        var _this = this;
+        // do nothing if this url is the same as the current one
+        if (!this._isCurrentUrl(browserUrl)) {
+            var /** @type {?} */ isGoingBack = true;
+            if (this._isBackUrl(browserUrl)) {
+                // scenario 2: user clicked the browser back button
+                // scenario 4: user changed the browser URL to what was the back url was
+                // scenario 5: user clicked a link href that was the back url
+                (void 0) /* console.debug */;
+                this._historyPop();
+            }
+            else {
+                // scenario 3: user click forward button
+                // scenario 4: user changed browser URL that wasn't the back url
+                // scenario 5: user clicked a link href that wasn't the back url
+                isGoingBack = false;
+                (void 0) /* console.debug */;
+                this._historyPush(browserUrl);
+            }
+            // get the app's root nav container
+            var /** @type {?} */ activeNavContainers_1 = this._app.getActiveNavContainers();
+            if (activeNavContainers_1 && activeNavContainers_1.length) {
+                if (browserUrl === '/') {
+                    // a url change to the index url
+                    if (isPresent(this._indexAliasUrl)) {
+                        // we already know the indexAliasUrl
+                        // update the url to use the know alias
+                        browserUrl = this._indexAliasUrl;
+                    }
+                    else {
+                        // the url change is to the root but we don't
+                        // already know the url used. So let's just
+                        // reset the root nav to its root page
+                        activeNavContainers_1.forEach(function (navContainer) {
+                            navContainer.goToRoot({
+                                updateUrl: false,
+                                isNavRoot: true
+                            });
+                        });
+                        return;
+                    }
+                }
+                // normal url
+                var /** @type {?} */ segments = this.getCurrentSegments(browserUrl);
+                segments
+                    .map(function (segment) {
+                    // find the matching nav container
+                    for (var _i = 0, activeNavContainers_2 = activeNavContainers_1; _i < activeNavContainers_2.length; _i++) {
+                        var navContainer = activeNavContainers_2[_i];
+                        var /** @type {?} */ nav = getNavFromTree(navContainer, segment.navId);
+                        if (nav) {
+                            return {
+                                segment: segment,
+                                navContainer: nav
+                            };
+                        }
+                    }
+                })
+                    .filter(function (pair) { return !!pair; })
+                    .forEach(function (pair) {
+                    _this._loadViewForSegment(pair.navContainer, pair.segment, function () { });
+                });
+            }
+        }
+    };
+    /**
+     * @param {?=} browserUrl
+     * @return {?}
+     */
+    DeepLinker.prototype.getCurrentSegments = function (browserUrl) {
+        if (!browserUrl) {
+            browserUrl = normalizeUrl(this._location.path());
+        }
+        return this._serializer.parse(browserUrl);
+    };
+    /**
+     * Update the deep linker using the NavController's current active view.
+     * \@internal
+     * @param {?} direction
+     * @return {?}
+     */
+    DeepLinker.prototype.navChange = function (direction) {
+        if (direction) {
+            var /** @type {?} */ activeNavContainers = this._app.getActiveNavContainers();
+            // the only time you'll ever get a TABS here is when loading directly from a URL
+            // this method will be called again when the TAB is loaded
+            // so just don't worry about the TABS for now
+            // if you encounter a TABS, just return
+            for (var _i = 0, activeNavContainers_3 = activeNavContainers; _i < activeNavContainers_3.length; _i++) {
+                var activeNavContainer = activeNavContainers_3[_i];
+                if (isTabs(activeNavContainer) || ((activeNavContainer)).isTransitioning()) {
+                    return;
+                }
+            }
+            // okay, get the root navs and build the segments up
+            var /** @type {?} */ segments = [];
+            var /** @type {?} */ navContainers = this._app.getRootNavs();
+            for (var _a = 0, navContainers_1 = navContainers; _a < navContainers_1.length; _a++) {
+                var navContainer = navContainers_1[_a];
+                var /** @type {?} */ segmentsForNav = this.getSegmentsFromNav(navContainer);
+                segments = segments.concat(segmentsForNav);
+            }
+            segments = segments.filter(function (segment) { return !!segment; });
+            if (segments.length) {
+                var /** @type {?} */ browserUrl = this._serializer.serialize(segments);
+                this._updateLocation(browserUrl, direction);
+            }
+        }
+    };
+    /**
+     * @param {?} nav
+     * @return {?}
+     */
+    DeepLinker.prototype.getSegmentsFromNav = function (nav) {
+        var _this = this;
+        var /** @type {?} */ segments = [];
+        if (isNav(nav)) {
+            segments.push(this.getSegmentFromNav(/** @type {?} */ (nav)));
+        }
+        else if (isTab(nav)) {
+            segments.push(this.getSegmentFromTab(nav));
+        }
+        nav.getActiveChildNavs().forEach(function (child) {
+            segments = segments.concat(_this.getSegmentsFromNav(child));
+        });
+        return segments;
+    };
+    /**
+     * @param {?} nav
+     * @param {?=} component
+     * @param {?=} data
+     * @return {?}
+     */
+    DeepLinker.prototype.getSegmentFromNav = function (nav, component, data) {
+        if (!component) {
+            var /** @type {?} */ viewController = nav.getActive(true);
+            if (viewController) {
+                component = viewController.component;
+                data = viewController.data;
+            }
+        }
+        return this._serializer.serializeComponent(nav, component, data);
+    };
+    /**
+     * @param {?} navContainer
+     * @param {?=} component
+     * @param {?=} data
+     * @return {?}
+     */
+    DeepLinker.prototype.getSegmentFromTab = function (navContainer, component, data) {
+        if (navContainer && navContainer.parent) {
+            var /** @type {?} */ tabsNavContainer = (navContainer.parent);
+            var /** @type {?} */ activeChildNavs = tabsNavContainer.getActiveChildNavs();
+            if (activeChildNavs && activeChildNavs.length) {
+                var /** @type {?} */ activeChildNav = activeChildNavs[0];
+                var /** @type {?} */ viewController = ((activeChildNav)).getActive(true);
+                if (viewController) {
+                    component = viewController.component;
+                    data = viewController.data;
+                }
+                return this._serializer.serializeComponent(tabsNavContainer, component, data);
+            }
+        }
+    };
+    /**
+     * \@internal
+     * @param {?} browserUrl
+     * @param {?} direction
+     * @return {?}
+     */
+    DeepLinker.prototype._updateLocation = function (browserUrl, direction) {
+        if (this._indexAliasUrl === browserUrl) {
+            browserUrl = '/';
+        }
+        if (direction === DIRECTION_BACK && this._isBackUrl(browserUrl)) {
+            // this URL is exactly the same as the back URL
+            // it's safe to use the browser's location.back()
+            (void 0) /* console.debug */;
+            this._historyPop();
+            this._location.back();
+        }
+        else if (!this._isCurrentUrl(browserUrl)) {
+            // probably navigating forward
+            (void 0) /* console.debug */;
+            this._historyPush(browserUrl);
+            this._location.go(browserUrl);
+        }
+    };
+    /**
+     * @param {?} componentName
+     * @return {?}
+     */
+    DeepLinker.prototype.getComponentFromName = function (componentName) {
+        var /** @type {?} */ link = this._serializer.getLinkFromName(componentName);
+        if (link) {
+            // cool, we found the right link for this component name
+            return this.getNavLinkComponent(link);
+        }
+        // umm, idk
+        return Promise.reject("invalid link: " + componentName);
+    };
+    /**
+     * @param {?} link
+     * @return {?}
+     */
+    DeepLinker.prototype.getNavLinkComponent = function (link) {
+        if (link.component) {
+            // sweet, we're already got a component loaded for this link
+            return Promise.resolve(link.component);
+        }
+        if (link.loadChildren) {
+            // awesome, looks like we'll lazy load this component
+            // using loadChildren as the URL to request
+            return this._moduleLoader.load(link.loadChildren).then(function (response) {
+                link.component = response.component;
+                return response.component;
+            });
+        }
+        return Promise.reject("invalid link component: " + link.name);
+    };
+    /**
+     * \@internal
+     * @param {?} component
+     * @return {?}
+     */
+    DeepLinker.prototype.resolveComponent = function (component) {
+        var /** @type {?} */ cfr = this._moduleLoader.getComponentFactoryResolver(component);
+        if (!cfr) {
+            cfr = this._baseCfr;
+        }
+        return cfr.resolveComponentFactory(component);
+    };
+    /**
+     * \@internal
+     * @param {?} navContainer
+     * @param {?} nameOrComponent
+     * @param {?=} _data
+     * @param {?=} prepareExternalUrl
+     * @return {?}
+     */
+    DeepLinker.prototype.createUrl = function (navContainer, nameOrComponent, _data, prepareExternalUrl) {
+        if (_data === void 0) { _data = null; }
+        if (prepareExternalUrl === void 0) { prepareExternalUrl = true; }
+        // create a segment out of just the passed in name
+        var /** @type {?} */ segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent, _data);
+        var /** @type {?} */ allSegments = this.getCurrentSegments();
+        if (segment) {
+            for (var /** @type {?} */ i = 0; i < allSegments.length; i++) {
+                if (allSegments[i].navId === navContainer.name || allSegments[i].navId === navContainer.id) {
+                    allSegments[i] = segment;
+                    var /** @type {?} */ url = this._serializer.serialize(allSegments);
+                    return prepareExternalUrl ? this._location.prepareExternalUrl(url) : url;
+                }
+            }
+        }
+        return '';
+    };
+    /**
+     * Each NavController will call this method when it initializes for
+     * the first time. This allows each NavController to figure out
+     * where it lives in the path and load up the correct component.
+     * \@internal
+     * @param {?} navId
+     * @param {?} name
+     * @return {?}
+     */
+    DeepLinker.prototype.getSegmentByNavIdOrName = function (navId, name) {
+        var /** @type {?} */ browserUrl = normalizeUrl(this._location.path());
+        var /** @type {?} */ segments = this._serializer.parse(browserUrl);
+        for (var _i = 0, segments_1 = segments; _i < segments_1.length; _i++) {
+            var segment = segments_1[_i];
+            if (segment.navId === navId || segment.navId === name) {
+                return segment;
+            }
+        }
+        return null;
+    };
+    /**
+     * \@internal
+     * @param {?} segment
+     * @return {?}
+     */
+    DeepLinker.prototype.initViews = function (segment) {
+        var _this = this;
+        var /** @type {?} */ link = this._serializer.getLinkFromName(segment.name);
+        return this.getNavLinkComponent(link).then(function (component) {
+            segment.component = component;
+            var /** @type {?} */ view = new ViewController(component, segment.data);
+            view.id = segment.id;
+            if (isArray(segment.defaultHistory)) {
+                return convertToViews(_this, segment.defaultHistory).then(function (views) {
+                    views.push(view);
+                    return views;
+                });
+            }
+            return [view];
+        });
+    };
+    /**
+     * \@internal
+     * @param {?} browserUrl
+     * @return {?}
+     */
+    DeepLinker.prototype._isBackUrl = function (browserUrl) {
+        return (browserUrl === this._history[this._history.length - 2]);
+    };
+    /**
+     * \@internal
+     * @param {?} browserUrl
+     * @return {?}
+     */
+    DeepLinker.prototype._isCurrentUrl = function (browserUrl) {
+        return (browserUrl === this._history[this._history.length - 1]);
+    };
+    /**
+     * \@internal
+     * @param {?} browserUrl
+     * @return {?}
+     */
+    DeepLinker.prototype._historyPush = function (browserUrl) {
+        if (!this._isCurrentUrl(browserUrl)) {
+            this._history.push(browserUrl);
+            if (this._history.length > 30) {
+                this._history.shift();
+            }
+        }
+    };
+    /**
+     * \@internal
+     * @return {?}
+     */
+    DeepLinker.prototype._historyPop = function () {
+        this._history.pop();
+        if (!this._history.length) {
+            this._historyPush(this._location.path());
+        }
+    };
+    /**
+     * \@internal
+     * @param {?} tab
+     * @return {?}
+     */
+    DeepLinker.prototype._getTabSelector = function (tab) {
+        if (isPresent(tab.tabUrlPath)) {
+            return tab.tabUrlPath;
+        }
+        if (isPresent(tab.tabTitle)) {
+            return formatUrlPart(tab.tabTitle);
+        }
+        return "tab-" + tab.index;
+    };
+    /**
+     * Using the known Path of Segments, walk down all descendents
+     * from the root NavController and load each NavController according
+     * to each Segment. This is usually called after a browser URL and
+     * Path changes and needs to update all NavControllers to match
+     * the new browser URL. Because the URL is already known, it will
+     * not update the browser's URL when transitions have completed.
+     *
+     * \@internal
+     * @param {?} navContainer
+     * @param {?} segment
+     * @param {?} done
+     * @return {?}
+     */
+    DeepLinker.prototype._loadViewForSegment = function (navContainer, segment, done) {
+        if (!segment) {
+            return done();
+        }
+        if (isTabs(navContainer) || (isTab(navContainer) && navContainer.parent)) {
+            var /** @type {?} */ tabs = (((isTabs(navContainer) ? navContainer : navContainer.parent)));
+            var /** @type {?} */ selectedIndex = tabs._getSelectedTabIndex(segment.secondaryId);
+            var /** @type {?} */ tab = tabs.getByIndex(selectedIndex);
+            tab._lazyRootFromUrl = segment.name;
+            tab._lazyRootFromUrlData = segment.data;
+            tabs.select(tab, {
+                updateUrl: false,
+                animate: false
+            }, true);
+            return done();
+        }
+        var /** @type {?} */ navController = ((navContainer));
+        var /** @type {?} */ numViews = navController.length() - 1;
+        // walk backwards to see if the exact view we want to show here
+        // is already in the stack that we can just pop back to
+        for (var /** @type {?} */ i = numViews; i >= 0; i--) {
+            var /** @type {?} */ viewController = navController.getByIndex(i);
+            if (viewController && (viewController.id === segment.id || viewController.id === segment.name)) {
+                // hooray! we've already got a view loaded in the stack
+                // matching the view they wanted to show
+                if (i === numViews) {
+                    // this is the last view in the stack and it's the same
+                    // as the segment so there's no change needed
+                    return done();
+                }
+                else {
+                    // it's not the exact view as the end
+                    // let's have this nav go back to this exact view
+                    return navController.popTo(viewController, {
+                        animate: false,
+                        updateUrl: false,
+                    }, {}, done);
+                }
+            }
+        }
+        // ok, so we don't know about a view that they're navigating to
+        // so we might as well just call setRoot and make tthe view the first view
+        // this seems like the least bad option
+        return navController.setRoot(segment.component || segment.name, segment.data, {
+            id: segment.id, animate: false, updateUrl: false
+        }, done);
+    };
+    return DeepLinker;
+}());
+export { DeepLinker };
+function DeepLinker_tsickle_Closure_declarations() {
+    /**
+     * \@internal
+     * @type {?}
+     */
+    DeepLinker.prototype._history;
+    /**
+     * \@internal
+     * @type {?}
+     */
+    DeepLinker.prototype._indexAliasUrl;
+    /** @type {?} */
+    DeepLinker.prototype._app;
+    /** @type {?} */
+    DeepLinker.prototype._serializer;
+    /** @type {?} */
+    DeepLinker.prototype._location;
+    /** @type {?} */
+    DeepLinker.prototype._moduleLoader;
+    /** @type {?} */
+    DeepLinker.prototype._baseCfr;
+}
+/**
+ * @param {?} app
+ * @param {?} serializer
+ * @param {?} location
+ * @param {?} moduleLoader
+ * @param {?} cfr
+ * @return {?}
+ */
+export function setupDeepLinker(app, serializer, location, moduleLoader, cfr) {
+    var /** @type {?} */ deepLinker = new DeepLinker(app, serializer, location, moduleLoader, cfr);
+    deepLinker.init();
+    return deepLinker;
+}
+/**
+ * @param {?} browserUrl
+ * @return {?}
+ */
+export function normalizeUrl(browserUrl) {
+    browserUrl = browserUrl.trim();
+    if (browserUrl.charAt(0) !== '/') {
+        // ensure first char is a /
+        browserUrl = '/' + browserUrl;
+    }
+    if (browserUrl.length > 1 && browserUrl.charAt(browserUrl.length - 1) === '/') {
+        // ensure last char is not a /
+        browserUrl = browserUrl.substr(0, browserUrl.length - 1);
+    }
+    return browserUrl;
+}
+/**
+ * @param {?} nav
+ * @param {?} id
+ * @return {?}
+ */
+export function getNavFromTree(nav, id) {
+    while (nav) {
+        if (nav.id === id || nav.name === id) {
+            return nav;
+        }
+        nav = nav.parent;
+    }
+    return null;
+}
+//# sourceMappingURL=deep-linker.js.map

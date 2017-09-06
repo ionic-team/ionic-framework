@@ -1,0 +1,16 @@
+@import "../themes/ionic.globals.md";
+
+// Material Design on iOS with Cordova
+// --------------------------------------------------
+
+/// @prop - Height of the Statusbar
+$cordova-md-statusbar-padding:                         20px !default;
+
+/// @prop - The breakpoint when a modal becomes inset
+$cordova-md-statusbar-padding-modal-max-width:         $cordova-statusbar-padding-modal-max-width !default;
+
+// Cordova mixins are in the main cordova file
+.md {
+  @include statusbar-padding($toolbar-md-height, $toolbar-md-padding, $content-md-padding, $cordova-md-statusbar-padding, $cordova-md-statusbar-padding-modal-max-width);
+}
+

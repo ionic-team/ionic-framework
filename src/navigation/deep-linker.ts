@@ -267,9 +267,9 @@ export class DeepLinker {
   /**
    * @internal
    */
-  createUrl(navContainer: NavigationContainer, nameOrComponent: any, _data: any, prepareExternalUrl: boolean = true): string {
+  createUrl(navContainer: NavigationContainer, nameOrComponent: any, _data: any = null, prepareExternalUrl: boolean = true): string {
     // create a segment out of just the passed in name
-    const segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent);
+    const segment = this._serializer.createSegmentFromName(navContainer, nameOrComponent, _data);
     const allSegments = this.getCurrentSegments();
     if (segment) {
       for (let i = 0; i < allSegments.length; i++) {

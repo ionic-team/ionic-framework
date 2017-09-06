@@ -1,0 +1,68 @@
+@import "../../themes/ionic.globals";
+
+// Modals
+// --------------------------------------------------
+
+/// @prop - Min width of the modal inset
+$modal-inset-min-width:         768px !default;
+
+/// @prop - Minimum height of the small modal inset
+$modal-inset-min-height-small:  600px !default;
+
+/// @prop - Minimum height of the large modal inset
+$modal-inset-min-height-large:  768px !default;
+
+/// @prop - Width of the large modal inset
+$modal-inset-width:             600px !default;
+
+/// @prop - Height of the small modal inset
+$modal-inset-height-small:      500px !default;
+
+/// @prop - Height of the large modal inset
+$modal-inset-height-large:      600px !default;
+
+
+ion-modal {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  contain: strict;
+}
+
+ion-modal ion-backdrop {
+  @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    visibility: hidden;
+  }
+}
+
+.modal-wrapper {
+  z-index: 10;
+
+  height: 100%;
+
+  contain: strict;
+
+  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    @include position(calc(50% - (#{$modal-inset-height-small}/2)), null, null, calc(50% - (#{$modal-inset-width}/2)));
+
+    position: absolute;
+
+    width: $modal-inset-width;
+    height: $modal-inset-height-small;
+  }
+
+  @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
+    @include position(calc(50% - (#{$modal-inset-height-large}/2)), null, null, calc(50% - (#{$modal-inset-width}/2)));
+
+    position: absolute;
+
+    width: $modal-inset-width;
+    height: $modal-inset-height-large;
+  }
+}

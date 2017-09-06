@@ -1,0 +1,280 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows Card
+// --------------------------------------------------
+
+/// @prop - Margin top of the card
+$card-wp-margin-top:                  8px !default;
+
+// deprecated
+$card-wp-margin-right:                8px !default;
+/// @prop - Margin end of the card
+$card-wp-margin-end:                  $card-wp-margin-right !default;
+
+/// @prop - Margin bottom of the card
+$card-wp-margin-bottom:               8px !default;
+
+// deprecated
+$card-wp-margin-left:                 8px !default;
+/// @prop - Margin start of the card
+$card-wp-margin-start:                $card-wp-margin-left !default;
+
+/// @prop - Padding top of the card
+$card-wp-padding-top:                 13px !default;
+
+// deprecated
+$card-wp-padding-right:               16px !default;
+/// @prop - Padding end of the card
+$card-wp-padding-end:                 $card-wp-padding-right !default;
+
+/// @prop - Padding bottom of the card
+$card-wp-padding-bottom:              13px !default;
+
+// deprecated
+$card-wp-padding-left:                16px !default;
+/// @prop - Padding start of the card
+$card-wp-padding-start:               $card-wp-padding-left !default;
+
+/// @prop - Padding top of the media on the card
+$card-wp-padding-media-top:           10px !default;
+
+/// @prop - Padding bottom of the media on the card
+$card-wp-padding-media-bottom:        10px !default;
+
+/// @prop - Size of the card avatar
+$card-wp-avatar-size:                 4rem !default;
+
+/// @prop - Size of the card thumbnail
+$card-wp-thumbnail-size:              8rem !default;
+
+/// @prop - Background color of the card
+$card-wp-background-color:            $list-wp-background-color !default;
+
+/// @prop - Box shadow color of the card
+$card-wp-box-shadow-color:            rgba(0, 0, 0, .2) !default;
+
+/// @prop - Box shadow of the card
+$card-wp-box-shadow:                  0 1px 1px 1px $card-wp-box-shadow-color !default;
+
+/// @prop - Border radius of the card
+$card-wp-border-radius:               1px !default;
+
+/// @prop - Font size of the card
+$card-wp-font-size:                   1.4rem !default;
+
+/// @prop - Line height of the card
+$card-wp-line-height:                 1.5 !default;
+
+/// @prop - Color of the card text
+$card-wp-text-color:                  #222 !default;
+
+/// @prop - Font size of card title
+$card-wp-title-font-size:             2.4rem !default;
+
+// deprecated
+$card-wp-title-padding:               null !default;
+
+/// @prop - Padding top of the card title
+$card-wp-title-padding-top:           8px !default;
+
+/// @prop - Padding end of the card title
+$card-wp-title-padding-end:           0 !default;
+
+/// @prop - Padding bottom of the card title
+$card-wp-title-padding-bottom:        8px !default;
+
+/// @prop - Padding start of the card title
+$card-wp-title-padding-start:         0 !default;
+
+// deprecated
+$card-wp-title-margin:                null !default;
+
+/// @prop - Margin top of the card title
+$card-wp-title-margin-top:            2px !default;
+
+/// @prop - Margin end of the card title
+$card-wp-title-margin-end:            0 !default;
+
+/// @prop - Margin bottom of the card title
+$card-wp-title-margin-bottom:         $card-wp-title-margin-top !default;
+
+/// @prop - Margin start of the card title
+$card-wp-title-margin-start:          $card-wp-title-margin-end !default;
+
+/// @prop - Color of the card title
+$card-wp-title-text-color:            #222 !default;
+
+/// @prop - Font size of the card header
+$card-wp-header-font-size:            1.6rem !default;
+
+// deprecated
+$card-wp-header-padding:              null !default;
+
+/// @prop - Padding top of the card header
+$card-wp-header-padding-top:          16px !default;
+
+/// @prop - Padding end of the card header
+$card-wp-header-padding-end:          $card-wp-header-padding-top !default;
+
+/// @prop - Padding bottom of the card header
+$card-wp-header-padding-bottom:       $card-wp-header-padding-top !default;
+
+/// @prop - Padding start of the card header
+$card-wp-header-padding-start:        $card-wp-header-padding-end !default;
+
+/// @prop - Color of the card header
+$card-wp-header-color:                #222 !default;
+
+
+.card-wp {
+  @include margin($card-wp-margin-top, $card-wp-margin-end, $card-wp-margin-bottom, $card-wp-margin-start);
+  @include border-radius($card-wp-border-radius);
+
+  width: calc(100% - #{($card-wp-margin-end + $card-wp-margin-start)});
+
+  font-size: $card-wp-font-size;
+
+  background: $card-wp-background-color;
+  box-shadow: $card-wp-box-shadow;
+}
+
+.card-wp ion-list {
+  @include margin(null, null, 0, null);
+}
+
+.card-wp > .item:last-child,
+.card-wp > .item:last-child .item-inner,
+.card-wp > .item-wrapper:last-child .item {
+  border-bottom: 0;
+}
+
+.card-wp .item-wp.item-block .item-inner {
+  border: 0;
+}
+
+.card-content-wp {
+  @include padding($card-wp-padding-top, $card-wp-padding-end, $card-wp-padding-bottom, $card-wp-padding-start);
+
+  font-size: $card-wp-font-size;
+  line-height: $card-wp-line-height;
+}
+
+.card-header-wp {
+  font-size: $card-wp-header-font-size;
+
+  color: $card-wp-header-color;
+
+  @include deprecated-variable(padding, $card-wp-header-padding) {
+    @include padding($card-wp-header-padding-top, $card-wp-header-padding-end, $card-wp-header-padding-bottom, $card-wp-header-padding-start);
+  }
+}
+
+.card-header-wp + .card-content-wp,
+.card-wp .item + .card-content-wp {
+  @include padding(0, null, null, null);
+}
+
+.card .note-wp {
+  font-size: 1.3rem;
+}
+
+.card-title-wp {
+  display: block;
+
+  font-size: $card-wp-title-font-size;
+  line-height: 1.2;
+  color: $card-wp-title-text-color;
+
+  @include deprecated-variable(margin, $card-wp-title-margin) {
+    @include margin($card-wp-title-margin-top, $card-wp-title-margin-end, $card-wp-title-margin-bottom, $card-wp-title-margin-start);
+  }
+
+  @include deprecated-variable(padding, $card-wp-title-padding) {
+    @include padding($card-wp-title-padding-top, $card-wp-title-padding-end, $card-wp-title-padding-bottom, $card-wp-title-padding-start);
+  }
+}
+
+.card-wp h1 {
+  @include margin(0, 0, 2px);
+
+  font-size: 2.4rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp h2 {
+  @include margin(2px, 0);
+
+  font-size: 1.6rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp h3,
+.card-wp h4,
+.card-wp h5,
+.card-wp h6 {
+  @include margin(2px, 0);
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  color: $card-wp-text-color;
+}
+
+.card-wp p {
+  @include margin(0, 0, 2px);
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  line-height: 1.5;
+  color: $card-wp-text-color;
+}
+
+.card-wp + ion-card {
+  @include margin(0, null, null, null);
+}
+
+
+// Generate Windows Card Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+
+  .card-wp .text-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+  .card-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+
+    .card-header-wp,
+    .card-title-wp,
+    .card-content-wp,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+      color: $color-contrast;
+    }
+
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+      .text-wp-#{$color-name},
+      .card-header-wp-#{$color-name},
+      .card-title-wp-#{$color-name},
+      .card-content-wp-#{$color-name} {
+        color: $color-base;
+      }
+    }
+  }
+
+  .card-header-wp-#{$color-name},
+  .card-title-wp-#{$color-name},
+  .card-content-wp-#{$color-name} {
+    color: $color-base;
+  }
+
+}

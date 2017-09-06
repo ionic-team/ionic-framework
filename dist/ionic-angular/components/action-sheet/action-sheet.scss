@@ -1,0 +1,39 @@
+@import "../../themes/ionic.globals";
+
+// Action Sheet
+// --------------------------------------------------
+
+/// @prop - Width of the action sheet
+$action-sheet-width:                             100% !default;
+
+/// @prop - Maximum width of the action sheet
+$action-sheet-max-width:                         500px !default;
+
+
+ion-action-sheet {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+  z-index: $z-index-overlay;
+  display: block;
+
+  width: $action-sheet-width;
+  height: $action-sheet-width;
+}
+
+.action-sheet-wrapper {
+  @include position(null, 0, 0, 0);
+  @include margin(auto);
+  @include transform(translate3d(0, 100%, 0));
+
+  position: absolute;
+  z-index: $z-index-overlay-wrapper;
+  display: block;
+
+  width: $action-sheet-width;
+  max-width: $action-sheet-max-width;
+}
+
+.action-sheet-button {
+  width: $action-sheet-width;
+}

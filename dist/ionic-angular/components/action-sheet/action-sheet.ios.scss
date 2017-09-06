@@ -1,0 +1,158 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Action Sheet
+// --------------------------------------------------
+
+/// @prop - Text align of the action sheet
+$action-sheet-ios-text-align:                           center !default;
+
+// deprecated
+$action-sheet-ios-padding:                              null !default;
+
+/// @prop - Padding top of the action sheet
+$action-sheet-ios-padding-top:                          0 !default;
+
+/// @prop - Padding end of the action sheet
+$action-sheet-ios-padding-end:                          10px !default;
+
+/// @prop - Padding bottom of the action sheet
+$action-sheet-ios-padding-bottom:                       $action-sheet-ios-padding-top !default;
+
+/// @prop - Padding start of the action sheet
+$action-sheet-ios-padding-start:                        $action-sheet-ios-padding-end !default;
+
+/// @prop - Bottom margin of the action sheet button group
+$action-sheet-ios-group-margin-bottom:                  10px !default;
+
+/// @prop - Background color of the action sheet
+$action-sheet-ios-background:                           #f9f9f9 !default;
+
+/// @prop - Border color of the action sheet
+$action-sheet-ios-border-color:                         #d6d6da !default;
+
+/// @prop - Border radius of the action sheet
+$action-sheet-ios-border-radius:                        13px !default;
+
+/// @prop - Padding of the action sheet title
+$action-sheet-ios-title-padding:                        1.5rem !default;
+
+/// @prop - Color of the action sheet title
+$action-sheet-ios-title-color:                          #8f8f8f !default;
+
+/// @prop - Font size of the action sheet title
+$action-sheet-ios-title-font-size:                      1.3rem !default;
+
+/// @prop - Font weight of the action sheet title
+$action-sheet-ios-title-font-weight:                    400 !default;
+
+/// @prop - Border radius of the action sheet title
+$action-sheet-ios-title-border-radius:                  0 !default;
+
+/// @prop - Minimum height of the action sheet button
+$action-sheet-ios-button-min-height:                    5.6rem !default;
+
+/// @prop - Padding of the action sheet button
+$action-sheet-ios-button-padding:                       18px !default;
+
+/// @prop - Text color of the action sheet button
+$action-sheet-ios-button-text-color:                    #007aff !default;
+
+/// @prop - Font size of the action sheet button
+$action-sheet-ios-button-font-size:                     2rem !default;
+
+/// @prop - Border width of the action sheet button
+$action-sheet-ios-button-border-width:                  $hairlines-width !default;
+
+/// @prop - Border style of the action sheet button
+$action-sheet-ios-button-border-style:                  solid !default;
+
+/// @prop - Border color of the action sheet button
+$action-sheet-ios-button-border-color:                  #d1d3d6 !default;
+
+/// @prop - Background color of the action sheet button
+$action-sheet-ios-button-background:                    transparent !default;
+
+/// @prop - Background color of the activated action sheet button
+$action-sheet-ios-button-background-activated:          #ebebeb !default;
+
+/// @prop - Destructive text color of the action sheet button
+$action-sheet-ios-button-destructive-text-color:        #f53d3d !default;
+
+/// @prop - Background color of the action sheet cancel button
+$action-sheet-ios-button-cancel-background:             #fff !default;
+
+/// @prop - Font weight of the action sheet cancel button
+$action-sheet-ios-button-cancel-font-weight:            600 !default;
+
+
+.action-sheet-ios {
+  @include text-align($action-sheet-ios-text-align);
+}
+
+.action-sheet-ios .action-sheet-container {
+  @include deprecated-variable(padding, $action-sheet-ios-padding) {
+    @include padding($action-sheet-ios-padding-top, $action-sheet-ios-padding-end, $action-sheet-ios-padding-bottom, $action-sheet-ios-padding-start);
+  }
+}
+
+.action-sheet-ios .action-sheet-group {
+  @include border-radius($action-sheet-ios-border-radius);
+  @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
+
+  overflow: hidden;
+
+  background: $action-sheet-ios-background;
+}
+
+.action-sheet-ios .action-sheet-group:last-child {
+  @include margin(null, null, $action-sheet-ios-group-margin-bottom, null);
+}
+
+.action-sheet-ios .action-sheet-title {
+  @include padding($action-sheet-ios-title-padding);
+  @include text-align($action-sheet-ios-text-align);
+  @include border-radius($action-sheet-ios-title-border-radius);
+
+  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
+  font-size: $action-sheet-ios-title-font-size;
+  font-weight: $action-sheet-ios-title-font-weight;
+  color: $action-sheet-ios-title-color;
+}
+
+.action-sheet-ios .action-sheet-button {
+  @include margin(0);
+  @include padding($action-sheet-ios-button-padding);
+
+  min-height: $action-sheet-ios-button-min-height;
+
+  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
+  font-size: $action-sheet-ios-button-font-size;
+  color: $action-sheet-ios-button-text-color;
+  background: $action-sheet-ios-button-background;
+}
+
+.action-sheet-ios .action-sheet-button:last-child {
+  border-bottom-color: transparent;
+}
+
+.action-sheet-ios .action-sheet-button.activated {
+  @include margin(-$action-sheet-ios-button-border-width, null, null, null);
+
+  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
+  border-bottom-color: $action-sheet-ios-button-background-activated;
+  background: $action-sheet-ios-button-background-activated;
+}
+
+.action-sheet-ios .action-sheet-selected {
+  font-weight: bold;
+  background: #fff;
+}
+
+.action-sheet-ios .action-sheet-destructive {
+  color: $action-sheet-ios-button-destructive-text-color;
+}
+
+.action-sheet-ios .action-sheet-cancel {
+  font-weight: $action-sheet-ios-button-cancel-font-weight;
+  background: $action-sheet-ios-button-cancel-background;
+}

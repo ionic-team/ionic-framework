@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows Modals
+// --------------------------------------------------
+
+/// @prop - Background color for the modal
+$modal-wp-background-color:          $background-wp-color !default;
+
+.wp .modal-wrapper {
+  @include transform(translate3d(0, 40px, 0));
+
+  opacity: .01;
+}

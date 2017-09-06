@@ -1,0 +1,31 @@
+@import "../../themes/ionic.globals";
+
+// Badge
+// --------------------------------------------------
+
+/// @prop - Font size of the badge
+$badge-font-size:                 1.3rem !default;
+
+/// @prop - Font weight of the badge
+$badge-font-weight:               bold !default;
+
+
+ion-badge {
+  @include padding(3px, 8px);
+  @include text-align(center);
+
+  display: inline-block;
+
+  min-width: 10px;
+
+  font-size: $badge-font-size;
+  font-weight: $badge-font-weight;
+  line-height: 1;
+
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+ion-badge:empty {
+  display: none;
+}

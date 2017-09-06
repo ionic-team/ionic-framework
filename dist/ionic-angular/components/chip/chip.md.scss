@@ -1,0 +1,95 @@
+
+// Material Design Chip
+// --------------------------------------------------
+
+// deprecated
+$chip-md-margin:                     null !default;
+
+/// @prop - Margin top of the chip
+$chip-md-margin-top:                 2px !default;
+
+/// @prop - Margin end of the chip
+$chip-md-margin-end:                 0 !default;
+
+/// @prop - Margin bottom of the chip
+$chip-md-margin-bottom:              $chip-md-margin-top !default;
+
+/// @prop - Margin start of the chip
+$chip-md-margin-start:               $chip-md-margin-end !default;
+
+/// @prop - Height of the chip
+$chip-md-height:                     32px !default;
+
+/// @prop - Border radius of the chip
+$chip-md-border-radius:              16px !default;
+
+/// @prop - Font size of the chip
+$chip-md-font-size:                  13px !default;
+
+/// @prop - Text color of the chip
+$chip-md-text-color:                 rgba(0, 0, 0, .87) !default;
+
+/// @prop - Background color of the chip
+$chip-md-background-color:           rgba(0, 0, 0, .12) !default;
+
+// deprecated
+$chip-md-label-margin:               null !default;
+
+/// @prop - Margin top of the label in the chip
+$chip-md-label-margin-top:           0 !default;
+
+/// @prop - Margin end of the label in the chip
+$chip-md-label-margin-end:           10px !default;
+
+/// @prop - Margin bottom of the label in the chip
+$chip-md-label-margin-bottom:        $chip-md-label-margin-top !default;
+
+/// @prop - Margin start of the label in the chip
+$chip-md-label-margin-start:         $chip-md-label-margin-end !default;
+
+/// @prop - Background color of the icon in the chip
+$chip-md-icon-background-color:      color($colors-md, primary) !default;
+
+/// @prop - Text color of the icon in the chip
+$chip-md-icon-text-color:            color-contrast($colors-md, $chip-md-icon-background-color) !default;
+
+
+.chip-md {
+  @include border-radius($chip-md-border-radius);
+
+  height: $chip-md-height;
+
+  font-size: $chip-md-font-size;
+  line-height: $chip-md-height;
+  color: $chip-md-text-color;
+  background: $chip-md-background-color;
+
+  @include deprecated-variable(margin, $chip-md-margin) {
+    @include margin($chip-md-margin-top, $chip-md-margin-end, $chip-md-margin-bottom, $chip-md-margin-start);
+  }
+}
+
+.chip-md > ion-label {
+  @include deprecated-variable(margin, $chip-md-label-margin) {
+    @include margin($chip-md-label-margin-top, $chip-md-label-margin-end, $chip-md-label-margin-bottom, $chip-md-label-margin-start);
+  }
+}
+
+.chip-md > ion-icon {
+  color: $chip-md-icon-text-color;
+  background-color: $chip-md-icon-background-color;
+}
+
+
+// Generate Material Design Chip Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .chip-md-#{$color-name},
+  .chip-md .icon-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+
+}

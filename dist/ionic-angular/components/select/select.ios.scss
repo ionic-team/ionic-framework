@@ -1,0 +1,59 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Select
+// --------------------------------------------------
+
+/// @prop - Padding top of the select
+$select-ios-padding-top:         $item-ios-padding-top !default;
+
+// deprecated
+$select-ios-padding-right:       ($item-ios-padding-end / 2) !default;
+/// @prop - Padding end of the select
+$select-ios-padding-end:         $select-ios-padding-right !default;
+
+/// @prop - Padding bottom of the select
+$select-ios-padding-bottom:      $item-ios-padding-bottom !default;
+
+// deprecated
+$select-ios-padding-left:        $item-ios-padding-start !default;
+/// @prop - Padding start of the select
+$select-ios-padding-start:       $select-ios-padding-left !default;
+
+/// @prop - Color of the select icon
+$select-ios-icon-color:          #999 !default;
+
+/// @prop - Color of the select placeholder
+$select-ios-placeholder-color:   $select-ios-icon-color !default;
+
+
+.select-ios {
+  @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);
+}
+
+.select-ios .select-placeholder {
+  color: $select-ios-placeholder-color;
+}
+
+.select-ios .select-icon {
+  position: relative;
+
+  width: 12px;
+  height: 18px;
+}
+
+.select-ios .select-icon .select-icon-inner {
+  @include position(50%, null, null, 5px);
+  @include margin(-2px, null, null, null);
+
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  border-top: 5px solid;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  color: $select-ios-icon-color;
+
+  pointer-events: none;
+}

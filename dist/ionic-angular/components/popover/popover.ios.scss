@@ -1,0 +1,80 @@
+@import "../../themes/ionic.globals";
+
+// iOS Popover
+// --------------------------------------------------
+
+/// @prop - Width of the popover content
+$popover-ios-width:                     200px !default;
+
+/// @prop - Min width of the popover content
+$popover-ios-min-width:                 0 !default;
+
+/// @prop - Minimum height of the popover content
+$popover-ios-min-height:                0 !default;
+
+/// @prop - Maximum height of the popover content
+$popover-ios-max-height:                90% !default;
+
+/// @prop - Border radius of the popover content
+$popover-ios-border-radius:             10px !default;
+
+/// @prop - Text color of the popover content
+$popover-ios-text-color:                $text-ios-color !default;
+
+/// @prop - Background of the popover content
+$popover-ios-background:                $background-ios-color !default;
+
+/// @prop - Background of the popover arrow
+$popover-ios-arrow-background:          $popover-ios-background !default;
+
+
+.popover-ios .popover-content {
+  @include border-radius($popover-ios-border-radius);
+
+  width: $popover-ios-width;
+  min-width: $popover-ios-min-width;
+  min-height: $popover-ios-min-height;
+  max-height: $popover-ios-max-height;
+
+  color: $popover-ios-text-color;
+  background: $popover-ios-background;
+}
+
+
+// Popover Arrow
+// -----------------------------------------
+
+.popover-ios .popover-arrow {
+  position: absolute;
+  display: block;
+
+  overflow: hidden;
+
+  width: 20px;
+  height: 10px;
+}
+
+.popover-ios .popover-arrow::after {
+  @include position(3px, null, null, 3px);
+  @include border-radius(3px);
+
+  position: absolute;
+
+  z-index: $z-index-overlay-wrapper;
+
+  width: 14px;
+  height: 14px;
+
+  background-color: $popover-ios-arrow-background;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.popover-ios.popover-bottom .popover-arrow {
+  top: auto;
+  bottom: -10px;
+}
+
+.popover-ios.popover-bottom .popover-arrow::after {
+  top: -6px;
+}

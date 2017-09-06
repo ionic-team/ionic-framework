@@ -1,0 +1,103 @@
+@import "../../themes/ionic.globals";
+
+// Windows Loading Indicator
+// --------------------------------------------------
+
+// deprecated
+$loading-wp-padding:                   null !default;
+
+/// @prop - Padding top of the loading wrapper
+$loading-wp-padding-top:               20px !default;
+
+/// @prop - Padding end of the loading wrapper
+$loading-wp-padding-end:               $loading-wp-padding-top !default;
+
+/// @prop - Padding bottom of the loading wrapper
+$loading-wp-padding-bottom:            $loading-wp-padding-top !default;
+
+/// @prop - Padding start of the loading wrapper
+$loading-wp-padding-start:             $loading-wp-padding-end !default;
+
+/// @prop - Max width of the loading wrapper
+$loading-wp-max-width:                 280px !default;
+
+/// @prop - Maximum height of the loading wrapper
+$loading-wp-max-height:                90% !default;
+
+/// @prop - Border radius of the loading wrapper
+$loading-wp-border-radius:             2px !default;
+
+/// @prop - Text color of the loading wrapper
+$loading-wp-text-color:                #fff !default;
+
+/// @prop - Background of the loading wrapper
+$loading-wp-background:                #000 !default;
+
+/// @prop - Margin start of the loading content next to a spinner
+$loading-wp-content-margin-start:      $content-wp-margin !default;
+
+/// @prop - Color of the loading spinner
+$loading-wp-spinner-color:             $loading-wp-text-color !default;
+
+/// @prop - Color of the ios loading spinner
+$loading-wp-spinner-ios-color:         $loading-wp-spinner-color !default;
+
+/// @prop - Color of the bubbles loading spinner
+$loading-wp-spinner-bubbles-color:     $loading-wp-spinner-color !default;
+
+/// @prop - Color of the circles loading spinner
+$loading-wp-spinner-circles-color:     $loading-wp-spinner-color !default;
+
+/// @prop - Color of the crescent loading spinner
+$loading-wp-spinner-crescent-color:    $loading-wp-spinner-color !default;
+
+/// @prop - Color of the dots loading spinner
+$loading-wp-spinner-dots-color:        $loading-wp-spinner-color !default;
+
+
+.loading-wp .loading-wrapper {
+  @include border-radius($loading-wp-border-radius);
+
+  max-width: $loading-wp-max-width;
+  max-height: $loading-wp-max-height;
+
+  color: $loading-wp-text-color;
+  background: $loading-wp-background;
+
+  @include deprecated-variable(padding, $loading-wp-padding) {
+    @include padding($loading-wp-padding-top, $loading-wp-padding-end, $loading-wp-padding-bottom, $loading-wp-padding-start);
+  }
+}
+
+
+// Windows Loading Content
+// -----------------------------------------
+
+.loading-wp .loading-spinner + .loading-content {
+  @include margin-horizontal($loading-wp-content-margin-start, null);
+}
+
+
+// Windows Loading Spinner fill colors
+// -----------------------------------------
+
+.loading-wp .spinner-ios line,
+.loading-wp .spinner-ios-small line {
+  stroke: $loading-wp-spinner-ios-color;
+}
+
+.loading-wp .spinner-bubbles circle {
+  fill: $loading-wp-spinner-bubbles-color;
+}
+
+.loading-wp .spinner-circles circle {
+  fill: $loading-wp-spinner-circles-color;
+}
+
+.loading-wp .spinner-crescent circle {
+  stroke: $loading-wp-spinner-crescent-color;
+}
+
+.loading-wp .spinner-dots circle {
+  fill: $loading-wp-spinner-dots-color;
+}

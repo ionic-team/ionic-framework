@@ -1,0 +1,10 @@
+e2e/
+demos/
+js/Rx.js
+js/angular2-polyfills.js
+js/angular2.dev.js
+js/es6-module-loader.src.js
+js/es6-shim.min.js
+js/http.dev.js
+js/router.dev.js
+js/system.src.js

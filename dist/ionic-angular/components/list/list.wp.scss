@@ -1,0 +1,186 @@
+@import "../../themes/ionic.globals.wp";
+
+// Windows List
+// --------------------------------------------------
+
+/// @prop - Margin top of the list
+$list-wp-margin-top:             16px !default;
+
+// deprecated
+$list-wp-margin-right:           0 !default;
+/// @prop - Margin end of the list
+$list-wp-margin-end:             $list-wp-margin-right !default;
+
+/// @prop - Margin bottom of the list
+$list-wp-margin-bottom:          16px !default;
+
+// deprecated
+$list-wp-margin-left:            0 !default;
+/// @prop - Margin start of the list
+$list-wp-margin-start:           $list-wp-margin-left !default;
+
+/// @prop - Margin top of the inset list
+$list-inset-wp-margin-top:       16px !default;
+
+// deprecated
+$list-inset-wp-margin-right:     16px !default;
+/// @prop - Margin end of the inset list
+$list-inset-wp-margin-end:       $list-inset-wp-margin-right !default;
+
+/// @prop - Margin bottom of the inset list
+$list-inset-wp-margin-bottom:    16px !default;
+
+// deprecated
+$list-inset-wp-margin-left:      16px !default;
+/// @prop - Margin start of the inset list
+$list-inset-wp-margin-start:     $list-inset-wp-margin-left !default;
+
+/// @prop - Border radius of the inset list
+$list-inset-wp-border-radius:    2px !default;
+
+// deprecated
+$list-wp-header-padding-left:    $item-wp-padding-start !default;
+/// @prop - Padding start of the header in a list
+$list-wp-header-padding-start:   $list-wp-header-padding-left !default;
+
+/// @prop - Border bottom of the header in a list
+$list-wp-header-border-bottom:   1px solid $list-wp-border-color !default;
+
+/// @prop - Font size of the header in a list
+$list-wp-header-font-size:       2rem !default;
+
+/// @prop - Text color of the header in a list
+$list-wp-header-color:           $list-wp-text-color !default;
+
+
+// Windows Default List
+// --------------------------------------------------
+
+.list-wp {
+  @include margin(0, $list-wp-margin-end, $list-wp-margin-bottom, $list-wp-margin-start);
+}
+
+.list-wp .item-block .item-inner {
+  border-bottom: 1px solid $list-wp-border-color;
+}
+
+.list-wp > .item-block:first-child,
+.list-wp > .item-wrapper:first-child .item-block {
+  border-top: 1px solid $list-wp-border-color;
+}
+
+.list-wp > .item-block:last-child,
+.list-wp > .item-wrapper:last-child .item-block {
+  border-bottom: 1px solid $list-wp-border-color;
+}
+
+.list-wp > .item-block:last-child,
+.list-wp > .item-wrapper:last-child {
+  ion-label,
+  .item-inner {
+    border-bottom: 0;
+  }
+}
+
+.list-wp > ion-input:last-child::after {
+  @include position-horizontal(0, null);
+}
+
+.list-wp ion-item-options .button {
+  @include margin(1px, 0);
+  @include border-radius(0);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  height: calc(100% - 2px);
+
+  border: 0;
+  box-shadow: none;
+
+  box-sizing: border-box;
+}
+
+.list-wp ion-item-options .button::before {
+  @include margin(0, auto);
+}
+
+// If the item has the no-lines attribute remove the bottom border from:
+// the item itself (for last-child items)
+// the item-inner class (if it is not last)
+.list-wp .item[no-lines],
+.list-wp .item[no-lines] .item-inner {
+  border-width: 0;
+}
+
+.list-wp + ion-list ion-list-header {
+  @include margin(-$list-wp-margin-top, null, null, null);
+  @include padding(0, null, null, null);
+}
+
+
+// Windows Insert List
+// --------------------------------------------------
+
+.list-wp[inset] {
+  @include margin($list-inset-wp-margin-top, $list-inset-wp-margin-end, $list-inset-wp-margin-bottom, $list-inset-wp-margin-start);
+  @include border-radius($list-inset-wp-border-radius);
+}
+
+.list-wp[inset] .item:first-child {
+  @include border-radius($list-inset-wp-border-radius, $list-inset-wp-border-radius, null, null);
+
+  border-top-width: 0;
+}
+
+.list-wp[inset] .item:last-child {
+  @include border-radius(null, null, $list-inset-wp-border-radius, $list-inset-wp-border-radius);
+
+  border-bottom-width: 0;
+}
+
+.list-wp[inset] .item-input {
+  @include padding-horizontal(0);
+}
+
+.list-wp[inset] + ion-list[inset] {
+  @include margin(0, null, null, null);
+}
+
+.list-wp[inset] ion-list-header {
+  background-color: $list-wp-background-color;
+}
+
+
+// Windows No Lines List
+// --------------------------------------------------
+
+.list-wp[no-lines] .item,
+.list-wp[no-lines] .item .item-inner {
+  border-width: 0;
+}
+
+
+// Windows List Header
+// --------------------------------------------------
+
+.list-header-wp {
+  @include padding-horizontal($list-wp-header-padding-start, null);
+
+  border-bottom: $list-wp-header-border-bottom;
+  font-size: $list-wp-header-font-size;
+  color: $list-wp-header-color;
+}
+
+
+// Generate Windows List Header Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  .list-header-wp-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+}
+

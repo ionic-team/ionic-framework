@@ -1,0 +1,207 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Picker
+// --------------------------------------------------
+
+/// @prop - Height of the picker wrapper
+$picker-ios-height:                            260px !default;
+
+/// @prop - Border color of the picker wrapper
+$picker-ios-border-color:                      $list-ios-border-color !default;
+
+/// @prop - Background of the picker wrapper
+$picker-ios-background-color:                  $list-ios-background-color !default;
+
+/// @prop - Height of the picker toolbar
+$picker-ios-toolbar-height:                    44px !default;
+
+/// @prop - Background color of the picker toolbar
+$picker-ios-toolbar-background-color:          $picker-ios-background-color !default;
+
+/// @prop - Height of the picker button
+$picker-ios-button-height:                     $picker-ios-toolbar-height !default;
+
+/// @prop - Text color of the picker button
+$picker-ios-button-text-color:                 color($colors-ios, primary) !default;
+
+/// @prop - Background of the picker button
+$picker-ios-button-background-color:           transparent !default;
+
+// deprecated
+$picker-ios-column-padding:                    null !default;
+
+/// @prop - Padding top of the picker column
+$picker-ios-column-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker column
+$picker-ios-column-padding-end:                4px !default;
+
+/// @prop - Padding bottom of the picker column
+$picker-ios-column-padding-bottom:             $picker-ios-column-padding-top !default;
+
+/// @prop - Padding start of the picker column
+$picker-ios-column-padding-start:              $picker-ios-column-padding-end !default;
+
+/// @prop - Perspective of the picker column
+$picker-ios-column-perspective:                1000px !default;
+
+// deprecated
+$picker-ios-option-padding:                    null !default;
+
+/// @prop - Padding top of the picker option
+$picker-ios-option-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker option
+$picker-ios-option-padding-end:                $picker-ios-option-padding-top !default;
+
+/// @prop - Padding bottom of the picker option
+$picker-ios-option-padding-bottom:             $picker-ios-option-padding-top !default;
+
+/// @prop - Padding start of the picker option
+$picker-ios-option-padding-start:              $picker-ios-option-padding-end !default;
+
+/// @prop - Text color of the picker option
+$picker-ios-option-text-color:                 $list-ios-text-color !default;
+
+/// @prop - Font size of the picker option
+$picker-ios-option-font-size:                  20px !default;
+
+/// @prop - Height of the picker option
+$picker-ios-option-height:                     42px !default;
+
+/// @prop - Offset y of the picker option
+$picker-ios-option-offset-y:                   (($picker-ios-height - $picker-ios-toolbar-height) / 2) - ($picker-ios-option-height / 2) - 10 !default;
+
+$picker-button-ios-strong-font-weight:         600 !default;
+
+.picker-ios .picker-wrapper {
+  height: $picker-ios-height;
+
+  border-top: 1px solid $picker-ios-border-color;
+
+  background: $picker-ios-background-color;
+}
+
+.picker-ios .picker-toolbar {
+  display: flex;
+
+  height: $picker-ios-toolbar-height;
+
+  border-bottom: $hairlines-width solid $picker-ios-border-color;
+
+  background: $picker-ios-toolbar-background-color;
+}
+
+.picker-ios .picker-toolbar-button {
+  @include text-align(end);
+
+  flex: 1;
+}
+
+.picker-ios .picker-toolbar-button:last-child .picker-button {
+  font-weight: $picker-button-ios-strong-font-weight;
+}
+
+.picker-ios .picker-toolbar-cancel {
+  @include text-align(start);
+
+  font-weight: normal;
+}
+
+.picker-ios .picker-button,
+.picker-ios .picker-button.activated {
+  @include margin(0);
+
+  height: $picker-ios-button-height;
+
+  color: $picker-ios-button-text-color;
+  background: $picker-ios-button-background-color;
+}
+
+.picker-columns {
+  height: $picker-ios-height - $picker-ios-toolbar-height - 1;
+
+  perspective: $picker-ios-column-perspective;
+}
+
+.picker-ios .picker-col {
+  transform-style: preserve-3d;
+
+  @include deprecated-variable(padding, $picker-ios-column-padding) {
+    @include padding($picker-ios-column-padding-top, $picker-ios-column-padding-end, $picker-ios-column-padding-bottom, $picker-ios-column-padding-start);
+  }
+}
+
+.picker-ios .picker-prefix,
+.picker-ios .picker-suffix,
+.picker-ios .picker-opts {
+  top: $picker-ios-option-offset-y;
+
+  font-size: $picker-ios-option-font-size;
+  line-height: $picker-ios-option-height;
+  color: $picker-ios-option-text-color;
+
+  transform-style: preserve-3d;
+
+  pointer-events: none;
+}
+
+.picker-ios .picker-opt {
+  @include margin(0);
+  @include transform-origin(center, center);
+
+  height: 4.6rem;
+
+  font-size: $picker-ios-option-font-size;
+  line-height: $picker-ios-option-height;
+  color: $picker-ios-option-text-color;
+
+  background: transparent;
+  transform-style: preserve-3d;
+  transition-timing-function: ease-out;
+
+  backface-visibility: hidden;
+
+  pointer-events: auto;
+
+  @include deprecated-variable(padding, $picker-ios-option-padding) {
+    @include padding($picker-ios-option-padding-top, $picker-ios-option-padding-end, $picker-ios-option-padding-bottom, $picker-ios-option-padding-start);
+  }
+}
+
+.picker-ios .picker-above-highlight {
+  @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  position: absolute;
+  z-index: 10;
+  display: block;
+
+  width: 100%;
+  height: $picker-ios-option-offset-y + 4px;
+
+  border-bottom: 1px solid $picker-ios-border-color;
+
+  background: linear-gradient(to bottom,
+                            rgba($picker-ios-background-color, 1) 20%,
+                            rgba($picker-ios-background-color, .7) 100%);
+}
+
+.picker-ios .picker-below-highlight {
+  @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
+  position: absolute;
+
+  z-index: 11;
+  display: block;
+
+  width: 100%;
+  height: $picker-ios-option-offset-y + $picker-ios-option-height;
+
+  border-top: 1px solid $picker-ios-border-color;
+
+  background: linear-gradient(to top,
+                           rgba($picker-ios-background-color, 1) 30%,
+                           rgba($picker-ios-background-color, .7) 100%);
+}

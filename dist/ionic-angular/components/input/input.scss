@@ -1,0 +1,154 @@
+@import "../../themes/ionic.globals";
+
+// Input
+// --------------------------------------------------
+
+/// @prop - Color of the input highlight when valid
+$text-input-highlight-color-valid:       #32db64 !default;
+
+/// @prop - Color of the input highlight when invalid
+$text-input-highlight-color-invalid:     #f53d3d !default;
+
+/// @prop - Color of the input placeholder
+$text-input-placeholder-color:           #999 !default;
+
+
+// Input/Textarea Wrapper
+// --------------------------------------------------
+
+ion-input,
+ion-textarea {
+  position: relative;
+  display: block;
+
+  flex: 1;
+
+  width: 100%;
+}
+
+.item-input ion-input,
+.item-input ion-textarea {
+  position: static;
+}
+
+
+// Textarea Within An Item
+// --------------------------------------------------
+
+.item.item-textarea {
+  align-items: stretch;
+}
+
+
+// Native Text Input
+// --------------------------------------------------
+
+.text-input {
+  @include placeholder($text-input-placeholder-color);
+  @include appearance(none);
+  @include border-radius(0);
+
+  display: inline-block;
+
+  flex: 1;
+
+  width: 92%;
+  width: calc(100% - 10px);
+
+  border: 0;
+
+  background: transparent;
+}
+
+textarea.text-input {
+  display: block;
+}
+
+.text-input[disabled] {
+  opacity: .4;
+}
+
+input.text-input:-webkit-autofill {
+  background-color: transparent;
+}
+
+.platform-mobile textarea.text-input {
+  resize: none;
+}
+
+
+// Input Cover: Unfocused
+// --------------------------------------------------
+// The input cover is the div that actually receives the
+// tap/click event when scroll assist is configured to true.
+// This make it so the native input element is not clickable.
+// This will only show when the scroll assist is configured
+// otherwise the .input-cover will not be rendered at all
+// The input cover is not clickable when the input is disabled
+
+.input-cover {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  touch-action: manipulation;
+}
+
+.input[disabled] .input-cover {
+  pointer-events: none;
+}
+
+
+// Input Cover: Focused
+// --------------------------------------------------
+// When the input has focus, then the input cover should be hidden
+
+// TODO remove all uses of input-has-focus in v4
+.item-input-has-focus .input-cover,
+.input-has-focus .input-cover {
+  display: none;
+}
+
+.item-input-has-focus,
+.input-has-focus {
+  pointer-events: none;
+}
+
+.item-input-has-focus input,
+.input-has-focus input,
+.item-input-has-focus textarea,
+.input-has-focus textarea,
+.item-input-has-focus a,
+.input-has-focus a,
+.item-input-has-focus button,
+.input-has-focus button {
+  pointer-events: auto;
+}
+
+
+// Clear Input Icon
+// --------------------------------------------------
+
+.text-input-clear-icon {
+  @include margin(0);
+  @include padding(0);
+  @include background-position(center);
+
+  position: absolute;
+  top: 0;
+  display: none;
+
+  height: 100%;
+
+  background-repeat: no-repeat;
+}
+
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus.item-input-has-value .text-input-clear-icon,
+.input-has-focus.input-has-value .text-input-clear-icon {
+  display: block;
+}
