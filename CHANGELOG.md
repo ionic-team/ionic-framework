@@ -1,3 +1,27 @@
+<a name="3.6.1"></a>
+## [3.6.1](https://github.com/ionic-team/ionic/compare/v3.6.0...v3.6.1) (2017-09-07)
+
+### Upgrade Instructions
+
+`ionic-angular@3.6.1` is a drop-in replacement for 3.6.0. To install it, please run:
+
+```
+npm install -g ionic@latest
+npm install @ionic/app-scripts@2.1.4 --save-dev
+npm install ionic-angular@3.6.1 --save
+```
+
+
+### Bug Fixes
+
+* **generators:** Update documentation URLs for templates ([475b722](https://github.com/ionic-team/ionic/commit/475b722))
+* **navigation:** check existence of done transition callback ([#12640](https://github.com/ionic-team/ionic/issues/12640)) ([0a6bb3b](https://github.com/ionic-team/ionic/commit/0a6bb3b))
+* **navigation:** ensure secondaryId always has a string value ([#12641](https://github.com/ionic-team/ionic/issues/12641)) ([1069505](https://github.com/ionic-team/ionic/commit/1069505))
+* **navigation:** fix popTo signature and make usage uniform ([3187375](https://github.com/ionic-team/ionic/commit/3187375))
+* **slider:** guard the processing of _slides ([b809665](https://github.com/ionic-team/ionic/commit/b809665)), closes [#12791](https://github.com/ionic-team/ionic/issues/12791)
+
+
+
 <a name="3.6.0"></a>
 # [3.6.0](https://github.com/ionic-team/ionic/compare/v3.5.3...v3.6.0) (2017-07-27)
 
