@@ -17,20 +17,86 @@
     </ion-header>
     <ion-content>
       <ion-list>
+        <ion-list-header>
+          Range color
+        </ion-list-header>
         <ion-item>
-          <ion-range value="40" id="range">
-            <ion-icon small name="sunny" slot="range-start"></ion-icon>
-            <ion-icon name="sunny" slot="range-end"></ion-icon>
-          </ion-range>
+          <ion-range value="20"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range value="40" color="secondary"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range value="60" color="light"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range value="80" color="dark"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range value="100" color="danger"></ion-range>
         </ion-item>
       </ion-list>
-    <button onClick='elFunction()'> Helllo</button>
+
+      <ion-list>
+        <ion-list-header>
+          Mode
+        </ion-list-header>
+        <ion-item>
+          <ion-range value="50" mode="md"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range value="50" mode="ios"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range value="50" mode="wp"></ion-range>
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-list-header>
+          Options
+        </ion-list-header>
+        <ion-item>
+          <ion-range pin="true"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range min="1000" max="2000" steps="100" snaps="true" id="range"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range dual-knobs="true" id="multiKnob"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range color="danger">
+            <ion-icon small name="thermometer" slot="range-start"></ion-icon>
+            <ion-icon name="thermometer" slot="range-end"></ion-icon>
+          </ion-range>
+        </ion-item>
+
+      </ion-list>
+
+      <ion-button onclick="elTest()">Test</ion-button>
     </ion-content>
   </ion-app>
+
   <script>
-    function elFunction(){
-    var range = document.querySelector('ion-range');
-    console.log(range.ratio())
+    var knob = document.getElementById('multiKnob')
+    knob.value = {
+      lower: 33,
+      upper: 60
+    }
+    knob.addEventListener('ionFocus', function(ev) {
+      console.log('focus', ev)
+    })
+    knob.addEventListener('ionBlur', function(ev) {
+      console.log('blur', ev)
+    })
+    knob.addEventListener('ionChange', function(ev) {
+      console.log('change', ev)
+    })
+
+    function elTest() {
+      var range = document.getElementById('range');
+      range.disabled = !range.disabled;
     }
   </script>
 </body>

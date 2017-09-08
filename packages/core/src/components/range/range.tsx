@@ -1,23 +1,13 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Listen,
-  Method,
-  Prop,
-  PropDidChange,
-  State
-} from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
 import { BaseInputComponent, GestureDetail } from '../../index';
 import { clamp } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-range',
   styleUrls: {
-    // ios: 'toggle.ios.scss',
-    md: 'range.md.scss'
-    // wp: 'toggle.wp.scss'
+    ios: 'range.ios.scss',
+    md: 'range.md.scss',
+    wp: 'range.wp.scss'
   },
   host: {
     theme: 'range'
@@ -39,7 +29,7 @@ export class Range implements BaseInputComponent {
   @State() _valB: number = 0;
   @State() _ratioA: number = 0;
   @State() _ratioB: number = 0;
-  @State() _ticks: any[];
+  @State() _ticks: any[] = [];
   @State() _activeB: boolean;
   @State() _rect: ClientRect;
 
@@ -51,12 +41,13 @@ export class Range implements BaseInputComponent {
   @Event() ionStyle: EventEmitter;
   @Event() ionFocus: EventEmitter;
   @Event() ionBlur: EventEmitter;
-  //
-  // @Prop() color: string;
-  // @Prop() mode: string;
+
+  @Prop() color: string;
+  @Prop() mode: string;
 
   @Prop({ state: true })
   value: any;
+
   @Prop() disabled: boolean = false;
   @Prop() min: number = 0;
   @Prop() max: number = 100;
@@ -65,10 +56,6 @@ export class Range implements BaseInputComponent {
   @Prop() pin: boolean = false;
   @Prop() snaps: boolean = false;
   @Prop() debounce: number = 0;
-
-  private canStart() {
-    return !this.disabled;
-  }
 
   fireBlur() {
     if (this.hasFocus) {
@@ -83,8 +70,15 @@ export class Range implements BaseInputComponent {
     this.emitStyle();
   }
 
+  @PropDidChange('value')
+  valueChanged(val: boolean) {
+    this.ionChange.emit({ value: val });
+    this.emitStyle();
+  }
+
   ionViewWillLoad() {
-    this._inputUpdated();
+    this.inputUpdated();
+    this.createTicks();
     this.emitStyle();
   }
 
@@ -106,22 +100,21 @@ export class Range implements BaseInputComponent {
     }
   }
 
-  _inputUpdated() {
+  inputUpdated() {
     const val = this.value;
     if (this.dualKnobs) {
       this._valA = val.lower;
       this._valB = val.upper;
-      this._ratioA = this._valueToRatio(val.lower);
-      this._ratioB = this._valueToRatio(val.upper);
+      this._ratioA = this.valueToRatio(val.lower);
+      this._ratioB = this.valueToRatio(val.upper);
     } else {
       this._valA = val;
-      this._ratioA = this._valueToRatio(val);
+      this._ratioA = this.valueToRatio(val);
     }
-
-    this._updateBar();
+    this.updateBar();
   }
 
-  _updateBar() {
+  updateBar() {
     const ratioA = this._ratioA;
     const ratioB = this._ratioB;
 
@@ -133,27 +126,25 @@ export class Range implements BaseInputComponent {
       this._barR = `${100 - ratioA * 100}%`;
     }
 
-    this._updateTicks();
+    this.updateTicks();
   }
 
-  _creatTicks() {
+  createTicks() {
     if (this.snaps) {
-      this._ticks = [];
       for (let value = this.min; value <= this.max; value += this.steps) {
-        let ratio = this._valueToRatio(value);
+        let ratio = this.valueToRatio(value);
         this._ticks.push({
           ratio,
           left: `${ratio * 100}%`
         });
       }
-      this._updateTicks();
+      this.updateTicks();
     }
   }
 
-  _updateTicks() {
+  updateTicks() {
     const ticks = this._ticks;
     const ratio = this.ratio;
-
     if (this.snaps && ticks) {
       if (this.dualKnobs) {
         let upperRatio = this.ratioUpper();
@@ -169,19 +160,19 @@ export class Range implements BaseInputComponent {
     }
   }
 
-  _valueToRatio(value: number) {
+  valueToRatio(value: number) {
     value = Math.round((value - this.min) / this.steps) * this.steps;
     value = value / (this.max - this.min);
     return clamp(0, value, 1);
   }
 
-  _ratioToValue(ratio: number) {
+  ratioToValue(ratio: number) {
     ratio = Math.round((this.max - this.min) * ratio);
     ratio = Math.round(ratio / this.steps) * this.steps + this.min;
     return clamp(this.min, ratio, this.max);
   }
 
-  _inputNormalize(val: any): any {
+  inputNormalize(val: any): any {
     if (this.dualKnobs) {
       return val;
     } else {
@@ -190,21 +181,16 @@ export class Range implements BaseInputComponent {
     }
   }
 
-  _update(
-    current: { x?: number; y?: number },
-    rect: ClientRect,
-    isPressed: boolean
-  ) {
+  update(current: { x?: number; y?: number }, rect: ClientRect, isPressed: boolean) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
     let ratio = clamp(0, (current.x - rect.left) / rect.width, 1);
-    let val = this._ratioToValue(ratio);
+    let val = this.ratioToValue(ratio);
 
     if (this.snaps) {
       // snaps the ratio to the current value
-      ratio = this._valueToRatio(val);
+      ratio = this.valueToRatio(val);
     }
-
     // update which knob is pressed
     this._pressed = isPressed;
     let valChanged = false;
@@ -224,7 +210,8 @@ export class Range implements BaseInputComponent {
       valChanged = val === this._valA;
       this._valA = val;
     }
-    this._updateBar();
+
+    this.updateBar();
     if (valChanged) {
       return false;
     }
@@ -271,72 +258,83 @@ export class Range implements BaseInputComponent {
   }
 
   @Listen('ionIncrease, ionDecrease')
-  _keyChg(ev: any) {
+  keyChng(ev: RangeEvent) {
     const step = this.steps;
-    // if (isKnobB) {
-    //   if (isIncrease) {
-    //     this._valB += step;
-    //   } else {
-    //     this._valB -= step;
-    //   }
-    //   this._valB = clamp(this.min, this._valB, this.max);
-    //   this._ratioB = this._valueToRatio(this._valB);
-    // } else {
-    if (!!ev.detail.isIncrease) {
-      this._valA += step;
+    if (ev.detail.knob === 'knobB') {
+      if (!!ev.detail.isIncrease) {
+        this._valB += step;
+      } else {
+        this._valB -= step;
+      }
+      this._valB = clamp(this.min, this._valB, this.max);
+      this._ratioB = this.valueToRatio(this._valB);
     } else {
-      this._valA -= step;
+      if (!!ev.detail.isIncrease) {
+        this._valA += step;
+      } else {
+        this._valA -= step;
+      }
+      this._valA = clamp(this.min, this._valA, this.max);
+      this._ratioA = this.valueToRatio(this._valA);
     }
-    this._valA = clamp(this.min, this._valA, this.max);
-    this._ratioA = this._valueToRatio(this._valA);
-    // }
-    this._updateBar();
+    this.updateBar();
   }
 
-  onPress(detail: GestureDetail) {
-    console.log('on press')
-    if (this.disabled) {
-      return false;
-    }
+  canStart() {
+    const el = this.rangeEl.querySelector('.range-slider');
+    this._rect = el.getBoundingClientRect();
+    return !this.disabled;
+  }
+
+  onDown(detail: GestureDetail) {
+    if (this.disabled) return false;
     this.fireFocus();
 
     const current = { x: detail.currentX, y: detail.currentY };
-    const rect = (this._rect = this.rangeEl.getBoundingClientRect());
+    const rect = this._rect;
+
     // figure out which knob they started closer to
     const ratio = clamp(0, (current.x - rect.left) / rect.width, 1);
-
     this._activeB =
       this.dualKnobs &&
       Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB);
 
     // update the active knob's position
-    this._update(current, rect, true);
+    this.update(current, rect, true);
 
     // return true so the pointer events
     // know everything's still valid
     return true;
   }
 
+  onUp(detail: GestureDetail) {
+    if (this.disabled) {
+      return;
+    }
+    // update the active knob's position
+    this.update({ x: detail.currentX, y: detail.currentY }, this._rect, false);
+    // trigger ionBlur event
+    this.fireBlur();
+  }
+
   onDragMove(detail: GestureDetail) {
-    console.log('drag start')
     if (this.disabled) {
       return;
     }
     const current = { x: detail.currentX, y: detail.currentY };
     // update the active knob's position
-    this._update(current, this._rect, true);
+    this.update(current, this._rect, true);
   }
 
-  onDragEnd(detail: GestureDetail) {
-    console.log('drag end')
-    if (this.disabled) {
-      return;
-    }
-    // update the active knob's position
-    this._update({ x: detail.currentX, y: detail.currentY }, this._rect, false);
 
-    // trigger ionBlur event
-    this.fireBlur();
+  hostData() {
+    return {
+      class: {
+        'range-disabled': this.disabled,
+        'range-pressed': this._pressed,
+        'range-has-pin': this.pin
+      }
+    };
   }
 
   render() {
@@ -346,17 +344,26 @@ export class Range implements BaseInputComponent {
       <ion-gesture
         props={{
           disableScroll: true,
-          onPress: this.onPress.bind(this),
+          canStart: this.canStart.bind(this),
+          onDown: this.onDown.bind(this),
           onMove: this.onDragMove.bind(this),
-          onEnd: this.onDragEnd.bind(this),
+          onUp: this.onUp.bind(this),
           gestureName: 'range',
           gesturePriority: 30,
-          type: 'pan,press',
+          type: 'press,pan',
           direction: 'x',
           threshold: 0
         }}
       >
         <div class="range-slider">
+          {this._ticks.map(t =>
+            <div
+              style={{ left: t.left }}
+              role="presentation"
+              class={{ 'range-tick': true, 'range-tick-active': t.active }}
+            />
+          )}
+
           <div class="range-bar" role="presentation" />
           <div
             class="range-bar range-bar-active"
@@ -368,6 +375,7 @@ export class Range implements BaseInputComponent {
           />
           <ion-range-knob
             class="range-knob-handle"
+            knob="knobA"
             pressed={this._pressedA}
             ratio={this._ratioA}
             val={this._valA}
@@ -375,9 +383,29 @@ export class Range implements BaseInputComponent {
             min={this.min}
             max={this.max}
           />
+
+          {this.dualKnobs
+            ? <ion-range-knob
+                class="range-knob-handle"
+                knob="knobB"
+                pressed={this._pressedB}
+                ratio={this._ratioB}
+                val={this._valB}
+                pin={this.pin}
+                min={this.min}
+                max={this.max}
+              />
+            : null}
         </div>
       </ion-gesture>,
       <slot name="range-end" />
     ];
   }
+}
+
+export interface RangeEvent {
+  detail: {
+    isIncrease: boolean,
+    knob: string
+  };
 }

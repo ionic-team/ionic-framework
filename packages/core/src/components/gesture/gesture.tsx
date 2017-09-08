@@ -3,6 +3,42 @@ import { BlockerDelegate, GestureController, GestureDelegate, BLOCK_ALL } from '
 import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 import { PanRecognizer } from './recognizers';
 
+/**
+ * @name Range
+ * @description
+ * The Range slider lets users select from a range of values by moving
+ * the slider knob. It can accept dual knobs, but by default one knob
+ * controls the value of the range.
+ *
+ * ### Range Labels
+ * Labels can be placed on either side of the range by adding the
+ * `range-start` or `range-end` property to the element. The element
+ * doesn't have to be an `ion-label`, it can be added to any element
+ * to place it to the left or right of the range. See [usage](#usage)
+ * below for examples.
+ *
+ *
+ * ### Minimum and Maximum Values
+ * Minimum and maximum values can be passed to the range through the `min`
+ * and `max` properties, respectively. By default, the range sets the `min`
+ * to `0` and the `max` to `100`.
+ *
+ *
+ * ### Steps and Snaps
+ * The `step` property specifies the value granularity of the range's value.
+ * It can be useful to set the `step` when the value isn't in increments of `1`.
+ * Setting the `step` property will show tick marks on the range for each step.
+ * The `snaps` property can be set to automatically move the knob to the nearest
+ * tick mark based on the step property value.
+ *
+ *
+ * ### Dual Knobs
+ * Setting the `dual-knobs` property to `true` on the range component will
+ * enable two knobs on the range. If the range has two knobs, the value will
+ * be an object containing two properties: `lower` and `upper`.
+ *
+ *
+ */
 
 @Component({
   tag: 'ion-gesture'
@@ -44,6 +80,8 @@ export class Gesture {
   @Prop() onMove: GestureCallback;
   @Prop() onEnd: GestureCallback;
   @Prop() onPress: GestureCallback;
+  @Prop() onDown: GestureCallback;
+  @Prop() onUp: GestureCallback;
   @Prop() notCaptured: GestureCallback;
 
 
@@ -149,7 +187,7 @@ export class Gesture {
 
       this.pan.start(detail.startX, detail.startY);
     }
-
+    this.onDown(detail)
     return true;
   }
 
@@ -305,7 +343,7 @@ export class Gesture {
     detail.event = ev;
 
     this.calcGestureData(ev);
-
+    this.onUp(detail)
     if (this.pan) {
       if (this.hasCapturedPan) {
         detail.type = 'pan';

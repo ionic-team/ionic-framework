@@ -11,6 +11,7 @@ export class RangeKnob {
   @Prop() val: number;
   @Prop() disabled: boolean;
   @Prop() labelId: string;
+  @Prop() knob: string;
   @Prop() ratio: number;
 
   @Event() ionIncrease: EventEmitter;
@@ -20,11 +21,11 @@ export class RangeKnob {
   handleKeyBoard(ev: KeyboardEvent) {
     const keyCode = ev.keyCode;
     if (keyCode === KEY_LEFT || keyCode === KEY_DOWN) {
-      this.ionDecrease.emit({isIncrease: false});
+      this.ionDecrease.emit({isIncrease: false, knob: this.knob});
       ev.preventDefault();
       ev.stopPropagation();
     } else if (keyCode === KEY_RIGHT || keyCode === KEY_UP) {
-      this.ionIncrease.emit({isIncrease: true});
+      this.ionIncrease.emit({isIncrease: true, knob: this.knob});
       ev.preventDefault();
       ev.stopPropagation();
     }
@@ -42,16 +43,16 @@ export class RangeKnob {
         'range-knob-max': this.val === this.max
       },
       style: {
-        left: this.leftPos(this.ratio)
+        'left': this.leftPos(this.ratio)
       },
       attrs: {
-        role: 'slider',
-        tabindex: this.disabled ? -1 : 0,
-        'aria-valuemin': `${this.min}`,
-        'aria-valuemax': `${this.max}`,
-        'aria-disabled': `${this.disabled}`,
-        'aria-labelledby': `${this.labelId}`,
-        'aria-valuenow': `${this.val}`
+        'role': 'slider',
+        'tabindex': this.disabled ? -1 : 0,
+        'aria-valuemin': this.min,
+        'aria-valuemax': this.max,
+        'aria-disabled': this.disabled,
+        'aria-labelledby': this.labelId,
+        'aria-valuenow': this.val
       }
     };
   }
