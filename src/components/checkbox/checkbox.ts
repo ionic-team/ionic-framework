@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, Optional, Renderer, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
@@ -76,7 +76,7 @@ import { Item } from '../item/item';
 @Component({
   selector: 'ion-checkbox',
   template:
-    '<div class="checkbox-icon" [class.checkbox-checked]="_value">' +
+    '<div class="checkbox-icon" [class.checkbox-checked]="_value" [class.checkbox-indeterminate]="_indeterminate">' +
       '<div class="checkbox-inner"></div>' +
     '</div>' +
     '<button role="checkbox" ' +
@@ -84,6 +84,7 @@ import { Item } from '../item/item';
             'ion-button="item-cover" ' +
             '[id]="id" ' +
             '[attr.aria-checked]="_value" ' +
+            '[attr.aria-indeterminate]="_indeterminate" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
             'class="item-cover"> ' +
@@ -95,6 +96,7 @@ import { Item } from '../item/item';
   encapsulation: ViewEncapsulation.None,
 })
 export class Checkbox extends BaseInput<boolean> implements IonicTapInput, OnDestroy {
+  _indeterminate: boolean;
 
   /**
    * @input {boolean} If true, the element is selected.
@@ -106,6 +108,23 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, OnDes
 
   set checked(val: boolean) {
     this.value = val;
+  }
+
+  @Output() indeterminateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  /**
+   * @input {boolean} If true, the element is indeterminate.
+   */
+  @Input()
+  get indeterminate(): boolean {
+    return this._indeterminate;
+  }
+
+  set indeterminate(val: boolean) {
+    this._indeterminate = val;
+
+    this._item && this._item.setElementClass('item-checkbox-indeterminate', val);
+    this.indeterminateChange.emit(this._indeterminate);
   }
 
   constructor(
@@ -126,6 +145,7 @@ export class Checkbox extends BaseInput<boolean> implements IonicTapInput, OnDes
     ev.preventDefault();
     ev.stopPropagation();
     this.value = !this.value;
+    this.indeterminate = false;
   }
 
   /**

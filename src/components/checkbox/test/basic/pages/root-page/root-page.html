@@ -73,7 +73,7 @@
     Stand-alone checkbox: {{standAloneChecked}}
   </p>
 
-  <p aria-hidden="true" padding>
+  <p aria-hidden="true" margin-left>
     <code>appleCtrl.dirty: {{appleCtrl.dirty}}</code><br>
     <code>appleCtrl.value: {{appleCtrl.value}}</code><br>
     <code>bananaCtrl.dirty: {{bananaCtrl.dirty}}</code><br>
@@ -86,7 +86,18 @@
     <code>strawberryValue: {{strawberryValue}}</code><br>
   </p>
 
-  <pre aria-hidden="true" padding>{{formResults}}</pre>
+  <pre aria-hidden="true" padding-left>{{formResults}}</pre>
+
+  <p padding-top>
+    <ion-checkbox [(ngModel)]="chkStates.checked"></ion-checkbox>
+    Toggle Checked State<br>
+    <ion-checkbox [(ngModel)]="chkStates.indeterminate"></ion-checkbox>
+    Toggle Indeterminate State<br>
+    <ion-checkbox [(indeterminate)]="chkStates.indeterminate" [(ngModel)]="chkStates.checked"></ion-checkbox>
+    Result Checkbox
+  </p>
+  <pre>{{chkStates | json}}</pre>
+
 
   <ion-item>
     <ion-label>Checkbox / Toggle</ion-label>
