@@ -1,7 +1,7 @@
 exports.config = {
   namespace: 'Ionic',
   wwwDir: 'dist',
-  publicPath: '/dist/build',
+  buildDir: '.',
   generateCollection: true,
   bundles: [
     { components: ['ion-animation-controller'] },
