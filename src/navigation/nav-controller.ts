@@ -475,7 +475,6 @@ export abstract class NavController implements NavigationContainer {
    * when a new instance needs to be created.
    *
    * @param {Page|string|ViewController} page The component class or deeplink name you want to push onto the navigation stack.
-   * @param {object} [params={}] Any NavParams to be used when a new view instance is created at the root.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
