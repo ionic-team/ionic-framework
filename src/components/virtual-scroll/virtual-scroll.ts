@@ -235,7 +235,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   };
   _queue: number = SCROLL_QUEUE_NO_CHANGES;
 
-  _virtualTrackBy: TrackByFunction;
+  _virtualTrackBy: TrackByFunction<any>;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
@@ -370,13 +370,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @input {function} Same as `ngForTrackBy` which can be used on `ngFor`.
    */
   @Input()
-  set virtualTrackBy(val: TrackByFunction) {
+  set virtualTrackBy(val: TrackByFunction<any>) {
     if (isPresent(val)) {
       this._virtualTrackBy = val;
       this._updateDiffer();
     }
   }
-  get virtualTrackBy(): TrackByFunction {
+  get virtualTrackBy(): TrackByFunction<any> {
     return this._virtualTrackBy;
   }
 
