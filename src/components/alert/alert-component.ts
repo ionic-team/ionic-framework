@@ -34,7 +34,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
               '</div>' +
-			  '<div class="alert-radio-icon" *ngIf="_plt.isRTL"><div class="alert-radio-inner"></div></div>' +
+              '<div class="alert-radio-icon" *ngIf="_plt.isRTL"><div class="alert-radio-inner"></div></div>' +
             '</button>' +
           '</div>' +
         '</ng-template>' +
@@ -46,7 +46,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
               '</div>' +
-			  '<div class="alert-checkbox-icon" *ngIf="_plt.isRTL"><div class="alert-checkbox-inner"></div></div>' +
+              '<div class="alert-checkbox-icon" *ngIf="_plt.isRTL"><div class="alert-checkbox-inner"></div></div>' +
             '</button>' +
           '</div>' +
         '</ng-template>' +
