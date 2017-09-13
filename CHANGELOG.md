@@ -1,3 +1,175 @@
+<a name="3.6.1"></a>
+## [3.6.1](https://github.com/ionic-team/ionic/compare/v3.6.0...v3.6.1) (2017-09-07)
+
+### Upgrade Instructions
+
+`ionic-angular@3.6.1` is a drop-in replacement for 3.6.0. To install it, please run:
+
+```
+npm install -g ionic@latest
+npm install @ionic/app-scripts@2.1.4 --save-dev
+npm install ionic-angular@3.6.1 --save
+```
+
+
+### Bug Fixes
+
+* **generators:** Update documentation URLs for templates ([475b722](https://github.com/ionic-team/ionic/commit/475b722))
+* **navigation:** check existence of done transition callback ([#12640](https://github.com/ionic-team/ionic/issues/12640)) ([0a6bb3b](https://github.com/ionic-team/ionic/commit/0a6bb3b))
+* **navigation:** ensure secondaryId always has a string value ([#12641](https://github.com/ionic-team/ionic/issues/12641)) ([1069505](https://github.com/ionic-team/ionic/commit/1069505))
+* **navigation:** fix popTo signature and make usage uniform ([3187375](https://github.com/ionic-team/ionic/commit/3187375))
+* **slider:** guard the processing of _slides ([b809665](https://github.com/ionic-team/ionic/commit/b809665)), closes [#12791](https://github.com/ionic-team/ionic/issues/12791)
+
+
+
+<a name="3.6.0"></a>
+# [3.6.0](https://github.com/ionic-team/ionic/compare/v3.5.3...v3.6.0) (2017-07-27)
+
+
+### Upgrade Instructions
+
+`ionic-angular` 3.6.0 requires developer's to update to the latest version of the `Ionic CLI` and `@ionic/app-scripts`.
+
+To upgrade, please run
+
+```
+npm install -g ionic@latest
+npm install @ionic/app-scripts@latest --save-dev
+npm install ionic-angular@latest --save
+```
+
+### Notes
+
+The URL when using deep linking is shortened and improved in this release. Due to a limitation in our nav system, if you're using `ion-tabs` and have a tab name that matches a segment, meaning you have a tab name of `schedule` and a segment of `schedule`, there could potentially be issues. To mitigate these issues, make sure you set the `tabUrlPath` property on the `ion-tab` and give it a unique name. This limitation will require an API change to fix so it will be resolved in `ionic-angular` 4.x.
+
+
+The upgrades include necessary changes to generators that add back lazy loading functionality, as well as an improved way of generating component/directives/and pipes.
+
+### New Generators
+
+The release adds back the functionality to generate lazy loaded pages.
+To generate a lazy loaded page, run:
+
+```bash
+ionic g page <Page-Name>
+```
+
+This will include a `.module.ts` file in the page directory created. If you do not want to generate a lazy loaded page, you can run:
+
+```bash
+ionic g page <Page-Name> --no-module
+```
+
+This will also generate lazy loaded tabs as well, accepting the `--no-module` flag as well to disable it.
+
+
+For pipes/components/components, we now generate a shared common module for each of these.
+
+So running:
+
+```bash
+ionic g component music-card
+```
+
+Will create a `components/components.module.ts` file that declares and exports the `music-card` component.
+We think that this will allow developers to get up and running with custom components much faster and will less overhead.
+
+### Bug Fixes
+
+* **list:** remove margin of MD buttons in ion-item-options ([#12263](https://github.com/ionic-team/ionic/issues/12263)) ([97f9522](https://github.com/ionic-team/ionic/commit/97f9522))
+* **nav:** make call to setPages return the promise so if it rejects it doesn't get lost ([de0f9d5](https://github.com/ionic-team/ionic/commit/de0f9d5))
+* **navigation:** account for race conditions in developer's code ([4596dbe](https://github.com/ionic-team/ionic/commit/4596dbe))
+* **navigation:** fix bug where that occurred when tab identifier and segment had the exact same string ([add0c4e](https://github.com/ionic-team/ionic/commit/add0c4e))
+* **navigation:** fix null pointer exceptions that would occur when destroying a nav controller while its transitioning ([584afd0](https://github.com/ionic-team/ionic/commit/584afd0))
+* **navigation:** reduce urls to minimum set of fields ([a8ceee4](https://github.com/ionic-team/ionic/commit/a8ceee4))
+
+
+### Features
+
+* **generators:** refactor generators ([400aa54](https://github.com/ionic-team/ionic/commit/400aa54))
+
+
+
+<a name="3.5.3"></a>
+## [3.5.3](https://github.com/ionic-team/ionic/compare/v3.5.2...v3.5.3) (2017-07-14)
+
+## Upgrade Instructions
+`ionic-angular@3.5.3` is a drop-in replacement for `3.5.2`. To install it, simply run `npm install ionic-angular@3.5.3 --save --save-exact`.
+
+### Bug Fixes
+
+* **app:** restore getActiveNav api ([2d49e10](https://github.com/ionic-team/ionic/commit/2d49e10))
+
+
+
+<a name="3.5.2"></a>
+## [3.5.2](https://github.com/ionic-team/ionic/compare/v3.5.1...v3.5.2) (2017-07-13)
+
+## Upgrade Instructions
+`ionic-angular@3.5.2` is a drop-in replacement for `3.5.1`. To install it, simply run `npm install ionic-angular@3.5.2 --save --save-exact`.
+
+We have released a new version of our build process for `ionic-angular` apps, `@ionic/app-scripts` in conjunction with this release of `ionic-angular`. While it's not a required update, we recommend it because we have greatly improved the developer experience. Incremental, or update builds while developing are much faster now. We've also added `scope hoisting` for better start-up performance on production builds.
+
+To upgrade to `@ionic/app-scripts`, run the following command:
+
+```
+rm -rf node_modules
+npm install @ionic/app-scripts@2.0.2 --save-dev --save-exact
+```
+
+After installing the update, you'll need to make a minor change to the `src/index.html` file to include a new `<script>` tag for `build/vendor.js`. The reason for this breaking change in `@ionic/app-scripts` is for faster builds. By separating out the `node_modules` dependencies into a `vendor.js` file, the incremental build is faster.
+
+```
+...
+<body>
+
+  <!-- Ionic's root component and where the app will load -->
+  <ion-app></ion-app>
+
+  <!-- cordova.js required for cordova apps -->
+  <script src="cordova.js"></script>
+
+  <!-- The polyfills js is generated during the build process -->
+  <script src="build/polyfills.js"></script>
+
+  <!-- The vendor js is generated during the build process
+       and includes all files in the node_modules directory -->
+  <script src="build/vendor.js"></script>
+
+  <!-- The bundle js is generated during the build process -->
+  <script src="build/main.js"></script>
+
+</body>
+...
+```
+
+If you're customizing `@ionic/app-scripts`, we recommend you review the [changelog](https://github.com/ionic-team/ionic-app-scripts/blob/master/CHANGELOG.md), and update any of your configs accordingly.
+
+## Notes
+`3.5.2` is the same as `3.5.1`. We had a small publishing error.
+
+### Bug Fixes
+
+* **navigation:** fix swipe-to-go-back ([04e78d8](https://github.com/ionic-team/ionic/commit/04e78d8))
+* **navigation:** mark as not transitioning on success in addition to '_transitionFinish', provide no ([48b3243](https://github.com/ionic-team/ionic/commit/48b3243))
+* **navigation:** navs can have n child navs instead of just one ([fce4422](https://github.com/ionic-team/ionic/commit/fce4422))
+* **navigation:** restore getActiveChildNav method to maintain old API, add deprecation notice ([d22d77b](https://github.com/ionic-team/ionic/commit/d22d77b))
+* **navigation:** ts2.4 compatibility ([08be9dc](https://github.com/ionic-team/ionic/commit/08be9dc)), closes [#12233](https://github.com/ionic-team/ionic/issues/12233) [#12235](https://github.com/ionic-team/ionic/issues/12235)
+* **select:** not activated on enter in input field ([ad25cd1](https://github.com/ionic-team/ionic/commit/ad25cd1)), closes [#12202](https://github.com/ionic-team/ionic/issues/12202)
+* **sliding-item:** ionSwipe event is fired ([#12157](https://github.com/ionic-team/ionic/issues/12157)) ([b5aa304](https://github.com/ionic-team/ionic/commit/b5aa304)), closes [#12146](https://github.com/ionic-team/ionic/issues/12146)
+* **tabs:** have tabs behavior match nav when navigating back/forth via the url ([3f39e14](https://github.com/ionic-team/ionic/commit/3f39e14))
+
+
+### Features
+
+* **navigation:** support for named ion-nav/ion-tabs to improve url in the short term ([486bff0](https://github.com/ionic-team/ionic/commit/486bff0))
+
+
+<a name="3.5.1"></a>
+## [3.5.1](https://github.com/ionic-team/ionic/compare/v3.5.0...v3.5.1) (2017-07-13)
+
+See the [3.5.2](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#352-2017-07-13) changelog. We had a publishing error here.
+
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/ionic-team/ionic/compare/v3.4.2...v3.5.0) (2017-06-28)
 

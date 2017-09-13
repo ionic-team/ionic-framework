@@ -3,9 +3,8 @@ import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer
 import { Config } from '../../config/config';
 import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
-import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
 import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
@@ -45,7 +44,6 @@ export class PopoverCmp {
     public _elementRef: ElementRef,
     public _renderer: Renderer,
     public _config: Config,
-    private _plt: Platform,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
     gestureCtrl: GestureController,

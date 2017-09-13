@@ -50,6 +50,15 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   if (config.compilerOptions && config.compilerOptions.outDir) {
     delete config.compilerOptions.outDir;
   }
+
+  // remove linting checks that we do not want in dist
+  if (config.compilerOptions.noUnusedLocals) {
+    delete config.compilerOptions.noUnusedLocals;
+  }
+  if (config.compilerOptions.noUnusedParameters) {
+    delete config.compilerOptions.noUnusedParameters;
+  }
+
   if (config.compilerOptions) {
     config.compilerOptions.module = moduleType;
     config.compilerOptions.target = target;
@@ -316,7 +325,7 @@ export function writePolyfills(outputDirectory: string) {
   promises.push(bundlePolyfill(NG_ENTRIES, join(outputDirectory, 'polyfills.ng.js')));
 
   return Promise.all(promises);
-};
+}
 
 function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) {
   return rollup({

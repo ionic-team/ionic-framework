@@ -45,7 +45,7 @@ export class RippleActivator implements ActivatorBase {
     this.highlight && this.highlight.clearState(animated);
   }
 
-  _downAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  _downAction(ev: UIEvent, activatableEle: HTMLElement, _startCoord: PointerCoordinates) {
     if (isActivatedDisabled(ev, activatableEle)) {
       return;
     }
@@ -79,7 +79,7 @@ export class RippleActivator implements ActivatorBase {
     }
   }
 
-  _clickAction(ev: UIEvent, activatableEle: HTMLElement, startCoord: PointerCoordinates) {
+  _clickAction(_ev: UIEvent, _activatableEle: HTMLElement, _startCoord: PointerCoordinates) {
     // NOTHING
   }
 

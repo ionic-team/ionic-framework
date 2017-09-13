@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, NgModule } from '@angular/core';
+import { Component, NgModule, ViewEncapsulation } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../..';
 
@@ -37,7 +37,7 @@ export class E2EPage {
     }
   }
 
-  headerFn(record: any, recordIndex: number, records: any[]) {
+  headerFn(record: any) {
     if (this.lastMonth !== record.date.getMonth()) {
       this.lastMonth = record.date.getMonth();
 
@@ -49,7 +49,7 @@ export class E2EPage {
     return null;
   }
 
-  footerFn(record: any, recordIndex: number, records: any[]) {
+  footerFn(_record: any, recordIndex: number, records: any[]) {
 
     if (recordIndex === records.length - 1) {
       return true;

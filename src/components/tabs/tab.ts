@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -8,7 +8,7 @@ import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavOptions } from '../../navigation/nav-util';
+import { NavOptions, TransitionDoneFn } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
@@ -98,7 +98,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```html
  * <ion-tabs>
  *   <ion-tab (ionSelect)="chat()" tabTitle="Show Modal"></ion-tab>
- * </ion-tabs>
+ * </ion-tabs>pop
  * ```
  *
  * ```ts
@@ -304,17 +304,39 @@ export class Tab extends NavControllerBase implements ITab {
   /**
    * @hidden
    */
-  load(opts: NavOptions, done?: () => void) {
+  load(opts: NavOptions, done?: TransitionDoneFn) {
     if (this._lazyRootFromUrl || (!this._loaded && this.root)) {
       this.setElementClass('show-tab', true);
-      if (this._lazyRootFromUrl) {
-        this.push(this._lazyRootFromUrl, this._lazyRootFromUrlData, opts, done);
-        this._lazyRootFromUrl = null;
-        this._lazyRootFromUrlData = null;
-      } else {
-        this.push(this.root, this.rootParams, opts, done);
+      // okay, first thing we need to do if check if the view already exists
+      const nameToUse = this._lazyRootFromUrl ? this._lazyRootFromUrl : this.root;
+      const dataToUse = this._lazyRootFromUrlData ? this._lazyRootFromUrlData : this.rootParams;
+      const numViews = this.length() - 1;
+      for (let i = numViews; i >= 0; i--) {
+        const viewController = this.getByIndex(i);
+        if (viewController && (viewController.id === nameToUse || viewController.component === nameToUse)) {
+          if (i === numViews) {
+            // this is the last view in the stack and it's the same
+            // as the segment so there's no change needed
+            if (done) {
+              done(false, false);
+            }
+            return;
+          } else {
+            // it's not the exact view as the end
+            // let's have this nav go back to this exact view
+            return this.popTo(viewController, {
+              animate: false,
+              updateUrl: false,
+            }, done);
+          }
+        }
       }
 
+      this.push(nameToUse, dataToUse, opts, done);
+
+
+      this._lazyRootFromUrl = null;
+      this._lazyRootFromUrlData = null;
       this._loaded = true;
 
     } else {
@@ -324,7 +346,10 @@ export class Tab extends NavControllerBase implements ITab {
       this._dom.read(() => {
         this.resize();
       });
-      done();
+      if (done) {
+        done(false, false);
+      }
+      return;
     }
   }
 

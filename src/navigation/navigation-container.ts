@@ -1,10 +1,14 @@
 import { NavController } from './nav-controller';
 
+/**
+ * @hidden
+ */
 export interface NavigationContainer {
   id: string;
   name: string;
   parent: NavController;
-  getActiveChildNav(): NavigationContainer;
+  getActiveChildNavs(): NavigationContainer[];
+  getAllChildNavs?(): NavigationContainer[];
   getType(): string;
   getSecondaryIdentifier(): string;
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, ErrorHandler, forwardRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, ErrorHandler, Input, NgZone, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation, forwardRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -114,7 +114,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
 
     if (segment && (segment.component || segment.loadChildren)) {
       return this._linker.initViews(segment).then(views => {
-        this.setPages(views, null, null);
+        return this.setPages(views, null, null);
       });
     } else if (this._root) {
       // no segment match, so use the root property but don't set the url I guess
@@ -133,6 +133,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
   get root(): any {
     return this._root;
   }
+
   set root(page: any) {
     this._root = page;
 

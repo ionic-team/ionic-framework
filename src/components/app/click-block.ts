@@ -1,4 +1,4 @@
-import { Directive, ElementRef, forwardRef, Inject, Renderer } from '@angular/core';
+import { Directive, ElementRef, Inject, Renderer, forwardRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';

@@ -2,7 +2,7 @@ import { Renderer, TypeDecorator } from '@angular/core';
 import { DeepLinker } from './deep-linker';
 import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
-import { isViewController, ViewController } from './view-controller';
+import { ViewController, isViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 
@@ -163,16 +163,26 @@ export interface NavResult {
   direction?: string;
 }
 
-export interface NavSegment {
+export interface NavSegment extends DehydratedSegment {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  requiresExplicitNavPrefix?: boolean;
+}
+
+export interface DehydratedSegment {
   id: string;
   name: string;
   component?: any;
   loadChildren?: string;
   data: any;
-  type: string;
-  navId: string;
-  secondaryId: string;
   defaultHistory?: NavSegment[];
+  secondaryId?: string;
+}
+
+export interface DehydratedSegmentPair {
+  segments: DehydratedSegment[];
+  navGroup: NavGroup;
 }
 
 export interface NavGroup {
@@ -211,6 +221,10 @@ export interface TransitionRejectFn {
   (rejectReason: any, transition?: Transition): void;
 }
 
+export interface TransitionDoneFn {
+  (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string): void;
+}
+
 export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
@@ -220,7 +234,7 @@ export interface TransitionInstruction {
   removeCount?: number;
   resolve?: (hasCompleted: boolean) => void;
   reject?: (rejectReason: string) => void;
-  done?: Function;
+  done?: TransitionDoneFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
   requiresTransition?: boolean;

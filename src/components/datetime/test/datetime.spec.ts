@@ -90,7 +90,7 @@ describe('DateTime', () => {
       columns[0].selectedIndex = 1; // February
       datetime.validate();
 
-      for (var i = 0; i < 28; i++) {
+      for (let i = 0; i < 28; i++) {
         expect(columns[1].options[i].disabled).toEqual(false);
       }
       expect(columns[1].options[28].disabled).toEqual(true);
@@ -100,7 +100,7 @@ describe('DateTime', () => {
       columns[0].selectedIndex = 3; // April
       datetime.validate();
 
-      for (var i = 0; i < 30; i++) {
+      for (let i = 0; i < 30; i++) {
         expect(columns[1].options[i].disabled).toEqual(false);
       }
       expect(columns[1].options[30].disabled).toEqual(true);
@@ -130,7 +130,7 @@ describe('DateTime', () => {
       }
 
       // // Days
-      for (var i = 0; i < columns[1].options.length; i++) {
+      for (let i = 0; i < columns[1].options.length; i++) {
         expect(columns[1].options[i].disabled).toEqual(false);
       }
 
@@ -736,7 +736,7 @@ describe('DateTime', () => {
 
 function zoned(fn: () => any): (done: DoneFn) => void {
   return () => {
-    const zone = new NgZone(false);
+    const zone = new NgZone({enableLongStackTrace: false});
     zone.run(fn);
   };
 }

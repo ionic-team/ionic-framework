@@ -19,7 +19,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *
  * When a modal (or any other overlay such as an alert or actionsheet) is
  * "presented" to a nav controller, the overlay is added to the app's root nav.
- * After the modal has been presented, from within the component instance The
+ * After the modal has been presented, from within the component instance, the
  * modal can later be closed or "dismissed" by using the ViewController's
  * `dismiss` method. Additionally, you can dismiss any overlay by using `pop`
  * on the root nav controller. Modals are not reusable. When a modal is dismissed
@@ -110,6 +110,25 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *    this.viewCtrl.dismiss(data);
  *  }
  *
+ * }
+ * ```
+ *
+ * A common issue is that a developer may try to implement navigation in a modal, but when you try NavController.push(),
+ * you will notice that the status bar on iOS gets cut off. The proper way to implement navigation in a modal is to
+ * make the modal component a navigation container, and set the root page to the page you want to show in your modal.
+ *
+ * ```ts
+ * @Component({
+ *   template: '<ion-nav [root]="rootPage" [rootParams]="rootParams"></ion-nav>'
+ * })
+ * export class MyModalWrapper {
+ *   rootPage = 'MyModalContentPage'; // This is the page you want your modal to display
+ *   rootParams;
+ *
+ *   constructor(navParams: NavParams, private viewCtrl: ViewController) {
+ *       this.rootParams = Object.assign({}, navParams.data, {viewCtrl: viewCtrl});
+ *       // This line will send the view controller into your child views, so you can dismiss the modals from there.
+ *   }
  * }
  * ```
  * @demo /docs/demos/src/modal/

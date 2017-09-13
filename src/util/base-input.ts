@@ -2,7 +2,7 @@ import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Rend
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
-import { isPresent, isString, isUndefined, isArray, isTrueProperty, deepCopy, assert } from './util';
+import { assert, deepCopy, isArray, isPresent, isString, isTrueProperty, isUndefined } from './util';
 import { IonicFormInput } from './form';
 import { Ion } from '../components/ion';
 import { Config } from '../config/config';
@@ -228,7 +228,15 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
 
     this._form && this._form.unsetAsFocused(this);
     this._setFocus(false);
+    this._fireTouched();
     this.ionBlur.emit(this);
+  }
+
+  /**
+   * @hidden
+   */
+  _fireTouched() {
+    this._onTouched && this._onTouched();
   }
 
   /**
@@ -253,7 +261,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   private onChange() {
     this._onChanged && this._onChanged(this._inputNgModelEvent());
-    this._onTouched && this._onTouched();
   }
 
   /**

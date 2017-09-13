@@ -90,7 +90,10 @@ export class Segment extends BaseInput<string> implements AfterContentInit {
   ngAfterContentInit() {
     this._initialize();
     this._buttons.forEach(button => {
-      button.ionSelect.subscribe((selectedButton: any) => this.value = selectedButton.value);
+      button.ionSelect.subscribe((selectedButton: any) => {
+        this.value = selectedButton.value;
+        this._fireTouched();
+      });
     });
   }
 
@@ -109,6 +112,4 @@ export class Segment extends BaseInput<string> implements AfterContentInit {
       button.isActive = (button.value === value);
     }
   }
-
-
 }

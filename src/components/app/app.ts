@@ -1,12 +1,12 @@
 import { EventEmitter, Injectable, Optional } from '@angular/core';
-import { Title, DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT, Title } from '@angular/platform-browser';
 
 import { IonicApp } from './app-root';
 import * as Constants from './app-constants';
 import { ClickBlock } from './click-block';
-import { runInDev, assert } from '../../util/util';
+import { assert, runInDev } from '../../util/util';
 import { Config } from '../../config/config';
-import { NavOptions, DIRECTION_FORWARD, DIRECTION_BACK, isTabs } from '../../navigation/nav-util';
+import { DIRECTION_BACK, DIRECTION_FORWARD, NavOptions, isTabs } from '../../navigation/nav-util';
 import { MenuController } from './menu-controller';
 import { NavigationContainer } from '../../navigation/navigation-container';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
@@ -206,20 +206,41 @@ export class App {
   }
 
   /**
-   * @return {NavController} Returns the active NavController. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
+   * @return {NavController} Returns the first Active Nav Controller from the list. This method is deprecated
    */
-  getActiveNav(navId?: string): NavControllerBase {
+  getActiveNav(): NavControllerBase {
+    console.warn('(getActiveNav) is deprecated and will be removed in the next major release. Use getActiveNavs instead.');
+    const navs = this.getActiveNavs();
+    if (navs && navs.length) {
+      return navs[0];
+    }
+    return null;
+  }
+
+  /**
+   * @return {NavController[]} Returns the active NavControllers. Using this method is preferred when we need access to the top-level navigation controller while on the outside views and handlers like `registerBackButtonAction()`
+   */
+  getActiveNavs(rootNavId?: string): NavControllerBase[] {
     const portal = this._appRoot._getPortal(Constants.PORTAL_MODAL);
     if (portal.length() > 0) {
-      return <NavControllerBase> findTopNav(portal);
+      return <NavControllerBase[]> findTopNavs(portal);
     }
     if (!this._rootNavs || !this._rootNavs.size) {
-      return null;
+      return [];
     }
     if (this._rootNavs.size === 1) {
-      return <NavControllerBase> findTopNav(this._rootNavs.values().next().value);
+      return <NavControllerBase[]> findTopNavs(this._rootNavs.values().next().value);
     }
-    return <NavControllerBase> findTopNav(this.getRootNavById(navId));
+    if (rootNavId) {
+      return <NavControllerBase[]> findTopNavs(this._rootNavs.get(rootNavId));
+    }
+    // fallback to just using all root names
+    let activeNavs: NavigationContainer[] = [];
+    this._rootNavs.forEach(nav => {
+      const topNavs = findTopNavs(nav);
+      activeNavs = activeNavs.concat(topNavs);
+    });
+    return <NavControllerBase[]> activeNavs;
   }
 
   getRootNav(): any {
@@ -256,9 +277,9 @@ export class App {
 
   getActiveNavContainers(): NavigationContainer[] {
     // for each root nav container, get it's active nav
-    const list: NavigationContainer[] = [];
+    let list: NavigationContainer[] = [];
     this._rootNavs.forEach((container: NavigationContainer) => {
-      list.push(findTopNav(container));
+      list = list.concat(findTopNavs(container));
     });
     return list;
   }
@@ -328,15 +349,15 @@ export class App {
     let navToPop: NavControllerBase = null;
     let mostRecentVC: ViewController = null;
     this._rootNavs.forEach((navContainer: NavigationContainer) => {
-      const activeNav = this.getActiveNav(navContainer.id);
-      const poppable = getPoppableNav(activeNav);
-      if (poppable) {
+      const activeNavs = this.getActiveNavs(navContainer.id);
+      const poppableNavs = activeNavs.map(activeNav => getPoppableNav(activeNav)).filter(nav => !!nav);
+      poppableNavs.forEach(poppable => {
         const topViewController = poppable.last();
         if (poppable._isPortal || (topViewController && poppable.length() > 1 && (!mostRecentVC || topViewController._ts >=  mostRecentVC._ts))) {
           mostRecentVC = topViewController;
           navToPop = poppable;
         }
-      }
+      });
     });
     if (navToPop) {
       return navToPop.pop();
@@ -355,9 +376,10 @@ export class App {
     platform.registerListener(platform.doc(), 'focusin', onFocusin, { capture: true, zone: false, passive: true });
     platform.registerListener(platform.doc(), 'touchend', onTouchend, { capture: false, zone: false, passive: true });
 
-    function onFocusin(ev: any) {
+    function onFocusin() {
       focused = true;
     }
+
     function onTouchend(ev: any) {
       // if app did scroll return early
       if (self._didScroll) {
@@ -397,8 +419,31 @@ export class App {
     }
   }
 
+  getNavByIdOrName(id: string) {
+    const navs = Array.from(this._rootNavs.values());
+    for (const navContainer of navs) {
+      const match = getNavByIdOrName(navContainer, id);
+      if (match) {
+        return match;
+      }
+    }
+    return null;
+  }
+
 }
 
+export function getNavByIdOrName(nav: NavigationContainer, id: string): NavigationContainer {
+  if (nav.id === id || nav.name === id) {
+    return nav;
+  }
+  for (const child of nav.getAllChildNavs()) {
+    const tmp = getNavByIdOrName(child, id);
+    if (tmp) {
+      return tmp;
+    }
+  }
+  return null;
+}
 
 function getPoppableNav(nav: NavControllerBase): NavControllerBase {
   if (!nav) {
@@ -419,16 +464,20 @@ function getPoppableNav(nav: NavControllerBase): NavControllerBase {
   return getPoppableNav(nav.parent);
 }
 
-function findTopNav(nav: NavigationContainer): NavigationContainer {
-  while (nav) {
-    const childNav = nav.getActiveChildNav();
-    if (!childNav) {
-      break;
-    }
-    nav = childNav;
+export function findTopNavs(nav: NavigationContainer): NavigationContainer[] {
+  let containers: NavigationContainer[] = [];
+  const childNavs = nav.getActiveChildNavs();
+  if (!childNavs || !childNavs.length) {
+    containers.push(nav);
+  } else {
+    childNavs.forEach(childNav => {
+      const topNavs = findTopNavs(childNav);
+      containers = containers.concat(topNavs);
+    });
   }
-  return nav;
+  return containers;
 }
+
 
 const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
 const ACTIVE_SCROLLING_TIME = 100;

@@ -14,10 +14,10 @@ import { IonicPage, NavController, NavParams } from '../../../../../../..';
 <ion-content>
   Tabs 1 Tab 2 Page 3
   <div>
-  Param One: {{userId}}
+  Param One: {{paramOne}}
   </div>
   <div>
-  Param Two: {{name}}
+  Param Two: {{paramTwo}}
   </div>
 </ion-content>
   `

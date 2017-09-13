@@ -16,7 +16,7 @@ import { ScrollView } from './scroll-view';
  * constructor(public events: Events) {}
  * createUser(user) {
  *   console.log('User created!')
- *   events.publish('user:created', user, Date.now());
+ *   this.events.publish('user:created', user, Date.now());
  * }
  *
  *

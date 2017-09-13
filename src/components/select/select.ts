@@ -1,4 +1,4 @@
-import { Component, ContentChildren, ElementRef, EventEmitter, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
@@ -9,7 +9,7 @@ import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
-import { isCheckedProperty, isTrueProperty, deepCopy, deepEqual, assert } from '../../util/util';
+import { assert, deepCopy, deepEqual, isCheckedProperty, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
 import { Option } from '../option/option';
 import { SelectPopover, SelectPopoverOption } from './select-popover-component';
@@ -159,6 +159,7 @@ import { SelectPopover, SelectPopoverOption } from './select-popover-component';
       '<div class="select-icon-inner"></div>' +
     '</div>' +
     '<button aria-haspopup="true" ' +
+            'type="button" ' +
             '[id]="id" ' +
             'ion-button="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
@@ -379,7 +380,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
         };
       });
 
-      var selectCssClass = 'select-alert';
+      let selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions
       overlay = new Alert(this._app, selectOptions, this.config);

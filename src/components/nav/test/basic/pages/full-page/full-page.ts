@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, AlertController, IonicPage, NavController, NavParams, ViewController } from '../../../../../..';
+import { AlertController, App, IonicPage, NavController, NavParams, ViewController } from '../../../../../..';
 
 @IonicPage({
   name: 'full-page'

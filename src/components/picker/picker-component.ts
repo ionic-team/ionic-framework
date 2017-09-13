@@ -1,13 +1,12 @@
 import { Component, ElementRef, HostListener, QueryList, Renderer, ViewChildren, ViewEncapsulation } from '@angular/core';
 
-import { isNumber, isPresent, isString, assert } from '../../util/util';
+import { assert, isNumber, isPresent, isString } from '../../util/util';
 import { Config } from '../../config/config';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { BLOCK_ALL, BlockerDelegate, GestureController, } from '../../gestures/gesture-controller';
 import { KEY_ENTER, KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { Picker } from './picker';
-import { PickerOptions, PickerColumnOption } from './picker-options';
-import { Platform } from '../../platform/platform';
+import { PickerColumnOption, PickerOptions } from './picker-options';
 import { ViewController } from '../../navigation/view-controller';
 
 import { PickerColumnCmp } from './picker-column';
@@ -53,7 +52,6 @@ export class PickerCmp {
     private _viewCtrl: ViewController,
     private _elementRef: ElementRef,
     config: Config,
-    private _plt: Platform,
     gestureCtrl: GestureController,
     params: NavParams,
     renderer: Renderer
@@ -133,7 +131,7 @@ export class PickerCmp {
     this._cols.forEach(column => column.refresh());
   }
 
-  _colChange(selectedOption: PickerColumnOption) {
+  _colChange() {
     // one of the columns has changed its selected index
     var picker = <Picker>this._viewCtrl;
     picker.ionChange.emit(this.getSelected());

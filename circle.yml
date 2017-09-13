@@ -4,6 +4,9 @@ jobs:
     working_directory: ~/ionic/
     docker:
       - image: node:7
+    branches:
+      ignore:
+        - mono-refactor
     steps:
       - checkout
       - restore_cache:

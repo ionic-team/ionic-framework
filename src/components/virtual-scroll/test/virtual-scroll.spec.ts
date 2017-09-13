@@ -1,5 +1,5 @@
 import { VirtualCell, VirtualData, VirtualNode } from '../virtual-util';
-import { processRecords, populateNodeData, initReadNodes, getVirtualHeight, adjustRendered, estimateHeight } from '../virtual-util';
+import { adjustRendered, estimateHeight, getVirtualHeight, initReadNodes, populateNodeData, processRecords } from '../virtual-util';
 import { mockPlatform } from '../../../util/mock-providers';
 
 
@@ -22,7 +22,7 @@ describe('VirtualScroll', () => {
       ftrWidth: viewportWidth,
       ftrHeight: HEIGHT_FOOTER
     };
-    window.getComputedStyle = function(element) {
+    window.getComputedStyle = function() {
       var styles: any = {
         marginTop: '0px',
         marginRight: '0px',
@@ -229,7 +229,7 @@ describe('VirtualScroll', () => {
       let startCellIndex = 0;
       let endCellIndex = 0;
 
-      populateNodeData(startCellIndex, endCellIndex, data.viewWidth, true,
+      populateNodeData(startCellIndex, endCellIndex, true,
                     cells, records, nodes, viewContainer,
                     itmTmp, hdrTmp, ftrTmp, false);
 
@@ -257,7 +257,7 @@ describe('VirtualScroll', () => {
       let startCellIndex = 2;
       let endCellIndex = 5;
 
-      populateNodeData(startCellIndex, endCellIndex, data.viewWidth, true,
+      populateNodeData(startCellIndex, endCellIndex, true,
                     cells, records, nodes, viewContainer,
                     itmTmp, hdrTmp, ftrTmp, false);
 
@@ -286,7 +286,7 @@ describe('VirtualScroll', () => {
       let startCellIndex = 2;
       let endCellIndex = 4;
 
-      populateNodeData(startCellIndex, endCellIndex, data.viewWidth, true,
+      populateNodeData(startCellIndex, endCellIndex, true,
                        cells, records, nodes, viewContainer,
                        itmTmp, hdrTmp, ftrTmp, true);
 

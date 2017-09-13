@@ -1,9 +1,20 @@
 import * as deepLinker from '../deep-linker';
 import { NavSegment } from '../nav-util';
 import { UrlSerializer } from '../url-serializer';
-import { mockApp, mockDeepLinkConfig, mockNavController, mockLocation,
-         mockModuleLoader, mockTab, mockTabs, mockViews, mockView, noop,
-         MockView1, MockView2 } from '../../util/mock-providers';
+import {
+  MockView1,
+  MockView2,
+  mockApp,
+  mockDeepLinkConfig,
+  mockLocation,
+  mockModuleLoader,
+  mockNavController,
+  mockTab,
+  mockTabs,
+  mockView,
+  mockViews,
+  noop
+} from '../../util/mock-providers';
 
 
 describe('DeepLinker', () => {
@@ -415,7 +426,7 @@ describe('DeepLinker', () => {
 
       spyOn(linker, 'getSegmentsFromNav');
 
-      linker.navChange('1', 'forward');
+      linker.navChange('forward');
 
       expect(linker.getSegmentsFromNav).not.toHaveBeenCalled();
     });
@@ -429,7 +440,7 @@ describe('DeepLinker', () => {
 
       spyOn(linker, 'getSegmentsFromNav');
 
-      linker.navChange('1', 'forward');
+      linker.navChange('forward');
 
       expect(linker.getSegmentsFromNav).not.toHaveBeenCalled();
     });
@@ -446,9 +457,7 @@ describe('DeepLinker', () => {
 
       linker.getSegmentFromNav(mockNav, null, null);
 
-      expect(spy.calls.first().args[0].navId).toEqual(mockNav.name);
-      expect(spy.calls.first().args[0].secondaryId).toBeFalsy();
-      expect(spy.calls.first().args[0].type).toEqual('nav');
+      expect(spy.calls.first().args[0]).toEqual(mockNav);
     });
 
     it('should use the id of the nav when name doesnt exists', () => {
@@ -461,9 +470,7 @@ describe('DeepLinker', () => {
 
       linker.getSegmentFromNav(mockNav, null, null);
 
-      expect(spy.calls.first().args[0].navId).toEqual(mockNav.id);
-      expect(spy.calls.first().args[0].secondaryId).toBeFalsy();
-      expect(spy.calls.first().args[0].type).toEqual('nav');
+      expect(spy.calls.first().args[0]).toEqual(mockNav);
     });
   });
 
@@ -482,7 +489,7 @@ describe('DeepLinker', () => {
       linker.getSegmentFromTab(tabOne, null, null);
 
       expect(spy).toHaveBeenCalled();
-      expect(spy.calls.first().args[0].navId).toEqual(tabs.name);
+      expect(spy.calls.first().args[0]).toEqual(tabs);
 
     });
 
@@ -500,7 +507,7 @@ describe('DeepLinker', () => {
       linker.getSegmentFromTab(tabOne, null, null);
 
       expect(spy).toHaveBeenCalled();
-      expect(spy.calls.first().args[0].navId).toEqual(tabs.id);
+      expect(spy.calls.first().args[0]).toEqual(tabs);
 
     });
   });
@@ -674,7 +681,7 @@ describe('DeepLinker', () => {
 
   beforeEach(() => {
     let linkConfig = mockDeepLinkConfig();
-    serializer = new UrlSerializer(linkConfig);
+    serializer = new UrlSerializer(mockApp(), linkConfig);
 
     let moduleLoader = mockModuleLoader();
     let baseCfr: any = null;

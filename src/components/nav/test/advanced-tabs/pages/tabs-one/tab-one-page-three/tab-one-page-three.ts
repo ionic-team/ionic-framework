@@ -19,7 +19,6 @@ import { IonicPage, NavController, NavParams } from '../../../../../../..';
   <div>
   Name: {{paramTwo}}
   </div>
-  <button ion-button (click)="goToNext()">Next</button>
 </ion-content>
   `
 })

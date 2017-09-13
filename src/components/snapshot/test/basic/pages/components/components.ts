@@ -560,7 +560,7 @@ export class ComponentsPage {
     }
   ];
 
-  constructor(private navCtrl: NavController, private assistive: AssistiveTouchProvider) {
+  constructor(private navCtrl: NavController, assistive: AssistiveTouchProvider) {
     assistive.closeButton.subscribe(this.close.bind(this));
   }
 

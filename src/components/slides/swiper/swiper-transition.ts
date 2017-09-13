@@ -1,5 +1,5 @@
 import { Slides } from '../slides';
-import { isHorizontal, round, transform, transition, maxTranslate, minTranslate } from './swiper-utils';
+import { isHorizontal, maxTranslate, minTranslate, round, transform, transition } from './swiper-utils';
 import { parallaxSetTransition, parallaxSetTranslate } from './swiper-parallax';
 import { Platform } from '../../../platform/platform';
 import { updateProgress } from './swiper-progress';

@@ -26,7 +26,7 @@ export class AppComponent {
     this.listenToLoginEvents();
   }
 
-  openPage(menu: any, page: any) {
+  openPage(_: any, page: any) {
     // find the nav component and set what the root page should be
     // reset the nav to remove previous pages and only have this page
     // we wouldn't want the back button to show in this scenario
