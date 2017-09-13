@@ -35,8 +35,8 @@
     "@angular/platform-browser": "4.3.6",
     "@angular/platform-browser-dynamic": "4.3.6",
     "ionicons": "~3.0.0",
-    "rxjs": "5.4.0",
-    "zone.js": "0.8.12"
+    "rxjs": "5.4.3",
+    "zone.js": "0.8.17"
   },
   "devDependencies": {
     "@ionic/app-scripts": "nightly",
