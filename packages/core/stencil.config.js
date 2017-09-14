@@ -1,8 +1,7 @@
 exports.config = {
   namespace: 'Ionic',
-  wwwDir: 'dist',
-  buildDir: '.',
-  generateCollection: true,
+  generateDistribution: true,
+  generateWWW: false,
   bundles: [
     { components: ['ion-animation-controller'] },
     { components: ['ion-app', 'ion-content', 'ion-fixed', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-overlay-portal', 'ion-page', 'ion-title', 'ion-toolbar'] },

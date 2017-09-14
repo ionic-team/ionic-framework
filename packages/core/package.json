@@ -4,20 +4,20 @@
   "description": "Base components for Ionic",
   "main": "dist/collection/index.js",
   "types": "dist/collection/index.d.ts",
+  "browser": "dist/ionic.js",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
-    "dist/",
-    "README.md"
+    "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.0.5-11",
+    "@stencil/core": "0.0.5-18",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest"
   },
   "scripts": {
-    "build": "stencil build && node scripts/package.js",
+    "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "publish": "npm run build && cd ./dist && ../../../node_modules/.bin/np --any-branch --no-publish",
+    "publish": "npm run build && ../../node_modules/.bin/np --any-branch",
     "test": "jest --no-cache"
   },
   "author": "Ionic Team",
