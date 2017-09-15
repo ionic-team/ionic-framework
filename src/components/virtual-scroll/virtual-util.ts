@@ -3,20 +3,20 @@ import { EmbeddedViewRef, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Platform } from '../../platform/platform';
 
 const PREVIOUS_CELL = {
-      row: 0,
-      width: 0,
-      height: 0,
-      top: 0,
-      left: 0,
-      tmpl: -1
-    };
+  row: 0,
+  width: 0,
+  height: 0,
+  top: 0,
+  left: 0,
+  tmpl: -1
+};
 /**
  * NO DOM
  */
 export function processRecords(stopAtHeight: number,
-                               records: any[], cells: VirtualCell[],
-                               headerFn: Function, footerFn: Function,
-                               data: VirtualData) {
+  records: any[], cells: VirtualCell[],
+  headerFn: Function, footerFn: Function,
+  data: VirtualData) {
   let record: any;
   let startRecordIndex: number;
   let previousCell: VirtualCell;
@@ -25,7 +25,7 @@ export function processRecords(stopAtHeight: number,
 
   if (cells.length) {
     // we already have cells
-    previousCell = cells[ cells.length - 1];
+    previousCell = cells[cells.length - 1];
     if (previousCell.top + previousCell.height > stopAtHeight) {
       return;
     }
@@ -48,14 +48,14 @@ export function processRecords(stopAtHeight: number,
       if (tmpData !== null) {
         // add header data
         previousCell = addCell(previousCell, recordIndex, TEMPLATE_HEADER, tmpData,
-                                data.hdrWidth, data.hdrHeight, data.viewWidth);
+          data.hdrWidth, data.hdrHeight, data.viewWidth);
         cells.push(previousCell);
       }
     }
 
     // add item data
     previousCell = addCell(previousCell, recordIndex, TEMPLATE_ITEM, null,
-                            data.itmWidth, data.itmHeight, data.viewWidth);
+      data.itmWidth, data.itmHeight, data.viewWidth);
     cells.push(previousCell);
 
     if (footerFn) {
@@ -64,7 +64,7 @@ export function processRecords(stopAtHeight: number,
       if (tmpData !== null) {
         // add footer data
         previousCell = addCell(previousCell, recordIndex, TEMPLATE_FOOTER, tmpData,
-                                data.ftrWidth, data.ftrHeight, data.viewWidth);
+          data.ftrWidth, data.ftrHeight, data.viewWidth);
         cells.push(previousCell);
       }
     }
@@ -86,11 +86,11 @@ export function processRecords(stopAtHeight: number,
 
 
 function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, tmplData: any,
-                 cellWidth: number, cellHeight: number, viewportWidth: number) {
+  cellWidth: number, cellHeight: number, viewportWidth: number) {
   let newCell: VirtualCell;
 
   if (previousCell.left + previousCell.width + cellWidth > viewportWidth) {
-     // add a new cell in a new row
+    // add a new cell in a new row
     newCell = {
       record: recordIndex,
       tmpl: tmpl,
@@ -128,9 +128,9 @@ function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, t
  * NO DOM
  */
 export function populateNodeData(startCellIndex: number, endCellIndex: number, scrollingDown: boolean,
-                                 cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
-                                 itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>,
-                                 initialLoad: boolean): boolean {
+  cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
+  itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>,
+  initialLoad: boolean): boolean {
   if (!records || records.length === 0) {
     nodes.length = 0;
     return true;
@@ -511,7 +511,7 @@ export function getVirtualHeight(totalRecords: number, lastCell: VirtualCell): n
   let unknownRecords = (totalRecords - lastCell.record - 1);
   let knownHeight = (lastCell.top + lastCell.height);
 
-  return  Math.ceil(knownHeight + ((knownHeight / (totalRecords - unknownRecords)) * unknownRecords));
+  return Math.ceil(knownHeight + ((knownHeight / (totalRecords - unknownRecords)) * unknownRecords));
 }
 
 
@@ -529,7 +529,7 @@ export function estimateHeight(totalRecords: number, lastCell: VirtualCell, exis
   const diff = Math.abs(existingHeight - newHeight);
 
   if ((diff > (newHeight * difference)) ||
-      (percentToBottom > .995)) {
+    (percentToBottom > .995)) {
     return newHeight;
   }
 
@@ -541,11 +541,11 @@ export function estimateHeight(totalRecords: number, lastCell: VirtualCell, exis
  * DOM READ
  */
 export function calcDimensions(data: VirtualData,
-                               virtualScrollElement: HTMLElement,
-                               approxItemWidth: string, approxItemHeight: string,
-                               appoxHeaderWidth: string, approxHeaderHeight: string,
-                               approxFooterWidth: string, approxFooterHeight: string,
-                               bufferRatio: number) {
+  virtualScrollElement: HTMLElement,
+  approxItemWidth: string, approxItemHeight: string,
+  appoxHeaderWidth: string, approxHeaderHeight: string,
+  approxFooterWidth: string, approxFooterHeight: string,
+  bufferRatio: number) {
 
   // get the parent container's viewport bounds
   const viewportElement = virtualScrollElement.parentElement;
@@ -592,7 +592,7 @@ function calcWidth(viewportWidth: number, approxWidth: string): number {
     return parseFloat(approxWidth);
   }
 
-  throw 'virtual scroll width can only use "%" or "px" units';
+  throw new Error('virtual scroll width can only use "%" or "px" units');
 }
 
 
@@ -604,7 +604,7 @@ function calcHeight(_viewportHeight: number, approxHeight: string): number {
     return parseFloat(approxHeight);
   }
 
-  throw 'virtual scroll height must use "px" units';
+  throw new Error('virtual scroll height must use "px" units');
 }
 
 
@@ -631,10 +631,10 @@ export interface VirtualHtmlElement {
   offsetHeight: number;
   style: any;
   classList: {
-    add: {(name: string): void};
-    remove: {(name: string): void};
+    add: { (name: string): void };
+    remove: { (name: string): void };
   };
-  setAttribute: {(name: string, value: any): void};
+  setAttribute: { (name: string, value: any): void };
   parentElement: VirtualHtmlElement;
 }
 
@@ -665,7 +665,7 @@ export interface VirtualNode {
 export class VirtualContext {
   bounds: VirtualBounds = {};
 
-  constructor(public $implicit: any, public index: number, public count: number) {}
+  constructor(public $implicit: any, public index: number, public count: number) { }
 
   get first(): boolean { return this.index === 0; }
 
