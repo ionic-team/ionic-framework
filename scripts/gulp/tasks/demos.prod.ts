@@ -59,9 +59,9 @@ function getDemosEntryPoints() {
 
 
 function buildDemos(filePaths: string[]) {
-  var batches = chunkArrayInGroups(filePaths, argv.batches || 1);
-  var batch = argv.batch || 0;
-  if(batch >= batches.length) {
+  const batches = chunkArrayInGroups(filePaths, argv.batches || 1);
+  const batch = argv.batch || 0;
+  if (batch >= batches.length) {
     throw new Error(`Batch number higher than total number of batches.`);
   }
 
@@ -100,13 +100,13 @@ function buildDemo(filePath: string) {
   const distDir = join(distTestRoot, 'www');
 
   return runAppScriptsBuild(
-    appEntryPoint, 
-    appNgModulePath, 
-    ionicAngularDir, 
-    distDir, 
-    pathToWriteFile, 
-    ionicAngularDir, 
-    sassConfigPath, 
+    appEntryPoint,
+    appNgModulePath,
+    ionicAngularDir,
+    distDir,
+    pathToWriteFile,
+    ionicAngularDir,
+    sassConfigPath,
     copyConfigPath
   ).then(() => {
     const end = Date.now();
@@ -116,8 +116,8 @@ function buildDemo(filePath: string) {
 }
 
 function chunkArrayInGroups(arr, size) {
-  var result = [];
-  for(var i = 0; i < arr.length; i++) {
+  const result = [];
+  for (let i = 0; i < arr.length; i++) {
     if (!Array.isArray(result[i % size])) {
       result[i % size] = [];
     }
@@ -129,7 +129,7 @@ function chunkArrayInGroups(arr, size) {
 function uploadToS3(path) {
   // fail silently if envars not present
   if (!process.env.AWS_KEY || !process.env.AWS_SECRET) {
-    return new Promise((resolve) => {resolve();});
+    return Promise.resolve();
   }
 
   let client = s3.createClient({
@@ -143,23 +143,23 @@ function uploadToS3(path) {
   let demo = path.split('/')[path.split('/').length - 2];
 
   let params = {
-    localDir: path.replace('tsconfig.json',''),
-    deleteRemoved: true, 
+    localDir: path.replace('tsconfig.json', ''),
+    deleteRemoved: true,
     s3Params: {
-      Bucket: "ionic-demos",
+      Bucket: 'ionic-demos',
       Prefix: demo,
     },
   };
 
-  var uploader = client.uploadDir(params);
+  const uploader = client.uploadDir(params);
 
-  return new Promise((resolve, reject) => {    
+  return new Promise((resolve, reject) => {
     uploader.on('error', function(err) {
-      console.error("s3 Upload Error:", err.stack);
+      console.error('s3 Upload Error:', err.stack);
       reject();
     });
     uploader.on('end', function() {
-      console.log(demo, " demo uploaded to s3");
+      console.log(demo, ' demo uploaded to s3');
       resolve();
     });
   });
@@ -167,7 +167,7 @@ function uploadToS3(path) {
 
 task('demos.download', (done: Function) => {
   if (!process.env.AWS_KEY || !process.env.AWS_SECRET) {
-    return new Promise((resolve) => {resolve();});
+    return Promise.resolve();
   }
 
   let client = s3.createClient({
@@ -180,23 +180,23 @@ task('demos.download', (done: Function) => {
   let params = {
     localDir: join(process.cwd(), 'dist', 'demos', 'src'),
     s3Params: {
-      Bucket: "ionic-demos",
+      Bucket: 'ionic-demos',
     },
   };
 
   let uploader = client.downloadDir(params);
 
-  return new Promise((resolve, reject) => {    
+  return new Promise((resolve, reject) => {
     uploader.on('error', function(err) {
-      console.error("s3 Download Error:", err.stack);
+      console.error('s3 Download Error:', err.stack);
       reject();
     });
     uploader.on('end', function() {
-      console.log("Demos downloaded from s3");
+      console.log('Demos downloaded from s3');
       resolve();
     });
   });
-})
+});
 
 task('demos.clean', (done: Function) => {
   // this is a super hack, but it works for now
