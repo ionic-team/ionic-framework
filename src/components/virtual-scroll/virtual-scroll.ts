@@ -458,13 +458,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
         // add new record after current position
         if (pindex === null && (cindex < lastRecord)) {
-          console.debug('adding record before current position, slow path');
+          console.debug('virtual-scroll', 'adding record before current position, slow path');
           needClean = true;
           return;
         }
         // remove record after current position
         if (pindex < lastRecord && cindex === null) {
-          console.debug('removing record before current position, slow path');
+          console.debug('virtual-scroll', 'removing record before current position, slow path');
           needClean = true;
           return;
         }
@@ -484,7 +484,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   readUpdate(needClean: boolean) {
     if (needClean) {
       // reset everything
-      console.debug('virtual-scroll, readUpdate: slow path');
+      console.debug('virtual-scroll', 'readUpdate: slow path');
       this._cells.length = 0;
       this._nodes.length = 0;
       this._itmTmp.viewContainer.clear();
@@ -492,7 +492,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       // ******** DOM READ ****************
       this.calcDimensions();
     } else {
-      console.debug(`virtual-scroll, readUpdate: fast path`);
+      console.debug('virtual-scroll', 'readUpdate: fast path');
     }
   }
 
@@ -500,7 +500,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @hidden
    */
   writeUpdate(needClean: boolean) {
-    console.debug('virtual-scroll, writeUpdate need clean:', needClean);
+    console.debug('virtual-scroll', 'writeUpdate need clean:', needClean);
     const data = this._data;
     const stopAtHeight = (data.scrollTop + data.renderHeight);
     data.scrollDiff = SCROLL_DIFFERENCE_MINIMUM + 1;
@@ -610,7 +610,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       return;
     }
 
-    console.debug('virtual-list: resized window');
+    console.debug('virtual-scroll', 'resized window');
     this.calcDimensions();
     this.writeUpdate(false);
   }
@@ -779,7 +779,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
 
       this._vHeight = newVirtualHeight;
-      console.debug('VirtualScroll, height', newVirtualHeight);
+      console.debug('virtual-scroll', 'height', newVirtualHeight);
     }
   }
 
