@@ -15,7 +15,7 @@ $menu-md-box-shadow-color:      rgba(0, 0, 0, .25) !default;
 $menu-md-box-shadow:            0 0 10px $menu-md-box-shadow-color !default;
 
 
-.menu-md {
+.menu-md .menu-inner {
   background: $menu-md-background;
 }
 

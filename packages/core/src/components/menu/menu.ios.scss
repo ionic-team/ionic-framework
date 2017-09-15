@@ -19,14 +19,14 @@ $menu-ios-box-shadow:            0 0 10px $menu-ios-box-shadow-color !default;
   background: $menu-ios-background;
 }
 
-.ios .menu-content-reveal {
+.menu-ios .menu-content-reveal {
   box-shadow: $menu-ios-box-shadow;
 }
 
-.ios .menu-content-push {
+.menu-ios .menu-content-push {
   box-shadow: $menu-ios-box-shadow;
 }
 
-.ios ion-menu[type=overlay] .menu-inner {
+ion-menu[type=overlay] .menu-ios {
   box-shadow: $menu-ios-box-shadow;
 }

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Item Sliding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-menu side="left">
+      <ion-header>
+        <ion-toolbar color="secondary">
+          <ion-title>Left Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+
+        <ion-list>
+
+          <ion-item>
+            Open Right Menu
+          </ion-item>
+
+          <ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+          <ion-item menuClose="left" detail-none>
+            Close Menu
+          </ion-item>
+
+        </ion-list>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar color="secondary">
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+
+    </ion-menu>
+
+    <ion-menu side="right" >
+
+      <ion-header id="id">
+        <ion-toolbar>
+          <ion-title>Hola</ion-title>
+        </ion-toolbar>
+
+      </ion-header>
+      <ion-content padding>
+        hola macho
+      </ion-content>
+
+    </ion-menu>
+
+    <ion-page main class="show-page">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu Basic Test</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content padding>
+        <ion-button onclick="openLeft()">
+          Open left menu
+        </ion-button>
+        <ion-button onclick="openRight()">
+            Open right menu
+          </ion-button>
+      </ion-content>
+    </ion-page>
+
+  </ion-app>
+
+  <script>
+    function getMenu() {
+      return document.querySelector('ion-menu-controller');
+    }
+      function openLeft() {
+        console.log('Open left menu');
+        getMenu().open('left');
+      }
+      function openRight() {
+        console.log('Open right menu');
+        getMenu().open('right');
+      }
+    </script>
+</body>
+
+</html>

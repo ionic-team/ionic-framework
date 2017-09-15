@@ -19,7 +19,7 @@ exports.config = {
     { components: ['ion-item', 'ion-item-divider', 'ion-item-sliding', 'ion-item-options', 'ion-item-option', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
     { components: ['ion-input', 'ion-textarea'] },
     { components: ['ion-loading', 'ion-loading-controller'] },
-    { components: ['ion-menu'], priority: 'low' },
+    { components: ['ion-menu', 'ion-menu-controller'], priority: 'low' },
     { components: ['ion-modal', 'ion-modal-controller'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
