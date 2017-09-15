@@ -82,9 +82,6 @@ export class Scroll {
       }
     }
 
-    detail.directionX = detail.velocityDirectionX = (detail.deltaX > 0 ? 'left' : (detail.deltaX < 0 ? 'right' : null));
-    detail.directionY = detail.velocityDirectionY = (detail.deltaY > 0 ? 'up' : (detail.deltaY < 0 ? 'down' : null));
-
     // actively scrolling
     positions.push(detail.scrollTop, detail.scrollLeft, detail.timeStamp);
 
@@ -106,15 +103,11 @@ export class Scroll {
         // compute relative movement between these two points
         var movedTop = (positions[startPos - 2] - positions[endPos - 2]);
         var movedLeft = (positions[startPos - 1] - positions[endPos - 1]);
-        var factor = 16.67 / (positions[endPos] - positions[startPos]);
+        var factor = 16.67 / (positions[startPos] - positions[endPos]);
 
         // based on XXms compute the movement to apply for each render step
         detail.velocityY = movedTop * factor;
         detail.velocityX = movedLeft * factor;
-
-        // figure out which direction we're scrolling
-        detail.velocityDirectionX = (movedLeft > 0 ? 'left' : (movedLeft < 0 ? 'right' : null));
-        detail.velocityDirectionY = (movedTop > 0 ? 'up' : (movedTop < 0 ? 'down' : null));
       }
     }
 
