@@ -14,8 +14,8 @@ import { ModalImpl } from './modal-impl';
 export class Modal extends OverlayProxy {
 
   public isOverlay: boolean = true;
-  private _onDidDismissQueue: Array<(data: any, role: string) => void>;
-  private _onWillDismissQueue: Array<() => void>;
+  private _onDidDismissQueue: Array<(data: any, role: string) => void> = [];
+  private _onWillDismissQueue: Array<() => void> = [];
 
   constructor(app: App, component: any, private data: any, private opts: ModalOptions = {}, config: Config, deepLinker: DeepLinker) {
     super(app, component, config, deepLinker);
@@ -40,16 +40,10 @@ export class Modal extends OverlayProxy {
   }
 
   onDidDismiss (callback: (data: any, role: string) => void ) {
-    if (typeof(this._onDidDismissQueue) === 'undefined') {
-      this._onDidDismissQueue = [];
-    }
     this._onDidDismissQueue.push(callback);
   }
 
   onWillDismiss (callback: () => void ) {
-    if (typeof(this._onWillDismissQueue) === 'undefined') {
-      this._onWillDismissQueue = [];
-    }
     this._onWillDismissQueue.push(callback);
   }
 }
