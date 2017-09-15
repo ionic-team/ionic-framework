@@ -87,33 +87,23 @@ export function processRecords(stopAtHeight: number,
 
 function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, tmplData: any,
   cellWidth: number, cellHeight: number, viewportWidth: number) {
-  let newCell: VirtualCell;
-
+  const newCell: VirtualCell = {
+    record: recordIndex,
+    tmpl: tmpl,
+    width: cellWidth,
+    height: cellHeight,
+    reads: 0
+  };
   if (previousCell.left + previousCell.width + cellWidth > viewportWidth) {
     // add a new cell in a new row
-    newCell = {
-      record: recordIndex,
-      tmpl: tmpl,
-      row: (previousCell.row + 1),
-      width: cellWidth,
-      height: cellHeight,
-      top: (previousCell.top + previousCell.height),
-      left: 0,
-      reads: 0,
-    };
-
+    newCell.row = (previousCell.row + 1);
+    newCell.top = (previousCell.top + previousCell.height);
+    newCell.left = 0;
   } else {
     // add a new cell in the same row
-    newCell = {
-      record: recordIndex,
-      tmpl: tmpl,
-      row: previousCell.row,
-      width: cellWidth,
-      height: cellHeight,
-      top: previousCell.top,
-      left: (previousCell.left + previousCell.width),
-      reads: 0,
-    };
+    newCell.row = previousCell.row;
+    newCell.top = previousCell.top;
+    newCell.left = (previousCell.left + previousCell.width);
   }
 
   if (tmplData) {
