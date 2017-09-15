@@ -79,9 +79,7 @@ export function processRecords(stopAtHeight: number,
     if (previousCell.top + previousCell.height + data.itmHeight > stopAtHeight && processedTotal > 3) {
       return;
     }
-
   }
-
 }
 
 
@@ -131,7 +129,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
   let node: VirtualNode;
   let availableNode: VirtualNode;
   let cell: VirtualCell;
-  let isAlreadyRendered: boolean;
   let viewInsertIndex: number = null;
   let totalNodes = nodes.length;
   let templateRef: TemplateRef<VirtualContext>;
@@ -141,48 +138,44 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
   for (var cellIndex = startCellIndex; cellIndex <= endCellIndex; cellIndex++) {
     cell = cells[cellIndex];
     availableNode = null;
-    isAlreadyRendered = false;
 
     // find the first one that's available
     if (!initialLoad) {
-      for (var i = 0; i < totalNodes; i++) {
-        node = nodes[i];
+      const existingNode = nodes.find(n => n.cell === cellIndex);
+      if (existingNode) {
+        if (existingNode.view.context.$implicit === records[existingNode.cell]) continue; // optimization: node data is the same no need to update
+        availableNode = existingNode; // update existing node
+      } else {
+        for (var i = 0; i < totalNodes; i++) {
+          node = nodes[i];
 
-        if (cell.tmpl !== node.tmpl || i === 0 && cellIndex !== 0) {
-          // the cell must use the correct template
-          // first node can only be used by the first cell (css :first-child reasons)
-          // this node is never available to be reused
-          continue;
-        }
+          if (cell.tmpl !== node.tmpl || i === 0 && cellIndex !== 0) {
+            // the cell must use the correct template
+            // first node can only be used by the first cell (css :first-child reasons)
+            // this node is never available to be reused
+            continue;
+          }
 
-        if (node.cell === cellIndex) {
-          isAlreadyRendered = true;
-          break;
-        }
+          if (node.cell < startCellIndex || node.cell > endCellIndex) {
 
-        if (node.cell < startCellIndex || node.cell > endCellIndex) {
-
-          if (!availableNode) {
-            // havent gotten an available node yet
-            availableNode = nodes[i];
-
-          } else if (scrollingDown) {
-            // scrolling down
-            if (node.cell < availableNode.cell) {
+            if (!availableNode) {
+              // havent gotten an available node yet
               availableNode = nodes[i];
-            }
 
-          } else {
-            // scrolling up
-            if (node.cell > availableNode.cell) {
-              availableNode = nodes[i];
+            } else if (scrollingDown) {
+              // scrolling down
+              if (node.cell < availableNode.cell) {
+                availableNode = nodes[i];
+              }
+
+            } else {
+              // scrolling up
+              if (node.cell > availableNode.cell) {
+                availableNode = nodes[i];
+              }
             }
           }
         }
-      }
-
-      if (isAlreadyRendered) {
-        continue;
       }
     }
 
