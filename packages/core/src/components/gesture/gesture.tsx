@@ -85,7 +85,7 @@ export class Gesture {
       return;
     }
     if (this.pan || this.hasPress) {
-      Context.enableListener(this, 'touchstart', isEnabled);
+      Context.enableListener(this, 'touchstart', isEnabled, this.attachTo);
       Context.enableListener(this, 'mousedown', isEnabled, this.attachTo);
       if (!isEnabled) {
         this.abortGesture();
@@ -124,7 +124,6 @@ export class Gesture {
 
     if (this.lastTouch === 0 || (this.lastTouch + MOUSE_WAIT < timeStamp)) {
       if (this.pointerDown(ev, timeStamp)) {
-        console.log('hola');
         this.enableMouse(true);
         this.enableTouch(false);
       } else {

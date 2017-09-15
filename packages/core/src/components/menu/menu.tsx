@@ -323,9 +323,13 @@ export class Menu {
     }
 
     // const isRTL = false;
+    const isRightSide = this.isRightSide;
     const z = this._width;
+    let delta = slide.deltaX;
+    delta = Math.max((isRightSide) ? -delta : delta);
+
     // const z = (this.isRightSide !== isRTL ? slide.min : slide.max);
-    const stepValue = (Math.abs(slide.deltaX) / z);
+    const stepValue = delta / z;
 
     this._animation.progressStep(stepValue);
     // TODO: this.ionDrag.emit({ menu: this });
@@ -337,8 +341,11 @@ export class Menu {
       assert(false, '_isAnimating has to be true');
       return;
     }
+    const isRightSide = this.isRightSide;
+    let delta = slide.deltaX;
+    delta = Math.max((isRightSide) ? -delta : delta);
+
     const width = this._width;
-    const delta = Math.abs(slide.deltaX)
     const stepValue = delta / width;
     const velocity = slide.velocityX;
     const z = width / 2;
@@ -348,7 +355,6 @@ export class Menu {
     const shouldCompleteLeft = (velocity <= 0)
       && (velocity < -0.2 || slide.deltaX < -z);
 
-    const isRightSide = this.isRightSide;
     const opening = !this._isOpen;
     const shouldComplete = (opening)
     ? isRightSide ? shouldCompleteLeft : shouldCompleteRight
@@ -361,8 +367,11 @@ export class Menu {
 
     const missing = shouldComplete ? 1 - stepValue : stepValue;
     const missingDistance = missing * width;
-    const dur = missingDistance / Math.abs(velocity);
-    const realDur = Math.min(dur, 380);
+    let realDur = 0;
+    if (missingDistance > 5) {
+      const dur = missingDistance / Math.abs(velocity);
+      realDur = Math.min(dur, 380);
+    }
 
     this._animation
       .onFinish(() => this._after(isOpen), { clearExistingCallacks: true })
