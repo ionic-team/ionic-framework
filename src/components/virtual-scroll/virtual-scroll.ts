@@ -445,7 +445,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
 
     // and if there actually are changes
-    const changes = this._changes();
+    const changes = isPresent(this._differ) ? this._differ.diff(this.virtualScroll) : null;
     if (!isPresent(changes)) {
       return;
     }
@@ -525,13 +525,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this.approxHeaderWidth, this.approxHeaderHeight,
       this.approxFooterWidth, this.approxFooterHeight,
       this.bufferRatio);
-  }
-
-  private _changes(): IterableChanges<any> {
-    if (isPresent(this._records) && isPresent(this._differ)) {
-      return this._differ.diff(this._records);
-    }
-    return null;
   }
 
   /**
