@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, SimpleChanges, TrackByFunction } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, populateNodeData, processRecords, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
@@ -235,8 +235,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   };
   _queue: number = ScrollQueue.NoChanges;
 
-  _virtualTrackBy: TrackByFn;
-
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
   @ContentChild(VirtualFooter) _ftrTmp: VirtualFooter;
@@ -250,7 +248,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input()
   set virtualScroll(val: any) {
     this._records = val;
-    this._updateDiffer();
   }
 
   /**
@@ -370,15 +367,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @input {function} Same as `ngForTrackBy` which can be used on `ngFor`.
    */
   @Input()
-  set virtualTrackBy(val: TrackByFn) {
-    if (isPresent(val)) {
-      this._virtualTrackBy = val;
-      this._updateDiffer();
-    }
-  }
-  get virtualTrackBy(): TrackByFn {
-    return this._virtualTrackBy;
-  }
+  virtualTrackBy: TrackByFunction<any>;
 
   constructor(
     private _iterableDiffers: IterableDiffers,
@@ -426,6 +415,24 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   lastRecord(): number {
     const cells = this._cells;
     return (cells.length > 0) ? cells[cells.length - 1].record : 0;
+  }
+
+  /**
+  * @hidden
+  */
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('virtualScroll' in changes) {
+      // React on virtualScroll changes only once all inputs have been initialized
+      const value = changes['virtualScroll'].currentValue;
+      if (!isPresent(this._differ) && isPresent(value)) {
+        try {
+          this._differ = this._iterableDiffers.find(value).create(this.virtualTrackBy);
+        } catch (e) {
+          throw new Error(
+            `Cannot find a differ supporting object '${value}'. VirtualScroll only supports binding to Iterables such as Arrays.`);
+        }
+      }
+    }
   }
 
   /**
@@ -525,12 +532,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       return this._differ.diff(this._records);
     }
     return null;
-  }
-
-  private _updateDiffer() {
-    if (isPresent(this._records)) {
-      this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
-    }
   }
 
   /**
