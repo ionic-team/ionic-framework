@@ -47,14 +47,14 @@ export function processRecords(stopAtHeight: number,
 
       if (tmpData !== null) {
         // add header data
-        previousCell = addCell(previousCell, recordIndex, TEMPLATE_HEADER, tmpData,
+        previousCell = addCell(previousCell, recordIndex, TemplateType.Header, tmpData,
           data.hdrWidth, data.hdrHeight, data.viewWidth);
         cells.push(previousCell);
       }
     }
 
     // add item data
-    previousCell = addCell(previousCell, recordIndex, TEMPLATE_ITEM, null,
+    previousCell = addCell(previousCell, recordIndex, TemplateType.Item, null,
       data.itmWidth, data.itmHeight, data.viewWidth);
     cells.push(previousCell);
 
@@ -63,7 +63,7 @@ export function processRecords(stopAtHeight: number,
 
       if (tmpData !== null) {
         // add footer data
-        previousCell = addCell(previousCell, recordIndex, TEMPLATE_FOOTER, tmpData,
+        previousCell = addCell(previousCell, recordIndex, TemplateType.Footer, tmpData,
           data.ftrWidth, data.ftrHeight, data.viewWidth);
         cells.push(previousCell);
       }
@@ -194,9 +194,9 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
       }
 
       // select which templateRef should be used for this cell
-      templateRef = cell.tmpl === TEMPLATE_HEADER ? hdrTmp : cell.tmpl === TEMPLATE_FOOTER ? ftrTmp : itmTmp;
+      templateRef = cell.tmpl === TemplateType.Header ? hdrTmp : cell.tmpl === TemplateType.Footer ? ftrTmp : itmTmp;
       if (!templateRef) {
-        console.error(`virtual${cell.tmpl === TEMPLATE_HEADER ? 'Header' : cell.tmpl === TEMPLATE_FOOTER ? 'Footer' : 'Item'} template required`);
+        console.error(`virtual${cell.tmpl === TemplateType.Header ? 'Header' : cell.tmpl === TemplateType.Footer ? 'Footer' : 'Item'} template required`);
         continue;
       }
 
@@ -271,13 +271,13 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
 
       if (initialUpdate) {
         // update estimated dimensions with more accurate dimensions
-        if (cell.tmpl === TEMPLATE_HEADER) {
+        if (cell.tmpl === TemplateType.Header) {
           data.hdrHeight = cell.height;
           if (cell.left === 0) {
             data.hdrWidth = cell.width;
           }
 
-        } else if (cell.tmpl === TEMPLATE_FOOTER) {
+        } else if (cell.tmpl === TemplateType.Footer) {
           data.ftrHeight = cell.height;
           if (cell.left === 0) {
             data.ftrWidth = cell.width;
@@ -690,8 +690,11 @@ export interface VirtualData {
   ftrHeight?: number;
 }
 
-const TEMPLATE_ITEM = 0;
-const TEMPLATE_HEADER = 1;
-const TEMPLATE_FOOTER = 2;
+enum TemplateType {
+  Item = 0,
+  Header = 1,
+  Footer = 2
+}
+
 const VIEWABLE_RENDERED_PADDING = 3;
 const REQUIRED_DOM_READS = 2;

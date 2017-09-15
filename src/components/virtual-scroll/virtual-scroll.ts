@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, SimpleChanges, TrackByFunction } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, SimpleChanges, TrackByFunction } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, populateNodeData, processRecords, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
