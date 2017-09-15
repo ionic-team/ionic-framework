@@ -17,7 +17,7 @@
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "publish": "../../node_modules/.bin/np --any-branch",
+    "deploy": "../../node_modules/.bin/np --any-branch",
     "test": "jest --no-cache",
     "prepublishOnly": "npm run build"
   },
