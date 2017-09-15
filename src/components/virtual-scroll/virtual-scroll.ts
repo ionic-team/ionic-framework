@@ -233,7 +233,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _data: VirtualData = {
     scrollTop: 0,
   };
-  _queue: number = SCROLL_QUEUE_NO_CHANGES;
+  _queue: number = ScrollQueue.NoChanges;
 
   _virtualTrackBy: TrackByFn;
 
@@ -602,7 +602,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
           // ******** DOM WRITE ****************
           this.setElementClass('virtual-loading', false);
         }
-        assert(this._queue === SCROLL_QUEUE_NO_CHANGES, 'queue value should be NO_CHANGES');
+        assert(this._queue === ScrollQueue.NoChanges, 'queue value should be NO_CHANGES');
       });
     });
   }
@@ -638,7 +638,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     );
 
     // we're done here, good work
-    this._queue = SCROLL_QUEUE_NO_CHANGES;
+    this._queue = ScrollQueue.NoChanges;
   }
 
   /**
@@ -657,7 +657,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
 
     // on the next frame we need write to the dom nodes manually
-    this._queue = SCROLL_QUEUE_DOM_WRITE;
+    this._queue = ScrollQueue.DomWrite;
   }
 
   /**
@@ -704,7 +704,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 
     if (hasChanges) {
       // queue making updates in the next frame
-      this._queue = SCROLL_QUEUE_CHANGE_DETECTION;
+      this._queue = ScrollQueue.ChangeDetection;
 
       // update the bound context for each node
       updateNodeContext(nodes, cells, data);
@@ -721,13 +721,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // there is a queue system so that we can
     // spread out the work over multiple frames
     const queue = this._queue;
-    if (queue === SCROLL_QUEUE_NO_CHANGES) {
+    if (queue === ScrollQueue.NoChanges) {
       // no dom writes or change detection to take care of
       this._stepNoChanges();
-    } else if (queue === SCROLL_QUEUE_CHANGE_DETECTION) {
+    } else if (queue === ScrollQueue.ChangeDetection) {
       this._dom.write(() => this._stepChangeDetection());
     } else {
-      assert(queue === SCROLL_QUEUE_DOM_WRITE, 'queue value unexpected');
+      assert(queue === ScrollQueue.DomWrite, 'queue value unexpected');
       // there are DOM writes we need to take care of in this frame
       this._dom.write(() => this._stepDOMWrite());
     }
@@ -821,6 +821,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 }
 
 const SCROLL_DIFFERENCE_MINIMUM = 40;
-const SCROLL_QUEUE_NO_CHANGES = 1;
-const SCROLL_QUEUE_CHANGE_DETECTION = 2;
-const SCROLL_QUEUE_DOM_WRITE = 3;
+
+enum ScrollQueue {
+  NoChanges = 1,
+  ChangeDetection = 2,
+  DomWrite = 3
+}
