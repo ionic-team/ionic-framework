@@ -11,7 +11,7 @@ export class AlertController {
   private alerts: Alert[] = [];
 
   @Method()
-  create(opts?: AlertOptions) {
+  create(opts?: AlertOptions): Promise<Alert> {
     // create ionic's wrapping ion-alert component
     const alert = document.createElement('ion-alert');
 

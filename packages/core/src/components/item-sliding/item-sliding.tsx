@@ -485,22 +485,21 @@ export class ItemSliding {
 
   render() {
     return (
-
-    <ion-gesture props={{
-      'canStart': this.canStart.bind(this),
-      'onStart': this.onDragStart.bind(this),
-      'onMove': this.onDragMove.bind(this),
-      'onEnd': this.onDragEnd.bind(this),
-      'gestureName': 'item-swipe',
-      'gesturePriority': -10,
-      'type': 'pan',
-      'direction': 'x',
-      'maxAngle': 20,
-      'threshold': 5,
-      'attachTo': 'parent'
-    }}>
-      <slot></slot>
-    </ion-gesture>
+      <ion-gesture props={{
+        'canStart': this.canStart.bind(this),
+        'onStart': this.onDragStart.bind(this),
+        'onMove': this.onDragMove.bind(this),
+        'onEnd': this.onDragEnd.bind(this),
+        'gestureName': 'item-swipe',
+        'gesturePriority': -10,
+        'type': 'pan',
+        'direction': 'x',
+        'maxAngle': 20,
+        'threshold': 5,
+        'attachTo': 'parent'
+      }}>
+        <slot></slot>
+      </ion-gesture>
     );
   }
 }
