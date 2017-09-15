@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-10",
+  "version": "0.0.2-11",
   "description": "Base components for Ionic",
   "main": "dist/collection/index.js",
   "types": "dist/collection/index.d.ts",
@@ -17,8 +17,9 @@
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "publish": "npm run build && ../../node_modules/.bin/np --any-branch",
-    "test": "jest --no-cache"
+    "publish": "../../node_modules/.bin/np --any-branch",
+    "test": "jest --no-cache",
+    "prepublishOnly": "npm run build"
   },
   "author": "Ionic Team",
   "license": "MIT",
