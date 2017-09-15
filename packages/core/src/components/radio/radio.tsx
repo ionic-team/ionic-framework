@@ -77,6 +77,11 @@ export class Radio {
   @Event() ionRadioDidToggle: EventEmitter;
 
   /**
+   * @output {EventEmitter} Emitted when the radio checked property is changed.
+   */
+  @Event() ionRadioCheckedDidChange: EventEmitter;
+
+  /**
    * @output {EventEmitter} Emitted when the styles of the radio change.
    */
   @Event() ionStyle: EventEmitter;
@@ -111,6 +116,7 @@ export class Radio {
 
   @PropDidChange('checked')
   checkedChanged(val: boolean) {
+    this.ionRadioCheckedDidChange.emit({ radio: this });
     this.ionSelect.emit({ checked: val });
     this.emitStyle();
   }

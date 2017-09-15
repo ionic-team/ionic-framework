@@ -8,7 +8,6 @@ import { Component } from '@stencil/core';
     md: 'item-divider.md.scss',
     wp: 'item-divider.wp.scss'
   },
-  shadow: false,
   host: {
     theme: 'item item-divider'
   }

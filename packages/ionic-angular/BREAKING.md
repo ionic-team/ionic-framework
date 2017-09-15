@@ -274,7 +274,7 @@ Item should now be written as an `<ion-item>` element. Ionic will determine when
 
 ### Label Required
 
-Previously an `ion-label` would automatically get added to an `ion-item` if one wasn't provided. Now an `ion-label` should always be added if the item is used to display text.
+Previously an `ion-label` would automatically get added to an `ion-item`, `ion-item-divider` and `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
 
 ```html
 <ion-item>

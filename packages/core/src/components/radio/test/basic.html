@@ -14,11 +14,11 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="radio-test outer-content">
-      <ion-radio-group id="fruitRadio">
-        <ion-list>
-          <ion-list-header>
-            Fruits (Group w/ values)
-          </ion-list-header>
+      <ion-list>
+        <ion-radio-group id="fruitRadio">
+          <ion-item-divider>
+            <ion-label>Fruits (Group w/ values)</ion-label>
+          </ion-item-divider>
           <ion-item>
             <ion-label>Apple</ion-label>
             <ion-radio slot="start" value="apple"></ion-radio>
@@ -33,36 +33,27 @@
             <ion-label>Cherry</ion-label>
             <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
           </ion-item>
-        </ion-list>
-      </ion-radio-group>
+        </ion-radio-group>
 
-      <ion-radio-group id="pizzaRadio">
-        <ion-list>
-          <ion-list-header>
-            Extra Pizza Topping (Group w/ no values)
-          </ion-list-header>
+        <ion-radio-group id="pizzaRadio">
+          <ion-item-divider>
+            <ion-label>Extra Pizza Topping (Group w/ no values)</ion-label>
+          </ion-item-divider>
           <ion-item>
             <ion-label>Pepperoni</ion-label>
             <ion-radio slot="end" name="pepperoni" checked></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label>Pineapple</ion-label>
-            <ion-radio slot="end" name="pineapple"></ion-radio>
-          </ion-item>
-
-          <ion-item>
             <ion-label>Sausage</ion-label>
             <ion-radio slot="end" color="danger" name="sausage"></ion-radio>
           </ion-item>
-        </ion-list>
-      </ion-radio-group>
+        </ion-radio-group>
 
-      <ion-radio-group id="veggiesRadio" allow-empty-selection>
-        <ion-list>
-          <ion-list-header>
-            Veggies (Group w/ allow empty)
-          </ion-list-header>
+        <ion-radio-group id="veggiesRadio" allow-empty-selection>
+          <ion-item-divider>
+            <ion-label>Veggies (Group w/ allow empty)</ion-label>
+          </ion-item-divider>
           <ion-item>
             <ion-label>Carrot</ion-label>
             <ion-radio slot="end" value="carrot"></ion-radio>
@@ -77,14 +68,14 @@
             <ion-label>Broccoli</ion-label>
             <ion-radio slot="end" color="danger" value="broccoli" checked></ion-radio>
           </ion-item>
-        </ion-list>
-      </ion-radio-group>
+        </ion-radio-group>
 
-      <p aria-hidden="true" text-center>
-        <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
-        <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
-        <ion-button onClick="printRadioValues()" outline small>Print Values</ion-button>
-      </p>
+        <ion-item>
+            <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
+            <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
+            <ion-button onClick="printRadioValues()" outline small>Print Values</ion-button>
+        </ion-item>
+      </ion-list>
 
       <pre id="valuesCode"></pre>
 
@@ -164,13 +155,11 @@
       }
 
       function toggleBoolean(id, prop) {
-        console.log('toggleBoolean', id);
         var ele = document.getElementById(id);
-        console.log('toggleBoolean', ele);
 
         var isTrue = ele[prop] ? false : true;
         ele[prop] = isTrue;
-        console.log('in toggleBoolean, setting', prop, 'to', isTrue);
+        console.debug('in toggleBoolean, setting', prop, 'to', isTrue);
       }
     </script>
 
@@ -179,6 +168,7 @@
         background: #f6f6f6;
         border: 1px solid #ddd;
         padding: 15px 10px;
+        margin-top: -20px;
       }
     </style>
 

@@ -110,8 +110,19 @@ export class RadioGroup {
     }
   }
 
+  @Listen('ionRadioCheckedDidChange')
+  protected radioCheckedDidChange(ev: RadioEvent) {
+    const radio = ev.detail.radio;
+
+    // TODO shouldn't be able to set radio checked to false
+    // if allowEmptySelection is false
+    if (radio.checked && this.value !== radio.value) {
+      this.value = radio.checked ? radio.value : '';
+    }
+  }
+
   @Listen('ionRadioDidToggle')
-  protected radioToggle(ev: RadioEvent) {
+  protected radioDidToggle(ev: RadioEvent) {
     const radio = ev.detail.radio;
 
     // If the group does not allow empty selection then checked
