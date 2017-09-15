@@ -41,7 +41,7 @@ export function assert(bool: boolean, msg: string) {
   if (!bool) {
     console.error(msg);
   }
-};
+}
 
 export function toDashCase(str: string) {
   return str.replace(/([A-Z])/g, (g) => '-' + g[0].toLowerCase());
@@ -64,6 +64,26 @@ export function pointerCoordX(ev: any): number {
   return 0;
 }
 
+export function updateDetail(ev: any, detail: any) {
+  // get X coordinates for either a mouse click
+  // or a touch depending on the given event
+  let x = 0;
+  let y = 0;
+  if (ev) {
+    var changedTouches = ev.changedTouches;
+    if (changedTouches && changedTouches.length > 0) {
+      var touch = changedTouches[0];
+      x = touch.clientX;
+      y = touch.clientY;
+    }else if (ev.pageX !== undefined) {
+      x = ev.pageX;
+      y = ev.pageY;
+    }
+  }
+  detail.currentX = x;
+  detail.currentY = y;
+}
+
 export function pointerCoordY(ev: any): number {
   // get Y coordinates for either a mouse click
   // or a touch depending on the given event
@@ -79,7 +99,9 @@ export function pointerCoordY(ev: any): number {
   return 0;
 }
 
-export function getElementReference(elm: any, ref: string) {
+export type ElementRef = 'child' | 'parent' | 'body' | 'document' | 'window';
+
+export function getElementReference(elm: any, ref: ElementRef) {
   if (ref === 'child') {
     return elm.firstElementChild;
   }
@@ -139,8 +161,15 @@ export function getToolbarHeight(toolbarTagName: string, pageChildren: HTMLEleme
   return '';
 }
 
-/** @hidden */
 export type Side = 'left' | 'right' | 'start' | 'end';
+
+export function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
+  if (isRightSide) {
+    return posX >= window.innerWidth - maxEdgeStart;
+  } else {
+    return posX <= maxEdgeStart;
+  }
+}
 
 /**
  * @hidden
