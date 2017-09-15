@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, SimpleChanges, TrackByFunction } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffer, IterableDiffers, NgZone, OnChanges, OnDestroy, Renderer, SimpleChanges, TrackByFunction } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, populateNodeData, processRecords, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
@@ -214,7 +214,7 @@ import { VirtualHeader } from './virtual-header';
 @Directive({
   selector: '[virtualScroll]'
 })
-export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
+export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDestroy {
 
   _differ: IterableDiffer<any>;
   _scrollSub: any;
@@ -248,6 +248,10 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input()
   set virtualScroll(val: any) {
     this._records = val;
+  }
+
+  get virtualScroll() {
+    return this._records;
   }
 
   /**
@@ -451,28 +455,25 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
 
     let needClean = false;
-    if (changes) {
-      var lastRecord = this._recordSize;
+    var lastRecord = this._recordSize;
 
-      changes.forEachOperation((_, pindex, cindex) => {
+    changes.forEachOperation((_, pindex, cindex) => {
 
-        // add new record after current position
-        if (pindex === null && (cindex < lastRecord)) {
-          console.debug('virtual-scroll', 'adding record before current position, slow path');
-          needClean = true;
-          return;
-        }
-        // remove record after current position
-        if (pindex < lastRecord && cindex === null) {
-          console.debug('virtual-scroll', 'removing record before current position, slow path');
-          needClean = true;
-          return;
-        }
-      });
-    } else {
-      needClean = true;
-    }
-    this._recordSize = this._records.length;
+      // add new record after current position
+      if (pindex === null && (cindex < lastRecord)) {
+        console.debug('virtual-scroll', 'adding record before current position, slow path');
+        needClean = true;
+        return;
+      }
+      // remove record after current position
+      if (pindex < lastRecord && cindex === null) {
+        console.debug('virtual-scroll', 'removing record before current position, slow path');
+        needClean = true;
+        return;
+      }
+    });
+
+    this._recordSize = this._records ? this._records.length : 0;
 
     this.readUpdate(needClean);
     this.writeUpdate(needClean);
@@ -546,7 +547,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       }
 
       adjustRendered(cells, data);
-
+      console.debug('virtual-scroll', 'populateData inside renderVirtual');
       this._zone.run(() => {
         populateNodeData(
           data.topCell, data.bottomCell,
@@ -685,7 +686,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     updateDimensions(this._plt, nodes, cells, data, false);
 
     adjustRendered(cells, data);
-
+    console.debug('virtual-scroll', 'populateData inside hasNoChanges');
     var hasChanges = populateNodeData(
       data.topCell, data.bottomCell,
       diff > 0,
