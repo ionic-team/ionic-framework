@@ -161,17 +161,19 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
             if (!availableNode) {
               // havent gotten an available node yet
               availableNode = nodes[i];
-
+              break;
             } else if (scrollingDown) {
               // scrolling down
               if (node.cell < availableNode.cell) {
                 availableNode = nodes[i];
+                break;
               }
 
             } else {
               // scrolling up
               if (node.cell > availableNode.cell) {
                 availableNode = nodes[i];
+                break;
               }
             }
           }
