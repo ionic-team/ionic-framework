@@ -21,11 +21,6 @@ export class MenuController {
     this.registerAnimation('overlay', MenuOverlayAnimation);
   }
 
-  @Method()
-  getInstance(): MenuController {
-    return this;
-  }
-
   /**
    * Programatically open the Menu.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.

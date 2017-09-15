@@ -3,8 +3,9 @@ import { Config, Animation } from '../../index';
 import { MenuController } from './menu-controller';
 import { isRightSide, Side, assert, checkEdgeSide } from '../../utils/helpers';
 
-export type Lazy<T> =
-  {[P in keyof T]: (...args: any[]) => Promise<any>; };
+export type Lazy<T> = T &
+  { componentOnReady(): Promise<T> } &
+  { componentOnReady(done: (cmp: T) => void): void }
 
 @Component({
   tag: 'ion-menu',
@@ -113,7 +114,8 @@ export class Menu {
   }
 
   ionViewWillLoad() {
-    return this.lazyMenuCtrl.getInstance().then(menu => this.menuCtrl = menu);
+    return this.lazyMenuCtrl.componentOnReady()
+      .then(menu => this.menuCtrl = menu);
   }
 
   /**
@@ -205,7 +207,7 @@ export class Menu {
   onBackdropClick(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
-    this.menuCtrl.close();
+    this.close();
   }
 
   /**
@@ -235,7 +237,7 @@ export class Menu {
       return Promise.resolve(this._isOpen);
     }
     this._before();
-    this.prepareAnimation()
+    return this.prepareAnimation()
       .then(() => this._startAnimation(shouldOpen, animated))
       .then(() => {
         this._after(shouldOpen);
@@ -558,8 +560,8 @@ export class Menu {
     const onBackdropClick = this.onBackdropClick.bind(this);
 
     if (shouldAdd && !this._unregBdClick) {
-      this._unregBdClick = Context.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
-      this._unregCntClick = Context.addListener(this._cntElm, 'click', onBackdropClick, { capture: true });
+      this._unregBdClick = Context.addListener(this._backdropEle, 'click', onBackdropClick, { capture: true });
+      this._unregCntClick = Context.addListener(this._backdropEle, 'click', onBackdropClick, { capture: true });
 
     } else if (!shouldAdd && this._unregBdClick) {
       this._unregBdClick();

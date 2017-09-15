@@ -116,20 +116,19 @@
     </ion-page>
 
   </ion-app>
+  <ion-menu-controller></ion-menu-controller>
 
   <script>
-    function getMenu() {
-      return document.querySelector('ion-menu-controller');
+    const menu = document.querySelector('ion-menu-controller');
+    function openLeft() {
+      console.log('Open left menu');
+      menu.open('left');
     }
-      function openLeft() {
-        console.log('Open left menu');
-        getMenu().open('left');
-      }
-      function openRight() {
-        console.log('Open right menu');
-        getMenu().open('right');
-      }
-    </script>
+    function openRight() {
+      console.log('Open right menu');
+      menu.open('right');
+    }
+  </script>
 </body>
 
 </html>
