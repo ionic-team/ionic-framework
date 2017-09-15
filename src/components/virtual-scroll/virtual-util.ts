@@ -183,7 +183,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
 
     if (!availableNode) {
       // did not find an available node to put the cell data into
-      // insert a new node before the last record nodes
+      // insert a new node after existing ones
       if (viewInsertIndex === null) {
         viewInsertIndex = -1;
         for (var j = totalNodes - 1; j >= 0; j--) {
