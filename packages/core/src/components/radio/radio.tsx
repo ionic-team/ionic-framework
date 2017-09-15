@@ -114,6 +114,11 @@ export class Radio {
     this.ionRadioDidLoad.emit({ radio: this });
   }
 
+  @PropDidChange('color')
+  colorChanged() {
+    this.emitStyle();
+  }
+
   @PropDidChange('checked')
   checkedChanged(val: boolean) {
     this.ionRadioCheckedDidChange.emit({ radio: this });

@@ -66,14 +66,15 @@
 
           <ion-item>
             <ion-label>Broccoli</ion-label>
-            <ion-radio slot="end" color="danger" value="broccoli" checked></ion-radio>
+            <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli" checked></ion-radio>
           </ion-item>
         </ion-radio-group>
 
         <ion-item>
-            <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
-            <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
-            <ion-button onClick="printRadioValues()" outline small>Print Values</ion-button>
+          <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Checked</ion-button>
+          <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Disabled</ion-button>
+          <ion-button slot="end" onClick="printRadioValues()" outline small>Print</ion-button>
+          <ion-button slot="end" onClick="toggleString('dangerRadio', 'color', 'danger', 'secondary')" outline small color="danger">Color</ion-button>
         </ion-item>
       </ion-list>
 
@@ -160,6 +161,14 @@
         var isTrue = ele[prop] ? false : true;
         ele[prop] = isTrue;
         console.debug('in toggleBoolean, setting', prop, 'to', isTrue);
+      }
+
+      function toggleString(id, prop, firstVal, secondVal) {
+        var ele = document.getElementById(id);
+
+        var stringVal = ele[prop] == firstVal ? secondVal : firstVal;
+        ele[prop] = stringVal;
+        console.debug('in toggleString, setting', prop, 'to', stringVal);
       }
     </script>
 

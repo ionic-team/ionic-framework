@@ -4,8 +4,6 @@ import { createThemedClasses } from '../../utils/theme';
 
 import { CssClassMap } from '../../index';
 
-import { RadioEvent } from '../radio/radio';
-
 @Component({
   tag: 'ion-item',
   styleUrls: {
@@ -19,7 +17,7 @@ export class Item {
   private id: string;
   private inputs: any = [];
 
-  private childStyles: CssClassMap = Object.create(null);
+  private itemStyles: { [key: string]: CssClassMap } = Object.create(null);
   private label: any;
 
   // TODO get reorder from a parent list/group
@@ -36,14 +34,19 @@ export class Item {
     ev.stopPropagation();
 
     let hasChildStyleChange = false;
+
+    let tagName: string = (ev.target as HTMLElement).tagName;
     let updatedStyles: any = ev.detail;
 
     for (var key in updatedStyles) {
-      if (updatedStyles[key] !== this.childStyles['item-' + key]) {
-        this.childStyles['item-' + key] = updatedStyles[key];
+      if (('item-' + key) !== key) {
+        Object.defineProperty(updatedStyles, 'item-' + key, Object.getOwnPropertyDescriptor(updatedStyles, key));
+        delete updatedStyles[key];
         hasChildStyleChange = true;
       }
     }
+
+    this.itemStyles[tagName] = updatedStyles;
 
     // returning true tells the renderer to queue an update
     return hasChildStyleChange;
@@ -105,8 +108,14 @@ export class Item {
   }
 
   render() {
+    let childStyles = {};
+
+    for (var key in this.itemStyles) {
+      childStyles = Object.assign(childStyles, this.itemStyles[key]);
+    }
+
     let themedClasses = {
-      ...this.childStyles,
+      ...childStyles,
       ...createThemedClasses(this.mode, this.color, 'item'),
       'item-block': true
     };
