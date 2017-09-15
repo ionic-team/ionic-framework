@@ -1,4 +1,5 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
+
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -51,7 +52,6 @@ import { createThemedClasses } from '../../utils/theme';
 export class Radio {
   mode: string;
   color: string;
-  group: any;
   labelId: string;
   styleTmr: any;
 
@@ -60,6 +60,21 @@ export class Radio {
   @State() id: string;
 
   @State() activated: boolean;
+
+  /**
+   * @output {EventEmitter} Emitted when the radio loads.
+   */
+  @Event() ionRadioDidLoad: EventEmitter;
+
+  /**
+   * @output {EventEmitter} Emitted when the radio unloads.
+   */
+  @Event() ionRadioDidUnload: EventEmitter;
+
+  /**
+   * @output {EventEmitter} Emitted when the radio is toggled.
+   */
+  @Event() ionRadioDidToggle: EventEmitter;
 
   /**
    * @output {EventEmitter} Emitted when the styles of the radio change.
@@ -86,36 +101,17 @@ export class Radio {
    */
   @Prop({ mutable: true }) value: string;
 
-
   ionViewWillLoad() {
     this.emitStyle();
   }
 
   ionViewDidLoad() {
-    this.group = this.el.closest('ion-radio-group') as any;
-
-    const item = this.el.closest('ion-item') as any;
-
-    if (item) {
-      // register the input inside of the item
-      // reset to the item's id instead of the radiogroup id
-      this.id = 'rb-' + item.registerInput('radio');
-      this.labelId = 'lbl-' + item.id;
-    }
-
-    // if the value is not defined then use it's unique id
-    this.value = !this.value ? this.id : this.value;
+    this.ionRadioDidLoad.emit({ radio: this });
   }
 
   @PropDidChange('checked')
   checkedChanged(val: boolean) {
     this.ionSelect.emit({ checked: val });
-
-    if (this.group) {
-      this.group.value = this.value;
-      this.group.$instance.ionChange.emit(this);
-    }
-
     this.emitStyle();
   }
 
@@ -145,6 +141,7 @@ export class Radio {
 
   toggle() {
     this.checked = !this.checked;
+    this.ionRadioDidToggle.emit({ radio: this });
   }
 
   hostData() {
@@ -180,30 +177,8 @@ export class Radio {
   }
 }
 
-//  constructor() {
-//     if (_group) {
-//       // register with the radiogroup
-//       this.id = 'rb-' + _group.add(this);
-//     }
-
-//     if (_item) {
-//       // register the input inside of the item
-//       // reset to the item's id instead of the radiogroup id
-//       this.id = 'rb-' + _item.registerInput('radio');
-//       this._labelId = 'lbl-' + _item.id;
-//       this._item.setElementClass('item-radio', true);
-//     }
-//   }
-
-//   /**
-//    * @internal
-//    */
-//   ngOnInit() {
-//     if (this._group && isPresent(this._group.value)) {
-//       this.checked = isCheckedProperty(this._group.value, this.value);
-//     }
-
-//     if (this._group && this._group.disabled) {
-//       this.disabled = this._group.disabled;
-//     }
-//   }
+export interface RadioEvent extends Event {
+  detail: {
+    radio: Radio;
+  }
+}
