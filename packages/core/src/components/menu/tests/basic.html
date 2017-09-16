@@ -11,6 +11,7 @@
 <body>
   <ion-app>
     <ion-menu side="left">
+
       <ion-header>
         <ion-toolbar color="secondary">
           <ion-title>Left Menu</ion-title>
@@ -18,61 +19,19 @@
       </ion-header>
 
       <ion-content>
-
         <ion-list>
-
-          <ion-item>
-            Open Right Menu
-          </ion-item>
-
-          <ion-item menuClose="left" class="e2eCloseLeftMenu" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
-          <ion-item menuClose="left" detail-none>
-            Close Menu
-          </ion-item>
-
+          <ion-item>Open Right Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
         </ion-list>
       </ion-content>
 
@@ -84,35 +43,31 @@
 
     </ion-menu>
 
-    <ion-menu side="right" >
-
-      <ion-header id="id">
+    <ion-menu side="right">
+      <ion-header>
         <ion-toolbar>
           <ion-title>Hola</ion-title>
         </ion-toolbar>
-
       </ion-header>
+
       <ion-content padding>
         hola macho
       </ion-content>
-
     </ion-menu>
 
     <ion-page main class="show-page">
+
       <ion-header>
         <ion-toolbar>
-          <ion-title>Menu Basic Test</ion-title>
+          <ion-title>Ionic CDN demo</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content padding>
-        <ion-button onclick="openLeft()">
-          Open left menu
-        </ion-button>
-        <ion-button onclick="openRight()">
-            Open right menu
-          </ion-button>
+        <ion-button onclick="openLeft()">Open left menu</ion-button>
+        <ion-button onclick="openRight()">Open right menu</ion-button>
       </ion-content>
+
     </ion-page>
 
   </ion-app>
@@ -130,5 +85,4 @@
     }
   </script>
 </body>
-
 </html>
