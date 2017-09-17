@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-import { AnimationBuilder, Animation, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 
 import { createThemedClasses } from '../../utils/theme';
 
@@ -71,20 +71,20 @@ export class Popover {
     let origin = {
       y: 'top',
       x: 'left'
-    }
+    };
 
     // Popover content width and height
     const popover = {
       width: contentEl.getBoundingClientRect().width,
       height: contentEl.getBoundingClientRect().height
-    }
+    };
 
     // Window body width and height
     // TODO need to check if portrait/landscape?
     const body = {
       width: window.screen.width,
       height: window.screen.height
-    }
+    };
 
     // If ev was passed, use that for target element
     let targetDim = this.ev && this.ev.target && (this.ev.target as HTMLElement).getBoundingClientRect();
@@ -108,7 +108,7 @@ export class Popover {
     const arrow = {
       width: arrowDim.width,
       height: arrowDim.height
-    }
+    };
 
     let arrowCSS = {
       top: target.top + target.height,
@@ -122,7 +122,7 @@ export class Popover {
 
     // If the popover should be centered to the target
     if (props.centerTarget) {
-      popoverCSS.left = target.left + (target.width / 2) - (popover.width / 2)
+      popoverCSS.left = target.left + (target.width / 2) - (popover.width / 2);
     }
 
     // If the popover left is less than the padding it is off screen
@@ -276,12 +276,12 @@ export class Popover {
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class="popover-backdrop"
+        class='popover-backdrop'
       />,
       <div class={wrapperClasses} style={wrapperStyle}>
-        <div class="popover-arrow"/>
-        <div class="popover-content">
-          <div class="popover-viewport">
+        <div class='popover-arrow'/>
+        <div class='popover-content'>
+          <div class='popover-viewport'>
             <ThisComponent
               props={this.componentProps}
               class={this.cssClass}
@@ -329,4 +329,4 @@ export const POPOVER_POSITION_PROPERTIES: any = {
     showArrow: false,
     centerTarget: false
   }
-}
+};

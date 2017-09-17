@@ -112,13 +112,13 @@ export class Icon {
 
   render() {
     if (this.isServer) {
-      return <div class="icon-inner">{/* ssr */}</div>;
+      return <div class='icon-inner'>{/* ssr */}</div>;
     }
 
     const iconName = this.iconName;
     if (!iconName) {
       // we don't have good data
-      return <div class="icon-inner">{/* invalid svg */}</div>;
+      return <div class='icon-inner'>{/* invalid svg */}</div>;
     }
 
     const svgContent = svgContents[iconName];
@@ -126,7 +126,7 @@ export class Icon {
       // we've already loaded up this svg at one point
       // and the svg content we've loaded and assigned checks out
       // render this svg!!
-      return <div class="icon-inner" innerHTML={svgContent}></div>;
+      return <div class='icon-inner' innerHTML={svgContent}></div>;
     }
 
     // haven't loaded this svg yet
@@ -138,7 +138,7 @@ export class Icon {
     });
 
     // actively requesting the svg, so let's just render a div for now
-    return <div class="icon-inner">{/* loading svg */}</div>;
+    return <div class='icon-inner'>{/* loading svg */}</div>;
   }
 
 }
@@ -201,7 +201,7 @@ const svgContents: {[iconName: string]: string} = {};
   // remove this url from the active requests
   delete activeRequests[iconName];
 
-  svgContents[iconName] = svgContent
+  svgContents[iconName] = svgContent;
 
   // find any callbacks waiting on this icon
   const svgLoadCallbacks = loadCallbacks[iconName];

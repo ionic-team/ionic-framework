@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
-import { isRightSide, Side } from '../../utils/helpers';
+import { Side, isRightSide } from '../../utils/helpers';
 
 
 /**

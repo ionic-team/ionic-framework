@@ -116,7 +116,7 @@ export class Select {
         option.value = option.getText();
       }
       this.options.push(option.$instance);
-    })
+    });
 
     const values = this.getValues();
 
@@ -243,13 +243,13 @@ export class Select {
     selectOptions.buttons = selectOptions.buttons.concat({
       text: this.okText,
       handler: (selectedValues: any) => this.value = selectedValues
-    })
+    });
 
     // create the alert instance from our built up selectOptions
     const alertOptions = {
       cssClass: selectCssClass,
       ...selectOptions
-    }
+    };
 
     console.debug('Built Select: Alert with', alertOptions);
     return this.alertCtrl.create(alertOptions);
@@ -277,7 +277,7 @@ export class Select {
     const actionSheetOptions = {
       cssClass: selectCssClass,
       ...selectOptions
-    }
+    };
 
     console.debug('Built Select: Action Sheet with', actionSheetOptions);
     return this.actionSheetCtrl.create(actionSheetOptions);
@@ -311,7 +311,7 @@ export class Select {
       },
       cssClass: selectCssClass,
       ev: event
-    }
+    };
 
     console.debug('Built Select: Popover with', popoverOptions);
     return this.popoverCtrl.create(popoverOptions);
@@ -385,16 +385,16 @@ export class Select {
 
     return [
       <div class={ selectTextClasses }>{ selectText }</div>,
-      <div class="select-icon">
-        <div class="select-icon-inner"></div>
+      <div class='select-icon'>
+        <div class='select-icon-inner'></div>
       </div>,
       <button
-        aria-haspopup="true"
+        aria-haspopup='true'
         id={this.id}
         aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? "true" : false}
+        aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
-        class="item-cover">
+        class='item-cover'>
       </button>
     ];
   }

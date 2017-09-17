@@ -136,7 +136,7 @@ export class Item {
             : null
           }
         </div>
-        <div class="button-effect"></div>
+        <div class='button-effect'></div>
       </TagType>
     );
   }

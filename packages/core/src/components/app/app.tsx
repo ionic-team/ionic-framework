@@ -1,4 +1,4 @@
-import { Element, Component, Listen, Prop } from '@stencil/core';
+import { Component, Element, Listen, Prop } from '@stencil/core';
 import { Nav, NavContainer, OverlayPortal } from '../../navigation/nav-interfaces';
 import { Config } from '../..';
 import { App } from './app-interfaces';

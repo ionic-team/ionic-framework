@@ -16,11 +16,11 @@ export class IonOverlayPortal implements NavContainer, OverlayPortal {
   @Event() registerPortal: EventEmitter;
 
   getActiveChildNavs(): NavContainer[] {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   getAllChildNavs?(): NavContainer[] {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   getType(): string {

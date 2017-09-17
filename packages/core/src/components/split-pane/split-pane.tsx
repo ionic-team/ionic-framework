@@ -1,4 +1,4 @@
-import { Component, State, Element, Event, EventEmitter, Prop, Method, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
 // import { assert } from '../../utils/helpers';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
@@ -274,7 +274,7 @@ export class SplitPane {
 export interface SplitPaneAlert {
   detail: {
     splitPane: SplitPane
-  }
+  };
 }
 
 function setPaneClass(ele: HTMLElement, isMain: boolean) {

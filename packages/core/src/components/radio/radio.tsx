@@ -191,5 +191,5 @@ export class Radio {
 export interface RadioEvent extends Event {
   detail: {
     radio: Radio;
-  }
+  };
 }

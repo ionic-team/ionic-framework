@@ -1,5 +1,5 @@
 import { FrameworkDelegate, Nav, ViewController } from './nav-interfaces';
-import { STATE_ATTACHED, STATE_DESTROYED, STATE_NEW, STATE_INITIALIZED } from './nav-utils';
+import { STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED, STATE_NEW } from './nav-utils';
 
 import { assert } from '../utils/helpers';
 

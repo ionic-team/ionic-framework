@@ -160,7 +160,7 @@ export class Spinner {
     const spinnerClasses = {
       ...themedClasses,
       'spinner-paused': this.paused
-    }
+    };
 
     return {
       class: spinnerClasses
@@ -201,7 +201,7 @@ function buildCircle(spinner: SpinnerConfig, duration: number, index: number, to
 
   return (
     <svg viewBox='0 0 64 64' style={data.style}>
-      <circle transform="translate(32,32)" r={data.r}></circle>
+      <circle transform='translate(32,32)' r={data.r}></circle>
     </svg>
   );
 }
@@ -213,7 +213,7 @@ function buildLine(spinner: SpinnerConfig, duration: number, index: number, tota
 
   return (
     <svg viewBox='0 0 64 64' style={data.style}>
-      <line transform="translate(32,32)" y1={data.y1} y2={data.y2}></line>
+      <line transform='translate(32,32)' y1={data.y1} y2={data.y2}></line>
     </svg>
   );
 }

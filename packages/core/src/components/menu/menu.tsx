@@ -1,11 +1,11 @@
-import { Component, Element, Event, EventEmitter, Prop, PropDidChange, Listen } from '@stencil/core';
-import { Config, Animation, SplitPaneAlert } from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Animation, Config, SplitPaneAlert } from '../../index';
 import { MenuController } from './menu-controller';
-import { isRightSide, Side, assert, checkEdgeSide } from '../../utils/helpers';
+import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
 export type Lazy<T> = T &
   { componentOnReady(): Promise<T> } &
-  { componentOnReady(done: (cmp: T) => void): void }
+  { componentOnReady(done: (cmp: T) => void): void };
 
 @Component({
   tag: 'ion-menu',
@@ -127,7 +127,7 @@ export class Menu {
    * @hidden
    */
   ionViewDidLoad() {
-    assert(!!this.menuCtrl, "menucontroller was not initialized");
+    assert(!!this.menuCtrl, 'menucontroller was not initialized');
 
     this._menuInnerEle = this.el.querySelector('.menu-inner') as HTMLElement;
     this._backdropEle = this.el.querySelector('.menu-backdrop') as HTMLElement;
@@ -185,7 +185,7 @@ export class Menu {
       <div class='menu-inner'>
         <slot></slot>
       </div>,
-      <ion-backdrop class="menu-backdrop"></ion-backdrop> ,
+      <ion-backdrop class='menu-backdrop'></ion-backdrop> ,
       <ion-gesture props={{
         'canStart': this.canStart.bind(this),
         'onWillStart': this._swipeWillStart.bind(this),
@@ -271,7 +271,7 @@ export class Menu {
     assert(this._isOpen, 'menu cannot be closed');
 
     this._isAnimating = true;
-    this._startAnimation(false, false)
+    this._startAnimation(false, false);
     this._after(false);
   }
 

@@ -1,5 +1,5 @@
-import { applyStyles, getElementReference, ElementRef, updateDetail, assert } from '../../utils/helpers';
-import { BlockerDelegate, GestureController, GestureDelegate, BLOCK_ALL } from '../gesture-controller/gesture-controller';
+import { ElementRef, applyStyles, assert, getElementReference, updateDetail } from '../../utils/helpers';
+import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 import { PanRecognizer } from './recognizers';
 
@@ -148,7 +148,7 @@ export class Gesture {
 
     assert(this.hasFiredStart, 'fired start must be false');
     assert(!this.hasStartedPan, 'pan can be started at this point');
-    assert(!this.hasCapturedPan, 'pan can be started at this point')
+    assert(!this.hasCapturedPan, 'pan can be started at this point');
     assert(!this.isMoveQueued, 'some move is still queued');
     assert(this.positions.length === 0, 'positions must be emprty');
 

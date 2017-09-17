@@ -17,7 +17,7 @@ export class Router {
 
   @Prop()
   get match() {
-    return this.routeMatch
+    return this.routeMatch;
   }
 
   /*

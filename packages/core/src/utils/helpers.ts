@@ -35,7 +35,7 @@ export function isCheckedProperty(a: any, b: any): boolean {
 
   // not using strict comparison on purpose
   return (a == b); // tslint:disable-line
-};
+}
 
 export function assert(bool: boolean, msg: string) {
   if (!bool) {

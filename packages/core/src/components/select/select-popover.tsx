@@ -52,7 +52,7 @@ export class SelectPopover {
 
   render() {
     return (
-      <ion-list no-lines={this.mode == 'md'}>
+      <ion-list no-lines={this.mode === 'md'}>
         <ion-radio-group value={this.value}>
           {this.options.map(option =>
             <ion-item>

@@ -27,7 +27,7 @@ export default function(Animation: Animation, _: HTMLElement, menu: Menu): Anima
 
   const backdropApi = new Animation()
     .addElement(menu.getBackdropElement())
-    .fromTo('opacity', 0.01, 0.35)
+    .fromTo('opacity', 0.01, 0.35);
 
   return baseAnimation(Animation)
     .add(menuAni)

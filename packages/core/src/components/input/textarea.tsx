@@ -326,6 +326,6 @@ export class Textarea implements TextareaComponent {
       >
         {this.value}
       </textarea>
-    )
+    );
   }
 }

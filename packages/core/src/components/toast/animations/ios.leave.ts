@@ -11,7 +11,7 @@ export default function iOSLeaveAnimation(
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();
-  const wrapperEle = baseElm.querySelector('.toast-wrapper') as HTMLElement
+  const wrapperEle = baseElm.querySelector('.toast-wrapper') as HTMLElement;
   wrapperAnimation.addElement(wrapperEle);
   switch (position) {
     case 'top':

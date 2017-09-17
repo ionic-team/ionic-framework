@@ -1,4 +1,4 @@
-import { Component, State, Prop, Listen, PropDidChange } from '@stencil/core';
+import { Component, Listen, Prop, PropDidChange, State } from '@stencil/core';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { Component, State, Prop, Listen, PropDidChange } from '@stencil/core';
 })
 export class Tabs {
   // Current list of tabs
-  @State() tabs: any
+  @State() tabs: any;
 
   /**
    * @state {number} The selected tab
@@ -29,7 +29,7 @@ export class Tabs {
   /**
    * @prop {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
-  @Prop() tabsLayout: string = 'icon-top'
+  @Prop() tabsLayout: string = 'icon-top';
 
   /**
    * @prop {string} Set position of the tabbar: `top`, `bottom`.
@@ -52,7 +52,7 @@ export class Tabs {
    */
   @PropDidChange('selectedIndex')
   handleSelectedIndexChanged() {
-    this.selectedTab = this.tabs[this.selectedIndex]
+    this.selectedTab = this.tabs[this.selectedIndex];
   }
 
   @Listen('ionTabDidLoad')
@@ -60,7 +60,7 @@ export class Tabs {
     const tab = ev.detail.tab;
 
     // First tab? Select it
-    if(this.tabs.length == 0) {
+    if (this.tabs.length === 0) {
       this.handleOnTabSelected(tab, 0);
     }
 
@@ -69,7 +69,7 @@ export class Tabs {
 
   @Listen('ionTabDidUnload')
   tabDidUnload(ev: any) {
-    this.tabs = this.tabs.filter((t: any) => t !== ev.detail.tab)
+    this.tabs = this.tabs.filter((t: any) => t !== ev.detail.tab);
   }
 
   handleOnTabSelected(tab: any, index: number) {
@@ -82,7 +82,7 @@ export class Tabs {
     this.selectedIndex = index;
 
     // Fire a change event
-    this.ionChange && this.ionChange(tab)
+    this.ionChange && this.ionChange(tab);
   }
 
   render() {
@@ -92,6 +92,6 @@ export class Tabs {
         onTabSelected={this.handleOnTabSelected.bind(this)}
         selectedIndex={this.selectedIndex} />,
       <slot></slot>
-    ]
+    ];
   }
 }

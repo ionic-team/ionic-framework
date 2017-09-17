@@ -54,7 +54,7 @@ export interface Nav {
   popTo?(indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
   remove?(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any>;
   removeView?(viewController: ViewController, opts?: NavOptions): Promise<any>;
-  setPages?(componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
+  setPages?(componentDataPairs: ComponentDataPair[], opts?: NavOptions): Promise<any>;
 }
 
 export interface OverlayPortal extends Nav {
@@ -72,7 +72,7 @@ export interface NavController {
   popTo(nav: Nav, indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
   remove(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions): Promise<any>;
   removeView(nav: Nav, viewController: ViewController, opts?: NavOptions): Promise<any>;
-  setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
+  setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts?: NavOptions): Promise<any>;
 
   delegate?: FrameworkDelegate;
   animationCtrl?: AnimationController;
@@ -97,7 +97,7 @@ export interface ViewController {
   didEnter(): void;
   willLoad(): void;
   didLoad(): void;
-  willUnload():void;
+  willUnload(): void;
 
   destroy(delegate?: FrameworkDelegate): Promise<any>;
   getTransitionName(direction: string): string;

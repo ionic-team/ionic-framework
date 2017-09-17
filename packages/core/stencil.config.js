@@ -28,6 +28,7 @@ exports.config = {
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
+    { components: ['ion-split-pane'] },
     { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] },
     { components: ['ion-nav', 'ion-nav-controller', 'stencil-ion-nav-delegate','page-one', 'page-two', 'page-three'] },

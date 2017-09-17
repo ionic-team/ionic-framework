@@ -92,7 +92,7 @@ export class ChipButton {
     const buttonClasses = {
       ...hostClasses,
       ...elementClasses
-    }
+    };
 
     return (
       <TagType class={buttonClasses} disabled={this.disabled}>

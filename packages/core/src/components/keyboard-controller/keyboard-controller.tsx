@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter} from '@stencil/core';
+import { Component, Event, EventEmitter, Prop} from '@stencil/core';
 import { KeyboardController } from './keyboard-interfaces';
 import { Config } from '../..';
 import { focusOutActiveElement, getDocument, getWindow, hasFocusedTextInput } from '../../utils/helpers';
@@ -94,12 +94,12 @@ export function listenV2(win: Window, keyboardController: KeyboardController) {
 export function listenV1(win: Window, keyboardController: KeyboardController) {
   v1keyboardHide = () => {
     blurActiveInput(true, keyboardController);
-  }
+  };
   win.addEventListener('native.keyboardhide', v1keyboardHide);
 
   v1keyboardShow = () => {
     blurActiveInput(false, keyboardController);
-  }
+  };
   win.addEventListener('native.keyboardshow', v1keyboardShow);
 }
 

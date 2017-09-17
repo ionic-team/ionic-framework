@@ -12,14 +12,19 @@
   "devDependencies": {
     "@stencil/core": "0.0.5-23",
     "@stencil/dev-server": "latest",
-    "@stencil/utils": "latest"
+    "@stencil/utils": "latest",
+    "tslint-ionic-rules": "0.0.11"
   },
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "deploy": "../../node_modules/.bin/np --any-branch",
     "test": "jest --no-cache",
-    "prepublishOnly": "npm run build"
+    "clean": "rm -rf dist",
+    "lint": "tslint --project .",
+    "lint-fix": "tslint --project . --fix",
+    "validate": "npm run clean && npm run lint && npm run test && npm run build",
+    "deploy": "np --any-branch",
+    "preversion": "npm run lint && npm run build"
   },
   "author": "Ionic Team",
   "license": "MIT",
