@@ -160,6 +160,7 @@ export class SplitPane {
   /**
    * @output {any} Expression to be called when the split-pane visibility has changed
    */
+  @Event() ionSplitPaneDidChange: EventEmitter;
   @Event() ionChange: EventEmitter;
 
   ionViewDidLoad() {
@@ -181,16 +182,16 @@ export class SplitPane {
       var isMain = child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
-          // console.warn('split pane can not have more than one main node');
+          console.warn('split pane can not have more than one main node');
           return;
         }
         foundMain = true;
       }
       setPaneClass(child, isMain);
     }
-    // if (!foundMain) {
-    //   console.warn('split pane could not found any main node');
-    // }
+    if (!foundMain) {
+      console.warn('split pane could not found any main node');
+    }
   }
 
   @PropDidChange('when')
@@ -234,7 +235,9 @@ export class SplitPane {
   private _setVisible(visible: boolean) {
     if (this.visible !== visible) {
       this.visible = visible;
-      this.ionChange.emit(this);
+      const detail = { splitPane: this };
+      this.ionChange.emit(detail);
+      this.ionSplitPaneDidChange.emit(detail);
     }
   }
 
@@ -244,6 +247,14 @@ export class SplitPane {
   @Method()
   isVisible(): boolean {
     return this.visible;
+  }
+
+  isPane(element: HTMLElement): boolean {
+    if (!this.visible) {
+      return false;
+    }
+    return element.parentElement === this.ele
+      && element.classList.contains(SPLIT_PANE_SIDE);
   }
 
   hostData() {
@@ -258,6 +269,12 @@ export class SplitPane {
     return <slot></slot>;
   }
 
+}
+
+export interface SplitPaneAlert {
+  detail: {
+    splitPane: SplitPane
+  }
 }
 
 function setPaneClass(ele: HTMLElement, isMain: boolean) {

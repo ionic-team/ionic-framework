@@ -1,5 +1,5 @@
-import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
-import { Config, Animation } from '../../index';
+import { Component, Element, Event, EventEmitter, Prop, PropDidChange, Listen } from '@stencil/core';
+import { Config, Animation, SplitPaneAlert } from '../../index';
 import { MenuController } from './menu-controller';
 import { isRightSide, Side, assert, checkEdgeSide } from '../../utils/helpers';
 
@@ -102,6 +102,11 @@ export class Menu {
   //   const isRTL = false;
   //   // this.isRightSide = isRightSide(side, isRTL);
   // }
+  @Listen('body:ionSplitPaneDidChange')
+  splitPaneChanged(ev: SplitPaneAlert) {
+    this._isPane = ev.detail.splitPane.isPane(this.el);
+    this._updateState();
+  }
 
   @PropDidChange('enabled')
   enabledChanged() {
@@ -155,6 +160,7 @@ export class Menu {
 
     // mask it as enabled / disabled
     this.enable(isEnabled);
+    this._init = true;
   }
 
   hostData() {
@@ -266,7 +272,7 @@ export class Menu {
 
     this._isAnimating = true;
     this._startAnimation(false, false)
-      .then(() => this._after(false));
+    this._after(false);
   }
 
   getWidth(): number {
@@ -519,14 +525,6 @@ export class Menu {
    */
   initPane(): boolean {
     return false;
-  }
-
-  /**
-   * @internal
-   */
-  paneChanged(isPane: boolean) {
-    this._isPane = isPane;
-    this._updateState();
   }
 
   /**
