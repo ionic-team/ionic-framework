@@ -156,9 +156,6 @@ export class Gesture {
     if (this.canStart && this.canStart(detail) === false) {
       return false;
     }
-
-    this.positions.push(detail.currentX, detail.currentY, timeStamp);
-
     // Release fallback
     this.gesture.release();
 
@@ -167,6 +164,7 @@ export class Gesture {
       return false;
     }
 
+    this.positions.push(detail.currentX, detail.currentY, timeStamp);
     if (this.pan) {
       this.hasStartedPan = true;
       this.pan.start(detail.startX, detail.startY);
@@ -196,6 +194,8 @@ export class Gesture {
   private pointerMove(ev: UIEvent) {
     assert(!!this.pan, 'pan must be non null');
 
+    // fast path, if gesture is currently captured
+    // do minimun job to get user-land even dispatched
     if (this.hasCapturedPan) {
       if (!this.isMoveQueued && this.hasFiredStart) {
         this.isMoveQueued = true;
@@ -205,11 +205,12 @@ export class Gesture {
       return;
     }
 
+    // gesture is currently being detected
     const detail = this.detail;
     this.calcGestureData(ev);
     if (this.pan.detect(detail.currentX, detail.currentY)) {
       if (this.pan.isGesture() !== 0) {
-        if (!this.tryToCapturePan(ev)) {
+        if (!this.tryToCapturePan()) {
           this.abortGesture();
         }
       }
@@ -263,13 +264,24 @@ export class Gesture {
     positions.push(currentX, currentY, timestamp);
   }
 
-  private tryToCapturePan(ev: UIEvent): boolean {
+  private tryToCapturePan(): boolean {
     if (this.gesture && !this.gesture.capture()) {
       return false;
     }
     this.hasCapturedPan = true;
     this.hasFiredStart = false;
-    this.calcGestureData(ev);
+
+    // reset start position since the real user-land event starts here
+    // If the pan detector threshold is big, not reseting the start position
+    // will cause a jump in the animation equal to the detector threshold.
+    // the array of positions used to calculate the gesture velocity does not
+    // need to be cleaned, more points in the positions array always results in a
+    // more acurate value of the velocity.
+    const detail = this.detail;
+    detail.startX = detail.currentX;
+    detail.startY = detail.currentY;
+    detail.startTimeStamp = detail.timeStamp;
+
     if (this.onWillStart) {
       this.onWillStart(this.detail).then(this.fireOnStart.bind(this));
     } else {

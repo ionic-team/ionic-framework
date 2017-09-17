@@ -199,7 +199,7 @@ export class Menu {
         'gesturePriority': 10,
         'type': 'pan',
         'direction': 'x',
-        'threshold': 5,
+        'threshold': 10,
         'attachTo': 'body',
         'disableScroll': true,
         'block': this._activeBlock
@@ -328,17 +328,9 @@ export class Menu {
       return;
     }
 
-    // const isRTL = false;
-    const isRightSide = this.isRightSide;
-    const z = this._width;
-    let delta = slide.deltaX;
-    delta = Math.max((isRightSide) ? -delta : delta);
-
-    // const z = (this.isRightSide !== isRTL ? slide.min : slide.max);
-    const stepValue = delta / z;
-
+    const delta = computeDelta(slide.deltaX, this._isOpen, this.isRightSide);
+    const stepValue = delta / this._width;
     this._animation.progressStep(stepValue);
-    // TODO: this.ionDrag.emit({ menu: this });
   }
 
   _swipeEnd(slide: any) {
@@ -348,9 +340,7 @@ export class Menu {
       return;
     }
     const isRightSide = this.isRightSide;
-    let delta = slide.deltaX;
-    delta = Math.max((isRightSide) ? -delta : delta);
-
+    const delta = computeDelta(slide.deltaX, this._isOpen, isRightSide);
     const width = this._width;
     const stepValue = delta / width;
     const velocity = slide.velocityX;
@@ -589,6 +579,10 @@ export class Menu {
     this.menuCtrl = this._animation = this._cntElm = this._backdropEle = null;
   }
 
+}
+
+function computeDelta(deltaX: number, isOpen: boolean, isRightSide: boolean): number {
+  return Math.max(0, (isOpen !== isRightSide) ? -deltaX : deltaX);
 }
 
 const GESTURE_BLOCKER = 'goback-swipe';
