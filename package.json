@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
-    "jest": "^20.0.4",
     "lerna": "^2.0.0-rc.5",
     "np": "^2.16.0"
   }
