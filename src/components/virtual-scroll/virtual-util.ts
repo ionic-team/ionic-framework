@@ -17,6 +17,7 @@ export function processRecords(stopAtHeight: number,
   records: any[], cells: VirtualCell[],
   headerFn: Function, footerFn: Function,
   data: VirtualData) {
+  console.debug('virtual-util-processRecords', 'cells before processing are:', cells);
   let record: any;
   let startRecordIndex: number;
   let previousCell: VirtualCell;
@@ -79,6 +80,7 @@ export function processRecords(stopAtHeight: number,
     if (previousCell.top + previousCell.height + data.itmHeight > stopAtHeight && processedTotal > 3) {
       return;
     }
+    console.debug('virtual-util-processRecords', 'cells after processing are:', cells);
   }
 }
 
@@ -464,7 +466,11 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
     data.topCell = Math.max(data.topViewCell - viewableRenderedPadding, 0);
     data.bottomCell = Math.min(data.topCell + 2, totalCells - 1);
 
-    for (var i = data.topCell; i < totalCells; i++) {
+    console.debug('virtualScroll-util', 'before scrolling down, will render cells:', data.topCell, 'to', data.bottomCell,
+      'totalCells are:', totalCells, 'renderHeight is now', cellsRenderHeight, 'viewableRenderedPadding', viewableRenderedPadding,
+      'topViewCell:', data.topViewCell, 'bottomViewCell:', data.bottomViewCell);
+
+    for (let i = data.topCell; i < totalCells; i++) {
       cell = cells[i];
       if (cell.row !== lastRow) {
         cellsRenderHeight += cell.height;
@@ -479,6 +485,29 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
         break;
       }
     }
+
+    if (data.bottomCell === totalCells - 1) {
+      let tempHeight = 0;
+      lastRow = -1;
+      for (let i = data.bottomCell; i >= 0; i--) {
+        cell = cells[i];
+        if (cell.row !== lastRow) {
+          tempHeight += cell.height;
+          lastRow = cell.row;
+        }
+
+        if (i < data.topCell) {
+          data.topCell = i;
+        }
+
+        if (tempHeight >= maxRenderHeight) {
+          break;
+        }
+      }
+    }
+    console.debug('virtualScroll-util', 'after scrolling down, will render cells:', data.topCell, 'to', data.bottomCell,
+      'totalCells are:', totalCells, 'renderHeight is now', cellsRenderHeight, 'viewableRenderedPadding', viewableRenderedPadding,
+      'topViewCell:', data.topViewCell, 'bottomViewCell:', data.bottomViewCell);
 
   } else {
     // scroll up
@@ -500,6 +529,29 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
         break;
       }
     }
+
+    if (data.topCell === 0) {
+      let tempHeight = 0;
+      lastRow = -1;
+      for (let i = data.topCell; i < totalCells; i++) {
+        cell = cells[i];
+        if (cell.row !== lastRow) {
+          tempHeight += cell.height;
+          lastRow = cell.row;
+        }
+
+        if (i > data.bottomCell) {
+          data.bottomCell = i;
+        }
+
+        if (tempHeight >= maxRenderHeight) {
+          break;
+        }
+      }
+    }
+    console.debug('virtualScroll-util', 'scrolling up, will render cells:', data.topCell, 'to', data.bottomCell,
+      'totalCells are:', totalCells, 'renderHeight is now', cellsRenderHeight, 'viewableRenderedPadding', viewableRenderedPadding,
+      'topViewCell:', data.topViewCell, 'bottomViewCell:', data.bottomViewCell);
   }
 }
 
