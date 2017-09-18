@@ -119,8 +119,7 @@ function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, t
  */
 export function populateNodeData(startCellIndex: number, endCellIndex: number, scrollingDown: boolean,
   cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
-  itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>,
-  initialLoad: boolean): boolean {
+  itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>): boolean {
   if (!records || records.length === 0) {
     nodes.length = 0;
     viewContainer.clear();
@@ -137,7 +136,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
   let templateRef: TemplateRef<VirtualContext>;
   startCellIndex = Math.max(startCellIndex, 0);
   endCellIndex = Math.min(endCellIndex, cells.length - 1);
-  console.log(initialLoad);
 
   const usedNodes: any[] = [];
   for (var cellIndex = startCellIndex; cellIndex <= endCellIndex; cellIndex++) {
@@ -145,7 +143,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
     availableNode = null;
 
     // find the first one that's available
-    // if (!initialLoad) {
     const existingNode = nodes.find(n => n.cell === cellIndex && n.tmpl === cell.tmpl);
     if (existingNode) {
       console.debug('virtual-util', 'found that cell is already rendered in existingNode', existingNode);
@@ -189,7 +186,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
         }
       }
     }
-    // }
 
     if (!availableNode) {
       // did not find an available node to put the cell data into

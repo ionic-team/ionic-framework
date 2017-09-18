@@ -556,7 +556,7 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
           this._itmTmp.viewContainer,
           this._itmTmp.templateRef,
           this._hdrTmp && this._hdrTmp.templateRef,
-          this._ftrTmp && this._ftrTmp.templateRef, needClean
+          this._ftrTmp && this._ftrTmp.templateRef
         );
       });
 
@@ -693,7 +693,7 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
       this._itmTmp.viewContainer,
       this._itmTmp.templateRef,
       this._hdrTmp && this._hdrTmp.templateRef,
-      this._ftrTmp && this._ftrTmp.templateRef, false
+      this._ftrTmp && this._ftrTmp.templateRef
     );
 
     if (hasChanges) {
