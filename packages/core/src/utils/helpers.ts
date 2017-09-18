@@ -1,5 +1,9 @@
 import { StencilElement } from '..';
 
+export function clamp(min: number, n: number, max: number) {
+  return Math.max(min, Math.min(n, max));
+}
+
 export function isDef(v: any): boolean { return v !== undefined && v !== null; }
 
 export function isUndef(v: any): boolean { return v === undefined || v === null; }
@@ -161,6 +165,7 @@ export function getToolbarHeight(toolbarTagName: string, pageChildren: HTMLEleme
   return '';
 }
 
+/** @hidden */
 export type Side = 'left' | 'right' | 'start' | 'end';
 
 export function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
