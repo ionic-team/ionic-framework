@@ -1,18 +1,10 @@
 import { Element, Component, Listen, Prop } from '@stencil/core';
-import { Nav, NavContainer, OverlayPortal } from '../../navigation/nav-interfaces';
+import { Nav, NavContainer } from '../../navigation/nav-interfaces';
 import { Config } from '../..';
 import { App } from './app-interfaces';
 import { isReady } from '../../utils/helpers';
 
-import {
-  PORTAL_DEFAULT,
-  PORTAL_LOADING,
-  PORTAL_MODAL,
-  PORTAL_TOAST
-} from './app-constants';
-
 const rootNavs = new Map<number, Nav>();
-const portals = new Map<string, OverlayPortal>();
 
 @Component({
   tag: 'ion-app',
@@ -35,20 +27,19 @@ export class IonApp implements App {
     rootNavs.set((event.detail as Nav).id, (event.detail as Nav));
   }
 
-  @Listen('body:registerPortal')
-  registerPortal(event: CustomEvent) {
-    portals.set((event.detail as OverlayPortal).type, (event.detail as OverlayPortal));
-  }
+
 
   componentWillLoad() {
     componentDidLoadImpl(this);
   }
 
   getActiveNavs(rootNavId?: number): Nav[] {
-    const portal = portals.get(PORTAL_MODAL);
+    /*const portal = portals.get(PORTAL_MODAL);
     if (portal && portal.views && portal.views.length) {
       return findTopNavs(portal);
     }
+    */
+    // TODO - figure out if a modal is open, don't use portal
     if (!rootNavs.size) {
       return [];
     }
@@ -79,11 +70,7 @@ export class IonApp implements App {
 
   render() {
     return ([
-      <slot></slot>,
-      <ion-overlay-portal type={PORTAL_MODAL}></ion-overlay-portal>,
-      <ion-overlay-portal type={PORTAL_DEFAULT}></ion-overlay-portal>,
-      <ion-overlay-portal type={PORTAL_LOADING}></ion-overlay-portal>,
-      <ion-overlay-portal type={PORTAL_TOAST}></ion-overlay-portal>,
+      <slot></slot>
     ]);
   }
 }

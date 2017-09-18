@@ -5,7 +5,7 @@ exports.config = {
   generateCollection: true,
   bundles: [
     { components: ['ion-animation-controller'] },
-    { components: ['ion-app', 'ion-content', 'ion-fixed', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-overlay-portal', 'ion-page', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-app', 'ion-content', 'ion-fixed', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
     { components: ['ion-alert', 'ion-alert-controller'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
@@ -32,6 +32,7 @@ exports.config = {
     { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] },
     { components: ['ion-nav', 'ion-nav-controller', 'stencil-ion-nav-delegate','page-one', 'page-two', 'page-three'] },
+
     { components: ['ion-toast', 'ion-toast-controller'] },
   ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',

@@ -57,11 +57,6 @@ export interface Nav {
   setPages?(componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any>;
 }
 
-export interface OverlayPortal extends Nav {
-  type?: string;
-  registerPortal?: EventEmitter;
-}
-
 export interface NavController {
   push(nav: Nav, component: any, data: any, opts: NavOptions): Promise<any>;
   pop(nav: Nav, opts: NavOptions): Promise<any>;
