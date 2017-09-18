@@ -222,7 +222,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
       };
 
       totalNodes = nodes.push(availableNode);
-      console.warn('virtual-util', '++++++++ did not find a node to reuse, created a new one', availableNode);
     }
 
     // assign who's the new cell index for this node
@@ -245,7 +244,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
     viewContainer.remove(index);
     const removeIndex = nodes.findIndex(n => n === node);
     nodes.splice(removeIndex, 1);
-    console.warn('virtual-util', '-------- found orphan node, removing', node);
   });
 
   return hasChanges;
