@@ -45,8 +45,7 @@ export class Range implements BaseInputComponent {
   @Prop() color: string;
   @Prop() mode: string;
 
-  @Prop({ state: true })
-  value: any;
+  @Prop({ mutable: true }) value: any;
 
   @Prop() disabled: boolean = false;
   @Prop() min: number = 0;
@@ -225,14 +224,9 @@ export class Range implements BaseInputComponent {
         upper: Math.max(this._valA, this._valB)
       };
 
-      console.debug(
-        `range, updateKnob: ${ratio}, lower: ${this.value.lower}, upper: ${this
-          .value.upper}`
-      );
     } else {
       // single knob only has one value
       value = this._valA;
-      console.debug(`range, updateKnob: ${ratio}, value: ${this.value}`);
     }
 
     // Update input value
@@ -280,17 +274,13 @@ export class Range implements BaseInputComponent {
     this.updateBar();
   }
 
-  canStart() {
-    const el = this.rangeEl.querySelector('.range-slider');
-    this._rect = el.getBoundingClientRect();
-    return !this.disabled;
-  }
-
-  onDown(detail: GestureDetail) {
+  onDragStart(detail: GestureDetail) {
     if (this.disabled) return false;
     this.fireFocus();
 
     const current = { x: detail.currentX, y: detail.currentY };
+    const el = this.rangeEl.querySelector('.range-slider');
+    this._rect = el.getBoundingClientRect();
     const rect = this._rect;
 
     // figure out which knob they started closer to
@@ -307,7 +297,7 @@ export class Range implements BaseInputComponent {
     return true;
   }
 
-  onUp(detail: GestureDetail) {
+  onDragEnd(detail: GestureDetail) {
     if (this.disabled) {
       return;
     }
@@ -339,43 +329,43 @@ export class Range implements BaseInputComponent {
 
   render() {
     return [
-      <slot name="range-start" />,
+      <slot name='range-start' />,
 
       <ion-gesture
         props={{
           disableScroll: true,
-          canStart: this.canStart.bind(this),
-          onDown: this.onDown.bind(this),
+          onStart: this.onDragStart.bind(this),
           onMove: this.onDragMove.bind(this),
-          onUp: this.onUp.bind(this),
+          onEnd: this.onDragEnd.bind(this),
+          enabled: !this.disabled,
           gestureName: 'range',
           gesturePriority: 30,
-          type: 'press,pan',
+          type: 'pan',
           direction: 'x',
           threshold: 0
         }}
       >
-        <div class="range-slider">
+        <div class='range-slider'>
           {this._ticks.map(t =>
             <div
               style={{ left: t.left }}
-              role="presentation"
+              role='presentation'
               class={{ 'range-tick': true, 'range-tick-active': t.active }}
             />
           )}
 
-          <div class="range-bar" role="presentation" />
+          <div class='range-bar' role='presentation' />
           <div
-            class="range-bar range-bar-active"
+            class='range-bar range-bar-active'
             style={{
               left: this._barL,
               right: this._barR
             }}
-            role="presentation"
+            role='presentation'
           />
           <ion-range-knob
-            class="range-knob-handle"
-            knob="knobA"
+            class='range-knob-handle'
+            knob='knobA'
             pressed={this._pressedA}
             ratio={this._ratioA}
             val={this._valA}
@@ -386,8 +376,8 @@ export class Range implements BaseInputComponent {
 
           {this.dualKnobs
             ? <ion-range-knob
-                class="range-knob-handle"
-                knob="knobB"
+                class='range-knob-handle'
+                knob='knobB'
                 pressed={this._pressedB}
                 ratio={this._ratioB}
                 val={this._valB}
@@ -398,7 +388,7 @@ export class Range implements BaseInputComponent {
             : null}
         </div>
       </ion-gesture>,
-      <slot name="range-end" />
+      <slot name='range-end' />
     ];
   }
 }

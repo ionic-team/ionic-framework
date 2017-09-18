@@ -60,11 +60,11 @@ export class RangeKnob {
   render() {
     if (this.pin) {
       return [
-        <div class="range-pin" role="presentation">{this.val}</div>,
-        <div class="range-knob" role="presentation" />
+        <div class='range-pin' role='presentation'>{this.val}</div>,
+        <div class='range-knob' role='presentation' />
       ];
     }
-    return <div class="range-knob" role="presentation" />;
+    return <div class='range-knob' role='presentation' />;
   }
 }
 
