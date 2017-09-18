@@ -622,14 +622,13 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
   private _stepDOMWrite() {
     const cells = this._cells;
     const nodes = this._nodes;
-    const recordsLength = this._records.length;
 
     // ******** DOM WRITE ****************
-    writeToNodes(this._plt, nodes, cells, recordsLength);
+    writeToNodes(this._plt, nodes, cells, this._recordSize);
 
     // ******** DOM WRITE ****************
     this._setHeight(
-      estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
+      estimateHeight(this._recordSize, cells[cells.length - 1], this._vHeight, 0.25)
     );
 
     // we're done here, good work
