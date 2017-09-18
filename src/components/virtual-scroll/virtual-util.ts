@@ -121,12 +121,13 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
   initialLoad: boolean): boolean {
   if (!records || records.length === 0) {
     nodes.length = 0;
+    viewContainer.clear();
     return true;
   }
   const recordsLength = records.length;
 
   let hasChanges = false;
-  let node: VirtualNode;
+  // let node: VirtualNode;
   let availableNode: VirtualNode;
   let cell: VirtualCell;
   let viewInsertIndex: number = null;
@@ -134,52 +135,59 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
   let templateRef: TemplateRef<VirtualContext>;
   startCellIndex = Math.max(startCellIndex, 0);
   endCellIndex = Math.min(endCellIndex, cells.length - 1);
+  console.log(initialLoad);
 
+  const usedNodes: any[] = [];
   for (var cellIndex = startCellIndex; cellIndex <= endCellIndex; cellIndex++) {
     cell = cells[cellIndex];
     availableNode = null;
 
     // find the first one that's available
-    if (!initialLoad) {
-      const existingNode = nodes.find(n => n.cell === cellIndex);
-      if (existingNode) {
-        if (existingNode.view.context.$implicit === records[existingNode.cell]) continue; // optimization: node data is the same no need to update
-        availableNode = existingNode; // update existing node
-      } else {
-        for (var i = 0; i < totalNodes; i++) {
-          node = nodes[i];
+    // if (!initialLoad) {
+    const existingNode = nodes.find(n => n.cell === cellIndex && n.tmpl === cell.tmpl);
+    if (existingNode) {
+      console.debug('virtual-util', 'found that cell is already rendered in existingNode', existingNode);
+      if (existingNode.view.context.$implicit === records[cell.record]) {
+        usedNodes.push(existingNode);
+        continue; // optimization: node data is the same no need to update
+      }
+      console.debug('virtual-util', 'data is not the same, will need to update node. Setting as available node');
+      availableNode = existingNode; // update existing node
+    } else {
+      console.debug('virtual-util', 'cell was not rendered in current nodes, will now look for an available node');
+      for (var i = 0; i < totalNodes; i++) {
+        const node = nodes[i];
 
-          if (cell.tmpl !== node.tmpl || i === 0 && cellIndex !== 0) {
-            // the cell must use the correct template
-            // first node can only be used by the first cell (css :first-child reasons)
-            // this node is never available to be reused
-            continue;
-          }
+        if (cell.tmpl !== node.tmpl || i === 0 && cellIndex !== 0) {
+          // the cell must use the correct template
+          // first node can only be used by the first cell (css :first-child reasons)
+          // this node is never available to be reused
+          continue;
+        }
 
-          if (node.cell < startCellIndex || node.cell > endCellIndex) {
+        if (node.cell < startCellIndex || node.cell > endCellIndex) {
 
-            if (!availableNode) {
-              // havent gotten an available node yet
-              availableNode = nodes[i];
-              break;
-            } else if (scrollingDown) {
-              // scrolling down
-              if (node.cell < availableNode.cell) {
-                availableNode = nodes[i];
-                break;
-              }
-
-            } else {
-              // scrolling up
-              if (node.cell > availableNode.cell) {
-                availableNode = nodes[i];
-                break;
-              }
+          if (!availableNode) {
+            // havent gotten an available node yet
+            availableNode = node;
+            console.debug('virtual-util', 'found node to reuse', availableNode);
+          } else if (scrollingDown) {
+            // scrolling down
+            if (node.cell < availableNode.cell) {
+              availableNode = node;
+              console.debug('virtual-util', 'scrolling-down found better node to reuse', availableNode);
+            }
+          } else {
+            // scrolling up
+            if (node.cell > availableNode.cell) {
+              availableNode = node;
+              console.debug('virtual-util', 'scrolling-up found better node to reuse', availableNode);
             }
           }
         }
       }
     }
+    // }
 
     if (!availableNode) {
       // did not find an available node to put the cell data into
@@ -187,7 +195,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
       if (viewInsertIndex === null) {
         viewInsertIndex = -1;
         for (var j = totalNodes - 1; j >= 0; j--) {
-          node = nodes[j];
+          const node = nodes[j];
           if (node) {
             viewInsertIndex = viewContainer.indexOf(node.view);
             break;
@@ -212,6 +220,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
       };
 
       totalNodes = nodes.push(availableNode);
+      console.warn('virtual-util', '++++++++ did not find a node to reuse, created a new one', availableNode);
     }
 
     // assign who's the new cell index for this node
@@ -225,7 +234,17 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
     availableNode.hasChanges = true;
     availableNode.lastTransform = null;
     hasChanges = true;
+    usedNodes.push(availableNode);
   }
+
+  const unusedNodes = nodes.filter(n => usedNodes.indexOf(n) < 0);
+  unusedNodes.forEach(node => {
+    const index = viewContainer.indexOf(node.view);
+    viewContainer.remove(index);
+    const removeIndex = nodes.findIndex(n => n === node);
+    nodes.splice(removeIndex, 1);
+    console.warn('virtual-util', '-------- found orphan node, removing', node);
+  });
 
   return hasChanges;
 }
