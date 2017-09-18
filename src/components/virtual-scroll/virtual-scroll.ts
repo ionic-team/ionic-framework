@@ -487,8 +487,8 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
       // reset everything
       console.debug('virtual-scroll', 'readUpdate: slow path');
       this._cells.length = 0;
-      this._nodes.length = 0;
-      this._itmTmp.viewContainer.clear();
+      // this._nodes.length = 0;
+      // this._itmTmp.viewContainer.clear();
 
       // ******** DOM READ ****************
       this.calcDimensions();
