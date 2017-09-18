@@ -30,7 +30,7 @@ import {
 
 import { ViewControllerImpl } from './view-controller-impl';
 
-import { assert, isDef, isNumber } from '../utils/helpers';
+import { assert, focusOutActiveElement, isDef, isNumber } from '../utils/helpers';
 
 import { buildIOSTransition } from './transitions/transition.ios';
 import { buildMdTransition } from './transitions/transition.md';
@@ -39,7 +39,7 @@ const queueMap = new Map<number, TransitionInstruction[]>();
 
 // public api
 
-export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data?: any, opts?: NavOptions, done? : () => void): Promise<any> {
+export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data?: any, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     insertStart: -1,
     insertViews: [{page: component, params: data}],
@@ -147,7 +147,7 @@ export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animat
   return setPages(nav, delegate, animation, [{ page: page, params: params }], opts, done);
 }
 
-export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPars: ComponentDataPair[], opts? : NavOptions, done?: () => void): Promise<any> {
+export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPars: ComponentDataPair[], opts?: NavOptions, done?: () => void): Promise<any> {
   if (!isDef(opts)) {
     opts = {};
   }
@@ -378,7 +378,7 @@ export function executeAsyncTransition(nav: Nav, transition: Transition, enterin
     if (duration > DISABLE_APP_MINIMUM_DURATION && opts.disableApp !== false) {
       // if this transition has a duration and this is the root transition
       // then set that the app is actively disabled
-      //this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET, opts.minClickBlockDuration);
+      // this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET, opts.minClickBlockDuration);
 
       // TODO - figure out how to disable the app
     }
@@ -425,8 +425,8 @@ export function transitionFinish(nav: Nav, transition: Transition, delegate: Fra
 
       // TODO - navChange on the deep linker used to be called here
 
-      if (opts.keyboardClose) {
-        // TODO - close the keyboard
+      if (opts.keyboardClose !== false) {
+        focusOutActiveElement();
       }
     }
 
@@ -434,7 +434,7 @@ export function transitionFinish(nav: Nav, transition: Transition, delegate: Fra
       hasCompleted: transition.hasCompleted,
       requiresTransition: true,
       direction: opts.direction
-    }
+    };
   });
 }
 
@@ -492,7 +492,7 @@ export function initializeViewBeforeTransition(ti: TransitionInstruction): Promi
     }
 
     // mark state as initialized
-    //enteringView.state = STATE_INITIALIZED;
+    // enteringView.state = STATE_INITIALIZED;
     ti.requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
     return testIfViewsCanLeaveAndEnter(enteringView, leavingView, ti);
   }).then(() => {

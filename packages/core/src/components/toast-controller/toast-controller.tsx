@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ToastEvent, ToastOptions, Toast } from '../../index';
+import { Toast, ToastEvent, ToastOptions } from '../../index';
 
 @Component({
   tag: 'ion-toast-controller'

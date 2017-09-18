@@ -1,10 +1,12 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, HostElement, Prop } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, HostElement, Prop, PropDidChange, State } from '@stencil/core';
 
-import { deepCopy } from '../../utils/helpers';
+import { deepCopy, isCheckedProperty } from '../../utils/helpers';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
 import { Popover } from '../popover/popover';
+
+import { SelectOption } from '../select-option/select-option';
 
 import { ActionSheetController } from '../action-sheet-controller/action-sheet-controller';
 import { AlertController } from '../alert-controller/alert-controller';
@@ -23,12 +25,11 @@ import { PopoverController } from '../popover-controller/popover-controller';
   }
 })
 export class Select {
-  text: any;
-  texts: any;
+  texts: any = [];
   id: string;
   labelId: string;
   item: any;
-  options: any;
+  options: SelectOption[] = [];
   overlay: ActionSheet | Alert | Popover;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
@@ -36,6 +37,8 @@ export class Select {
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
 
   @Element() el: HTMLElement;
+
+  @State() text: string;
 
   /**
    * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
@@ -83,29 +86,12 @@ export class Select {
   /**
    * @input {string} the value of the select.
    */
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string | string[];
 
-//   /**
-//    * @hidden
-//    */
-//   _inputUpdated() {
-//     this._texts.length = 0;
-
-//     if (this._options) {
-//       this._options.forEach(option => {
-//         // check this option if the option's value is in the values array
-//         option.selected = this.getValues().some(selectValue => {
-//           return isCheckedProperty(selectValue, option.value);
-//         });
-
-//         if (option.selected) {
-//           this._texts.push(option.text);
-//         }
-//       });
-//     }
-
-//     this._text = this._texts.join(', ');
-//   }
+  @PropDidChange('value')
+  valueChanged() {
+    this.optionUpdated();
+  }
 
   /**
    * @output {EventEmitter} Emitted when the selection is cancelled.
@@ -113,7 +99,7 @@ export class Select {
   @Event() ionCancel: EventEmitter;
 
 
-  ionViewWillLoad() {
+  ionViewDidLoad() {
     // Get the parent item
     this.item = this.el.closest('ion-item') as HostElement;
 
@@ -123,15 +109,49 @@ export class Select {
 
   setOptions() {
     // Get the options
-    this.options = this.el.querySelectorAll('ion-select-option') as NodeListOf<HostElement>;
+    const options = this.el.querySelectorAll('ion-select-option') as NodeListOf<any>;
+
+    Array.from(options).forEach(option => {
+      if (!option.value) {
+        option.value = option.getText();
+      }
+      this.options.push(option.$instance);
+    });
 
     const values = this.getValues();
+
     if (values.length === 0) {
       // there are no values set at this point
       // so check to see who should be selected
-      // we use writeValue() because we don't want to update ngModel
-      // this.writeValue(val.filter(o => o.selected).map(o => o.value));
+      let filtered = this.options.filter(o => o.selected).map(o => o.value);
+      this.value = filtered;
+    } else {
+      this.optionUpdated();
     }
+  }
+
+
+  /**
+   * @hidden
+   * Update the select options when the value changes
+   */
+  optionUpdated() {
+    this.texts = [];
+
+    if (this.options) {
+      this.options.forEach(option => {
+        // check this option if the option's value is in the values array
+        option.selected = this.getValues().some(selectValue => {
+          return isCheckedProperty(selectValue, option.value);
+        });
+
+        if (option.selected) {
+          this.texts.push(option.getText());
+        }
+      });
+    }
+
+    this.text = this.texts.join(', ');
   }
 
 
@@ -139,6 +159,9 @@ export class Select {
    * @hidden
    */
   getValues(): any[] {
+    if (!this.value) {
+      return [];
+    }
     const values = Array.isArray(this.value) ? this.value : [this.value];
     return values;
   }
@@ -188,13 +211,12 @@ export class Select {
     return selectInterface;
   }
 
-  // TODO add Alert to finish this
   buildAlert(selectOptions: any) {
     console.debug('Build Select: Alert with', selectOptions, this.options);
 
     // user cannot provide inputs from selectOptions
     // alert inputs must be created by ionic from ion-select-options
-    selectOptions.inputs = Array.from(this.options).map((option: any) => {
+    selectOptions.inputs = this.options.map((option: any) => {
       return {
         type: (this.multiple ? 'checkbox' : 'radio'),
         label: option.getText(),
@@ -217,15 +239,17 @@ export class Select {
     // If the user passed a cssClass for the select, add it
     selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
+    // Add an ok button to the alert
+    selectOptions.buttons = selectOptions.buttons.concat({
+      text: this.okText,
+      handler: (selectedValues: any) => this.value = selectedValues
+    });
+
     // create the alert instance from our built up selectOptions
     const alertOptions = {
       cssClass: selectCssClass,
-      buttons: [{
-        text: this.okText,
-        handler: (selectedValues: any) => this.value = selectedValues
-      }],
       ...selectOptions
-    }
+    };
 
     console.debug('Built Select: Alert with', alertOptions);
     return this.alertCtrl.create(alertOptions);
@@ -234,14 +258,13 @@ export class Select {
   buildActionSheet(selectOptions: any) {
     console.debug('Building Select: Action Sheet with', selectOptions, this.options);
 
-    selectOptions.buttons = selectOptions.buttons.concat(Array.from(this.options).map((option: any) => {
+    selectOptions.buttons = selectOptions.buttons.concat(this.options.map((option: any) => {
       return {
         role: (option.selected ? 'selected' : ''),
         text: option.getText(),
         handler: () => {
           this.value = option.value;
-          // TODO remove $instance
-          option.$instance.ionSelect.emit(option.value);
+          option.ionSelect.emit(option.value);
         }
       };
     }));
@@ -254,7 +277,7 @@ export class Select {
     const actionSheetOptions = {
       cssClass: selectCssClass,
       ...selectOptions
-    }
+    };
 
     console.debug('Built Select: Action Sheet with', actionSheetOptions);
     return this.actionSheetCtrl.create(actionSheetOptions);
@@ -263,7 +286,7 @@ export class Select {
   buildPopover(selectOptions: any) {
     console.debug('Building Select: Popover with', selectOptions, this.options);
 
-    selectOptions = Array.from(this.options).map((option: any) => {
+    selectOptions = this.options.map((option: any) => {
       return {
         text: option.getText(),
         checked: option.selected,
@@ -288,7 +311,7 @@ export class Select {
       },
       cssClass: selectCssClass,
       ev: event
-    }
+    };
 
     console.debug('Built Select: Popover with', popoverOptions);
     return this.popoverCtrl.create(popoverOptions);
@@ -362,16 +385,16 @@ export class Select {
 
     return [
       <div class={ selectTextClasses }>{ selectText }</div>,
-      <div class="select-icon">
-        <div class="select-icon-inner"></div>
+      <div class='select-icon'>
+        <div class='select-icon-inner'></div>
       </div>,
       <button
-        aria-haspopup="true"
+        aria-haspopup='true'
         id={this.id}
         aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? "true" : false}
+        aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
-        class="item-cover">
+        class='item-cover'>
       </button>
     ];
   }

@@ -1,7 +1,5 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-import { AnimationBuilder, Animation, AnimationController, Config, CssClassMap } from '../../index';
-
-import { createThemedClasses } from '../../utils/theme';
+import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -129,10 +127,10 @@ export class Toast {
 
   protected ionViewDidEnter() {
     this.ionToastDidPresent.emit({ toast: this });
-    if(this.duration){
-      setTimeout(()=>{
+    if (this.duration) {
+      setTimeout(() => {
         this.dismiss();
-      }, this.duration)
+      }, this.duration);
     }
   }
 
@@ -144,12 +142,12 @@ export class Toast {
 
     return (
       <div class={this.wrapperClass()}>
-        <div class="toast-container">
+        <div class='toast-container'>
           {this.message
-            ? <div class="toast-message">{this.message}</div>
+            ? <div class='toast-message'>{this.message}</div>
             : null}
           {this.showCloseButton
-            ? <ion-button clear color="light" class="toast-button" onClick={()=>this.dismiss()}>
+            ? <ion-button clear color='light' class='toast-button' onClick={() => this.dismiss()}>
                 {this.closeButtonText || 'Close'}
               </ion-button>
             : null}
@@ -160,7 +158,7 @@ export class Toast {
 
   wrapperClass(): CssClassMap {
     let wrapperClass: string[] = !this.position
-      ? ['toast-wrapper','toast-bottom']
+      ? ['toast-wrapper', 'toast-bottom']
       : [`toast-wrapper`, `toast-${this.position}`];
     return wrapperClass.reduce((prevValue: any, cssClass: any) => {
       prevValue[cssClass] = true;

@@ -58,17 +58,17 @@ export class SegmentButton {
   /*
    * @input {boolean} If true, the button is selected. Default false.
    */
-  @Prop({ state: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked: boolean = false;
 
   /*
    * @input {boolean} If true, the user cannot interact with this element. Default false.
    */
-  @Prop({ state: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) disabled: boolean = false;
 
   /**
    * @input {string} the value of the segment button. Required.
    */
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
   segmentButtonClick(ev: UIEvent) {
     ev.preventDefault();

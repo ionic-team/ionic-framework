@@ -1,6 +1,6 @@
 
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { AnimationBuilder, Animation, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -38,7 +38,7 @@ export class Alert {
   @Prop() subTitle: string;
   @Prop() message: string;
   @Prop() buttons: AlertButton[] = [];
-  @Prop({state: true}) inputs: AlertInput[] = [];
+  @Prop({ mutable: true }) inputs: AlertInput[] = [];
   @Prop() enableBackdropDismiss: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -233,12 +233,12 @@ export class Alert {
     if (inputs.length === 0) return null;
 
     return (
-      <div class="alert-checkbox-group">
+      <div class='alert-checkbox-group'>
         { inputs.map(i => (
-          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} role="checkbox" class="alert-tappable alert-checkbox alert-checkbox-button">
-            <div class="button-inner">
-              <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
-              <div class="alert-checkbox-label">
+          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} role='checkbox' class='alert-tappable alert-checkbox alert-checkbox-button'>
+            <div class='button-inner'>
+              <div class='alert-checkbox-icon'><div class='alert-checkbox-inner'></div></div>
+              <div class='alert-checkbox-label'>
                 {i.label}
               </div>
             </div>
@@ -254,12 +254,12 @@ export class Alert {
     if (inputs.length === 0) return null;
 
     return (
-      <div class="alert-radio-group" role="radiogroup" aria-labelledby={hdrId} aria-activedescendant={this.activeId}>
+      <div class='alert-radio-group' role='radiogroup' aria-labelledby={hdrId} aria-activedescendant={this.activeId}>
         { inputs.map(i => (
-          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} class="alert-radio-button alert-tappable alert-radio" role="radio">
-            <div class="button-inner">
-              <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
-              <div class="alert-radio-label">
+          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} class='alert-radio-button alert-tappable alert-radio' role='radio'>
+            <div class='button-inner'>
+              <div class='alert-radio-icon'><div class='alert-radio-inner'></div></div>
+              <div class='alert-radio-label'>
                 {i.label}
               </div>
             </div>
@@ -273,9 +273,9 @@ export class Alert {
     if (inputs.length === 0) return null;
 
     return (
-      <div class="alert-input-group">
+      <div class='alert-input-group'>
         { inputs.map(i => (
-          <div class="alert-input-wrapper">
+          <div class='alert-input-wrapper'>
             <input
               placeholder={i.placeholder}
               value={i.value}
@@ -283,7 +283,7 @@ export class Alert {
               min={i.min}
               max={i.max}
               id={i.id}
-              class="alert-input"/>
+              class='alert-input'/>
           </div>
         ))}
       </div>
@@ -336,7 +336,7 @@ export class Alert {
       if (inputTypes.indexOf(i.type) < 0) {
         inputTypes.push(i.type);
       }
-    })
+    });
 
     if (inputTypes.length > 1 && (inputTypes.indexOf('checkbox') > -1 || inputTypes.indexOf('radio') > -1)) {
       console.warn(`Alert cannot mix input types: ${(inputTypes.join('/'))}. Please see alert docs for more info.`);
@@ -347,21 +347,21 @@ export class Alert {
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class="alert-backdrop"
+        class='alert-backdrop'
       />,
-      <div class="alert-wrapper">
-        <div class="alert-head">
+      <div class='alert-wrapper'>
+        <div class='alert-head'>
           {this.title
-              ? <h2 id={hdrId} class="alert-title">{this.title}</h2>
+              ? <h2 id={hdrId} class='alert-title'>{this.title}</h2>
               : null}
           {this.subTitle
-              ? <h2 id={subHdrId} class="alert-sub-title">{this.subTitle}</h2>
+              ? <h2 id={subHdrId} class='alert-sub-title'>{this.subTitle}</h2>
               : null}
         </div>
-        <div id={msgId} class="alert-message" innerHTML={this.message}></div>
+        <div id={msgId} class='alert-message' innerHTML={this.message}></div>
 
         {(() => {
-          switch(this.inputType) {
+          switch (this.inputType) {
             case 'checkbox':
               return this.renderCheckbox(this.inputs);
 
@@ -370,13 +370,13 @@ export class Alert {
 
             default:
               return this.renderInput(this.inputs);
-          };
+          }
         })()}
 
         <div class={alertButtonGroupClass}>
           {buttons.map(b =>
             <button class={this.buttonClass(b)} onClick={() => this.btnClick(b)}>
-              <span class="button-inner">
+              <span class='button-inner'>
                 {b.text}
               </span>
             </button>
@@ -418,7 +418,7 @@ export interface AlertButton {
   role?: string;
   cssClass?: string;
   handler?: (value: any) => boolean|void;
-};
+}
 
 export interface AlertEvent {
   detail: {

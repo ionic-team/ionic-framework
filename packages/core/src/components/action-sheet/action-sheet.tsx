@@ -1,5 +1,5 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { AnimationBuilder, Animation, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -176,22 +176,22 @@ export class ActionSheet {
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class="action-sheet-backdrop"
+        class='action-sheet-backdrop'
       />,
-      <div class="action-sheet-wrapper" role="dialog">
-        <div class="action-sheet-container">
-          <div class="action-sheet-group">
+      <div class='action-sheet-wrapper' role='dialog'>
+        <div class='action-sheet-container'>
+          <div class='action-sheet-group'>
             {this.title
-              ? <div class="action-sheet-title">{this.title}</div>
+              ? <div class='action-sheet-title'>{this.title}</div>
               : null}
             {this.subTitle
-              ? <div class="action-sheet-sub-title">{this.subTitle}</div>
+              ? <div class='action-sheet-sub-title'>{this.subTitle}</div>
               : null}
             {buttons.map(b =>
               <button class={this.buttonClass(b)} onClick={() => this.click(b)}>
-                <span class="button-inner">
+                <span class='button-inner'>
                   {b.icon
-                    ? <ion-icon name={b.icon} class="action-sheet-icon" />
+                    ? <ion-icon name={b.icon} class='action-sheet-icon' />
                     : null}
                   {b.text}
                 </span>
@@ -199,7 +199,7 @@ export class ActionSheet {
             )}
           </div>
           {cancelButton
-            ? <div class="action-sheet-group">
+            ? <div class='action-sheet-group'>
                 <button
                   class={this.buttonClass(cancelButton)}
                   onClick={() => this.click(cancelButton)}
@@ -207,7 +207,7 @@ export class ActionSheet {
                   {cancelButton.icon
                     ? <ion-icon
                         name={cancelButton.icon}
-                        class="action-sheet-icon"
+                        class='action-sheet-icon'
                       />
                     : null}
                   {cancelButton.text}

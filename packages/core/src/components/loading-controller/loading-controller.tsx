@@ -11,7 +11,7 @@ export class LoadingController {
   private loadings: Loading[] = [];
 
   @Method()
-  create(opts?: LoadingOptions) {
+  create(opts?: LoadingOptions): Promise<Loading> {
     // create ionic's wrapping ion-loading component
     const loading = document.createElement('ion-loading');
 

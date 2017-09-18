@@ -28,6 +28,6 @@ export class PageOne {
         <ion-button onClick={() => this.nextPage()}>Go to Page Two</ion-button>
       </div>
     </ion-content>
-    ]
+    ];
   }
 }

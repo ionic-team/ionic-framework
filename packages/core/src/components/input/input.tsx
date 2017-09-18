@@ -86,7 +86,7 @@ export class Input implements InputComponent {
   /**
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ state: true }) clearOnEdit: boolean;
+  @Prop({ mutable: true }) clearOnEdit: boolean;
 
   /**
    * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
@@ -184,7 +184,7 @@ export class Input implements InputComponent {
   /**
    * @input {string} The text value of the input.
    */
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
 
   /**
@@ -358,10 +358,10 @@ export class Input implements InputComponent {
       />,
       <button
         hidden={this.clearInput !== true}
-        class="text-input-clear-icon"
+        class='text-input-clear-icon'
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}>
       </button>
-    ]
+    ];
   }
 }

@@ -3,15 +3,15 @@ import { Animation } from '../../../index';
 /**
  * iOS Toast Enter Animation
  */
-export default function(
+export default function iOSEnterAnimation(
   Animation: Animation,
   baseElm: HTMLElement,
   position: string
-) {
+): Animation {
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();
-  const wrapperEle = baseElm.querySelector('.toast-wrapper') as HTMLElement
+  const wrapperEle = baseElm.querySelector('.toast-wrapper') as HTMLElement;
   wrapperAnimation.addElement(wrapperEle);
 
   switch (position) {

@@ -217,5 +217,5 @@ export interface LoadingOptions {
 export interface LoadingEvent extends Event {
   detail: {
     loading: Loading;
-  }
+  };
 }

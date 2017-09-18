@@ -100,7 +100,7 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ state: true }) clearOnEdit: boolean;
+  @Prop({ mutable: true }) clearOnEdit: boolean;
 
   /**
    * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
@@ -168,7 +168,7 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {string} The text value of the input.
    */
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
   /**
    * @hidden
@@ -326,6 +326,6 @@ export class Textarea implements TextareaComponent {
       >
         {this.value}
       </textarea>
-    )
+    );
   }
 }

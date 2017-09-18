@@ -11,7 +11,7 @@ export class ActionSheetController {
   private actionSheets: ActionSheet[] = [];
 
   @Method()
-  create(opts?: ActionSheetOptions) {
+  create(opts?: ActionSheetOptions): Promise<ActionSheet> {
     // create ionic's wrapping ion-action-sheet component
     const actionSheet = document.createElement('ion-action-sheet');
 

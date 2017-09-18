@@ -22,11 +22,30 @@ export function isFunction(v: any): v is (Function) { return typeof v === 'funct
 
 export function isStringOrNumber(v: any): v is (string | number) { return isString(v) || isNumber(v); }
 
+/** @hidden */
+export function isCheckedProperty(a: any, b: any): boolean {
+  if (a === undefined || a === null || a === '') {
+    return (b === undefined || b === null || b === '');
+
+  } else if (a === true || a === 'true') {
+    return (b === true || b === 'true');
+
+  } else if (a === false || a === 'false') {
+    return (b === false || b === 'false');
+
+  } else if (a === 0 || a === '0') {
+    return (b === 0 || b === '0');
+  }
+
+  // not using strict comparison on purpose
+  return (a == b); // tslint:disable-line
+}
+
 export function assert(bool: boolean, msg: string) {
   if (!bool) {
     console.error(msg);
   }
-};
+}
 
 export function toDashCase(str: string) {
   return str.replace(/([A-Z])/g, (g) => '-' + g[0].toLowerCase());
@@ -49,6 +68,26 @@ export function pointerCoordX(ev: any): number {
   return 0;
 }
 
+export function updateDetail(ev: any, detail: any) {
+  // get X coordinates for either a mouse click
+  // or a touch depending on the given event
+  let x = 0;
+  let y = 0;
+  if (ev) {
+    var changedTouches = ev.changedTouches;
+    if (changedTouches && changedTouches.length > 0) {
+      var touch = changedTouches[0];
+      x = touch.clientX;
+      y = touch.clientY;
+    }else if (ev.pageX !== undefined) {
+      x = ev.pageX;
+      y = ev.pageY;
+    }
+  }
+  detail.currentX = x;
+  detail.currentY = y;
+}
+
 export function pointerCoordY(ev: any): number {
   // get Y coordinates for either a mouse click
   // or a touch depending on the given event
@@ -64,7 +103,9 @@ export function pointerCoordY(ev: any): number {
   return 0;
 }
 
-export function getElementReference(elm: any, ref: string) {
+export type ElementRef = 'child' | 'parent' | 'body' | 'document' | 'window';
+
+export function getElementReference(elm: any, ref: ElementRef) {
   if (ref === 'child') {
     return elm.firstElementChild;
   }
@@ -127,6 +168,14 @@ export function getToolbarHeight(toolbarTagName: string, pageChildren: HTMLEleme
 /** @hidden */
 export type Side = 'left' | 'right' | 'start' | 'end';
 
+export function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
+  if (isRightSide) {
+    return posX >= window.innerWidth - maxEdgeStart;
+  } else {
+    return posX <= maxEdgeStart;
+  }
+}
+
 /**
  * @hidden
  * Given a side, return if it should be on the right
@@ -164,7 +213,7 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
   return (!isMovingFast && isOnResetZone) || (isResetDirection && isMovingFast);
 }
 
-export function isReady(element: HTMLElement) {
+export function isReady(element: Element): Promise<any> {
   return new Promise((resolve) => {
     (element as StencilElement).componentOnReady((elm: HTMLElement) => {
       resolve(elm);
@@ -172,7 +221,50 @@ export function isReady(element: HTMLElement) {
   });
 }
 
+export function getOrAppendElement(tagName: string): Element {
+  const element = document.querySelector(tagName);
+  if (element) {
+    return element;
+  }
+  const tmp = document.createElement(tagName);
+  document.body.appendChild(tmp);
+  return tmp;
+}
+
 /** @hidden */
 export function deepCopy(obj: any) {
   return JSON.parse(JSON.stringify(obj));
+}
+
+export function getWindow() {
+  return window;
+}
+
+export function getDocument() {
+  return document;
+}
+
+export function getActiveElement(): HTMLElement {
+  return getDocument()['activeElement'] as HTMLElement;
+}
+
+export function focusOutActiveElement() {
+  const activeElement = getActiveElement();
+  activeElement && activeElement.blur && activeElement.blur();
+}
+
+export function isTextInput(ele: any) {
+  return !!ele &&
+      (ele.tagName === 'TEXTAREA'
+      || ele.contentEditable === 'true'
+      || (ele.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(ele.type))));
+}
+export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
+
+export function hasFocusedTextInput() {
+  const activeElement = getActiveElement();
+  if (isTextInput(activeElement)) {
+    return activeElement.parentElement.querySelector(':focus') === activeElement;
+  }
+  return false;
 }

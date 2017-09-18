@@ -76,8 +76,8 @@ export class Tab {
       },
       attrs: {
         'role': 'tabpanel'
-        //'id': _tabId,
-        //aria-labelledby: _btnId
+        // 'id': _tabId,
+        // aria-labelledby: _btnId
       },
       class: {
       }
@@ -86,19 +86,19 @@ export class Tab {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.ionTabDidLoad.emit({ tab: this })
-    }, 0)
+      this.ionTabDidLoad.emit({ tab: this });
+    }, 0);
   }
 
   ionViewDidUnload() {
-    this.ionTabDidLoad.emit({ tab: this })
+    this.ionTabDidLoad.emit({ tab: this });
   }
 
   render() {
     const RootComponent = this.root;
     return [
       <RootComponent />,
-      <div class="nav-decor"></div>
-    ]
+      <div class='nav-decor'></div>
+    ];
   }
 }

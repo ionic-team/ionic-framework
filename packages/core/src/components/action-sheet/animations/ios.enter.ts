@@ -3,7 +3,7 @@ import { Animation } from '../../../index';
 /**
  * iOS Action Sheet Enter Animation
  */
-export default function(Animation: Animation, baseElm: HTMLElement) {
+export default function iOSEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

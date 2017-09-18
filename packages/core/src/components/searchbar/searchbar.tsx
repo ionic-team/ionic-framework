@@ -76,22 +76,22 @@ export class Searchbar {
   /**
    * @input {boolean} If true, enable searchbar animation. Default `false`.
    */
-  @Prop({ state: true }) animated: boolean = false;
+  @Prop({ mutable: true }) animated: boolean = false;
 
   /**
    * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Prop({ state: true }) autocomplete: string = 'off';
+  @Prop({ mutable: true }) autocomplete: string = 'off';
 
   /**
    * @input {string} Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Prop({ state: true }) autocorrect: string = 'off';
+  @Prop({ mutable: true }) autocorrect: string = 'off';
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
    */
-  @Prop({ state: true }) cancelButtonText: string = 'Cancel';
+  @Prop({ mutable: true }) cancelButtonText: string = 'Cancel';
 
 
 //   _inputDebouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
@@ -111,32 +111,32 @@ export class Searchbar {
   /**
    * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
    */
-  @Prop({ state: true }) debounce: number = 250;
+  @Prop({ mutable: true }) debounce: number = 250;
 
   /**
    * @input {string} Set the input's placeholder. Default `"Search"`.
    */
-  @Prop({ state: true }) placeholder: string = 'Search';
+  @Prop({ mutable: true }) placeholder: string = 'Search';
 
   /**
    * @input {boolean} If true, show the cancel button. Default `false`.
    */
-  @Prop({ state: true }) showCancelButton: boolean = false;
+  @Prop({ mutable: true }) showCancelButton: boolean = false;
 
   /**
    * @input {boolean} If true, enable spellcheck on the input. Default `false`.
    */
-  @Prop({ state: true }) spellcheck: boolean = false;
+  @Prop({ mutable: true }) spellcheck: boolean = false;
 
   /**
    * @input {string} Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
    */
-  @Prop({ state: true }) type: string = 'search';
+  @Prop({ mutable: true }) type: string = 'search';
 
   /**
    * @input {string} Set the value of the searchbar.
    */
-  @Prop({ state: true }) value: string;
+  @Prop({ mutable: true }) value: string;
 
 
   ionViewDidLoad() {
@@ -351,17 +351,17 @@ export class Searchbar {
     return [
       <div class='searchbar-input-container'>
         <ion-button
-          mode="md"
+          mode='md'
           onClick={this.cancelSearchbar.bind(this)}
           onMousedown={this.cancelSearchbar.bind(this)}
           clear
-          color="dark"
-          class="searchbar-md-cancel">
-            <ion-icon name="md-arrow-back"></ion-icon>
+          color='dark'
+          class='searchbar-md-cancel'>
+            <ion-icon name='md-arrow-back'></ion-icon>
         </ion-button>
-        <div class="searchbar-search-icon"></div>
+        <div class='searchbar-search-icon'></div>
         <input
-          class="searchbar-input"
+          class='searchbar-input'
           onInput={this.inputChanged.bind(this)}
           onBlur={this.inputBlurred.bind(this)}
           onFocus={this.inputFocused.bind(this)}
@@ -373,7 +373,7 @@ export class Searchbar {
           spellCheck={this.spellcheck}/>
         <ion-button
           clear
-          class="searchbar-clear-icon"
+          class='searchbar-clear-icon'
           onClick={this.clearInput.bind(this)}
           onMousedown={this.clearInput.bind(this)}>
         </ion-button>
@@ -383,7 +383,7 @@ export class Searchbar {
         clear
         onClick={this.cancelSearchbar.bind(this)}
         onMousedown={this.cancelSearchbar.bind(this)}
-        class="searchbar-ios-cancel">
+        class='searchbar-ios-cancel'>
           {this.cancelButtonText}
       </ion-button>
     ];

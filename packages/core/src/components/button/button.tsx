@@ -1,4 +1,4 @@
-import { Component, Element, Prop, CssClassMap } from '@stencil/core';
+import { Component, CssClassMap, Element, Prop } from '@stencil/core';
 
 import { getElementClassObject } from '../../utils/theme';
 
@@ -202,7 +202,7 @@ export class Button {
     const buttonClasses = {
       ...hostClasses,
       ...elementClasses
-    }
+    };
 
     return (
       <TagType class={buttonClasses} disabled={this.disabled}>

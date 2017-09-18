@@ -20,7 +20,7 @@ export class SelectOption {
   /**
    * @input {boolean} If true, the element is selected.
    */
-  @Prop() selected: boolean = false;
+  @Prop({ mutable: true }) selected: boolean = false;
 
   /**
    * @input {string} The text value of the option.

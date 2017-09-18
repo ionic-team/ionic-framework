@@ -6,14 +6,18 @@
  * option with a simple `get` method.
  *
  * @usage
+ *
  * ```ts
- * export class MyClass{
- *  constructor(public navParams: NavParams){
- *    // userParams is an object we have in our nav-parameters
- *    this.navParams.get('userParams');
- *  }
+ * import { NavParams } from 'ionic-angular';
+ *
+ * export class MyClass {
+ *   constructor(public navParams: NavParams) {
+ *     // userParams is an object we have in our nav-parameters
+ *     this.navParams.get('userParams');
+ *   }
  * }
  * ```
+ *
  * @demo /docs/demos/src/nav-params/
  * @see {@link /docs/components#navigation Navigation Component Docs}
  * @see {@link ../NavController/ NavController API Docs}
@@ -29,19 +33,21 @@ export class NavParams {
   constructor(public data: any = {}) {}
 
   /**
-   * Get the value of a nav-parameter for the current view
+   * Get the value of a navigation parameter for the current view
    *
    * ```ts
-   * export class MyClass{
-   *  constructor(public navParams: NavParams){
-   *    // userParams is an object we have in our nav-parameters
-   *    this.navParams.get('userParams');
-   *  }
+   * import { NavParams } from 'ionic-angular';
+   *
+   * export class MyClass {
+   *   constructor(public navParams: NavParams) {
+   *     // userParams is an object we have in our navigation parameters
+   *     this.navParams.get('userParams');
+   *   }
    * }
    * ```
    *
    *
-   * @param {string} param Which param you want to look up
+   * @param {string} param the parameter you want to get the value for
    */
   get(param: string): any {
     return this.data[param];

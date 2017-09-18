@@ -1,10 +1,11 @@
 import { AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animation-interface';
-import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSITION_END_FALLBACK_PADDING_MS, TRANSFORM_PROPS } from './constants';
+import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSFORM_PROPS, TRANSITION_END_FALLBACK_PADDING_MS } from './constants';
 import { transitionEnd } from './transition-end';
 
 
 
 export class Animator {
+
   private _afterAddClasses: string[];
   private _afterRemoveClasses: string[];
   private _afterStyles: { [property: string]: any; };
@@ -639,7 +640,7 @@ export class Animator {
 
     // flip the number if we're going in reverse
     if (this._isReverse) {
-      stepValue = ((stepValue * -1) + 1);
+      stepValue = 1 - stepValue;
     }
     var i = 0;
     var j = 0;
@@ -1021,12 +1022,6 @@ export class Animator {
     for (var i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i].progressStep(stepValue);
-    }
-
-    if (this._isReverse) {
-      // if the animation is going in reverse then
-      // flip the step value: 0 becomes 1, 1 becomes 0
-      stepValue = ((stepValue * -1) + 1);
     }
 
     // ******** DOM WRITE ****************

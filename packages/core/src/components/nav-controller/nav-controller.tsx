@@ -96,7 +96,7 @@ export class NavControllerImpl implements NavController {
   }
 
   @Method()
-  setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any> {
+  setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts?: NavOptions): Promise<any> {
     return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
       return setPagesImpl(nav, delegate, animation, componentDataPairs, opts);
     });
