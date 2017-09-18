@@ -111,7 +111,7 @@ export class Content {
       ...themedClasses,
       ...hostClasses,
       'statusbar-padding': this.config.getBoolean('statusbarPadding')
-    }
+    };
 
     return (
       <ion-scroll style={scrollStyle} props={props} class={scrollClasses}>

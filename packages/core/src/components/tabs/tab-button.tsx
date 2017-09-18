@@ -18,7 +18,7 @@ export class TabButton {
 
   hostData() {
     const tab = this.tab;
-    if(!tab) return {};
+    if (!tab) return {};
 
     // attr.id
     // attr.aria-controls
@@ -34,7 +34,7 @@ export class TabButton {
 
     return {
       attrs: {
-        'aria-selected': this.selectedIndex == this.index
+        'aria-selected': this.selectedIndex === this.index
       },
       class: {
         'has-title': hasTitle,
@@ -47,11 +47,11 @@ export class TabButton {
   }
 
   render() {
-    if(!this.tab) {
+    if (!this.tab) {
       return null;
     }
 
-    const tab = this.tab
+    const tab = this.tab;
 
     // TODO: Apply these on host?
     /*
@@ -59,22 +59,22 @@ export class TabButton {
     iconOnly, hasBadge, disableHover, tabDisabled, tabHidden } = {};
     */
 
-    const items = []
+    const items = [];
 
-    if(tab.tabIcon) {
-      items.push(<ion-icon class="tab-button-icon" name={tab.tabIcon}></ion-icon>);
+    if (tab.tabIcon) {
+      items.push(<ion-icon class='tab-button-icon' name={tab.tabIcon}></ion-icon>);
     }
 
-    if(tab.tabTitle) {
-      items.push(<span class="tab-button-text">{tab.tabTitle}</span>);
+    if (tab.tabTitle) {
+      items.push(<span class='tab-button-text'>{tab.tabTitle}</span>);
     }
 
-    if(tab.tabBadge) {
-      items.push(<ion-badge class="tab-badge" color={tab.tabBadgeStyle}>{tab.tabBadge}</ion-badge>);
+    if (tab.tabBadge) {
+      items.push(<ion-badge class='tab-badge' color={tab.tabBadgeStyle}>{tab.tabBadge}</ion-badge>);
     }
 
-    items.push(<div class="button-effect"></div>);
+    items.push(<div class='button-effect'></div>);
 
-    return (items)
+    return (items);
   }
 }

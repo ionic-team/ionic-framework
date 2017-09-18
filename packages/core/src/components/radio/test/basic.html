@@ -13,47 +13,85 @@
         <ion-title>Radios</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="outer-content">
-      <ion-radio-group>
-        <ion-list>
-          <ion-list-header>
-            Fruits
-          </ion-list-header>
+    <ion-content class="radio-test outer-content">
+      <ion-list>
+        <ion-radio-group id="fruitRadio">
+          <ion-item-divider>
+            <ion-label>Fruits (Group w/ values)</ion-label>
+          </ion-item-divider>
           <ion-item>
             <ion-label>Apple</ion-label>
-            <ion-radio slot="start" name="apple" checked></ion-radio>
-            <ion-icon slot="end" name="ionic"></ion-icon>
+            <ion-radio slot="start" value="apple"></ion-radio>
           </ion-item>
 
           <ion-item>
-            <ion-label>Banana</ion-label>
-            <ion-radio slot="start" name="banana" checked></ion-radio>
+            <ion-label>Grape, checked, disabled</ion-label>
+            <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
           </ion-item>
 
           <ion-item>
             <ion-label>Cherry</ion-label>
-            <ion-radio slot="start" color="danger" name="cherry"></ion-radio>
+            <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
           </ion-item>
-        </ion-list>
-      </ion-radio-group>
+        </ion-radio-group>
+
+        <ion-radio-group id="pizzaRadio">
+          <ion-item-divider>
+            <ion-label>Extra Pizza Topping (Group w/ no values)</ion-label>
+          </ion-item-divider>
+          <ion-item>
+            <ion-label>Pepperoni</ion-label>
+            <ion-radio slot="end" name="pepperoni" checked></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Sausage</ion-label>
+            <ion-radio slot="end" color="danger" name="sausage"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
+        <ion-radio-group id="veggiesRadio" allow-empty-selection>
+          <ion-item-divider>
+            <ion-label>Veggies (Group w/ allow empty)</ion-label>
+          </ion-item-divider>
+          <ion-item>
+            <ion-label>Carrot</ion-label>
+            <ion-radio slot="end" value="carrot"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Tomato</ion-label>
+            <ion-radio slot="end" value="tomato"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Broccoli</ion-label>
+            <ion-radio id="dangerRadio" slot="end" color="danger" value="broccoli" checked></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
+        <ion-item>
+          <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Checked</ion-button>
+          <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Disabled</ion-button>
+          <ion-button slot="end" onClick="printRadioValues()" outline small>Print</ion-button>
+          <ion-button slot="end" onClick="toggleString('dangerRadio', 'color', 'danger', 'secondary')" outline small color="danger">Color</ion-button>
+        </ion-item>
+      </ion-list>
+
+      <pre id="valuesCode"></pre>
 
       <ion-list>
         <ion-list-header>
-          Mo Fruits
+          No Radio Group
         </ion-list-header>
         <ion-item>
-          <ion-label>Grape, checked, disabled</ion-label>
-          <ion-radio slot="start" id="grapeChecked" name="grape" checked disabled></ion-radio>
-        </ion-item>
-
-        <ion-item>
           <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
-          <ion-radio slot="start" color="secondary" (ionChange)="kiwiChange($event)"></ion-radio>
+          <ion-radio slot="start" color="secondary"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Strawberry, (ionChange) checked="true"</ion-label>
-          <ion-radio slot="start" color="light" (ionChange)="strawberryChange($event)" checked="true"></ion-radio>
+          <ion-radio slot="start" color="light" checked="true"></ion-radio>
         </ion-item>
 
         <ion-item>
@@ -73,28 +111,10 @@
 
       </ion-list>
 
-
-      <p aria-hidden="true" text-center>
-        <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
-        <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
-        <ion-button onClick="printForm()" outline small>Print Form</ion-button>
-      </p>
-
       <p>
         <ion-radio id="standAloneChecked"></ion-radio>
         Stand-alone checkbox: <span id="standAloneCheckedSpan"></span>
       </p>
-
-      <p aria-hidden="true" padding>
-        <code>appleCtrl.value: <span id="appleCtrlValue"></span></code><br>
-        <code>bananaCtrl.value: <span id="bananaCtrlValue"></span></code><br>
-        <code>cherry.value: <span id="cherryCtrlValue"></span></code><br>
-        <code>grape.value: <span id="grapeCtrlValue"></span></code><br>
-        <code>kiwiValue: <spa id="kiwiValue"></span></code><br>
-        <code>strawberryValue: <span id="strawberryValue">y</span></code><br>
-      </p>
-
-      <pre aria-hidden="true" padding id="formResults"></pre>
 
       <ion-item>
         <ion-label>Checkbox / Toggle</ion-label>
@@ -115,8 +135,24 @@
     </ion-content>
 
     <script>
+      var radioValues = ['fruitRadio', 'pizzaRadio', 'veggiesRadio'];
+      printRadioValues();
+
       function printForm(ev) {
         console.log('TODO get working with forms');
+      }
+
+      function printRadioValues() {
+        var html = 'Values:<br>';
+
+        for (var i = 0; i < radioValues.length; i++) {
+          var radio = radioValues[i];
+          var ele = document.getElementById(radio);
+          html += '<span>' + radio + ': ' + ele.value + ' </span><br>';
+        }
+
+        var valueEle = document.getElementById('valuesCode');
+        valueEle.innerHTML = html;
       }
 
       function toggleBoolean(id, prop) {
@@ -124,9 +160,26 @@
 
         var isTrue = ele[prop] ? false : true;
         ele[prop] = isTrue;
-        console.log('in toggleBoolean, setting', prop, 'to', isTrue);
+        console.debug('in toggleBoolean, setting', prop, 'to', isTrue);
+      }
+
+      function toggleString(id, prop, firstVal, secondVal) {
+        var ele = document.getElementById(id);
+
+        var stringVal = ele[prop] == firstVal ? secondVal : firstVal;
+        ele[prop] = stringVal;
+        console.debug('in toggleString, setting', prop, 'to', stringVal);
       }
     </script>
+
+    <style>
+      .radio-test pre {
+        background: #f6f6f6;
+        border: 1px solid #ddd;
+        padding: 15px 10px;
+        margin-top: -20px;
+      }
+    </style>
 
   </ion-app>
 </body>

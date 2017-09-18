@@ -1,6 +1,6 @@
 import { Nav, Transition, ViewController } from './nav-interfaces';
 import { Animation, AnimationOptions, Config, TransitionBuilder } from '..';
-import { isDef } from '../utils/helpers'
+import { isDef } from '../utils/helpers';
 
 export const STATE_NEW = 1;
 export const STATE_INITIALIZED = 2;
@@ -78,7 +78,7 @@ export function canNavGoBack(nav: Nav) {
 export function transitionFactory(animation: Animation): Transition {
   (animation as any).registerTransitionStart = (callback: Function) => {
     (animation as any).transitionStartFunction = callback;
-  }
+  };
 
   (animation as any).start = function() {
     this.transitionStartFunction && this.transitionStartFunction();
@@ -107,13 +107,13 @@ export function transitionDestroyImpl(transition: Transition) {
 }
 
 export function getParentTransitionId(nav: Nav) {
-  nav = nav.parent
+  nav = nav.parent;
   while (nav) {
     const transitionId = nav.transitionId;
     if (isDef(transitionId)) {
       return transitionId;
     }
-    nav = nav.parent
+    nav = nav.parent;
   }
   return -1;
 }

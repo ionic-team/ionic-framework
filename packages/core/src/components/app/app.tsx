@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { Element, Component, Listen, Prop } from '@stencil/core';
 import { Nav, NavContainer } from '../../navigation/nav-interfaces';
+=======
+import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Nav, NavContainer, OverlayPortal } from '../../navigation/nav-interfaces';
+>>>>>>> fffa9b54606f47336abfbb232405186787180b12
 import { Config } from '../..';
 import { App } from './app-interfaces';
 import { isReady } from '../../utils/helpers';

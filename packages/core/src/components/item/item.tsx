@@ -1,7 +1,8 @@
-import { Component, Element, HostElement, Method, Prop, Listen } from '@stencil/core';
-import { CssClassMap } from '../../index';
+import { Component, Element, HostElement, Listen, Method, Prop, State } from '@stencil/core';
+
 import { createThemedClasses } from '../../utils/theme';
 
+import { CssClassMap } from '../../index';
 
 @Component({
   tag: 'ion-item',
@@ -14,9 +15,13 @@ import { createThemedClasses } from '../../utils/theme';
 export class Item {
   private ids: number = -1;
   private id: string;
+  private inputs: any = [];
 
-  private childStyles: CssClassMap = Object.create(null);
+  private itemStyles: { [key: string]: CssClassMap } = Object.create(null);
   private label: any;
+
+  // TODO get reorder from a parent list/group
+  @State() reorder: boolean = false;
 
   @Element() private el: HTMLElement;
 
@@ -29,22 +34,41 @@ export class Item {
     ev.stopPropagation();
 
     let hasChildStyleChange = false;
+
+    let tagName: string = (ev.target as HTMLElement).tagName;
     let updatedStyles: any = ev.detail;
 
     for (var key in updatedStyles) {
-      if (updatedStyles[key] !== this.childStyles['item-' + key]) {
-        this.childStyles['item-' + key] = updatedStyles[key];
+      if (('item-' + key) !== key) {
+        Object.defineProperty(updatedStyles, 'item-' + key, Object.getOwnPropertyDescriptor(updatedStyles, key));
+        delete updatedStyles[key];
         hasChildStyleChange = true;
       }
     }
+
+    this.itemStyles[tagName] = updatedStyles;
 
     // returning true tells the renderer to queue an update
     return hasChildStyleChange;
   }
 
+  // TODO? this loads after radio group
+  // @Listen('ionRadioDidLoad')
+  // protected radioDidLoad(ev: RadioEvent) {
+  //   const radio = ev.detail.radio;
+  //   // register the input inside of the item
+  //   // reset to the item's id instead of the radiogroup id
+  //   radio.id = 'rb-' + this.registerInput('radio');
+  //   radio.labelId = 'lbl-' + this.id;
+  // }
+
   @Method()
   getLabelText(): string {
     return this.label ? this.label.getText() : '';
+  }
+
+  ionViewWillLoad() {
+    this.id = (++itemId).toString();
   }
 
   ionViewDidLoad() {
@@ -64,20 +88,34 @@ export class Item {
     //   }
     //   this.viewLabel = false;
     // }
+
+    // if (this._viewLabel && this.inputs.length) {
+    //   let labelText = this.getLabelText().trim();
+    //   this._viewLabel = (labelText.length > 0);
+    // }
+
+    // if (this.inputs.length > 1) {
+    //   this.setElementClass('item-multiple-inputs', true);
+    // }
   }
 
   /**
    * @hidden
    */
-  @Method()
   registerInput(type: string) {
-    // this.inputs.push(type);
+    this.inputs.push(type);
     return this.id + '-' + (++this.ids);
   }
 
   render() {
+    let childStyles = {};
+
+    for (var key in this.itemStyles) {
+      childStyles = Object.assign(childStyles, this.itemStyles[key]);
+    }
+
     let themedClasses = {
-      ...this.childStyles,
+      ...childStyles,
       ...createThemedClasses(this.mode, this.color, 'item'),
       'item-block': true
     };
@@ -93,53 +131,18 @@ export class Item {
             <slot></slot>
           </div>
           <slot name='end'></slot>
+          { this.reorder
+            ? <ion-reorder></ion-reorder>
+            : null
+          }
         </div>
+        <div class='button-effect'></div>
       </TagType>
     );
-
-    // template:
-    //   '<ng-content select="[slot="start"],ion-checkbox:not([slot="end"])"></ng-content>' +
-    //   '<div class="item-inner">' +
-    //     '<div class="input-wrapper">' +
-    //       '<ng-content select="ion-label"></ng-content>' +
-    //       '<ion-label *ngIf="_viewLabel">' +
-    //         '<ng-content></ng-content>' +
-    //       '</ion-label>' +
-    //       '<ng-content select="ion-select,ion-input,ion-textarea,ion-datetime,ion-range,[item-content]"></ng-content>' +
-    //     '</div>' +
-    //     '<ng-content select="[slot="end"],ion-radio,ion-toggle"></ng-content>' +
-    //     '<ion-reorder *ngIf="_hasReorder"></ion-reorder>' +
-    //   '</div>' +
-    //   '<div class="button-effect"></div>',
   }
 
 
-  // _ids: number = -1;
-  // _inputs: Array<string> = [];
-  // _label: Label;
-  // _viewLabel: boolean = true;
-  // _name: string = 'item';
-  // _hasReorder: boolean;
-
-  // /**
-  //  * @hidden
-  //  */
-  // id: string;
-
-  // /**
-  //  * @hidden
-  //  */
-  // labelId: string = null;
-
-  // constructor(
-  //   form: Form,
-  //   config: Config,
-  //   elementRef: ElementRef,
-  //   renderer: Renderer,
-  //   @Optional() reorder: ItemReorder
-  // ) {
-  //   super(config, elementRef, renderer, 'item');
-
+  // constructor() {
   //   this._setName(elementRef);
   //   this._hasReorder = !!reorder;
   //   this.id = form.nextId().toString();
@@ -155,48 +158,6 @@ export class Item {
   //     };
   //   }
   // }
-
-  // /**
-  //  * @hidden
-  //  */
-  // registerInput(type: string) {
-  //   this._inputs.push(type);
-  //   return this.id + '-' + (++this._ids);
-  // }
-
-  // /**
-  //  * @hidden
-  //  */
-  // ngAfterContentInit() {
-  //   if (this._viewLabel && this._inputs.length) {
-  //     let labelText = this.getLabelText().trim();
-  //     this._viewLabel = (labelText.length > 0);
-  //   }
-
-  //   if (this._inputs.length > 1) {
-  //     this.setElementClass('item-multiple-inputs', true);
-  //   }
-  // }
-
-  // /**
-  //  * @hidden
-  //  */
-  // _updateColor(newColor: string, componentName?: string) {
-  //   componentName = componentName || 'item'; // item-radio
-  //   this._setColor(newColor, componentName);
-  // }
-
-  // /**
-  //  * @hidden
-  //  */
-  // _setName(elementRef: ElementRef) {
-  //   let nodeName = elementRef.nativeElement.nodeName.replace('ION-', '');
-
-  //   if (nodeName === 'LIST-HEADER' || nodeName === 'ITEM-DIVIDER') {
-  //     this._name = nodeName;
-  //   }
-  // }
-
 
   // /**
   //  * @hidden
@@ -226,18 +187,6 @@ export class Item {
   // /**
   //  * @hidden
   //  */
-  // @ContentChildren(Button)
-  // set _buttons(buttons: QueryList<Button>) {
-  //   buttons.forEach(button => {
-  //     if (!button._size) {
-  //       button.setElementClass('item-button', true);
-  //     }
-  //   });
-  // }
-
-  // /**
-  //  * @hidden
-  //  */
   // @ContentChildren(Icon)
   // set _icons(icons: QueryList<Icon>) {
   //   icons.forEach(icon => {
@@ -245,3 +194,5 @@ export class Item {
   //   });
   // }
 }
+
+var itemId = -1;

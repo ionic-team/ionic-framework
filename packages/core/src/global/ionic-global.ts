@@ -1,5 +1,5 @@
 import { createConfigController } from './config-controller';
-import { detectPlatforms, PLATFORM_CONFIGS } from './platform-configs';
+import { PLATFORM_CONFIGS, detectPlatforms } from './platform-configs';
 
 
 const Ionic = (window as any).Ionic = (window as any).Ionic || {};

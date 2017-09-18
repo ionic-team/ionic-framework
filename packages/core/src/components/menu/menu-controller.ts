@@ -1,15 +1,24 @@
-import { Menu, MenuType } from '../../index';
-import { MenuRevealType, MenuPushType, MenuOverlayType } from './menu-types';
+import { Animation, AnimationBuilder, AnimationController, Menu } from '../../index';
+import { Component, Method, Prop } from '@stencil/core';
 
+import MenuOverlayAnimation from './animations/overlay';
+import MenuRevealAnimation from './animations/reveal';
+import MenuPushAnimation from './animations/push';
 
+@Component({
+  tag: 'ion-menu-controller'
+})
 export class MenuController {
-  private _menus: Array<Menu> = [];
-  private _menuTypes: { [name: string]: new(...args: any[]) => MenuType } = {};
+
+  private menus: Menu[] = [];
+  private menuAnimations: { [name: string]: AnimationBuilder } = {};
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
 
   constructor() {
-    this.registerType('reveal', MenuRevealType);
-    this.registerType('push', MenuPushType);
-    this.registerType('overlay', MenuOverlayType);
+    this.registerAnimation('reveal', MenuRevealAnimation);
+    this.registerAnimation('push', MenuPushAnimation);
+    this.registerAnimation('overlay', MenuOverlayAnimation);
   }
 
   /**
@@ -17,6 +26,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu is fully opened
    */
+  @Method()
   open(menuId?: string): Promise<boolean> {
     const menu = this.get(menuId);
     if (menu && !this.isAnimating()) {
@@ -36,6 +46,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu is fully closed
    */
+  @Method()
   close(menuId?: string): Promise<boolean> {
     let menu: Menu;
 
@@ -63,6 +74,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Promise} returns a promise when the menu has been toggled
    */
+  @Method()
   toggle(menuId?: string): Promise<boolean> {
     const menu = this.get(menuId);
     if (menu && !this.isAnimating()) {
@@ -83,6 +95,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
+  @Method()
   enable(shouldEnable: boolean, menuId?: string): Menu {
     const menu = this.get(menuId);
     return (menu && menu.enable(shouldEnable)) || null;
@@ -94,6 +107,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
+  @Method()
   swipeEnable(shouldEnable: boolean, menuId?: string): Menu {
     const menu = this.get(menuId);
     return (menu && menu.swipeEnable(shouldEnable)) || null;
@@ -104,10 +118,11 @@ export class MenuController {
    * @return {boolean} Returns true if the specified menu is currently open, otherwise false.
    * If the menuId is not specified, it returns true if ANY menu is currenly open.
    */
+  @Method()
   isOpen(menuId?: string): boolean {
     if (menuId) {
       var menu = this.get(menuId);
-      return menu && menu.isOpen || false;
+      return menu && menu.isOpen() || false;
     } else {
       return !!this.getOpen();
     }
@@ -117,6 +132,7 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {boolean} Returns true if the menu is currently enabled, otherwise false.
    */
+  @Method()
   isEnabled(menuId?: string): boolean {
     const menu = this.get(menuId);
     return menu && menu.enabled || false;
@@ -131,87 +147,94 @@ export class MenuController {
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
    * @return {Menu} Returns the instance of the menu if found, otherwise `null`.
    */
+  @Method()
   get(menuId?: string): Menu {
     var menu: Menu;
 
     if (menuId === 'left' || menuId === 'right') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      menu = this._menus.find(m => m.side === menuId && m.enabled);
+      menu = this.menus.find(m => m.side === menuId && m.enabled);
       if (menu) {
         return menu;
       }
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
-      return this._menus.find(m => m.side === menuId) || null;
+      return this.menus.find(m => m.side === menuId) || null;
 
     } else if (menuId) {
       // the menuId was not left or right
       // so try to get the menu by its "id"
-      return this._menus.find(m => m.id === menuId) || null;
+      return this.menus.find(m => m.id === menuId) || null;
     }
 
     // return the first enabled menu
-    menu = this._menus.find(m => m.enabled);
+    menu = this.menus.find(m => m.enabled);
     if (menu) {
       return menu;
     }
 
     // get the first menu in the array, if one exists
-    return (this._menus.length ? this._menus[0] : null);
+    return (this.menus.length > 0 ? this.menus[0] : null);
   }
 
   /**
    * @return {Menu} Returns the instance of the menu already opened, otherwise `null`.
    */
+  @Method()
   getOpen(): Menu {
-    return this._menus.find(m => m.isOpen);
+    return this.menus.find(m => m.isOpen());
   }
 
   /**
    * @return {Array<Menu>}  Returns an array of all menu instances.
    */
-  getMenus(): Array<Menu> {
-    return this._menus;
+  @Method()
+  getMenus(): Menu[] {
+    return this.menus;
   }
 
   /**
    * @hidden
    * @return {boolean} if any menu is currently animating
    */
+  @Method()
   isAnimating(): boolean {
-    return this._menus.some(menu => menu.isAnimating);
+    return this.menus.some(menu => menu.isAnimating());
   }
 
   /**
    * @hidden
    */
+  @Method()
   _register(menu: Menu) {
-    if (this._menus.indexOf(menu) < 0) {
-      this._menus.push(menu);
+    if (this.menus.indexOf(menu) < 0) {
+      this.menus.push(menu);
     }
   }
 
   /**
    * @hidden
    */
+  @Method()
   _unregister(menu: Menu) {
-    const index = this._menus.indexOf(menu);
+    const index = this.menus.indexOf(menu);
     if (index > -1) {
-      this._menus.splice(index, 1);
+      this.menus.splice(index, 1);
     }
   }
 
   /**
    * @hidden
    */
+  @Method()
   _setActiveMenu(menu: Menu) {
     // if this menu should be enabled
     // then find all the other menus on this same side
     // and automatically disable other same side menus
     const side = menu.side;
-    this._menus
+    this.menus
       .filter(m => m.side === side && m !== menu)
       .map(m => m.enable(false));
   }
@@ -220,15 +243,17 @@ export class MenuController {
   /**
    * @hidden
    */
-  registerType(name: string, cls: new(...args: any[]) => MenuType) {
-    this._menuTypes[name] = cls;
+  registerAnimation(name: string, cls: AnimationBuilder) {
+    this.menuAnimations[name] = cls;
   }
 
   /**
    * @hidden
    */
-  create(type: string, menuCmp: Menu) {
-    return new this._menuTypes[type](menuCmp);
+  @Method()
+  create(type: string, menuCmp: Menu): Promise<Animation> {
+    const animationBuilder = this.menuAnimations[type];
+    return this.animationCtrl.create(animationBuilder, null, menuCmp);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { AnimationBuilder, AnimationController, Animation } from '../../index';
+import { Animation, AnimationBuilder, AnimationController } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -187,5 +187,5 @@ export interface ModalOptions {
 export interface ModalEvent extends Event {
   detail: {
     modal: Modal;
-  }
+  };
 }

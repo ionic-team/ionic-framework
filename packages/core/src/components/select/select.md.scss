@@ -58,3 +58,18 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
 
   pointer-events: none;
 }
+
+// Select Popover Interface
+// --------------------------------------------------
+
+.select-popover-md .radio-icon {
+  display: none;
+}
+
+.select-popover-md .item-radio-checked {
+  background-color: #DCDCDC;
+}
+
+.select-popover-md .item-radio-checked ion-label {
+  color: initial;
+}

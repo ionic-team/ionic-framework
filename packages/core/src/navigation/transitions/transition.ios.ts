@@ -124,7 +124,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
     const leavingNavbarEle = leavingView.element.querySelector('ion-navbar');
     if (leavingNavbarEle) {
       const leavingNavBar = rootTransition.create();
-      leavingNavBar.addElement(leavingNavbarEle)
+      leavingNavBar.addElement(leavingNavbarEle);
 
       const leavingTitle = rootTransition.create();
       leavingTitle.addElement(leavingNavbarEle.querySelector('ion-title'));

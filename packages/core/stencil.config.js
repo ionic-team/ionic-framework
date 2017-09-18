@@ -1,8 +1,7 @@
 exports.config = {
   namespace: 'Ionic',
-  wwwDir: 'dist',
-  publicPath: '/dist/build',
-  generateCollection: true,
+  generateDistribution: true,
+  generateWWW: false,
   bundles: [
     { components: ['ion-animation-controller'] },
     { components: ['ion-app', 'ion-content', 'ion-fixed', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
@@ -20,7 +19,7 @@ exports.config = {
     { components: ['ion-item', 'ion-item-divider', 'ion-item-sliding', 'ion-item-options', 'ion-item-option', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
     { components: ['ion-input', 'ion-textarea'] },
     { components: ['ion-loading', 'ion-loading-controller'] },
-    { components: ['ion-menu'], priority: 'low' },
+    { components: ['ion-menu', 'ion-menu-controller'], priority: 'low' },
     { components: ['ion-modal', 'ion-modal-controller'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
@@ -29,6 +28,7 @@ exports.config = {
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
+    { components: ['ion-split-pane'] },
     { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] },
     { components: ['ion-nav', 'ion-nav-controller', 'stencil-ion-nav-delegate','page-one', 'page-two', 'page-three'] },

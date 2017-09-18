@@ -1,7 +1,6 @@
 
 import { Component, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 
-import { createThemedClasses } from '../../utils/theme';
 
 export interface SelectPopoverOption {
   text: string;
@@ -53,7 +52,7 @@ export class SelectPopover {
 
   render() {
     return (
-      <ion-list>
+      <ion-list no-lines={this.mode === 'md'}>
         <ion-radio-group value={this.value}>
           {this.options.map(option =>
             <ion-item>

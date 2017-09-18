@@ -351,17 +351,17 @@ export class Searchbar {
     return [
       <div class='searchbar-input-container'>
         <ion-button
-          mode="md"
+          mode='md'
           onClick={this.cancelSearchbar.bind(this)}
           onMousedown={this.cancelSearchbar.bind(this)}
           clear
-          color="dark"
-          class="searchbar-md-cancel">
-            <ion-icon name="md-arrow-back"></ion-icon>
+          color='dark'
+          class='searchbar-md-cancel'>
+            <ion-icon name='md-arrow-back'></ion-icon>
         </ion-button>
-        <div class="searchbar-search-icon"></div>
+        <div class='searchbar-search-icon'></div>
         <input
-          class="searchbar-input"
+          class='searchbar-input'
           onInput={this.inputChanged.bind(this)}
           onBlur={this.inputBlurred.bind(this)}
           onFocus={this.inputFocused.bind(this)}
@@ -373,7 +373,7 @@ export class Searchbar {
           spellCheck={this.spellcheck}/>
         <ion-button
           clear
-          class="searchbar-clear-icon"
+          class='searchbar-clear-icon'
           onClick={this.clearInput.bind(this)}
           onMousedown={this.clearInput.bind(this)}>
         </ion-button>
@@ -383,7 +383,7 @@ export class Searchbar {
         clear
         onClick={this.cancelSearchbar.bind(this)}
         onMousedown={this.cancelSearchbar.bind(this)}
-        class="searchbar-ios-cancel">
+        class='searchbar-ios-cancel'>
           {this.cancelButtonText}
       </ion-button>
     ];

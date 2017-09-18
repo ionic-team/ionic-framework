@@ -358,10 +358,10 @@ export class Input implements InputComponent {
       />,
       <button
         hidden={this.clearInput !== true}
-        class="text-input-clear-icon"
+        class='text-input-clear-icon'
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}>
       </button>
-    ]
+    ];
   }
 }

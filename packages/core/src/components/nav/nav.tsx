@@ -89,7 +89,7 @@ export class IonNav implements Nav {
   }
 
   @Method()
-  setPages(componentDataPairs: ComponentDataPair[], opts? : NavOptions): Promise<any> {
+  setPages(componentDataPairs: ComponentDataPair[], opts?: NavOptions): Promise<any> {
     return setPagesImpl(this, componentDataPairs, opts);
   }
 
@@ -191,7 +191,7 @@ export function removeViewImpl(nav: Nav, viewController: ViewController, opts?: 
   });
 }
 
-export function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPair[], opts? : NavOptions) {
+export function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPair[], opts?: NavOptions) {
   return getNavController(nav).then(() => {
     return nav.navController.setPages(nav, componentDataPairs, opts);
   });

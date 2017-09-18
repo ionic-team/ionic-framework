@@ -28,6 +28,6 @@ export class PageThree {
         <ion-button onClick={() => this.pop()}>Go Back</ion-button>
       </div>
     </ion-content>
-    ]
+    ];
   }
 }

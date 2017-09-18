@@ -18,7 +18,7 @@ export class TabBar {
   /**
    * @prop {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
-  @Prop() tabsLayout: string = 'icon-top'
+  @Prop() tabsLayout: string = 'icon-top';
   /*
 
   hostData() {

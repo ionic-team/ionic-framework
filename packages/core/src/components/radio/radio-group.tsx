@@ -1,6 +1,8 @@
-import { Component, Element, Event, EventEmitter, HostElement, Prop , State} from '@stencil/core';
+import { Component, Element, Event, EventEmitter, HostElement, Listen, Prop, PropDidChange, State} from '@stencil/core';
+
 import { isCheckedProperty } from '../../utils/helpers';
-import { Radio } from './radio';
+
+import { Radio, RadioEvent } from './radio';
 
 
 /**
@@ -58,7 +60,9 @@ import { Radio } from './radio';
   tag: 'ion-radio-group'
 })
 export class RadioGroup {
-  radios: Radio[];
+  radios: Radio[] = [];
+  id: number;
+  ids = 0;
 
   @Element() el: HTMLElement;
 
@@ -86,32 +90,56 @@ export class RadioGroup {
    */
   @Prop({ mutable: true }) value: string;
 
+  @PropDidChange('value')
+  valueChanged() {
+    this.update();
+    this.ionChange.emit(this);
+  }
+
+  @Listen('ionRadioDidLoad')
+  protected radioDidLoad(ev: RadioEvent) {
+    const radio = ev.detail.radio;
+    this.radios.push(radio);
+    radio.id = 'rb-' + this.id + '-' + (++this.ids);
+
+    // if the value is not defined then use its unique id
+    radio.value = !radio.value ? radio.id : radio.value;
+
+    if (radio.checked && !this.value) {
+      this.value = radio.value;
+    }
+  }
+
+  @Listen('ionRadioCheckedDidChange')
+  protected radioCheckedDidChange(ev: RadioEvent) {
+    const radio = ev.detail.radio;
+
+    // TODO shouldn't be able to set radio checked to false
+    // if allowEmptySelection is false
+    if (radio.checked && this.value !== radio.value) {
+      this.value = radio.checked ? radio.value : '';
+    }
+  }
+
+  @Listen('ionRadioDidToggle')
+  protected radioDidToggle(ev: RadioEvent) {
+    const radio = ev.detail.radio;
+
+    // If the group does not allow empty selection then checked
+    // should be true, otherwise leave it as is
+    radio.checked = this.allowEmptySelection ? radio.checked : true;
+    this.value = radio.checked ? radio.value : '';
+  }
 
   ionViewWillLoad() {
-    let radioGroupId = ++radioGroupIds;
-    let radioId = 0;
-
-    const radios = this.el.querySelectorAll('ion-radio') as NodeListOf<HostElement>;
-
-    for (var i = 0; i < radios.length; i++) {
-      const radio = radios[i].$instance;
-
-      if (radio) {
-        radio.id = 'rb-' + radioGroupId + '-' + (++radioId);
-
-        if (radio.checked) {
-          this.activeId = radio.id;
-        }
-      } else {
-      }
-    }
+    this.id = ++radioGroupIds;
 
     // Get the list header if it exists and set the id
     const header = this.el.querySelector('ion-list-header') as HostElement;
 
     if (header) {
       if (!header.id) {
-        header.id = 'rg-hdr-' + radioGroupId;
+        header.id = 'rg-hdr-' + this.id;
       }
       this.headerId = header.id;
     }
@@ -125,10 +153,9 @@ export class RadioGroup {
   update() {
     // loop through each of the radios
     let hasChecked = false;
-    this.radios.forEach(radio => {
+    this.radios.forEach((radio: Radio) => {
 
-      // check this radiobutton if its value is
-      // the same as the radiogroups value
+      // Check the radio if the value is the same as the group value
       radio.checked = isCheckedProperty(this.value, radio.value) && !hasChecked;
 
       if (radio.checked) {

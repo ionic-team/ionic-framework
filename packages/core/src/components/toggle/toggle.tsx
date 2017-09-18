@@ -160,7 +160,7 @@ export class Toggle implements BooleanInputComponent {
         'gesturePriority': 30,
         'type': 'pan,press',
         'direction': 'x',
-        'threshold': 20,
+        'threshold': 0,
         'attachTo': 'parent'
       }}>
         <div class='toggle-icon'>

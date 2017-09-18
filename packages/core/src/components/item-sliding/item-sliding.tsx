@@ -317,12 +317,13 @@ export class ItemSliding {
       default: console.warn('invalid ItemSideFlags value', this.sides); break;
     }
 
+    let optsWidth;
     if (openAmount > this.optsWidthRightSide) {
-      var optsWidth = this.optsWidthRightSide;
+      optsWidth = this.optsWidthRightSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
 
     } else if (openAmount < -this.optsWidthLeftSide) {
-      var optsWidth = -this.optsWidthLeftSide;
+      optsWidth = -this.optsWidthLeftSide;
       openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
     }
 
@@ -374,13 +375,13 @@ export class ItemSliding {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
       this.optsWidthRightSide = this.rightOptions.width();
-      this.optsWidthRightSide == 0 && console.warn('optsWidthRightSide should not be zero');
+      this.optsWidthRightSide === 0 && console.warn('optsWidthRightSide should not be zero');
     }
 
     this.optsWidthLeftSide = 0;
     if (this.leftOptions) {
       this.optsWidthLeftSide = this.leftOptions.width();
-      this.optsWidthLeftSide == 0 && console.warn('optsWidthLeftSide should not be zero');
+      this.optsWidthLeftSide === 0 && console.warn('optsWidthLeftSide should not be zero');
     }
     this.optsDirty = false;
   }
@@ -396,15 +397,16 @@ export class ItemSliding {
       this.item.style.transition = '';
 
     } else {
+      var state;
       if (openAmount > 0) {
-        var state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
+        state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
           ? SlidingState.Right | SlidingState.SwipeRight
           : SlidingState.Right;
 
         this.setState(state);
 
       } else if (openAmount < 0) {
-        var state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
+        state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
           ? SlidingState.Left | SlidingState.SwipeLeft
           : SlidingState.Left;
 
@@ -480,27 +482,26 @@ export class ItemSliding {
         'active-swipe-right': !!(this.state & SlidingState.SwipeRight),
         'active-swipe-left': !!(this.state & SlidingState.SwipeLeft)
       }
-    }
+    };
   }
 
   render() {
     return (
-
-    <ion-gesture props={{
-      'canStart': this.canStart.bind(this),
-      'onStart': this.onDragStart.bind(this),
-      'onMove': this.onDragMove.bind(this),
-      'onEnd': this.onDragEnd.bind(this),
-      'gestureName': 'item-swipe',
-      'gesturePriority': -10,
-      'type': 'pan',
-      'direction': 'x',
-      'maxAngle': 20,
-      'threshold': 5,
-      'attachTo': 'parent'
-    }}>
-      <slot></slot>
-    </ion-gesture>
+      <ion-gesture props={{
+        'canStart': this.canStart.bind(this),
+        'onStart': this.onDragStart.bind(this),
+        'onMove': this.onDragMove.bind(this),
+        'onEnd': this.onDragEnd.bind(this),
+        'gestureName': 'item-swipe',
+        'gesturePriority': -10,
+        'type': 'pan',
+        'direction': 'x',
+        'maxAngle': 20,
+        'threshold': 5,
+        'attachTo': 'parent'
+      }}>
+        <slot></slot>
+      </ion-gesture>
     );
   }
 }

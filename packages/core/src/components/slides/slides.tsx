@@ -1,4 +1,4 @@
-import { Component, Element, Event, Prop, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 import { Swiper } from './vendor/swiper';
 
 

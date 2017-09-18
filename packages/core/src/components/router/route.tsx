@@ -18,7 +18,7 @@ export class Route {
   // The instance of the router
   @Prop() router: any;
 
-  //@Prop() match: any;
+  // @Prop() match: any;
   @State() match: any = {};
 
   ionViewWillLoad() {

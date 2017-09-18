@@ -1,4 +1,4 @@
-import { Component, Element, HostElement, Listen, Prop, PropDidChange, EventEmitter, Event } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, HostElement, Listen, Prop, PropDidChange } from '@stencil/core';
 
 import { SegmentButtonEvent } from '../../index';
 

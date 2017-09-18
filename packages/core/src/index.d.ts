@@ -10,7 +10,6 @@ import { Loading, LoadingEvent, LoadingOptions } from './components/loading/load
 import { LoadingController } from './components/loading-controller/loading-controller';
 import { GestureDetail, GestureCallback } from './components/gesture/gesture';
 import { Menu } from './components/menu/menu';
-import { MenuType } from './components/menu/menu-types';
 import { MenuController } from './components/menu/menu-controller';
 import { Modal, ModalOptions, ModalEvent } from './components/modal/modal';
 import { ModalController } from './components/modal-controller/modal-controller';
@@ -21,6 +20,8 @@ import { PopoverController } from './components/popover-controller/popover-contr
 import { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 import { Segment } from './components/segment/segment';
 import { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
+import { SplitPane, SplitPaneAlert } from './components/split-pane/split-pane';
+
 import { Toast, ToastEvent, ToastOptions } from './components/toast/toast'
 import { ToastController } from './components/toast-controller/toast-controller'
 
@@ -77,7 +78,6 @@ export {
   LoadingEvent,
   Menu,
   MenuController,
-  MenuType,
   Modal,
   ModalController,
   ModalOptions,
@@ -92,6 +92,8 @@ export {
   Segment,
   SegmentButton,
   SegmentButtonEvent,
+  SplitPane,
+  SplitPaneAlert,
   TransitionBuilder,
   Toast,
   ToastEvent,

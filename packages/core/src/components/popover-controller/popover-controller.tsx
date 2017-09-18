@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { PopoverEvent, PopoverOptions, Popover } from '../../index';
+import { Popover, PopoverEvent, PopoverOptions } from '../../index';
 
 
 @Component({

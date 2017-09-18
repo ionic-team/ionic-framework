@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, CssClassMap, Event, EventEmitter, Prop } from '@stencil/core';
 
 import { LocaleData } from './datetime-util';
 
@@ -481,12 +481,12 @@ export class DateTime {
     return [
       <div class={ dateTimeTextClasses }>{ dateTimeText }</div>,
       <button
-        aria-haspopup="true"
+        aria-haspopup='true'
         id={this.id}
         aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? "true" : false}
+        aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
-        class="item-cover">
+        class='item-cover'>
       </button>
     ];
   }
