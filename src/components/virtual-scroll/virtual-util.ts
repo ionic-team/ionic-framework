@@ -448,110 +448,55 @@ export function writeToNodes(plt: Platform, nodes: VirtualNode[], cells: Virtual
   }
 }
 
-
 /**
  * NO DOM
  */
 export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
-  // figure out which cells should be rendered
-  let cell: VirtualCell;
-  let lastRow = -1;
-  let cellsRenderHeight = 0;
-  let maxRenderHeight = (data.renderHeight - data.itmHeight);
-  let totalCells = cells.length;
-  let viewableRenderedPadding = (data.itmHeight < 90 ? VIEWABLE_RENDERED_PADDING : 0);
+
+  const maxRenderHeight = (data.renderHeight - data.itmHeight);
+  const totalCells = cells.length;
+  const viewableRenderedPadding = (data.itmHeight < 90 ? VIEWABLE_RENDERED_PADDING : 0);
 
   if (data.scrollDiff > 0) {
     // scrolling down
     data.topCell = Math.max(data.topViewCell - viewableRenderedPadding, 0);
-    data.bottomCell = Math.min(data.topCell + 2, totalCells - 1);
+    data.bottomCell = data.topCell;
 
-    console.debug('virtualScroll-util', 'before scrolling down, will render cells:', data.topCell, 'to', data.bottomCell,
-      'totalCells are:', totalCells, 'renderHeight is now', cellsRenderHeight, 'viewableRenderedPadding', viewableRenderedPadding,
-      'topViewCell:', data.topViewCell, 'bottomViewCell:', data.bottomViewCell);
-
+    let cellsRenderHeight = 0;
     for (let i = data.topCell; i < totalCells; i++) {
-      cell = cells[i];
-      if (cell.row !== lastRow) {
-        cellsRenderHeight += cell.height;
-        lastRow = cell.row;
-      }
-
-      if (i > data.bottomCell) {
-        data.bottomCell = i;
-      }
-
-      if (cellsRenderHeight >= maxRenderHeight) {
-        break;
-      }
+      cellsRenderHeight += cells[i].height;
+      if (i > data.bottomCell) data.bottomCell = i;
+      if (cellsRenderHeight >= maxRenderHeight) break;
     }
 
-    if (data.bottomCell === totalCells - 1) {
-      let tempHeight = 0;
-      lastRow = -1;
-      for (let i = data.bottomCell; i >= 0; i--) {
-        cell = cells[i];
-        if (cell.row !== lastRow) {
-          tempHeight += cell.height;
-          lastRow = cell.row;
-        }
-
-        if (i < data.topCell) {
-          data.topCell = i;
-        }
-
-        if (tempHeight >= maxRenderHeight) {
-          break;
-        }
+    if (cellsRenderHeight < maxRenderHeight) {
+      // there are no more cells at the bottom, so move topCell to a smaller index
+      for (let i = data.topCell - 1; i >= 0; i--) {
+        cellsRenderHeight += cells[i].height;
+        data.topCell = i;
+        if (cellsRenderHeight >= maxRenderHeight) break;
       }
     }
-    console.debug('virtualScroll-util', 'after scrolling down, will render cells:', data.topCell, 'to', data.bottomCell,
-      'totalCells are:', totalCells, 'renderHeight is now', cellsRenderHeight, 'viewableRenderedPadding', viewableRenderedPadding,
-      'topViewCell:', data.topViewCell, 'bottomViewCell:', data.bottomViewCell);
-
   } else {
     // scroll up
     data.bottomCell = Math.min(data.bottomViewCell + viewableRenderedPadding, totalCells - 1);
-    data.topCell = Math.max(data.bottomCell - 2, 0);
+    data.topCell = data.bottomCell;
 
+    let cellsRenderHeight = 0;
     for (let i = data.bottomCell; i >= 0; i--) {
-      cell = cells[i];
-      if (cell.row !== lastRow) {
-        cellsRenderHeight += cell.height;
-        lastRow = cell.row;
-      }
-
-      if (i < data.topCell) {
-        data.topCell = i;
-      }
-
-      if (cellsRenderHeight >= maxRenderHeight) {
-        break;
-      }
+      cellsRenderHeight += cells[i].height;
+      if (i < data.topCell) data.topCell = i;
+      if (cellsRenderHeight >= maxRenderHeight) break;
     }
 
-    if (data.topCell === 0) {
-      let tempHeight = 0;
-      lastRow = -1;
-      for (let i = data.topCell; i < totalCells; i++) {
-        cell = cells[i];
-        if (cell.row !== lastRow) {
-          tempHeight += cell.height;
-          lastRow = cell.row;
-        }
-
-        if (i > data.bottomCell) {
-          data.bottomCell = i;
-        }
-
-        if (tempHeight >= maxRenderHeight) {
-          break;
-        }
+    if (cellsRenderHeight < maxRenderHeight) {
+      // there are no more cells at the top, so move bottomCell to a higher index
+      for (let i = data.bottomCell; i < totalCells; i++) {
+        cellsRenderHeight += cells[i].height;
+        data.bottomCell = i;
+        if (cellsRenderHeight >= maxRenderHeight) break;
       }
     }
-    console.debug('virtualScroll-util', 'scrolling up, will render cells:', data.topCell, 'to', data.bottomCell,
-      'totalCells are:', totalCells, 'renderHeight is now', cellsRenderHeight, 'viewableRenderedPadding', viewableRenderedPadding,
-      'topViewCell:', data.topViewCell, 'bottomViewCell:', data.bottomViewCell);
   }
 }
 
