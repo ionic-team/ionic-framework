@@ -16,7 +16,7 @@ export class PageOne {
 
   filterItems(ev: any) {
     this.setItems();
-    let val = ev.value;
+    let val = ev.target.value;
 
     if (val && val.trim() !== '') {
       this.items = this.items.filter(function(item) {
