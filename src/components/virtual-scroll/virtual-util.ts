@@ -1,4 +1,5 @@
 import { EmbeddedViewRef, TemplateRef, ViewContainerRef } from '@angular/core';
+import { assert } from '../../util/util';
 
 import { Platform } from '../../platform/platform';
 
@@ -17,7 +18,6 @@ export function processRecords(stopAtHeight: number,
   records: any[], cells: VirtualCell[],
   headerFn: Function, footerFn: Function,
   data: VirtualData) {
-  console.debug('virtual-util-processRecords', 'cells before processing are:', cells);
   let record: any;
   let startRecordIndex: number;
   let previousCell: VirtualCell;
@@ -80,7 +80,6 @@ export function processRecords(stopAtHeight: number,
     if (previousCell.top + previousCell.height + data.itmHeight > stopAtHeight && processedTotal > 3) {
       return;
     }
-    console.debug('virtual-util-processRecords', 'cells after processing are:', cells);
   }
 }
 
@@ -137,7 +136,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
   startCellIndex = Math.max(startCellIndex, 0);
   endCellIndex = Math.min(endCellIndex, cells.length - 1);
 
-  const usedNodes: any[] = [];
+  const usedNodes: VirtualNode[] = [];
   for (var cellIndex = startCellIndex; cellIndex <= endCellIndex; cellIndex++) {
     cell = cells[cellIndex];
     availableNode = null;
@@ -145,7 +144,6 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
     // find the first one that's available
     const existingNode = nodes.find(n => n.cell === cellIndex && n.tmpl === cell.tmpl);
     if (existingNode) {
-      console.debug('virtual-util', 'found that cell is already rendered in existingNode', existingNode);
       if (existingNode.view.context.$implicit === records[cell.record]) {
         usedNodes.push(existingNode);
         continue; // optimization: node data is the same no need to update
@@ -241,6 +239,8 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, s
     const removeIndex = nodes.findIndex(n => n === node);
     nodes.splice(removeIndex, 1);
   });
+  usedNodes.length = 0;
+  unusedNodes.length = 0;
 
   return hasChanges;
 }
@@ -338,7 +338,6 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
         cell.row++;
         cell.top = (previousCell.top + previousCell.height);
         cell.left = 0;
-
       } else {
         // same row
         cell.row = previousCell.row;
@@ -356,7 +355,6 @@ export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: Vir
       previousCell = cell;
     }
   }
-
 }
 
 
@@ -477,6 +475,7 @@ export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
     data.topCell = data.bottomCell;
 
     let cellsRenderHeight = 0;
+    assert(data.bottomCell > 0, 'bottomCell should be greater than 0');
     for (let i = data.bottomCell; i >= 0; i--) {
       cellsRenderHeight += cells[i].height;
       if (i < data.topCell) data.topCell = i;

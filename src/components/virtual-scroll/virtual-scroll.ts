@@ -735,6 +735,15 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     // ******** DOM READ ****************
     updateDimensions(this._plt, this._nodes, this._cells, this._data, false);
     adjustRendered(this._cells, this._data);
+    populateNodeData(
+      this._data.topCell, this._data.bottomCell,
+      true,
+      this._cells, this._records, this._nodes,
+      this._itmTmp.viewContainer,
+      this._itmTmp.templateRef,
+      this._hdrTmp && this._hdrTmp.templateRef,
+      this._ftrTmp && this._ftrTmp.templateRef
+    );
 
     // ******** DOM WRITE ***************
     this._dom.write(() => {
