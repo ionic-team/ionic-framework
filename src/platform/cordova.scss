@@ -46,6 +46,10 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
     @include padding(calc(#{$cordova-statusbar-padding} + #{$toolbar-padding}), null, null, null);
 
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
+
+    // ios11&iphonex
+    @include padding(calc(constant(safe-area-inset-top) + 4px), null, null, null);
+    min-height: calc(constant(safe-area-inset-top) + 44px);
   }
 
   > ion-content.statusbar-padding:first-child .scroll-content {
@@ -55,6 +59,8 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
   > ion-content.statusbar-padding:first-child[padding] .scroll-content,
   > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     @include padding(calc(#{$content-padding} + #{$cordova-statusbar-padding}), null, null, null);
+    //calc(constant(safe-area-inset-top) + 4px);
+    @include padding(calc(#{$content-padding} + constant(safe-area-inset-top)), null, null, null);
   }
 
 }
@@ -71,6 +77,18 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
     height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
+
+    // ios11&iphonex
+    @include padding(calc(constant(safe-area-inset-top) + 4px), null, null, null);
+    min-height: calc(constant(safe-area-inset-top) + 44px);
   }
 
+}
+
+
+@mixin tabbar-safe-area-bottom() {
+
+  .tabs-ios .tabbar {
+     padding-bottom: constant(safe-area-inset-bottom);
+  }
 }
