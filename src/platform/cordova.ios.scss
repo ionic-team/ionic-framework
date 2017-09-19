@@ -9,9 +9,41 @@ $cordova-ios-statusbar-padding:                         20px !default;
 /// @prop - The breakpoint when a modal becomes inset
 $cordova-ios-statusbar-padding-modal-max-width:         $cordova-statusbar-padding-modal-max-width !default;
 
+@mixin content-safe-area-padding() {
+   [padding] .scroll-content {
+    @include padding(calc(constant(safe-area-inset-top) + #{$content-ios-padding}), calc(constant(safe-area-inset-right) + #{$content-ios-padding}), calc(constant(safe-area-inset-bottom) + #{$content-ios-padding}), calc(constant(safe-area-inset-left) + #{$content-ios-padding}));
+  }
+
+   [padding-top] .scroll-content {
+    @include padding(calc(constant(safe-area-inset-top) + #{$content-ios-padding}), null, null, null);
+  }
+
+   [padding-left] .scroll-content {
+    @include padding-horizontal(calc(constant(safe-area-inset-left) + #{$content-ios-padding}), null);
+  }
+
+   [padding-right] .scroll-content {
+    @include padding-horizontal(null, calc(constant(safe-area-inset-right) + #{$content-ios-padding}));
+  }
+
+   [padding-bottom] .scroll-content {
+    @include padding(null, null, calc(constant(safe-area-inset-bottom) + #{$content-ios-padding}), null);
+  }
+
+   [padding-vertical] .scroll-content {
+    @include padding(calc(constant(safe-area-inset-top) + #{$content-ios-padding}), null, calc(constant(safe-area-inset-bottom) + #{$content-ios-padding}), null);
+  }
+
+   [padding-horizontal] .scroll-content {
+    @include padding-horizontal(calc(constant(safe-area-inset-left) + #{$content-ios-padding}), calc(constant(safe-area-inset-right) + #{$content-ios-padding}));
+  }
+}
+
 // Cordova mixins are in the main cordova file
 .ios {
   @include statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $cordova-ios-statusbar-padding, $cordova-ios-statusbar-padding-modal-max-width, true);
 
   @include tabbar-safe-area-bottom();
+  @include content-safe-area-padding();
+
 }
