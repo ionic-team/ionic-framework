@@ -20,9 +20,6 @@ export class Item {
   private itemStyles: { [key: string]: CssClassMap } = Object.create(null);
   private label: any;
 
-  // TODO get reorder from a parent list/group
-  @State() reorder: boolean = false;
-
   @Element() private el: HTMLElement;
 
   @Prop() mode: string;
@@ -131,10 +128,6 @@ export class Item {
             <slot></slot>
           </div>
           <slot name='end'></slot>
-          { this.reorder
-            ? <ion-reorder></ion-reorder>
-            : null
-          }
         </div>
         <div class='button-effect'></div>
       </TagType>

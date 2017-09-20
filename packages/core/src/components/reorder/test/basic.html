@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Reorder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Item Reorder</ion-title>
+        <ion-buttons slot="end">
+          <ion-button onclick="toggleEdit()">Toggle</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-reorder-group id="reorder">
+          <ion-item>
+            Item 1
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          <ion-item>Item 2
+              <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          <ion-item>Item 3
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 4
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 5
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 6
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 7
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 8
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 9
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 10
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 11
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+
+          </ion-item>
+          <ion-item>Item 12
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+          </ion-item>
+          <ion-item>Item 13
+              <ion-icon reorderAnchor name="pizza" slot="end"></ion-icon>
+          </ion-item>
+        </ion-reorder-group>
+      </ion-list>
+    </ion-content>
+  </ion-app>
+
+  <script>
+    function toggleEdit() {
+      const list = document.getElementById('reorder');
+      list.enabled = !list.enabled;
+    }
+  </script>
+</body>
+
+</html>

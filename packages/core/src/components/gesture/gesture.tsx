@@ -38,7 +38,7 @@ export class Gesture {
   @Prop() gestureName: string = '';
   @Prop() gesturePriority: number = 0;
   @Prop() maxAngle: number = 40;
-  @Prop() threshold: number = 20;
+  @Prop() threshold: number = 10;
   @Prop() type: string = 'pan';
 
   @Prop() canStart: GestureCallback;
@@ -209,7 +209,7 @@ export class Gesture {
     const detail = this.detail;
     this.calcGestureData(ev);
     if (this.pan.detect(detail.currentX, detail.currentY)) {
-      if (this.pan.isGesture() !== 0) {
+      if (this.pan.isGesture()) {
         if (!this.tryToCapturePan()) {
           this.abortGesture();
         }
@@ -463,6 +463,7 @@ export interface GestureDetail {
   deltaX?: number;
   deltaY?: number;
   timeStamp?: number;
+  data?: any;
 }
 
 

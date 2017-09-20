@@ -1,4 +1,4 @@
-import { Component, Method, State } from '@stencil/core';
+import { Component, Method, Prop, State } from '@stencil/core';
 
 import { ItemSliding } from '../item-sliding/item-sliding';
 
@@ -15,9 +15,18 @@ import { ItemSliding } from '../item-sliding/item-sliding';
   }
 })
 export class List {
+
   @State() openContainer: ItemSliding;
+  @Prop() radioGroup: boolean;
 
   render() {
+    if (this.radioGroup) {
+      return (
+        <ion-radio-group>
+          <slot></slot>
+        </ion-radio-group>
+      );
+    }
     return <slot></slot>;
   }
 
