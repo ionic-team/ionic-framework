@@ -52,7 +52,7 @@ ion-reorder ion-icon {
   pointer-events: none;
 }
 
-.reorder-side-start ion-reorder {
+ion-reorder[slot="start"] {
   @include transform(translate3d(-$reorder-initial-transform, 0, 0));
 
   order: -1;

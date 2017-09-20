@@ -17,16 +17,8 @@ import { ItemSliding } from '../item-sliding/item-sliding';
 export class List {
 
   @State() openContainer: ItemSliding;
-  @Prop() radioGroup: boolean;
 
   render() {
-    if (this.radioGroup) {
-      return (
-        <ion-radio-group>
-          <slot></slot>
-        </ion-radio-group>
-      );
-    }
     return <slot></slot>;
   }
 

@@ -163,8 +163,6 @@ export class ReorderGroup {
   /**
    * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
    */
-  @Prop() side: string;
-
   @PropDidChange('enabled')
   enabledChanged(enabled: boolean) {
     if (enabled) {
@@ -330,8 +328,7 @@ export class ReorderGroup {
       class: {
         'reorder-enabled': this._enabled,
         'reorder-list-active': this._actived,
-        'reorder-visible': this._iconVisible,
-        'reorder-side-start': this.side === 'start'
+        'reorder-visible': this._iconVisible
       }
     };
   }
