@@ -2,12 +2,11 @@ import { register, render } from '@stencil/core/testing';
 import { Navbar } from '../navbar';
 
 describe('navbar', () => {
-  let plt: any;
   beforeEach(() => {
-    plt = register([{
+    register([{
       tagNameMeta: 'ion-navbar',
       componentModule: Navbar
-    }])
+    }]);
   });
 
   it('exists', () => {
@@ -16,7 +15,7 @@ describe('navbar', () => {
   });
 
   it('renders', async () => {
-    const btn = await render(plt, '<ion-navbar></ion-navbar>');
+    const btn = await render('<ion-navbar></ion-navbar>');
     // expect(btn.innerHTML).toBeTruthy; // so it would be nice if this worked, but currently having h() undefined issues
     expect(btn.outerHTML).toEqual('<ion-navbar class="💎"></ion-navbar>');
   });
