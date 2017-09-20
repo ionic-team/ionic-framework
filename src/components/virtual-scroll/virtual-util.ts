@@ -701,7 +701,7 @@ export interface VirtualData {
   ftrHeight?: number;
 }
 
-enum TemplateType {
+const enum TemplateType {
   Item = 0,
   Header = 1,
   Footer = 2

@@ -547,7 +547,6 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
       }
 
       adjustRendered(cells, data);
-      console.debug('virtual-scroll', 'populateData inside renderVirtual');
       this._zone.run(() => {
         populateNodeData(
           data.topCell, data.bottomCell,
@@ -685,7 +684,6 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     updateDimensions(this._plt, nodes, cells, data, false);
 
     adjustRendered(cells, data);
-    console.debug('virtual-scroll', 'populateData inside hasNoChanges');
     var hasChanges = populateNodeData(
       data.topCell, data.bottomCell,
       diff > 0,
@@ -825,7 +823,7 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
 
 const SCROLL_DIFFERENCE_MINIMUM = 40;
 
-enum ScrollQueue {
+const enum ScrollQueue {
   NoChanges = 1,
   ChangeDetection = 2,
   DomWrite = 3
