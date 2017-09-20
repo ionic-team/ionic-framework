@@ -1,4 +1,4 @@
-import { render, flush } from '@stencil/core/testing';
+import { flush, render } from '@stencil/core/testing';
 import { Button } from '../button';
 
 

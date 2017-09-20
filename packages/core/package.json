@@ -10,7 +10,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.0.6-2",
+    "@stencil/core": "0.0.6-4",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.0",
@@ -26,7 +26,7 @@
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
     "clean": "rm -rf dist",
-    "lint": "npm run tslint",
+    "lint": "npm run tslint & npm run sass-lint",
     "sass-lint": "sass-lint -v -q",
     "tslint": "tslint --project .",
     "tslint-fix": "tslint --project . --fix",

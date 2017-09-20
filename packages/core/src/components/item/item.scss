@@ -97,10 +97,3 @@ ion-input.item {
   background: transparent;
   cursor: pointer;
 }
-
-[reorderAnchor] {
-  display: none;
-
-  pointer-events: all !important;
-  touch-action: manipulation;
-}

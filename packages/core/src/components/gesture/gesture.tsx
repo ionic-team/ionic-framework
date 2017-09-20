@@ -167,6 +167,9 @@ export class Gesture {
     this.positions.push(detail.currentX, detail.currentY, timeStamp);
     if (this.pan) {
       this.hasStartedPan = true;
+      if (this.threshold === 0) {
+        return this.tryToCapturePan();
+      }
       this.pan.start(detail.startX, detail.startY);
     }
     return true;

@@ -1,11 +1,11 @@
 import { Component, Element, Prop, PropDidChange, State } from '@stencil/core';
 import { GestureDetail } from '../../index';
-import { reorderArray } from '../../utils/helpers';
+import { clamp, reorderArray } from '../../utils/helpers';
 import { CSS_PROP } from '../animation-controller/constants';
 
-// const AUTO_SCROLL_MARGIN = 60;
-//  const SCROLL_JUMP = 10;
-const ITEM_REORDER_ACTIVE = 'reorder-active';
+const AUTO_SCROLL_MARGIN = 60;
+const SCROLL_JUMP = 10;
+const ITEM_REORDER_SELECTED = 'reorder-selected';
 
 
 export class ReorderIndexes {
@@ -147,10 +147,16 @@ export class ReorderGroup {
   private selectedItemEle: HTMLElement = null;
   private selectedItemHeight: number;
   private lastToIndex: number;
-  private lastYcoord: number;
-  private topOfList: number;
   private cachedHeights: number[] = [];
   private containerEle: HTMLElement;
+  private scrollEle: HTMLElement;
+
+  private scrollTop: number;
+  private scrollBottom: number;
+  private scrollInitial: number;
+
+  private containerTop: number;
+  private containerBottom: number;
 
   @State() _enabled: boolean = false;
   @State() _iconVisible: boolean = false;
@@ -178,6 +184,7 @@ export class ReorderGroup {
 
   ionViewDidLoad() {
     this.containerEle = this.ele.querySelector('ion-gesture') as HTMLElement;
+    this.scrollEle = this.ele.closest('ion-scroll') as HTMLElement;
   }
 
   ionViewDidUnload() {
@@ -189,7 +196,7 @@ export class ReorderGroup {
       return false;
     }
     const target = ev.event.target as HTMLElement;
-    const reorderEle = target.closest('[reorderAnchor]') as HTMLElement;
+    const reorderEle = target.closest('ion-reorder') as HTMLElement;
     if (!reorderEle) {
       return false;
     }
@@ -213,20 +220,33 @@ export class ReorderGroup {
     }
 
     let sum = 0;
-    for (let i = 0, ilen = children.length; i < ilen; i++) {
+    for (var i = 0, ilen = children.length; i < ilen; i++) {
       var child = children[i];
       sum += child.offsetHeight;
       heights.push(sum);
       child.$ionIndex = i;
     }
 
-    this.topOfList = item.getBoundingClientRect().top;
-    this._actived = true;
-    this.lastYcoord = -100;
+    const box = this.containerEle.getBoundingClientRect();
+    this.containerTop = box.top;
+    this.containerBottom = box.bottom;
+
+    if (this.scrollEle) {
+      var scrollBox = this.scrollEle.getBoundingClientRect();
+      this.scrollInitial = this.scrollEle.scrollTop;
+      this.scrollTop = scrollBox.top + AUTO_SCROLL_MARGIN;
+      this.scrollBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
+    } else {
+      this.scrollInitial = 0;
+      this.scrollTop = 0;
+      this.scrollBottom = 0;
+    }
+
     this.lastToIndex = indexForItem(item);
     this.selectedItemHeight = item.offsetHeight;
+    this._actived = true;
 
-    item.classList.add(ITEM_REORDER_ACTIVE);
+    item.classList.add(ITEM_REORDER_SELECTED);
   }
 
   private onDragMove(ev: GestureDetail) {
@@ -234,26 +254,24 @@ export class ReorderGroup {
     if (!selectedItem) {
       return;
     }
-    // ev.event.preventDefault();
+    // Scroll if we reach the scroll margins
+    const scroll = this.autoscroll(ev.currentY);
 
     // // Get coordinate
-    const posY = ev.deltaY;
-
-    // Scroll if we reach the scroll margins
-    // const scrollPosition = this.scroll(posY);
-    // Only perform hit test if we moved at least 30px from previous position
-    if (Math.abs(posY - this.lastYcoord) > 30) {
-      let toIndex = this.itemIndexForDelta(posY);
-      if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
-        let fromIndex = indexForItem(selectedItem);
-        this.lastToIndex = toIndex;
-        this.lastYcoord = posY;
-        this._reorderMove(fromIndex, toIndex, this.selectedItemHeight);
-      }
+    const top = this.containerTop - scroll;
+    const bottom = this.containerBottom - scroll;
+    const currentY = clamp(top, ev.currentY, bottom);
+    const deltaY = scroll + currentY - ev.startY;
+    const normalizedY = currentY - top;
+    const toIndex = this.itemIndexForTop(normalizedY);
+    if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
+      let fromIndex = indexForItem(selectedItem);
+      this.lastToIndex = toIndex;
+      this._reorderMove(fromIndex, toIndex);
     }
 
     // Update selected item position
-    (selectedItem.style as any)[CSS_PROP.transformProp] = `translateY(${posY}px)`;
+    (selectedItem.style as any)[CSS_PROP.transformProp] = `translateY(${deltaY}px)`;
   }
 
   private onDragEnd() {
@@ -285,7 +303,7 @@ export class ReorderGroup {
 
     const reorderInactive = () => {
       this.selectedItemEle.style.transition = '';
-      this.selectedItemEle.classList.remove(ITEM_REORDER_ACTIVE);
+      this.selectedItemEle.classList.remove(ITEM_REORDER_SELECTED);
       this.selectedItemEle = null;
     };
     if (toIndex === fromIndex) {
@@ -296,24 +314,29 @@ export class ReorderGroup {
     }
   }
 
-  private itemIndexForDelta(deltaY: number): number {
+  private itemIndexForTop(deltaY: number): number {
     const heights = this.cachedHeights;
-    let sum = deltaY + this.topOfList - (this.selectedItemHeight / 2);
-    for (var i = 0; i < heights.length; i++) {
-      if (heights[i] > sum) {
-        return i;
+    let i = 0;
+
+    // TODO: since heights is a sorted array of integers, we can do
+    // speed up the search using binary search. Remember that linear-search is still
+    // faster than binary-search for small arrays (<64) due CPU branch misprediction.
+    for (i = 0; i < heights.length; i++) {
+      if (heights[i] > deltaY) {
+        break;
       }
     }
-    return null;
+    return i;
   }
 
-  private _reorderMove(fromIndex: number, toIndex: number, itemHeight: number) {
-    /********* DOM WRITE ********* */
+  /********* DOM WRITE ********* */
+  private _reorderMove(fromIndex: number, toIndex: number) {
+    const itemHeight = this.selectedItemHeight;
     const children = this.containerEle.children;
     const transform = CSS_PROP.transformProp;
     for (var i = 0; i < children.length; i++) {
-      const style = (children[i] as any).style;
-      let value = '';
+      var style = (children[i] as any).style;
+      var value = '';
       if (i > fromIndex && i <= toIndex) {
         value = `translateY(${-itemHeight}px)`;
       } else if (i < fromIndex && i >= toIndex) {
@@ -321,6 +344,23 @@ export class ReorderGroup {
       }
       style[transform] = value;
     }
+  }
+
+  private autoscroll(posY: number): number {
+    if (!this.scrollEle) {
+      return 0;
+    }
+
+    let amount = 0;
+    if (posY < this.scrollTop) {
+      amount = -SCROLL_JUMP;
+    } else if (posY > this.scrollBottom) {
+      amount = SCROLL_JUMP;
+    }
+    if (amount !== 0) {
+      this.scrollEle.scrollBy(0, amount);
+    }
+    return this.scrollEle.scrollTop - this.scrollInitial;
   }
 
   hostData() {
