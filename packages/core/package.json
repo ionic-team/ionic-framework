@@ -10,9 +10,10 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.0.5-23",
+    "@stencil/core": "0.0.5-25",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
+    "ionicons": "^4.0.0-6",
     "tslint-ionic-rules": "0.0.11"
   },
   "scripts": {

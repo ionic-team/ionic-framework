@@ -1,5 +1,3 @@
-@import "../../themes/ionic.globals";
-
 
 // Icon
 // --------------------------------------------------
@@ -9,11 +7,6 @@ ion-icon {
   display: inline-block;
 
   font-size: 1.2em;
-
-  svg {
-    width: 1em;
-    height: 1em;
-  }
 }
 
 ion-icon[small] {

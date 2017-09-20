@@ -36,6 +36,9 @@ exports.config = {
     { components: ['ion-nav', 'ion-nav-controller', 'stencil-ion-nav-delegate','page-one', 'page-two', 'page-three'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
   ],
+  collections: [
+    'ionicons'
+  ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   global: 'src/global/ionic-global.ts'
 };

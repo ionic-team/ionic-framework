@@ -28,7 +28,6 @@
     "src/**/*.tsx"
   ],
   "exclude": [
-    "node_modules",
-    "src/animations"
+    "node_modules"
   ]
 }
