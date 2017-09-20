@@ -24,7 +24,7 @@
     "lint": "tslint --project .",
     "lint-fix": "tslint --project . --fix",
     "validate": "npm run clean && npm run lint && npm run test && npm run build",
-    "deploy": "np --any-branch",
+    "deploy": "../../node_modules/.bin/np --any-branch",
     "preversion": "npm run lint && npm run build"
   },
   "author": "Ionic Team",
