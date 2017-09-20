@@ -14,6 +14,7 @@
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "ionicons": "^4.0.0-6",
+    "tslint": "^5.7.0",
     "tslint-ionic-rules": "0.0.11"
   },
   "scripts": {
@@ -21,8 +22,8 @@
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
     "test": "jest --no-cache",
     "clean": "rm -rf dist",
-    "lint": "tslint --project .",
-    "lint-fix": "tslint --project . --fix",
+    "lint": "./node_modules/.bin/tslint --project .",
+    "lint-fix": "./node_modules/.bin/tslint --project . --fix",
     "validate": "npm run clean && npm run lint && npm run test && npm run build",
     "deploy": "../../node_modules/.bin/np --any-branch",
     "preversion": "npm run lint && npm run build"
