@@ -48,13 +48,13 @@ $content-ios-transition-background:     #000 !default;
 // iOS Content Padding
 // --------------------------------------------------
 
-@include content-padding('ios', $content-ios-padding);
+@include content-padding("ios", $content-ios-padding);
 
 
 // iOS Content Margin
 // --------------------------------------------------
 
-@include content-margin('ios', $content-ios-margin);
+@include content-margin("ios", $content-ios-margin);
 
 
 // iOS Content Scroll
