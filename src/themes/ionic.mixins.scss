@@ -538,3 +538,40 @@
     }
   }
 }
+
+
+// Add safe-area-padding for all directions
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin safe-area-padding($top, $end: $top, $bottom: $top, $start: $end) {
+  $safe-area-top: null;
+  $safe-area-end: null;
+  $safe-area-bottom: null;
+  $safe-area-start: null;
+
+  @if ($top) { $safe-area-top: calc(constant(safe-area-inset-top) + #{$top}); }
+  @if ($end) { $safe-area-end: calc(constant(safe-area-inset-right) + #{$end}); }
+  @if ($bottom) { $safe-area-bottom: calc(constant(safe-area-inset-bottom) + #{$bottom}); }
+  @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
+
+  @include padding($top, $end, $bottom, $start);
+  @include padding($safe-area-top, $safe-area-end, $safe-area-bottom, $safe-area-start);
+}
+
+// Add safe area padding horizontal
+// @param {string} $start
+// @param {string} $end
+// ----------------------------------------------------------
+@mixin safe-area-padding-horizontal($start, $end: $start) {
+  $safe-area-end: null;
+  $safe-area-start: null;
+
+  @if ($end) { $safe-area-end: calc(constant(safe-area-inset-right) + #{$end}); }
+  @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
+
+  @include property-horizontal(padding, $start, $end);
+  @include property-horizontal(padding, $safe-area-start, $safe-area-end);
+}

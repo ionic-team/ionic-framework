@@ -47,6 +47,8 @@ $tabs-ios-tab-icon-size:            30px !default;
 
 
 .tabs-ios .tabbar {
+  padding-bottom: constant(safe-area-inset-bottom);
+
   justify-content: center;
 
   border-top: $tabs-ios-border;
