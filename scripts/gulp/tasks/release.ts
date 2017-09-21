@@ -264,7 +264,7 @@ task('release.sass', () => {
 });
 
 task('release.pullLatest', (done: Function) => {
-  exec('git status --porcelain', (err: Error, stdOut: string) => {
+  /*exec('git status --porcelain', (err: Error, stdOut: string) => {
     if (err) {
       done(err);
     } else if ( stdOut && stdOut.length > 0) {
@@ -277,6 +277,8 @@ task('release.pullLatest', (done: Function) => {
       done();
     }
   });
+  */
+  done();
 });
 
 task('release.prepareChangelog', () => {
