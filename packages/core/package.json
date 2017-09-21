@@ -14,10 +14,10 @@
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^20.0.8",
+    "ionicons": "^4.0.0-6",
     "jest": "^21.1.0",
     "memory-fs": "^0.4.1",
     "ts-jest": "^21.0.1",
-    "ionicons": "^4.0.0-6",
     "tslint": "^5.7.0",
     "tslint-ionic-rules": "0.0.11"
   },
