@@ -37,15 +37,15 @@ $card-wp-title-text-color:            #222 !default;
 
 
 .card-title-wp {
+  @include margin($card-wp-title-margin-top, $card-wp-title-margin-end, $card-wp-title-margin-bottom, $card-wp-title-margin-start);
+
+  @include padding($card-wp-title-padding-top, $card-wp-title-padding-end, $card-wp-title-padding-bottom, $card-wp-title-padding-start);
+
   display: block;
 
   font-size: $card-wp-title-font-size;
   line-height: 1.2;
   color: $card-wp-title-text-color;
-
-  @include margin($card-wp-title-margin-top, $card-wp-title-margin-end, $card-wp-title-margin-bottom, $card-wp-title-margin-start);
-
-  @include padding($card-wp-title-padding-top, $card-wp-title-padding-end, $card-wp-title-padding-bottom, $card-wp-title-padding-start);
 }
 
 

@@ -224,6 +224,10 @@ $button-md-strong-font-weight:                  bold !default;
 .button-md {
   @include border-radius($button-md-border-radius);
 
+  @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
+
+  @include padding($button-md-padding-top, $button-md-padding-end, $button-md-padding-bottom, $button-md-padding-start);
+
   overflow: hidden;
 
   height: $button-md-height;
@@ -239,10 +243,6 @@ $button-md-strong-font-weight:                  bold !default;
   transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function;
-
-  @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
-
-  @include padding($button-md-padding-top, $button-md-padding-end, $button-md-padding-bottom, $button-md-padding-start);
 }
 
 .button-md:hover:not(.disable-hover) {
@@ -291,19 +291,19 @@ $button-md-strong-font-weight:                  bold !default;
 // --------------------------------------------------
 
 .button-large-md {
+  @include padding($button-md-large-padding-top, $button-md-large-padding-end, $button-md-large-padding-bottom, $button-md-large-padding-start);
+
   height: $button-md-large-height;
 
   font-size: $button-md-large-font-size;
-
-  @include padding($button-md-large-padding-top, $button-md-large-padding-end, $button-md-large-padding-bottom, $button-md-large-padding-start);
 }
 
 .button-small-md {
+  @include padding($button-md-small-padding-top, $button-md-small-padding-end, $button-md-small-padding-bottom, $button-md-small-padding-start);
+
   height: $button-md-small-height;
 
   font-size: $button-md-small-font-size;
-
-  @include padding($button-md-small-padding-top, $button-md-small-padding-end, $button-md-small-padding-bottom, $button-md-small-padding-start);
 }
 
 .button-small-md ion-icon[slot="icon-only"] {

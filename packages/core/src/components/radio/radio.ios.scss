@@ -94,12 +94,12 @@ $radio-ios-item-end-margin-start:     ($item-ios-padding-start / 2) !default;
 // -----------------------------------------
 
 .item-ios .radio-ios {
+  @include margin($radio-ios-item-end-margin-top, $radio-ios-item-end-margin-end, $radio-ios-item-end-margin-bottom, $radio-ios-item-end-margin-start);
+
   position: static;
   display: block;
 
-  @include margin($radio-ios-item-end-margin-top, $radio-ios-item-end-margin-end, $radio-ios-item-end-margin-bottom, $radio-ios-item-end-margin-start);
-
-  &[item-start] {
+  &[slot="start"] {
     @include margin($radio-ios-item-start-margin-top, $radio-ios-item-start-margin-end, $radio-ios-item-start-margin-bottom, $radio-ios-item-start-margin-start);
   }
 }

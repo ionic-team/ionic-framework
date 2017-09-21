@@ -31,12 +31,12 @@ $toolbar-wp-title-text-color:            color-contrast($colors-wp, $toolbar-wp-
 
 
 .toolbar-title-wp {
+  @include padding($toolbar-wp-title-padding-top, $toolbar-wp-title-padding-end, $toolbar-wp-title-padding-bottom, $toolbar-wp-title-padding-start);
+
   font-size: $toolbar-wp-title-font-size;
   font-weight: $toolbar-wp-title-font-weight;
   text-transform: $toolbar-wp-title-text-transform;
   color: $toolbar-wp-title-text-color;
-
-  @include padding($toolbar-wp-title-padding-top, $toolbar-wp-title-padding-end, $toolbar-wp-title-padding-bottom, $toolbar-wp-title-padding-start);
 }
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {

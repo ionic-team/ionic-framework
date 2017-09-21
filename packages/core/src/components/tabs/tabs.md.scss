@@ -141,18 +141,18 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 // --------------------------------------------------
 
 .tabs-md .tab-button {
+  @include padding($tabs-md-tab-padding-top, $tabs-md-tab-padding-end, $tabs-md-tab-padding-bottom, $tabs-md-tab-padding-start);
+
   min-height: $tabs-md-tab-min-height;
 
   font-weight: $tabs-md-tab-font-weight;
   color: $tabs-md-tab-text-color;
-
-  @include padding($tabs-md-tab-padding-top, $tabs-md-tab-padding-end, $tabs-md-tab-padding-bottom, $tabs-md-tab-padding-start);
 }
 
 .tabs-md .tab-button[aria-selected=true] {
-  color: $tabs-md-tab-text-color-active;
-
   @include padding($tabs-md-tab-padding-active-top, $tabs-md-tab-padding-active-end, $tabs-md-tab-padding-active-bottom, $tabs-md-tab-padding-active-start);
+
+  color: $tabs-md-tab-text-color-active;
 }
 
 
@@ -160,14 +160,14 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 // --------------------------------------------------
 
 .tabs-md .tab-button-text {
+  @include margin($tabs-md-tab-text-margin-top, $tabs-md-tab-text-margin-end, $tabs-md-tab-text-margin-bottom, $tabs-md-tab-text-margin-start);
+
+  @include transform-origin($tabs-md-tab-text-transform-origin-x, $tabs-md-tab-text-transform-origin-y);
+
   font-size: $tabs-md-tab-font-size;
 
   text-transform: $tabs-md-tab-text-capitalization;
   transition: $tabs-md-tab-text-transition;
-
-  @include margin($tabs-md-tab-text-margin-top, $tabs-md-tab-text-margin-end, $tabs-md-tab-text-margin-bottom, $tabs-md-tab-text-margin-start);
-
-  @include transform-origin($tabs-md-tab-text-transform-origin-x, $tabs-md-tab-text-transform-origin-y);
 }
 
 .tabs-md .tab-button[aria-selected=true] .tab-button-text {
@@ -190,6 +190,8 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
 .tabs-md .tab-button-icon {
   @include margin(1px, null, null, null);
 
+  @include transform-origin($tabs-md-tab-icon-transform-origin-x, $tabs-md-tab-icon-transform-origin-y);
+
   min-width: $tabs-md-tab-icon-size;
 
   font-size: $tabs-md-tab-icon-size;
@@ -197,15 +199,13 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
   color: $tabs-md-tab-icon-color;
 
   transition: $tabs-md-tab-icon-transition;
-
-  @include transform-origin($tabs-md-tab-icon-transform-origin-x, $tabs-md-tab-icon-transform-origin-y);
 }
 
 // Tab layout: icon-top, icon-only, title-only
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon {
-  color: $tabs-md-tab-icon-color-active;
-
   @include transform(translate3d($tabs-md-tab-icon-transform-x-active, $tabs-md-tab-icon-transform-y-active, $tabs-md-tab-icon-transform-z-active));
+
+  color: $tabs-md-tab-icon-color-active;
 }
 
 // Tab layout: icon-end

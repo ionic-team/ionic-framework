@@ -25,11 +25,11 @@ $card-wp-header-color:                #222 !default;
 
 
 .card-header-wp {
+  @include padding($card-wp-header-padding-top, $card-wp-header-padding-end, $card-wp-header-padding-bottom, $card-wp-header-padding-start);
+
   font-size: $card-wp-header-font-size;
 
   color: $card-wp-header-color;
-
-  @include padding($card-wp-header-padding-top, $card-wp-header-padding-end, $card-wp-header-padding-bottom, $card-wp-header-padding-start);
 }
 
 

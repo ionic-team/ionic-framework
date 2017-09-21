@@ -61,6 +61,8 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
 .tabs-wp .tab-button {
   @include border-radius(0);
 
+  @include padding($tabs-wp-tab-padding-top, $tabs-wp-tab-padding-end, $tabs-wp-tab-padding-bottom, $tabs-wp-tab-padding-start);
+
   min-height: $tabs-wp-tab-min-height;
 
   border-bottom: $tabs-wp-tab-border;
@@ -68,8 +70,6 @@ $tabs-wp-tab-icon-size:                 2.4rem !default;
   font-weight: $tabs-wp-tab-font-weight;
   color: $tabs-wp-tab-color;
   box-shadow: none;
-
-  @include padding($tabs-wp-tab-padding-top, $tabs-wp-tab-padding-end, $tabs-wp-tab-padding-bottom, $tabs-wp-tab-padding-start);
 }
 
 .tabs-wp .tab-button[aria-selected=true] {

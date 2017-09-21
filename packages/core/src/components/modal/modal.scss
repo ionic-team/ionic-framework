@@ -44,9 +44,10 @@ ion-modal-controller {
 }
 
 .modal-backdrop {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   z-index: $z-index-backdrop;
   display: block;
 
@@ -56,16 +57,14 @@ ion-modal-controller {
   background-color: $modal-backdrop-color;
   opacity: .01;
   transform: translateZ(0);
+
+  @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    visibility: hidden;
+  }
 }
 
 .modal-backdrop.backdrop-no-tappable {
   cursor: auto;
-}
-
-.modal-backdrop {
-  @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-    visibility: hidden;
-  }
 }
 
 .modal-backdrop.hide-backdrop {
@@ -99,9 +98,9 @@ ion-modal-controller {
 }
 
 .modal-content {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
 
   display: block;
 

@@ -57,13 +57,13 @@ $tabs-ios-tab-icon-size:            30px !default;
 }
 
 .tabs-ios .tab-button {
+  @include padding($tabs-ios-tab-padding-top, $tabs-ios-tab-padding-end, $tabs-ios-tab-padding-bottom, $tabs-ios-tab-padding-start);
+
   max-width: $tabs-ios-tab-max-width;
   min-height: $tabs-ios-tab-min-height;
 
   font-size: $tabs-ios-tab-font-size;
   color: $tabs-ios-tab-text-color;
-
-  @include padding($tabs-ios-tab-padding-top, $tabs-ios-tab-padding-end, $tabs-ios-tab-padding-bottom, $tabs-ios-tab-padding-start);
 }
 
 .tabs-ios .tab-button:hover:not(.disable-hover),

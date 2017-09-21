@@ -350,9 +350,9 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-message,
 .alert-md .alert-input-group {
-  color: $alert-md-message-text-color;
-
   @include padding($alert-md-message-padding-top, $alert-md-message-padding-end, $alert-md-message-padding-bottom, $alert-md-message-padding-start);
+
+  color: $alert-md-message-text-color;
 }
 
 .alert-md .alert-message {
@@ -412,6 +412,8 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-radio-label {
+  @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
+
   overflow: hidden;
 
   flex: 1;
@@ -420,8 +422,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   white-space: nowrap;
 
   color: $alert-md-radio-label-text-color;
-
-  @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
 }
 
 // Material Design Alert Radio Unchecked Circle
@@ -480,6 +480,8 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-checkbox-label {
+  @include padding($alert-md-checkbox-label-padding-top, $alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-bottom, $alert-md-checkbox-label-padding-start);
+
   overflow: hidden;
 
   flex: 1;
@@ -488,8 +490,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   white-space: nowrap;
 
   color: $alert-md-checkbox-label-text-color;
-
-  @include padding($alert-md-checkbox-label-padding-top, $alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-bottom, $alert-md-checkbox-label-padding-start);
 }
 
 .alert-md [aria-checked=true] .alert-checkbox-label {
@@ -542,15 +542,20 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-button-group {
+  @include padding($alert-md-button-group-padding-top, $alert-md-button-group-padding-end, $alert-md-button-group-padding-bottom, $alert-md-button-group-padding-start);
+
   flex-wrap: $alert-md-button-group-flex-wrap;
   justify-content: $alert-md-button-group-justify-content;
-
-  @include padding($alert-md-button-group-padding-top, $alert-md-button-group-padding-end, $alert-md-button-group-padding-bottom, $alert-md-button-group-padding-start);
 }
 
 .alert-md .alert-button {
-  @include text-align($alert-md-button-text-align);
   @include border-radius($alert-md-button-border-radius);
+
+  @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
+
+  @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
+
+  @include text-align($alert-md-button-text-align);
 
   // necessary for ripple to work properly
   position: relative;
@@ -560,10 +565,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
-
-  @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
-
-  @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
 }
 
 .alert-md .alert-button.activated {

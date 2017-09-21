@@ -58,9 +58,9 @@ $toast-md-title-padding-start:                   $toast-md-title-padding-end !de
 }
 
 .toast-md .toast-message {
+  @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
+
   font-size: $toast-md-title-font-size;
 
   color: $toast-md-title-color;
-
-  @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
 }

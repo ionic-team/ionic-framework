@@ -128,12 +128,12 @@ $radio-md-item-end-margin-start:     0 !default;
 // -----------------------------------------
 
 .item-md .radio-md {
+  @include margin($radio-md-item-end-margin-top, $radio-md-item-end-margin-end, $radio-md-item-end-margin-bottom, $radio-md-item-end-margin-start);
+
   position: static;
   display: block;
 
-  @include margin($radio-md-item-end-margin-top, $radio-md-item-end-margin-end, $radio-md-item-end-margin-bottom, $radio-md-item-end-margin-start);
-
-  &[item-start] {
+  &[slot="start"] {
     @include margin($radio-md-item-start-margin-top, $radio-md-item-start-margin-end, $radio-md-item-start-margin-bottom, $radio-md-item-start-margin-start);
   }
 }

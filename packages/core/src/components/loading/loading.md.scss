@@ -60,6 +60,8 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 .loading-md .loading-wrapper {
   @include border-radius($loading-md-border-radius);
 
+  @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
+
   max-width: $loading-md-max-width;
   max-height: $loading-md-max-height;
 
@@ -67,8 +69,6 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
   background: $loading-md-background;
 
   box-shadow: $loading-md-box-shadow;
-
-  @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
 }
 
 

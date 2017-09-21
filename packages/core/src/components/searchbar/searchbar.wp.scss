@@ -81,9 +81,9 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .searchbar-wp {
-  background: $searchbar-wp-background-color;
-
   @include padding($searchbar-wp-padding-top, $searchbar-wp-padding-end, $searchbar-wp-padding-bottom, $searchbar-wp-padding-start);
+
+  background: $searchbar-wp-background-color;
 }
 
 .searchbar-wp .searchbar-input-container {

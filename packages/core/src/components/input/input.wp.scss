@@ -130,8 +130,8 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   width: calc(100% - #{$text-input-wp-margin-end});
 }
 
-.item-wp.item-label-stacked [item-end],
-.item-wp.item-label-floating [item-end] {
+.item-wp.item-label-stacked [slot="end"],
+.item-wp.item-label-floating [slot="end"] {
   align-self: flex-end;
 }
 

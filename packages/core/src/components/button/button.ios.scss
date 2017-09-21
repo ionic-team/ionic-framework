@@ -187,16 +187,16 @@ $button-ios-strong-font-weight:                     600 !default;
 .button-ios {
   @include border-radius($button-ios-border-radius);
 
+  @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
+
+  @include padding($button-ios-padding-top, $button-ios-padding-end, $button-ios-padding-bottom, $button-ios-padding-start);
+
   height: $button-ios-height;
 
   font-size: $button-ios-font-size;
 
   color: $button-ios-text-color;
   background-color: $button-ios-background-color;
-
-  @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
-
-  @include padding($button-ios-padding-top, $button-ios-padding-end, $button-ios-padding-bottom, $button-ios-padding-start);
 }
 
 .button-ios.activated {
@@ -232,19 +232,19 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-large-ios {
+  @include padding($button-ios-large-padding-top, $button-ios-large-padding-end, $button-ios-large-padding-bottom, $button-ios-large-padding-start);
+
   height: $button-ios-large-height;
 
   font-size: $button-ios-large-font-size;
-
-  @include padding($button-ios-large-padding-top, $button-ios-large-padding-end, $button-ios-large-padding-bottom, $button-ios-large-padding-start);
 }
 
 .button-small-ios {
+  @include padding($button-ios-small-padding-top, $button-ios-small-padding-end, $button-ios-small-padding-bottom, $button-ios-small-padding-start);
+
   height: $button-ios-small-height;
 
   font-size: $button-ios-small-font-size;
-
-  @include padding($button-ios-small-padding-top, $button-ios-small-padding-end, $button-ios-small-padding-bottom, $button-ios-small-padding-start);
 }
 
 .button-small-ios ion-icon[slot="icon-only"] {

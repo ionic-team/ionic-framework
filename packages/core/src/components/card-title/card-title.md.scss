@@ -37,15 +37,15 @@ $card-md-title-text-color:            #222 !default;
 
 
 .card-title-md {
+  @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
+
+  @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
+
   display: block;
 
   font-size: $card-md-title-font-size;
   line-height: 1.2;
   color: $card-md-title-text-color;
-
-  @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
-
-  @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
 }
 
 

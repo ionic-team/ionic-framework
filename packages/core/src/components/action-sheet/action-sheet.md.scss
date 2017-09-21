@@ -90,15 +90,17 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 
 .action-sheet-md .action-sheet-title,
 .action-sheet-md .action-sheet-sub-title {
+  @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
+
   @include text-align($action-sheet-md-text-align);
 
   font-size: $action-sheet-md-title-font-size;
   color: $action-sheet-md-title-color;
-
-  @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 }
 
 .action-sheet-md .action-sheet-button {
+  @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
+
   @include text-align($action-sheet-md-text-align);
 
   position: relative;
@@ -109,9 +111,6 @@ $action-sheet-md-icon-margin-start:                     0 !default;
   font-size: $action-sheet-md-button-font-size;
   color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
-
-
-  @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
 }
 
 .action-sheet-md .action-sheet-button.activated {
@@ -119,15 +118,16 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 }
 
 .action-sheet-md .action-sheet-icon {
+  @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);
+
   @include padding(0);
+
   @include text-align($action-sheet-md-icon-text-align);
 
   width: $action-sheet-md-icon-width;
 
   font-size: $action-sheet-md-icon-font-size;
   vertical-align: $action-sheet-md-icon-vertical-align;
-
-  @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);
 }
 
 .action-sheet-md .action-sheet-group {

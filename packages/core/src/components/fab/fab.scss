@@ -193,6 +193,7 @@ ion-fab-list[side=right] {
   @include position(0, 0, null, 0);
 
   position: absolute;
+
   height: 100%;
 
   opacity: 0;
@@ -202,10 +203,12 @@ ion-fab-list[side=right] {
 }
 
 .fab-close-icon .icon-inner {
-  height: 100%;
   display: flex;
+
   align-items: center;
   justify-content: center;
+
+  height: 100%;
 }
 
 

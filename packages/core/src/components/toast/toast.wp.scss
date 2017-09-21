@@ -64,11 +64,11 @@ $toast-wp-title-padding-start:                   $toast-wp-title-padding-end !de
 }
 
 .toast-message {
+  @include padding($toast-wp-title-padding-top, $toast-wp-title-padding-end, $toast-wp-title-padding-bottom, $toast-wp-title-padding-start);
+
   font-size: $toast-wp-title-font-size;
 
   color: $toast-wp-title-color;
-
-  @include padding($toast-wp-title-padding-top, $toast-wp-title-padding-end, $toast-wp-title-padding-bottom, $toast-wp-title-padding-start);
 }
 
 .toast-button {

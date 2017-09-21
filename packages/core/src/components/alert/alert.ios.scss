@@ -319,12 +319,12 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-message,
 .alert-ios .alert-input-group {
+  @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
+
   @include text-align($alert-ios-message-text-align);
 
   font-size: $alert-ios-message-font-size;
   color: $alert-ios-message-text-color;
-
-  @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
 }
 
 .alert-ios .alert-message {
@@ -341,13 +341,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-input {
   @include appearance(none);
-  @include margin($alert-ios-input-margin-top, null, null, null);
+
   @include border-radius($alert-ios-input-border-radius);
+
+  @include margin($alert-ios-input-margin-top, null, null, null);
+
+  @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
 
   border: $alert-ios-input-border;
   background-color: $alert-ios-input-background-color;
-
-  @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
 }
 
 
@@ -377,6 +379,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-radio-label {
+  @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
+
   overflow: hidden;
 
   flex: 1;
@@ -387,8 +391,6 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   white-space: nowrap;
 
   color: $alert-ios-radio-label-text-color;
-
-  @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
 }
 
 
@@ -436,6 +438,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-checkbox-label {
+  @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
+
   overflow: hidden;
 
   flex: 1;
@@ -444,8 +448,6 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   white-space: nowrap;
 
   color: $alert-ios-checkbox-label-text-color;
-
-  @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
 }
 
 .alert-ios [aria-checked=true] .alert-checkbox-label {
@@ -458,6 +460,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 .alert-ios .alert-checkbox-icon {
   @include border-radius($alert-ios-checkbox-border-radius);
 
+  @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
+
   position: relative;
 
   width: $alert-ios-checkbox-size;
@@ -467,8 +471,6 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   border-style: $alert-ios-checkbox-border-style;
   border-color: $alert-ios-checkbox-border-color-off;
   background-color: $alert-ios-checkbox-background-color-off;
-
-  @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
 }
 
 

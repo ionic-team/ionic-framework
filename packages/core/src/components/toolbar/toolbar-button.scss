@@ -68,11 +68,11 @@
 ion-icon[slot="start"] {
   @include button-icon();
 
-  padding-right: .3em;
+  @include padding-horizontal(null, .3em);
 }
 
 ion-icon[slot="end"] {
   @include button-icon();
 
-  padding-left: .4em;
+  @include padding-horizontal(.4em, null);
 }

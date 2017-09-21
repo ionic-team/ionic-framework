@@ -61,9 +61,9 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
 }
 
 .toast-ios .toast-message {
+  @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
+
   font-size: $toast-ios-title-font-size;
 
   color: $toast-ios-title-color;
-
-  @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
 }

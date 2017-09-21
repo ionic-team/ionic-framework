@@ -54,13 +54,13 @@ $loading-wp-spinner-dots-color:        $loading-wp-spinner-color !default;
 .loading-wp .loading-wrapper {
   @include border-radius($loading-wp-border-radius);
 
+  @include padding($loading-wp-padding-top, $loading-wp-padding-end, $loading-wp-padding-bottom, $loading-wp-padding-start);
+
   max-width: $loading-wp-max-width;
   max-height: $loading-wp-max-height;
 
   color: $loading-wp-text-color;
   background: $loading-wp-background;
-
-  @include padding($loading-wp-padding-top, $loading-wp-padding-end, $loading-wp-padding-bottom, $loading-wp-padding-start);
 }
 
 

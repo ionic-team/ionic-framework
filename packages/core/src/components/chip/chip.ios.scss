@@ -52,6 +52,7 @@ $chip-ios-icon-fill-color:                  color-contrast($colors-ios, $chip-io
 
 .chip-ios {
   @include border-radius($chip-ios-border-radius);
+
   @include margin($chip-ios-margin-top, $chip-ios-margin-end, $chip-ios-margin-bottom, $chip-ios-margin-start);
 
   height: $chip-ios-height;
@@ -67,8 +68,9 @@ $chip-ios-icon-fill-color:                  color-contrast($colors-ios, $chip-io
 }
 
 .chip-ios > ion-icon {
-  fill: $chip-ios-icon-fill-color;
   background-color: $chip-ios-icon-background-color;
+
+  fill: $chip-ios-icon-fill-color;
 }
 
 
@@ -83,8 +85,9 @@ $chip-ios-icon-fill-color:                  color-contrast($colors-ios, $chip-io
   }
 
   .chip-ios .icon-ios-#{$color-name} {
-    fill: $color-contrast;
     background-color: $color-base;
+
+    fill: $color-contrast;
   }
 
 }

@@ -37,15 +37,15 @@ $card-ios-title-text-color:            #222 !default;
 
 
 .card-title-ios {
+  @include margin($card-ios-title-margin-top, $card-ios-title-margin-end, $card-ios-title-margin-bottom, $card-ios-title-margin-start);
+
+  @include padding($card-ios-title-padding-top, $card-ios-title-padding-end, $card-ios-title-padding-bottom, $card-ios-title-padding-start);
+
   display: block;
 
   font-size: $card-ios-title-font-size;
   line-height: 1.2;
   color: $card-ios-title-text-color;
-
-  @include margin($card-ios-title-margin-top, $card-ios-title-margin-end, $card-ios-title-margin-bottom, $card-ios-title-margin-start);
-
-  @include padding($card-ios-title-padding-top, $card-ios-title-padding-end, $card-ios-title-padding-bottom, $card-ios-title-padding-start);
 }
 
 

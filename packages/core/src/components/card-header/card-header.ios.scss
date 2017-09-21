@@ -28,11 +28,11 @@ $card-ios-header-color:                #333 !default;
 
 
 .card-header-ios {
+  @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
+
   font-size: $card-ios-header-font-size;
   font-weight: $card-ios-header-font-weight;
   color: $card-ios-header-color;
-
-  @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
 }
 
 

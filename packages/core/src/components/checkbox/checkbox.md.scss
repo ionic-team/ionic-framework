@@ -146,13 +146,13 @@ $checkbox-md-item-end-margin-start:      0 !default;
 // -----------------------------------------
 
 .item.item-md .checkbox-md {
+  @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
+
   position: static;
   display: block;
-
-  @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
 }
 
-.item.item-md .checkbox-md[item-end] {
+.item.item-md .checkbox-md[slot="end"] {
   @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
 }
 

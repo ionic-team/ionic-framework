@@ -91,14 +91,14 @@ $item-ios-detail-push-svg:                "<svg xmlns='http://www.w3.org/2000/sv
 }
 
 .item-ios p {
+  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
+
   overflow: inherit;
 
   font-size: $item-ios-paragraph-font-size;
   line-height: normal;
   text-overflow: inherit;
   color: $item-ios-paragraph-text-color;
-
-  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
 }
 
 .item-ios h2:last-child,
@@ -246,4 +246,3 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
     }
   }
 }
-

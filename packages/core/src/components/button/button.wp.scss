@@ -178,6 +178,10 @@ $button-wp-strong-font-weight:                            bold !default;
 .button-wp {
   @include border-radius($button-wp-border-radius);
 
+  @include margin($button-wp-margin-top, $button-wp-margin-end, $button-wp-margin-bottom, $button-wp-margin-start);
+
+  @include padding($button-wp-padding-top, $button-wp-padding-end, $button-wp-padding-bottom, $button-wp-padding-start);
+
   height: $button-wp-height;
 
   border: $button-wp-border-width $button-wp-border-style $button-wp-border-color;
@@ -186,10 +190,6 @@ $button-wp-strong-font-weight:                            bold !default;
 
   color: $button-wp-text-color;
   background-color: $button-wp-background-color;
-
-  @include margin($button-wp-margin-top, $button-wp-margin-end, $button-wp-margin-bottom, $button-wp-margin-start);
-
-  @include padding($button-wp-padding-top, $button-wp-padding-end, $button-wp-padding-bottom, $button-wp-padding-start);
 }
 
 .button-wp:hover:not(.disable-hover) {
@@ -230,19 +230,19 @@ $button-wp-strong-font-weight:                            bold !default;
 // --------------------------------------------------
 
 .button-large-wp {
+  @include padding($button-wp-large-padding-top, $button-wp-large-padding-end, $button-wp-large-padding-bottom, $button-wp-large-padding-start);
+
   height: $button-wp-large-height;
 
   font-size: $button-wp-large-font-size;
-
-  @include padding($button-wp-large-padding-top, $button-wp-large-padding-end, $button-wp-large-padding-bottom, $button-wp-large-padding-start);
 }
 
 .button-small-wp {
+  @include padding($button-wp-small-padding-top, $button-wp-small-padding-end, $button-wp-small-padding-bottom, $button-wp-small-padding-start);
+
   height: $button-wp-small-height;
 
   font-size: $button-wp-small-font-size;
-
-  @include padding($button-wp-small-padding-top, $button-wp-small-padding-end, $button-wp-small-padding-bottom, $button-wp-small-padding-start);
 }
 
 .button-small-wp ion-icon[slot="icon-only"] {

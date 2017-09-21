@@ -136,13 +136,13 @@ $checkbox-wp-item-end-margin-start:      0 !default;
 // -----------------------------------------
 
 .item.item-wp .checkbox-wp {
+  @include margin($checkbox-wp-item-start-margin-top, $checkbox-wp-item-start-margin-end, $checkbox-wp-item-start-margin-bottom, $checkbox-wp-item-start-margin-start);
+
   position: static;
   display: block;
-
-  @include margin($checkbox-wp-item-start-margin-top, $checkbox-wp-item-start-margin-end, $checkbox-wp-item-start-margin-bottom, $checkbox-wp-item-start-margin-start);
 }
 
-.item.item-wp .checkbox-wp[item-end] {
+.item.item-wp .checkbox-wp[slot="end"] {
   @include margin($checkbox-wp-item-end-margin-top, $checkbox-wp-item-end-margin-end, $checkbox-wp-item-end-margin-bottom, $checkbox-wp-item-end-margin-start);
 }
 

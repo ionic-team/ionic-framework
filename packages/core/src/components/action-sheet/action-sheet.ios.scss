@@ -62,7 +62,7 @@ $action-sheet-ios-button-icon-fill-color:               $action-sheet-ios-button
 $action-sheet-ios-button-icon-font-size:                1.4em !default;
 
 /// @prop - Padding right of the action sheet button icon
-$action-sheet-ios-button-icon-padding-right:            0.1em !default;
+$action-sheet-ios-button-icon-padding-right:            .1em !default;
 
 /// @prop - Height of the action sheet button icon
 $action-sheet-ios-button-icon-height:                   .7em !default;
@@ -123,11 +123,14 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 }
 
 .action-sheet-ios .action-sheet-title {
-  @include padding($action-sheet-ios-title-padding);
-  @include text-align($action-sheet-ios-text-align);
   @include border-radius($action-sheet-ios-title-border-radius);
 
+  @include padding($action-sheet-ios-title-padding);
+
+  @include text-align($action-sheet-ios-text-align);
+
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
+
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
   color: $action-sheet-ios-title-color;
@@ -135,22 +138,28 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 
 .action-sheet-ios .action-sheet-button {
   @include margin(0);
+
   @include padding($action-sheet-ios-button-padding);
 
   min-height: $action-sheet-ios-button-min-height;
 
   border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
+
   font-size: $action-sheet-ios-button-font-size;
   color: $action-sheet-ios-button-text-color;
   background: $action-sheet-ios-button-background;
 }
 
 .action-sheet-ios .action-sheet-button .action-sheet-icon {
-  fill: $action-sheet-ios-button-icon-fill-color;
-  font-size: $action-sheet-ios-button-icon-font-size;
-  padding-right: $action-sheet-ios-button-icon-padding-right;
+  @include margin($action-sheet-ios-button-icon-margin-top, null, null, null);
+
+  @include padding-horizontal(null, $action-sheet-ios-button-icon-padding-right);
+
   height: $action-sheet-ios-button-icon-height;
-  margin-top: $action-sheet-ios-button-icon-margin-top;
+
+  font-size: $action-sheet-ios-button-icon-font-size;
+
+  fill: $action-sheet-ios-button-icon-fill-color;
 }
 
 .action-sheet-ios .action-sheet-button:last-child {

@@ -63,9 +63,9 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .searchbar-md {
-  background: $searchbar-md-background-color;
-
   @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
+
+  background: $searchbar-md-background-color;
 }
 
 

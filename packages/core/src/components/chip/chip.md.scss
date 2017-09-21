@@ -53,14 +53,14 @@ $chip-md-icon-fill-color:                  color-contrast($colors-md, $chip-md-i
 .chip-md {
   @include border-radius($chip-md-border-radius);
 
+  @include margin($chip-md-margin-top, $chip-md-margin-end, $chip-md-margin-bottom, $chip-md-margin-start);
+
   height: $chip-md-height;
 
   font-size: $chip-md-font-size;
   line-height: $chip-md-height;
   color: $chip-md-text-color;
   background: $chip-md-background-color;
-
-  @include margin($chip-md-margin-top, $chip-md-margin-end, $chip-md-margin-bottom, $chip-md-margin-start);
 }
 
 .chip-md > ion-label {
@@ -68,8 +68,9 @@ $chip-md-icon-fill-color:                  color-contrast($colors-md, $chip-md-i
 }
 
 .chip-md > ion-icon {
-  fill: $chip-md-icon-fill-color;
   background-color: $chip-md-icon-background-color;
+
+  fill: $chip-md-icon-fill-color;
 }
 
 
@@ -84,8 +85,9 @@ $chip-md-icon-fill-color:                  color-contrast($colors-md, $chip-md-i
   }
 
   .chip-md .icon-md-#{$color-name} {
-    fill: $color-contrast;
     background-color: $color-base;
+
+    fill: $color-contrast;
   }
 
 }

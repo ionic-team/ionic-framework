@@ -78,6 +78,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 @mixin ios-searchbar-icon($svg-icon, $fg-color) {
   $svg: str-replace($svg-icon, 'fg-color', $fg-color);
+
   @include svg-background-image($svg, true);
 }
 
