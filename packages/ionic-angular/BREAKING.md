@@ -11,6 +11,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Icon](#icon)
 - [Item](#item)
 - [Option](#option)
+- [Radio](#radio)
 - [Segment](#segment)
 - [Toolbar](#toolbar)
 - [Sass](#sass)
@@ -349,6 +350,103 @@ Select's option element should now be written as `<ion-select-option>`. This mak
 ### Class Changed
 
 The class has been renamed from `Option` to `SelectOption` to keep it consistent with the element tag name.
+
+## Radio
+
+### Slot Required
+
+Previously radio was positioned inside of an item automatically or by using `item-left`/`item-right`. It is now required to have a `slot` to be positioned properly.
+
+** Old Usage Example **
+
+```html
+<ion-item>
+  <ion-label>Apple</ion-label>
+  <ion-radio value="apple"></ion-radio>
+</ion-item>
+
+<ion-item>
+  <ion-label>Grape, checked, disabled</ion-label>
+  <ion-radio item-left value="grape" checked disabled></ion-radio>
+</ion-item>
+
+<ion-item>
+  <ion-label>Cherry</ion-label>
+  <ion-radio item-right color="danger" value="cherry"></ion-radio>
+</ion-item>
+```
+
+** New Usage Example **
+
+```html
+<ion-item>
+  <ion-label>Apple</ion-label>
+  <ion-radio slot="start" value="apple"></ion-radio>
+</ion-item>
+
+<ion-item>
+  <ion-label>Grape, checked, disabled</ion-label>
+  <ion-radio slot="start" value="grape" checked disabled></ion-radio>
+</ion-item>
+
+<ion-item>
+  <ion-label>Cherry</ion-label>
+  <ion-radio slot="end" color="danger" value="cherry"></ion-radio>
+</ion-item>
+```
+
+### Radio Group
+
+Radio group has been changed to an element. It should now be wrapped around any `<ion-radio>` elements as `<ion-radio-group>`.
+
+** Old Usage Example **
+
+```html
+<ion-list radio-group>
+  <ion-item>
+    <ion-label>Apple</ion-label>
+    <ion-radio value="apple"></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Grape, checked, disabled</ion-label>
+    <ion-radio value="grape" checked disabled></ion-radio>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Cherry</ion-label>
+    <ion-radio color="danger" value="cherry"></ion-radio>
+  </ion-item>
+</ion-list>
+```
+
+** New Usage Example **
+
+```html
+<ion-list>
+  <ion-radio-group>
+    <ion-item>
+      <ion-label>Apple</ion-label>
+      <ion-radio slot="start" value="apple"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Grape, checked, disabled</ion-label>
+      <ion-radio slot="start" value="grape" checked disabled></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Cherry</ion-label>
+      <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>
+```
+
+### Order for Windows
+
+Previously a radio inside of an item in Windows Platform mode would align itself to the start of the item. This has been removed, `slot` should always be used to align a radio inside of an item now.
+
 
 ## Segment
 

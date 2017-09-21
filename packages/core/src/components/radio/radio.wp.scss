@@ -10,9 +10,6 @@ $radio-wp-color-on:                   color($colors-wp, primary) !default;
 /// @prop - Color of the unchecked radio
 $radio-wp-color-off:                  #333 !default;
 
-/// @prop - Order of the radio (places to the left of the item)
-$radio-wp-order:                      -1 !default;
-
 /// @prop - Width of the radio icon
 $radio-wp-icon-width:                 16px !default;
 
@@ -127,16 +124,12 @@ $radio-wp-item-end-margin-start:      0 !default;
 // -----------------------------------------
 
 .item-wp .radio-wp {
+  @include margin($radio-wp-item-start-margin-top, $radio-wp-item-start-margin-end, $radio-wp-item-start-margin-bottom, $radio-wp-item-start-margin-start);
+
   position: static;
   display: block;
 
-  order: $radio-wp-order;
-
-  @include margin($radio-wp-item-start-margin-top, $radio-wp-item-start-margin-end, $radio-wp-item-start-margin-bottom, $radio-wp-item-start-margin-start);
-
-  &[item-end] {
-    order: 0;
-
+  &[slot="end"] {
     @include margin($radio-wp-item-end-margin-top, $radio-wp-item-end-margin-end, $radio-wp-item-end-margin-bottom, $radio-wp-item-end-margin-start);
   }
 }
