@@ -4,12 +4,16 @@
 
 plugin_directories: ['.scss-linters']
 
+scss_files: 'src/**/*.scss'
+
 exclude:
   - 'src/themes/ionic.mixins.scss'
   - 'src/themes/license.scss'
+  - 'src/themes/normalize.scss'
   - 'src/themes/util.scss'
   - 'src/themes/version.scss'
   - 'src/platform/cordova.*.scss'
+  - 'src/components/slides/slides-import.scss'
 
 
 linters:
