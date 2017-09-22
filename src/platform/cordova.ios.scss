@@ -13,5 +13,5 @@ $cordova-ios-statusbar-padding-modal-max-width:         $cordova-statusbar-paddi
 .ios {
  @include statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $cordova-ios-statusbar-padding, $cordova-ios-statusbar-padding-modal-max-width, true);
 
- @include footer-safe-area(($toolbar-ios-height, $toolbar-ios-padding)
+ @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding);
 }
