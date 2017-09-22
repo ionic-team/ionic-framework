@@ -547,24 +547,19 @@
 // @param {string} $start
 // ----------------------------------------------------------
 @mixin safe-area-padding($top, $end: $top, $bottom: $top, $start: $end) {
-  $safe-area-top: null;
-  $safe-area-end: null;
-  $safe-area-bottom: null;
   $safe-area-start: null;
 
-  @if ($top) { $safe-area-top: calc(constant(safe-area-inset-top) + #{$top}); }
-  @if ($end) { $safe-area-end: calc(constant(safe-area-inset-right) + #{$end}); }
-  @if ($bottom) { $safe-area-bottom: calc(constant(safe-area-inset-bottom) + #{$bottom}); }
-  @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
 
   @include padding($top, $end, $bottom, $start);
 
-  @media screen and (orientation: landscape){
+  @media screen and (orientation: landscape) {
     @include padding($top, $end, $bottom, $safe-area-start);
-
   }
-
 }
+
 
 // Add safe area padding horizontal
 // @param {string} $start
@@ -574,12 +569,16 @@
   $safe-area-end: null;
   $safe-area-start: null;
 
-  @if ($end) { $safe-area-end: calc(constant(safe-area-inset-right) + #{$end}); }
-  @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
+  @if ($end) {
+    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
+  }
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
 
   @include padding-horizontal($start, $end);
 
-  @media screen and (orientation: landscape){
+  @media screen and (orientation: landscape) {
     @include padding-horizontal($safe-area-start, $safe-area-end);
   }
 }
@@ -587,10 +586,16 @@
 
 // Add safe area padding to a screen
 // only if it is landscape mode, then only on the left
+// @param {string} $start
+// ----------------------------------------------------------
 @mixin safe-area-no-padding($start) {
   $safe-area-start: null;
-  @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
-  @media screen and (orientation: landscape){
+
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
+
+  @media screen and (orientation: landscape) {
     @include padding-horizontal($safe-area-start, null);
   }
 }
