@@ -558,7 +558,12 @@
   @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
 
   @include padding($top, $end, $bottom, $start);
-  @include padding($safe-area-top, $safe-area-end, $safe-area-bottom, $safe-area-start);
+
+  @media screen and (orientation: landscape){
+    @include padding($top, $end, $bottom, $safe-area-start);
+
+  }
+
 }
 
 // Add safe area padding horizontal
@@ -572,6 +577,20 @@
   @if ($end) { $safe-area-end: calc(constant(safe-area-inset-right) + #{$end}); }
   @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
 
-  @include property-horizontal(padding, $start, $end);
-  @include property-horizontal(padding, $safe-area-start, $safe-area-end);
+  @include padding-horizontal($start, $end);
+
+  @media screen and (orientation: landscape){
+    @include padding-horizontal($safe-area-start, $safe-area-end);
+  }
+}
+
+
+// Add safe area padding to a screen
+// only if it is landscape mode, then only on the left
+@mixin safe-area-no-padding($start) {
+  $safe-area-start: null;
+  @if ($start) { $safe-area-start: calc(constant(safe-area-inset-left) + #{$start}); }
+  @media screen and (orientation: landscape){
+    @include padding-horizontal($safe-area-start, null);
+  }
 }

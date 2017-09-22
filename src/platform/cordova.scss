@@ -11,6 +11,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
   ion-nav > .ion-page,
   ion-nav > .ion-page > ion-header,
+  ion-tab > .ion-page,
   ion-tab > .ion-page > ion-header,
   ion-tabs > .ion-page.tab-subpage > ion-header,
   ion-menu > .menu-inner,
@@ -52,6 +53,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
   > ion-content.statusbar-padding:first-child .scroll-content {
     @include padding($cordova-statusbar-padding, null, null, null);
+    @include padding(calc(#{$cordova-statusbar-padding} + constant(safe-area-inset-top)), null, null, null);
   }
 
   > ion-content.statusbar-padding:first-child[padding] .scroll-content,
