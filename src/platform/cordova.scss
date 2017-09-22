@@ -74,8 +74,23 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
     @include padding(calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null, null, null);
 
     height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
+    height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
 
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
+    min-height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
+  }
+
+}
+
+
+@mixin footer-safe-area($toolbar-height, $toolbar-padding) {
+  .tabs .tabbar  {
+    @include padding(null, null, constant(safe-area-inset-bottom), null);
+  }
+
+  ion-footer .toolbar:last-child {
+    @include padding(null, null, calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null);
+    height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
     min-height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
   }
 }
