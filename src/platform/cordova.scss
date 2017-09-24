@@ -43,9 +43,10 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
 @mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding) {
 
+
   > .toolbar.statusbar-padding:first-child {
     @include padding(calc(#{$cordova-statusbar-padding} + #{$toolbar-padding}), null, null, null);
-    @include padding(calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null, null, null);
+    @include padding(calc(constant(safe-area-inset-top) + #{$toolbar-padding}), calc(constant(safe-area-inset-right) + #{$toolbar-padding}), null, calc(constant(safe-area-inset-left) + #{$toolbar-padding}));
 
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     min-height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
