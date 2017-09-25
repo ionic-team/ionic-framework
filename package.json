@@ -134,7 +134,7 @@
     "ts-node": "3.3.0",
     "tslint": "^5.4.3",
     "tslint-ionic-rules": "0.0.11",
-    "typescript": "~2.5.2",
+    "typescript": "~2.3.2",
     "vinyl": "1.2.0",
     "yargs": "5.0.0"
   },

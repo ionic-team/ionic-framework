@@ -10,7 +10,6 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noStrictGenericChecks": true,
     "outDir": "dist/tmp",
     "removeComments": false,
     "sourceMap": true,
