@@ -13,7 +13,8 @@ import { ScrollView } from './scroll-view';
  * import { Events } from 'ionic-angular';
  *
  * // first page (publish an event when a user is created)
- * constructor(public events: Events) {}
+ * constructor(public events: Events) { }
+ *
  * createUser(user) {
  *   console.log('User created!')
  *   events.publish('user:created', user, Date.now());

@@ -11,9 +11,9 @@
  * import { NavParams } from 'ionic-angular';
  *
  * export class MyClass {
- *   constructor(public navParams: NavParams) {
+ *   constructor(navParams: NavParams) {
  *     // userParams is an object we have in our nav-parameters
- *     this.navParams.get('userParams');
+ *     const params = navParams.get('userParams');
  *   }
  * }
  * ```
