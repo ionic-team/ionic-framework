@@ -14,8 +14,9 @@ import { Platform } from '../platform/platform';
  *
  * @usage
  * ```ts
- * export class MyClass{
- *  constructor(haptic: Haptic){
+ * export class MyClass {
+ *
+ *  constructor(haptic: Haptic) {
  *    haptic.selection();
  *  }
  * }

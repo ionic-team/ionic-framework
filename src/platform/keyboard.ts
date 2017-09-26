@@ -16,9 +16,9 @@ import { Platform } from './platform';
  * @usage
  * ```ts
  * export class MyClass {
- *   constructor(public keyboard: Keyboard) {
  *
- *   }
+ *   constructor(public keyboard: Keyboard) { }
+ *
  * }
  * ```
  */
