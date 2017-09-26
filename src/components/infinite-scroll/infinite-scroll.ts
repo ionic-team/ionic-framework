@@ -33,7 +33,7 @@ import { assert } from '../../util/util';
  * ```ts
  * @Component({...})
  * export class NewsFeedPage {
- *   items = [];
+ *   public items: any[] = [];
  *
  *   constructor() {
  *     for (let i = 0; i < 30; i++) {
