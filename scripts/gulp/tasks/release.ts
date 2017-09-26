@@ -277,6 +277,7 @@ task('release.pullLatest', (done: Function) => {
       done();
     }
   });
+  done();
 });
 
 task('release.prepareChangelog', () => {

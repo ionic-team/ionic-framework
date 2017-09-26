@@ -42,6 +42,9 @@ $tabs-ios-tab-icon-color-active:    $tabs-ios-tab-color-active !default;
 /// @prop - Font size of the tab button text
 $tabs-ios-tab-font-size:            10px !default;
 
+/// @prop - Font weight of the tab button text
+$tabs-ios-tab-font-weight:          500 !default;
+
 /// @prop - Size of the tab button icon
 $tabs-ios-tab-icon-size:            30px !default;
 
@@ -63,6 +66,7 @@ $tabs-ios-tab-icon-size:            30px !default;
   min-height: $tabs-ios-tab-min-height;
 
   font-size: $tabs-ios-tab-font-size;
+  font-weight: $tabs-ios-tab-font-weight;
   color: $tabs-ios-tab-text-color;
 
   @include deprecated-variable(padding, $tabs-ios-tab-padding) {

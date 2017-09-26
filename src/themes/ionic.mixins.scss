@@ -538,3 +538,111 @@
     }
   }
 }
+
+
+// Add safe-area transform for all directions
+// Used by item-reorder
+// @param {string} $transforms - comma separated list of transforms
+@mixin reorder-safe-translate($transforms...) {
+  $extra: null;
+
+  $x: null;
+  $ltr-translate: null;
+  $rtl-translate: null;
+
+  @each $transform in $transforms {
+    @if (str-index($transform, translate3d)) {
+      $transform: str-replace($transform, 'translate3d(');
+      $transform: str-replace($transform, ')');
+
+      $coordinates: str-split($transform, ',');
+
+      $x: nth($coordinates, 1);
+      $y: nth($coordinates, 2);
+      $z: nth($coordinates, 3);
+
+      $ltr-translate: translate3d(calc(-1 * constant(safe-area-inset-right)), 0, 0);
+      $rtl-translate: translate3d(constant(safe-area-inset-left), $y, $z);
+    } @else {
+      @if $extra == null {
+        $extra: $transform;
+      } @else {
+        $extra: $extra $transform;
+      }
+    }
+  }
+
+  @if $x == '0' or $x == null {
+    @include multi-dir() {
+      transform: $ltr-translate $extra;
+    }
+  } @else {
+    @include ltr() {
+      transform: $ltr-translate $extra;
+    }
+
+    @include rtl() {
+      transform: $rtl-translate $extra;
+    }
+  }
+}
+
+// Add safe-area-padding for all directions
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin safe-area-padding($top, $end: $top, $bottom: $top, $start: $end) {
+  $safe-area-start: null;
+
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
+
+  @include padding($top, $end, $bottom, $start);
+
+  @media screen and (orientation: landscape) {
+    @include padding($top, $end, $bottom, $safe-area-start);
+  }
+}
+
+
+// Add safe area padding horizontal
+// @param {string} $start
+// @param {string} $end
+// ----------------------------------------------------------
+@mixin safe-area-padding-horizontal($start, $end: $start) {
+  $safe-area-end: null;
+  $safe-area-start: null;
+
+  @if ($end) {
+    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
+  }
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
+
+  @include padding-horizontal($start, $end);
+
+  @media screen and (orientation: landscape) {
+    @include padding-horizontal($safe-area-start, $safe-area-end);
+  }
+}
+
+
+// Add safe area padding to a screen
+// only if it is landscape mode, then only on the left
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin safe-area-no-padding($start) {
+  $safe-area-start: null;
+
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
+
+  @media screen and (orientation: landscape) {
+    @include padding-horizontal($safe-area-start, null);
+  }
+}
