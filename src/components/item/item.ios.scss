@@ -139,7 +139,9 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
 
 .item-ios [item-right], // deprecated
 .item-ios [item-end] {
-  @include margin($item-ios-padding-media-top, ($item-ios-padding-start / 2), $item-ios-padding-media-bottom, ($item-ios-padding-end / 2));
+  @include margin($item-ios-padding-media-top, null, $item-ios-padding-media-bottom, ($item-ios-padding-end / 2));
+
+  @include safe-area-padding-horizontal(null, ($item-ios-padding-start / 4));
 }
 
 .item-ios ion-icon[item-left], // deprecated

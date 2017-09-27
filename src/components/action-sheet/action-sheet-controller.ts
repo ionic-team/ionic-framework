@@ -39,10 +39,10 @@ import { Config } from '../../config/config';
  *
  * export class MyClass{
  *
- *  constructor(public actionSheetCtrl: ActionSheetController) {}
+ *  constructor(public actionSheetCtrl: ActionSheetController) { }
  *
  *  presentActionSheet() {
- *    let actionSheet = this.actionSheetCtrl.create({
+ *    const actionSheet = this.actionSheetCtrl.create({
  *      title: 'Modify your album',
  *      buttons: [
  *        {
@@ -115,7 +115,7 @@ import { Config } from '../../config/config';
  * out first, *then* start the next transition.
  *
  * ```ts
- * let actionSheet = this.actionSheetCtrl.create({
+ * const actionSheet = this.actionSheetCtrl.create({
  *   title: 'Hello',
  *   buttons: [{
  *     text: 'Ok',

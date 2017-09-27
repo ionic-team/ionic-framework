@@ -12,4 +12,6 @@ $cordova-wp-statusbar-padding-modal-max-width:         $cordova-statusbar-paddin
 // Cordova mixins are in the main cordova file
 .wp {
   @include statusbar-padding($toolbar-wp-height, $toolbar-wp-padding, $content-wp-padding, $cordova-wp-statusbar-padding, $cordova-wp-statusbar-padding-modal-max-width);
+
+  @include footer-safe-area($toolbar-wp-height, $toolbar-wp-padding);
 }

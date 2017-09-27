@@ -89,6 +89,10 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   @include text-align($action-sheet-ios-text-align);
 }
 
+.action-sheet-ios .action-sheet-wrapper {
+  @include margin(auto, auto, constant(safe-area-inset-bottom), auto);
+}
+
 .action-sheet-ios .action-sheet-container {
   @include deprecated-variable(padding, $action-sheet-ios-padding) {
     @include padding($action-sheet-ios-padding-top, $action-sheet-ios-padding-end, $action-sheet-ios-padding-bottom, $action-sheet-ios-padding-start);

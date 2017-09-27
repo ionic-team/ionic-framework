@@ -91,39 +91,65 @@ ion-app [no-padding] .scroll-content {
 }
 
 @mixin content-padding($mode, $content-padding) {
-  ion-app.#{$mode} [padding],
-  ion-app.#{$mode} [padding] .scroll-content {
+  ion-app.#{$mode} [padding] {
     @include padding($content-padding);
   }
 
-  ion-app.#{$mode} [padding-top],
-  ion-app.#{$mode} [padding-top] .scroll-content {
+  ion-app.#{$mode} [padding-top] {
     @include padding($content-padding, null, null, null);
   }
 
-  ion-app.#{$mode} [padding-left],
-  ion-app.#{$mode} [padding-left] .scroll-content {
+  ion-app.#{$mode} [padding-left] {
     @include padding-horizontal($content-padding, null);
   }
 
-  ion-app.#{$mode} [padding-right],
-  ion-app.#{$mode} [padding-right] .scroll-content {
+  ion-app.#{$mode} [padding-right] {
     @include padding-horizontal(null, $content-padding);
   }
 
-  ion-app.#{$mode} [padding-bottom],
-  ion-app.#{$mode} [padding-bottom] .scroll-content {
+  ion-app.#{$mode} [padding-bottom] {
     @include padding(null, null, $content-padding, null);
   }
 
-  ion-app.#{$mode} [padding-vertical],
-  ion-app.#{$mode} [padding-vertical] .scroll-content {
+  ion-app.#{$mode} [padding-vertical] {
     @include padding($content-padding, null, $content-padding, null);
   }
 
-  ion-app.#{$mode} [padding-horizontal],
-  ion-app.#{$mode} [padding-horizontal] .scroll-content {
+  ion-app.#{$mode} [padding-horizontal] {
     @include padding-horizontal($content-padding);
+  }
+
+  // Scroll content should use safe-area-padding
+  ion-app.#{$mode} [padding] .scroll-content {
+    @include safe-area-padding($content-padding);
+  }
+
+  ion-app.#{$mode} .scroll-content {
+    @include safe-area-no-padding($content-padding);
+  }
+
+  ion-app.#{$mode} [padding-top] .scroll-content {
+    @include safe-area-padding($content-padding, null, null, null);
+  }
+
+  ion-app.#{$mode} [padding-left] .scroll-content {
+    @include safe-area-padding-horizontal($content-padding, null);
+  }
+
+  ion-app.#{$mode} [padding-right] .scroll-content {
+    @include safe-area-padding-horizontal(null, $content-padding);
+  }
+
+  ion-app.#{$mode} [padding-bottom] .scroll-content {
+    @include safe-area-padding(null, null, $content-padding, null);
+  }
+
+  ion-app.#{$mode} [padding-vertical] .scroll-content {
+    @include safe-area-padding($content-padding, null, $content-padding, null);
+  }
+
+  ion-app.#{$mode} [padding-horizontal] .scroll-content {
+    @include safe-area-padding-horizontal($content-padding);
   }
 }
 
