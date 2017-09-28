@@ -1,3 +1,53 @@
+<a name="3.7.0"></a>
+# [3.7.0](https://github.com/ionic-team/ionic/compare/v3.6.1...v3.7.0) (2017-09-28)
+
+### Notes
+This release adds support the latest version of Angular (4.4.3) as well as the initial iteration of support for the iPhone X.
+
+### Upgrade Instructions
+
+Update the following dependencies to the following version. This is the latest version of `@angular`, `rxjs`, `zone.js` and `ionic-angular`.
+
+```
+...
+"dependencies": {
+    "@angular/common": "4.4.3",
+    "@angular/compiler": "4.4.3",
+    "@angular/compiler-cli": "4.4.3",
+    "@angular/core": "4.4.3",
+    "@angular/forms": "4.4.3",
+    "@angular/http": "4.4.3",
+    "@angular/platform-browser": "4.4.3",
+    "@angular/platform-browser-dynamic": "4.4.3",
+    "ionic-angular": "3.7.0",
+    "rxjs": "5.4.3",
+    "zone.js": "0.8.17"
+}
+"devDependencies": {
+  "@ionic/app-scripts": "3.0.0"
+}
+...
+```
+
+If you're using a `package-lock.json` file, make sure that is updated as well.
+
+### Bug Fixes
+
+* **input:** mark ion-input touched on blur instead of changed ([#12812](https://github.com/ionic-team/ionic/issues/12812)) ([d0cad6b](https://github.com/ionic-team/ionic/commit/d0cad6b)), closes [#12102](https://github.com/ionic-team/ionic/issues/12102)
+* **swiper:** change var to let to avoid variable shadowing ([f5ef1ca](https://github.com/ionic-team/ionic/commit/f5ef1ca))
+
+
+### Features
+
+* initial iphoneX support ([112d4f5](https://github.com/ionic-team/ionic/commit/112d4f5))
+
+
+### Reverts
+
+* **item:** revert the change from margin to padding right ([921ccbb](https://github.com/ionic-team/ionic/commit/921ccbb))
+
+
+
 <a name="3.6.1"></a>
 ## [3.6.1](https://github.com/ionic-team/ionic/compare/v3.6.0...v3.6.1) (2017-09-07)
 
