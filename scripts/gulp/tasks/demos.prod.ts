@@ -99,6 +99,10 @@ function buildDemo(filePath: string) {
   const appNgModulePath = join(dirname(filePath), 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
+  const minifyCss = argv.noMinifyCss ? false : true;
+  const minifyJs = argv.noMinifyJs ? false : true;
+  const optimizeJs = argv.noOptimizeJs ? false : true;
+
   return runAppScriptsBuild(
     appEntryPoint,
     appNgModulePath,
@@ -107,7 +111,11 @@ function buildDemo(filePath: string) {
     pathToWriteFile,
     ionicAngularDir,
     sassConfigPath,
-    copyConfigPath
+    copyConfigPath,
+    false,
+    minifyCss,
+    minifyJs,
+    optimizeJs
   ).then(() => {
     const end = Date.now();
     console.log(`${filePath} took a total of ${(end - start) / 1000} seconds to build`);
