@@ -2,11 +2,11 @@
 # [3.7.0](https://github.com/ionic-team/ionic/compare/v3.6.1...v3.7.0) (2017-09-28)
 
 ### Notes
-This release adds support the latest version of Angular (4.4.3) as well as the initial iteration of support for the iPhone X.
+This release adds support for the latest version of Angular (4.4.3) as well as the initial iteration of support for the iPhone X.
 
 ### Upgrade Instructions
 
-Update the following dependencies to the following version. This is the latest version of `@angular`, `rxjs`, `zone.js` and `ionic-angular`.
+These are the latest versions of `@angular`, `rxjs`, `zone.js` and `ionic-angular`. Update your `package.json` to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
 
 ```
 ...
@@ -40,12 +40,6 @@ If you're using a `package-lock.json` file, make sure that is updated as well.
 ### Features
 
 * initial iphoneX support ([112d4f5](https://github.com/ionic-team/ionic/commit/112d4f5))
-
-
-### Reverts
-
-* **item:** revert the change from margin to padding right ([921ccbb](https://github.com/ionic-team/ionic/commit/921ccbb))
-
 
 
 <a name="3.6.1"></a>
