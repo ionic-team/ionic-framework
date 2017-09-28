@@ -3,7 +3,7 @@ export { IonicApp } from './components/app/app-root';
 export { MenuController } from './components/app/menu-controller';
 export { ActionSheet } from './components/action-sheet/action-sheet';
 export { ActionSheetController } from './components/action-sheet/action-sheet-controller';
-export { ActionSheetOptions } from './components/action-sheet/action-sheet-options';
+export { ActionSheetButton, ActionSheetOptions } from './components/action-sheet/action-sheet-options';
 export { ActionSheetCmp } from './components/action-sheet/action-sheet-component';
 export { Alert } from './components/alert/alert';
 export { AlertController } from './components/alert/alert-controller';
