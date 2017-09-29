@@ -4,10 +4,15 @@
 
 ### Upgrade Instructions
 
-This release includes the latest version of `zone.js`. Update your `package.json` to match the following dependency, remove the existing `node_modules` directory, and then run `npm install`:
+This release includes the latest version of `zone.js`. Update your `package.json` to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
 
 ```
+"dependencies": {
+    ...
+    "ionic-angular": "3.7.1",
+    ...
     "zone.js": "0.8.18"
+}
 ```
 
 
