@@ -80,7 +80,7 @@ export interface IonicPageMetadata {
  * The `@IonicPage` decorator accepts a `DeepLinkMetadataType` object. This object accepts
  * the following properties: `name`, `segment`, `defaultHistory`, and `priority`. All of them
  * are optional but can be used to create complex navigation links. The `name` and `segment`
- * values must be unique..
+ * values must be unique.
  *
  *
  * ### Changing Name
