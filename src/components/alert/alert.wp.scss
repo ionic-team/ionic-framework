@@ -493,6 +493,10 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   border-width: $alert-wp-radio-border-width;
   border-style: $alert-wp-radio-border-style;
   border-color: $alert-wp-radio-border-color;
+
+  @include rtl() {
+    order: 1;
+  }
 }
 
 // Windows Alert Radio Checked Dot
@@ -565,6 +569,10 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   border-style: $alert-wp-checkbox-border-style;
   border-color: $alert-wp-checkbox-border-color;
   background: $alert-wp-checkbox-background-off;
+
+  @include rtl() {
+    order: 1;
+  }
 }
 
 // Windows Alert Checkbox Outline: Checked

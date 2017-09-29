@@ -479,6 +479,10 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   border-width: $alert-md-radio-border-width;
   border-style: $alert-md-radio-border-style;
   border-color: $alert-md-radio-border-color-off;
+
+  @include rtl() {
+    order: 1;
+  }
 }
 
 // Material Design Alert Radio Checked Dot
@@ -552,6 +556,10 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   border-width: $alert-md-checkbox-border-width;
   border-style: $alert-md-checkbox-border-style;
   border-color: $alert-md-checkbox-border-color-off;
+
+  @include rtl() {
+    order: 1;
+  }
 }
 
 // Material Design Alert Checkbox Checkmark: Checked
