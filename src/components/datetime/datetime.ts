@@ -12,6 +12,7 @@ import { assert, clamp, deepCopy, isArray, isBlank, isObject, isPresent, isStrin
 import {
   DateTimeData,
   LocaleData,
+  compareDates,
   convertDataToISO,
   convertFormatToKey,
   dateDataSortValue,
@@ -850,10 +851,17 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
    * @private
    */
   getDefaultValue() {
+    const now = parseDate((new Date).toISOString());
     if (this.max) {
-      return parseDate(this.max);
+      const max = parseDate(this.max);
+      const diff = compareDates(now, max);
+
+      // If max is before current time, return max
+      if (diff > 0) {
+        return max;
+      }
     }
-    return parseDate((new Date).toISOString());
+    return now;
   }
 }
 

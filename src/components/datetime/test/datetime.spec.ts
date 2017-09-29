@@ -25,13 +25,23 @@ describe('DateTime', () => {
       expect(val.minute).toEqual(now.minute);
     });
 
-    fit('should default to max if no initial value supplied but max specified', () => {
+    fit('should default to max if no initial value supplied but max specified and max before current', () => {
       datetime.max = '1987-10-19';
       datetime.generate();
       const val = datetime.getValue();
       expect(val.year).toEqual(1987);
       expect(val.month).toEqual(10);
       expect(val.day).toEqual(19);
+    });
+
+    fit('should default to current if no initial value supplied but max specified and max after current', () => {
+      const now = datetimeUtil.parseDate(new Date().toISOString());
+      datetime.max = '2100-10-19';
+      datetime.generate();
+      const val = datetime.getValue();
+      expect(val.year).toEqual(now.year);
+      expect(val.month).toEqual(now.month);
+      expect(val.day).toEqual(now.day);
     });
 
     it('should restrict January 1-14, 2000 from selection, then allow it, and restrict December 15-31, 2001', () => {
