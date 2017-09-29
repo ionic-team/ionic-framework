@@ -1,3 +1,28 @@
+<a name="3.7.1"></a>
+## [3.7.1](https://github.com/ionic-team/ionic/compare/v3.7.0...v3.7.1) (2017-09-29)
+
+
+### Upgrade Instructions
+
+This release includes the latest version of `zone.js`. Update your `package.json` to match the following dependency, remove the existing `node_modules` directory, and then run `npm install`:
+
+```
+    "zone.js": "0.8.18"
+```
+
+
+### Bug Fixes
+
+* **datetime:** set default to max if max before current only [#9846](https://github.com/ionic-team/ionic/issues/9846) ([39e7da3](https://github.com/ionic-team/ionic/commit/39e7da3))
+
+
+### Features
+
+* **datetime:** add default picker value input ([b87d212](https://github.com/ionic-team/ionic/commit/b87d212))
+* **datetime:** default to now or max. Fixes [#9846](https://github.com/ionic-team/ionic/issues/9846) ([559f4d3](https://github.com/ionic-team/ionic/commit/559f4d3))
+
+
+
 <a name="3.7.0"></a>
 # [3.7.0](https://github.com/ionic-team/ionic/compare/v3.6.1...v3.7.0) (2017-09-28)
 
