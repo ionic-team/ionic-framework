@@ -510,6 +510,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     if (this.isFocus() || this._disabled) {
       return;
     }
+
     console.debug('datetime, open picker');
 
     // the user may have assigned some options specifically for the alert
@@ -548,6 +549,11 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
    * @hidden
    */
   generate() {
+    // If the date doesn't have a value yet, set it to now or the max value
+    if (Object.keys(this._value).length === 0) {
+      this._value = this.getDefaultValue();
+    }
+
     const picker = this._picker;
     // if a picker format wasn't provided, then fallback
     // to use the display format
@@ -838,6 +844,17 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     }
   }
 
+  /**
+   * Get the default value to show when none is provided,
+   * and within the bounds of the max value
+   * @private
+   */
+  getDefaultValue() {
+    if (this.max) {
+      return parseDate(this.max);
+    }
+    return parseDate((new Date).toISOString());
+  }
 }
 
 /**

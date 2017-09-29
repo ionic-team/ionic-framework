@@ -4,7 +4,7 @@ import { DateTime } from '../datetime';
 import { Form } from '../../../util/form';
 import { Picker } from '../../picker/picker';
 import { PickerController } from '../../picker/picker-controller';
-import * as datetime from '../../../util/datetime-util';
+import * as datetimeUtil from '../../../util/datetime-util';
 import { mockApp, mockConfig, mockElementRef, mockRenderer } from '../../../util/mock-providers';
 
 
@@ -13,6 +13,26 @@ describe('DateTime', () => {
   // pass commonInputTest()
 
   describe('validate', () => {
+
+    fit('should default to now if no initial value or bounds supplied', () => {
+      const now = datetimeUtil.parseDate(new Date().toISOString());
+      datetime.generate();
+      const val = datetime.getValue();
+      expect(val.year).toEqual(now.year);
+      expect(val.month).toEqual(now.month);
+      expect(val.day).toEqual(now.day);
+      expect(val.hour).toEqual(now.hour);
+      expect(val.minute).toEqual(now.minute);
+    });
+
+    fit('should default to max if no initial value supplied but max specified', () => {
+      datetime.max = '1987-10-19';
+      datetime.generate();
+      const val = datetime.getValue();
+      expect(val.year).toEqual(1987);
+      expect(val.month).toEqual(10);
+      expect(val.day).toEqual(19);
+    });
 
     it('should restrict January 1-14, 2000 from selection, then allow it, and restrict December 15-31, 2001', () => {
       datetime.max = '2001-12-15';
@@ -683,7 +703,7 @@ describe('DateTime', () => {
   console.warn = function(){};
 
   // pt-br
-  var customLocale: datetime.LocaleData = {
+  var customLocale: datetimeUtil.LocaleData = {
     dayNames: [
       'domingo',
       'segunda-feira',
