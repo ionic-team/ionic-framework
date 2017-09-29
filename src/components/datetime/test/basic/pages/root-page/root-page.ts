@@ -17,6 +17,7 @@ export class RootPage {
   leapYearsSummerMonths = '';
   convertedDate = '';
   specificDaysMonthsYears = '';
+  defaultValue: any;
 
   leapYearsArray = [2020, 2016, 2008, 2004, 2000, 1996];
 

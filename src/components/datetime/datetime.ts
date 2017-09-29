@@ -323,6 +323,14 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
   @Input() displayFormat: string;
 
   /**
+   * @input {string} The default datetime selected in picker modal if field value is empty.
+   * Value must be a date string following the
+   * [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
+   * `1996-12-19`.
+   */
+  @Input() pickerDefault: string;
+
+  /**
    * @input {string} The format of the date and time picker columns the user selects.
    * A datetime input can have one or many datetime parts, each getting their
    * own column which allow individual selection of that particular datetime part. For
@@ -605,7 +613,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
 
         // cool, we've loaded up the columns with options
         // preselect the option for this column
-        const optValue = getValueFromFormat(this.getValue(), format);
+        const optValue = getValueFromFormat(this.getValueOrDefault(), format);
         const selectedIndex = column.options.findIndex(opt => opt.value === optValue);
         if (selectedIndex >= 0) {
           // set the select index for this column's options
@@ -779,6 +787,18 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
    */
   getValue(): DateTimeData {
     return this._value;
+  }
+
+  /**
+   * @hidden
+   */
+  getValueOrDefault(): DateTimeData {
+    if (this.hasValue()) {
+      return this._value;
+    }
+    const _default = {};
+    updateDate(_default, this.pickerDefault);
+    return _default;
   }
 
   /**
