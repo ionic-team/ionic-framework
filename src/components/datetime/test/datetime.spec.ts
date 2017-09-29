@@ -14,7 +14,7 @@ describe('DateTime', () => {
 
   describe('validate', () => {
 
-    fit('should default to now if no initial value or bounds supplied', () => {
+    it('should default to now if no initial value or bounds supplied', () => {
       const now = datetimeUtil.parseDate(new Date().toISOString());
       datetime.generate();
       const val = datetime.getValue();
@@ -25,7 +25,7 @@ describe('DateTime', () => {
       expect(val.minute).toEqual(now.minute);
     });
 
-    fit('should default to max if no initial value supplied but max specified and max before current', () => {
+    it('should default to max if no initial value supplied but max specified and max before current', () => {
       datetime.max = '1987-10-19';
       datetime.generate();
       const val = datetime.getValue();
@@ -34,7 +34,7 @@ describe('DateTime', () => {
       expect(val.day).toEqual(19);
     });
 
-    fit('should default to current if no initial value supplied but max specified and max after current', () => {
+    it('should default to current if no initial value supplied but max specified and max after current', () => {
       const now = datetimeUtil.parseDate(new Date().toISOString());
       datetime.max = '2100-10-19';
       datetime.generate();
