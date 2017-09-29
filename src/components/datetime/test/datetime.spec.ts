@@ -14,36 +14,6 @@ describe('DateTime', () => {
 
   describe('validate', () => {
 
-    it('should default to now if no initial value or bounds supplied', () => {
-      const now = datetimeUtil.parseDate(new Date().toISOString());
-      datetime.generate();
-      const val = datetime.getValue();
-      expect(val.year).toEqual(now.year);
-      expect(val.month).toEqual(now.month);
-      expect(val.day).toEqual(now.day);
-      expect(val.hour).toEqual(now.hour);
-      expect(val.minute).toEqual(now.minute);
-    });
-
-    it('should default to max if no initial value supplied but max specified and max before current', () => {
-      datetime.max = '1987-10-19';
-      datetime.generate();
-      const val = datetime.getValue();
-      expect(val.year).toEqual(1987);
-      expect(val.month).toEqual(10);
-      expect(val.day).toEqual(19);
-    });
-
-    it('should default to current if no initial value supplied but max specified and max after current', () => {
-      const now = datetimeUtil.parseDate(new Date().toISOString());
-      datetime.max = '2100-10-19';
-      datetime.generate();
-      const val = datetime.getValue();
-      expect(val.year).toEqual(now.year);
-      expect(val.month).toEqual(now.month);
-      expect(val.day).toEqual(now.day);
-    });
-
     it('should restrict January 1-14, 2000 from selection, then allow it, and restrict December 15-31, 2001', () => {
       datetime.max = '2001-12-15';
       datetime.min = '2000-01-15';
@@ -329,20 +299,6 @@ describe('DateTime', () => {
       expect(columns[0].options[0].text).toEqual('1');
     }));
 
-    it('should use pickerDefault if has no value', zoned(() => {
-      datetime.setValue(null);
-      datetime.max = '2100-12-31';
-      datetime.pickerFormat = 'DD MMMM YYYY';
-      datetime.pickerDefault = '2004-08-06';
-
-      datetime.generate();
-      var columns = picker.getColumns();
-
-      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(6);
-      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(8);
-      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(2004);
-    }));
-
     it('should generate MM DD YYYY pickerFormat with min/max', () => {
       datetime.max = '2010-12-31';
       datetime.min = '2000-01-01';
@@ -532,6 +488,53 @@ describe('DateTime', () => {
       expect(datetime._min.minute).toEqual(0);
       expect(datetime._min.second).toEqual(0);
     });
+
+  });
+
+  describe('defaultValue', () => {
+    it('should default to now if no initial value or bounds supplied', () => {
+      const now = datetimeUtil.parseDate(new Date().toISOString());
+      datetime.pickerFormat = 'YYYY-MM-DDThh:mm';
+      datetime.generate();
+      var columns = picker.getColumns();
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(now.year);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(now.month);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(now.day);
+      expect(columns[3].options[columns[3].selectedIndex].value).toEqual(now.hour % 12);
+      expect(columns[4].options[columns[4].selectedIndex].value).toEqual(now.minute);
+    });
+
+    it('should default to max if no initial value supplied but max specified and max before current', () => {
+      datetime.max = '1987-10-19';
+      datetime.generate();
+      var columns = picker.getColumns();
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(10);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(19);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(1987);
+    });
+
+    it('should default to current if no initial value supplied but max specified and max after current', () => {
+      const now = datetimeUtil.parseDate(new Date().toISOString());
+      datetime.max = '2100-10-19';
+      datetime.generate();
+      var columns = picker.getColumns();
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(now.month);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(now.day);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(now.year);
+    });
+
+    it('should use pickerDefault if has no value', zoned(() => {
+      datetime.max = '2100-12-31';
+      datetime.pickerFormat = 'DD MMMM YYYY';
+      datetime.initialValue = '2004-08-06';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(6);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(8);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(2004);
+    }));
 
   });
 
