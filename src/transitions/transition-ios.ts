@@ -2,8 +2,8 @@ import { Animation } from '../animations/animation';
 import { isPresent } from '../util/util';
 import { PageTransition } from './page-transition';
 
-const DURATION = 500;
-const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
+const DURATION = 250;
+const EASING = 'cubic-bezier(0.36,0.66,0.9,1)';
 const OPACITY = 'opacity';
 const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
