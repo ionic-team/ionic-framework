@@ -8,7 +8,7 @@ import * as s3 from 's3';
 import { argv } from 'yargs';
 
 
-import { DEMOS_SRC_ROOT, ES_2015, PROJECT_ROOT } from '../constants';
+import { DEMOS_SRC_ROOT, ES_2015, ES5, PROJECT_ROOT } from '../constants';
 import { createTempTsConfig, getFolderInfo, runAppScriptsBuild, writePolyfills } from '../util';
 
 import * as pAll from 'p-all';
@@ -90,7 +90,7 @@ function buildDemo(filePath: string) {
   const pathToWriteFile = join(distTestRoot, 'tsconfig.json');
   const pathToReadFile = join(PROJECT_ROOT, 'tsconfig.json');
 
-  createTempTsConfig(includeGlob, ES_2015, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
+  createTempTsConfig(includeGlob, ES5, ES_2015, pathToReadFile, pathToWriteFile, { removeComments: true});
 
   const sassConfigPath = join('scripts', 'demos', 'sass.config.js');
   const copyConfigPath = join('scripts', 'demos', 'copy.config.js');
