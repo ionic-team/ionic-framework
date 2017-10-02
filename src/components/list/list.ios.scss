@@ -179,6 +179,7 @@ $list-ios-header-background-color:    transparent !default;
 
 .list-header-ios {
   @include padding-horizontal($list-ios-header-padding-start, null);
+  @include safe-area-padding-horizontal($list-ios-header-padding-start, null);
 
   position: relative;
 

@@ -595,15 +595,19 @@
 // ----------------------------------------------------------
 @mixin safe-area-padding($top, $end: $top, $bottom: $top, $start: $end) {
   $safe-area-start: null;
+  $safe-area-end: null;
 
   @if ($start) {
     $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
+  @if ($end) {
+    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
   }
 
   @include padding($top, $end, $bottom, $start);
 
   @media screen and (orientation: landscape) {
-    @include padding($top, $end, $bottom, $safe-area-start);
+    @include padding($top, $safe-area-end, $bottom, $safe-area-start);
   }
 }
 
@@ -646,3 +650,36 @@
     @include padding-horizontal($safe-area-start, null);
   }
 }
+
+
+// Add safe position horizontal
+// @param {string} $start - amount to position start
+// @param {string} $end - amount to left: 0; end
+// ----------------------------------------------------------
+@mixin safe-position-horizontal($start: null, $end: null){
+  $safe-area-start: null;
+  $safe-area-end: null;
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+  }
+  @if ($end) {
+    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
+  }
+
+  @if $safe-area-start == $safe-area-end {
+    @include multi-dir() {
+      left: $safe-area-start;
+      right: $safe-area-end;
+    }
+  } @else {
+    @include ltr() {
+      left: $safe-area-start;
+      right: $safe-area-end;
+    }
+    @include rtl() {
+      left: $safe-area-end;
+      right: $safe-area-start;
+    }
+  }
+}
+
