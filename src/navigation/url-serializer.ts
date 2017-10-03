@@ -2,7 +2,7 @@ import { OpaqueToken } from '@angular/core';
 
 import { App } from '../components/app/app';
 import { NavigationContainer } from './navigation-container';
-import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment } from './nav-util';
+import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, isNav, isTab, isTabs, NavGroup, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
@@ -372,8 +372,42 @@ export function hydrateSegmentsWithNav(app: App, dehydratedSegmentPairs: Dehydra
         // the simple solution is to just use the last child
         // because that is probably what the user wants anyway
         // remember, do not harm, even if it makes our shizzle ugly
-        segments.push(hydrateSegment(dehydratedSegment, navs[navs.length - 1]));
-        navs = navs[navs.length - 1].getActiveChildNavs();
+
+
+        // Update 9/30/17 - well, we know now that we can be in all sorts of weird
+        // states when we hit this
+        // one being a state with a root Nav, and then toggling between PageOne (with an `ion-tabs` component)
+        // and PageTwo (with an `ion-tabs` component)
+        // when you go from a page with tabs to a different page with tabs
+        // as of 9/30/17 we do not update the URL correctly
+        // and if we change how that works
+        // we'll probably break a lot of apps in other, unexpected ways
+        // so the best answer seems to be to check if an existing nav's active page matches the
+        // url segment. If it does, then we're in a weird state and don't use the segment.
+        // if an existing nav's active page does NOT match the segment, then it's
+        // probably fair game to use
+        let probableSegment = hydrateSegment(dehydratedSegment, navs[navs.length - 1]);
+        for (const nav of navs) {
+          if (nav === navs[navs.length - 1]) {
+            break;
+          }
+
+          if (isTabs(nav)) {
+            if (nav.getActiveChildNavs().length) {
+              const tab = nav.getActiveChildNavs()[0];
+              const activeView = (tab as any).getActive();
+              if (activeView.component === probableSegment.component) {
+                probableSegment = null;
+                break;
+              }
+            }
+          }
+        }
+
+        if (probableSegment) {
+          segments.push(probableSegment);
+          navs = navs[navs.length - 1].getActiveChildNavs();
+        }
       } else {
         break;
       }
