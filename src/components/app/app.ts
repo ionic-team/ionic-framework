@@ -274,6 +274,13 @@ export class App {
     this._rootNavs.set(nav.id, nav);
   }
 
+  /**
+   * @hidden
+   */
+  unregisterRootNav(nav: NavigationContainer) {
+    this._rootNavs.delete(nav.id);
+  }
+
 
   getActiveNavContainers(): NavigationContainer[] {
     // for each root nav container, get it's active nav

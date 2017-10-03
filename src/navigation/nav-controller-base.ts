@@ -1025,6 +1025,8 @@ export class NavControllerBase extends Ion implements NavController {
     // Unregister navcontroller
     if (this.parent && this.parent.unregisterChildNav) {
       this.parent.unregisterChildNav(this);
+    } else if (this._app) {
+      this._app.unregisterRootNav(this);
     }
 
     this._destroyed = true;
