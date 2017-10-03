@@ -10,7 +10,7 @@ describe('App', () => {
 
   describe('goBack', () => {
 
-    it('should not select the previous tab', () => {
+    it('should not select the previous tab', (done: Function) => {
       const nav = mockNavController();
       app.registerRootNav(nav);
 
@@ -23,24 +23,26 @@ describe('App', () => {
 
       nav.registerChildNav(tabs);
 
-      tabs.select(tab1);
-      tabs.select(tab2);
-
-      expect(tabs._selectHistory).toEqual([tab1.id, tab2.id]);
-
-      spyOn(plt, 'exitApp');
-      spyOn(tabs, 'select');
-      spyOn(tab1, 'pop');
-      spyOn(tab2, 'pop');
-      spyOn(portal, 'pop');
-
-      app.goBack();
-
-      expect(tabs.select).not.toHaveBeenCalled();
-      expect(tab1.pop).not.toHaveBeenCalled();
-      expect(tab2.pop).not.toHaveBeenCalled();
-      expect(portal.pop).not.toHaveBeenCalled();
-      expect(plt.exitApp).toHaveBeenCalled();
+      tabs.select(tab1).then(() => {
+        return tabs.select(tab2);
+      }).then(() => {
+        expect(tabs._selectHistory).toEqual([tab1.id, tab2.id]);
+        spyOn(plt, 'exitApp');
+        spyOn(tabs, 'select');
+        spyOn(tab1, 'pop');
+        spyOn(tab2, 'pop');
+        spyOn(portal, 'pop');
+        return app.goBack();
+      }).then(() => {
+        expect(tabs.select).not.toHaveBeenCalled();
+        expect(tab1.pop).not.toHaveBeenCalled();
+        expect(tab2.pop).not.toHaveBeenCalled();
+        expect(portal.pop).not.toHaveBeenCalled();
+        expect(plt.exitApp).toHaveBeenCalled();
+        done();
+      }).catch((err: Error) => {
+        done(err);
+      });
     });
 
     it('should pop from the active tab, when tabs is nested is the root nav', () => {

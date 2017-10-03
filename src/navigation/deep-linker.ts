@@ -389,8 +389,7 @@ export class DeepLinker {
       const tabs = <Tabs> <any> (isTabs(navContainer) ? navContainer : navContainer.parent);
       const selectedIndex = tabs._getSelectedTabIndex(segment.secondaryId);
       const tab = tabs.getByIndex(selectedIndex);
-      tab._lazyRootFromUrl = segment.name;
-      tab._lazyRootFromUrlData = segment.data;
+      tab._segment = segment;
       tabs.select(tab, {
         updateUrl: false,
         animate: false

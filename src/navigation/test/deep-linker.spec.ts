@@ -550,8 +550,7 @@ describe('DeepLinker', () => {
       linker._loadViewForSegment(tabs, segment, wrapper.done);
 
       expect(selectSpy.calls.first().args[0]).toEqual(tabOne);
-      expect(selectSpy.calls.first().args[0]._lazyRootFromUrl).toEqual(segment.name);
-      expect(selectSpy.calls.first().args[0]._lazyRootFromUrlData).toEqual(segment.data);
+      expect(selectSpy.calls.first().args[0]._segment).toEqual(segment);
       expect(wrapper.done).toHaveBeenCalled();
     });
 
