@@ -87,5 +87,27 @@ describe('tab', () => {
       expect(spy).not.toHaveBeenCalled();
     });
 
+    it('should push the tab root page if it doesnt exist already', () => {
+      const tabs = mockTabs();
+      const tab = mockTab(tabs, false);
+      const spy = jasmine.createSpy('done');
+
+      const mockViewOne = mockView('one');
+      const mockViewTwo = mockView('two');
+      mockViews(tab, [mockViewOne, mockViewTwo]);
+
+      tab._lazyRootFromUrl = 'someValue';
+      tab._lazyRootFromUrlData = { };
+
+      spyOn(tab, 'setRoot');
+      spyOn(tab, 'popTo');
+
+      tab.load({}, spy);
+
+      expect(tab.setRoot).toHaveBeenCalled();
+      expect(tab.popTo).not.toHaveBeenCalled();
+      expect(spy).not.toHaveBeenCalled();
+    });
+
   });
 });
