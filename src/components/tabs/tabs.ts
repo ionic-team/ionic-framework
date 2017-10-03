@@ -301,7 +301,11 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    */
   ngOnDestroy() {
     this._onDestroy.next();
-    this.parent.unregisterChildNav(this);
+    if (this.parent) {
+      this.parent.unregisterChildNav(this);
+    } else {
+      this._app.unregisterRootNav(this);
+    }
   }
 
   /**
