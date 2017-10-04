@@ -101,6 +101,7 @@ import { Platform } from '../../platform/platform';
     '(focus)="onFocus($event)" ' +
     '(keydown)="onKeydown($event)" ' +
     '[type]="_type" ' +
+    'dir="auto" ' +
     '[attr.aria-labelledby]="_labelId" ' +
     '[attr.min]="min" ' +
     '[attr.max]="max" ' +
