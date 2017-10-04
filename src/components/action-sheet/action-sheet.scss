@@ -37,3 +37,14 @@ ion-action-sheet {
 .action-sheet-button {
   width: $action-sheet-width;
 }
+
+.action-sheet-container {
+  display: flex;
+
+  flex-flow: column;
+
+  justify-content: flex-end;
+
+  height: 100%;
+  max-height: 100%;
+}
