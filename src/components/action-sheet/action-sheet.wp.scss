@@ -147,10 +147,18 @@ $action-sheet-wp-icon-margin-start:               0 !default;
   }
 }
 
-.action-sheet-wp .action-sheet-container {
-  @include padding(.8rem, 0);
-
+.action-sheet-wp .action-sheet-group {
   background: $action-sheet-wp-background;
+
+  overflow: scroll;
+}
+
+.action-sheet-wp .action-sheet-group:first-child {
+  @include padding(.8rem, 0, 0, 0);
+}
+
+.action-sheet-wp .action-sheet-group:last-child {
+  @include padding(0, 0, .8rem, 0);
 }
 
 .action-sheet-wp .action-sheet-group .button-inner {

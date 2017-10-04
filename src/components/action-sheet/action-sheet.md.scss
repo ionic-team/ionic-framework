@@ -90,11 +90,6 @@ $action-sheet-md-icon-margin-bottom:                    0 !default;
 /// @prop - Margin start of the icon in the action sheet button
 $action-sheet-md-icon-margin-start:                     0 !default;
 
-.action-sheet-md .action-sheet-container {
-  @include padding(.8rem, 0);
-
-  background: $action-sheet-md-background;
-}
 
 .action-sheet-md .action-sheet-title {
   @include text-align($action-sheet-md-text-align);
@@ -144,7 +139,17 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 }
 
 .action-sheet-md .action-sheet-group {
-  overflow: hidden;
+  overflow: scroll;
+
+  background: $action-sheet-md-background;
+}
+
+.action-sheet-md .action-sheet-group:first-child {
+  @include padding(.8rem, 0, 0, 0);
+}
+
+.action-sheet-md .action-sheet-group:last-child {
+  @include padding(0, 0, .8rem, 0);
 }
 
 .action-sheet-md .action-sheet-group .button-inner {
