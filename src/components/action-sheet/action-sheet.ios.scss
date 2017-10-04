@@ -107,9 +107,10 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
 
   overflow: scroll;
-  -webkit-overflow-scrolling: touch;
 
   background: $action-sheet-ios-background;
+
+  -webkit-overflow-scrolling: touch;
 }
 
 .action-sheet-ios .action-sheet-group:first-child {

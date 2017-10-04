@@ -148,9 +148,9 @@ $action-sheet-wp-icon-margin-start:               0 !default;
 }
 
 .action-sheet-wp .action-sheet-group {
-  background: $action-sheet-wp-background;
-
   overflow: scroll;
+
+  background: $action-sheet-wp-background;
 }
 
 .action-sheet-wp .action-sheet-group:first-child {
