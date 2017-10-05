@@ -32,6 +32,8 @@ ion-action-sheet {
 
   width: $action-sheet-width;
   max-width: $action-sheet-max-width;
+
+  pointer-events: none;
 }
 
 .action-sheet-button {
@@ -53,6 +55,8 @@ ion-action-sheet {
   overflow: scroll;
 
   flex-shrink: 2;
+
+  pointer-events: all;
 }
 
 .action-sheet-group-cancel {
