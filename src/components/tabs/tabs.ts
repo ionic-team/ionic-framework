@@ -551,11 +551,17 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
             animate: false,
             updateUrl: false,
           });
-        } else {
+        } else if (tab._views.length === 0 && tab._segment.defaultHistory && tab._segment.defaultHistory.length) {
           return this._linker.initViews(tab._segment).then((views: ViewController[]) => {
             return tab.setPages(views,  {
               animate: false, updateUrl: false
             });
+          }).then(() => {
+            tab._segment = null;
+          });
+        } else {
+          return tab.setRoot(tab._segment.name, tab._segment.data, {
+            animate: false, updateUrl: false
           }).then(() => {
             tab._segment = null;
           });
