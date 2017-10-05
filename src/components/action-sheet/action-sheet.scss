@@ -48,3 +48,17 @@ ion-action-sheet {
   height: 100%;
   max-height: 100%;
 }
+
+.action-sheet-group {
+  overflow: scroll;
+}
+
+.action-sheet-group:first-child {
+  flex-shrink: 2;
+}
+
+.action-sheet-group:last-child {
+  overflow: hidden;
+
+  flex-shrink: 0;
+}
