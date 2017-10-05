@@ -329,7 +329,7 @@ export class Tab extends NavControllerBase implements ITab {
       let promise: Promise<any> = null;
       if (segment && segment.defaultHistory && segment.defaultHistory.length && this._views.length === 0) {
         promise = this.linker.initViews(segment).then((views: ViewController[]) => {
-          return this.setPages(views, null);
+          return this.setPages(views, opts);
         });
       } else {
         promise = this.push(nameToUse, dataToUse, opts);
