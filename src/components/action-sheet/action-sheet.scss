@@ -51,13 +51,11 @@ ion-action-sheet {
 
 .action-sheet-group {
   overflow: scroll;
-}
 
-.action-sheet-group:first-child {
   flex-shrink: 2;
 }
 
-.action-sheet-group:last-child {
+.action-sheet-group-cancel {
   overflow: hidden;
 
   flex-shrink: 0;
