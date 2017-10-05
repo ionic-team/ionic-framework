@@ -222,11 +222,12 @@ $item-ios-sliding-content-background:     $list-ios-background-color !default;
   button.item-ios:not([detail-none]) .item-inner,
   a.item-ios:not([detail-none]) .item-inner {
     $safe-area-position: calc(#{$item-ios-padding-end - 2} + constant(safe-area-inset-right));
-    $safe-area-position: calc(#{$item-ios-padding-end - 2} + env(safe-area-inset-right));
+    $safe-area-position-env: calc(#{$item-ios-padding-end - 2} + env(safe-area-inset-right));
     @include svg-background-image($item-ios-detail-push-svg, true);
     @include padding-horizontal(null, 32px);
     @include background-position(end, $item-ios-padding-end - 2, center);
     @include background-position(end, $safe-area-position, center);
+    @include background-position(end, $safe-area-position-env, center);
 
     background-repeat: no-repeat;
     background-size: 14px 14px;
