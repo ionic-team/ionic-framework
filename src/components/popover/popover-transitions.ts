@@ -31,7 +31,7 @@ export class PopoverTransition extends PageTransition {
 
     let targetHeight = targetDim && targetDim.height || 0;
 
-    let popoverCSS = {
+    let popoverCSS: {top: any, left: any} = {
       top: targetTop,
       left: targetLeft
     };
@@ -107,7 +107,7 @@ export class PopoverTransition extends PageTransition {
       left: targetLeft + (targetWidth / 2) - (arrowWidth / 2)
     };
 
-    let popoverCSS = {
+    let popoverCSS: {top: any, left: any} = {
       top: targetTop + targetHeight + (arrowHeight - 1),
       left: targetLeft + (targetWidth / 2) - (popoverWidth / 2)
     };
@@ -117,8 +117,14 @@ export class PopoverTransition extends PageTransition {
     // exceeds the body width it is off screen to the right so adjust
     if (popoverCSS.left < POPOVER_IOS_BODY_PADDING) {
       popoverCSS.left = POPOVER_IOS_BODY_PADDING;
-    } else if (popoverWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left > bodyWidth) {
-      popoverCSS.left = bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING;
+    }  else if (popoverWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left > bodyWidth) {
+      if (CSS.supports('left', 'constant(safe-area-inset-left)')) {
+        popoverCSS.left = `calc(${bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING}px - constant(safe-area-inset-left)`;
+      } else if (CSS.supports('left', 'env(safe-area-inset-left)')) {
+        popoverCSS.left = `calc(${bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING}px - env(safe-area-inset-left)`;
+      } else {
+        popoverCSS.left = `${bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING}px`;
+      }
       originX = 'right';
     }
 
@@ -138,7 +144,7 @@ export class PopoverTransition extends PageTransition {
     arrowEle.style.left = arrowCSS.left + 'px';
 
     popoverEle.style.top = popoverCSS.top + 'px';
-    popoverEle.style.left = popoverCSS.left + 'px';
+    popoverEle.style.left = popoverCSS.left;
 
     (<any>popoverEle.style)[this.plt.Css.transformOrigin] = originY + ' ' + originX;
 

@@ -100,6 +100,7 @@ ion-fab {
 
     @include multi-dir() {
       right: calc(#{$fab-content-margin} + constant(safe-area-inset-right));
+      right: calc(#{$fab-content-margin} + env(safe-area-inset-right));
     }
   }
 
@@ -120,6 +121,7 @@ ion-fab {
 
     @include multi-dir() {
       left: calc(#{$fab-content-margin} + constant(safe-area-inset-left));
+      left: calc(#{$fab-content-margin} + env(safe-area-inset-left));
     }
   }
 
