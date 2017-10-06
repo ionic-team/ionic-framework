@@ -293,10 +293,6 @@ export class Select extends BaseInput<any> implements OnDestroy {
     }
 
     let options = this._options.toArray();
-    if (this.interface === 'action-sheet' && options.length > 6) {
-      console.warn('Interface cannot be "action-sheet" with more than 6 options. Using the "alert" interface.');
-      this.interface = 'alert';
-    }
 
     if ((this.interface === 'action-sheet' || this.interface === 'popover') && this._multi) {
       console.warn('Interface cannot be "' + this.interface + '" with a multi-value select. Using the "alert" interface.');
