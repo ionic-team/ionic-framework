@@ -199,7 +199,7 @@ export class ActionSheet {
             )}
           </div>
           {cancelButton
-            ? <div class='action-sheet-group'>
+            ? <div class='action-sheet-group action-sheet-group-cancel'>
                 <button
                   class={this.buttonClass(cancelButton)}
                   onClick={() => this.click(cancelButton)}

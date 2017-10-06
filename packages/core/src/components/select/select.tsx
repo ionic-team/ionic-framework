@@ -193,11 +193,6 @@ export class Select {
   resetInterface(ev: Event): string {
     let selectInterface = this.interface;
 
-    if (selectInterface === 'action-sheet' && this.options.length > 6) {
-      console.warn('Interface cannot be "' + selectInterface + '" with more than 6 options. Using the "alert" interface instead.');
-      selectInterface = 'alert';
-    }
-
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
       console.warn('Interface cannot be "' + selectInterface + '" with a multi-value select. Using the "alert" interface instead.');
       selectInterface = 'alert';
