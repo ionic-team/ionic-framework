@@ -50,6 +50,7 @@ import { Config } from '../../config/config';
  * @usage
  * ```ts
  * import { AlertController } from 'ionic-angular';
+ * import { Validators } from '@angular/forms';
  *
  * constructor(public alertCtrl: AlertController) { }
  *
@@ -96,7 +97,11 @@ import { Config } from '../../config/config';
  *       {
  *         name: 'password',
  *         placeholder: 'Password',
- *         type: 'password'
+ *         type: 'password',
+ *         validators: [Validators.required, Validators.minLength(10)],
+ *         errors: [{
+ *           {error: 'minlength', message: 'Error: Must be at least 10 characters'}
+ *         }]
  *       }
  *     ],
  *     buttons: [
@@ -141,15 +146,18 @@ import { Config } from '../../config/config';
  *
  *  Input options
  *
- *  | Property    | Type      | Description                                                     |
- *  |-------------|-----------|-----------------------------------------------------------------|
- *  | type        | `string`  | The type the input should be: text, tel, number, etc.           |
- *  | name        | `string`  | The name for the input.                                         |
- *  | placeholder | `string`  | The input's placeholder (for textual/numeric inputs)            |
- *  | value       | `string`  | The input's value.                                              |
- *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
- *  | checked     | `boolean` | Whether or not the input is checked.                            |
- *  | id          | `string`  | The input's id.                                                 |
+ *  | Property        | Type      | Description                                                     |
+ *  |-----------------|-----------|-----------------------------------------------------------------|
+ *  | type            | `string`  | The type the input should be: text, tel, number, etc.           |
+ *  | name            | `string`  | The name for the input.                                         |
+ *  | placeholder     | `string`  | The input's placeholder (for textual/numeric inputs)            |
+ *  | value           | `string`  | The input's value.                                              |
+ *  | label           | `string`  | The input's label (only for radio/checkbox inputs)              |
+ *  | checked         | `boolean` | Whether or not the input is checked.                            |
+ *  | id              | `string`  | The input's id.                                                 |
+ *  | validators      | `array`   | An array of Angular validator functions.                        |
+ *  | asyncValidators | `array`   | An array of async Angular validator functions.                  |
+ *  | errors          | `array`   | An array of error messages to display.                          |
  *
  *  Button options
  *
@@ -158,7 +166,7 @@ import { Config } from '../../config/config';
  *  | text     | `string` | The buttons displayed text.                                     |
  *  | handler  | `any`    | Emitted when the button is pressed.                             |
  *  | cssClass | `string` | An additional CSS class for the button.                         |
- *  | role     | `string` | The buttons role, null or `cancel`.                             |
+ *  | role     | `string` | The buttons role, null, `cancel`, `submit`.                     |
  *
  * ### Dismissing And Async Navigation
  *

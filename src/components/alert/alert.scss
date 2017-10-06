@@ -84,6 +84,13 @@ ion-alert input {
   background: inherit;
 }
 
+.alert-error-msg {
+  @include margin(3px 0);
+
+  font-size: 12px;
+  color: color($colors, danger);
+}
+
 .alert-button-group {
   display: flex;
 
