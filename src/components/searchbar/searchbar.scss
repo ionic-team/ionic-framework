@@ -28,11 +28,12 @@ ion-searchbar {
 
 .searchbar-input {
   @include appearance(none);
+  @include border(0);
+
   display: block;
 
   width: 100%;
 
-  border: 0;
   font-family: inherit;
 }
 

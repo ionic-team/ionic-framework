@@ -75,19 +75,19 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 $picker-button-ios-strong-font-weight:         600 !default;
 
 .picker-ios .picker-wrapper {
-  height: $picker-ios-height;
+  @include border(1px solid $picker-ios-border-color, null, null, null);
 
-  border-top: 1px solid $picker-ios-border-color;
+  height: $picker-ios-height;
 
   background: $picker-ios-background-color;
 }
 
 .picker-ios .picker-toolbar {
+  @include border(null, null, $hairlines-width solid $picker-ios-border-color, null);
+
   display: flex;
 
   height: $picker-ios-toolbar-height;
-
-  border-bottom: $hairlines-width solid $picker-ios-border-color;
 
   background: $picker-ios-toolbar-background-color;
 }
@@ -172,6 +172,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
 .picker-ios .picker-above-highlight {
   @include position(0, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
+  @include border(null, null, 1px solid $picker-ios-border-color, null);
 
   position: absolute;
   z-index: 10;
@@ -179,8 +180,6 @@ $picker-button-ios-strong-font-weight:         600 !default;
 
   width: 100%;
   height: $picker-ios-option-offset-y + 4px;
-
-  border-bottom: 1px solid $picker-ios-border-color;
 
   background: linear-gradient(to bottom,
                             rgba($picker-ios-background-color, 1) 20%,
@@ -190,6 +189,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
 .picker-ios .picker-below-highlight {
   @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
+  @include border(1px solid $picker-ios-border-color, null, null, null);
 
   position: absolute;
 
@@ -198,8 +198,6 @@ $picker-button-ios-strong-font-weight:         600 !default;
 
   width: 100%;
   height: $picker-ios-option-offset-y + $picker-ios-option-height;
-
-  border-top: 1px solid $picker-ios-border-color;
 
   background: linear-gradient(to top,
                            rgba($picker-ios-background-color, 1) 30%,

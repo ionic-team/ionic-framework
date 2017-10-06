@@ -63,11 +63,10 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 
 .searchbar-ios {
   @include padding($searchbar-ios-padding-vertical, $searchbar-ios-padding-horizontal);
+  @include border($hairlines-width solid transparent, null, $hairlines-width solid $searchbar-ios-border-color, null);
 
   min-height: $searchbar-ios-min-height;
 
-  border-top: $hairlines-width solid transparent;
-  border-bottom: $hairlines-width solid $searchbar-ios-border-color;
   background: $searchbar-ios-background-color;
 }
 
@@ -175,7 +174,8 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .toolbar .searchbar-ios {
-  border-bottom-width: 0;
+  @include border-width(null, null, 0, null);
+
   background: transparent;
 }
 

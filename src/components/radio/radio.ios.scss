@@ -75,17 +75,15 @@ $radio-ios-item-end-margin-start:     ($item-ios-padding-start / 2) !default;
 
 .radio-ios .radio-checked .radio-inner {
   @include position(4px, null, null, 7px);
+  @include border-width(0, $radio-ios-icon-border-width, $radio-ios-icon-border-width, 0);
+  @include border-style($radio-ios-icon-border-style);
+  @include border-color($radio-ios-color-on);
 
   position: absolute;
 
   width: 5px;
   height: 12px;
 
-  border-width: $radio-ios-icon-border-width;
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $radio-ios-icon-border-style;
-  border-color: $radio-ios-color-on;
   transform: rotate(45deg);
 }
 
@@ -147,7 +145,7 @@ $radio-ios-item-end-margin-start:     ($item-ios-padding-start / 2) !default;
   }
 
   .radio-ios-#{$color-name} .radio-checked  .radio-inner {
-    border-color: $color-base;
+    @include border-color($color-base);
   }
 
 }

@@ -67,14 +67,14 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md .item-block .item-inner {
-  border-bottom: 1px solid $list-md-border-color;
+  @include border(null, null, 1px solid $list-md-border-color, null);
 }
 
 .list-md > .item-block:last-child,
 .list-md > .item-wrapper:last-child {
   ion-label,
   .item-inner {
-    border-bottom: 0;
+    @include border(null, null, 0, null);
   }
 }
 
@@ -83,20 +83,19 @@ $list-md-header-color:           #757575 !default;
 }
 
 .list-md ion-item-options {
-  border-bottom: 1px solid $list-md-border-color;
+  @include border(null, null, 1px solid $list-md-border-color, null);
 }
 
 .list-md ion-item-options .button {
   @include margin(0);
   @include border-radius(0);
+  @include border(0);
 
   display: inline-flex;
 
   align-items: center;
 
   height: 100%;
-
-  border: 0;
 
   box-shadow: none;
 
@@ -112,7 +111,7 @@ $list-md-header-color:           #757575 !default;
 // the item-inner class (if it is not last)
 .list-md .item[no-lines],
 .list-md .item[no-lines] .item-inner {
-  border-width: 0;
+  @include border-width(0);
 }
 
 .list-md + ion-list ion-list-header {
@@ -130,14 +129,12 @@ $list-md-header-color:           #757575 !default;
 
 .list-md[inset] .item:first-child {
   @include border-radius($list-inset-md-border-radius, $list-inset-md-border-radius, null, null);
-
-  border-top-width: 0;
+  @include border-width(0, null, null, null);
 }
 
 .list-md[inset] .item:last-child {
   @include border-radius(null, null, $list-inset-md-border-radius, $list-inset-md-border-radius);
-
-  border-bottom-width: 0;
+  @include border-width(null, null, 0, null);
 }
 
 .list-md[inset] .item-input {
@@ -159,7 +156,7 @@ $list-md-header-color:           #757575 !default;
 .list-md[no-lines] .item-block,
 .list-md[no-lines] ion-item-options,
 .list-md[no-lines] .item .item-inner {
-  border-width: 0;
+  @include border-width(0);
 }
 
 
@@ -169,10 +166,10 @@ $list-md-header-color:           #757575 !default;
 .list-header-md {
   @include padding-horizontal($list-md-header-padding-start, null);
   @include margin(null, null, $list-md-header-margin-bottom, null);
+  @include border($list-md-header-border-top, null, null, null);
 
   min-height: $list-md-header-min-height;
 
-  border-top: $list-md-header-border-top;
   font-size: $list-md-header-font-size;
   color: $list-md-header-color;
 }
@@ -192,5 +189,5 @@ $list-md-header-color:           #757575 !default;
 // --------------------------------------------------
 
 .list-md .item-input:last-child {
-  border-bottom: 1px solid $list-md-border-color;
+  @include border(null, null, 1px solid $list-md-border-color, null);
 }

@@ -284,9 +284,7 @@ $button-ios-strong-font-weight:                     600 !default;
 .button-full-ios {
   @include margin-horizontal(0);
   @include border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
+  @include border-width(null, 0, null, 0);
 }
 
 // iOS Outline Button
@@ -294,10 +292,10 @@ $button-ios-strong-font-weight:                     600 !default;
 
 .button-outline-ios {
   @include border-radius($button-ios-outline-border-radius);
+  @include border-width($button-ios-outline-border-width);
+  @include border-style($button-ios-outline-border-style);
+  @include border-color($button-ios-outline-border-color);
 
-  border-width: $button-ios-outline-border-width;
-  border-style: $button-ios-outline-border-style;
-  border-color: $button-ios-outline-border-color;
   color: $button-ios-outline-text-color;
   background-color: $button-ios-outline-background-color;
 }
@@ -314,7 +312,8 @@ $button-ios-strong-font-weight:                     600 !default;
 @mixin ios-button-outline($color-name, $color-base, $color-contrast) {
 
   .button-outline-ios-#{$color-name} {
-    border-color: $color-base;
+    @include border-color($color-base);
+
     color: $color-base;
     background-color: $button-ios-outline-background-color;
   }
@@ -331,7 +330,8 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-clear-ios {
-  border-color: $button-ios-clear-border-color;
+  @include border-color($button-ios-clear-border-color);
+
   color: $button-ios-background-color;
   background-color: $button-ios-clear-background-color;
 }
@@ -354,7 +354,8 @@ $button-ios-strong-font-weight:                     600 !default;
   $fg-color: $color-base;
 
   .button-clear-ios-#{$color-name} {
-    border-color: $button-ios-clear-border-color;
+    @include border-color($button-ios-clear-border-color);
+
     color: $fg-color;
     background-color: $button-ios-clear-background-color;
   }

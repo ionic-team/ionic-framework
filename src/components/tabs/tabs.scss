@@ -34,6 +34,7 @@
   @include margin(0);
   @include text-align(center);
   @include border-radius(0);
+  @include border(0);
 
   position: relative;
   z-index: 0;
@@ -45,8 +46,6 @@
   align-items: center;
   align-self: center;
   justify-content: center;
-
-  border: 0;
 
   text-decoration: none;
   background: none;

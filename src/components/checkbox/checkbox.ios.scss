@@ -81,15 +81,15 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 
 .checkbox-ios .checkbox-icon {
   @include border-radius($checkbox-ios-icon-border-radius);
+  @include border-width($checkbox-ios-icon-border-width);
+  @include border-style($checkbox-ios-icon-border-style);
+  @include border-color($checkbox-ios-icon-border-color-off);
 
   position: relative;
 
   width: $checkbox-ios-icon-size;
   height: $checkbox-ios-icon-size;
 
-  border-width: $checkbox-ios-icon-border-width;
-  border-style: $checkbox-ios-icon-border-style;
-  border-color: $checkbox-ios-icon-border-color-off;
   background-color: $checkbox-ios-background-color-off;
 }
 
@@ -98,7 +98,7 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 // -----------------------------------------
 
 .checkbox-ios .checkbox-checked {
-  border-color: $checkbox-ios-icon-border-color-on;
+  @include border-color($checkbox-ios-icon-border-color-on);
   background-color: $checkbox-ios-background-color-on;
 }
 
@@ -108,17 +108,15 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 
 .checkbox-ios .checkbox-checked .checkbox-inner {
   @include position(4px, null, null, 7px);
+  @include border-width(0, $checkbox-ios-icon-checkmark-width, $checkbox-ios-icon-checkmark-width, 0);
+  @include border-style($checkbox-ios-icon-checkmark-style);
+  @include border-color($checkbox-ios-icon-checkmark-color);
 
   position: absolute;
 
   width: 4px;
   height: 9px;
 
-  border-width: $checkbox-ios-icon-checkmark-width;
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $checkbox-ios-icon-checkmark-style;
-  border-color: $checkbox-ios-icon-checkmark-color;
   transform: rotate(45deg);
 }
 
@@ -160,12 +158,12 @@ $checkbox-ios-item-end-margin-start:      0 !default;
 @mixin checkbox-theme-ios($color-name, $color-base, $color-contrast) {
 
   .checkbox-ios-#{$color-name} .checkbox-checked {
-    border-color: $color-base;
+    @include border-color($color-base);
     background-color: $color-base;
   }
 
   .checkbox-ios-#{$color-name} .checkbox-checked .checkbox-inner {
-    border-color: $color-contrast;
+    @include border-color($color-contrast);
   }
 
 }

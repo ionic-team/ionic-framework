@@ -71,31 +71,6 @@ linters:
       - column-count
       - column-width
 
-      # Border
-
-      - border
-      - border-top
-      - border-right
-      - border-bottom
-      - border-left
-      - border-width
-      - border-top-width
-      - border-right-width
-      - border-bottom-width
-      - border-left-width
-
-      - border-style
-      - border-top-style
-      - border-right-style
-      - border-bottom-style
-      - border-left-style
-
-      - border-color
-      - border-top-color
-      - border-right-color
-      - border-bottom-color
-      - border-left-color
-
       - outline
       - outline-color
       - outline-offset
@@ -190,24 +165,56 @@ linters:
       - contain
     disabled_properties:
       - background-position
+
       - direction
+
       - right
       - left
+
       - float
+
       - padding
       - padding-left
       - padding-right
       - padding-top
       - padding-bottom
+
       - margin
       - margin-left
       - margin-right
       - margin-top
       - margin-bottom
+
       - border-radius
       - border-top-left-radius
       - border-top-right-radius
       - border-bottom-right-radius
       - border-bottom-left-radius
+
+      - border
+      - border-top
+      - border-right
+      - border-bottom
+      - border-left
+
+      - border-style
+      - border-top-style
+      - border-right-style
+      - border-bottom-style
+      - border-left-style
+
+      - border-color
+      - border-top-color
+      - border-right-color
+      - border-bottom-color
+      - border-left-color
+
+      - border-width
+      - border-top-width
+      - border-right-width
+      - border-bottom-width
+      - border-left-width
+
       - text-align
+
       - transform-origin

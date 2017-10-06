@@ -48,15 +48,13 @@ $select-md-placeholder-color:   $select-md-icon-color !default;
 .select-md .select-icon .select-icon-inner {
   @include position(50%, null, null, 5px);
   @include margin(-3px, null, null, null);
+  @include border(5px solid, 5px solid transparent, null, 5px solid transparent);
 
   position: absolute;
 
   width: 0;
   height: 0;
 
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
   color: $select-md-icon-color;
 
   pointer-events: none;

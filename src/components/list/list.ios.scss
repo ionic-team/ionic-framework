@@ -73,21 +73,21 @@ $list-ios-header-background-color:    transparent !default;
 }
 
 .list-ios > .item-block:first-child {
-  border-top: $hairlines-width solid $list-ios-border-color;
+  @include border($hairlines-width solid $list-ios-border-color, null, null, null);
 }
 
 .list-ios > .item-block:last-child,
 .list-ios > .item-wrapper:last-child .item-block {
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  @include border(null, null, $hairlines-width solid $list-ios-border-color, null);
 }
 
 .list-ios > .item-block:last-child .item-inner,
 .list-ios > .item-wrapper:last-child .item-block .item-inner {
-  border-bottom: 0;
+  @include border(null, null, 0, null);
 }
 
 .list-ios .item-block .item-inner {
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  @include border(null, null, $hairlines-width solid $list-ios-border-color, null);
 }
 
 // If the item has the no-lines attribute remove the bottom border from:
@@ -95,16 +95,17 @@ $list-ios-header-background-color:    transparent !default;
 // the item-inner class (if it is not last)
 .list-ios .item[no-lines],
 .list-ios .item[no-lines] .item-inner {
-  border-width: 0;
+  @include border-width(0);
 }
 
 .list-ios ion-item-options {
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  @include border(null, null, $hairlines-width solid $list-ios-border-color, null);
 }
 
 .list-ios ion-item-options .button {
   @include margin(0);
   @include border-radius(0);
+  @include border(0);
 
   display: inline-flex;
 
@@ -112,8 +113,6 @@ $list-ios-header-background-color:    transparent !default;
 
   height: 100%;
   min-height: 100%;
-
-  border: 0;
 
   box-sizing: border-box;
 }
@@ -141,21 +140,21 @@ $list-ios-header-background-color:    transparent !default;
 }
 
 .list-ios[inset] .item {
-  border-bottom: 1px solid $list-ios-border-color;
+  @include border(null, null, 1px solid $list-ios-border-color, null);
 }
 
 .list-ios[inset] .item-inner {
-  border-bottom: 0;
+  @include border(null, null, 0, null);
 }
 
 .list-ios[inset] > .item:first-child,
 .list-ios[inset] > .item-wrapper:first-child .item {
-  border-top: 0;
+  @include border(1px, null, null, null);
 }
 
 .list-ios[inset] > .item:last-child,
 .list-ios[inset] > .item-wrapper:last-child .item {
-  border-bottom: 0;
+  @include border(null, null, 0, null);
 }
 
 .list-ios[inset] + ion-list[inset] {
@@ -170,7 +169,7 @@ $list-ios-header-background-color:    transparent !default;
 .list-ios[no-lines] ion-item-options,
 .list-ios[no-lines] .item,
 .list-ios[no-lines] .item .item-inner {
-  border-width: 0;
+  @include border-width(0);
 }
 
 
@@ -179,10 +178,10 @@ $list-ios-header-background-color:    transparent !default;
 
 .list-header-ios {
   @include padding-horizontal($list-ios-header-padding-start, null);
+  @include border(null, null, $list-ios-header-border-bottom, null);
 
   position: relative;
 
-  border-bottom: $list-ios-header-border-bottom;
   font-size: $list-ios-header-font-size;
   font-weight: $list-ios-header-font-weight;
   letter-spacing: $list-ios-header-letter-spacing;

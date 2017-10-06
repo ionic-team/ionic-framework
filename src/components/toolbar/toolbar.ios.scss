@@ -65,24 +65,25 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 
 .header-ios .toolbar-background-ios,
 .footer-ios .toolbar-background-ios {
-  border-style: solid;
-  border-color: $toolbar-ios-border-color;
+  @include border-style(solid);
+  @include border-color($toolbar-ios-border-color);
 }
 
 .header-ios .toolbar-ios:last-child .toolbar-background-ios {
-  border-width: 0 0 $hairlines-width;
+  @include border-width(0, 0, $hairlines-width);
+
 }
 
 .footer-ios .toolbar-ios:first-child .toolbar-background-ios {
-  border-width: $hairlines-width 0 0;
+  @include border-width($hairlines-width, 0, 0);
 }
 
 .header-ios[no-border] .toolbar-ios:last-child .toolbar-background-ios {
-  border-bottom-width: 0;
+  @include border-width(null, null, 0, null);
 }
 
 .footer-ios[no-border] .toolbar-ios:first-child .toolbar-background-ios {
-  border-top-width: 0;
+  @include border-width(0, null, null, null);
 }
 
 
@@ -174,10 +175,10 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 .bar-button-ios {
   @include padding(0, 4px);
   @include border-radius($toolbar-ios-button-border-radius);
+  @include border(0);
 
   height: 32px;
 
-  border: 0;
   font-size: $toolbar-ios-button-font-size;
 }
 
@@ -205,9 +206,9 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 // --------------------------------------------------
 
 .bar-button-outline-ios {
-  border-width: 1px;
-  border-style: solid;
-  border-color: $toolbar-ios-button-color;
+  @include border(1px solid);
+  @include border-color($toolbar-ios-button-color);
+
   color: $toolbar-ios-button-color;
   background-color: transparent;
 
@@ -225,7 +226,9 @@ $toolbar-button-ios-strong-font-weight:     600 !default;
 
   .bar-button-outline-ios-#{$color-name} {
     $fg-color: $color-base;
-    border-color: $fg-color;
+
+    @include border-color($fg-color);
+
     color: $fg-color;
     background-color: transparent;
 

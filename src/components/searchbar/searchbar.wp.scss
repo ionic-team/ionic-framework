@@ -91,7 +91,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 }
 
 .searchbar-wp .searchbar-input-container {
-  border: $searchbar-wp-border-width solid $searchbar-wp-border-color;
+  @include border($searchbar-wp-border-width solid $searchbar-wp-border-color);
 }
 
 // Searchbar Search Icon
@@ -163,7 +163,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 // -----------------------------------------
 
 .searchbar-wp.searchbar-has-focus .searchbar-input-container {
-  border-color: $searchbar-wp-border-color-focused;
+  @include border-color($searchbar-wp-border-color-focused);
 }
 
 
@@ -204,7 +204,7 @@ $searchbar-wp-input-clear-icon-size:     22px !default;
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
   .searchbar-wp-#{$color-name}.searchbar-has-focus .searchbar-input-container {
-    border-color: $color-base;
+    @include border-color($color-base);
   }
 
 }

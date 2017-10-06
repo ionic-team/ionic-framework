@@ -74,10 +74,10 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 .text-input-wp {
   @include margin($text-input-wp-margin-top, $text-input-wp-margin-end, $text-input-wp-margin-bottom, $text-input-wp-margin-start);
   @include padding($text-input-wp-padding-vertical, $text-input-wp-padding-horizontal);
+  @include border($text-input-wp-border-width solid $text-input-wp-border-color);
 
   width: calc(100% - #{$text-input-wp-margin-end} - #{$text-input-wp-margin-start});
 
-  border: $text-input-wp-border-width solid $text-input-wp-border-color;
   line-height: $text-input-wp-line-height;
 }
 
@@ -100,7 +100,7 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
   // TODO remove all uses of input-has-value in v4
   .item-wp.item-input.item-input-has-focus .text-input,
   .item-wp.item-input.input-has-focus .text-input {
-    border-color: $text-input-wp-highlight-color;
+    @include border-color($text-input-wp-highlight-color);
   }
 }
 
@@ -108,14 +108,14 @@ $text-input-wp-highlight-color-invalid:     $text-input-highlight-color-invalid 
 @if ($text-input-wp-show-valid-highlight) {
   .item-wp.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input,
   .item-wp.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .text-input {
-    border-color: $text-input-wp-highlight-color-valid;
+    @include border-color($text-input-wp-highlight-color-valid);
   }
 }
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($text-input-wp-show-invalid-highlight) {
   .item-wp.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .text-input {
-    border-color: $text-input-wp-highlight-color-invalid;
+    @include border-color($text-input-wp-highlight-color-invalid);
   }
 }
 

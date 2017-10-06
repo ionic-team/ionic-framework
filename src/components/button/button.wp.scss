@@ -189,10 +189,9 @@ $button-wp-strong-font-weight:                            bold !default;
 
 .button-wp {
   @include border-radius($button-wp-border-radius);
+  @include border($button-wp-border-width $button-wp-border-style $button-wp-border-color);
 
   height: $button-wp-height;
-
-  border: $button-wp-border-width $button-wp-border-style $button-wp-border-color;
 
   font-size: $button-wp-font-size;
 
@@ -209,7 +208,8 @@ $button-wp-strong-font-weight:                            bold !default;
 }
 
 .button-wp:hover:not(.disable-hover) {
-  border-color: $button-wp-background-color-activated;
+  @include border-color($button-wp-background-color-activated);
+
   background-color: $button-wp-background-color;
 }
 
@@ -232,7 +232,8 @@ $button-wp-strong-font-weight:                            bold !default;
   }
 
   .button-wp-#{$color-name}:hover:not(.disable-hover) {
-    border-color: $bg-color-activated;
+    @include border-color($bg-color-activated);
+
     background-color: $bg-color;
   }
 
@@ -282,18 +283,17 @@ $button-wp-strong-font-weight:                            bold !default;
 .button-full-wp {
   @include margin-horizontal(0);
   @include border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
+  @include border-width(null, 0, null, 0);
 }
 
 // Windows Outline Button
 // --------------------------------------------------
 
 .button-outline-wp {
-  border-width: $button-wp-outline-border-width;
-  border-style: $button-wp-outline-border-style;
-  border-color: $button-wp-outline-border-color;
+  @include border-width($button-wp-outline-border-width);
+  @include border-style($button-wp-outline-border-style);
+  @include border-color($button-wp-outline-border-color);
+
   color: $button-wp-outline-text-color;
   background-color: $button-wp-outline-background-color;
 }
@@ -314,13 +314,15 @@ $button-wp-strong-font-weight:                            bold !default;
   $fg-color: color-shade($color-base, 5%);
 
   .button-outline-wp-#{$color-name} {
-    border-color: $fg-color;
+    @include border-color($fg-color);
+
     color: $fg-color;
     background-color: $button-wp-outline-background-color;
   }
 
   .button-outline-wp-#{$color-name}:hover:not(.disable-hover) {
-    border-color: $fg-color;
+    @include border-color($fg-color);
+
     background-color: $button-wp-clear-background-color-hover;
   }
 

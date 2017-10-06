@@ -126,8 +126,8 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   @include padding($action-sheet-ios-title-padding);
   @include text-align($action-sheet-ios-text-align);
   @include border-radius($action-sheet-ios-title-border-radius);
+  @include border(null, null, $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color, null);
 
-  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
   color: $action-sheet-ios-title-color;
@@ -136,24 +136,24 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 .action-sheet-ios .action-sheet-button {
   @include margin(0);
   @include padding($action-sheet-ios-button-padding);
+  @include border(null, null, $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color, null);
 
   min-height: $action-sheet-ios-button-min-height;
 
-  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
   font-size: $action-sheet-ios-button-font-size;
   color: $action-sheet-ios-button-text-color;
   background: $action-sheet-ios-button-background;
 }
 
 .action-sheet-ios .action-sheet-button:last-child {
-  border-bottom-color: transparent;
+  @include border-color(null, null, transparent, null);
 }
 
 .action-sheet-ios .action-sheet-button.activated {
   @include margin(-$action-sheet-ios-button-border-width, null, null, null);
+  @include border($action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated, null, null, null);
+  @include border-color(null, null, $action-sheet-ios-button-background-activated, null);
 
-  border-top: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-background-activated;
-  border-bottom-color: $action-sheet-ios-button-background-activated;
   background: $action-sheet-ios-button-background-activated;
 }
 

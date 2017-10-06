@@ -74,6 +74,9 @@ $radio-wp-item-end-margin-start:      0 !default;
   @include position(0, null, null, 0);
   @include margin(0);
   @include border-radius($radio-wp-icon-border-radius);
+  @include border-width($radio-wp-icon-border-width);
+  @include border-style($radio-wp-icon-border-style);
+  @include border-color($radio-wp-color-off);
 
   position: relative;
 
@@ -81,10 +84,6 @@ $radio-wp-item-end-margin-start:      0 !default;
 
   width: $radio-wp-icon-width;
   height: $radio-wp-icon-height;
-
-  border-width: $radio-wp-icon-border-width;
-  border-style: $radio-wp-icon-border-style;
-  border-color: $radio-wp-color-off;
 }
 
 
@@ -110,7 +109,7 @@ $radio-wp-item-end-margin-start:      0 !default;
 // -----------------------------------------
 
 .radio-wp .radio-checked {
-  border-color: $radio-wp-color-on;
+  @include border-color($radio-wp-color-on);
 }
 
 
@@ -168,7 +167,7 @@ $radio-wp-item-end-margin-start:      0 !default;
 @mixin radio-theme-wp($color-name, $color-base) {
 
   .radio-wp-#{$color-name} .radio-checked {
-    border-color: $color-base;
+    @include border-color($color-base);
   }
 
 }

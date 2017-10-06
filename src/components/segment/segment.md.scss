@@ -56,14 +56,14 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
 
 .segment-md .segment-button {
+  @include border-width(null, null, $segment-button-md-border-bottom-width, null);
+  @include border-style(null, null, solid, null);
+  @include border-color(null, null, $segment-button-md-border-bottom-color, null);
+
   flex: 1;
 
   width: 0;
   height: $segment-button-md-height;
-
-  border-bottom-width: $segment-button-md-border-bottom-width;
-  border-bottom-style: solid;
-  border-bottom-color: $segment-button-md-border-bottom-color;
 
   font-size: $segment-button-md-font-size;
   font-weight: 500;
@@ -86,7 +86,7 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
   &.activated,
   &.segment-activated {
-    border-color: $segment-button-md-border-color-activated;
+    @include border-color($segment-button-md-border-color-activated);
     opacity: $segment-button-md-opacity-activated;
   }
 }
@@ -122,7 +122,7 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 
     &.activated,
     &.segment-activated {
-      border-color: $color-base;
+      @include border-color($color-base);
       color: $color-base;
       opacity: 1;
     }

@@ -115,7 +115,8 @@ $segment-button-wp-buttons-justify-content:    flex-start !default;
 
     &.activated,
     &.segment-activated {
-      border-color: $color-base;
+      @include border-color($color-base);
+
       color: $color-base;
       opacity: $segment-button-wp-opacity-activated;
     }

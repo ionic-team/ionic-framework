@@ -464,7 +464,54 @@
   }
 }
 
-@mixin transform-origin($x-axis, $y-axis: null) {
+@mixin border($top, $end: $top, $bottom: $top, $start: $end) {
+  @include property(border, $top, $end, $bottom, $start);
+}
+
+@mixin border-property($property, $top, $end: $top, $bottom: $top, $start: $end) {
+  @if $top == $end and $top == $bottom and $top == $start {
+    @include multi-dir() {
+      border-#{$property}: $top;
+    }
+  } @else if $end == $start {
+    @include multi-dir() {
+      border-top-#{$property}: $top;
+      border-right-#{$property}: $end;
+      border-bottom-#{$property}: $bottom;
+      border-left-#{$property}: $start;
+    }
+  } @else {
+    @include ltr() {
+      border-top-#{$property}: $top;
+      border-right-#{$property}: $end;
+      border-bottom-#{$property}: $bottom;
+      border-left-#{$property}: $start;
+    }
+
+    @include rtl() {
+      border-top-#{$property}: $top;
+      border-right-#{$property}: $start;
+      border-bottom-#{$property}: $bottom;
+      border-left-#{$property}: $end;
+    }
+  }
+}
+
+@mixin border-width($top, $end: $top, $bottom: $top, $start: $end) {
+  @include border-property(width, $top, $end, $bottom, $start);
+}
+
+@mixin border-color($top, $end: $top, $bottom: $top, $start: $end) {
+  @include border-property(color, $top, $end, $bottom, $start);
+}
+
+@mixin border-style($top, $end: $top, $bottom: $top, $start: $end) {
+  @include border-property(style, $top, $end, $bottom, $start);
+}
+
+
+
+  @mixin transform-origin($x-axis, $y-axis: null) {
   @if $x-axis == start {
     @include ltr() {
       transform-origin: left $y-axis;

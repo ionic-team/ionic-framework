@@ -74,15 +74,15 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 
 
 .segment-ios .segment-button {
+  @include border-width($segment-button-ios-border-width);
+  @include border-style(solid);
+  @include border-color($segment-button-ios-background-color-activated);
+
   flex: 1;
 
   width: 0;
 
   height: $segment-button-ios-height;
-
-  border-width: $segment-button-ios-border-width;
-  border-style: solid;
-  border-color: $segment-button-ios-background-color-activated;
 
   font-size: $segment-button-ios-font-size;
   line-height: $segment-button-ios-line-height;
@@ -118,27 +118,15 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   }
 
   &:not(:first-of-type) {
-    border-left-width: 0;
+    @include border-width(null, null, null, 0);
   }
 
   &:last-of-type {
     @include border-radius(0, $segment-button-ios-border-radius, $segment-button-ios-border-radius, 0);
     @include margin-horizontal(0, null);
-
-    border-left-width: 0;
+    @include border-width(null, null, null, 0);
   }
 }
-
-[dir="rtl"] .segment-ios .segment-button {
-  &:first-of-type {
-    border-left-width: 0;
-  }
-
-  &:last-of-type {
-    border-left-width: $segment-button-ios-border-width;
-  }
-}
-
 
 .segment-ios.segment-disabled {
   opacity: .4;
@@ -184,7 +172,7 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   .segment-ios-#{$color-name} {
 
     .segment-button {
-      border-color: $color-base;
+      @include border-color($color-base);
       color: $color-base;
 
       &:hover:not(.segment-activated) {

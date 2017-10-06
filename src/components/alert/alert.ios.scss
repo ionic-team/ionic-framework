@@ -373,8 +373,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   @include appearance(none);
   @include margin($alert-ios-input-margin-top, null, null, null);
   @include border-radius($alert-ios-input-border-radius);
+  @include border($alert-ios-input-border);
 
-  border: $alert-ios-input-border;
   background-color: $alert-ios-input-background-color;
 
   @include deprecated-variable(padding, $alert-ios-input-padding) {
@@ -388,14 +388,13 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-radio-group,
 .alert-ios .alert-checkbox-group {
+  @include border($alert-ios-list-border-top, null, null, null);
+
   overflow: scroll;
 
   max-height: $alert-ios-content-max-height;
 
-  border-top: $alert-ios-list-border-top;
-
   -webkit-overflow-scrolling: touch;
-
 }
 
 .alert-ios .alert-tappable {
@@ -451,17 +450,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios [aria-checked=true] .alert-radio-inner {
   @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-start);
+  @include border-width(0, $alert-ios-radio-icon-border-width, $alert-ios-radio-icon-border-width, 0);
+  @include border-style($alert-ios-radio-icon-border-style);
+  @include border-color($alert-ios-radio-icon-border-color);
 
   position: absolute;
 
   width: $alert-ios-radio-icon-width;
   height: $alert-ios-radio-icon-height;
 
-  border-width: $alert-ios-radio-icon-border-width;
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $alert-ios-radio-icon-border-style;
-  border-color: $alert-ios-radio-icon-border-color;
   transform: $alert-ios-radio-icon-transform;
 }
 
@@ -493,15 +490,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-checkbox-icon {
   @include border-radius($alert-ios-checkbox-border-radius);
+  @include border-width($alert-ios-checkbox-border-width);
+  @include border-style($alert-ios-checkbox-border-style);
+  @include border-color($alert-ios-checkbox-border-color-off);
 
   position: relative;
 
   width: $alert-ios-checkbox-size;
   height: $alert-ios-checkbox-size;
 
-  border-width: $alert-ios-checkbox-border-width;
-  border-style: $alert-ios-checkbox-border-style;
-  border-color: $alert-ios-checkbox-border-color-off;
   background-color: $alert-ios-checkbox-background-color-off;
 
   @include deprecated-variable(margin, $alert-ios-checkbox-margin) {
@@ -514,7 +511,7 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // -----------------------------------------
 
 .alert-ios [aria-checked=true] .alert-checkbox-icon {
-  border-color: $alert-ios-checkbox-border-color-on;
+  @include border-color($alert-ios-checkbox-border-color-on);
   background-color: $alert-ios-checkbox-background-color-on;
 }
 
@@ -524,17 +521,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios [aria-checked=true] .alert-checkbox-inner {
   @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-start);
+  @include border-width(0, $alert-ios-checkbox-icon-border-width, $alert-ios-checkbox-icon-border-width, 0);
+  @include border-style($alert-ios-checkbox-icon-border-style);
+  @include border-color($alert-ios-checkbox-icon-border-color);
 
   position: absolute;
 
   width: $alert-ios-checkbox-icon-width;
   height: $alert-ios-checkbox-icon-height;
 
-  border-width: $alert-ios-checkbox-icon-border-width;
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $alert-ios-checkbox-icon-border-style;
-  border-color: $alert-ios-checkbox-icon-border-color;
   transform: $alert-ios-checkbox-icon-transform;
 }
 
@@ -551,6 +546,8 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 .alert-ios .alert-button {
   @include margin($alert-ios-button-margin);
   @include border-radius($alert-ios-button-border-radius);
+  @include border($alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color,
+          $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color, null, null);
 
   overflow: hidden;
 
@@ -559,15 +556,13 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   min-width: $alert-ios-button-min-width;
   height: $alert-ios-button-min-height;
 
-  border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
-  border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   font-size: $alert-ios-button-font-size;
   color: $alert-ios-button-text-color;
   background-color: $alert-ios-button-background-color;
 }
 
 .alert-ios .alert-button:last-child {
-  border-right: 0;
+  @include border(null, 0, null, null);
   font-weight: $alert-ios-button-main-font-weight;
 }
 

@@ -162,11 +162,11 @@ e2e-popover-basic .text-smaller {
 }
 
 .popover-ios e2e-popover-basic .text-smaller {
-  border-right: 1px solid #c8c7cc;
+  @include border(null, 1px solid #c8c7cc, null, null);
 }
 
 .popover-md e2e-popover-basic  .text-smaller {
-  border-right: 1px solid #dedede;
+  @include border(null, 1px solid #dedede, null, null);
 }
 
 e2e-popover-basic .text-larger {

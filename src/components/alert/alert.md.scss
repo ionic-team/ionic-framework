@@ -408,15 +408,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-input {
   @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
+  @include border(null, null, $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color, null);
 
-  border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;
 }
 
 .alert-md .alert-input:focus {
   @include margin(null, null, $alert-md-input-margin-bottom - 1, null);
-
-  border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
+  @include border(null, null, $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused, null);
 }
 
 
@@ -425,13 +424,12 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-radio-group,
 .alert-md .alert-checkbox-group {
+  @include border($alert-md-list-border-top, null, $alert-md-list-border-bottom, null);
+
   position: relative;
   overflow: auto;
 
   max-height: $alert-md-content-max-height;
-
-  border-top: $alert-md-list-border-top;
-  border-bottom: $alert-md-list-border-bottom;
 }
 
 .alert-md .alert-tappable {
@@ -469,16 +467,15 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 .alert-md .alert-radio-icon {
   @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
   @include border-radius($alert-md-radio-border-radius);
+  @include border-width($alert-md-radio-border-width);
+  @include border-style($alert-md-radio-border-style);
+  @include border-color($alert-md-radio-border-color-off);
 
   position: relative;
   display: block;
 
   width: $alert-md-radio-width;
   height: $alert-md-radio-height;
-
-  border-width: $alert-md-radio-border-width;
-  border-style: $alert-md-radio-border-style;
-  border-color: $alert-md-radio-border-color-off;
 }
 
 // Material Design Alert Radio Checked Dot
@@ -507,7 +504,7 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 }
 
 .alert-md [aria-checked=true] .alert-radio-icon {
-  border-color: $alert-md-radio-border-color-on;
+  @include border-color($alert-md-radio-border-color-on);
 }
 
 .alert-md [aria-checked=true] .alert-radio-inner {
@@ -543,38 +540,36 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 .alert-md .alert-checkbox-icon {
   @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
   @include border-radius($alert-md-checkbox-border-radius);
+  @include border-width($alert-md-checkbox-border-width);
+  @include border-style($alert-md-checkbox-border-style);
+  @include border-color($alert-md-checkbox-border-color-off);
 
   position: relative;
 
   width: $alert-md-checkbox-width;
   height: $alert-md-checkbox-height;
-
-  border-width: $alert-md-checkbox-border-width;
-  border-style: $alert-md-checkbox-border-style;
-  border-color: $alert-md-checkbox-border-color-off;
 }
 
 // Material Design Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
 .alert-md [aria-checked=true] .alert-checkbox-icon {
-  border-color: $alert-md-checkbox-border-color-on;
+  @include border-color($alert-md-checkbox-border-color-on);
+
   background-color: $alert-md-checkbox-border-color-on;
 }
 
 .alert-md [aria-checked=true] .alert-checkbox-inner {
   @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
+  @include border-width(0, $alert-md-checkbox-icon-border-width, $alert-md-checkbox-icon-border-width, 0);
+  @include border-style($alert-md-checkbox-icon-border-style);
+  @include border-color($alert-md-checkbox-icon-border-color);
 
   position: absolute;
 
   width: $alert-md-checkbox-icon-width;
   height: $alert-md-checkbox-icon-height;
 
-  border-width: $alert-md-checkbox-icon-border-width;
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $alert-md-checkbox-icon-border-style;
-  border-color: $alert-md-checkbox-icon-border-color;
   transform: $alert-md-checkbox-icon-transform;
 }
 

@@ -50,7 +50,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .toolbar-background-md {
-  border-color: $toolbar-md-border-color;
+  @include border-color($toolbar-md-border-color);
   background: $toolbar-md-background;
 }
 
@@ -136,7 +136,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
     }
 
     .bar-button-outline-md {
-      border-color: $color-contrast;
+      @include border-color($color-contrast);
     }
 
     @each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
@@ -185,10 +185,10 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   @include margin(0, .2rem, 0, .2rem);
   @include padding(0, 5px);
   @include border-radius($toolbar-md-button-border-radius);
+  @include border(0);
 
   height: 32px;
 
-  border: 0;
   font-size: $toolbar-md-button-font-size;
   font-weight: 500;
   text-transform: uppercase;
@@ -220,9 +220,9 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // --------------------------------------------------
 
 .bar-button-outline-md {
-  border-width: 1px;
-  border-style: solid;
-  border-color: $toolbar-md-button-color;
+  @include border(1px solid);
+  @include border-color($toolbar-md-button-color);
+
   color: $toolbar-md-button-color;
   background-color: transparent;
 
@@ -243,7 +243,9 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
   .bar-button-outline-md-#{$color-name} {
     $fg-color: color-shade($color-base);
-    border-color: $fg-color;
+
+    @include border-color($fg-color);
+
     color: $fg-color;
     background-color: transparent;
 

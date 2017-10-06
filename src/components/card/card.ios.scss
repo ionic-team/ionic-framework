@@ -139,11 +139,11 @@ $card-ios-header-color:                #333 !default;
 .card-ios > .item:last-child,
 .card-ios > .item:last-child .item-inner,
 .card-ios > .item-wrapper:last-child .item {
-  border-bottom: 0;
+  @include border(null, null, 0, null);
 }
 
 .card-ios .item-ios.item-block .item-inner {
-  border: 0;
+  @include border(0);
 }
 
 .card-content-ios {
