@@ -100,11 +100,11 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
   }
 
   ion-footer .toolbar:last-child {
-    @include padding(null, null, calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null);
-    @include padding(null, null, calc(env(safe-area-inset-top) + #{$toolbar-padding}), null);
-    height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
-    height: calc(#{$toolbar-height} + env(safe-area-inset-top));
-    min-height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
-    min-height: calc(#{$toolbar-height} + env(safe-area-inset-top));
+    @include padding(null, null, calc(constant(safe-area-inset-bottom) + #{$toolbar-padding}), null);
+    @include padding(null, null, calc(env(safe-area-inset-bottom) + #{$toolbar-padding}), null);
+    height: calc(#{$toolbar-height} + constant(safe-area-inset-bottom));
+    height: calc(#{$toolbar-height} + env(safe-area-inset-bottom));
+    min-height: calc(#{$toolbar-height} + constant(safe-area-inset-bottom));
+    min-height: calc(#{$toolbar-height} + env(safe-area-inset-bottom));
   }
 }
