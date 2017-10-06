@@ -1085,7 +1085,7 @@ export class NavControllerBase extends Ion implements NavController {
     }
     const views = this._views;
     const index = views.indexOf(view);
-    return (index >= 0) ? views[index - 1] : null;
+    return (index > 0) ? views[index - 1] : null;
   }
 
   first(): ViewController {
