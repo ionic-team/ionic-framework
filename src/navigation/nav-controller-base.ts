@@ -865,8 +865,6 @@ export class NavControllerBase extends Ion implements NavController {
     // only do this if the views exist, though
     if (!this._destroyed) {
       const activeViewIndex = this._views.indexOf(activeView);
-      assert(activeViewIndex >= 0, 'active index is invalid');
-
       const views = this._views;
       let reorderZIndexes = false;
       let view: ViewController;
