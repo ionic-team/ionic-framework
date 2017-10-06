@@ -1,5 +1,6 @@
 import { Component, NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from '../../../..';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class E2EPage {
 
     return getAsyncData().then(newData => {
       for (var i = 0; i < newData.length; i++) {
-        this.items.push( this.items.length );
+        this.items.push(this.items.length);
       }
 
       console.log('Finished receiving data, async operation complete');
@@ -71,6 +72,7 @@ export class E2EApp {
     E2EPage
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(E2EApp)
   ],
   bootstrap: [IonicApp],
@@ -79,4 +81,4 @@ export class E2EApp {
     E2EPage
   ]
 })
-export class AppModule {}
+export class AppModule { }
