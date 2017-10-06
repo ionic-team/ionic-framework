@@ -1,4 +1,4 @@
-import { OpaqueToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 import { App } from '../components/app/app';
 import { NavigationContainer } from './navigation-container';
@@ -282,7 +282,7 @@ const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|
 /**
  * @hidden
  */
-export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
+export const DeepLinkConfigToken = new InjectionToken<any>('USERLINKS');
 
 export function setupUrlSerializer(app: App, userDeepLinkConfig: any): UrlSerializer {
   return new UrlSerializer(app, userDeepLinkConfig);

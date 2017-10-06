@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, OpaqueToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, InjectionToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
 import { assert } from '../../util/util';
@@ -8,7 +8,7 @@ import { OverlayPortal } from './overlay-portal';
 import { Platform } from '../../platform/platform';
 import * as Constants from './app-constants';
 
-export const AppRootToken = new OpaqueToken('USERROOT');
+export const AppRootToken = new InjectionToken<any>('USERROOT');
 
 /**
  * @hidden

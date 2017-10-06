@@ -1,4 +1,4 @@
-import { OpaqueToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
 import { isCordova, isElectron, isIos, isIosUIWebView } from './platform-utils';
@@ -251,7 +251,7 @@ function keyboardResizes(plt: Platform): boolean {
   return false;
 }
 
-export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');
+export const PlatformConfigToken = new InjectionToken<any>('PLTCONFIG');
 
 export function providePlatformConfigs() {
   return PLATFORM_CONFIGS;

@@ -1,4 +1,4 @@
-import { OpaqueToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 /**
 * @ngdoc service
@@ -416,4 +416,4 @@ export function setupConfig(userConfig: any, plt: Platform): Config {
 /**
  * @hidden
  */
-export const ConfigToken = new OpaqueToken('USERCONFIG');
+export const ConfigToken = new InjectionToken<any>('USERCONFIG');
