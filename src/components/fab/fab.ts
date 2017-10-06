@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';

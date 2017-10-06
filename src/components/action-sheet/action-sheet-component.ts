@@ -1,11 +1,10 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { ActionSheetOptions, ActionSheetButton } from './action-sheet-options';
+import { ActionSheetButton, ActionSheetOptions } from './action-sheet-options';
 import { assert } from '../../util/util';
-import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
 import { Config } from '../../config/config';
 import { KEY_ESCAPE } from '../../platform/key';
-import { Platform } from '../../platform/platform';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -27,7 +26,7 @@ import { ViewController } from '../../navigation/view-controller';
             '{{b.text}}' +
           '</button>' +
         '</div>' +
-        '<div class="action-sheet-group" *ngIf="cancelButton">' +
+        '<div class="action-sheet-group action-sheet-group-cancel" *ngIf="cancelButton">' +
           '<button ion-button="action-sheet-button" (click)="click(cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-start]="cancelButton.icon ? \'\' : null" [ngClass]="cancelButton.cssClass">' +
             '<ion-icon [name]="cancelButton.icon" *ngIf="cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
             '{{cancelButton.text}}' +
@@ -57,7 +56,6 @@ export class ActionSheetCmp {
   constructor(
     private _viewCtrl: ViewController,
     config: Config,
-    private _plt: Platform,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,

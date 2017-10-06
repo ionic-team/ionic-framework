@@ -10,7 +10,7 @@
 <ion-content class="outer-content">
 
   <ion-item>
-    <ion-label>Gender</ion-label>
+    <ion-label stacked>Gender</ion-label>
     <ion-select [(ngModel)]="gender" class="e2eSelectGender">
       <ion-option value="f">Female</ion-option>
       <ion-option value="m">Male</ion-option>
@@ -39,7 +39,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Operating System</ion-label>
+    <ion-label floating>Operating System</ion-label>
     <ion-select [(ngModel)]="os" interface="alert" submitText="Okay" cancelText="Nah">
       <ion-option value="dos">DOS</ion-option>
       <ion-option value="lunix">Linux</ion-option>
@@ -58,6 +58,24 @@
       <ion-option value="mute">Mute</ion-option>
       <ion-option value="mute_week">Mute for a week</ion-option>
       <ion-option value="mute_year" (ionSelect)="notificationSelect($event)">Mute for a year</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Edit</ion-label>
+    <ion-select [(ngModel)]="edit" interface="action-sheet">
+      <ion-option value="add_reaction">Add Reaction</ion-option>
+      <ion-option value="copy_text">Copy Text</ion-option>
+      <ion-option value="share_text">Share Text</ion-option>
+      <ion-option value="copy_link">Copy Link to Message</ion-option>
+      <ion-option value="remind_me">Remind Me</ion-option>
+      <ion-option value="pin_file">Pin File</ion-option>
+      <ion-option value="star_file">Star File</ion-option>
+      <ion-option value="mark_unread">Mark Unread</ion-option>
+      <ion-option value="edit_title">Edit Title</ion-option>
+      <ion-option value="save_image">Save Image</ion-option>
+      <ion-option value="copy_image">Copy Image</ion-option>
+      <ion-option value="delete_file">Delete File</ion-option>
     </ion-select>
   </ion-item>
 

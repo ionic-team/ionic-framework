@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewEncapsulation, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, ErrorHandler, EventEmitter, Input, NgZone, Optional, Output, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -8,7 +8,7 @@ import { GestureController } from '../../gestures/gesture-controller';
 import { isTrueProperty } from '../../util/util';
 import { Tab as ITab } from '../../navigation/nav-interfaces';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
-import { NavOptions } from '../../navigation/nav-util';
+import { NavOptions, NavSegment } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { TabButton } from './tab-button';
 import { Tabs } from './tabs';
@@ -98,7 +98,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```html
  * <ion-tabs>
  *   <ion-tab (ionSelect)="chat()" tabTitle="Show Modal"></ion-tab>
- * </ion-tabs>
+ * </ion-tabs>pop
  * ```
  *
  * ```ts
@@ -172,6 +172,12 @@ export class Tab extends NavControllerBase implements ITab {
    * @hidden
    */
   _tabsHideOnSubPages: boolean;
+
+
+  /**
+   * @hidden
+   */
+  _segment: NavSegment;
 
   /**
    * @input {Page} Set the root page for this tab.
@@ -249,6 +255,8 @@ export class Tab extends NavControllerBase implements ITab {
    */
   @Output() ionSelect: EventEmitter<Tab> = new EventEmitter<Tab>();
 
+
+
   constructor(
     parent: Tabs,
     app: App,
@@ -292,11 +300,45 @@ export class Tab extends NavControllerBase implements ITab {
   /**
    * @hidden
    */
-  load(opts: NavOptions, done?: () => void) {
-    if (!this._loaded && this.root) {
+  load(opts: NavOptions): Promise<any> {
+    const segment = this._segment;
+    if (segment || (!this._loaded && this.root)) {
       this.setElementClass('show-tab', true);
-      this.push(this.root, this.rootParams, opts, done);
-      this._loaded = true;
+      // okay, first thing we need to do if check if the view already exists
+      const nameToUse = segment && segment.name ? segment.name : this.root;
+      const dataToUse = segment ? segment.data : this.rootParams;
+      const numViews = this.length() - 1;
+      for (let i = numViews; i >= 0; i--) {
+        const viewController = this.getByIndex(i);
+        if (viewController && (viewController.id === nameToUse || viewController.component === nameToUse)) {
+          if (i === numViews) {
+            // this is the last view in the stack and it's the same
+            // as the segment so there's no change needed
+            return Promise.resolve();
+          } else {
+            // it's not the exact view as the end
+            // let's have this nav go back to this exact view
+            return this.popTo(viewController, {
+              animate: false,
+              updateUrl: false,
+            });
+          }
+        }
+      }
+
+      let promise: Promise<any> = null;
+      if (segment && segment.defaultHistory && segment.defaultHistory.length && this._views.length === 0) {
+        promise = this.linker.initViews(segment).then((views: ViewController[]) => {
+          return this.setPages(views, opts);
+        });
+      } else {
+        promise = this.push(nameToUse, dataToUse, opts);
+      }
+
+      return promise.then(() => {
+        this._segment = null;
+        this._loaded = true;
+      });
 
     } else {
       // if this is not the Tab's initial load then we need
@@ -305,7 +347,7 @@ export class Tab extends NavControllerBase implements ITab {
       this._dom.read(() => {
         this.resize();
       });
-      done();
+      return Promise.resolve();
     }
   }
 
@@ -373,7 +415,7 @@ export class Tab extends NavControllerBase implements ITab {
    */
   updateHref(component: any, data: any) {
     if (this.btn && this.linker) {
-      let href = this.linker.createUrl(this, component, data) || '#';
+      let href = this.linker.createUrl(this.parent, component, data) || '#';
       this.btn.updateHref(href);
     }
   }
@@ -385,4 +427,14 @@ export class Tab extends NavControllerBase implements ITab {
     this.destroy();
   }
 
+  /**
+   * @hidden
+   */
+  getType() {
+    return 'tab';
+  }
+
+  goToRoot(opts: NavOptions) {
+    return this.setRoot(this.root, this.rootParams, opts, null);
+  }
 }

@@ -22,7 +22,7 @@ ion-action-sheet {
 }
 
 .action-sheet-wrapper {
-  @include position(null, 0, 0, 0);
+  @include position(0, 0, 0, 0);
   @include margin(auto);
   @include transform(translate3d(0, 100%, 0));
 
@@ -32,8 +32,35 @@ ion-action-sheet {
 
   width: $action-sheet-width;
   max-width: $action-sheet-max-width;
+
+  pointer-events: none;
 }
 
 .action-sheet-button {
   width: $action-sheet-width;
+}
+
+.action-sheet-container {
+  display: flex;
+
+  flex-flow: column;
+
+  justify-content: flex-end;
+
+  height: 100%;
+  max-height: 100%;
+}
+
+.action-sheet-group {
+  overflow: scroll;
+
+  flex-shrink: 2;
+
+  pointer-events: all;
+}
+
+.action-sheet-group-cancel {
+  overflow: hidden;
+
+  flex-shrink: 0;
 }

@@ -7,7 +7,7 @@ describe('recognizers', () => {
     let p = new PanRecognizer('x', 2, 2);
     expect(p.pan()).toEqual(0);
 
-    Simulate.from(0, 0).to(99, 0).run((coord: Coordinates) => {
+    Simulate.from(0, 0).to(99, 0).run((coord: any) => {
       expect(p.detect(coord)).toEqual(false);
     });
   });
@@ -18,7 +18,7 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     expect(p.pan()).toEqual(0);
 
-    Simulate.from(0, 0).to(10, 0).run((coord: Coordinates) => {
+    Simulate.from(0, 0).to(10, 0).run((coord: any) => {
       p.detect(coord);
     });
     expect(p.pan()).toEqual(1);
@@ -26,7 +26,7 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     expect(p.pan()).toEqual(0);
 
-    Simulate.from(0, 0).to(-10, 0).run((coord: Coordinates) => {
+    Simulate.from(0, 0).to(-10, 0).run((coord: any) => {
       p.detect(coord);
     });
     expect(p.pan()).toEqual(-1);
@@ -40,11 +40,11 @@ describe('recognizers', () => {
     Simulate
       .from(0, 0).to(99, 0)
       // Since threshold is 100, it should not fire yet
-      .run((coord: Coordinates) => expect(p.detect(coord)).toEqual(false))
+      .run((coord: any) => expect(p.detect(coord)).toEqual(false))
 
       // Now it should fire
       .delta(2, 0)
-      .run((coord: Coordinates) => {
+      .run((coord: any) => {
         if (p.detect(coord)) {
           // it should detect a horizontal pan
           expect(p.pan()).toEqual(1);
@@ -56,7 +56,7 @@ describe('recognizers', () => {
       .delta(20, 0)
       .to(0, 0)
       .to(102, 0)
-      .run((coord: Coordinates) => expect(p.detect(coord)).toEqual(false));
+      .run((coord: any) => expect(p.detect(coord)).toEqual(false));
 
     expect(detected).toEqual(true);
   });
@@ -66,13 +66,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(19, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(1);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(-19, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(1);
   });
 
@@ -81,13 +81,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(180 - 19, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(-1);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(180 + 19, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(-1);
   });
 
@@ -96,13 +96,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(21, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(-21, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
   });
 
@@ -111,13 +111,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(180 - 21, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(180 + 21, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
   });
 
@@ -128,13 +128,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(90 - 19, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(1);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(90 + 19, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(1);
   });
 
@@ -143,13 +143,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(-90 + 19, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(-1);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(-90 - 19, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(-1);
   });
 
@@ -158,13 +158,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(90 - 21, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(90 + 21, 21).delta(-30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
   });
 
@@ -173,13 +173,13 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(-90 + 21, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
 
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(-90 - 21, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
     expect(p.pan()).toEqual(0);
   });
 
@@ -188,7 +188,7 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).deltaPolar(90, 21).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
 
     expect(p.pan()).toEqual(0);
   });
@@ -198,7 +198,7 @@ describe('recognizers', () => {
     p.start({ x: 0, y: 0 });
     Simulate
       .from(0, 0).delta(30, 0)
-      .run((coord: Coordinates) => p.detect(coord));
+      .run((coord: any) => p.detect(coord));
 
     expect(p.pan()).toEqual(0);
   });

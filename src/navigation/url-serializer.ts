@@ -1,6 +1,8 @@
 import { OpaqueToken } from '@angular/core';
 
-import { DeepLinkConfig, NavLink, NavSegment } from './nav-util';
+import { App } from '../components/app/app';
+import { NavigationContainer } from './navigation-container';
+import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment, isTabs } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 
@@ -10,7 +12,7 @@ import { isArray, isBlank, isPresent } from '../util/util';
 export class UrlSerializer {
   links: NavLink[];
 
-  constructor(config: DeepLinkConfig) {
+  constructor(public _app: App, config: DeepLinkConfig) {
     if (config && isArray(config.links)) {
       this.links = normalizeLinks(config.links);
 
@@ -30,21 +32,17 @@ export class UrlSerializer {
 
     // trim off data after ? and #
     browserUrl = browserUrl.split('?')[0].split('#')[0];
-
-    return parseUrlParts(browserUrl.split('/'), this.links);
+    return convertUrlToSegments(this._app, browserUrl, this.links);
   }
 
-  createSegmentFromName(nameOrComponent: any): NavSegment {
-    const configLink = this.getLinkFromName(nameOrComponent);
 
-    return configLink ? {
-      id: configLink.name,
-      name: configLink.name,
-      component: configLink.component,
-      loadChildren: configLink.loadChildren,
-      data: null,
-      defaultHistory: configLink.defaultHistory
-    } : null;
+
+  createSegmentFromName(navContainer: NavigationContainer, nameOrComponent: any): NavSegment {
+    const configLink = this.getLinkFromName(nameOrComponent);
+    if (configLink) {
+      return this._createSegment(this._app, navContainer, configLink, null);
+    }
+    return null;
   }
 
   getLinkFromName(nameOrComponent: any) {
@@ -58,26 +56,44 @@ export class UrlSerializer {
    * Serialize a path, which is made up of multiple NavSegments,
    * into a URL string. Turn each segment into a string and concat them to a URL.
    */
-  serialize(path: NavSegment[]): string {
-    return '/' + path.map(segment => segment.id).join('/');
+  serialize(segments: NavSegment[]): string {
+    if (!segments || !segments.length) {
+      return '/';
+    }
+    const sections = segments.map(segment => {
+      if (segment.type === 'tabs') {
+        if (segment.requiresExplicitNavPrefix) {
+          return `/${segment.type}/${segment.navId}/${segment.secondaryId}/${segment.id}`;
+        }
+        return `/${segment.secondaryId}/${segment.id}`;
+      }
+      // it's a nav
+      if (segment.requiresExplicitNavPrefix) {
+        return `/${segment.type}/${segment.navId}/${segment.id}`;
+      }
+      return `/${segment.id}`;
+    });
+    return sections.join('');
   }
 
   /**
    * Serializes a component and its data into a NavSegment.
    */
-  serializeComponent(component: any, data: any): NavSegment {
+  serializeComponent(navContainer: NavigationContainer, component: any, data: any): NavSegment {
     if (component) {
       const link = findLinkByComponentData(this.links, component, data);
       if (link) {
-        return this._createSegment(link, data);
+        return this._createSegment(this._app, navContainer, link, data);
       }
     }
     return null;
   }
 
-  /** @internal */
-  _createSegment(configLink: NavLink, data: any): NavSegment {
-    let urlParts = configLink.parts;
+  /**
+ * @internal
+ */
+  _createSegment(app: App, navContainer: NavigationContainer, configLink: NavLink, data: any): NavSegment {
+    let urlParts = configLink.segmentParts;
 
     if (isPresent(data)) {
       // create a copy of the original parts in the link config
@@ -102,99 +118,45 @@ export class UrlSerializer {
       }
     }
 
+    let requiresExplicitPrefix = true;
+    if (navContainer.parent) {
+      requiresExplicitPrefix = navContainer.parent && navContainer.parent.getAllChildNavs().length > 1;
+    } else {
+      // if it's a root nav, and there are multiple root navs, we need an explicit prefix
+      requiresExplicitPrefix = app.getRootNavById(navContainer.id) && app.getRootNavs().length > 1;
+    }
+
     return {
       id: urlParts.join('/'),
       name: configLink.name,
       component: configLink.component,
       loadChildren: configLink.loadChildren,
       data: data,
-      defaultHistory: configLink.defaultHistory
+      defaultHistory: configLink.defaultHistory,
+      navId: navContainer.name || navContainer.id,
+      type: navContainer.getType(),
+      secondaryId: navContainer.getSecondaryIdentifier(),
+      requiresExplicitNavPrefix: requiresExplicitPrefix
     };
   }
-
-  formatUrlPart(name: string): string {
-    name = name.replace(URL_REPLACE_REG, '-');
-    name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
-      return '-' + match.toLowerCase();
-    });
-    while (name.indexOf('--') > -1) {
-      name = name.replace('--', '-');
-    }
-    if (name.charAt(0) === '-') {
-      name = name.substring(1);
-    }
-    if (name.substring(name.length - 1) === '-') {
-      name = name.substring(0, name.length - 1);
-    }
-    return encodeURIComponent(name);
-  }
-
 }
 
-export const parseUrlParts = (urlParts: string[], configLinks: NavLink[]): NavSegment[] => {
-  const configLinkLen = configLinks.length;
-  const urlPartsLen = urlParts.length;
-  const segments: NavSegment[] = new Array(urlPartsLen);
-
-  for (var i = 0; i < configLinkLen; i++) {
-    // compare url parts to config link parts to create nav segments
-    var configLink = configLinks[i];
-    if (configLink.partsLen <= urlPartsLen) {
-      fillMatchedUrlParts(segments, urlParts, configLink);
-    }
+export function formatUrlPart(name: string): string {
+  name = name.replace(URL_REPLACE_REG, '-');
+  name = name.charAt(0).toLowerCase() + name.substring(1).replace(/[A-Z]/g, match => {
+    return '-' + match.toLowerCase();
+  });
+  while (name.indexOf('--') > -1) {
+    name = name.replace('--', '-');
   }
-
-  // remove all the undefined segments
-  for (var i = urlPartsLen - 1; i >= 0; i--) {
-    if (segments[i] === undefined) {
-      if (urlParts[i] === undefined) {
-        // not a used part, so remove it
-        segments.splice(i, 1);
-
-      } else {
-        // create an empty part
-        segments[i] = {
-          id: urlParts[i],
-          name: urlParts[i],
-          component: null,
-          loadChildren: null,
-          data: null
-        };
-      }
-    }
+  if (name.charAt(0) === '-') {
+    name = name.substring(1);
   }
-
-  return segments;
-};
-
-export const fillMatchedUrlParts = (segments: NavSegment[], urlParts: string[], configLink: NavLink) => {
-  for (var i = 0; i < urlParts.length; i++) {
-    var urlI = i;
-
-    for (var j = 0; j < configLink.partsLen; j++) {
-      if (isPartMatch(urlParts[urlI], configLink.parts[j])) {
-        urlI++;
-      } else {
-        break;
-      }
-    }
-
-    if ((urlI - i) === configLink.partsLen) {
-      var matchedUrlParts = urlParts.slice(i, urlI);
-      for (var j = i; j < urlI; j++) {
-        urlParts[j] = undefined;
-      }
-      segments[i] = {
-        id: matchedUrlParts.join('/'),
-        name: configLink.name,
-        component: configLink.component,
-        loadChildren: configLink.loadChildren,
-        data: createMatchedData(matchedUrlParts, configLink),
-        defaultHistory: configLink.defaultHistory
-      };
-    }
+  if (name.substring(name.length - 1) === '-') {
+    name = name.substring(0, name.length - 1);
   }
-};
+  return encodeURIComponent(name);
+}
 
 export const isPartMatch = (urlPart: string, configLinkPart: string) => {
   if (isPresent(urlPart) && isPresent(configLinkPart)) {
@@ -209,10 +171,10 @@ export const isPartMatch = (urlPart: string, configLinkPart: string) => {
 export const createMatchedData = (matchedUrlParts: string[], link: NavLink): any => {
   let data: any = null;
 
-  for (var i = 0; i < link.partsLen; i++) {
-    if (link.parts[i].charAt(0) === ':') {
+  for (var i = 0; i < link.segmentPartsLen; i++) {
+    if (link.segmentParts[i].charAt(0) === ':') {
       data = data || {};
-      data[link.parts[i].substring(1)] = decodeURIComponent(matchedUrlParts[i]);
+      data[link.segmentParts[i].substring(1)] = decodeURIComponent(matchedUrlParts[i]);
     }
   }
 
@@ -263,18 +225,18 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
     }
 
     link.dataKeys = {};
-    link.parts = link.segment.split('/');
-    link.partsLen = link.parts.length;
+    link.segmentParts = link.segment.split('/');
+    link.segmentPartsLen = link.segmentParts.length;
 
     // used for sorting
     link.staticLen = link.dataLen = 0;
     var stillCountingStatic = true;
 
-    for (var j = 0; j < link.partsLen; j++) {
-      if (link.parts[j].charAt(0) === ':') {
+    for (var j = 0; j < link.segmentPartsLen; j++) {
+      if (link.segmentParts[j].charAt(0) === ':') {
         link.dataLen++;
         stillCountingStatic = false;
-        link.dataKeys[link.parts[j].substring(1)] = true;
+        link.dataKeys[link.segmentParts[j].substring(1)] = true;
 
       } else if (stillCountingStatic) {
         link.staticLen++;
@@ -289,10 +251,10 @@ export const normalizeLinks = (links: NavLink[]): NavLink[] => {
 
 function sortConfigLinks(a: NavLink, b: NavLink) {
   // sort by the number of parts
-  if (a.partsLen > b.partsLen) {
+  if (a.segmentPartsLen > b.segmentPartsLen) {
     return -1;
   }
-  if (a.partsLen < b.partsLen) {
+  if (a.segmentPartsLen < b.segmentPartsLen) {
     return 1;
   }
 
@@ -322,6 +284,301 @@ const URL_REPLACE_REG = /\s+|\?|\!|\$|\,|\.|\+|\"|\'|\*|\^|\||\/|\\|\[|\]|#|%|`|
  */
 export const DeepLinkConfigToken = new OpaqueToken('USERLINKS');
 
-export function setupUrlSerializer(userDeepLinkConfig: any): UrlSerializer {
-  return new UrlSerializer(userDeepLinkConfig);
+export function setupUrlSerializer(app: App, userDeepLinkConfig: any): UrlSerializer {
+  return new UrlSerializer(app, userDeepLinkConfig);
+}
+
+export function navGroupStringtoObjects(navGroupStrings: string[]): NavGroup[] {
+  // each string has a known format-ish, convert it to it
+  return navGroupStrings.map(navGroupString => {
+    const sections = navGroupString.split('/');
+    if (sections[0] === 'nav') {
+      return {
+        type: 'nav',
+        navId: sections[1],
+        niceId: sections[1],
+        secondaryId: null,
+        segmentPieces: sections.splice(2)
+      };
+    } else if (sections[0] === 'tabs') {
+      return {
+        type: 'tabs',
+        navId: sections[1],
+        niceId: sections[1],
+        secondaryId: sections[2],
+        segmentPieces: sections.splice(3)
+      };
+    }
+    return {
+      type: null,
+      navId: null,
+      niceId: null,
+      secondaryId: null,
+      segmentPieces: sections
+    };
+  });
+}
+
+export function urlToNavGroupStrings(url: string) {
+  const tokens = url.split('/');
+  const keywordIndexes = [];
+  for (let i = 0; i < tokens.length; i++) {
+    if (i !== 0 && (tokens[i] === 'nav' || tokens[i] === 'tabs')) {
+      keywordIndexes.push(i);
+    }
+  }
+  // append the last index + 1 to the list no matter what
+  keywordIndexes.push(tokens.length);
+  const groupings: string[] = [];
+  let activeKeywordIndex = 0;
+  let tmpArray: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    if (i >= keywordIndexes[activeKeywordIndex]) {
+      groupings.push(tmpArray.join('/'));
+      tmpArray = [];
+      activeKeywordIndex++;
+    }
+    tmpArray.push(tokens[i]);
+  }
+  // okay, after the loop we've gotta push one more time just to be safe
+  groupings.push(tmpArray.join('/'));
+  return groupings;
+}
+
+export function convertUrlToSegments(app: App, url: string, navLinks: NavLink[]): NavSegment[] {
+  const pairs = convertUrlToDehydratedSegments(url, navLinks);
+  return hydrateSegmentsWithNav(app, pairs);
+}
+
+export function convertUrlToDehydratedSegments(url: string, navLinks: NavLink[]): DehydratedSegmentPair[] {
+  const navGroupStrings = urlToNavGroupStrings(url);
+  const navGroups = navGroupStringtoObjects(navGroupStrings);
+  return getSegmentsFromNavGroups(navGroups, navLinks);
+}
+
+export function hydrateSegmentsWithNav(app: App, dehydratedSegmentPairs: DehydratedSegmentPair[]) {
+  const segments: NavSegment[] = [];
+  for (let i = 0; i < dehydratedSegmentPairs.length; i++) {
+    let navs = getNavFromNavGroup(dehydratedSegmentPairs[i].navGroup, app);
+    // okay, cool, let's walk through the segments and hydrate them
+    for (const dehydratedSegment of dehydratedSegmentPairs[i].segments) {
+      if (navs.length === 1) {
+        segments.push(hydrateSegment(dehydratedSegment, navs[0]));
+        navs = navs[0].getActiveChildNavs();
+      } else if (navs.length > 1) {
+        // this is almost certainly an async race condition bug in userland
+        // if you're in this state, it would be nice to just bail here
+        // but alas we must perservere and handle the issue
+        // the simple solution is to just use the last child
+        // because that is probably what the user wants anyway
+        // remember, do not harm, even if it makes our shizzle ugly
+
+
+        // Update 9/30/17 - well, we know now that we can be in all sorts of weird
+        // states when we hit this
+        // one being a state with a root Nav, and then toggling between PageOne (with an `ion-tabs` component)
+        // and PageTwo (with an `ion-tabs` component)
+        // when you go from a page with tabs to a different page with tabs
+        // as of 9/30/17 we do not update the URL correctly
+        // and if we change how that works
+        // we'll probably break a lot of apps in other, unexpected ways
+        // so the best answer seems to be to check if an existing nav's active page matches the
+        // url segment. If it does, then we're in a weird state and don't use the segment.
+        // if an existing nav's active page does NOT match the segment, then it's
+        // probably fair game to use
+        let probableSegment = hydrateSegment(dehydratedSegment, navs[navs.length - 1]);
+        for (const nav of navs) {
+          if (nav === navs[navs.length - 1]) {
+            break;
+          }
+
+          if (isTabs(nav)) {
+            if (nav.getActiveChildNavs().length) {
+              const tab = nav.getActiveChildNavs()[0];
+              const activeView = (tab as any).getActive();
+              if (activeView.component === probableSegment.component) {
+                probableSegment = null;
+                break;
+              }
+            }
+          }
+        }
+
+        if (probableSegment) {
+          segments.push(probableSegment);
+          navs = navs[navs.length - 1].getActiveChildNavs();
+        }
+      } else {
+        break;
+      }
+    }
+  }
+  return segments;
+}
+
+export function getNavFromNavGroup(navGroup: NavGroup, app: App): NavigationContainer[] {
+  if (navGroup.navId) {
+    const rootNav = app.getNavByIdOrName(navGroup.navId);
+    if (rootNav) {
+      return [rootNav];
+    }
+    return [];
+  }
+  // we don't know what nav to use, so just use the root nav.
+  // if there is more than one root nav, throw an error
+  return app.getRootNavs();
+}
+
+/*
+ * Let's face the facts: Getting a dehydrated segment from the url is really hard
+ * because we need to do a ton of crazy looping
+ * the are chunks of a url that are totally irrelevant at this stage, such as the secondary identifier
+ * stating which tab is selected, etc.
+ * but is necessary.
+ * We look at segment pieces in reverse order to try to build segments
+ * as in, if you had an array like this
+ * ['my', 'super', 'cool', 'url']
+ * we want to look at the pieces in reverse order:
+ * url
+ * cool url
+ * super cool url
+ * my super cool url
+ * cool
+ * super cool
+ * my super cool
+ * super
+ * my super
+ * my
+ **/
+export function getSegmentsFromNavGroups(navGroups: NavGroup[], navLinks: NavLink[]) {
+  const pairs: DehydratedSegmentPair[] = [];
+  const usedNavLinks = new Set<string>();
+  for (const navGroup of navGroups) {
+    const segments: DehydratedSegment[] = [];
+
+    const segmentPieces = navGroup.segmentPieces.concat([]);
+
+    for (let i = segmentPieces.length; i >= 0; i--) {
+      let created = false;
+      for (let j = 0; j < i; j++) {
+        const startIndex = i - j - 1;
+        const endIndex = i;
+        const subsetOfUrl = segmentPieces.slice(startIndex, endIndex);
+        for (const navLink of navLinks) {
+          if (!usedNavLinks.has(navLink.name)) {
+            const segment = getSegmentsFromUrlPieces(subsetOfUrl, navLink);
+
+            if (segment) {
+              i = startIndex + 1;
+              usedNavLinks.add(navLink.name);
+              created = true;
+              // sweet, we found a segment
+              segments.push(segment);
+              // now we want to null out the url subsection in the segmentPieces
+              for (let k = startIndex; k < endIndex; k++) {
+                segmentPieces[k] = null;
+              }
+              break;
+            }
+          }
+        }
+        if (created) {
+          break;
+        }
+      }
+      if (!created && segmentPieces[i - 1]) {
+        // this is very likely a tab's secondary identifier
+        segments.push({
+          id: null,
+          name: null,
+          secondaryId: segmentPieces[i - 1],
+          component: null,
+          loadChildren: null,
+          data: null,
+          defaultHistory: null
+        });
+      }
+    }
+
+    // since we're getting segments in from right-to-left in the url, reverse them
+    // so they're in the correct order. Also filter out and bogus segments
+    const orderedSegments = segments.reverse();
+
+
+    // okay, this is the lazy persons approach here.
+    // so here's the deal! Right now if section of the url is not a part of a segment
+    // it is almost certainly the secondaryId for a tabs component
+    // basically, knowing the segment for the `tab` itself is good, but we also need to know
+    // which tab is selected, so we have an identifer in the url that is associated with the tabs component
+    // telling us which tab is selected. With that in mind, we are going to go through and find the segments with only secondary identifiers,
+    // and simply add the secondaryId to the next segment, and then remove the empty segment from the list
+    for (let i = 0; i < orderedSegments.length; i++) {
+      if (orderedSegments[i].secondaryId && !orderedSegments[i].id && ((i + 1) <= orderedSegments.length - 1)) {
+        orderedSegments[i + 1].secondaryId = orderedSegments[i].secondaryId;
+        orderedSegments[i] = null;
+      }
+    }
+
+    const cleanedSegments = segments.filter(segment => !!segment);
+    // if the nav group has a secondary id, make sure the first segment also has it set
+    if (navGroup.secondaryId && segments.length) {
+      cleanedSegments[0].secondaryId = navGroup.secondaryId;
+    }
+
+    pairs.push({
+      navGroup: navGroup,
+      segments: cleanedSegments
+    });
+  }
+  return pairs;
+}
+
+export function getSegmentsFromUrlPieces(urlSections: string[], navLink: NavLink): DehydratedSegment {
+  if (navLink.segmentPartsLen !== urlSections.length) {
+    return null;
+  }
+  for (let i = 0; i < urlSections.length; i++) {
+    if (!isPartMatch(urlSections[i], navLink.segmentParts[i])) {
+      // just return an empty array if the part doesn't match
+      return null;
+    }
+  }
+  return {
+    id: urlSections.join('/'),
+    name: navLink.name,
+    component: navLink.component,
+    loadChildren: navLink.loadChildren,
+    data: createMatchedData(urlSections, navLink),
+    defaultHistory: navLink.defaultHistory
+  };
+}
+
+export function hydrateSegment(segment: DehydratedSegment, nav: NavigationContainer) {
+  const hydratedSegment = Object.assign({}, segment) as NavSegment;
+  hydratedSegment.type = nav.getType();
+  hydratedSegment.navId = nav.name || nav.id;
+  // secondaryId is set on an empty dehydrated segment in the case of tabs to identify which tab is selected
+  hydratedSegment.secondaryId = segment.secondaryId;
+  return hydratedSegment;
+}
+
+export function getNonHydratedSegmentIfLinkAndUrlMatch(urlChunks: string[], navLink: NavLink): DehydratedSegment {
+  let allSegmentsMatch = true;
+  for (let i = 0; i < urlChunks.length; i++) {
+    if (!isPartMatch(urlChunks[i], navLink.segmentParts[i])) {
+      allSegmentsMatch = false;
+      break;
+    }
+  }
+  if (allSegmentsMatch) {
+    return {
+      id: navLink.segmentParts.join('/'),
+      name: navLink.name,
+      component: navLink.component,
+      loadChildren: navLink.loadChildren,
+      data: createMatchedData(urlChunks, navLink),
+      defaultHistory: navLink.defaultHistory
+    };
+  }
+  return null;
 }

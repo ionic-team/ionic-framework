@@ -71,7 +71,7 @@ export class PageOne {
     this.expandAction(item, 'downloading', 'Login was downloaded.');
   }
 
-  expandAction(item: ItemSliding, action: string, text: string) {
+  expandAction(item: ItemSliding, _: any, text: string) {
     // TODO item.setElementClass(action, true);
 
     setTimeout(() => {

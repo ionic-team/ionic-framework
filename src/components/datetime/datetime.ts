@@ -8,8 +8,24 @@ import { PickerColumn } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
-import { deepCopy, isBlank, isPresent, isArray, isObject, isString, assert, clamp } from '../../util/util';
-import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from '../../util/datetime-util';
+import { assert, clamp, deepCopy, isArray, isBlank, isObject, isPresent, isString } from '../../util/util';
+import {
+  DateTimeData,
+  LocaleData,
+  compareDates,
+  convertDataToISO,
+  convertFormatToKey,
+  dateDataSortValue,
+  dateSortValue,
+  dateValueRange,
+  daysInMonth,
+  getValueFromFormat,
+  parseDate,
+  parseTemplate,
+  renderDateTime,
+  renderTextFormat,
+  updateDate,
+} from '../../util/datetime-util';
 
 /**
  * @name DateTime
@@ -120,6 +136,8 @@ import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, con
  * to serialize and pass within JSON objects, and sending databases a standardized
  * format which it can be easily parsed if need be.
  *
+ * To create an ISO datetime string for the current date and time, e.g. use `const currentDate = (new Date()).toISOString();`.
+ *
  * An ISO format can be used as a simple year, or just the hour and minute, or get more
  * detailed down to the millisecond and timezone. Any of the ISO formats below can be used,
  * and after a user selects a new value, Ionic will continue to use the same ISO format
@@ -152,7 +170,7 @@ import { dateValueRange, renderDateTime, renderTextFormat, convertDataToISO, con
  * ## Min and Max Datetimes
  *
  * Dates are infinite in either direction, so for a user's selection there should be at
- * least some form of restricting the dates that can be selected. Be default, the maximum
+ * least some form of restricting the dates that can be selected. By default, the maximum
  * date is to the end of the current year, and the minimum date is from the beginning
  * of the year that was 100 years ago.
  *
@@ -303,6 +321,14 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
    * more info. Defaults to `MMM D, YYYY`.
    */
   @Input() displayFormat: string;
+
+  /**
+   * @input {string} The default datetime selected in picker modal if field value is empty.
+   * Value must be a date string following the
+   * [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
+   * `1996-12-19`.
+   */
+  @Input() initialValue: string;
 
   /**
    * @input {string} The format of the date and time picker columns the user selects.
@@ -493,6 +519,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     if (this.isFocus() || this._disabled) {
       return;
     }
+
     console.debug('datetime, open picker');
 
     // the user may have assigned some options specifically for the alert
@@ -581,7 +608,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
 
         // cool, we've loaded up the columns with options
         // preselect the option for this column
-        const optValue = getValueFromFormat(this.getValue(), format);
+        const optValue = getValueFromFormat(this.getValueOrDefault(), format);
         const selectedIndex = column.options.findIndex(opt => opt.value === optValue);
         if (selectedIndex >= 0) {
           // set the select index for this column's options
@@ -760,6 +787,51 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
   /**
    * @hidden
    */
+  getValueOrDefault(): DateTimeData {
+    if (this.hasValue()) {
+      return this._value;
+    }
+
+    const initialDateString = this.getDefaultValueDateString();
+    const _default = {};
+    updateDate(_default, initialDateString);
+    return _default;
+  }
+
+  /**
+   * Get the default value as a date string
+   * @hidden
+   */
+  getDefaultValueDateString() {
+    if (this.initialValue) {
+      return this.initialValue;
+    }
+
+    const nowString = (new Date).toISOString();
+    if (this.max) {
+      const now = parseDate(nowString);
+      const max = parseDate(this.max);
+
+      let v;
+      for (let i in max) {
+        v = (<any>max)[i];
+        if (v === null) {
+          (<any>max)[i] = (<any>now)[i];
+        }
+      }
+
+      const diff = compareDates(now, max);
+      // If max is before current time, return max
+      if (diff > 0) {
+        return this.max;
+      }
+    }
+    return nowString;
+  }
+
+  /**
+   * @hidden
+   */
   hasValue(): boolean {
     const val = this._value;
     return isPresent(val)
@@ -820,7 +892,6 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
       }
     }
   }
-
 }
 
 /**

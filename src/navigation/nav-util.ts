@@ -1,9 +1,8 @@
 import { Renderer, TypeDecorator } from '@angular/core';
-
 import { DeepLinker } from './deep-linker';
 import { IonicPageMetadata } from './ionic-page';
 import { isArray, isPresent } from '../util/util';
-import { isViewController, ViewController } from './view-controller';
+import { ViewController, isViewController } from './view-controller';
 import { NavControllerBase } from './nav-controller-base';
 import { Transition } from '../transitions/transition';
 
@@ -17,7 +16,9 @@ export function getComponent(linker: DeepLinker, nameOrPageOrView: any, params?:
 
   if (typeof nameOrPageOrView === 'string') {
     return linker.getComponentFromName(nameOrPageOrView).then((component) => {
-      return new ViewController(component, params);
+      const vc = new ViewController(component, params);
+      vc.id = nameOrPageOrView;
+      return vc;
     });
   }
 
@@ -98,7 +99,15 @@ export function isTab(nav: any): boolean {
 
 export function isNav(nav: any): boolean {
   // Nav (ion-nav), Tab (ion-tab), Portal (ion-portal)
-  return !!nav && !!nav.push;
+  return !!nav && !!nav.push && nav.getType() === 'nav';
+}
+
+export function linkToSegment(navId: string, type: string, secondaryId: string, link: NavLink): NavSegment {
+  const segment = <NavSegment> Object.assign({}, link);
+  segment.navId = navId;
+  segment.type = type;
+  segment.secondaryId = secondaryId;
+  return segment;
 }
 
 /**
@@ -138,8 +147,8 @@ export interface NavLink {
   loadChildren?: string;
   name?: string;
   segment?: string;
-  parts?: string[];
-  partsLen?: number;
+  segmentParts?: string[];
+  segmentPartsLen?: number;
   staticLen?: number;
   dataLen?: number;
   dataKeys?: {[key: string]: boolean};
@@ -154,14 +163,34 @@ export interface NavResult {
   direction?: string;
 }
 
-export interface NavSegment {
+export interface NavSegment extends DehydratedSegment {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  requiresExplicitNavPrefix?: boolean;
+}
+
+export interface DehydratedSegment {
   id: string;
   name: string;
   component?: any;
   loadChildren?: string;
   data: any;
-  navId?: string;
   defaultHistory?: NavSegment[];
+  secondaryId?: string;
+}
+
+export interface DehydratedSegmentPair {
+  segments: DehydratedSegment[];
+  navGroup: NavGroup;
+}
+
+export interface NavGroup {
+  type: string;
+  navId: string;
+  secondaryId: string;
+  segmentPieces?: string[];
+  tabSegmentPieces?: string[];
 }
 
 export interface NavOptions {
@@ -192,6 +221,10 @@ export interface TransitionRejectFn {
   (rejectReason: any, transition?: Transition): void;
 }
 
+export interface TransitionDoneFn {
+  (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string): void;
+}
+
 export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
@@ -201,7 +234,7 @@ export interface TransitionInstruction {
   removeCount?: number;
   resolve?: (hasCompleted: boolean) => void;
   reject?: (rejectReason: string) => void;
-  done?: Function;
+  done?: TransitionDoneFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
   requiresTransition?: boolean;
@@ -217,3 +250,6 @@ export const INIT_ZINDEX = 100;
 export const DIRECTION_BACK = 'back';
 export const DIRECTION_FORWARD = 'forward';
 export const DIRECTION_SWITCH = 'switch';
+
+export const NAV = 'nav';
+export const TABS = 'tabs';

@@ -5,7 +5,7 @@ import { NavOptions } from '../../navigation/nav-util';
 import { PORTAL_TOAST } from '../app/app-constants';
 import { ToastCmp } from './toast-component';
 import { ToastOptions } from './toast-options';
-import { ToastSlideIn, ToastSlideOut, ToastMdSlideIn, ToastMdSlideOut, ToastWpPopOut, ToastWpPopIn } from './toast-transitions';
+import { ToastMdSlideIn, ToastMdSlideOut, ToastSlideIn, ToastSlideOut, ToastWpPopIn, ToastWpPopOut } from './toast-transitions';
 import { ViewController } from '../../navigation/view-controller';
 
 

@@ -1,4 +1,4 @@
-import { Injectable, NgZone, EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable, NgZone } from '@angular/core';
 
 import { Config } from '../config/config';
 import { DomController } from './dom-controller';
@@ -16,9 +16,9 @@ import { Platform } from './platform';
  * @usage
  * ```ts
  * export class MyClass {
- *   constructor(public keyboard: Keyboard) {
  *
- *   }
+ *   constructor(public keyboard: Keyboard) { }
+ *
  * }
  * ```
  */

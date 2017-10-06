@@ -1,7 +1,7 @@
 import { App } from '../app/app';
 import { AlertCmp } from './alert-component';
-import { AlertOptions, AlertInputOptions, AlertButton } from './alert-options';
-import { AlertPopIn, AlertPopOut, AlertMdPopIn, AlertMdPopOut, AlertWpPopIn, AlertWpPopOut } from './alert-transitions';
+import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
+import { AlertMdPopIn, AlertMdPopOut, AlertPopIn, AlertPopOut, AlertWpPopIn, AlertWpPopOut } from './alert-transitions';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';

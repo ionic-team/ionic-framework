@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, forwardRef, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, ErrorHandler, Inject, Input, NgZone, Optional, Renderer, ViewContainerRef, forwardRef } from '@angular/core';
 
 import { App } from './app';
 import { Config } from '../../config/config';
@@ -6,6 +6,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
 import { DomController } from '../../platform/dom-controller';
 import { GestureController } from '../../gestures/gesture-controller';
 import { NavControllerBase } from '../../navigation/nav-controller-base';
+import { NavigationContainer } from '../../navigation/navigation-container';
 import { Platform } from '../../platform/platform';
 import { TransitionController } from '../../transitions/transition-controller';
 import { ViewController } from '../../navigation/view-controller';
@@ -16,7 +17,7 @@ import { ViewController } from '../../navigation/view-controller';
 @Directive({
   selector: '[overlay-portal]',
 })
-export class OverlayPortal extends NavControllerBase {
+export class OverlayPortal extends NavControllerBase implements NavigationContainer {
   constructor(
     @Inject(forwardRef(() => App)) app: App,
     config: Config,
@@ -55,4 +56,17 @@ export class OverlayPortal extends NavControllerBase {
     this.destroy();
   }
 
+  /*
+   * @private
+   */
+  getType() {
+    return 'portal';
+  }
+
+  /*
+   * @private
+   */
+  getSecondaryIdentifier(): string {
+    return null;
+  }
 }

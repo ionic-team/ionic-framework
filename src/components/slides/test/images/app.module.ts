@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Http } from '@angular/http';
 

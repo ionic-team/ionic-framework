@@ -8,7 +8,7 @@ import { OpaqueToken } from '@angular/core';
 * Config allows you to set the modes of your components
 */
 import { Platform } from '../platform/platform';
-import { isObject, isDefined, isFunction, isArray } from '../util/util';
+import { isArray, isDefined, isFunction, isObject } from '../util/util';
 
 /**
  * @name Config
@@ -116,8 +116,11 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
  * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                  |
- * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
+ * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.
+ * | `scrollAssist`           | `boolean`           | Used to avoid the input to be hidden by the keyboard if it's near the bottom of the page.
+ * | `scrollPadding`          | `boolean`           | Used to remove the extra padding on ion-content when keyboard is displayed.
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
+ * | `statusbarPadding`       | `boolean`           | Whether to hide extra padding for statusbar.                                                                                                     |
  * | `swipeBackEnabled`       | `boolean`           | Whether native iOS swipe to go back functionality is enabled.                                                                                    |
  * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
  * | `tabsLayout`             | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.   |

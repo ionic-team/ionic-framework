@@ -302,7 +302,7 @@ $tabs-md-tab-icon-size:                       2.4rem !default;
   transition-duration: 300ms;
 }
 
-.tabs-md[tabsHighlight=true][tabsPlacement=bottom] .tab-highlight {
+.tabs-md[tabsHighlight=true][tabsPlacement=bottom] > .tabbar > .tab-highlight {
   top: 0;
 }
 

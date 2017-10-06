@@ -46,7 +46,7 @@ export function config(config) {
       'dist/ionic-angular/umd/**/!(*spec).js': ['coverage'],
       'dist/ionic-angular/**/*.js': ['sourcemap']
     },
-    reporters: ['dots', 'coverage', 'spec'],
+    reporters: ['coverage', 'spec'],
     specReporter: {
       maxLogLines: 5,         // limit number of lines logged per test
       suppressErrorSummary: true,  // do not print error summary

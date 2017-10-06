@@ -1,5 +1,5 @@
 import { defaults } from '../util/util';
-import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
+import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL, Hammer } from './hammer';
 
 /**
  * @hidden

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, ErrorHandler, forwardRef, Input, Optional, NgZone, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, ErrorHandler, Input, NgZone, Optional, Renderer, ViewChild, ViewContainerRef, ViewEncapsulation, forwardRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -92,10 +92,10 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
       this.parent = viewCtrl.getNav();
       this.parent.registerChildNav(this);
 
-    } else if (app && !app.getRootNav()) {
+    } else if (app && !app.getRootNavById(this.id)) {
       // a root nav has not been registered yet with the app
       // this is the root navcontroller for the entire app
-      app._setRootNav(this);
+      app.registerRootNav(this);
     }
   }
 
@@ -110,23 +110,20 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
   ngAfterViewInit() {
     this._hasInit = true;
 
-    let navSegment = this._linker.initNav(this);
-    if (navSegment && (navSegment.component || navSegment.loadChildren)) {
-      // there is a segment match in the linker
-      return this._linker.initViews(navSegment).then(views => {
-        this.setPages(views, null, null);
-      });
+    const segment = this._linker.getSegmentByNavIdOrName(this.id, this.name);
 
+    if (segment && (segment.component || segment.loadChildren)) {
+      return this._linker.initViews(segment).then(views => {
+        return this.setPages(views, null, null);
+      });
     } else if (this._root) {
-      // no segment match, so use the root property
+      // no segment match, so use the root property but don't set the url I guess
+      const setUrl = segment ? false : true;
       return this.push(this._root, this.rootParams, {
-        isNavRoot: (<any>this._app.getRootNav() === this)
+        isNavRoot: (<any>this._app.getRootNavById(this.id) === this),
+        updateUrl: setUrl
       }, null);
     }
-  }
-
-  goToRoot(opts: NavOptions) {
-    return this.setRoot(this._root, this.rootParams, opts, null);
   }
 
   /**
@@ -136,6 +133,7 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
   get root(): any {
     return this._root;
   }
+
   set root(page: any) {
     this._root = page;
 
@@ -148,6 +146,11 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
    * @input {object} Any nav-params to pass to the root page of this nav.
    */
   @Input() rootParams: any;
+
+  /**
+   * @input {string} a unique name for the nav element
+   */
+  @Input() name: string;
 
   /**
    * @hidden
@@ -167,4 +170,21 @@ export class Nav extends NavControllerBase implements AfterViewInit, RootNode, I
     }
   }
 
+  goToRoot(opts: NavOptions) {
+    return this.setRoot(this._root, this.rootParams, opts, null);
+  }
+
+  /*
+   * @private
+   */
+  getType() {
+    return 'nav';
+  }
+
+  /*
+   * @private
+   */
+  getSecondaryIdentifier(): string {
+    return null;
+  }
 }
