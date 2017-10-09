@@ -112,7 +112,7 @@ import { ViewController } from '../../navigation/view-controller';
  * `img`, `svg`, `canvas`, and `ion-img`.
  *
  * ```html
- * <ion-slidesj zoom="true">
+ * <ion-slides zoom="true">
  *   <ion-slide>
  *     <div class="swiper-zoom-container">
  *       <img src="assets/img/dog.jpg">
