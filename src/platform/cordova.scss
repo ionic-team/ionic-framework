@@ -78,8 +78,8 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
   > .toolbar.statusbar-padding:first-child ion-segment,
   > .toolbar.statusbar-padding:first-child ion-title {
     @include padding($cordova-statusbar-padding, null, null, null);
-    @include padding(calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null, null, null);
-    @include padding(calc(env(safe-area-inset-top) + #{$toolbar-padding}), null, null, null);
+    @include padding(constant(safe-area-inset-top), null, null, null);
+    @include padding(env(safe-area-inset-top), null, null, null);
 
     height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
