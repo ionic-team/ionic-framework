@@ -52,6 +52,7 @@ ion-picker-cmp {
 
 .picker-columns {
   @include margin(null, null, constant(safe-area-inset-bottom), null);
+  @include margin(null, null, env(safe-area-inset-bottom), null);
   position: relative;
   display: flex;
 

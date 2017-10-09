@@ -563,6 +563,10 @@
 
       $ltr-translate: translate3d(calc(-1 * constant(safe-area-inset-right)), 0, 0);
       $rtl-translate: translate3d(constant(safe-area-inset-left), $y, $z);
+
+      $ltr-env-translate: translate3d(calc(-1 * env(safe-area-inset-right)), 0, 0);
+      $rtl-env-translate: translate3d(env(safe-area-inset-left), $y, $z);
+
     } @else {
       @if $extra == null {
         $extra: $transform;
@@ -575,14 +579,17 @@
   @if $x == '0' or $x == null {
     @include multi-dir() {
       transform: $ltr-translate $extra;
+      transform: $ltr-env-translate $extra;
     }
   } @else {
     @include ltr() {
       transform: $ltr-translate $extra;
+      transform: $ltr-env-translate $extra;
     }
 
     @include rtl() {
       transform: $rtl-translate $extra;
+      transform: $rtl-env-translate $extra;
     }
   }
 }
@@ -595,15 +602,24 @@
 // ----------------------------------------------------------
 @mixin safe-area-padding($top, $end: $top, $bottom: $top, $start: $end) {
   $safe-area-start: null;
+  $safe-area-end: null;
+  $safe-area-start-env: null;
+  $safe-area-end-env: null;
 
   @if ($start) {
     $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+  }
+  @if ($end) {
+    $safe-area-end-env: calc(constant(safe-area-inset-right) + #{$end});
+    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
   }
 
   @include padding($top, $end, $bottom, $start);
 
   @media screen and (orientation: landscape) {
-    @include padding($top, $end, $bottom, $safe-area-start);
+    @include padding($top, $safe-area-end, $bottom, $safe-area-start);
+    @include padding($top, $safe-area-end-env, $bottom, $safe-area-start-env);
   }
 }
 
@@ -615,34 +631,71 @@
 @mixin safe-area-padding-horizontal($start, $end: $start) {
   $safe-area-end: null;
   $safe-area-start: null;
+  $safe-area-start-env: null;
+  $safe-area-end-env: null;
 
   @if ($end) {
     $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
+    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
   }
   @if ($start) {
     $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
   }
 
   @include padding-horizontal($start, $end);
 
   @media screen and (orientation: landscape) {
     @include padding-horizontal($safe-area-start, $safe-area-end);
+    @include padding-horizontal($safe-area-start-env, $safe-area-end-env);
   }
 }
 
 
-// Add safe area padding to a screen
-// only if it is landscape mode, then only on the left
-// @param {string} $start
+// Add safe position horizontal
+// @param {string} $start - amount to position start
+// @param {string} $end - amount to left: 0; end
 // ----------------------------------------------------------
-@mixin safe-area-no-padding($start) {
+@mixin safe-position-horizontal($start: null, $end: null){
   $safe-area-start: null;
-
+  $safe-area-end: null;
+  $safe-area-start-env: null;
+  $safe-area-end-env: null;
   @if ($start) {
     $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+  }
+  @if ($end) {
+    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
+    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
   }
 
-  @media screen and (orientation: landscape) {
-    @include padding-horizontal($safe-area-start, null);
+  @if $safe-area-start == $safe-area-end {
+    @include multi-dir() {
+      left: $safe-area-start;
+      right: $safe-area-end;
+    }
+    @include multi-dir() {
+      left: $safe-area-start-env;
+      right: $safe-area-end-env;
+    }
+  } @else {
+    @include ltr() {
+      left: $safe-area-start;
+      right: $safe-area-end;
+    }
+    @include ltr() {
+      left: $safe-area-start-env;
+      right: $safe-area-end-env;
+    }
+    @include rtl() {
+      left: $safe-area-end;
+      right: $safe-area-start;
+    }
+    @include rtl() {
+      left: $safe-area-end-env;
+      right: $safe-area-start-env;
+    }
   }
 }
+

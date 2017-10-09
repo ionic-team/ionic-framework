@@ -49,6 +49,7 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
 .toast-ios .toast-wrapper.toast-top {
   @include transform(translate3d(0, -100%, 0));
   @include margin(constant(safe-area-inset-top), auto, auto, auto);
+  @include margin(env(safe-area-inset-top), auto, auto, auto);
 
   top: 0;
 }
@@ -57,6 +58,7 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
   @include transform(translate3d(0, 100%, 0));
 
   @include margin(auto, auto, constant(safe-area-inset-bottom), auto);
+  @include margin(auto, auto, env(safe-area-inset-bottom), auto);
   bottom: 0;
 }
 

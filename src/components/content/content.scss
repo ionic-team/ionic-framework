@@ -124,10 +124,6 @@ ion-app [no-padding] .scroll-content {
     @include safe-area-padding($content-padding);
   }
 
-  ion-app.#{$mode} .scroll-content {
-    @include safe-area-no-padding($content-padding);
-  }
-
   ion-app.#{$mode} [padding-top] .scroll-content {
     @include safe-area-padding($content-padding, null, null, null);
   }

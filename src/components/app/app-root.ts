@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ElementRef, Inject, OnInit, InjectionToken, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Inject, InjectionToken, OnInit, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { App } from './app';
 import { assert } from '../../util/util';

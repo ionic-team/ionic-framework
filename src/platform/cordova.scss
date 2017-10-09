@@ -46,21 +46,25 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
   > .toolbar.statusbar-padding:first-child {
     @include padding(calc(#{$cordova-statusbar-padding} + #{$toolbar-padding}), null, null, null);
-    @include padding(calc(constant(safe-area-inset-top) + #{$toolbar-padding}), calc(constant(safe-area-inset-right) + #{$toolbar-padding}), null, calc(constant(safe-area-inset-left) + #{$toolbar-padding}));
+    @include padding(calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null, null, null);
+    @include padding(calc(env(safe-area-inset-top) + #{$toolbar-padding}), null, null, null);
 
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     min-height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
+    min-height: calc(#{$toolbar-height} + env(safe-area-inset-top));
   }
 
   > ion-content.statusbar-padding:first-child .scroll-content {
     @include padding($cordova-statusbar-padding, null, null, null);
-    @include padding(calc(#{$cordova-statusbar-padding} + constant(safe-area-inset-top)), null, null, null);
+    @include padding(constant(safe-area-inset-top), null, null, null);
+    @include padding(env(safe-area-inset-top), null, null, null);
   }
 
   > ion-content.statusbar-padding:first-child[padding] .scroll-content,
   > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
     @include padding(calc(#{$content-padding} + #{$cordova-statusbar-padding}), null, null, null);
-    @include padding(calc(#{$content-padding} + constant(safe-area-inset-top)), null, null, null);
+    @include padding(constant(safe-area-inset-top), null, null, null);
+    @include padding(env(safe-area-inset-top), null, null, null);
   }
 
 }
@@ -74,13 +78,16 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
   > .toolbar.statusbar-padding:first-child ion-segment,
   > .toolbar.statusbar-padding:first-child ion-title {
     @include padding($cordova-statusbar-padding, null, null, null);
-    @include padding(calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null, null, null);
+    @include padding(constant(safe-area-inset-top), null, null, null);
+    @include padding(env(safe-area-inset-top), null, null, null);
 
     height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
+    height: calc(#{$toolbar-height} + env(safe-area-inset-top));
 
     min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
     min-height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
+    min-height: calc(#{$toolbar-height} + env(safe-area-inset-top));
   }
 
 }
@@ -89,11 +96,15 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 @mixin footer-safe-area($toolbar-height, $toolbar-padding) {
   .tabs .tabbar {
     @include padding(null, null, constant(safe-area-inset-bottom), null);
+    @include padding(null, null, env(safe-area-inset-bottom), null);
   }
 
   ion-footer .toolbar:last-child {
-    @include padding(null, null, calc(constant(safe-area-inset-top) + #{$toolbar-padding}), null);
-    height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
-    min-height: calc(#{$toolbar-height} + constant(safe-area-inset-top));
+    @include padding(null, null, calc(constant(safe-area-inset-bottom) + #{$toolbar-padding}), null);
+    @include padding(null, null, calc(env(safe-area-inset-bottom) + #{$toolbar-padding}), null);
+    height: calc(#{$toolbar-height} + constant(safe-area-inset-bottom));
+    height: calc(#{$toolbar-height} + env(safe-area-inset-bottom));
+    min-height: calc(#{$toolbar-height} + constant(safe-area-inset-bottom));
+    min-height: calc(#{$toolbar-height} + env(safe-area-inset-bottom));
   }
 }
