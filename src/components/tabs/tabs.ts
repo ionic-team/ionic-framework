@@ -416,7 +416,6 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
       // Let's start the transition
       opts.animate = false;
       return selectedTab.load(opts).then(() => {
-        console.log('selectedTab.load resolved');
         this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
         if (opts.updateUrl !== false) {
           this._linker.navChange(DIRECTION_SWITCH);
