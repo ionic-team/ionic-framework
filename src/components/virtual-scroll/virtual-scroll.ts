@@ -234,6 +234,7 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     scrollTop: 0,
   };
   _queue: number = ScrollQueue.NoChanges;
+  _raf: number;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
@@ -533,7 +534,7 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
    * DOM WRITE
    */
   renderVirtual(needClean: boolean) {
-    this._plt.raf(() => {
+    this._raf = this._plt.raf(() => {
       const nodes = this._nodes;
       const cells = this._cells;
       const data = this._data;
@@ -813,6 +814,7 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
    * @hidden
    */
   ngOnDestroy() {
+    this._raf && this._plt.cancelRaf(this._raf);
     this._resizeSub && this._resizeSub.unsubscribe();
     this._scrollSub && this._scrollSub.unsubscribe();
     this._scrollEndSub && this._scrollEndSub.unsubscribe();
