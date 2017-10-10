@@ -452,8 +452,15 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     }
 
     // Fire didEnter/didLeave lifecycle events
-    selectedPage && selectedPage._didEnter();
-    currentPage && currentPage._didLeave();
+    if (selectedPage) {
+      selectedPage._didEnter();
+      this._app.viewDidEnter.emit(selectedPage);
+    }
+
+    if (currentPage) {
+      currentPage && currentPage._didLeave();
+      this._app.viewDidLeave.emit(currentPage);
+    }
 
     // track the order of which tabs have been selected, by their index
     // do not track if the tab index is the same as the previous
