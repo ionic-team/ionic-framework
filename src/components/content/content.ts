@@ -635,6 +635,10 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
    */
   addScrollPadding(newPadding: number) {
     assert(typeof this._scrollPadding === 'number', '_scrollPadding must be a number');
+    if (newPadding === 0) {
+      this._inputPolling = false;
+      this._scrollPadding = -1;
+    }
     if (newPadding > this._scrollPadding) {
       console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
@@ -659,12 +663,12 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
 
       this._keyboard.onClose(() => {
         console.debug(`content, clearScrollPaddingFocusOut _keyboard.onClose`);
-        this._inputPolling = false;
-        this._scrollPadding = -1;
         this.addScrollPadding(0);
       }, 200, 3000);
     }
   }
+
+
 
   /**
    * Tell the content to recalculate its dimensions. This should be called
