@@ -127,7 +127,7 @@ import { AppComponent as NavChildNavs } from '../../../../../nav/test/child-navs
 import { AppComponent as NavInitAsync } from '../../../../../nav/test/init-async/app.module';
 import { AppComponent as NavInsertViews } from '../../../../../nav/test/insert-views/app.module';
 import { AppComponent as NavMemory } from '../../../../../nav/test/memory/app.module';
-import { AppComponent as NavNavPushPop } from '../../../../../nav/test/nav-push-pop/app.module';
+import { AppComponent as NavNavPushPop } from '../../../../../nav/test/nav-push-pop/app/app.component';
 import { AppComponent as NavWorstCase } from '../../../../../nav/test/worst-case/app.module';
 
 import { AppComponent as PickerBasic } from '../../../../../picker/test/basic/app/app.component';
@@ -560,7 +560,7 @@ export class ComponentsPage {
     }
   ];
 
-  constructor(private navCtrl: NavController, private assistive: AssistiveTouchProvider) {
+  constructor(private navCtrl: NavController, assistive: AssistiveTouchProvider) {
     assistive.closeButton.subscribe(this.close.bind(this));
   }
 

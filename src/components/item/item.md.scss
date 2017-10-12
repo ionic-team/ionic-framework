@@ -123,12 +123,11 @@ $item-md-sliding-content-background: $list-md-background-color !default;
   .item-md[detail-push] .item-inner,
   button.item-md:not([detail-none]) .item-inner,
   a.item-md:not([detail-none]) .item-inner {
-    @include svg-background-image($item-md-detail-push-svg);
-
+    @include svg-background-image($item-md-detail-push-svg, true);
     @include padding-horizontal(null, 32px);
+    @include background-position(end, $item-md-padding-end - 2, center);
 
     background-repeat: no-repeat;
-    background-position: right ($item-md-padding-end - 2) center;
     background-size: 14px 14px;
   }
 }

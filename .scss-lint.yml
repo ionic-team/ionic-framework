@@ -17,7 +17,7 @@ linters:
     enabled: false
 
   DefaultRule:
-    enabled: false
+    enabled: true
 
   DuplicateProperty:
     enabled: false
@@ -135,7 +135,6 @@ linters:
       - background-color
       - background-image
       - background-repeat
-      - background-position
       - background-size
 
       # Other
@@ -158,7 +157,6 @@ linters:
 
       - transform
       - transform-box
-      - transform-origin
       - transform-style
 
       - transition
@@ -191,6 +189,7 @@ linters:
     extra_properties:
       - contain
     disabled_properties:
+      - background-position
       - direction
       - right
       - left
@@ -211,3 +210,4 @@ linters:
       - border-bottom-right-radius
       - border-bottom-left-radius
       - text-align
+      - transform-origin

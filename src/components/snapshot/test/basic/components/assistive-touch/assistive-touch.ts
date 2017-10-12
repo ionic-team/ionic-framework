@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
 import { DomController } from '../../../../../../platform/dom-controller';
-import { AssistiveTouchProvider } from '../../providers/assistive-touch/assistive-touch';
+import { PopoverController } from '../../../../../popover/popover-controller';
+import { AssistivePopover } from './assistive-popover/assistive-popover';
 
 @Component({
   selector: 'assistive-touch',
@@ -18,7 +19,10 @@ export class AssistiveTouchComponent implements AfterViewInit {
   private elemWidthOffset: number;
   private elemHeightOffset: number;
 
-  constructor(private assistive: AssistiveTouchProvider, public element: ElementRef, public renderer: Renderer2, public domCtrl: DomController) {
+  constructor(private popoverCtrl: PopoverController,
+              public element: ElementRef,
+              public renderer: Renderer2,
+              public domCtrl: DomController) {
   }
 
   ngAfterViewInit() {
@@ -35,7 +39,7 @@ export class AssistiveTouchComponent implements AfterViewInit {
     this.updatePosition();
   }
 
-  private handlePan(ev: {center: {x: number, y: number}}) {
+  private handlePan(ev: { center: { x: number, y: number } }) {
     let newX = ev.center.x;
     let newY = ev.center.y;
 
@@ -77,8 +81,6 @@ export class AssistiveTouchComponent implements AfterViewInit {
   }
 
   openControl() {
-    // TODO when custom alerts are out, this should open a custom alert
-    // Allow setting direction, close, whatever
-    this.assistive.closeButton.emit();
+    this.popoverCtrl.create(AssistivePopover).present();
   }
 }

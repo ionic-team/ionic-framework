@@ -1,12 +1,12 @@
-import { OnInit, OnDestroy, ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, forwardRef, Input, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer, ViewChild, ViewEncapsulation, forwardRef } from '@angular/core';
 
 import { App } from '../app/app';
 import { Backdrop } from '../backdrop/backdrop';
 import { Config } from '../../config/config';
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { GestureController, GESTURE_GO_BACK_SWIPE, BlockerDelegate } from '../../gestures/gesture-controller';
-import { isTrueProperty, Side, isRightSide, assert } from '../../util/util';
+import { BlockerDelegate, GESTURE_GO_BACK_SWIPE, GestureController,  } from '../../gestures/gesture-controller';
+import { Side, assert, isRightSide, isTrueProperty } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { MenuContentGesture } from  './menu-gestures';
 import { Menu as MenuInterface } from '../app/menu-interface';
@@ -25,7 +25,7 @@ import { RootNode } from '../split-pane/split-pane';
  * will be displayed differently based on the mode, however the display type can be changed
  * to any of the available [menu types](#menu-types). The menu element should be a sibling
  * to the app's content element. There can be any number of menus attached to the content.
- * These can be controlled from the templates, or programmatically using the [MenuController](../app/MenuController).
+ * These can be controlled from the templates, or programmatically using the [MenuController](../../app/MenuController).
  *
  * @usage
  *
@@ -490,10 +490,11 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
 
     // user has finished dragging the menu
     const isRightSide = this.isRightSide;
+    const isRTL = this._plt.isRTL;
     const opening = !this.isOpen;
     const shouldComplete = (opening)
-    ? isRightSide ? shouldCompleteLeft : shouldCompleteRight
-    : isRightSide ? shouldCompleteRight : shouldCompleteLeft;
+    ? (isRightSide !== isRTL) ? shouldCompleteLeft : shouldCompleteRight
+    : (isRightSide !== isRTL) ? shouldCompleteRight : shouldCompleteLeft;
 
     this._getType().setProgressEnd(shouldComplete, stepValue, velocity, (isOpen: boolean) => {
       console.debug('menu, swipeEnd', this.side);

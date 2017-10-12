@@ -184,6 +184,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
   @include text-align(center);
   @include border-radius(50%);
+  @include transform(translate3d(0, 28px, 0), scale(.01));
 
   position: relative;
   top: -20px;
@@ -198,7 +199,6 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
   background: $range-md-pin-background-color;
 
-  transform: translate3d(0, 28px, 0) scale(.01);
   transition: transform 120ms ease, background-color 120ms ease;
 
   &::before {
@@ -222,7 +222,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-knob-pressed .range-pin {
-  transform: translate3d(0, 0, 0) scale(1);
+  @include transform(translate3d(0, 0, 0), scale(1));
 }
 
 .range-md:not(.range-has-pin) .range-knob-pressed .range-knob {

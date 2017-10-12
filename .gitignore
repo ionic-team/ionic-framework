@@ -9,6 +9,7 @@ log.txt
 *.sublime-workspace
 
 .idea/
+.sourcemaps/
 .vscode/
 .sass-cache/
 .versions/

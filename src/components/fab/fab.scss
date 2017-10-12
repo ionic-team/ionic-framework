@@ -97,10 +97,16 @@ ion-fab {
     @include multi-dir() {
       right: $fab-content-margin;
     }
+
+    @include multi-dir() {
+      right: calc(#{$fab-content-margin} + constant(safe-area-inset-right));
+      right: calc(#{$fab-content-margin} + env(safe-area-inset-right));
+    }
   }
 
   &[end] {
     @include position-horizontal(null, $fab-content-margin);
+    @include safe-position-horizontal(null, $fab-content-margin);
   }
 
   &[bottom] {
@@ -112,10 +118,16 @@ ion-fab {
     @include multi-dir() {
       left: $fab-content-margin;
     }
+
+    @include multi-dir() {
+      left: calc(#{$fab-content-margin} + constant(safe-area-inset-left));
+      left: calc(#{$fab-content-margin} + env(safe-area-inset-left));
+    }
   }
 
   &[start] {
     @include position-horizontal($fab-content-margin, null);
+    @include safe-position-horizontal($fab-content-margin, null);
   }
 
   &[top][edge] {

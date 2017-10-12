@@ -1,5 +1,5 @@
 import { assert, defaults } from '../util/util';
-import { DomDebouncer, DomController } from '../platform/dom-controller';
+import { DomController, DomDebouncer } from '../platform/dom-controller';
 import { GestureDelegate } from './gesture-controller';
 import { PanRecognizer } from './recognizers';
 import { Platform } from '../platform/platform';
@@ -168,11 +168,11 @@ export class PanGesture {
   }
 
   // Implemented in a subclass
-  canStart(ev: any): boolean { return true; }
-  onDragStart(ev: any) { }
-  onDragMove(ev: any) { }
-  onDragEnd(ev: any) { }
-  notCaptured(ev: any) { }
+  canStart(_ev: any): boolean { return true; }
+  onDragStart(_ev: any) { }
+  onDragMove(_ev: any) { }
+  onDragEnd(_ev: any) { }
+  notCaptured(_ev: any) { }
 }
 
 

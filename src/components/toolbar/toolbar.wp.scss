@@ -13,7 +13,7 @@ $toolbar-order-wp: (
   buttons-end: 5,
   buttons-right: 6,
   menu-toggle-end: 7,
-);
+) !default;
 
 // deprecated
 $toolbar-wp-title-padding:               null !default;

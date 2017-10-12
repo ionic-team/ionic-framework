@@ -39,6 +39,9 @@ $loading-md-box-shadow-color:          rgba(0, 0, 0, .4) !default;
 /// @prop - Box shadow of the loading wrapper
 $loading-md-box-shadow:                0 16px 20px $loading-md-box-shadow-color !default;
 
+/// @prop - Margin start of the loading content next to a spinner
+$loading-md-content-margin-start:      $content-md-margin !default;
+
 /// @prop - Color of the loading spinner
 $loading-md-spinner-color:             color($colors-md, primary) !default;
 
@@ -79,7 +82,7 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 // -----------------------------------------
 
 .loading-md .loading-spinner + .loading-content {
-  @include margin-horizontal(16px, null);
+  @include margin-horizontal($loading-md-content-margin-start, null);
 }
 
 

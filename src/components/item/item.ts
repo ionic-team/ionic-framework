@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList, Renderer, Optional, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef,  Optional, QueryList, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Config } from '../../config/config';
@@ -323,6 +323,7 @@ export class Item extends Ion {
     this._setName(elementRef);
     this._hasReorder = !!reorder;
     this.id = form.nextId().toString();
+    this.labelId = 'lbl-' + this.id;
 
     // auto add "tappable" attribute to ion-item components that have a click listener
     if (!(<any>renderer).orgListen) {
@@ -391,7 +392,7 @@ export class Item extends Ion {
   set contentLabel(label: Label) {
     if (label) {
       this._label = label;
-      this.labelId = label.id = ('lbl-' + this.id);
+      label.id = this.labelId;
       if (label.type) {
         this.setElementClass('item-label-' + label.type, true);
       }

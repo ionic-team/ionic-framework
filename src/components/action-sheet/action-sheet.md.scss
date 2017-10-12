@@ -9,8 +9,11 @@ $action-sheet-md-text-align:                            start !default;
 /// @prop - Background color of the action sheet
 $action-sheet-md-background:                            #fafafa !default;
 
-/// @prop - Bottom margin of the action sheet button group
-$action-sheet-md-group-margin-bottom:                   8px !default;
+/// @prop - Padding top of the action sheet
+$action-sheet-md-padding-top:                           .8rem !default;
+
+/// @prop - Padding bottom of the action sheet
+$action-sheet-md-padding-bottom:                        .8rem !default;
 
 /// @prop - Color of the action sheet title
 $action-sheet-md-title-color:                           #757575 !default;
@@ -90,11 +93,6 @@ $action-sheet-md-icon-margin-bottom:                    0 !default;
 /// @prop - Margin start of the icon in the action sheet button
 $action-sheet-md-icon-margin-start:                     0 !default;
 
-.action-sheet-md .action-sheet-container {
-  @include padding(.8rem, 0);
-
-  background: $action-sheet-md-background;
-}
 
 .action-sheet-md .action-sheet-title {
   @include text-align($action-sheet-md-text-align);
@@ -144,7 +142,15 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 }
 
 .action-sheet-md .action-sheet-group {
-  overflow: hidden;
+  background: $action-sheet-md-background;
+}
+
+.action-sheet-md .action-sheet-group:first-child {
+  @include padding($action-sheet-md-padding-top, null, null, null);
+}
+
+.action-sheet-md .action-sheet-group:last-child {
+  @include padding(null, null, $action-sheet-md-padding-bottom, null);
 }
 
 .action-sheet-md .action-sheet-group .button-inner {

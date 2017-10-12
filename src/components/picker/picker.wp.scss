@@ -175,6 +175,7 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 
 .picker-wp .picker-above-highlight {
   @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
 
@@ -188,12 +189,11 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   background: linear-gradient(to bottom,
                             rgba($picker-wp-background-color, 1) 20%,
                             rgba($picker-wp-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }
 
 .picker-wp .picker-below-highlight {
   @include position($picker-wp-option-offset-y + $picker-wp-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
 
@@ -207,6 +207,4 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   background: linear-gradient(to top,
                            rgba($picker-wp-background-color, 1) 30%,
                            rgba($picker-wp-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }

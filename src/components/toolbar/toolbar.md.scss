@@ -13,7 +13,7 @@ $toolbar-order-md: (
   buttons-end: 5,
   buttons-right: 6,
   menu-toggle-end: 7,
-);
+) !default;
 
 /// @prop - Font size of the toolbar title
 $toolbar-md-title-font-size:             2rem !default;
@@ -66,6 +66,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
   @include position(null, null, -5px, 0);
+  @include background-position(start, 0, top, -2px);
 
   position: absolute;
 
@@ -74,7 +75,6 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
   background-repeat: repeat-x;
-  background-position: 0 -2px;
 
   content: "";
 }
@@ -82,10 +82,9 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 .footer-md::before,
 .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
   @include position(-2px, null, auto, null);
+  @include background-position(start, 0, top, 0);
 
   height: 2px;
-
-  background-position: 0 0;
 }
 
 .header-md[no-border]::after,

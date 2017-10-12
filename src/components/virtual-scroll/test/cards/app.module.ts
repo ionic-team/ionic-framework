@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, NgModule } from '@angular/core';
+import { Component, NgModule, ViewEncapsulation } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../..';
 

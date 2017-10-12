@@ -1,4 +1,5 @@
-import { exec, spawnSync, spawn } from 'child_process';
+import { exec, spawnSync } from 'child_process';
+import { spawn } from 'cross-spawn';
 import { writeFileSync } from 'fs';
 import * as changelog from 'conventional-changelog';
 import * as GithubApi from 'github';

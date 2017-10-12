@@ -35,6 +35,7 @@ import { Platform } from '../../platform/platform';
       '</button>' +
       '<div #searchbarIcon class="searchbar-search-icon"></div>' +
       '<input #searchbarInput class="searchbar-input" (input)="inputChanged($event)" (blur)="inputBlurred()" (focus)="inputFocused()" ' +
+        'dir="auto" ' +
         '[attr.placeholder]="placeholder" ' +
         '[attr.type]="type" ' +
         '[attr.autocomplete]="_autocomplete" ' +
@@ -188,10 +189,11 @@ export class Searchbar extends BaseInput<string> {
    */
   _inputUpdated() {
     const ele = this._searchbarInput.nativeElement;
+    const value = this._value;
     // It is important not to re-assign the value if it is the same, because,
     // otherwise, the caret is moved to the end of the input
-    if (ele && ele.value !== this.value) {
-      ele.value = this.value;
+    if (ele.value !== value) {
+      ele.value = value;
     }
     this.positionElements();
   }

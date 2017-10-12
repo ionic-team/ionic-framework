@@ -4,6 +4,7 @@ import { getCss, isTextInput } from '../util/dom';
 import { QueryParams } from './query-params';
 import { removeArrayItem } from '../util/util';
 
+export type DocumentDirection = 'ltr' | 'rtl';
 
 /**
  * @name Platform
@@ -22,7 +23,7 @@ import { removeArrayItem } from '../util/util';
  *
  * @Component({...})
  * export MyPage {
- *   constructor(public plt: Platform) {
+ *   constructor(public platform: Platform) {
  *
  *   }
  * }
@@ -34,7 +35,7 @@ export class Platform {
   private _win: Window;
   private _doc: HTMLDocument;
   private _versions: {[name: string]: PlatformVersion} = {};
-  private _dir: string;
+  private _dir: DocumentDirection;
   private _lang: string;
   private _ua: string;
   private _qp = new QueryParams();
@@ -144,8 +145,8 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(public plt: Platform) {
-   *     if (this.plt.is('ios')) {
+   *   constructor(public platform: Platform) {
+   *     if (this.platform.is('ios')) {
    *       // This will only print when on iOS
    *       console.log('I am an iOS device!');
    *     }
@@ -185,9 +186,9 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(public plt: Platform) {
+   *   constructor(public platform: Platform) {
    *     // This will print an array of the current platforms
-   *     console.log(this.plt.platforms());
+   *     console.log(this.platform.platforms());
    *   }
    * }
    * ```
@@ -207,10 +208,10 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(public plt: Platform) {
+   *   constructor(public platform: Platform) {
    *     // This will print an object containing
    *     // all of the platforms and their versions
-   *     console.log(plt.versions());
+   *     console.log(platform.versions());
    *   }
    * }
    * ```
@@ -254,8 +255,8 @@ export class Platform {
    *
    * @Component({...})
    * export MyApp {
-   *   constructor(public plt: Platform) {
-   *     this.plt.ready().then((readySource) => {
+   *   constructor(public platform: Platform) {
+   *     this.platform.ready().then((readySource) => {
    *       console.log('Platform ready from', readySource);
    *       // Platform now ready, execute any required native code
    *     });
@@ -313,11 +314,11 @@ export class Platform {
    * `<html dir="ltr">` or `<html dir="rtl">`. This method is useful if the
    * direction needs to be dynamically changed per user/session.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-   * @param {string} dir  Examples: `rtl`, `ltr`
+   * @param {DocumentDirection} dir  Examples: `rtl`, `ltr`
    * @param {boolean} updateDocument
    */
-  setDir(dir: string, updateDocument: boolean) {
-    this._dir = dir = (dir || '').toLowerCase();
+  setDir(dir: DocumentDirection, updateDocument: boolean) {
+    this._dir = dir;
     this.isRTL = (dir === 'rtl');
 
     if (updateDocument !== false) {
@@ -330,9 +331,9 @@ export class Platform {
    * We recommend the app's `index.html` file already has the correct `dir`
    * attribute value set, such as `<html dir="ltr">` or `<html dir="rtl">`.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-   * @returns {string}
+   * @returns {DocumentDirection}
    */
-  dir(): string {
+  dir(): DocumentDirection {
     return this._dir;
   }
 
@@ -407,9 +408,9 @@ export class Platform {
   resume: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
-   * The resize event emits when the native platform pulls the application
-   * out from the background. This event would emit when a Cordova app comes
-   * out from the background, however, it would not fire on a standard web browser.
+   * The resize event emits when the browser window has changed dimensions. This
+   * could be from a browser window being physically resized, or from a device
+   * changing orientation.
    */
   resize: EventEmitter<Event> = new EventEmitter<Event>();
 
@@ -1181,7 +1182,7 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
   const docElement = doc.documentElement;
   plt.setDocument(doc);
   const dir = docElement.dir;
-  plt.setDir(dir || 'ltr', !dir);
+  plt.setDir(dir === 'rtl' ? 'rtl' : 'ltr', !dir);
   plt.setLang(docElement.lang, false);
 
   // set css properties

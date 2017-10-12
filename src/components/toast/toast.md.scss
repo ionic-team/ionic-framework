@@ -44,15 +44,15 @@ $toast-md-title-padding-start:                   $toast-md-title-padding-end !de
 }
 
 .toast-md .toast-wrapper.toast-top {
-  top: 0;
+  @include transform(translate3d(0, -100%, 0));
 
-  transform: translate3d(0, -100%, 0);
+  top: 0;
 }
 
 .toast-md .toast-wrapper.toast-bottom {
-  bottom: 0;
+  @include transform(translate3d(0, 100%, 0));
 
-  transform: translate3d(0, 100%, 0);
+  bottom: 0;
 }
 
 .toast-md .toast-wrapper.toast-middle {

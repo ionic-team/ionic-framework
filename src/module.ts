@@ -2,7 +2,7 @@
  * Import Angular
  */
 import { ANALYZE_FOR_ENTRY_COMPONENTS, APP_INITIALIZER, ComponentFactoryResolver, Inject, Injector, ModuleWithProviders, NgModule, NgZone, Optional } from '@angular/core';
-import { APP_BASE_HREF, Location, LocationStrategy, HashLocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
+import { APP_BASE_HREF, HashLocationStrategy, Location, LocationStrategy, PathLocationStrategy, PlatformLocation } from '@angular/common';
 import { DOCUMENT, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,7 @@ import { DeepLinkConfig } from './navigation/nav-util';
 
 import { App } from './components/app/app';
 import { AppRootToken } from './components/app/app-root';
-import { Config, setupConfig, ConfigToken } from './config/config';
+import { Config, ConfigToken, setupConfig } from './config/config';
 import { DeepLinker, setupDeepLinker } from './navigation/deep-linker';
 import { DomController } from './platform/dom-controller';
 import { Events, setupProvideEvents } from './util/events';
@@ -27,14 +27,14 @@ import { GestureController } from './gestures/gesture-controller';
 import { IonicGestureConfig } from './gestures/gesture-config';
 import { Haptic } from './tap-click/haptic';
 import { Keyboard } from './platform/keyboard';
-import { ModuleLoader, provideModuleLoader, setupPreloading, LAZY_LOADED_TOKEN } from './util/module-loader';
+import { LAZY_LOADED_TOKEN, ModuleLoader, provideModuleLoader, setupPreloading } from './util/module-loader';
 import { NgModuleLoader } from './util/ng-module-loader';
 import { Platform, setupPlatform } from './platform/platform';
 import { PlatformConfigToken, providePlatformConfigs } from './platform/platform-registry';
 import { TapClick, setupTapClick } from './tap-click/tap-click';
 import { registerModeConfigs } from './config/mode-registry';
 import { TransitionController } from './transitions/transition-controller';
-import { UrlSerializer, setupUrlSerializer, DeepLinkConfigToken } from './navigation/url-serializer';
+import { DeepLinkConfigToken, UrlSerializer, setupUrlSerializer } from './navigation/url-serializer';
 
 /**
  * Import Components/Directives/Etc
@@ -69,8 +69,6 @@ import { Icon } from './components/icon/icon';
 import { Img } from './components/img/img';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
-import { NativeInput } from './components/input/native-input';
-import { NextInput } from './components/input/next-input';
 import { TextInput } from './components/input/input';
 import { Item } from './components/item/item';
 import { ItemContent } from './components/item/item-content';
@@ -221,8 +219,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     ListHeader,
     Reorder,
     LoadingCmp,
-    NativeInput,
-    NextInput,
     Menu,
     MenuClose,
     MenuToggle,
@@ -324,8 +320,6 @@ import { VirtualScroll } from './components/virtual-scroll/virtual-scroll';
     ListHeader,
     Reorder,
     LoadingCmp,
-    NativeInput,
-    NextInput,
     Menu,
     MenuClose,
     MenuToggle,
@@ -451,7 +445,7 @@ export class IonicModule {
 
         { provide: ModuleLoader, useFactory: provideModuleLoader, deps: [NgModuleLoader, Injector]},
         { provide: LocationStrategy, useFactory: provideLocationStrategy, deps: [ PlatformLocation, [new Inject(APP_BASE_HREF), new Optional()], Config ] },
-        { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ DeepLinkConfigToken ] },
+        { provide: UrlSerializer, useFactory: setupUrlSerializer, deps: [ App, DeepLinkConfigToken ] },
         { provide: DeepLinker, useFactory: setupDeepLinker, deps: [ App, UrlSerializer, Location,  ModuleLoader, ComponentFactoryResolver ] },
       ]
     };

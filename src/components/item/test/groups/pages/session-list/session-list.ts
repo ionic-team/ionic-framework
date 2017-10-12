@@ -22,7 +22,7 @@ export class SessionList {
     window.location.reload();
   }
 
-};
+}
 
 
 const data = [

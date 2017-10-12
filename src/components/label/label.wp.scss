@@ -36,13 +36,8 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 }
 
 .label-wp[floating] {
-  transform: translate3d(8px, 34px, 0);
-  transform-origin: left top;
-}
-
-[dir="rtl"] .label-wp[floating] {
-  transform: translate3d(-8px, 34px, 0);
-  transform-origin: right top;
+  @include transform(translate3d(8px, 34px, 0));
+  @include transform-origin(start, top);
 }
 
 .label-wp[stacked],
@@ -63,7 +58,7 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 .input-has-focus .label-wp[floating],
 .item-input-has-value .label-wp[floating],
 .input-has-value .label-wp[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
 .item-wp.item-label-stacked [item-right], // deprecated

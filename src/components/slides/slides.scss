@@ -53,7 +53,7 @@
 
 .swiper-container-android .swiper-slide,
 .swiper-wrapper {
-  transform: translate3d(0, 0, 0);
+  @include transform(translate3d(0, 0, 0));
 }
 
 .swiper-container-multirow > .swiper-wrapper {
@@ -125,6 +125,7 @@
 .swiper-button-next {
   @include position(50%, null, null, null);
   @include margin(-22px, null, null, null);
+  @include background-position(center);
 
   position: absolute;
   z-index: 10;
@@ -133,7 +134,6 @@
   height: 44px;
 
   background-repeat: no-repeat;
-  background-position: center;
   background-size: 27px 44px;
   cursor: pointer;
 }
@@ -183,11 +183,11 @@
 // Pagination Styles
 .swiper-pagination {
   @include text-align(center);
+  @include transform(translate3d(0, 0, 0));
 
   position: absolute;
   z-index: 10;
 
-  transform: translate3d(0, 0, 0);
   transition: 300ms;
 
   pointer-events: none;
@@ -253,8 +253,7 @@ button.swiper-pagination-bullet {
 
 .swiper-container-vertical > .swiper-pagination-bullets {
   @include position(50%, 10px, null, null);
-
-  transform: translate3d(0, -50%, 0);
+  @include transform(translate3d(0, -50%, 0));
 }
 
 .swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
@@ -276,6 +275,7 @@ button.swiper-pagination-bullet {
 
 .swiper-pagination-progress .swiper-pagination-progressbar {
   @include position(0, null, null, 0);
+  @include transform-origin(start, top);
 
   position: absolute;
 
@@ -285,11 +285,10 @@ button.swiper-pagination-bullet {
   background: #007aff;
 
   transform: scale(0);
-  transform-origin: left top;
 }
 
 .swiper-container-rtl .swiper-pagination-progress .swiper-pagination-progressbar {
-  transform-origin: right top;
+  @include transform-origin(end, top);
 }
 
 .swiper-container-horizontal > .swiper-pagination-progress {
@@ -413,15 +412,16 @@ button.swiper-pagination-bullet {
 
 // Cube
 .swiper-container-cube .swiper-slide {
+  @include transform-origin(0, 0);
+
   width: 100%;
   height: 100%;
 
   visibility: hidden;
-  transform-origin: 0 0;
 }
 
 .swiper-container-cube.swiper-container-rtl .swiper-slide {
-  transform-origin: 100% 0;
+  @include transform-origin(100%, 0);
 }
 
 .swiper-container-cube .swiper-slide-active,
@@ -540,6 +540,7 @@ button.swiper-pagination-bullet {
 .swiper-lazy-preloader {
   @include position(50%, null, null, 50%);
   @include margin(-21px, null, null, -21px);
+  @include transform-origin(50%);
 
   position: absolute;
   z-index: 10;
@@ -547,12 +548,12 @@ button.swiper-pagination-bullet {
   width: 42px;
   height: 42px;
 
-  transform-origin: 50%;
-
   animation: swiper-preloader-spin 1s steps(12, end) infinite;
 }
 
 .swiper-lazy-preloader::after {
+  @include background-position(50%);
+
   display: block;
 
   width: 100%;
@@ -560,7 +561,6 @@ button.swiper-pagination-bullet {
 
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D'0%200%20120%20120'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20xmlns%3Axlink%3D'http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink'%3E%3Cdefs%3E%3Cline%20id%3D'l'%20x1%3D'60'%20x2%3D'60'%20y1%3D'7'%20y2%3D'27'%20stroke%3D'%236c6c6c'%20stroke-width%3D'11'%20stroke-linecap%3D'round'%2F%3E%3C%2Fdefs%3E%3Cg%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(30%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(60%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(90%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(120%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(150%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.37'%20transform%3D'rotate(180%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.46'%20transform%3D'rotate(210%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.56'%20transform%3D'rotate(240%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.66'%20transform%3D'rotate(270%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.75'%20transform%3D'rotate(300%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.85'%20transform%3D'rotate(330%2060%2C60)'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
-  background-position: 50%;
   background-size: 100%;
 
   content: "";
