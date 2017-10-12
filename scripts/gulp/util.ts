@@ -1,8 +1,8 @@
 import { spawn } from 'cross-spawn';
 import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
-import { src, dest } from 'gulp';
+import { dest, src } from 'gulp';
 import { dirname, join } from 'path';
-import { ensureDirSync, readdirSync, readFile, readFileSync, statSync, writeFile, writeFileSync } from 'fs-extra';
+import { ensureDirSync, readFile, readFileSync, readdirSync, statSync, writeFile, writeFileSync } from 'fs-extra';
 import { rollup } from 'rollup';
 import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -11,7 +11,7 @@ import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
 import { argv } from 'yargs';
-
+import { newSilentPublisher } from '@ionic/discover';
 import { runWorker } from './utils/app-scripts-worker-client';
 
 // These packages lack of types.
@@ -28,8 +28,8 @@ export function mergeObjects(obj1: any, obj2: any ) {
   for (var attrname in obj1) {
     (<any>obj3)[attrname] = obj1[attrname];
   }
-  for (var attrname in obj2) {
-    (<any>obj3)[attrname] = obj2[attrname];
+  for (var attrname2 in obj2) {
+    (<any>obj3)[attrname2] = obj2[attrname2];
   }
   return obj3;
 }
@@ -216,13 +216,15 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--copy', copyConfigPath,
     '--enableLint', 'false'
   ];
-  if (devApp) {
-    scriptArgs.push('--bonjour');
-  }
 
   if (watchConfigPath) {
     scriptArgs.push('--watch');
     scriptArgs.push(watchConfigPath);
+  }
+
+  if (devApp) {
+    newSilentPublisher('devapp', 'ionic-angular', 8100);
+    console.log('publishing devapp service');
   }
 
   const debug: boolean = argv.debug;
@@ -361,11 +363,11 @@ export function getFolderInfo() {
     componentName = folderSplit[0];
     componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
   }
-  const devApp = argv.devapp !== undefined;
+  const devapp = argv.devapp !== undefined;
   return {
     componentName: componentName,
     componentTest: componentTest,
-    devApp: devApp
+    devapp: devapp
   };
 }
 
