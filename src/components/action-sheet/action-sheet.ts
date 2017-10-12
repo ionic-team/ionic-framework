@@ -1,6 +1,6 @@
 import { ActionSheetCmp } from './action-sheet-component';
-import { ActionSheetOptions, ActionSheetButton } from './action-sheet-options';
-import { ActionSheetSlideIn, ActionSheetMdSlideIn, ActionSheetSlideOut, ActionSheetMdSlideOut, ActionSheetWpSlideIn, ActionSheetWpSlideOut } from './action-sheet-transitions';
+import { ActionSheetButton, ActionSheetOptions } from './action-sheet-options';
+import { ActionSheetMdSlideIn, ActionSheetMdSlideOut, ActionSheetSlideIn, ActionSheetSlideOut, ActionSheetWpSlideIn, ActionSheetWpSlideOut } from './action-sheet-transitions';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';

@@ -1,6 +1,6 @@
 import { Toggle } from '../toggle';
-import { mockConfig, mockPlatform, mockHaptic, mockElementRef, mockGestureController, mockRenderer, mockItem, mockForm, mockZone } from '../../../util/mock-providers';
-import { commonInputTest, BOOLEAN_CORPUS } from '../../../util/input-tester';
+import { mockConfig, mockElementRef, mockForm, mockGestureController, mockHaptic, mockItem, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { BOOLEAN_CORPUS, commonInputTest } from '../../../util/input-tester';
 
 describe('Toggle', () => {
 

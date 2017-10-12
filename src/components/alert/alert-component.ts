@@ -2,14 +2,14 @@ import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from
 
 import { Config } from '../../config/config';
 import { NON_TEXT_INPUT_REGEX } from '../../util/dom';
-import { GestureController, BlockerDelegate, BLOCK_ALL } from '../../gestures/gesture-controller';
-import { isPresent, assert } from '../../util/util';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
+import { assert, isPresent } from '../../util/util';
 import { KEY_ENTER, KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
-import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
+import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
 
 
 /**
@@ -52,7 +52,7 @@ import { AlertInputOptions, AlertOptions, AlertButton } from './alert-options';
         '<ng-template ngSwitchDefault>' +
           '<div class="alert-input-group">' +
             '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" [min]="i.min" [max]="i.max" [attr.id]="i.id" class="alert-input">' +
+              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" dir="auto" [min]="i.min" [max]="i.max" [attr.id]="i.id" class="alert-input">' +
             '</div>' +
           '</div>' +
         '</ng-template>' +
@@ -84,6 +84,7 @@ export class AlertCmp {
   msgId: string;
   subHdrId: string;
   mode: string;
+  keyboardResizes: boolean;
   gestureBlocker: BlockerDelegate;
 
   constructor(
@@ -99,6 +100,7 @@ export class AlertCmp {
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
     this.mode = this.d.mode || config.get('mode');
+    this.keyboardResizes = config.getBoolean('keyboardResizes', false);
     _renderer.setElementClass(_elementRef.nativeElement, `alert-${this.mode}`, true);
 
     if (this.d.cssClass) {
@@ -178,7 +180,7 @@ export class AlertCmp {
     }
 
     const hasTextInput = (this.d.inputs.length && this.d.inputs.some(i => !(NON_TEXT_INPUT_REGEX.test(i.type))));
-    if (hasTextInput && this._plt.is('mobile')) {
+    if (!this.keyboardResizes && hasTextInput && this._plt.is('mobile')) {
       // this alert has a text input and it's on a mobile device so we should align
       // the alert up high because we need to leave space for the virtual keboard
       // this also helps prevent the layout getting all messed up from
@@ -192,18 +194,10 @@ export class AlertCmp {
   }
 
   ionViewDidLeave() {
-    this._plt.focusOutActiveElement();
     this.gestureBlocker.unblock();
   }
 
-  ionViewWillLeave() {
-    this._plt.focusOutActiveElement();
-  }
-
   ionViewDidEnter() {
-    // focus out of the active element
-    this._plt.focusOutActiveElement();
-
     // set focus on the first input or button in the alert
     // note that this does not always work and bring up the keyboard on
     // devices since the focus command must come from the user's touch event
@@ -314,6 +308,11 @@ export class AlertCmp {
       // this is an alert with checkboxes (multiple value select)
       // return an array of all the checked values
       return this.d.inputs.filter(i => i.checked).map(i => i.value);
+    }
+
+    if (this.d.inputs.length === 0) {
+      // this is an alert without any options/inputs at all
+      return undefined;
     }
 
     // this is an alert with text inputs

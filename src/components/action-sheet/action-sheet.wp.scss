@@ -9,6 +9,12 @@ $action-sheet-wp-text-align:                      start !default;
 /// @prop - Background color of the action sheet
 $action-sheet-wp-background:                      #fff !default;
 
+/// @prop - Padding top of the action sheet
+$action-sheet-wp-padding-top:                     .8rem !default;
+
+/// @prop - Padding bottom of the action sheet
+$action-sheet-wp-padding-bottom:                  .8rem !default;
+
 /// @prop - Box shadow color of the action sheet
 $action-sheet-wp-box-shadow-color:                rgba(0, 0, 0, .2) !default;
 
@@ -147,10 +153,16 @@ $action-sheet-wp-icon-margin-start:               0 !default;
   }
 }
 
-.action-sheet-wp .action-sheet-container {
-  @include padding(.8rem, 0);
-
+.action-sheet-wp .action-sheet-group {
   background: $action-sheet-wp-background;
+}
+
+.action-sheet-wp .action-sheet-group:first-child {
+  @include padding($action-sheet-wp-padding-top, null, null, null);
+}
+
+.action-sheet-wp .action-sheet-group:last-child {
+  @include padding(null, null, $action-sheet-wp-padding-bottom, null);
 }
 
 .action-sheet-wp .action-sheet-group .button-inner {

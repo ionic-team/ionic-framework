@@ -47,12 +47,12 @@ import { LoadingOptions } from './loading-options';
  *
  * @usage
  * ```ts
- * constructor(public loadingCtrl: LoadingController) {
+ * import { LoadingController } from 'ionic-angular';
  *
- * }
+ * constructor(public loadingCtrl: LoadingController) { }
  *
  * presentLoadingDefault() {
- *   let loading = this.loadingCtrl.create({
+ *   const loading = this.loadingCtrl.create({
  *     content: 'Please wait...'
  *   });
  *
@@ -64,7 +64,7 @@ import { LoadingOptions } from './loading-options';
  * }
  *
  * presentLoadingCustom() {
- *   let loading = this.loadingCtrl.create({
+ *   const loading = this.loadingCtrl.create({
  *     spinner: 'hide',
  *     content: `
  *       <div class="custom-spinner-container">
@@ -81,7 +81,7 @@ import { LoadingOptions } from './loading-options';
  * }
  *
  * presentLoadingText() {
- *   let loading = this.loadingCtrl.create({
+ *   const loading = this.loadingCtrl.create({
  *     spinner: 'hide',
  *     content: 'Loading Please Wait...'
  *   });
@@ -107,6 +107,7 @@ import { LoadingOptions } from './loading-options';
  * | content               |`string`    | The html content for the loading indicator.                                                                      |
  * | cssClass              |`string`    | Additional classes for custom styles, separated by spaces.                                                       |
  * | showBackdrop          |`boolean`   | Whether to show the backdrop. Default true.                                                                      |
+ * | enableBackdropDismiss | `boolean`  | Whether the loading indicator should be dismissed by tapping the backdrop. Default false.                        |
  * | dismissOnPageChange   |`boolean`   | Whether to dismiss the indicator when navigating to a new page. Default false.                                   |
  * | duration              |`number`    | How many milliseconds to wait before hiding the indicator. By default, it will show until `dismiss()` is called. |
  *

@@ -14,9 +14,9 @@
 
 import { SlideElement } from './swiper-interfaces';
 import { Platform } from '../../../platform/platform';
-import { maxTranslate, minTranslate, addClass, eachChild, inlineStyle, removeClass, isHorizontal, round, updateSlidesOffset, CLS } from './swiper-utils';
+import { CLS, addClass, eachChild, inlineStyle, isHorizontal, maxTranslate, minTranslate, removeClass, round, updateSlidesOffset } from './swiper-utils';
 import { Slides } from '../slides';
-import { setWrapperTranslate, setWrapperTransition } from './swiper-transition';
+import { setWrapperTransition, setWrapperTranslate } from './swiper-transition';
 import { updateProgress } from './swiper-progress';
 import { updateClasses } from './swiper-classes';
 import { parallaxSetTranslate } from './swiper-parallax';
@@ -693,8 +693,10 @@ function destroyLoop(s: Slides) {
   eachChild(s._wrapper, '.' + CLS.slide + '.' + CLS.slideDuplicate, ele => {
     ele.parentElement.removeChild(ele);
   });
-  for (var i = 0; i < s._slides.length; i++) {
-    s._slides[i].removeAttribute('data-swiper-slide-index');
+  if (s._slides) {
+    for (var i = 0; i < s._slides.length; i++) {
+      s._slides[i].removeAttribute('data-swiper-slide-index');
+    }
   }
 }
 
@@ -926,7 +928,7 @@ function cleanupStyles(s: Slides) {
   // Buttons
   removeClass(s.prevButton, CLS.buttonDisabled);
   removeClass(s.nextButton, CLS.buttonDisabled);
-};
+}
 
 
 // Destroy

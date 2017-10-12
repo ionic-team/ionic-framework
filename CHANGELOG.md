@@ -1,3 +1,373 @@
+<a name="3.7.1"></a>
+## [3.7.1](https://github.com/ionic-team/ionic/compare/v3.7.0...v3.7.1) (2017-09-29)
+
+
+### Upgrade Instructions
+
+This release includes the latest version of `zone.js`. Update your `package.json` to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
+
+```
+"dependencies": {
+    ...
+    "ionic-angular": "3.7.1",
+    ...
+    "zone.js": "0.8.18"
+}
+```
+
+
+### Bug Fixes
+
+* **datetime:** set default to max if max before current only [#9846](https://github.com/ionic-team/ionic/issues/9846) ([39e7da3](https://github.com/ionic-team/ionic/commit/39e7da3))
+
+
+### Features
+
+* **datetime:** add default picker value input ([b87d212](https://github.com/ionic-team/ionic/commit/b87d212))
+* **datetime:** default to now or max. Fixes [#9846](https://github.com/ionic-team/ionic/issues/9846) ([559f4d3](https://github.com/ionic-team/ionic/commit/559f4d3))
+
+
+
+<a name="3.7.0"></a>
+# [3.7.0](https://github.com/ionic-team/ionic/compare/v3.6.1...v3.7.0) (2017-09-28)
+
+### Notes
+This release adds support for the latest version of Angular (4.4.3) as well as the initial iteration of support for the iPhone X.
+
+### Upgrade Instructions
+
+These are the latest versions of `@angular`, `rxjs`, `zone.js` and `ionic-angular`. Update your `package.json` to match the following dependencies, remove the existing `node_modules` directory, and then run `npm install`:
+
+```
+...
+"dependencies": {
+    "@angular/common": "4.4.3",
+    "@angular/compiler": "4.4.3",
+    "@angular/compiler-cli": "4.4.3",
+    "@angular/core": "4.4.3",
+    "@angular/forms": "4.4.3",
+    "@angular/http": "4.4.3",
+    "@angular/platform-browser": "4.4.3",
+    "@angular/platform-browser-dynamic": "4.4.3",
+    "ionic-angular": "3.7.0",
+    "rxjs": "5.4.3",
+    "zone.js": "0.8.17"
+}
+"devDependencies": {
+  "@ionic/app-scripts": "3.0.0"
+}
+...
+```
+
+If you're using a `package-lock.json` file, make sure that is updated as well.
+
+### Bug Fixes
+
+* **input:** mark ion-input touched on blur instead of changed ([#12812](https://github.com/ionic-team/ionic/issues/12812)) ([d0cad6b](https://github.com/ionic-team/ionic/commit/d0cad6b)), closes [#12102](https://github.com/ionic-team/ionic/issues/12102)
+* **swiper:** change var to let to avoid variable shadowing ([f5ef1ca](https://github.com/ionic-team/ionic/commit/f5ef1ca))
+
+
+### Features
+
+* initial iphoneX support ([112d4f5](https://github.com/ionic-team/ionic/commit/112d4f5))
+
+
+<a name="3.6.1"></a>
+## [3.6.1](https://github.com/ionic-team/ionic/compare/v3.6.0...v3.6.1) (2017-09-07)
+
+### Upgrade Instructions
+
+`ionic-angular@3.6.1` is a drop-in replacement for 3.6.0. To install it, please run:
+
+```
+npm install -g ionic@latest
+npm install @ionic/app-scripts@2.1.4 --save-dev
+npm install ionic-angular@3.6.1 --save
+```
+
+
+### Bug Fixes
+
+* **generators:** Update documentation URLs for templates ([475b722](https://github.com/ionic-team/ionic/commit/475b722))
+* **navigation:** check existence of done transition callback ([#12640](https://github.com/ionic-team/ionic/issues/12640)) ([0a6bb3b](https://github.com/ionic-team/ionic/commit/0a6bb3b))
+* **navigation:** ensure secondaryId always has a string value ([#12641](https://github.com/ionic-team/ionic/issues/12641)) ([1069505](https://github.com/ionic-team/ionic/commit/1069505))
+* **navigation:** fix popTo signature and make usage uniform ([3187375](https://github.com/ionic-team/ionic/commit/3187375))
+* **slider:** guard the processing of _slides ([b809665](https://github.com/ionic-team/ionic/commit/b809665)), closes [#12791](https://github.com/ionic-team/ionic/issues/12791)
+
+
+
+<a name="3.6.0"></a>
+# [3.6.0](https://github.com/ionic-team/ionic/compare/v3.5.3...v3.6.0) (2017-07-27)
+
+
+### Upgrade Instructions
+
+`ionic-angular` 3.6.0 requires developer's to update to the latest version of the `Ionic CLI` and `@ionic/app-scripts`.
+
+To upgrade, please run
+
+```
+npm install -g ionic@latest
+npm install @ionic/app-scripts@latest --save-dev
+npm install ionic-angular@latest --save
+```
+
+### Notes
+
+The URL when using deep linking is shortened and improved in this release. Due to a limitation in our nav system, if you're using `ion-tabs` and have a tab name that matches a segment, meaning you have a tab name of `schedule` and a segment of `schedule`, there could potentially be issues. To mitigate these issues, make sure you set the `tabUrlPath` property on the `ion-tab` and give it a unique name. This limitation will require an API change to fix so it will be resolved in `ionic-angular` 4.x.
+
+
+The upgrades include necessary changes to generators that add back lazy loading functionality, as well as an improved way of generating component/directives/and pipes.
+
+### New Generators
+
+The release adds back the functionality to generate lazy loaded pages.
+To generate a lazy loaded page, run:
+
+```bash
+ionic g page <Page-Name>
+```
+
+This will include a `.module.ts` file in the page directory created. If you do not want to generate a lazy loaded page, you can run:
+
+```bash
+ionic g page <Page-Name> --no-module
+```
+
+This will also generate lazy loaded tabs as well, accepting the `--no-module` flag as well to disable it.
+
+
+For pipes/components/components, we now generate a shared common module for each of these.
+
+So running:
+
+```bash
+ionic g component music-card
+```
+
+Will create a `components/components.module.ts` file that declares and exports the `music-card` component.
+We think that this will allow developers to get up and running with custom components much faster and will less overhead.
+
+### Bug Fixes
+
+* **list:** remove margin of MD buttons in ion-item-options ([#12263](https://github.com/ionic-team/ionic/issues/12263)) ([97f9522](https://github.com/ionic-team/ionic/commit/97f9522))
+* **nav:** make call to setPages return the promise so if it rejects it doesn't get lost ([de0f9d5](https://github.com/ionic-team/ionic/commit/de0f9d5))
+* **navigation:** account for race conditions in developer's code ([4596dbe](https://github.com/ionic-team/ionic/commit/4596dbe))
+* **navigation:** fix bug where that occurred when tab identifier and segment had the exact same string ([add0c4e](https://github.com/ionic-team/ionic/commit/add0c4e))
+* **navigation:** fix null pointer exceptions that would occur when destroying a nav controller while its transitioning ([584afd0](https://github.com/ionic-team/ionic/commit/584afd0))
+* **navigation:** reduce urls to minimum set of fields ([a8ceee4](https://github.com/ionic-team/ionic/commit/a8ceee4))
+
+
+### Features
+
+* **generators:** refactor generators ([400aa54](https://github.com/ionic-team/ionic/commit/400aa54))
+
+
+
+<a name="3.5.3"></a>
+## [3.5.3](https://github.com/ionic-team/ionic/compare/v3.5.2...v3.5.3) (2017-07-14)
+
+## Upgrade Instructions
+`ionic-angular@3.5.3` is a drop-in replacement for `3.5.2`. To install it, simply run `npm install ionic-angular@3.5.3 --save --save-exact`.
+
+### Bug Fixes
+
+* **app:** restore getActiveNav api ([2d49e10](https://github.com/ionic-team/ionic/commit/2d49e10))
+
+
+
+<a name="3.5.2"></a>
+## [3.5.2](https://github.com/ionic-team/ionic/compare/v3.5.1...v3.5.2) (2017-07-13)
+
+## Upgrade Instructions
+`ionic-angular@3.5.2` is a drop-in replacement for `3.5.1`. To install it, simply run `npm install ionic-angular@3.5.2 --save --save-exact`.
+
+We have released a new version of our build process for `ionic-angular` apps, `@ionic/app-scripts` in conjunction with this release of `ionic-angular`. While it's not a required update, we recommend it because we have greatly improved the developer experience. Incremental, or update builds while developing are much faster now. We've also added `scope hoisting` for better start-up performance on production builds.
+
+To upgrade to `@ionic/app-scripts`, run the following command:
+
+```
+rm -rf node_modules
+npm install @ionic/app-scripts@2.0.2 --save-dev --save-exact
+```
+
+After installing the update, you'll need to make a minor change to the `src/index.html` file to include a new `<script>` tag for `build/vendor.js`. The reason for this breaking change in `@ionic/app-scripts` is for faster builds. By separating out the `node_modules` dependencies into a `vendor.js` file, the incremental build is faster.
+
+```
+...
+<body>
+
+  <!-- Ionic's root component and where the app will load -->
+  <ion-app></ion-app>
+
+  <!-- cordova.js required for cordova apps -->
+  <script src="cordova.js"></script>
+
+  <!-- The polyfills js is generated during the build process -->
+  <script src="build/polyfills.js"></script>
+
+  <!-- The vendor js is generated during the build process
+       and includes all files in the node_modules directory -->
+  <script src="build/vendor.js"></script>
+
+  <!-- The bundle js is generated during the build process -->
+  <script src="build/main.js"></script>
+
+</body>
+...
+```
+
+If you're customizing `@ionic/app-scripts`, we recommend you review the [changelog](https://github.com/ionic-team/ionic-app-scripts/blob/master/CHANGELOG.md), and update any of your configs accordingly.
+
+## Notes
+`3.5.2` is the same as `3.5.1`. We had a small publishing error.
+
+### Bug Fixes
+
+* **navigation:** fix swipe-to-go-back ([04e78d8](https://github.com/ionic-team/ionic/commit/04e78d8))
+* **navigation:** mark as not transitioning on success in addition to '_transitionFinish', provide no ([48b3243](https://github.com/ionic-team/ionic/commit/48b3243))
+* **navigation:** navs can have n child navs instead of just one ([fce4422](https://github.com/ionic-team/ionic/commit/fce4422))
+* **navigation:** restore getActiveChildNav method to maintain old API, add deprecation notice ([d22d77b](https://github.com/ionic-team/ionic/commit/d22d77b))
+* **navigation:** ts2.4 compatibility ([08be9dc](https://github.com/ionic-team/ionic/commit/08be9dc)), closes [#12233](https://github.com/ionic-team/ionic/issues/12233) [#12235](https://github.com/ionic-team/ionic/issues/12235)
+* **select:** not activated on enter in input field ([ad25cd1](https://github.com/ionic-team/ionic/commit/ad25cd1)), closes [#12202](https://github.com/ionic-team/ionic/issues/12202)
+* **sliding-item:** ionSwipe event is fired ([#12157](https://github.com/ionic-team/ionic/issues/12157)) ([b5aa304](https://github.com/ionic-team/ionic/commit/b5aa304)), closes [#12146](https://github.com/ionic-team/ionic/issues/12146)
+* **tabs:** have tabs behavior match nav when navigating back/forth via the url ([3f39e14](https://github.com/ionic-team/ionic/commit/3f39e14))
+
+
+### Features
+
+* **navigation:** support for named ion-nav/ion-tabs to improve url in the short term ([486bff0](https://github.com/ionic-team/ionic/commit/486bff0))
+
+
+<a name="3.5.1"></a>
+## [3.5.1](https://github.com/ionic-team/ionic/compare/v3.5.0...v3.5.1) (2017-07-13)
+
+See the [3.5.2](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md#352-2017-07-13) changelog. We had a publishing error here.
+
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/ionic-team/ionic/compare/v3.4.2...v3.5.0) (2017-06-28)
+
+### Steps to Upgrade
+
+`ionic-angular` should be set to version `3.5.0`.
+
+```
+npm install ionic-angular@3.5.0 --save --save-exact
+```
+
+### Notes
+There were major improvements made to navigation in this release of `ionic-angular`. Specifically, we updated Ionic to support a concept of `n` root navigation elements, instead of just one. This will enable first-class url support for things `split-pane`. Before `3.5.0`, only one section of the screen could be represented in the URL. With these changes, multiple sections can be. Another large change was improving the behavior surrounding browser behaviors, such as the back-and-forward buttons, as well as refresh. In general, Ionic should work much more intuitively in a web browser now.
+
+As a result of these improvements, if you're using deep linking, the urls of the application will be different with `3.5.0` than they were with previous Ionic releases. The URLs will likely change again in the near future with the next round of navigation improvements too. For now, we don't recommend using `href` attributes in the application. Using the `navPush` and `navPop` directives is a better option for now while URL support is being built-out.
+
+### Bug Fixes
+
+* **navigation:** add isTab check to getSegmentsFromNav ([f39c381](https://github.com/ionic-team/ionic/commit/f39c381))
+* **navigation:** fallback to name if component does not exist on segment ([30f69c8](https://github.com/ionic-team/ionic/commit/30f69c8))
+* **select:** _inputUpdated should not be called manually ([8dc08f9](https://github.com/ionic-team/ionic/commit/8dc08f9))
+* **select:** floating label ([e3a8d27](https://github.com/ionic-team/ionic/commit/e3a8d27)), closes [#12068](https://github.com/ionic-team/ionic/issues/12068)
+* **tabs:** use segment if it exists even if component exists ([016b90d](https://github.com/ionic-team/ionic/commit/016b90d))
+
+
+
+<a name="3.4.2"></a>
+## [3.4.2](https://github.com/ionic-team/ionic/compare/v3.4.1...v3.4.2) (2017-06-16)
+
+
+### Bug Fixes
+
+* **rtl:** use multi direction in order to override the default ltr ([70b5b6](https://github.com/ionic-team/ionic/commit/70b5b6))
+
+
+
+<a name="3.4.1"></a>
+## [3.4.1](https://github.com/ionic-team/ionic/compare/v3.4.0...v3.4.1) (2017-06-16)
+
+
+### Bug Fixes
+
+* **themes:** change default app-direction ([1ca7df](https://github.com/ionic-team/ionic/commit/1ca7df))
+
+
+
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/ionic-team/ionic/compare/v3.3.0...v3.4.0) (2017-06-15)
+
+### Steps to Upgrade
+
+`ionic-angular` should be set to version `3.4.0` in the package.json dependency list. The latest `@angular` release `4.1.3` is also supported. Feel free to update apps by updating the `package.json` dependencies to match below.
+
+```
+"dependencies": {
+  "@angular/common": "4.1.3",
+  "@angular/compiler": "4.1.3",
+  "@angular/compiler-cli": "4.1.3",
+  "@angular/core": "4.1.3",
+  "@angular/forms": "4.1.3",
+  "@angular/http": "4.1.3",
+  "@angular/platform-browser": "4.1.3",
+  "@angular/platform-browser-dynamic": "4.1.3",
+  "@ionic-native/core": "3.12.1",
+  "@ionic-native/splash-screen": "3.12.1",
+  "@ionic-native/status-bar": "3.12.1",
+  "@ionic/storage": "2.0.1",
+  "ionic-angular": "3.4.2",
+  "ionicons": "3.0.0",
+  "rxjs": "5.4.0",
+  "sw-toolbox": "3.6.0",
+  "zone.js": "0.8.12"
+},
+"devDependencies": {
+  "@ionic/app-scripts": "1.3.7",
+  "typescript": "2.3.4"
+}
+```
+
+### Bug Fixes
+
+* **button:** rtl fix for md ripple effect ([#11842](https://github.com/ionic-team/ionic/issues/11842)) ([bb966e5](https://github.com/ionic-team/ionic/commit/bb966e5))
+* **content:** scroll content should inherit background ([#11467](https://github.com/ionic-team/ionic/issues/11467)) ([6256b0f](https://github.com/ionic-team/ionic/commit/6256b0f))
+* **datetime:** set datetime direction the same on ltr and rtl ([#11992](https://github.com/ionic-team/ionic/issues/11992)) ([20c9dd7](https://github.com/ionic-team/ionic/commit/20c9dd7))
+* **gesture:** RTL fix for slide-gesture ([#11822](https://github.com/ionic-team/ionic/issues/11822)) ([59a1e3d](https://github.com/ionic-team/ionic/commit/59a1e3d))
+* **input:** add correct translate3d for rtl ([ef85ba6](https://github.com/ionic-team/ionic/commit/ef85ba6)), closes [#11745](https://github.com/ionic-team/ionic/issues/11745) [#11211](https://github.com/ionic-team/ionic/issues/11211)
+* **input:** better handling of attributes ([9f86e10](https://github.com/ionic-team/ionic/commit/9f86e10))
+* **input:** slightly longer delay for autofocus ([#12037](https://github.com/ionic-team/ionic/issues/12037)) ([54ac2e3](https://github.com/ionic-team/ionic/commit/54ac2e3))
+* **input:** use all supported attributes on both textareas and inputs ([#12028](https://github.com/ionic-team/ionic/issues/12028)) ([8041eed](https://github.com/ionic-team/ionic/commit/8041eed))
+* **item-sliding:** RTL fix for item sliding ([#11825](https://github.com/ionic-team/ionic/issues/11825)) ([10f4df4](https://github.com/ionic-team/ionic/commit/10f4df4))
+* **keyboard:** big keyboard/input refactor ([c10f72b](https://github.com/ionic-team/ionic/commit/c10f72b)), closes [#9699](https://github.com/ionic-team/ionic/issues/9699) [#11484](https://github.com/ionic-team/ionic/issues/11484) [#11389](https://github.com/ionic-team/ionic/issues/11389) [#11325](https://github.com/ionic-team/ionic/issues/11325) [#11291](https://github.com/ionic-team/ionic/issues/11291) [#10828](https://github.com/ionic-team/ionic/issues/10828) [#11291](https://github.com/ionic-team/ionic/issues/11291) [#10393](https://github.com/ionic-team/ionic/issues/10393) [#10257](https://github.com/ionic-team/ionic/issues/10257) [#9434](https://github.com/ionic-team/ionic/issues/9434) [#8933](https://github.com/ionic-team/ionic/issues/8933) [#7178](https://github.com/ionic-team/ionic/issues/7178) [#7047](https://github.com/ionic-team/ionic/issues/7047) [#10552](https://github.com/ionic-team/ionic/issues/10552) [#10393](https://github.com/ionic-team/ionic/issues/10393) [#10183](https://github.com/ionic-team/ionic/issues/10183) [#10187](https://github.com/ionic-team/ionic/issues/10187) [#10852](https://github.com/ionic-team/ionic/issues/10852) [#11578](https://github.com/ionic-team/ionic/issues/11578)
+* **menu:** rtl gesture for menu ([#11830](https://github.com/ionic-team/ionic/issues/11830)) ([30047f0](https://github.com/ionic-team/ionic/commit/30047f0))
+* **refresher:** border should only show when pulled ([#12015](https://github.com/ionic-team/ionic/issues/12015)) ([47e3c70](https://github.com/ionic-team/ionic/commit/47e3c70)), closes [#10994](https://github.com/ionic-team/ionic/issues/10994)
+* **rtl:** add icon-start and icon-end attributes ([#11737](https://github.com/ionic-team/ionic/issues/11737)) ([a40b872](https://github.com/ionic-team/ionic/commit/a40b872))
+* **sass:** add default flag to variables ([#11779](https://github.com/ionic-team/ionic/issues/11779)) ([f14d7d6](https://github.com/ionic-team/ionic/commit/f14d7d6))
+* **searchbar:** caret moving to the end when typing ([261bc4d](https://github.com/ionic-team/ionic/commit/261bc4d))
+* **segment:** fix border-radius logic for RTL ([#11981](https://github.com/ionic-team/ionic/issues/11981)) ([6db8c14](https://github.com/ionic-team/ionic/commit/6db8c14))
+* **select:** add cssClass for popover interface ([#11769](https://github.com/ionic-team/ionic/issues/11769)) ([1c25acb](https://github.com/ionic-team/ionic/commit/1c25acb))
+* **select:** return undefined when there are no options ([#11968](https://github.com/ionic-team/ionic/issues/11968)) ([dc6c586](https://github.com/ionic-team/ionic/commit/dc6c586)), closes [#10435](https://github.com/ionic-team/ionic/issues/10435)
+* **split-pane:** correct split-pane menu side order ([30dc247](https://github.com/ionic-team/ionic/commit/30dc247))
+* **textarea:** apply classes properly ([dc958c3](https://github.com/ionic-team/ionic/commit/dc958c3))
+* **toggle:** RTL fix for toggle ([2afb936](https://github.com/ionic-team/ionic/commit/2afb936))
+* **toolbar:** get the correct contrast color for md mode ([0f4ed1c](https://github.com/ionic-team/ionic/commit/0f4ed1c)), closes [#11848](https://github.com/ionic-team/ionic/issues/11848)
+* **toolbar:** use the correct contrast color for MD toolbar ([041689b](https://github.com/ionic-team/ionic/commit/041689b)), closes [#11848](https://github.com/ionic-team/ionic/issues/11848)
+* **transition:** RTL fix for transition on ios ([#11820](https://github.com/ionic-team/ionic/issues/11820)) ([6322134](https://github.com/ionic-team/ionic/commit/6322134))
+
+
+### Features
+
+* **background-position:** add background position support for rtl ([#11946](https://github.com/ionic-team/ionic/issues/11946)) ([305c306](https://github.com/ionic-team/ionic/commit/305c306))
+* **loading:** add enableBackdropDismiss to Loading ([#11937](https://github.com/ionic-team/ionic/issues/11937)) ([d0ae810](https://github.com/ionic-team/ionic/commit/d0ae810)), closes [#7975](https://github.com/ionic-team/ionic/issues/7975)
+* **loading:** add margin start variable ([#11980](https://github.com/ionic-team/ionic/issues/11980)) ([3e0d43e](https://github.com/ionic-team/ionic/commit/3e0d43e))
+* **rtl:** add transform and transform-origin support for rtl ([#11649](https://github.com/ionic-team/ionic/issues/11649)) ([2273fb5](https://github.com/ionic-team/ionic/commit/2273fb5))
+* **rtl:** optimize the new mixins for smaller bundle, ltr separation ([#11635](https://github.com/ionic-team/ionic/issues/11635)) ([f0c6948](https://github.com/ionic-team/ionic/commit/f0c6948))
+* **rtl:** support flipped svg background images on rtl ([#11945](https://github.com/ionic-team/ionic/issues/11945)) ([f4452b5](https://github.com/ionic-team/ionic/commit/f4452b5))
+* **slides:** support centering slides and using decimal numbers ([e3c60c5](https://github.com/ionic-team/ionic/commit/e3c60c5)), closes [#10361](https://github.com/ionic-team/ionic/issues/10361)
+
+
+### Performance Improvements
+
+* **item-sliding:** remove duplicate class ([#11829](https://github.com/ionic-team/ionic/issues/11829)) ([c9cb9ae](https://github.com/ionic-team/ionic/commit/c9cb9ae))
+
+
+
 <a name="3.3.0"></a>
 # [3.3.0](https://github.com/ionic-team/ionic/compare/v3.2.1...v3.3.0) (2017-05-24)
 

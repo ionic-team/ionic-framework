@@ -15,10 +15,13 @@ export class TabHighlight {
   constructor(private _elementRef: ElementRef, private _dom: DomController) {}
 
   select(tab: Tab) {
+    if (!tab) {
+      return;
+    }
     const dom = this._dom;
 
     dom.read(() => {
-      const btnEle: HTMLElement = tab.btn.getElementRef().nativeElement;
+      const btnEle: HTMLElement = tab.btn.getNativeElement();
       const transform = `translate3d(${btnEle.offsetLeft}px,0,0) scaleX(${btnEle.offsetWidth})`;
 
       dom.write(() => {

@@ -176,6 +176,7 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 .range-wp .range-pin {
   @include text-align(center);
   @include border-radius(50px);
+  @include transform(translate3d(0, 28px, 0), scale(.01));
 
   position: relative;
   top: -24px;
@@ -189,7 +190,6 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 
   background: $range-wp-pin-background-color;
 
-  transform: translate3d(0, 28px, 0) scale(.01);
   transition: transform 120ms ease;
 
   @include deprecated-variable(padding, $range-wp-pin-padding) {
@@ -198,7 +198,7 @@ $range-wp-pin-padding-start:                 $range-wp-pin-padding-end !default;
 }
 
 .range-wp .range-knob-pressed .range-pin {
-  transform: translate3d(0, 0, 0) scale(1);
+  @include transform(translate3d(0, 0, 0), scale(1));
 }
 
 .range-wp.range-disabled {

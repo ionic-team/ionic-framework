@@ -45,6 +45,10 @@ export const ANY_CORPUS: any[] = [
 export interface TestConfig {
   defaultValue: any;
   corpus: any;
+  testItem?: boolean;
+  testForm?: boolean;
+  onValueChange?: (value: any) => boolean;
+  onFocusChange?: (isFocused: boolean) => boolean;
 }
 
 
@@ -52,10 +56,36 @@ export function commonInputTest<T>(input: BaseInput<T>, config: TestConfig) {
   // TODO test form register/deregister
   // TODO test item classes
   // TODO test disable
-  const zone = new NgZone(true);
+  const zone = new NgZone({ enableLongStackTrace: true });
   zone.run(() => {
+    if (config.testItem === true && !input._item) {
+      assert(false, 'input is invalid');
+    }
+    if (config.testForm === true && !input._form) {
+      assert(false, 'form is invalid');
+    }
+
+    // Run tests before initialization
     testInput(input, config, false);
+
     input.ngAfterContentInit();
+    (<any>input).ngAfterViewInit && (<any>input).ngAfterViewInit();
+
+    // Run tests after initialization
+    testInput(input, config, true);
+
+    // Run tests without item
+    if (config.testItem === true && !input._item) {
+      input._item = undefined;
+      testInput(input, config, true);
+    }
+
+    // Run tests without item
+    if (config.testForm === true && !input._form) {
+      input._form = undefined;
+      testInput(input, config, true);
+    }
+
     testInput(input, config, true);
     input.ngOnDestroy();
     assert(!input._init, 'input was not destroyed correctly');
@@ -77,14 +107,30 @@ function testState<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) 
   if (isInit) {
     let blurCount = 0;
     let focusCount = 0;
+    let onTouchedCalled = 0;
     const subBlur = input.ionBlur.subscribe((ev: any) => {
       assertEqual(ev, input, 'ionBlur argument is wrong');
       blurCount++;
+      if (config.onFocusChange && config.onFocusChange(false) !== true) {
+        assert(false, 'onFocusChange test failed');
+      }
     });
     const subFocus = input.ionFocus.subscribe((ev: any) => {
       assertEqual(ev, input, 'ionFocus argument is wrong');
       focusCount++;
+      if (config.onFocusChange && config.onFocusChange(true) !== true) {
+        assert(false, 'onFocusChange test failed');
+      }
     });
+    input.registerOnTouched(() => {
+      assertEqual(onTouchedCalled, 0, 'registerOnTouched: internal error');
+      onTouchedCalled++;
+    });
+
+    input._fireBlur();
+    assertEqual(blurCount, 0, 'blur should not have been emitted');
+    assertEqual(onTouchedCalled, 0, 'touched should not have been called');
+
     input._fireFocus();
     assertEqual(input._isFocus, true, 'should be focus');
     assertEqual(input.isFocus(), true, 'should be focus');
@@ -93,6 +139,7 @@ function testState<T>(input: BaseInput<T>, config: TestConfig, isInit: boolean) 
     input._fireBlur();
     assertEqual(input._isFocus, false, 'should be not focus');
     assertEqual(input.isFocus(), false, 'should be not focus');
+    assertEqual(onTouchedCalled, 1, 'touched should have been called');
     input._fireBlur(); // it should not crash
 
     assertEqual(focusCount, 1, 'ionFocus was not called correctly');
@@ -130,7 +177,7 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
     OnChangeCalled++;
   });
 
-  // Test registerOnChange
+  // Test registerOnTouched
   input.registerOnTouched(() => {
     assertEqual(OnTouchedCalled, 0, 'registerOnTouched: internal error');
 
@@ -144,11 +191,14 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
     assertEqual(input.value, test[1], 'loop: input/output does not match');
     if (isInit) {
       assertEqual(ionChangeCalled, 1, 'loop: ionChange error');
+      if (config.onValueChange && config.onValueChange(test[1]) !== true) {
+        assert(false, 'onValueChange() test failed');
+      }
     } else {
       assertEqual(ionChangeCalled, 0, 'loop: ionChange error');
     }
     assertEqual(OnChangeCalled, 1, 'loop: OnChangeCalled was not called');
-    assertEqual(OnTouchedCalled, 1, 'loop: OnTouchedCalled was not called');
+    assertEqual(OnTouchedCalled, 0, 'loop: OnTouchedCalled was called');
 
     OnTouchedCalled = OnChangeCalled = ionChangeCalled = 0;
 
@@ -173,7 +223,7 @@ function testWriteValue<T>(input: BaseInput<T>, config: TestConfig, isInit: bool
   input.value = null;
   assertEqual(input.value, config.defaultValue, 'null: wrong default value');
   assertEqual(OnChangeCalled, 1, 'null: OnChangeCalled was not called');
-  assertEqual(OnTouchedCalled, 1, 'null: OnTouchedCalled was not called');
+  assertEqual(OnTouchedCalled, 0, 'null: OnTouchedCalled was called');
 
 
   input.registerOnChange(null);
@@ -215,6 +265,9 @@ function testNgModelChange<T>(input: BaseInput<T>, config: TestConfig, isInit: b
     assertEqual(input.value, test[1], 'input/output does not match');
     if (isInit) {
       assertEqual(ionChangeCalled, 1, 'ionChange error');
+      if (config.onValueChange && config.onValueChange(test[1]) !== true) {
+        assert(false, 'onValueChange() test failed');
+      }
     } else {
       assertEqual(ionChangeCalled, 0, 'ionChange error');
     }

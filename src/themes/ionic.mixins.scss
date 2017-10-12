@@ -29,15 +29,6 @@
   }
 }
 
-
-// SVG Background Image Mixin
-// --------------------------------------------------
-
-@mixin svg-background-image($svg) {
-  $url: url-encode($svg);
-  background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
-}
-
 // Check that the given map values are in ascending order
 // ---------------------------------------------------------------------------------
 
@@ -68,7 +59,6 @@
   }
 }
 
-
 // Breakpoint Mixins
 // ---------------------------------------------------------------------------------
 
@@ -90,7 +80,6 @@
   $min: map-get($breakpoints, $name);
   @return if($min != 0, $min, null);
 }
-
 
 // Returns a blank string if smallest breakpoint, otherwise returns the name with a dash infront.
 // Useful for making responsive utilities.
@@ -139,7 +128,6 @@
   @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
 }
 
-
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
 @mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
@@ -154,7 +142,7 @@
 }
 
 @mixin multi-dir() {
-  @if $app-direction == null {
+  @if $app-direction == multi {
     $root: #{&};
     @at-root [dir="ltr"], [dir="rtl"] {
       #{$root} {
@@ -167,7 +155,7 @@
 }
 
 @mixin rtl() {
-  @if $app-direction == null {
+  @if $app-direction == multi {
     $root: #{&};
     @at-root [dir="rtl"] {
       #{$root} {
@@ -180,7 +168,7 @@
 }
 
 @mixin ltr() {
-  @if $app-direction == null {
+  @if $app-direction == multi {
     $root: #{&};
     @at-root [dir="ltr"] {
       #{$root} {
@@ -203,6 +191,34 @@
     // TODO find variable name
     @warn "you are using a deprecated variable";
     #{$property}: $variable;
+  }
+}
+
+// SVG Background Image Mixin
+// @param {string} $svg
+// ----------------------------------------------------------
+@mixin svg-background-image($svg, $flip-rtl: false) {
+  $url: url-encode($svg);
+  $viewBox: str-split(str-extract($svg, "viewBox='", "'"), " ");
+
+  @if $flip-rtl != true or $viewBox == null {
+    @include multi-dir() {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+    }
+  } @else {
+    $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
+    $flipped-url: $svg;
+    $flipped-url: str-replace($flipped-url, "<path", "<path #{$transform}");
+    $flipped-url: str-replace($flipped-url, "<line", "<line #{$transform}");
+    $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
+    $flipped-url: url-encode($flipped-url);
+
+    @include ltr () {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+    }
+    @include rtl() {
+      background-image: url("data:image/svg+xml;charset=utf-8,#{$flipped-url}");
+    }
   }
 }
 
@@ -236,7 +252,7 @@
 // @param {string} $start
 // @param {boolean} $content include content or use default
 // ----------------------------------------------------------
-@mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end, $content: false) {
+@mixin property($prop, $top, $end: $top, $bottom: $top, $start: $end) {
   @if $top == $end and $top == $bottom and $top == $start {
     @include multi-dir() {
       #{$prop}: $top;
@@ -257,14 +273,10 @@
       #{$prop}: $top $start $bottom $end;
     }
   } @else {
-    @if $content == true { // TODO check if @content exists instead
-      @content;
-    } @else {
-      @include property-horizontal($prop, $start, $end);
-      @include multi-dir() {
-        #{$prop}-top: $top;
-        #{$prop}-bottom: $bottom;
-      }
+    @include property-horizontal($prop, $start, $end);
+    @include multi-dir() {
+      #{$prop}-top: $top;
+      #{$prop}-bottom: $bottom;
     }
   }
 }
@@ -346,7 +358,11 @@
 // @param {string} $bottom-start
 // ----------------------------------------------------------
 @mixin border-radius($top-start, $top-end: $top-start, $bottom-end: $top-start, $bottom-start: $top-end) {
-  @include property(border-radius, $top-start, $top-end, $bottom-end, $bottom-start, true) {
+  @if $top-start == $top-end and $top-start == $bottom-end and $top-start == $bottom-start {
+    @include multi-dir() {
+      border-radius: $top-start;
+    }
+  } @else {
     @include ltr() {
       border-top-left-radius: $top-start;
       border-top-right-radius: $top-end;
@@ -422,3 +438,264 @@
     }
   }
 }
+
+@mixin background-position($horizontal, $horizontal-amount: null, $vertical: null, $vertical-amount: null) {
+  @if $horizontal == start or $horizontal == end {
+    $horizontal-ltr: null;
+    $horizontal-rtl: null;
+    @if $horizontal == start {
+      $horizontal-ltr: left;
+      $horizontal-rtl: right;
+    } @else {
+      $horizontal-ltr: right;
+      $horizontal-rtl: left;
+    }
+
+    @include ltr() {
+      background-position: $horizontal-ltr $horizontal-amount $vertical $vertical-amount;
+    }
+    @include rtl() {
+      background-position: $horizontal-rtl $horizontal-amount $vertical $vertical-amount;
+    }
+  } @else {
+    @include multi-dir() {
+      background-position: $horizontal $horizontal-amount $vertical $vertical-amount;
+    }
+  }
+}
+
+@mixin transform-origin($x-axis, $y-axis: null) {
+  @if $x-axis == start {
+    @include ltr() {
+      transform-origin: left $y-axis;
+    }
+    @include rtl() {
+      transform-origin: right $y-axis;
+    }
+  } @else if $x-axis == end {
+    @include ltr() {
+      transform-origin: right $y-axis;
+    }
+    @include rtl() {
+      transform-origin: left $y-axis;
+    }
+  } @else if $x-axis == left or $x-axis == right {
+    @include multi-dir() {
+      transform-origin: $x-axis $y-axis;
+    }
+  } @else {
+    @include ltr() {
+      transform-origin: $x-axis $y-axis;
+    }
+    @include rtl() {
+      transform-origin: calc(100% - #{$x-axis}) $y-axis;
+    }
+  }
+}
+
+// Add transform for all directions
+// @param {string} $transforms - comma separated list of transforms
+@mixin transform($transforms...) {
+  $extra: null;
+
+  $x: null;
+  $ltr-translate: null;
+  $rtl-translate: null;
+
+  @each $transform in $transforms {
+    @if (str-index($transform, translate3d)) {
+      $transform: str-replace($transform, 'translate3d(');
+      $transform: str-replace($transform, ')');
+
+      $coordinates: str-split($transform, ',');
+
+      $x: nth($coordinates, 1);
+      $y: nth($coordinates, 2);
+      $z: nth($coordinates, 3);
+
+      $ltr-translate: translate3d($x, $y, $z);
+      $rtl-translate: translate3d(calc(-1 * #{$x}), $y, $z);
+    } @else {
+      @if $extra == null {
+        $extra: $transform;
+      } @else {
+        $extra: $extra $transform;
+      }
+    }
+  }
+
+  @if $x == '0' or $x == null {
+    @include multi-dir() {
+      transform: $ltr-translate $extra;
+    }
+  } @else {
+    @include ltr() {
+      transform: $ltr-translate $extra;
+    }
+
+    @include rtl() {
+      transform: $rtl-translate $extra;
+    }
+  }
+}
+
+
+// Add safe-area transform for all directions
+// Used by item-reorder
+// @param {string} $transforms - comma separated list of transforms
+@mixin reorder-safe-translate($transforms...) {
+  $extra: null;
+
+  $x: null;
+  $ltr-translate: null;
+  $rtl-translate: null;
+
+  @each $transform in $transforms {
+    @if (str-index($transform, translate3d)) {
+      $transform: str-replace($transform, 'translate3d(');
+      $transform: str-replace($transform, ')');
+
+      $coordinates: str-split($transform, ',');
+
+      $x: nth($coordinates, 1);
+      $y: nth($coordinates, 2);
+      $z: nth($coordinates, 3);
+
+      $ltr-translate: translate3d(calc(-1 * constant(safe-area-inset-right)), 0, 0);
+      $rtl-translate: translate3d(constant(safe-area-inset-left), $y, $z);
+
+      $ltr-env-translate: translate3d(calc(-1 * env(safe-area-inset-right)), 0, 0);
+      $rtl-env-translate: translate3d(env(safe-area-inset-left), $y, $z);
+
+    } @else {
+      @if $extra == null {
+        $extra: $transform;
+      } @else {
+        $extra: $extra $transform;
+      }
+    }
+  }
+
+  @if $x == '0' or $x == null {
+    @include multi-dir() {
+      transform: $ltr-translate $extra;
+      transform: $ltr-env-translate $extra;
+    }
+  } @else {
+    @include ltr() {
+      transform: $ltr-translate $extra;
+      transform: $ltr-env-translate $extra;
+    }
+
+    @include rtl() {
+      transform: $rtl-translate $extra;
+      transform: $rtl-env-translate $extra;
+    }
+  }
+}
+
+// Add safe-area-padding for all directions
+// @param {string} $top
+// @param {string} $end
+// @param {string} $bottom
+// @param {string} $start
+// ----------------------------------------------------------
+@mixin safe-area-padding($top, $end: $top, $bottom: $top, $start: $end) {
+  $safe-area-start: null;
+  $safe-area-end: null;
+  $safe-area-start-env: null;
+  $safe-area-end-env: null;
+
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+  }
+  @if ($end) {
+    $safe-area-end-env: calc(constant(safe-area-inset-right) + #{$end});
+    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
+  }
+
+  @include padding($top, $end, $bottom, $start);
+
+  @media screen and (orientation: landscape) {
+    @include padding($top, $safe-area-end, $bottom, $safe-area-start);
+    @include padding($top, $safe-area-end-env, $bottom, $safe-area-start-env);
+  }
+}
+
+
+// Add safe area padding horizontal
+// @param {string} $start
+// @param {string} $end
+// ----------------------------------------------------------
+@mixin safe-area-padding-horizontal($start, $end: $start) {
+  $safe-area-end: null;
+  $safe-area-start: null;
+  $safe-area-start-env: null;
+  $safe-area-end-env: null;
+
+  @if ($end) {
+    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
+    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
+  }
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+  }
+
+  @include padding-horizontal($start, $end);
+
+  @media screen and (orientation: landscape) {
+    @include padding-horizontal($safe-area-start, $safe-area-end);
+    @include padding-horizontal($safe-area-start-env, $safe-area-end-env);
+  }
+}
+
+
+// Add safe position horizontal
+// @param {string} $start - amount to position start
+// @param {string} $end - amount to left: 0; end
+// ----------------------------------------------------------
+@mixin safe-position-horizontal($start: null, $end: null){
+  $safe-area-start: null;
+  $safe-area-end: null;
+  $safe-area-start-env: null;
+  $safe-area-end-env: null;
+  @if ($start) {
+    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
+    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+  }
+  @if ($end) {
+    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
+    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
+  }
+
+  @if $safe-area-start == $safe-area-end {
+    @include multi-dir() {
+      left: $safe-area-start;
+      right: $safe-area-end;
+    }
+    @include multi-dir() {
+      left: $safe-area-start-env;
+      right: $safe-area-end-env;
+    }
+  } @else {
+    @include ltr() {
+      left: $safe-area-start;
+      right: $safe-area-end;
+    }
+    @include ltr() {
+      left: $safe-area-start-env;
+      right: $safe-area-end-env;
+    }
+    @include rtl() {
+      left: $safe-area-end;
+      right: $safe-area-start;
+    }
+    @include rtl() {
+      left: $safe-area-end-env;
+      right: $safe-area-start-env;
+    }
+  }
+}
+

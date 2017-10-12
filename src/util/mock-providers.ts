@@ -10,7 +10,6 @@ import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
 import { Haptic } from '../tap-click/haptic';
 import { IonicApp } from '../components/app/app-root';
-import { Keyboard } from '../platform/keyboard';
 import { Menu } from '../components/menu/menu';
 import { NavOptions } from '../navigation/nav-util';
 import { NavControllerBase } from '../navigation/nav-controller-base';
@@ -31,7 +30,7 @@ import { Item } from '../components/item/item';
 import { Form } from './form';
 
 
-export function mockConfig(config?: any, url: string = '/', platform?: Platform) {
+export function mockConfig(config?: any, _url: string = '/', platform?: Platform) {
   const c = new Config();
   const p = platform || mockPlatform();
   c.init(config, p);
@@ -222,7 +221,7 @@ export function mockContent(): Content {
 }
 
 export function mockZone(): NgZone {
-  return new NgZone(false);
+  return new NgZone({enableLongStackTrace: false});
 }
 
 export function mockChangeDetectorRef(): ChangeDetectorRef {
@@ -287,9 +286,9 @@ export class MockElement {
     this.attributes[name] = val;
   }
 
-  addEventListener(type: string, listener: Function, options?: any) { }
+  addEventListener(_type: string, _listener: Function, _options?: any) { }
 
-  removeEventListener(type: string, listener: Function, options?: any) { }
+  removeEventListener(_type: string, _listener: Function, _options?: any) { }
 
   removeAttribute(name: string) {
     delete this.attributes[name];
@@ -359,7 +358,8 @@ export function mockLocation(): Location {
     path: () => { return ''; },
     subscribe: () => {},
     go: () => {},
-    back: () => {}
+    back: () => {},
+    prepareExternalUrl: () => {}
   };
   return location;
 }
@@ -390,8 +390,8 @@ export function mockComponentRef(): ComponentRef<any> {
 }
 
 export function mockDeepLinker(linkConfig: DeepLinkConfig = null, app?: App) {
-  let serializer = new UrlSerializer(linkConfig);
-
+  app = app || mockApp(mockConfig(), mockPlatform());
+  let serializer = new UrlSerializer(app, linkConfig);
   let location = mockLocation();
 
   return new DeepLinker(app || mockApp(), serializer, location, null, null);
@@ -403,7 +403,6 @@ export function mockNavController(): NavControllerBase {
   let app = mockApp(config, platform);
   let zone = mockZone();
   let dom = mockDomController(platform);
-  let keyboard = new Keyboard(config, platform, zone, dom);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let componentFactoryResolver: any = null;
@@ -415,7 +414,6 @@ export function mockNavController(): NavControllerBase {
     app,
     config,
     platform,
-    keyboard,
     elementRef,
     zone,
     renderer,
@@ -434,7 +432,7 @@ export function mockNavController(): NavControllerBase {
 
   (<any>nav)._orgViewInsert = nav._viewAttachToDOM;
 
-  nav._viewAttachToDOM = function(view: ViewController, componentRef: ComponentRef<any>, viewport: ViewContainerRef) {
+  nav._viewAttachToDOM = function(view: ViewController, componentRef: ComponentRef<any>, _viewport: ViewContainerRef) {
     let mockedViewport: any = {
       insert: () => { }
     };
@@ -447,12 +445,11 @@ export function mockNavController(): NavControllerBase {
 export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): OverlayPortal {
   let zone = mockZone();
   let dom = mockDomController(plt);
-  let keyboard = new Keyboard(config, plt, zone, dom);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let componentFactoryResolver: any = null;
   let gestureCtrl = new GestureController(app);
-  let serializer = new UrlSerializer(null);
+  let serializer = new UrlSerializer(app, null);
   let location = mockLocation();
   let deepLinker = new DeepLinker(app, serializer, location, null, null);
 
@@ -460,7 +457,6 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
     app,
     config,
     plt,
-    keyboard,
     elementRef,
     zone,
     renderer,
@@ -474,13 +470,12 @@ export function mockOverlayPortal(app: App, config: Config, plt: MockPlatform): 
   );
 }
 
-export function mockTab(parentTabs: Tabs): Tab {
+export function mockTab(parentTabs: Tabs, overrideLoad: boolean = true): Tab {
   let platform = mockPlatform();
   let config = mockConfig(null, '/', platform);
   let app = (<any>parentTabs)._app || mockApp(config, platform);
   let zone = mockZone();
   let dom = mockDomController(platform);
-  let keyboard = new Keyboard(config, platform, zone, dom);
   let elementRef = mockElementRef();
   let renderer = mockRenderer();
   let changeDetectorRef = mockChangeDetectorRef();
@@ -493,7 +488,6 @@ export function mockTab(parentTabs: Tabs): Tab {
     app,
     config,
     platform,
-    keyboard,
     elementRef,
     zone,
     renderer,
@@ -506,9 +500,11 @@ export function mockTab(parentTabs: Tabs): Tab {
     null
   );
 
-  tab.load = (opts: any, cb: Function) => {
-    cb();
-  };
+  if (overrideLoad) {
+    tab.load = (_opts: any) => {
+      return Promise.resolve();
+    };
+  }
 
   return tab;
 }
@@ -577,7 +573,7 @@ export class MockView3 {}
 export class MockView4 {}
 export class MockView5 {}
 
-export function noop(): any { return 'noop'; };
+export function noop(): any { return 'noop'; }
 
 export function mockModuleLoader(ngModuleLoader?: NgModuleLoader): ModuleLoader {
   ngModuleLoader = ngModuleLoader || mockNgModuleLoader();
@@ -590,9 +586,9 @@ export function mockNgModuleLoader(): NgModuleLoader {
 
 export function mockOverlay() {
   return {
-    present: (opts?: NavOptions) => { return Promise.resolve(); },
-    dismiss: (data?: any, role?: string, navOptions?: NavOptions) => { return Promise.resolve(); },
-    onDidDismiss: (callback: Function) => { },
-    onWillDismiss: (callback: Function) => { }
+    present: (_opts?: NavOptions) => { return Promise.resolve(); },
+    dismiss: (_data?: any, _role?: string, _navOptions?: NavOptions) => { return Promise.resolve(); },
+    onDidDismiss: (_callback: Function) => { },
+    onWillDismiss: (_callback: Function) => { }
   };
 }

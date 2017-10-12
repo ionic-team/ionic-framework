@@ -3,7 +3,7 @@ import { dirname, join } from 'path';
 
 import { MessageToWorker, WorkerProcess } from './interfaces';
 
-export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean) {
+export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean, minifyCss: boolean, minifyJs: boolean, optimizeJs: boolean) {
   return new Promise((resolve, reject) => {
 
     const msgToWorker: MessageToWorker = {
@@ -17,7 +17,10 @@ export function runWorker(pathToAppScripts: string, debug: boolean, appEntryPoin
       ionicAngularDir: ionicAngularDir,
       sassConfigPath: sassConfigPath,
       copyConfigPath: copyConfigPath,
-      isDev: isDev
+      isDev: isDev,
+      minifyCss: minifyCss,
+      minifyJs: minifyJs,
+      optimizeJs: optimizeJs
     };
 
     const worker = <ChildProcess>createWorker(msgToWorker);
@@ -82,6 +85,18 @@ export function createWorker(msg: MessageToWorker): any {
 
     if (msg.debug) {
       scriptArgs.push('--debug');
+    }
+
+    if (msg.minifyJs) {
+      scriptArgs.push('--minifyJs');
+    }
+
+    if (msg.minifyCss) {
+      scriptArgs.push('--minifyCss');
+    }
+
+    if (msg.optimizeJs) {
+      scriptArgs.push('--optimizeJs');
     }
 
     const workerModule = join(process.cwd(), 'node_modules', '@ionic', 'app-scripts', 'bin', 'ionic-app-scripts.js');

@@ -4,7 +4,7 @@ import { isPresent } from '../../util/util';
 import { PORTAL_LOADING } from '../app/app-constants';
 import { LoadingCmp } from './loading-component';
 import { LoadingOptions } from './loading-options';
-import { LoadingPopIn, LoadingPopOut, LoadingMdPopIn, LoadingMdPopOut, LoadingWpPopIn, LoadingWpPopOut } from './loading-transitions';
+import { LoadingMdPopIn, LoadingMdPopOut, LoadingPopIn, LoadingPopOut, LoadingWpPopIn, LoadingWpPopOut } from './loading-transitions';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
 
@@ -16,6 +16,7 @@ export class Loading extends ViewController {
 
   constructor(app: App, opts: LoadingOptions = {}, config: Config) {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
+    opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : false;
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
     super(LoadingCmp, opts, null);

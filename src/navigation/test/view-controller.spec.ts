@@ -4,7 +4,7 @@ import { STATE_ATTACHED } from '../nav-util';
 describe('ViewController', () => {
 
   describe('willEnter', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
       subscription = viewController.willEnter.subscribe((event: any) => {
@@ -12,7 +12,7 @@ describe('ViewController', () => {
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
@@ -22,7 +22,7 @@ describe('ViewController', () => {
   });
 
   describe('didEnter', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
       subscription = viewController.didEnter.subscribe((event: any) => {
@@ -30,7 +30,7 @@ describe('ViewController', () => {
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
@@ -40,7 +40,7 @@ describe('ViewController', () => {
   });
 
   describe('willLeave', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
       subscription = viewController.willLeave.subscribe((event: any) => {
@@ -48,7 +48,7 @@ describe('ViewController', () => {
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
@@ -58,7 +58,7 @@ describe('ViewController', () => {
   });
 
   describe('didLeave', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
       subscription = viewController.didLeave.subscribe((event: any) => {
@@ -66,7 +66,7 @@ describe('ViewController', () => {
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act
@@ -75,14 +75,14 @@ describe('ViewController', () => {
   });
 
   describe('willUnload', () => {
-    it('should emit LifeCycleEvent when called with component data', (done) => {
+    it('should emit LifeCycleEvent when called with component data', (done: Function) => {
       // arrange
       let viewController = mockView();
       subscription = viewController.willUnload.subscribe((event: any) => {
         expect(event).toEqual(null);
         done();
       }, (err: any) => {
-        done();
+        done(err);
       });
 
       // act

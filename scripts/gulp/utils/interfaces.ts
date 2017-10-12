@@ -2,7 +2,7 @@
 export interface WorkerProcess {
   appEntryPoint: string;
   worker: any;
-};
+}
 
 export interface MessageToWorker {
   pathToAppScripts: string;
@@ -16,4 +16,8 @@ export interface MessageToWorker {
   sassConfigPath: string;
   copyConfigPath: string;
   isDev: boolean;
-};
+  minifyJs: boolean;
+  minifyCss: boolean;
+  optimizeJs: boolean;
+}
+

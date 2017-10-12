@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -6,12 +6,12 @@ import { DomController } from '../../platform/dom-controller';
 import { Img } from '../img/img-interface';
 import { Ion } from '../ion';
 import { isTabs } from '../../navigation/nav-util';
-import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
+import { assert, isTrueProperty, removeArrayItem } from '../../util/util';
 import { Keyboard } from '../../platform/keyboard';
 import { NavController } from '../../navigation/nav-controller';
 import { Content as IContent, Tabs } from '../../navigation/nav-interfaces';
 import { Platform } from '../../platform/platform';
-import { ScrollView, ScrollEvent } from '../../util/scroll-view';
+import { ScrollEvent, ScrollView } from '../../util/scroll-view';
 import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';
@@ -31,7 +31,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  * The Content component provides an easy to use content area with
  * some useful methods to control the scrollable area. There should
  * only be one content in a single view component. If additional scrollable
- * elements are need, use [ionScroll](../../scroll/Scroll).
+ * elements are needed, use [ionScroll](../../scroll/Scroll).
  *
  *
  * The content area can also implement pull-to-refresh with the
@@ -63,7 +63,44 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  *
  * @advanced
  *
- * Resizing the content. If the height of `ion-header`, `ion-footer` or `ion-tabbar`
+ * ### Scroll Events
+ *
+ * Scroll events happen outside of Angular's Zones. This is for performance reasons. So
+ * if you're trying to bind a value to any scroll event, it will need to be wrapped in
+ * a `zone.run()`
+ *
+ * ```ts
+ * import { Component, NgZone } from '@angular/core';
+ * @Component({
+ *   template: `
+ *     <ion-header>
+ *       <ion-navbar>
+ *         <ion-title>{{scrollAmount}}</ion-title>
+ *       </ion-navbar>
+ *     </ion-header>
+ *     <ion-content (ionScroll)="scrollHandler($event)">
+ *        <p> Some realllllllly long content </p>
+ *     </ion-content>
+ * `})
+ * class E2EPage {
+ *  public scrollAmount = 0;
+ *  constructor( public zone: NgZone){}
+ *  scrollHandler(event) {
+ *    console.log(`ScrollEvent: ${event}`)
+ *    this.zone.run(()=>{
+ *      // since scrollAmount is data-binded,
+ *      // the update needs to happen in zone
+ *      this.scrollAmount++
+ *    })
+ *  }
+ * }
+ * ```
+ *
+ * This goes for any scroll event, not just `ionScroll`.
+ *
+ * ### Resizing the content
+ *
+ * If the height of `ion-header`, `ion-footer` or `ion-tabbar`
  * changes dynamically, `content.resize()` has to be called in order to update the
  * layout of `Content`.
  *
@@ -130,7 +167,8 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
-    '[class.statusbar-padding]': 'statusbarPadding'
+    '[class.statusbar-padding]': 'statusbarPadding',
+    '[class.has-refresher]': '_hasRefresher'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
@@ -174,6 +212,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   _scLsn: Function;
   /** @internal */
   _fullscreen: boolean;
+  /** @internal */
+  _hasRefresher: boolean = false;
   /** @internal */
   _footerEle: HTMLElement;
   /** @internal */
@@ -630,6 +670,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
    * Tell the content to recalculate its dimensions. This should be called
    * after dynamically adding/removing headers, footers, or tabs.
    */
+  @HostListener('window:resize')
   resize() {
     this._dom.read(this._readDimensions.bind(this));
     this._dom.write(this._writeDimensions.bind(this));
@@ -743,6 +784,11 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
 
     } else if (this._tabsPlacement === 'bottom') {
       this._cBottom += this._tabbarHeight;
+    }
+
+    // Refresher uses a border which should be hidden unless pulled
+    if (this._hasRefresher) {
+      this._cTop -= 1;
     }
 
     // Fixed content shouldn't include content padding

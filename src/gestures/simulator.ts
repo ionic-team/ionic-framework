@@ -69,7 +69,7 @@ export class Simulate {
   velocity(vel: number): Simulate {
     let p1 = this.getLastPoint();
     let p2 = this.getPreviousPoint();
-    let d = distance(p1, p2);
+    let d = distance(p1.coord, p2.coord);
     return this.duration(d / vel);
   }
 

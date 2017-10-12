@@ -2,8 +2,8 @@
 import { BaseInput } from '../base-input';
 import { Form } from '../form';
 import { Item } from '../../components/item/item';
-import { commonInputTest, ANY_CORPUS } from '../input-tester';
-import { mockConfig, mockPlatform, mockElementRef, mockRenderer, mockForm } from '../mock-providers';
+import { ANY_CORPUS, commonInputTest } from '../input-tester';
+import { mockConfig, mockElementRef, mockForm, mockPlatform, mockRenderer } from '../mock-providers';
 
 let platform: any;
 let config: any;
