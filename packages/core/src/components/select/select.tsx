@@ -61,9 +61,10 @@ export class Select {
   @Prop() placeholder: string;
 
   /**
-   * @input {any} Any additional options that the `alert` or `action-sheet` interface can take.
-   * See the [AlertController API docs](../../alert/AlertController/#create) and the
-   * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) for the
+   * @input {any} Any additional options that the `alert`, `action-sheet` or `popover` interface
+   * can take. See the [AlertController API docs](../../alert/AlertController/#create), the
+   * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
+   * [PopoverController API docs](../../popover/PopoverController/#create) for the
    * create options for each interface.
    */
   @Prop() selectOptions: any = {};

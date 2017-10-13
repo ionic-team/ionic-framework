@@ -22,6 +22,8 @@ export function isFunction(v: any): v is (Function) { return typeof v === 'funct
 
 export function isStringOrNumber(v: any): v is (string | number) { return isString(v) || isNumber(v); }
 
+export function isBlank(val: any): val is null { return val === undefined || val === null; }
+
 /** @hidden */
 export function isCheckedProperty(a: any, b: any): boolean {
   if (a === undefined || a === null || a === '') {
