@@ -439,19 +439,10 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     }
 
     let needClean = false;
-    var lastRecord = this._recordSize;
 
     changes.forEachOperation((_, pindex, cindex) => {
-
-      // add new record after current position
-      if (pindex === null && (cindex < lastRecord)) {
-        console.debug('virtual-scroll', 'adding record before current position, slow path');
-        needClean = true;
-        return;
-      }
-      // remove record after current position
-      if (pindex < lastRecord && cindex === null) {
-        console.debug('virtual-scroll', 'removing record before current position, slow path');
+      if (pindex === null || cindex === null) {
+        console.debug('virtual-scroll', 'record added or removed, slow path');
         needClean = true;
         return;
       }
@@ -467,18 +458,14 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
    * @hidden
    */
   readUpdate(needClean: boolean) {
-    if (needClean) {
-      // reset everything
-      console.debug('virtual-scroll', 'readUpdate: slow path');
-      this._cells.length = 0;
-      // this._nodes.length = 0;
-      // this._itmTmp.viewContainer.clear();
+    console.debug('virtual-scroll', 'readUpdate need clean:', needClean);
+    if (!needClean) return;
 
-      // ******** DOM READ ****************
-      this.calcDimensions();
-    } else {
-      console.debug('virtual-scroll', 'readUpdate: fast path');
-    }
+    // clear cells
+    this._cells.length = 0;
+
+    // ******** DOM READ ****************
+    this.calcDimensions();
   }
 
   /**
