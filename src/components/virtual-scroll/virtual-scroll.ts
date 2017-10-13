@@ -406,22 +406,6 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
   }
 
   /**
-   * @hidden
-   */
-  firstRecord(): number {
-    const cells = this._cells;
-    return (cells.length > 0) ? cells[0].record : 0;
-  }
-
-  /**
-   * @hidden
-   */
-  lastRecord(): number {
-    const cells = this._cells;
-    return (cells.length > 0) ? cells[cells.length - 1].record : 0;
-  }
-
-  /**
   * @hidden
   */
   ngOnChanges(changes: SimpleChanges): void {
