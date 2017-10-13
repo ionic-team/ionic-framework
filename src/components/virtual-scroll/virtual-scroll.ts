@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffer, IterableDiffers, NgZone, OnChanges, OnDestroy, Renderer, SimpleChanges, TrackByFunction } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffer, IterableDiffers, NgZone, OnChanges, OnDestroy, Renderer2, SimpleChanges, TrackByFunction } from '@angular/core';
 
 import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, populateNodeData, processRecords, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
@@ -376,7 +376,7 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
   constructor(
     private _iterableDiffers: IterableDiffers,
     private _elementRef: ElementRef,
-    private _renderer: Renderer,
+    private _renderer: Renderer2,
     private _zone: NgZone,
     private _cd: ChangeDetectorRef,
     private _content: Content,
@@ -767,7 +767,11 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
   private _setHeight(newVirtualHeight: number) {
     if (newVirtualHeight !== this._vHeight) {
       // ******** DOM WRITE ****************
-      this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
+      if (newVirtualHeight > 0) {
+        this._renderer.setStyle(this._elementRef.nativeElement, 'height', `${newVirtualHeight}px`);
+      } else {
+        this._renderer.removeStyle(this._elementRef.nativeElement, 'height');
+      }
 
       this._vHeight = newVirtualHeight;
       console.debug('virtual-scroll', 'height', newVirtualHeight);
@@ -790,7 +794,11 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
    * @hidden
    */
   setElementClass(className: string, add: boolean) {
-    this._renderer.setElementClass(this._elementRef.nativeElement, className, add);
+    if (add) {
+      this._renderer.addClass(this._elementRef.nativeElement, className);
+    } else {
+      this._renderer.removeClass(this._elementRef.nativeElement, className);
+    }
   }
 
   /**
