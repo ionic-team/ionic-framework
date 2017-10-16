@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, Prop} from '@stencil/core';
-import { KeyboardController } from './keyboard-interfaces';
 import { Config } from '../..';
 import { focusOutActiveElement, getDocument, getWindow, hasFocusedTextInput } from '../../utils/helpers';
 import { KEY_TAB } from './keys';
@@ -15,7 +14,7 @@ let timeoutValue: number = null;
 @Component({
   tag: 'ion-keyboard-controller'
 })
-export class IonKeyboardController implements KeyboardController {
+export class IonKeyboardController {
 
   @Prop({context: 'config'}) config: Config;
   @Prop({context: 'dom'}) domController: any;
@@ -38,7 +37,7 @@ export class IonKeyboardController implements KeyboardController {
   }
 }
 
-export function onCloseImpl(keyboardController: KeyboardController, callback: Function, pollingInterval: number, maxPollingChecks: number): Promise<any> {
+export function onCloseImpl(keyboardController: IonKeyboardController, callback: Function, pollingInterval: number, maxPollingChecks: number): Promise<any> {
   let numChecks = 0;
 
   const promise: Promise<any> = callback ? null : new Promise((resolve) => {
@@ -60,8 +59,8 @@ export function onCloseImpl(keyboardController: KeyboardController, callback: Fu
   return promise;
 }
 
-export function componentDidLoadImpl(keyboardController: KeyboardController) {
-  focusOutline(getDocument(), keyboardController.config.get('focusOutline'), keyboardController);
+export function componentDidLoadImpl(keyboardController: IonKeyboardController) {
+  focusOutline(getDocument(), keyboardController.config.get('focusOutline'));
   if (keyboardController.config.getBoolean('keyboardResizes', false)) {
     listenV2(getWindow(), keyboardController);
   } else {
@@ -69,7 +68,7 @@ export function componentDidLoadImpl(keyboardController: KeyboardController) {
   }
 }
 
-export function listenV2(win: Window, keyboardController: KeyboardController) {
+export function listenV2(win: Window, keyboardController: IonKeyboardController) {
   v2KeyboardWillShowHandler = () => {
     keyboardController.keyboardWillShow.emit();
   };
@@ -91,7 +90,7 @@ export function listenV2(win: Window, keyboardController: KeyboardController) {
   win.addEventListener('keyboardDidHide', v2KeyboardDidHideHandler);
 }
 
-export function listenV1(win: Window, keyboardController: KeyboardController) {
+export function listenV1(win: Window, keyboardController: IonKeyboardController) {
   v1keyboardHide = () => {
     blurActiveInput(true, keyboardController);
   };
@@ -103,7 +102,7 @@ export function listenV1(win: Window, keyboardController: KeyboardController) {
   win.addEventListener('native.keyboardshow', v1keyboardShow);
 }
 
-export function blurActiveInput(shouldBlur: boolean, keyboardController: KeyboardController) {
+export function blurActiveInput(shouldBlur: boolean, keyboardController: IonKeyboardController) {
   clearTimeout(timeoutValue);
   if (shouldBlur) {
     timeoutValue = setTimeout(() => {
@@ -114,7 +113,7 @@ export function blurActiveInput(shouldBlur: boolean, keyboardController: Keyboar
   }
 }
 
-export function focusOutline(doc: Document, value: boolean, keyboardController: KeyboardController) {
+export function focusOutline(doc: Document, value: boolean) {
   /* Focus Outline
   * --------------------------------------------------
   * By default, when a keydown event happens from a tab key, then
@@ -130,7 +129,7 @@ export function focusOutline(doc: Document, value: boolean, keyboardController: 
   let isKeyInputEnabled = false;
 
   const cssClass = () => {
-    keyboardController.dom.write(() => {
+    window.requestAnimationFrame(() => {
       doc.body.classList[isKeyInputEnabled ? 'add' : 'remove']('focus-outline');
     });
   };
