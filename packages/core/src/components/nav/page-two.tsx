@@ -21,7 +21,7 @@ export class PageTwo {
     nav.pop();
   }
 
-  render() {
+  protected render() {
     return [<ion-header>
       <ion-navbar>
         <ion-title>Page Two</ion-title>

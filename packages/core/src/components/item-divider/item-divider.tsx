@@ -13,7 +13,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class ItemDivider {
-  render() {
+  protected render() {
     return [
       <slot name='start'></slot>,
       <div class='item-inner'>

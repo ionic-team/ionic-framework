@@ -266,7 +266,7 @@ export class Popover {
     }
   }
 
-  render() {
+  protected render() {
     const ThisComponent = this.component;
 
     const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');

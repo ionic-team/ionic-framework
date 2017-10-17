@@ -55,7 +55,7 @@ export class Router {
     console.log('Hash change', e)
   }
 
-  render() {
+  protected render() {
     console.log('<ion-router> rendering')
     return (
       <slot></slot>

@@ -163,7 +163,7 @@ export class Button {
    */
   @Prop() color: string;
 
-  render() {
+  protected render() {
     const buttonType = this.buttonType;
     const mode = this.mode;
 

@@ -99,7 +99,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class Chip {
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

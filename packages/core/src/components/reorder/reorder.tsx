@@ -12,7 +12,7 @@ export class ItemReorder {
     this.hasContent = this.ele.childElementCount > 0;
   }
 
-  render() {
+  protected render() {
     // TODO: https://github.com/ionic-team/stencil/issues/171
     if (this.hasContent === true) {
       return <slot></slot>;

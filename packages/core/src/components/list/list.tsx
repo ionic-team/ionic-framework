@@ -18,7 +18,7 @@ export class List {
 
   @State() openContainer: ItemSliding;
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 

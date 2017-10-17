@@ -372,7 +372,7 @@ export class ReorderGroup {
     };
   }
 
-  render() {
+  protected render() {
     return (
       <ion-gesture {...{
         disableScroll: true,

@@ -13,7 +13,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class CardTitle {
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

@@ -94,7 +94,7 @@ export class Tab {
     this.ionTabDidLoad.emit({ tab: this });
   }
 
-  render() {
+  protected render() {
     const RootComponent = this.root;
     return [
       <RootComponent />,

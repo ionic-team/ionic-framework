@@ -46,7 +46,7 @@ export class TabButton {
     };
   }
 
-  render() {
+  protected render() {
     if (!this.tab) {
       return null;
     }

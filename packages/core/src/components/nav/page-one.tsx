@@ -16,7 +16,7 @@ export class PageOne {
     nav.push('page-two');
   }
 
-  render() {
+  protected render() {
     return [<ion-header>
       <ion-navbar>
         <ion-title>Page One</ion-title>

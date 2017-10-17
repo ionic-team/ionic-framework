@@ -40,7 +40,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class Note {
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

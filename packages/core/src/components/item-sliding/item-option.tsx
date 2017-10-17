@@ -34,7 +34,7 @@ export class ItemOption {
     return !!ele;
   }
 
-  render() {
+  protected render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'item-option-button');
 
     const TagType = this.href ? 'a' : 'button';

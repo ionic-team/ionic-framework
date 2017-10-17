@@ -98,7 +98,7 @@ export class FabContainer {
     fab.close();
   }
 
-  render() {
+  protected render() {
     return (
       <slot></slot>
     );

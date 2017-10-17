@@ -349,7 +349,7 @@ export class Searchbar {
 
   // TODO remove the ion-buttons and replace with native buttons to remove
   // the button dependency
-  render() {
+  protected render() {
     return [
       <div class='searchbar-input-container'>
         <ion-button

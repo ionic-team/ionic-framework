@@ -134,7 +134,7 @@ export class Segment {
     };
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

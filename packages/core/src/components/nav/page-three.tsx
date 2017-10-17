@@ -16,7 +16,7 @@ export class PageThree {
     nav.pop();
   }
 
-  render() {
+  protected render() {
     return [<ion-header>
       <ion-navbar>
         <ion-title>Page Three</ion-title>

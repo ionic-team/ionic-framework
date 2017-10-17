@@ -32,7 +32,7 @@ export class Route {
 */
   }
 
-  render() {
+  protected render() {
 /*
     this.match.url = this.routerInstance.routeMatch.url;
     const match = this.match

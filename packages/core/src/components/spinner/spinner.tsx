@@ -167,7 +167,7 @@ export class Spinner {
     };
   }
 
-  render() {
+  protected render() {
     const name = this.getName();
 
     const spinner = SPINNERS[name] || SPINNERS['lines'];

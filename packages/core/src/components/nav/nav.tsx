@@ -124,7 +124,7 @@ export class IonNav implements Nav {
   }
 
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

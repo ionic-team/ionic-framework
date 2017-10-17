@@ -265,7 +265,7 @@ export class SplitPane {
     };
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 

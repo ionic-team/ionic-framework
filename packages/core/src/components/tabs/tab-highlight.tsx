@@ -5,7 +5,7 @@ import { Component } from '@stencil/core';
   tag: 'ion-tab-highlight'
 })
 export class TabHighlight {
-  render() {
+  protected render() {
     return (
       <div></div>
     );

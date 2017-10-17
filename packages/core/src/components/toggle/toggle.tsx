@@ -149,7 +149,7 @@ export class Toggle implements BooleanInputComponent {
     };
   }
 
-  render() {
+  protected render() {
     return (
       <ion-gesture {...{
         'canStart': this.canStart.bind(this),

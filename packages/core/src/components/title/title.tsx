@@ -52,7 +52,7 @@ export class ToolbarTitle {
   mode: string;
   color: string;
 
-  render() {
+  protected render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'toolbar-title');
 
     return [

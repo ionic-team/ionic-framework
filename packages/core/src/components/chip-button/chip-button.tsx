@@ -72,7 +72,7 @@ export class ChipButton {
     return classList;
   }
 
-  render() {
+  protected render() {
     const buttonType = 'chip-button';
 
     const hostClasses = getElementClassObject(this.el.classList);

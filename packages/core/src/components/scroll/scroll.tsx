@@ -341,7 +341,7 @@ export class Scroll {
     this.gesture = this.detail = this.detail.event = null;
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 

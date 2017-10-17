@@ -17,7 +17,7 @@ export class Buttons {
     }
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

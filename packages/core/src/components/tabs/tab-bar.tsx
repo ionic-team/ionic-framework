@@ -36,7 +36,7 @@ export class TabBar {
     this.onTabSelected && this.onTabSelected(tab, index);
   }
 
-  render() {
+  protected render() {
     return (
       <div class="tabbar" role="tablist">
         {this.tabs.map((tab, index) => {

@@ -68,7 +68,7 @@ export class IonApp implements App {
     return null;
   }
 
-  render() {
+  protected render() {
     return ([
       <slot></slot>
     ]);

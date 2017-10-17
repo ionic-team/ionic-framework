@@ -104,7 +104,7 @@ export class Item {
     return this.itemId + '-' + (++this.ids);
   }
 
-  render() {
+  protected render() {
     let childStyles = {};
 
     for (var key in this.itemStyles) {

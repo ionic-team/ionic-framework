@@ -177,7 +177,7 @@ export class RadioGroup {
     };
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

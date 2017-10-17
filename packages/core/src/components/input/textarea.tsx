@@ -298,7 +298,7 @@ export class Textarea implements TextareaComponent {
   }
 
 
-  render() {
+  protected render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
     // TODO aria-labelledby={this.item.labelId}
 

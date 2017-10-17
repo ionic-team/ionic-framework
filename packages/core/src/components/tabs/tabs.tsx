@@ -85,7 +85,7 @@ export class Tabs {
     this.ionChange && this.ionChange(tab);
   }
 
-  render() {
+  protected render() {
     return [
       <ion-tab-bar
         tabs={this.tabs}

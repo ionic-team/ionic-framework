@@ -13,7 +13,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class Thumbnail {
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

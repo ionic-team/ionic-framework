@@ -8,7 +8,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class Header {
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

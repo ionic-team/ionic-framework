@@ -78,7 +78,7 @@ export class Content {
   @Prop() fullscreen: boolean = false;
 
 
-  render() {
+  protected render() {
     const props: any = {};
     const scrollStyle: any = {};
 

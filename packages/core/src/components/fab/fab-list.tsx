@@ -53,7 +53,7 @@ export class FabList {
     };
   }
 
-  render() {
+  protected render() {
     return (
       <slot></slot>
     );

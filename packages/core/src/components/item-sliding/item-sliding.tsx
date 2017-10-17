@@ -485,7 +485,7 @@ export class ItemSliding {
     };
   }
 
-  render() {
+  protected render() {
     return (
       <ion-gesture {...{
         'canStart': this.canStart.bind(this),

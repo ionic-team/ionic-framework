@@ -32,7 +32,7 @@ export class SelectOption {
     return this.el.textContent || '';
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 

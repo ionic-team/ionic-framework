@@ -21,7 +21,7 @@ export class RouteLink {
     */
   }
 
-  render() {
+  protected render() {
     /*
     const router = document.querySelector(this.router);
     const match = router.match

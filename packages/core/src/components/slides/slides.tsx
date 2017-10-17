@@ -133,7 +133,7 @@ export class Slides {
   @Prop() keyboardControl: boolean;
 
 
-  render() {
+  protected render() {
     return (
       <div class='swiper-container' data-dir='rtl'>
         <div class='swiper-wrapper'>

@@ -55,7 +55,7 @@ export class ItemOptions {
     return this.el.offsetWidth;
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

@@ -180,7 +180,7 @@ export class Menu {
     return this.isRightSide ? 'right' : 'left';
   }
 
-  render() {
+  protected render() {
     return ([
       <div class='menu-inner'>
         <slot></slot>

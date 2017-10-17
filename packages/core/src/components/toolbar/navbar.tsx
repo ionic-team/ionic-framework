@@ -78,7 +78,7 @@ export class Navbar {
     };
   }
 
-  render() {
+  protected render() {
     const backButtonIcon = this.backButtonIcon || this.config.get('backButtonText', 'Back');
     const backButtonText = this.backButtonText || this.config.get('backButtonIcon', 'Back');
 

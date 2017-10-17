@@ -164,7 +164,7 @@ export class Radio {
     };
   }
 
-  render() {
+  protected render() {
     const radioClasses: CssClassMap = {
       'radio-icon': true,
       'radio-checked': this.checked

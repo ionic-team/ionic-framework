@@ -369,7 +369,7 @@ export class Select {
     };
   }
 
-  render() {
+  protected render() {
     let addPlaceholderClass = false;
 
     // If selected text has been passed in, use that first

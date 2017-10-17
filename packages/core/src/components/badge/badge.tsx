@@ -39,7 +39,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class Badge {
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

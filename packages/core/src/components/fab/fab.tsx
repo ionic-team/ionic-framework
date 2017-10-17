@@ -151,7 +151,7 @@ export class FabButton {
     ];
   }
 
-  render() {
+  protected render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab');
     const hostClasses = getElementClassObject(this.el.classList);
 

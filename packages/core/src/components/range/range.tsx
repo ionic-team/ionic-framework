@@ -329,7 +329,7 @@ export class Range implements BaseInputComponent {
     };
   }
 
-  render() {
+  protected render() {
     return [
       <slot name='range-start' />,
 

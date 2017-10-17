@@ -122,7 +122,7 @@ export class Toolbar {
     };
   }
 
-  render() {
+  protected render() {
     const backgroundCss = createThemedClasses(this.mode, this.color, 'toolbar-background');
     const contentCss = createThemedClasses(this.mode, this.color, 'toolbar-content');
 

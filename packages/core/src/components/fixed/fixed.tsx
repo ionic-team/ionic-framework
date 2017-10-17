@@ -34,7 +34,7 @@ export class Fixed {
     };
   }
 
-  render() {
+  protected render() {
     return (
       <slot></slot>
     );

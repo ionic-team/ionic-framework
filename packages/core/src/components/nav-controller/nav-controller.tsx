@@ -102,7 +102,7 @@ export class NavControllerImpl implements NavController {
     });
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

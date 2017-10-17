@@ -63,7 +63,7 @@ export class Label {
     });
   }
 
-  render() {
+  protected render() {
     return <slot></slot>;
   }
 }

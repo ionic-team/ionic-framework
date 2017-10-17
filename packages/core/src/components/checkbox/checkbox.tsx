@@ -148,7 +148,7 @@ export class Checkbox {
     };
   }
 
-  render() {
+  protected render() {
     const checkboxClasses: CssClassMap = {
       'checkbox-icon': true,
       'checkbox-checked': this.checked
