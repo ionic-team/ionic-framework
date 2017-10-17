@@ -17,7 +17,7 @@ export class PopoverController {
     const id = this.ids++;
 
     // give this popover a unique id
-    popover.id = `popover-${id}`;
+    popover.popoverId = `popover-${id}`;
     popover.style.zIndex = (10000 + id).toString();
 
     // convert the passed in popover options into props
@@ -30,7 +30,7 @@ export class PopoverController {
 
     // store the resolve function to be called later up when the popover loads
     return new Promise<Popover>(resolve => {
-      this.popoverResolves[popover.id] = resolve;
+      this.popoverResolves[popover.popoverId] = resolve;
     });
   }
 
@@ -38,10 +38,10 @@ export class PopoverController {
   @Listen('body:ionPopoverDidLoad')
   protected viewDidLoad(ev: PopoverEvent) {
     const popover = ev.detail.popover;
-    const popoverResolve = this.popoverResolves[popover.id];
+    const popoverResolve = this.popoverResolves[popover.popoverId];
     if (popoverResolve) {
       popoverResolve(popover);
-      delete this.popoverResolves[popover.id];
+      delete this.popoverResolves[popover.popoverId];
     }
   }
 

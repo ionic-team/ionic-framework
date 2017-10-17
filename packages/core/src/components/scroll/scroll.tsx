@@ -26,7 +26,7 @@ export class Scroll {
   @Prop() ionScroll: ScrollCallback;
   @Prop() ionScrollEnd: ScrollCallback;
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     if (Context.isServer) return;
 
     const gestureCtrl = Context.gesture = Context.gesture || new GestureController;
@@ -234,7 +234,7 @@ export class Scroll {
     }
   }
 
-  scrollTo(x: number, y: number, duration: number, done?: Function): Promise<any> {
+  scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
 
@@ -324,7 +324,7 @@ export class Scroll {
   }
 
   scrollToTop(duration: number): Promise<void> {
-    return this.scrollTo(0, 0, duration);
+    return this.scrollToPoint(0, 0, duration);
   }
 
   scrollToBottom(duration: number): Promise<void> {
@@ -332,11 +332,11 @@ export class Scroll {
     if (this.el) {
       y = this.el.scrollHeight - this.el.clientHeight;
     }
-    return this.scrollTo(0, y, duration);
+    return this.scrollToPoint(0, y, duration);
   }
 
 
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this.gesture && this.gesture.destroy();
     this.gesture = this.detail = this.detail.event = null;
   }

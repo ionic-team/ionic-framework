@@ -9,11 +9,11 @@ import { isReady } from '../../utils/helpers';
   tag: 'ion-nav',
 })
 export class IonNav implements Nav {
+  // private navId: number;
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;
 
-  id: number;
   parent: Nav;
   views: ViewController[];
   transitioning?: boolean;
@@ -79,7 +79,7 @@ export class IonNav implements Nav {
   }
 
   @Method()
-  remove(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any> {
+  removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any> {
     return removeImpl(this, startIndex, removeCount, opts);
   }
 
@@ -181,7 +181,7 @@ export function popToImpl(nav: Nav, indexOrViewCtrl: any, opts: NavOptions) {
 
 export function removeImpl(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions) {
   return getNavController(nav).then(() => {
-    return nav.navController.remove(nav, startIndex, removeCount, opts);
+    return nav.navController.removeIndex(nav, startIndex, removeCount, opts);
   });
 }
 

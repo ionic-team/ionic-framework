@@ -143,17 +143,16 @@ export class ReorderIndexes {
   styleUrl: 'reorder.scss'
 })
 export class ReorderGroup {
-
-  private selectedItemEle: HTMLElement = null;
+  private selectedItemEl: HTMLElement = null;
   private selectedItemHeight: number;
   private lastToIndex: number;
   private cachedHeights: number[] = [];
-  private containerEle: HTMLElement;
-  private scrollEle: HTMLElement;
+  private containerEl: HTMLElement;
+  private scrollEl: HTMLElement;
 
-  private scrollTop: number;
-  private scrollBottom: number;
-  private scrollInitial: number;
+  private scrollElTop: number;
+  private scrollElBottom: number;
+  private scrollElInitial: number;
 
   private containerTop: number;
   private containerBottom: number;
@@ -182,25 +181,25 @@ export class ReorderGroup {
     }
   }
 
-  ionViewDidLoad() {
-    this.containerEle = this.ele.querySelector('ion-gesture') as HTMLElement;
-    this.scrollEle = this.ele.closest('ion-scroll') as HTMLElement;
+  protected ionViewDidLoad() {
+    this.containerEl = this.ele.querySelector('ion-gesture') as HTMLElement;
+    this.scrollEl = this.ele.closest('ion-scroll') as HTMLElement;
   }
 
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this.onDragEnd();
   }
 
   private canStart(ev: GestureDetail): boolean {
-    if (this.selectedItemEle) {
+    if (this.selectedItemEl) {
       return false;
     }
     const target = ev.event.target as HTMLElement;
-    const reorderEle = target.closest('ion-reorder') as HTMLElement;
-    if (!reorderEle) {
+    const reorderEl = target.closest('ion-reorder') as HTMLElement;
+    if (!reorderEl) {
       return false;
     }
-    const item = findReorderItem(reorderEle, this.containerEle);
+    const item = findReorderItem(reorderEl, this.containerEl);
     if (!item) {
       console.error('reorder node not found');
       return false;
@@ -210,10 +209,10 @@ export class ReorderGroup {
   }
 
   private onDragStart(ev: GestureDetail) {
-    const item = this.selectedItemEle = ev.data;
+    const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
-    const ele = this.containerEle;
+    const ele = this.containerEl;
     const children: any = ele.children;
     if (!children || children.length === 0) {
       return;
@@ -227,19 +226,19 @@ export class ReorderGroup {
       child.$ionIndex = i;
     }
 
-    const box = this.containerEle.getBoundingClientRect();
+    const box = this.containerEl.getBoundingClientRect();
     this.containerTop = box.top;
     this.containerBottom = box.bottom;
 
-    if (this.scrollEle) {
-      var scrollBox = this.scrollEle.getBoundingClientRect();
-      this.scrollInitial = this.scrollEle.scrollTop;
-      this.scrollTop = scrollBox.top + AUTO_SCROLL_MARGIN;
-      this.scrollBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
+    if (this.scrollEl) {
+      var scrollBox = this.scrollEl.getBoundingClientRect();
+      this.scrollElInitial = this.scrollEl.scrollTop;
+      this.scrollElTop = scrollBox.top + AUTO_SCROLL_MARGIN;
+      this.scrollElBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
     } else {
-      this.scrollInitial = 0;
-      this.scrollTop = 0;
-      this.scrollBottom = 0;
+      this.scrollElInitial = 0;
+      this.scrollElTop = 0;
+      this.scrollElBottom = 0;
     }
 
     this.lastToIndex = indexForItem(item);
@@ -250,7 +249,7 @@ export class ReorderGroup {
   }
 
   private onDragMove(ev: GestureDetail) {
-    const selectedItem = this.selectedItemEle;
+    const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
     }
@@ -276,7 +275,7 @@ export class ReorderGroup {
 
   private onDragEnd() {
     this._actived = false;
-    const selectedItem = this.selectedItemEle;
+    const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
     }
@@ -289,12 +288,12 @@ export class ReorderGroup {
     const fromIndex = indexForItem(selectedItem);
 
     const ref = (fromIndex < toIndex)
-      ? this.containerEle.children[toIndex + 1]
-      : this.containerEle.children[toIndex];
+      ? this.containerEl.children[toIndex + 1]
+      : this.containerEl.children[toIndex];
 
-    this.containerEle.insertBefore(this.selectedItemEle, ref);
+    this.containerEl.insertBefore(this.selectedItemEl, ref);
 
-    const children = this.containerEle.children;
+    const children = this.containerEl.children;
     const len = children.length;
     const transform = CSS_PROP.transformProp;
     for (let i = 0; i < len; i++) {
@@ -302,9 +301,9 @@ export class ReorderGroup {
     }
 
     const reorderInactive = () => {
-      this.selectedItemEle.style.transition = '';
-      this.selectedItemEle.classList.remove(ITEM_REORDER_SELECTED);
-      this.selectedItemEle = null;
+      this.selectedItemEl.style.transition = '';
+      this.selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
+      this.selectedItemEl = null;
     };
     if (toIndex === fromIndex) {
       selectedItem.style.transition = 'transform 200ms ease-in-out';
@@ -332,7 +331,7 @@ export class ReorderGroup {
   /********* DOM WRITE ********* */
   private _reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
-    const children = this.containerEle.children;
+    const children = this.containerEl.children;
     const transform = CSS_PROP.transformProp;
     for (var i = 0; i < children.length; i++) {
       var style = (children[i] as any).style;
@@ -347,20 +346,20 @@ export class ReorderGroup {
   }
 
   private autoscroll(posY: number): number {
-    if (!this.scrollEle) {
+    if (!this.scrollEl) {
       return 0;
     }
 
     let amount = 0;
-    if (posY < this.scrollTop) {
+    if (posY < this.scrollElTop) {
       amount = -SCROLL_JUMP;
-    } else if (posY > this.scrollBottom) {
+    } else if (posY > this.scrollElBottom) {
       amount = SCROLL_JUMP;
     }
     if (amount !== 0) {
-      this.scrollEle.scrollBy(0, amount);
+      this.scrollEl.scrollBy(0, amount);
     }
-    return this.scrollEle.scrollTop - this.scrollInitial;
+    return this.scrollEl.scrollTop - this.scrollElInitial;
   }
 
   hostData() {
@@ -375,7 +374,7 @@ export class ReorderGroup {
 
   render() {
     return (
-      <ion-gesture props={{
+      <ion-gesture {...{
         disableScroll: true,
         canStart: this.canStart.bind(this),
         onStart: this.onDragStart.bind(this),

@@ -78,9 +78,9 @@ import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChang
   }
 })
 export class Checkbox {
-  id: string;
-  labelId: string;
-  styleTmr: any;
+  private checkboxId: string;
+  private labelId: string;
+  private styleTmr: any;
 
   @Event() ionChange: EventEmitter;
   @Event() ionStyle: EventEmitter;
@@ -101,7 +101,7 @@ export class Checkbox {
   @Prop({ mutable: true }) value: string;
 
 
-  ionViewWillLoad() {
+  protected ionViewWillLoad() {
     this.emitStyle();
   }
 
@@ -161,7 +161,7 @@ export class Checkbox {
       <button
         class='checkbox-cover'
         onClick={() => this.toggle()}
-        id={this.id}
+        id={this.checkboxId}
         aria-checked={this.checked ? 'true' : false}
         aria-disabled={this.disabled ? 'true' : false}
         aria-labelledby={this.labelId}

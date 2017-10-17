@@ -31,16 +31,16 @@ import { Component, Element, PropDidChange, State } from '@stencil/core';
 export class FabList {
   @Element() private el: HTMLElement;
 
-  @State() private activated: boolean = false;
+  @State() activated: boolean = false;
 
   @PropDidChange('activated')
   activatedChange(activated: boolean) {
-    const fabs = this.el.querySelectorAll('ion-fab-button') as NodeListOf<any>;
+    const fabs = this.el.querySelectorAll('ion-fab-button');
 
     // if showing the fabs add a timeout, else show immediately
     var timeout = activated ? 30 : 0;
     for (var i = 0; i < fabs.length; i++) {
-      const fab = fabs[i].$instance;
+      const fab = fabs[i];
       setTimeout(() => fab.show = activated, i * timeout);
     }
   }

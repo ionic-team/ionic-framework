@@ -163,12 +163,12 @@ export class SplitPane {
   @Event() ionSplitPaneDidChange: EventEmitter;
   @Event() ionChange: EventEmitter;
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     this._styleChildren();
     this._updateQuery();
   }
 
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this.rmL && this.rmL();
     this.rmL = null;
   }

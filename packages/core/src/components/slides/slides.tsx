@@ -151,13 +151,13 @@ export class Slides {
    * @hidden
    * Height of container.
    */
-  height: number;
+  private height: number;
 
   /**
    * @hidden
    * Width of container.
    */
-  width: number;
+  private width: number;
 
   /**
    * @hidden
@@ -165,21 +165,21 @@ export class Slides {
    * not move, real translate values on wrapper will not be set. Useful when
    * you may need to create custom slide transition.
    */
-  virtualTranslate = false;
+  private virtualTranslate = false;
 
   /**
    * @hidden
    * Set to true to round values of slides width and height to prevent blurry
    * texts on usual resolution screens (if you have such)
    */
-  roundLengths = false;
+  private roundLengths = false;
 
   // Slides grid
 
   /**
    * @hidden
    */
-  originalEvent: any;
+  private originalEvent: any;
 
   /**
    * Private properties only useful to this class.
@@ -189,40 +189,21 @@ export class Slides {
   private _tmr: number;
 
   /**
-   * Properties that are exposed publically but no docs.
+   * Properties that are exposed publicly but no docs.
    * ------------------------------------
    */
   /** @hidden */
-  container: HTMLElement;
+  private container: HTMLElement;
   /** @hidden */
-  id: number;
+  private slidesId: number;
   /** @hidden */
-  renderedHeight: number;
-  /** @hidden */
-  renderedWidth: number;
-  /** @hidden */
-  slideId: string;
-  /** @hidden */
-  swipeDirection: string;
-  /** @hidden */
-  velocity: number;
+  private slideId: string;
 
-
-  /**
-   * Properties which are for internal use only
-   * and not exposed to the public
-   * ------------------------------------
-   */
-
-  /** @hidden */
-  nextButton: HTMLElement;
-  /** @hidden */
-  prevButton: HTMLElement;
 
   constructor(
   ) {
-    this.id = ++slidesId;
-    this.slideId = 'slides-' + this.id;
+    this.slidesId = ++slidesId;
+    this.slideId = 'slides-' + this.slidesId;
   }
 
   private _initSlides() {
@@ -353,7 +334,7 @@ export class Slides {
   /**
    * @hidden
    */
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     /**
      * TODO: This should change because currently ionViewDidLoad fires independent of whether the
      * child components are ready.
@@ -514,7 +495,7 @@ export class Slides {
   /**
    * @hidden
    */
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this._init = false;
 
     this.swiper.destroy(true, true);

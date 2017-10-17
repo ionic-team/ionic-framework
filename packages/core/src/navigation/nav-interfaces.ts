@@ -65,7 +65,7 @@ export interface NavController {
   insertPages(nav: Nav, insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any>;
   popToRoot(nav: Nav, opts: NavOptions): Promise<any>;
   popTo(nav: Nav, indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
-  remove(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions): Promise<any>;
+  removeIndex(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions): Promise<any>;
   removeView(nav: Nav, viewController: ViewController, opts?: NavOptions): Promise<any>;
   setPages(nav: Nav, componentDataPairs: ComponentDataPair[], opts?: NavOptions): Promise<any>;
 

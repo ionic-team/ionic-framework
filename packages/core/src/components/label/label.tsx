@@ -45,7 +45,7 @@ export class Label {
     return this.el.textContent || '';
   }
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     this.emitStyle();
   }
 

@@ -63,8 +63,8 @@ export class Navbar {
     console.log('back button click');
   }
 
-  ionViewDidLoad() {
-    const buttons = this.el.querySelectorAll('ion-button') as any;
+  protected ionViewDidLoad() {
+    const buttons = this.el.querySelectorAll('ion-button');
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
     }
@@ -91,8 +91,9 @@ export class Navbar {
     return [
       <div class={backgroundCss}></div>,
       <button onClick={this.backButtonClick.bind(this)} class={backButtonCss} hidden={this.hideBackButton}>
-        if (backButtonIcon) {
-          <ion-icon class={backButtonIconCss} name={backButtonIcon}></ion-icon>
+        { backButtonIcon
+          ? <ion-icon class={backButtonIconCss} name={backButtonIcon}></ion-icon>
+          : null
         }
         <span class={backButtonTextCss}>{backButtonText}</span>
       </button>,
@@ -105,5 +106,4 @@ export class Navbar {
       </div>
     ];
   }
-
 }

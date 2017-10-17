@@ -39,7 +39,7 @@ export class Toast {
   @Prop() position: string;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
-  @Prop() id: string;
+  @Prop() toastId: string;
 
   present() {
     return new Promise<void>(resolve => {

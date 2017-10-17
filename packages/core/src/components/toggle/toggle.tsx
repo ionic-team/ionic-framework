@@ -14,12 +14,13 @@ import { BooleanInputComponent, GestureDetail } from '../../index';
   }
 })
 export class Toggle implements BooleanInputComponent {
+  private toggleId: string;
+  private labelId: string;
+  private styleTmr: any;
+
   activated: boolean = false;
   hasFocus: boolean = false;
-  id: string;
-  labelId: string;
   startX: number;
-  styleTmr: any;
 
   @Event() ionChange: EventEmitter;
   @Event() ionStyle: EventEmitter;
@@ -34,7 +35,7 @@ export class Toggle implements BooleanInputComponent {
   @Prop({ mutable: true }) value: string;
 
 
-  ionViewWillLoad() {
+  protected ionViewWillLoad() {
     this.emitStyle();
   }
 
@@ -150,7 +151,7 @@ export class Toggle implements BooleanInputComponent {
 
   render() {
     return (
-      <ion-gesture props={{
+      <ion-gesture {...{
         'canStart': this.canStart.bind(this),
         'onStart': this.onDragStart.bind(this),
         'onMove': this.onDragMove.bind(this),
@@ -168,7 +169,7 @@ export class Toggle implements BooleanInputComponent {
         </div>
         <div
           class='toggle-cover'
-          id={this.id}
+          id={this.toggleId}
           aria-checked={this.checked ? 'true' : false}
           aria-disabled={this.disabled ? 'true' : false}
           aria-labelledby={this.labelId}

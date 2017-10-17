@@ -10,7 +10,7 @@ import { Component, Element } from '@stencil/core';
 export class Buttons {
   @Element() private el: HTMLElement;
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');

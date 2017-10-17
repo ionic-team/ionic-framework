@@ -53,7 +53,7 @@ export class Gesture {
     this.fireOnMoveFunc = this.fireOnMove.bind(this);
   }
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     // in this case, we already know the GestureController and Gesture are already
     // apart of the same bundle, so it's safe to load it this way
     // only create one instance of GestureController, and reuse the same one later
@@ -426,7 +426,7 @@ export class Gesture {
   }
 
 
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     if (this.blocker) {
       this.blocker.destroy();
       this.blocker = null;

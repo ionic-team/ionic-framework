@@ -16,7 +16,7 @@ export class ToastController {
     const id = this.ids++;
 
     // give this toast a unique id
-    toast.id = `toast-${id}`;
+    toast.toastId = `toast-${id}`;
     toast.style.zIndex = (10000 + id).toString();
 
     // convert the passed in toast options into props
@@ -29,17 +29,17 @@ export class ToastController {
 
     // store the resolve function to be called later up when the toast loads
     return new Promise<Toast>(resolve => {
-      this.toastResolves[toast.id] = resolve;
+      this.toastResolves[toast.toastId] = resolve;
     });
   }
 
   @Listen('body:ionToastDidLoad')
   protected viewDidLoad(ev: ToastEvent) {
     const toast = ev.detail.toast;
-    const toastResolve = this.toastResolves[toast.id];
+    const toastResolve = this.toastResolves[toast.toastId];
     if (toastResolve) {
       toastResolve(toast);
-      delete this.toastResolves[toast.id];
+      delete this.toastResolves[toast.toastId];
     }
   }
 

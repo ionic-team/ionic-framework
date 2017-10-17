@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, HostElement, Listen, Prop, PropDidChange, State} from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State} from '@stencil/core';
 
 import { isCheckedProperty } from '../../utils/helpers';
 
@@ -61,7 +61,7 @@ import { Radio, RadioEvent } from './radio';
 })
 export class RadioGroup {
   radios: Radio[] = [];
-  id: number;
+  radioGroupId: number;
   ids = 0;
 
   @Element() el: HTMLElement;
@@ -100,10 +100,10 @@ export class RadioGroup {
   protected radioDidLoad(ev: RadioEvent) {
     const radio = ev.detail.radio;
     this.radios.push(radio);
-    radio.id = 'rb-' + this.id + '-' + (++this.ids);
+    radio.radioId = 'rb-' + this.radioGroupId + '-' + (++this.ids);
 
     // if the value is not defined then use its unique id
-    radio.value = !radio.value ? radio.id : radio.value;
+    radio.value = !radio.value ? radio.radioId : radio.value;
 
     if (radio.checked && !this.value) {
       this.value = radio.value;
@@ -131,15 +131,15 @@ export class RadioGroup {
     this.value = radio.checked ? radio.value : '';
   }
 
-  ionViewWillLoad() {
-    this.id = ++radioGroupIds;
+  protected ionViewWillLoad() {
+    this.radioGroupId = ++radioGroupIds;
 
     // Get the list header if it exists and set the id
-    const header = this.el.querySelector('ion-list-header') as HostElement;
+    const header = this.el.querySelector('ion-list-header');
 
     if (header) {
       if (!header.id) {
-        header.id = 'rg-hdr-' + this.id;
+        header.id = 'rg-hdr-' + this.radioGroupId;
       }
       this.headerId = header.id;
     }
@@ -161,7 +161,7 @@ export class RadioGroup {
       if (radio.checked) {
         // if this button is checked, then set it as
         // the radiogroup's active descendant
-        this.activeId = radio.id;
+        this.activeId = radio.radioId;
         hasChecked = true;
       }
     });

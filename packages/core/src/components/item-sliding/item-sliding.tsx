@@ -1,6 +1,6 @@
-import { Component, Element, Event, EventEmitter, HostElement, Method, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
 
-import { GestureDetail } from '../../index';
+import { GestureDetail, HTMLIonItemElement, HTMLIonListElement } from '../../index';
 import { swipeShouldReset } from '../../utils/helpers';
 
 // import { ItemOptions } from './item-options';
@@ -137,8 +137,8 @@ const enum SlidingState {
 export class ItemSliding {
   @Element() private el: HTMLElement;
 
-  private item: HostElement;
-  private list: HostElement;
+  private item: HTMLIonItemElement;
+  private list: HTMLIonListElement;
 
   private openAmount: number = 0;
   private startX: number = 0;
@@ -186,8 +186,8 @@ export class ItemSliding {
    */
   @Event() ionDrag: EventEmitter;
 
-  ionViewDidLoad() {
-    const options = this.el.querySelectorAll('ion-item-options') as NodeListOf<HostElement>;
+  protected ionViewDidLoad() {
+    const options = this.el.querySelectorAll('ion-item-options');
 
     let sides = 0;
 
@@ -195,7 +195,7 @@ export class ItemSliding {
     this.leftOptions = this.rightOptions = null;
 
     for (var i = 0; i < options.length; i++) {
-      let option = options[i].$instance;
+      let option = options[i];
 
       if (option.isRightSide()) {
         this.rightOptions = option;
@@ -208,10 +208,10 @@ export class ItemSliding {
     this.optsDirty = true;
     this.sides = sides;
 
-    this.item = this.el.querySelector('ion-item') as HostElement;
+    this.item = this.el.querySelector('ion-item');
 
     // Get the parent list to close open containers
-    this.list = this.el.closest('ion-list') as HostElement;
+    this.list = this.el.closest('ion-list') as HTMLIonListElement;
   }
 
   canStart(gesture: GestureDetail): boolean {
@@ -222,7 +222,7 @@ export class ItemSliding {
     let container = this;
 
     // Close open container if it is not the selected one.
-    if (this.list && container !== this.list.$instance.openContainer) {
+    if (this.list && container !== this.list.openContainer) {
       this.closeOpened();
     }
 
@@ -234,7 +234,7 @@ export class ItemSliding {
   }
 
   onDragStart(gesture: GestureDetail) {
-    this.selectedContainer = this.list.$instance.openContainer = this.preSelectedContainer;
+    this.selectedContainer = this.list.openContainer = this.preSelectedContainer;
     this.selectedContainer.startSliding(gesture.currentX);
   }
 
@@ -254,8 +254,8 @@ export class ItemSliding {
   closeOpened(): boolean {
     this.selectedContainer = null;
 
-    if (this.list.$instance.openContainer) {
-      this.list.$instance.closeSlidingItems();
+    if (this.list.openContainer) {
+      this.list.closeSlidingItems();
       return true;
     }
     return false;
@@ -487,7 +487,7 @@ export class ItemSliding {
 
   render() {
     return (
-      <ion-gesture props={{
+      <ion-gesture {...{
         'canStart': this.canStart.bind(this),
         'onStart': this.onDragStart.bind(this),
         'onMove': this.onDragMove.bind(this),

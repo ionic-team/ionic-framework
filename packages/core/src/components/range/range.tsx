@@ -14,12 +14,14 @@ import { clamp } from '../../utils/helpers';
   }
 })
 export class Range implements BaseInputComponent {
+  // private rangeId: string;
+  // private labelId: string;
+
+  private styleTmr: any;
+
   activated: boolean = false;
   hasFocus: boolean = false;
-  id: string;
-  labelId: string;
   startX: number;
-  styleTmr: any;
 
   @Element() rangeEl: HTMLElement;
 
@@ -75,7 +77,7 @@ export class Range implements BaseInputComponent {
     this.emitStyle();
   }
 
-  ionViewWillLoad() {
+  protected ionViewWillLoad() {
     this.inputUpdated();
     this.createTicks();
     this.emitStyle();
@@ -332,7 +334,7 @@ export class Range implements BaseInputComponent {
       <slot name='range-start' />,
 
       <ion-gesture
-        props={{
+        {...{
           disableScroll: true,
           onStart: this.onDragStart.bind(this),
           onMove: this.onDragMove.bind(this),

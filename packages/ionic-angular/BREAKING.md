@@ -10,6 +10,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Fixed Content](#fixed-content)
 - [Icon](#icon)
 - [Item](#item)
+- [Nav](#nav)
 - [Option](#option)
 - [Radio](#radio)
 - [Segment](#segment)
@@ -320,6 +321,12 @@ These have been renamed to the following:
   <div slot="end">Right on LTR, Left on RTL</div>
 </ion-item>
 ```
+
+## Nav
+
+### Method renamed
+
+The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
 
 ## Option
 

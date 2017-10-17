@@ -62,8 +62,9 @@ export class FabButton {
 
   @Prop() href: string;
 
+  @State() show: boolean = false;
+
   @State() private activated: boolean = false;
-  @State() private show: boolean = false;
   @State() private inContainer: boolean = false;
   @State() private inList: boolean = false;
 
@@ -72,7 +73,7 @@ export class FabButton {
    */
   @Prop() disabled: boolean = false;
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     const parentNode = this.el.parentNode.nodeName;
 
     this.inList = (parentNode === 'ION-FAB-LIST');
@@ -90,14 +91,14 @@ export class FabButton {
    * @hidden
    */
   setActiveLists(activated: boolean) {
-    const lists = this.el.parentElement.querySelectorAll('ion-fab-list') as NodeListOf<any>;
+    const lists = this.el.parentElement.querySelectorAll('ion-fab-list');
 
     if (lists.length > 0) {
       this.activated = activated;
     }
 
     for (var i = 0; i < lists.length; i++) {
-      const list = lists[i].$instance;
+      const list = lists[i];
       list.activated = activated;
     }
   }

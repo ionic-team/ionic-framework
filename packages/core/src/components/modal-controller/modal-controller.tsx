@@ -19,7 +19,7 @@ export class ModalController {
     const id = this.ids++;
 
     // give this modal a unique id
-    modal.id = `modal-${id}`;
+    modal.modalId = `modal-${id}`;
     modal.style.zIndex = (10000 + id).toString();
 
     // convert the passed in modal options into props
@@ -32,7 +32,7 @@ export class ModalController {
 
     // store the resolve function to be called later up when the modal loads
     return new Promise<Modal>(resolve => {
-      this.modalResolves[modal.id] = resolve;
+      this.modalResolves[modal.modalId] = resolve;
     });
   }
 
@@ -40,10 +40,10 @@ export class ModalController {
   @Listen('body:ionModalDidLoad')
   protected modalDidLoad(ev: ModalEvent) {
     const modal = ev.detail.modal;
-    const modalResolve = this.modalResolves[modal.id];
+    const modalResolve = this.modalResolves[modal.modalId];
     if (modalResolve) {
       modalResolve(modal);
-      delete this.modalResolves[modal.id];
+      delete this.modalResolves[modal.modalId];
     }
   }
 

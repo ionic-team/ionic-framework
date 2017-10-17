@@ -166,7 +166,7 @@ export class MenuController {
     } else if (menuId) {
       // the menuId was not left or right
       // so try to get the menu by its "id"
-      return this.menus.find(m => m.id === menuId) || null;
+      return this.menus.find(m => m.menuId === menuId) || null;
     }
 
     // return the first enabled menu

@@ -33,7 +33,7 @@ export class Router {
     Ionic.emit(this.$instance, 'ionRouterNavigation', { detail: this.routeMatch });
   }
 
-  ionViewWillLoad() {
+  protected ionViewWillLoad() {
     console.log('<ion-router> loaded');
     window.addEventListener('popstate', this.handlePopState.bind(this));
     window.addEventListener('hashchange', this.handleHashChange.bind(this));

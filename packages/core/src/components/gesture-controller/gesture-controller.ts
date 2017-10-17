@@ -5,11 +5,11 @@ import { Component } from '@stencil/core';
   tag: 'ion-gesture-controller'
 })
 export class GestureController {
-  private id: number = 0;
+  private gestureId: number = 0;
   private requestedStart: { [eventId: number]: number } = {};
   private disabledGestures: { [eventName: string]: Set<number> } = {};
   private disabledScroll: Set<number> = new Set<number>();
-  private capturedID: number = null;
+  private capturedId: number = null;
 
 
   createGesture(gestureName: string, gesturePriority: number, disableScroll: boolean): GestureDelegate {
@@ -24,7 +24,7 @@ export class GestureController {
   }
 
   newID(): number {
-    return this.id++;
+    return this.gestureId++;
   }
 
   start(gestureName: string, id: number, priority: number): boolean {
@@ -48,7 +48,7 @@ export class GestureController {
     }
 
     if (maxPriority === priority) {
-      this.capturedID = id;
+      this.capturedId = id;
       this.requestedStart = {};
       return true;
     }
@@ -60,8 +60,8 @@ export class GestureController {
   release(id: number) {
     delete this.requestedStart[id];
 
-    if (this.capturedID && id === this.capturedID) {
-      this.capturedID = null;
+    if (this.capturedId && id === this.capturedId) {
+      this.capturedId = null;
     }
   }
 
@@ -100,7 +100,7 @@ export class GestureController {
   }
 
   canStart(gestureName: string): boolean {
-    if (this.capturedID) {
+    if (this.capturedId) {
       // a gesture already captured
       return false;
     }
@@ -113,7 +113,7 @@ export class GestureController {
   }
 
   isCaptured(): boolean {
-    return !!this.capturedID;
+    return !!this.capturedId;
   }
 
   isScrollDisabled(): boolean {
@@ -135,7 +135,7 @@ export class GestureDelegate {
 
   constructor(
     private ctrl: GestureController,
-    private id: number,
+    private gestureDelegateId: number,
     private name: string,
     private priority: number,
     private disableScroll: boolean
@@ -154,7 +154,7 @@ export class GestureDelegate {
       return false;
     }
 
-    return this.ctrl.start(this.name, this.id, this.priority);
+    return this.ctrl.start(this.name, this.gestureDelegateId, this.priority);
   }
 
   capture(): boolean {
@@ -162,9 +162,9 @@ export class GestureDelegate {
       return false;
     }
 
-    let captured = this.ctrl.capture(this.name, this.id, this.priority);
+    let captured = this.ctrl.capture(this.name, this.gestureDelegateId, this.priority);
     if (captured && this.disableScroll) {
-      this.ctrl.disableScroll(this.id);
+      this.ctrl.disableScroll(this.gestureDelegateId);
     }
 
     return captured;
@@ -172,10 +172,10 @@ export class GestureDelegate {
 
   release() {
     if (this.ctrl) {
-      this.ctrl.release(this.id);
+      this.ctrl.release(this.gestureDelegateId);
 
       if (this.disableScroll) {
-        this.ctrl.enableScroll(this.id);
+        this.ctrl.enableScroll(this.gestureDelegateId);
       }
     }
   }
@@ -193,7 +193,7 @@ export class BlockerDelegate {
   blocked: boolean = false;
 
   constructor(
-    private id: number,
+    private blockerDelegateId: number,
     private controller: GestureController,
     private disable: string[],
     private disableScroll: boolean
@@ -205,12 +205,12 @@ export class BlockerDelegate {
     }
     if (this.disable) {
       this.disable.forEach(gesture => {
-        this.controller.disableGesture(gesture, this.id);
+        this.controller.disableGesture(gesture, this.blockerDelegateId);
       });
     }
 
     if (this.disableScroll) {
-      this.controller.disableScroll(this.id);
+      this.controller.disableScroll(this.blockerDelegateId);
     }
     this.blocked = true;
   }
@@ -221,11 +221,11 @@ export class BlockerDelegate {
     }
     if (this.disable) {
       this.disable.forEach(gesture => {
-        this.controller.enableGesture(gesture, this.id);
+        this.controller.enableGesture(gesture, this.blockerDelegateId);
       });
     }
     if (this.disableScroll) {
-      this.controller.enableScroll(this.id);
+      this.controller.enableScroll(this.blockerDelegateId);
     }
     this.blocked = false;
   }

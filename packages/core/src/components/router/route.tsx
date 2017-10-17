@@ -21,7 +21,7 @@ export class Route {
   // @Prop() match: any;
   @State() match: any = {};
 
-  ionViewWillLoad() {
+  protected ionViewWillLoad() {
 /*
     this.routerInstance = document.querySelector(this.router)
 
@@ -34,7 +34,7 @@ export class Route {
 
   render() {
 /*
-    this.match.url = this.routerInstance.$instance.routeMatch.url;
+    this.match.url = this.routerInstance.routeMatch.url;
     const match = this.match
     const ChildComponent = this.component
 

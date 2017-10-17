@@ -43,7 +43,7 @@ export class Popover {
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() ev: Event;
-  @Prop() id: string;
+  @Prop() popoverId: string;
   @Prop() showBackdrop: boolean = true;
 
 
@@ -283,7 +283,7 @@ export class Popover {
         <div class='popover-content'>
           <div class='popover-viewport'>
             <ThisComponent
-              props={this.componentProps}
+              {...this.componentProps}
               class={this.cssClass}
             />
           </div>

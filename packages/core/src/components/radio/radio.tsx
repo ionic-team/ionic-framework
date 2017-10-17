@@ -57,7 +57,7 @@ export class Radio {
 
   @Element() el: HTMLElement;
 
-  @State() id: string;
+  @State() radioId: string;
 
   @State() activated: boolean;
 
@@ -106,11 +106,11 @@ export class Radio {
    */
   @Prop({ mutable: true }) value: string;
 
-  ionViewWillLoad() {
+  protected ionViewWillLoad() {
     this.emitStyle();
   }
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     this.ionRadioDidLoad.emit({ radio: this });
   }
 
@@ -177,7 +177,7 @@ export class Radio {
       <button
         class='radio-cover'
         onClick={() => this.toggle()}
-        id={this.id}
+        id={this.radioId}
         aria-checked={this.checked ? 'true' : false}
         aria-disabled={this.disabled ? 'true' : false}
         aria-labelledby={this.labelId}

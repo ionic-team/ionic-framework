@@ -18,7 +18,7 @@ export class AlertController {
     const id = this.ids++;
 
     // give this action sheet a unique id
-    alert.id = `alert-${id}`;
+    alert.alertId = `alert-${id}`;
     alert.style.zIndex = (20000 + id).toString();
 
     // convert the passed in action sheet options into props
@@ -31,17 +31,17 @@ export class AlertController {
 
     // store the resolve function to be called later up when the action sheet loads
     return new Promise<Alert>(resolve => {
-      this.alertResolves[alert.id] = resolve;
+      this.alertResolves[alert.alertId] = resolve;
     });
   }
 
   @Listen('body:ionAlertDidLoad')
   protected viewDidLoad(ev: AlertEvent) {
     const alert = ev.detail.alert;
-    const alertResolve = this.alertResolves[alert.id];
+    const alertResolve = this.alertResolves[alert.alertId];
     if (alertResolve) {
       alertResolve(alert);
-      delete this.alertResolves[alert.id];
+      delete this.alertResolves[alert.alertId];
     }
   }
 

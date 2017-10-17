@@ -8,7 +8,7 @@ export class ItemReorder {
   @State() hasContent: boolean = null;
   @Element() ele: HTMLElement;
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     this.hasContent = this.ele.childElementCount > 0;
   }
 

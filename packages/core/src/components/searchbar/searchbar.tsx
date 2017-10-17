@@ -139,7 +139,7 @@ export class Searchbar {
   @Prop({ mutable: true }) value: string;
 
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     this.positionElements();
   }
 
@@ -347,13 +347,14 @@ export class Searchbar {
     };
   }
 
+  // TODO remove the ion-buttons and replace with native buttons to remove
+  // the button dependency
   render() {
     return [
       <div class='searchbar-input-container'>
         <ion-button
-          mode='md'
           onClick={this.cancelSearchbar.bind(this)}
-          onMousedown={this.cancelSearchbar.bind(this)}
+          onMouseDown={this.cancelSearchbar.bind(this)}
           clear
           color='dark'
           class='searchbar-md-cancel'>
@@ -375,14 +376,14 @@ export class Searchbar {
           clear
           class='searchbar-clear-icon'
           onClick={this.clearInput.bind(this)}
-          onMousedown={this.clearInput.bind(this)}>
+          onMouseDown={this.clearInput.bind(this)}>
         </ion-button>
       </div>,
       <ion-button
         tabindex={this.activated ? 1 : -1}
         clear
         onClick={this.cancelSearchbar.bind(this)}
-        onMousedown={this.cancelSearchbar.bind(this)}
+        onMouseDown={this.cancelSearchbar.bind(this)}
         class='searchbar-ios-cancel'>
           {this.cancelButtonText}
       </ion-button>

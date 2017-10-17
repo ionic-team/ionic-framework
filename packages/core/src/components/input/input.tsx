@@ -200,7 +200,7 @@ export class Input implements InputComponent {
   }
 
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     this.emitStyle();
 
     // By default, password inputs clear after focus when they have content

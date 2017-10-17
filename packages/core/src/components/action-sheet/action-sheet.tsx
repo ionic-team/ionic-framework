@@ -38,7 +38,7 @@ export class ActionSheet {
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
-  @Prop() id: string;
+  @Prop() actionSheetId: string;
 
 
   present() {
@@ -138,7 +138,7 @@ export class ActionSheet {
     }
   }
 
-  protected click(button: ActionSheetButton) {
+  protected buttonClick(button: ActionSheetButton) {
     let shouldDismiss = true;
     if (button.handler) {
       if (button.handler() === false) {
@@ -188,7 +188,7 @@ export class ActionSheet {
               ? <div class='action-sheet-sub-title'>{this.subTitle}</div>
               : null}
             {buttons.map(b =>
-              <button class={this.buttonClass(b)} onClick={() => this.click(b)}>
+              <button class={this.buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class='button-inner'>
                   {b.icon
                     ? <ion-icon name={b.icon} class='action-sheet-icon' />
@@ -202,7 +202,7 @@ export class ActionSheet {
             ? <div class='action-sheet-group action-sheet-group-cancel'>
                 <button
                   class={this.buttonClass(cancelButton)}
-                  onClick={() => this.click(cancelButton)}
+                  onClick={() => this.buttonClick(cancelButton)}
                 >
                   {cancelButton.icon
                     ? <ion-icon

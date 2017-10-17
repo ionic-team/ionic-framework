@@ -18,7 +18,7 @@ export class LoadingController {
     const id = this.ids++;
 
     // give this loading a unique id
-    loading.id = `loading-${id}`;
+    loading.loadingId = `loading-${id}`;
     loading.style.zIndex = (20000 + id).toString();
 
     // convert the passed in loading options into props
@@ -31,7 +31,7 @@ export class LoadingController {
 
     // store the resolve function to be called later up when the loading loads
     return new Promise<Loading>(resolve => {
-      this.loadingResolves[loading.id] = resolve;
+      this.loadingResolves[loading.loadingId] = resolve;
     });
   }
 
@@ -39,10 +39,10 @@ export class LoadingController {
   @Listen('body:ionLoadingDidLoad')
   protected viewDidLoad(ev: LoadingEvent) {
     const loading = ev.detail.loading;
-    const loadingResolve = this.loadingResolves[loading.id];
+    const loadingResolve = this.loadingResolves[loading.loadingId];
     if (loadingResolve) {
       loadingResolve(loading);
-      delete this.loadingResolves[loading.id];
+      delete this.loadingResolves[loading.loadingId];
     }
   }
 

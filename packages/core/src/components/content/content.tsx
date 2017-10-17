@@ -42,7 +42,7 @@ export class Content {
   headerHeight: string;
 
 
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this.$fixed = this.$scroll = this.$siblingFooter = this.$siblingHeader = this.$scrollDetail = null;
   }
 
@@ -114,7 +114,7 @@ export class Content {
     };
 
     return (
-      <ion-scroll style={scrollStyle} props={props} class={scrollClasses}>
+      <ion-scroll {...props} style={scrollStyle} class={scrollClasses}>
         <slot></slot>
       </ion-scroll>
     );

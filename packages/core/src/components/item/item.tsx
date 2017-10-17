@@ -1,4 +1,4 @@
-import { Component, Element, HostElement, Listen, Method, Prop, State } from '@stencil/core';
+import { Component, Element, Listen, Method, Prop } from '@stencil/core';
 
 import { createThemedClasses } from '../../utils/theme';
 
@@ -14,7 +14,7 @@ import { CssClassMap } from '../../index';
 })
 export class Item {
   private ids: number = -1;
-  private id: string;
+  private itemId: string;
   private inputs: any = [];
 
   private itemStyles: { [key: string]: CssClassMap } = Object.create(null);
@@ -56,7 +56,7 @@ export class Item {
   //   // register the input inside of the item
   //   // reset to the item's id instead of the radiogroup id
   //   radio.id = 'rb-' + this.registerInput('radio');
-  //   radio.labelId = 'lbl-' + this.id;
+  //   radio.labelId = 'lbl-' + this.itemId;
   // }
 
   @Method()
@@ -64,22 +64,22 @@ export class Item {
     return this.label ? this.label.getText() : '';
   }
 
-  ionViewWillLoad() {
-    this.id = (++itemId).toString();
+  protected ionViewWillLoad() {
+    this.itemId = (++itemId).toString();
   }
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     // Add item-button classes to each ion-button in the item
     const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].itemButton = true;
     }
 
-    this.label = this.el.querySelector('ion-label') as HostElement;
+    this.label = this.el.querySelector('ion-label');
 
     // if (label) {
     //   this.label = label;
-    //   this.labelId = label.id = ('lbl-' + this.id);
+    //   this.labelId = label.id = ('lbl-' + this.itemId);
     //   if (label.type) {
     //     this.setElementClass('item-label-' + label.type, true);
     //   }
@@ -101,7 +101,7 @@ export class Item {
    */
   registerInput(type: string) {
     this.inputs.push(type);
-    return this.id + '-' + (++this.ids);
+    return this.itemId + '-' + (++this.ids);
   }
 
   render() {
@@ -138,7 +138,7 @@ export class Item {
   // constructor() {
   //   this._setName(elementRef);
   //   this._hasReorder = !!reorder;
-  //   this.id = form.nextId().toString();
+  //   this.itemId = form.nextId().toString();
 
   //   // auto add "tappable" attribute to ion-item components that have a click listener
   //   if (!(<any>renderer).orgListen) {
@@ -159,7 +159,7 @@ export class Item {
   // set contentLabel(label: Label) {
   //   if (label) {
   //     this._label = label;
-  //     this.labelId = label.id = ('lbl-' + this.id);
+  //     this.labelId = label.id = ('lbl-' + this.itemId);
   //     if (label.type) {
   //       this.setElementClass('item-label-' + label.type, true);
   //     }

@@ -36,7 +36,7 @@ export class Modal {
   @Prop() enableBackdropDismiss: boolean = true;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
-  @Prop() id: string;
+  @Prop() modalId: string;
   @Prop() showBackdrop: boolean = true;
 
   private animation: Animation;
@@ -163,7 +163,7 @@ export class Modal {
         class={dialogClasses}
       >
         <ThisComponent
-          props={this.componentProps}
+          {...this.componentProps}
           class={thisComponentClasses}
         >
         </ThisComponent>

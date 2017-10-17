@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, HostElement, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
 
 import { deepCopy, isCheckedProperty } from '../../utils/helpers';
 
@@ -25,10 +25,15 @@ import { PopoverController } from '../popover-controller/popover-controller';
   }
 })
 export class Select {
+  private selectId: string;
+  private labelId: string;
+
+  // TODO rename this
   texts: any = [];
-  id: string;
-  labelId: string;
+
+  // TODO typing
   item: any;
+
   options: SelectOption[] = [];
   overlay: ActionSheet | Alert | Popover;
 
@@ -100,9 +105,9 @@ export class Select {
   @Event() ionCancel: EventEmitter;
 
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     // Get the parent item
-    this.item = this.el.closest('ion-item') as HostElement;
+    this.item = this.el.closest('ion-item');
 
     this.setOptions();
   }
@@ -110,13 +115,13 @@ export class Select {
 
   setOptions() {
     // Get the options
-    const options = this.el.querySelectorAll('ion-select-option') as NodeListOf<any>;
+    const options = this.el.querySelectorAll('ion-select-option');
 
     Array.from(options).forEach(option => {
       if (!option.value) {
         option.value = option.getText();
       }
-      this.options.push(option.$instance);
+      this.options.push(option);
     });
 
     const values = this.getValues();
@@ -386,7 +391,7 @@ export class Select {
       </div>,
       <button
         aria-haspopup='true'
-        id={this.id}
+        id={this.selectId}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}

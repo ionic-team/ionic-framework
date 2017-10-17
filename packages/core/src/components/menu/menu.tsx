@@ -61,7 +61,7 @@ export class Menu {
   /**
    * @input {string} An id for the menu.
    */
-  @Prop() id: string;
+  @Prop() menuId: string;
 
   /**
    * @input {string} The display type of the menu. Default varies based on the mode,
@@ -118,7 +118,7 @@ export class Menu {
     this._updateState();
   }
 
-  ionViewWillLoad() {
+  protected ionViewWillLoad() {
     return this.lazyMenuCtrl.componentOnReady()
       .then(menu => this.menuCtrl = menu);
   }
@@ -126,7 +126,7 @@ export class Menu {
   /**
    * @hidden
    */
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     assert(!!this.menuCtrl, 'menucontroller was not initialized');
 
     this._menuInnerEle = this.el.querySelector('.menu-inner') as HTMLElement;
@@ -186,7 +186,7 @@ export class Menu {
         <slot></slot>
       </div>,
       <ion-backdrop class='menu-backdrop'></ion-backdrop> ,
-      <ion-gesture props={{
+      <ion-gesture {...{
         'canStart': this.canStart.bind(this),
         'onWillStart': this._swipeWillStart.bind(this),
         'onStart': this._swipeStart.bind(this),
@@ -570,7 +570,7 @@ export class Menu {
   /**
    * @hidden
    */
-  ionViewDidUnload() {
+  protected ionViewDidUnload() {
     this._backdropClick(false);
 
     this.menuCtrl._unregister(this);

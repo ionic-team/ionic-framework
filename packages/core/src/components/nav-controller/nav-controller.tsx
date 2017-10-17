@@ -82,7 +82,7 @@ export class NavControllerImpl implements NavController {
   }
 
   @Method()
-  remove(nav: Nav, startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any> {
+  removeIndex(nav: Nav, startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any> {
     return hydrateDelegateAndAnimation(this).then(([delegate, animation]) => {
       return removeImpl(nav, delegate, animation, startIndex, removeCount, opts);
     });

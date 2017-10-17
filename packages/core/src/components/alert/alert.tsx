@@ -43,7 +43,7 @@ export class Alert {
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
-  @Prop() id: string;
+  @Prop() alertId: string;
 
   present() {
     return new Promise<void>(resolve => {
@@ -323,7 +323,7 @@ export class Alert {
           label: i.label,
           checked: !!i.checked,
           disabled: !!i.disabled,
-          id: i.id ? i.id : `alert-input-${this.id}-${index}`,
+          id: i.id ? i.id : `alert-input-${this.alertId}-${index}`,
           handler: i.handler ? i.handler : null,
           min: i.min ? i.min : null,
           max: i.max ? i.max : null

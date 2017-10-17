@@ -107,7 +107,7 @@ export class Toolbar {
   mode: string;
   color: string;
 
-  ionViewDidLoad() {
+  protected ionViewDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');

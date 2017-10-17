@@ -18,7 +18,7 @@ export class PickerController {
     const id = this.ids++;
 
     // give this picker a unique id
-    picker.id = `picker-${id}`;
+    picker.pickerId = `picker-${id}`;
     picker.style.zIndex = (20000 + id).toString();
 
     // convert the passed in picker options into props
@@ -31,7 +31,7 @@ export class PickerController {
 
     // store the resolve function to be called later up when the picker loads
     return new Promise<Picker>(resolve => {
-      this.pickerResolves[picker.id] = resolve;
+      this.pickerResolves[picker.pickerId] = resolve;
     });
   }
 
@@ -39,10 +39,10 @@ export class PickerController {
   @Listen('body:ionPickerDidLoad')
   protected viewDidLoad(ev: PickerEvent) {
     const picker = ev.detail.picker;
-    const pickerResolve = this.pickerResolves[picker.id];
+    const pickerResolve = this.pickerResolves[picker.pickerId];
     if (pickerResolve) {
       pickerResolve(picker);
-      delete this.pickerResolves[picker.id];
+      delete this.pickerResolves[picker.pickerId];
     }
   }
 

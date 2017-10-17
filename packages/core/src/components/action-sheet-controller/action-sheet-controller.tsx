@@ -18,7 +18,7 @@ export class ActionSheetController {
     const id = this.ids++;
 
     // give this action sheet a unique id
-    actionSheet.id = `action-sheet-${id}`;
+    actionSheet.actionSheetId = `action-sheet-${id}`;
     actionSheet.style.zIndex = (20000 + id).toString();
 
     // convert the passed in action sheet options into props
@@ -31,17 +31,17 @@ export class ActionSheetController {
 
     // store the resolve function to be called later up when the action sheet loads
     return new Promise<ActionSheet>(resolve => {
-      this.actionSheetResolves[actionSheet.id] = resolve;
+      this.actionSheetResolves[actionSheet.actionSheetId] = resolve;
     });
   }
 
   @Listen('body:ionActionSheetDidLoad')
   protected viewDidLoad(ev: ActionSheetEvent) {
     const actionSheet = ev.detail.actionSheet;
-    const actionSheetResolve = this.actionSheetResolves[actionSheet.id];
+    const actionSheetResolve = this.actionSheetResolves[actionSheet.actionSheetId];
     if (actionSheetResolve) {
       actionSheetResolve(actionSheet);
-      delete this.actionSheetResolves[actionSheet.id];
+      delete this.actionSheetResolves[actionSheet.actionSheetId];
     }
   }
 

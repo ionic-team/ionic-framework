@@ -41,7 +41,7 @@ export class Loading {
   @Prop() duration: number;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
-  @Prop() id: string;
+  @Prop() loadingId: string;
   @Prop() showBackdrop: boolean = true;
 
   present() {

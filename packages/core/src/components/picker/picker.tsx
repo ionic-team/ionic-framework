@@ -41,7 +41,7 @@ export class Picker {
   @Prop() duration: number;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
-  @Prop() id: string;
+  @Prop() pickerId: string;
   @Prop() showBackdrop: boolean = true;
   @Prop() enableBackdropDismiss: boolean = true;
 
@@ -273,7 +273,6 @@ export class Picker {
   }
 
   buttonWrapperClass(button: PickerButton): CssClassMap {
-    console.log('buttonWrapperClass', button);
     let buttonClass: string[] = !button.role
       ? ['picker-toolbar-button']
       : [`picker-toolbar-button`, `picker-toolbar-${button.role}`];
