@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Element, Method, Prop, State } from '@stencil/core';
+import { Component, CssClassMap, Element, Method, Prop, State, PropDidChange } from '@stencil/core';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 
 
@@ -61,10 +61,11 @@ export class FabButton {
   private color: string;
 
   @Prop() href: string;
+  @Prop() activated: boolean = false;
+  @Prop() toggleActive: Function = () => {};
 
-  @State() show: boolean = false;
+  @Prop() show: boolean = false;
 
-  @State() private activated: boolean = false;
   @State() private inContainer: boolean = false;
   @State() private inList: boolean = false;
 
@@ -80,35 +81,11 @@ export class FabButton {
     this.inContainer = (parentNode === 'ION-FAB');
   }
 
+
   clickedFab() {
     if (this.inContainer) {
-      const activated = !this.activated;
-      this.setActiveLists(activated);
+      this.toggleActive();
     }
-  }
-
-  /**
-   * @hidden
-   */
-  setActiveLists(activated: boolean) {
-    const lists = this.el.parentElement.querySelectorAll('ion-fab-list');
-
-    if (lists.length > 0) {
-      this.activated = activated;
-    }
-
-    for (var i = 0; i < lists.length; i++) {
-      const list = lists[i];
-      list.activated = activated;
-    }
-  }
-
-  /**
-   * Close an active FAB list container
-   */
-  @Method()
-  close() {
-    this.setActiveLists(false);
   }
 
   /**

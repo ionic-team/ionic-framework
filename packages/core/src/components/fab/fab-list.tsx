@@ -1,4 +1,4 @@
-import { Component, Element, PropDidChange, State } from '@stencil/core';
+import { Component, Element, Prop, PropDidChange } from '@stencil/core';
 
 
 /**
@@ -31,7 +31,7 @@ import { Component, Element, PropDidChange, State } from '@stencil/core';
 export class FabList {
   @Element() private el: HTMLElement;
 
-  @State() activated: boolean = false;
+  @Prop() activated: boolean = false;
 
   @PropDidChange('activated')
   activatedChange(activated: boolean) {

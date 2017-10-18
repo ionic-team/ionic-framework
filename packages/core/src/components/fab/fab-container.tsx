@@ -1,4 +1,4 @@
-import { Component, Element, Method } from '@stencil/core';
+import { Component, Element, Method, State } from '@stencil/core';
 
 
 /**
@@ -89,16 +89,30 @@ import { Component, Element, Method } from '@stencil/core';
 export class FabContainer {
   @Element() private el: HTMLElement;
 
+  @State() activated: boolean = false;
+
   /**
    * Close an active FAB list container
    */
   @Method()
   close() {
-    const fab: any = this.el.querySelector('ion-fab-button');
-    fab.close();
+    this.activated = false;
+  }
+
+  toggleActive = () => {
+    this.activated = !this.activated;
   }
 
   protected render() {
+    const fab: any = this.el.querySelector('ion-fab-button');
+    fab.toggleActive = this.toggleActive;
+    fab.activated = this.activated;
+
+    const lists = this.el.querySelectorAll('ion-fab-list');
+    for (let i = 0, length = lists.length; i < length; i += 1) {
+      lists[i].activated = this.activated;
+    }
+
     return (
       <slot></slot>
     );
