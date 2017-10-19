@@ -318,14 +318,6 @@ export class Input implements InputComponent {
     return (this.value !== null && this.value !== undefined && this.value !== '');
   }
 
-  reduceUndefProps(props: { [ key: string]: any}) {
-    return Object.keys(props).reduce((final, propName) => {
-      if (props[propName] != null) {
-        final[propName] = props[propName];
-      }
-      return final;
-    }, {} as { [key: string]: any});
-  }
 
   protected render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
@@ -334,37 +326,35 @@ export class Input implements InputComponent {
     return [
       <input
         aria-disabled={this.disabled ? 'true' : false}
+        accept={this.accept}
+        autoCapitalize={this.autocapitalize}
+        autoComplete={this.autocomplete}
+        autoCorrect={this.autocorrect}
+        autoFocus={this.autofocus}
+        checked={this.checked}
+        disabled={this.disabled}
+        inputMode={this.inputmode}
+        min={this.min}
+        max={this.max}
+        minLength={this.minlength}
+        maxLength={this.maxlength}
+        multiple={this.multiple}
+        name={this.name}
+        pattern={this.pattern}
+        placeholder={this.placeholder}
+        results={this.results}
+        readOnly={this.readonly}
+        required={this.required}
+        spellCheck={this.spellcheck}
+        step={this.step}
+        size={this.size}
+        type={this.type}
+        value={this.value}
+        class={themedClasses}
         onBlur={this.inputBlurred.bind(this)}
         onInput={this.inputChanged.bind(this)}
         onFocus={this.inputFocused.bind(this)}
         onKeyDown={this.inputKeydown.bind(this)}
-        {...this.reduceUndefProps({
-          accept: this.accept,
-          autoCapitalize: this.autocapitalize,
-          autoComplete: this.autocomplete,
-          autoCorrect: this.autocorrect,
-          autoFocus: this.autofocus,
-          checked: this.checked,
-          disabled: this.disabled,
-          inputMode: this.inputmode,
-          min: this.min,
-          max: this.max,
-          minLength: this.minlength,
-          maxLength: this.maxlength,
-          multiple: this.multiple,
-          name: this.name,
-          pattern: this.pattern,
-          placeholder: this.placeholder,
-          results: this.results,
-          readOnly: this.readonly,
-          required: this.required,
-          spellCheck: this.spellcheck,
-          step: this.step,
-          size: this.size,
-          type: this.type,
-          value: this.value,
-          class: themedClasses
-        })}
       />,
       <button
         hidden={this.clearInput !== true}
