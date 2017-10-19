@@ -670,7 +670,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
    * Tell the content to recalculate its dimensions. This should be called
    * after dynamically adding/removing headers, footers, or tabs.
    */
-  @HostListener('window:resize')
+  @HostListener('window:orientationchange')
   resize() {
     this._dom.read(this._readDimensions.bind(this));
     this._dom.write(this._writeDimensions.bind(this));
