@@ -5,13 +5,7 @@ import { Config } from '../../index';
 
 @Component({
   tag: 'ion-fixed',
-  styleUrl: 'fixed.scss',
-  // TODO REMOVE when https://github.com/ionic-team/stencil/issues/52 is done
-  styleUrls: {
-    ios: 'fixed.scss',
-    md: 'fixed.scss',
-    wp: 'fixed.scss'
-  }
+  styleUrl: 'fixed.scss'
 })
 export class Fixed {
   @Element() private el: HTMLElement;
