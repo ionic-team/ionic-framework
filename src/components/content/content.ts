@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -227,6 +227,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   /** @internal */
   _scrollDownOnLoad: boolean = false;
 
+  _viewCtrl: any;
+
   private _imgReqBfr: number;
   private _imgRndBfr: number;
   private _imgVelMax: number;
@@ -410,6 +412,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
     }
 
     if (viewCtrl) {
+      this._viewCtrl = viewCtrl;
+
       // content has a view controller
       viewCtrl._setIONContent(this);
       viewCtrl._setIONContentRef(elementRef);
@@ -670,7 +674,6 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
    * Tell the content to recalculate its dimensions. This should be called
    * after dynamically adding/removing headers, footers, or tabs.
    */
-  @HostListener('window:orientationchange')
   resize() {
     this._dom.read(this._readDimensions.bind(this));
     this._dom.write(this._writeDimensions.bind(this));

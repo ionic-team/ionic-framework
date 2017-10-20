@@ -113,6 +113,13 @@ export class ViewController {
 
     this._cssClass = rootCssClass;
     this._ts = Date.now();
+    window.addEventListener('orientationchange', this.handleOrientationChange.bind(this));
+  }
+
+  handleOrientationChange() {
+    if (this.getNav().isActive(this)) {
+      this.getContent().resize();
+    }
   }
 
   /**
@@ -533,6 +540,7 @@ export class ViewController {
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
 
+      window.removeEventListener('orienationchagne', this.handleOrientationChange.bind(this));
       // completely destroy this component. boom.
       this._cmp.destroy();
     }
