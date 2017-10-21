@@ -67,9 +67,12 @@ ion-reorder[slot="start"] {
   @include transform(translate3d($reorder-initial-transform, 0, 0));
 
   font-size: 1.3em;
-  opacity: .25;
-
   transition: transform 140ms ease-in;
+}
+
+.item-ios .reorder-icon {
+  font-size: 2em;
+  opacity: 0.3;
 }
 
 ion-reorder[slot="start"] .reorder-icon {

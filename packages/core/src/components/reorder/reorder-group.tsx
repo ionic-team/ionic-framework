@@ -209,6 +209,11 @@ export class ReorderGroup {
   }
 
   private onDragStart(ev: GestureDetail) {
+    if (ev.event) {
+      ev.event.preventDefault();
+      ev.event.stopPropagation();
+    }
+
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
@@ -246,6 +251,10 @@ export class ReorderGroup {
     this._actived = true;
 
     item.classList.add(ITEM_REORDER_SELECTED);
+
+    if ((window as any).TapticEngine) {
+      (window as any).TapticEngine.gestureSelectionStart();
+    }
   }
 
   private onDragMove(ev: GestureDetail) {
@@ -266,6 +275,10 @@ export class ReorderGroup {
     if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
       let fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
+
+      if ((window as any).TapticEngine) {
+        (window as any).TapticEngine.gestureSelectionChanged();
+      }
       this._reorderMove(fromIndex, toIndex);
     }
 
@@ -279,25 +292,21 @@ export class ReorderGroup {
     if (!selectedItem) {
       return;
     }
-    // if (ev.event) {
-    //   ev.event.preventDefault();
-    //   ev.event.stopPropagation();
-    // }
 
+    const children = this.containerEl.children as any;
     const toIndex = this.lastToIndex;
     const fromIndex = indexForItem(selectedItem);
 
     const ref = (fromIndex < toIndex)
-      ? this.containerEl.children[toIndex + 1]
-      : this.containerEl.children[toIndex];
+      ? children[toIndex + 1]
+      : children[toIndex];
 
     this.containerEl.insertBefore(this.selectedItemEl, ref);
 
-    const children = this.containerEl.children;
     const len = children.length;
     const transform = CSS_PROP.transformProp;
     for (let i = 0; i < len; i++) {
-      (children[i] as any).style[transform] = '';
+      children[i].style[transform] = '';
     }
 
     const reorderInactive = () => {
@@ -310,6 +319,10 @@ export class ReorderGroup {
       setTimeout(reorderInactive, 200);
     } else {
       reorderInactive();
+    }
+
+    if ((window as any).TapticEngine) {
+      (window as any).TapticEngine.gestureSelectionEnd();
     }
   }
 
@@ -386,7 +399,7 @@ export class ReorderGroup {
         type: 'pan',
         direction: 'y',
         threshold: 0,
-        attachTo: 'parent'
+        attachTo: 'body'
       }}>
         <slot></slot>
       </ion-gesture>
