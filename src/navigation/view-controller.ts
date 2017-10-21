@@ -540,7 +540,7 @@ export class ViewController {
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
 
-      window.removeEventListener('orienationchagne', this.handleOrientationChange.bind(this));
+      window.removeEventListener('orientationchange', this.handleOrientationChange.bind(this));
       // completely destroy this component. boom.
       this._cmp.destroy();
     }
