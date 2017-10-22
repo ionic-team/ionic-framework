@@ -24,21 +24,6 @@ export class Content {
   $siblingHeader: HTMLElement;
   $siblingFooter: HTMLElement;
 
-  /**
-   * @output {ScrollEvent} Emitted when the scrolling first starts.
-   */
-  @Prop() ionScrollStart: Function;
-
-  /**
-   * @output {ScrollEvent} Emitted on every scroll event.
-   */
-  @Prop() ionScroll: Function;
-
-  /**
-   * @output {ScrollEvent} Emitted when scrolling ends.
-   */
-  @Prop() ionScrollEnd: Function;
-
   headerHeight: string;
 
 
@@ -79,7 +64,6 @@ export class Content {
 
 
   protected render() {
-    const props: any = {};
     const scrollStyle: any = {};
 
     const pageChildren: HTMLElement[] = getParentElement(this.el).children;
@@ -94,16 +78,6 @@ export class Content {
       scrollStyle.marginBottom = footerHeight;
     }
 
-    if (this.ionScrollStart) {
-      props['ionScrollStart'] = this.ionScrollStart.bind(this);
-    }
-    if (this.ionScroll) {
-      props['ionScroll'] = this.ionScroll.bind(this);
-    }
-    if (this.ionScrollEnd) {
-      props['ionScrollEnd'] = this.ionScrollEnd.bind(this);
-    }
-
     const themedClasses = createThemedClasses(this.mode, this.color, 'content');
     const hostClasses = getElementClassObject(this.el.classList);
 
@@ -114,7 +88,7 @@ export class Content {
     };
 
     return (
-      <ion-scroll {...props} style={scrollStyle} class={scrollClasses}>
+      <ion-scroll style={scrollStyle} class={scrollClasses}>
         <slot></slot>
       </ion-scroll>
     );

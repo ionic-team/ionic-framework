@@ -596,10 +596,7 @@ declare global {
           mode?: string,
           color?: string,
         
-          ionScrollStart?: any,
-          ionScroll?: any,
-          ionScrollEnd?: any,
-          fullscreen?: boolean
+          fullscreen?: boolean | "true" | "false"
       }
   }
 }
@@ -629,14 +626,13 @@ declare global {
           mode?: string,
           color?: string,
         
-          pickerCtrl?: any,
-          disabled?: boolean,
-          min?: string,
-          max?: string,
-          displayFormat?: string,
-          pickerFormat?: string,
-          cancelText?: string,
-          doneText?: string,
+          disabled?: boolean | "true" | "false",
+          min?: any,
+          max?: any,
+          displayFormat?: any,
+          pickerFormat?: any,
+          cancelText?: any,
+          doneText?: any,
           yearValues?: any,
           monthValues?: any,
           dayValues?: any,
@@ -647,8 +643,7 @@ declare global {
           dayNames?: any,
           dayShortNames?: any,
           pickerOptions?: any,
-          placeholder?: string,
-          value?: string
+          placeholder?: any
       }
   }
 }
@@ -993,6 +988,66 @@ declare global {
           mode?: string,
           color?: string,
         
+      }
+  }
+}
+
+import { InfiniteScrollContent as IonInfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
+
+interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLElement {
+}
+declare var HTMLIonInfiniteScrollContentElement: {
+  prototype: HTMLIonInfiniteScrollContentElement;
+  new (): HTMLIonInfiniteScrollContentElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
+  }
+  interface ElementTagNameMap {
+      "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ion-infinite-scroll-content": JSXElements.IonInfiniteScrollContentAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface IonInfiniteScrollContentAttributes extends HTMLAttributes {
+        
+          loadingSpinner?: any,
+          loadingText?: any
+      }
+  }
+}
+
+import { InfiniteScroll as IonInfiniteScroll } from './components/infinite-scroll/infinite-scroll';
+
+interface HTMLIonInfiniteScrollElement extends IonInfiniteScroll, HTMLElement {
+}
+declare var HTMLIonInfiniteScrollElement: {
+  prototype: HTMLIonInfiniteScrollElement;
+  new (): HTMLIonInfiniteScrollElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
+  }
+  interface ElementTagNameMap {
+      "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ion-infinite-scroll": JSXElements.IonInfiniteScrollAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface IonInfiniteScrollAttributes extends HTMLAttributes {
+        
+          complete?: any,
+          threshold?: any,
+          enabled?: boolean | "true" | "false",
+          position?: any
       }
   }
 }
@@ -2346,11 +2401,11 @@ declare global {
           mode?: string,
           color?: string,
         
-          enabled?: boolean,
-          jsScroll?: boolean,
-          ionScrollStart?: any,
-          ionScroll?: any,
-          ionScrollEnd?: any
+          enabled?: boolean | "true" | "false",
+          jsScroll?: boolean | "true" | "false",
+          onionScrollStart?: any,
+          onionScroll?: any,
+          onionScrollEnd?: any
       }
   }
 }

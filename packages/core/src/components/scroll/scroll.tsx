@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 import { Config, GestureDetail } from '../../index';
 import { GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 
@@ -22,9 +22,14 @@ export class Scroll {
   @Prop({ context: 'config'}) config: Config;
   @Prop() enabled: boolean = true;
   @Prop() jsScroll: boolean = false;
-  @Prop() ionScrollStart: ScrollCallback;
-  @Prop() ionScroll: ScrollCallback;
-  @Prop() ionScrollEnd: ScrollCallback;
+
+  @Prop() onionScrollStart: ScrollCallback;
+  @Prop() onionScroll: ScrollCallback;
+  @Prop() onionScrollEnd: ScrollCallback;
+
+  @Event() ionScrollStart: EventEmitter;
+  @Event() ionScroll: EventEmitter;
+  @Event() ionScrollEnd: EventEmitter;
 
   protected ionViewDidLoad() {
     if (Context.isServer) return;
@@ -77,8 +82,10 @@ export class Scroll {
       detail.velocityY = detail.velocityX = detail.deltaY = detail.deltaX = positions.length = 0;
 
       // emit only on the first scroll event
-      if (self.ionScrollStart) {
-        self.ionScrollStart(detail);
+      if (self.onionScrollStart) {
+        self.onionScrollStart(detail);
+      } else {
+        self.ionScrollStart.emit(detail);
       }
     }
 
@@ -125,21 +132,24 @@ export class Scroll {
     }, 80);
 
     // emit on each scroll event
-    if (self.ionScrollStart) {
-      self.ionScroll(detail);
+    if (self.onionScroll) {
+      self.onionScroll(detail);
+    } else {
+      self.ionScroll.emit(detail);
     }
   }
 
 
   onEnd(timeStamp: number) {
-    const self = this;
-    const detail = self.detail;
+    const detail = this.detail;
 
     detail.timeStamp = timeStamp || Date.now();
 
     // emit that the scroll has ended
-    if (self.ionScrollEnd) {
-      self.ionScrollEnd(detail);
+    if (this.onionScrollEnd) {
+      this.onionScrollEnd(detail);
+    } else {
+      this.ionScrollEnd.emit(detail);
     }
   }
 
