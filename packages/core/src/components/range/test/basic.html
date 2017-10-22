@@ -10,72 +10,74 @@
 
 <body>
   <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Range</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <ion-list>
-        <ion-list-header>
-          Range color
-        </ion-list-header>
-        <ion-item>
-          <ion-range value="20"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range value="40" color="secondary"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range value="60" color="light"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range value="80" color="dark"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range value="100" color="danger"></ion-range>
-        </ion-item>
-      </ion-list>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Range</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-list-header>
+            Range color
+          </ion-list-header>
+          <ion-item>
+            <ion-range value="20"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range value="40" color="secondary"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range value="60" color="light"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range value="80" color="dark"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range value="100" color="danger"></ion-range>
+          </ion-item>
+        </ion-list>
 
-      <ion-list>
-        <ion-list-header>
-          Mode
-        </ion-list-header>
-        <ion-item>
-          <ion-range value="50" mode="md"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range value="50" mode="ios"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range value="50" mode="wp"></ion-range>
-        </ion-item>
-      </ion-list>
+        <ion-list>
+          <ion-list-header>
+            Mode
+          </ion-list-header>
+          <ion-item>
+            <ion-range value="50" mode="md"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range value="50" mode="ios"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range value="50" mode="wp"></ion-range>
+          </ion-item>
+        </ion-list>
 
-      <ion-list>
-        <ion-list-header>
-          Options
-        </ion-list-header>
-        <ion-item>
-          <ion-range pin="true"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range min="1000" max="2000" steps="100" snaps="true" id="range"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range dual-knobs="true" id="multiKnob"></ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-range color="danger">
-            <ion-icon small name="thermometer" slot="range-start"></ion-icon>
-            <ion-icon name="thermometer" slot="range-end"></ion-icon>
-          </ion-range>
-        </ion-item>
+        <ion-list>
+          <ion-list-header>
+            Options
+          </ion-list-header>
+          <ion-item>
+            <ion-range pin="true"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range min="1000" max="2000" steps="100" snaps="true" id="range"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range dual-knobs="true" id="multiKnob"></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-range color="danger">
+              <ion-icon small name="thermometer" slot="range-start"></ion-icon>
+              <ion-icon name="thermometer" slot="range-end"></ion-icon>
+            </ion-range>
+          </ion-item>
 
-      </ion-list>
+        </ion-list>
 
-      <ion-button onclick="elTest()">Test</ion-button>
-    </ion-content>
+        <ion-button onclick="elTest()">Test</ion-button>
+      </ion-content>
+    </ion-page>
   </ion-app>
 
   <script>

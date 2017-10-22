@@ -8,73 +8,75 @@
 </head>
 <body>
   <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Toggles</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Toggles</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
 
-      <ion-list>
-        <ion-item>
-          <ion-label>Apple</ion-label>
-          <ion-toggle slot="start" name="apple" checked></ion-toggle>
-        </ion-item>
+        <ion-list>
+          <ion-item>
+            <ion-label>Apple</ion-label>
+            <ion-toggle slot="start" name="apple" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Banana</ion-label>
-          <ion-toggle slot="start" name="banana" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Banana</ion-label>
+            <ion-toggle slot="start" name="banana" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Cherry, disabled</ion-label>
-          <ion-toggle slot="start" color="danger" name="cherry" disabled></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Cherry, disabled</ion-label>
+            <ion-toggle slot="start" color="danger" name="cherry" disabled></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Grape, checked, disabled</ion-label>
-          <ion-toggle slot="start" id="grapeChecked" name="grape" checked disabled></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Grape, checked, disabled</ion-label>
+            <ion-toggle slot="start" id="grapeChecked" name="grape" checked disabled></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
-          <ion-toggle slot="start" color="secondary" (ionChange)="kiwiChange($event)"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
+            <ion-toggle slot="start" color="secondary" (ionChange)="kiwiChange($event)"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Strawberry, (ionChange) checked="true"</ion-label>
-          <ion-toggle slot="start" color="light" (ionChange)="strawberryChange($event)" checked="true"></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Strawberry, (ionChange) checked="true"</ion-label>
+            <ion-toggle slot="start" color="light" (ionChange)="strawberryChange($event)" checked="true"></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
-          <ion-toggle slot="end" color="danger" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
+            <ion-toggle slot="end" color="danger" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Checkbox right side</ion-label>
-          <ion-toggle slot="end" checked></ion-toggle>
-        </ion-item>
+          <ion-item>
+            <ion-label>Checkbox right side</ion-label>
+            <ion-toggle slot="end" checked></ion-toggle>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>Button w/ right side default icon, really long text that should ellipsis</ion-label>
-          <ion-icon name="information-circle" slot="end"></ion-icon>
-        </ion-item>
+          <ion-item>
+            <ion-label>Button w/ right side default icon, really long text that should ellipsis</ion-label>
+            <ion-icon name="information-circle" slot="end"></ion-icon>
+          </ion-item>
 
-      </ion-list>
+        </ion-list>
 
 
-      <p aria-hidden="true" text-center>
-        <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
-        <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
-        <ion-button onClick="printForm()" outline small>Print Form</ion-button>
-      </p>
+        <p aria-hidden="true" text-center>
+          <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
+          <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
+          <ion-button onClick="printForm()" outline small>Print Form</ion-button>
+        </p>
 
-      <p>
-        <ion-toggle id="standAloneChecked"></ion-toggle>
-        Stand-alone toggle: <span id="standAloneCheckedSpan"></span>
-      </p>
-    </ion-content>
+        <p>
+          <ion-toggle id="standAloneChecked"></ion-toggle>
+          Stand-alone toggle: <span id="standAloneCheckedSpan"></span>
+        </p>
+      </ion-content>
+    </ion-page>
 
     <script>
       function printForm(ev) {

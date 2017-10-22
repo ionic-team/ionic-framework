@@ -8,399 +8,401 @@
 </head>
 <body>
   <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Sliding Items</ion-title>
-        <ion-buttons slot="start">
-          <ion-button onclick="changeDynamicText()">Dynamic</ion-button>
-        </ion-buttons>
-        <ion-buttons slot="end">
-          <ion-button onclick="reload()">Reload</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Sliding Items</ion-title>
+          <ion-buttons slot="start">
+            <ion-button onclick="changeDynamicText()">Dynamic</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button onclick="reload()">Reload</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-content>
+      <ion-content>
 
-      <div padding>
-        <ion-button block onclick="toggleSliding()">Toggle sliding</ion-button>
-        <ion-button block onclick="toggleDynamicOptions()">Toggle Dynamic Options</ion-button>
-        <ion-button block onclick="closeOpened()">Close Opened Items</ion-button>
-      </div>
+        <div padding>
+          <ion-button block onclick="toggleSliding()">Toggle sliding</ion-button>
+          <ion-button block onclick="toggleDynamicOptions()">Toggle Dynamic Options</ion-button>
+          <ion-button block onclick="closeOpened()">Close Opened Items</ion-button>
+        </div>
 
-      <ion-list id="list">
-        <div class="nested-div">
-          <ion-item-sliding>
-            <ion-item>
+        <ion-list id="list">
+          <div class="nested-div">
+            <ion-item-sliding>
+              <ion-item>
+                <ion-label>
+                  <h2>No Options</h2>
+                  <p>Should not error or swipe without options</p>
+                </ion-label>
+              </ion-item>
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item6">
+              <ion-item>
+                <ion-label>
+                  One Line, dynamic option and text
+                </ion-label>
+              </ion-item>
+              <ion-item-options class="show-options">
+                <ion-item-option color="primary">
+                  <ion-icon name="more"></ion-icon>
+                  <span class="more-text"></span>
+                </ion-item-option>
+                <ion-item-option color="secondary" onclick="archive('item6')">
+                  <ion-icon name="archive"></ion-icon>
+                  <span class="archive-text"></span>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item6">
+              <ion-item>
+                <ion-label>
+                  Two options, one dynamic option and text
+                </ion-label>
+              </ion-item>
+              <ion-item-options side="left">
+                <ion-item-option color="primary">
+                  <ion-icon slot="icon-only" name="more"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+              <ion-item-options side="right" class="show-options">
+                <ion-item-option color="primary">
+                  <ion-icon name="more"></ion-icon>
+                  <span class="more-text"></span>
+                </ion-item-option>
+                <ion-item-option color="secondary" onclick="archive('item6')">
+                  <ion-icon name="archive"></ion-icon>
+                  <span class="archive-text"></span>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item100">
+              <ion-item href="#">
+                <ion-label>
+                  <h2>HubStruck Notifications</h2>
+                  <p>A new message from a repo in your network</p>
+                  <p>Oceanic Next has joined your network</p>
+                </ion-label>
+                <ion-note slot="end">
+                  10:45 AM
+                </ion-note>
+              </ion-item>
+
+              <ion-item-options side="left">
+                <ion-item-option onclick="noclose('item100')">
+                  No close
+                </ion-item-option>
+              </ion-item-options>
+              <ion-item-options side="right">
+                <ion-item-option color="light" onclick="unread('item100')">
+                  <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-item-option>
+                <ion-item-option onclick="unread('item100')">
+                  <ion-icon slot="icon-only" name="star"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item0">
+              <ion-item text-wrap onclick="clickedItem('item0')">
+                <ion-label>
+                  <h2>RIGHT side - no icons</h2>
+                  <p>Hey do you want to go to the game tonight?</p>
+                </ion-label>
+              </ion-item>
+              <ion-item-options class="sliding-enabled">
+                <ion-item-option color="primary" onclick="archive('item0')">Archive</ion-item-option>
+                <ion-item-option color="danger" onclick="del('item0')">Delete</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item1">
+              <ion-item text-wrap detail-push href="#" class="activated">
+                <ion-label>
+                  <h2>LEFT side - no icons</h2>
+                  <p>I think I figured out how to get more Mountain Dew</p>
+                </ion-label>
+              </ion-item>
+              <ion-item-options side="left" class="sliding-enabled">
+                <ion-item-option color="primary" onclick="archive('item1')">Archive</ion-item-option>
+                <ion-item-option color="danger" onclick="del('item1')">Delete</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+
+            <ion-item-sliding id="item2">
+              <ion-item text-wrap detail-push>
+                <ion-label>
+                  <h2>RIGHT/LEFT side - icons</h2>
+                  <p>I think I figured out how to get more Mountain Dew</p>
+                </ion-label>
+              </ion-item>
+              <ion-item-options side="left" (ionSwipe)="unread($event)" class="sliding-enabled">
+                <ion-item-option color="secondary" expandable onclick="unread('item2')">
+                  <ion-icon name="ios-checkmark"></ion-icon>Unread
+                </ion-item-option>
+              </ion-item-options>
+
+              <ion-item-options side="right" (ionSwipe)="del('item2')" class="sliding-enabled">
+                <ion-item-option color="primary" onclick="archive('item2')">
+                  <ion-icon name="mail"></ion-icon>Archive
+                </ion-item-option>
+                <ion-item-option color="danger" onclick="del('item2')" expandable>
+                  <ion-icon name="trash"></ion-icon>Delete
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item3">
+              <ion-item text-wrap detail-push>
+                <ion-label>
+                  <h2>RIGHT/LEFT side - icons (slot="start")</h2>
+                  <p>I think I figured out how to get more Mountain Dew</p>
+                </ion-label>
+              </ion-item>
+              <ion-item-options side="left" icon-start (ionSwipe)="unread($event)" class="sliding-enabled">
+                <ion-item-option color="secondary" expandable onclick="unread('item3')">
+                  <ion-icon name="ios-checkmark"></ion-icon>Unread
+                </ion-item-option>
+              </ion-item-options>
+
+              <ion-item-options icon-start (ionSwipe)="del('item3')">
+                <ion-item-option color="primary" onclick="archive('item3')">
+                  <ion-icon name="mail"></ion-icon>Archive
+                </ion-item-option>
+                <ion-item-option color="danger" onclick="del('item3')" expandable class="sliding-enabled">
+                  <ion-icon name="trash"></ion-icon>Delete
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+
+            <ion-item-sliding id="item4">
+              <ion-item>
+                <ion-icon name="mail" slot="start"></ion-icon>
+                <ion-label>
+                  One Line w/ Icon, div only text
+                </ion-label>
+              </ion-item>
+              <ion-item-options icon-start (ionSwipe)="archive($event)">
+                <ion-item-option color="primary" onclick="archive('item4')" expandable class="sliding-enabled">
+                  <ion-icon name="archive"></ion-icon>Archive
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+
+            <ion-item-sliding id="item5" class="sliding-enabled">
+              <ion-item>
+                <ion-avatar slot="start">
+                  <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+                </ion-avatar>
+                <ion-label>
+                  One Line w/ Avatar, div only text
+                </ion-label>
+              </ion-item>
+              <ion-item-options>
+                <ion-item-option color="primary" expandable>
+                  <ion-icon name="more"></ion-icon>More
+                </ion-item-option>
+                <ion-item-option color="secondary" onclick="archive('item5')">
+                  <ion-icon name="archive"></ion-icon>Archive
+                </ion-item-option>
+                <ion-item-option color="light" onclick="del('item5')">
+                  <ion-icon name="trash"></ion-icon>Delete
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+
+            <ion-item-sliding id="item7">
+              <ion-item>
+                <ion-label>
+                  One Line, dynamic icon-start option
+                </ion-label>
+              </ion-item>
+              <ion-item-options icon-start>
+                <ion-item-option color="primary">
+                  <ion-icon name="more"></ion-icon>
+                  <span class="more-text"></span>
+                </ion-item-option>
+                <ion-item-option color="secondary" onclick="archive('item7')">
+                  <ion-icon name="archive"></ion-icon>
+                  <span class="archive-text"></span>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item8">
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>DOWNLOAD</h2>
+                  <p>Paragraph text.</p>
+                </ion-label>
+              </ion-item>
+              <ion-item-options (ionSwipe)="download('item8')">
+                <ion-item-option color="primary" onclick="archive('item8')">
+                  <ion-icon name="archive"></ion-icon>Archive
+                </ion-item-option>
+                <ion-item-option color="secondary" expandable onclick="download('item8')">
+                  <ion-icon name="download" class="download-hide"></ion-icon>
+                  <div class="download-hide">Download</div>
+
+                  <ion-icon class="download-spinner" name="refresh"></ion-icon>
+                  <div class="download-spinner">Loading...</div>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+
+            <ion-item-sliding id="item9">
+              <ion-item>
+                <ion-thumbnail slot="start">
+                  <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+                </ion-thumbnail>
+                <ion-label>
+                  <h2>ion-item-sliding without options (no sliding)</h2>
+                  <p>Paragraph text.</p>
+                </ion-label>
+              </ion-item>
+            </ion-item-sliding>
+
+            <ion-item text-wrap>
               <ion-label>
-                <h2>No Options</h2>
-                <p>Should not error or swipe without options</p>
+                <h2>Normal ion-item (no sliding)</h2>
+                <p>Paragraph text.</p>
               </ion-label>
             </ion-item>
-          </ion-item-sliding>
 
-          <ion-item-sliding id="item6">
-            <ion-item>
+            <ion-item text-wrap onclick="clickedItem('item9')">
               <ion-label>
-                One Line, dynamic option and text
-              </ion-label>
-            </ion-item>
-            <ion-item-options class="show-options">
-              <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
-                <span class="more-text"></span>
-              </ion-item-option>
-              <ion-item-option color="secondary" onclick="archive('item6')">
-                <ion-icon name="archive"></ion-icon>
-                <span class="archive-text"></span>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-          <ion-item-sliding id="item6">
-            <ion-item>
-              <ion-label>
-                Two options, one dynamic option and text
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="left">
-              <ion-item-option color="primary">
-                <ion-icon slot="icon-only" name="more"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-            <ion-item-options side="right" class="show-options">
-              <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
-                <span class="more-text"></span>
-              </ion-item-option>
-              <ion-item-option color="secondary" onclick="archive('item6')">
-                <ion-icon name="archive"></ion-icon>
-                <span class="archive-text"></span>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-          <ion-item-sliding id="item100">
-            <ion-item href="#">
-              <ion-label>
-                <h2>HubStruck Notifications</h2>
-                <p>A new message from a repo in your network</p>
-                <p>Oceanic Next has joined your network</p>
-              </ion-label>
-              <ion-note slot="end">
-                10:45 AM
-              </ion-note>
-            </ion-item>
-
-            <ion-item-options side="left">
-              <ion-item-option onclick="noclose('item100')">
-                No close
-              </ion-item-option>
-            </ion-item-options>
-            <ion-item-options side="right">
-              <ion-item-option color="light" onclick="unread('item100')">
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
-              </ion-item-option>
-              <ion-item-option onclick="unread('item100')">
-                <ion-icon slot="icon-only" name="star"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-
-          </ion-item-sliding>
-
-          <ion-item-sliding id="item0">
-            <ion-item text-wrap onclick="clickedItem('item0')">
-              <ion-label>
-                <h2>RIGHT side - no icons</h2>
+                <h2>Normal button (no sliding)</h2>
                 <p>Hey do you want to go to the game tonight?</p>
               </ion-label>
             </ion-item>
-            <ion-item-options class="sliding-enabled">
-              <ion-item-option color="primary" onclick="archive('item0')">Archive</ion-item-option>
-              <ion-item-option color="danger" onclick="del('item0')">Delete</ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
+          </div>
 
-          <ion-item-sliding id="item1">
-            <ion-item text-wrap detail-push href="#" class="activated">
-              <ion-label>
-                <h2>LEFT side - no icons</h2>
-                <p>I think I figured out how to get more Mountain Dew</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="left" class="sliding-enabled">
-              <ion-item-option color="primary" onclick="archive('item1')">Archive</ion-item-option>
-              <ion-item-option color="danger" onclick="del('item1')">Delete</ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
+        </ion-list>
 
+        <script>
+          var dynamicSlidingEnabled = document.getElementsByClassName('sliding-enabled');
 
-          <ion-item-sliding id="item2">
-            <ion-item text-wrap detail-push>
-              <ion-label>
-                <h2>RIGHT/LEFT side - icons</h2>
-                <p>I think I figured out how to get more Mountain Dew</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="left" (ionSwipe)="unread($event)" class="sliding-enabled">
-              <ion-item-option color="secondary" expandable onclick="unread('item2')">
-                <ion-icon name="ios-checkmark"></ion-icon>Unread
-              </ion-item-option>
-            </ion-item-options>
+          // Toggle the dynamic options
+          var dynamicShowOptions = document.getElementsByClassName('show-options');
+          toggleDynamicOptions();
 
-            <ion-item-options side="right" (ionSwipe)="del('item2')" class="sliding-enabled">
-              <ion-item-option color="primary" onclick="archive('item2')">
-                <ion-icon name="mail"></ion-icon>Archive
-              </ion-item-option>
-              <ion-item-option color="danger" onclick="del('item2')" expandable>
-                <ion-icon name="trash"></ion-icon>Delete
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-          <ion-item-sliding id="item3">
-            <ion-item text-wrap detail-push>
-              <ion-label>
-                <h2>RIGHT/LEFT side - icons (slot="start")</h2>
-                <p>I think I figured out how to get more Mountain Dew</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="left" icon-start (ionSwipe)="unread($event)" class="sliding-enabled">
-              <ion-item-option color="secondary" expandable onclick="unread('item3')">
-                <ion-icon name="ios-checkmark"></ion-icon>Unread
-              </ion-item-option>
-            </ion-item-options>
-
-            <ion-item-options icon-start (ionSwipe)="del('item3')">
-              <ion-item-option color="primary" onclick="archive('item3')">
-                <ion-icon name="mail"></ion-icon>Archive
-              </ion-item-option>
-              <ion-item-option color="danger" onclick="del('item3')" expandable class="sliding-enabled">
-                <ion-icon name="trash"></ion-icon>Delete
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-
-          <ion-item-sliding id="item4">
-            <ion-item>
-              <ion-icon name="mail" slot="start"></ion-icon>
-              <ion-label>
-                One Line w/ Icon, div only text
-              </ion-label>
-            </ion-item>
-            <ion-item-options icon-start (ionSwipe)="archive($event)">
-              <ion-item-option color="primary" onclick="archive('item4')" expandable class="sliding-enabled">
-                <ion-icon name="archive"></ion-icon>Archive
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-
-          <ion-item-sliding id="item5" class="sliding-enabled">
-            <ion-item>
-              <ion-avatar slot="start">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-              </ion-avatar>
-              <ion-label>
-                One Line w/ Avatar, div only text
-              </ion-label>
-            </ion-item>
-            <ion-item-options>
-              <ion-item-option color="primary" expandable>
-                <ion-icon name="more"></ion-icon>More
-              </ion-item-option>
-              <ion-item-option color="secondary" onclick="archive('item5')">
-                <ion-icon name="archive"></ion-icon>Archive
-              </ion-item-option>
-              <ion-item-option color="light" onclick="del('item5')">
-                <ion-icon name="trash"></ion-icon>Delete
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-
-          <ion-item-sliding id="item7">
-            <ion-item>
-              <ion-label>
-                One Line, dynamic icon-start option
-              </ion-label>
-            </ion-item>
-            <ion-item-options icon-start>
-              <ion-item-option color="primary">
-                <ion-icon name="more"></ion-icon>
-                <span class="more-text"></span>
-              </ion-item-option>
-              <ion-item-option color="secondary" onclick="archive('item7')">
-                <ion-icon name="archive"></ion-icon>
-                <span class="archive-text"></span>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-          <ion-item-sliding id="item8">
-            <ion-item>
-              <ion-thumbnail slot="start">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-              </ion-thumbnail>
-              <ion-label>
-                <h2>DOWNLOAD</h2>
-                <p>Paragraph text.</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options (ionSwipe)="download('item8')">
-              <ion-item-option color="primary" onclick="archive('item8')">
-                <ion-icon name="archive"></ion-icon>Archive
-              </ion-item-option>
-              <ion-item-option color="secondary" expandable onclick="download('item8')">
-                <ion-icon name="download" class="download-hide"></ion-icon>
-                <div class="download-hide">Download</div>
-
-                <ion-icon class="download-spinner" name="refresh"></ion-icon>
-                <div class="download-spinner">Loading...</div>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-
-          <ion-item-sliding id="item9">
-            <ion-item>
-              <ion-thumbnail slot="start">
-                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-              </ion-thumbnail>
-              <ion-label>
-                <h2>ion-item-sliding without options (no sliding)</h2>
-                <p>Paragraph text.</p>
-              </ion-label>
-            </ion-item>
-          </ion-item-sliding>
-
-          <ion-item text-wrap>
-            <ion-label>
-              <h2>Normal ion-item (no sliding)</h2>
-              <p>Paragraph text.</p>
-            </ion-label>
-          </ion-item>
-
-          <ion-item text-wrap onclick="clickedItem('item9')">
-            <ion-label>
-              <h2>Normal button (no sliding)</h2>
-              <p>Hey do you want to go to the game tonight?</p>
-            </ion-label>
-          </ion-item>
-        </div>
-
-      </ion-list>
-
-      <script>
-        var dynamicSlidingEnabled = document.getElementsByClassName('sliding-enabled');
-
-        // Toggle the dynamic options
-        var dynamicShowOptions = document.getElementsByClassName('show-options');
-        toggleDynamicOptions();
-
-        function toggleDynamicOptions() {
-          // TODO the element needs to be removed / added to the DOM
-        }
-
-        // Change the text for the more and archive buttons
-        var dynamicText = true;
-        var moreTextSpans = document.getElementsByClassName('more-text');
-        var archiveTextSpans = document.getElementsByClassName('archive-text');
-        changeDynamicText();
-
-        function changeDynamicText() {
-          dynamicText = !dynamicText;
-
-          for (var i = 0; i < moreTextSpans.length; i++) {
-            var moreText = dynamicText ? 'Changed More' : 'Dynamic More';
-            moreTextSpans[i].innerHTML = moreText;
+          function toggleDynamicOptions() {
+            // TODO the element needs to be removed / added to the DOM
           }
 
-          for (var i = 0; i < archiveTextSpans.length; i++) {
-            var archiveText = dynamicText ? 'Changed Archive' : 'Dynamic Archive';
-            archiveTextSpans[i].innerHTML = archiveText;
+          // Change the text for the more and archive buttons
+          var dynamicText = true;
+          var moreTextSpans = document.getElementsByClassName('more-text');
+          var archiveTextSpans = document.getElementsByClassName('archive-text');
+          changeDynamicText();
+
+          function changeDynamicText() {
+            dynamicText = !dynamicText;
+
+            for (var i = 0; i < moreTextSpans.length; i++) {
+              var moreText = dynamicText ? 'Changed More' : 'Dynamic More';
+              moreTextSpans[i].innerHTML = moreText;
+            }
+
+            for (var i = 0; i < archiveTextSpans.length; i++) {
+              var archiveText = dynamicText ? 'Changed Archive' : 'Dynamic Archive';
+              archiveTextSpans[i].innerHTML = archiveText;
+            }
           }
-        }
 
-        function toggleSliding() {
-          // this.slidingEnabled = !this.slidingEnabled;
-        }
-
-        function closeOpened() {
-          var list = document.getElementById('list');
-          list.closeSlidingItems();
-        }
-
-        function noclose(item) {
-          var itemEle = document.getElementById(item);
-          console.log('no close', itemEle);
-        }
-
-        function unread(item) {
-          closeSlidingItem('UNREAD', item);
-        }
-
-        function archive(item) {
-          closeSlidingItem('ARCHIVE', item);
-        }
-
-        function del(item) {
-          closeSlidingItem('DELETE', item);
-        }
-
-        function download(item) {
-          var itemEle = document.getElementById(item);
-          console.log(itemEle);
-          itemEle.classList.add('downloading');
-          setTimeout(() => {
-            alert('Item was downloaded!');
-
-            itemEle.classList.remove('downloading');
-            itemEle.close();
-          }, 1500);
-        }
-
-        function closeSlidingItem(option, item) {
-          var itemEle = document.getElementById(item);
-
-          // TODO open alert instead
-          if (itemEle) {
-            itemEle.close();
+          function toggleSliding() {
+            // this.slidingEnabled = !this.slidingEnabled;
           }
-          console.log(option, itemEle);
-        }
 
-        function clickedItem(item) {
-          var itemEle = document.getElementById(item);
-          console.log('Clicked, ion-item', itemEle);
-        }
+          function closeOpened() {
+            var list = document.getElementById('list');
+            list.closeSlidingItems();
+          }
 
-        function reload() {
-          window.location.reload();
-        }
-      </script>
-      <style>
-        img {
-          height: 100px;
-        }
+          function noclose(item) {
+            var itemEle = document.getElementById(item);
+            console.log('no close', itemEle);
+          }
 
-        .download-spinner {
-          display: none;
-        }
+          function unread(item) {
+            closeSlidingItem('UNREAD', item);
+          }
 
-        svg circle {
-          stroke: white;
-        }
+          function archive(item) {
+            closeSlidingItem('ARCHIVE', item);
+          }
 
-        .downloading .download-spinner {
-          display: block;
-        }
+          function del(item) {
+            closeSlidingItem('DELETE', item);
+          }
 
-        .downloading .download-hide {
-          display: none;
-        }
-      </style>
-    </ion-content>
+          function download(item) {
+            var itemEle = document.getElementById(item);
+            console.log(itemEle);
+            itemEle.classList.add('downloading');
+            setTimeout(() => {
+              alert('Item was downloaded!');
+
+              itemEle.classList.remove('downloading');
+              itemEle.close();
+            }, 1500);
+          }
+
+          function closeSlidingItem(option, item) {
+            var itemEle = document.getElementById(item);
+
+            // TODO open alert instead
+            if (itemEle) {
+              itemEle.close();
+            }
+            console.log(option, itemEle);
+          }
+
+          function clickedItem(item) {
+            var itemEle = document.getElementById(item);
+            console.log('Clicked, ion-item', itemEle);
+          }
+
+          function reload() {
+            window.location.reload();
+          }
+        </script>
+        <style>
+          img {
+            height: 100px;
+          }
+
+          .download-spinner {
+            display: none;
+          }
+
+          svg circle {
+            stroke: white;
+          }
+
+          .downloading .download-spinner {
+            display: block;
+          }
+
+          .downloading .download-hide {
+            display: none;
+          }
+        </style>
+      </ion-content>
+    </ion-page>
   </ion-app>
 </body>
 </html>

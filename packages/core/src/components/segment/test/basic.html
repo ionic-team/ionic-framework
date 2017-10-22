@@ -8,102 +8,104 @@
 </head>
 <body>
   <ion-app>
-    <ion-content>
-      <ion-toolbar no-border-top>
-        <ion-segment value="Free">
-          <ion-segment-button value="Paid">
-            Paid
-          </ion-segment-button>
-          <ion-segment-button value="Free">
-            Free
-          </ion-segment-button>
-          <ion-segment-button value="Top">
-            Top
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
+    <ion-page>
+      <ion-content>
+        <ion-toolbar no-border-top>
+          <ion-segment value="Free">
+            <ion-segment-button value="Paid">
+              Paid
+            </ion-segment-button>
+            <ion-segment-button value="Free">
+              Free
+            </ion-segment-button>
+            <ion-segment-button value="Top">
+              Top
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
 
-      <ion-toolbar no-border-top no-border-bottom>
-        <ion-segment color="danger">
-          <ion-segment-button value="sunny">
-            Sunny
-          </ion-segment-button>
-          <ion-segment-button value="rainy" checked>
-            Rainy
-          </ion-segment-button>
-        </ion-segment>
-      </ion-toolbar>
+        <ion-toolbar no-border-top no-border-bottom>
+          <ion-segment color="danger">
+            <ion-segment-button value="sunny">
+              Sunny
+            </ion-segment-button>
+            <ion-segment-button value="rainy" checked>
+              Rainy
+            </ion-segment-button>
+          </ion-segment>
+        </ion-toolbar>
 
-      <div padding>
-        <ion-segment color="dark" value="Reading List">
-          <ion-segment-button value="Bookmarks">
-            <ion-icon name="book"></ion-icon>
-          </ion-segment-button>
-          <ion-segment-button value="Reading List">
-            <ion-icon ios="ios-glasses-outline" md="md-glasses"></ion-icon>
-          </ion-segment-button>
-          <ion-segment-button value="Shared Links">
-            <ion-icon ios="ios-at-outline" md="md-at"></ion-icon>
-          </ion-segment-button>
-        </ion-segment>
+        <div padding>
+          <ion-segment color="dark" value="Reading List">
+            <ion-segment-button value="Bookmarks">
+              <ion-icon name="book"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="Reading List">
+              <ion-icon ios="ios-glasses-outline" md="md-glasses"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="Shared Links">
+              <ion-icon ios="ios-at-outline" md="md-at"></ion-icon>
+            </ion-segment-button>
+          </ion-segment>
 
-        <ion-segment id="dynamicPropDisable" disabled color="danger">
-          <ion-segment-button value="Bookmarks">
-            Bookmarks
-          </ion-segment-button>
-          <ion-segment-button value="Reading List">
-            Reading List
-          </ion-segment-button>
-          <ion-segment-button value="Shared Links">
-            Shared Links
-          </ion-segment-button>
-        </ion-segment>
+          <ion-segment id="dynamicPropDisable" disabled color="danger">
+            <ion-segment-button value="Bookmarks">
+              Bookmarks
+            </ion-segment-button>
+            <ion-segment-button value="Reading List">
+              Reading List
+            </ion-segment-button>
+            <ion-segment-button value="Shared Links">
+              Shared Links
+            </ion-segment-button>
+          </ion-segment>
 
-        <ion-segment id="dynamicAttrElem" color="secondary" value="active">
-          <ion-segment-button value="active">
-            Active
-          </ion-segment-button>
-          <ion-segment-button id="dynamicAttrDisable" value="disabled" disabled="true">
-            Disabled
-          </ion-segment-button>
-          <ion-segment-button value="inactive" disabled="false">
-            Inactive
-          </ion-segment-button>
-        </ion-segment>
-      </div>
+          <ion-segment id="dynamicAttrElem" color="secondary" value="active">
+            <ion-segment-button value="active">
+              Active
+            </ion-segment-button>
+            <ion-segment-button id="dynamicAttrDisable" value="disabled" disabled="true">
+              Disabled
+            </ion-segment-button>
+            <ion-segment-button value="inactive" disabled="false">
+              Inactive
+            </ion-segment-button>
+          </ion-segment>
+        </div>
 
-      <div padding-horizontal>
-        <ion-button block onClick="toggleDisabled()">Toggle Disabled</ion-button>
-      </div>
-      <div padding>
-        <ion-button block color="secondary" onClick="toggleValue()">Toggle Value</ion-button>
-      </div>
+        <div padding-horizontal>
+          <ion-button block onClick="toggleDisabled()">Toggle Disabled</ion-button>
+        </div>
+        <div padding>
+          <ion-button block color="secondary" onClick="toggleValue()">Toggle Value</ion-button>
+        </div>
 
-      <script>
-          var dynamicAttrDisable = document.getElementById('dynamicAttrDisable');
-          var dynamicPropDisable = document.getElementById('dynamicPropDisable');
+        <script>
+            var dynamicAttrDisable = document.getElementById('dynamicAttrDisable');
+            var dynamicPropDisable = document.getElementById('dynamicPropDisable');
 
-          function toggleDisabled() {
-            const attrIsDisabled = dynamicAttrDisable.getAttribute('disabled') === 'true' ? false : true;
-            const propIsDisabled = dynamicPropDisable.disabled === true ? false : true;
-            dynamicAttrDisable.setAttribute('disabled', attrIsDisabled);
-            dynamicPropDisable.disabled = propIsDisabled;
-          }
-
-          function toggleValue() {
-            var dynamicAttrElem = document.getElementById('dynamicAttrElem');
-            var dynamicAttrValue = dynamicAttrElem.getAttribute('value');
-
-            if (dynamicAttrValue === 'active') {
-              dynamicAttrElem.setAttribute('value', 'inactive');
-            } else if (dynamicAttrValue === 'inactive') {
-              dynamicAttrElem.setAttribute('value', 'disabled');
-            } else {
-              dynamicAttrElem.setAttribute('value', 'active');
+            function toggleDisabled() {
+              const attrIsDisabled = dynamicAttrDisable.getAttribute('disabled') === 'true' ? false : true;
+              const propIsDisabled = dynamicPropDisable.disabled === true ? false : true;
+              dynamicAttrDisable.setAttribute('disabled', attrIsDisabled);
+              dynamicPropDisable.disabled = propIsDisabled;
             }
-          }
-      </script>
-    </ion-content>
+
+            function toggleValue() {
+              var dynamicAttrElem = document.getElementById('dynamicAttrElem');
+              var dynamicAttrValue = dynamicAttrElem.getAttribute('value');
+
+              if (dynamicAttrValue === 'active') {
+                dynamicAttrElem.setAttribute('value', 'inactive');
+              } else if (dynamicAttrValue === 'inactive') {
+                dynamicAttrElem.setAttribute('value', 'disabled');
+              } else {
+                dynamicAttrElem.setAttribute('value', 'active');
+              }
+            }
+        </script>
+      </ion-content>
+    </ion-page>
   </ion-app>
 </body>
 </html>

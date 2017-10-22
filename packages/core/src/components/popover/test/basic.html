@@ -10,35 +10,37 @@
 
 <body>
   <ion-app>
-    <ion-header>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-          <ion-button onclick="presentPopover('profile-page', event)">
-            <ion-icon slot="icon-only" name="person"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Popover</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="start">
+            <ion-button onclick="presentPopover('profile-page', event)">
+              <ion-icon slot="icon-only" name="person"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Popover</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-content padding>
-      <ion-button block onclick="presentPopover('profile-page', event)">Show Popover</ion-button>
-      <ion-button block onclick="presentPopover('list-page', event)">Show Long List Popover</ion-button>
-      <ion-button block onclick="presentPopover('profile-page')">No Event Popover</ion-button>
+      <ion-content padding>
+        <ion-button block onclick="presentPopover('profile-page', event)">Show Popover</ion-button>
+        <ion-button block onclick="presentPopover('list-page', event)">Show Long List Popover</ion-button>
+        <ion-button block onclick="presentPopover('profile-page')">No Event Popover</ion-button>
 
-      <ion-popover-controller></ion-popover-controller>
-    </ion-content>
+        <ion-popover-controller></ion-popover-controller>
+      </ion-content>
 
-    <ion-footer>
-      <ion-toolbar color="primary">
-        <ion-buttons slot="end">
-          <ion-button onclick="presentPopover('profile-page', event)">
-            <ion-icon slot="icon-only" name="person"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-title>Popover</ion-title>
-      </ion-toolbar>
-    </ion-footer>
+      <ion-footer>
+        <ion-toolbar color="primary">
+          <ion-buttons slot="end">
+            <ion-button onclick="presentPopover('profile-page', event)">
+              <ion-icon slot="icon-only" name="person"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Popover</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-page>
   </ion-app>
   <script>
     function presentPopover(componentName, event) {

@@ -10,64 +10,66 @@
 
 <body>
   <ion-app>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Item Reorder</ion-title>
-        <ion-buttons slot="end">
-          <ion-button onclick="toggleEdit()">Toggle</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item Reorder</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onclick="toggleEdit()">Toggle</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-content>
-      <ion-list>
-        <ion-reorder-group id="reorder">
+      <ion-content>
+        <ion-list>
+          <ion-reorder-group id="reorder">
 
-          <ion-item>
-            Item 1 (default ion-reorder)
-            <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
+            <ion-item>
+              Item 1 (default ion-reorder)
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
 
-          <ion-item>
-            Item 2 (default ion-reorder)
-            <ion-reorder slot="end"></ion-reorder>
-          </ion-item>
+            <ion-item>
+              Item 2 (default ion-reorder)
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
 
-          <ion-item>
-            Item 3 (default ion-reorder slot="start")
-            <ion-reorder slot="start"></ion-reorder>
-          </ion-item>
+            <ion-item>
+              Item 3 (default ion-reorder slot="start")
+              <ion-reorder slot="start"></ion-reorder>
+            </ion-item>
 
-          <ion-item>
-            Item 4 (custom ion-reorder)
-            <ion-reorder slot="end"><ion-icon name="pizza"></ion-reorder>
-          </ion-item>
+            <ion-item>
+              Item 4 (custom ion-reorder)
+              <ion-reorder slot="end"><ion-icon name="pizza"></ion-reorder>
+            </ion-item>
 
-          <ion-item>
-            Item 5 (custom ion-reorder)
-            <ion-reorder slot="end"><ion-icon name="pizza"></ion-reorder>
-          </ion-item>
+            <ion-item>
+              Item 5 (custom ion-reorder)
+              <ion-reorder slot="end"><ion-icon name="pizza"></ion-reorder>
+            </ion-item>
 
-          <ion-item>
-            Item 6 (custom ion-reorder slot="start")
-            <ion-reorder slot="start"><ion-icon name="pizza"></ion-reorder>
-          </ion-item>
+            <ion-item>
+              Item 6 (custom ion-reorder slot="start")
+              <ion-reorder slot="start"><ion-icon name="pizza"></ion-reorder>
+            </ion-item>
 
-          <ion-reorder class="no-hide">
-            <ion-item>Item 7 (the whole item can be dragged)</ion-item>
-          </ion-reorder>
+            <ion-reorder class="no-hide">
+              <ion-item>Item 7 (the whole item can be dragged)</ion-item>
+            </ion-reorder>
 
-          <ion-reorder class="no-hide">
-            <ion-item>Item 8 (the whole item can be dragged)</ion-item>
-          </ion-reorder>
+            <ion-reorder class="no-hide">
+              <ion-item>Item 8 (the whole item can be dragged)</ion-item>
+            </ion-reorder>
 
-          <ion-reorder class="no-hide">
-            <ion-item>Item 9 (the whole item can be dragged)</ion-item>
-          </ion-reorder>
+            <ion-reorder class="no-hide">
+              <ion-item>Item 9 (the whole item can be dragged)</ion-item>
+            </ion-reorder>
 
-        </ion-reorder-group>
-      </ion-list>
-    </ion-content>
+          </ion-reorder-group>
+        </ion-list>
+      </ion-content>
+    </ion-page>
   </ion-app>
 
   <script>
