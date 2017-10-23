@@ -20,6 +20,7 @@ export class Picker {
   private animation: Animation;
   private durationTimeout: any;
   private mode: string;
+  private lastClick: number = 0;
 
   @Element() private el: HTMLElement;
 
@@ -167,30 +168,50 @@ export class Picker {
     this.ionPickerDidPresent.emit({ picker: this });
   }
 
-  btnClick(button: PickerButton) {
+  buttonClick(button: PickerButton) {
     // if (!this.enabled) {
     //   return;
     // }
 
-    // // keep the time of the most recent button click
-    // this.lastClick = Date.now();
+    // keep the time of the most recent button click
+    this.lastClick = Date.now();
 
     let shouldDismiss = true;
 
-    // if (button.handler) {
-    //   // a handler has been provided, execute it
-    //   // pass the handler the values from the inputs
-    //   if (button.handler(this.getSelected()) === false) {
-    //     // if the return value of the handler is false then do not dismiss
-    //     shouldDismiss = false;
-    //   }
-    // }
+    if (button.handler) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
+      if (button.handler(this.getSelected()) === false) {
+        // if the return value of the handler is false then do not dismiss
+        shouldDismiss = false;
+      }
+    }
 
     if (shouldDismiss) {
       this.dismiss();
     }
   }
 
+  getSelected(): any {
+    let selected: {[k: string]: any} = {};
+    this.columns.forEach((col, index) => {
+      let selectedColumn = col.options[col.selectedIndex];
+      selected[col.name] = {
+        text: selectedColumn ? selectedColumn.text : null,
+        value: selectedColumn ? selectedColumn.value : null,
+        columnIndex: index,
+      };
+    });
+    return selected;
+  }
+
+  /**
+   * @param {any} button Picker toolbar button
+   */
+  @Method()
+  addButton(button: any) {
+    this.buttons.push(button);
+  }
 
   /**
    * @param {PickerColumn} column Picker toolbar button
@@ -215,7 +236,7 @@ export class Picker {
     if (this.enableBackdropDismiss) {
       let cancelBtn = this.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
-        this.btnClick(cancelBtn);
+        this.buttonClick(cancelBtn);
       } else {
         this.dismiss();
       }
@@ -240,8 +261,53 @@ export class Picker {
     })
     .filter(b => b !== null);
 
-    console.log('picker render, columns', this.columns);
     let columns = this.columns;
+
+    // // clean up dat data
+    // data.columns = data.columns.map(column => {
+    //   if (!isPresent(column.options)) {
+    //     column.options = [];
+    //   }
+    //   column.selectedIndex = column.selectedIndex || 0;
+    //   column.options = column.options.map(inputOpt => {
+    //     let opt: PickerColumnOption = {
+    //       text: '',
+    //       value: '',
+    //       disabled: inputOpt.disabled,
+    //     };
+
+    //     if (isPresent(inputOpt)) {
+    //       if (isString(inputOpt) || isNumber(inputOpt)) {
+    //         opt.text = inputOpt.toString();
+    //         opt.value = inputOpt;
+
+    //       } else {
+    //         opt.text = isPresent(inputOpt.text) ? inputOpt.text : inputOpt.value;
+    //         opt.value = isPresent(inputOpt.value) ? inputOpt.value : inputOpt.text;
+    //       }
+    //     }
+
+    //     return opt;
+    //   });
+    //   return column;
+    // });
+
+    // RENDER TODO
+    // <ion-backdrop (click)="bdClick()"></ion-backdrop>
+    // <div class="picker-wrapper">
+    //   <div class="picker-toolbar">
+    //     <div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">
+    //       <ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
+    //         {{b.text}}
+    //       </ion-button>
+    //     </div>
+    //   </div>
+    //   <div class="picker-columns">
+    //     <div class="picker-above-highlight"></div>
+    //     <div *ngFor="let c of d.columns" [col]="c" class="picker-col" (ionChange)="_colChange($event)"></div>
+    //     <div class="picker-below-highlight"></div>
+    //   </div>
+    // </div>
 
     return [
       <ion-backdrop
@@ -255,7 +321,7 @@ export class Picker {
         <div class='picker-toolbar'>
           {buttons.map(b =>
             <div class={this.buttonWrapperClass(b)}>
-              <button onClick={() => this.btnClick(b)} class={this.buttonClass(b)}>
+              <button onClick={() => this.buttonClick(b)} class={this.buttonClass(b)}>
                 {b.text}
               </button>
             </div>
@@ -294,8 +360,6 @@ export class Picker {
 }
 
 
-
-
 export interface PickerButton {
   text?: string;
   role?: string;
@@ -323,12 +387,16 @@ export interface PickerColumn {
   prefixWidth?: string;
   suffixWidth?: string;
   optionsWidth?: string;
+  refresh?: () => void;
 }
 
 export interface PickerColumnOption {
   text?: string;
   value?: any;
   disabled?: boolean;
+  duration?: number;
+  transform?: string;
+  selected?: boolean;
 }
 
 export interface PickerEvent extends Event {
@@ -343,124 +411,15 @@ export const FRAME_MS = (1000 / 60);
 export const MAX_PICKER_SPEED = 60;
 
 
-
-
-
-// /**
-//  * @hidden
-//  */
-// @Component({
-//   selector: 'ion-picker-cmp',
-//   template: `
-//     <ion-backdrop (click)="bdClick()"></ion-backdrop>
-//     <div class="picker-wrapper">
-//       <div class="picker-toolbar">
-//         <div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">
-//           <ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
-//             {{b.text}}
-//           </ion-button>
-//         </div>
-//       </div>
-//       <div class="picker-columns">
-//         <div class="picker-above-highlight"></div>
-//         <div *ngFor="let c of d.columns" [col]="c" class="picker-col" (ionChange)="_colChange($event)"></div>
-//         <div class="picker-below-highlight"></div>
-//       </div>
-//     </div>
-//   `,
-//   host: {
-//     'role': 'dialog'
-//   },
-//   encapsulation: ViewEncapsulation.None,
-// })
-// export class PickerCmp {
-
 //   @ViewChildren(PickerColumnCmp) _cols: QueryList<PickerColumnCmp>;
 //   d: PickerOptions;
 //   enabled: boolean;
-//   lastClick: number;
 //   id: number;
 //   mode: string;
 //   _gestureBlocker: BlockerDelegate;
 
-//   constructor(
-//     private _viewCtrl: ViewController,
-//     private _elementRef: ElementRef,
-//     config: Config,
-//     private _plt: Platform,
-//     gestureCtrl: GestureController,
-//     params: NavParams,
-//     renderer: Renderer
-//   ) {
-//     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
-//     this.d = params.data;
-//     this.mode = config.get('mode');
-//     renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
-
-//     if (this.d.cssClass) {
-//       this.d.cssClass.split(' ').forEach(cssClass => {
-//         renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
-//       });
-//     }
-
+//   constructor() {
 //     this.id = (++pickerIds);
-//     this.lastClick = 0;
-//   }
-
-//   ionViewWillLoad() {
-//     // normalize the data
-//     let data = this.d;
-
-//     data.buttons = data.buttons.map(button => {
-//       if (isString(button)) {
-//         return { text: button };
-//       }
-//     });
-
-//     // clean up dat data
-//     data.columns = data.columns.map(column => {
-//       if (!isPresent(column.options)) {
-//         column.options = [];
-//       }
-//       column.selectedIndex = column.selectedIndex || 0;
-//       column.options = column.options.map(inputOpt => {
-//         let opt: PickerColumnOption = {
-//           text: '',
-//           value: '',
-//           disabled: inputOpt.disabled,
-//         };
-
-//         if (isPresent(inputOpt)) {
-//           if (isString(inputOpt) || isNumber(inputOpt)) {
-//             opt.text = inputOpt.toString();
-//             opt.value = inputOpt;
-
-//           } else {
-//             opt.text = isPresent(inputOpt.text) ? inputOpt.text : inputOpt.value;
-//             opt.value = isPresent(inputOpt.value) ? inputOpt.value : inputOpt.text;
-//           }
-//         }
-
-//         return opt;
-//       });
-//       return column;
-//     });
-//   }
-
-//   ionViewDidLoad() {
-//     this.refresh();
-//   }
-
-//   ionViewWillEnter() {
-//     this._gestureBlocker.block();
-//   }
-
-//   ionViewDidLeave() {
-//     this._gestureBlocker.unblock();
-//   }
-
-//   refresh() {
-//     this._cols.forEach(column => column.refresh());
 //   }
 
 //   _colChange(selectedOption: PickerColumnOption) {
@@ -500,25 +459,6 @@ export const MAX_PICKER_SPEED = 60;
 //     this.enabled = true;
 //   }
 
-
-
-//   dismiss(role: string): Promise<any> {
-//     return this._viewCtrl.dismiss(this.getSelected(), role);
-//   }
-
-//   getSelected(): any {
-//     let selected: {[k: string]: any} = {};
-//     this.d.columns.forEach((col, index) => {
-//       let selectedColumn = col.options[col.selectedIndex];
-//       selected[col.name] = {
-//         text: selectedColumn ? selectedColumn.text : null,
-//         value: selectedColumn ? selectedColumn.value : null,
-//         columnIndex: index,
-//       };
-//     });
-//     return selected;
-//   }
-
 //   ngOnDestroy() {
 //     assert(this._gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
 //     this._gestureBlocker.destroy();
@@ -527,76 +467,3 @@ export const MAX_PICKER_SPEED = 60;
 // }
 
 // let pickerIds = -1;
-
-
-
-
-
-
-// /**
-//  * @hidden
-//  */
-// export class Picker extends ViewController {
-//   private _app: App;
-
-//   @Output() ionChange: EventEmitter<any>;
-
-//   constructor(app: App, opts: PickerOptions = {}, config: Config) {
-//     if (!opts) {
-//       opts = {};
-//     }
-//     opts.columns = opts.columns || [];
-//     opts.buttons = opts.buttons || [];
-//     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? Boolean(opts.enableBackdropDismiss) : true;
-
-//     super(PickerCmp, opts, null);
-//     this._app = app;
-//     this.isOverlay = true;
-
-//     this.ionChange = new EventEmitter<any>();
-
-//     config.setTransition('picker-slide-in', PickerSlideIn);
-//     config.setTransition('picker-slide-out', PickerSlideOut);
-//   }
-
-//   /**
-//   * @hidden
-//   */
-//   getTransitionName(direction: string) {
-//     let key = (direction === 'back' ? 'pickerLeave' : 'pickerEnter');
-//     return this._nav && this._nav.config.get(key);
-//   }
-
-//   /**
-//    * @param {any} button Picker toolbar button
-//    */
-//   addButton(button: any) {
-//     this.data.buttons.push(button);
-//   }
-
-
-//   refresh() {
-//     assert(this._cmp, 'componentRef must be valid');
-//     assert(this._cmp.instance.refresh, 'instance must implement refresh()');
-
-//     this._cmp && this._cmp.instance.refresh && this._cmp.instance.refresh();
-//   }
-
-//   /**
-//    * @param {string} cssClass CSS class name to add to the picker's outer wrapper.
-//    */
-//   setCssClass(cssClass: string) {
-//     this.data.cssClass = cssClass;
-//   }
-
-//   /**
-//    * Present the picker instance.
-//    *
-//    * @param {NavOptions} [navOptions={}] Nav options to go with this transition.
-//    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
-//    */
-//   present(navOptions: NavOptions = {}) {
-//     return this._app.present(this, navOptions);
-//   }
-
-// }

@@ -629,6 +629,7 @@ declare global {
           mode?: string,
           color?: string,
         
+          pickerCtrl?: any,
           disabled?: boolean,
           min?: string,
           max?: string,
@@ -646,7 +647,8 @@ declare global {
           dayNames?: any,
           dayShortNames?: any,
           pickerOptions?: any,
-          placeholder?: string
+          placeholder?: string,
+          value?: string
       }
   }
 }
@@ -1934,6 +1936,7 @@ declare global {
           mode?: string,
           color?: string,
         
+          addButton?: any,
           addColumn?: any,
           getColumn?: any,
           getColumns?: any,

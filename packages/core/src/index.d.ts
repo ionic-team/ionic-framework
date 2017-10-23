@@ -12,7 +12,7 @@ import { MenuController } from './components/menu/menu-controller';
 import { Modal, ModalOptions, ModalEvent } from './components/modal/modal';
 import { ModalController } from './components/modal-controller/modal-controller';
 
-import { Picker, PickerButton, PickerColumn, PickerEvent, PickerOptions } from './components/picker/picker';
+import { Picker, PickerButton, PickerColumn, PickerColumnOption, PickerEvent, PickerOptions } from './components/picker/picker';
 import { PickerController } from './components/picker-controller/picker-controller';
 
 import { Popover, PopoverEvent, PopoverOptions } from './components/popover/popover';
@@ -89,6 +89,7 @@ export {
   Picker,
   PickerButton,
   PickerColumn,
+  PickerColumnOption,
   PickerController,
   PickerEvent,
   PickerOptions,

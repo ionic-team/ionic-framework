@@ -115,7 +115,7 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
   font-weight: $picker-ios-button-strong-font-weight;
 }
 
-.picker-ios .picker-toolbar-cancel {
+.picker-ios .picker-toolbar-button:first-child{
   @include text-align(start);
 
   font-weight: normal;
