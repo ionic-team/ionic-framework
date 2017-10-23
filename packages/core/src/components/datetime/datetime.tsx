@@ -1,6 +1,6 @@
-import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
+import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
 
-import { convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, DateTimeData, dateValueRange, daysInMonth, getValueFromFormat, LocaleData, parseDate, parseTemplate, renderTextFormat, renderDateTime } from './datetime-util';
+import { convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, DateTimeData, dateValueRange, daysInMonth, getValueFromFormat, LocaleData, parseDate, parseTemplate, renderTextFormat, renderDateTime, updateDate } from './datetime-util';
 
 import { clamp, isBlank, isObject } from '../../utils/helpers';
 
@@ -259,11 +259,12 @@ export class DateTime {
   private labelId: string;
   private picker: Picker;
 
-  text: any;
   locale: LocaleData = {};
   dateTimeMin: DateTimeData = {};
   dateTimeMax: DateTimeData = {};
   dateTimeValue: DateTimeData = {};
+
+  @State() text: any;
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl: PickerController;
 
@@ -413,11 +414,11 @@ export class DateTime {
 
   /**
    * @hidden
-   * Update the datetime text when the value changes
+   * Update the datetime value when the value changes
    */
   @PropDidChange('value')
   valueChanged() {
-    this.updateText();
+    this.updateValue();
   }
 
   /**
@@ -425,7 +426,7 @@ export class DateTime {
    */
   @Event() ionCancel: EventEmitter;
 
-  protected ionViewDidLoad() {
+  protected ionViewWillLoad() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
@@ -437,6 +438,15 @@ export class DateTime {
       dayShortNames: convertToArrayOfStrings(this.dayShortNames, 'dayShortNames')
     };
 
+    this.updateValue();
+  }
+
+  /**
+   * @hidden
+   * Update the datetime text and datetime value
+   */
+  updateValue() {
+    updateDate(this.dateTimeValue, this.value);
     this.updateText();
   }
 
