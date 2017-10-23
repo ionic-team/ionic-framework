@@ -117,7 +117,7 @@ export class ViewController {
   }
 
   handleOrientationChange() {
-    if (this.getNav().isActive(this)) {
+    if (this.getContent()) {
       this.getContent().resize();
     }
   }
@@ -455,6 +455,8 @@ export class ViewController {
    * The view is about to enter and become the active view.
    */
   _willEnter() {
+    this.handleOrientationChange();
+
     assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
 
     if (this._detached && this._cmp) {
