@@ -163,8 +163,8 @@ export class Alert {
     }
   }
 
-  btnClick(button: any) {
-    console.log('btnClick', button);
+  buttonClick(button: any) {
+    console.log('buttonClick', button);
 
     // TODO keep the time of the most recent button click
     // this.lastClick = Date.now();
@@ -375,7 +375,7 @@ export class Alert {
 
         <div class={alertButtonGroupClass}>
           {buttons.map(b =>
-            <button class={this.buttonClass(b)} onClick={() => this.btnClick(b)}>
+            <button class={this.buttonClass(b)} onClick={() => this.buttonClick(b)}>
               <span class='button-inner'>
                 {b.text}
               </span>

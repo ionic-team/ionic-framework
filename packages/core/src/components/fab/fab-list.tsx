@@ -1,5 +1,6 @@
 import { Component, Element, Prop, PropDidChange } from '@stencil/core';
 
+import { HTMLIonFabElement } from '../../index';
 
 /**
   * @name FabList
@@ -29,7 +30,7 @@ import { Component, Element, Prop, PropDidChange } from '@stencil/core';
   tag: 'ion-fab-list',
 })
 export class FabList {
-  @Element() private el: HTMLElement;
+  @Element() private el: HTMLIonFabElement;
 
   @Prop() activated: boolean = false;
 

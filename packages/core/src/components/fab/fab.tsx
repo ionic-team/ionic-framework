@@ -1,6 +1,7 @@
 import { Component, CssClassMap, Element, Method, Prop, State, PropDidChange } from '@stencil/core';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 
+import { HTMLIonFabListElement } from '../../index';
 
 /**
   * @name FabButton
