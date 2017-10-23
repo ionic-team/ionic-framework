@@ -28,7 +28,7 @@
 
         <ion-item>
           <ion-label>YYYY</ion-label>
-          <ion-datetime display-format="YYYY" min="1981" max="2002" value="1989"></ion-datetime>
+          <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -65,7 +65,7 @@
 
         <ion-item>
           <ion-label>h:mm a</ion-label>
-          <ion-datetime (ionChange)="onChange($event)" (ionCancel)="onCancel($event)" display-format="h:mm a"></ion-datetime>
+          <ion-datetime display-format="h:mm a"></ion-datetime>
         </ion-item>
 
         <ion-item>
@@ -129,6 +129,20 @@
       var customDayShortNames = document.getElementById('customDayShortNames');
       customDayShortNames.dayShortNames = dayShortNamesArray;
 
+      var customPickerButtons = {
+        buttons: [{
+          text: 'Save',
+          handler: () => console.log('Clicked Save!')
+        }, {
+          text: 'Log',
+          handler: () => {
+            console.log('Clicked Log. Don\'t Dismiss.');
+            return false;
+          }
+        }]
+      }
+      var customPickerOptions = document.getElementById('customPickerOptions');
+      customPickerOptions.pickerOptions = customPickerButtons;
 
       function toggleBoolean(id, prop) {
         var ele = document.getElementById(id);
