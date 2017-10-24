@@ -233,6 +233,9 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   private _imgRndBfr: number;
   private _imgVelMax: number;
 
+  private _viewInit: boolean;
+  private _imgNeedsRefresh: boolean;
+
   /** @hidden */
   statusbarPadding: boolean;
 
@@ -465,6 +468,15 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
 
       this.imgsUpdate();
     };
+
+    this._viewInit = true;
+  }
+
+  ngAfterViewChecked(): void {
+    if (this._imgNeedsRefresh) {
+      this._imgNeedsRefresh = false;
+      this.imgsUpdate();
+    }
   }
 
   /**
@@ -573,6 +585,10 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
    */
   addImg(img: Img) {
     this._imgs.push(img);
+
+    if (this._viewInit) {
+      this._imgNeedsRefresh = true;
+    }
   }
 
   /**

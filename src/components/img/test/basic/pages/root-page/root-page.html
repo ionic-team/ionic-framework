@@ -99,4 +99,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <button ion-button (click)="addDynImg()">Add image</button>
+  <ion-list>
+    <ion-item *ngFor="let image of dynamicImages">
+      <ion-img [width]="image.width" [height]="image.height" [src]="image.src"></ion-img>
+    </ion-item>
+  </ion-list>
 </ion-content>

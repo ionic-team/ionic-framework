@@ -22,4 +22,9 @@ export class RootPage {
       src: 'assets/img/general-lee.jpg'
     }
   ];
+  dynamicImages: {src: string, width: string, height: string}[] = [];
+
+  addDynImg(): void {
+    this.dynamicImages.push(this.images[Math.round(Math.random() * 2)]);
+  }
 }
