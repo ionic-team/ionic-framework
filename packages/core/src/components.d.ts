@@ -1243,6 +1243,8 @@ declare global {
           mode?: string,
           color?: string,
         
+          isRightSide?: any,
+          width?: any,
           side?: string
       }
   }
@@ -1425,6 +1427,8 @@ declare global {
           mode?: string,
           color?: string,
         
+          getOpenedItem?: any,
+          setOpenedItem?: any,
           closeSlidingItems?: any
       }
   }

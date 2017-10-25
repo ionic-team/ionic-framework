@@ -2,8 +2,8 @@ import { Component, Element, Event, EventEmitter, Method, State } from '@stencil
 
 import { GestureDetail, HTMLIonItemElement, HTMLIonListElement } from '../../index';
 import { swipeShouldReset } from '../../utils/helpers';
+import { ItemOptions } from './item-options';
 
-// import { ItemOptions } from './item-options';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -147,11 +147,8 @@ export class ItemSliding {
   private sides: number;
   private tmr: any = null;
 
-  // TODO file with item sliding interfaces & item options implement
-  // leftOptions: ItemOptions;
-  // rightOptions: ItemOptions;
-  private leftOptions: any;
-  private rightOptions: any;
+  private leftOptions: ItemOptions;
+  private rightOptions: ItemOptions;
 
   private optsDirty: boolean = true;
 
@@ -222,7 +219,7 @@ export class ItemSliding {
     let container = this;
 
     // Close open container if it is not the selected one.
-    if (this.list && container !== this.list.openContainer) {
+    if (this.list && container !== this.list.getOpenedItem()) {
       this.closeOpened();
     }
 
@@ -234,7 +231,8 @@ export class ItemSliding {
   }
 
   onDragStart(gesture: GestureDetail) {
-    this.selectedContainer = this.list.openContainer = this.preSelectedContainer;
+    this.selectedContainer = this.preSelectedContainer;
+    this.list.setOpenedItem(this.selectedContainer);
     this.selectedContainer.startSliding(gesture.currentX);
   }
 
@@ -254,7 +252,7 @@ export class ItemSliding {
   closeOpened(): boolean {
     this.selectedContainer = null;
 
-    if (this.list.openContainer) {
+    if (this.list.getOpenedItem()) {
       this.list.closeSlidingItems();
       return true;
     }

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 import { Side, isRightSide } from '../../utils/helpers';
 
 
@@ -40,18 +40,12 @@ export class ItemOptions {
    */
   @Event() ionSwipe: EventEmitter;
 
-  /**
-   * @hidden
-   */
-  isRightSide(): boolean {
+  @Method() isRightSide() {
     const isRTL = document.dir === 'rtl';
     return isRightSide(this.side, isRTL, true);
   }
 
-  /**
-   * @hidden
-   */
-  width(): number {
+  @Method() width(): number {
     return this.el.offsetWidth;
   }
 

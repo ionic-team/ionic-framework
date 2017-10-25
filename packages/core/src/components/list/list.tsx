@@ -1,4 +1,4 @@
-import { Component, Method, Prop, State } from '@stencil/core';
+import { Component, Method } from '@stencil/core';
 
 import { ItemSliding } from '../item-sliding/item-sliding';
 
@@ -15,19 +15,25 @@ import { ItemSliding } from '../item-sliding/item-sliding';
   }
 })
 export class List {
+  private openedItem: ItemSliding;
 
-  @State() openContainer: ItemSliding;
+  @Method()
+  getOpenedItem() {
+    return this.openedItem;
+  }
+
+  @Method()
+  setOpenedItem(itemSliding: ItemSliding) {
+    this.openedItem = itemSliding;
+  }
+
+  @Method()
+  closeSlidingItems() {
+    this.openedItem && this.openedItem.close();
+    this.openedItem = null;
+  }
 
   protected render() {
     return <slot></slot>;
-  }
-
-  /**
-   * Close any sliding items that are open.
-   */
-  @Method()
-  closeSlidingItems() {
-    this.openContainer.close();
-    this.openContainer = null;
   }
 }
