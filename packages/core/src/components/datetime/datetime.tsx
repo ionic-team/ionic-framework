@@ -255,6 +255,8 @@ import { Picker, PickerColumn, PickerController, PickerOptions } from '../../ind
   }
 })
 export class DateTime {
+  [key: string]: any;
+
   private datetimeId: string;
   private labelId: string;
   private picker: Picker;
@@ -484,8 +486,6 @@ export class DateTime {
   }
 
   open() {
-    console.debug('datetime, open picker');
-
     const pickerOptions = {...this.pickerOptions};
 
     // TODO check this.isFocus() || this.disabled

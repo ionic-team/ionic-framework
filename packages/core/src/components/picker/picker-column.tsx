@@ -1,8 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 
-import { PickerColumn, PickerColumnOption } from '../../index';
-
-import { PICKER_OPT_SELECTED } from './picker';
+import { GestureDetail, PickerColumn, PickerColumnOption } from '../../index';
 
 import { clamp } from '../../utils/helpers';
 
@@ -13,15 +11,24 @@ import { clamp } from '../../utils/helpers';
   }
 })
 export class PickerColumnCmp {
-  mode: string;
+  private mode: string;
 
-  colHeight: number;
-  velocity: number;
-  optHeight: number;
-  rotateFactor: number;
-  scaleFactor: number;
-  y: number = 0;
-  lastIndex: number;
+  private bounceFrom: number;
+  private colHeight: number;
+  private lastIndex: number;
+  private lastTempIndex: number;
+  private minY: number;
+  private maxY: number;
+  private optHeight: number;
+  private pos: number[] = [];
+  private rotateFactor: number;
+  private scaleFactor: number;
+  private startY: number;
+  private velocity: number;
+  private y: number = 0;
+
+  private activeBlock: string;
+  // private decelerateFunc: Function;
 
   @Element() el: HTMLElement;
 
@@ -39,7 +46,6 @@ export class PickerColumnCmp {
     this.rotateFactor = pickerRotateFactor;
     this.scaleFactor = pickerScaleFactor;
     // this.decelerateFunc = this.decelerate.bind(this);
-    // this.debouncer = domCtrl.debouncer();
   }
 
   protected ionViewDidLoad() {
@@ -50,17 +56,15 @@ export class PickerColumnCmp {
     // get the height of one option
     this.optHeight = (colEle.firstElementChild ? colEle.firstElementChild.clientHeight : 0);
 
-    // TODO Listening for pointer events
-    // this.events.pointerEvents({
-    //   element: this.elementRef.nativeElement,
-    //   pointerDown: this.pointerStart.bind(this),
-    //   pointerMove: this.pointerMove.bind(this),
-    //   pointerUp: this.pointerEnd.bind(this),
-    //   capture: true,
-    //   zone: false
-    // });
+    // TODO block goback-swipe and menu-swipe
+    // this.activeBlock = 'goback-swipe menu-swipe';
 
     this.refresh();
+  }
+
+  protected ionViewDidUnload() {
+    // TODO block goback-swipe and menu-swipe
+    // this.activeBlock = 'goback-swipe menu-swipe';
   }
 
   optClick(ev: Event, index: number) {
@@ -77,7 +81,6 @@ export class PickerColumnCmp {
     // if there isn't a selected index, then just use the top y position
     let y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
 
-    // this._plt.cancelRaf(this.rafId);
     this.velocity = 0;
 
     // set what y position we're at
@@ -189,62 +192,192 @@ export class PickerColumnCmp {
 
 
   decelerate() {
-    // let y = 0;
+    let y = 0;
 
-    // if (isNaN(this.y) || !this.optHeight) {
-    //   // fallback in case numbers get outta wack
-    //   this.update(y, 0, true, true);
-    //   this._haptic.gestureSelectionEnd();
+    if (isNaN(this.y) || !this.optHeight) {
+      // fallback in case numbers get outta wack
+      this.update(y, 0, true, true);
 
-    // } else if (Math.abs(this.velocity) > 0) {
-    //   // still decelerating
-    //   this.velocity *= DECELERATION_FRICTION;
+    } else if (Math.abs(this.velocity) > 0) {
+      // still decelerating
+      this.velocity *= DECELERATION_FRICTION;
 
-    //   // do not let it go slower than a velocity of 1
-    //   this.velocity = (this.velocity > 0)
-    //     ? Math.max(this.velocity, 1)
-    //     : Math.min(this.velocity, -1);
+      // do not let it go slower than a velocity of 1
+      this.velocity = (this.velocity > 0)
+        ? Math.max(this.velocity, 1)
+        : Math.min(this.velocity, -1);
 
-    //   y = Math.round(this.y - this.velocity);
+      y = Math.round(this.y - this.velocity);
 
-    //   if (y > this.minY) {
-    //     // whoops, it's trying to scroll up farther than the options we have!
-    //     y = this.minY;
-    //     this.velocity = 0;
+      if (y > this.minY) {
+        // whoops, it's trying to scroll up farther than the options we have!
+        y = this.minY;
+        this.velocity = 0;
 
-    //   } else if (y < this.maxY) {
-    //     // gahh, it's trying to scroll down farther than we can!
-    //     y = this.maxY;
-    //     this.velocity = 0;
-    //   }
+      } else if (y < this.maxY) {
+        // gahh, it's trying to scroll down farther than we can!
+        y = this.maxY;
+        this.velocity = 0;
+      }
 
-    //   var notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
+      var notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
 
-    //   this.update(y, 0, true, !notLockedIn);
+      this.update(y, 0, true, !notLockedIn);
 
+      // TODO
+      // if (notLockedIn) {
+      //   // isn't locked in yet, keep decelerating until it is
+      //   this.rafId =  this._plt.raf(this.decelerateFunc);
+      // }
 
-    //   if (notLockedIn) {
-    //     // isn't locked in yet, keep decelerating until it is
-    //     this.rafId =  this._plt.raf(this.decelerateFunc);
-    //   }
+    } else if (this.y % this.optHeight !== 0) {
+      // needs to still get locked into a position so options line up
+      var currentPos = Math.abs(this.y % this.optHeight);
 
-    // } else if (this.y % this.optHeight !== 0) {
-    //   // needs to still get locked into a position so options line up
-    //   var currentPos = Math.abs(this.y % this.optHeight);
+      // create a velocity in the direction it needs to scroll
+      this.velocity = (currentPos > (this.optHeight / 2) ? 1 : -1);
 
-    //   // create a velocity in the direction it needs to scroll
-    //   this.velocity = (currentPos > (this.optHeight / 2) ? 1 : -1);
-    //   this._haptic.gestureSelectionEnd();
+      this.decelerate();
+    }
 
-    //   this.decelerate();
-    // }
+    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
 
-    // let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    // TODO
     // if (currentIndex !== this.lastTempIndex) {
     //   // Trigger a haptic event for physical feedback that the index has changed
     //   this._haptic.gestureSelectionChanged();
     // }
-    // this.lastTempIndex = currentIndex;
+    this.lastTempIndex = currentIndex;
+  }
+
+  // TODO should this check enabled?
+  private canStart() {
+    return true;
+  }
+
+  onDragStart(detail: GestureDetail): boolean {
+    console.debug('picker, onDragStart', detail, this.startY);
+
+    // We have to prevent default in order to block scrolling under the picker
+    // but we DO NOT have to stop propagation, since we still want
+    // some "click" events to capture
+    if (detail.event) {
+      // TODO this errors
+      // detail.event.preventDefault();
+    }
+
+    // remember where the pointer started from
+    this.startY = detail.startY;
+
+    // reset everything
+    this.velocity = 0;
+    this.pos.length = 0;
+    this.pos.push(this.startY, Date.now());
+
+    let options = this.col.options;
+    let minY = (options.length - 1);
+    let maxY = 0;
+    for (var i = 0; i < options.length; i++) {
+      if (!options[i].disabled) {
+        minY = Math.min(minY, i);
+        maxY = Math.max(maxY, i);
+      }
+    }
+
+    this.minY = (minY * this.optHeight * -1);
+    this.maxY = (maxY * this.optHeight * -1);
+    return true;
+  }
+
+  onDragMove(detail: GestureDetail) {
+    if (detail.event) {
+      detail.event.preventDefault();
+      detail.event.stopPropagation();
+    }
+
+    console.debug('picker, onDragMove', detail);
+
+    let currentY = detail.currentY;
+    this.pos.push(currentY, Date.now());
+
+    if (this.startY === null) {
+      return;
+    }
+
+    // update the scroll position relative to pointer start position
+    let y = this.y + (currentY - this.startY);
+
+    if (y > this.minY) {
+      // scrolling up higher than scroll area
+      y = Math.pow(y, 0.8);
+      this.bounceFrom = y;
+
+    } else if (y < this.maxY) {
+      // scrolling down below scroll area
+      y += Math.pow(this.maxY - y, 0.9);
+      this.bounceFrom = y;
+
+    } else {
+      this.bounceFrom = 0;
+    }
+
+    this.update(y, 0, false, false);
+
+    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    if (currentIndex !== this.lastTempIndex) {
+      this.lastTempIndex = currentIndex;
+    }
+  }
+
+  onDragEnd(detail: GestureDetail) {
+    if (this.startY === null) {
+      return;
+    }
+
+    console.debug('picker, onDragEnd', detail);
+
+    this.velocity = 0;
+
+    if (this.bounceFrom > 0) {
+      // bounce back up
+      this.update(this.minY, 100, true, true);
+      return;
+    } else if (this.bounceFrom < 0) {
+      // bounce back down
+      this.update(this.maxY, 100, true, true);
+      return;
+    }
+
+    let endY = detail.currentY;
+
+    this.pos.push(endY, Date.now());
+
+    let endPos = (this.pos.length - 1);
+    let startPos = endPos;
+    let timeRange = (Date.now() - 100);
+
+    // move pointer to position measured 100ms ago
+    for (var i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
+      startPos = i;
+    }
+
+    if (startPos !== endPos) {
+      // compute relative movement between these two points
+      var timeOffset = (this.pos[endPos] - this.pos[startPos]);
+      var movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
+
+      // based on XXms compute the movement to apply for each render step
+      var velocity = ((movedTop / timeOffset) * FRAME_MS);
+      this.velocity = clamp(-MAX_PICKER_SPEED, velocity, MAX_PICKER_SPEED);
+    }
+
+    if (Math.abs(endY - this.startY) > 3) {
+      var y = this.y + (endY - this.startY);
+      this.update(y, 0, true, true);
+    }
+
+    this.startY = null;
+    this.decelerate();
   }
 
   refresh() {
@@ -261,13 +394,10 @@ export class PickerColumnCmp {
     const selectedIndex = clamp(min, this.col.selectedIndex, max);
     if (this.col.prevSelected !== selectedIndex) {
       var y = (selectedIndex * this.optHeight) * -1;
-      // TODO
-      // this._plt.cancelRaf(this.rafId);
       this.velocity = 0;
       this.update(y, 150, true, false);
     }
   }
-
 
   hostData() {
     return {
@@ -278,7 +408,7 @@ export class PickerColumnCmp {
       style: {
         'max-width': this.col.columnWidth
       }
-    };
+    }
   }
 
   protected render() {
@@ -293,28 +423,31 @@ export class PickerColumnCmp {
     })
     .filter(clientInformation => clientInformation !== null);
 
-    let pickerPrefix: any[] = [];
+    let results: any[] = [];
 
     if (col.prefix) {
-      pickerPrefix.push(
+      results.push(
         <div class="picker-prefix" style={{width: col.prefixWidth}}>
           {col.prefix}
         </div>
       );
     }
 
-    let pickerSuffix: any[] = [];
-
-    if (col.suffix) {
-      pickerSuffix.push(
-        <div class="picker-suffix" style={{width: col.suffixWidth}}>
-          {col.suffix}
-        </div>
-      );
-    }
-
-    return [
-      { pickerPrefix },
+    results.push(
+      <ion-gesture {...{
+        'canStart': this.canStart.bind(this),
+        'onStart': this.onDragStart.bind(this),
+        'onMove': this.onDragMove.bind(this),
+        'onEnd': this.onDragEnd.bind(this),
+        'gestureName': 'picker-swipe',
+        'gesturePriority': 10,
+        'type': 'pan',
+        'direction': 'y',
+        'maxAngle': 20,
+        'threshold': 10,
+        'attachTo': 'parent',
+        'block': this.activeBlock
+      }}></ion-gesture>,
       <div class="picker-opts" style={{maxWidth: col.optionsWidth}}>
         {options.map((o, index) =>
         <button
@@ -324,156 +457,22 @@ export class PickerColumnCmp {
           {o.text}
         </button>
         )}
-      </div>,
-      { pickerSuffix }
-    ];
+      </div>
+    );
+
+    if (col.suffix) {
+      results.push(
+        <div class="picker-suffix" style={{width: col.suffixWidth}}>
+          {col.suffix}
+        </div>
+      );
+    }
+
+    return results;
   }
 }
 
-// export class PickerColumnCmp {
-//   @ViewChild('colEle') colEle: ElementRef;
-//   @Input() col: PickerColumn;
-//   pos: number[] = [];
-//   startY: number = null;
-//   rafId: number;
-//   bounceFrom: number;
-//   minY: number;
-//   maxY: number;
-//   lastIndex: number;
-//   lastTempIndex: number;
-//   decelerateFunc: Function;
-//   debouncer: DomDebouncer;
-//   events: UIEventManager;
-
-//   ngOnDestroy() {
-//     this._plt.cancelRaf(this.rafId);
-//     this.events.destroy();
-//   }
-
-//   pointerStart(ev: UIEvent): boolean {
-//     console.debug('picker, pointerStart', ev.type, this.startY);
-//     this._haptic.gestureSelectionStart();
-
-//     // We have to prevent default in order to block scrolling under the picker
-//     // but we DO NOT have to stop propagation, since we still want
-//     // some "click" events to capture
-//     ev.preventDefault();
-
-//     // cancel any previous raf's that haven't fired yet
-//     this._plt.cancelRaf(this.rafId);
-
-//     // remember where the pointer started from`
-//     this.startY = pointerCoord(ev).y;
-
-//     // reset everything
-//     this.velocity = 0;
-//     this.pos.length = 0;
-//     this.pos.push(this.startY, Date.now());
-
-//     let options = this.col.options;
-//     let minY = (options.length - 1);
-//     let maxY = 0;
-//     for (var i = 0; i < options.length; i++) {
-//       if (!options[i].disabled) {
-//         minY = Math.min(minY, i);
-//         maxY = Math.max(maxY, i);
-//       }
-//     }
-
-//     this.minY = (minY * this.optHeight * -1);
-//     this.maxY = (maxY * this.optHeight * -1);
-//     return true;
-//   }
-
-//   pointerMove(ev: UIEvent) {
-//     ev.preventDefault();
-//     ev.stopPropagation();
-
-//     let currentY = pointerCoord(ev).y;
-//     this.pos.push(currentY, Date.now());
-
-//     this.debouncer.write(() => {
-//       if (this.startY === null) {
-//         return;
-//       }
-
-//       // update the scroll position relative to pointer start position
-//       let y = this.y + (currentY - this.startY);
-
-//       if (y > this.minY) {
-//         // scrolling up higher than scroll area
-//         y = Math.pow(y, 0.8);
-//         this.bounceFrom = y;
-
-//       } else if (y < this.maxY) {
-//         // scrolling down below scroll area
-//         y += Math.pow(this.maxY - y, 0.9);
-//         this.bounceFrom = y;
-
-//       } else {
-//         this.bounceFrom = 0;
-//       }
-
-//       this.update(y, 0, false, false);
-
-//       let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
-//       if (currentIndex !== this.lastTempIndex) {
-//         // Trigger a haptic event for physical feedback that the index has changed
-//         this._haptic.gestureSelectionChanged();
-//         this.lastTempIndex = currentIndex;
-//       }
-//     });
-//   }
-
-//   pointerEnd(ev: UIEvent) {
-//     ev.preventDefault();
-//     this.debouncer.cancel();
-
-//     if (this.startY === null) {
-//       return;
-//     }
-//     console.debug('picker, pointerEnd', ev.type);
-
-//     this.velocity = 0;
-
-//     if (this.bounceFrom > 0) {
-//       // bounce back up
-//       this.update(this.minY, 100, true, true);
-//       return;
-//     } else if (this.bounceFrom < 0) {
-//       // bounce back down
-//       this.update(this.maxY, 100, true, true);
-//       return;
-//     }
-
-//     let endY = pointerCoord(ev).y;
-
-//     this.pos.push(endY, Date.now());
-
-//     let endPos = (this.pos.length - 1);
-//     let startPos = endPos;
-//     let timeRange = (Date.now() - 100);
-
-//     // move pointer to position measured 100ms ago
-//     for (var i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
-//       startPos = i;
-//     }
-
-//     if (startPos !== endPos) {
-//       // compute relative movement between these two points
-//       var timeOffset = (this.pos[endPos] - this.pos[startPos]);
-//       var movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
-
-//       // based on XXms compute the movement to apply for each render step
-//       var velocity = ((movedTop / timeOffset) * FRAME_MS);
-//       this.velocity = clamp(-MAX_PICKER_SPEED, velocity, MAX_PICKER_SPEED);
-//     }
-
-//     if (Math.abs(endY - this.startY) > 3) {
-//       var y = this.y + (endY - this.startY);
-//       this.update(y, 0, true, true);
-//     }
-
-//     this.startY = null;
-//     this.decelerate();
-//   }
+export const PICKER_OPT_SELECTED = 'picker-opt-selected';
+export const DECELERATION_FRICTION = 0.97;
+export const FRAME_MS = (1000 / 60);
+export const MAX_PICKER_SPEED = 60;

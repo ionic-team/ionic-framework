@@ -461,6 +461,7 @@ function fourDigit(val: number): string {
 
 
 export interface DateTimeData {
+  [key: string]: any;
   year?: number;
   month?: number;
   day?: number;

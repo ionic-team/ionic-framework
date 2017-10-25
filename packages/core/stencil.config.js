@@ -13,6 +13,7 @@ exports.config = {
     { components: ['ion-card', 'ion-card-content', 'ion-card-header', 'ion-card-title'] },
     { components: ['ion-checkbox'] },
     { components: ['ion-chip', 'ion-chip-button'] },
+    { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-gesture', 'ion-scroll'], priority: 'low' },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
