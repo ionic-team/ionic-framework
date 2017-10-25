@@ -1,0 +1,40 @@
+
+<ion-slides style="background: black"
+            (ionSlideWillChange)="onSlideWillChange($event)"
+            (ionSlideDidChange)="onSlideDidChange($event)"
+            (ionSlideDrag)="onSlideDrag($event)"
+            pager="true"
+            effect="flip">
+
+  <ion-slide style="background: red; color: white;">
+    <ion-slides style="background: black"
+                (ionSlideWillChange)="onSlideWillChange($event)"
+                (ionSlideDidChange)="onSlideDidChange($event)"
+                (ionSlideDrag)="onSlideDrag($event)"
+                pager="true"
+                effect="flip">
+      <ion-slide>
+        <h1>Nested Slide 1</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Nested Slide 2</h1>
+      </ion-slide>
+    </ion-slides>
+  </ion-slide>
+
+  <ion-slide style="background: white; color: blue;">
+    <ion-slides style="background: black"
+                (ionSlideWillChange)="onSlideWillChange($event)"
+                (ionSlideDidChange)="onSlideDidChange($event)"
+                (ionSlideDrag)="onSlideDrag($event)"
+                pager="true"
+                effect="flip">
+      <ion-slide>
+        <h1>Nested Slide 1</h1>
+      </ion-slide>
+      <ion-slide>
+        <h1>Nested Slide 2</h1>
+      </ion-slide>
+    </ion-slides>
+  </ion-slide>
+</ion-slides>
