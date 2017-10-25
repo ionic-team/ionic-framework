@@ -1,20 +1,20 @@
 import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
 
-import { convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, DateTimeData, dateValueRange, daysInMonth, getValueFromFormat, LocaleData, parseDate, parseTemplate, renderTextFormat, renderDateTime, updateDate } from './datetime-util';
+import { convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, DatetimeData, dateValueRange, daysInMonth, getValueFromFormat, LocaleData, parseDate, parseTemplate, renderTextFormat, renderDatetime, updateDate } from './datetime-util';
 
 import { clamp, isBlank, isObject } from '../../utils/helpers';
 
 import { Picker, PickerColumn, PickerController, PickerOptions } from '../../index';
 
 /**
- * @name DateTime
+ * @name Datetime
  * @description
- * The DateTime component is used to present an interface which makes it easy for
+ * The Datetime component is used to present an interface which makes it easy for
  * users to select dates and times. Tapping on `<ion-datetime>` will display a picker
  * interface that slides up from the bottom of the page. The picker then displays
  * scrollable columns that can be used to individually select years, months, days,
- * hours and minute values. The DateTime component is similar to the native
- * `<input type="datetime-local">` element, however, Ionic's DateTime component makes
+ * hours and minute values. The Datetime component is similar to the native
+ * `<input type="datetime-local">` element, however, Ionic's Datetime component makes
  * it easy to display the date and time in a preferred format, and manage the datetime
  * values.
  *
@@ -28,7 +28,7 @@ import { Picker, PickerColumn, PickerController, PickerOptions } from '../../ind
  *
  * ## Display and Picker Formats
  *
- * The DateTime component displays the values in two places: in the `<ion-datetime>`
+ * The Datetime component displays the values in two places: in the `<ion-datetime>`
  * component, and in the interface that is presented from the bottom of the screen.
  * The following chart lists all of the formats that can be used.
  *
@@ -172,7 +172,7 @@ import { Picker, PickerColumn, PickerController, PickerOptions } from '../../ind
  * At this time, there is no one-size-fits-all standard to automatically choose the correct
  * language/spelling for a month name, or day of the week name, depending on the language
  * or locale. Good news is that there is an
- * [Intl.DateTimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat)
+ * [Intl.DatetimeFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DatetimeFormat)
  * standard which *most* browsers have adopted. However, at this time the standard has not
  * been fully implemented by all popular browsers so Ionic is unavailable to take advantage
  * of it *yet*. Additionally, Angular also provides an internationalization service, but it
@@ -254,7 +254,7 @@ import { Picker, PickerColumn, PickerController, PickerOptions } from '../../ind
     theme: 'datetime'
   }
 })
-export class DateTime {
+export class Datetime {
   [key: string]: any;
 
   private datetimeId: string;
@@ -262,9 +262,9 @@ export class DateTime {
   private picker: Picker;
 
   locale: LocaleData = {};
-  dateTimeMin: DateTimeData = {};
-  dateTimeMax: DateTimeData = {};
-  dateTimeValue: DateTimeData = {};
+  datetimeMin: DatetimeData = {};
+  datetimeMax: DatetimeData = {};
+  datetimeValue: DatetimeData = {};
 
   @State() text: any;
 
@@ -448,7 +448,7 @@ export class DateTime {
    * Update the datetime text and datetime value
    */
   updateValue() {
-    updateDate(this.dateTimeValue, this.value);
+    updateDate(this.datetimeValue, this.value);
     this.updateText();
   }
 
@@ -546,7 +546,7 @@ export class DateTime {
           values = convertToArrayOfNumbers(this[key + 'Values'], key);
         } else {
           // use the default date part values
-          values = dateValueRange(format, this.dateTimeMin, this.dateTimeMax);
+          values = dateValueRange(format, this.datetimeMin, this.datetimeMax);
         }
 
         const column: PickerColumn = {
@@ -562,7 +562,7 @@ export class DateTime {
 
         // cool, we've loaded up the columns with options
         // preselect the option for this column
-        const optValue = getValueFromFormat(this.dateTimeValue, format);
+        const optValue = getValueFromFormat(this.datetimeValue, format);
         const selectedIndex = column.options.findIndex(opt => opt.value === optValue);
         if (selectedIndex >= 0) {
           // set the select index for this column's options
@@ -574,8 +574,8 @@ export class DateTime {
       });
 
       // Normalize min/max
-      const min = this.dateTimeMin;
-      const max = this.dateTimeMax;
+      const min = this.datetimeMin;
+      const max = this.datetimeMax;
       ['month', 'day', 'hour', 'minute']
         .filter(name => !columns.find(column => column.name === name))
         .forEach(name => {
@@ -594,8 +594,8 @@ export class DateTime {
    */
   validate() {
     const today = new Date();
-    const minCompareVal = dateDataSortValue(this.dateTimeMin);
-    const maxCompareVal = dateDataSortValue(this.dateTimeMax);
+    const minCompareVal = dateDataSortValue(this.datetimeMin);
+    const maxCompareVal = dateDataSortValue(this.datetimeMax);
     const yearCol = this.picker.getColumn('year');
 
     let selectedYear: number = today.getFullYear();
@@ -665,8 +665,8 @@ export class DateTime {
         this.max = todaysYear.toString();
       }
     }
-    const min = this.dateTimeMin = parseDate(this.min);
-    const max = this.dateTimeMax = parseDate(this.max);
+    const min = this.datetimeMin = parseDate(this.min);
+    const max = this.datetimeMax = parseDate(this.max);
 
     min.year = min.year || todaysYear;
     max.year = max.year || todaysYear;
@@ -783,14 +783,14 @@ export class DateTime {
   updateText() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
-    this.text = renderDateTime(template, this.dateTimeValue, this.locale);
+    this.text = renderDatetime(template, this.datetimeValue, this.locale);
   }
 
   /**
    * @hidden
    */
   hasValue(): boolean {
-    const val = this.dateTimeValue;
+    const val = this.datetimeValue;
     return val
       && isObject(val)
       && Object.keys(val).length > 0;
@@ -808,19 +808,19 @@ export class DateTime {
     let addPlaceholderClass = false;
 
     // If selected text has been passed in, use that first
-    let dateTimeText = this.text;
-    if (!dateTimeText && this.placeholder) {
-      dateTimeText = this.placeholder;
+    let datetimeText = this.text;
+    if (!datetimeText && this.placeholder) {
+      datetimeText = this.placeholder;
       addPlaceholderClass = true;
     }
 
-    const dateTimeTextClasses: CssClassMap = {
+    const datetimeTextClasses: CssClassMap = {
       'datetime-text': true,
       'datetime-placeholder': addPlaceholderClass
     };
 
     return [
-      <div class={ dateTimeTextClasses }>{ dateTimeText }</div>,
+      <div class={ datetimeTextClasses }>{ datetimeText }</div>,
       <button
         aria-haspopup='true'
         id={this.datetimeId}

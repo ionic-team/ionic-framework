@@ -601,7 +601,7 @@ declare global {
   }
 }
 
-import { DateTime as IonDatetime } from './components/datetime/datetime';
+import { Datetime as IonDatetime } from './components/datetime/datetime';
 
 interface HTMLIonDatetimeElement extends IonDatetime, HTMLElement {
 }

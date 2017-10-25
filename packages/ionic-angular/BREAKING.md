@@ -6,6 +6,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Dynamic Mode](#dynamic-mode)
 - [Button](#button)
 - [Chip](#chip)
+- [Datetime](#datetime)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
 - [Icon](#icon)
@@ -129,6 +130,23 @@ Buttons inside of an `<ion-chip>` container should now be written as an `<ion-ch
   </ion-chip-button>
 </ion-chip>
 ```
+
+## Datetime
+
+The Datetime classes and interfaces have changed capitalization from `DateTime` to `Datetime`. This is more consistent with other components and their tags.
+
+**Old Usage Example:**
+
+```javascript
+import { DateTime } from 'ionic-angular';
+```
+
+**New Usage Example:**
+
+```javascript
+import { Datetime } from 'ionic-angular';
+```
+
 
 ## FAB
 

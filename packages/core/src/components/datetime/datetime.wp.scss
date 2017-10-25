@@ -1,31 +1,31 @@
 @import "../../themes/ionic.globals.wp";
 @import "./datetime";
 
-// Windows DateTime
+// Windows Datetime
 // --------------------------------------------------
 
-/// @prop - Min width of the DateTime component
+/// @prop - Min width of the Datetime component
 $datetime-wp-min-width:           45% !default;
 
-/// @prop - Padding top of the DateTime component
+/// @prop - Padding top of the Datetime component
 $datetime-wp-padding-top:         $item-wp-padding-top !default;
 
-/// @prop - Padding end of the DateTime component
+/// @prop - Padding end of the Datetime component
 $datetime-wp-padding-end:         ($item-wp-padding-end / 2) !default;
 
-/// @prop - Padding bottom of the DateTime component
+/// @prop - Padding bottom of the Datetime component
 $datetime-wp-padding-bottom:      $item-wp-padding-bottom !default;
 
-/// @prop - Padding start of the DateTime component
+/// @prop - Padding start of the Datetime component
 $datetime-wp-padding-start:       $item-wp-padding-start !default;
 
-/// @prop - Border width of the DateTime component
+/// @prop - Border width of the Datetime component
 $datetime-wp-border-width:        2px !default;
 
-/// @prop - Border color of the DateTime component
+/// @prop - Border color of the Datetime component
 $datetime-wp-border-color:        $input-wp-border-color !default;
 
-/// @prop - Color of the DateTime placeholder
+/// @prop - Color of the Datetime placeholder
 $datetime-wp-placeholder-color:   $input-wp-border-color !default;
 
 

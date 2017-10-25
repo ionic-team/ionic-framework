@@ -1,7 +1,7 @@
 import { isArray, isBlank, isString } from '../../utils/helpers';
 
 
-export function renderDateTime(template: string, value: DateTimeData, locale: LocaleData) {
+export function renderDatetime(template: string, value: DatetimeData, locale: LocaleData) {
   if (isBlank(value)) {
     return '';
   }
@@ -35,7 +35,7 @@ export function renderDateTime(template: string, value: DateTimeData, locale: Lo
 }
 
 
-export function renderTextFormat(format: string, value: any, date: DateTimeData, locale: LocaleData): string {
+export function renderTextFormat(format: string, value: any, date: DatetimeData, locale: LocaleData): string {
 
   if (format === FORMAT_DDDD || format === FORMAT_DDD) {
     try {
@@ -98,7 +98,7 @@ export function renderTextFormat(format: string, value: any, date: DateTimeData,
 }
 
 
-export function dateValueRange(format: string, min: DateTimeData, max: DateTimeData): any[] {
+export function dateValueRange(format: string, min: DatetimeData, max: DatetimeData): any[] {
   let opts: any[] = [];
   let i: number;
 
@@ -154,7 +154,7 @@ export function dateSortValue(year: number, month: number, day: number, hour: nu
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
-export function dateDataSortValue(data: DateTimeData): number {
+export function dateDataSortValue(data: DatetimeData): number {
   if (data) {
     return dateSortValue(data.year, data.month, data.day, data.hour, data.minute);
   }
@@ -173,7 +173,7 @@ export function isLeapYear(year: number): boolean {
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
-export function parseDate(val: any): DateTimeData {
+export function parseDate(val: any): DatetimeData {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
   let parse: any[];
@@ -229,22 +229,22 @@ export function parseDate(val: any): DateTimeData {
 }
 
 
-export function updateDate(existingData: DateTimeData, newData: any): boolean {
+export function updateDate(existingData: DatetimeData, newData: any): boolean {
   if (newData && newData !== '') {
 
     if (isString(newData)) {
       // new date is a string, and hopefully in the ISO format
-      // convert it to our DateTimeData if a valid ISO
+      // convert it to our DatetimeData if a valid ISO
       newData = parseDate(newData);
       if (newData) {
-        // successfully parsed the ISO string to our DateTimeData
+        // successfully parsed the ISO string to our DatetimeData
         Object.assign(existingData, newData);
         return true;
       }
 
     } else if ((newData.year || newData.hour || newData.month || newData.day || newData.minute || newData.second)) {
       // newData is from of a datetime picker's selected values
-      // update the existing DateTimeData data with the new values
+      // update the existing DatetimeData data with the new values
 
       // do some magic for 12-hour values
       if (newData.ampm && newData.hour) {
@@ -257,7 +257,7 @@ export function updateDate(existingData: DateTimeData, newData: any): boolean {
       }
 
       // merge new values from the picker's selection
-      // to the existing DateTimeData values
+      // to the existing DatetimeData values
       for (var k in newData) {
         (<any>existingData)[k] = newData[k].value;
       }
@@ -312,7 +312,7 @@ export function parseTemplate(template: string): string[] {
 }
 
 
-export function getValueFromFormat(date: DateTimeData, format: string) {
+export function getValueFromFormat(date: DatetimeData, format: string) {
   if (format === FORMAT_A || format === FORMAT_a) {
     return (date.hour < 12 ? 'am' : 'pm');
   }
@@ -333,7 +333,7 @@ export function convertFormatToKey(format: string): string {
 }
 
 
-export function convertDataToISO(data: DateTimeData): string {
+export function convertDataToISO(data: DatetimeData): string {
   // https://www.w3.org/TR/NOTE-datetime
   let rtn = '';
 
@@ -460,7 +460,7 @@ function fourDigit(val: number): string {
 }
 
 
-export interface DateTimeData {
+export interface DatetimeData {
   [key: string]: any;
   year?: number;
   month?: number;
