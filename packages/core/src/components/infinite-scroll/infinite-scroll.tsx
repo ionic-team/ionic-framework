@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, HostElement, Method, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, HostElement, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
 import { ScrollDetail } from '../../index';
 
 const enum Position {
@@ -146,7 +146,6 @@ const enum Position {
 })
 export class InfiniteScroll {
 
-  private rmListener: Function;
   private thrPx: number = 0;
   private thrPc: number = 0.15;
   private init: boolean = false;
@@ -233,8 +232,8 @@ export class InfiniteScroll {
     this.scrollEl = null;
   }
 
-  // ******** DOM READ ****************
-  private onScroll(ev: CustomEvent) {
+  @Listen('ionScroll', {enabled: false})
+  protected onScroll(ev: CustomEvent) {
     const detail = ev.detail as ScrollDetail;
     if (!this.canStart()) {
       return 1;
@@ -355,18 +354,7 @@ export class InfiniteScroll {
     if (!this.init) {
       return;
     }
-    if (shouldListen) {
-      if (!this.rmListener) {
-        const onScroll = this.onScroll.bind(this);
-        this.scrollEl.addEventListener('ionScroll', onScroll);
-        this.rmListener = () => {
-          this.scrollEl.removeEventListener('ionScroll', onScroll);
-        };
-      }
-    } else {
-      this.rmListener && this.rmListener();
-      this.rmListener = null;
-    }
+    Context.enableListener(this, 'ionScroll', shouldListen, this.scrollEl);
   }
 
   hostData() {
