@@ -38,7 +38,7 @@ export class Alert {
   @Prop() subTitle: string;
   @Prop() message: string;
   @Prop() buttons: AlertButton[] = [];
-  @Prop({ mutable: true }) inputs: AlertInput[] = [];
+  @Prop() inputs: AlertInput[] = [];
   @Prop() enableBackdropDismiss: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -146,7 +146,6 @@ export class Alert {
   rbClick(button: any) {
     this.inputs.forEach(input => {
       input.checked = (button === input);
-      return input;
     });
     this.activeId = button.id;
 
@@ -313,9 +312,9 @@ export class Alert {
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes: string[] = [];
 
-    this.inputs = this.inputs
+    const inputs = this.inputs
       .map((i, index) => {
-        let r: AlertInput = {
+        const r: AlertInput = {
           type: i.type || 'text',
           name: i.name ? i.name : index + '',
           placeholder: i.placeholder ? i.placeholder : '',
@@ -332,7 +331,7 @@ export class Alert {
       })
       .filter(i => i !== null);
 
-    this.inputs.forEach(i => {
+    inputs.forEach(i => {
       if (inputTypes.indexOf(i.type) < 0) {
         inputTypes.push(i.type);
       }
@@ -363,13 +362,13 @@ export class Alert {
         {(() => {
           switch (this.inputType) {
             case 'checkbox':
-              return this.renderCheckbox(this.inputs);
+              return this.renderCheckbox(inputs);
 
             case 'radio':
-              return this.renderRadio(this.inputs);
+              return this.renderRadio(inputs);
 
             default:
-              return this.renderInput(this.inputs);
+              return this.renderInput(inputs);
           }
         })()}
 
