@@ -20,6 +20,7 @@ export class Alert {
   private animation: Animation;
   private activeId: string;
   private inputType: string;
+  private hdrId: string;
 
   @Element() private el: HTMLElement;
 
@@ -38,7 +39,7 @@ export class Alert {
   @Prop() subTitle: string;
   @Prop() message: string;
   @Prop() buttons: AlertButton[] = [];
-  @Prop() inputs: AlertInput[] = [];
+  @Prop({ mutable: true }) inputs: AlertInput[] = [];
   @Prop() enableBackdropDismiss: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -73,6 +74,12 @@ export class Alert {
 
       animation.onFinish((a: any) => {
         a.destroy();
+
+        const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
+        if (firstInput) {
+          firstInput.focus();
+        }
+
         this.ionViewDidEnter();
         resolve();
       }).play();
@@ -143,22 +150,31 @@ export class Alert {
     }
   }
 
-  rbClick(button: any) {
-    this.inputs.forEach(input => {
-      input.checked = (button === input);
+  rbClick(inputIndex: number) {
+    this.inputs = this.inputs.map((input, index) => {
+      input.checked = (inputIndex === index);
+      return input;
     });
-    this.activeId = button.id;
 
-    if (button.handler) {
-      button.handler(button);
+    const rbButton = this.inputs[inputIndex];
+    this.activeId = rbButton.id;
+
+    if (rbButton.handler) {
+      rbButton.handler(rbButton);
     }
   }
 
-  cbClick(button: any) {
-    button.checked = !button.checked;
+  cbClick(inputIndex: number) {
+    this.inputs = this.inputs.map((input, index) => {
+      if (inputIndex === index) {
+        input.checked = !input.checked;
+      }
+      return input;
+    });
 
-    if (button.handler) {
-      button.handler(button);
+    const cbButton = this.inputs[inputIndex];
+    if (cbButton.handler) {
+      cbButton.handler(cbButton);
     }
   }
 
@@ -233,8 +249,8 @@ export class Alert {
 
     return (
       <div class='alert-checkbox-group'>
-        { inputs.map(i => (
-          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} role='checkbox' class='alert-tappable alert-checkbox alert-checkbox-button'>
+        { inputs.map((i, index) => (
+          <button onClick={() => this.cbClick(index)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role='checkbox' class='alert-tappable alert-checkbox alert-checkbox-button'>
             <div class='button-inner'>
               <div class='alert-checkbox-icon'><div class='alert-checkbox-inner'></div></div>
               <div class='alert-checkbox-label'>
@@ -248,14 +264,12 @@ export class Alert {
   }
 
   renderRadio(inputs: AlertInput[]) {
-    const hdrId = 'TODO';
-
     if (inputs.length === 0) return null;
 
     return (
-      <div class='alert-radio-group' role='radiogroup' aria-labelledby={hdrId} aria-activedescendant={this.activeId}>
-        { inputs.map(i => (
-          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} class='alert-radio-button alert-tappable alert-radio' role='radio'>
+      <div class='alert-radio-group' role='radiogroup' aria-labelledby={this.hdrId} aria-activedescendant={this.activeId}>
+        { inputs.map((i, index) => (
+          <button onClick={() => this.rbClick(index)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class='alert-radio-button alert-tappable alert-radio' role='radio'>
             <div class='button-inner'>
               <div class='alert-radio-icon'><div class='alert-radio-inner'></div></div>
               <div class='alert-radio-label'>
@@ -282,6 +296,7 @@ export class Alert {
               min={i.min}
               max={i.max}
               id={i.id}
+              tabIndex={0}
               class='alert-input'/>
           </div>
         ))}
@@ -290,16 +305,23 @@ export class Alert {
   }
 
   protected render() {
-    const hdrId = 'TODO';
-    const subHdrId = 'TODO';
-    const msgId = 'TODO';
+    const hdrId = `${this.alertId}-hdr`;
+    const subHdrId = `${this.alertId}-sub-hdr`;
+    const msgId = `${this.alertId}-msg`;
+
+    if (this.title || !this.subTitle) {
+      this.hdrId = hdrId;
+
+    } else if (this.subTitle) {
+      this.hdrId = subHdrId;
+    }
 
     const alertButtonGroupClass = {
       'alert-button-group': true,
       'alert-button-group-vertical': this.buttons.length > 2
     };
 
-    let buttons = this.buttons
+    const buttons = this.buttons
       .map(b => {
         if (typeof b === 'string') {
           b = { text: b };
@@ -312,9 +334,9 @@ export class Alert {
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes: string[] = [];
 
-    const inputs = this.inputs
+    this.inputs = this.inputs
       .map((i, index) => {
-        const r: AlertInput = {
+        let r: AlertInput = {
           type: i.type || 'text',
           name: i.name ? i.name : index + '',
           placeholder: i.placeholder ? i.placeholder : '',
@@ -331,7 +353,7 @@ export class Alert {
       })
       .filter(i => i !== null);
 
-    inputs.forEach(i => {
+      this.inputs.forEach(i => {
       if (inputTypes.indexOf(i.type) < 0) {
         inputTypes.push(i.type);
       }
@@ -362,19 +384,19 @@ export class Alert {
         {(() => {
           switch (this.inputType) {
             case 'checkbox':
-              return this.renderCheckbox(inputs);
+              return this.renderCheckbox(this.inputs);
 
             case 'radio':
-              return this.renderRadio(inputs);
+              return this.renderRadio(this.inputs);
 
             default:
-              return this.renderInput(inputs);
+              return this.renderInput(this.inputs);
           }
         })()}
 
         <div class={alertButtonGroupClass}>
           {buttons.map(b =>
-            <button class={this.buttonClass(b)} onClick={() => this.buttonClick(b)}>
+            <button class={this.buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
               <span class='button-inner'>
                 {b.text}
               </span>
@@ -385,7 +407,14 @@ export class Alert {
     ];
   }
 
+  hostData() {
+    return {
+      id: this.alertId
+    };
+  }
+
 }
+
 
 export interface AlertOptions {
   title?: string;
