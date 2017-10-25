@@ -28,7 +28,6 @@ export class PickerColumnCmp {
   private y: number = 0;
 
   private activeBlock: string;
-  // private decelerateFunc: Function;
 
   @Element() el: HTMLElement;
 
@@ -45,7 +44,6 @@ export class PickerColumnCmp {
 
     this.rotateFactor = pickerRotateFactor;
     this.scaleFactor = pickerScaleFactor;
-    // this.decelerateFunc = this.decelerate.bind(this);
   }
 
   protected ionViewDidLoad() {
@@ -224,11 +222,10 @@ export class PickerColumnCmp {
 
       this.update(y, 0, true, !notLockedIn);
 
-      // TODO
-      // if (notLockedIn) {
-      //   // isn't locked in yet, keep decelerating until it is
-      //   this.rafId =  this._plt.raf(this.decelerateFunc);
-      // }
+      if (notLockedIn) {
+        // isn't locked in yet, keep decelerating until it is
+        Context.dom.raf(() => this.decelerate());
+      }
 
     } else if (this.y % this.optHeight !== 0) {
       // needs to still get locked into a position so options line up
