@@ -596,7 +596,7 @@ declare global {
           mode?: string,
           color?: string,
         
-          fullscreen?: boolean | "true" | "false"
+          fullscreen?: boolean
       }
   }
 }
@@ -626,13 +626,14 @@ declare global {
           mode?: string,
           color?: string,
         
-          disabled?: boolean | "true" | "false",
-          min?: any,
-          max?: any,
-          displayFormat?: any,
-          pickerFormat?: any,
-          cancelText?: any,
-          doneText?: any,
+          pickerCtrl?: any,
+          disabled?: boolean,
+          min?: string,
+          max?: string,
+          displayFormat?: string,
+          pickerFormat?: string,
+          cancelText?: string,
+          doneText?: string,
           yearValues?: any,
           monthValues?: any,
           dayValues?: any,
@@ -643,7 +644,8 @@ declare global {
           dayNames?: any,
           dayShortNames?: any,
           pickerOptions?: any,
-          placeholder?: any
+          placeholder?: string,
+          value?: string
       }
   }
 }
@@ -1014,9 +1016,11 @@ declare global {
   }
   namespace JSXElements {
       export interface IonInfiniteScrollContentAttributes extends HTMLAttributes {
+          mode?: string,
+          color?: string,
         
-          loadingSpinner?: any,
-          loadingText?: any
+          loadingSpinner?: string,
+          loadingText?: string
       }
   }
 }
@@ -1043,10 +1047,12 @@ declare global {
   }
   namespace JSXElements {
       export interface IonInfiniteScrollAttributes extends HTMLAttributes {
+          mode?: string,
+          color?: string,
         
           complete?: any,
-          threshold?: any,
-          enabled?: boolean | "true" | "false",
+          threshold?: string,
+          enabled?: boolean,
           position?: any
       }
   }
@@ -2401,8 +2407,8 @@ declare global {
           mode?: string,
           color?: string,
         
-          enabled?: boolean | "true" | "false",
-          jsScroll?: boolean | "true" | "false",
+          enabled?: boolean,
+          jsScroll?: boolean,
           onionScrollStart?: any,
           onionScroll?: any,
           onionScrollEnd?: any
