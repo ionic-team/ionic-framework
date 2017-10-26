@@ -27,23 +27,6 @@ $content-ios-transition-background:     #000 !default;
   background-color: rgba(0, 0, 0, .12);
 }
 
-.ios .ion-page.show-page ~ .nav-decor {
-  // when ios pages transition, the leaving page grays out
-  // this is the black square behind all pages so they gray out
-  @include position(0, null, null, 0);
-
-  position: absolute;
-  z-index: 0;
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  background: $content-ios-transition-background;
-
-  pointer-events: none;
-}
-
 
 // iOS Content Padding
 // --------------------------------------------------

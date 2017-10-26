@@ -69,9 +69,9 @@ export class IonApp implements App {
   }
 
   protected render() {
-    return ([
+    return (
       <slot></slot>
-    ]);
+    );
   }
 }
 
@@ -122,9 +122,3 @@ export function handleBackButtonClick(): Promise<any> {
     console.log('todo');
   });
 }
-
-
-
-
-
-

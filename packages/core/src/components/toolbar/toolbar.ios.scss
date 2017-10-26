@@ -273,7 +273,7 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 .back-button-ios {
   @include margin(0);
 
-  z-index: 99;
+  z-index: $z-index-toolbar-buttons;
   overflow: visible;
 
   order: map-get($toolbar-order-ios, back-button);

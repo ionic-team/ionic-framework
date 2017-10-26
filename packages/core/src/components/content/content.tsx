@@ -1,8 +1,7 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { Config, Scroll, ScrollDetail } from '../../index';
+import { Component, Element, Method, Prop } from '@stencil/core';
+import { Config, HTMLIonScrollElement } from '../../index';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
-import { getParentElement, getToolbarHeight } from '../../utils/helpers';
-
+import { getPageElement } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-content',
@@ -13,47 +12,33 @@ import { getParentElement, getToolbarHeight } from '../../utils/helpers';
   }
 })
 export class Content {
-  private mode: string;
-  private color: string;
+
+  private cTop = 0;
+  private cBottom = 0;
+  private dirty = false;
+  private scrollEl: HTMLIonScrollElement;
+
+  mode: string;
+  color: string;
+
   @Element() private el: HTMLElement;
+
   @Prop({ context: 'config' }) config: Config;
 
-  $scroll: Scroll;
-  $scrollDetail: ScrollDetail = {};
-  $fixed: HTMLElement;
-  $siblingHeader: HTMLElement;
-  $siblingFooter: HTMLElement;
-
-  headerHeight: string;
-
-
-  protected ionViewDidUnload() {
-    this.$fixed = this.$scroll = this.$siblingFooter = this.$siblingHeader = this.$scrollDetail = null;
-  }
-
-  enableJsScroll() {
-    this.$scroll.jsScroll = true;
-  }
+  /**
+   * @output {ScrollEvent} Emitted when the scrolling first starts.
+   */
+  @Prop() ionScrollStart: Function;
 
   /**
-   * Scroll to the top of the content component.
-   *
-   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
+   * @output {ScrollEvent} Emitted on every scroll event.
    */
-  scrollToTop(duration: number = 300) {
-    return this.$scroll.scrollToTop(duration);
-  }
+  @Prop() ionScroll: Function;
 
   /**
-   * Scroll to the bottom of the content component.
-   *
-   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
+   * @output {ScrollEvent} Emitted when scrolling ends.
    */
-  scrollToBottom(duration: number = 300) {
-    return this.$scroll.scrollToBottom(duration);
-  }
+  @Prop() ionScrollEnd: Function;
 
   /**
    * @input {boolean} If true, the content will scroll behind the headers
@@ -62,35 +47,91 @@ export class Content {
    */
   @Prop() fullscreen: boolean = false;
 
+  protected ionViewDidLoad() {
+    this.scrollEl = this.el.querySelector('ion-scroll') as HTMLIonScrollElement;
+    this.resize();
+  }
+
+  protected ionViewDidUnload() {
+    this.scrollEl = null;
+  }
+
+  @Method()
+  enableJsScroll() {
+    this.scrollEl.jsScroll = true;
+  }
+
+  /**
+   * Scroll to the top of the content component.
+   *
+   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
+   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
+   */
+  @Method()
+  scrollToTop(duration: number = 300) {
+    return this.scrollEl.scrollToTop(duration);
+  }
+
+  /**
+   * Scroll to the bottom of the content component.
+   *
+   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
+   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
+   */
+  @Method()
+  scrollToBottom(duration: number = 300) {
+    return this.scrollEl.scrollToBottom(duration);
+  }
+
+  resize() {
+    if (!this.scrollEl) {
+      return;
+    }
+    if (this.fullscreen) {
+      Context.dom.read(this.readDimensions.bind(this));
+      Context.dom.write(this.writeDimensions.bind(this));
+    } else {
+      this.cTop = this.cBottom = null;
+      Context.dom.write(() => this.scrollEl.removeAttribute('style'));
+    }
+  }
+
+  private readDimensions() {
+    const page = getPageElement(this.el);
+    const top = Math.max(this.el.offsetTop, 0);
+    const bottom = Math.max(page.offsetHeight - top - this.el.offsetHeight, 0);
+    this.dirty = top !== this.cTop || bottom !== this.cBottom;
+    this.cTop = top;
+    this.cBottom = bottom;
+  }
+
+  private writeDimensions() {
+    if (this.dirty && this.scrollEl) {
+      const style = this.scrollEl.style;
+      style.paddingTop = this.cTop + 'px';
+      style.paddingBottom = this.cBottom + 'px';
+      style.top = -this.cTop + 'px';
+      style.bottom = -this.cBottom + 'px';
+      this.dirty = false;
+    }
+  }
 
   protected render() {
-    const scrollStyle: any = {};
-
-    const pageChildren: HTMLElement[] = getParentElement(this.el).children;
-    const headerHeight = getToolbarHeight('ION-HEADER', pageChildren, this.mode, '44px', '56px');
-    const footerHeight = getToolbarHeight('ION-FOOTER', pageChildren, this.mode, '50px', '48px');
-
-    if (this.fullscreen) {
-      scrollStyle.paddingTop = headerHeight;
-      scrollStyle.paddingBottom = footerHeight;
-    } else {
-      scrollStyle.marginTop = headerHeight;
-      scrollStyle.marginBottom = footerHeight;
-    }
-
     const themedClasses = createThemedClasses(this.mode, this.color, 'content');
     const hostClasses = getElementClassObject(this.el.classList);
 
     const scrollClasses = {
       ...themedClasses,
       ...hostClasses,
-      'statusbar-padding': this.config.getBoolean('statusbarPadding')
     };
 
-    return (
-      <ion-scroll style={scrollStyle} class={scrollClasses}>
+    this.resize();
+
+    return [
+      <ion-scroll class={scrollClasses}>
         <slot></slot>
-      </ion-scroll>
-    );
+      </ion-scroll>,
+      <slot name='fixed'></slot>
+    ];
   }
 }

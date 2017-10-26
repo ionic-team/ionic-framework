@@ -596,6 +596,12 @@ declare global {
           mode?: string,
           color?: string,
         
+          enableJsScroll?: any,
+          scrollToTop?: any,
+          scrollToBottom?: any,
+          ionScrollStart?: any,
+          ionScroll?: any,
+          ionScrollEnd?: any,
           fullscreen?: boolean
       }
   }
@@ -740,35 +746,6 @@ declare global {
           toggleActive?: any,
           show?: boolean,
           disabled?: boolean
-      }
-  }
-}
-
-import { Fixed as IonFixed } from './components/fixed/fixed';
-
-interface HTMLIonFixedElement extends IonFixed, HTMLElement {
-}
-declare var HTMLIonFixedElement: {
-  prototype: HTMLIonFixedElement;
-  new (): HTMLIonFixedElement;
-};
-declare global {
-  interface HTMLElementTagNameMap {
-      "ion-fixed": HTMLIonFixedElement;
-  }
-  interface ElementTagNameMap {
-      "ion-fixed": HTMLIonFixedElement;
-  }
-  namespace JSX {
-      interface IntrinsicElements {
-          "ion-fixed": JSXElements.IonFixedAttributes;
-      }
-  }
-  namespace JSXElements {
-      export interface IonFixedAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
       }
   }
 }
@@ -1053,7 +1030,7 @@ declare global {
           complete?: any,
           threshold?: string,
           enabled?: boolean,
-          position?: any
+          position?: string
       }
   }
 }
@@ -2416,6 +2393,9 @@ declare global {
           mode?: string,
           color?: string,
         
+          scrollToTop?: any,
+          scrollToBottom?: any,
+          scrollToPoint?: any,
           enabled?: boolean,
           jsScroll?: boolean,
           onionScrollStart?: any,

@@ -18,9 +18,9 @@ export class PageOne {
 
   protected render() {
     return [<ion-header>
-      <ion-navbar>
+      <ion-toolbar>
         <ion-title>Page One</ion-title>
-      </ion-navbar>
+      </ion-toolbar>
     </ion-header>,
     <ion-content>
       Page One Content

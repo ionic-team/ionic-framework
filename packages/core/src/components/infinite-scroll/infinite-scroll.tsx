@@ -1,5 +1,5 @@
-import { Component, Element, Event, EventEmitter, HostElement, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { ScrollDetail } from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
+import { HTMLIonScrollElement, ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
   Top = 'top',
@@ -148,10 +148,10 @@ export class InfiniteScroll {
 
   private thrPx: number = 0;
   private thrPc: number = 0.15;
-  private init: boolean = false;
-  private scrollEl: HTMLElement;
+  private scrollEl: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
+  private init = false;
 
   @Element() private el: HTMLElement;
   @State() isLoading: boolean = false;
@@ -204,7 +204,7 @@ export class InfiniteScroll {
    * The value can be either `top` or `bottom`.
    * Default is `bottom`.
    */
-  @Prop() position: Position = Position.Bottom;
+  @Prop() position: string = Position.Bottom;
 
   /**
    * @output {event} Emitted when the scroll reaches
@@ -214,16 +214,23 @@ export class InfiniteScroll {
    */
   @Event() private ionInfinite: EventEmitter;
 
+  ionViewWillLoad() {
+    const scrollEl = this.el.closest('ion-scroll') as StencilElement;
+    return scrollEl.componentOnReady().then((el) => {
+      this.scrollEl = el as HTMLIonScrollElement;
+    });
+  }
+
   ionViewDidLoad() {
-    const scrollEl = this.scrollEl = this.el.closest('ion-scroll') as HostElement;
-    if (!scrollEl) {
-      console.error('ion-infinite-scroll must be used ion-content');
+    if (this.init) {
+      console.warn('instance was already initialized');
       return;
     }
     this.init = true;
+    this.thresholdChanged(this.threshold);
     this.enableScrollEvents(this.enabled);
     if (this.position === Position.Top) {
-      // scrollEl.scrollDownOnLoad = true;
+      Context.dom.write(() => this.scrollEl.scrollToBottom(0));
     }
   }
 
@@ -351,9 +358,6 @@ export class InfiniteScroll {
    * @hidden
    */
   private enableScrollEvents(shouldListen: boolean) {
-    if (!this.init) {
-      return;
-    }
     Context.enableListener(this, 'ionScroll', shouldListen, this.scrollEl);
   }
 

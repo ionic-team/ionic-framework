@@ -1,11 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, PropWillChange } from '@stencil/core';
-import { Animation, Config, GestureDetail, HTMLIonMenuElement, SplitPaneAlert } from '../../index';
-import { MenuController } from './menu-controller';
+import { Animation, Config, GestureDetail, HTMLIonMenuControllerElement, HTMLIonMenuElement, SplitPaneAlert, StencilElement } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
-
-export type Lazy<T> = T &
-  { componentOnReady(): Promise<T> } &
-  { componentOnReady(done: (cmp: T) => void): void };
 
 @Component({
   tag: 'ion-menu',
@@ -35,12 +30,12 @@ export class Menu {
   backdropEl: HTMLElement;
   menuInnerEl: HTMLElement;
   contentEl: HTMLElement;
-  menuCtrl: MenuController;
+  menuCtrl: HTMLIonMenuControllerElement;
 
   @Element() el: HTMLIonMenuElement;
 
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: Lazy<MenuController>;
+  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: StencilElement;
 
   /**
    * @input {string} The content's id the menu should use.
@@ -116,8 +111,9 @@ export class Menu {
   @Event() ionClose: EventEmitter;
 
   protected ionViewWillLoad() {
-    return this.lazyMenuCtrl.componentOnReady()
-      .then(menu => this.menuCtrl = menu);
+    return this.lazyMenuCtrl.componentOnReady().then(menu => {
+      this.menuCtrl = menu as HTMLIonMenuControllerElement;
+    });
   }
 
   protected ionViewDidLoad() {

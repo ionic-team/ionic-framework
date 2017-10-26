@@ -112,6 +112,8 @@ export {
   ToastController
 }
 
+
 export interface StencilElement extends HTMLElement {
-  componentOnReady?: (cb: (elm?: StencilElement) => void) => void;
+  componentOnReady(): Promise<HTMLElement>;
+  componentOnReady(done: (cmp?: HTMLElement) => void): void;
 }

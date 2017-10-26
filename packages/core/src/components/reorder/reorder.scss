@@ -16,7 +16,7 @@ ion-reorder-group > ion-gesture {
 
 .reorder-selected {
   position: relative;
-  z-index: 100;
+  z-index: $z-index-reorder-selected;
 
   box-shadow: 0 0 10px rgba(0, 0, 0, .4);
   opacity: .8;
@@ -29,6 +29,7 @@ ion-reorder-group > ion-gesture {
 
 ion-reorder.no-hide {
   display: block;
+
   visibility: normal;
 }
 
@@ -72,7 +73,7 @@ ion-reorder[slot="start"] {
 
 .item-ios .reorder-icon {
   font-size: 2em;
-  opacity: 0.3;
+  opacity: .3;
 }
 
 ion-reorder[slot="start"] .reorder-icon {

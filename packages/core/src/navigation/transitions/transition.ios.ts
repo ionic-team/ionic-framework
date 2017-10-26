@@ -27,7 +27,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
 
   rootTransition.addElement(enteringView.element);
-  rootTransition.beforeAddClass('show-page');
+  rootTransition.beforeRemoveClass('hide-page');
 
   const backDirection = (opts.direction === 'back');
 

@@ -1,4 +1,3 @@
-
 // Globals
 // --------------------------------------------------
 @import "../../themes/ionic.globals";
@@ -226,7 +225,9 @@ sub {
 ion-app,
 ion-nav,
 ion-tab,
-ion-tabs {
+ion-tabs,
+ion-page,
+.ion-page {
   @include position(0, null, null, 0);
 
   position: absolute;
@@ -235,6 +236,8 @@ ion-tabs {
 
   width: 100%;
   height: 100%;
+
+  contain: strict;
 }
 
 ion-nav,
@@ -251,58 +254,39 @@ ion-tab.show-tab {
   display: block;
 }
 
-ion-app,
-ion-nav,
-ion-tab,
-ion-tabs,
-ion-page {
-  contain: strict;
-}
-
 
 // Page Container Structure
 // --------------------------------------------------
 
-ion-page {
-  @include position(0, null, null, 0);
+ion-page,
+.ion-page,
+.page-inner {
+  display: flex;
 
-  position: absolute;
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  // do not show, but still render so we can get dimensions
-  // opacity: 0;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-ion-page.show-page {
-  // show the page now that it's ready
-  // opacity: 1;
+.hide-page {
+  opacity: 0;
 }
-
 
 // Toolbar Container Structure
 // --------------------------------------------------
 
-ion-header {
-  @include position(0, null, null, 0);
-
-  position: absolute;
+ion-header,
+ion-footer {
+  position: relative;
   z-index: $z-index-toolbar;
   display: block;
+
+  order: 1;
 
   width: 100%;
 }
 
-ion-footer {
-  @include position(null, null, 0, 0);
-
-  position: absolute;
-  z-index: $z-index-toolbar;
-  display: block;
-
-  width: 100%;
+ion-header {
+  order: -1;
 }
 
 
@@ -312,8 +296,7 @@ ion-footer {
 [app-viewport],
 [overlay-portal],
 [nav-viewport],
-[tab-portal],
-.nav-decor {
+[tab-portal] {
   display: none;
 }
 

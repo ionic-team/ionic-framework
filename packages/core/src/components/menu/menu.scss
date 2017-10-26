@@ -40,12 +40,6 @@ ion-menu.show-menu {
   contain: strict;
 }
 
-.menu-inner > ion-header,
-.menu-inner > ion-content,
-.menu-inner > ion-footer {
-  position: absolute;
-}
-
 .menu-side-left > .menu-inner {
   @include multi-dir() {
     // scss-lint:disable PropertySpelling

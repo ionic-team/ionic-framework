@@ -38,9 +38,12 @@ $z-index-refresher:              0; // scss-lint:disable DefaultRule
 $z-index-page-container:         0; // scss-lint:disable DefaultRule
 $z-index-toolbar:                10; // scss-lint:disable DefaultRule
 $z-index-toolbar-background:     -1; // scss-lint:disable DefaultRule
+$z-index-toolbar-buttons:        99; // scss-lint:disable DefaultRule
 
 $z-index-backdrop:               2; // scss-lint:disable DefaultRule
 $z-index-overlay-wrapper:        10; // scss-lint:disable DefaultRule
 
 $z-index-item-options:           1; // scss-lint:disable DefaultRule
-$z-index-item-divider:          100; // scss-lint:disable DefaultRule
+$z-index-item-divider:           100; // scss-lint:disable DefaultRule
+
+$z-index-reorder-selected:       100; // scss-lint:disable DefaultRule

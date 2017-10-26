@@ -15,7 +15,7 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
   rootTransition.leavingView = leavingView;
 
   rootTransition.addElement(enteringView.element);
-  rootTransition.beforeAddClass('show-page');
+  rootTransition.beforeRemoveClass('hide-page');
 
   const backDirection = (opts.direction === 'back');
   if (enteringView) {
