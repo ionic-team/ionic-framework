@@ -96,7 +96,9 @@ export function initSwiper(s: Slides, plt: Platform) {
 
   // Pagination
   if (s.paginationType) {
-    s._paginationContainer = <any>s.container.querySelector('.swiper-pagination');
+    // As nested slides also have a paginationcontainer we need to ensure to pick the our own, which will always be last
+    const childPaginationContainer = <any>s.container.querySelectorAll('.swiper-pagination');
+    s._paginationContainer = childPaginationContainer[childPaginationContainer.length - 1];
 
     if (s.paginationType === 'bullets') {
       s._paginationContainer.classList.add(CLS.paginationModifier + 'clickable');
