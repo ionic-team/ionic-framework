@@ -48,7 +48,7 @@
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
     },
-    "testRegex": ".*\\.spec\\.(ts|tsx|js)$",
+    "testRegex": "src/.*\\.spec\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
