@@ -727,7 +727,7 @@ describe('DateTime', () => {
     datetime._picker = picker = new Picker(mockApp(), null, mockConfig());
   });
 
-  console.warn = function(){};
+  console.warn = function() {};
 
   // pt-br
   var customLocale: datetimeUtil.LocaleData = {
