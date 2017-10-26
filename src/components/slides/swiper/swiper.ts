@@ -359,6 +359,16 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
   s._slidesGrid = [];
   s._slidesSizesGrid = [];
 
+  var nestedWrapper = (<any>s._wrapper.querySelectorAll('.' + CLS.wrapper));
+  var nestedSlides: Array<any>;
+  nestedSlides = [];
+  nestedWrapper.forEach((wrapper: any) => {
+    wrapper.querySelectorAll('.' + CLS.slide).forEach((slide: any) => nestedSlides.push(slide));
+  });
+  s._slides = Array.from(s._slides).filter(((slide: any) => {
+       return nestedSlides.indexOf((slide)) === -1;
+     }));
+
   var spaceBetween: any = s.spaceBetween;
   var slidePosition = -s.slidesOffsetBefore;
   var i: number;
