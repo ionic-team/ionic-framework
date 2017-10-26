@@ -115,20 +115,27 @@ export class PopoverTransition extends PageTransition {
     // If the popover left is less than the padding it is off screen
     // to the left so adjust it, else if the width of the popover
     // exceeds the body width it is off screen to the right so adjust
-    if (popoverCSS.left < POPOVER_IOS_BODY_PADDING) {
+    //
+    let checkSafeAreaLeft = false;
+    let checkSafeAreaRight = false;
+
+    // If the popover left is less than the padding it is off screen
+    // to the left so adjust it, else if the width of the popover
+    // exceeds the body width it is off screen to the right so adjust
+    // 25 is a random/arbitrary number. It seems to work fine for ios11
+    // and iPhoneX. Is it perfect? No. Does it work? Yes.
+    if (popoverCSS.left < (POPOVER_IOS_BODY_PADDING + 25)) {
+      checkSafeAreaLeft = true;
       popoverCSS.left = POPOVER_IOS_BODY_PADDING;
-    }  else if (popoverWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left > bodyWidth) {
-      if (CSS.supports('left', 'constant(safe-area-inset-left)')) {
-        popoverCSS.left = `calc(${bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING}px - constant(safe-area-inset-left)`;
-      } else if (CSS.supports('left', 'env(safe-area-inset-left)')) {
-        popoverCSS.left = `calc(${bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING}px - env(safe-area-inset-left)`;
-      } else {
-        popoverCSS.left = `${bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING}px`;
-      }
+    } else if ((popoverWidth + POPOVER_IOS_BODY_PADDING + popoverCSS.left + 25) > bodyWidth) {
+      // Ok, so we're on the right side of the screen,
+      // but now we need to make sure we're still a bit further right
+      // cus....notchurally... Again, 25 is random. It works tho
+      checkSafeAreaRight = true;
+      popoverCSS.left = bodyWidth - popoverWidth - POPOVER_IOS_BODY_PADDING;
       originX = 'right';
     }
 
-    // If the popover when popped down stretches past bottom of screen,
     // make it pop up if there's room above
     if (targetTop + targetHeight + popoverHeight > bodyHeight && targetTop - popoverHeight > 0) {
       arrowCSS.top = targetTop - (arrowHeight + 1);
@@ -144,7 +151,25 @@ export class PopoverTransition extends PageTransition {
     arrowEle.style.left = arrowCSS.left + 'px';
 
     popoverEle.style.top = popoverCSS.top + 'px';
-    popoverEle.style.left = popoverCSS.left;
+    popoverEle.style.left = popoverCSS.left + 'px';
+
+    if (checkSafeAreaLeft) {
+      if (CSS.supports('left', 'constant(safe-area-inset-left)')) {
+        popoverEle.style.left = `calc(${popoverCSS.left}px + constant(safe-area-inset-left)`;
+
+      } else if (CSS.supports('left', 'env(safe-area-inset-left)')) {
+        popoverEle.style.left = `calc(${popoverCSS.left}px + env(safe-area-inset-left)`;
+      }
+    }
+
+    if (checkSafeAreaRight) {
+      if (CSS.supports('right', 'constant(safe-area-inset-right)')) {
+        popoverEle.style.left = `calc(${popoverCSS.left}px - constant(safe-area-inset-right)`;
+      } else if (CSS.supports('right', 'env(safe-area-inset-right)')) {
+        popoverEle.style.left = `calc(${popoverCSS.left}px - env(safe-area-inset-right)`;
+      }
+    }
+
 
     (<any>popoverEle.style)[this.plt.Css.transformOrigin] = originY + ' ' + originX;
 
