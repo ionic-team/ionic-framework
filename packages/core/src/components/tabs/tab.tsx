@@ -74,13 +74,7 @@ export class Tab {
       style: {
         display: !this.isSelected && 'none' || ''
       },
-      attrs: {
-        'role': 'tabpanel'
-        // 'id': _tabId,
-        // aria-labelledby: _btnId
-      },
-      class: {
-      }
+      'role': 'tabpanel'
     };
   }
 

@@ -169,11 +169,9 @@ export class RadioGroup {
 
   hostData() {
     return {
-      attrs: {
-        'role': 'radiogroup',
-        'aria-activedescendant': this.activeId,
-        'aria-describedby': this.headerId
-      }
+      'role': 'radiogroup',
+      'aria-activedescendant': this.activeId,
+      'aria-describedby': this.headerId
     };
   }
 

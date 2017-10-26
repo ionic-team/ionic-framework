@@ -45,15 +45,13 @@ export class RangeKnob {
       style: {
         'left': this.leftPos(this.ratio)
       },
-      attrs: {
-        'role': 'slider',
-        'tabindex': this.disabled ? -1 : 0,
-        'aria-valuemin': this.min,
-        'aria-valuemax': this.max,
-        'aria-disabled': this.disabled,
-        'aria-labelledby': this.labelId,
-        'aria-valuenow': this.val
-      }
+      'role': 'slider',
+      'tabindex': this.disabled ? -1 : 0,
+      'aria-valuemin': this.min,
+      'aria-valuemax': this.max,
+      'aria-disabled': this.disabled,
+      'aria-labelledby': this.labelId,
+      'aria-valuenow': this.val
     };
   }
 

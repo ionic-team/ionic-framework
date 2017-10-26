@@ -23,9 +23,7 @@ export class TabBar {
 
   hostData() {
     return {
-      attrs: {
-        'role': 'tablist'
-      },
+      'role': 'tablist'
       class: {
         'tabbar': true
       }

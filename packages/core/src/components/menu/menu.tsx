@@ -165,11 +165,9 @@ export class Menu {
 
   hostData() {
     return {
-      attrs: {
-        'role': 'navigation',
-        'side': this.getSide(),
-        'type': this.type
-      },
+      'role': 'navigation',
+      'side': this.getSide(),
+      'type': this.type,
       class: {
         'menu-enabled': this._canOpen()
       }

@@ -33,9 +33,7 @@ export class TabButton {
     // class.tab-hidden
 
     return {
-      attrs: {
-        'aria-selected': this.selectedIndex === this.index
-      },
+      'aria-selected': this.selectedIndex === this.index,
       class: {
         'has-title': hasTitle,
         'has-icon': hasIcon,
