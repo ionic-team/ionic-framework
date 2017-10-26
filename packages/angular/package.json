@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "ionic2",
-  "version": "3.3.0",
-  "description": "A powerful framework for building mobile and progressive web apps with JavaScript and Angular",
+  "name": "@ionic/angular",
+  "version": "4.0.0",
+  "description": "A powerful framework for building mobile and progressive web apps with TypeScript and Angular",
   "keywords": [
     "ionic",
     "framework",

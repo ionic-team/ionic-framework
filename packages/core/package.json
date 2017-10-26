@@ -11,18 +11,20 @@
   ],
   "devDependencies": {
     "@stencil/core": "^0.0.6",
-    "@stencil/dev-server": "latest",
+    "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.0",
     "ionicons": "^4.0.0-6",
     "jest": "^21.1.0",
     "sass-lint": "^1.11.1",
+    "selenium-webdriver": "^3.6.0",
     "tslint": "^5.7.0",
     "tslint-ionic-rules": "0.0.11"
   },
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
+    "e2e": "node ./scripts/e2e-test-runner.js",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
     "clean": "rm -rf dist",
