@@ -1,18 +1,39 @@
+const glob = require('glob');
+const Mocha = require('mocha');
 const path = require('path');
-const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
 
-const webdriver = require('selenium-webdriver');
-const driver = new webdriver.Builder().forBrowser('chrome').build();
+const mocha = new Mocha();
 
-cmdArgs = [
-  '--config', path.join(__dirname, '../stencil.config.js'),
-  '--no-open'
-];
+function startDevServer() {
+  const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
+  const cmdArgs = ['--config', path.join(__dirname, '../stencil.config.js'), '--no-open'];
+
+  return server.run(cmdArgs);
+}
+
+function getTestFiles() {
+  return new Promise((resolve, reject) => {
+    const src = path.join(__dirname, '../src/**/*.e2e-spec.js');
+    glob(src, (err, files) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(files);
+      }
+    });
+  });
+}
 
 (async () => {
-  const devServer = await server.run(cmdArgs);
-  await driver.navigate().to('http://localhost:3333/src/components/button/test/basic.html');
-  driver.close();
-  devServer.close();
-})();
+  const devServer = await startDevServer();
 
+  const files = await getTestFiles();
+  files.forEach(f => mocha.addFile(f));
+
+  mocha.run(function(failures) {
+    process.on('exit', function() {
+      process.exit(failures); // exit with non-zero status if there were failures
+    });
+    devServer.close();
+  });
+})();

@@ -1,5 +1,0 @@
-describe('buttons', () => {
-  it('loads', () => {
-
-  });
-});

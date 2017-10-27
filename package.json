@@ -5,6 +5,7 @@
   "devDependencies": {
     "jest": "^20.0.4",
     "lerna": "^2.0.0-rc.5",
+    "mocha": "^4.0.1",
     "np": "^2.16.0"
   }
 }
