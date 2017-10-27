@@ -204,7 +204,7 @@ export class AlertCmp {
     // and ionViewDidEnter is not in the same callstack as the touch event :(
     const focusableEle = this._elementRef.nativeElement.querySelector('input,button');
     if (focusableEle) {
-      focusableEle.focus();
+      setTimeout(() => focusableEle.focus());
     }
     this.enabled = true;
   }
