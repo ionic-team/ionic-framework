@@ -305,8 +305,6 @@ export class Menu {
       assert(false, 'isAnimating has to be true');
       return;
     }
-    console.log('end');
-
     const isOpen = this._isOpen;
     const isRightSide = this.isRightSide;
     const delta = computeDelta(detail.deltaX, isOpen, isRightSide);
