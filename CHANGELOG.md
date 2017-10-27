@@ -15,7 +15,7 @@ npm install @ionic/app-scripts@latest --save-dev
 
 This release uses version `4.4.4` of Angular. Please update the version number of any `@angular` packaages in your `package.json` file:
 
-```json
+```
   "dependencies": {
     "@angular/common": "4.4.4",
     "@angular/compiler": "4.4.4",
