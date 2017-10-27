@@ -23,6 +23,7 @@ export class TapClick {
   private usePolyfill: boolean;
   private activator: ActivatorBase;
   private startCoord: any;
+  private activatableEle: HTMLElement;
   private events: UIEventManager;
   private pointerEvents: PointerEvents;
   private lastTouchEnd: number;
@@ -77,14 +78,14 @@ export class TapClick {
       return true;
     }
 
-    let activatableEle = getActivatableTarget(ev.target);
-    if (!activatableEle) {
+    this.activatableEle = getActivatableTarget(ev.target);
+    if (!this.activatableEle) {
       this.startCoord = null;
       return false;
     }
 
     this.startCoord = pointerCoord(ev);
-    this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
+    this.activator && this.activator.downAction(ev, this.activatableEle, this.startCoord);
     return true;
   }
 
@@ -103,7 +104,7 @@ export class TapClick {
       return;
     }
     if (this.activator && ev.target !== this.plt.doc()) {
-      let activatableEle = getActivatableTarget(ev.target);
+      let activatableEle = getActivatableTarget(ev.target) || this.activatableEle;
       if (activatableEle) {
         this.activator.upAction(ev, activatableEle, this.startCoord);
       }
@@ -112,6 +113,7 @@ export class TapClick {
       this.handleTapPolyfill(ev);
     }
     this.startCoord = null;
+    this.activatableEle = null;
   }
 
   pointerCancel(ev: UIEvent) {
