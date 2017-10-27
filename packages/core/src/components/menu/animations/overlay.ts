@@ -9,7 +9,7 @@ import baseAnimation from './base';
  */
 export default function(Animation: Animation, _: HTMLElement, menu: Menu): Animation {
   let closedX: string, openedX: string;
-  const width = menu.getWidth();
+  const width = menu.width;
   if (menu.isRightSide) {
     // right side
     closedX = 8 + width + 'px';
@@ -22,11 +22,11 @@ export default function(Animation: Animation, _: HTMLElement, menu: Menu): Anima
   }
 
   const menuAni = new Animation()
-    .addElement(menu.getMenuElement())
+    .addElement(menu.menuInnerEl)
     .fromTo('translateX', closedX, openedX);
 
   const backdropApi = new Animation()
-    .addElement(menu.getBackdropElement())
+    .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.35);
 
   return baseAnimation(Animation)

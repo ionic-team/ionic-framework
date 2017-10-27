@@ -1541,7 +1541,7 @@ declare global {
           _register?: any,
           _unregister?: any,
           _setActiveMenu?: any,
-          create?: any,
+          createAnimation?: any,
           animationCtrl?: any
       }
   }
@@ -1572,6 +1572,11 @@ declare global {
           mode?: string,
           color?: string,
         
+          isOpen?: any,
+          setOpen?: any,
+          open?: any,
+          close?: any,
+          toggle?: any,
           lazyMenuCtrl?: any,
           content?: string,
           menuId?: string,

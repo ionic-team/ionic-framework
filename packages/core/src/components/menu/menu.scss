@@ -46,7 +46,7 @@ ion-menu.show-menu {
   position: absolute;
 }
 
-ion-menu[side=left] > .menu-inner {
+.menu-side-left > .menu-inner {
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     right: auto;
@@ -54,16 +54,12 @@ ion-menu[side=left] > .menu-inner {
   }
 }
 
-ion-menu[side=right] > .menu-inner {
+.menu-side-right > .menu-inner {
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     right: 0;
     left: auto;
   }
-}
-
-ion-menu[side=end] > .menu-inner {
-  @include position-horizontal(auto, 0);
 }
 
 ion-menu ion-backdrop {
@@ -84,6 +80,7 @@ ion-menu ion-backdrop {
 }
 
 .menu-content-open ion-pane,
+.menu-content-open .ion-pane,
 .menu-content-open ion-content,
 .menu-content-open .toolbar {
   // the containing element itself should be clickable but
@@ -106,11 +103,11 @@ ion-menu ion-backdrop {
 // The content slides over to reveal the menu underneath.
 // The menu itself, which is under the content, does not move.
 
-ion-menu[type=reveal] {
+ion-menu.menu-type-reveal {
   z-index: 0;
 }
 
-ion-menu[type=reveal].show-menu .menu-inner {
+ion-menu.menu-type-reveal.show-menu .menu-inner {
   @include transform(translate3d(0, 0, 0));
 }
 
@@ -120,10 +117,11 @@ ion-menu[type=reveal].show-menu .menu-inner {
 // The menu slides over the content. The content
 // itself, which is under the menu, does not move.
 
-ion-menu[type=overlay] {
+ion-menu.menu-type-overlay {
   z-index: $z-index-menu-overlay;
 }
 
-ion-menu[type=overlay] .show-backdrop {
+ion-menu.menu-type-overlay .show-backdrop {
   display: block;
+  cursor: pointer;
 }

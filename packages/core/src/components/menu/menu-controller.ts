@@ -1,5 +1,6 @@
 import { Animation, AnimationBuilder, AnimationController, Menu } from '../../index';
 import { Component, Method, Prop } from '@stencil/core';
+import { HTMLIonMenuElement } from '../../index';
 
 import MenuOverlayAnimation from './animations/overlay';
 import MenuRevealAnimation from './animations/reveal';
@@ -48,22 +49,13 @@ export class MenuController {
    */
   @Method()
   close(menuId?: string): Promise<boolean> {
-    let menu: Menu;
-
-    if (menuId) {
-      // find the menu by its id
-      menu = this.get(menuId);
-
-    } else {
-      // find the menu that is open
-      menu = this.getOpen();
-    }
+    const menu = (menuId)
+      ? this.get(menuId)
+      : this.getOpen();
 
     if (menu) {
-      // close the menu
       return menu.close();
     }
-
     return Promise.resolve(false);
   }
 
@@ -96,9 +88,12 @@ export class MenuController {
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
   @Method()
-  enable(shouldEnable: boolean, menuId?: string): Menu {
+  enable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement {
     const menu = this.get(menuId);
-    return (menu && menu.enable(shouldEnable)) || null;
+    if (menu) {
+      menu.enabled = shouldEnable;
+    }
+    return menu;
   }
 
   /**
@@ -108,9 +103,12 @@ export class MenuController {
    * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
    */
   @Method()
-  swipeEnable(shouldEnable: boolean, menuId?: string): Menu {
+  swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement {
     const menu = this.get(menuId);
-    return (menu && menu.swipeEnable(shouldEnable)) || null;
+    if (menu) {
+      menu.swipeEnabled = shouldEnable;
+    }
+    return menu;
   }
 
   /**
@@ -123,9 +121,8 @@ export class MenuController {
     if (menuId) {
       var menu = this.get(menuId);
       return menu && menu.isOpen() || false;
-    } else {
-      return !!this.getOpen();
     }
+    return !!this.getOpen();
   }
 
   /**
@@ -135,7 +132,10 @@ export class MenuController {
   @Method()
   isEnabled(menuId?: string): boolean {
     const menu = this.get(menuId);
-    return menu && menu.enabled || false;
+    if (menu) {
+      return menu.enabled;
+    }
+    return false;
   }
 
   /**
@@ -148,7 +148,7 @@ export class MenuController {
    * @return {Menu} Returns the instance of the menu if found, otherwise `null`.
    */
   @Method()
-  get(menuId?: string): Menu {
+  get(menuId?: string): HTMLIonMenuElement {
     var menu: Menu;
 
     if (menuId === 'left' || menuId === 'right') {
@@ -156,43 +156,43 @@ export class MenuController {
       // so first try to get the enabled one
       menu = this.menus.find(m => m.side === menuId && m.enabled);
       if (menu) {
-        return menu;
+        return menu.el;
       }
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
-      return this.menus.find(m => m.side === menuId) || null;
+      return this.find(m => m.side === menuId) || null;
 
     } else if (menuId) {
       // the menuId was not left or right
       // so try to get the menu by its "id"
-      return this.menus.find(m => m.menuId === menuId) || null;
+      return this.find(m => m.menuId === menuId) || null;
     }
 
     // return the first enabled menu
     menu = this.menus.find(m => m.enabled);
     if (menu) {
-      return menu;
+      return menu.el;
     }
 
     // get the first menu in the array, if one exists
-    return (this.menus.length > 0 ? this.menus[0] : null);
+    return (this.menus.length > 0 ? this.menus[0].el : null);
   }
 
   /**
    * @return {Menu} Returns the instance of the menu already opened, otherwise `null`.
    */
   @Method()
-  getOpen(): Menu {
-    return this.menus.find(m => m.isOpen());
+  getOpen(): HTMLIonMenuElement {
+    return this.find(m => m.isOpen());
   }
 
   /**
    * @return {Array<Menu>}  Returns an array of all menu instances.
    */
   @Method()
-  getMenus(): Menu[] {
-    return this.menus;
+  getMenus(): HTMLIonMenuElement[] {
+    return this.menus.map(menu => menu.el);
   }
 
   /**
@@ -201,7 +201,7 @@ export class MenuController {
    */
   @Method()
   isAnimating(): boolean {
-    return this.menus.some(menu => menu.isAnimating());
+    return this.menus.some(menu => menu.isAnimating);
   }
 
   /**
@@ -236,24 +236,28 @@ export class MenuController {
     const side = menu.side;
     this.menus
       .filter(m => m.side === side && m !== menu)
-      .map(m => m.enable(false));
-  }
-
-
-  /**
-   * @hidden
-   */
-  registerAnimation(name: string, cls: AnimationBuilder) {
-    this.menuAnimations[name] = cls;
+      .map(m => m.enabled = false);
   }
 
   /**
    * @hidden
    */
   @Method()
-  create(type: string, menuCmp: Menu): Promise<Animation> {
+  createAnimation(type: string, menuCmp: Menu): Promise<Animation> {
     const animationBuilder = this.menuAnimations[type];
     return this.animationCtrl.create(animationBuilder, null, menuCmp);
+  }
+
+  private registerAnimation(name: string, cls: AnimationBuilder) {
+    this.menuAnimations[name] = cls;
+  }
+
+  private find(predicate: (menu: Menu) => boolean): HTMLIonMenuElement {
+    const instance = this.menus.find(predicate);
+    if (instance) {
+      return instance.el;
+    }
+    return null;
   }
 
 }

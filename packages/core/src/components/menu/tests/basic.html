@@ -64,8 +64,15 @@
       </ion-header>
 
       <ion-content padding>
-        <ion-button onclick="openLeft()">Open left menu</ion-button>
-        <ion-button onclick="openRight()">Open right menu</ion-button>
+        <p>
+          <ion-button onclick="openLeft()">Open left menu</ion-button>
+          <ion-button onclick="openRight()">Open right menu</ion-button>
+        </p>
+        <p>
+          <ion-button onclick="setPush()">Set Push</ion-button>
+          <ion-button onclick="setOverlay()">Set Overlay</ion-button>
+          <ion-button onclick="setReveal()">Set Reveal</ion-button>
+        </p>
       </ion-content>
 
     </ion-page>
@@ -82,6 +89,18 @@
     function openRight() {
       console.log('Open right menu');
       menu.open('right');
+    }
+    function setPush() {
+      menu.get('left').type = 'push';
+      menu.get('right').type = 'push';
+    }
+    function setOverlay() {
+      menu.get('left').type = 'overlay';
+      menu.get('right').type = 'overlay';
+    }
+    function setReveal() {
+      menu.get('left').type = 'reveal';
+      menu.get('right').type = 'reveal';
     }
   </script>
 </body>

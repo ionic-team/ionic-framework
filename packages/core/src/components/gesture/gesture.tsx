@@ -8,7 +8,6 @@ import { PanRecognizer } from './recognizers';
 })
 export class Gesture {
 
-  @Element() private el: HTMLElement;
   private detail: GestureDetail = {};
   private positions: number[] = [];
   private ctrl: GestureController;
@@ -21,13 +20,8 @@ export class Gesture {
   private hasFiredStart = true;
   private isMoveQueued = false;
   private blocker: BlockerDelegate;
-  private fireOnMoveFunc: any;
 
-  @Event() private ionGestureMove: EventEmitter;
-  @Event() private ionGestureStart: EventEmitter;
-  @Event() private ionGestureEnd: EventEmitter;
-  @Event() private ionGestureNotCaptured: EventEmitter;
-  @Event() private ionPress: EventEmitter;
+  @Element() private el: HTMLElement;
 
   @Prop() enabled: boolean = true;
   @Prop() attachTo: ElementRef = 'child';
@@ -49,9 +43,12 @@ export class Gesture {
   @Prop() onPress: GestureCallback;
   @Prop() notCaptured: GestureCallback;
 
-  constructor() {
-    this.fireOnMoveFunc = this.fireOnMove.bind(this);
-  }
+  @Event() private ionGestureMove: EventEmitter;
+  @Event() private ionGestureStart: EventEmitter;
+  @Event() private ionGestureEnd: EventEmitter;
+  @Event() private ionGestureNotCaptured: EventEmitter;
+  @Event() private ionPress: EventEmitter;
+
 
   protected ionViewDidLoad() {
     // in this case, we already know the GestureController and Gesture are already
@@ -203,7 +200,7 @@ export class Gesture {
       if (!this.isMoveQueued && this.hasFiredStart) {
         this.isMoveQueued = true;
         this.calcGestureData(ev);
-        Context.dom.write(this.fireOnMoveFunc);
+        Context.dom.write(this.fireOnMove.bind(this));
       }
       return;
     }
@@ -221,6 +218,11 @@ export class Gesture {
   }
 
   private fireOnMove() {
+    // Since fireOnMove is called inside a RAF, onEnd() might be called,
+    // we must double check hasCapturedPan
+    if (!this.hasCapturedPan) {
+      return;
+    }
     const detail = this.detail;
     this.isMoveQueued = false;
     if (this.onMove) {
@@ -312,6 +314,7 @@ export class Gesture {
   private reset() {
     this.hasCapturedPan = false;
     this.hasStartedPan = false;
+    this.isMoveQueued = false;
     this.hasFiredStart = true;
     this.gesture && this.gesture.release();
   }

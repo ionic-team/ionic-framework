@@ -8,10 +8,10 @@ import baseAnimation from './base';
  * The menu itself, which is under the content, does not move.
  */
 export default function(Animation: Animation, _: HTMLElement, menu: Menu): Animation {
-  const openedX = (menu.getWidth() * (menu.isRightSide ? -1 : 1)) + 'px';
+  const openedX = (menu.width * (menu.isRightSide ? -1 : 1)) + 'px';
 
   const contentOpen = new Animation()
-    .addElement(menu.getContentElement())
+    .addElement(menu.contentEl)
     .fromTo('translateX', '0px', openedX);
 
   return baseAnimation(Animation)

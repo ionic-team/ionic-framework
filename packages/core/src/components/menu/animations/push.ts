@@ -10,7 +10,7 @@ import baseAnimation from './base';
 export default function(Animation: Animation, _: HTMLElement, menu: Menu): Animation {
 
   let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
-  const width = menu.getWidth();
+  const width = menu.width;
 
   if (menu.isRightSide) {
     contentOpenedX = -width + 'px';
@@ -23,11 +23,11 @@ export default function(Animation: Animation, _: HTMLElement, menu: Menu): Anima
     menuClosedX = -width + 'px';
   }
   const menuAni = new Animation()
-    .addElement(menu.getMenuElement())
+    .addElement(menu.menuInnerEl)
     .fromTo('translateX', menuClosedX, menuOpenedX);
 
   const contentAni = new Animation()
-    .addElement(menu.getContentElement())
+    .addElement(menu.contentEl)
     .fromTo('translateX', '0px', contentOpenedX);
 
   return baseAnimation(Animation)
