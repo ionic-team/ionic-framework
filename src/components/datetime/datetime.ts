@@ -522,8 +522,8 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
 
     console.debug('datetime, open picker');
 
-    // the user may have assigned some options specifically for the alert
-    const pickerOptions = deepCopy(this.pickerOptions);
+    // the user may have assigned some options specifically for the picker
+    const pickerOptions = {...this.pickerOptions};
 
     // Configure picker under the hood
     const picker = this._picker = this._pickerCtrl.create(pickerOptions);
