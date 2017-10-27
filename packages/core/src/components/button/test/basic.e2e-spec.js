@@ -1,7 +1,7 @@
 const webdriver = require('selenium-webdriver');
 const driver = new webdriver.Builder().forBrowser('chrome').build();
 
-describe('basic button', () => {
+describe('button: basic', () => {
   after(() => {
     return driver.quit();
   });

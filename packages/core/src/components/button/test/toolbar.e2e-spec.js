@@ -1,7 +1,7 @@
 const webdriver = require('selenium-webdriver');
 const driver = new webdriver.Builder().forBrowser('chrome').build();
 
-describe('toolbar button', () => {
+describe('button: toolbar', () => {
   after(() => {
     return driver.quit();
   });
