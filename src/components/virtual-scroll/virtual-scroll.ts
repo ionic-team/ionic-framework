@@ -610,6 +610,11 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
       return;
     }
 
+    // check if component is rendered in the dom currently
+    if (this._elementRef.nativeElement.offsetParent === null) {
+      return;
+    }
+
     console.debug('virtual-scroll', 'resized window');
     this.calcDimensions();
     this.writeUpdate(false);
