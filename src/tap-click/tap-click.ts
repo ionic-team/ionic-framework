@@ -120,6 +120,7 @@ export class TapClick {
     console.debug(`pointerCancel from ${ev.type} ${Date.now()}`);
 
     this.startCoord = null;
+    this.activatableEle = null;
     this.dispatchClick = false;
     this.activator && this.activator.clearState(false);
     this.pointerEvents.stop();
