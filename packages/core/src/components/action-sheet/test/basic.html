@@ -19,12 +19,12 @@
     <ion-content padding>
       <ion-action-sheet-controller></ion-action-sheet-controller>
 
-      <ion-button block onclick="presentBasic()">Basic</ion-button>
-      <ion-button block onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
-      <ion-button block onclick="presentAlert()">Alert from Action Sheet</ion-button>
-      <ion-button block onclick="presentScroll()">Scrollable Options</ion-button>
-      <ion-button block onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
-      <ion-button block onclick="presentCancelOnly()">Cancel Only</ion-button>
+      <ion-button id="basic" block onclick="presentBasic()">Basic</ion-button>
+      <ion-button id="noBackdropDismiss" block onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
+      <ion-button id="alertFromActionSheet" block onclick="presentAlert()">Alert from Action Sheet</ion-button>
+      <ion-button id="scrollableOptions" block onclick="presentScroll()">Scrollable Options</ion-button>
+      <ion-button id="scrollWithoutCancel" block onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button id="cancelOnly" block onclick="presentCancelOnly()">Cancel Only</ion-button>
 
     </ion-content>
   </ion-app>
