@@ -1,8 +1,8 @@
+'use strict';
+
 const glob = require('glob');
 const Mocha = require('mocha');
 const path = require('path');
-
-const mocha = new Mocha();
 
 function startDevServer() {
   const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
@@ -25,11 +25,16 @@ function getTestFiles() {
 }
 
 (async () => {
+  const mocha = new Mocha({
+    timeout: 5000,
+    slow: 2000
+  });
+
   const devServer = await startDevServer();
+  // process.env.takeScreenshots = true;
 
   const files = await getTestFiles();
   files.forEach(f => mocha.addFile(f));
-
   mocha.run(function(failures) {
     process.on('exit', function() {
       process.exit(failures); // exit with non-zero status if there were failures
