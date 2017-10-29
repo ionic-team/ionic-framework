@@ -92,23 +92,50 @@ import { ViewController } from '../../navigation/view-controller';
  *   }
  * }
  *```
- *
+ * @name Tabs Dynamic Selection
  * By default, the first tab will be selected upon navigation to the
  * Tabs page. We can change the selected tab by using `selectedIndex`
  * on the `<ion-tabs>` element:
  *
  * ```html
- * <ion-tabs selectedIndex="2">
+ * <ion-tabs selectedIndex="tabIndex">
  *   <ion-tab [root]="tab1Root"></ion-tab>
  *   <ion-tab [root]="tab2Root"></ion-tab>
  *   <ion-tab [root]="tab3Root"></ion-tab>
  * </ion-tabs>
  * ```
  *
- * Since the index starts at `0`, this will select the 3rd tab which has
- * root set to `tab3Root`. If you wanted to change it dynamically from
- * your class, you could use [property binding](https://angular.io/docs/ts/latest/guide/template-syntax.html#!#property-binding).
+ * Then we can change our TabsPage to receive an index as a parameter to select a specific tab. Here an example:
+ * @Component({
+ *   templateUrl: 'tabs.html'
+ * })
+ * export class TabsPage {
+ *   tab1Root = Page1;
+ *   tab2Root = Page2;
+ *   tab3Root = Page3;
+ *   public tabIndex:Number = 0;
+ *   
+ *       constructor(public params:NavParams) {
+ *         let tabIndex = this.params.get('tabIndex');
+ *         if(tabIndex){
+ *           this.tabIndex = tabIndex;
+ *         }
+ *       }
+ * }
  *
+ * Finally we can call a specific tab from any `Page` passing as parameter an object `{tabIndex: number}`.
+ * For example:
+ *```ts
+ * export class Page1 {
+ * 
+ *   constructor(public navCtrl: NavController, public navParams: NavParams) {
+ *   }
+ *   
+ *   goToTab(index: number){
+ * 		this.navCtrl.setRoot(TabsPage, {tabIndex: index});
+ *   }
+ * } 
+ * ```
  * Alternatively, you can grab the `Tabs` instance and call the `select()`
  * method. This requires the `<ion-tabs>` element to have an `id`. For
  * example, set the value of `id` to `myTabs`:
