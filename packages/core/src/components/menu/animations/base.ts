@@ -10,16 +10,11 @@ export default function baseAnimation(Animation: Animation): Animation {
   // https://material.io/guidelines/motion/movement.html#movement-movement-in-out-of-screen-bounds
   // https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves
 
-  /** TODO replace duration(280ms)
-   * - Mobile entering time: 225ms
-   * - Mobile leaving time: 195ms
-   *
-   * - Tablet time = Mobile time * 1.3 (+30%)
-   * - Tablet entering time: 292.5
-   * - Tablet leaving time: 253.5
-   */
+  // "Apply the sharp curve to items temporarily leaving the screen that may return
+  // from the same exit point. When they return, use the deceleration curve. On mobile,
+  // this transition typically occurs over 300ms" -- MD Motion Guide
   return new Animation()
     .easing('cubic-bezier(0.0, 0.0, 0.2, 1)') // Deceleration curve (Entering the screen)
     .easingReverse('cubic-bezier(0.4, 0.0, 0.6, 1)') // Sharp curve (Temporarily leaving the screen)
-    .duration(280);
+    .duration(300);
 }
