@@ -8,7 +8,7 @@ import { PickerColumn } from '../picker/picker-options';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { Item } from '../item/item';
-import { assert, clamp, deepCopy, isArray, isBlank, isObject, isPresent, isString } from '../../util/util';
+import { assert, clamp, isArray, isBlank, isObject, isPresent, isString } from '../../util/util';
 import {
   DateTimeData,
   LocaleData,
