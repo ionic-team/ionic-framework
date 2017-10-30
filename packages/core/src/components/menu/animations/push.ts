@@ -9,22 +9,20 @@ import baseAnimation from './base';
  */
 export default function(Animation: Animation, _: HTMLElement, menu: Menu): Animation {
 
-  let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
+  let contentOpenedX: string, menuClosedX: string;
   const width = menu.width;
 
   if (menu.isRightSide) {
     contentOpenedX = -width + 'px';
     menuClosedX = width + 'px';
-    menuOpenedX = '0px';
 
   } else {
     contentOpenedX = width + 'px';
-    menuOpenedX = '0px';
     menuClosedX = -width + 'px';
   }
   const menuAni = new Animation()
     .addElement(menu.menuInnerEl)
-    .fromTo('translateX', menuClosedX, menuOpenedX);
+    .fromTo('translateX', menuClosedX, '0px');
 
   const contentAni = new Animation()
     .addElement(menu.contentEl)

@@ -1,6 +1,7 @@
 import { Animation, Menu } from '../../../index';
 import baseAnimation from './base';
 
+const BOX_SHADOW_WIDTH = 8;
 /**
  * @hidden
  * Menu Overlay Type
@@ -9,15 +10,15 @@ import baseAnimation from './base';
  */
 export default function(Animation: Animation, _: HTMLElement, menu: Menu): Animation {
   let closedX: string, openedX: string;
-  const width = menu.width;
+  const width = menu.width + BOX_SHADOW_WIDTH;
   if (menu.isRightSide) {
     // right side
-    closedX = 8 + width + 'px';
+    closedX = width + 'px';
     openedX = '0px';
 
   } else {
     // left side
-    closedX = -(8 + width) + 'px';
+    closedX = -width + 'px';
     openedX = '0px';
   }
 
