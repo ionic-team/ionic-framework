@@ -2,31 +2,33 @@
 
 const fs = require('fs');
 const webdriver = require('selenium-webdriver');
+const Snapshot = require('./Snapshot');
 
-function takeScreenshot(driver, name) {
-  return driver.takeScreenshot().then(function(data) {
-    var base64Data = data.replace(/^data:image\/png;base64,/, '');
-    fs.writeFile(`${name}.png`, base64Data, 'base64', function(err) {
-      if (err) console.log(err);
+let snapshotTool;
+function getSnapshotTool() {
+  if (!snapshotTool) {
+    snapshotTool = new Snapshot({
+      platformDefaults: {
+        params: {
+          height: 800,
+          width: 400
+        }
+      }
     });
-  });
-}
-
-function allowForAnnimation() {
-  return new Promise((resolve, reject) => {
-    setTimeout(function() {
-      resolve();
-    }, 300);
-  });
+  }
+  return snapshotTool;
 }
 
 function registerE2ETest(desc, tst) {
-  it(desc, async () => {
+  // NOTE: Do not use an arrow function here because: https://mochajs.org/#arrow-functions
+  it(desc, async function() {
     const driver = new webdriver.Builder().forBrowser('chrome').build();
     await tst(driver);
     if (process.env.takeScreenshots) {
-      await allowForAnnimation();
-      takeScreenshot(driver, desc);
+      const snapshot = getSnapshotTool();
+      await snapshot.takeScreenshot(driver, {
+        name: this.test.fullTitle()
+      });
     }
     return driver.quit();
   });

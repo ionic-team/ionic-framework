@@ -24,14 +24,23 @@ function getTestFiles() {
   });
 }
 
+function processCommandLine() {
+  process.argv.forEach(arg => {
+    if (arg === '--snapshot') {
+      process.env.takeScreenshots = true;
+    }
+  });
+}
+
 (async () => {
   const mocha = new Mocha({
     timeout: 5000,
     slow: 2000
   });
 
+  processCommandLine();
+
   const devServer = await startDevServer();
-  // process.env.takeScreenshots = true;
 
   const files = await getTestFiles();
   files.forEach(f => mocha.addFile(f));
