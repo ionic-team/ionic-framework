@@ -108,7 +108,7 @@ export class Select {
   protected ionViewDidLoad() {
     // Get the parent item
     this.item = this.el.closest('ion-item');
-
+    this.item.onclick = this.open.bind(this);
     this.setOptions();
   }
 
@@ -394,7 +394,6 @@ export class Select {
         id={this.selectId}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
-        onClick={this.open.bind(this)}
         class='item-cover'>
       </button>
     ];
