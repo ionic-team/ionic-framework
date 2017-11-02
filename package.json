@@ -41,6 +41,7 @@
   "devDependencies": {
     "@ionic/app-scripts": "nightly",
     "@ionic/commit-hooks": "1.0.3",
+    "@ionic/discover": "^0.3.2",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
     "@types/fs-extra": "0.0.37",

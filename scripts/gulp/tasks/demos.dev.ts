@@ -11,7 +11,7 @@ task('demos.watch', ['demos.prepare'], (done: Function) => {
     done(new Error(`Usage: gulp e2e.watch --folder modal`));
   }
 
-  serveDemo(folderInfo.componentName, folderInfo.devApp).then(() => {
+  serveDemo(folderInfo.componentName, folderInfo.devapp).then(() => {
     done();
   }).catch((err: Error) => {
     done(err);

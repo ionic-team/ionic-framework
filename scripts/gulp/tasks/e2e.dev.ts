@@ -13,7 +13,7 @@ task('e2e.watch', ['e2e.prepare'], (done: Function) => {
     return;
   }
 
-  serveTest(folderInfo, folderInfo.devApp).then(() => {
+  serveTest(folderInfo, folderInfo.devapp).then(() => {
     done();
   }).catch((err: Error) => {
     done(err);
