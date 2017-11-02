@@ -22,6 +22,7 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
     name: IOS,
     settings: {
       mode: IOS,
+      tabsHighlight: false,
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
   },

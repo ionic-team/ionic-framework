@@ -1,69 +1,58 @@
-import { Component, Prop } from '@stencil/core';
-
-
+import { Component, Listen, Prop, State } from '@stencil/core';
+import { HTMLIonTabElement } from '../../index';
 
 @Component({
-  tag: 'ion-tab-bar',
+  tag: 'ion-tabbar',
   host: {
     theme: 'tabbar'
   }
 })
 export class TabBar {
 
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
-   */
-  @Prop() color: string;
+  @State() hidden = false;
 
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() placement = 'bottom';
+  @Prop() tabs: HTMLIonTabElement[];
+  @Prop() selectedTab: HTMLIonTabElement;
+  @Prop() layout: string = 'icon-top';
+  @Prop() highlight: boolean = false;
 
-  @Prop() tabs: any;
+  @Listen('body:keyboardWillHide')
+  protected onKeyboardWillHide() {
+    setTimeout(() => this.hidden = false, 50);
+  }
 
-  @Prop() onTabSelected: Function;
-
-  @Prop() selectedIndex: number = 0;
-
-  /**
-   * @input {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
-   */
-  @Prop() tabsLayout: string = 'icon-top';
-  /*
-
-  hostData() {
-    return {
-      'role': 'tablist'
-      class: {
-        'tabbar': true
-      }
+  @Listen('body:keyboardWillShow')
+  protected onKeyboardWillShow() {
+    if (this.placement === 'bottom') {
+      this.hidden = true;
     }
   }
 
-  handleTabButtonClick(tab, index) {
-    this.onTabSelected && this.onTabSelected(tab, index);
+  protected hostData() {
+    const layoutClass = `layout-${this.layout}`;
+    const placementClass = `placement-${this.placement}`;
+    return {
+      'role': 'tablist',
+      'class': {
+        'tabbar-hidden': this.hidden,
+        [layoutClass]: true,
+        [placementClass]: true
+      }
+    };
   }
 
   protected render() {
-    return (
-      <div class="tabbar" role="tablist">
-        {this.tabs.map((tab, index) => {
-        return (
-          <ion-tab-button role="tab"
-                          tab={tab}
-                          selectedIndex={this.selectedIndex}
-                          index={index}
-                          onClick={this.handleTabButtonClick.bind(this, tab, index)}
-                          layout={this.tabsLayout}></ion-tab-button>
-        )
-        })}
-      </div>
-    )
+    const selectedTab = this.selectedTab;
+    const dom = this.tabs.map(tab => (
+      <ion-tab-button
+        tab={tab}
+        selected={selectedTab === tab}>
+      </ion-tab-button>
+    ));
+    if (this.highlight) {
+      dom.push(<ion-tab-highlight selectedTab={selectedTab}></ion-tab-highlight>);
+    }
+    return dom;
   }
-  */
 }

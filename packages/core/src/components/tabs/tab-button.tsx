@@ -1,78 +1,62 @@
-import { Component, Prop } from '@stencil/core';
-
+import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { HTMLIonTabElement } from '../../index';
 
 @Component({
-  tag: 'ion-tab-button',
-  host: {
-    theme: 'tab-button'
-  }
+  tag: 'ion-tab-button'
 })
-export class TabButton {
-  @Prop() tab: any;
+export class TabbarButton {
 
-  @Prop() layout: string;
+  @Prop() selected: boolean = false;
+  @Prop() tab: HTMLIonTabElement;
 
-  @Prop() selectedIndex: number;
+  @Event() ionTabbarClick: EventEmitter;
 
-  @Prop() index: number;
+  @Listen('click')
+  protected onClick(ev: UIEvent) {
+    this.ionTabbarClick.emit(this.tab);
+    ev.stopPropagation();
+  }
 
-  hostData() {
+  protected hostData() {
+    const selected = this.selected;
     const tab = this.tab;
-    if (!tab) return {};
-
-    // attr.id
-    // attr.aria-controls
-
-    const hasTitle = !!tab.tabTitle;
-    const hasIcon = !!tab.tabIcon && this.layout !== 'icon-hide';
+    const hasTitle = !!tab.title;
+    const hasIcon = !! tab.icon;
     const hasTitleOnly = (hasTitle && !hasIcon);
     const hasIconOnly = (hasIcon && !hasTitle);
-    const hasBadge = !!tab.tabBadge;
-    // class.disable-hover
-    // class.tab-disabled
-    // class.tab-hidden
-
+    const hasBadge = !!tab.badge;
     return {
-      'aria-selected': this.selectedIndex === this.index,
+      'role': 'tab',
+      'id': tab.btnId,
+      'aria-selected': selected,
       class: {
+        'tab-selected': selected,
         'has-title': hasTitle,
         'has-icon': hasIcon,
         'has-title-only': hasTitleOnly,
         'has-icon-only': hasIconOnly,
-        'has-badge': hasBadge
+        'has-badge': hasBadge,
+        'tab-disabled': !tab.enabled,
+        'tab-hidden': tab.hidden,
       }
     };
   }
 
   protected render() {
-    if (!this.tab) {
-      return null;
-    }
-
+    const items = [];
     const tab = this.tab;
 
-    // TODO: Apply these on host?
-    /*
-    let { id, ariaControls, ariaSelected, hasTitle, hasIcon, hasTitleOnly,
-    iconOnly, hasBadge, disableHover, tabDisabled, tabHidden } = {};
-    */
-
-    const items = [];
-
-    if (tab.tabIcon) {
-      items.push(<ion-icon class='tab-button-icon' name={tab.tabIcon}></ion-icon>);
+    if (tab.icon) {
+      items.push(<ion-icon class='tab-button-icon' name={tab.icon}></ion-icon>);
     }
-
-    if (tab.tabTitle) {
-      items.push(<span class='tab-button-text'>{tab.tabTitle}</span>);
+    if (tab.title) {
+      items.push(<span class='tab-button-text'>{tab.title}</span>);
     }
-
-    if (tab.tabBadge) {
-      items.push(<ion-badge class='tab-badge' color={tab.tabBadgeStyle}>{tab.tabBadge}</ion-badge>);
+    if (tab.badge) {
+      items.push(<ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge>);
     }
-
     items.push(<div class='button-effect'></div>);
 
-    return (items);
+    return items;
   }
 }

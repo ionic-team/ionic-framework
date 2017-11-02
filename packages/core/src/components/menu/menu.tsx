@@ -428,7 +428,7 @@ export class Menu {
   protected hostData() {
     const typeClass = 'menu-type-' + this.type;
     return {
-      role: 'navigation',
+      role: 'complementary',
       class: {
         'menu-enabled': this.isActive(),
         'menu-side-right': this.isRightSide,

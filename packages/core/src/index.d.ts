@@ -23,6 +23,9 @@ import { Segment } from './components/segment/segment';
 import { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
 import { SplitPane, SplitPaneAlert } from './components/split-pane/split-pane';
 
+import { Tab } from './components/tabs/tab';
+import { Tabs } from './components/tabs/tabs';
+
 import { Toast, ToastEvent, ToastOptions } from './components/toast/toast';
 import { ToastController } from './components/toast-controller/toast-controller';
 
