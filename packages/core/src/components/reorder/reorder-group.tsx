@@ -1,6 +1,7 @@
 import { Component, Element, Prop, PropDidChange, State } from '@stencil/core';
 import { GestureDetail } from '../../index';
 import { clamp, reorderArray } from '../../utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
 import { CSS_PROP } from '../animation-controller/constants';
 
 const AUTO_SCROLL_MARGIN = 60;
@@ -252,9 +253,7 @@ export class ReorderGroup {
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
-    if ((window as any).TapticEngine) {
-      (window as any).TapticEngine.gestureSelectionStart();
-    }
+    hapticSelectionStart();
   }
 
   private onDragMove(ev: GestureDetail) {
@@ -276,9 +275,7 @@ export class ReorderGroup {
       let fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
-      if ((window as any).TapticEngine) {
-        (window as any).TapticEngine.gestureSelectionChanged();
-      }
+      hapticSelectionChanged();
       this._reorderMove(fromIndex, toIndex);
     }
 
@@ -321,9 +318,7 @@ export class ReorderGroup {
       reorderInactive();
     }
 
-    if ((window as any).TapticEngine) {
-      (window as any).TapticEngine.gestureSelectionEnd();
-    }
+    hapticSelectionEnd();
   }
 
   private itemIndexForTop(deltaY: number): number {

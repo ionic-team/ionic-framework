@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
 import { BooleanInputComponent, GestureDetail } from '../../index';
+import { hapticSelection } from '../../utils/haptic';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class Toggle implements BooleanInputComponent {
   private labelId: string;
   private styleTmr: any;
   private gestureConfig: any;
-  private startX: number;
+  private pivotX: number;
 
   hasFocus: boolean = false;
 
@@ -85,39 +86,30 @@ export class Toggle implements BooleanInputComponent {
   }
 
   private onDragStart(detail: GestureDetail) {
-    this.startX = detail.startX;
+    this.pivotX = detail.currentX;
+    this.activated = true;
     this.fireFocus();
   }
 
   private onDragMove(detail: GestureDetail) {
     const currentX = detail.currentX;
-    if (this.checked) {
-      if (currentX + 15 < this.startX) {
-        this.checked = false;
-        this.activated = true;
-        this.startX = currentX;
-      }
-
-    } else if (currentX - 15 > this.startX) {
-      this.checked = true;
-      this.activated = (currentX < this.startX + 5);
-      this.startX = currentX;
+    const checked = this.checked;
+    if (shouldToggle(checked, currentX - this.pivotX, -15)) {
+      this.checked = !checked;
+      this.pivotX = currentX;
+      hapticSelection();
     }
   }
 
   private onDragEnd(detail: GestureDetail) {
-    const delta = detail.deltaX;
-    if (this.checked) {
-      if (delta < -4) {
-        this.checked = false;
-      }
-
-    } else if (delta > 4) {
-      this.checked = true;
+    const delta = detail.currentX - this.pivotX;
+    const checked = this.checked;
+    if (shouldToggle(checked, delta, 4)) {
+      this.checked = !checked;
+      hapticSelection();
     }
 
     this.activated = false;
-    this.startX = null;
     this.fireBlur();
   }
 
@@ -180,5 +172,17 @@ export class Toggle implements BooleanInputComponent {
         </div>
       </ion-gesture>
     );
+  }
+}
+
+function shouldToggle(checked: boolean, deltaX: number, margin: number): boolean {
+  const isRTL = document.dir === 'rtl';
+
+  if (checked) {
+    return (!isRTL && (margin > deltaX)) ||
+      (isRTL && (- margin < deltaX));
+  } else {
+    return (!isRTL && (- margin < deltaX)) ||
+      (isRTL && (margin > deltaX));
   }
 }
