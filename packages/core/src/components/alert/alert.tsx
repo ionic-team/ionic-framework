@@ -24,12 +24,35 @@ export class Alert {
 
   @Element() private el: HTMLElement;
 
-  @Event() private ionAlertDidLoad: EventEmitter;
-  @Event() private ionAlertDidPresent: EventEmitter;
-  @Event() private ionAlertWillPresent: EventEmitter;
-  @Event() private ionAlertWillDismiss: EventEmitter;
-  @Event() private ionAlertDidDismiss: EventEmitter;
-  @Event() private ionAlertDidUnload: EventEmitter;
+  /**
+   * @output {AlertEvent} Emitted after the alert has loaded.
+   */
+  @Event() ionAlertDidLoad: EventEmitter;
+
+  /**
+   * @output {AlertEvent} Emitted after the alert has presented.
+   */
+  @Event() ionAlertDidPresent: EventEmitter;
+
+  /**
+   * @output {AlertEvent} Emitted before the alert has presented.
+   */
+  @Event() ionAlertWillPresent: EventEmitter;
+
+  /**
+   * @output {AlertEvent} Emitted before the alert has dismissed.
+   */
+  @Event() ionAlertWillDismiss: EventEmitter;
+
+  /**
+   * @output {AlertEvent} Emitted after the alert has dismissed.
+   */
+  @Event() ionAlertDidDismiss: EventEmitter;
+
+  /**
+   * @output {AlertEvent} Emitted after the alert has unloaded.
+   */
+  @Event() ionAlertDidUnload: EventEmitter;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -138,7 +161,7 @@ export class Alert {
   }
 
   protected ionViewDidEnter() {
-    this.ionAlertDidPresent.emit({ loading: this });
+    this.ionAlertDidPresent.emit({ alert: this });
   }
 
   protected backdropClick() {
@@ -448,7 +471,7 @@ export interface AlertButton {
   handler?: (value: any) => boolean|void;
 }
 
-export interface AlertEvent {
+export interface AlertEvent extends Event {
   detail: {
     alert: Alert;
   };

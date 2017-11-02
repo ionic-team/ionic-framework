@@ -168,7 +168,7 @@ export class InfiniteScroll {
    */
   @Prop() threshold: string = '15%';
   @PropDidChange('threshold')
-  thresholdChanged(val: string) {
+  protected thresholdChanged(val: string) {
     if (val.lastIndexOf('%') > -1) {
       this.thrPx = 0;
       this.thrPc = (parseFloat(val) / 100);
@@ -195,7 +195,7 @@ export class InfiniteScroll {
    */
   @Prop() enabled: boolean = true;
   @PropDidChange('enabled')
-  enabledChanged(val: boolean) {
+  protected enabledChanged(val: boolean) {
     this.enableScrollEvents(val);
   }
 
@@ -207,12 +207,12 @@ export class InfiniteScroll {
   @Prop() position: string = Position.Bottom;
 
   /**
-   * @output {event} Emitted when the scroll reaches
+   * @output {Event} Emitted when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.
    */
-  @Event() private ionInfinite: EventEmitter;
+  @Event() ionInfinite: EventEmitter;
 
   ionViewWillLoad() {
     const scrollEl = this.el.closest('ion-scroll') as StencilElement;

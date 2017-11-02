@@ -84,10 +84,10 @@
       }
 
       function toggleBoolean(id, prop) {
-        var ele = document.getElementById(id);
+        var el = document.getElementById(id);
 
-        var isTrue = ele[prop] ? false : true;
-        ele[prop] = isTrue;
+        var isTrue = el[prop] ? false : true;
+        el[prop] = isTrue;
         console.log('in toggleBoolean, setting', prop, 'to', isTrue);
       }
     </script>

@@ -1,5 +1,6 @@
 import { Component, Listen, Prop, PropDidChange, State } from '@stencil/core';
 
+import { TabEvent } from './tab';
 
 @Component({
   tag: 'ion-tabs',
@@ -41,9 +42,8 @@ export class Tabs {
    */
   @Prop() tabsHighlight: boolean = false;
 
-
   /**
-   * @output {any} Emitted when the tab changes.
+   * @output {Event} Emitted when the tab changes.
    */
   @Prop() ionChange: Function;
 
@@ -51,12 +51,12 @@ export class Tabs {
    * If selectedIndex was changed, grab the reference to the tab it points to.
    */
   @PropDidChange('selectedIndex')
-  handleSelectedIndexChanged() {
+  protected selectedIndexChanged() {
     this.selectedTab = this.tabs[this.selectedIndex];
   }
 
   @Listen('ionTabDidLoad')
-  tabDidLoad(ev: any) {
+  tabDidLoad(ev: TabEvent) {
     const tab = ev.detail.tab;
 
     // First tab? Select it

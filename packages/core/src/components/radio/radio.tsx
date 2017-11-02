@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
 
 import { createThemedClasses } from '../../utils/theme';
 
@@ -55,50 +55,48 @@ export class Radio {
   labelId: string;
   styleTmr: any;
 
-  @Element() el: HTMLElement;
-
   @State() radioId: string;
 
   @State() activated: boolean;
 
   /**
-   * @output {EventEmitter} Emitted when the radio loads.
+   * @output {RadioEvent} Emitted when the radio loads.
    */
   @Event() ionRadioDidLoad: EventEmitter;
 
   /**
-   * @output {EventEmitter} Emitted when the radio unloads.
+   * @output {RadioEvent} Emitted when the radio unloads.
    */
   @Event() ionRadioDidUnload: EventEmitter;
 
   /**
-   * @output {EventEmitter} Emitted when the radio is toggled.
+   * @output {RadioEvent} Emitted when the radio is toggled.
    */
   @Event() ionRadioDidToggle: EventEmitter;
 
   /**
-   * @output {EventEmitter} Emitted when the radio checked property is changed.
+   * @output {RadioEvent} Emitted when the radio checked property is changed.
    */
   @Event() ionRadioCheckedDidChange: EventEmitter;
 
   /**
-   * @output {EventEmitter} Emitted when the styles of the radio change.
+   * @output {Event} Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {EventEmitter} Emitted when the radio is selected.
+   * @output {Event} Emitted when the radio is selected.
    */
   @Event() ionSelect: EventEmitter;
 
-  /*
-   * @input {boolean} If true, the radio is checked. Default false.
+  /**
+   * @input {boolean} If true, the radio is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked: boolean = false;
 
   /*
-    * @input {boolean} If true, the user cannot interact with this element. Default false.
-    */
+   * @input {boolean} If true, the user cannot interact with the radio. Default false.
+   */
   @Prop({ mutable: true }) disabled: boolean = false;
 
   /**
@@ -114,20 +112,24 @@ export class Radio {
     this.ionRadioDidLoad.emit({ radio: this });
   }
 
+  protected ionViewDidUnload() {
+    this.ionRadioDidUnload.emit({ radio: this });
+  }
+
   @PropDidChange('color')
-  colorChanged() {
+  protected colorChanged() {
     this.emitStyle();
   }
 
   @PropDidChange('checked')
-  checkedChanged(val: boolean) {
+  protected checkedChanged(val: boolean) {
     this.ionRadioCheckedDidChange.emit({ radio: this });
     this.ionSelect.emit({ checked: val });
     this.emitStyle();
   }
 
   @PropDidChange('disabled')
-  disabledChanged() {
+  protected disabledChanged() {
     this.emitStyle();
   }
 

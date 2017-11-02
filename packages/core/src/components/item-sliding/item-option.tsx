@@ -31,8 +31,8 @@ export class ItemOption {
   }
 
   clickedOptionButton(ev: any): boolean {
-    let ele = ev.target.closest('ion-item-option');
-    return !!ele;
+    let el = ev.target.closest('ion-item-option');
+    return !!el;
   }
 
   protected render() {

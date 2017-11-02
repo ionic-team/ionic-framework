@@ -45,8 +45,9 @@ export class Tab {
   @Prop() tabBadgeStyle: string;
 
   /**
+   * TODO why isn't this disabled like other components?
    * @prop {boolean} If true, enable the tab. If false,
-   * the user cannot interact with this element.
+   * the user cannot interact with the tab.
    * Default: `true`.
    */
   @Prop() enabled: boolean = true;
@@ -67,6 +68,9 @@ export class Tab {
    */
   @Prop() onSelected: Function;
 
+  /**
+   * @output {TabEvent} Emitted after the tab has loaded.
+   */
   @Event() ionTabDidLoad: EventEmitter;
 
   hostData() {
@@ -94,5 +98,11 @@ export class Tab {
       <RootComponent />,
       <div class='nav-decor'></div>
     ];
+  }
+}
+
+export interface TabEvent extends Event {
+  detail: {
+    tab: Tab
   }
 }

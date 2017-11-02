@@ -155,7 +155,7 @@ export class ItemSliding {
 
 
   /**
-   * @output {event} Emitted when the sliding position changes.
+   * @output {Event} Emitted when the sliding position changes.
    * It reports the relative position.
    *
    * ```ts

@@ -32,7 +32,7 @@ export class Menu {
   contentEl: HTMLElement;
   menuCtrl: HTMLIonMenuControllerElement;
 
-  @Element() el: HTMLIonMenuElement;
+  @Element() private el: HTMLIonMenuElement;
 
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: StencilElement;
@@ -72,7 +72,7 @@ export class Menu {
    */
   @Prop({ mutable: true }) enabled: boolean;
   @PropDidChange('enabled')
-  enabledChanged() {
+  protected enabledChanged() {
     this.updateState();
   }
 
@@ -81,8 +81,14 @@ export class Menu {
    */
   @Prop() side: Side = 'start';
   @PropDidChange('side')
+<<<<<<< HEAD
   sideChanged() {
     this.isRightSide = isRightSide(this.side);
+=======
+  protected sideChanged() {
+    const isRTL = false;
+    this.isRightSide = isRightSide(this.side, isRTL);
+>>>>>>> style(components): rename variables and methods for consistency
   }
 
   /**
@@ -90,7 +96,7 @@ export class Menu {
    */
   @Prop() swipeEnabled: boolean = true;
   @PropDidChange('swipeEnabled')
-  swipeEnabledChange() {
+  protected swipeEnabledChanged() {
     this.updateState();
   }
 
@@ -105,8 +111,20 @@ export class Menu {
   @Prop() maxEdgeStart: number = 50;
 
 
+  /**
+   * @output {Event} Emitted when the sliding position changes.
+   * It reports the relative position.
+   */
   @Event() ionDrag: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the menu is open.
+   */
   @Event() ionOpen: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the menu is closed.
+   */
   @Event() ionClose: EventEmitter;
 
   protected ionViewWillLoad() {
@@ -173,6 +191,10 @@ export class Menu {
       ev.stopPropagation();
       this.close();
     }
+  }
+
+  getElement(): HTMLIonMenuElement {
+    return this.el;
   }
 
   @Method()

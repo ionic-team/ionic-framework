@@ -30,20 +30,72 @@ import { Swiper } from './vendor/swiper';
 })
 export class Slides {
   swiper: any;
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
+
+  /**
+   * @output {Event} Emitted before the active slide has changed.
+   */
   @Event() ionSlideWillChange: EventEmitter;
+
+  /**
+   * @output {Event} Emitted after the active slide has changed.
+   */
   @Event() ionSlideDidChange: EventEmitter;
-  @Event() ionSlideNextStarto: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the next slide has started.
+   */
+  @Event() ionSlideNextStart: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the previous slide has started.
+   */
   @Event() ionSlidePrevStart: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the next slide has ended.
+   */
   @Event() ionSlideNextEnd: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the previous slide has ended.
+   */
   @Event() ionSlidePrevEnd: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the slide transition has started.
+   */
   @Event() ionSlideTransitionStart: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the slide transition has ended.
+   */
   @Event() ionSlideTransitionEnd: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the slider is actively being moved.
+   */
   @Event() ionSlideDrag: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the slider is at its initial position.
+   */
   @Event() ionSlideReachStart: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the slider is at the last slide.
+   */
   @Event() ionSlideReachEnd: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the user first touches the slider.
+   */
   @Event() ionSlideTouchStart: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the user releases the touch.
+   */
   @Event() ionSlideTouchEnd: EventEmitter;
 
   /**
@@ -306,7 +358,7 @@ export class Slides {
         lastSlideMessage: 'This is the last slide',
         onSlideChangeStart: this.ionSlideWillChange.emit,
         onSlideChangeEnd: this.ionSlideDidChange.emit,
-        onSlideNextStart: this.ionSlideNextStarto.emit,
+        onSlideNextStart: this.ionSlideNextStart.emit,
         onSlidePrevStart: this.ionSlidePrevStart.emit,
         onSlideNextEnd: this.ionSlideNextEnd.emit,
         onSlidePrevEnd: this.ionSlidePrevEnd.emit,

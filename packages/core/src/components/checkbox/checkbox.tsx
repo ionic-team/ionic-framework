@@ -82,16 +82,23 @@ export class Checkbox {
   private labelId: string;
   private styleTmr: any;
 
+  /**
+   * @output {Event} Emitted when the checked property has changed.
+   */
   @Event() ionChange: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the styles change.
+   */
   @Event() ionStyle: EventEmitter;
 
-  /*
-   * @input {boolean} If true, the checkbox is checked. Default false.
+  /**
+   * @input {boolean} If true, the checkbox is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked: boolean = false;
 
   /*
-   * @input {boolean} If true, the user cannot interact with this element. Default false.
+   * @input {boolean} If true, the user cannot interact with the checkbox. Default false.
    */
   @Prop({ mutable: true }) disabled: boolean = false;
 
@@ -106,13 +113,13 @@ export class Checkbox {
   }
 
   @PropDidChange('checked')
-  checkedChanged(val: boolean) {
+  protected checkedChanged(val: boolean) {
     this.ionChange.emit({ checked: val });
     this.emitStyle();
   }
 
   @PropDidChange('disabled')
-  disabledChanged() {
+  protected disabledChanged() {
     this.emitStyle();
   }
 

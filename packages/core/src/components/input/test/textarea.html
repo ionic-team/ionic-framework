@@ -93,26 +93,26 @@
     </ion-page>
     <script>
       function toggleBoolean(id, prop) {
-        var ele = document.getElementById(id);
+        var el = document.getElementById(id);
 
-        var isTrue = ele[prop] ? false : true;
-        ele[prop] = isTrue;
+        var isTrue = el[prop] ? false : true;
+        el[prop] = isTrue;
         console.log('in toggleBoolean, setting', prop, 'to', isTrue);
       }
 
       function toggleString(id, prop) {
-        var ele = document.getElementById(id);
-        console.log('INPUT ELE', ele);
+        var el = document.getElementById(id);
+        console.log('INPUT ELE', el);
 
-        var newString = ele[prop] === 'dynamic' ? 'changed' : 'dynamic';
-        ele[prop] = newString;
+        var newString = el[prop] === 'dynamic' ? 'changed' : 'dynamic';
+        el[prop] = newString;
         console.log('in toggleString, setting', prop, 'to', newString);
       }
 
       function clearString(id, prop) {
-        var ele = document.getElementById(id);
+        var el = document.getElementById(id);
 
-        ele[prop] = '';
+        el[prop] = '';
         console.log('in toggleString, setting', prop, 'to', '');
       }
     </script>

@@ -162,7 +162,7 @@ export class ReorderGroup {
   @State() _iconVisible: boolean = false;
   @State() _actived: boolean = false;
 
-  @Element() ele: HTMLElement;
+  @Element() private el: HTMLElement;
 
   @Prop() enabled: boolean = false;
 
@@ -170,7 +170,7 @@ export class ReorderGroup {
    * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
    */
   @PropDidChange('enabled')
-  enabledChanged(enabled: boolean) {
+  protected enabledChanged(enabled: boolean) {
     if (enabled) {
       this._enabled = true;
       Context.dom.raf(() => {
@@ -183,8 +183,8 @@ export class ReorderGroup {
   }
 
   protected ionViewDidLoad() {
-    this.containerEl = this.ele.querySelector('ion-gesture') as HTMLElement;
-    this.scrollEl = this.ele.closest('ion-scroll') as HTMLElement;
+    this.containerEl = this.el.querySelector('ion-gesture') as HTMLElement;
+    this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
   }
 
   protected ionViewDidUnload() {
@@ -218,8 +218,8 @@ export class ReorderGroup {
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
-    const ele = this.containerEl;
-    const children: any = ele.children;
+    const el = this.containerEl;
+    const children: any = el.children;
     if (!children || children.length === 0) {
       return;
     }

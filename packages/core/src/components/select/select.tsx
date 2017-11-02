@@ -41,12 +41,12 @@ export class Select {
   @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   @State() text: string;
 
   /**
-   * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
+   * @input {boolean} If true, the user cannot interact with the select. Defaults to `false`.
    */
   @Prop() disabled: boolean = false;
 
@@ -85,7 +85,7 @@ export class Select {
   @Prop() selectedText: string;
 
   /**
-   * @input {boolean} If true, the element can accept multiple values.
+   * @input {boolean} If true, the select can accept multiple values.
    */
   @Prop() multiple: boolean;
 
@@ -95,12 +95,12 @@ export class Select {
   @Prop({ mutable: true }) value: string | string[];
 
   @PropDidChange('value')
-  valueChanged() {
+  protected valueChanged() {
     this.optionUpdated();
   }
 
   /**
-   * @output {EventEmitter} Emitted when the selection is cancelled.
+   * @output {Event} Emitted when the selection is cancelled.
    */
   @Event() ionCancel: EventEmitter;
 

@@ -271,7 +271,7 @@ export class Datetime {
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl: PickerController;
 
   /**
-   * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
+   * @input {boolean} If true, the user cannot interact with the datetime. Defaults to `false`.
    */
   @Prop() disabled: boolean = false;
 
@@ -419,12 +419,12 @@ export class Datetime {
    * Update the datetime value when the value changes
    */
   @PropDidChange('value')
-  valueChanged() {
+  protected valueChanged() {
     this.updateValue();
   }
 
   /**
-   * @output {any} Emitted when the datetime selection was cancelled.
+   * @output {Event} Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel: EventEmitter;
 

@@ -35,7 +35,7 @@ export class FabList {
   @Prop() activated: boolean = false;
 
   @PropDidChange('activated')
-  activatedChange(activated: boolean) {
+  protected activatedChanged(activated: boolean) {
     const fabs = this.el.querySelectorAll('ion-fab-button');
 
     // if showing the fabs add a timeout, else show immediately

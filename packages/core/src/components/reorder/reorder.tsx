@@ -6,10 +6,10 @@ import { Component, Element, State } from '@stencil/core';
 export class ItemReorder {
 
   @State() hasContent: boolean = null;
-  @Element() ele: HTMLElement;
+  @Element() private el: HTMLElement;
 
   protected ionViewDidLoad() {
-    this.hasContent = this.ele.childElementCount > 0;
+    this.hasContent = this.el.childElementCount > 0;
   }
 
   protected render() {

@@ -36,9 +36,9 @@ export default function iOSEnterAnimation(Animation: Animation, baseElm: HTMLEle
 
 
 // export class ModalSlideOut {
-//   constructor(ele: HTMLElement) {
-//     let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-//     let wrapperEle = <HTMLElement>ele.querySelector('.modal-wrapper');
+//   constructor(el: HTMLElement) {
+//     let backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
+//     let wrapperEle = <HTMLElement>el.querySelector('.modal-wrapper');
 //     let wrapperEleRect = wrapperEle.getBoundingClientRect();
 //     let wrapper = new Animation(this.plt, wrapperEle);
 
@@ -58,9 +58,9 @@ export default function iOSEnterAnimation(Animation: Animation, baseElm: HTMLEle
 
 
 // export class ModalMDSlideIn {
-//   constructor(ele: HTMLElement) {
-//     const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
+//   constructor(el: HTMLElement) {
+//     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
+//     const wrapper = new Animation(this.plt, el.querySelector('.modal-wrapper'));
 
 //     backdrop.fromTo('opacity', 0.01, 0.4);
 //     wrapper.fromTo('translateY', '40px', '0px');
@@ -76,9 +76,9 @@ export default function iOSEnterAnimation(Animation: Animation, baseElm: HTMLEle
 
 
 // export class ModalMDSlideOut {
-//   constructor(ele: HTMLElement) {
-//     const backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
-//     const wrapper = new Animation(this.plt, ele.querySelector('.modal-wrapper'));
+//   constructor(el: HTMLElement) {
+//     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
+//     const wrapper = new Animation(this.plt, el.querySelector('.modal-wrapper'));
 
 //     backdrop.fromTo('opacity', 0.4, 0.0);
 //     wrapper.fromTo('translateY', '0px', '40px');

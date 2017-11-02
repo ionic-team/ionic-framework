@@ -20,12 +20,35 @@ export class Toast {
 
   @Element() private el: HTMLElement;
 
-  @Event() private ionToastDidLoad: EventEmitter;
-  @Event() private ionToastDidPresent: EventEmitter;
-  @Event() private ionToastWillPresent: EventEmitter;
-  @Event() private ionToastWillDismiss: EventEmitter;
-  @Event() private ionToastDidDismiss: EventEmitter;
-  @Event() private ionToastDidUnload: EventEmitter;
+  /**
+   * @output {ToastEvent} Emitted after the toast has loaded.
+   */
+  @Event() ionToastDidLoad: EventEmitter;
+
+  /**
+   * @output {ToastEvent} Emitted after the toast has presented.
+   */
+  @Event() ionToastDidPresent: EventEmitter;
+
+  /**
+   * @output {ToastEvent} Emitted before the toast has presented.
+   */
+  @Event() ionToastWillPresent: EventEmitter;
+
+  /**
+   * @output {ToastEvent} Emitted before the toast has dismissed.
+   */
+  @Event() ionToastWillDismiss: EventEmitter;
+
+  /**
+   * @output {ToastEvent} Emitted after the toast has dismissed.
+   */
+  @Event() ionToastDidDismiss: EventEmitter;
+
+  /**
+   * @output {ToastEvent} Emitted after the toast has unloaded.
+   */
+  @Event() ionToastDidUnload: EventEmitter;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -52,7 +75,7 @@ export class Toast {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionToastWillPresent.emit({ actionSheet: this });
+    this.ionToastWillPresent.emit({ toast: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;

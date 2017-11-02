@@ -49,24 +49,27 @@ export class SegmentButton {
   mode: string;
   color: string;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
+  /**
+   * @output {SegmentButtonEvent} Emitted when the segment button is clicked.
+   */
   @Event() ionClick: EventEmitter;
 
   @State() activated: boolean = false;
 
-  /*
-   * @input {boolean} If true, the button is selected. Default false.
+  /**
+   * @input {boolean} If true, the segment button is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked: boolean = false;
 
   /*
-   * @input {boolean} If true, the user cannot interact with this element. Default false.
+   * @input {boolean} If true, the user cannot interact with the segment button. Default false.
    */
   @Prop({ mutable: true }) disabled: boolean = false;
 
   /**
-   * @input {string} the value of the segment button. Required.
+   * @input {string} the value of the segment button.
    */
   @Prop({ mutable: true }) value: string;
 
@@ -85,10 +88,7 @@ export class SegmentButton {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      const ev: SegmentButtonEvent = {
-        'segmentButton': this
-      };
-      this.ionClick.emit(ev);
+      this.ionClick.emit({ segmentButton: this });
     });
   }
 
@@ -133,6 +133,8 @@ export class SegmentButton {
 }
 
 
-export interface SegmentButtonEvent {
-  segmentButton: SegmentButton;
+export interface SegmentButtonEvent extends Event {
+  detail: {
+    segmentButton: SegmentButton;
+  }
 }

@@ -102,7 +102,7 @@ import { Config } from '../../index';
   }
 })
 export class Toolbar {
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
   @Prop({ context: 'config' }) config: Config;
   mode: string;
   color: string;

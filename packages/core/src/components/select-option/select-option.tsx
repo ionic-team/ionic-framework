@@ -8,12 +8,15 @@ import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/
   }
 })
 export class SelectOption {
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
+  /**
+   * @output {SelectOptionEvent} Emitted when the select option is selected.
+   */
   @Event() ionSelect: EventEmitter;
 
   /**
-   * @input {boolean} If true, the user cannot interact with this element.
+   * @input {boolean} If true, the user cannot interact with the select option.
    */
   @Prop() disabled: boolean = false;
 

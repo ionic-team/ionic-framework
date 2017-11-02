@@ -65,20 +65,20 @@ export class Textarea implements TextareaComponent {
   didBlurAfterEdit: boolean;
   styleTmr: number;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   /**
-   * @output {event} Emitted when the styles change.
+   * @output {Event} Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {event} Emitted when the input no longer has focus.
+   * @output {Event} Emitted when the input loses focus.
    */
   @Event() ionBlur: EventEmitter;
 
   /**
-   * @output {event} Emitted when the input has focus.
+   * @output {Event} Emitted when the input has focus.
    */
   @Event() ionFocus: EventEmitter;
 
@@ -103,7 +103,7 @@ export class Textarea implements TextareaComponent {
   @Prop({ mutable: true }) clearOnEdit: boolean;
 
   /**
-   * @input {boolean} If true, the user cannot interact with this element. Defaults to `false`.
+   * @input {boolean} If true, the user cannot interact with the textarea. Defaults to `false`.
    */
   @Prop() disabled: boolean = false;
 
@@ -111,7 +111,7 @@ export class Textarea implements TextareaComponent {
    * @hidden
    */
   @PropDidChange('disabled')
-  disabledChanged() {
+  protected disabledChanged() {
     this.emitStyle();
   }
 
@@ -166,7 +166,7 @@ export class Textarea implements TextareaComponent {
   @Prop() wrap: string;
 
   /**
-   * @input {string} The text value of the input.
+   * @input {string} The value of the textare.
    */
   @Prop({ mutable: true }) value: string;
 
@@ -175,7 +175,7 @@ export class Textarea implements TextareaComponent {
    * Update the native input element when the value changes
    */
   @PropDidChange('value')
-  valueChanged() {
+  protected valueChanged() {
     const inputEl = this.el.querySelector('textarea');
     if (inputEl.value !== this.value) {
       inputEl.value = this.value;

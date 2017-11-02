@@ -20,10 +20,16 @@ export class SelectPopover {
   mode: string;
   color: string;
 
+  /**
+   * @output {Event} Emitted when the select popover is dismissed.
+   */
   @Event() ionDismiss: EventEmitter;
 
   @Prop() options: SelectPopoverOption[];
 
+  /**
+   * @input {string} the value of the select popover.
+   */
   @Prop({ mutable: true }) value: string;
 
   @Listen('ionChange')
@@ -42,7 +48,7 @@ export class SelectPopover {
   }
 
   @PropDidChange('value')
-  valueChanged(value: string) {
+  protected valueChanged(value: string) {
     let checkedOption = this.options.find(option => option.value === value);
     if (checkedOption && checkedOption.handler) {
       checkedOption.handler();

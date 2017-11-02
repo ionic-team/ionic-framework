@@ -20,11 +20,34 @@ import iOSLeaveAnimation from './animations/ios.leave';
 export class Modal {
   @Element() private el: HTMLElement;
 
+  /**
+   * @output {ModalEvent} Emitted after the modal has loaded.
+   */
   @Event() ionModalDidLoad: EventEmitter;
-  @Event() ionModalWillPresent: EventEmitter;
+
+  /**
+   * @output {ModalEvent} Emitted after the modal has presented.
+   */
   @Event() ionModalDidPresent: EventEmitter;
+
+  /**
+   * @output {ModalEvent} Emitted before the modal has presented.
+   */
+  @Event() ionModalWillPresent: EventEmitter;
+
+  /**
+   * @output {ModalEvent} Emitted before the modal has dismissed.
+   */
   @Event() ionModalWillDismiss: EventEmitter;
+
+  /**
+   * @output {ModalEvent} Emitted after the modal has dismissed.
+   */
   @Event() ionModalDidDismiss: EventEmitter;
+
+  /**
+   * @output {ModalEvent} Emitted after the modal has unloaded.
+   */
   @Event() ionModalDidUnload: EventEmitter;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;

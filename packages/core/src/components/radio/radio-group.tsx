@@ -64,14 +64,14 @@ export class RadioGroup {
   radioGroupId: number;
   ids = 0;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   @State() activeId: string;
   @State() headerId: string;
 
 
   /**
-   * @output {any} Emitted when the selected button has changed.
+   * @output {Event} Emitted when the value has changed.
    */
   @Event() ionChange: EventEmitter;
 
@@ -81,17 +81,17 @@ export class RadioGroup {
   @Prop() allowEmptySelection: boolean = false;
 
   /*
-   * @input {boolean} If true, the user cannot interact with this element. Default false.
+   * @input {boolean} If true, the user cannot interact with the radio group. Default false.
    */
   @Prop({ mutable: true }) disabled: boolean = false;
 
   /**
-   * @input {string} the value of the radio.
+   * @input {string} the value of the radio group.
    */
   @Prop({ mutable: true }) value: string;
 
   @PropDidChange('value')
-  valueChanged() {
+  protected valueChanged() {
     this.update();
     this.ionChange.emit(this);
   }

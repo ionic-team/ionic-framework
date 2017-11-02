@@ -34,8 +34,19 @@ export class Scroll {
   @Prop() onionScroll: ScrollCallback;
   @Prop() onionScrollEnd: ScrollCallback;
 
+  /**
+   * @output {ScrollEvent} Emitted when the scroll has started.
+   */
   @Event() ionScrollStart: EventEmitter;
+
+  /**
+   * @output {ScrollEvent} Emitted while scrolling.
+   */
   @Event() ionScroll: EventEmitter;
+
+  /**
+   * @output {ScrollEvent} Emitted when the scroll has ended.
+   */
   @Event() ionScrollEnd: EventEmitter;
 
   protected ionViewDidLoad() {

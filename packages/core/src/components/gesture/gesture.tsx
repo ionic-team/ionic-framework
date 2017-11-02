@@ -43,11 +43,30 @@ export class Gesture {
   @Prop() onPress: GestureCallback;
   @Prop() notCaptured: GestureCallback;
 
-  @Event() private ionGestureMove: EventEmitter;
-  @Event() private ionGestureStart: EventEmitter;
-  @Event() private ionGestureEnd: EventEmitter;
-  @Event() private ionGestureNotCaptured: EventEmitter;
-  @Event() private ionPress: EventEmitter;
+  /**
+   * @output {Event} Emitted when the gesture moves.
+   */
+  @Event() ionGestureMove: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the gesture starts.
+   */
+  @Event() ionGestureStart: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the gesture ends.
+   */
+  @Event() ionGestureEnd: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the gesture is not captured.
+   */
+  @Event() ionGestureNotCaptured: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when press is detected.
+   */
+  @Event() ionPress: EventEmitter;
 
 
   protected ionViewDidLoad() {
@@ -63,7 +82,7 @@ export class Gesture {
     }
     this.hasPress = (types.indexOf('press') > -1);
 
-    this.enabledChange(this.enabled);
+    this.enabledChanged(this.enabled);
     if (this.pan || this.hasPress) {
       Context.dom.write(() => {
         applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
@@ -77,7 +96,7 @@ export class Gesture {
   }
 
   @PropDidChange('enabled')
-  enabledChange(isEnabled: boolean) {
+  protected enabledChanged(isEnabled: boolean) {
     if (this.pan || this.hasPress) {
       Context.enableListener(this, 'touchstart', isEnabled, this.attachTo);
       Context.enableListener(this, 'mousedown', isEnabled, this.attachTo);
@@ -88,7 +107,7 @@ export class Gesture {
   }
 
   @PropDidChange('block')
-  blockChange(block: string) {
+  protected blockChanged(block: string) {
     if (this.blocker) {
       this.blocker.destroy();
     }

@@ -23,12 +23,35 @@ export class Loading {
 
   @Element() private el: HTMLElement;
 
-  @Event() private ionLoadingDidLoad: EventEmitter;
-  @Event() private ionLoadingDidPresent: EventEmitter;
-  @Event() private ionLoadingWillPresent: EventEmitter;
-  @Event() private ionLoadingWillDismiss: EventEmitter;
-  @Event() private ionLoadingDidDismiss: EventEmitter;
-  @Event() private ionLoadingDidUnload: EventEmitter;
+  /**
+   * @output {LoadingEvent} Emitted after the loading has loaded.
+   */
+  @Event() ionLoadingDidLoad: EventEmitter;
+
+  /**
+   * @output {LoadingEvent} Emitted after the loading has presented.
+   */
+  @Event() ionLoadingDidPresent: EventEmitter;
+
+  /**
+   * @output {LoadingEvent} Emitted before the loading has presented.
+   */
+  @Event() ionLoadingWillPresent: EventEmitter;
+
+  /**
+   * @output {LoadingEvent} Emitted before the loading has dismissed.
+   */
+  @Event() ionLoadingWillDismiss: EventEmitter;
+
+  /**
+   * @output {LoadingEvent} Emitted after the loading has dismissed.
+   */
+  @Event() ionLoadingDidDismiss: EventEmitter;
+
+  /**
+   * @output {LoadingEvent} Emitted after the loading has unloaded.
+   */
+  @Event() ionLoadingDidUnload: EventEmitter;
 
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;

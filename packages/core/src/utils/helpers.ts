@@ -241,11 +241,11 @@ export function focusOutActiveElement() {
   activeElement && activeElement.blur && activeElement.blur();
 }
 
-export function isTextInput(ele: any) {
-  return !!ele &&
-      (ele.tagName === 'TEXTAREA'
-      || ele.contentEditable === 'true'
-      || (ele.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(ele.type))));
+export function isTextInput(el: any) {
+  return !!el &&
+      (el.tagName === 'TEXTAREA'
+      || el.contentEditable === 'true'
+      || (el.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(el.type))));
 }
 export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
 

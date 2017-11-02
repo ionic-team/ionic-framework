@@ -97,9 +97,9 @@
 
       function insertLog(message) {
         console.log(message);
-        var ele = document.querySelector('#log');
-        const oldHTML = ele.innerHTML;
-        ele.innerHTML = oldHTML + '\n' + message;
+        var el = document.querySelector('#log');
+        const oldHTML = el.innerHTML;
+        el.innerHTML = oldHTML + '\n' + message;
       }
 
       function add() {

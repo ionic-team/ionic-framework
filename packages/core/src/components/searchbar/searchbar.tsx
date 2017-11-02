@@ -36,7 +36,7 @@ export class Searchbar {
   private _shouldBlur: boolean = true;
   private _shouldAlignLeft: boolean = true;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   @Prop() mode: string;
 
@@ -48,27 +48,27 @@ export class Searchbar {
 
 
   /**
-   * @output {event} Emitted when the Searchbar input has changed, including when it's cleared.
+   * @output {Event} Emitted when the Searchbar input has changed, including when it's cleared.
    */
   @Event() ionInput: EventEmitter;
 
   /**
-   * @output {event} Emitted when the cancel button is clicked.
+   * @output {Event} Emitted when the cancel button is clicked.
    */
   @Event() ionCancel: EventEmitter;
 
   /**
-   * @output {event} Emitted when the clear input button is clicked.
+   * @output {Event} Emitted when the clear input button is clicked.
    */
   @Event() ionClear: EventEmitter;
 
   /**
-   * @output {event}
+   * @output {Event} Emitted when the input loses focus.
    */
   @Event() ionBlur: EventEmitter;
 
   /**
-   * @output {event}
+   * @output {Event} Emitted when the input has focus.
    */
   @Event() ionFocus: EventEmitter;
 
@@ -134,7 +134,7 @@ export class Searchbar {
   @Prop({ mutable: true }) type: string = 'search';
 
   /**
-   * @input {string} Set the value of the searchbar.
+   * @input {string} the value of the searchbar.
    */
   @Prop({ mutable: true }) value: string;
 

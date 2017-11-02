@@ -74,16 +74,25 @@ export class Segment {
   // TODO typing
   buttons: any;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
+  /**
+   * @output {Event} Emitted when the value property has changed.
+   */
   @Event() ionChange: EventEmitter;
 
+  /*
+   * @input {boolean} If true, the user cannot interact with the segment. Default false.
+   */
   @Prop({ mutable: true }) disabled: boolean = false;
 
+  /**
+   * @input {string} the value of the segment.
+   */
   @Prop({ mutable: true }) value: string;
 
   @PropDidChange('value')
-  changed(val: string) {
+  protected valueChanged(val: string) {
     this.selectButton(val);
   }
 
@@ -105,15 +114,13 @@ export class Segment {
 
   @Listen('ionClick')
   segmentClick(ev: CustomEvent) {
-    let selectedButton = (ev.detail as SegmentButtonEvent).segmentButton;
+    let selectedButton = ev.detail.segmentButton;
 
     this.value = selectedButton.value;
     this.selectButton(this.value);
 
-    const event: SegmentEvent = {
-      'segment': this
-    };
-    this.ionChange.emit(event);
+    // TODO should this move to valueChanged
+    this.ionChange.emit({ segment: this });
   }
 
   selectButton(val: string) {
@@ -139,6 +146,8 @@ export class Segment {
   }
 }
 
-export interface SegmentEvent {
-  segment: Segment;
+export interface SegmentEvent extends Event {
+  detail: {
+    segment: Segment;
+  }
 }

@@ -2205,15 +2205,15 @@ declare global {
         
           ratio?: any,
           ratioUpper?: any,
-          value?: any,
+          debounce?: number,
           disabled?: boolean,
-          min?: number,
-          max?: number,
-          steps?: number,
           dualKnobs?: boolean,
+          max?: number,
+          min?: number,
           pin?: boolean,
           snaps?: boolean,
-          debounce?: number
+          steps?: number,
+          value?: any
       }
   }
 }

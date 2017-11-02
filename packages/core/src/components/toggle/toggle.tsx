@@ -24,21 +24,62 @@ export class Toggle implements BooleanInputComponent {
 
   hasFocus: boolean = false;
 
+<<<<<<< HEAD
   @State() activated: boolean = false;
+=======
+  /**
+   * @output {Event} Emitted when the value property has changed.
+   */
+  @Event() ionChange: EventEmitter;
 
-  @Prop() color: string;
-  @Prop() mode: string;
+  /**
+   * @output {Event} Emitted when the styles change.
+   */
+  @Event() ionStyle: EventEmitter;
 
+  /**
+   * @output {Event} Emitted when the toggle has focus.
+   */
+  @Event() ionFocus: EventEmitter;
+>>>>>>> style(components): rename variables and methods for consistency
+
+  /**
+   * @output {Event} Emitted when the toggle loses focus.
+   */
+  @Event() ionBlur: EventEmitter;
+
+  /**
+   * @input {boolean} If true, the toggle is selected. Defaults to `false`.
+   */
   @Prop({ mutable: true }) checked: boolean = false;
+<<<<<<< HEAD
+=======
+
+  /*
+   * @input {boolean} If true, the user cannot interact with the toggle. Default false.
+   */
+  @Prop({ mutable: true }) disabled: boolean = false;
+
+  /**
+   * @input {string} the value of the toggle.
+   */
+  @Prop({ mutable: true }) value: string;
+
+
+  protected ionViewWillLoad() {
+    this.emitStyle();
+  }
+
+>>>>>>> style(components): rename variables and methods for consistency
   @PropDidChange('checked')
-  checkedChanged(val: boolean) {
+  protected checkedChanged(val: boolean) {
     this.ionChange.emit({ checked: val });
     this.emitStyle();
   }
 
   @Prop({ mutable: true }) disabled: boolean = false;
   @PropDidChange('disabled')
-  disabledChanged() {
+  protected disabledChanged() {
     this.emitStyle();
   }
 

@@ -149,8 +149,8 @@
 
         for (var i = 0; i < radioValues.length; i++) {
           var radio = radioValues[i];
-          var ele = document.getElementById(radio);
-          html += '<span>' + radio + ': ' + ele.value + ' </span><br>';
+          var el = document.getElementById(radio);
+          html += '<span>' + radio + ': ' + el.value + ' </span><br>';
         }
 
         var valueEle = document.getElementById('valuesCode');
@@ -158,18 +158,18 @@
       }
 
       function toggleBoolean(id, prop) {
-        var ele = document.getElementById(id);
+        var el = document.getElementById(id);
 
-        var isTrue = ele[prop] ? false : true;
-        ele[prop] = isTrue;
+        var isTrue = el[prop] ? false : true;
+        el[prop] = isTrue;
         console.debug('in toggleBoolean, setting', prop, 'to', isTrue);
       }
 
       function toggleString(id, prop, firstVal, secondVal) {
-        var ele = document.getElementById(id);
+        var el = document.getElementById(id);
 
-        var stringVal = ele[prop] == firstVal ? secondVal : firstVal;
-        ele[prop] = stringVal;
+        var stringVal = el[prop] == firstVal ? secondVal : firstVal;
+        el[prop] = stringVal;
         console.debug('in toggleString, setting', prop, 'to', stringVal);
       }
     </script>

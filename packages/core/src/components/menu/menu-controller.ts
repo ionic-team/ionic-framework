@@ -156,7 +156,7 @@ export class MenuController {
       // so first try to get the enabled one
       menu = this.menus.find(m => m.side === menuId && m.enabled);
       if (menu) {
-        return menu.el;
+        return menu.getElement();
       }
 
       // didn't find a menu side that is enabled
@@ -172,11 +172,11 @@ export class MenuController {
     // return the first enabled menu
     menu = this.menus.find(m => m.enabled);
     if (menu) {
-      return menu.el;
+      return menu.getElement();
     }
 
     // get the first menu in the array, if one exists
-    return (this.menus.length > 0 ? this.menus[0].el : null);
+    return (this.menus.length > 0 ? this.menus[0].getElement() : null);
   }
 
   /**
@@ -192,7 +192,7 @@ export class MenuController {
    */
   @Method()
   getMenus(): HTMLIonMenuElement[] {
-    return this.menus.map(menu => menu.el);
+    return this.menus.map(menu => menu.getElement());
   }
 
   /**
@@ -255,7 +255,7 @@ export class MenuController {
   private find(predicate: (menu: Menu) => boolean): HTMLIonMenuElement {
     const instance = this.menus.find(predicate);
     if (instance) {
-      return instance.el;
+      return instance.getElement();
     }
     return null;
   }

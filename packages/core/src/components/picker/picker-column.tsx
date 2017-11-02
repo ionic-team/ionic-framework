@@ -29,7 +29,7 @@ export class PickerColumnCmp {
 
   private activeBlock: string;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   @Prop() col: PickerColumn;
 

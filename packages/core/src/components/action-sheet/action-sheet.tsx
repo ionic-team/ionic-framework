@@ -20,12 +20,35 @@ export class ActionSheet {
 
   @Element() private el: HTMLElement;
 
-  @Event() private ionActionSheetDidLoad: EventEmitter;
-  @Event() private ionActionSheetDidPresent: EventEmitter;
-  @Event() private ionActionSheetWillPresent: EventEmitter;
-  @Event() private ionActionSheetWillDismiss: EventEmitter;
-  @Event() private ionActionSheetDidDismiss: EventEmitter;
-  @Event() private ionActionSheetDidUnload: EventEmitter;
+  /**
+   * @output {ActionSheetEvent} Emitted after the alert has loaded.
+   */
+  @Event() ionActionSheetDidLoad: EventEmitter;
+
+  /**
+   * @output {ActionSheetEvent} Emitted after the alert has presented.
+   */
+  @Event() ionActionSheetDidPresent: EventEmitter;
+
+  /**
+   * @output {ActionSheetEvent} Emitted before the alert has presented.
+   */
+  @Event() ionActionSheetWillPresent: EventEmitter;
+
+  /**
+   * @output {ActionSheetEvent} Emitted before the alert has dismissed.
+   */
+  @Event() ionActionSheetWillDismiss: EventEmitter;
+
+  /**
+   * @output {ActionSheetEvent} Emitted after the alert has dismissed.
+   */
+  @Event() ionActionSheetDidDismiss: EventEmitter;
+
+  /**
+   * @output {ActionSheetEvent} Emitted after the alert has unloaded.
+   */
+  @Event() ionActionSheetDidUnload: EventEmitter;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -126,7 +149,7 @@ export class ActionSheet {
   }
 
   protected ionViewDidEnter() {
-    this.ionActionSheetDidPresent.emit({ loading: this });
+    this.ionActionSheetDidPresent.emit({ actionSheet: this });
   }
 
   protected backdropClick() {
@@ -247,7 +270,7 @@ export interface ActionSheetButton {
   handler?: () => boolean | void;
 }
 
-export interface ActionSheetEvent {
+export interface ActionSheetEvent extends Event {
   detail: {
     actionSheet: ActionSheet;
   };

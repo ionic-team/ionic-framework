@@ -24,12 +24,35 @@ export class Popover {
 
   @Element() private el: HTMLElement;
 
-  @Event() private ionPopoverDidLoad: EventEmitter;
-  @Event() private ionPopoverDidPresent: EventEmitter;
-  @Event() private ionPopoverWillPresent: EventEmitter;
-  @Event() private ionPopoverWillDismiss: EventEmitter;
-  @Event() private ionPopoverDidDismiss: EventEmitter;
-  @Event() private ionPopoverDidUnload: EventEmitter;
+  /**
+   * @output {PopoverEvent} Emitted after the popover has loaded.
+   */
+  @Event() ionPopoverDidLoad: EventEmitter;
+
+  /**
+   * @output {PopoverEvent} Emitted after the popover has presented.
+   */
+  @Event() ionPopoverDidPresent: EventEmitter;
+
+  /**
+   * @output {PopoverEvent} Emitted before the popover has presented.
+   */
+  @Event() ionPopoverWillPresent: EventEmitter;
+
+  /**
+   * @output {PopoverEvent} Emitted before the popover has dismissed.
+   */
+  @Event() ionPopoverWillDismiss: EventEmitter;
+
+  /**
+   * @output {PopoverEvent} Emitted after the popover has dismissed.
+   */
+  @Event() ionPopoverDidDismiss: EventEmitter;
+
+  /**
+   * @output {PopoverEvent} Emitted after the popover has unloaded.
+   */
+  @Event() ionPopoverDidUnload: EventEmitter;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;

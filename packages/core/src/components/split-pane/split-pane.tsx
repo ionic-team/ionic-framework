@@ -141,7 +141,8 @@ const QUERY: { [key: string]: string }  = {
 export class SplitPane {
 
   private rmL: any;
-  @Element() private ele: HTMLElement;
+
+  @Element() private el: HTMLElement;
   @State() private visible: boolean = false;
 
   /**
@@ -158,14 +159,18 @@ export class SplitPane {
   @Prop() when: string | boolean = QUERY['md'];
 
   /**
-   * @output {any} Expression to be called when the split-pane visibility has changed
+   * @output {Event} Expression to be called when the split-pane visibility has changed
    */
   @Event() ionSplitPaneDidChange: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the split pane is visible.
+   */
   @Event() ionChange: EventEmitter;
 
   protected ionViewDidLoad() {
     this._styleChildren();
-    this._updateQuery();
+    this.whenChanged();
   }
 
   protected ionViewDidUnload() {
@@ -174,8 +179,8 @@ export class SplitPane {
   }
 
   private _styleChildren() {
-    const children = this.ele.children;
-    const nu = this.ele.childElementCount;
+    const children = this.el.children;
+    const nu = this.el.childElementCount;
     let foundMain = false;
     for (var i = 0; i < nu; i++) {
       var child = children[i] as HTMLElement;
@@ -195,7 +200,7 @@ export class SplitPane {
   }
 
   @PropDidChange('when')
-  _updateQuery() {
+  protected whenChanged() {
     this.rmL && this.rmL();
     this.rmL = null;
 
@@ -253,7 +258,7 @@ export class SplitPane {
     if (!this.visible) {
       return false;
     }
-    return element.parentElement === this.ele
+    return element.parentElement === this.el
       && element.classList.contains(SPLIT_PANE_SIDE);
   }
 
@@ -277,7 +282,7 @@ export interface SplitPaneAlert {
   };
 }
 
-function setPaneClass(ele: HTMLElement, isMain: boolean) {
+function setPaneClass(el: HTMLElement, isMain: boolean) {
   let toAdd;
   let toRemove;
   if (isMain) {
@@ -287,7 +292,7 @@ function setPaneClass(ele: HTMLElement, isMain: boolean) {
     toAdd = SPLIT_PANE_SIDE;
     toRemove = SPLIT_PANE_MAIN;
   }
-  const classList = ele.classList;
+  const classList = el.classList;
   classList.add(toAdd);
   classList.remove(toRemove);
 }

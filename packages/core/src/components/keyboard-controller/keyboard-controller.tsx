@@ -18,9 +18,25 @@ export class IonKeyboardController {
 
   @Prop({context: 'config'}) config: Config;
   @Prop({context: 'dom'}) domController: any;
+
+  /**
+   * @output {Event} Emitted before the keyboard has shown.
+   */
   @Event() keyboardWillShow: EventEmitter;
+
+  /**
+   * @output {Event} Emitted after the keyboard has shown.
+   */
   @Event() keyboardDidShow: EventEmitter;
+
+  /**
+   * @output {Event} Emitted before the keyboard has hidden.
+   */
   @Event() keyboardWillHide: EventEmitter;
+
+  /**
+   * @output {Event} Emitted after the keyboard has hidden.
+   */
   @Event() keyboardDidHide: EventEmitter;
 
   componentDidLoad() {

@@ -36,7 +36,7 @@ export class ItemOptions {
   @Prop() side: Side = 'right';
 
   /**
-   * @output {event} Emitted when the item has been fully swiped.
+   * @output {Event} Emitted when the item has been fully swiped.
    */
   @Event() ionSwipe: EventEmitter;
 

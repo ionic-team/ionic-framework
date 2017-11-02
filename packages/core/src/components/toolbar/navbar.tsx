@@ -46,7 +46,7 @@ import { Config } from '../../index';
   }
 })
 export class Navbar {
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
   mode: string;
   color: string;
 

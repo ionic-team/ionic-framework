@@ -24,12 +24,35 @@ export class Picker {
 
   @Element() private el: HTMLElement;
 
-  @Event() private ionPickerDidLoad: EventEmitter;
-  @Event() private ionPickerDidPresent: EventEmitter;
-  @Event() private ionPickerWillPresent: EventEmitter;
-  @Event() private ionPickerWillDismiss: EventEmitter;
-  @Event() private ionPickerDidDismiss: EventEmitter;
-  @Event() private ionPickerDidUnload: EventEmitter;
+  /**
+   * @output {PickerEvent} Emitted after the picker has loaded.
+   */
+  @Event() ionPickerDidLoad: EventEmitter;
+
+  /**
+   * @output {PickerEvent} Emitted after the picker has presented.
+   */
+  @Event() ionPickerDidPresent: EventEmitter;
+
+  /**
+   * @output {PickerEvent} Emitted before the picker has presented.
+   */
+  @Event() ionPickerWillPresent: EventEmitter;
+
+  /**
+   * @output {PickerEvent} Emitted before the picker has dismissed.
+   */
+  @Event() ionPickerWillDismiss: EventEmitter;
+
+  /**
+   * @output {PickerEvent} Emitted after the picker has dismissed.
+   */
+  @Event() ionPickerDidDismiss: EventEmitter;
+
+  /**
+   * @output {PickerEvent} Emitted after the picker has unloaded.
+   */
+  @Event() ionPickerDidUnload: EventEmitter;
 
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;

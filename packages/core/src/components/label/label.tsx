@@ -15,25 +15,25 @@ import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/
 export class Label {
   styleTmr: any;
 
-  @Element() el: HTMLElement;
+  @Element() private el: HTMLElement;
 
   /**
-   * @output {event} Emitted when the styles change.
+   * @output {Event} Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {event} If true, the label will sit alongside an input. Defaults to `false`.
+   * @output {Event} If true, the label will sit alongside an input. Defaults to `false`.
    */
   @Prop() fixed: boolean = false;
 
   /**
-   * @output {event} If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
+   * @output {Event} If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
    */
   @Prop() floating: boolean = false;
 
   /**
-   * @output {event} If true, the label will be stacked above an input. Defaults to `false`.
+   * @output {Event} If true, the label will be stacked above an input. Defaults to `false`.
    */
   @Prop() stacked: boolean = false;
 
