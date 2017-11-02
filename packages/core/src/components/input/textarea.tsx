@@ -166,7 +166,7 @@ export class Textarea implements TextareaComponent {
   @Prop() wrap: string;
 
   /**
-   * @input {string} The value of the textare.
+   * @input {string} The value of the textarea.
    */
   @Prop({ mutable: true }) value: string;
 

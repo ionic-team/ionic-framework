@@ -28,17 +28,17 @@ export class Tabs {
   @State() selectedIndex: number = 0;
 
   /**
-   * @prop {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+   * @input {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
   @Prop() tabsLayout: string = 'icon-top';
 
   /**
-   * @prop {string} Set position of the tabbar: `top`, `bottom`.
+   * @input {string} Set position of the tabbar: `top`, `bottom`.
    */
   @Prop() tabsPlacement: string = 'bottom';
 
   /**
-   * @prop {boolean} If true, show the tab highlight bar under the selected tab.
+   * @input {boolean} If true, show the tab highlight bar under the selected tab.
    */
   @Prop() tabsHighlight: boolean = false;
 

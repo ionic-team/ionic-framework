@@ -75,93 +75,97 @@ export class Button {
 
   @Prop() itemButton: boolean = false;
 
+  /**
+   * @input {string} Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
+   */
   @Prop() href: string;
 
   /**
-   * @Prop {string} The type of button.
+   * @input {string} The type of button.
    * Possible values are: `"button"`, `"bar-button"`.
    */
   @Prop() buttonType: string = 'button';
 
   /**
-   * @Prop {boolean} If true, activates the large button size.
+   * @input {boolean} If true, activates the large button size.
    * Type: size
    */
   @Prop() large: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates the small button size.
+   * @input {boolean} If true, activates the small button size.
    * Type: size
    */
   @Prop() small: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
+   * @input {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
    * Type: size
    */
   @Prop() default: boolean = false;
 
   /**
-   * @Prop {boolean} If true, sets the button into a disabled state.
+   * @input {boolean} If true, sets the button into a disabled state.
    */
   @Prop() disabled: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates a transparent button style with a border.
+   * @input {boolean} If true, activates a transparent button style with a border.
    * Type: style
    */
   @Prop() outline: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates a transparent button style without a border.
+   * @input {boolean} If true, activates a transparent button style without a border.
    * Type: style
    */
   @Prop() clear: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
+   * @input {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
    * Type: style
    */
   @Prop() solid: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates a button with rounded corners.
+   * @input {boolean} If true, activates a button with rounded corners.
    * Type: shape
    */
   @Prop() round: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates a button style that fills the available width.
+   * @input {boolean} If true, activates a button style that fills the available width.
    * Type: display
    */
   @Prop() block: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates a button style that fills the available width without
+   * @input {boolean} If true, activates a button style that fills the available width without
    * a left and right border.
    * Type: display
    */
   @Prop() full: boolean = false;
 
   /**
-   * @Prop {boolean} If true, activates a button with a heavier font weight.
+   * @input {boolean} If true, activates a button with a heavier font weight.
    * Type: decorator
    */
   @Prop() strong: boolean = false;
 
   /**
-   * @Prop {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode: 'ios' | 'md' | 'wp';
-
-  /**
-   * @Prop {string} The color to use from your Sass `$colors` map.
+   * @input {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
+
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @Prop() mode: 'ios' | 'md' | 'wp';
 
   protected render() {
     const buttonType = this.buttonType;
