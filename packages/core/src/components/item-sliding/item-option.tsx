@@ -1,6 +1,4 @@
 import { Component, Prop } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
-
 
 /**
  * @name ItemOption
@@ -10,7 +8,10 @@ import { createThemedClasses } from '../../utils/theme';
  * action for the item.
  */
 @Component({
-  tag: 'ion-item-option'
+  tag: 'ion-item-option',
+  host: {
+    theme: 'item-option'
+  }
 })
 export class ItemOption {
   mode: string;
@@ -35,18 +36,14 @@ export class ItemOption {
   }
 
   protected render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'item-option-button');
 
     const TagType = this.href ? 'a' : 'button';
-
-    return (
-      <TagType class={themedClasses} onClick={this.clickedOptionButton.bind(this)} disabled={this.disabled}>
-        <span class='button-inner'>
-          <slot></slot>
-        </span>
-        <div class='button-effect'></div>
-      </TagType>
-    );
+    return [
+      <TagType class='item-option-button' onClick={this.clickedOptionButton.bind(this)} disabled={this.disabled}></TagType>,
+      <span class='button-inner'>
+        <slot></slot>
+       </span>
+    ];
   }
 
 }

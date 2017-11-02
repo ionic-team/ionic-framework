@@ -29,13 +29,13 @@ $item-md-sliding-button-icon-color:          color-contrast($colors-md, $item-md
   border-bottom: 1px solid $list-md-border-color;
 }
 
-.item-option-button-md {
+.item-option-md {
   font-size: $item-md-sliding-button-font-size;
   color: $item-md-sliding-button-text-color;
   background-color: $item-md-sliding-button-background-color;
 }
 
-.item-option-button-md .icon {
+.item-option-md .icon {
   fill: $item-md-sliding-button-icon-color;
 }
 
@@ -52,12 +52,12 @@ $item-md-sliding-button-icon-color:          color-contrast($colors-md, $item-md
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
-  .item-option-button-md-#{$color-name} {
+  .item-option-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }
 
-  .item-option-button-md-#{$color-name} .icon {
+  .item-option-md-#{$color-name} .icon {
     fill: $color-contrast;
   }
 

@@ -29,13 +29,13 @@ $item-wp-sliding-button-icon-color:          color-contrast($colors-wp, $item-wp
   border-bottom: 1px solid $list-wp-border-color;
 }
 
-.item-option-button-wp {
+.item-option-wp {
   font-size: $item-wp-sliding-button-font-size;
   color: $item-wp-sliding-button-text-color;
   background-color: $item-wp-sliding-button-background-color;
 }
 
-.item-option-button-wp .icon {
+.item-option-wp .icon {
   fill: $item-wp-sliding-button-icon-color;
 }
 
@@ -52,12 +52,12 @@ $item-wp-sliding-button-icon-color:          color-contrast($colors-wp, $item-wp
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
 
-  .item-option-button-wp-#{$color-name} {
+  item-option-wp-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
   }
 
-  .item-option-button-wp-#{$color-name} .icon {
+  item-option-wp-#{$color-name} .icon {
     fill: $color-contrast;
   }
 

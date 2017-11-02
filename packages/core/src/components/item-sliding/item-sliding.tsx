@@ -8,11 +8,12 @@ import { ItemOptions } from './item-options';
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
-const ITEM_SIDE_FLAG_NONE = 0;
-const ITEM_SIDE_FLAG_LEFT = 1 << 0;
-const ITEM_SIDE_FLAG_RIGHT = 1 << 1;
-const ITEM_SIDE_FLAG_BOTH = ITEM_SIDE_FLAG_LEFT | ITEM_SIDE_FLAG_RIGHT;
-
+const enum ItemSide {
+  None = 0,
+  Left = 1 << 0,
+  Right = 1 << 1,
+  Both = Left | Right
+}
 
 const enum SlidingState {
   Disabled = 1 << 1,
@@ -135,30 +136,23 @@ const enum SlidingState {
   }
 })
 export class ItemSliding {
-  @Element() private el: HTMLElement;
 
   private item: HTMLIonItemElement;
   private list: HTMLIonListElement;
-
-  private openAmount: number = 0;
-  private startX: number = 0;
-  private optsWidthRightSide: number = 0;
-  private optsWidthLeftSide: number = 0;
-  private sides: number;
+  private openAmount = 0;
+  private initialOpenAmount = 0;
+  private optsWidthRightSide = 0;
+  private optsWidthLeftSide = 0;
+  private sides: ItemSide;
   private tmr: any = null;
-
   private leftOptions: ItemOptions;
   private rightOptions: ItemOptions;
-
   private optsDirty: boolean = true;
+  private gestureOptions: any;
 
+  @Element() private el: HTMLElement;
   @State() state: SlidingState = SlidingState.Disabled;
 
-  private preSelectedContainer: ItemSliding = null;
-  private selectedContainer: ItemSliding = null;
-  openContainer: ItemSliding = null;
-  private firstCoordX: number;
-  private firstTimestamp: number;
 
   /**
    * @output {event} Emitted when the sliding position changes.
@@ -183,92 +177,39 @@ export class ItemSliding {
    */
   @Event() ionDrag: EventEmitter;
 
+  constructor() {
+    this.gestureOptions = {
+      'canStart': this.canStart.bind(this),
+      'onStart': this.onDragStart.bind(this),
+      'onMove': this.onDragMove.bind(this),
+      'onEnd': this.onDragEnd.bind(this),
+      'gestureName': 'item-swipe',
+      'gesturePriority': -10,
+      'type': 'pan',
+      'direction': 'x',
+      'maxAngle': 20,
+      'threshold': 5,
+      'attachTo': 'parent'
+    };
+  }
+
   protected ionViewDidLoad() {
-    const options = this.el.querySelectorAll('ion-item-options');
-
-    let sides = 0;
-
-    // Reset left and right options in case they were removed
-    this.leftOptions = this.rightOptions = null;
-
-    for (var i = 0; i < options.length; i++) {
-      let option = options[i];
-
-      if (option.isRightSide()) {
-        this.rightOptions = option;
-        sides |= ITEM_SIDE_FLAG_RIGHT;
-      } else {
-        this.leftOptions = option;
-        sides |= ITEM_SIDE_FLAG_LEFT;
-      }
-    }
-    this.optsDirty = true;
-    this.sides = sides;
-
     this.item = this.el.querySelector('ion-item');
-
-    // Get the parent list to close open containers
     this.list = this.el.closest('ion-list') as HTMLIonListElement;
+
+    this.updateOptions();
   }
 
-  canStart(gesture: GestureDetail): boolean {
-    if (this.selectedContainer) {
-      return false;
-    }
-    // Get swiped sliding container
-    let container = this;
-
-    // Close open container if it is not the selected one.
-    if (this.list && container !== this.list.getOpenedItem()) {
-      this.closeOpened();
-    }
-
-    this.preSelectedContainer = container;
-    this.firstCoordX = gesture.currentX;
-    this.firstTimestamp = Date.now();
-
-    return true;
+  protected ionViewDidUnLoad() {
+    this.item = this.list = this.leftOptions = this.rightOptions = null;
   }
 
-  onDragStart(gesture: GestureDetail) {
-    this.selectedContainer = this.preSelectedContainer;
-    this.list.setOpenedItem(this.selectedContainer);
-    this.selectedContainer.startSliding(gesture.currentX);
-  }
-
-  onDragMove(gesture: GestureDetail) {
-    this.selectedContainer && this.selectedContainer.moveSliding(gesture.currentX);
-  }
-
-  onDragEnd(gesture: GestureDetail) {
-    let coordX = gesture.currentX;
-    let deltaX = (coordX - this.firstCoordX);
-    let deltaT = (Date.now() - this.firstTimestamp);
-    this.selectedContainer.endSliding(deltaX / deltaT);
-    this.selectedContainer = null;
-    this.preSelectedContainer = null;
-  }
-
-  closeOpened(): boolean {
-    this.selectedContainer = null;
-
-    if (this.list.getOpenedItem()) {
-      this.list.closeSlidingItems();
-      return true;
-    }
-    return false;
-  }
-
-  /**
-   * @hidden
-   */
+  @Method()
   getOpenAmount(): number {
     return this.openAmount;
   }
 
-  /**
-   * @hidden
-   */
+  @Method()
   getSlidingPercent(): number {
     const openAmount = this.openAmount;
     if (openAmount > 0) {
@@ -280,156 +221,6 @@ export class ItemSliding {
     }
   }
 
-  /**
-   * @hidden
-   */
-  startSliding(startX: number) {
-    if (this.tmr) {
-      clearTimeout(this.tmr);
-      this.tmr = null;
-    }
-    if (this.openAmount === 0) {
-      this.optsDirty = true;
-      this.setState(SlidingState.Enabled);
-    }
-    this.startX = startX + this.openAmount;
-    this.item.style.transition = 'none';
-  }
-
-  /**
-   * @hidden
-   */
-  moveSliding(x: number): number {
-    if (this.optsDirty) {
-      this.calculateOptsWidth();
-      return 0;
-    }
-
-    let openAmount = (this.startX - x);
-
-    switch (this.sides) {
-      case ITEM_SIDE_FLAG_RIGHT: openAmount = Math.max(0, openAmount); break;
-      case ITEM_SIDE_FLAG_LEFT: openAmount = Math.min(0, openAmount); break;
-      case ITEM_SIDE_FLAG_BOTH: break;
-      case ITEM_SIDE_FLAG_NONE: return 0;
-      default: console.warn('invalid ItemSideFlags value', this.sides); break;
-    }
-
-    let optsWidth;
-    if (openAmount > this.optsWidthRightSide) {
-      optsWidth = this.optsWidthRightSide;
-      openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
-
-    } else if (openAmount < -this.optsWidthLeftSide) {
-      optsWidth = -this.optsWidthLeftSide;
-      openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
-    }
-
-    this.setOpenAmount(openAmount, false);
-    return openAmount;
-  }
-
-  /**
-   * @hidden
-   */
-  endSliding(velocity: number): number {
-    let restingPoint = (this.openAmount > 0)
-      ? this.optsWidthRightSide
-      : -this.optsWidthLeftSide;
-
-    // Check if the drag didn't clear the buttons mid-point
-    // and we aren't moving fast enough to swipe open
-    const isResetDirection = (this.openAmount > 0) === !(velocity < 0);
-    const isMovingFast = Math.abs(velocity) > 0.3;
-    const isOnCloseZone = Math.abs(this.openAmount) < Math.abs(restingPoint / 2);
-    if (swipeShouldReset(isResetDirection, isMovingFast, isOnCloseZone)) {
-      restingPoint = 0;
-    }
-
-    this.setOpenAmount(restingPoint, true);
-    this.fireSwipeEvent();
-    return restingPoint;
-  }
-
-  /**
-   * @hidden
-   * Emit the ionSwipe event on the child options
-   */
-  fireSwipeEvent() {
-    if (this.state & SlidingState.SwipeRight) {
-      this.rightOptions.ionSwipe.emit(this);
-    } else if (this.state & SlidingState.SwipeLeft) {
-      this.leftOptions.ionSwipe.emit(this);
-    }
-  }
-
-  /**
-   * @hidden
-   */
-  calculateOptsWidth() {
-    if (!this.optsDirty) {
-      return;
-    }
-    this.optsWidthRightSide = 0;
-    if (this.rightOptions) {
-      this.optsWidthRightSide = this.rightOptions.width();
-      this.optsWidthRightSide === 0 && console.warn('optsWidthRightSide should not be zero');
-    }
-
-    this.optsWidthLeftSide = 0;
-    if (this.leftOptions) {
-      this.optsWidthLeftSide = this.leftOptions.width();
-      this.optsWidthLeftSide === 0 && console.warn('optsWidthLeftSide should not be zero');
-    }
-    this.optsDirty = false;
-  }
-
-  setOpenAmount(openAmount: number, isFinal: boolean) {
-    if (this.tmr) {
-      clearTimeout(this.tmr);
-      this.tmr = null;
-    }
-    this.openAmount = openAmount;
-
-    if (isFinal) {
-      this.item.style.transition = '';
-
-    } else {
-      var state;
-      if (openAmount > 0) {
-        state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
-          ? SlidingState.Right | SlidingState.SwipeRight
-          : SlidingState.Right;
-
-        this.setState(state);
-
-      } else if (openAmount < 0) {
-        state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
-          ? SlidingState.Left | SlidingState.SwipeLeft
-          : SlidingState.Left;
-
-        this.setState(state);
-      }
-    }
-    if (openAmount === 0) {
-      this.tmr = setTimeout(() => {
-        this.setState(SlidingState.Disabled);
-        this.tmr = null;
-      }, 600);
-      this.item.style.transform = '';
-      return;
-    }
-
-    this.item.style.transform = `translate3d(${-openAmount}px,0,0)`;
-    this.ionDrag.emit();
-  }
-
-  private setState(state: SlidingState) {
-    if (state === this.state) {
-      return;
-    }
-    this.state = state;
-  }
 
   /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
@@ -470,7 +261,160 @@ export class ItemSliding {
     this.setOpenAmount(0, true);
   }
 
-  hostData() {
+  @Method()
+  closeOpened(): boolean {
+    return this.list && this.list.closeSlidingItems();
+  }
+
+  private updateOptions() {
+    const options = this.el.querySelectorAll('ion-item-options');
+
+    let sides = 0;
+
+    // Reset left and right options in case they were removed
+    this.leftOptions = this.rightOptions = null;
+
+    for (var i = 0; i < options.length; i++) {
+      let option = options.item(i);
+
+      if (option.isRightSide()) {
+        this.rightOptions = option;
+        sides |= ItemSide.Right;
+      } else {
+        this.leftOptions = option;
+        sides |= ItemSide.Left;
+      }
+    }
+    this.optsDirty = true;
+    this.sides = sides;
+  }
+
+  private canStart(): boolean {
+    const selected = this.list && this.list.getOpenedItem();
+    if (selected && selected !== this) {
+      this.closeOpened();
+      return false;
+    }
+    return true;
+  }
+
+  private onDragStart() {
+    this.list && this.list.setOpenedItem(this);
+
+    if (this.tmr) {
+      clearTimeout(this.tmr);
+      this.tmr = null;
+    }
+    if (this.openAmount === 0) {
+      this.optsDirty = true;
+      this.state = SlidingState.Enabled;
+    }
+    this.initialOpenAmount = this.openAmount;
+    this.item.style.transition = 'none';
+  }
+
+  private onDragMove(gesture: GestureDetail) {
+    if (this.optsDirty) {
+      this.calculateOptsWidth();
+    }
+    let openAmount = this.initialOpenAmount - gesture.deltaX;
+
+    switch (this.sides) {
+      case ItemSide.Right: openAmount = Math.max(0, openAmount); break;
+      case ItemSide.Left: openAmount = Math.min(0, openAmount); break;
+      case ItemSide.Both: break;
+      case ItemSide.None: return;
+      default: console.warn('invalid ItemSideFlags value', this.sides); break;
+    }
+
+    let optsWidth;
+    if (openAmount > this.optsWidthRightSide) {
+      optsWidth = this.optsWidthRightSide;
+      openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
+
+    } else if (openAmount < -this.optsWidthLeftSide) {
+      optsWidth = -this.optsWidthLeftSide;
+      openAmount = optsWidth + (openAmount - optsWidth) * ELASTIC_FACTOR;
+    }
+
+    this.setOpenAmount(openAmount, false);
+  }
+
+  private onDragEnd(gesture: GestureDetail) {
+    const velocity = gesture.velocityX;
+
+    let restingPoint = (this.openAmount > 0)
+      ? this.optsWidthRightSide
+      : -this.optsWidthLeftSide;
+
+    // Check if the drag didn't clear the buttons mid-point
+    // and we aren't moving fast enough to swipe open
+    const isResetDirection = (this.openAmount > 0) === !(velocity < 0);
+    const isMovingFast = Math.abs(velocity) > 0.3;
+    const isOnCloseZone = Math.abs(this.openAmount) < Math.abs(restingPoint / 2);
+    if (swipeShouldReset(isResetDirection, isMovingFast, isOnCloseZone)) {
+      restingPoint = 0;
+    }
+
+    this.setOpenAmount(restingPoint, true);
+
+    if (this.state & SlidingState.SwipeRight) {
+      this.rightOptions.fireSwipeEvent(this);
+    } else if (this.state & SlidingState.SwipeLeft) {
+      this.leftOptions.fireSwipeEvent(this);
+    }
+  }
+
+  private calculateOptsWidth() {
+    this.optsWidthRightSide = 0;
+    if (this.rightOptions) {
+      this.optsWidthRightSide = this.rightOptions.width();
+    }
+
+    this.optsWidthLeftSide = 0;
+    if (this.leftOptions) {
+      this.optsWidthLeftSide = this.leftOptions.width();
+    }
+    this.optsDirty = false;
+  }
+
+  private setOpenAmount(openAmount: number, isFinal: boolean) {
+    if (this.tmr) {
+      clearTimeout(this.tmr);
+      this.tmr = null;
+    }
+    const style = this.item.style;
+    this.openAmount = openAmount;
+
+    if (isFinal) {
+      style.transition = '';
+
+    } else if (openAmount > 0) {
+      this.state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
+        ? SlidingState.Right | SlidingState.SwipeRight
+        : SlidingState.Right;
+
+    } else if (openAmount < 0) {
+      this.state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
+        ? SlidingState.Left | SlidingState.SwipeLeft
+        : SlidingState.Left;
+    }
+
+    if (openAmount === 0) {
+      this.tmr = setTimeout(() => {
+        this.state = SlidingState.Disabled;
+        this.tmr = null;
+      }, 600);
+      this.list && this.list.setOpenedItem(null);
+      style.transform = '';
+      return;
+    }
+
+    style.transform = `translate3d(${-openAmount}px,0,0)`;
+    this.ionDrag.emit(this);
+  }
+
+  protected hostData() {
     return {
       class: {
         'item-wrapper': true,
@@ -485,19 +429,7 @@ export class ItemSliding {
 
   protected render() {
     return (
-      <ion-gesture {...{
-        'canStart': this.canStart.bind(this),
-        'onStart': this.onDragStart.bind(this),
-        'onMove': this.onDragMove.bind(this),
-        'onEnd': this.onDragEnd.bind(this),
-        'gestureName': 'item-swipe',
-        'gesturePriority': -10,
-        'type': 'pan',
-        'direction': 'x',
-        'maxAngle': 20,
-        'threshold': 5,
-        'attachTo': 'parent'
-      }}>
+      <ion-gesture {...this.gestureOptions}>
         <slot></slot>
       </ion-gesture>
     );

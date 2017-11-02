@@ -40,13 +40,19 @@ export class ItemOptions {
    */
   @Event() ionSwipe: EventEmitter;
 
-  @Method() isRightSide() {
-    const isRTL = document.dir === 'rtl';
-    return isRightSide(this.side, isRTL, true);
+  @Method()
+  isRightSide() {
+    return isRightSide(this.side, true);
   }
 
-  @Method() width(): number {
+  @Method()
+  width(): number {
     return this.el.offsetWidth;
+  }
+
+  @Method()
+  fireSwipeEvent(value: any) {
+    this.ionSwipe.emit(value);
   }
 
   protected render() {

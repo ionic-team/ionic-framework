@@ -28,9 +28,13 @@ export class List {
   }
 
   @Method()
-  closeSlidingItems() {
-    this.openedItem && this.openedItem.close();
-    this.openedItem = null;
+  closeSlidingItems(): boolean {
+    if (this.openedItem) {
+      this.openedItem.close();
+      this.openedItem = null;
+      return true;
+    }
+    return false;
   }
 
   protected render() {

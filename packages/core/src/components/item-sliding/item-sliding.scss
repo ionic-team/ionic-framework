@@ -2,7 +2,7 @@
 
 // Item Sliding
 // --------------------------------------------------
-// The hidden buttons that can be exposed under a list item by dragging
+// The hidden right-side buttons that can be exposed under a list item with dragging.
 
 ion-item-sliding {
   position: relative;
@@ -10,10 +10,6 @@ ion-item-sliding {
   overflow: hidden;
 
   width: 100%;
-}
-
-ion-item-sliding ion-item {
-  position: static;
 }
 
 ion-item-options {
@@ -66,29 +62,31 @@ ion-item-options[side=left] {
   }
 }
 
-.item-option-button {
-  @include margin(0);
-  @include border-radius(0);
 
+ion-item-option {
   @include padding(0, .7em);
 
-  display: inline-flex;
+  position: relative;
+  display: flex;
 
   align-items: center;
 
-  height: 100%;
+  min-width: 6rem;
+}
+
+.item-option-button {
+  @include position(0, 0, 0, 0);
+  @include margin(0);
+  @include padding(0);
+  @include border-radius(0);
+
+  position: absolute;
 
   border: 0;
-  box-shadow: none;
-
-  box-sizing: border-box;
+  background: none;
 }
 
-.item-option-button::before {
-  @include margin(0, auto);
-}
-
-ion-item-options:not([icon-start]) .item-option-button:not([icon-only]) {
+ion-item-options:not([icon-start]) ion-item-option:not([icon-only]) {
   .button-inner {
     flex-direction: column;
   }
@@ -131,7 +129,7 @@ ion-item-sliding.active-slide {
 // Item Expandable Animation
 // --------------------------------------------------
 
-ion-item-option[expandable] .item-option-button {
+ion-item-option[expandable] {
   flex-shrink: 0;
 
   transition-duration: 0;
@@ -139,7 +137,7 @@ ion-item-option[expandable] .item-option-button {
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
 
-ion-item-sliding.active-swipe-right ion-item-option[expandable] .item-option-button {
+ion-item-sliding.active-swipe-right ion-item-option[expandable] {
   transition-duration: .6s;
   transition-property: padding-left;
 
@@ -157,7 +155,7 @@ ion-item-sliding.active-swipe-right ion-item-option[expandable] .item-option-but
   }
 }
 
-ion-item-sliding.active-swipe-left ion-item-option[expandable] .item-option-button {
+ion-item-sliding.active-swipe-left ion-item-option[expandable] {
   transition-duration: .6s;
   transition-property: padding-right;
 

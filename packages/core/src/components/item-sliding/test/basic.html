@@ -143,13 +143,13 @@
                   <p>I think I figured out how to get more Mountain Dew</p>
                 </ion-label>
               </ion-item>
-              <ion-item-options side="left" (ionSwipe)="unread($event)" class="sliding-enabled">
+              <ion-item-options side="left" class="sliding-enabled">
                 <ion-item-option color="secondary" expandable onclick="unread('item2')">
                   <ion-icon name="ios-checkmark"></ion-icon>Unread
                 </ion-item-option>
               </ion-item-options>
 
-              <ion-item-options side="right" (ionSwipe)="del('item2')" class="sliding-enabled">
+              <ion-item-options side="right" class="sliding-enabled">
                 <ion-item-option color="primary" onclick="archive('item2')">
                   <ion-icon name="mail"></ion-icon>Archive
                 </ion-item-option>
@@ -166,13 +166,13 @@
                   <p>I think I figured out how to get more Mountain Dew</p>
                 </ion-label>
               </ion-item>
-              <ion-item-options side="left" icon-start (ionSwipe)="unread($event)" class="sliding-enabled">
+              <ion-item-options side="left" icon-start class="sliding-enabled">
                 <ion-item-option color="secondary" expandable onclick="unread('item3')">
                   <ion-icon name="ios-checkmark"></ion-icon>Unread
                 </ion-item-option>
               </ion-item-options>
 
-              <ion-item-options icon-start (ionSwipe)="del('item3')">
+              <ion-item-options icon-start>
                 <ion-item-option color="primary" onclick="archive('item3')">
                   <ion-icon name="mail"></ion-icon>Archive
                 </ion-item-option>
@@ -190,7 +190,7 @@
                   One Line w/ Icon, div only text
                 </ion-label>
               </ion-item>
-              <ion-item-options icon-start (ionSwipe)="archive($event)">
+              <ion-item-options icon-start>
                 <ion-item-option color="primary" onclick="archive('item4')" expandable class="sliding-enabled">
                   <ion-icon name="archive"></ion-icon>Archive
                 </ion-item-option>
@@ -249,7 +249,7 @@
                   <p>Paragraph text.</p>
                 </ion-label>
               </ion-item>
-              <ion-item-options (ionSwipe)="download('item8')">
+              <ion-item-options>
                 <ion-item-option color="primary" onclick="archive('item8')">
                   <ion-icon name="archive"></ion-icon>Archive
                 </ion-item-option>
@@ -379,6 +379,9 @@
           function reload() {
             window.location.reload();
           }
+          document.addEventListener('ionSwipe', (ev)=> console.log('SWIPE!!', ev.detail));
+          document.addEventListener('ionDrag', (ev)=> console.log('DRAG!!', ev.detail.getOpenAmount()));
+
         </script>
         <style>
           img {

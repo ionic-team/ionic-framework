@@ -85,7 +85,7 @@ export class MenuController {
    * time. If there are multiple menus on the same side, then enabling one menu
    * will also automatically disable all the others that are on the same side.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
-   * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
+   * @return {HTMLIonMenuElement}  Returns the instance of the menu, which is useful for chaining.
    */
   @Method()
   enable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement {
@@ -100,7 +100,7 @@ export class MenuController {
    * Used to enable or disable the ability to swipe open the menu.
    * @param {boolean} shouldEnable  True if it should be swipe-able, false if not.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
-   * @return {Menu}  Returns the instance of the menu, which is useful for chaining.
+   * @return {HTMLIonMenuElement}  Returns the instance of the menu, which is useful for chaining.
    */
   @Method()
   swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement {
@@ -145,7 +145,7 @@ export class MenuController {
    * provided, then it'll try to find the menu using the menu's `id`
    * property. If a menu is not found then it'll return `null`.
    * @param {string} [menuId]  Optionally get the menu by its id, or side.
-   * @return {Menu} Returns the instance of the menu if found, otherwise `null`.
+   * @return {HTMLIonMenuElement} Returns the instance of the menu if found, otherwise `null`.
    */
   @Method()
   get(menuId?: string): HTMLIonMenuElement {
@@ -188,7 +188,7 @@ export class MenuController {
   }
 
   /**
-   * @return {Array<Menu>}  Returns an array of all menu instances.
+   * @return {Array<HTMLIonMenuElement>}  Returns an array of all menu instances.
    */
   @Method()
   getMenus(): HTMLIonMenuElement[] {

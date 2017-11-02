@@ -1222,6 +1222,7 @@ declare global {
         
           isRightSide?: any,
           width?: any,
+          fireSwipeEvent?: any,
           side?: string
       }
   }
@@ -1252,7 +1253,10 @@ declare global {
           mode?: string,
           color?: string,
         
-          close?: any
+          getOpenAmount?: any,
+          getSlidingPercent?: any,
+          close?: any,
+          closeOpened?: any
       }
   }
 }

@@ -175,7 +175,8 @@ export function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: 
  * @param isRTL whether the application dir is rtl
  * @param defaultRight whether the default side is right
  */
-export function isRightSide(side: Side, isRTL: boolean, defaultRight: boolean = false): boolean {
+export function isRightSide(side: Side, defaultRight: boolean = false): boolean {
+  const isRTL = document.dir === 'rtl';
   switch (side) {
     case 'right': return true;
     case 'left': return false;
