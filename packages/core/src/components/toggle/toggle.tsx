@@ -24,9 +24,7 @@ export class Toggle implements BooleanInputComponent {
 
   hasFocus: boolean = false;
 
-<<<<<<< HEAD
   @State() activated: boolean = false;
-=======
   /**
    * @output {Event} Emitted when the value property has changed.
    */
@@ -41,7 +39,6 @@ export class Toggle implements BooleanInputComponent {
    * @output {Event} Emitted when the toggle has focus.
    */
   @Event() ionFocus: EventEmitter;
->>>>>>> style(components): rename variables and methods for consistency
 
   /**
    * @output {Event} Emitted when the toggle loses focus.
@@ -52,44 +49,27 @@ export class Toggle implements BooleanInputComponent {
    * @input {boolean} If true, the toggle is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked: boolean = false;
-<<<<<<< HEAD
-=======
 
-  /*
-   * @input {boolean} If true, the user cannot interact with the toggle. Default false.
-   */
-  @Prop({ mutable: true }) disabled: boolean = false;
-
-  /**
-   * @input {string} the value of the toggle.
-   */
-  @Prop({ mutable: true }) value: string;
-
-
-  protected ionViewWillLoad() {
-    this.emitStyle();
-  }
-
->>>>>>> style(components): rename variables and methods for consistency
   @PropDidChange('checked')
   protected checkedChanged(val: boolean) {
     this.ionChange.emit({ checked: val });
     this.emitStyle();
   }
 
+  /*
+   * @input {boolean} If true, the user cannot interact with the toggle. Default false.
+   */
   @Prop({ mutable: true }) disabled: boolean = false;
+
   @PropDidChange('disabled')
   protected disabledChanged() {
     this.emitStyle();
   }
 
-  // TODO: value is broken
+  /**
+   * @input {string} the value of the toggle.
+   */
   @Prop({ mutable: true }) value: string;
-
-  @Event() ionChange: EventEmitter;
-  @Event() ionStyle: EventEmitter;
-  @Event() ionFocus: EventEmitter;
-  @Event() ionBlur: EventEmitter;
 
   constructor() {
     this.gestureConfig = {

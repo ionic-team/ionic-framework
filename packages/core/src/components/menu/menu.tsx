@@ -81,14 +81,8 @@ export class Menu {
    */
   @Prop() side: Side = 'start';
   @PropDidChange('side')
-<<<<<<< HEAD
-  sideChanged() {
-    this.isRightSide = isRightSide(this.side);
-=======
   protected sideChanged() {
-    const isRTL = false;
-    this.isRightSide = isRightSide(this.side, isRTL);
->>>>>>> style(components): rename variables and methods for consistency
+    this.isRightSide = isRightSide(this.side);
   }
 
   /**
