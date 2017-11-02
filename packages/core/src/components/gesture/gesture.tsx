@@ -63,7 +63,7 @@ export class Gesture {
     }
     this.hasPress = (types.indexOf('press') > -1);
 
-    this.enabledChange(true);
+    this.enabledChange(this.enabled);
     if (this.pan || this.hasPress) {
       Context.dom.write(() => {
         applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
@@ -78,9 +78,6 @@ export class Gesture {
 
   @PropDidChange('enabled')
   enabledChange(isEnabled: boolean) {
-    if (!this.gesture) {
-      return;
-    }
     if (this.pan || this.hasPress) {
       Context.enableListener(this, 'touchstart', isEnabled, this.attachTo);
       Context.enableListener(this, 'mousedown', isEnabled, this.attachTo);

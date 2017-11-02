@@ -4,7 +4,7 @@ exports.config = {
   generateWWW: false,
   bundles: [
     { components: ['ion-animation-controller'] },
-    { components: ['ion-app', 'ion-content', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-app', 'ion-content', 'ion-scroll', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-page', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
     { components: ['ion-alert', 'ion-alert-controller'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
@@ -15,7 +15,7 @@ exports.config = {
     { components: ['ion-chip', 'ion-chip-button'] },
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
-    { components: ['ion-gesture', 'ion-scroll'], priority: 'low' },
+    { components: ['ion-gesture'], priority: 'low' },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-item', 'ion-item-divider', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },

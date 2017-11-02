@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
 import { BooleanInputComponent, GestureDetail } from '../../index';
 
 
@@ -14,40 +14,111 @@ import { BooleanInputComponent, GestureDetail } from '../../index';
   }
 })
 export class Toggle implements BooleanInputComponent {
+
   private toggleId: string;
   private labelId: string;
   private styleTmr: any;
+  private gestureConfig: any;
+  private startX: number;
 
-  activated: boolean = false;
   hasFocus: boolean = false;
-  startX: number;
 
-  @Event() ionChange: EventEmitter;
-  @Event() ionStyle: EventEmitter;
-  @Event() ionFocus: EventEmitter;
-  @Event() ionBlur: EventEmitter;
+  @State() activated: boolean = false;
 
   @Prop() color: string;
   @Prop() mode: string;
 
   @Prop({ mutable: true }) checked: boolean = false;
-  @Prop({ mutable: true }) disabled: boolean = false;
-  @Prop({ mutable: true }) value: string;
-
-
-  protected ionViewWillLoad() {
-    this.emitStyle();
-  }
-
   @PropDidChange('checked')
   checkedChanged(val: boolean) {
     this.ionChange.emit({ checked: val });
     this.emitStyle();
   }
 
+  @Prop({ mutable: true }) disabled: boolean = false;
   @PropDidChange('disabled')
   disabledChanged() {
     this.emitStyle();
+  }
+
+  // TODO: value is broken
+  @Prop({ mutable: true }) value: string;
+
+  @Event() ionChange: EventEmitter;
+  @Event() ionStyle: EventEmitter;
+  @Event() ionFocus: EventEmitter;
+  @Event() ionBlur: EventEmitter;
+
+  constructor() {
+    this.gestureConfig = {
+      'onStart': this.onDragStart.bind(this),
+      'onMove': this.onDragMove.bind(this),
+      'onEnd': this.onDragEnd.bind(this),
+      'onPress': this.toggle.bind(this),
+      'gestureName': 'toggle',
+      'gesturePriority': 30,
+      'type': 'pan,press',
+      'direction': 'x',
+      'threshold': 0,
+      'attachTo': 'parent'
+    };
+  }
+
+  protected ionViewWillLoad() {
+    this.emitStyle();
+  }
+
+  @Listen('keydown.space')
+  onSpace(ev: KeyboardEvent) {
+    this.toggle();
+    ev.stopPropagation();
+    ev.preventDefault();
+  }
+
+  @Method()
+  toggle() {
+    if (!this.disabled) {
+      this.checked = !this.checked;
+      this.fireFocus();
+    }
+    return this.checked;
+  }
+
+  private onDragStart(detail: GestureDetail) {
+    this.startX = detail.startX;
+    this.fireFocus();
+  }
+
+  private onDragMove(detail: GestureDetail) {
+    const currentX = detail.currentX;
+    if (this.checked) {
+      if (currentX + 15 < this.startX) {
+        this.checked = false;
+        this.activated = true;
+        this.startX = currentX;
+      }
+
+    } else if (currentX - 15 > this.startX) {
+      this.checked = true;
+      this.activated = (currentX < this.startX + 5);
+      this.startX = currentX;
+    }
+  }
+
+  private onDragEnd(detail: GestureDetail) {
+    const delta = detail.deltaX;
+    if (this.checked) {
+      if (delta < -4) {
+        this.checked = false;
+      }
+
+    } else if (delta > 4) {
+      this.checked = true;
+    }
+
+    this.activated = false;
+    this.startX = null;
+    this.fireBlur();
   }
 
   private emitStyle() {
@@ -63,65 +134,6 @@ export class Toggle implements BooleanInputComponent {
     });
   }
 
-  private canStart() {
-    return !this.disabled;
-  }
-
-
-  private onDragStart(detail: GestureDetail) {
-    this.startX = detail.startX;
-    this.fireFocus();
-  }
-
-
-  private onDragMove(detail: GestureDetail) {
-    if (this.checked) {
-      if (detail.currentX + 15 < this.startX) {
-        this.checked = false;
-        this.activated = true;
-        this.startX = detail.currentX;
-      }
-
-    } else if (detail.currentX - 15 > this.startX) {
-      this.checked = true;
-      this.activated = (detail.currentX < this.startX + 5);
-      this.startX = detail.currentX;
-    }
-  }
-
-
-  private onDragEnd(detail: GestureDetail) {
-    if (this.checked) {
-      if (detail.startX + 4 > detail.currentX) {
-        this.checked = false;
-      }
-
-    } else if (detail.startX - 4 < detail.currentX) {
-      this.checked = true;
-    }
-
-    this.activated = false;
-    this.fireBlur();
-    this.startX = null;
-  }
-
-
-  @Listen('keydown.space')
-  onSpace(ev: KeyboardEvent) {
-    this.toggle();
-    ev.stopPropagation();
-    ev.preventDefault();
-  }
-
-  toggle() {
-    if (!this.disabled) {
-      this.checked = !this.checked;
-      this.fireFocus();
-    }
-    return this.checked;
-  }
-
-
   fireFocus() {
     if (!this.hasFocus) {
       this.hasFocus = true;
@@ -129,7 +141,6 @@ export class Toggle implements BooleanInputComponent {
       this.emitStyle();
     }
   }
-
 
   fireBlur() {
     if (this.hasFocus) {
@@ -139,7 +150,7 @@ export class Toggle implements BooleanInputComponent {
     }
   }
 
-  hostData() {
+  protected hostData() {
     return {
       class: {
         'toggle-activated': this.activated,
@@ -151,19 +162,9 @@ export class Toggle implements BooleanInputComponent {
 
   protected render() {
     return (
-      <ion-gesture {...{
-        'canStart': this.canStart.bind(this),
-        'onStart': this.onDragStart.bind(this),
-        'onMove': this.onDragMove.bind(this),
-        'onEnd': this.onDragEnd.bind(this),
-        'onPress': this.toggle.bind(this),
-        'gestureName': 'toggle',
-        'gesturePriority': 30,
-        'type': 'pan,press',
-        'direction': 'x',
-        'threshold': 0,
-        'attachTo': 'parent'
-      }}>
+      <ion-gesture {...this.gestureConfig}
+        enabled={!this.disabled}
+      >
         <div class='toggle-icon'>
           <div class='toggle-inner'></div>
         </div>

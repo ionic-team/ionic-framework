@@ -3102,6 +3102,7 @@ declare global {
           mode?: string,
           color?: string,
         
+          toggle?: any,
           checked?: boolean,
           disabled?: boolean,
           value?: string
