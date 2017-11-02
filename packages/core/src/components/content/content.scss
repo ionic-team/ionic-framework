@@ -12,6 +12,8 @@ ion-content {
   width: 100%;
 
   contain: layout size style;
+
+  padding: 0 !important; // scss-lint:disable all
 }
 
 a {
@@ -62,30 +64,37 @@ ion-app [no-padding] ion-scroll {
 }
 
 @mixin content-padding($mode, $content-padding) {
+  .app-#{$mode} [padding],
   .app-#{$mode} [padding] .scroll-inner {
     @include padding($content-padding);
   }
 
+  .app-#{$mode} [padding-top],
   .app-#{$mode} [padding-top] .scroll-inner {
     @include padding($content-padding, null, null, null);
   }
 
+  .app-#{$mode} [padding-left],
   .app-#{$mode} [padding-left] .scroll-inner {
     @include padding-horizontal($content-padding, null);
   }
 
+  .app-#{$mode} [padding-right],
   .app-#{$mode} [padding-right] .scroll-inner {
     @include padding-horizontal(null, $content-padding);
   }
 
+  .app-#{$mode} [padding-bottom],
   .app-#{$mode} [padding-bottom] .scroll-inner {
     @include padding(null, null, $content-padding, null);
   }
 
+  .app-#{$mode} [padding-vertical],
   .app-#{$mode} [padding-vertical] .scroll-inner {
     @include padding($content-padding, null, $content-padding, null);
   }
 
+  .app-#{$mode} [padding-horizontal],
   .app-#{$mode} [padding-horizontal] .scroll-inner {
     @include padding-horizontal($content-padding);
   }
