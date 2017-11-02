@@ -6,7 +6,7 @@ jobs:
       - image: node:7
     branches:
       ignore:
-        - mono-refactor
+        - core
     steps:
       - checkout
       - restore_cache:
