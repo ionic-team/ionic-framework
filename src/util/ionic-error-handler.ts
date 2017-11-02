@@ -41,9 +41,6 @@ import { ErrorHandler } from '@angular/core';
  * More information about Angular's [`ErrorHandler`](https://angular.io/docs/ts/latest/api/core/index/ErrorHandler-class.html).
  */
 export class IonicErrorHandler extends ErrorHandler {
-  constructor() {
-    super(false);
-  }
   /**
    * @internal
    */
