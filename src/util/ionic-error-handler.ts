@@ -1,4 +1,5 @@
-import { ErrorHandler } from '@angular/core';
+import {ErrorHandler} from "@angular/core";
+import {IonicErrorReporter} from "./ionic-error-reporter";
 
 /**
  * @name IonicErrorHandler
@@ -41,23 +42,30 @@ import { ErrorHandler } from '@angular/core';
  * More information about Angular's [`ErrorHandler`](https://angular.io/docs/ts/latest/api/core/index/ErrorHandler-class.html).
  */
 export class IonicErrorHandler extends ErrorHandler {
-  constructor() {
-    super(false);
-  }
-  /**
-   * @internal
-   */
-  handleError(err: any): void {
-    super.handleError(err);
-    try {
-      const win: any = window;
-      let monitor: any;
+    private static errorReporter: IonicErrorReporter = null;
 
-      monitor = win['IonicDevServer'];
-      monitor && monitor.handleError && monitor.handleError(err);
+    public static setErrorReporter(ionicErrorReporter: IonicErrorReporter) {
+        IonicErrorHandler.errorReporter = ionicErrorReporter;
+    }
 
-      monitor = (win['Ionic'] = win['Ionic'] || {}).Monitor;
-      monitor && monitor.handleError && monitor.handleError(err);
-    } catch (e) {}
-  }
+    public static report(error: any, type: 'error'|'warning'|'info' = 'error') {
+        if (IonicErrorHandler.errorReporter !== null) {
+            IonicErrorHandler.errorReporter[type].apply(null, error);
+        }
+    }
+
+    /**
+     * @internal
+     */
+    handleError(err: any): void {
+        super.handleError(err);
+        try {
+            const devServer = (<any>window)['IonicDevServer'];
+            if (devServer) {
+                devServer.handleError(err);
+            }
+        } catch (e) {
+        }
+        IonicErrorHandler.report(err);
+    }
 }
