@@ -2212,7 +2212,7 @@ declare global {
           min?: number,
           pin?: boolean,
           snaps?: boolean,
-          steps?: number,
+          step?: number,
           value?: any
       }
   }

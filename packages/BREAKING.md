@@ -14,6 +14,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Nav](#nav)
 - [Option](#option)
 - [Radio](#radio)
+- [Range](#range)
 - [Segment](#segment)
 - [Toolbar](#toolbar)
 - [Sass](#sass)
@@ -53,7 +54,7 @@ Button should now be written as an `<ion-button>` element. Ionic will determine 
 </ion-button>
 ```
 
-### Icon Attributes Renamed
+### Attributes Renamed
 
 Previously to style icons inside of a button the following attributes were used: `icon-left`, `icon-right`, (and with the added support of RTL) `icon-start`, `icon-end`.
 
@@ -468,9 +469,47 @@ Radio group has been changed to an element. It should now be wrapped around any 
 </ion-list>
 ```
 
-### Order for Windows
+### Windows Mode Order
 
 Previously a radio inside of an item in Windows Platform mode would align itself to the start of the item. This has been removed, `slot` should always be used to align a radio inside of an item now.
+
+
+## Range
+
+### Attributes Renamed
+
+Previously to place content inside of a range the following attributes were used: `range-left`, `range-right`, (and with the added support of RTL) `range-start`, `range-end`.
+
+These have been renamed to the following:
+
+| Old Property                | New Property   | Property Behavior                                                     |
+|-----------------------------|----------------|-----------------------------------------------------------------------|
+| `range-left`, `range-start` | `slot="start"` | Positions to the left of the range in LTR, and to the right in RTL.   |
+| `range-right`, `range-end`  | `slot="end"`   | Positions to the right of the range in LTR, and to the left in RTL.   |
+
+
+**Old Usage Example:**
+
+```html
+<ion-range>
+  <ion-icon name="sunny" range-left></ion-icon>
+  <ion-icon name="sunny" range-right></ion-icon>
+</ion-range>
+
+<ion-range>
+  <ion-icon name="sunny" range-start></ion-icon>
+  <ion-icon name="sunny" range-end></ion-icon>
+</ion-range>
+```
+
+**New Usage Example:**
+
+```html
+<ion-range>
+  <ion-icon name="sunny" slot="start"></ion-icon>
+  <ion-icon name="sunny" slot="end"></ion-icon>
+</ion-range>
+```
 
 
 ## Segment

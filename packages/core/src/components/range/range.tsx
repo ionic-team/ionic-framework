@@ -114,7 +114,7 @@ export class Range implements BaseInputComponent {
   /**
    * @input {number} Specifies the value granularity. Defaults to `1`.
    */
-  @Prop() steps: number = 1;
+  @Prop() step: number = 1;
 
   /**
    * @input {string} the value of the range.
@@ -196,7 +196,7 @@ export class Range implements BaseInputComponent {
 
   createTicks() {
     if (this.snaps) {
-      for (let value = this.min; value <= this.max; value += this.steps) {
+      for (let value = this.min; value <= this.max; value += this.step) {
         let ratio = this.valueToRatio(value);
         this.ticks.push({
           ratio,
@@ -226,14 +226,14 @@ export class Range implements BaseInputComponent {
   }
 
   valueToRatio(value: number) {
-    value = Math.round((value - this.min) / this.steps) * this.steps;
+    value = Math.round((value - this.min) / this.step) * this.step;
     value = value / (this.max - this.min);
     return clamp(0, value, 1);
   }
 
   ratioToValue(ratio: number) {
     ratio = Math.round((this.max - this.min) * ratio);
-    ratio = Math.round(ratio / this.steps) * this.steps + this.min;
+    ratio = Math.round(ratio / this.step) * this.step + this.min;
     return clamp(this.min, ratio, this.max);
   }
 
@@ -329,7 +329,7 @@ export class Range implements BaseInputComponent {
 
   @Listen('ionIncrease, ionDecrease')
   keyChng(ev: RangeEvent) {
-    const step = this.steps;
+    const step = this.step;
     if (ev.detail.knob === 'knobB') {
       if (!!ev.detail.isIncrease) {
         this.valB += step;
@@ -404,7 +404,7 @@ export class Range implements BaseInputComponent {
 
   protected render() {
     return [
-      <slot name='range-start'></slot>,
+      <slot name='start'></slot>,
       <ion-gesture
         {...{
           disableScroll: true,
@@ -462,7 +462,7 @@ export class Range implements BaseInputComponent {
             : null}
         </div>
       </ion-gesture>,
-      <slot name='range-end'></slot>
+      <slot name='end'></slot>
     ];
   }
 }

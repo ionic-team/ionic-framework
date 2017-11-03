@@ -25,16 +25,20 @@
             <ion-range value="20"></ion-range>
           </ion-item>
           <ion-item>
-            <ion-range value="40" color="secondary"></ion-range>
-          </ion-item>
-          <ion-item>
             <ion-range value="60" color="light"></ion-range>
           </ion-item>
           <ion-item>
             <ion-range value="80" color="dark"></ion-range>
           </ion-item>
           <ion-item>
-            <ion-range value="100" color="danger"></ion-range>
+            <ion-range pin="true" color="secondary" value="86">
+              <ion-icon small name="ios-sunny-outline" slot="start"></ion-icon>
+              <ion-icon name="ios-sunny" slot="end"></ion-icon>
+            </ion-range>
+            <ion-range pin="true" color="danger" value="54">
+              <ion-icon small name="ios-thermometer-outline" slot="start"></ion-icon>
+              <ion-icon name="ios-thermometer" slot="end"></ion-icon>
+            </ion-range>
           </ion-item>
         </ion-list>
 
@@ -61,18 +65,14 @@
             <ion-range pin="true"></ion-range>
           </ion-item>
           <ion-item>
+            <ion-range min="-200" max="200" steps="10" snaps="true" pin="true"></ion-range>
+          </ion-item>
+          <ion-item>
             <ion-range min="1000" max="2000" steps="100" snaps="true" id="range"></ion-range>
           </ion-item>
           <ion-item>
             <ion-range dual-knobs="true" id="multiKnob"></ion-range>
           </ion-item>
-          <ion-item>
-            <ion-range color="danger">
-              <ion-icon small name="thermometer" slot="range-start"></ion-icon>
-              <ion-icon name="thermometer" slot="range-end"></ion-icon>
-            </ion-range>
-          </ion-item>
-
         </ion-list>
 
         <ion-button onclick="elTest()">Test</ion-button>
