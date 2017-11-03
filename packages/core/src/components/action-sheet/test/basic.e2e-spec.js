@@ -4,7 +4,7 @@ const webdriver = require('selenium-webdriver');
 const By = webdriver.By;
 const until = webdriver.until;
 
-const register = require('../../../../scripts/register-e2e-test');
+const register = require('../../../../scripts/e2e-test-runner').register;
 const E2ETestPage = require('../../../../scripts/E2ETestPage');
 
 class ActionSheetE2ETestPage extends E2ETestPage {

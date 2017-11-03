@@ -1,8 +1,15 @@
 'use strict';
 
+const fs = require('fs');
 const glob = require('glob');
 const Mocha = require('mocha');
 const path = require('path');
+const webdriver = require('selenium-webdriver');
+
+const Snapshot = require('./Snapshot');
+
+let snapshot;
+let takeScreenshots = false;
 
 function startDevServer() {
   const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
@@ -27,18 +34,41 @@ function getTestFiles() {
 function processCommandLine() {
   process.argv.forEach(arg => {
     if (arg === '--snapshot') {
-      process.env.takeScreenshots = true;
+      takeScreenshots = true;
     }
   });
 }
 
-(async () => {
+function registerE2ETest(desc, tst) {
+  // NOTE: Do not use an arrow function here because: https://mochajs.org/#arrow-functions
+  it(desc, async function() {
+    const driver = new webdriver.Builder().forBrowser('chrome').build();
+    await tst(driver);
+    if (takeScreenshots) {
+      await snapshot.takeScreenshot(driver, {
+        name: this.test.fullTitle()
+      });
+    }
+    return driver.quit();
+  });
+}
+
+async function run() {
   const mocha = new Mocha({
     timeout: 5000,
     slow: 2000
   });
 
   processCommandLine();
+
+  snapshot = new Snapshot({
+    platformDefaults: {
+      params: {
+        height: 800,
+        width: 400
+      }
+    }
+  });
 
   const devServer = await startDevServer();
 
@@ -50,4 +80,9 @@ function processCommandLine() {
     });
     devServer.close();
   });
-})();
+}
+
+module.exports = {
+  register: registerE2ETest,
+  run: run
+};
