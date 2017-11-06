@@ -79,7 +79,7 @@ export function getTranslate(s: Slides, plt: Platform, el: HTMLElement, axis: st
   if (win.WebKitCSSMatrix) {
     curTransform = curStyle.transform || curStyle.webkitTransform;
     if (curTransform.split(',').length > 6) {
-      curTransform = curTransform.split(', ').map(function(a: any){
+      curTransform = curTransform.split(', ').map(function(a: any) {
         return a.replace(',', '.');
       }).join(', ');
     }

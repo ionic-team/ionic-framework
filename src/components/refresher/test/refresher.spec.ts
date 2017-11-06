@@ -251,7 +251,7 @@ describe('Refresher', () => {
       type: 'mockTouch',
       pageX: 0,
       pageY: y,
-      preventDefault: function(){}
+      preventDefault: function() {}
     };
   }
 

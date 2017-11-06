@@ -1,3 +1,63 @@
+<a name="3.8.0"></a>
+# [3.8.0](https://github.com/ionic-team/ionic/compare/v3.7.1...v3.8.0) (2017-10-26)
+
+
+### Upgrade Instructions
+
+This release includes improvements for iOS11 and specifically, the iPhone X. Please also read over the [iOS 11 checklist](http://blog.ionic.io/ios-11-checklist/) blog post for additional information.
+
+To update, install the latest version of `ionic-angular` and `@ionic/app-scripts`:
+
+```bash
+npm install ionic-angular@latest --save
+npm install @ionic/app-scripts@latest --save-dev
+```
+
+This release uses version `4.4.4` of Angular. Please update the version number of any `@angular` packages in your `package.json` file:
+
+```
+  "dependencies": {
+    "@angular/common": "4.4.4",
+    "@angular/compiler": "4.4.4",
+    "@angular/compiler-cli": "4.4.4",
+    "@angular/core": "4.4.4",
+    "@angular/forms": "4.4.4",
+    "@angular/http": "4.4.4",
+    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser-dynamic": "4.4.4",
+    ...
+  }
+```
+
+### Bug Fixes
+
+* **action-sheet:** fix action sheet so it will scroll when the options exceed the screen ([#13049](https://github.com/ionic-team/ionic/issues/13049)) ([199cb00](https://github.com/ionic-team/ionic/commit/199cb00))
+* **content:** reize on orientationchange only ([6b848a0](https://github.com/ionic-team/ionic/commit/6b848a0))
+* **cordova:** size footer correctly ([33960f1](https://github.com/ionic-team/ionic/commit/33960f1))
+* **item:** safe-padding on last item only ([af36358](https://github.com/ionic-team/ionic/commit/af36358))
+* **nav:** remove bad assert ([ae4be66](https://github.com/ionic-team/ionic/commit/ae4be66))
+* **navigation:** account for condition of toggling one view with tabs to another view with tabs ([c963745](https://github.com/ionic-team/ionic/commit/c963745))
+* **navigation:** add defaultHistory support to ion-tabs ([2646ebe](https://github.com/ionic-team/ionic/commit/2646ebe))
+* **navigation:** unregister root navs when appropriate ([2bd89fe](https://github.com/ionic-team/ionic/commit/2bd89fe))
+* **overlay:** onWillDismiss is called as expected ([#12056](https://github.com/ionic-team/ionic/issues/12056)) ([c91223b](https://github.com/ionic-team/ionic/commit/c91223b)), closes [#11702](https://github.com/ionic-team/ionic/issues/11702)
+* **popover:** improve positioning in ios11 ([73f6a82](https://github.com/ionic-team/ionic/commit/73f6a82))
+* **select:** overlay types should use shared interface ([c4e9b5d](https://github.com/ionic-team/ionic/commit/c4e9b5d)), closes [#13103](https://github.com/ionic-team/ionic/issues/13103)
+* **swiper:** add safe-guards when user tries to zoom a slide without an image ([#12931](https://github.com/ionic-team/ionic/issues/12931)) ([e0c8309](https://github.com/ionic-team/ionic/commit/e0c8309)), closes [#12861](https://github.com/ionic-team/ionic/issues/12861)
+* **swiper:** allow for multiple swipers on a page ([#12213](https://github.com/ionic-team/ionic/issues/12213)) ([dd66f9a](https://github.com/ionic-team/ionic/commit/dd66f9a)), closes [#12008](https://github.com/ionic-team/ionic/issues/12008)
+* **tabs:** emit viewDidEnter and viewDidLeave on app during tab change ([c8be8e2](https://github.com/ionic-team/ionic/commit/c8be8e2))
+* **tabs:** return promises where appropriate ([a77bb2c](https://github.com/ionic-team/ionic/commit/a77bb2c))
+* **virtual-scroll:** flickering issue fixes ([88b2e83](https://github.com/ionic-team/ionic/commit/88b2e83))
+* **viewController** move resize logic to viewCtrl ([ebdf22d](https://github.com/ionic-team/ionic/commit/ebdf22d))
+
+
+### Features
+
+* **alert:** export AlertButton interface ([0ba33d9](https://github.com/ionic-team/ionic/commit/0ba33d9)), closes [#12545](https://github.com/ionic-team/ionic/issues/12545)
+* **input:** add dir attribute for different language directions ([#13043](https://github.com/ionic-team/ionic/issues/13043)) ([b180351](https://github.com/ionic-team/ionic/commit/b180351))
+* improved ios11 support ([49e0c37](https://github.com/ionic-team/ionic/commit/49e0c37))
+
+
+
 <a name="3.7.1"></a>
 ## [3.7.1](https://github.com/ionic-team/ionic/compare/v3.7.0...v3.7.1) (2017-09-29)
 

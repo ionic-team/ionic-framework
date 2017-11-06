@@ -69,7 +69,6 @@ ion-item-options[side=left] {
 ion-item-options .button {
   @include margin(0);
   @include padding(0, .7em);
-  @include safe-area-padding-horizontal(null, .7em);
   @include border-radius(0);
 
   height: 100%;
@@ -77,6 +76,10 @@ ion-item-options .button {
   box-shadow: none;
 
   box-sizing: content-box;
+
+  &:last-child {
+    @include safe-area-padding-horizontal(null, .7em);
+  }
 }
 
 ion-item-options:not([icon-left]) .button:not([icon-only]), // deprecated

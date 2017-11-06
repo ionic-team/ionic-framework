@@ -113,6 +113,13 @@ export class ViewController {
 
     this._cssClass = rootCssClass;
     this._ts = Date.now();
+    window.addEventListener('orientationchange', this.handleOrientationChange.bind(this));
+  }
+
+  handleOrientationChange() {
+    if (this.getContent()) {
+      this.getContent().resize();
+    }
   }
 
   /**
@@ -448,6 +455,8 @@ export class ViewController {
    * The view is about to enter and become the active view.
    */
   _willEnter() {
+    this.handleOrientationChange();
+
     assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
 
     if (this._detached && this._cmp) {
@@ -533,6 +542,7 @@ export class ViewController {
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
 
+      window.removeEventListener('orientationchange', this.handleOrientationChange.bind(this));
       // completely destroy this component. boom.
       this._cmp.destroy();
     }
