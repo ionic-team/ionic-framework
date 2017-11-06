@@ -344,7 +344,7 @@ export class Searchbar {
         <ion-button
           onClick={this.cancelSearchbar.bind(this)}
           onMouseDown={this.cancelSearchbar.bind(this)}
-          clear
+          fill="clear"
           color='dark'
           class='searchbar-md-cancel'>
             <ion-icon name='md-arrow-back'></ion-icon>
@@ -362,7 +362,7 @@ export class Searchbar {
           autoCorrect={this.autocorrect}
           spellCheck={this.spellcheck}/>
         <ion-button
-          clear
+          fill="clear"
           class='searchbar-clear-icon'
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}>
@@ -370,7 +370,7 @@ export class Searchbar {
       </div>,
       <ion-button
         tabindex={this.activated ? 1 : -1}
-        clear
+        fill="clear"
         onClick={this.cancelSearchbar.bind(this)}
         onMouseDown={this.cancelSearchbar.bind(this)}
         class='searchbar-ios-cancel'>
