@@ -26,7 +26,7 @@
     "tsc": "tsc --outdir .tmp"
   },
   "dependencies": {
-    "@angular/common": "",
+    "@angular/common": "5.0.0",
     "@angular/compiler": "5.0.0",
     "@angular/compiler-cli": "5.0.0",
     "@angular/core": "5.0.0",
