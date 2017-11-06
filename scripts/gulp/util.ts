@@ -214,7 +214,8 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
-    '--enableLint', 'false'
+    '--enableLint', 'false',
+    '--skipIonicAngularVersion', 'true'
   ];
   if (devApp) {
     scriptArgs.push('--bonjour');
