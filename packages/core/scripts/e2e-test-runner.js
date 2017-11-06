@@ -9,6 +9,7 @@ const webdriver = require('selenium-webdriver');
 const Snapshot = require('./Snapshot');
 
 let snapshot;
+let specIndex = 0;
 let takeScreenshots = false;
 
 function startDevServer() {
@@ -16,6 +17,16 @@ function startDevServer() {
   const cmdArgs = ['--config', path.join(__dirname, '../stencil.config.js'), '--no-open'];
 
   return server.run(cmdArgs);
+}
+
+function generateTestId() {
+  let chars = 'abcdefghjkmnpqrstuvwxyz';
+  let id = chars.charAt(Math.floor(Math.random() * chars.length));
+  chars += '0123456789';
+  while (id.length < 3) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
 }
 
 function getTestFiles() {
@@ -46,11 +57,18 @@ function registerE2ETest(desc, tst) {
     await tst(driver);
     if (takeScreenshots) {
       await snapshot.takeScreenshot(driver, {
-        name: this.test.fullTitle()
+        name: this.test.fullTitle(),
+        specIndex: specIndex++
       });
     }
     return driver.quit();
   });
+}
+
+function getTotalTests(suite) {
+  let ttl = suite.tests.length;
+  suite.suites.forEach(s => (ttl += getTotalTests(s)));
+  return ttl;
 }
 
 async function run() {
@@ -61,24 +79,41 @@ async function run() {
 
   processCommandLine();
 
-  snapshot = new Snapshot({
-    platformDefaults: {
-      params: {
-        height: 800,
-        width: 400
-      }
-    }
-  });
-
   const devServer = await startDevServer();
 
   const files = await getTestFiles();
   files.forEach(f => mocha.addFile(f));
-  mocha.run(function(failures) {
-    process.on('exit', function() {
-      process.exit(failures); // exit with non-zero status if there were failures
+  mocha.loadFiles(() => {
+    specIndex = 0;
+
+    snapshot = new Snapshot({
+      groupId: 'ionic-core',
+      appId: 'snapshots',
+      testId: generateTestId(),
+      domain: 'ionic-snapshot-go.appspot.com',
+      // domain: 'localhost:8080',
+      sleepBetweenSpecs: 300,
+      totalSpecs: getTotalTests(mocha.suite),
+      platformDefaults: {
+        browser: 'chrome',
+        platform: 'linux',
+        params: {
+          platform_id: 'chrome_400x800',
+          platform_index: 0,
+          platform_count: 1,
+          width: 400,
+          height: 800
+        }
+      },
+      accessKey: process.env.IONIC_SNAPSHOT_KEY
     });
-    devServer.close();
+
+    mocha.run(function(failures) {
+      process.on('exit', function() {
+        process.exit(failures); // exit with non-zero status if there were failures
+      });
+      devServer.close();
+    });
   });
 }
 

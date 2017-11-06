@@ -1,14 +1,16 @@
 'use strict';
 
-const fs = require('fs'); // temp hack for now...
-const http = require('http');
+const request = require('request');
 
 class Snapshot {
   constructor(options) {
     this.appId = (options && options.appId) || 'test_app';
     this.domain = (options && options.domain) || 'localhost:8080';
     this.groupId = (options && options.groupId) || 'test_group';
+    this.testId = options && options.testId;
     this.sleepTime = (options && options.sleepBetweenSpecs) || 500;
+    this.totalSpecs = options && options.totalSpecs;
+    this.accessKey = options && options.accessKey;
     this.platformId =
       options && options.platformDefaults && options.platformDefaults.params && options.platformDefaults.params.platform_id;
     this.platformIndex =
@@ -19,13 +21,18 @@ class Snapshot {
       (options && options.platformDefaults && options.platformDefaults.params && options.platformDefaults.params.width) || -1;
     this.height =
       (options && options.platformDefaults && options.platformDefaults.params && options.platformDefaults.params.height) || -1;
+
+    this.queue = [];
+    this.highestMismatch = 0;
+    this.mismatches = [];
+    this.results = {};
   }
 
   async takeScreenshot(driver, options) {
     this._resizeWindow(driver);
     await this._allowForAnnimation();
-    const data = await this._takeScreenshot(driver, options && options.name);
-    return this._postScreenshot(data);
+    const screenshot = await this._takeScreenshot(driver, options);
+    return this._post(screenshot);
   }
 
   _allowForAnnimation() {
@@ -36,18 +43,32 @@ class Snapshot {
     });
   }
 
-  _postScreenshot(data) {
-    return new Promise((resolve, reject) => {
-      let base64Data = data.png_base64.replace(/^data:image\/png;base64,/, '');
-      fs.writeFile(`${data.description}.png`, base64Data, 'base64', function(err) {
-        if (err) {
-          console.log(err);
-          reject(err);
+  _post(screenshot) {
+    const p = new Promise((resolve, reject) => {
+      request.post(`http://${this.domain}/screenshot`, { form: screenshot }, (error, res, body) => {
+        if (error) {
+          console.error(error);
+        } else if (res.statusCode > 400) {
+          console.log('error posting screenshot:', response.statusCode, body);
         } else {
-          resolve();
+          const data = JSON.parse(body);
+          this.highestMismatch = Math.max(this.highestMismatch, data.Mismatch);
+          const resultKey = (data.Mismatch * 1000 + 1000000 + '').split('.')[0] + '-' + screenshot.spec_index;
+          this.results[resultKey] = {
+            index: screenshot.spec_index,
+            name: screenshot.description,
+            mismatch: Math.round(data.Mismatch * 100) / 100,
+            compareUrl: data.CompareUrl,
+            screenshotUrl: data.ScreenshotUrl
+          };
+          if (data.IsMismatch) {
+            this.mismatches.push(resultKey);
+          }
         }
       });
     });
+    this.queue.push(p);
+    return Promise.resolve(true);
   }
 
   _resizeWindow(driver) {
@@ -57,15 +78,29 @@ class Snapshot {
       .setSize(this.width, this.height);
   }
 
-  async _takeScreenshot(driver, name) {
+  async _takeScreenshot(driver, options) {
+    const capabilities = await driver.getCapabilities();
     const png = await driver.takeScreenshot();
     const url = await driver.getCurrentUrl();
 
-    // TODO: There are more things to add, not sure how yet for some
     return Promise.resolve({
-      description: name,
+      app_id: this.appId,
+      group_id: this.groupId,
+      description: options.name,
+      spec_index: options.specIndex,
+      total_specs: this.totalSpecs,
+      test_id: this.testId,
       url: url,
-      png_base64: png
+      png_base64: png,
+      height: this.height,
+      width: this.width,
+      platform_count: this.platformCount,
+      platform_id: this.platformId,
+      platform_index: this.platformIndex,
+      browser: capabilities.get('browserName'),
+      platform: capabilities.get('platform'),
+      version: capabilities.get('version'),
+      access_key: this.accessKey
     });
   }
 }
