@@ -2,7 +2,7 @@ import { InjectionToken } from '@angular/core';
 
 import { App } from '../components/app/app';
 import { NavigationContainer } from './navigation-container';
-import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment, isTabs } from './nav-util';
+import { DeepLinkConfig, DehydratedSegment, DehydratedSegmentPair, NavGroup, NavLink, NavSegment } from './nav-util';
 import { isArray, isBlank, isPresent } from '../util/util';
 
 

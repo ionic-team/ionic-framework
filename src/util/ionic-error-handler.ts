@@ -42,7 +42,7 @@ import { ErrorHandler } from '@angular/core';
  */
 export class IonicErrorHandler extends ErrorHandler {
   constructor() {
-    super(false);
+    super();
   }
   /**
    * @internal
