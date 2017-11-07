@@ -8,6 +8,7 @@ const webdriver = require('selenium-webdriver');
 
 const Snapshot = require('./Snapshot');
 
+let driver;
 let snapshot;
 let specIndex = 0;
 let takeScreenshots = false;
@@ -53,7 +54,6 @@ function processCommandLine() {
 function registerE2ETest(desc, tst) {
   // NOTE: Do not use an arrow function here because: https://mochajs.org/#arrow-functions
   it(desc, async function() {
-    const driver = new webdriver.Builder().forBrowser('chrome').build();
     await tst(driver);
     if (takeScreenshots) {
       await snapshot.takeScreenshot(driver, {
@@ -61,7 +61,7 @@ function registerE2ETest(desc, tst) {
         specIndex: specIndex++
       });
     }
-    return driver.quit();
+    return Promise.resolve(true);
   });
 }
 
@@ -76,6 +76,8 @@ async function run() {
     timeout: 5000,
     slow: 2000
   });
+
+  driver = new webdriver.Builder().forBrowser('chrome').build();
 
   processCommandLine();
 
@@ -113,6 +115,7 @@ async function run() {
         process.exit(failures); // exit with non-zero status if there were failures
       });
       devServer.close();
+      driver.quit();
     });
   });
 }
