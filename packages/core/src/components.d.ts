@@ -366,7 +366,7 @@ declare global {
         disabled?: boolean,
         fill?: 'clear' | 'outline' | 'solid' | 'default',
         round?: boolean,
-        span?: 'full' | 'block',
+        expand?: 'full' | 'block',
         strong?: boolean,
         color?: string,
         mode?: 'ios' | 'md'
