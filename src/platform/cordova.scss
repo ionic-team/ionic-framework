@@ -94,7 +94,7 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
 
 
 @mixin footer-safe-area($toolbar-height, $toolbar-padding) {
-  .tabs .tabbar {
+  .tabs:not(.tabs-ios[tabsPlacement=top]) .tabbar {
     @include padding(null, null, constant(safe-area-inset-bottom), null);
     @include padding(null, null, env(safe-area-inset-bottom), null);
   }
