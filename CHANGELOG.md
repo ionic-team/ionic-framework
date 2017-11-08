@@ -1,3 +1,19 @@
+<a name="3.9.1"></a>
+## [3.9.1](https://github.com/ionic-team/ionic/compare/v3.9.0...v3.9.1) (2017-11-08)
+
+## Upgrade Instructions
+`ionic-angular` 3.9.1 is patch release of `ionic-angular` 3.9.0. To upgrade, follow the instructions below in the `3.9.0` changelog section, and then update `ionic-angular` to `3.9.1`
+
+```
+npm install ionic-angular@3.9.1 --save
+```
+
+### Bug Fixes
+
+* **datetime:** avoid adding cancel and done button repeatedly ([248a1ce](https://github.com/ionic-team/ionic/commit/248a1ce))
+
+
+
 <a name="3.9.0"></a>
 # [3.9.0](https://github.com/ionic-team/ionic/compare/v3.8.0...v3.9.0) (2017-11-08)
 
