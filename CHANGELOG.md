@@ -1,3 +1,19 @@
+<a name="3.9.0"></a>
+# [3.9.0](https://github.com/ionic-team/ionic/compare/v3.8.0...v3.9.0) (2017-11-08)
+
+
+### Bug Fixes
+
+* **action-sheet:** move box-shadow to first group ([4f3e91b](https://github.com/ionic-team/ionic/commit/4f3e91b))
+* **alert:** focus input after it is ready ([#13259](https://github.com/ionic-team/ionic/issues/13259)) ([e555eae](https://github.com/ionic-team/ionic/commit/e555eae))
+* **datetime:** use spread operator to copy pickerOptions ([#13202](https://github.com/ionic-team/ionic/issues/13202)) ([2ab8385](https://github.com/ionic-team/ionic/commit/2ab8385)), closes [#11641](https://github.com/ionic-team/ionic/issues/11641)
+* **input:** better support for WKKeyboard ([#13106](https://github.com/ionic-team/ionic/issues/13106)) ([e7ac15f](https://github.com/ionic-team/ionic/commit/e7ac15f))
+* **tabs:** no safe area padding for top tabs ([236e7f8](https://github.com/ionic-team/ionic/commit/236e7f8))
+* **tap-click:** clear activated state on activable element when appropriate ([#13258](https://github.com/ionic-team/ionic/issues/13258)) ([5742540](https://github.com/ionic-team/ionic/commit/5742540)), closes [#13044](https://github.com/ionic-team/ionic/issues/13044)
+* **VirtualScroll:** stop from resizing while out of view ([#13143](https://github.com/ionic-team/ionic/issues/13143)) ([6978bb5](https://github.com/ionic-team/ionic/commit/6978bb5))
+
+
+
 <a name="3.8.0"></a>
 # [3.8.0](https://github.com/ionic-team/ionic/compare/v3.7.1...v3.8.0) (2017-10-26)
 
