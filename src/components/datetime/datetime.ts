@@ -525,17 +525,20 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     // the user may have assigned some options specifically for the picker
     const pickerOptions = {...this.pickerOptions};
 
-    // Configure picker under the hood
-    const picker = this._picker = this._pickerCtrl.create(pickerOptions);
-    picker.addButton({
+    // Add a cancel and done button by default to the picker
+    const defaultButtons = [{
       text: this.cancelText,
       role: 'cancel',
       handler: () => this.ionCancel.emit(this)
-    });
-    picker.addButton({
+    }, {
       text: this.doneText,
       handler: (data: any) => this.value = data,
-    });
+    }];
+
+    pickerOptions.buttons = (pickerOptions.buttons || []).concat(defaultButtons);
+
+    // Configure picker under the hood
+    const picker = this._picker = this._pickerCtrl.create(pickerOptions);
 
     picker.ionChange.subscribe(() => {
       this.validate();
