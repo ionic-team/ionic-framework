@@ -1,6 +1,94 @@
 <a name="3.9.0"></a>
 # [3.9.0](https://github.com/ionic-team/ionic/compare/v3.8.0...v3.9.0) (2017-11-08)
 
+### Upgrade Instructions
+`ionic-angular` 3.9.0 adds support for `@angular` 5.0.0 :tada:! It is a drop-in replacement for `ionic-angular` 3.8.x.
+
+To update, remove existing `node_modules` and any lock files, and then update `package.json` to the following deps.
+
+```
+"dependencies" : {
+  ...
+  "@angular/common": "5.0.0",
+  "@angular/compiler": "5.0.0",
+  "@angular/compiler-cli": "5.0.0",
+  "@angular/core": "5.0.0",
+  "@angular/forms": "5.0.0",
+  "@angular/http": "5.0.0",
+  "@angular/platform-browser": "5.0.0",
+  "@angular/platform-browser-dynamic": "5.0.0",
+  "@ionic/storage": "2.1.3",
+  "ionic-angular": "3.9.0",
+  "rxjs": "5.5.2",
+  "zone.js": "0.8.18"
+  ...
+},
+"devDependencies: {
+  "@ionic/app-scripts": "3.1.0"
+  "typescript" : "2.4.2"
+}
+```
+
+If your app uses RXJS, see the instructions below to update.
+
+### RXJS 5.5.2 Updates
+
+The recent update of RXJS includes a change in how operators are applied.
+
+Traditionally, operators were applied like this:
+
+```typescript
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/switchMap';
+
+export MyClass {
+
+
+  someMethod(){
+    // Using Reactive Forms
+    this.input.valueChanges
+    .debounceTime(500)
+    .switchMap(inputVal => this.service.get(inputVal))
+    .subscribe(res => console.log(res))
+  }
+}
+```
+
+This approach involved modifying the Observable prototype and patching on the
+methods.
+
+RXJS 5.5 introduces a different way to do this that can lead to significantly
+smaller code bundles, lettable operators.
+
+To use lettable operators, modify the code from above to look like this:
+
+```typescript
+//Use Deep imports here for smallest bunlde size
+import { debounceTime } from 'rxjs/operators/debounceTime';
+import { switch } from 'rxjs/operators/switchMap';
+
+export MyClass {
+
+
+  someMethod(){
+    // Using Reactive Forms
+    // We use the new `.pipe` method on the observable
+    // too apply operators now
+
+    this.input.valueChanges
+    .pipe(
+      debounceTime(500),
+      switchMap(inputVal => this.service.get(inputVal))
+    )
+    .subscribe(res => console.log(res))
+  }
+}
+```
+
+This slight change allows only import the operators we need in our code. This will result in a smaller, faster application. This example uses Deep Imports, which allow the module we want to import to be isolated.
+
+Take a look at [this
+doc](https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md) for more information.
 
 ### Bug Fixes
 
