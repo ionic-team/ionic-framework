@@ -110,9 +110,12 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   background: $action-sheet-ios-background;
 
   // scss-lint:disable VendorPrefix
-  -webkit-overflow-scrolling: touch;
+  // TODO Removing this temporarily because it causes a flicker
+  // when there are not enough elements to overflow
+  // https://github.com/ionic-team/ionic/issues/13262
+  // -webkit-overflow-scrolling: touch;
   // Prevents borders from going outside of the container
-  -webkit-mask-image: -webkit-radial-gradient(circle, #fff, #000);
+  // -webkit-mask-image: -webkit-radial-gradient(circle, #fff, #000);
 }
 
 .action-sheet-ios .action-sheet-group:first-child {
