@@ -818,6 +818,14 @@ export class Slides extends Ion {
   swipeDirection: string;
   /** @hidden */
   velocity: number;
+  /** @hidden */
+  isTouched: boolean;
+  /** @hidden */
+  isMoved: boolean;
+  /** @hidden */
+  allowTouchCallbacks: boolean;
+  /** @hidden */
+  isScrolling: boolean;
 
 
   /**
