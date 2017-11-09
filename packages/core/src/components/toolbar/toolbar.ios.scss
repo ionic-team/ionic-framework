@@ -36,6 +36,7 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 
 .toolbar-ios {
   @include padding($toolbar-ios-padding);
+  @include safe-area-padding($toolbar-ios-padding);
 
   min-height: $toolbar-ios-height;
 }
