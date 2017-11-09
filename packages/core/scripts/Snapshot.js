@@ -7,7 +7,6 @@ class Snapshot {
     this.appId = (options && options.appId) || 'test_app';
     this.domain = (options && options.domain) || 'localhost:8080';
     this.groupId = (options && options.groupId) || 'test_group';
-    this.testId = options && options.testId;
     this.sleepTime = (options && options.sleepBetweenSpecs) || 500;
     this.totalSpecs = options && options.totalSpecs;
     this.accessKey = options && options.accessKey;
@@ -22,6 +21,17 @@ class Snapshot {
     this.height =
       (options && options.platformDefaults && options.platformDefaults.params && options.platformDefaults.params.height) || -1;
 
+    this.start(options && options.testId);
+  }
+
+  async finish() {
+    console.log('waiting for uploads to complete');
+    await Promise.all(this.queue);
+    console.log(`done processing ${this.queue.length} screenshots`);
+  }
+
+  start(testId) {
+    this.testId = testId;
     this.queue = [];
     this.highestMismatch = 0;
     this.mismatches = [];
@@ -65,6 +75,7 @@ class Snapshot {
             this.mismatches.push(resultKey);
           }
         }
+        resolve(res);
       });
     });
     this.queue.push(p);

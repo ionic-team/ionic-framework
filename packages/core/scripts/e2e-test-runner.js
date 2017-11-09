@@ -94,7 +94,7 @@ async function run() {
       testId: generateTestId(),
       domain: 'ionic-snapshot-go.appspot.com',
       // domain: 'localhost:8080',
-      sleepBetweenSpecs: 300,
+      sleepBetweenSpecs: 750,
       totalSpecs: getTotalTests(mocha.suite),
       platformDefaults: {
         browser: 'chrome',
@@ -114,6 +114,9 @@ async function run() {
       process.on('exit', function() {
         process.exit(failures); // exit with non-zero status if there were failures
       });
+      if (takeScreenshots) {
+        snapshot.finish();
+      }
       devServer.close();
       driver.quit();
     });
