@@ -4,6 +4,8 @@ import { createThemedClasses } from '../../utils/theme';
 
 import { InputComponent } from './input-base';
 
+import { ComponentDetail } from '../../index';
+
 @Component({
   tag: 'ion-input',
   styleUrls: {
@@ -30,14 +32,14 @@ export class Input implements InputComponent {
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the input loses focus.
+   * @output {ComponentEvent} Emitted when the input loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur: EventEmitter<ComponentDetail<Input>>;
 
   /**
-   * @output {Event} Emitted when the input has focus.
+   * @output {ComponentEvent} Emitted when the input has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus: EventEmitter<ComponentDetail<Input>>;
 
   /**
    * @input {string} If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -229,8 +231,8 @@ export class Input implements InputComponent {
   /**
    * @hidden
    */
-  inputBlurred(ev: any) {
-    this.ionBlur.emit(ev);
+  inputBlurred() {
+    this.ionBlur.emit({ component: this });
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
@@ -249,8 +251,8 @@ export class Input implements InputComponent {
   /**
    * @hidden
    */
-  inputFocused(ev: any) {
-    this.ionFocus.emit(ev);
+  inputFocused() {
+    this.ionFocus.emit({ component: this });
 
     this.focusChange(this.hasFocus());
     this.emitStyle();

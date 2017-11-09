@@ -37,17 +37,17 @@ export class Label {
   @Prop() mode: 'ios' | 'md' | 'wp';
 
   /**
-   * @output {Event} If true, the label will sit alongside an input. Defaults to `false`.
+   * @input {boolean} If true, the label will sit alongside an input. Defaults to `false`.
    */
   @Prop() fixed: boolean = false;
 
   /**
-   * @output {Event} If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
+   * @input {boolean} If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
    */
   @Prop() floating: boolean = false;
 
   /**
-   * @output {Event} If true, the label will be stacked above an input. Defaults to `false`.
+   * @input {boolean} If true, the label will be stacked above an input. Defaults to `false`.
    */
   @Prop() stacked: boolean = false;
 

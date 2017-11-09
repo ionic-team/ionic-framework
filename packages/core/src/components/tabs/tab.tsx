@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 
+import { ComponentDetail } from '../../index';
 
 @Component({
   tag: 'ion-tab',
@@ -69,9 +70,9 @@ export class Tab {
   @Prop() onSelected: Function;
 
   /**
-   * @output {TabEvent} Emitted after the tab has loaded.
+   * @output {ComponentEvent} Emitted after the tab has loaded.
    */
-  @Event() ionTabDidLoad: EventEmitter;
+  @Event() ionTabDidLoad: EventEmitter<ComponentDetail<Tab>>;
 
   hostData() {
     return {
@@ -84,12 +85,12 @@ export class Tab {
 
   protected ionViewDidLoad() {
     setTimeout(() => {
-      this.ionTabDidLoad.emit({ tab: this });
+      this.ionTabDidLoad.emit({ component: this });
     }, 0);
   }
 
   protected ionViewDidUnload() {
-    this.ionTabDidLoad.emit({ tab: this });
+    this.ionTabDidLoad.emit({ component: this });
   }
 
   protected render() {
@@ -98,11 +99,5 @@ export class Tab {
       <RootComponent />,
       <div class='nav-decor'></div>
     ];
-  }
-}
-
-export interface TabEvent extends Event {
-  detail: {
-    tab: Tab
   }
 }

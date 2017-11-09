@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, ComponentDetail, Config } from '../../index';
 
 import { createThemedClasses } from '../../utils/theme';
 
@@ -25,34 +25,34 @@ export class Popover {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has loaded.
+   * @output {ComponentEvent} Emitted after the popover has loaded.
    */
-  @Event() ionPopoverDidLoad: EventEmitter;
+  @Event() ionPopoverDidLoad: EventEmitter<ComponentDetail<Popover>>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has presented.
+   * @output {ComponentEvent} Emitted after the popover has presented.
    */
-  @Event() ionPopoverDidPresent: EventEmitter;
+  @Event() ionPopoverDidPresent: EventEmitter<ComponentDetail<Popover>>;
 
   /**
-   * @output {PopoverEvent} Emitted before the popover has presented.
+   * @output {ComponentEvent} Emitted before the popover has presented.
    */
-  @Event() ionPopoverWillPresent: EventEmitter;
+  @Event() ionPopoverWillPresent: EventEmitter<ComponentDetail<Popover>>;
 
   /**
-   * @output {PopoverEvent} Emitted before the popover has dismissed.
+   * @output {ComponentEvent} Emitted before the popover has dismissed.
    */
-  @Event() ionPopoverWillDismiss: EventEmitter;
+  @Event() ionPopoverWillDismiss: EventEmitter<ComponentDetail<Popover>>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has dismissed.
+   * @output {ComponentEvent} Emitted after the popover has dismissed.
    */
-  @Event() ionPopoverDidDismiss: EventEmitter;
+  @Event() ionPopoverDidDismiss: EventEmitter<ComponentDetail<Popover>>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has unloaded.
+   * @output {ComponentEvent} Emitted after the popover has unloaded.
    */
-  @Event() ionPopoverDidUnload: EventEmitter;
+  @Event() ionPopoverDidUnload: EventEmitter<ComponentDetail<Popover>>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -202,7 +202,7 @@ export class Popover {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionPopoverWillPresent.emit({ popover: this });
+    this.ionPopoverWillPresent.emit({ component: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -232,7 +232,7 @@ export class Popover {
       this.animation = null;
     }
     return new Promise(resolve => {
-      this.ionPopoverWillDismiss.emit({ popover: this });
+      this.ionPopoverWillDismiss.emit({ component: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -248,7 +248,7 @@ export class Popover {
 
         animation.onFinish((a: any) => {
           a.destroy();
-          this.ionPopoverDidDismiss.emit({ popover: this });
+          this.ionPopoverDidDismiss.emit({ component: this });
 
           Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -261,7 +261,7 @@ export class Popover {
   }
 
   protected ionViewDidUnload() {
-    this.ionPopoverDidUnload.emit({ popover: this });
+    this.ionPopoverDidUnload.emit({ component: this });
   }
 
   @Listen('ionDismiss')
@@ -273,11 +273,11 @@ export class Popover {
   }
 
   protected ionViewDidLoad() {
-    this.ionPopoverDidLoad.emit({ popover: this });
+    this.ionPopoverDidLoad.emit({ component: this });
   }
 
   protected ionViewDidEnter() {
-    this.ionPopoverDidPresent.emit({ popover: this });
+    this.ionPopoverDidPresent.emit({ component: this });
   }
 
   protected backdropClick() {
@@ -327,7 +327,7 @@ export interface PopoverOptions {
   ev: Event;
 }
 
-export interface PopoverEvent {
+export interface ComponentEvent {
   detail: {
     popover: Popover;
   };

@@ -1,4 +1,4 @@
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, ComponentDetail, Config } from '../../index';
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -24,34 +24,34 @@ export class Loading {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has loaded.
+   * @output {ComponentEvent} Emitted after the loading has loaded.
    */
-  @Event() ionLoadingDidLoad: EventEmitter;
+  @Event() ionLoadingDidLoad: EventEmitter<ComponentDetail<Loading>>;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has presented.
+   * @output {ComponentEvent} Emitted after the loading has presented.
    */
-  @Event() ionLoadingDidPresent: EventEmitter;
+  @Event() ionLoadingDidPresent: EventEmitter<ComponentDetail<Loading>>;
 
   /**
-   * @output {LoadingEvent} Emitted before the loading has presented.
+   * @output {ComponentEvent} Emitted before the loading has presented.
    */
-  @Event() ionLoadingWillPresent: EventEmitter;
+  @Event() ionLoadingWillPresent: EventEmitter<ComponentDetail<Loading>>;
 
   /**
-   * @output {LoadingEvent} Emitted before the loading has dismissed.
+   * @output {ComponentEvent} Emitted before the loading has dismissed.
    */
-  @Event() ionLoadingWillDismiss: EventEmitter;
+  @Event() ionLoadingWillDismiss: EventEmitter<ComponentDetail<Loading>>;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has dismissed.
+   * @output {ComponentEvent} Emitted after the loading has dismissed.
    */
-  @Event() ionLoadingDidDismiss: EventEmitter;
+  @Event() ionLoadingDidDismiss: EventEmitter<ComponentDetail<Loading>>;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has unloaded.
+   * @output {ComponentEvent} Emitted after the loading has unloaded.
    */
-  @Event() ionLoadingDidUnload: EventEmitter;
+  @Event() ionLoadingDidUnload: EventEmitter<ComponentDetail<Loading>>;
 
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;
@@ -79,7 +79,7 @@ export class Loading {
       this.animation = null;
     }
 
-    this.ionLoadingWillPresent.emit({ loading: this });
+    this.ionLoadingWillPresent.emit({ component: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -112,7 +112,7 @@ export class Loading {
     }
 
     return new Promise(resolve => {
-      this.ionLoadingWillDismiss.emit({ loading: this });
+      this.ionLoadingWillDismiss.emit({ component: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -129,7 +129,7 @@ export class Loading {
 
         animation.onFinish((a: any) => {
           a.destroy();
-          this.ionLoadingDidDismiss.emit({ loading: this });
+          this.ionLoadingDidDismiss.emit({ component: this });
 
           Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -143,7 +143,7 @@ export class Loading {
   }
 
   protected ionViewDidUnload() {
-    this.ionLoadingDidUnload.emit({ loading: this });
+    this.ionLoadingDidUnload.emit({ component: this });
   }
 
   @Listen('ionDismiss')
@@ -170,7 +170,7 @@ export class Loading {
     if (this.showSpinner === null || this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
-    this.ionLoadingDidLoad.emit({ loading: this });
+    this.ionLoadingDidLoad.emit({ component: this });
   }
 
   protected ionViewDidEnter() {
@@ -183,7 +183,7 @@ export class Loading {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
 
-    this.ionLoadingDidPresent.emit({ loading: this });
+    this.ionLoadingDidPresent.emit({ component: this });
   }
 
   protected render() {
@@ -234,11 +234,4 @@ export interface LoadingOptions {
   showBackdrop?: boolean;
   dismissOnPageChange?: boolean;
   duration?: number;
-}
-
-
-export interface LoadingEvent extends Event {
-  detail: {
-    loading: Loading;
-  };
 }

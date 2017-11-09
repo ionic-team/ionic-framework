@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+
 import { Side, isRightSide } from '../../utils/helpers';
 
+import { ComponentDetail } from '../../index';
 
 /**
  * @name ItemOptions
@@ -36,9 +38,9 @@ export class ItemOptions {
   @Prop() side: Side = 'right';
 
   /**
-   * @output {Event} Emitted when the item has been fully swiped.
+   * @output {ComponentEvent} Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe: EventEmitter;
+  @Event() ionSwipe: EventEmitter<ComponentDetail<ItemOptions>>;
 
   @Method()
   isRightSide() {

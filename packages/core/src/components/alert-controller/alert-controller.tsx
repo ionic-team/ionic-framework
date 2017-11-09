@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Alert, AlertEvent, AlertOptions  } from '../../index';
+import { Alert, AlertOptions, ComponentEvent } from '../../index';
 
 
 @Component({
@@ -36,8 +36,8 @@ export class AlertController {
   }
 
   @Listen('body:ionAlertDidLoad')
-  protected viewDidLoad(ev: AlertEvent) {
-    const alert = ev.detail.alert;
+  protected viewDidLoad(ev: ComponentEvent<Alert>) {
+    const alert = ev.detail.component;
     const alertResolve = this.alertResolves[alert.alertId];
     if (alertResolve) {
       alertResolve(alert);
@@ -46,13 +46,13 @@ export class AlertController {
   }
 
   @Listen('body:ionAlertWillPresent')
-  protected willPresent(ev: AlertEvent) {
-    this.alerts.push(ev.detail.alert);
+  protected willPresent(ev: ComponentEvent<Alert>) {
+    this.alerts.push(ev.detail.component);
   }
 
   @Listen('body:ionAlertWillDismiss, body:ionAlertDidUnload')
-  protected willDismiss(ev: AlertEvent) {
-    const index = this.alerts.indexOf(ev.detail.alert);
+  protected willDismiss(ev: ComponentEvent<Alert>) {
+    const index = this.alerts.indexOf(ev.detail.component);
     if (index > -1) {
       this.alerts.splice(index, 1);
     }

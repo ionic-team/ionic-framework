@@ -19,7 +19,7 @@
         <ion-list>
           <ion-item>
             <ion-label>Apple</ion-label>
-            <ion-checkbox slot="start" name="apple" checked></ion-checkbox>
+            <ion-checkbox slot="start" id="apple" name="apple" checked></ion-checkbox>
           </ion-item>
 
           <ion-item>
@@ -107,8 +107,19 @@
     </ion-page>
 
     <script>
+      const checkboxes = document.getElementsByTagName('ion-checkbox');
+
+      for(var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('ionChange', checkboxChanged, false);
+      }
+
+      function checkboxChanged(ev) {
+        console.log('checkboxChanged', ev.detail.component);
+        console.log('checkboxChanged', ev.target);
+      }
+
       function printForm(ev) {
-        console.log('TODO get working with forms');
+        console.log('TODO get working with forms', ev);
       }
 
       function toggleBoolean(id, prop) {

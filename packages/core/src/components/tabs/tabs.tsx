@@ -1,6 +1,8 @@
 import { Component, Listen, Prop, PropDidChange, State } from '@stencil/core';
 
-import { TabEvent } from './tab';
+import { ComponentEvent } from '../../index';
+
+import { Tab } from './tab';
 
 @Component({
   tag: 'ion-tabs',
@@ -45,6 +47,7 @@ export class Tabs {
   /**
    * @output {Event} Emitted when the tab changes.
    */
+  // TODO should this be an event?
   @Prop() ionChange: Function;
 
   /**
@@ -56,8 +59,8 @@ export class Tabs {
   }
 
   @Listen('ionTabDidLoad')
-  tabDidLoad(ev: TabEvent) {
-    const tab = ev.detail.tab;
+  tabDidLoad(ev: ComponentEvent<Tab>) {
+    const tab = ev.detail.component;
 
     // First tab? Select it
     if (this.tabs.length === 0) {

@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
-// import { assert } from '../../utils/helpers';
+
+import { ComponentDetail } from '../../index';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -159,14 +160,14 @@ export class SplitPane {
   @Prop() when: string | boolean = QUERY['md'];
 
   /**
-   * @output {Event} Expression to be called when the split-pane visibility has changed
+   * @output {ComponentEvent} Expression to be called when the split-pane visibility has changed
    */
-  @Event() ionSplitPaneDidChange: EventEmitter;
+  @Event() ionSplitPaneDidChange: EventEmitter<ComponentDetail<SplitPane>>;
 
   /**
-   * @output {Event} Emitted when the split pane is visible.
+   * @output {ComponentEvent} Emitted when the split pane is visible.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<ComponentDetail<SplitPane>>;
 
   protected ionViewDidLoad() {
     this._styleChildren();
@@ -240,9 +241,9 @@ export class SplitPane {
   private _setVisible(visible: boolean) {
     if (this.visible !== visible) {
       this.visible = visible;
-      const detail = { splitPane: this };
-      this.ionChange.emit(detail);
-      this.ionSplitPaneDidChange.emit(detail);
+
+      this.ionChange.emit({ component: this });
+      this.ionSplitPaneDidChange.emit({ component: this });
     }
   }
 
@@ -274,12 +275,6 @@ export class SplitPane {
     return <slot></slot>;
   }
 
-}
-
-export interface SplitPaneAlert {
-  detail: {
-    splitPane: SplitPane
-  };
 }
 
 function setPaneClass(el: HTMLElement, isMain: boolean) {

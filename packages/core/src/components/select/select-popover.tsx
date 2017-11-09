@@ -1,6 +1,7 @@
 
 import { Component, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 
+import { ComponentDetail, ComponentEvent } from '../../index';
 
 export interface SelectPopoverOption {
   text: string;
@@ -21,9 +22,9 @@ export class SelectPopover {
   color: string;
 
   /**
-   * @output {Event} Emitted when the select popover is dismissed.
+   * @output {ComponentEvent} Emitted when the select popover is dismissed.
    */
-  @Event() ionDismiss: EventEmitter;
+  @Event() ionDismiss: EventEmitter<ComponentDetail<SelectPopover>>;
 
   @Prop() options: SelectPopoverOption[];
 
@@ -33,8 +34,8 @@ export class SelectPopover {
   @Prop({ mutable: true }) value: string;
 
   @Listen('ionChange')
-  onChange(ev: CustomEvent) {
-    this.value = ev.detail.value;
+  onChange(ev: ComponentEvent<SelectPopover>) {
+    this.value = ev.detail.component.value;
   }
 
   // public get value() {

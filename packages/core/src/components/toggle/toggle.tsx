@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { BooleanInputComponent, GestureDetail } from '../../index';
+import { BooleanInputComponent, ComponentDetail, GestureDetail } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
 
 
@@ -25,24 +25,24 @@ export class Toggle implements BooleanInputComponent {
 
   @State() activated: boolean = false;
   /**
-   * @output {Event} Emitted when the value property has changed.
+   * @output {ComponentEvent} Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<ComponentDetail<Toggle>>;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * @output {ComponentEvent} Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the toggle has focus.
+   * @output {ComponentEvent} Emitted when the toggle has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus: EventEmitter<ComponentDetail<Toggle>>;
 
   /**
-   * @output {Event} Emitted when the toggle loses focus.
+   * @output {ComponentEvent} Emitted when the toggle loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur: EventEmitter<ComponentDetail<Toggle>>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -64,8 +64,8 @@ export class Toggle implements BooleanInputComponent {
   @Prop({ mutable: true }) checked: boolean = false;
 
   @PropDidChange('checked')
-  protected checkedChanged(val: boolean) {
-    this.ionChange.emit({ checked: val });
+  protected checkedChanged() {
+    this.ionChange.emit({ component: this });
     this.emitStyle();
   }
 

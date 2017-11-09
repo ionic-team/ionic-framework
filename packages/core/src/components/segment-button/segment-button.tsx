@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
-import { CssClassMap } from '../../index';
+import { ComponentDetail, CssClassMap } from '../../index';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 
 
@@ -49,9 +49,9 @@ export class SegmentButton {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {SegmentButtonEvent} Emitted when the segment button is clicked.
+   * @output {ComponentEvent} Emitted when the segment button is clicked.
    */
-  @Event() ionClick: EventEmitter;
+  @Event() ionClick: EventEmitter<ComponentDetail<SegmentButton>>;
 
   @State() activated: boolean = false;
 
@@ -99,7 +99,7 @@ export class SegmentButton {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      this.ionClick.emit({ segmentButton: this });
+      this.ionClick.emit({ component: this });
     });
   }
 
@@ -140,12 +140,5 @@ export class SegmentButton {
         <slot></slot>
       </button>
     ];
-  }
-}
-
-
-export interface SegmentButtonEvent extends Event {
-  detail: {
-    segmentButton: SegmentButton;
   }
 }

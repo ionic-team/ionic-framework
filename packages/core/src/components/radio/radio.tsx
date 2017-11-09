@@ -2,6 +2,7 @@ import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChang
 
 import { createThemedClasses } from '../../utils/theme';
 
+import { ComponentDetail } from '../../index';
 
 /**
  * @description
@@ -58,24 +59,24 @@ export class Radio {
   @State() activated: boolean;
 
   /**
-   * @output {RadioEvent} Emitted when the radio loads.
+   * @output {ComponentEvent} Emitted when the radio loads.
    */
-  @Event() ionRadioDidLoad: EventEmitter;
+  @Event() ionRadioDidLoad: EventEmitter<ComponentDetail<Radio>>;
 
   /**
-   * @output {RadioEvent} Emitted when the radio unloads.
+   * @output {ComponentEvent} Emitted when the radio unloads.
    */
-  @Event() ionRadioDidUnload: EventEmitter;
+  @Event() ionRadioDidUnload: EventEmitter<ComponentDetail<Radio>>;
 
   /**
-   * @output {RadioEvent} Emitted when the radio is toggled.
+   * @output {ComponentEvent} Emitted when the radio is toggled.
    */
-  @Event() ionRadioDidToggle: EventEmitter;
+  @Event() ionRadioDidToggle: EventEmitter<ComponentDetail<Radio>>;
 
   /**
-   * @output {RadioEvent} Emitted when the radio checked property is changed.
+   * @output {ComponentEvent} Emitted when the radio checked property is changed.
    */
-  @Event() ionRadioCheckedDidChange: EventEmitter;
+  @Event() ionRadioCheckedDidChange: EventEmitter<ComponentDetail<Radio>>;
 
   /**
    * @output {Event} Emitted when the styles change.
@@ -83,9 +84,9 @@ export class Radio {
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the radio is selected.
+   * @output {ComponentEvent} Emitted when the radio is selected.
    */
-  @Event() ionSelect: EventEmitter;
+  @Event() ionSelect: EventEmitter<ComponentDetail<Radio>>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -121,11 +122,11 @@ export class Radio {
   }
 
   protected ionViewDidLoad() {
-    this.ionRadioDidLoad.emit({ radio: this });
+    this.ionRadioDidLoad.emit({ component: this });
   }
 
   protected ionViewDidUnload() {
-    this.ionRadioDidUnload.emit({ radio: this });
+    this.ionRadioDidUnload.emit({ component: this });
   }
 
   @PropDidChange('color')
@@ -135,8 +136,8 @@ export class Radio {
 
   @PropDidChange('checked')
   protected checkedChanged(val: boolean) {
-    this.ionRadioCheckedDidChange.emit({ radio: this });
-    this.ionSelect.emit({ checked: val });
+    this.ionRadioCheckedDidChange.emit({ component: this });
+    this.ionSelect.emit({ component: this });
     this.emitStyle();
   }
 
@@ -166,7 +167,7 @@ export class Radio {
 
   toggle() {
     this.checked = !this.checked;
-    this.ionRadioDidToggle.emit({ radio: this });
+    this.ionRadioDidToggle.emit({ component: this });
   }
 
   hostData() {
@@ -200,10 +201,4 @@ export class Radio {
       />
     ];
   }
-}
-
-export interface RadioEvent extends Event {
-  detail: {
-    radio: Radio;
-  };
 }

@@ -1,5 +1,13 @@
 import { StencilElement } from '..';
 
+export interface ComponentDetail<T> {
+  component: T
+}
+
+export interface ComponentEvent<T> extends CustomEvent {
+  detail: ComponentDetail<T>
+}
+
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }

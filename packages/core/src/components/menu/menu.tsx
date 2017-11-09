@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, PropWillChange } from '@stencil/core';
-import { Animation, Config, GestureDetail, HTMLIonMenuControllerElement, HTMLIonMenuElement, SplitPaneAlert, StencilElement } from '../../index';
+import { Animation, ComponentDetail, ComponentEvent, Config, GestureDetail, HTMLIonMenuControllerElement, HTMLIonMenuElement, StencilElement } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
+
+import { SplitPane } from '../split-pane/split-pane';
 
 @Component({
   tag: 'ion-menu',
@@ -106,20 +108,20 @@ export class Menu {
 
 
   /**
-   * @output {Event} Emitted when the sliding position changes.
+   * @output {ComponentEvent} Emitted when the sliding position changes.
    * It reports the relative position.
    */
-  @Event() ionDrag: EventEmitter;
+  @Event() ionDrag: EventEmitter<ComponentDetail<Menu>>;
 
   /**
-   * @output {Event} Emitted when the menu is open.
+   * @output {ComponentEvent} Emitted when the menu is open.
    */
-  @Event() ionOpen: EventEmitter;
+  @Event() ionOpen: EventEmitter<ComponentDetail<Menu>>;
 
   /**
-   * @output {Event} Emitted when the menu is closed.
+   * @output {ComponentEvent} Emitted when the menu is closed.
    */
-  @Event() ionClose: EventEmitter;
+  @Event() ionClose: EventEmitter<ComponentDetail<Menu>>;
 
   protected ionViewWillLoad() {
     return this.lazyMenuCtrl.componentOnReady().then(menu => {
@@ -172,8 +174,8 @@ export class Menu {
   }
 
   @Listen('body:ionSplitPaneDidChange')
-  splitPaneChanged(ev: SplitPaneAlert) {
-    this.isPane = ev.detail.splitPane.isPane(this.el);
+  splitPaneChanged(ev: ComponentEvent<SplitPane>) {
+    this.isPane = ev.detail.component.isPane(this.el);
     this.updateState();
   }
 
@@ -385,7 +387,7 @@ export class Menu {
       this.contentEl.classList.add(MENU_CONTENT_OPEN);
 
       // emit open event
-      this.ionOpen.emit({ menu: this });
+      this.ionOpen.emit({ component: this });
 
     } else {
       // enable swipe to go back gesture
@@ -397,7 +399,7 @@ export class Menu {
       this.backdropEl.classList.remove(SHOW_BACKDROP);
 
       // emit close event
-      this.ionClose.emit({ menu: this });
+      this.ionClose.emit({ component: this });
     }
     return isOpen;
   }

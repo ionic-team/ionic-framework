@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Picker, PickerEvent, PickerOptions } from '../../index';
+import { ComponentEvent, Picker, PickerOptions } from '../../index';
 
 
 @Component({
@@ -37,8 +37,8 @@ export class PickerController {
 
 
   @Listen('body:ionPickerDidLoad')
-  protected viewDidLoad(ev: PickerEvent) {
-    const picker = ev.detail.picker;
+  protected viewDidLoad(ev: ComponentEvent<Picker>) {
+    const picker = ev.detail.component;
     const pickerResolve = this.pickerResolves[picker.pickerId];
     if (pickerResolve) {
       pickerResolve(picker);
@@ -48,14 +48,14 @@ export class PickerController {
 
 
   @Listen('body:ionPickerWillPresent')
-  protected willPresent(ev: PickerEvent) {
-    this.pickers.push(ev.detail.picker);
+  protected willPresent(ev: ComponentEvent<Picker>) {
+    this.pickers.push(ev.detail.component);
   }
 
 
   @Listen('body:ionPickerWillDismiss, body:ionPickerDidUnload')
-  protected willDismiss(ev: PickerEvent) {
-    const index = this.pickers.indexOf(ev.detail.picker);
+  protected willDismiss(ev: ComponentEvent<Picker>) {
+    const index = this.pickers.indexOf(ev.detail.component);
     if (index > -1) {
       this.pickers.splice(index, 1);
     }

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, ComponentDetail } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -21,34 +21,34 @@ export class Modal {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has loaded.
+   * @output {ComponentEvent} Emitted after the modal has loaded.
    */
-  @Event() ionModalDidLoad: EventEmitter;
+  @Event() ionModalDidLoad: EventEmitter<ComponentDetail<Modal>>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has presented.
+   * @output {ComponentEvent} Emitted after the modal has presented.
    */
-  @Event() ionModalDidPresent: EventEmitter;
+  @Event() ionModalDidPresent: EventEmitter<ComponentDetail<Modal>>;
 
   /**
-   * @output {ModalEvent} Emitted before the modal has presented.
+   * @output {ComponentEvent} Emitted before the modal has presented.
    */
-  @Event() ionModalWillPresent: EventEmitter;
+  @Event() ionModalWillPresent: EventEmitter<ComponentDetail<Modal>>;
 
   /**
-   * @output {ModalEvent} Emitted before the modal has dismissed.
+   * @output {ComponentEvent} Emitted before the modal has dismissed.
    */
-  @Event() ionModalWillDismiss: EventEmitter;
+  @Event() ionModalWillDismiss: EventEmitter<ComponentDetail<Modal>>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has dismissed.
+   * @output {ComponentEvent} Emitted after the modal has dismissed.
    */
-  @Event() ionModalDidDismiss: EventEmitter;
+  @Event() ionModalDidDismiss: EventEmitter<ComponentDetail<Modal>>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has unloaded.
+   * @output {ComponentEvent} Emitted after the modal has unloaded.
    */
-  @Event() ionModalDidUnload: EventEmitter;
+  @Event() ionModalDidUnload: EventEmitter<ComponentDetail<Modal>>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop() mode: string;
@@ -77,7 +77,7 @@ export class Modal {
       this.animation = null;
     }
 
-    this.ionModalWillPresent.emit({ modal: this });
+    this.ionModalWillPresent.emit({ component: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -95,7 +95,7 @@ export class Modal {
 
       animation.onFinish((a: any) => {
         a.destroy();
-        this.ionModalDidPresent.emit({ modal: this });
+        this.ionModalDidPresent.emit({ component: this });
         resolve();
       }).play();
     });
@@ -108,7 +108,7 @@ export class Modal {
     }
 
     return new Promise<void>(resolve => {
-      this.ionModalWillDismiss.emit({ modal: this });
+      this.ionModalWillDismiss.emit({ component: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -126,7 +126,7 @@ export class Modal {
 
         animation.onFinish((a: any) => {
           a.destroy();
-          this.ionModalDidDismiss.emit({ modal: this });
+          this.ionModalDidDismiss.emit({ component: this });
 
           Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -146,11 +146,11 @@ export class Modal {
   }
 
   protected ionViewDidLoad() {
-    this.ionModalDidLoad.emit({ modal: this });
+    this.ionModalDidLoad.emit({ component: this });
   }
 
   protected ionViewDidUnload() {
-    this.ionModalDidUnload.emit({ modal: this });
+    this.ionModalDidUnload.emit({ component: this });
   }
 
   protected backdropClick() {
@@ -204,11 +204,4 @@ export interface ModalOptions {
   enterAnimation?: AnimationBuilder;
   exitAnimation?: AnimationBuilder;
   cssClass?: string;
-}
-
-
-export interface ModalEvent extends Event {
-  detail: {
-    modal: Modal;
-  };
 }

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { BaseInputComponent, GestureDetail } from '../../index';
+import { BaseInputComponent, ComponentDetail, GestureDetail } from '../../index';
 import { clamp } from '../../utils/helpers';
 
 @Component({
@@ -40,9 +40,9 @@ export class Range implements BaseInputComponent {
   @State() pressedB: boolean;
 
   /**
-   * @output {Event} Emitted when the value property has changed.
+   * @output {ComponentEvent} Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<ComponentDetail<Range>>;
 
   /**
    * @output {Event} Emitted when the styles change.
@@ -50,14 +50,14 @@ export class Range implements BaseInputComponent {
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the range has focus.
+   * @output {ComponentEvent} Emitted when the range has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus: EventEmitter<ComponentDetail<Range>>;
 
   /**
-   * @output {Event} Emitted when the range loses focus.
+   * @output {ComponentEvent} Emitted when the range loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur: EventEmitter<ComponentDetail<Range>>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -128,8 +128,8 @@ export class Range implements BaseInputComponent {
   }
 
   @PropDidChange('value')
-  protected valueChanged(val: boolean) {
-    this.ionChange.emit({ value: val });
+  protected valueChanged() {
+    this.ionChange.emit({ component: this });
     this.emitStyle();
   }
 
@@ -152,7 +152,7 @@ export class Range implements BaseInputComponent {
   fireBlur() {
     if (this.hasFocus) {
       this.hasFocus = false;
-      this.ionBlur.emit();
+      this.ionBlur.emit({ component: this });
       this.emitStyle();
     }
   }
@@ -160,7 +160,7 @@ export class Range implements BaseInputComponent {
   fireFocus() {
     if (!this.hasFocus) {
       this.hasFocus = true;
-      this.ionFocus.emit();
+      this.ionFocus.emit({ component: this });
       this.emitStyle();
     }
   }

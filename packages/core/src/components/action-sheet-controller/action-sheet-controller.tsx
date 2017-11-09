@@ -1,6 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ActionSheet, ActionSheetEvent, ActionSheetOptions  } from '../../index';
-
+import { ActionSheet, ActionSheetOptions, ComponentEvent  } from '../../index';
 
 @Component({
   tag: 'ion-action-sheet-controller'
@@ -36,8 +35,8 @@ export class ActionSheetController {
   }
 
   @Listen('body:ionActionSheetDidLoad')
-  protected viewDidLoad(ev: ActionSheetEvent) {
-    const actionSheet = ev.detail.actionSheet;
+  protected viewDidLoad(ev: ComponentEvent<ActionSheet>) {
+    const actionSheet = ev.detail.component;
     const actionSheetResolve = this.actionSheetResolves[actionSheet.actionSheetId];
     if (actionSheetResolve) {
       actionSheetResolve(actionSheet);
@@ -46,13 +45,13 @@ export class ActionSheetController {
   }
 
   @Listen('body:ionActionSheetWillPresent')
-  protected willPresent(ev: ActionSheetEvent) {
-    this.actionSheets.push(ev.detail.actionSheet);
+  protected willPresent(ev: ComponentEvent<ActionSheet>) {
+    this.actionSheets.push(ev.detail.component);
   }
 
   @Listen('body:ionActionSheetWillDismiss, body:ionActionSheetDidUnload')
-  protected willDismiss(ev: ActionSheetEvent) {
-    const index = this.actionSheets.indexOf(ev.detail.actionSheet);
+  protected willDismiss(ev: ComponentEvent<ActionSheet>) {
+    const index = this.actionSheets.indexOf(ev.detail.component);
     if (index > -1) {
       this.actionSheets.splice(index, 1);
     }

@@ -2,6 +2,8 @@ import { Component, CssClassMap, Element, Event, EventEmitter, Prop, PropDidChan
 
 import { deepCopy, isCheckedProperty } from '../../utils/helpers';
 
+import { ComponentDetail } from '../../index';
+
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
 import { Popover } from '../popover/popover';
@@ -100,9 +102,9 @@ export class Select {
   }
 
   /**
-   * @output {Event} Emitted when the selection is cancelled.
+   * @output {ComponentEvent} Emitted when the selection is cancelled.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel: EventEmitter<ComponentDetail<Select>>;
 
 
   protected ionViewDidLoad() {
@@ -328,7 +330,7 @@ export class Select {
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.ionCancel.emit(this);
+        this.ionCancel.emit({ component: this });
       }
     }];
 

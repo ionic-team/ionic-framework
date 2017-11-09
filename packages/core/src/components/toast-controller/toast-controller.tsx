@@ -1,5 +1,6 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Toast, ToastEvent, ToastOptions } from '../../index';
+
+import { ComponentEvent, Toast, ToastOptions } from '../../index';
 
 @Component({
   tag: 'ion-toast-controller'
@@ -34,8 +35,8 @@ export class ToastController {
   }
 
   @Listen('body:ionToastDidLoad')
-  protected viewDidLoad(ev: ToastEvent) {
-    const toast = ev.detail.toast;
+  protected viewDidLoad(ev: ComponentEvent<Toast>) {
+    const toast = ev.detail.component;
     const toastResolve = this.toastResolves[toast.toastId];
     if (toastResolve) {
       toastResolve(toast);
@@ -44,13 +45,13 @@ export class ToastController {
   }
 
   @Listen('body:ionToastWillPresent')
-  protected willPresent(ev: ToastEvent) {
-    this.toasts.push(ev.detail.toast);
+  protected willPresent(ev: ComponentEvent<Toast>) {
+    this.toasts.push(ev.detail.component);
   }
 
   @Listen('body:ionToastWillDismiss, body:ionToastDidUnload')
-  protected willDismiss(ev: ToastEvent) {
-    const index = this.toasts.indexOf(ev.detail.toast);
+  protected willDismiss(ev: ComponentEvent<Toast>) {
+    const index = this.toasts.indexOf(ev.detail.component);
     if (index > -1) {
       this.toasts.splice(index, 1);
     }

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, ComponentDetail, Config, CssClassMap } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -21,34 +21,34 @@ export class Toast {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has loaded.
+   * @output {ComponentEvent} Emitted after the toast has loaded.
    */
-  @Event() ionToastDidLoad: EventEmitter;
+  @Event() ionToastDidLoad: EventEmitter<ComponentDetail<Toast>>;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has presented.
+   * @output {ComponentEvent} Emitted after the toast has presented.
    */
-  @Event() ionToastDidPresent: EventEmitter;
+  @Event() ionToastDidPresent: EventEmitter<ComponentDetail<Toast>>;
 
   /**
-   * @output {ToastEvent} Emitted before the toast has presented.
+   * @output {ComponentEvent} Emitted before the toast has presented.
    */
-  @Event() ionToastWillPresent: EventEmitter;
+  @Event() ionToastWillPresent: EventEmitter<ComponentDetail<Toast>>;
 
   /**
-   * @output {ToastEvent} Emitted before the toast has dismissed.
+   * @output {ComponentEvent} Emitted before the toast has dismissed.
    */
-  @Event() ionToastWillDismiss: EventEmitter;
+  @Event() ionToastWillDismiss: EventEmitter<ComponentDetail<Toast>>;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has dismissed.
+   * @output {ComponentEvent} Emitted after the toast has dismissed.
    */
-  @Event() ionToastDidDismiss: EventEmitter;
+  @Event() ionToastDidDismiss: EventEmitter<ComponentDetail<Toast>>;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has unloaded.
+   * @output {ComponentEvent} Emitted after the toast has unloaded.
    */
-  @Event() ionToastDidUnload: EventEmitter;
+  @Event() ionToastDidUnload: EventEmitter<ComponentDetail<Toast>>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -75,7 +75,7 @@ export class Toast {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionToastWillPresent.emit({ toast: this });
+    this.ionToastWillPresent.emit({ component: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -104,7 +104,7 @@ export class Toast {
       this.animation = null;
     }
     return new Promise(resolve => {
-      this.ionToastWillDismiss.emit({ toast: this });
+      this.ionToastWillDismiss.emit({ component: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -120,7 +120,7 @@ export class Toast {
 
         animation.onFinish((a: any) => {
           a.destroy();
-          this.ionToastDidDismiss.emit({ toast: this });
+          this.ionToastDidDismiss.emit({ component: this });
 
           Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -133,7 +133,7 @@ export class Toast {
   }
 
   protected ionViewDidUnload() {
-    this.ionToastDidUnload.emit({ toast: this });
+    this.ionToastDidUnload.emit({ component: this });
   }
 
   @Listen('ionDismiss')
@@ -145,11 +145,11 @@ export class Toast {
   }
 
   protected ionViewDidLoad() {
-    this.ionToastDidLoad.emit({ toast: this });
+    this.ionToastDidLoad.emit({ component: this });
   }
 
   protected ionViewDidEnter() {
-    this.ionToastDidPresent.emit({ toast: this });
+    this.ionToastDidPresent.emit({ component: this });
     if (this.duration) {
       setTimeout(() => {
         this.dismiss();
@@ -201,10 +201,4 @@ export interface ToastOptions {
   position?: string;
   enterAnimation?: AnimationBuilder;
   exitAnimation?: AnimationBuilder;
-}
-
-export interface ToastEvent {
-  detail: {
-    toast: Toast;
-  };
 }

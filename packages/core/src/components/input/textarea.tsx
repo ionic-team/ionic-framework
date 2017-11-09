@@ -4,6 +4,7 @@ import { createThemedClasses } from '../../utils/theme';
 
 import { TextareaComponent } from './input-base';
 
+import { ComponentDetail } from '../../index';
 
 /**
  * @name TextArea
@@ -73,14 +74,14 @@ export class Textarea implements TextareaComponent {
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the input loses focus.
+   * @output {ComponentEvent} Emitted when the input loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur: EventEmitter<ComponentDetail<Textarea>>;
 
   /**
-   * @output {Event} Emitted when the input has focus.
+   * @output {ComponentEvent} Emitted when the input has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus: EventEmitter<ComponentDetail<Textarea>>;
 
   /**
    * @input {string} Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
@@ -215,8 +216,8 @@ export class Textarea implements TextareaComponent {
   /**
    * @hidden
    */
-  inputBlurred(ev: any) {
-    this.ionBlur.emit(ev);
+  inputBlurred() {
+    this.ionBlur.emit({ component: this });
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
@@ -235,8 +236,8 @@ export class Textarea implements TextareaComponent {
   /**
    * @hidden
    */
-  inputFocused(ev: any) {
-    this.ionFocus.emit(ev);
+  inputFocused() {
+    this.ionFocus.emit({ component: this });
 
     this.focusChange(this.hasFocus());
     this.emitStyle();

@@ -4,7 +4,7 @@ import { convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, d
 
 import { clamp, isBlank, isObject } from '../../utils/helpers';
 
-import { Picker, PickerColumn, PickerController, PickerOptions } from '../../index';
+import { ComponentDetail, Picker, PickerColumn, PickerController, PickerOptions } from '../../index';
 
 /**
  * @name Datetime
@@ -424,9 +424,9 @@ export class Datetime {
   }
 
   /**
-   * @output {Event} Emitted when the datetime selection was cancelled.
+   * @output {ComponentEvent} Emitted when the datetime selection was cancelled.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel: EventEmitter<ComponentDetail<Datetime>>;
 
   protected ionViewWillLoad() {
     // first see if locale names were provided in the inputs
@@ -461,7 +461,7 @@ export class Datetime {
       pickerOptions.buttons = [{
         text: this.cancelText,
         role: 'cancel',
-        handler: () => this.ionCancel.emit(this)
+        handler: () => this.ionCancel.emit({ component: this })
       },{
         text: this.doneText,
         handler: (data: any) => this.value = data,
