@@ -28,6 +28,8 @@ class Snapshot {
     console.log('waiting for uploads to complete');
     await Promise.all(this.queue);
     console.log(`done processing ${this.queue.length} screenshots`);
+    console.log(`${this.mismatches.length} snapshots had significant mismatches`);
+    console.log(`Test Id: ${this.testId}`);
   }
 
   start(testId) {
