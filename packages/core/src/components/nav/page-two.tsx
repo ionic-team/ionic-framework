@@ -27,7 +27,7 @@ export class PageTwo {
         <ion-title>Page Two</ion-title>
       </ion-navbar>
     </ion-header>,
-    <ion-content>
+    <ion-content fullscreen={true}>
       Page Two Content
       <div>
         <ion-button onClick={() => this.nextPage()}>Go to Page Three</ion-button>

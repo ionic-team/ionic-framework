@@ -34,7 +34,7 @@ exports.config = {
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
     { components: ['ion-range', 'ion-range-knob']},
-    { components: ['ion-tabs', 'ion-tab', 'ion-tab-bar', 'ion-tab-button', 'ion-tab-highlight'] },
+    { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] },
     { components: ['ion-nav', 'ion-nav-controller', 'stencil-ion-nav-delegate','page-one', 'page-two', 'page-three'] },
     { components: ['ion-toast', 'ion-toast-controller'] },

@@ -1751,6 +1751,7 @@ declare global {
           canGoBack?: any,
           canSwipeBack?: any,
           getFirstView?: any,
+          resize?: any,
           root?: any,
           delegate?: any
       }
@@ -2782,40 +2783,70 @@ declare global {
   }
 }
 
-import { TabBar as IonTabBar } from './components/tabs/tab-bar';
+import { PageTab as PageTab } from './components/tabs/page-tab';
 
-interface HTMLIonTabBarElement extends IonTabBar, HTMLElement {
+interface HTMLPageTabElement extends PageTab, HTMLElement {
 }
-declare var HTMLIonTabBarElement: {
-  prototype: HTMLIonTabBarElement;
-  new (): HTMLIonTabBarElement;
+declare var HTMLPageTabElement: {
+  prototype: HTMLPageTabElement;
+  new (): HTMLPageTabElement;
 };
 declare global {
   interface HTMLElementTagNameMap {
-      "ion-tab-bar": HTMLIonTabBarElement;
+      "page-tab": HTMLPageTabElement;
   }
   interface ElementTagNameMap {
-      "ion-tab-bar": HTMLIonTabBarElement;
+      "page-tab": HTMLPageTabElement;
   }
   namespace JSX {
       interface IntrinsicElements {
-          "ion-tab-bar": JSXElements.IonTabBarAttributes;
+          "page-tab": JSXElements.PageTabAttributes;
       }
   }
   namespace JSXElements {
-      export interface IonTabBarAttributes extends HTMLAttributes {
+      export interface PageTabAttributes extends HTMLAttributes {
           mode?: string,
           color?: string,
         
-          tabs?: any,
-          onTabSelected?: any,
-          selectedIndex?: number,
-          tabsLayout?: string
       }
   }
 }
 
-import { TabButton as IonTabButton } from './components/tabs/tab-button';
+import { TabBar as IonTabbar } from './components/tabs/tab-bar';
+
+interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
+}
+declare var HTMLIonTabbarElement: {
+  prototype: HTMLIonTabbarElement;
+  new (): HTMLIonTabbarElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ion-tabbar": HTMLIonTabbarElement;
+  }
+  interface ElementTagNameMap {
+      "ion-tabbar": HTMLIonTabbarElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ion-tabbar": JSXElements.IonTabbarAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface IonTabbarAttributes extends HTMLAttributes {
+          mode?: string,
+          color?: string,
+        
+          placement?: string,
+          tabs?: any,
+          selectedTab?: any,
+          layout?: string,
+          highlight?: boolean
+      }
+  }
+}
+
+import { TabbarButton as IonTabButton } from './components/tabs/tab-button';
 
 interface HTMLIonTabButtonElement extends IonTabButton, HTMLElement {
 }
@@ -2840,10 +2871,8 @@ declare global {
           mode?: string,
           color?: string,
         
-          tab?: any,
-          layout?: string,
-          selectedIndex?: number,
-          index?: number
+          selected?: boolean,
+          tab?: any
       }
   }
 }
@@ -2873,6 +2902,7 @@ declare global {
           mode?: string,
           color?: string,
         
+          selectedTab?: any
       }
   }
 }
@@ -2902,16 +2932,23 @@ declare global {
           mode?: string,
           color?: string,
         
-          root?: string,
+          _setActive?: any,
+          resize?: any,
+          goToRoot?: any,
+          getActive?: any,
+          getNav?: any,
+          btnId?: string,
+          root?: any,
           rootParams?: any,
-          tabTitle?: string,
-          tabIcon?: string,
-          tabBadge?: string,
-          tabBadgeStyle?: string,
+          urlPath?: string,
+          title?: string,
+          icon?: string,
+          badge?: string,
+          badgeStyle?: string,
           enabled?: boolean,
-          shown?: boolean,
+          show?: boolean,
           tabsHideOnSubPages?: boolean,
-          onSelected?: any
+          selected?: boolean
       }
   }
 }
@@ -2941,10 +2978,18 @@ declare global {
           mode?: string,
           color?: string,
         
-          tabsLayout?: string,
-          tabsPlacement?: string,
-          tabsHighlight?: boolean,
-          ionChange?: any
+          select?: any,
+          getByIndex?: any,
+          getSelected?: any,
+          getIndex?: any,
+          getTabs?: any,
+          previousTab?: any,
+          resize?: any,
+          name?: string,
+          tabbarHidden?: boolean,
+          tabbarLayout?: string,
+          tabbarPlacement?: string,
+          tabbarHighlight?: boolean
       }
   }
 }

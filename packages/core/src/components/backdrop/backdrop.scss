@@ -19,6 +19,8 @@ ion-backdrop {
   background-color: $backdrop-color;
   opacity: .01;
   transform: translateZ(0);
+
+  contain: strict;
 }
 
 ion-backdrop.backdrop-no-tappable {

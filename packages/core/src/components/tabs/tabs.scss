@@ -1,36 +1,30 @@
 @import "../../themes/ionic.globals";
 
-// Tabs
+// Tabbar
 // --------------------------------------------------
 
-.tabbar {
-  @include position(null, null, 0, 0);
-
-  position: absolute;
+ion-tabbar {
+  position: relative;
 
   z-index: $z-index-toolbar;
   display: flex;
 
-  width: 100%;
+  justify-content: center;
 
-  // default to hidden until ready
-  //opacity: 0;
+  order: 1;
+
+  width: 100%;
 }
 
-.tabbar-hidden .tabbar {
+ion-tabbar.tabbar-hidden {
   display: none;
 }
 
-.tabbar.show-tabbar {
-  opacity: 1;
+ion-tabbar.placement-top {
+  order: -1;
 }
 
-[tabsPlacement=top] > .tabbar {
-  top: 0;
-  bottom: auto;
-}
-
-.tab-button {
+ion-tab-button {
   @include margin(0);
   @include text-align(center);
   @include border-radius(0);
@@ -43,8 +37,7 @@
   flex: 1;
   flex-direction: column;
   align-items: center;
-  align-self: center;
-  justify-content: center;
+  justify-content: space-between;
 
   border: 0;
 
@@ -59,19 +52,13 @@
   pointer-events: none;
 }
 
-.tab-disabled ion-badge,
-.tab-disabled ion-icon,
-.tab-disabled span {
+.tab-disabled > * {
   opacity: .4;
-}
-
-.tab-button-text {
-  @include margin(3px, null, 2px, null);
 }
 
 .tab-button-text,
 .tab-button-icon {
-  //display: none;
+  display: none;
   overflow: hidden;
 
   align-self: center;
@@ -92,31 +79,28 @@
   white-space: normal;
 }
 
-[tabsLayout=icon-bottom] .tab-button .tab-button-icon {
-  order: 10;
-}
-
-[tabsLayout=icon-start] .tab-button,
-[tabsLayout=icon-end] .tab-button {
+.layout-icon-start ion-tab-button {
   flex-direction: row;
 }
 
-[tabsLayout=icon-start] .tab-button .tab-button-icon {
-  @include padding-horizontal(null, 8px);
-  @include text-align(end);
+.layout-icon-end ion-tab-button {
+  flex-direction: row-reverse;
 }
 
-[tabsLayout=icon-end] .tab-button .tab-button-icon {
-  @include padding-horizontal(8px, null);
-  @include text-align(start);
+.layout-icon-bottom ion-tab-button {
+  flex-direction: column-reverse;
+}
 
-  order: 10;
+.layout-icon-start ion-tab-button,
+.layout-icon-end ion-tab-button,
+.layout-icon-hide ion-tab-button,
+.layout-title-hide ion-tab-button {
+  justify-content: center;
 }
 
 .tab-hidden,
-.tab-highlight,
-[tabsLayout=icon-hide] .tab-button-icon,
-[tabsLayout=title-hide] .tab-button-text {
+.layout-icon-hide .tab-button-icon,
+.layout-title-hide .tab-button-text {
   display: none;
 }
 
@@ -140,8 +124,43 @@
   @include position(null, calc(50% - 30px), null, null);
 }
 
-[tabsLayout=icon-bottom] .tab-badge,
-[tabsLayout=icon-start] .tab-badge,
-[tabsLayout=icon-end] .tab-badge {
+.layout-icon-bottom .tab-badge,
+.layout-icon-start .tab-badge,
+.layout-icon-end .tab-badge {
   @include position(null, calc(50% - 50px), null, null);
 }
+
+
+// Tab Highlight
+// --------------------------------------------------
+
+ion-tab-highlight {
+  @include position(null, null, 0, 0);
+  @include transform-origin(0, 0);
+
+  position: absolute;
+
+  display: block;
+
+  width: 1px;
+  height: 2px;
+
+  transform: translateZ(0);
+
+  &.animated {
+    transition-duration: 300ms;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+
+    will-change: transform;
+  }
+}
+
+.placement-top > ion-tab-highlight {
+  bottom: 0;
+}
+
+.placement-bottom > ion-tab-highlight {
+  top: 0;
+}
+

@@ -24,7 +24,10 @@ import { PopoverController } from './components/popover-controller/popover-contr
 import { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 import { Segment } from './components/segment/segment';
 import { SegmentButton } from './components/segment-button/segment-button';
-import { SplitPane, SplitPaneAlert } from './components/split-pane/split-pane';
+import { SplitPane } from './components/split-pane/split-pane';
+
+import { Tab } from './components/tabs/tab';
+import { Tabs } from './components/tabs/tabs';
 
 import { Toast, ToastOptions } from './components/toast/toast';
 import { ToastController } from './components/toast-controller/toast-controller';
@@ -102,7 +105,6 @@ export {
   Segment,
   SegmentButton,
   SplitPane,
-  SplitPaneAlert,
   TransitionBuilder,
   Toast,
   ToastOptions,
