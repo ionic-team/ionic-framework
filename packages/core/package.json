@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-19",
+  "version": "0.0.2-21",
   "description": "Base components for Ionic",
   "main": "dist/collection/index.js",
   "types": "dist/collection/index.d.ts",
@@ -10,7 +10,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "^0.0.6",
+    "@stencil/core": "^0.0.7",
     "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.0",
@@ -36,7 +36,7 @@
     "tslint-fix": "tslint --project . --fix",
     "validate": "npm run clean && npm run lint && npm run test && npm run build",
     "deploy": "np --any-branch",
-    "preversion": "npm run lint && npm run build"
+    "version": "npm run build"
   },
   "author": "Ionic Team",
   "license": "MIT",
