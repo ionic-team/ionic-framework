@@ -13,7 +13,7 @@ import {
 import { NgControl } from '@angular/forms';
 
 import { Subject } from 'rxjs/Subject';
-import {takeUntil} from 'rxjs/operators/takeUntil';
+import { takeUntil } from 'rxjs/operators/takeUntil';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
