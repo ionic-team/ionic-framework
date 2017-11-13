@@ -1,15 +1,11 @@
 'use strict';
 
-const webdriver = require('selenium-webdriver');
-const By = webdriver.By;
-const until = webdriver.until;
+const { By, until } = require('selenium-webdriver');
+const { register, Page } = require('../../../../../scripts/e2e');
 
-const register = require('../../../../scripts/e2e-test-runner').register;
-const E2ETestPage = require('../../../../scripts/E2ETestPage');
-
-class ActionSheetE2ETestPage extends E2ETestPage {
+class ActionSheetE2ETestPage extends Page {
   constructor(driver) {
-    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic.html');
+    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic/index.html');
   }
 
   present(buttonId) {
