@@ -2,8 +2,8 @@
 
 The end-to-end testing scripts consist of the following modules:
 
-1. `e2e` - the script that npm uses to kick this stuff off
-1. `e2e-test-runner` - the test controller and test utilities
+1. `e2e` - the test controller and test utilities
+1. `run-e2e` - the script that npm uses to kick this stuff off
 1. `E2ETestPage` - a base class for end-to-end tests
 1. `Snapshot` - the snapshot tool, copied from the `index.js` file in the [Snapshot Repo](https://github.com/ionic-team/snapshot) (private)
 
@@ -13,21 +13,18 @@ Each end-to-end test file is NodeJS ES2015 script that contains at least one `de
 
 In general, writing an end-to-end tests consists of the following steps:
 
-1. create a `filename.e2e-spec.js` file
-1. extend the E2ETestPage class to perform the extra actions a page needs to do (if any)
-1. register each test you would like to run using the `register` method from the `e2e-test-runner` module, the `register` method takes two parameters: a test description and a callback function that contains the test, the callback is passed the selenium driver that is in use for the test
+1. create a `e2e.js` file
+1. extend the `Page` class to perform the extra actions a page needs to do (if any)
+1. register each test you would like to run using the `register` method from the `e2e` module, the `register` method takes two parameters: a test description and a callback function that contains the test, the callback is passed the selenium driver that is in use for the test
 
 The most basic end-to-end test just navigates to the page in order to verify that it draws properly. In this case, it is not necessary to extend the E2ETestPage class. The base class contains a navigate method that goes to the page and waits for it to load. The test just needs to instantiate the page with the proper URL and call the navigate. Such a test looks like this:
 
 ```ts
-'use strict';
-
-const register = require('../../../../scripts/e2e-test-runner').register;
-const E2ETestPage = require('../../../../scripts/E2ETestPage');
+const { register, Page } = require('../../../../scripts/e2e');
 
 describe('button: basic', () => {
   register('navigates', driver => {
-    const page = new E2ETestPage(driver, 'http://localhost:3333/src/components/button/test/basic.html');
+    const page = new Page(driver, 'http://localhost:3333/src/components/button/test/basic/index.html');
     return page.navigate();
   });
 });
@@ -36,18 +33,12 @@ describe('button: basic', () => {
 For more complicated tests, it may be necessary to extend the base E2ETestPage class to add perform more actions that can then be used in the tests. Such a test may look like this:
 
 ```ts
-'use strict';
+const { By, until } = require('selenium-webdriver');
+const { register, Page } = require('../../../../scripts/e2e');;
 
-const webdriver = require('selenium-webdriver');
-const By = webdriver.By;
-const until = webdriver.until;
-
-const register = require('../../../../scripts/e2e-test-runner').register;
-const E2ETestPage = require('../../../../scripts/E2ETestPage');
-
-class ActionSheetE2ETestPage extends E2ETestPage {
+class ActionSheetE2ETestPage extends Page {
   constructor(driver) {
-    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic.html');
+    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic/index.html');
   }
 
   present(buttonId) {
