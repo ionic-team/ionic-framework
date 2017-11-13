@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Badge - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-page>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Badges</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+          <ion-list>
+            <ion-item>
+              <ion-badge item-left color="primary">11</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-badge item-left color="secondary">22</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-badge item-left color="danger">33</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-badge item-left color="light">44</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-badge item-left color="dark">55</ion-badge>
+            </ion-item>
+          </ion-list>
+
+          <ion-button onclick="toggleColors()">Toggle Colors</ion-button>
+        </ion-content>
+
+    </ion-page>
+  </ion-app>
+
+  <script>
+    const badges = [...document.querySelectorAll('ion-badge')];
+    const baseColors = badges.map(el => el.getAttribute('color'));
+
+    function toggleColors() {
+      badges.forEach((el, i) => {
+        const prev = el.getAttribute('color');
+        const base = baseColors[i];
+        el.setAttribute('color', prev === base ? null : base);
+      });
+    }
+  </script>
+</body>
+</html>
