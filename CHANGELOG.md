@@ -56,7 +56,7 @@ To update, remove existing `node_modules` and any lock files, and then update `p
   ...
 },
 "devDependencies: {
-  "@ionic/app-scripts": "3.1.0"
+  "@ionic/app-scripts": "3.1.0",
   "typescript" : "2.4.2"
 }
 ```
