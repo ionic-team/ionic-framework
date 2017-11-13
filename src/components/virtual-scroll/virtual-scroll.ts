@@ -390,19 +390,39 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     // dimensions because it's still rendered and only opacity hidden
     this.setElementClass('virtual-loading', true);
 
-    // wait for the content to be rendered and has readable dimensions
-    const readSub = _ctrl.readReady.subscribe(() => {
-      readSub.unsubscribe();
-      this.readUpdate(true);
-    });
+    // if virtualzone is initialized on conditional rendering change, the view might already be readReady
+    if (_ctrl.isReadReady) {
+      // wait for vs to be rendered
+      setTimeout(() => {
+        this.readUpdate(true);
+      });
+    } else {
+      // wait for the content to be rendered and has readable dimensions
+      const readSub = _ctrl.readReady.subscribe(() => {
+        readSub.unsubscribe();
+        this.readUpdate(true);
+      });
+    }
 
-    // wait for the content to be writable
-    const writeSub = _ctrl.writeReady.subscribe(() => {
-      writeSub.unsubscribe();
-      this._init = true;
-      this.writeUpdate(true);
-      this._listeners();
-    });
+    // if virtualzone is initialized on conditional rendering change, the view might already be writeReady
+    if (_ctrl.isWriteReady) {
+      // wait for vs to be rendered
+      setTimeout(() => {
+        this.writeInit();
+      });
+    } else {
+      // wait for the content to be writable
+      const writeSub = _ctrl.writeReady.subscribe(() => {
+        writeSub.unsubscribe();
+        this.writeInit();
+      });
+    }
+  }
+
+  writeInit() {
+    this._init = true;
+    this.writeUpdate(true);
+    this._listeners();
   }
 
   /**

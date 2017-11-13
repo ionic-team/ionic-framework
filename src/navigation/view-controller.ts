@@ -84,9 +84,23 @@ export class ViewController {
   readReady: EventEmitter<any> = new EventEmitter<any>();
 
   /**
+   * True after readReady has been emitted - allows dev to use it out of events scope (ie for conditional rendering)
+   * @hidden
+   * @type {boolean}
+   */
+  isReadReady: boolean = false;
+
+  /**
    * @hidden
    */
   writeReady: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * True after writeReady has been emitted - allows dev to use it out of events scope (ie for conditional rendering)
+   * @hidden
+   * @type {boolean}
+   */
+  isWriteReady: boolean = false;
 
   /** @hidden */
   data: any;
@@ -131,6 +145,14 @@ export class ViewController {
     this._cmp = componentRef;
     this.instance = this.instance || componentRef.instance;
     this._detached = false;
+
+    this.writeReady.subscribe(() => {
+      this.isWriteReady = true;
+    });
+
+    this.readReady.subscribe(() => {
+      this.isReadReady = true;
+    });
   }
 
   _setNav(navCtrl: NavController) {

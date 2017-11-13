@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="changeItem()">
+        Change random
+      </button>
+      <button ion-button icon-only (click)="addRandomItem()">
+        Add random
+      </button>
+      <button ion-button icon-only (click)="addItem()">
+        Append
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="vs">
+      <ion-segment-button value="1">
+        Virtual Scroll 1
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        Virtual Scroll 2
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <h1>VS {{ vs }}</h1>
+
+  <div padding>
+    <button ion-button (click)="pushPage()">Push Virtual Scroll Page</button>
+  </div>
+
+
+  <ion-list [virtualScroll]="items[1]" [headerFn]="headerFn" [virtualTrackBy]="trackByFn" *ngIf="vs == 1"
+            approxItemHeight="46px">
+
+    <ion-item-divider *virtualHeader="let header">
+      Header: {{ header }}
+    </ion-item-divider>
+
+    <ion-item *virtualItem="let item">
+      Item: {{ item.value }} {{ item.someMethod() }}
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list [virtualScroll]="items[2]" [headerFn]="headerFn" [virtualTrackBy]="trackByFn" *ngIf="vs == 2"
+            approxItemHeight="46px">
+
+    <ion-item-divider *virtualHeader="let header">
+      Header: {{ header }}
+    </ion-item-divider>
+
+    <ion-item *virtualItem="let item">
+      Item: {{ item.value }} {{ item.someMethod() }}
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <button ion-button (click)="addItems()">Add items</button>
+  </div>
+
+  <div padding>
+    <button ion-button (click)="pushPage()">Push Virtual Scroll Page</button>
+  </div>
+
+</ion-content>
