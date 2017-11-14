@@ -124,7 +124,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
         this._elementRef.nativeElement.children[0].disabled = isDisabled;
         this._inputUpdated();
     }
-    this._inputUpdated();
   }
 
   /**
