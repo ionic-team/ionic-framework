@@ -375,6 +375,6 @@ function setControlCss(element: Ion, control: NgControl) {
   element.setElementClass('ng-touched', control.touched);
   element.setElementClass('ng-pristine', control.pristine);
   element.setElementClass('ng-dirty', control.dirty);
-  element.setElementClass('ng-valid', control.valid);
-  element.setElementClass('ng-invalid', !control.valid);
+  element.setElementClass('ng-valid', control.valid && !control.disabled);
+  element.setElementClass('ng-invalid', !control.valid && !control.disabled);
 }
