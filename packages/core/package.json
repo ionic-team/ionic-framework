@@ -25,8 +25,8 @@
   "scripts": {
     "build": "stencil build",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "e2e": "node ./scripts/run-e2e.js",
-    "snapshot": "node ./scripts/run-e2e.js --snapshot",
+    "e2e": "node ./scripts/e2e",
+    "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
     "clean": "rm -rf dist",

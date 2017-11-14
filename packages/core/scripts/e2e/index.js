@@ -6,8 +6,8 @@ const Mocha = require('mocha');
 const path = require('path');
 const webdriver = require('selenium-webdriver');
 
-const Page = require('./E2ETestPage');
-const Snapshot = require('./Snapshot');
+const Page = require('./e2e-test-page');
+const Snapshot = require('./snapshot');
 
 let driver;
 let snapshot;
@@ -33,7 +33,7 @@ function generateTestId() {
 
 function getTestFiles() {
   return new Promise((resolve, reject) => {
-    const src = path.join(__dirname, '../src/**/e2e.js');
+    const src = path.join(__dirname, '../../src/**/e2e.js');
     glob(src, (err, files) => {
       if (err) {
         reject(err);
@@ -123,6 +123,8 @@ async function run() {
     });
   });
 }
+
+run();
 
 module.exports = {
   Page,
