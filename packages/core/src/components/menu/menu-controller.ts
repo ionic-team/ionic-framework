@@ -1,6 +1,5 @@
 import { Animation, AnimationBuilder, AnimationController, Menu } from '../../index';
 import { Component, Method, Prop } from '@stencil/core';
-import { HTMLIonMenuElement } from '../../index';
 
 import MenuOverlayAnimation from './animations/overlay';
 import MenuRevealAnimation from './animations/reveal';

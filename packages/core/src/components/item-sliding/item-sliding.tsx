@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
 
-import { GestureDetail, HTMLIonItemElement, HTMLIonListElement } from '../../index';
+import { GestureDetail } from '../../index';
 import { swipeShouldReset } from '../../utils/helpers';
 import { ItemOptions } from './item-options';
 

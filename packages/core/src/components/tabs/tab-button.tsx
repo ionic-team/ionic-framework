@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { HTMLIonTabElement } from '../../index';
 
 @Component({
   tag: 'ion-tab-button'

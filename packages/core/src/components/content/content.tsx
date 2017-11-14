@@ -1,5 +1,5 @@
 import { Component, Element, Method, Prop } from '@stencil/core';
-import { Config, HTMLIonScrollElement } from '../../index';
+import { Config } from '../../index';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 import { getPageElement } from '../../utils/helpers';
 

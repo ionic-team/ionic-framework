@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { HTMLIonScrollElement, ScrollDetail, StencilElement } from '../../index';
+import { ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
   Top = 'top',
