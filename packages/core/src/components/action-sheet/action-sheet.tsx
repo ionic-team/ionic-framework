@@ -1,5 +1,5 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, ComponentDetail, Config } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -21,34 +21,34 @@ export class ActionSheet {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has loaded.
+   * @output {ComponentEvent} Emitted after the alert has loaded.
    */
-  @Event() ionActionSheetDidLoad: EventEmitter;
+  @Event() ionActionSheetDidLoad: EventEmitter<ComponentDetail<ActionSheet>>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has presented.
+   * @output {ComponentEvent} Emitted after the alert has presented.
    */
-  @Event() ionActionSheetDidPresent: EventEmitter;
+  @Event() ionActionSheetDidPresent: EventEmitter<ComponentDetail<ActionSheet>>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has presented.
+   * @output {ComponentEvent} Emitted before the alert has presented.
    */
-  @Event() ionActionSheetWillPresent: EventEmitter;
+  @Event() ionActionSheetWillPresent: EventEmitter<ComponentDetail<ActionSheet>>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has dismissed.
+   * @output {ComponentEvent} Emitted before the alert has dismissed.
    */
-  @Event() ionActionSheetWillDismiss: EventEmitter;
+  @Event() ionActionSheetWillDismiss: EventEmitter<ComponentDetail<ActionSheet>>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has dismissed.
+   * @output {ComponentEvent} Emitted after the alert has dismissed.
    */
-  @Event() ionActionSheetDidDismiss: EventEmitter;
+  @Event() ionActionSheetDidDismiss: EventEmitter<ComponentDetail<ActionSheet>>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has unloaded.
+   * @output {ComponentEvent} Emitted after the alert has unloaded.
    */
-  @Event() ionActionSheetDidUnload: EventEmitter;
+  @Event() ionActionSheetDidUnload: EventEmitter<ComponentDetail<ActionSheet>>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -75,7 +75,7 @@ export class ActionSheet {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionActionSheetWillPresent.emit({ actionSheet: this });
+    this.ionActionSheetWillPresent.emit({ component: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -104,7 +104,7 @@ export class ActionSheet {
       this.animation = null;
     }
     return new Promise(resolve => {
-      this.ionActionSheetWillDismiss.emit({ actionSheet: this });
+      this.ionActionSheetWillDismiss.emit({ component: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -120,7 +120,7 @@ export class ActionSheet {
 
         animation.onFinish((a: any) => {
           a.destroy();
-          this.ionActionSheetDidDismiss.emit({ actionSheet: this });
+          this.ionActionSheetDidDismiss.emit({ component: this });
 
           Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -133,7 +133,7 @@ export class ActionSheet {
   }
 
   protected ionViewDidUnload() {
-    this.ionActionSheetDidUnload.emit({ actionSheet: this });
+    this.ionActionSheetDidUnload.emit({ component: this });
   }
 
   @Listen('ionDismiss')
@@ -145,11 +145,11 @@ export class ActionSheet {
   }
 
   protected ionViewDidLoad() {
-    this.ionActionSheetDidLoad.emit({ actionSheet: this });
+    this.ionActionSheetDidLoad.emit({ component: this });
   }
 
   protected ionViewDidEnter() {
-    this.ionActionSheetDidPresent.emit({ actionSheet: this });
+    this.ionActionSheetDidPresent.emit({ component: this });
   }
 
   protected backdropClick() {
@@ -268,10 +268,4 @@ export interface ActionSheetButton {
   icon?: string;
   cssClass?: string;
   handler?: () => boolean | void;
-}
-
-export interface ActionSheetEvent extends Event {
-  detail: {
-    actionSheet: ActionSheet;
-  };
 }

@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
+import { ComponentDetail } from '../../index';
 
 @Component({
   tag: 'ion-select-option',
@@ -11,9 +12,9 @@ export class SelectOption {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {SelectOptionEvent} Emitted when the select option is selected.
+   * @output {ComponentEvent} Emitted when the select option is selected.
    */
-  @Event() ionSelect: EventEmitter;
+  @Event() ionSelect: EventEmitter<ComponentDetail<SelectOption>>;
 
   /**
    * @input {boolean} If true, the user cannot interact with the select option.

@@ -1,5 +1,6 @@
 import { Component, Listen, Prop, State } from '@stencil/core';
-import { HTMLIonTabElement } from '../../index';
+
+import { Tab } from './tab';
 
 @Component({
   tag: 'ion-tabbar',
@@ -12,8 +13,8 @@ export class TabBar {
   @State() hidden = false;
 
   @Prop() placement = 'bottom';
-  @Prop() tabs: HTMLIonTabElement[];
-  @Prop() selectedTab: HTMLIonTabElement;
+  @Prop() tabs: Tab[];
+  @Prop() selectedTab: Tab;
   @Prop() layout: string = 'icon-top';
   @Prop() highlight: boolean = false;
 

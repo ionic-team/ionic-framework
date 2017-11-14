@@ -68,7 +68,7 @@ export class Item {
   // TODO? this loads after radio group
   // @Listen('ionRadioDidLoad')
   // protected radioDidLoad(ev: RadioEvent) {
-  //   const radio = ev.detail.radio;
+  //   const radio = ev.detail.component;
   //   // register the input inside of the item
   //   // reset to the item's id instead of the radiogroup id
   //   radio.id = 'rb-' + this.registerInput('radio');

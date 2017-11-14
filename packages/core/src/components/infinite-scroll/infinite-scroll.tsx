@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { HTMLIonScrollElement, ScrollDetail, StencilElement } from '../../index';
+
+import { ComponentDetail, ComponentEvent, HTMLIonScrollElement, ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
   Top = 'top',
@@ -207,12 +208,12 @@ export class InfiniteScroll {
   @Prop() position: string = Position.Bottom;
 
   /**
-   * @output {Event} Emitted when the scroll reaches
+   * @output {ComponentEvent} Emitted when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.
    */
-  @Event() ionInfinite: EventEmitter;
+  @Event() ionInfinite: EventEmitter<ComponentDetail<InfiniteScroll>>;
 
   ionViewWillLoad() {
     const scrollEl = this.el.closest('ion-scroll') as StencilElement;
@@ -239,8 +240,8 @@ export class InfiniteScroll {
     this.scrollEl = null;
   }
 
-  @Listen('ionScroll', {enabled: false})
-  protected onScroll(ev: CustomEvent) {
+  @Listen('ionScroll', { enabled: false })
+  protected onScroll(ev: ComponentEvent<InfiniteScroll>) {
     const detail = ev.detail as ScrollDetail;
     if (!this.canStart()) {
       return 1;
@@ -269,7 +270,7 @@ export class InfiniteScroll {
       if (!this.didFire) {
         this.isLoading = true;
         this.didFire = true;
-        this.ionInfinite.emit(this);
+        this.ionInfinite.emit({ component: this });
         return 3;
       }
     } else {

@@ -2,6 +2,8 @@ import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, S
 import { HTMLIonNavElement, StencilElement } from '../../index';
 import { ViewController } from '../../navigation/nav-interfaces';
 
+import { ComponentDetail } from '../../index';
+
 /**
  * @name Tab
  * @description
@@ -112,12 +114,14 @@ import { ViewController } from '../../navigation/nav-interfaces';
   tag: 'ion-tab',
 })
 export class Tab {
-
   private nav: Promise<HTMLIonNavElement>;
   private resolveNav: (el: HTMLIonNavElement) => void;
 
+  id: string;
+
   @Element() el: HTMLElement;
 
+  @State() hidden = false;
   @State() init = false;
   @State() active = false;
 
@@ -187,23 +191,32 @@ export class Tab {
   @PropDidChange('selected')
   selectedChanged(selected: boolean) {
     if (selected) {
-      this.ionSelect.emit(this.el);
+      this.ionSelect.emit({ component: this });
     }
   }
 
   /**
-   * @output {Tab} Emitted when the current tab is selected.
+   * @output {ComponentEvent} Emitted when the current tab is selected.
    */
-  @Event() ionSelect: EventEmitter;
-  @Event() ionTabDidLoad: EventEmitter;
-  @Event() ionTabDidUnload: EventEmitter;
+  @Event() ionSelect: EventEmitter<ComponentDetail<Tab>>;
+
+  /**
+   * @output {ComponentEvent} Emitted after the tab has loaded.
+   */
+  @Event() ionTabDidLoad: EventEmitter<ComponentDetail<Tab>>;
+
+  /**
+   * @output {ComponentEvent} Emitted after the tab has unloaded.
+   */
+  @Event() ionTabDidUnload: EventEmitter<ComponentDetail<Tab>>;
+
 
   protected ionViewDidLoad() {
-    this.ionTabDidLoad.emit(this.el);
+    this.ionTabDidLoad.emit({ component: this });
   }
 
   protected ionViewDidUnload() {
-    this.ionTabDidUnload.emit(this.el);
+    this.ionTabDidUnload.emit({ component: this });
   }
 
   protected componentDidUpdate() {

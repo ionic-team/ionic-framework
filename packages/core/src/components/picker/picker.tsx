@@ -1,4 +1,4 @@
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, ComponentDetail, Config } from '../../index';
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -25,34 +25,34 @@ export class Picker {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has loaded.
+   * @output {ComponentEvent} Emitted after the picker has loaded.
    */
-  @Event() ionPickerDidLoad: EventEmitter;
+  @Event() ionPickerDidLoad: EventEmitter<ComponentDetail<Picker>>;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has presented.
+   * @output {ComponentEvent} Emitted after the picker has presented.
    */
-  @Event() ionPickerDidPresent: EventEmitter;
+  @Event() ionPickerDidPresent: EventEmitter<ComponentDetail<Picker>>;
 
   /**
-   * @output {PickerEvent} Emitted before the picker has presented.
+   * @output {ComponentEvent} Emitted before the picker has presented.
    */
-  @Event() ionPickerWillPresent: EventEmitter;
+  @Event() ionPickerWillPresent: EventEmitter<ComponentDetail<Picker>>;
 
   /**
-   * @output {PickerEvent} Emitted before the picker has dismissed.
+   * @output {ComponentEvent} Emitted before the picker has dismissed.
    */
-  @Event() ionPickerWillDismiss: EventEmitter;
+  @Event() ionPickerWillDismiss: EventEmitter<ComponentDetail<Picker>>;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has dismissed.
+   * @output {ComponentEvent} Emitted after the picker has dismissed.
    */
-  @Event() ionPickerDidDismiss: EventEmitter;
+  @Event() ionPickerDidDismiss: EventEmitter<ComponentDetail<Picker>>;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has unloaded.
+   * @output {ComponentEvent} Emitted after the picker has unloaded.
    */
-  @Event() ionPickerDidUnload: EventEmitter;
+  @Event() ionPickerDidUnload: EventEmitter<ComponentDetail<Picker>>;
 
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;
@@ -84,7 +84,7 @@ export class Picker {
       this.animation = null;
     }
 
-    this.ionPickerWillPresent.emit({ picker: this });
+    this.ionPickerWillPresent.emit({ component: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -117,7 +117,7 @@ export class Picker {
     }
 
     return new Promise(resolve => {
-      this.ionPickerWillDismiss.emit({ picker: this });
+      this.ionPickerWillDismiss.emit({ component: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -134,7 +134,7 @@ export class Picker {
 
         animation.onFinish((a: any) => {
           a.destroy();
-          this.ionPickerDidDismiss.emit({ picker: this });
+          this.ionPickerDidDismiss.emit({ component: this });
 
           Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -148,7 +148,7 @@ export class Picker {
   }
 
   protected ionViewDidUnload() {
-    this.ionPickerDidUnload.emit({ picker: this });
+    this.ionPickerDidUnload.emit({ component: this });
   }
 
   @Listen('ionDismiss')
@@ -175,7 +175,7 @@ export class Picker {
     if (this.showSpinner === null || this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
-    this.ionPickerDidLoad.emit({ picker: this });
+    this.ionPickerDidLoad.emit({ component: this });
   }
 
   protected ionViewDidEnter() {
@@ -188,7 +188,7 @@ export class Picker {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
 
-    this.ionPickerDidPresent.emit({ picker: this });
+    this.ionPickerDidPresent.emit({ component: this });
   }
 
   buttonClick(button: PickerButton) {
@@ -421,13 +421,6 @@ export interface PickerColumnOption {
   transform?: string;
   selected?: boolean;
 }
-
-export interface PickerEvent extends Event {
-  detail: {
-    picker: Picker;
-  };
-}
-
 
 //   @ViewChildren(PickerColumnCmp) _cols: QueryList<PickerColumnCmp>;
 //   d: PickerOptions;

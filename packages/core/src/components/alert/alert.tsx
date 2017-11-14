@@ -1,6 +1,6 @@
 
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, ComponentDetail, Config } from '../../index';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -25,34 +25,34 @@ export class Alert {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has loaded.
+   * @output {ComponentEvent} Emitted after the alert has loaded.
    */
-  @Event() ionAlertDidLoad: EventEmitter;
+  @Event() ionAlertDidLoad: EventEmitter<ComponentDetail<Alert>>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has presented.
+   * @output {ComponentEvent} Emitted after the alert has presented.
    */
-  @Event() ionAlertDidPresent: EventEmitter;
+  @Event() ionAlertDidPresent: EventEmitter<ComponentDetail<Alert>>;
 
   /**
-   * @output {AlertEvent} Emitted before the alert has presented.
+   * @output {ComponentEvent} Emitted before the alert has presented.
    */
-  @Event() ionAlertWillPresent: EventEmitter;
+  @Event() ionAlertWillPresent: EventEmitter<ComponentDetail<Alert>>;
 
   /**
-   * @output {AlertEvent} Emitted before the alert has dismissed.
+   * @output {ComponentEvent} Emitted before the alert has dismissed.
    */
-  @Event() ionAlertWillDismiss: EventEmitter;
+  @Event() ionAlertWillDismiss: EventEmitter<ComponentDetail<Alert>>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has dismissed.
+   * @output {ComponentEvent} Emitted after the alert has dismissed.
    */
-  @Event() ionAlertDidDismiss: EventEmitter;
+  @Event() ionAlertDidDismiss: EventEmitter<ComponentDetail<Alert>>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has unloaded.
+   * @output {ComponentEvent} Emitted after the alert has unloaded.
    */
-  @Event() ionAlertDidUnload: EventEmitter;
+  @Event() ionAlertDidUnload: EventEmitter<ComponentDetail<Alert>>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -80,7 +80,7 @@ export class Alert {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionAlertWillPresent.emit({ alert: this });
+    this.ionAlertWillPresent.emit({ component: this });
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
@@ -115,7 +115,7 @@ export class Alert {
       this.animation = null;
     }
     return new Promise(resolve => {
-      this.ionAlertWillDismiss.emit({ alert: this });
+      this.ionAlertWillDismiss.emit({ component: this });
 
       // get the user's animation fn if one was provided
       let animationBuilder = this.exitAnimation;
@@ -131,7 +131,7 @@ export class Alert {
 
         animation.onFinish((a: any) => {
           a.destroy();
-          this.ionAlertDidDismiss.emit({ alert: this });
+          this.ionAlertDidDismiss.emit({ component: this });
 
           Context.dom.write(() => {
             this.el.parentNode.removeChild(this.el);
@@ -145,7 +145,7 @@ export class Alert {
 
 
   protected ionViewDidUnload() {
-    this.ionAlertDidUnload.emit({ alert: this });
+    this.ionAlertDidUnload.emit({ component: this });
   }
 
   @Listen('ionDismiss')
@@ -157,11 +157,11 @@ export class Alert {
   }
 
   protected ionViewDidLoad() {
-    this.ionAlertDidLoad.emit({ alert: this });
+    this.ionAlertDidLoad.emit({ component: this });
   }
 
   protected ionViewDidEnter() {
-    this.ionAlertDidPresent.emit({ alert: this });
+    this.ionAlertDidPresent.emit({ component: this });
   }
 
   protected backdropClick() {
@@ -469,10 +469,4 @@ export interface AlertButton {
   role?: string;
   cssClass?: string;
   handler?: (value: any) => boolean|void;
-}
-
-export interface AlertEvent extends Event {
-  detail: {
-    alert: Alert;
-  };
 }

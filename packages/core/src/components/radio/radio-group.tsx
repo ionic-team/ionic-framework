@@ -2,8 +2,9 @@ import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange, S
 
 import { isCheckedProperty } from '../../utils/helpers';
 
-import { Radio, RadioEvent } from './radio';
+import { Radio } from './radio';
 
+import { ComponentDetail, ComponentEvent } from '../../index';
 
 /**
  * @name RadioGroup
@@ -71,9 +72,9 @@ export class RadioGroup {
 
 
   /**
-   * @output {Event} Emitted when the value has changed.
+   * @output {ComponentEvent} Emitted when the value has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<ComponentDetail<RadioGroup>>;
 
   /*
    * @input {boolean} If true, the radios can be deselected. Default false.
@@ -93,12 +94,12 @@ export class RadioGroup {
   @PropDidChange('value')
   protected valueChanged() {
     this.update();
-    this.ionChange.emit(this);
+    this.ionChange.emit({ component: this });
   }
 
   @Listen('ionRadioDidLoad')
-  protected radioDidLoad(ev: RadioEvent) {
-    const radio = ev.detail.radio;
+  protected radioDidLoad(ev: ComponentEvent<Radio>) {
+    const radio = ev.detail.component;
     this.radios.push(radio);
     radio.radioId = 'rb-' + this.radioGroupId + '-' + (++this.ids);
 
@@ -111,8 +112,8 @@ export class RadioGroup {
   }
 
   @Listen('ionRadioCheckedDidChange')
-  protected radioCheckedDidChange(ev: RadioEvent) {
-    const radio = ev.detail.radio;
+  protected radioCheckedDidChange(ev: ComponentEvent<Radio>) {
+    const radio = ev.detail.component;
 
     // TODO shouldn't be able to set radio checked to false
     // if allowEmptySelection is false
@@ -122,8 +123,8 @@ export class RadioGroup {
   }
 
   @Listen('ionRadioDidToggle')
-  protected radioDidToggle(ev: RadioEvent) {
-    const radio = ev.detail.radio;
+  protected radioDidToggle(ev: ComponentEvent<Radio>) {
+    const radio = ev.detail.component;
 
     // If the group does not allow empty selection then checked
     // should be true, otherwise leave it as is

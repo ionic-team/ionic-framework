@@ -1,5 +1,7 @@
 import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 
+import { ComponentDetail } from '../../index';
+
 
 /**
  * @name Checkbox
@@ -83,9 +85,9 @@ export class Checkbox {
   private styleTmr: any;
 
   /**
-   * @output {Event} Emitted when the checked property has changed.
+   * @output {ComponentEvent} Emitted when the checked property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<ComponentDetail<Checkbox>>;
 
   /**
    * @output {Event} Emitted when the styles change.
@@ -127,8 +129,8 @@ export class Checkbox {
   }
 
   @PropDidChange('checked')
-  protected checkedChanged(val: boolean) {
-    this.ionChange.emit({ checked: val });
+  protected checkedChanged() {
+    this.ionChange.emit({ component: this });
     this.emitStyle();
   }
 

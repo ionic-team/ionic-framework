@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Loading, LoadingEvent, LoadingOptions } from '../../index';
+import { ComponentEvent, Loading, LoadingOptions } from '../../index';
 
 
 @Component({
@@ -37,8 +37,8 @@ export class LoadingController {
 
 
   @Listen('body:ionLoadingDidLoad')
-  protected viewDidLoad(ev: LoadingEvent) {
-    const loading = ev.detail.loading;
+  protected viewDidLoad(ev: ComponentEvent<Loading>) {
+    const loading = ev.detail.component;
     const loadingResolve = this.loadingResolves[loading.loadingId];
     if (loadingResolve) {
       loadingResolve(loading);
@@ -48,14 +48,14 @@ export class LoadingController {
 
 
   @Listen('body:ionLoadingWillPresent')
-  protected willPresent(ev: LoadingEvent) {
-    this.loadings.push(ev.detail.loading);
+  protected willPresent(ev: ComponentEvent<Loading>) {
+    this.loadings.push(ev.detail.component);
   }
 
 
   @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
-  protected willDismiss(ev: LoadingEvent) {
-    const index = this.loadings.indexOf(ev.detail.loading);
+  protected willDismiss(ev: ComponentEvent<Loading>) {
+    const index = this.loadings.indexOf(ev.detail.component);
     if (index > -1) {
       this.loadings.splice(index, 1);
     }

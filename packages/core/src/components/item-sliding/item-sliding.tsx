@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
 
-import { GestureDetail, HTMLIonItemElement, HTMLIonListElement } from '../../index';
+import { ComponentDetail, GestureDetail, HTMLIonItemElement, HTMLIonListElement } from '../../index';
 import { swipeShouldReset } from '../../utils/helpers';
 import { ItemOptions } from './item-options';
 
@@ -155,7 +155,7 @@ export class ItemSliding {
 
 
   /**
-   * @output {Event} Emitted when the sliding position changes.
+   * @output {ComponentEvent} Emitted when the sliding position changes.
    * It reports the relative position.
    *
    * ```ts
@@ -175,7 +175,7 @@ export class ItemSliding {
    * ```
    *
    */
-  @Event() ionDrag: EventEmitter;
+  @Event() ionDrag: EventEmitter<ComponentDetail<ItemSliding>>;
 
   constructor() {
     this.gestureOptions = {
@@ -411,7 +411,7 @@ export class ItemSliding {
     }
 
     style.transform = `translate3d(${-openAmount}px,0,0)`;
-    this.ionDrag.emit(this);
+    this.ionDrag.emit({ component: this });
   }
 
   protected hostData() {

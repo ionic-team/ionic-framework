@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 
-import { SegmentButtonEvent } from '../../index';
+import { ComponentDetail, ComponentEvent } from '../../index';
 
 
 /**
@@ -77,9 +77,9 @@ export class Segment {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {Event} Emitted when the value property has changed.
+   * @output {ComponentDetail} Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<ComponentDetail<Segment>>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -127,14 +127,14 @@ export class Segment {
   }
 
   @Listen('ionClick')
-  segmentClick(ev: CustomEvent) {
-    let selectedButton = ev.detail.segmentButton;
+  segmentClick(ev: ComponentEvent<Segment>) {
+    let selectedButton = ev.detail.component;
 
     this.value = selectedButton.value;
     this.selectButton(this.value);
 
     // TODO should this move to valueChanged
-    this.ionChange.emit({ segment: this });
+    this.ionChange.emit({ component: this });
   }
 
   selectButton(val: string) {
@@ -157,11 +157,5 @@ export class Segment {
 
   protected render() {
     return <slot></slot>;
-  }
-}
-
-export interface SegmentEvent extends Event {
-  detail: {
-    segment: Segment;
   }
 }

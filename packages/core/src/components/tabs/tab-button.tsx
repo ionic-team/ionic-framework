@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { HTMLIonTabElement } from '../../index';
+
+import { Tab } from './tab';
 
 @Component({
   tag: 'ion-tab-button'
@@ -7,7 +8,7 @@ import { HTMLIonTabElement } from '../../index';
 export class TabbarButton {
 
   @Prop() selected: boolean = false;
-  @Prop() tab: HTMLIonTabElement;
+  @Prop() tab: Tab;
 
   @Event() ionTabbarClick: EventEmitter;
 

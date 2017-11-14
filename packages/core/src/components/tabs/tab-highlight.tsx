@@ -1,6 +1,9 @@
 import { Component, Element, Listen, Prop, PropDidChange, State } from '@stencil/core';
 import { getParentElement } from '../../utils/helpers';
-import { HTMLIonTabButtonElement, HTMLIonTabElement } from '../../index';
+
+import { HTMLIonTabButtonElement } from '../../index';
+
+import { Tab } from './tab';
 
 @Component({
   tag: 'ion-tab-highlight'
@@ -12,7 +15,7 @@ export class TabHighlight {
   @State() animated = false;
   @State() transform = '';
 
-  @Prop() selectedTab: HTMLIonTabElement;
+  @Prop() selectedTab: Tab;
   @PropDidChange('selectedTab')
   selectedTabChanged() {
     this.updateTransform();

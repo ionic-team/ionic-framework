@@ -1,8 +1,11 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, HTMLIonTabElement } from '../../index';
+import { Config } from '../../index';
+
+import { ComponentDetail, ComponentEvent } from '../../index';
+
+import { Tab } from './tab';
 
 export interface NavOptions { }
-// import { isPresent } from '../../utils/helpers';
 
 /**
  * @name Tabs
@@ -152,8 +155,8 @@ export class Tabs {
 
   @Element() el: HTMLElement;
 
-  @State() tabs: HTMLIonTabElement[] = [];
-  @State() selectedTab: HTMLIonTabElement;
+  @State() tabs: Tab[] = [];
+  @State() selectedTab: Tab;
 
   @Prop({ context: 'config' }) config: Config;
 
@@ -183,9 +186,9 @@ export class Tabs {
   @Prop({ mutable: true }) tabbarHighlight: boolean;
 
   /**
-   * @output {any} Emitted when the tab changes.
+   * @output {ComponentEvent} Emitted when the tab changes.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<ComponentDetail<Tabs>>;
 
   protected ionViewDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
@@ -225,14 +228,14 @@ export class Tabs {
 
   @Listen('ionTabbarClick')
   @Listen('ionSelect')
-  tabChange(ev: CustomEvent) {
-    const selectedTab = ev.detail as HTMLIonTabElement;
+  tabChange(ev: ComponentEvent<Tab>) {
+    const selectedTab = ev.detail.component;
     this.select(selectedTab);
   }
 
   @Listen('ionTabDidLoad')
-  protected addTab(ev: CustomEvent) {
-    const tab = ev.detail as HTMLIonTabElement;
+  protected addTab(ev: ComponentEvent<Tab>) {
+    const tab = ev.detail.component;
     const id = `t-${this.tabsId}-${++this.ids}`;
     tab.btnId = 'tab-' + id;
     tab.id = 'tabpanel-' + id;
@@ -241,8 +244,8 @@ export class Tabs {
   }
 
   @Listen('ionTabDidUnload')
-  protected removeTab(ev: CustomEvent) {
-    const tab = ev.detail;
+  protected removeTab(ev: ComponentEvent<Tab>) {
+    const tab = ev.detail.component;
     this.tabs.slice(this.tabs.indexOf(tab));
     ev.stopPropagation();
   }
@@ -251,7 +254,7 @@ export class Tabs {
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
   @Method()
-  select(tabOrIndex: number | HTMLIonTabElement) {
+  select(tabOrIndex: number | Tab) {
     const selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (!selectedTab) {
       return;
@@ -279,34 +282,34 @@ export class Tabs {
       }
       this.selectedTab = selectedTab;
       this.selectHistory.push(selectedTab.id);
-      this.ionChange.emit(selectedTab);
+      this.ionChange.emit({ component: this });
     }
   }
 
    /**
    * @param {number} index Index of the tab you want to get
-   * @returns {HTMLIonTabElement} Returns the tab who's index matches the one passed
+   * @returns {Tab} Returns the tab who's index matches the one passed
    */
   @Method()
-  getByIndex(index: number): HTMLIonTabElement {
+  getByIndex(index: number): Tab {
     return this.tabs[index];
   }
 
   /**
-   * @return {HTMLIonTabElement} Returns the currently selected tab
+   * @return {Tab} Returns the currently selected tab
    */
   @Method()
-  getSelected(): HTMLIonTabElement {
+  getSelected(): Tab {
     return this.tabs.find((tab) => tab.selected);
   }
 
   @Method()
-  getIndex(tab: HTMLIonTabElement): number {
+  getIndex(tab: Tab): number {
     return this.tabs.indexOf(tab);
   }
 
   @Method()
-  getTabs(): HTMLIonTabElement[] {
+  getTabs(): Tab[] {
     return this.tabs;
   }
 
@@ -338,10 +341,10 @@ export class Tabs {
   /**
    * Get the previously selected Tab which is currently not disabled or hidden.
    * @param {boolean} trimHistory If the selection history should be trimmed up to the previous tab selection or not.
-   * @returns {HTMLIonTabElement}
+   * @returns {Tab}
    */
   @Method()
-  previousTab(trimHistory: boolean = true): HTMLIonTabElement {
+  previousTab(trimHistory: boolean = true): Tab {
     // walk backwards through the tab selection history
     // and find the first previous tab that is enabled and shown
     for (var i = this.selectHistory.length - 2; i >= 0; i--) {

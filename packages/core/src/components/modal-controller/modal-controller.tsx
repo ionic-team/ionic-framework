@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Modal, ModalEvent, ModalOptions } from '../../index';
+import { ComponentEvent, Modal, ModalOptions } from '../../index';
 
 
 @Component({
@@ -38,8 +38,8 @@ export class ModalController {
 
 
   @Listen('body:ionModalDidLoad')
-  protected modalDidLoad(ev: ModalEvent) {
-    const modal = ev.detail.modal;
+  protected modalDidLoad(ev: ComponentEvent<Modal>) {
+    const modal = ev.detail.component;
     const modalResolve = this.modalResolves[modal.modalId];
     if (modalResolve) {
       modalResolve(modal);
@@ -49,14 +49,14 @@ export class ModalController {
 
 
   @Listen('body:ionModalWillPresent')
-  protected modalWillPresent(ev: ModalEvent) {
-    this.modals.push(ev.detail.modal);
+  protected modalWillPresent(ev: ComponentEvent<Modal>) {
+    this.modals.push(ev.detail.component);
   }
 
 
   @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
-  protected modalWillDismiss(ev: ModalEvent) {
-    const index = this.modals.indexOf(ev.detail.modal);
+  protected modalWillDismiss(ev: ComponentEvent<Modal>) {
+    const index = this.modals.indexOf(ev.detail.component);
     if (index > -1) {
       this.modals.splice(index, 1);
     }

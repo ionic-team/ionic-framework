@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
+import { ComponentDetail } from '../../index';
 
 /**
  * @name Searchbar
@@ -44,29 +45,29 @@ export class Searchbar {
 
 
   /**
-   * @output {Event} Emitted when the Searchbar input has changed, including when it's cleared.
+   * @output {ComponentEvent} Emitted when the Searchbar input has changed, including when it's cleared.
    */
-  @Event() ionInput: EventEmitter;
+  @Event() ionInput: EventEmitter<ComponentDetail<Searchbar>>;
 
   /**
-   * @output {Event} Emitted when the cancel button is clicked.
+   * @output {ComponentEvent} Emitted when the cancel button is clicked.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel: EventEmitter<ComponentDetail<Searchbar>>;
 
   /**
-   * @output {Event} Emitted when the clear input button is clicked.
+   * @output {ComponentEvent} Emitted when the clear input button is clicked.
    */
-  @Event() ionClear: EventEmitter;
+  @Event() ionClear: EventEmitter<ComponentDetail<Searchbar>>;
 
   /**
-   * @output {Event} Emitted when the input loses focus.
+   * @output {ComponentEvent} Emitted when the input loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur: EventEmitter<ComponentDetail<Searchbar>>;
 
   /**
-   * @output {Event} Emitted when the input has focus.
+   * @output {ComponentEvent} Emitted when the input has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus: EventEmitter<ComponentDetail<Searchbar>>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -156,8 +157,8 @@ export class Searchbar {
    * @hidden
    * Clears the input field and triggers the control change.
    */
-  clearInput(ev: UIEvent) {
-    this.ionClear.emit({event: ev});
+  clearInput() {
+    this.ionClear.emit({ component: this });
 
     // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
@@ -165,7 +166,7 @@ export class Searchbar {
       let value = this.value;
       if (value !== undefined && value !== '') {
         this.value = '';
-        this.ionInput.emit({event: ev});
+        this.ionInput.emit({ component: this });
       }
     }, 16 * 4);
     this._shouldBlur = false;
@@ -177,10 +178,10 @@ export class Searchbar {
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
    */
-  cancelSearchbar(ev: UIEvent) {
-    this.ionCancel.emit({event: ev});
+  cancelSearchbar() {
+    this.ionCancel.emit({ component: this });
 
-    this.clearInput(ev);
+    this.clearInput();
     this._shouldBlur = true;
     this.activated = false;
   }
@@ -226,7 +227,7 @@ export class Searchbar {
     if (this._shouldBlur === false) {
       inputEle.focus();
       this._shouldBlur = true;
-      this.ionBlur.emit({this: this});
+      this.ionBlur.emit({ component: this });
       this.inputUpdated();
       return;
     }
@@ -243,7 +244,7 @@ export class Searchbar {
     this.activated = true;
 
     this.focused = true;
-    this.ionFocus.emit({this: this});
+    this.ionFocus.emit({ component: this });
     this.inputUpdated();
 
     this.positionElements();

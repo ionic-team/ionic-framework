@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Popover, PopoverEvent, PopoverOptions } from '../../index';
+import { ComponentEvent, Popover, PopoverOptions } from '../../index';
 
 
 @Component({
@@ -36,8 +36,8 @@ export class PopoverController {
 
 
   @Listen('body:ionPopoverDidLoad')
-  protected viewDidLoad(ev: PopoverEvent) {
-    const popover = ev.detail.popover;
+  protected viewDidLoad(ev: ComponentEvent<Popover>) {
+    const popover = ev.detail.component;
     const popoverResolve = this.popoverResolves[popover.popoverId];
     if (popoverResolve) {
       popoverResolve(popover);
@@ -47,14 +47,14 @@ export class PopoverController {
 
 
   @Listen('body:ionPopoverWillPresent')
-  protected willPresent(ev: PopoverEvent) {
-    this.popovers.push(ev.detail.popover);
+  protected willPresent(ev: ComponentEvent<Popover>) {
+    this.popovers.push(ev.detail.component);
   }
 
 
   @Listen('body:ionPopoverWillDismiss, body:ionPopoverDidUnload')
-  protected willDismiss(ev: PopoverEvent) {
-    const index = this.popovers.indexOf(ev.detail.popover);
+  protected willDismiss(ev: ComponentEvent<Popover>) {
+    const index = this.popovers.indexOf(ev.detail.component);
     if (index > -1) {
       this.popovers.splice(index, 1);
     }
