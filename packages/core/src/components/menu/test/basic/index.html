@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Ionic Item Sliding</title>
+  <title>Menu - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
@@ -55,17 +55,14 @@
       </ion-content>
     </ion-menu>
 
-    <ion-page main>
+    <ion-page main class="show-page">
 
       <ion-header>
         <ion-toolbar>
-          <ion-title>Ionic CDN demo</ion-title>
+          <ion-title>Menu - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-footer>
-          <ion-toolbar>
-          </ion-toolbar>
-        </ion-footer>
+
       <ion-content padding>
         <p>
           <ion-button onclick="openLeft()">Open left menu</ion-button>
@@ -75,6 +72,8 @@
           <ion-button onclick="setPush()">Set Push</ion-button>
           <ion-button onclick="setOverlay()">Set Overlay</ion-button>
           <ion-button onclick="setReveal()">Set Reveal</ion-button>
+
+          <ion-button onclick="setEnabled()">Set Swipe Enabled False</ion-button>
         </p>
       </ion-content>
 
@@ -104,6 +103,9 @@
     function setReveal() {
       menu.get('left').type = 'reveal';
       menu.get('right').type = 'reveal';
+    }
+    function setEnabled() {
+      menu.get('left').swipeEnabled = false;
     }
   </script>
 </body>
