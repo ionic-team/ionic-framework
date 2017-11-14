@@ -124,7 +124,10 @@ async function run() {
   });
 }
 
-run();
+// Invoke run() only if executed directly i.e. `node ./scripts/e2e`
+if (require.main === module) {
+  run();
+}
 
 module.exports = {
   Page,
