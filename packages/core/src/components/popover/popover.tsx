@@ -327,12 +327,6 @@ export interface PopoverOptions {
   ev: Event;
 }
 
-export interface ComponentEvent {
-  detail: {
-    popover: Popover;
-  };
-}
-
 export const POPOVER_POSITION_PROPERTIES: any = {
   ios: {
     padding: 2,
