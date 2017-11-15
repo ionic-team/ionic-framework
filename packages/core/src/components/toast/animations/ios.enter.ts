@@ -31,7 +31,7 @@ export default function iOSEnterAnimation(
   }
   return baseAnimation
     .addElement(baseElm)
-    .easing('cubic-bezier(.36,.66,.04,1)')
+    .easing('cubic-bezier(.155,1.105,.295,1.12)')
     .duration(400)
     .add(wrapperAnimation);
 }
