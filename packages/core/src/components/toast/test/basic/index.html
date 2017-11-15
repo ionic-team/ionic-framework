@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Ionic Toast</title>
+  <title>Toast - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
@@ -12,13 +12,13 @@
   <ion-app>
     <ion-page>
       <ion-header>
-        <ion-toolbar color="primary">
-          <ion-title>Popover</ion-title>
+        <ion-toolbar>
+          <ion-title>Toast - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content padding>
-        <ion-button block onclick="presentToast('bottom')">Show Toast Bottom</ion-button>
+        <ion-button block class="e2eShowBottomToast" onclick="presentToast('bottom')">Show Toast Bottom</ion-button>
         <ion-button block onclick="presentToast('top')">Show Toast Top</ion-button>
         <ion-button block onclick="presentToast('middle')">Show Toast Middle</ion-button>
         <ion-button block onclick="presentToastWithOptions({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show Toast with long message</ion-button>
