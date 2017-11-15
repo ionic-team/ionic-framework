@@ -20,13 +20,10 @@ In general, writing an end-to-end tests consists of the following steps:
 The most basic end-to-end test just navigates to the page in order to verify that it draws properly. In this case, it is not necessary to extend the E2ETestPage class. The base class contains a navigate method that goes to the page and waits for it to load. The test just needs to instantiate the page with the proper URL and call the navigate. Such a test looks like this:
 
 ```ts
-const { register, Page } = require('../../../../scripts/e2e');
+const { register, navigate } = require('../../../../scripts/e2e');
 
 describe('button: basic', () => {
-  register('navigates', driver => {
-    const page = new Page(driver, 'http://localhost:3333/src/components/button/test/basic/index.html');
-    return page.navigate();
-  });
+  register('navigates', navigate('http://localhost:3333/src/components/button/test/basic'));
 });
 ```
 
@@ -38,7 +35,7 @@ const { register, Page } = require('../../../../scripts/e2e');;
 
 class ActionSheetE2ETestPage extends Page {
   constructor(driver) {
-    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic/index.html');
+    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic');
   }
 
   present(buttonId) {
