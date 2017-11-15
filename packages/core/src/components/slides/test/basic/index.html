@@ -2,18 +2,13 @@
 <html dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Ionic Slides Basic</title>
+  <title>Slides - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
 <body>
 
-<ion-slides style="background: black"
-            (ionSlideWillChange)="onSlideWillChange($event)"
-            (ionSlideDidChange)="onSlideDidChange($event)"
-            (ionSlideDrag)="onSlideDrag($event)"
-            pager="true"
-            effect="flip">
+<ion-slides style="background: black" pager="true" effect="flip">
 
   <ion-slide style="background: red; color: white;">
     <h1>Slide 1</h1>
