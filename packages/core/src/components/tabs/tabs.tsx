@@ -140,8 +140,7 @@ export interface NavOptions { }
   tag: 'ion-tabs',
   styleUrls: {
     ios: 'tabs.ios.scss',
-    md: 'tabs.md.scss',
-    wp: 'tabs.wp.scss'
+    md: 'tabs.md.scss'
   }
 })
 export class Tabs {

@@ -5,8 +5,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-item-divider',
   styleUrls: {
     ios: 'item-divider.ios.scss',
-    md: 'item-divider.md.scss',
-    wp: 'item-divider.wp.scss'
+    md: 'item-divider.md.scss'
   },
   host: {
     theme: 'item item-divider'
@@ -23,10 +22,10 @@ export class ItemDivider {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     return [

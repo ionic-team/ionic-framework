@@ -10,8 +10,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
   tag: 'ion-popover',
   styleUrls: {
     ios: 'popover.ios.scss',
-    md: 'popover.md.scss',
-    wp: 'popover.wp.scss'
+    md: 'popover.md.scss'
   },
   host: {
     theme: 'popover'
@@ -341,12 +340,6 @@ export const POPOVER_POSITION_PROPERTIES: any = {
     centerTarget: true
   },
   md: {
-    padding: 12,
-    unit: 'px',
-    showArrow: false,
-    centerTarget: false
-  },
-  wp: {
     padding: 12,
     unit: 'px',
     showArrow: false,

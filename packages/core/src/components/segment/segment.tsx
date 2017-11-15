@@ -63,8 +63,7 @@ import { SegmentButtonEvent } from '../../index';
   tag: 'ion-segment',
   styleUrls: {
     ios: 'segment.ios.scss',
-    md: 'segment.md.scss',
-    wp: 'segment.wp.scss'
+    md: 'segment.md.scss'
   },
   host: {
     theme: 'segment'
@@ -90,10 +89,10 @@ export class Segment {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /*
    * @input {boolean} If true, the user cannot interact with the segment. Default false.

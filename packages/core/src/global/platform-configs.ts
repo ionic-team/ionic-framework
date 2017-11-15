@@ -39,7 +39,7 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
   {
     name: 'windows',
     settings: {
-      mode: 'wp'
+      mode: 'md'
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, 'windows', WINDOWS_PHONE, [])
   },

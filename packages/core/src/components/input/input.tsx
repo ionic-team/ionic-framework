@@ -8,8 +8,7 @@ import { InputComponent } from './input-base';
   tag: 'ion-input',
   styleUrls: {
     ios: 'input.ios.scss',
-    md: 'input.md.scss',
-    wp: 'input.wp.scss'
+    md: 'input.md.scss'
   },
   host: {
     theme: 'input'

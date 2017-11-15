@@ -10,8 +10,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
   tag: 'ion-modal',
   styleUrls: {
     ios: 'modal.ios.scss',
-    md: 'modal.md.scss',
-    wp: 'modal.wp.scss'
+    md: 'modal.md.scss'
   },
   host: {
     theme: 'modal'

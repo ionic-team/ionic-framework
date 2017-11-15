@@ -5,8 +5,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-list-header',
   styleUrls: {
     ios: 'list-header.ios.scss',
-    md: 'list-header.md.scss',
-    wp: 'list-header.wp.scss'
+    md: 'list-header.md.scss'
   },
   host: {
     theme: 'list-header'
@@ -23,10 +22,10 @@ export class ListHeader {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     return <slot></slot>;

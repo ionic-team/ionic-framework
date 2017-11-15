@@ -4,8 +4,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-card',
   styleUrls: {
     ios: 'card.ios.scss',
-    md: 'card.md.scss',
-    wp: 'card.wp.scss'
+    md: 'card.md.scss'
   },
   host: {
     theme: 'card'
@@ -21,10 +20,10 @@ export class Card {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     return <slot></slot>;

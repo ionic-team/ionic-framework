@@ -22,10 +22,10 @@ import { Config } from '../../index';
  *
  * | Property    | Description                                                                                                           |
  * |-------------|-----------------------------------------------------------------------------------------------------------------------|
- * | `start`     | Positions element to the left of the content in `ios` mode, and directly to the right in `md` and `wp` mode.    |
- * | `end`       | Positions element to the right of the content in `ios` mode, and to the far right in `md` and `wp` mode.        |
- * | `left`      | Positions element to the left of all other elements.                                                            |
- * | `right`     | Positions element to the right of all other elements.                                                           |
+ * | `start`     | Positions element to the left of the content in `ios` mode, and directly to the right in `md` mode.                   |
+ * | `end`       | Positions element to the right of the content in `ios` mode, and to the far right in `md` mode.                       |
+ * | `left`      | Positions element to the left of all other elements.                                                                  |
+ * | `right`     | Positions element to the right of all other elements.                                                                 |
  *
  *
  * ### Header / Footer Box Shadow and Border
@@ -94,8 +94,7 @@ import { Config } from '../../index';
   tag: 'ion-toolbar',
   styleUrls: {
     ios: 'toolbar.ios.scss',
-    md: 'toolbar.md.scss',
-    wp: 'toolbar.wp.scss'
+    md: 'toolbar.md.scss'
   },
   host: {
     theme: 'toolbar'
@@ -115,10 +114,10 @@ export class Toolbar {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected ionViewDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button') as any;

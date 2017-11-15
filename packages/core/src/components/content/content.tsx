@@ -7,8 +7,7 @@ import { getPageElement } from '../../utils/helpers';
   tag: 'ion-content',
   styleUrls: {
     ios: 'content.ios.scss',
-    md: 'content.md.scss',
-    wp: 'content.wp.scss'
+    md: 'content.md.scss'
   }
 })
 export class Content {

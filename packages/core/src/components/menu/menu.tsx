@@ -6,8 +6,7 @@ import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
   tag: 'ion-menu',
   styleUrls: {
     ios: 'menu.ios.scss',
-    md: 'menu.md.scss',
-    wp: 'menu.wp.scss'
+    md: 'menu.md.scss'
   },
   host: {
     theme: 'menu'
