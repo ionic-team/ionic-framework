@@ -6,8 +6,7 @@ import { getElementClassObject } from '../../utils/theme';
   tag: 'ion-chip-button',
   styleUrls: {
     ios: 'chip-button.ios.scss',
-    md: 'chip-button.md.scss',
-    wp: 'chip-button.wp.scss'
+    md: 'chip-button.md.scss'
   },
 })
 export class ChipButton {
@@ -28,10 +27,10 @@ export class ChipButton {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {boolean} If true, activates a transparent button style.

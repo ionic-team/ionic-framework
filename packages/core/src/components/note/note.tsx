@@ -32,8 +32,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-note',
   styleUrls: {
     ios: 'note.ios.scss',
-    md: 'note.md.scss',
-    wp: 'note.wp.scss'
+    md: 'note.md.scss'
   },
   host: {
     theme: 'note'
@@ -50,10 +49,10 @@ export class Note {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     return <slot></slot>;

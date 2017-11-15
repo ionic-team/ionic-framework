@@ -51,8 +51,7 @@ import { TextareaComponent } from './input-base';
   tag: 'ion-textarea',
   styleUrls: {
     ios: 'input.ios.scss',
-    md: 'input.md.scss',
-    wp: 'input.wp.scss'
+    md: 'input.md.scss'
   },
   host: {
     theme: 'input'

@@ -5,9 +5,6 @@
 // Material Design Card Header
 // --------------------------------------------------
 
-/// @prop - Font size of the card header
-$card-md-header-font-size:            1.6rem !default;
-
 /// @prop - Padding top of the card header
 $card-md-header-padding-top:          16px !default;
 
@@ -20,38 +17,7 @@ $card-md-header-padding-bottom:       $card-md-header-padding-top !default;
 /// @prop - Padding start of the card header
 $card-md-header-padding-start:        $card-md-header-padding-end !default;
 
-/// @prop - Color of the card header
-$card-md-header-color:                #222 !default;
-
 
 .card-header-md {
   @include padding($card-md-header-padding-top, $card-md-header-padding-end, $card-md-header-padding-bottom, $card-md-header-padding-start);
-
-  font-size: $card-md-header-font-size;
-  color: $card-md-header-color;
-}
-
-
-// Generate Material Design Card Header Colors
-// --------------------------------------------------
-
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-
-  .card-md-#{$color-name} {
-
-    .card-header-md {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-      .card-header-md-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-
-  .card-header-md-#{$color-name} {
-    color: $color-base;
-  }
-
 }

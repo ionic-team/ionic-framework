@@ -41,8 +41,7 @@ import { createThemedClasses } from '../../utils/theme';
   tag: 'ion-title',
   styleUrls: {
     ios: 'title.ios.scss',
-    md: 'title.md.scss',
-    wp: 'title.wp.scss'
+    md: 'title.md.scss'
   },
   host: {
     theme: 'title'

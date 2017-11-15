@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
 
-import { GestureDetail, HTMLIonItemElement, HTMLIonListElement } from '../../index';
+import { GestureDetail } from '../../index';
 import { swipeShouldReset } from '../../utils/helpers';
 import { ItemOptions } from './item-options';
 
@@ -131,8 +131,7 @@ const enum SlidingState {
   tag: 'ion-item-sliding',
   styleUrls: {
     ios: 'item-sliding.ios.scss',
-    md: 'item-sliding.md.scss',
-    wp: 'item-sliding.wp.scss'
+    md: 'item-sliding.md.scss'
   }
 })
 export class ItemSliding {

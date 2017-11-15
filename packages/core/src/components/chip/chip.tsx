@@ -91,8 +91,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-chip',
   styleUrls: {
     ios: 'chip.ios.scss',
-    md: 'chip.md.scss',
-    wp: 'chip.wp.scss'
+    md: 'chip.md.scss'
   },
   host: {
     theme: 'chip'
@@ -108,10 +107,10 @@ export class Chip {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     return <slot></slot>;

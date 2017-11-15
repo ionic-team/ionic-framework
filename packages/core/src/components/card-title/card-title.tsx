@@ -5,8 +5,7 @@ import { Component, Prop} from '@stencil/core';
   tag: 'ion-card-title',
   styleUrls: {
     ios: 'card-title.ios.scss',
-    md: 'card-title.md.scss',
-    wp: 'card-title.wp.scss'
+    md: 'card-title.md.scss'
   },
   host: {
     theme: 'card-title'
@@ -22,10 +21,17 @@ export class CardTitle {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
+
+  hostData() {
+    return {
+      'role': 'heading',
+      'aria-level': '2'
+    };
+  }
 
   protected render() {
     return <slot></slot>;

@@ -1,5 +1,4 @@
 import { Component, Element } from '@stencil/core';
-import { HTMLIonTabsElement } from '../../index';
 
 @Component({
   tag: 'page-tab'

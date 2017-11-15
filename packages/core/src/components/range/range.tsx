@@ -6,8 +6,7 @@ import { clamp } from '../../utils/helpers';
   tag: 'ion-range',
   styleUrls: {
     ios: 'range.ios.scss',
-    md: 'range.md.scss',
-    wp: 'range.wp.scss'
+    md: 'range.md.scss'
   },
   host: {
     theme: 'range'
@@ -68,10 +67,10 @@ export class Range implements BaseInputComponent {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {number} How long, in milliseconds, to wait to trigger the

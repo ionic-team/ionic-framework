@@ -5,8 +5,7 @@ import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/
   tag: 'ion-label',
   styleUrls: {
     ios: 'label.ios.scss',
-    md: 'label.md.scss',
-    wp: 'label.wp.scss'
+    md: 'label.md.scss'
   },
   host: {
     theme: 'label'
@@ -31,10 +30,10 @@ export class Label {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @output {Event} If true, the label will sit alongside an input. Defaults to `false`.

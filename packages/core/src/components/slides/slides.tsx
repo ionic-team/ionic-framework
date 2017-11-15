@@ -118,7 +118,7 @@ export class Slides {
    * that should be controlled by this Slides instance.
    * Default: `null`.
    */
-  @Prop() control: Slides | Slides[] = null;
+  @Prop() control: any = null;
 
   /**
    * @input {string}  Swipe direction: 'horizontal' or 'vertical'.

@@ -70,8 +70,7 @@ import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChang
   tag: 'ion-checkbox',
   styleUrls: {
     ios: 'checkbox.ios.scss',
-    md: 'checkbox.md.scss',
-    wp: 'checkbox.wp.scss'
+    md: 'checkbox.md.scss'
   },
   host: {
     theme: 'checkbox'
@@ -101,10 +100,10 @@ export class Checkbox {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {boolean} If true, the checkbox is selected. Defaults to `false`.

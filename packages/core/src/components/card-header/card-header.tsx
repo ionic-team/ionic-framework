@@ -5,8 +5,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-card-header',
   styleUrls: {
     ios: 'card-header.ios.scss',
-    md: 'card-header.md.scss',
-    wp: 'card-header.wp.scss'
+    md: 'card-header.md.scss'
   },
   host: {
     theme: 'card-header'
@@ -22,10 +21,10 @@ export class CardHeader {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     return <slot></slot>;

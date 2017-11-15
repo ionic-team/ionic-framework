@@ -6,3243 +6,3350 @@
 
 import 'ionicons';
 
-import { ActionSheetController as IonActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
+import {
+  ActionSheetButton,
+} from './components/action-sheet/action-sheet.js';
+import {
+  AnimationBuilder,
+  PickerOptions,
+  PickerColumn,
+} from './index';
+import {
+  AlertButton,
+  AlertInput,
+} from './components/alert/alert.js';
+import {
+  ElementRef,
+  Side,
+} from './utils/helpers';
+import {
+  GestureCallback,
+  GestureDetail,
+} from './components/gesture/gesture.js';
+import {
+  FrameworkDelegate,
+} from './navigation/nav-interfaces';
+import {
+  PickerButton,
+  PickerColumn as PickerColumn2,
+} from './components/picker/picker.js';
+import {
+  Event,
+} from '@stencil/core';
+import {
+  ScrollCallback,
+} from './components/scroll/scroll.js';
+import {
+  SelectPopoverOption,
+} from './components/select/select-popover.js';
 
-interface HTMLIonActionSheetControllerElement extends IonActionSheetController, HTMLElement {
-}
-declare var HTMLIonActionSheetControllerElement: {
-  prototype: HTMLIonActionSheetControllerElement;
-  new (): HTMLIonActionSheetControllerElement;
-};
+import {
+  ActionSheetController as IonActionSheetController
+} from './components/action-sheet-controller/action-sheet-controller';
+
 declare global {
+  interface HTMLIonActionSheetControllerElement extends IonActionSheetController, HTMLElement {
+  }
+  var HTMLIonActionSheetControllerElement: {
+    prototype: HTMLIonActionSheetControllerElement;
+    new (): HTMLIonActionSheetControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-action-sheet-controller": HTMLIonActionSheetControllerElement;
+    "ion-action-sheet-controller": HTMLIonActionSheetControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-action-sheet-controller": HTMLIonActionSheetControllerElement;
+    "ion-action-sheet-controller": HTMLIonActionSheetControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-action-sheet-controller": JSXElements.IonActionSheetControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-action-sheet-controller": JSXElements.IonActionSheetControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonActionSheetControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonActionSheetControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { ActionSheet as IonActionSheet } from './components/action-sheet/action-sheet';
 
-interface HTMLIonActionSheetElement extends IonActionSheet, HTMLElement {
-}
-declare var HTMLIonActionSheetElement: {
-  prototype: HTMLIonActionSheetElement;
-  new (): HTMLIonActionSheetElement;
-};
+import {
+  ActionSheet as IonActionSheet
+} from './components/action-sheet/action-sheet';
+
 declare global {
+  interface HTMLIonActionSheetElement extends IonActionSheet, HTMLElement {
+  }
+  var HTMLIonActionSheetElement: {
+    prototype: HTMLIonActionSheetElement;
+    new (): HTMLIonActionSheetElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-action-sheet": HTMLIonActionSheetElement;
+    "ion-action-sheet": HTMLIonActionSheetElement;
   }
   interface ElementTagNameMap {
-      "ion-action-sheet": HTMLIonActionSheetElement;
+    "ion-action-sheet": HTMLIonActionSheetElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-action-sheet": JSXElements.IonActionSheetAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-action-sheet": JSXElements.IonActionSheetAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonActionSheetAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          animationCtrl?: any,
-          cssClass?: string,
-          title?: string,
-          subTitle?: string,
-          buttons?: any,
-          enableBackdropDismiss?: boolean,
-          enterAnimation?: any,
-          exitAnimation?: any,
-          actionSheetId?: string
-      }
+    export interface IonActionSheetAttributes extends HTMLAttributes {
+      
+        cssClass?: string,
+        title?: string,
+        subTitle?: string,
+        buttons?: ActionSheetButton[],
+        enableBackdropDismiss?: boolean,
+        enterAnimation?: AnimationBuilder,
+        exitAnimation?: AnimationBuilder,
+        actionSheetId?: string
+    }
   }
 }
 
-import { AlertController as IonAlertController } from './components/alert-controller/alert-controller';
 
-interface HTMLIonAlertControllerElement extends IonAlertController, HTMLElement {
-}
-declare var HTMLIonAlertControllerElement: {
-  prototype: HTMLIonAlertControllerElement;
-  new (): HTMLIonAlertControllerElement;
-};
+import {
+  AlertController as IonAlertController
+} from './components/alert-controller/alert-controller';
+
 declare global {
+  interface HTMLIonAlertControllerElement extends IonAlertController, HTMLElement {
+  }
+  var HTMLIonAlertControllerElement: {
+    prototype: HTMLIonAlertControllerElement;
+    new (): HTMLIonAlertControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-alert-controller": HTMLIonAlertControllerElement;
+    "ion-alert-controller": HTMLIonAlertControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-alert-controller": HTMLIonAlertControllerElement;
+    "ion-alert-controller": HTMLIonAlertControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-alert-controller": JSXElements.IonAlertControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-alert-controller": JSXElements.IonAlertControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonAlertControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonAlertControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Alert as IonAlert } from './components/alert/alert';
 
-interface HTMLIonAlertElement extends IonAlert, HTMLElement {
-}
-declare var HTMLIonAlertElement: {
-  prototype: HTMLIonAlertElement;
-  new (): HTMLIonAlertElement;
-};
+import {
+  Alert as IonAlert
+} from './components/alert/alert';
+
 declare global {
+  interface HTMLIonAlertElement extends IonAlert, HTMLElement {
+  }
+  var HTMLIonAlertElement: {
+    prototype: HTMLIonAlertElement;
+    new (): HTMLIonAlertElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-alert": HTMLIonAlertElement;
+    "ion-alert": HTMLIonAlertElement;
   }
   interface ElementTagNameMap {
-      "ion-alert": HTMLIonAlertElement;
+    "ion-alert": HTMLIonAlertElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-alert": JSXElements.IonAlertAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-alert": JSXElements.IonAlertAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonAlertAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          animationCtrl?: any,
-          cssClass?: string,
-          title?: string,
-          subTitle?: string,
-          message?: string,
-          buttons?: any,
-          inputs?: any,
-          enableBackdropDismiss?: boolean,
-          enterAnimation?: any,
-          exitAnimation?: any,
-          alertId?: string
-      }
+    export interface IonAlertAttributes extends HTMLAttributes {
+      
+        cssClass?: string,
+        title?: string,
+        subTitle?: string,
+        message?: string,
+        buttons?: AlertButton[],
+        inputs?: AlertInput[],
+        enableBackdropDismiss?: boolean,
+        enterAnimation?: AnimationBuilder,
+        exitAnimation?: AnimationBuilder,
+        alertId?: string
+    }
   }
 }
 
-import { AnimationControllerImpl as IonAnimationController } from './components/animation-controller/animation-controller';
 
-interface HTMLIonAnimationControllerElement extends IonAnimationController, HTMLElement {
-}
-declare var HTMLIonAnimationControllerElement: {
-  prototype: HTMLIonAnimationControllerElement;
-  new (): HTMLIonAnimationControllerElement;
-};
+import {
+  AnimationControllerImpl as IonAnimationController
+} from './components/animation-controller/animation-controller';
+
 declare global {
+  interface HTMLIonAnimationControllerElement extends IonAnimationController, HTMLElement {
+  }
+  var HTMLIonAnimationControllerElement: {
+    prototype: HTMLIonAnimationControllerElement;
+    new (): HTMLIonAnimationControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-animation-controller": HTMLIonAnimationControllerElement;
+    "ion-animation-controller": HTMLIonAnimationControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-animation-controller": HTMLIonAnimationControllerElement;
+    "ion-animation-controller": HTMLIonAnimationControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-animation-controller": JSXElements.IonAnimationControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-animation-controller": JSXElements.IonAnimationControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonAnimationControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonAnimationControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { IonApp as IonApp } from './components/app/app';
 
-interface HTMLIonAppElement extends IonApp, HTMLElement {
-}
-declare var HTMLIonAppElement: {
-  prototype: HTMLIonAppElement;
-  new (): HTMLIonAppElement;
-};
+import {
+  IonApp as IonApp
+} from './components/app/app';
+
 declare global {
+  interface HTMLIonAppElement extends IonApp, HTMLElement {
+  }
+  var HTMLIonAppElement: {
+    prototype: HTMLIonAppElement;
+    new (): HTMLIonAppElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-app": HTMLIonAppElement;
+    "ion-app": HTMLIonAppElement;
   }
   interface ElementTagNameMap {
-      "ion-app": HTMLIonAppElement;
+    "ion-app": HTMLIonAppElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-app": JSXElements.IonAppAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-app": JSXElements.IonAppAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonAppAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonAppAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Avatar as IonAvatar } from './components/avatar/avatar';
 
-interface HTMLIonAvatarElement extends IonAvatar, HTMLElement {
-}
-declare var HTMLIonAvatarElement: {
-  prototype: HTMLIonAvatarElement;
-  new (): HTMLIonAvatarElement;
-};
+import {
+  Avatar as IonAvatar
+} from './components/avatar/avatar';
+
 declare global {
+  interface HTMLIonAvatarElement extends IonAvatar, HTMLElement {
+  }
+  var HTMLIonAvatarElement: {
+    prototype: HTMLIonAvatarElement;
+    new (): HTMLIonAvatarElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-avatar": HTMLIonAvatarElement;
+    "ion-avatar": HTMLIonAvatarElement;
   }
   interface ElementTagNameMap {
-      "ion-avatar": HTMLIonAvatarElement;
+    "ion-avatar": HTMLIonAvatarElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-avatar": JSXElements.IonAvatarAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-avatar": JSXElements.IonAvatarAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonAvatarAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonAvatarAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Backdrop as IonBackdrop } from './components/backdrop/backdrop';
 
-interface HTMLIonBackdropElement extends IonBackdrop, HTMLElement {
-}
-declare var HTMLIonBackdropElement: {
-  prototype: HTMLIonBackdropElement;
-  new (): HTMLIonBackdropElement;
-};
+import {
+  Backdrop as IonBackdrop
+} from './components/backdrop/backdrop';
+
 declare global {
+  interface HTMLIonBackdropElement extends IonBackdrop, HTMLElement {
+  }
+  var HTMLIonBackdropElement: {
+    prototype: HTMLIonBackdropElement;
+    new (): HTMLIonBackdropElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-backdrop": HTMLIonBackdropElement;
+    "ion-backdrop": HTMLIonBackdropElement;
   }
   interface ElementTagNameMap {
-      "ion-backdrop": HTMLIonBackdropElement;
+    "ion-backdrop": HTMLIonBackdropElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-backdrop": JSXElements.IonBackdropAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-backdrop": JSXElements.IonBackdropAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonBackdropAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonBackdropAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Badge as IonBadge } from './components/badge/badge';
 
-interface HTMLIonBadgeElement extends IonBadge, HTMLElement {
-}
-declare var HTMLIonBadgeElement: {
-  prototype: HTMLIonBadgeElement;
-  new (): HTMLIonBadgeElement;
-};
+import {
+  Badge as IonBadge
+} from './components/badge/badge';
+
 declare global {
+  interface HTMLIonBadgeElement extends IonBadge, HTMLElement {
+  }
+  var HTMLIonBadgeElement: {
+    prototype: HTMLIonBadgeElement;
+    new (): HTMLIonBadgeElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-badge": HTMLIonBadgeElement;
+    "ion-badge": HTMLIonBadgeElement;
   }
   interface ElementTagNameMap {
-      "ion-badge": HTMLIonBadgeElement;
+    "ion-badge": HTMLIonBadgeElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-badge": JSXElements.IonBadgeAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-badge": JSXElements.IonBadgeAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonBadgeAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonBadgeAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { Button as IonButton } from './components/button/button';
 
-interface HTMLIonButtonElement extends IonButton, HTMLElement {
-}
-declare var HTMLIonButtonElement: {
-  prototype: HTMLIonButtonElement;
-  new (): HTMLIonButtonElement;
-};
+import {
+  Button as IonButton
+} from './components/button/button';
+
 declare global {
+  interface HTMLIonButtonElement extends IonButton, HTMLElement {
+  }
+  var HTMLIonButtonElement: {
+    prototype: HTMLIonButtonElement;
+    new (): HTMLIonButtonElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-button": HTMLIonButtonElement;
+    "ion-button": HTMLIonButtonElement;
   }
   interface ElementTagNameMap {
-      "ion-button": HTMLIonButtonElement;
+    "ion-button": HTMLIonButtonElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-button": JSXElements.IonButtonAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-button": JSXElements.IonButtonAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonButtonAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          itemButton?: boolean,
-          href?: string,
-          buttonType?: string,
-          large?: boolean,
-          small?: boolean,
-          default?: boolean,
-          disabled?: boolean,
-          outline?: boolean,
-          clear?: boolean,
-          solid?: boolean,
-          round?: boolean,
-          block?: boolean,
-          full?: boolean,
-          strong?: boolean
-      }
+    export interface IonButtonAttributes extends HTMLAttributes {
+      
+        itemButton?: boolean,
+        href?: string,
+        buttonType?: string,
+        large?: boolean,
+        small?: boolean,
+        default?: boolean,
+        disabled?: boolean,
+        outline?: boolean,
+        clear?: boolean,
+        solid?: boolean,
+        round?: boolean,
+        block?: boolean,
+        full?: boolean,
+        strong?: boolean,
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { Buttons as IonButtons } from './components/buttons/buttons';
 
-interface HTMLIonButtonsElement extends IonButtons, HTMLElement {
-}
-declare var HTMLIonButtonsElement: {
-  prototype: HTMLIonButtonsElement;
-  new (): HTMLIonButtonsElement;
-};
+import {
+  Buttons as IonButtons
+} from './components/buttons/buttons';
+
 declare global {
+  interface HTMLIonButtonsElement extends IonButtons, HTMLElement {
+  }
+  var HTMLIonButtonsElement: {
+    prototype: HTMLIonButtonsElement;
+    new (): HTMLIonButtonsElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-buttons": HTMLIonButtonsElement;
+    "ion-buttons": HTMLIonButtonsElement;
   }
   interface ElementTagNameMap {
-      "ion-buttons": HTMLIonButtonsElement;
+    "ion-buttons": HTMLIonButtonsElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-buttons": JSXElements.IonButtonsAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-buttons": JSXElements.IonButtonsAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonButtonsAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonButtonsAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { CardContent as IonCardContent } from './components/card-content/card-content';
 
-interface HTMLIonCardContentElement extends IonCardContent, HTMLElement {
-}
-declare var HTMLIonCardContentElement: {
-  prototype: HTMLIonCardContentElement;
-  new (): HTMLIonCardContentElement;
-};
+import {
+  CardContent as IonCardContent
+} from './components/card-content/card-content';
+
 declare global {
+  interface HTMLIonCardContentElement extends IonCardContent, HTMLElement {
+  }
+  var HTMLIonCardContentElement: {
+    prototype: HTMLIonCardContentElement;
+    new (): HTMLIonCardContentElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-card-content": HTMLIonCardContentElement;
+    "ion-card-content": HTMLIonCardContentElement;
   }
   interface ElementTagNameMap {
-      "ion-card-content": HTMLIonCardContentElement;
+    "ion-card-content": HTMLIonCardContentElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-card-content": JSXElements.IonCardContentAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-card-content": JSXElements.IonCardContentAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonCardContentAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonCardContentAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { CardHeader as IonCardHeader } from './components/card-header/card-header';
 
-interface HTMLIonCardHeaderElement extends IonCardHeader, HTMLElement {
-}
-declare var HTMLIonCardHeaderElement: {
-  prototype: HTMLIonCardHeaderElement;
-  new (): HTMLIonCardHeaderElement;
-};
+import {
+  CardHeader as IonCardHeader
+} from './components/card-header/card-header';
+
 declare global {
+  interface HTMLIonCardHeaderElement extends IonCardHeader, HTMLElement {
+  }
+  var HTMLIonCardHeaderElement: {
+    prototype: HTMLIonCardHeaderElement;
+    new (): HTMLIonCardHeaderElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-card-header": HTMLIonCardHeaderElement;
+    "ion-card-header": HTMLIonCardHeaderElement;
   }
   interface ElementTagNameMap {
-      "ion-card-header": HTMLIonCardHeaderElement;
+    "ion-card-header": HTMLIonCardHeaderElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-card-header": JSXElements.IonCardHeaderAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-card-header": JSXElements.IonCardHeaderAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonCardHeaderAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonCardHeaderAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { CardTitle as IonCardTitle } from './components/card-title/card-title';
 
-interface HTMLIonCardTitleElement extends IonCardTitle, HTMLElement {
-}
-declare var HTMLIonCardTitleElement: {
-  prototype: HTMLIonCardTitleElement;
-  new (): HTMLIonCardTitleElement;
-};
+import {
+  CardSubtitle as IonCardSubtitle
+} from './components/card-subtitle/card-subtitle';
+
 declare global {
+  interface HTMLIonCardSubtitleElement extends IonCardSubtitle, HTMLElement {
+  }
+  var HTMLIonCardSubtitleElement: {
+    prototype: HTMLIonCardSubtitleElement;
+    new (): HTMLIonCardSubtitleElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-card-title": HTMLIonCardTitleElement;
+    "ion-card-subtitle": HTMLIonCardSubtitleElement;
   }
   interface ElementTagNameMap {
-      "ion-card-title": HTMLIonCardTitleElement;
+    "ion-card-subtitle": HTMLIonCardSubtitleElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-card-title": JSXElements.IonCardTitleAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-card-subtitle": JSXElements.IonCardSubtitleAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonCardTitleAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonCardSubtitleAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { Card as IonCard } from './components/card/card';
 
-interface HTMLIonCardElement extends IonCard, HTMLElement {
-}
-declare var HTMLIonCardElement: {
-  prototype: HTMLIonCardElement;
-  new (): HTMLIonCardElement;
-};
+import {
+  CardTitle as IonCardTitle
+} from './components/card-title/card-title';
+
 declare global {
+  interface HTMLIonCardTitleElement extends IonCardTitle, HTMLElement {
+  }
+  var HTMLIonCardTitleElement: {
+    prototype: HTMLIonCardTitleElement;
+    new (): HTMLIonCardTitleElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-card": HTMLIonCardElement;
+    "ion-card-title": HTMLIonCardTitleElement;
   }
   interface ElementTagNameMap {
-      "ion-card": HTMLIonCardElement;
+    "ion-card-title": HTMLIonCardTitleElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-card": JSXElements.IonCardAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-card-title": JSXElements.IonCardTitleAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonCardAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonCardTitleAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { Checkbox as IonCheckbox } from './components/checkbox/checkbox';
 
-interface HTMLIonCheckboxElement extends IonCheckbox, HTMLElement {
-}
-declare var HTMLIonCheckboxElement: {
-  prototype: HTMLIonCheckboxElement;
-  new (): HTMLIonCheckboxElement;
-};
+import {
+  Card as IonCard
+} from './components/card/card';
+
 declare global {
+  interface HTMLIonCardElement extends IonCard, HTMLElement {
+  }
+  var HTMLIonCardElement: {
+    prototype: HTMLIonCardElement;
+    new (): HTMLIonCardElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-checkbox": HTMLIonCheckboxElement;
+    "ion-card": HTMLIonCardElement;
   }
   interface ElementTagNameMap {
-      "ion-checkbox": HTMLIonCheckboxElement;
+    "ion-card": HTMLIonCardElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-checkbox": JSXElements.IonCheckboxAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-card": JSXElements.IonCardAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonCheckboxAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          checked?: boolean,
-          disabled?: boolean,
-          value?: string
-      }
+    export interface IonCardAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { ChipButton as IonChipButton } from './components/chip-button/chip-button';
 
-interface HTMLIonChipButtonElement extends IonChipButton, HTMLElement {
-}
-declare var HTMLIonChipButtonElement: {
-  prototype: HTMLIonChipButtonElement;
-  new (): HTMLIonChipButtonElement;
-};
+import {
+  Checkbox as IonCheckbox
+} from './components/checkbox/checkbox';
+
 declare global {
+  interface HTMLIonCheckboxElement extends IonCheckbox, HTMLElement {
+  }
+  var HTMLIonCheckboxElement: {
+    prototype: HTMLIonCheckboxElement;
+    new (): HTMLIonCheckboxElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-chip-button": HTMLIonChipButtonElement;
+    "ion-checkbox": HTMLIonCheckboxElement;
   }
   interface ElementTagNameMap {
-      "ion-chip-button": HTMLIonChipButtonElement;
+    "ion-checkbox": HTMLIonCheckboxElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-chip-button": JSXElements.IonChipButtonAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-checkbox": JSXElements.IonCheckboxAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonChipButtonAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          href?: string,
-          clear?: boolean,
-          disabled?: boolean
-      }
+    export interface IonCheckboxAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        checked?: boolean,
+        disabled?: boolean,
+        value?: string
+    }
   }
 }
 
-import { Chip as IonChip } from './components/chip/chip';
 
-interface HTMLIonChipElement extends IonChip, HTMLElement {
-}
-declare var HTMLIonChipElement: {
-  prototype: HTMLIonChipElement;
-  new (): HTMLIonChipElement;
-};
+import {
+  ChipButton as IonChipButton
+} from './components/chip-button/chip-button';
+
 declare global {
+  interface HTMLIonChipButtonElement extends IonChipButton, HTMLElement {
+  }
+  var HTMLIonChipButtonElement: {
+    prototype: HTMLIonChipButtonElement;
+    new (): HTMLIonChipButtonElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-chip": HTMLIonChipElement;
+    "ion-chip-button": HTMLIonChipButtonElement;
   }
   interface ElementTagNameMap {
-      "ion-chip": HTMLIonChipElement;
+    "ion-chip-button": HTMLIonChipButtonElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-chip": JSXElements.IonChipAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-chip-button": JSXElements.IonChipButtonAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonChipAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonChipButtonAttributes extends HTMLAttributes {
+      
+        href?: string,
+        color?: string,
+        mode?: 'ios' | 'md',
+        clear?: boolean,
+        disabled?: boolean
+    }
   }
 }
 
-import { Content as IonContent } from './components/content/content';
 
-interface HTMLIonContentElement extends IonContent, HTMLElement {
-}
-declare var HTMLIonContentElement: {
-  prototype: HTMLIonContentElement;
-  new (): HTMLIonContentElement;
-};
+import {
+  Chip as IonChip
+} from './components/chip/chip';
+
 declare global {
+  interface HTMLIonChipElement extends IonChip, HTMLElement {
+  }
+  var HTMLIonChipElement: {
+    prototype: HTMLIonChipElement;
+    new (): HTMLIonChipElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-content": HTMLIonContentElement;
+    "ion-chip": HTMLIonChipElement;
   }
   interface ElementTagNameMap {
-      "ion-content": HTMLIonContentElement;
+    "ion-chip": HTMLIonChipElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-content": JSXElements.IonContentAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-chip": JSXElements.IonChipAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonContentAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          enableJsScroll?: any,
-          scrollToTop?: any,
-          scrollToBottom?: any,
-          ionScrollStart?: any,
-          ionScroll?: any,
-          ionScrollEnd?: any,
-          fullscreen?: boolean
-      }
+    export interface IonChipAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { Datetime as IonDatetime } from './components/datetime/datetime';
 
-interface HTMLIonDatetimeElement extends IonDatetime, HTMLElement {
-}
-declare var HTMLIonDatetimeElement: {
-  prototype: HTMLIonDatetimeElement;
-  new (): HTMLIonDatetimeElement;
-};
+import {
+  Content as IonContent
+} from './components/content/content';
+
 declare global {
+  interface HTMLIonContentElement extends IonContent, HTMLElement {
+  }
+  var HTMLIonContentElement: {
+    prototype: HTMLIonContentElement;
+    new (): HTMLIonContentElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-datetime": HTMLIonDatetimeElement;
+    "ion-content": HTMLIonContentElement;
   }
   interface ElementTagNameMap {
-      "ion-datetime": HTMLIonDatetimeElement;
+    "ion-content": HTMLIonContentElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-datetime": JSXElements.IonDatetimeAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-content": JSXElements.IonContentAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonDatetimeAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          pickerCtrl?: any,
-          disabled?: boolean,
-          min?: string,
-          max?: string,
-          displayFormat?: string,
-          pickerFormat?: string,
-          cancelText?: string,
-          doneText?: string,
-          yearValues?: any,
-          monthValues?: any,
-          dayValues?: any,
-          hourValues?: any,
-          minuteValues?: any,
-          monthNames?: any,
-          monthShortNames?: any,
-          dayNames?: any,
-          dayShortNames?: any,
-          pickerOptions?: any,
-          placeholder?: string,
-          value?: string
-      }
+    export interface IonContentAttributes extends HTMLAttributes {
+      
+        ionScrollStart?: Function,
+        ionScroll?: Function,
+        ionScrollEnd?: Function,
+        fullscreen?: boolean
+    }
   }
 }
 
-import { FabContainer as IonFab } from './components/fab/fab-container';
 
-interface HTMLIonFabElement extends IonFab, HTMLElement {
-}
-declare var HTMLIonFabElement: {
-  prototype: HTMLIonFabElement;
-  new (): HTMLIonFabElement;
-};
+import {
+  Datetime as IonDatetime
+} from './components/datetime/datetime';
+
 declare global {
+  interface HTMLIonDatetimeElement extends IonDatetime, HTMLElement {
+  }
+  var HTMLIonDatetimeElement: {
+    prototype: HTMLIonDatetimeElement;
+    new (): HTMLIonDatetimeElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-fab": HTMLIonFabElement;
+    "ion-datetime": HTMLIonDatetimeElement;
   }
   interface ElementTagNameMap {
-      "ion-fab": HTMLIonFabElement;
+    "ion-datetime": HTMLIonDatetimeElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-fab": JSXElements.IonFabAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-datetime": JSXElements.IonDatetimeAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonFabAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          close?: any
-      }
+    export interface IonDatetimeAttributes extends HTMLAttributes {
+      
+        disabled?: boolean,
+        min?: string,
+        max?: string,
+        displayFormat?: string,
+        pickerFormat?: string,
+        cancelText?: string,
+        doneText?: string,
+        yearValues?: any,
+        monthValues?: any,
+        dayValues?: any,
+        hourValues?: any,
+        minuteValues?: any,
+        monthNames?: any,
+        monthShortNames?: any,
+        dayNames?: any,
+        dayShortNames?: any,
+        pickerOptions?: PickerOptions,
+        placeholder?: string,
+        value?: string
+    }
   }
 }
 
-import { FabList as IonFabList } from './components/fab/fab-list';
 
-interface HTMLIonFabListElement extends IonFabList, HTMLElement {
-}
-declare var HTMLIonFabListElement: {
-  prototype: HTMLIonFabListElement;
-  new (): HTMLIonFabListElement;
-};
+import {
+  FabContainer as IonFab
+} from './components/fab/fab-container';
+
 declare global {
+  interface HTMLIonFabElement extends IonFab, HTMLElement {
+  }
+  var HTMLIonFabElement: {
+    prototype: HTMLIonFabElement;
+    new (): HTMLIonFabElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-fab-list": HTMLIonFabListElement;
+    "ion-fab": HTMLIonFabElement;
   }
   interface ElementTagNameMap {
-      "ion-fab-list": HTMLIonFabListElement;
+    "ion-fab": HTMLIonFabElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-fab-list": JSXElements.IonFabListAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-fab": JSXElements.IonFabAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonFabListAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          activated?: boolean
-      }
+    export interface IonFabAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { FabButton as IonFabButton } from './components/fab/fab';
 
-interface HTMLIonFabButtonElement extends IonFabButton, HTMLElement {
-}
-declare var HTMLIonFabButtonElement: {
-  prototype: HTMLIonFabButtonElement;
-  new (): HTMLIonFabButtonElement;
-};
+import {
+  FabList as IonFabList
+} from './components/fab/fab-list';
+
 declare global {
+  interface HTMLIonFabListElement extends IonFabList, HTMLElement {
+  }
+  var HTMLIonFabListElement: {
+    prototype: HTMLIonFabListElement;
+    new (): HTMLIonFabListElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-fab-button": HTMLIonFabButtonElement;
+    "ion-fab-list": HTMLIonFabListElement;
   }
   interface ElementTagNameMap {
-      "ion-fab-button": HTMLIonFabButtonElement;
+    "ion-fab-list": HTMLIonFabListElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-fab-button": JSXElements.IonFabButtonAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-fab-list": JSXElements.IonFabListAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonFabButtonAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          href?: string,
-          activated?: boolean,
-          toggleActive?: any,
-          show?: boolean,
-          disabled?: boolean
-      }
+    export interface IonFabListAttributes extends HTMLAttributes {
+      
+        activated?: boolean
+    }
   }
 }
 
-import { Footer as IonFooter } from './components/footer/footer';
 
-interface HTMLIonFooterElement extends IonFooter, HTMLElement {
-}
-declare var HTMLIonFooterElement: {
-  prototype: HTMLIonFooterElement;
-  new (): HTMLIonFooterElement;
-};
+import {
+  FabButton as IonFabButton
+} from './components/fab/fab';
+
 declare global {
+  interface HTMLIonFabButtonElement extends IonFabButton, HTMLElement {
+  }
+  var HTMLIonFabButtonElement: {
+    prototype: HTMLIonFabButtonElement;
+    new (): HTMLIonFabButtonElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-footer": HTMLIonFooterElement;
+    "ion-fab-button": HTMLIonFabButtonElement;
   }
   interface ElementTagNameMap {
-      "ion-footer": HTMLIonFooterElement;
+    "ion-fab-button": HTMLIonFabButtonElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-footer": JSXElements.IonFooterAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-fab-button": JSXElements.IonFabButtonAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonFooterAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonFabButtonAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        href?: string,
+        activated?: boolean,
+        toggleActive?: Function,
+        show?: boolean,
+        disabled?: boolean
+    }
   }
 }
 
-import { GestureController as IonGestureController } from './components/gesture-controller/gesture-controller';
 
-interface HTMLIonGestureControllerElement extends IonGestureController, HTMLElement {
-}
-declare var HTMLIonGestureControllerElement: {
-  prototype: HTMLIonGestureControllerElement;
-  new (): HTMLIonGestureControllerElement;
-};
+import {
+  Footer as IonFooter
+} from './components/footer/footer';
+
 declare global {
+  interface HTMLIonFooterElement extends IonFooter, HTMLElement {
+  }
+  var HTMLIonFooterElement: {
+    prototype: HTMLIonFooterElement;
+    new (): HTMLIonFooterElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-gesture-controller": HTMLIonGestureControllerElement;
+    "ion-footer": HTMLIonFooterElement;
   }
   interface ElementTagNameMap {
-      "ion-gesture-controller": HTMLIonGestureControllerElement;
+    "ion-footer": HTMLIonFooterElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-gesture-controller": JSXElements.IonGestureControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-footer": JSXElements.IonFooterAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonGestureControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonFooterAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Gesture as IonGesture } from './components/gesture/gesture';
 
-interface HTMLIonGestureElement extends IonGesture, HTMLElement {
-}
-declare var HTMLIonGestureElement: {
-  prototype: HTMLIonGestureElement;
-  new (): HTMLIonGestureElement;
-};
+import {
+  GestureController as IonGestureController
+} from './components/gesture-controller/gesture-controller';
+
 declare global {
+  interface HTMLIonGestureControllerElement extends IonGestureController, HTMLElement {
+  }
+  var HTMLIonGestureControllerElement: {
+    prototype: HTMLIonGestureControllerElement;
+    new (): HTMLIonGestureControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-gesture": HTMLIonGestureElement;
+    "ion-gesture-controller": HTMLIonGestureControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-gesture": HTMLIonGestureElement;
+    "ion-gesture-controller": HTMLIonGestureControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-gesture": JSXElements.IonGestureAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-gesture-controller": JSXElements.IonGestureControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonGestureAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          enabled?: boolean,
-          attachTo?: string,
-          autoBlockAll?: boolean,
-          block?: string,
-          disableScroll?: boolean,
-          direction?: string,
-          gestureName?: string,
-          gesturePriority?: number,
-          maxAngle?: number,
-          threshold?: number,
-          type?: string,
-          canStart?: any,
-          onWillStart?: any,
-          onStart?: any,
-          onMove?: any,
-          onEnd?: any,
-          onPress?: any,
-          notCaptured?: any
-      }
+    export interface IonGestureControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Col as IonCol } from './components/grid/col';
 
-interface HTMLIonColElement extends IonCol, HTMLElement {
-}
-declare var HTMLIonColElement: {
-  prototype: HTMLIonColElement;
-  new (): HTMLIonColElement;
-};
+import {
+  Gesture as IonGesture
+} from './components/gesture/gesture';
+
 declare global {
+  interface HTMLIonGestureElement extends IonGesture, HTMLElement {
+  }
+  var HTMLIonGestureElement: {
+    prototype: HTMLIonGestureElement;
+    new (): HTMLIonGestureElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-col": HTMLIonColElement;
+    "ion-gesture": HTMLIonGestureElement;
   }
   interface ElementTagNameMap {
-      "ion-col": HTMLIonColElement;
+    "ion-gesture": HTMLIonGestureElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-col": JSXElements.IonColAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-gesture": JSXElements.IonGestureAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonColAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonGestureAttributes extends HTMLAttributes {
+      
+        enabled?: boolean,
+        attachTo?: ElementRef,
+        autoBlockAll?: boolean,
+        block?: string,
+        disableScroll?: boolean,
+        direction?: string,
+        gestureName?: string,
+        gesturePriority?: number,
+        maxAngle?: number,
+        threshold?: number,
+        type?: string,
+        canStart?: GestureCallback,
+        onWillStart?: (_: GestureDetail) => Promise<void>,
+        onStart?: GestureCallback,
+        onMove?: GestureCallback,
+        onEnd?: GestureCallback,
+        onPress?: GestureCallback,
+        notCaptured?: GestureCallback
+    }
   }
 }
 
-import { Grid as IonGrid } from './components/grid/grid';
 
-interface HTMLIonGridElement extends IonGrid, HTMLElement {
-}
-declare var HTMLIonGridElement: {
-  prototype: HTMLIonGridElement;
-  new (): HTMLIonGridElement;
-};
+import {
+  Col as IonCol
+} from './components/grid/col';
+
 declare global {
+  interface HTMLIonColElement extends IonCol, HTMLElement {
+  }
+  var HTMLIonColElement: {
+    prototype: HTMLIonColElement;
+    new (): HTMLIonColElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-grid": HTMLIonGridElement;
+    "ion-col": HTMLIonColElement;
   }
   interface ElementTagNameMap {
-      "ion-grid": HTMLIonGridElement;
+    "ion-col": HTMLIonColElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-grid": JSXElements.IonGridAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-col": JSXElements.IonColAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonGridAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonColAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Row as IonRow } from './components/grid/row';
 
-interface HTMLIonRowElement extends IonRow, HTMLElement {
-}
-declare var HTMLIonRowElement: {
-  prototype: HTMLIonRowElement;
-  new (): HTMLIonRowElement;
-};
+import {
+  Grid as IonGrid
+} from './components/grid/grid';
+
 declare global {
+  interface HTMLIonGridElement extends IonGrid, HTMLElement {
+  }
+  var HTMLIonGridElement: {
+    prototype: HTMLIonGridElement;
+    new (): HTMLIonGridElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-row": HTMLIonRowElement;
+    "ion-grid": HTMLIonGridElement;
   }
   interface ElementTagNameMap {
-      "ion-row": HTMLIonRowElement;
+    "ion-grid": HTMLIonGridElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-row": JSXElements.IonRowAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-grid": JSXElements.IonGridAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRowAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonGridAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Header as IonHeader } from './components/header/header';
 
-interface HTMLIonHeaderElement extends IonHeader, HTMLElement {
-}
-declare var HTMLIonHeaderElement: {
-  prototype: HTMLIonHeaderElement;
-  new (): HTMLIonHeaderElement;
-};
+import {
+  Row as IonRow
+} from './components/grid/row';
+
 declare global {
+  interface HTMLIonRowElement extends IonRow, HTMLElement {
+  }
+  var HTMLIonRowElement: {
+    prototype: HTMLIonRowElement;
+    new (): HTMLIonRowElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-header": HTMLIonHeaderElement;
+    "ion-row": HTMLIonRowElement;
   }
   interface ElementTagNameMap {
-      "ion-header": HTMLIonHeaderElement;
+    "ion-row": HTMLIonRowElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-header": JSXElements.IonHeaderAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-row": JSXElements.IonRowAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonHeaderAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonRowAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { InfiniteScrollContent as IonInfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
 
-interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLElement {
-}
-declare var HTMLIonInfiniteScrollContentElement: {
-  prototype: HTMLIonInfiniteScrollContentElement;
-  new (): HTMLIonInfiniteScrollContentElement;
-};
+import {
+  Header as IonHeader
+} from './components/header/header';
+
 declare global {
+  interface HTMLIonHeaderElement extends IonHeader, HTMLElement {
+  }
+  var HTMLIonHeaderElement: {
+    prototype: HTMLIonHeaderElement;
+    new (): HTMLIonHeaderElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
+    "ion-header": HTMLIonHeaderElement;
   }
   interface ElementTagNameMap {
-      "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
+    "ion-header": HTMLIonHeaderElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-infinite-scroll-content": JSXElements.IonInfiniteScrollContentAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-header": JSXElements.IonHeaderAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonInfiniteScrollContentAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          loadingSpinner?: string,
-          loadingText?: string
-      }
+    export interface IonHeaderAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { InfiniteScroll as IonInfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 
-interface HTMLIonInfiniteScrollElement extends IonInfiniteScroll, HTMLElement {
-}
-declare var HTMLIonInfiniteScrollElement: {
-  prototype: HTMLIonInfiniteScrollElement;
-  new (): HTMLIonInfiniteScrollElement;
-};
+import {
+  InfiniteScrollContent as IonInfiniteScrollContent
+} from './components/infinite-scroll/infinite-scroll-content';
+
 declare global {
+  interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLElement {
+  }
+  var HTMLIonInfiniteScrollContentElement: {
+    prototype: HTMLIonInfiniteScrollContentElement;
+    new (): HTMLIonInfiniteScrollContentElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
+    "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
   }
   interface ElementTagNameMap {
-      "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
+    "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-infinite-scroll": JSXElements.IonInfiniteScrollAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-infinite-scroll-content": JSXElements.IonInfiniteScrollContentAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonInfiniteScrollAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          complete?: any,
-          threshold?: string,
-          enabled?: boolean,
-          position?: string
-      }
+    export interface IonInfiniteScrollContentAttributes extends HTMLAttributes {
+      
+        loadingSpinner?: string,
+        loadingText?: string
+    }
   }
 }
 
-import { Input as IonInput } from './components/input/input';
 
-interface HTMLIonInputElement extends IonInput, HTMLElement {
-}
-declare var HTMLIonInputElement: {
-  prototype: HTMLIonInputElement;
-  new (): HTMLIonInputElement;
-};
+import {
+  InfiniteScroll as IonInfiniteScroll
+} from './components/infinite-scroll/infinite-scroll';
+
 declare global {
+  interface HTMLIonInfiniteScrollElement extends IonInfiniteScroll, HTMLElement {
+  }
+  var HTMLIonInfiniteScrollElement: {
+    prototype: HTMLIonInfiniteScrollElement;
+    new (): HTMLIonInfiniteScrollElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-input": HTMLIonInputElement;
+    "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
   }
   interface ElementTagNameMap {
-      "ion-input": HTMLIonInputElement;
+    "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-input": JSXElements.IonInputAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-infinite-scroll": JSXElements.IonInfiniteScrollAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonInputAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          accept?: string,
-          autocapitalize?: string,
-          autocomplete?: string,
-          autocorrect?: string,
-          autofocus?: boolean,
-          checked?: boolean,
-          clearInput?: boolean,
-          clearOnEdit?: boolean,
-          disabled?: boolean,
-          inputmode?: string,
-          max?: string,
-          maxlength?: number,
-          min?: string,
-          minlength?: number,
-          multiple?: boolean,
-          name?: string,
-          pattern?: string,
-          placeholder?: string,
-          readonly?: boolean,
-          required?: boolean,
-          results?: number,
-          spellcheck?: boolean,
-          step?: string,
-          size?: number,
-          type?: string,
-          value?: string
-      }
+    export interface IonInfiniteScrollAttributes extends HTMLAttributes {
+      
+        threshold?: string,
+        enabled?: boolean,
+        position?: string
+    }
   }
 }
 
-import { Textarea as IonTextarea } from './components/input/textarea';
 
-interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
-}
-declare var HTMLIonTextareaElement: {
-  prototype: HTMLIonTextareaElement;
-  new (): HTMLIonTextareaElement;
-};
+import {
+  Input as IonInput
+} from './components/input/input';
+
 declare global {
+  interface HTMLIonInputElement extends IonInput, HTMLElement {
+  }
+  var HTMLIonInputElement: {
+    prototype: HTMLIonInputElement;
+    new (): HTMLIonInputElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-textarea": HTMLIonTextareaElement;
+    "ion-input": HTMLIonInputElement;
   }
   interface ElementTagNameMap {
-      "ion-textarea": HTMLIonTextareaElement;
+    "ion-input": HTMLIonInputElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-textarea": JSXElements.IonTextareaAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-input": JSXElements.IonInputAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonTextareaAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          autocapitalize?: string,
-          autocomplete?: string,
-          autofocus?: boolean,
-          clearOnEdit?: boolean,
-          disabled?: boolean,
-          maxlength?: number,
-          minlength?: number,
-          name?: string,
-          placeholder?: string,
-          readonly?: boolean,
-          required?: boolean,
-          spellcheck?: boolean,
-          cols?: number,
-          rows?: number,
-          wrap?: string,
-          value?: string
-      }
+    export interface IonInputAttributes extends HTMLAttributes {
+      
+        accept?: string,
+        autocapitalize?: string,
+        autocomplete?: string,
+        autocorrect?: string,
+        autofocus?: boolean,
+        checked?: boolean,
+        clearInput?: boolean,
+        clearOnEdit?: boolean,
+        disabled?: boolean,
+        inputmode?: string,
+        max?: string,
+        maxlength?: number,
+        min?: string,
+        minlength?: number,
+        multiple?: boolean,
+        name?: string,
+        pattern?: string,
+        placeholder?: string,
+        readonly?: boolean,
+        required?: boolean,
+        results?: number,
+        spellcheck?: boolean,
+        step?: string,
+        size?: number,
+        type?: string,
+        value?: string
+    }
   }
 }
 
-import { ItemDivider as IonItemDivider } from './components/item-divider/item-divider';
 
-interface HTMLIonItemDividerElement extends IonItemDivider, HTMLElement {
-}
-declare var HTMLIonItemDividerElement: {
-  prototype: HTMLIonItemDividerElement;
-  new (): HTMLIonItemDividerElement;
-};
+import {
+  Textarea as IonTextarea
+} from './components/input/textarea';
+
 declare global {
+  interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
+  }
+  var HTMLIonTextareaElement: {
+    prototype: HTMLIonTextareaElement;
+    new (): HTMLIonTextareaElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-item-divider": HTMLIonItemDividerElement;
+    "ion-textarea": HTMLIonTextareaElement;
   }
   interface ElementTagNameMap {
-      "ion-item-divider": HTMLIonItemDividerElement;
+    "ion-textarea": HTMLIonTextareaElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-item-divider": JSXElements.IonItemDividerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-textarea": JSXElements.IonTextareaAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonItemDividerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonTextareaAttributes extends HTMLAttributes {
+      
+        autocapitalize?: string,
+        autocomplete?: string,
+        autofocus?: boolean,
+        clearOnEdit?: boolean,
+        disabled?: boolean,
+        maxlength?: number,
+        minlength?: number,
+        name?: string,
+        placeholder?: string,
+        readonly?: boolean,
+        required?: boolean,
+        spellcheck?: boolean,
+        cols?: number,
+        rows?: number,
+        wrap?: string,
+        value?: string
+    }
   }
 }
 
-import { ItemOption as IonItemOption } from './components/item-sliding/item-option';
 
-interface HTMLIonItemOptionElement extends IonItemOption, HTMLElement {
-}
-declare var HTMLIonItemOptionElement: {
-  prototype: HTMLIonItemOptionElement;
-  new (): HTMLIonItemOptionElement;
-};
+import {
+  ItemDivider as IonItemDivider
+} from './components/item-divider/item-divider';
+
 declare global {
+  interface HTMLIonItemDividerElement extends IonItemDivider, HTMLElement {
+  }
+  var HTMLIonItemDividerElement: {
+    prototype: HTMLIonItemDividerElement;
+    new (): HTMLIonItemDividerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-item-option": HTMLIonItemOptionElement;
+    "ion-item-divider": HTMLIonItemDividerElement;
   }
   interface ElementTagNameMap {
-      "ion-item-option": HTMLIonItemOptionElement;
+    "ion-item-divider": HTMLIonItemDividerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-item-option": JSXElements.IonItemOptionAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-item-divider": JSXElements.IonItemDividerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonItemOptionAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          href?: string,
-          disabled?: boolean
-      }
+    export interface IonItemDividerAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { ItemOptions as IonItemOptions } from './components/item-sliding/item-options';
 
-interface HTMLIonItemOptionsElement extends IonItemOptions, HTMLElement {
-}
-declare var HTMLIonItemOptionsElement: {
-  prototype: HTMLIonItemOptionsElement;
-  new (): HTMLIonItemOptionsElement;
-};
+import {
+  ItemOption as IonItemOption
+} from './components/item-sliding/item-option';
+
 declare global {
+  interface HTMLIonItemOptionElement extends IonItemOption, HTMLElement {
+  }
+  var HTMLIonItemOptionElement: {
+    prototype: HTMLIonItemOptionElement;
+    new (): HTMLIonItemOptionElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-item-options": HTMLIonItemOptionsElement;
+    "ion-item-option": HTMLIonItemOptionElement;
   }
   interface ElementTagNameMap {
-      "ion-item-options": HTMLIonItemOptionsElement;
+    "ion-item-option": HTMLIonItemOptionElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-item-options": JSXElements.IonItemOptionsAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-item-option": JSXElements.IonItemOptionAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonItemOptionsAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          isRightSide?: any,
-          width?: any,
-          fireSwipeEvent?: any,
-          side?: string
-      }
+    export interface IonItemOptionAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        href?: string,
+        disabled?: boolean
+    }
   }
 }
 
-import { ItemSliding as IonItemSliding } from './components/item-sliding/item-sliding';
 
-interface HTMLIonItemSlidingElement extends IonItemSliding, HTMLElement {
-}
-declare var HTMLIonItemSlidingElement: {
-  prototype: HTMLIonItemSlidingElement;
-  new (): HTMLIonItemSlidingElement;
-};
+import {
+  ItemOptions as IonItemOptions
+} from './components/item-sliding/item-options';
+
 declare global {
+  interface HTMLIonItemOptionsElement extends IonItemOptions, HTMLElement {
+  }
+  var HTMLIonItemOptionsElement: {
+    prototype: HTMLIonItemOptionsElement;
+    new (): HTMLIonItemOptionsElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-item-sliding": HTMLIonItemSlidingElement;
+    "ion-item-options": HTMLIonItemOptionsElement;
   }
   interface ElementTagNameMap {
-      "ion-item-sliding": HTMLIonItemSlidingElement;
+    "ion-item-options": HTMLIonItemOptionsElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-item-sliding": JSXElements.IonItemSlidingAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-item-options": JSXElements.IonItemOptionsAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonItemSlidingAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          getOpenAmount?: any,
-          getSlidingPercent?: any,
-          close?: any,
-          closeOpened?: any
-      }
+    export interface IonItemOptionsAttributes extends HTMLAttributes {
+      
+        side?: Side
+    }
   }
 }
 
-import { Item as IonItem } from './components/item/item';
 
-interface HTMLIonItemElement extends IonItem, HTMLElement {
-}
-declare var HTMLIonItemElement: {
-  prototype: HTMLIonItemElement;
-  new (): HTMLIonItemElement;
-};
+import {
+  ItemSliding as IonItemSliding
+} from './components/item-sliding/item-sliding';
+
 declare global {
+  interface HTMLIonItemSlidingElement extends IonItemSliding, HTMLElement {
+  }
+  var HTMLIonItemSlidingElement: {
+    prototype: HTMLIonItemSlidingElement;
+    new (): HTMLIonItemSlidingElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-item": HTMLIonItemElement;
+    "ion-item-sliding": HTMLIonItemSlidingElement;
   }
   interface ElementTagNameMap {
-      "ion-item": HTMLIonItemElement;
+    "ion-item-sliding": HTMLIonItemSlidingElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-item": JSXElements.IonItemAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-item-sliding": JSXElements.IonItemSlidingAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonItemAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          getLabelText?: any,
-          href?: string
-      }
+    export interface IonItemSlidingAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { IonKeyboardController as IonKeyboardController } from './components/keyboard-controller/keyboard-controller';
 
-interface HTMLIonKeyboardControllerElement extends IonKeyboardController, HTMLElement {
-}
-declare var HTMLIonKeyboardControllerElement: {
-  prototype: HTMLIonKeyboardControllerElement;
-  new (): HTMLIonKeyboardControllerElement;
-};
+import {
+  Item as IonItem
+} from './components/item/item';
+
 declare global {
+  interface HTMLIonItemElement extends IonItem, HTMLElement {
+  }
+  var HTMLIonItemElement: {
+    prototype: HTMLIonItemElement;
+    new (): HTMLIonItemElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-keyboard-controller": HTMLIonKeyboardControllerElement;
+    "ion-item": HTMLIonItemElement;
   }
   interface ElementTagNameMap {
-      "ion-keyboard-controller": HTMLIonKeyboardControllerElement;
+    "ion-item": HTMLIonItemElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-keyboard-controller": JSXElements.IonKeyboardControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-item": JSXElements.IonItemAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonKeyboardControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonItemAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        href?: string
+    }
   }
 }
 
-import { Label as IonLabel } from './components/label/label';
 
-interface HTMLIonLabelElement extends IonLabel, HTMLElement {
-}
-declare var HTMLIonLabelElement: {
-  prototype: HTMLIonLabelElement;
-  new (): HTMLIonLabelElement;
-};
+import {
+  IonKeyboardController as IonKeyboardController
+} from './components/keyboard-controller/keyboard-controller';
+
 declare global {
+  interface HTMLIonKeyboardControllerElement extends IonKeyboardController, HTMLElement {
+  }
+  var HTMLIonKeyboardControllerElement: {
+    prototype: HTMLIonKeyboardControllerElement;
+    new (): HTMLIonKeyboardControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-label": HTMLIonLabelElement;
+    "ion-keyboard-controller": HTMLIonKeyboardControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-label": HTMLIonLabelElement;
+    "ion-keyboard-controller": HTMLIonKeyboardControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-label": JSXElements.IonLabelAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-keyboard-controller": JSXElements.IonKeyboardControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonLabelAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          getText?: any,
-          fixed?: boolean,
-          floating?: boolean,
-          stacked?: boolean
-      }
+    export interface IonKeyboardControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { ListHeader as IonListHeader } from './components/list-header/list-header';
 
-interface HTMLIonListHeaderElement extends IonListHeader, HTMLElement {
-}
-declare var HTMLIonListHeaderElement: {
-  prototype: HTMLIonListHeaderElement;
-  new (): HTMLIonListHeaderElement;
-};
+import {
+  Label as IonLabel
+} from './components/label/label';
+
 declare global {
+  interface HTMLIonLabelElement extends IonLabel, HTMLElement {
+  }
+  var HTMLIonLabelElement: {
+    prototype: HTMLIonLabelElement;
+    new (): HTMLIonLabelElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-list-header": HTMLIonListHeaderElement;
+    "ion-label": HTMLIonLabelElement;
   }
   interface ElementTagNameMap {
-      "ion-list-header": HTMLIonListHeaderElement;
+    "ion-label": HTMLIonLabelElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-list-header": JSXElements.IonListHeaderAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-label": JSXElements.IonLabelAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonListHeaderAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonLabelAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        fixed?: boolean,
+        floating?: boolean,
+        stacked?: boolean
+    }
   }
 }
 
-import { List as IonList } from './components/list/list';
 
-interface HTMLIonListElement extends IonList, HTMLElement {
-}
-declare var HTMLIonListElement: {
-  prototype: HTMLIonListElement;
-  new (): HTMLIonListElement;
-};
+import {
+  ListHeader as IonListHeader
+} from './components/list-header/list-header';
+
 declare global {
+  interface HTMLIonListHeaderElement extends IonListHeader, HTMLElement {
+  }
+  var HTMLIonListHeaderElement: {
+    prototype: HTMLIonListHeaderElement;
+    new (): HTMLIonListHeaderElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-list": HTMLIonListElement;
+    "ion-list-header": HTMLIonListHeaderElement;
   }
   interface ElementTagNameMap {
-      "ion-list": HTMLIonListElement;
+    "ion-list-header": HTMLIonListHeaderElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-list": JSXElements.IonListAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-list-header": JSXElements.IonListHeaderAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonListAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          getOpenedItem?: any,
-          setOpenedItem?: any,
-          closeSlidingItems?: any
-      }
+    export interface IonListHeaderAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { LoadingController as IonLoadingController } from './components/loading-controller/loading-controller';
 
-interface HTMLIonLoadingControllerElement extends IonLoadingController, HTMLElement {
-}
-declare var HTMLIonLoadingControllerElement: {
-  prototype: HTMLIonLoadingControllerElement;
-  new (): HTMLIonLoadingControllerElement;
-};
+import {
+  List as IonList
+} from './components/list/list';
+
 declare global {
+  interface HTMLIonListElement extends IonList, HTMLElement {
+  }
+  var HTMLIonListElement: {
+    prototype: HTMLIonListElement;
+    new (): HTMLIonListElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-loading-controller": HTMLIonLoadingControllerElement;
+    "ion-list": HTMLIonListElement;
   }
   interface ElementTagNameMap {
-      "ion-loading-controller": HTMLIonLoadingControllerElement;
+    "ion-list": HTMLIonListElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-loading-controller": JSXElements.IonLoadingControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-list": JSXElements.IonListAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonLoadingControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonListAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Loading as IonLoading } from './components/loading/loading';
 
-interface HTMLIonLoadingElement extends IonLoading, HTMLElement {
-}
-declare var HTMLIonLoadingElement: {
-  prototype: HTMLIonLoadingElement;
-  new (): HTMLIonLoadingElement;
-};
+import {
+  LoadingController as IonLoadingController
+} from './components/loading-controller/loading-controller';
+
 declare global {
+  interface HTMLIonLoadingControllerElement extends IonLoadingController, HTMLElement {
+  }
+  var HTMLIonLoadingControllerElement: {
+    prototype: HTMLIonLoadingControllerElement;
+    new (): HTMLIonLoadingControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-loading": HTMLIonLoadingElement;
+    "ion-loading-controller": HTMLIonLoadingControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-loading": HTMLIonLoadingElement;
+    "ion-loading-controller": HTMLIonLoadingControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-loading": JSXElements.IonLoadingAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-loading-controller": JSXElements.IonLoadingControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonLoadingAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          animationCtrl?: any,
-          cssClass?: string,
-          content?: string,
-          dismissOnPageChange?: boolean,
-          duration?: number,
-          enterAnimation?: any,
-          exitAnimation?: any,
-          loadingId?: string,
-          showBackdrop?: boolean
-      }
+    export interface IonLoadingControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { MenuController as IonMenuController } from './components/menu/menu-controller';
 
-interface HTMLIonMenuControllerElement extends IonMenuController, HTMLElement {
-}
-declare var HTMLIonMenuControllerElement: {
-  prototype: HTMLIonMenuControllerElement;
-  new (): HTMLIonMenuControllerElement;
-};
+import {
+  Loading as IonLoading
+} from './components/loading/loading';
+
 declare global {
+  interface HTMLIonLoadingElement extends IonLoading, HTMLElement {
+  }
+  var HTMLIonLoadingElement: {
+    prototype: HTMLIonLoadingElement;
+    new (): HTMLIonLoadingElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-menu-controller": HTMLIonMenuControllerElement;
+    "ion-loading": HTMLIonLoadingElement;
   }
   interface ElementTagNameMap {
-      "ion-menu-controller": HTMLIonMenuControllerElement;
+    "ion-loading": HTMLIonLoadingElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-menu-controller": JSXElements.IonMenuControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-loading": JSXElements.IonLoadingAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonMenuControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          open?: any,
-          close?: any,
-          toggle?: any,
-          enable?: any,
-          swipeEnable?: any,
-          isOpen?: any,
-          isEnabled?: any,
-          get?: any,
-          getOpen?: any,
-          getMenus?: any,
-          isAnimating?: any,
-          _register?: any,
-          _unregister?: any,
-          _setActiveMenu?: any,
-          createAnimation?: any,
-          animationCtrl?: any
-      }
+    export interface IonLoadingAttributes extends HTMLAttributes {
+      
+        cssClass?: string,
+        content?: string,
+        dismissOnPageChange?: boolean,
+        duration?: number,
+        enterAnimation?: AnimationBuilder,
+        exitAnimation?: AnimationBuilder,
+        loadingId?: string,
+        showBackdrop?: boolean
+    }
   }
 }
 
-import { Menu as IonMenu } from './components/menu/menu';
 
-interface HTMLIonMenuElement extends IonMenu, HTMLElement {
-}
-declare var HTMLIonMenuElement: {
-  prototype: HTMLIonMenuElement;
-  new (): HTMLIonMenuElement;
-};
+import {
+  MenuController as IonMenuController
+} from './components/menu/menu-controller';
+
 declare global {
+  interface HTMLIonMenuControllerElement extends IonMenuController, HTMLElement {
+  }
+  var HTMLIonMenuControllerElement: {
+    prototype: HTMLIonMenuControllerElement;
+    new (): HTMLIonMenuControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-menu": HTMLIonMenuElement;
+    "ion-menu-controller": HTMLIonMenuControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-menu": HTMLIonMenuElement;
+    "ion-menu-controller": HTMLIonMenuControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-menu": JSXElements.IonMenuAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-menu-controller": JSXElements.IonMenuControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonMenuAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          isOpen?: any,
-          setOpen?: any,
-          open?: any,
-          close?: any,
-          toggle?: any,
-          lazyMenuCtrl?: any,
-          content?: string,
-          menuId?: string,
-          type?: string,
-          enabled?: boolean,
-          side?: string,
-          swipeEnabled?: boolean,
-          persistent?: boolean,
-          maxEdgeStart?: number
-      }
+    export interface IonMenuControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { ModalController as IonModalController } from './components/modal-controller/modal-controller';
 
-interface HTMLIonModalControllerElement extends IonModalController, HTMLElement {
-}
-declare var HTMLIonModalControllerElement: {
-  prototype: HTMLIonModalControllerElement;
-  new (): HTMLIonModalControllerElement;
-};
+import {
+  Menu as IonMenu
+} from './components/menu/menu';
+
 declare global {
+  interface HTMLIonMenuElement extends IonMenu, HTMLElement {
+  }
+  var HTMLIonMenuElement: {
+    prototype: HTMLIonMenuElement;
+    new (): HTMLIonMenuElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-modal-controller": HTMLIonModalControllerElement;
+    "ion-menu": HTMLIonMenuElement;
   }
   interface ElementTagNameMap {
-      "ion-modal-controller": HTMLIonModalControllerElement;
+    "ion-menu": HTMLIonMenuElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-modal-controller": JSXElements.IonModalControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-menu": JSXElements.IonMenuAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonModalControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonMenuAttributes extends HTMLAttributes {
+      
+        content?: string,
+        menuId?: string,
+        type?: string,
+        enabled?: boolean,
+        side?: Side,
+        swipeEnabled?: boolean,
+        persistent?: boolean,
+        maxEdgeStart?: number
+    }
   }
 }
 
-import { Modal as IonModal } from './components/modal/modal';
 
-interface HTMLIonModalElement extends IonModal, HTMLElement {
-}
-declare var HTMLIonModalElement: {
-  prototype: HTMLIonModalElement;
-  new (): HTMLIonModalElement;
-};
+import {
+  ModalController as IonModalController
+} from './components/modal-controller/modal-controller';
+
 declare global {
+  interface HTMLIonModalControllerElement extends IonModalController, HTMLElement {
+  }
+  var HTMLIonModalControllerElement: {
+    prototype: HTMLIonModalControllerElement;
+    new (): HTMLIonModalControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-modal": HTMLIonModalElement;
+    "ion-modal-controller": HTMLIonModalControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-modal": HTMLIonModalElement;
+    "ion-modal-controller": HTMLIonModalControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-modal": JSXElements.IonModalAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-modal-controller": JSXElements.IonModalControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonModalAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          animationCtrl?: any,
-          component?: string,
-          componentProps?: any,
-          cssClass?: string,
-          enableBackdropDismiss?: boolean,
-          enterAnimation?: any,
-          exitAnimation?: any,
-          modalId?: string,
-          showBackdrop?: boolean
-      }
+    export interface IonModalControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { NavControllerImpl as IonNavController } from './components/nav-controller/nav-controller';
 
-interface HTMLIonNavControllerElement extends IonNavController, HTMLElement {
-}
-declare var HTMLIonNavControllerElement: {
-  prototype: HTMLIonNavControllerElement;
-  new (): HTMLIonNavControllerElement;
-};
+import {
+  Modal as IonModal
+} from './components/modal/modal';
+
 declare global {
+  interface HTMLIonModalElement extends IonModal, HTMLElement {
+  }
+  var HTMLIonModalElement: {
+    prototype: HTMLIonModalElement;
+    new (): HTMLIonModalElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-nav-controller": HTMLIonNavControllerElement;
+    "ion-modal": HTMLIonModalElement;
   }
   interface ElementTagNameMap {
-      "ion-nav-controller": HTMLIonNavControllerElement;
+    "ion-modal": HTMLIonModalElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-nav-controller": JSXElements.IonNavControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-modal": JSXElements.IonModalAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonNavControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          push?: any,
-          pop?: any,
-          setRoot?: any,
-          insert?: any,
-          insertPages?: any,
-          popToRoot?: any,
-          popTo?: any,
-          removeIndex?: any,
-          removeView?: any,
-          setPages?: any,
-          delegate?: any,
-          animationCtrl?: any
-      }
+    export interface IonModalAttributes extends HTMLAttributes {
+      
+        mode?: string,
+        color?: string,
+        component?: string,
+        componentProps?: any,
+        cssClass?: string,
+        enableBackdropDismiss?: boolean,
+        enterAnimation?: AnimationBuilder,
+        exitAnimation?: AnimationBuilder,
+        modalId?: string,
+        showBackdrop?: boolean
+    }
   }
 }
 
-import { StencilNavDelegate as StencilIonNavDelegate } from './components/nav-controller/stencil-nav-delegate';
 
-interface HTMLStencilIonNavDelegateElement extends StencilIonNavDelegate, HTMLElement {
-}
-declare var HTMLStencilIonNavDelegateElement: {
-  prototype: HTMLStencilIonNavDelegateElement;
-  new (): HTMLStencilIonNavDelegateElement;
-};
+import {
+  NavControllerImpl as IonNavController
+} from './components/nav-controller/nav-controller';
+
 declare global {
+  interface HTMLIonNavControllerElement extends IonNavController, HTMLElement {
+  }
+  var HTMLIonNavControllerElement: {
+    prototype: HTMLIonNavControllerElement;
+    new (): HTMLIonNavControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "stencil-ion-nav-delegate": HTMLStencilIonNavDelegateElement;
+    "ion-nav-controller": HTMLIonNavControllerElement;
   }
   interface ElementTagNameMap {
-      "stencil-ion-nav-delegate": HTMLStencilIonNavDelegateElement;
+    "ion-nav-controller": HTMLIonNavControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "stencil-ion-nav-delegate": JSXElements.StencilIonNavDelegateAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-nav-controller": JSXElements.IonNavControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface StencilIonNavDelegateAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          attachViewToDom?: any,
-          removeViewFromDom?: any
-      }
+    export interface IonNavControllerAttributes extends HTMLAttributes {
+      
+        delegate?: FrameworkDelegate
+    }
   }
 }
 
-import { IonNav as IonNav } from './components/nav/nav';
 
-interface HTMLIonNavElement extends IonNav, HTMLElement {
-}
-declare var HTMLIonNavElement: {
-  prototype: HTMLIonNavElement;
-  new (): HTMLIonNavElement;
-};
+import {
+  StencilNavDelegate as StencilIonNavDelegate
+} from './components/nav-controller/stencil-nav-delegate';
+
 declare global {
+  interface HTMLStencilIonNavDelegateElement extends StencilIonNavDelegate, HTMLElement {
+  }
+  var HTMLStencilIonNavDelegateElement: {
+    prototype: HTMLStencilIonNavDelegateElement;
+    new (): HTMLStencilIonNavDelegateElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-nav": HTMLIonNavElement;
+    "stencil-ion-nav-delegate": HTMLStencilIonNavDelegateElement;
   }
   interface ElementTagNameMap {
-      "ion-nav": HTMLIonNavElement;
+    "stencil-ion-nav-delegate": HTMLStencilIonNavDelegateElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-nav": JSXElements.IonNavAttributes;
-      }
+    interface IntrinsicElements {
+      "stencil-ion-nav-delegate": JSXElements.StencilIonNavDelegateAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonNavAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          push?: any,
-          pop?: any,
-          setRoot?: any,
-          insert?: any,
-          insertPages?: any,
-          popToRoot?: any,
-          popTo?: any,
-          removeIndex?: any,
-          removeView?: any,
-          setPages?: any,
-          getActive?: any,
-          getPrevious?: any,
-          canGoBack?: any,
-          canSwipeBack?: any,
-          getFirstView?: any,
-          resize?: any,
-          root?: any,
-          delegate?: any
-      }
+    export interface StencilIonNavDelegateAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { PageOne as PageOne } from './components/nav/page-one';
 
-interface HTMLPageOneElement extends PageOne, HTMLElement {
-}
-declare var HTMLPageOneElement: {
-  prototype: HTMLPageOneElement;
-  new (): HTMLPageOneElement;
-};
+import {
+  IonNav as IonNav
+} from './components/nav/nav';
+
 declare global {
+  interface HTMLIonNavElement extends IonNav, HTMLElement {
+  }
+  var HTMLIonNavElement: {
+    prototype: HTMLIonNavElement;
+    new (): HTMLIonNavElement;
+  };
   interface HTMLElementTagNameMap {
-      "page-one": HTMLPageOneElement;
+    "ion-nav": HTMLIonNavElement;
   }
   interface ElementTagNameMap {
-      "page-one": HTMLPageOneElement;
+    "ion-nav": HTMLIonNavElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "page-one": JSXElements.PageOneAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-nav": JSXElements.IonNavAttributes;
+    }
   }
   namespace JSXElements {
-      export interface PageOneAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonNavAttributes extends HTMLAttributes {
+      
+        mode?: string,
+        root?: any,
+        delegate?: FrameworkDelegate
+    }
   }
 }
 
-import { PageThree as PageThree } from './components/nav/page-three';
 
-interface HTMLPageThreeElement extends PageThree, HTMLElement {
-}
-declare var HTMLPageThreeElement: {
-  prototype: HTMLPageThreeElement;
-  new (): HTMLPageThreeElement;
-};
+import {
+  PageOne as PageOne
+} from './components/nav/page-one';
+
 declare global {
+  interface HTMLPageOneElement extends PageOne, HTMLElement {
+  }
+  var HTMLPageOneElement: {
+    prototype: HTMLPageOneElement;
+    new (): HTMLPageOneElement;
+  };
   interface HTMLElementTagNameMap {
-      "page-three": HTMLPageThreeElement;
+    "page-one": HTMLPageOneElement;
   }
   interface ElementTagNameMap {
-      "page-three": HTMLPageThreeElement;
+    "page-one": HTMLPageOneElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "page-three": JSXElements.PageThreeAttributes;
-      }
+    interface IntrinsicElements {
+      "page-one": JSXElements.PageOneAttributes;
+    }
   }
   namespace JSXElements {
-      export interface PageThreeAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface PageOneAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { PageTwo as PageTwo } from './components/nav/page-two';
 
-interface HTMLPageTwoElement extends PageTwo, HTMLElement {
-}
-declare var HTMLPageTwoElement: {
-  prototype: HTMLPageTwoElement;
-  new (): HTMLPageTwoElement;
-};
+import {
+  PageThree as PageThree
+} from './components/nav/page-three';
+
 declare global {
+  interface HTMLPageThreeElement extends PageThree, HTMLElement {
+  }
+  var HTMLPageThreeElement: {
+    prototype: HTMLPageThreeElement;
+    new (): HTMLPageThreeElement;
+  };
   interface HTMLElementTagNameMap {
-      "page-two": HTMLPageTwoElement;
+    "page-three": HTMLPageThreeElement;
   }
   interface ElementTagNameMap {
-      "page-two": HTMLPageTwoElement;
+    "page-three": HTMLPageThreeElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "page-two": JSXElements.PageTwoAttributes;
-      }
+    interface IntrinsicElements {
+      "page-three": JSXElements.PageThreeAttributes;
+    }
   }
   namespace JSXElements {
-      export interface PageTwoAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface PageThreeAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Note as IonNote } from './components/note/note';
 
-interface HTMLIonNoteElement extends IonNote, HTMLElement {
-}
-declare var HTMLIonNoteElement: {
-  prototype: HTMLIonNoteElement;
-  new (): HTMLIonNoteElement;
-};
+import {
+  PageTwo as PageTwo
+} from './components/nav/page-two';
+
 declare global {
+  interface HTMLPageTwoElement extends PageTwo, HTMLElement {
+  }
+  var HTMLPageTwoElement: {
+    prototype: HTMLPageTwoElement;
+    new (): HTMLPageTwoElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-note": HTMLIonNoteElement;
+    "page-two": HTMLPageTwoElement;
   }
   interface ElementTagNameMap {
-      "ion-note": HTMLIonNoteElement;
+    "page-two": HTMLPageTwoElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-note": JSXElements.IonNoteAttributes;
-      }
+    interface IntrinsicElements {
+      "page-two": JSXElements.PageTwoAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonNoteAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface PageTwoAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Page as IonPage } from './components/page/page';
 
-interface HTMLIonPageElement extends IonPage, HTMLElement {
-}
-declare var HTMLIonPageElement: {
-  prototype: HTMLIonPageElement;
-  new (): HTMLIonPageElement;
-};
+import {
+  Note as IonNote
+} from './components/note/note';
+
 declare global {
+  interface HTMLIonNoteElement extends IonNote, HTMLElement {
+  }
+  var HTMLIonNoteElement: {
+    prototype: HTMLIonNoteElement;
+    new (): HTMLIonNoteElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-page": HTMLIonPageElement;
+    "ion-note": HTMLIonNoteElement;
   }
   interface ElementTagNameMap {
-      "ion-page": HTMLIonPageElement;
+    "ion-note": HTMLIonNoteElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-page": JSXElements.IonPageAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-note": JSXElements.IonNoteAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonPageAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonNoteAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
   }
 }
 
-import { PickerController as IonPickerController } from './components/picker-controller/picker-controller';
 
-interface HTMLIonPickerControllerElement extends IonPickerController, HTMLElement {
-}
-declare var HTMLIonPickerControllerElement: {
-  prototype: HTMLIonPickerControllerElement;
-  new (): HTMLIonPickerControllerElement;
-};
+import {
+  Page as IonPage
+} from './components/page/page';
+
 declare global {
+  interface HTMLIonPageElement extends IonPage, HTMLElement {
+  }
+  var HTMLIonPageElement: {
+    prototype: HTMLIonPageElement;
+    new (): HTMLIonPageElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-picker-controller": HTMLIonPickerControllerElement;
+    "ion-page": HTMLIonPageElement;
   }
   interface ElementTagNameMap {
-      "ion-picker-controller": HTMLIonPickerControllerElement;
+    "ion-page": HTMLIonPageElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-picker-controller": JSXElements.IonPickerControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-page": JSXElements.IonPageAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonPickerControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonPageAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { PickerColumnCmp as IonPickerColumn } from './components/picker/picker-column';
 
-interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLElement {
-}
-declare var HTMLIonPickerColumnElement: {
-  prototype: HTMLIonPickerColumnElement;
-  new (): HTMLIonPickerColumnElement;
-};
+import {
+  PickerController as IonPickerController
+} from './components/picker-controller/picker-controller';
+
 declare global {
+  interface HTMLIonPickerControllerElement extends IonPickerController, HTMLElement {
+  }
+  var HTMLIonPickerControllerElement: {
+    prototype: HTMLIonPickerControllerElement;
+    new (): HTMLIonPickerControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-picker-column": HTMLIonPickerColumnElement;
+    "ion-picker-controller": HTMLIonPickerControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-picker-column": HTMLIonPickerColumnElement;
+    "ion-picker-controller": HTMLIonPickerControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-picker-column": JSXElements.IonPickerColumnAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-picker-controller": JSXElements.IonPickerControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonPickerColumnAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          col?: any
-      }
+    export interface IonPickerControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Picker as IonPicker } from './components/picker/picker';
 
-interface HTMLIonPickerElement extends IonPicker, HTMLElement {
-}
-declare var HTMLIonPickerElement: {
-  prototype: HTMLIonPickerElement;
-  new (): HTMLIonPickerElement;
-};
+import {
+  PickerColumnCmp as IonPickerColumn
+} from './components/picker/picker-column';
+
 declare global {
+  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLElement {
+  }
+  var HTMLIonPickerColumnElement: {
+    prototype: HTMLIonPickerColumnElement;
+    new (): HTMLIonPickerColumnElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-picker": HTMLIonPickerElement;
+    "ion-picker-column": HTMLIonPickerColumnElement;
   }
   interface ElementTagNameMap {
-      "ion-picker": HTMLIonPickerElement;
+    "ion-picker-column": HTMLIonPickerColumnElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-picker": JSXElements.IonPickerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-picker-column": JSXElements.IonPickerColumnAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonPickerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          addButton?: any,
-          addColumn?: any,
-          getColumn?: any,
-          getColumns?: any,
-          animationCtrl?: any,
-          cssClass?: string,
-          content?: string,
-          dismissOnPageChange?: boolean,
-          duration?: number,
-          enterAnimation?: any,
-          exitAnimation?: any,
-          pickerId?: string,
-          showBackdrop?: boolean,
-          enableBackdropDismiss?: boolean,
-          buttons?: any,
-          columns?: any
-      }
+    export interface IonPickerColumnAttributes extends HTMLAttributes {
+      
+        col?: PickerColumn
+    }
   }
 }
 
-import { PopoverController as IonPopoverController } from './components/popover-controller/popover-controller';
 
-interface HTMLIonPopoverControllerElement extends IonPopoverController, HTMLElement {
-}
-declare var HTMLIonPopoverControllerElement: {
-  prototype: HTMLIonPopoverControllerElement;
-  new (): HTMLIonPopoverControllerElement;
-};
+import {
+  Picker as IonPicker
+} from './components/picker/picker';
+
 declare global {
+  interface HTMLIonPickerElement extends IonPicker, HTMLElement {
+  }
+  var HTMLIonPickerElement: {
+    prototype: HTMLIonPickerElement;
+    new (): HTMLIonPickerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-popover-controller": HTMLIonPopoverControllerElement;
+    "ion-picker": HTMLIonPickerElement;
   }
   interface ElementTagNameMap {
-      "ion-popover-controller": HTMLIonPopoverControllerElement;
+    "ion-picker": HTMLIonPickerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-popover-controller": JSXElements.IonPopoverControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-picker": JSXElements.IonPickerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonPopoverControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonPickerAttributes extends HTMLAttributes {
+      
+        cssClass?: string,
+        content?: string,
+        dismissOnPageChange?: boolean,
+        duration?: number,
+        enterAnimation?: AnimationBuilder,
+        exitAnimation?: AnimationBuilder,
+        pickerId?: string,
+        showBackdrop?: boolean,
+        enableBackdropDismiss?: boolean,
+        buttons?: PickerButton[],
+        columns?: PickerColumn[]
+    }
   }
 }
 
-import { Popover as IonPopover } from './components/popover/popover';
 
-interface HTMLIonPopoverElement extends IonPopover, HTMLElement {
-}
-declare var HTMLIonPopoverElement: {
-  prototype: HTMLIonPopoverElement;
-  new (): HTMLIonPopoverElement;
-};
+import {
+  PopoverController as IonPopoverController
+} from './components/popover-controller/popover-controller';
+
 declare global {
+  interface HTMLIonPopoverControllerElement extends IonPopoverController, HTMLElement {
+  }
+  var HTMLIonPopoverControllerElement: {
+    prototype: HTMLIonPopoverControllerElement;
+    new (): HTMLIonPopoverControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-popover": HTMLIonPopoverElement;
+    "ion-popover-controller": HTMLIonPopoverControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-popover": HTMLIonPopoverElement;
+    "ion-popover-controller": HTMLIonPopoverControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-popover": JSXElements.IonPopoverAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-popover-controller": JSXElements.IonPopoverControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonPopoverAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          animationCtrl?: any,
-          component?: string,
-          componentProps?: any,
-          cssClass?: string,
-          enableBackdropDismiss?: boolean,
-          enterAnimation?: any,
-          exitAnimation?: any,
-          ev?: any,
-          popoverId?: string,
-          showBackdrop?: boolean
-      }
+    export interface IonPopoverControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { RadioGroup as IonRadioGroup } from './components/radio/radio-group';
 
-interface HTMLIonRadioGroupElement extends IonRadioGroup, HTMLElement {
-}
-declare var HTMLIonRadioGroupElement: {
-  prototype: HTMLIonRadioGroupElement;
-  new (): HTMLIonRadioGroupElement;
-};
+import {
+  Popover as IonPopover
+} from './components/popover/popover';
+
 declare global {
+  interface HTMLIonPopoverElement extends IonPopover, HTMLElement {
+  }
+  var HTMLIonPopoverElement: {
+    prototype: HTMLIonPopoverElement;
+    new (): HTMLIonPopoverElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-radio-group": HTMLIonRadioGroupElement;
+    "ion-popover": HTMLIonPopoverElement;
   }
   interface ElementTagNameMap {
-      "ion-radio-group": HTMLIonRadioGroupElement;
+    "ion-popover": HTMLIonPopoverElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-radio-group": JSXElements.IonRadioGroupAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-popover": JSXElements.IonPopoverAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRadioGroupAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          allowEmptySelection?: boolean,
-          disabled?: boolean,
-          value?: string
-      }
+    export interface IonPopoverAttributes extends HTMLAttributes {
+      
+        mode?: string,
+        color?: string,
+        component?: string,
+        componentProps?: any,
+        cssClass?: string,
+        enableBackdropDismiss?: boolean,
+        enterAnimation?: AnimationBuilder,
+        exitAnimation?: AnimationBuilder,
+        ev?: Event,
+        popoverId?: string,
+        showBackdrop?: boolean
+    }
   }
 }
 
-import { Radio as IonRadio } from './components/radio/radio';
 
-interface HTMLIonRadioElement extends IonRadio, HTMLElement {
-}
-declare var HTMLIonRadioElement: {
-  prototype: HTMLIonRadioElement;
-  new (): HTMLIonRadioElement;
-};
+import {
+  RadioGroup as IonRadioGroup
+} from './components/radio/radio-group';
+
 declare global {
+  interface HTMLIonRadioGroupElement extends IonRadioGroup, HTMLElement {
+  }
+  var HTMLIonRadioGroupElement: {
+    prototype: HTMLIonRadioGroupElement;
+    new (): HTMLIonRadioGroupElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-radio": HTMLIonRadioElement;
+    "ion-radio-group": HTMLIonRadioGroupElement;
   }
   interface ElementTagNameMap {
-      "ion-radio": HTMLIonRadioElement;
+    "ion-radio-group": HTMLIonRadioGroupElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-radio": JSXElements.IonRadioAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-radio-group": JSXElements.IonRadioGroupAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRadioAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          checked?: boolean,
-          disabled?: boolean,
-          value?: string
-      }
+    export interface IonRadioGroupAttributes extends HTMLAttributes {
+      
+        allowEmptySelection?: boolean,
+        disabled?: boolean,
+        value?: string
+    }
   }
 }
 
-import { RangeKnob as IonRangeKnob } from './components/range/range-knob';
 
-interface HTMLIonRangeKnobElement extends IonRangeKnob, HTMLElement {
-}
-declare var HTMLIonRangeKnobElement: {
-  prototype: HTMLIonRangeKnobElement;
-  new (): HTMLIonRangeKnobElement;
-};
+import {
+  Radio as IonRadio
+} from './components/radio/radio';
+
 declare global {
+  interface HTMLIonRadioElement extends IonRadio, HTMLElement {
+  }
+  var HTMLIonRadioElement: {
+    prototype: HTMLIonRadioElement;
+    new (): HTMLIonRadioElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-range-knob": HTMLIonRangeKnobElement;
+    "ion-radio": HTMLIonRadioElement;
   }
   interface ElementTagNameMap {
-      "ion-range-knob": HTMLIonRangeKnobElement;
+    "ion-radio": HTMLIonRadioElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-range-knob": JSXElements.IonRangeKnobAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-radio": JSXElements.IonRadioAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRangeKnobAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          pressed?: boolean,
-          pin?: boolean,
-          min?: number,
-          max?: number,
-          val?: number,
-          disabled?: boolean,
-          labelId?: string,
-          knob?: string,
-          ratio?: number
-      }
+    export interface IonRadioAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        checked?: boolean,
+        disabled?: boolean,
+        value?: string
+    }
   }
 }
 
-import { Range as IonRange } from './components/range/range';
 
-interface HTMLIonRangeElement extends IonRange, HTMLElement {
-}
-declare var HTMLIonRangeElement: {
-  prototype: HTMLIonRangeElement;
-  new (): HTMLIonRangeElement;
-};
+import {
+  RangeKnob as IonRangeKnob
+} from './components/range/range-knob';
+
 declare global {
+  interface HTMLIonRangeKnobElement extends IonRangeKnob, HTMLElement {
+  }
+  var HTMLIonRangeKnobElement: {
+    prototype: HTMLIonRangeKnobElement;
+    new (): HTMLIonRangeKnobElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-range": HTMLIonRangeElement;
+    "ion-range-knob": HTMLIonRangeKnobElement;
   }
   interface ElementTagNameMap {
-      "ion-range": HTMLIonRangeElement;
+    "ion-range-knob": HTMLIonRangeKnobElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-range": JSXElements.IonRangeAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-range-knob": JSXElements.IonRangeKnobAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRangeAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          ratio?: any,
-          ratioUpper?: any,
-          debounce?: number,
-          disabled?: boolean,
-          dualKnobs?: boolean,
-          max?: number,
-          min?: number,
-          pin?: boolean,
-          snaps?: boolean,
-          step?: number,
-          value?: any
-      }
+    export interface IonRangeKnobAttributes extends HTMLAttributes {
+      
+        pressed?: boolean,
+        pin?: boolean,
+        min?: number,
+        max?: number,
+        val?: number,
+        disabled?: boolean,
+        labelId?: string,
+        knob?: string,
+        ratio?: number
+    }
   }
 }
 
-import { ReorderGroup as IonReorderGroup } from './components/reorder/reorder-group';
 
-interface HTMLIonReorderGroupElement extends IonReorderGroup, HTMLElement {
-}
-declare var HTMLIonReorderGroupElement: {
-  prototype: HTMLIonReorderGroupElement;
-  new (): HTMLIonReorderGroupElement;
-};
+import {
+  Range as IonRange
+} from './components/range/range';
+
 declare global {
+  interface HTMLIonRangeElement extends IonRange, HTMLElement {
+  }
+  var HTMLIonRangeElement: {
+    prototype: HTMLIonRangeElement;
+    new (): HTMLIonRangeElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-reorder-group": HTMLIonReorderGroupElement;
+    "ion-range": HTMLIonRangeElement;
   }
   interface ElementTagNameMap {
-      "ion-reorder-group": HTMLIonReorderGroupElement;
+    "ion-range": HTMLIonRangeElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-reorder-group": JSXElements.IonReorderGroupAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-range": JSXElements.IonRangeAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonReorderGroupAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          enabled?: boolean
-      }
+    export interface IonRangeAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        debounce?: number,
+        disabled?: boolean,
+        dualKnobs?: boolean,
+        max?: number,
+        min?: number,
+        pin?: boolean,
+        snaps?: boolean,
+        step?: number,
+        value?: any
+    }
   }
 }
 
-import { ItemReorder as IonReorder } from './components/reorder/reorder';
 
-interface HTMLIonReorderElement extends IonReorder, HTMLElement {
-}
-declare var HTMLIonReorderElement: {
-  prototype: HTMLIonReorderElement;
-  new (): HTMLIonReorderElement;
-};
+import {
+  ReorderGroup as IonReorderGroup
+} from './components/reorder/reorder-group';
+
 declare global {
+  interface HTMLIonReorderGroupElement extends IonReorderGroup, HTMLElement {
+  }
+  var HTMLIonReorderGroupElement: {
+    prototype: HTMLIonReorderGroupElement;
+    new (): HTMLIonReorderGroupElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-reorder": HTMLIonReorderElement;
+    "ion-reorder-group": HTMLIonReorderGroupElement;
   }
   interface ElementTagNameMap {
-      "ion-reorder": HTMLIonReorderElement;
+    "ion-reorder-group": HTMLIonReorderGroupElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-reorder": JSXElements.IonReorderAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-reorder-group": JSXElements.IonReorderGroupAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonReorderAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonReorderGroupAttributes extends HTMLAttributes {
+      
+        enabled?: boolean
+    }
   }
 }
 
-import { RouteLink as IonRouteLink } from './components/router/route-link';
 
-interface HTMLIonRouteLinkElement extends IonRouteLink, HTMLElement {
-}
-declare var HTMLIonRouteLinkElement: {
-  prototype: HTMLIonRouteLinkElement;
-  new (): HTMLIonRouteLinkElement;
-};
+import {
+  ItemReorder as IonReorder
+} from './components/reorder/reorder';
+
 declare global {
+  interface HTMLIonReorderElement extends IonReorder, HTMLElement {
+  }
+  var HTMLIonReorderElement: {
+    prototype: HTMLIonReorderElement;
+    new (): HTMLIonReorderElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-route-link": HTMLIonRouteLinkElement;
+    "ion-reorder": HTMLIonReorderElement;
   }
   interface ElementTagNameMap {
-      "ion-route-link": HTMLIonRouteLinkElement;
+    "ion-reorder": HTMLIonReorderElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-route-link": JSXElements.IonRouteLinkAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-reorder": JSXElements.IonReorderAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRouteLinkAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          url?: string,
-          router?: any
-      }
+    export interface IonReorderAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Route as IonRoute } from './components/router/route';
 
-interface HTMLIonRouteElement extends IonRoute, HTMLElement {
-}
-declare var HTMLIonRouteElement: {
-  prototype: HTMLIonRouteElement;
-  new (): HTMLIonRouteElement;
-};
+import {
+  RouteLink as IonRouteLink
+} from './components/router/route-link';
+
 declare global {
+  interface HTMLIonRouteLinkElement extends IonRouteLink, HTMLElement {
+  }
+  var HTMLIonRouteLinkElement: {
+    prototype: HTMLIonRouteLinkElement;
+    new (): HTMLIonRouteLinkElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-route": HTMLIonRouteElement;
+    "ion-route-link": HTMLIonRouteLinkElement;
   }
   interface ElementTagNameMap {
-      "ion-route": HTMLIonRouteElement;
+    "ion-route-link": HTMLIonRouteLinkElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-route": JSXElements.IonRouteAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-route-link": JSXElements.IonRouteLinkAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRouteAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          url?: string,
-          component?: string,
-          componentProps?: any,
-          router?: any
-      }
+    export interface IonRouteLinkAttributes extends HTMLAttributes {
+      
+        url?: string,
+        router?: any
+    }
   }
 }
 
-import { Router as IonRouter } from './components/router/router';
 
-interface HTMLIonRouterElement extends IonRouter, HTMLElement {
-}
-declare var HTMLIonRouterElement: {
-  prototype: HTMLIonRouterElement;
-  new (): HTMLIonRouterElement;
-};
+import {
+  Route as IonRoute
+} from './components/router/route';
+
 declare global {
+  interface HTMLIonRouteElement extends IonRoute, HTMLElement {
+  }
+  var HTMLIonRouteElement: {
+    prototype: HTMLIonRouteElement;
+    new (): HTMLIonRouteElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-router": HTMLIonRouterElement;
+    "ion-route": HTMLIonRouteElement;
   }
   interface ElementTagNameMap {
-      "ion-router": HTMLIonRouterElement;
+    "ion-route": HTMLIonRouteElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-router": JSXElements.IonRouterAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-route": JSXElements.IonRouteAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonRouterAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          root?: string,
-          match?: any
-      }
+    export interface IonRouteAttributes extends HTMLAttributes {
+      
+        url?: string,
+        component?: string,
+        componentProps?: any,
+        router?: any
+    }
   }
 }
 
-import { Scroll as IonScroll } from './components/scroll/scroll';
 
-interface HTMLIonScrollElement extends IonScroll, HTMLElement {
-}
-declare var HTMLIonScrollElement: {
-  prototype: HTMLIonScrollElement;
-  new (): HTMLIonScrollElement;
-};
+import {
+  Router as IonRouter
+} from './components/router/router';
+
 declare global {
+  interface HTMLIonRouterElement extends IonRouter, HTMLElement {
+  }
+  var HTMLIonRouterElement: {
+    prototype: HTMLIonRouterElement;
+    new (): HTMLIonRouterElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-scroll": HTMLIonScrollElement;
+    "ion-router": HTMLIonRouterElement;
   }
   interface ElementTagNameMap {
-      "ion-scroll": HTMLIonScrollElement;
+    "ion-router": HTMLIonRouterElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-scroll": JSXElements.IonScrollAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-router": JSXElements.IonRouterAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonScrollAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          scrollToTop?: any,
-          scrollToBottom?: any,
-          scrollToPoint?: any,
-          enabled?: boolean,
-          jsScroll?: boolean,
-          onionScrollStart?: any,
-          onionScroll?: any,
-          onionScrollEnd?: any
-      }
+    export interface IonRouterAttributes extends HTMLAttributes {
+      
+        root?: string,
+        match?: any
+    }
   }
 }
 
-import { Searchbar as IonSearchbar } from './components/searchbar/searchbar';
 
-interface HTMLIonSearchbarElement extends IonSearchbar, HTMLElement {
-}
-declare var HTMLIonSearchbarElement: {
-  prototype: HTMLIonSearchbarElement;
-  new (): HTMLIonSearchbarElement;
-};
+import {
+  Scroll as IonScroll
+} from './components/scroll/scroll';
+
 declare global {
+  interface HTMLIonScrollElement extends IonScroll, HTMLElement {
+  }
+  var HTMLIonScrollElement: {
+    prototype: HTMLIonScrollElement;
+    new (): HTMLIonScrollElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-searchbar": HTMLIonSearchbarElement;
+    "ion-scroll": HTMLIonScrollElement;
   }
   interface ElementTagNameMap {
-      "ion-searchbar": HTMLIonSearchbarElement;
+    "ion-scroll": HTMLIonScrollElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-searchbar": JSXElements.IonSearchbarAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-scroll": JSXElements.IonScrollAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSearchbarAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          animated?: boolean,
-          autocomplete?: string,
-          autocorrect?: string,
-          cancelButtonText?: string,
-          debounce?: number,
-          placeholder?: string,
-          showCancelButton?: boolean,
-          spellcheck?: boolean,
-          type?: string,
-          value?: string
-      }
+    export interface IonScrollAttributes extends HTMLAttributes {
+      
+        enabled?: boolean,
+        jsScroll?: boolean,
+        onionScrollStart?: ScrollCallback,
+        onionScroll?: ScrollCallback,
+        onionScrollEnd?: ScrollCallback
+    }
   }
 }
 
-import { SegmentButton as IonSegmentButton } from './components/segment-button/segment-button';
 
-interface HTMLIonSegmentButtonElement extends IonSegmentButton, HTMLElement {
-}
-declare var HTMLIonSegmentButtonElement: {
-  prototype: HTMLIonSegmentButtonElement;
-  new (): HTMLIonSegmentButtonElement;
-};
+import {
+  Searchbar as IonSearchbar
+} from './components/searchbar/searchbar';
+
 declare global {
+  interface HTMLIonSearchbarElement extends IonSearchbar, HTMLElement {
+  }
+  var HTMLIonSearchbarElement: {
+    prototype: HTMLIonSearchbarElement;
+    new (): HTMLIonSearchbarElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-segment-button": HTMLIonSegmentButtonElement;
+    "ion-searchbar": HTMLIonSearchbarElement;
   }
   interface ElementTagNameMap {
-      "ion-segment-button": HTMLIonSegmentButtonElement;
+    "ion-searchbar": HTMLIonSearchbarElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-segment-button": JSXElements.IonSegmentButtonAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-searchbar": JSXElements.IonSearchbarAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSegmentButtonAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          checked?: boolean,
-          disabled?: boolean,
-          value?: string
-      }
+    export interface IonSearchbarAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        animated?: boolean,
+        autocomplete?: string,
+        autocorrect?: string,
+        cancelButtonText?: string,
+        debounce?: number,
+        placeholder?: string,
+        showCancelButton?: boolean,
+        spellcheck?: boolean,
+        type?: string,
+        value?: string
+    }
   }
 }
 
-import { Segment as IonSegment } from './components/segment/segment';
 
-interface HTMLIonSegmentElement extends IonSegment, HTMLElement {
-}
-declare var HTMLIonSegmentElement: {
-  prototype: HTMLIonSegmentElement;
-  new (): HTMLIonSegmentElement;
-};
+import {
+  SegmentButton as IonSegmentButton
+} from './components/segment-button/segment-button';
+
 declare global {
+  interface HTMLIonSegmentButtonElement extends IonSegmentButton, HTMLElement {
+  }
+  var HTMLIonSegmentButtonElement: {
+    prototype: HTMLIonSegmentButtonElement;
+    new (): HTMLIonSegmentButtonElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-segment": HTMLIonSegmentElement;
+    "ion-segment-button": HTMLIonSegmentButtonElement;
   }
   interface ElementTagNameMap {
-      "ion-segment": HTMLIonSegmentElement;
+    "ion-segment-button": HTMLIonSegmentButtonElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-segment": JSXElements.IonSegmentAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-segment-button": JSXElements.IonSegmentButtonAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSegmentAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          disabled?: boolean,
-          value?: string
-      }
+    export interface IonSegmentButtonAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        checked?: boolean,
+        disabled?: boolean,
+        value?: string
+    }
   }
 }
 
-import { SelectOption as IonSelectOption } from './components/select-option/select-option';
 
-interface HTMLIonSelectOptionElement extends IonSelectOption, HTMLElement {
-}
-declare var HTMLIonSelectOptionElement: {
-  prototype: HTMLIonSelectOptionElement;
-  new (): HTMLIonSelectOptionElement;
-};
+import {
+  Segment as IonSegment
+} from './components/segment/segment';
+
 declare global {
+  interface HTMLIonSegmentElement extends IonSegment, HTMLElement {
+  }
+  var HTMLIonSegmentElement: {
+    prototype: HTMLIonSegmentElement;
+    new (): HTMLIonSegmentElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-select-option": HTMLIonSelectOptionElement;
+    "ion-segment": HTMLIonSegmentElement;
   }
   interface ElementTagNameMap {
-      "ion-select-option": HTMLIonSelectOptionElement;
+    "ion-segment": HTMLIonSegmentElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-select-option": JSXElements.IonSelectOptionAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-segment": JSXElements.IonSegmentAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSelectOptionAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          getText?: any,
-          disabled?: boolean,
-          selected?: boolean,
-          value?: string
-      }
+    export interface IonSegmentAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        disabled?: boolean,
+        value?: string
+    }
   }
 }
 
-import { SelectPopover as IonSelectPopover } from './components/select/select-popover';
 
-interface HTMLIonSelectPopoverElement extends IonSelectPopover, HTMLElement {
-}
-declare var HTMLIonSelectPopoverElement: {
-  prototype: HTMLIonSelectPopoverElement;
-  new (): HTMLIonSelectPopoverElement;
-};
+import {
+  SelectOption as IonSelectOption
+} from './components/select-option/select-option';
+
 declare global {
+  interface HTMLIonSelectOptionElement extends IonSelectOption, HTMLElement {
+  }
+  var HTMLIonSelectOptionElement: {
+    prototype: HTMLIonSelectOptionElement;
+    new (): HTMLIonSelectOptionElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-select-popover": HTMLIonSelectPopoverElement;
+    "ion-select-option": HTMLIonSelectOptionElement;
   }
   interface ElementTagNameMap {
-      "ion-select-popover": HTMLIonSelectPopoverElement;
+    "ion-select-option": HTMLIonSelectOptionElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-select-popover": JSXElements.IonSelectPopoverAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-select-option": JSXElements.IonSelectOptionAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSelectPopoverAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          options?: any,
-          value?: string
-      }
+    export interface IonSelectOptionAttributes extends HTMLAttributes {
+      
+        disabled?: boolean,
+        selected?: boolean,
+        value?: string
+    }
   }
 }
 
-import { Select as IonSelect } from './components/select/select';
 
-interface HTMLIonSelectElement extends IonSelect, HTMLElement {
-}
-declare var HTMLIonSelectElement: {
-  prototype: HTMLIonSelectElement;
-  new (): HTMLIonSelectElement;
-};
+import {
+  SelectPopover as IonSelectPopover
+} from './components/select/select-popover';
+
 declare global {
+  interface HTMLIonSelectPopoverElement extends IonSelectPopover, HTMLElement {
+  }
+  var HTMLIonSelectPopoverElement: {
+    prototype: HTMLIonSelectPopoverElement;
+    new (): HTMLIonSelectPopoverElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-select": HTMLIonSelectElement;
+    "ion-select-popover": HTMLIonSelectPopoverElement;
   }
   interface ElementTagNameMap {
-      "ion-select": HTMLIonSelectElement;
+    "ion-select-popover": HTMLIonSelectPopoverElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-select": JSXElements.IonSelectAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-select-popover": JSXElements.IonSelectPopoverAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSelectAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          actionSheetCtrl?: any,
-          alertCtrl?: any,
-          popoverCtrl?: any,
-          disabled?: boolean,
-          cancelText?: string,
-          okText?: string,
-          placeholder?: string,
-          selectOptions?: any,
-          interface?: string,
-          selectedText?: string,
-          multiple?: boolean,
-          value?: any
-      }
+    export interface IonSelectPopoverAttributes extends HTMLAttributes {
+      
+        options?: SelectPopoverOption[],
+        value?: string
+    }
   }
 }
 
-import { SkeletonText as IonSkeletonText } from './components/skeleton-text/skeleton-text';
 
-interface HTMLIonSkeletonTextElement extends IonSkeletonText, HTMLElement {
-}
-declare var HTMLIonSkeletonTextElement: {
-  prototype: HTMLIonSkeletonTextElement;
-  new (): HTMLIonSkeletonTextElement;
-};
+import {
+  Select as IonSelect
+} from './components/select/select';
+
 declare global {
+  interface HTMLIonSelectElement extends IonSelect, HTMLElement {
+  }
+  var HTMLIonSelectElement: {
+    prototype: HTMLIonSelectElement;
+    new (): HTMLIonSelectElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-skeleton-text": HTMLIonSkeletonTextElement;
+    "ion-select": HTMLIonSelectElement;
   }
   interface ElementTagNameMap {
-      "ion-skeleton-text": HTMLIonSkeletonTextElement;
+    "ion-select": HTMLIonSelectElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-skeleton-text": JSXElements.IonSkeletonTextAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-select": JSXElements.IonSelectAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSkeletonTextAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          width?: string
-      }
+    export interface IonSelectAttributes extends HTMLAttributes {
+      
+        disabled?: boolean,
+        cancelText?: string,
+        okText?: string,
+        placeholder?: string,
+        selectOptions?: any,
+        interface?: string,
+        selectedText?: string,
+        multiple?: boolean,
+        value?: string | string[]
+    }
   }
 }
 
-import { Slide as IonSlide } from './components/slides/slide';
 
-interface HTMLIonSlideElement extends IonSlide, HTMLElement {
-}
-declare var HTMLIonSlideElement: {
-  prototype: HTMLIonSlideElement;
-  new (): HTMLIonSlideElement;
-};
+import {
+  SkeletonText as IonSkeletonText
+} from './components/skeleton-text/skeleton-text';
+
 declare global {
+  interface HTMLIonSkeletonTextElement extends IonSkeletonText, HTMLElement {
+  }
+  var HTMLIonSkeletonTextElement: {
+    prototype: HTMLIonSkeletonTextElement;
+    new (): HTMLIonSkeletonTextElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-slide": HTMLIonSlideElement;
+    "ion-skeleton-text": HTMLIonSkeletonTextElement;
   }
   interface ElementTagNameMap {
-      "ion-slide": HTMLIonSlideElement;
+    "ion-skeleton-text": HTMLIonSkeletonTextElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-slide": JSXElements.IonSlideAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-skeleton-text": JSXElements.IonSkeletonTextAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSlideAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonSkeletonTextAttributes extends HTMLAttributes {
+      
+        width?: string
+    }
   }
 }
 
-import { Slides as IonSlides } from './components/slides/slides';
 
-interface HTMLIonSlidesElement extends IonSlides, HTMLElement {
-}
-declare var HTMLIonSlidesElement: {
-  prototype: HTMLIonSlidesElement;
-  new (): HTMLIonSlidesElement;
-};
+import {
+  Slide as IonSlide
+} from './components/slides/slide';
+
 declare global {
+  interface HTMLIonSlideElement extends IonSlide, HTMLElement {
+  }
+  var HTMLIonSlideElement: {
+    prototype: HTMLIonSlideElement;
+    new (): HTMLIonSlideElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-slides": HTMLIonSlidesElement;
+    "ion-slide": HTMLIonSlideElement;
   }
   interface ElementTagNameMap {
-      "ion-slides": HTMLIonSlidesElement;
+    "ion-slide": HTMLIonSlideElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-slides": JSXElements.IonSlidesAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-slide": JSXElements.IonSlideAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSlidesAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          effect?: string,
-          autoplay?: number,
-          control?: any,
-          direction?: string,
-          initialSlide?: number,
-          loop?: boolean,
-          pager?: boolean,
-          paginationType?: string,
-          parallax?: boolean,
-          slidesPerView?: number,
-          spaceBetween?: number,
-          speed?: number,
-          zoom?: boolean,
-          keyboardControl?: boolean
-      }
+    export interface IonSlideAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Spinner as IonSpinner } from './components/spinner/spinner';
 
-interface HTMLIonSpinnerElement extends IonSpinner, HTMLElement {
-}
-declare var HTMLIonSpinnerElement: {
-  prototype: HTMLIonSpinnerElement;
-  new (): HTMLIonSpinnerElement;
-};
+import {
+  Slides as IonSlides
+} from './components/slides/slides';
+
 declare global {
+  interface HTMLIonSlidesElement extends IonSlides, HTMLElement {
+  }
+  var HTMLIonSlidesElement: {
+    prototype: HTMLIonSlidesElement;
+    new (): HTMLIonSlidesElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-spinner": HTMLIonSpinnerElement;
+    "ion-slides": HTMLIonSlidesElement;
   }
   interface ElementTagNameMap {
-      "ion-spinner": HTMLIonSpinnerElement;
+    "ion-slides": HTMLIonSlidesElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-spinner": JSXElements.IonSpinnerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-slides": JSXElements.IonSlidesAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSpinnerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          duration?: number,
-          name?: string,
-          paused?: boolean
-      }
+    export interface IonSlidesAttributes extends HTMLAttributes {
+      
+        effect?: string,
+        autoplay?: number,
+        control?: any,
+        direction?: 'horizontal' | 'vertical',
+        initialSlide?: number,
+        loop?: boolean,
+        pager?: boolean,
+        paginationType?: string,
+        parallax?: boolean,
+        slidesPerView?: number | 'auto',
+        spaceBetween?: number,
+        speed?: number,
+        zoom?: boolean,
+        keyboardControl?: boolean
+    }
   }
 }
 
-import { SplitPane as IonSplitPane } from './components/split-pane/split-pane';
 
-interface HTMLIonSplitPaneElement extends IonSplitPane, HTMLElement {
-}
-declare var HTMLIonSplitPaneElement: {
-  prototype: HTMLIonSplitPaneElement;
-  new (): HTMLIonSplitPaneElement;
-};
+import {
+  Spinner as IonSpinner
+} from './components/spinner/spinner';
+
 declare global {
+  interface HTMLIonSpinnerElement extends IonSpinner, HTMLElement {
+  }
+  var HTMLIonSpinnerElement: {
+    prototype: HTMLIonSpinnerElement;
+    new (): HTMLIonSpinnerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-split-pane": HTMLIonSplitPaneElement;
+    "ion-spinner": HTMLIonSpinnerElement;
   }
   interface ElementTagNameMap {
-      "ion-split-pane": HTMLIonSplitPaneElement;
+    "ion-spinner": HTMLIonSpinnerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-split-pane": JSXElements.IonSplitPaneAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-spinner": JSXElements.IonSpinnerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonSplitPaneAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          isVisible?: any,
-          enabled?: boolean,
-          when?: any
-      }
+    export interface IonSpinnerAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        duration?: number,
+        name?: string,
+        paused?: boolean
+    }
   }
 }
 
-import { PageTab as PageTab } from './components/tabs/page-tab';
 
-interface HTMLPageTabElement extends PageTab, HTMLElement {
-}
-declare var HTMLPageTabElement: {
-  prototype: HTMLPageTabElement;
-  new (): HTMLPageTabElement;
-};
+import {
+  SplitPane as IonSplitPane
+} from './components/split-pane/split-pane';
+
 declare global {
+  interface HTMLIonSplitPaneElement extends IonSplitPane, HTMLElement {
+  }
+  var HTMLIonSplitPaneElement: {
+    prototype: HTMLIonSplitPaneElement;
+    new (): HTMLIonSplitPaneElement;
+  };
   interface HTMLElementTagNameMap {
-      "page-tab": HTMLPageTabElement;
+    "ion-split-pane": HTMLIonSplitPaneElement;
   }
   interface ElementTagNameMap {
-      "page-tab": HTMLPageTabElement;
+    "ion-split-pane": HTMLIonSplitPaneElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "page-tab": JSXElements.PageTabAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-split-pane": JSXElements.IonSplitPaneAttributes;
+    }
   }
   namespace JSXElements {
-      export interface PageTabAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonSplitPaneAttributes extends HTMLAttributes {
+      
+        enabled?: boolean,
+        when?: string | boolean
+    }
   }
 }
 
-import { TabBar as IonTabbar } from './components/tabs/tab-bar';
 
-interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
-}
-declare var HTMLIonTabbarElement: {
-  prototype: HTMLIonTabbarElement;
-  new (): HTMLIonTabbarElement;
-};
+import {
+  PageTab as PageTab
+} from './components/tabs/page-tab';
+
 declare global {
+  interface HTMLPageTabElement extends PageTab, HTMLElement {
+  }
+  var HTMLPageTabElement: {
+    prototype: HTMLPageTabElement;
+    new (): HTMLPageTabElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-tabbar": HTMLIonTabbarElement;
+    "page-tab": HTMLPageTabElement;
   }
   interface ElementTagNameMap {
-      "ion-tabbar": HTMLIonTabbarElement;
+    "page-tab": HTMLPageTabElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-tabbar": JSXElements.IonTabbarAttributes;
-      }
+    interface IntrinsicElements {
+      "page-tab": JSXElements.PageTabAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonTabbarAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          placement?: string,
-          tabs?: any,
-          selectedTab?: any,
-          layout?: string,
-          highlight?: boolean
-      }
+    export interface PageTabAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { TabbarButton as IonTabButton } from './components/tabs/tab-button';
 
-interface HTMLIonTabButtonElement extends IonTabButton, HTMLElement {
-}
-declare var HTMLIonTabButtonElement: {
-  prototype: HTMLIonTabButtonElement;
-  new (): HTMLIonTabButtonElement;
-};
+import {
+  TabBar as IonTabbar
+} from './components/tabs/tab-bar';
+
 declare global {
+  interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
+  }
+  var HTMLIonTabbarElement: {
+    prototype: HTMLIonTabbarElement;
+    new (): HTMLIonTabbarElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-tab-button": HTMLIonTabButtonElement;
+    "ion-tabbar": HTMLIonTabbarElement;
   }
   interface ElementTagNameMap {
-      "ion-tab-button": HTMLIonTabButtonElement;
+    "ion-tabbar": HTMLIonTabbarElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-tab-button": JSXElements.IonTabButtonAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-tabbar": JSXElements.IonTabbarAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonTabButtonAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          selected?: boolean,
-          tab?: any
-      }
+    export interface IonTabbarAttributes extends HTMLAttributes {
+      
+        placement?: string,
+        tabs?: HTMLIonTabElement[],
+        selectedTab?: HTMLIonTabElement,
+        layout?: string,
+        highlight?: boolean
+    }
   }
 }
 
-import { TabHighlight as IonTabHighlight } from './components/tabs/tab-highlight';
 
-interface HTMLIonTabHighlightElement extends IonTabHighlight, HTMLElement {
-}
-declare var HTMLIonTabHighlightElement: {
-  prototype: HTMLIonTabHighlightElement;
-  new (): HTMLIonTabHighlightElement;
-};
+import {
+  TabbarButton as IonTabButton
+} from './components/tabs/tab-button';
+
 declare global {
+  interface HTMLIonTabButtonElement extends IonTabButton, HTMLElement {
+  }
+  var HTMLIonTabButtonElement: {
+    prototype: HTMLIonTabButtonElement;
+    new (): HTMLIonTabButtonElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-tab-highlight": HTMLIonTabHighlightElement;
+    "ion-tab-button": HTMLIonTabButtonElement;
   }
   interface ElementTagNameMap {
-      "ion-tab-highlight": HTMLIonTabHighlightElement;
+    "ion-tab-button": HTMLIonTabButtonElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-tab-highlight": JSXElements.IonTabHighlightAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-tab-button": JSXElements.IonTabButtonAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonTabHighlightAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          selectedTab?: any
-      }
+    export interface IonTabButtonAttributes extends HTMLAttributes {
+      
+        selected?: boolean,
+        tab?: HTMLIonTabElement
+    }
   }
 }
 
-import { Tab as IonTab } from './components/tabs/tab';
 
-interface HTMLIonTabElement extends IonTab, HTMLElement {
-}
-declare var HTMLIonTabElement: {
-  prototype: HTMLIonTabElement;
-  new (): HTMLIonTabElement;
-};
+import {
+  TabHighlight as IonTabHighlight
+} from './components/tabs/tab-highlight';
+
 declare global {
+  interface HTMLIonTabHighlightElement extends IonTabHighlight, HTMLElement {
+  }
+  var HTMLIonTabHighlightElement: {
+    prototype: HTMLIonTabHighlightElement;
+    new (): HTMLIonTabHighlightElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-tab": HTMLIonTabElement;
+    "ion-tab-highlight": HTMLIonTabHighlightElement;
   }
   interface ElementTagNameMap {
-      "ion-tab": HTMLIonTabElement;
+    "ion-tab-highlight": HTMLIonTabHighlightElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-tab": JSXElements.IonTabAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-tab-highlight": JSXElements.IonTabHighlightAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonTabAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          _setActive?: any,
-          resize?: any,
-          goToRoot?: any,
-          getActive?: any,
-          getNav?: any,
-          btnId?: string,
-          root?: any,
-          rootParams?: any,
-          urlPath?: string,
-          title?: string,
-          icon?: string,
-          badge?: string,
-          badgeStyle?: string,
-          enabled?: boolean,
-          show?: boolean,
-          tabsHideOnSubPages?: boolean,
-          selected?: boolean
-      }
+    export interface IonTabHighlightAttributes extends HTMLAttributes {
+      
+        selectedTab?: HTMLIonTabElement
+    }
   }
 }
 
-import { Tabs as IonTabs } from './components/tabs/tabs';
 
-interface HTMLIonTabsElement extends IonTabs, HTMLElement {
-}
-declare var HTMLIonTabsElement: {
-  prototype: HTMLIonTabsElement;
-  new (): HTMLIonTabsElement;
-};
+import {
+  Tab as IonTab
+} from './components/tabs/tab';
+
 declare global {
+  interface HTMLIonTabElement extends IonTab, HTMLElement {
+  }
+  var HTMLIonTabElement: {
+    prototype: HTMLIonTabElement;
+    new (): HTMLIonTabElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-tabs": HTMLIonTabsElement;
+    "ion-tab": HTMLIonTabElement;
   }
   interface ElementTagNameMap {
-      "ion-tabs": HTMLIonTabsElement;
+    "ion-tab": HTMLIonTabElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-tabs": JSXElements.IonTabsAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-tab": JSXElements.IonTabAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonTabsAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          select?: any,
-          getByIndex?: any,
-          getSelected?: any,
-          getIndex?: any,
-          getTabs?: any,
-          previousTab?: any,
-          resize?: any,
-          name?: string,
-          tabbarHidden?: boolean,
-          tabbarLayout?: string,
-          tabbarPlacement?: string,
-          tabbarHighlight?: boolean
-      }
+    export interface IonTabAttributes extends HTMLAttributes {
+      
+        btnId?: string,
+        root?: any,
+        rootParams?: any,
+        urlPath?: string,
+        title?: string,
+        icon?: string,
+        badge?: string,
+        badgeStyle?: string,
+        enabled?: boolean,
+        show?: boolean,
+        tabsHideOnSubPages?: boolean,
+        selected?: boolean
+    }
   }
 }
 
-import { Thumbnail as IonThumbnail } from './components/thumbnail/thumbnail';
 
-interface HTMLIonThumbnailElement extends IonThumbnail, HTMLElement {
-}
-declare var HTMLIonThumbnailElement: {
-  prototype: HTMLIonThumbnailElement;
-  new (): HTMLIonThumbnailElement;
-};
+import {
+  Tabs as IonTabs
+} from './components/tabs/tabs';
+
 declare global {
+  interface HTMLIonTabsElement extends IonTabs, HTMLElement {
+  }
+  var HTMLIonTabsElement: {
+    prototype: HTMLIonTabsElement;
+    new (): HTMLIonTabsElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-thumbnail": HTMLIonThumbnailElement;
+    "ion-tabs": HTMLIonTabsElement;
   }
   interface ElementTagNameMap {
-      "ion-thumbnail": HTMLIonThumbnailElement;
+    "ion-tabs": HTMLIonTabsElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-thumbnail": JSXElements.IonThumbnailAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-tabs": JSXElements.IonTabsAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonThumbnailAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonTabsAttributes extends HTMLAttributes {
+      
+        name?: string,
+        tabbarHidden?: boolean,
+        tabbarLayout?: string,
+        tabbarPlacement?: string,
+        tabbarHighlight?: boolean
+    }
   }
 }
 
-import { ToolbarTitle as IonTitle } from './components/title/title';
 
-interface HTMLIonTitleElement extends IonTitle, HTMLElement {
-}
-declare var HTMLIonTitleElement: {
-  prototype: HTMLIonTitleElement;
-  new (): HTMLIonTitleElement;
-};
+import {
+  Thumbnail as IonThumbnail
+} from './components/thumbnail/thumbnail';
+
 declare global {
+  interface HTMLIonThumbnailElement extends IonThumbnail, HTMLElement {
+  }
+  var HTMLIonThumbnailElement: {
+    prototype: HTMLIonThumbnailElement;
+    new (): HTMLIonThumbnailElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-title": HTMLIonTitleElement;
+    "ion-thumbnail": HTMLIonThumbnailElement;
   }
   interface ElementTagNameMap {
-      "ion-title": HTMLIonTitleElement;
+    "ion-thumbnail": HTMLIonThumbnailElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-title": JSXElements.IonTitleAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-thumbnail": JSXElements.IonThumbnailAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonTitleAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonThumbnailAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { ToastController as IonToastController } from './components/toast-controller/toast-controller';
 
-interface HTMLIonToastControllerElement extends IonToastController, HTMLElement {
-}
-declare var HTMLIonToastControllerElement: {
-  prototype: HTMLIonToastControllerElement;
-  new (): HTMLIonToastControllerElement;
-};
+import {
+  ToolbarTitle as IonTitle
+} from './components/title/title';
+
 declare global {
+  interface HTMLIonTitleElement extends IonTitle, HTMLElement {
+  }
+  var HTMLIonTitleElement: {
+    prototype: HTMLIonTitleElement;
+    new (): HTMLIonTitleElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-toast-controller": HTMLIonToastControllerElement;
+    "ion-title": HTMLIonTitleElement;
   }
   interface ElementTagNameMap {
-      "ion-toast-controller": HTMLIonToastControllerElement;
+    "ion-title": HTMLIonTitleElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-toast-controller": JSXElements.IonToastControllerAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-title": JSXElements.IonTitleAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonToastControllerAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          create?: any
-      }
+    export interface IonTitleAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Toast as IonToast } from './components/toast/toast';
 
-interface HTMLIonToastElement extends IonToast, HTMLElement {
-}
-declare var HTMLIonToastElement: {
-  prototype: HTMLIonToastElement;
-  new (): HTMLIonToastElement;
-};
+import {
+  ToastController as IonToastController
+} from './components/toast-controller/toast-controller';
+
 declare global {
+  interface HTMLIonToastControllerElement extends IonToastController, HTMLElement {
+  }
+  var HTMLIonToastControllerElement: {
+    prototype: HTMLIonToastControllerElement;
+    new (): HTMLIonToastControllerElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-toast": HTMLIonToastElement;
+    "ion-toast-controller": HTMLIonToastControllerElement;
   }
   interface ElementTagNameMap {
-      "ion-toast": HTMLIonToastElement;
+    "ion-toast-controller": HTMLIonToastControllerElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-toast": JSXElements.IonToastAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-toast-controller": JSXElements.IonToastControllerAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonToastAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          animationCtrl?: any,
-          message?: string,
-          cssClass?: string,
-          duration?: number,
-          showCloseButton?: boolean,
-          closeButtonText?: string,
-          dismissOnPageChange?: boolean,
-          position?: string,
-          enterAnimation?: any,
-          exitAnimation?: any,
-          toastId?: string
-      }
+    export interface IonToastControllerAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 
-import { Toggle as IonToggle } from './components/toggle/toggle';
 
-interface HTMLIonToggleElement extends IonToggle, HTMLElement {
-}
-declare var HTMLIonToggleElement: {
-  prototype: HTMLIonToggleElement;
-  new (): HTMLIonToggleElement;
-};
+import {
+  Toast as IonToast
+} from './components/toast/toast';
+
 declare global {
+  interface HTMLIonToastElement extends IonToast, HTMLElement {
+  }
+  var HTMLIonToastElement: {
+    prototype: HTMLIonToastElement;
+    new (): HTMLIonToastElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-toggle": HTMLIonToggleElement;
+    "ion-toast": HTMLIonToastElement;
   }
   interface ElementTagNameMap {
-      "ion-toggle": HTMLIonToggleElement;
+    "ion-toast": HTMLIonToastElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-toggle": JSXElements.IonToggleAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-toast": JSXElements.IonToastAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonToggleAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          toggle?: any,
-          checked?: boolean,
-          disabled?: boolean,
-          value?: string
-      }
+    export interface IonToastAttributes extends HTMLAttributes {
+      
+        message?: string,
+        cssClass?: string,
+        duration?: number,
+        showCloseButton?: boolean,
+        closeButtonText?: string,
+        dismissOnPageChange?: boolean,
+        position?: string,
+        enterAnimation?: AnimationBuilder,
+        exitAnimation?: AnimationBuilder,
+        toastId?: string
+    }
   }
 }
 
-import { Navbar as IonNavbar } from './components/toolbar/navbar';
 
-interface HTMLIonNavbarElement extends IonNavbar, HTMLElement {
-}
-declare var HTMLIonNavbarElement: {
-  prototype: HTMLIonNavbarElement;
-  new (): HTMLIonNavbarElement;
-};
+import {
+  Toggle as IonToggle
+} from './components/toggle/toggle';
+
 declare global {
+  interface HTMLIonToggleElement extends IonToggle, HTMLElement {
+  }
+  var HTMLIonToggleElement: {
+    prototype: HTMLIonToggleElement;
+    new (): HTMLIonToggleElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-navbar": HTMLIonNavbarElement;
+    "ion-toggle": HTMLIonToggleElement;
   }
   interface ElementTagNameMap {
-      "ion-navbar": HTMLIonNavbarElement;
+    "ion-toggle": HTMLIonToggleElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-navbar": JSXElements.IonNavbarAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-toggle": JSXElements.IonToggleAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonNavbarAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-          hideBackButton?: boolean,
-          backButtonText?: string,
-          backButtonIcon?: string,
-          hidden?: boolean
-      }
+    export interface IonToggleAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md',
+        checked?: boolean,
+        disabled?: boolean,
+        value?: string
+    }
   }
 }
 
-import { Toolbar as IonToolbar } from './components/toolbar/toolbar';
 
-interface HTMLIonToolbarElement extends IonToolbar, HTMLElement {
-}
-declare var HTMLIonToolbarElement: {
-  prototype: HTMLIonToolbarElement;
-  new (): HTMLIonToolbarElement;
-};
+import {
+  Navbar as IonNavbar
+} from './components/toolbar/navbar';
+
 declare global {
+  interface HTMLIonNavbarElement extends IonNavbar, HTMLElement {
+  }
+  var HTMLIonNavbarElement: {
+    prototype: HTMLIonNavbarElement;
+    new (): HTMLIonNavbarElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-toolbar": HTMLIonToolbarElement;
+    "ion-navbar": HTMLIonNavbarElement;
   }
   interface ElementTagNameMap {
-      "ion-toolbar": HTMLIonToolbarElement;
+    "ion-navbar": HTMLIonNavbarElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-toolbar": JSXElements.IonToolbarAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-navbar": JSXElements.IonNavbarAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonToolbarAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonNavbarAttributes extends HTMLAttributes {
+      
+        hideBackButton?: boolean,
+        backButtonText?: string,
+        backButtonIcon?: string,
+        hidden?: boolean
+    }
   }
 }
 
-import { IonUtils as IonUtils } from './components/util/util';
 
-interface HTMLIonUtilsElement extends IonUtils, HTMLElement {
+import {
+  Toolbar as IonToolbar
+} from './components/toolbar/toolbar';
+
+declare global {
+  interface HTMLIonToolbarElement extends IonToolbar, HTMLElement {
+  }
+  var HTMLIonToolbarElement: {
+    prototype: HTMLIonToolbarElement;
+    new (): HTMLIonToolbarElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-toolbar": HTMLIonToolbarElement;
+  }
+  interface ElementTagNameMap {
+    "ion-toolbar": HTMLIonToolbarElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-toolbar": JSXElements.IonToolbarAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonToolbarAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md'
+    }
+  }
 }
-declare var HTMLIonUtilsElement: {
-  prototype: HTMLIonUtilsElement;
-  new (): HTMLIonUtilsElement;
-};
+
+
+import {
+  IonUtils as IonUtils
+} from './components/util/util';
+
 declare global {
+  interface HTMLIonUtilsElement extends IonUtils, HTMLElement {
+  }
+  var HTMLIonUtilsElement: {
+    prototype: HTMLIonUtilsElement;
+    new (): HTMLIonUtilsElement;
+  };
   interface HTMLElementTagNameMap {
-      "ion-utils": HTMLIonUtilsElement;
+    "ion-utils": HTMLIonUtilsElement;
   }
   interface ElementTagNameMap {
-      "ion-utils": HTMLIonUtilsElement;
+    "ion-utils": HTMLIonUtilsElement;
   }
   namespace JSX {
-      interface IntrinsicElements {
-          "ion-utils": JSXElements.IonUtilsAttributes;
-      }
+    interface IntrinsicElements {
+      "ion-utils": JSXElements.IonUtilsAttributes;
+    }
   }
   namespace JSXElements {
-      export interface IonUtilsAttributes extends HTMLAttributes {
-          mode?: string,
-          color?: string,
-        
-      }
+    export interface IonUtilsAttributes extends HTMLAttributes {
+      
+    }
   }
 }
 

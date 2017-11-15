@@ -7,8 +7,7 @@ import { hapticSelection } from '../../utils/haptic';
   tag: 'ion-toggle',
   styleUrls: {
     ios: 'toggle.ios.scss',
-    md: 'toggle.md.scss',
-    wp: 'toggle.wp.scss'
+    md: 'toggle.md.scss'
   },
   host: {
     theme: 'toggle'
@@ -53,10 +52,10 @@ export class Toggle implements BooleanInputComponent {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {boolean} If true, the toggle is selected. Defaults to `false`.

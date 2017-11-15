@@ -131,8 +131,7 @@ const QUERY: { [key: string]: string }  = {
   tag: 'ion-split-pane',
   styleUrls: {
     ios: 'split-pane.ios.scss',
-    md: 'split-pane.md.scss',
-    wp: 'split-pane.wp.scss'
+    md: 'split-pane.md.scss'
   },
   host: {
     theme: 'split-pane'

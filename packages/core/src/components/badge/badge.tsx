@@ -31,8 +31,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-badge',
   styleUrls: {
     ios: 'badge.ios.scss',
-    md: 'badge.md.scss',
-    wp: 'badge.wp.scss'
+    md: 'badge.md.scss'
   },
   host: {
     theme: 'badge'
@@ -49,10 +48,10 @@ export class Badge {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     return <slot></slot>;

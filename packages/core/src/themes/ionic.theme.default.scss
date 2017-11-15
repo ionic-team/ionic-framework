@@ -20,7 +20,7 @@ $link-color:                 color($colors, primary) !default;
 $background-color:           #fff !default;
 $subdued-text-color:         #666 !default;
 
-$font-family-base:           -apple-system, "Helvetica Neue", "Roboto", sans-serif !default;
+$font-family-base:           -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif !default;
 $font-size-base:             1.4rem !default; // 1.4rem == 14px
 
 $content-padding:            16px !default;

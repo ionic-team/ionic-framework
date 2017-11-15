@@ -1,13 +1,12 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, PropWillChange } from '@stencil/core';
-import { Animation, Config, GestureDetail, HTMLIonMenuControllerElement, HTMLIonMenuElement, SplitPaneAlert, StencilElement } from '../../index';
+import { Animation, Config, GestureDetail, SplitPaneAlert, StencilElement } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-menu',
   styleUrls: {
     ios: 'menu.ios.scss',
-    md: 'menu.md.scss',
-    wp: 'menu.wp.scss'
+    md: 'menu.md.scss'
   },
   host: {
     theme: 'menu'

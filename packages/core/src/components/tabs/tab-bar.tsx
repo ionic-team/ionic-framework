@@ -1,5 +1,4 @@
 import { Component, Listen, Prop, State } from '@stencil/core';
-import { HTMLIonTabElement } from '../../index';
 
 @Component({
   tag: 'ion-tabbar',
