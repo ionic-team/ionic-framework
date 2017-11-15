@@ -327,7 +327,7 @@ declare global {
     export interface IonBadgeAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -373,7 +373,7 @@ declare global {
         full?: boolean,
         strong?: boolean,
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -435,7 +435,7 @@ declare global {
     export interface IonCardContentAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -467,7 +467,7 @@ declare global {
     export interface IonCardHeaderAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -499,7 +499,7 @@ declare global {
     export interface IonCardSubtitleAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -531,7 +531,7 @@ declare global {
     export interface IonCardTitleAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -563,7 +563,7 @@ declare global {
     export interface IonCardAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -595,7 +595,7 @@ declare global {
     export interface IonCheckboxAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         checked?: boolean,
         disabled?: boolean,
         value?: string
@@ -631,7 +631,7 @@ declare global {
       
         href?: string,
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         clear?: boolean,
         disabled?: boolean
     }
@@ -665,7 +665,7 @@ declare global {
     export interface IonChipAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -841,7 +841,7 @@ declare global {
     export interface IonFabButtonAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         href?: string,
         activated?: boolean,
         toggleActive?: Function,
@@ -1273,7 +1273,7 @@ declare global {
     export interface IonItemDividerAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -1305,7 +1305,7 @@ declare global {
     export interface IonItemOptionAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         href?: string,
         disabled?: boolean
     }
@@ -1400,7 +1400,7 @@ declare global {
     export interface IonItemAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         href?: string
     }
   }
@@ -1463,7 +1463,7 @@ declare global {
     export interface IonLabelAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         fixed?: boolean,
         floating?: boolean,
         stacked?: boolean
@@ -1498,7 +1498,7 @@ declare global {
     export interface IonListHeaderAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -1950,7 +1950,7 @@ declare global {
     export interface IonNoteAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
@@ -2218,7 +2218,7 @@ declare global {
     export interface IonRadioAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         checked?: boolean,
         disabled?: boolean,
         value?: string
@@ -2292,7 +2292,7 @@ declare global {
     export interface IonRangeAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         debounce?: number,
         disabled?: boolean,
         dualKnobs?: boolean,
@@ -2527,7 +2527,7 @@ declare global {
     export interface IonSearchbarAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         animated?: boolean,
         autocomplete?: string,
         autocorrect?: string,
@@ -2569,7 +2569,7 @@ declare global {
     export interface IonSegmentButtonAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         checked?: boolean,
         disabled?: boolean,
         value?: string
@@ -2604,7 +2604,7 @@ declare global {
     export interface IonSegmentAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         disabled?: boolean,
         value?: string
     }
@@ -2847,7 +2847,7 @@ declare global {
     export interface IonSpinnerAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         duration?: number,
         name?: string,
         paused?: boolean
@@ -3249,7 +3249,7 @@ declare global {
     export interface IonToggleAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp',
+        mode?: 'ios' | 'md',
         checked?: boolean,
         disabled?: boolean,
         value?: string
@@ -3318,7 +3318,7 @@ declare global {
     export interface IonToolbarAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md' | 'wp'
+        mode?: 'ios' | 'md'
     }
   }
 }
