@@ -124,6 +124,8 @@ async function run() {
   });
 }
 
+const navigate = url => driver => new Page(driver, url).navigate();
+
 // Invoke run() only if executed directly i.e. `node ./scripts/e2e`
 if (require.main === module) {
   run();
@@ -131,6 +133,7 @@ if (require.main === module) {
 
 module.exports = {
   Page,
+  navigate,
   register: registerE2ETest,
   run: run
 };
