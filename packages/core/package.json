@@ -24,6 +24,7 @@
   },
   "scripts": {
     "build": "stencil build",
+    "tsc": "tsc -p .",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/run-e2e.js",
     "snapshot": "node ./scripts/e2e.js --snapshot",
