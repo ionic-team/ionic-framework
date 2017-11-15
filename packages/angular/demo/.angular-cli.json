@@ -9,7 +9,8 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        { "glob": "**/*", "input": "../../../core/dist", "output": "./ionic/core" }
       ],
       "index": "index.html",
       "main": "main.ts",
