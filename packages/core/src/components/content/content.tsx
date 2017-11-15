@@ -1,5 +1,5 @@
 import { Component, Element, Method, Prop } from '@stencil/core';
-import { Config, HTMLIonScrollElement } from '../../index';
+import { Config } from '../../index';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 import { getPageElement } from '../../utils/helpers';
 
@@ -7,8 +7,7 @@ import { getPageElement } from '../../utils/helpers';
   tag: 'ion-content',
   styleUrls: {
     ios: 'content.ios.scss',
-    md: 'content.md.scss',
-    wp: 'content.wp.scss'
+    md: 'content.md.scss'
   }
 })
 export class Content {

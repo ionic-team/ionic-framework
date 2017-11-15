@@ -9,8 +9,20 @@
 <body>
   <ion-app>
     <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            Basic Searchbar
+          </ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar>
+          </ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+
       <ion-content>
-        <h5> Search - Default </h5>
+        <h5 padding-left padding-top> Search - Default </h5>
         <ion-searchbar
           value="test"
           type="tel"
@@ -18,14 +30,14 @@
           debounce="500">
         </ion-searchbar>
 
-        <h5> Search - Animated </h5>
+        <h5 padding-left padding-top> Search - Animated </h5>
         <ion-searchbar
           animated="true"
           show-cancel-button
           debounce="500">
         </ion-searchbar>
 
-        <h5> Search - Custom Placeholder </h5>
+        <h5 padding-left padding-top> Search - Custom Placeholder </h5>
         <ion-searchbar
           id="dynamicProp"
           value="33"
@@ -37,7 +49,7 @@
           placeholder="Filter Schedules">
         </ion-searchbar>
 
-        <h5> Search - No Cancel Button </h5>
+        <h5 padding-left padding-top> Search - No Cancel Button </h5>
         <ion-searchbar
           value="after view"
           autocorrect="off"
@@ -47,14 +59,14 @@
           show-cancel-button="false">
         </ion-searchbar>
 
-        <h5> Search - Custom Cancel Button Danger </h5>
+        <h5 padding-left padding-top> Search - Custom Cancel Button Danger </h5>
         <ion-searchbar
           show-cancel-button
           cancel-button-text="Really Long Cancel"
           color="danger">
         </ion-searchbar>
 
-        <h5> Search - Value passed </h5>
+        <h5 padding-left padding-top> Search - Value passed </h5>
         <ion-searchbar
           value="mysearch"
           cancel-button-text="Really Long Cancel"
@@ -62,7 +74,7 @@
           show-cancel-button>
         </ion-searchbar>
 
-        <h5> Search - Mode iOS</h5>
+        <h5 padding-left padding-top> Search - Mode iOS</h5>
         <ion-searchbar
           mode="ios"
           animated="true"
@@ -70,7 +82,7 @@
           placeholder="Search">
         </ion-searchbar>
 
-        <h5> Search - Mode MD</h5>
+        <h5 padding-left padding-top> Search - Mode MD</h5>
         <ion-searchbar
           mode="md"
           animated="true"
@@ -78,15 +90,7 @@
           placeholder="Search">
         </ion-searchbar>
 
-        <h5> Search - Mode WP</h5>
-        <ion-searchbar
-          mode="wp"
-          animated="true"
-          show-cancel-button
-          placeholder="Search">
-        </ion-searchbar>
-
-        <h5> Search - Animated and No Cancel</h5>
+        <h5 padding-left padding-top> Search - Animated and No Cancel</h5>
         <ion-searchbar
           id="dynamicAttr"
           placeholder="Search"

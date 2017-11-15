@@ -420,6 +420,35 @@ declare global {
   }
 }
 
+import { CardSubtitle as IonCardSubtitle } from './components/card-subtitle/card-subtitle';
+
+interface HTMLIonCardSubtitleElement extends IonCardSubtitle, HTMLElement {
+}
+declare var HTMLIonCardSubtitleElement: {
+  prototype: HTMLIonCardSubtitleElement;
+  new (): HTMLIonCardSubtitleElement;
+};
+declare global {
+  interface HTMLElementTagNameMap {
+      "ion-card-subtitle": HTMLIonCardSubtitleElement;
+  }
+  interface ElementTagNameMap {
+      "ion-card-subtitle": HTMLIonCardSubtitleElement;
+  }
+  namespace JSX {
+      interface IntrinsicElements {
+          "ion-card-subtitle": JSXElements.IonCardSubtitleAttributes;
+      }
+  }
+  namespace JSXElements {
+      export interface IonCardSubtitleAttributes extends HTMLAttributes {
+          mode?: string,
+          color?: string,
+        
+      }
+  }
+}
+
 import { CardTitle as IonCardTitle } from './components/card-title/card-title';
 
 interface HTMLIonCardTitleElement extends IonCardTitle, HTMLElement {

@@ -51,8 +51,7 @@ import { createThemedClasses, getElementClassObject } from '../../utils/theme';
   tag: 'ion-fab-button',
   styleUrls: {
     ios: 'fab.ios.scss',
-    md: 'fab.md.scss',
-    wp: 'fab.wp.scss'
+    md: 'fab.md.scss'
   }
 })
 export class FabButton {
@@ -67,10 +66,10 @@ export class FabButton {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {string} Contains a URL or a URL fragment that the hyperlink points to.

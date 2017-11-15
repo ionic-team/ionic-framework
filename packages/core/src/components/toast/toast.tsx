@@ -8,8 +8,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
   tag: 'ion-toast',
   styleUrls: {
     ios: 'toast.ios.scss',
-    md: 'toast.md.scss',
-    wp: 'toast.wp.scss'
+    md: 'toast.md.scss'
   },
   host: {
     theme: 'toast'

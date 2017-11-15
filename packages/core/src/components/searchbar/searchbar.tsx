@@ -24,8 +24,7 @@ import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/c
   tag: 'ion-searchbar',
   styleUrls: {
     ios: 'searchbar.ios.scss',
-    md: 'searchbar.md.scss',
-    wp: 'searchbar.wp.scss'
+    md: 'searchbar.md.scss'
   },
   host: {
     theme: 'searchbar'
@@ -77,10 +76,10 @@ export class Searchbar {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {boolean} If true, enable searchbar animation. Default `false`.

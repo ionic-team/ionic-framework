@@ -7,8 +7,7 @@ import { ItemSliding } from '../item-sliding/item-sliding';
   tag: 'ion-list',
   styleUrls: {
     ios: 'list.ios.scss',
-    md: 'list.md.scss',
-    wp: 'list.wp.scss'
+    md: 'list.md.scss'
   },
   host: {
     theme: 'list'

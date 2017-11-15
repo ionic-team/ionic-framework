@@ -8,8 +8,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
   tag: 'ion-loading',
   styleUrls: {
     ios: 'loading.ios.scss',
-    md: 'loading.md.scss',
-    wp: 'loading.wp.scss'
+    md: 'loading.md.scss'
   },
   host: {
     theme: 'loading'
@@ -159,8 +158,6 @@ export class Loading {
 
       if (this.mode === 'md') {
         defaultSpinner = 'crescent';
-      } else if (this.mode === 'wp') {
-        defaultSpinner = 'circles';
       }
 
       this.spinner = this.config.get('loadingSpinner') || defaultSpinner;

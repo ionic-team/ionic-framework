@@ -263,8 +263,7 @@ import { Picker, PickerColumn, PickerController, PickerOptions } from '../../ind
   tag: 'ion-datetime',
   styleUrls: {
     ios: 'datetime.ios.scss',
-    md: 'datetime.md.scss',
-    wp: 'datetime.wp.scss'
+    md: 'datetime.md.scss'
   },
   host: {
     theme: 'datetime'
@@ -478,7 +477,7 @@ export class Datetime {
         text: this.cancelText,
         role: 'cancel',
         handler: () => this.ionCancel.emit(this)
-      },{
+      }, {
         text: this.doneText,
         handler: (data: any) => this.value = data,
       }];

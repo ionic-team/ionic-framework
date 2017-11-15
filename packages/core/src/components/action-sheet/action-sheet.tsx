@@ -8,8 +8,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
   tag: 'ion-action-sheet',
   styleUrls: {
     ios: 'action-sheet.ios.scss',
-    md: 'action-sheet.md.scss',
-    wp: 'action-sheet.wp.scss'
+    md: 'action-sheet.md.scss'
   },
   host: {
     theme: 'action-sheet'

@@ -42,8 +42,7 @@ import { createThemedClasses } from '../../utils/theme';
   tag: 'ion-radio',
   styleUrls: {
     ios: 'radio.ios.scss',
-    md: 'radio.md.scss',
-    wp: 'radio.wp.scss'
+    md: 'radio.md.scss'
   },
   host: {
     theme: 'radio'
@@ -96,10 +95,10 @@ export class Radio {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {boolean} If true, the radio is selected. Defaults to `false`.

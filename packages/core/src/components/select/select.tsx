@@ -17,8 +17,7 @@ import { PopoverController } from '../popover-controller/popover-controller';
   tag: 'ion-select',
   styleUrls: {
     ios: 'select.ios.scss',
-    md: 'select.md.scss',
-    wp: 'select.wp.scss'
+    md: 'select.md.scss'
   },
   host: {
     theme: 'select'

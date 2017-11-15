@@ -9,8 +9,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
   tag: 'ion-alert',
   styleUrls: {
     ios: 'alert.ios.scss',
-    md: 'alert.md.scss',
-    wp: 'alert.wp.scss'
+    md: 'alert.md.scss'
   },
   host: {
     theme: 'alert'

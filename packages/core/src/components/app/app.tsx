@@ -8,8 +8,7 @@ const rootNavs = new Map<number, Nav>();
   tag: 'ion-app',
   styleUrls: {
     ios: 'app.ios.scss',
-    md: 'app.md.scss',
-    wp: 'app.wp.scss'
+    md: 'app.md.scss'
   },
   host: {
     theme: 'app'

@@ -8,8 +8,7 @@ import iOSLeaveAnimation from './animations/ios.leave';
   tag: 'ion-picker',
   styleUrls: {
     ios: 'picker.ios.scss',
-    md: 'picker.md.scss',
-    wp: 'picker.wp.scss'
+    md: 'picker.md.scss'
   },
   host: {
     theme: 'picker'
@@ -164,8 +163,6 @@ export class Picker {
 
       if (this.mode === 'md') {
         defaultSpinner = 'crescent';
-      } else if (this.mode === 'wp') {
-        defaultSpinner = 'circles';
       }
 
       this.spinner = this.config.get('pickerSpinner') || defaultSpinner;

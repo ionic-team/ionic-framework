@@ -101,8 +101,7 @@ import { SPINNERS, SpinnerConfig } from './spinner-configs';
   tag: 'ion-spinner',
   styleUrls: {
     ios: 'spinner.ios.scss',
-    md: 'spinner.md.scss',
-    wp: 'spinner.wp.scss'
+    md: 'spinner.md.scss'
   },
   host: {
     theme: 'spinner'
@@ -120,10 +119,10 @@ export class Spinner {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   /**
    * @input {string} How long it takes it to do one loop.
@@ -147,8 +146,6 @@ export class Spinner {
       // fallback
       if (this.mode === 'md') {
         return 'crescent';
-      } else if (this.mode === 'wp') {
-        return 'circles';
       } else {
         return 'lines';
       }

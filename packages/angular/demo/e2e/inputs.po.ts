@@ -5,7 +5,15 @@ export class InputsPage {
     return browser.get('/inputs');
   }
 
-  getTitle() {
+  getTitleText() {
     return element(by.css('.title')).getText();
+  }
+
+  getInputOne() {
+    return element(by.id('inputOne'));
+  }
+
+  getOutputOneText() {
+    return element(by.id('outputOne')).getText();
   }
 }

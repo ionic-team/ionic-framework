@@ -1,7 +1,5 @@
 import { Component, Element, Prop, PropDidChange } from '@stencil/core';
 
-import { HTMLIonFabElement } from '../../index';
-
 /**
   * @name FabList
   * @description

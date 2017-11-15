@@ -2,4 +2,15 @@
   Ionic Core Inputs Demo
 </div>
 
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-input id="inputOne" name="inputOne" [(ngModel)]="testInputOne"></ion-input>
+    </ion-col>
+    <ion-col>
+      Entered Data: <span id="outputOne">{{testInputOne}}</span>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
 <a href='home'>Home</a>

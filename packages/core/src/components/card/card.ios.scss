@@ -6,16 +6,16 @@
 // --------------------------------------------------
 
 /// @prop - Margin top of the card
-$card-ios-margin-top:                  12px !default;
+$card-ios-margin-top:                  30px !default;
 
 /// @prop - Margin end of the card
-$card-ios-margin-end:                  12px !default;
+$card-ios-margin-end:                  20px !default;
 
 /// @prop - Margin bottom of the card
-$card-ios-margin-bottom:               12px !default;
+$card-ios-margin-bottom:               30px !default;
 
 /// @prop - Margin start of the card
-$card-ios-margin-start:                12px !default;
+$card-ios-margin-start:                20px !default;
 
 /// @prop - Padding top of the media on the card
 $card-ios-padding-media-top:           10px !default;
@@ -27,13 +27,13 @@ $card-ios-padding-media-bottom:        9px !default;
 $card-ios-background-color:            $list-ios-background-color !default;
 
 /// @prop - Box shadow color of the card
-$card-ios-box-shadow-color:            rgba(0, 0, 0, .3) !default;
+$card-ios-box-shadow-color:            rgba(0, 0, 0, .18) !default;
 
 /// @prop - Box shadow of the card
-$card-ios-box-shadow:                  0 1px 2px $card-ios-box-shadow-color !default;
+$card-ios-box-shadow:                  0 16px 42px $card-ios-box-shadow-color !default;
 
 /// @prop - Border radius of the card
-$card-ios-border-radius:               2px !default;
+$card-ios-border-radius:               14px !default;
 
 /// @prop - Font size of the card
 $card-ios-font-size:                   1.4rem !default;

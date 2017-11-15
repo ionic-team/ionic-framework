@@ -66,8 +66,7 @@ import { getElementClassObject } from '../../utils/theme';
   tag: 'ion-button',
   styleUrls: {
     ios: 'button.ios.scss',
-    md: 'button.md.scss',
-    wp: 'button.wp.scss'
+    md: 'button.md.scss'
   }
 })
 export class Button {
@@ -162,10 +161,10 @@ export class Button {
 
   /**
    * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"`, `"md"`, or `"wp"`.
+   * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md' | 'wp';
+  @Prop() mode: 'ios' | 'md';
 
   protected render() {
     const buttonType = this.buttonType;

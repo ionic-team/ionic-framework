@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, HTMLIonTabElement } from '../../index';
+import { Config } from '../../index';
 
 export interface NavOptions { }
 // import { isPresent } from '../../utils/helpers';
@@ -140,8 +140,7 @@ export interface NavOptions { }
   tag: 'ion-tabs',
   styleUrls: {
     ios: 'tabs.ios.scss',
-    md: 'tabs.md.scss',
-    wp: 'tabs.wp.scss'
+    md: 'tabs.md.scss'
   }
 })
 export class Tabs {
