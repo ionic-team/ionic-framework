@@ -2,17 +2,16 @@ import { Component, Prop} from '@stencil/core';
 
 
 @Component({
-  tag: 'ion-card-title',
+  tag: 'ion-card-subtitle',
   styleUrls: {
-    ios: 'card-title.ios.scss',
-    md: 'card-title.md.scss',
-    wp: 'card-title.wp.scss'
+    ios: 'card-subtitle.ios.scss',
+    md: 'card-subtitle.md.scss'
   },
   host: {
-    theme: 'card-title'
+    theme: 'card-subtitle'
   }
 })
-export class CardTitle {
+export class CardSubtitle {
   /**
    * @input {string} The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
@@ -30,7 +29,7 @@ export class CardTitle {
   hostData() {
     return {
       'role': 'heading',
-      'aria-level': '2'
+      'aria-level': '3'
     };
   }
 

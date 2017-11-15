@@ -474,6 +474,38 @@ declare global {
 
 
 import {
+  CardSubtitle as IonCardSubtitle
+} from './components/card-subtitle/card-subtitle';
+
+declare global {
+  interface HTMLIonCardSubtitleElement extends IonCardSubtitle, HTMLElement {
+  }
+  var HTMLIonCardSubtitleElement: {
+    prototype: HTMLIonCardSubtitleElement;
+    new (): HTMLIonCardSubtitleElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-card-subtitle": HTMLIonCardSubtitleElement;
+  }
+  interface ElementTagNameMap {
+    "ion-card-subtitle": HTMLIonCardSubtitleElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-card-subtitle": JSXElements.IonCardSubtitleAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonCardSubtitleAttributes extends HTMLAttributes {
+      
+        color?: string,
+        mode?: 'ios' | 'md' | 'wp'
+    }
+  }
+}
+
+
+import {
   CardTitle as IonCardTitle
 } from './components/card-title/card-title';
 
