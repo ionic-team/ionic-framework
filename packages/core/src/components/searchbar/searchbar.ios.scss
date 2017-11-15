@@ -4,17 +4,17 @@
 // iOS Searchbar
 // --------------------------------------------------
 
-/// @prop - Padding top/bottom of the searchbar
-$searchbar-ios-padding-vertical:          0 !default;
+/// @prop - Padding top of the searchbar
+$searchbar-ios-padding-top:               12px !default;
 
-/// @prop - Padding start/end of the searchbar
-$searchbar-ios-padding-horizontal:        8px !default;
+/// @prop - Padding end of the searchbar
+$searchbar-ios-padding-end:               $searchbar-ios-padding-top !default;
 
-/// @prop - Background of the searchbar
-$searchbar-ios-background-color:          rgba(0, 0, 0, .2) !default;
+/// @prop - Padding bottom of the searchbar
+$searchbar-ios-padding-bottom:            $searchbar-ios-padding-top !default;
 
-/// @prop - Border color of the searchbar
-$searchbar-ios-border-color:              rgba(0, 0, 0, .05) !default;
+/// @prop - Padding start of the searchbar
+$searchbar-ios-padding-start:             $searchbar-ios-padding-end !default;
 
 /// @prop - Minimum height of the searchbar
 $searchbar-ios-min-height:                44px !default;
@@ -29,7 +29,10 @@ $searchbar-ios-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/sv
 $searchbar-ios-input-search-icon-size:    13px !default;
 
 /// @prop - Height of the searchbar input
-$searchbar-ios-input-height:              3rem !default;
+$searchbar-ios-input-height:              36px !default;
+
+/// @prop - Border radius of the searchbar input
+$searchbar-ios-input-border-radius:       10px !default;
 
 /// @prop - Color of the searchbar input placeholder
 $searchbar-ios-input-placeholder-color:   rgba(0, 0, 0, .5) !default;
@@ -38,7 +41,7 @@ $searchbar-ios-input-placeholder-color:   rgba(0, 0, 0, .5) !default;
 $searchbar-ios-input-text-color:          #000 !default;
 
 /// @prop - Background of the searchbar input
-$searchbar-ios-input-background-color:    #fff !default;
+$searchbar-ios-input-background-color:    rgba(225, 226, 231, 1) !default;
 
 /// @prop - Transition of the searchbar input
 $searchbar-ios-input-transition:          all 300ms ease !default;
@@ -55,21 +58,14 @@ $searchbar-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/sv
 /// @prop - Size of the searchbar input clear icon
 $searchbar-ios-input-clear-icon-size:     18px !default;
 
-/// @prop - Background of the searchbar input inside of a toolbar
-$searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
-
 
 // Searchbar
 // -----------------------------------------
 
 .searchbar-ios {
-  @include padding($searchbar-ios-padding-vertical, $searchbar-ios-padding-horizontal);
+  @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
 
   min-height: $searchbar-ios-min-height;
-
-  border-top: $hairlines-width solid transparent;
-  border-bottom: $hairlines-width solid $searchbar-ios-border-color;
-  background: $searchbar-ios-background-color;
 }
 
 
@@ -87,17 +83,18 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // -----------------------------------------
 
 .searchbar-ios .searchbar-search-icon {
-  @include position(9px, null, null, 9px);
+  @include position(0, null, null, 9px);
   @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
   @include margin-horizontal(calc(50% - 60px), null);
 
   position: absolute;
 
   width: $searchbar-ios-input-search-icon-size + 1;
-  height: $searchbar-ios-input-search-icon-size + 1;
+  height: 100%;
 
   background-repeat: no-repeat;
   background-size: $searchbar-ios-input-search-icon-size;
+  background-position: center;
 }
 
 
@@ -107,7 +104,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 .searchbar-ios .searchbar-input {
   @include placeholder($searchbar-ios-input-placeholder-color);
   @include padding(0, 28px);
-  @include border-radius(5px);
+  @include border-radius($searchbar-ios-input-border-radius);
 
   height: $searchbar-ios-input-height;
 
@@ -181,15 +178,6 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
 // Searchbar in Toolbar
 // -----------------------------------------
 
-.toolbar .searchbar-ios {
-  border-bottom-width: 0;
-  background: transparent;
-}
-
-.toolbar .searchbar-ios .searchbar-input {
-  background: $searchbar-ios-toolbar-input-background;
-}
-
 .toolbar .searchbar-ios .searchbar-ios-cancel {
   @include padding(0);
 }
@@ -228,7 +216,7 @@ $searchbar-ios-toolbar-input-background:  rgba(0, 0, 0, .08) !default;
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-input {
     @include placeholder($fg-color);
     color: $color-contrast;
-    background: rgba($color-contrast, .08);
+    background: rgba($color-contrast, .1);
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-clear-icon {

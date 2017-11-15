@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Searchbar Toolbar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+<body>
+  <ion-app>
+    <ion-page>
+      <ion-content>
+        <h5 padding-left padding-top> Search - Transparent Toolbar </h5>
+        <ion-toolbar transparent>
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-left padding-top> Search - Default Toolbar </h5>
+        <ion-toolbar>
+          <ion-searchbar></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-left padding-top> Search - Primary Toolbar </h5>
+        <ion-toolbar color="primary">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-left padding-top> Search - Dark Toolbar </h5>
+        <ion-toolbar color="dark">
+          <ion-searchbar placeholder="Filter Schedules"></ion-searchbar>
+        </ion-toolbar>
+
+        <h5 padding-left padding-top> Search - Light Toolbar </h5>
+        <ion-toolbar color="light">
+          <ion-searchbar show-cancel-button></ion-searchbar>
+        </ion-toolbar>
+      </ion-content>
+    </ion-page>
+  </ion-app>
+</body>
+</html>
