@@ -353,3 +353,5 @@ export const POPOVER_POSITION_PROPERTIES: any = {
     centerTarget: false
   }
 };
+
+export { iOSEnterAnimation, iOSLeaveAnimation };

@@ -163,5 +163,5 @@ export class Segment {
 export interface SegmentEvent extends Event {
   detail: {
     segment: Segment;
-  }
+  };
 }

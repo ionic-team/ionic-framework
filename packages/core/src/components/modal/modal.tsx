@@ -5,7 +5,6 @@ import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
-
 @Component({
   tag: 'ion-modal',
   styleUrls: {
@@ -212,3 +211,5 @@ export interface ModalEvent extends Event {
     modal: Modal;
   };
 }
+
+export { iOSEnterAnimation, iOSLeaveAnimation };

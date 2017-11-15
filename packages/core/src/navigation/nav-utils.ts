@@ -1,5 +1,5 @@
-import { Nav, Transition, ViewController } from './nav-interfaces';
-import { Animation, AnimationOptions, Config, TransitionBuilder } from '..';
+import { Transition } from './nav-interfaces';
+import { Animation, AnimationOptions, Config, Nav, TransitionBuilder, ViewController } from '..';
 import { isDef } from '../utils/helpers';
 
 export const STATE_NEW = 1;
@@ -33,7 +33,8 @@ export function setZIndex(nav: Nav, enteringView: ViewController, leavingView: V
   if (enteringView) {
     if (nav.isPortal) {
       if (direction === DIRECTION_FORWARD) {
-        updateZIndex(enteringView, nav.zIndexOffset + portalZindex);
+        // TODO - fix typing
+        updateZIndex(enteringView, (nav as any).zIndexOffset + portalZindex);
       }
       portalZindex++;
       return;
@@ -50,7 +51,8 @@ export function setZIndex(nav: Nav, enteringView: ViewController, leavingView: V
       }
 
     } else {
-      updateZIndex(enteringView, INIT_ZINDEX + nav.zIndexOffset);
+      // TODO - fix typing
+      updateZIndex(enteringView, INIT_ZINDEX + (nav as any).zIndexOffset);
     }
   }
 }
@@ -169,7 +171,7 @@ export function getViews(nav: Nav): ViewController[] {
 }
 
 export function init(nav: Nav) {
-  nav.id = getNextNavId();
+  nav.navId = getNextNavId();
   nav.views = [];
 }
 

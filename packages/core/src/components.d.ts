@@ -174,7 +174,7 @@ declare global {
   }
 }
 
-import { IonApp as IonApp } from './components/app/app';
+import { App as IonApp } from './components/app/app';
 
 interface HTMLIonAppElement extends IonApp, HTMLElement {
 }
@@ -855,7 +855,7 @@ declare global {
   }
 }
 
-import { Col as IonCol } from './components/grid/col';
+import { Column as IonCol } from './components/grid/col';
 
 interface HTMLIonColElement extends IonCol, HTMLElement {
 }
@@ -1292,7 +1292,7 @@ declare global {
   }
 }
 
-import { IonKeyboardController as IonKeyboardController } from './components/keyboard-controller/keyboard-controller';
+import { KeyboardController as IonKeyboardController } from './components/keyboard-controller/keyboard-controller';
 
 interface HTMLIonKeyboardControllerElement extends IonKeyboardController, HTMLElement {
 }
@@ -1483,7 +1483,7 @@ declare global {
   }
 }
 
-import { MenuController as IonMenuController } from './components/menu/menu-controller';
+import { MenuController as IonMenuController } from './components/menu-controller/menu-controller';
 
 interface HTMLIonMenuControllerElement extends IonMenuController, HTMLElement {
 }
@@ -1639,7 +1639,7 @@ declare global {
   }
 }
 
-import { NavControllerImpl as IonNavController } from './components/nav-controller/nav-controller';
+import { NavController as IonNavController } from './components/nav-controller/nav-controller';
 
 interface HTMLIonNavControllerElement extends IonNavController, HTMLElement {
 }
@@ -1711,7 +1711,7 @@ declare global {
   }
 }
 
-import { IonNav as IonNav } from './components/nav/nav';
+import { Nav as IonNav } from './components/nav/nav';
 
 interface HTMLIonNavElement extends IonNav, HTMLElement {
 }

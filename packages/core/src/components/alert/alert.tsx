@@ -476,3 +476,5 @@ export interface AlertEvent extends Event {
     alert: Alert;
   };
 }
+
+export { iOSEnterAnimation, iOSLeaveAnimation };

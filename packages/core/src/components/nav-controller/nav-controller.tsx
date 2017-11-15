@@ -1,6 +1,6 @@
 import { Component, Element, Method, Prop } from '@stencil/core';
-import { Animation, AnimationController } from '../..';
-import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
+
+import { Animation, AnimationController, ComponentDataPair, FrameworkDelegate, Nav, NavOptions, ViewController } from '../../index';
 
 import { isReady } from '../../utils/helpers';
 
@@ -22,7 +22,7 @@ let defaultDelegate: FrameworkDelegate = null;
 @Component({
   tag: 'ion-nav-controller',
 })
-export class NavControllerImpl implements NavController {
+export class NavController {
 
   @Element() element: HTMLElement;
   @Prop() delegate: FrameworkDelegate;

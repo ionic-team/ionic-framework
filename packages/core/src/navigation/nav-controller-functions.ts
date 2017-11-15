@@ -1,13 +1,8 @@
-import { Animation, AnimationOptions, Config } from '..';
+import { Animation, AnimationOptions, Config, FrameworkDelegate, Nav, NavOptions, Transition} from '../index';
 import {
   ComponentDataPair,
-  FrameworkDelegate,
-  Nav,
-  NavOptions,
   NavResult,
-  Transition,
   TransitionInstruction,
-  ViewController
 } from './nav-interfaces';
 
 import {
@@ -28,7 +23,7 @@ import {
 } from './nav-utils';
 
 
-import { ViewControllerImpl } from './view-controller-impl';
+import { ViewController } from './view-controller';
 
 import { assert, focusOutActiveElement, isDef, isNumber } from '../utils/helpers';
 
@@ -46,7 +41,7 @@ export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -58,7 +53,7 @@ export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animati
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -70,7 +65,7 @@ export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: An
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -82,7 +77,7 @@ export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation,
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -94,7 +89,7 @@ export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Anim
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -106,7 +101,7 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animatio
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   };
   if (isViewController(indexOrViewCtrl)) {
@@ -125,7 +120,7 @@ export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animati
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -138,7 +133,7 @@ export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Ani
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -162,7 +157,7 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
     opts: opts,
     nav: nav,
     delegate: delegate,
-    id: nav.id,
+    id: nav.navId,
     animation: animation
   }, done);
 }
@@ -211,7 +206,7 @@ export function nextTransaction(nav: Nav): Promise<any> {
     return Promise.resolve();
   }
 
-  const topTransaction = getTopTransaction(nav.id);
+  const topTransaction = getTopTransaction(nav.navId);
   if (!topTransaction) {
     return Promise.resolve();
   }
@@ -260,14 +255,14 @@ export function successfullyTransitioned(result: NavResult, ti: TransitionInstru
 }
 
 export function transitionFailed(error: Error, ti: TransitionInstruction) {
-  const queue = getQueue(ti.nav.id);
+  const queue = getQueue(ti.nav.navId);
   if (!queue) {
     // TODO, make throw error in the future
     return fireError(new Error('Queue is null, the nav must have been destroyed'), ti);
   }
 
   ti.nav.transitionId = null;
-  resetQueue(ti.nav.id);
+  resetQueue(ti.nav.navId);
 
   ti.nav.transitioning = false;
 
@@ -616,7 +611,7 @@ export function insertViewIntoNav(nav: Nav, view: ViewController, index: number)
     // give this inserted view an ID
     viewIds++;
     if (!view.id) {
-      view.id = `${nav.id}-${viewIds}`;
+      view.id = `${nav.navId}-${viewIds}`;
     }
 
     // insert the entering view into the correct index in the stack
@@ -730,7 +725,7 @@ export function convertViewsToViewControllers(views: any[]): ViewController[] {
       if (isViewController(view)) {
         return view as ViewController;
       }
-      return new ViewControllerImpl(view.page, view.params);
+      return new ViewController(view.page, view.params);
     }
     return null;
   }).filter(view => !!view);
@@ -746,7 +741,7 @@ export function convertComponentToViewController(ti: TransitionInstruction): Vie
     }
 
     for (const viewController of viewControllers) {
-      if (viewController.nav && viewController.nav.id !== ti.id) {
+      if (viewController.nav && viewController.nav.navId !== ti.id) {
         throw new Error('The view has already inserted into a different nav');
       }
       if (viewController.state === STATE_DESTROYED) {

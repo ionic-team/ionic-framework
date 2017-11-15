@@ -1,19 +1,17 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config } from '../..';
-import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
-
+import { ComponentDataPair, Config, FrameworkDelegate, NavController, NavOptions, ViewController } from '../../index';
 import { getActiveImpl, getFirstView, getPreviousImpl, getViews, init } from '../../navigation/nav-utils';
 import { isReady } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-nav',
 })
-export class IonNav implements Nav {
-  // private navId: number;
+export class Nav {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;
 
+  navId: number;
   parent: Nav;
   views: ViewController[];
   transitioning?: boolean;

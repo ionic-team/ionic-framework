@@ -1,7 +1,5 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { Nav, NavContainer } from '../../navigation/nav-interfaces';
-import { Config } from '../..';
-import { App } from './app-interfaces';
+import { Config, Nav, NavContainer } from '../../index';
 import { isReady } from '../../utils/helpers';
 
 const rootNavs = new Map<number, Nav>();
@@ -17,14 +15,14 @@ const rootNavs = new Map<number, Nav>();
     theme: 'app'
   }
 })
-export class IonApp implements App {
+export class App {
 
   @Element() element: HTMLElement;
   @Prop({ context: 'config' }) config: Config;
 
   @Listen('body:navInit')
   registerRootNav(event: CustomEvent) {
-    rootNavs.set((event.detail as Nav).id, (event.detail as Nav));
+    rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
   }
 
 
@@ -33,7 +31,7 @@ export class IonApp implements App {
     componentDidLoadImpl(this);
   }
 
-  getActiveNavs(rootNavId?: number): Nav[] {
+  getActiveNavs(rootNavId?: number): NavContainer[] {
     /*const portal = portals.get(PORTAL_MODAL);
     if (portal && portal.views && portal.views.length) {
       return findTopNavs(portal);
@@ -50,7 +48,7 @@ export class IonApp implements App {
       return findTopNavs(rootNavs.values().next().value);
     }
     // fallback to just using all root navs
-    let activeNavs: Nav[] = [];
+    let activeNavs: NavContainer[] = [];
     rootNavs.forEach(nav => {
       activeNavs = activeNavs.concat(findTopNavs(nav));
     });
