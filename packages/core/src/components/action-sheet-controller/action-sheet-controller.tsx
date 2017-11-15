@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ActionSheet, ActionSheetEvent, ActionSheetOptions  } from '../..';
+import { ActionSheet, ActionSheetEvent, ActionSheetOptions  } from '../../index';
 
 
 @Component({
