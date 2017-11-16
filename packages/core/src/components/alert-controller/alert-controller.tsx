@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Alert, AlertEvent, AlertOptions  } from '../../index';
+import { AlertEvent, AlertOptions  } from '../../index';
 
 
 @Component({
@@ -8,10 +8,10 @@ import { Alert, AlertEvent, AlertOptions  } from '../../index';
 export class AlertController {
   private ids = 0;
   private alertResolves: { [alertId: string]: Function } = {};
-  private alerts: Alert[] = [];
+  private alerts: HTMLIonAlertElement[] = [];
 
   @Method()
-  create(opts?: AlertOptions): Promise<Alert> {
+  create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
     // create ionic's wrapping ion-alert component
     const alert = document.createElement('ion-alert');
 
@@ -30,14 +30,14 @@ export class AlertController {
     appRoot.appendChild(alert as any);
 
     // store the resolve function to be called later up when the action sheet loads
-    return new Promise<Alert>(resolve => {
+    return new Promise((resolve) => {
       this.alertResolves[alert.alertId] = resolve;
     });
   }
 
   @Listen('body:ionAlertDidLoad')
   protected viewDidLoad(ev: AlertEvent) {
-    const alert = ev.detail.alert;
+    const alert = ev.target as HTMLIonAlertElement;
     const alertResolve = this.alertResolves[alert.alertId];
     if (alertResolve) {
       alertResolve(alert);
@@ -46,13 +46,15 @@ export class AlertController {
   }
 
   @Listen('body:ionAlertWillPresent')
-  protected willPresent(ev: AlertEvent) {
-    this.alerts.push(ev.detail.alert);
+  protected willPresent(event: AlertEvent) {
+    console.log('willPresent: ', event);
+    this.alerts.push(event.target as HTMLIonAlertElement);
   }
 
   @Listen('body:ionAlertWillDismiss, body:ionAlertDidUnload')
-  protected willDismiss(ev: AlertEvent) {
-    const index = this.alerts.indexOf(ev.detail.alert);
+  protected willDismiss(event: AlertEvent) {
+    console.log('willDismiss: ', event);
+    const index = this.alerts.indexOf(event.target as HTMLIonAlertElement);
     if (index > -1) {
       this.alerts.splice(index, 1);
     }

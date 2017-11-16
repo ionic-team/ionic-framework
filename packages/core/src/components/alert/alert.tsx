@@ -1,6 +1,7 @@
 
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
+import { playAnimationAsync } from '../../utils/helpers';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
@@ -68,22 +69,15 @@ export class Alert {
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() alertId: string;
 
-  present() {
-    return new Promise<void>(resolve => {
-      this._present(resolve);
-    });
-  }
-
-  private _present(resolve: Function) {
+  @Method() present() {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionAlertWillPresent.emit({ alert: this });
+    this.ionAlertWillPresent.emit();
 
     // get the user's animation fn if one was provided
     let animationBuilder = this.enterAnimation;
-
     if (!animationBuilder) {
       // user did not provide a custom animation fn
       // decide from the config which animation to use
@@ -91,60 +85,50 @@ export class Alert {
     }
 
     // build the animation and kick it off
-    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
+      if (firstInput) {
+        firstInput.focus();
+      }
 
-      animation.onFinish((a: any) => {
-        a.destroy();
-
-        const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
-        if (firstInput) {
-          firstInput.focus();
-        }
-
-        this.ionViewDidEnter();
-        resolve();
-      }).play();
+      this.ionViewDidEnter();
     });
   }
 
-  dismiss() {
+  @Method() dismiss() {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    return new Promise(resolve => {
-      this.ionAlertWillDismiss.emit({ alert: this });
+    this.ionAlertWillDismiss.emit();
 
-      // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        animationBuilder = iOSLeaveAnimation;
-      }
+    // get the user's animation fn if one was provided
+    let animationBuilder = this.exitAnimation;
+    if (!animationBuilder) {
+      // user did not provide a custom animation fn
+      // decide from the config which animation to use
+      animationBuilder = iOSLeaveAnimation;
+    }
 
-      // build the animation and kick it off
-      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-        this.animation = animation;
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.ionAlertDidDismiss.emit();
 
-        animation.onFinish((a: any) => {
-          a.destroy();
-          this.ionAlertDidDismiss.emit({ alert: this });
-
-          Context.dom.write(() => {
-            this.el.parentNode.removeChild(this.el);
-          });
-
-          resolve();
-        }).play();
+      Context.dom.write(() => {
+        this.el.parentNode.removeChild(this.el);
       });
     });
   }
 
-
   protected ionViewDidUnload() {
-    this.ionAlertDidUnload.emit({ alert: this });
+    this.ionAlertDidUnload.emit();
   }
 
   @Listen('ionDismiss')
@@ -156,11 +140,11 @@ export class Alert {
   }
 
   protected ionViewDidLoad() {
-    this.ionAlertDidLoad.emit({ alert: this });
+    this.ionAlertDidLoad.emit();
   }
 
   protected ionViewDidEnter() {
-    this.ionAlertDidPresent.emit({ alert: this });
+    this.ionAlertDidPresent.emit();
   }
 
   protected backdropClick() {
@@ -471,9 +455,6 @@ export interface AlertButton {
 }
 
 export interface AlertEvent extends Event {
-  detail: {
-    alert: Alert;
-  };
 }
 
 export { iOSEnterAnimation, iOSLeaveAnimation };
