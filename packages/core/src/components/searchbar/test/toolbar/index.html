@@ -9,7 +9,20 @@
 <body>
   <ion-app>
     <ion-page>
-      <ion-content>
+      <ion-header no-border translucent>
+        <ion-toolbar>
+          <ion-title>Searchbar - Toolbar</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar translucent></ion-searchbar>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content fullscreen>
+        <div class="block red"></div>
+        <div class="block green"></div>
+        <div class="block blue"></div>
+
         <h5 padding-left padding-top> Search - Transparent Toolbar </h5>
         <ion-toolbar transparent>
           <ion-searchbar></ion-searchbar>
@@ -37,5 +50,25 @@
       </ion-content>
     </ion-page>
   </ion-app>
+
+  <style>
+    .block {
+      width: 100%;
+      height: 200px;
+      margin: 20px auto;
+    }
+
+    .red {
+      background-color: #ea445a;
+    }
+
+    .green {
+      background-color: #76d672;
+    }
+
+    .blue {
+      background-color: #3478f6;
+    }
+  </style>
 </body>
 </html>
