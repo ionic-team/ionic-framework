@@ -1,12 +1,22 @@
 @import "../../themes/ionic.globals.ios";
 @import "./app";
 
-
 // iOS App
 // --------------------------------------------------
 
 .app-ios {
+  @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding, 50px);
+
   font-family: $font-family-ios-base;
   font-size: $font-size-ios-base;
   background-color: $background-ios-color;
+
+  ion-page,
+  > ion-page > ion-header,
+  ion-tabs ion-tab ion-nav .ion-page > ion-header,
+  ion-menu > .menu-inner,
+  ion-menu > .menu-inner > ion-header {
+    @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $cordova-ios-statusbar-padding);
+    @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $cordova-ios-statusbar-padding);
+  }
 }

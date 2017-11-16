@@ -55,6 +55,14 @@ export class Content {
     this.scrollEl = null;
   }
 
+  hostData() {
+    return {
+      class: {
+        'statusbar-padding': this.config.getBoolean('statusbarPadding')
+      }
+    };
+  }
+
   @Method()
   enableJsScroll() {
     this.scrollEl.jsScroll = true;
