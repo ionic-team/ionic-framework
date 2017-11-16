@@ -174,12 +174,6 @@ export interface BaseInputComponent {
   fireBlur: () => void;
 }
 
-export interface BooleanInputComponent extends BaseInputComponent {
-  checked: boolean;
-  toggle: (ev: UIEvent) => void;
-}
-
-
 export interface StencilElement extends HTMLElement {
   componentOnReady(): Promise<HTMLElement>;
   componentOnReady(done: (cmp?: HTMLElement) => void): void;
