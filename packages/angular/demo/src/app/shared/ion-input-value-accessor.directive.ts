@@ -26,7 +26,7 @@ export class IonInputValueAccessorDirective implements ControlValueAccessor {
     this.onChange(value);
   }
 
-  @HostListener('blur')
+  @HostListener('ionBlur')
   _handleBlurEvent() {
     this.onTouched();
   }

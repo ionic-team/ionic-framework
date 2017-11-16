@@ -24,6 +24,11 @@ export class IonCheckboxValueAccessorDirective implements ControlValueAccessor {
     this.onChange(value);
   }
 
+  @HostListener('ionBlur')
+  _handleBlurEvent() {
+    this.onTouched();
+  }
+
   registerOnChange(fn: (value: any) => void): void {
     this.onChange = fn;
   }
