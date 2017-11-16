@@ -7,6 +7,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class InputsTestPageComponent implements OnInit {
+  ionTextareaInput = 'This is the Ionic Textarea Input';
   ionTextInput = 'This is the Ionic Text Input';
   stdTextInput = 'This is the HTML Text Input';
 

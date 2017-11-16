@@ -5,7 +5,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 // May also need to look at this to see if we need anything else:
 // https://github.com/angular/angular/blob/5.0.1/packages/forms/src/directives/default_value_accessor.ts#L33-L101
 @Directive({
-  selector: 'ion-input',
+  selector: 'ion-input,ion-textarea',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonTextValueAccessorDirective, multi: true }]
 })
 export class IonTextValueAccessorDirective implements ControlValueAccessor {
