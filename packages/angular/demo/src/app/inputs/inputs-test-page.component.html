@@ -23,7 +23,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Text Input</ion-label>
-        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput"></ion-input>
+        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput" (ionBlur)="onBlur($event)"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -35,12 +35,12 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Text Area Input</ion-label>
-        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="ionTextareaInput"></ion-textarea>
+        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="ionTextareaInput" (ionBlur)="onBlur($event)"></ion-textarea>
       </ion-item>
     </ion-col>
     <ion-col>
       Ionic Text Input:
-      <span id="ionTextInputOutput">{{ionTextareaInput}}</span>
+      <span id="ionTextareaInputOutput">{{ionTextareaInput}}</span>
     </ion-col>
   </ion-row>
 
@@ -80,7 +80,7 @@
     </ion-col>
     <ion-col>
       Ionic Toggle:
-      <span id="ionCheckboxOutput">{{ionToggle}}</span>
+      <span id="ionToggleOutput">{{ionToggle}}</span>
     </ion-col>
   </ion-row>
 </ion-grid>
