@@ -261,4 +261,4 @@ export class MenuController {
 
 }
 
-export { MenuOverlayAnimation, MenuPushAnimation, MenuRevealAnimation }
+export { MenuOverlayAnimation, MenuPushAnimation, MenuRevealAnimation };

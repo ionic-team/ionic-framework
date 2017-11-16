@@ -147,5 +147,5 @@ export class SegmentButton {
 export interface SegmentButtonEvent extends Event {
   detail: {
     segmentButton: SegmentButton;
-  }
+  };
 }

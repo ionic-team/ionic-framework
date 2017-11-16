@@ -183,10 +183,7 @@ export class Loading {
   }
 
   protected render() {
-    let userCssClass = 'loading-content';
-    if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
-    }
+    // TODO: cssClass
 
     const loadingInner: any[] = [];
 
@@ -239,4 +236,4 @@ export interface LoadingEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation }
+export { iOSEnterAnimation, iOSLeaveAnimation };

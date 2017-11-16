@@ -18,7 +18,6 @@ export class Picker {
   private animation: Animation;
   private durationTimeout: any;
   private mode: string;
-  private lastClick: number = 0;
 
   @Element() private el: HTMLElement;
 
@@ -193,8 +192,6 @@ export class Picker {
     // }
 
     // keep the time of the most recent button click
-    this.lastClick = Date.now();
-
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -263,10 +260,7 @@ export class Picker {
   }
 
   protected render() {
-    let userCssClass = 'picker-content';
-    if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
-    }
+    // TODO: cssClass
 
     let buttons = this.buttons
     .map(b => {
@@ -346,12 +340,12 @@ export class Picker {
             </div>
           )}
         </div>
-        <div class="picker-columns">
-          <div class="picker-above-highlight"></div>
+        <div class='picker-columns'>
+          <div class='picker-above-highlight'></div>
           {columns.map(c =>
             <ion-picker-column col={c}></ion-picker-column>
           )}
-          <div class="picker-below-highlight"></div>
+          <div class='picker-below-highlight'></div>
         </div>
       </div>
     ];
