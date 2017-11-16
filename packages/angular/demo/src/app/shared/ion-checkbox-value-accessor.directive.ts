@@ -19,7 +19,7 @@ export class IonCheckboxValueAccessorDirective implements ControlValueAccessor {
     this.renderer.setProperty(this.element.nativeElement, 'checked', value);
   }
 
-  @HostListener('change', ['$event.target.checked'])
+  @HostListener('ionChange', ['$event.target.checked'])
   _handleIonChange(value: any) {
     this.onChange(value);
   }

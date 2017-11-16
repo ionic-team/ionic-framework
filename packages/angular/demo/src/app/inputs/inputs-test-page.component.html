@@ -13,7 +13,7 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput" (change)="change($event)" (blur)="onBlur($event)"></ion-input>
+      <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput" (change)="change($event)" (ionBlur)="onBlur($event)"></ion-input>
     </ion-col>
     <ion-col>
       Entered Data: <span id="ionTextInputOutput">{{ionTextInput}}</span>
@@ -29,7 +29,7 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="ionCheckbox" (change)="change($event)" (blur)="onBlur($event)"></ion-checkbox>
+      <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="ionCheckbox" (ionChange)="change($event)" (blur)="onBlur($event)"></ion-checkbox>
     </ion-col>
     <ion-col>
       Entered Data: <span id="ionCheckboxOutput">{{ionCheckbox}}</span>

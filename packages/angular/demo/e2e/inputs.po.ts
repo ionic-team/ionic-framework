@@ -16,4 +16,12 @@ export class InputsPage {
   getIonicTextInputOutputText() {
     return element(by.id('ionTextInputOutput')).getText();
   }
+
+  getIonicCheckbox() {
+    return element(by.id('ionCheckbox'));
+  }
+
+  getIonicCheckboxOutputText() {
+    return element(by.id('ionCheckboxOutput')).getText();
+  }
 }
