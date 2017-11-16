@@ -6,27 +6,29 @@ import { ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@
   selector: 'ion-input',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonInputValueAccessorDirective, multi: true }]
 })
-export class IonInputValueAccessorDirective implements ControlValueAccessor  {
+export class IonInputValueAccessorDirective implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
+    this.onTouched = () => {};
   }
 
-  onChange: (value: string) => void;
+  onChange: (value: any) => void;
+  onTouched: () => void;
 
-  writeValue(value: string) {
+  writeValue(value: any) {
     this.renderer.setProperty(this.element.nativeElement, 'value', value);
   }
 
   @HostListener('input', ['$event.target.value'])
-  _handleIllyChange(value: string) {
+  _handleInputEvent(value: any) {
     this.onChange(value);
   }
 
-  registerOnChange(fn: (value: string) => void) {
-    this.onChange = value => {
-      fn(value);
-    };
+  registerOnChange(fn: (value: any) => void) {
+    this.onChange = fn;
   }
 
-  registerOnTouched() {}
+  registerOnTouched(fn: () => void) {
+    this.onTouched = fn;
+  }
 }
