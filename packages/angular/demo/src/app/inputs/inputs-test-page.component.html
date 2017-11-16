@@ -5,18 +5,34 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-input id="inputOne" name="inputOne" [(ngModel)]="testInputOne"></ion-input>
+      <input id="stdTextInput" name="stdTextInput" [(ngModel)]="stdTextInput" (change)="change($event)" (blur)="onBlur($event)" />
     </ion-col>
     <ion-col>
-      Entered Data: <span id="outputOne">{{testInputOne}}</span>
+      Entered Data: <span id="stdTextInputOutput">{{stdTextInput}}</span>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-checkbox id="checkboxOne" name="checkboxOne" [(ngModel)]="testCheckboxOne"></ion-checkbox>
+      <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput" (change)="change($event)" (blur)="onBlur($event)"></ion-input>
     </ion-col>
     <ion-col>
-      Entered Data: <span id="outputCheckboxOne">{{testCheckboxOne}}</span>
+      Entered Data: <span id="ionTextInputOutput">{{ionTextInput}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <input type="checkbox" id="stdCheckbox" name="stdCheckbox" [(ngModel)]="stdCheckbox" (change)="change($event)" (blur)="onBlur($event)"/>
+    </ion-col>
+    <ion-col>
+      Entered Data: <span id="stdCheckboxOutput">{{stdCheckbox}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="ionCheckbox" (change)="change($event)" (blur)="onBlur($event)"></ion-checkbox>
+    </ion-col>
+    <ion-col>
+      Entered Data: <span id="ionCheckboxOutput">{{ionCheckbox}}</span>
     </ion-col>
   </ion-row>
 </ion-grid>

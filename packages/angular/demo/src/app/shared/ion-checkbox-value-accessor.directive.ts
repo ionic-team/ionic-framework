@@ -16,13 +16,11 @@ export class IonCheckboxValueAccessorDirective implements ControlValueAccessor {
   onTouched: () => void;
 
   writeValue(value: any) {
-    console.log('writeValue', value);
     this.renderer.setProperty(this.element.nativeElement, 'checked', value);
   }
 
   @HostListener('change', ['$event.target.checked'])
   _handleIonChange(value: any) {
-    console.log('handle change', value);
     this.onChange(value);
   }
 

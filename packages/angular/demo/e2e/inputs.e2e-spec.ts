@@ -15,8 +15,8 @@ describe('Demo Inputs Page', () => {
   describe('input one', () => {
     it('should display the starting text', () => {
       page.navigateTo();
-      const el = page.getInputOne();
-      expect(el.getAttribute('value')).toEqual('This is data for test input one');
+      const el = page.getIonicTextInput();
+      expect(el.getAttribute('value')).toEqual('This is the Ionic Text Input');
     });
   });
 });

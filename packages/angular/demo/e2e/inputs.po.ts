@@ -9,11 +9,11 @@ export class InputsPage {
     return element(by.css('.title')).getText();
   }
 
-  getInputOne() {
-    return element(by.id('inputOne'));
+  getIonicTextInput() {
+    return element(by.id('ionTextInput'));
   }
 
-  getOutputOneText() {
-    return element(by.id('outputOne')).getText();
+  getIonicTextInputOutputText() {
+    return element(by.id('ionTextInputOutput')).getText();
   }
 }
