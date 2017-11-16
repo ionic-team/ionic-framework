@@ -1,9 +1,9 @@
-import { FrameworkDelegate, Nav, ViewController } from './nav-interfaces';
+import { FrameworkDelegate, Nav } from '../index';
 import { STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED, STATE_NEW } from './nav-utils';
 
 import { assert } from '../utils/helpers';
 
-export class ViewControllerImpl implements ViewController {
+export class ViewController {
 
   id: string;
   data: any;

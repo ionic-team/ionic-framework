@@ -18,7 +18,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "dist",
+    "outDir": ".tmp",
     "pretty": true,
     "removeComments": false,
     "target": "es2015"

@@ -1,7 +1,5 @@
-import { AnimationOptions } from '../..';
-import { Transition, ViewController } from '../nav-interfaces';
+import { AnimationOptions, Transition, ViewController } from '../../index';
 import { canNavGoBack } from '../nav-utils';
-
 import { isDef } from '../../utils/helpers';
 
 const DURATION = 500;

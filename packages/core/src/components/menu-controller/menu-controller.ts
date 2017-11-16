@@ -2,8 +2,8 @@ import { Animation, AnimationBuilder, AnimationController, Menu } from '../../in
 import { Component, Method, Prop } from '@stencil/core';
 
 import MenuOverlayAnimation from './animations/overlay';
-import MenuRevealAnimation from './animations/reveal';
 import MenuPushAnimation from './animations/push';
+import MenuRevealAnimation from './animations/reveal';
 
 @Component({
   tag: 'ion-menu-controller'
@@ -260,3 +260,5 @@ export class MenuController {
   }
 
 }
+
+export { MenuOverlayAnimation, MenuPushAnimation, MenuRevealAnimation }

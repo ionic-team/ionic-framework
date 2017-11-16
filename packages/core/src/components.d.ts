@@ -12,6 +12,7 @@ import {
 import {
   AnimationBuilder,
   PickerOptions,
+  FrameworkDelegate,
   PickerColumn,
 } from './index';
 import {
@@ -26,9 +27,6 @@ import {
   GestureCallback,
   GestureDetail,
 } from './components/gesture/gesture.js';
-import {
-  FrameworkDelegate,
-} from './navigation/nav-interfaces';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
@@ -212,7 +210,7 @@ declare global {
 
 
 import {
-  IonApp as IonApp
+  App as IonApp
 } from './components/app/app';
 
 declare global {
@@ -961,7 +959,7 @@ declare global {
 
 
 import {
-  Col as IonCol
+  Column as IonCol
 } from './components/grid/col';
 
 declare global {
@@ -1408,7 +1406,7 @@ declare global {
 
 
 import {
-  IonKeyboardController as IonKeyboardController
+  KeyboardController as IonKeyboardController
 } from './components/keyboard-controller/keyboard-controller';
 
 declare global {
@@ -1604,7 +1602,7 @@ declare global {
 
 import {
   MenuController as IonMenuController
-} from './components/menu/menu-controller';
+} from './components/menu-controller/menu-controller';
 
 declare global {
   interface HTMLIonMenuControllerElement extends IonMenuController, HTMLElement {
@@ -1741,7 +1739,7 @@ declare global {
 
 
 import {
-  NavControllerImpl as IonNavController
+  NavController as IonNavController
 } from './components/nav-controller/nav-controller';
 
 declare global {
@@ -1802,7 +1800,7 @@ declare global {
 
 
 import {
-  IonNav as IonNav
+  Nav as IonNav
 } from './components/nav/nav';
 
 declare global {

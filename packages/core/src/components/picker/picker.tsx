@@ -4,7 +4,6 @@ import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, P
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
-
 @Component({
   tag: 'ion-picker',
   styleUrls: {
@@ -425,60 +424,4 @@ export interface PickerEvent extends Event {
   };
 }
 
-
-//   @ViewChildren(PickerColumnCmp) _cols: QueryList<PickerColumnCmp>;
-//   d: PickerOptions;
-//   enabled: boolean;
-//   id: number;
-//   mode: string;
-//   _gestureBlocker: BlockerDelegate;
-
-//   constructor() {
-//     this.id = (++pickerIds);
-//   }
-
-//   _colChange(selectedOption: PickerColumnOption) {
-//     // one of the columns has changed its selected index
-//     var picker = <Picker>this._viewCtrl;
-//     picker.ionChange.emit(this.getSelected());
-//   }
-
-//   @HostListener('body:keyup', ['$event'])
-//   _keyUp(ev: KeyboardEvent) {
-//     if (this.enabled && this._viewCtrl.isLast()) {
-//       if (ev.keyCode === KEY_ENTER) {
-//         if (this.lastClick + 1000 < Date.now()) {
-//           // do not fire this click if there recently was already a click
-//           // this can happen when the button has focus and used the enter
-//           // key to click the button. However, both the click handler and
-//           // this keyup event will fire, so only allow one of them to go.
-//           console.debug('picker, enter button');
-//           let button = this.d.buttons[this.d.buttons.length - 1];
-//           this.btnClick(button);
-//         }
-
-//       } else if (ev.keyCode === KEY_ESCAPE) {
-//         console.debug('picker, escape button');
-//         this.bdClick();
-//       }
-//     }
-//   }
-
-//   ionViewDidEnter() {
-//     this._plt.focusOutActiveElement();
-
-//     let focusableEle = this._elementRef.nativeElement.querySelector('button');
-//     if (focusableEle) {
-//       focusableEle.focus();
-//     }
-//     this.enabled = true;
-//   }
-
-//   ngOnDestroy() {
-//     assert(this._gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
-//     this._gestureBlocker.destroy();
-
-//   }
-// }
-
-// let pickerIds = -1;
+export { iOSEnterAnimation, iOSLeaveAnimation };

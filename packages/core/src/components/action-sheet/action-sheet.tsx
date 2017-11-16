@@ -274,3 +274,5 @@ export interface ActionSheetEvent extends Event {
     actionSheet: ActionSheet;
   };
 }
+
+export { iOSEnterAnimation, iOSLeaveAnimation };

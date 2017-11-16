@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { StencilElement } from '../../index';
-import { ViewController } from '../../navigation/nav-interfaces';
+import { StencilElement, ViewController } from '../../index';
 
 /**
  * @name Tab
@@ -209,7 +208,8 @@ export class Tab {
   protected componentDidUpdate() {
     if (this.init && this.resolveNav) {
       const nav = this.el.querySelector('ion-nav') as any as StencilElement;
-      nav.componentOnReady(this.resolveNav);
+      // TODO - fix existing typings issue
+      nav.componentOnReady(this.resolveNav as any);
       this.resolveNav = null;
     }
   }
