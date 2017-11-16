@@ -5,14 +5,37 @@
   <title>Tab - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <script type="text/javascript">
+    window.Ionic.config = {useRouter: true};
+  </script>
 </head>
 <body>
+
   <ion-app>
     <ion-tabs>
-      <ion-tab root="page-tab" title="Plain List" icon="star"></ion-tab>
-      <ion-tab root="page-two" title="Schedule" icon="globe"></ion-tab>
-      <ion-tab root="page-three" title="Stopwatch" icon="logo-facebook"></ion-tab>
-      <ion-tab root="page-one" title="Messages" icon="chatboxes"></ion-tab>
+      <ion-tab title="Plain List" icon="star" path="">
+        <page-tab class="ion-page"></page-tab>
+      </ion-tab>
+
+      <ion-tab title="Schedule" icon="globe" path="tab2">
+        <ion-nav root="page-two">
+          <ion-route path="" component="page-two"></ion-route>
+          <ion-route path="path/to/page/three" component="page-three"></ion-route>
+        </ion-nav>
+      </ion-tab>
+
+      <ion-tab title="Stopwatch" icon="logo-facebook" path="tab3">
+        <ion-nav root="page-three">
+          <ion-route path="/" component="page-three"></ion-route>
+        </ion-nav>
+      </ion-tab>
+
+      <ion-tab title="Messages" icon="chatboxes" path="tab4">
+        <ion-nav root="page-tab">
+          <ion-route component="page-one"></ion-route>
+          <ion-route path="paginaaaa-two" component="page-two"></ion-route>
+        </ion-nav>
+      </ion-tab>
     </ion-tabs>
 
     <ion-nav-controller></ion-nav-controller>

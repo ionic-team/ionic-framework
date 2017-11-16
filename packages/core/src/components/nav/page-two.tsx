@@ -23,9 +23,9 @@ export class PageTwo {
 
   protected render() {
     return [<ion-header>
-      <ion-navbar>
+      <ion-toolbar>
         <ion-title>Page Two</ion-title>
-      </ion-navbar>
+      </ion-toolbar>
     </ion-header>,
     <ion-content fullscreen={true}>
       Page Two Content

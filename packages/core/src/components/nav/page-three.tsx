@@ -18,9 +18,9 @@ export class PageThree {
 
   protected render() {
     return [<ion-header>
-      <ion-navbar>
+        <ion-toolbar>
         <ion-title>Page Three</ion-title>
-      </ion-navbar>
+      </ion-toolbar>
     </ion-header>,
     <ion-content>
       Page Three Content

@@ -126,19 +126,9 @@ export class Tab {
   @Prop() btnId: string;
 
   /**
-   * @input {Page} Set the root page for this tab.
-   */
-  @Prop() root: any;
-
-  /**
-   * @input {object} Any nav-params to pass to the root page of this tab.
-   */
-  @Prop() rootParams: any;
-
-  /**
    * @input {string} The URL path name to represent this tab within the URL.
    */
-  @Prop() urlPath: string;
+  @Prop() path: string;
 
   /**
    * @input {string} The title of the tab button.
@@ -194,22 +184,15 @@ export class Tab {
    * @output {Tab} Emitted when the current tab is selected.
    */
   @Event() ionSelect: EventEmitter;
-  @Event() ionTabDidLoad: EventEmitter;
-  @Event() ionTabDidUnload: EventEmitter;
-
-  protected ionViewDidLoad() {
-    this.ionTabDidLoad.emit(this.el);
-  }
-
-  protected ionViewDidUnload() {
-    this.ionTabDidUnload.emit(this.el);
-  }
 
   protected componentDidUpdate() {
     if (this.init && this.resolveNav) {
       const nav = this.el.querySelector('ion-nav') as any as StencilElement;
-      // TODO - fix existing typings issue
-      nav.componentOnReady(this.resolveNav as any);
+      if (nav) {
+        nav.componentOnReady(this.resolveNav);
+      } else {
+        this.resolveNav(null);
+      }
       this.resolveNav = null;
     }
   }
@@ -222,36 +205,17 @@ export class Tab {
     this.active = active;
     this.selected = active;
 
-    const needLifecycle = this.init;
-    if (active) {
-      this.init = true;
-      if (!needLifecycle) {
-        return this.nav.then(nav => nav.setRoot(this.root, this.rootParams));
-      }
-    }
-    if (needLifecycle) {
-      if (active) {
-        // lifecycle didEnter
-      } else {
-        // lifecycle didLeave
-      }
-    }
-    return this.nav;
-  }
-
-  @Method()
-  resize() {
-    this.nav.then(nav => nav.resize());
+    return Promise.resolve();
   }
 
   @Method()
   goToRoot(opts: any = {}) {
-    return this.nav.then(nav => nav.setRoot(this.root, this.rootParams, opts));
+    return this.nav.then(nav => nav && nav.setRoot(nav.root, null, opts));
   }
 
   @Method()
   getActive(): Promise<ViewController> {
-    return this.nav.then(nav => nav.getActive());
+    return this.nav.then(nav => nav && nav.getActive());
   }
 
   @Method()
@@ -269,12 +233,5 @@ export class Tab {
         'show-tab': this.active
       }
     };
-  }
-
-  protected render() {
-    if (this.init) {
-      return <ion-nav></ion-nav>;
-    }
-    return null;
   }
 }
