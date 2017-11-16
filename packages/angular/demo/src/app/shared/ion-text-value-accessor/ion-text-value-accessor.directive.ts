@@ -1,14 +1,14 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
-import { ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 // NOTE: this is just a sample. It really belongs in @ionic/angular and not at all int his app here
 // May also need to look at this to see if we need anything else:
 // https://github.com/angular/angular/blob/5.0.1/packages/forms/src/directives/default_value_accessor.ts#L33-L101
 @Directive({
   selector: 'ion-input',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonInputValueAccessorDirective, multi: true }]
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonTextValueAccessorDirective, multi: true }]
 })
-export class IonInputValueAccessorDirective implements ControlValueAccessor {
+export class IonTextValueAccessorDirective implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
     this.onTouched = () => {};

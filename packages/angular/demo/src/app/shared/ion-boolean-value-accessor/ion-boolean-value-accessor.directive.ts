@@ -3,10 +3,10 @@ import { ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@
 
 // NOTE: this is just a sample. It really belongs in @ionic/angular and not at all int his app here
 @Directive({
-  selector: 'ion-checkbox',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonCheckboxValueAccessorDirective, multi: true }]
+  selector: 'ion-checkbox,ion-toggle',
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonBooleanValueAccessorDirective, multi: true }]
 })
-export class IonCheckboxValueAccessorDirective implements ControlValueAccessor {
+export class IonBooleanValueAccessorDirective implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
     this.onTouched = () => {};

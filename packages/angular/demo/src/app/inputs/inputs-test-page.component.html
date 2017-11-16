@@ -3,36 +3,72 @@
 </div>
 
 <ion-grid>
+
   <ion-row>
     <ion-col>
+      <h2>Text Inputs</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <label for="stdTextInput">Standard Input</label>
       <input id="stdTextInput" name="stdTextInput" [(ngModel)]="stdTextInput" />
     </ion-col>
     <ion-col>
-      Entered Data: <span id="stdTextInputOutput">{{stdTextInput}}</span>
+      Standard Text Input:
+      <span id="stdTextInputOutput">{{stdTextInput}}</span>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput"></ion-input>
+      <ion-item>
+        <ion-label>Ionic Text Input</ion-label>
+        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput"></ion-input>
+      </ion-item>
     </ion-col>
     <ion-col>
-      Entered Data: <span id="ionTextInputOutput">{{ionTextInput}}</span>
+      Ionic Text Input:
+      <span id="ionTextInputOutput">{{ionTextInput}}</span>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <h2>Boolean Inputs</h2>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <input type="checkbox" id="stdCheckbox" name="stdCheckbox" [(ngModel)]="stdCheckbox" (blur)="onBlur($event)"/>
+      <label for="stdCheckbox">Standard Checkbox</label>
+      <input type="checkbox" id="stdCheckbox" name="stdCheckbox" [(ngModel)]="stdCheckbox" (blur)="onBlur($event)" />
     </ion-col>
     <ion-col>
-      Entered Data: <span id="stdCheckboxOutput">{{stdCheckbox}}</span>
+      Standard Checkbox:
+      <span id="stdCheckboxOutput">{{stdCheckbox}}</span>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="ionCheckbox" (ionBlur)="onBlur($event)"></ion-checkbox>
+      <ion-item>
+        <ion-label>Ionic Checkbox</ion-label>
+        <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="ionCheckbox" (ionBlur)="onBlur($event)"></ion-checkbox>
+      </ion-item>
     </ion-col>
     <ion-col>
-      Entered Data: <span id="ionCheckboxOutput">{{ionCheckbox}}</span>
+      Ionic Checkbox:
+      <span id="ionCheckboxOutput">{{ionCheckbox}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Ionic Toggle</ion-label>
+        <ion-toggle id="ionToggle" name="ionToggle" [(ngModel)]="ionToggle" (ionBlur)="onBlur($event)"></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      Ionic Toggle:
+      <span id="ionCheckboxOutput">{{ionToggle}}</span>
     </ion-col>
   </ion-row>
 </ion-grid>

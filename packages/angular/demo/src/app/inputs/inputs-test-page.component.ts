@@ -13,6 +13,8 @@ export class InputsTestPageComponent implements OnInit {
   ionCheckbox = true;
   stdCheckbox = true;
 
+  ionToggle = false;
+
   constructor() {}
 
   ngOnInit() {}
