@@ -26,21 +26,4 @@ describe('InputsTestPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe('testInputOne', () => {
-    let input;
-    beforeEach(
-      fakeAsync(() => {
-        component.ngOnInit();
-        fixture.detectChanges();
-        tick();
-        const ionInput = fixture.debugElement.query(By.css('#inputOne'));
-        input = ionInput.query(By.css('input')).nativeElement;
-      })
-    );
-
-    it('should reflect changes to the input', () => {
-      expect(input).toBeTruthy();
-    });
-  });
 });

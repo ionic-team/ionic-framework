@@ -12,8 +12,4 @@ export class InputsTestPageComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  changed(evt) {
-    console.log(evt);
-  }
 }
