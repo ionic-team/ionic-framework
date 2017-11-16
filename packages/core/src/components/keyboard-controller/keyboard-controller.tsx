@@ -1,4 +1,4 @@
-import { Component, DomController, Event, EventEmitter, Prop} from '@stencil/core';
+import { Component, Event, EventEmitter, Prop} from '@stencil/core';
 import { Config } from '../..';
 import { focusOutActiveElement, getDocument, getWindow, hasFocusedTextInput } from '../../utils/helpers';
 import { KEY_TAB } from './keys';
@@ -17,7 +17,6 @@ let timeoutValue: number = null;
 export class KeyboardController {
 
   @Prop({context: 'config'}) config: Config;
-  @Prop({context: 'dom'}) domController: DomController;
 
   /**
    * @output {Event} Emitted before the keyboard has shown.

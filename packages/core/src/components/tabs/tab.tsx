@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { HTMLIonNavElement, StencilElement, ViewController } from '../../index';
+import { StencilElement, ViewController } from '../../index';
 
 /**
  * @name Tab
