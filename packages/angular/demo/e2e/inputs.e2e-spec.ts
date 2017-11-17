@@ -100,6 +100,14 @@ describe('Demo Inputs Page', () => {
     });
   });
 
+  describe('select input', () => {
+    it('should be set the initial value', () => {
+      page.navigateTo();
+      const el = page.getIonicSelect();
+      expect(el.getAttribute('value')).toEqual('brains');
+    });
+  });
+
   async function hasClass(el: ElementFinder, cls: string): Promise<boolean> {
     const classes = await el.getAttribute('class');
     return classes.split(' ').indexOf(cls) !== -1;

@@ -3,6 +3,7 @@ import { ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@
 
 // NOTE: this is just a sample. It really belongs in @ionic/angular and not at all int his app here
 @Directive({
+  /* tslint:disable-next-line:directive-selector */
   selector: 'ion-checkbox,ion-toggle',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonBooleanValueAccessorDirective, multi: true }]
 })

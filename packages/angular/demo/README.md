@@ -4,7 +4,9 @@ The purpose of this application is to provide an Angular CLI application where I
 
 ## Getting started
 
-From this directory:
+**Note:** This application uses the locally built Ionic Core. It does not grab the latest uploaded version or anything. That allows the developer to use this application as they make changes in core. That also means that you **must** build core before building this application. So if you haven't done that yet, go do that first.
+
+To use _this_ application perform the following commands from this directory:
 
 - `npm i`
 - `npm start` - to serve the application

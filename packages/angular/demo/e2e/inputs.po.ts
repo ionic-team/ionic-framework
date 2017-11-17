@@ -13,6 +13,14 @@ export class InputsPage {
     return element(by.id('checkboxOutput')).getText();
   }
 
+  getIonicSelect() {
+    return element(by.id('ionSelect'));
+  }
+
+  getSelectOutput() {
+    return element(by.id('selectOutput')).getText();
+  }
+
   getIonicToggle() {
     return element(by.id('ionToggle'));
   }

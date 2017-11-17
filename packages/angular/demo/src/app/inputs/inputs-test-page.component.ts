@@ -13,6 +13,8 @@ export class InputsTestPageComponent implements OnInit {
   checkboxValue = true;
   toggleValue = false;
 
+  selectValue = 'brains';
+
   constructor() {}
 
   ngOnInit() {}
