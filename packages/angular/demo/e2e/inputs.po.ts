@@ -9,16 +9,16 @@ export class InputsPage {
     return element(by.id('ionCheckbox'));
   }
 
-  getIonicCheckboxOutputText() {
-    return element(by.id('ionCheckboxOutput')).getText();
+  getCheckboxOutput() {
+    return element(by.id('checkboxOutput')).getText();
   }
 
   getIonicToggle() {
     return element(by.id('ionToggle'));
   }
 
-  getIonicToggleOutputText() {
-    return element(by.id('ionToggleOutput')).getText();
+  getToggleOutput() {
+    return element(by.id('toggleOutput')).getText();
   }
 
   getTitleText() {
@@ -34,8 +34,8 @@ export class InputsPage {
     return parent.all(by.css('textarea')).first();
   }
 
-  getIonicTextareaInputOutputText() {
-    return element(by.id('ionTextareaInputOutput')).getText();
+  getTextareaOutput() {
+    return element(by.id('textareaOutput')).getText();
   }
 
   getIonicTextInput() {
@@ -47,7 +47,7 @@ export class InputsPage {
     return parent.all(by.css('input')).first();
   }
 
-  getIonicTextInputOutputText() {
-    return element(by.id('ionTextInputOutput')).getText();
+  getTextOutput() {
+    return element(by.id('textOutput')).getText();
   }
 }

@@ -6,81 +6,105 @@
 
   <ion-row>
     <ion-col>
-      <h2>Text Inputs</h2>
+      <h2>Text Input</h2>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
       <label for="stdTextInput">Standard Input</label>
-      <input id="stdTextInput" name="stdTextInput" [(ngModel)]="stdTextInput" minlength="10"/>
+      <input id="stdTextInput" name="stdTextInput" [(ngModel)]="textValue" minlength="10"/>
     </ion-col>
     <ion-col>
-      Standard Text Input:
-      <span id="stdTextInputOutput">{{stdTextInput}}</span>
+      Value:
+      <span id="textOutput">{{textValue}}</span>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
       <ion-item>
         <ion-label>Ionic Text Input</ion-label>
-        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput" minlength="10" (ionBlur)="onBlur($event)"></ion-input>
+        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="textValue" minlength="10" (ionBlur)="onBlur($event)"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
-      Ionic Text Input:
-      <span id="ionTextInputOutput">{{ionTextInput}}</span>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label>Ionic Text Area Input</ion-label>
-        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="ionTextareaInput" minlength="10" (ionBlur)="onBlur($event)"></ion-textarea>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      Ionic Text Input:
-      <span id="ionTextareaInputOutput">{{ionTextareaInput}}</span>
     </ion-col>
   </ion-row>
 
   <ion-row>
     <ion-col>
-      <h2>Boolean Inputs</h2>
+      <h2>Textarea Input</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <label for="stdTextareaInput">Standard Textarea Input</label>
+      <textarea id="stdTextareaInput" name="stdTextareaInput" [(ngModel)]="textareaValue" minlength="10"></textarea>
+    </ion-col>
+    <ion-col>
+      Value:
+      <span id="textareaOutput">{{textareaValue}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Ionic Textarea Input</ion-label>
+        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="textareaValue" minlength="10" (ionBlur)="onBlur($event)"></ion-textarea>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <h2>Checkbox</h2>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
       <label for="stdCheckbox">Standard Checkbox</label>
-      <input type="checkbox" id="stdCheckbox" name="stdCheckbox" [(ngModel)]="stdCheckbox" (blur)="onBlur($event)" />
+      <input type="checkbox" id="stdCheckbox" name="stdCheckbox" [(ngModel)]="checkboxValue" (blur)="onBlur($event)" />
     </ion-col>
     <ion-col>
-      Standard Checkbox:
-      <span id="stdCheckboxOutput">{{stdCheckbox}}</span>
+      Value:
+      <span id="checkboxOutput">{{checkboxValue}}</span>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
       <ion-item>
         <ion-label>Ionic Checkbox</ion-label>
-        <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="ionCheckbox" (ionBlur)="onBlur($event)"></ion-checkbox>
+        <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="checkboxValue" (ionBlur)="onBlur($event)"></ion-checkbox>
       </ion-item>
     </ion-col>
     <ion-col>
-      Ionic Checkbox:
-      <span id="ionCheckboxOutput">{{ionCheckbox}}</span>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <h2>Toggle</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <label for="stdToggle">Standard Toggle</label>
+      <input type="checkbox" id="stdToggle" name="stdToggle" [(ngModel)]="toggleValue" (blur)="onBlur($event)" />
+    </ion-col>
+    <ion-col>
+      Value:
+      <span id="toggleOutput">{{toggleValue}}</span>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
       <ion-item>
         <ion-label>Ionic Toggle</ion-label>
-        <ion-toggle id="ionToggle" name="ionToggle" [(ngModel)]="ionToggle" (ionBlur)="onBlur($event)"></ion-toggle>
+        <ion-toggle id="ionToggle" name="ionToggle" [(ngModel)]="toggleValue" (ionBlur)="onBlur($event)"></ion-toggle>
       </ion-item>
     </ion-col>
     <ion-col>
-      Ionic Toggle:
-      <span id="ionToggleOutput">{{ionToggle}}</span>
     </ion-col>
   </ion-row>
 </ion-grid>

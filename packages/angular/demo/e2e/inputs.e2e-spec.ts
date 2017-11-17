@@ -18,7 +18,7 @@ describe('Demo Inputs Page', () => {
     it('should display the starting text', () => {
       page.navigateTo();
       const el = page.getIonicTextInput();
-      expect(el.getAttribute('value')).toEqual('This is the Ionic Text Input');
+      expect(el.getAttribute('value')).toEqual('This is the Text Input');
     });
 
     it('should reflect back the entered data', () => {
@@ -26,7 +26,7 @@ describe('Demo Inputs Page', () => {
       const el = page.getIonicTextInputEditable();
       el.clear();
       el.sendKeys('I am new text');
-      expect(page.getIonicTextInputOutputText()).toEqual('I am new text');
+      expect(page.getTextOutput()).toEqual('I am new text');
     });
 
     it('should trigger validation errors', () => {
@@ -46,7 +46,7 @@ describe('Demo Inputs Page', () => {
     it('should display the starting text', () => {
       page.navigateTo();
       const el = page.getIonicTextareaInput();
-      expect(el.getAttribute('value')).toEqual('This is the Ionic Textarea Input');
+      expect(el.getAttribute('value')).toEqual('This is the Textarea Input');
     });
 
     it('should reflect back the entered data', () => {
@@ -54,7 +54,7 @@ describe('Demo Inputs Page', () => {
       const el = page.getIonicTextareaInputEditable();
       el.clear();
       el.sendKeys('I am new text');
-      expect(page.getIonicTextareaInputOutputText()).toEqual('I am new text');
+      expect(page.getTextareaOutput()).toEqual('I am new text');
     });
 
     it('should trigger validation errors', () => {
@@ -81,7 +81,7 @@ describe('Demo Inputs Page', () => {
       page.navigateTo();
       const el = page.getIonicCheckbox();
       el.click();
-      expect(page.getIonicCheckboxOutputText()).toEqual('false');
+      expect(page.getCheckboxOutput()).toEqual('false');
     });
   });
 
@@ -96,7 +96,7 @@ describe('Demo Inputs Page', () => {
       page.navigateTo();
       const el = page.getIonicToggle();
       el.click();
-      expect(page.getIonicToggleOutputText()).toEqual('true');
+      expect(page.getToggleOutput()).toEqual('true');
     });
   });
 
