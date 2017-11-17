@@ -12,7 +12,7 @@
   <ion-row>
     <ion-col>
       <label for="stdTextInput">Standard Input</label>
-      <input id="stdTextInput" name="stdTextInput" [(ngModel)]="stdTextInput" />
+      <input id="stdTextInput" name="stdTextInput" [(ngModel)]="stdTextInput" minlength="10"/>
     </ion-col>
     <ion-col>
       Standard Text Input:
@@ -23,7 +23,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Text Input</ion-label>
-        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput" (ionBlur)="onBlur($event)"></ion-input>
+        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="ionTextInput" minlength="10" (ionBlur)="onBlur($event)"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -35,7 +35,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Text Area Input</ion-label>
-        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="ionTextareaInput" (ionBlur)="onBlur($event)"></ion-textarea>
+        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="ionTextareaInput" minlength="10" (ionBlur)="onBlur($event)"></ion-textarea>
       </ion-item>
     </ion-col>
     <ion-col>

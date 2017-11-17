@@ -1,3 +1,5 @@
+import { ElementFinder, promise } from 'protractor/built';
+
 import { InputsPage } from './inputs.po';
 
 describe('Demo Inputs Page', () => {
@@ -26,6 +28,18 @@ describe('Demo Inputs Page', () => {
       el.sendKeys('I am new text');
       expect(page.getIonicTextInputOutputText()).toEqual('I am new text');
     });
+
+    it('should trigger validation errors', () => {
+      page.navigateTo();
+      const el = page.getIonicTextInput();
+      const inp = page.getIonicTextInputEditable();
+      expect(hasClass(el, 'ng-invalid')).toEqual(false);
+      inp.clear();
+      inp.sendKeys('ninechars');
+      expect(hasClass(el, 'ng-invalid')).toEqual(true);
+      inp.sendKeys('X');
+      expect(hasClass(el, 'ng-invalid')).toEqual(false);
+    });
   });
 
   describe('textarea input', () => {
@@ -41,6 +55,18 @@ describe('Demo Inputs Page', () => {
       el.clear();
       el.sendKeys('I am new text');
       expect(page.getIonicTextareaInputOutputText()).toEqual('I am new text');
+    });
+
+    it('should trigger validation errors', () => {
+      page.navigateTo();
+      const el = page.getIonicTextareaInput();
+      const inp = page.getIonicTextareaInputEditable();
+      expect(hasClass(el, 'ng-invalid')).toEqual(false);
+      inp.clear();
+      inp.sendKeys('ninechars');
+      expect(hasClass(el, 'ng-invalid')).toEqual(true);
+      inp.sendKeys('X');
+      expect(hasClass(el, 'ng-invalid')).toEqual(false);
     });
   });
 
@@ -73,4 +99,9 @@ describe('Demo Inputs Page', () => {
       expect(page.getIonicToggleOutputText()).toEqual('true');
     });
   });
+
+  async function hasClass(el: ElementFinder, cls: string): Promise<boolean> {
+    const classes = await el.getAttribute('class');
+    return classes.split(' ').indexOf(cls) !== -1;
+  }
 });
