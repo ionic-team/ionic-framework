@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import { BasicInputsPageComponent } from './basic-inputs-page.component';
 
 import { SharedModule } from '../shared/shared.module';
-import { BasicInputsRoutingModule } from './basic-inputs-routing.module';
+import { BasicInputsPageRoutingModule } from './basic-inputs-page-routing.module';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, BasicInputsRoutingModule, SharedModule],
+  imports: [CommonModule, FormsModule, BasicInputsPageRoutingModule, SharedModule],
   declarations: [BasicInputsPageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BasicInputsModule {}
+export class BasicInputsPageModule {}
