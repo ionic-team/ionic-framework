@@ -44,8 +44,8 @@ import { Platform } from '../../platform/platform';
  * `checkbox`, `radio`, `toggle`, `range`, `select`, etc.
  *
  * Along with the blur/focus events, `input` support all standard text input
- * events like `keyup`, `keydown`, `keypress`, `input`,etc. Any standard event
- * can be attached and will function as expected.
+ * events like `keyup`, `keydown`, `keypress`, `input`, etc. Any standard event
+ * can be attached and will function as expected. Example: `<ion-input (click)="someFunction()"></ion-input>`
  *
  * @usage
  * ```html
