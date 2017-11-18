@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-inputs-test-page',
-  templateUrl: './inputs-test-page.component.html',
-  styleUrls: ['./inputs-test-page.component.css'],
+  selector: 'app-basic-inputs-page',
+  templateUrl: './basic-inputs-page.component.html',
+  styleUrls: ['./basic-inputs-page.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class InputsTestPageComponent implements OnInit {
+export class BasicInputsPageComponent implements OnInit {
   textareaValue = 'This is the Textarea Input';
   textValue = 'This is the Text Input';
 

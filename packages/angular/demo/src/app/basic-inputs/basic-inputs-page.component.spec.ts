@@ -4,16 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { SharedModule } from '../shared/shared.module';
-import { InputsTestPageComponent } from './inputs-test-page.component';
+import { BasicInputsPageComponent } from './basic-inputs-page.component';
 
 describe('InputsTestPageComponent', () => {
-  let component: InputsTestPageComponent;
-  let fixture: ComponentFixture<InputsTestPageComponent>;
+  let component: BasicInputsPageComponent;
+  let fixture: ComponentFixture<BasicInputsPageComponent>;
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [InputsTestPageComponent],
+        declarations: [BasicInputsPageComponent],
         imports: [FormsModule, SharedModule],
         schemas: [CUSTOM_ELEMENTS_SCHEMA]
       }).compileComponents();
@@ -21,7 +21,7 @@ describe('InputsTestPageComponent', () => {
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InputsTestPageComponent);
+    fixture = TestBed.createComponent(BasicInputsPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

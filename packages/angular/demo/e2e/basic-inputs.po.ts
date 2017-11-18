@@ -1,8 +1,8 @@
 import { browser, by, element } from 'protractor';
 
-export class InputsPage {
+export class BasicInputsPage {
   navigateTo() {
-    return browser.get('/inputs');
+    return browser.get('/basic-inputs');
   }
 
   getIonicCheckbox() {

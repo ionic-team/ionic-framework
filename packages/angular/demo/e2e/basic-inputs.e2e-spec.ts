@@ -1,17 +1,17 @@
 import { ElementFinder, promise } from 'protractor/built';
 
-import { InputsPage } from './inputs.po';
+import { BasicInputsPage } from './basic-inputs.po';
 
-describe('Demo Inputs Page', () => {
-  let page: InputsPage;
+describe('Basic Inputs Page', () => {
+  let page: BasicInputsPage;
 
   beforeEach(() => {
-    page = new InputsPage();
+    page = new BasicInputsPage();
   });
 
   it('should display title', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Ionic Core Inputs Demo');
+    expect(page.getTitleText()).toEqual('Ionic Core Basic Inputs Demo');
   });
 
   describe('text input', () => {

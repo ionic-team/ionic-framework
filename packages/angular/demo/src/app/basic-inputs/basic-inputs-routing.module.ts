@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { InputsTestPageComponent } from './inputs-test-page.component';
+import { BasicInputsPageComponent } from './basic-inputs-page.component';
 
 const routes: Routes = [
-  { path: '', component: InputsTestPageComponent }
+  { path: '', component: BasicInputsPageComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class InputsRoutingModule { }
+export class BasicInputsRoutingModule { }
