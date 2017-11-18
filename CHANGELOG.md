@@ -97,7 +97,7 @@ To use lettable operators, modify the code from above to look like this:
 ```typescript
 //Use Deep imports here for smallest bunlde size
 import { debounceTime } from 'rxjs/operators/debounceTime';
-import { switch } from 'rxjs/operators/switchMap';
+import { switchMap } from 'rxjs/operators/switchMap';
 
 export MyClass {
 
