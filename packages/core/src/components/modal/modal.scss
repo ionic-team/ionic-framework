@@ -97,28 +97,3 @@ ion-modal-controller {
   }
 }
 
-.modal-content {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-
-  display: block;
-
-  // override the default visibility cloaking
-  // added for each component before it's loaded
-  // visibility: inherit !important;
-
-  width: 100%;
-  height: 100%;
-
-  // do not show by default, but still render
-  // so we can get dimensions before transitioning in
-  opacity: 0;
-
-  contain: strict;
-}
-
-.show-modal .modal-content {
-  // show the modal now that it's ready
-  opacity: 1;
-}
