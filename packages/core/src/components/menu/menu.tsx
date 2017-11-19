@@ -429,7 +429,7 @@ export class Menu {
     return {
       role: 'complementary',
       class: {
-        'menu-enabled': this.isActive(),
+        'menu-enabled': this.enabled,
         'menu-side-right': this.isRightSide,
         'menu-side-left': !this.isRightSide,
         [typeClass]: true,
