@@ -8,14 +8,14 @@ import { ItemOptions } from './item-options';
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
-const enum ItemSide {
+export const enum ItemSide {
   None = 0,
   Left = 1 << 0,
   Right = 1 << 1,
   Both = Left | Right
 }
 
-const enum SlidingState {
+export const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
