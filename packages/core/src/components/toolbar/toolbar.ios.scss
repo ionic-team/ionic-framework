@@ -36,6 +36,9 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 /// @prop - Filter of the translucent toolbar
 $toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
 
+/// @prop - Opacity of the translucent toolbar
+$toolbar-ios-translucent-opacity:           .88 !default;
+
 
 .toolbar-ios {
   @include padding($toolbar-ios-padding);
@@ -62,17 +65,6 @@ $toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
   border-color: $toolbar-ios-border-color;
 }
 
-.header-translucent-ios .toolbar-background,
-.footer-translucent-ios .toolbar-background,
-.toolbar-translucent-ios .toolbar-background {
-  background: rgba($toolbar-ios-background, 0.88);
-}
-
-.toolbar-translucent-ios .toolbar-background {
-  -webkit-backdrop-filter: $toolbar-ios-translucent-filter;
-  backdrop-filter: $toolbar-ios-translucent-filter;
-}
-
 .header-ios .toolbar-ios:last-child .toolbar-background-ios {
   border-width: 0 0 $hairlines-width;
 }
@@ -87,6 +79,21 @@ $toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
 
 .footer-ios[no-border] .toolbar-ios:first-child .toolbar-background-ios {
   border-top-width: 0;
+}
+
+
+// iOS Translucent Toolbar
+// --------------------------------------------------
+
+.header-translucent-ios .toolbar-background-ios,
+.footer-translucent-ios .toolbar-background-ios,
+.toolbar-translucent-ios .toolbar-background-ios {
+  background: rgba($toolbar-ios-background, $toolbar-ios-translucent-opacity);
+}
+
+.toolbar-translucent-ios .toolbar-background-ios {
+  -webkit-backdrop-filter: $toolbar-ios-translucent-filter;
+  backdrop-filter: $toolbar-ios-translucent-filter;
 }
 
 
@@ -117,6 +124,17 @@ $toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
       @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
       @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
     }
+  }
+
+  // Colored toolbars with translucency
+  .header-translucent-ios .toolbar-ios-#{$color-name},
+  .footer-translucent-ios .toolbar-ios-#{$color-name},
+  .toolbar-translucent-ios-#{$color-name} {
+
+    .toolbar-background-ios {
+      background: rgba($color-base, $toolbar-ios-translucent-opacity);
+    }
+
   }
 }
 
