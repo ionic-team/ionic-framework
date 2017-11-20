@@ -39,7 +39,7 @@ export class PageTab {
           <ion-title>Tab page</ion-title>
         </ion-toolbar>
       </ion-header>,
-      <ion-content>
+      <ion-content fullscreen class='test'>
         <p>
           <h2>Set tabbar layout</h2>
           <ion-button onClick={() => this.setLayout('icon-top')}>icon-top</ion-button>

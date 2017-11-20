@@ -119,6 +119,14 @@ export class Toolbar {
    */
   @Prop() mode: 'ios' | 'md';
 
+  /**
+   * @input {boolean} If true, adds transparency to the header.
+   * Note: In order to scroll content behind the header, the `fullscreen`
+   * attribute needs to be set on the content.
+   * Only affects `ios` mode. Defaults to `false`.
+   */
+  @Prop() translucent: boolean = false;
+
   protected ionViewDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
@@ -127,10 +135,15 @@ export class Toolbar {
   }
 
   hostData() {
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toolbar-translucent') : {};
+
+    const hostClasses = {
+      ...themedClasses,
+      'statusbar-padding': this.config.getBoolean('statusbarPadding')
+    };
+
     return {
-      class: {
-        'statusbar-padding': this.config.getBoolean('statusbarPadding')
-      }
+      class: hostClasses
     };
   }
 

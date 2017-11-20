@@ -841,6 +841,7 @@ declare global {
         color?: string,
         mode?: 'ios' | 'md',
         href?: string,
+        translucent?: boolean,
         activated?: boolean,
         toggleActive?: Function,
         show?: boolean,
@@ -875,6 +876,7 @@ declare global {
   namespace JSXElements {
     export interface IonFooterAttributes extends HTMLAttributes {
       
+        translucent?: boolean
     }
   }
 }
@@ -1073,6 +1075,7 @@ declare global {
   namespace JSXElements {
     export interface IonHeaderAttributes extends HTMLAttributes {
       
+        translucent?: boolean
     }
   }
 }
@@ -2914,41 +2917,6 @@ declare global {
 
 
 import {
-  TabBar as IonTabbar
-} from './components/tabs/tab-bar';
-
-declare global {
-  interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
-  }
-  var HTMLIonTabbarElement: {
-    prototype: HTMLIonTabbarElement;
-    new (): HTMLIonTabbarElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-tabbar": HTMLIonTabbarElement;
-  }
-  interface ElementTagNameMap {
-    "ion-tabbar": HTMLIonTabbarElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-tabbar": JSXElements.IonTabbarAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonTabbarAttributes extends HTMLAttributes {
-      
-        placement?: string,
-        tabs?: HTMLIonTabElement[],
-        selectedTab?: HTMLIonTabElement,
-        layout?: string,
-        highlight?: boolean
-    }
-  }
-}
-
-
-import {
   TabbarButton as IonTabButton
 } from './components/tabs/tab-button';
 
@@ -3052,6 +3020,42 @@ declare global {
 
 
 import {
+  Tabbar as IonTabbar
+} from './components/tabs/tabbar';
+
+declare global {
+  interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
+  }
+  var HTMLIonTabbarElement: {
+    prototype: HTMLIonTabbarElement;
+    new (): HTMLIonTabbarElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-tabbar": HTMLIonTabbarElement;
+  }
+  interface ElementTagNameMap {
+    "ion-tabbar": HTMLIonTabbarElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-tabbar": JSXElements.IonTabbarAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTabbarAttributes extends HTMLAttributes {
+      
+        placement?: string,
+        tabs?: HTMLIonTabElement[],
+        selectedTab?: HTMLIonTabElement,
+        layout?: string,
+        highlight?: boolean,
+        translucent?: boolean
+    }
+  }
+}
+
+
+import {
   Tabs as IonTabs
 } from './components/tabs/tabs';
 
@@ -3080,7 +3084,8 @@ declare global {
         tabbarHidden?: boolean,
         tabbarLayout?: string,
         tabbarPlacement?: string,
-        tabbarHighlight?: boolean
+        tabbarHighlight?: boolean,
+        translucent?: boolean
     }
   }
 }
@@ -3311,7 +3316,8 @@ declare global {
     export interface IonToolbarAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md'
+        mode?: 'ios' | 'md',
+        translucent?: boolean
     }
   }
 }

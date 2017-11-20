@@ -11,13 +11,13 @@
 <body>
   <ion-app>
     <ion-page>
-      <ion-header>
+      <ion-header translucent>
         <ion-toolbar>
           <ion-title>Card - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content>
+      <ion-content fullscreen="true">
         <ion-card>
           <ion-card-content>
             This is just your basic card with some text to boot. Like it? Keep scrolling...
@@ -25,6 +25,21 @@
         </ion-card>
 
         <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>
+              Subtitle
+            </ion-card-subtitle>
+            <ion-card-title>
+              Title
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card style="color: white; background-position: center; background-image:url(https://images.unsplash.com/photo-1500531279542-fc8490c8ea4d?auto=format&fit=crop&w=1502&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D)">
           <ion-card-header>
             <ion-card-subtitle>
               Subtitle
@@ -49,25 +64,6 @@
               Subtitle
             </ion-card-subtitle>
             <ion-card-title>
-              Title
-            </ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card style="color: white">
-          <div style="position: absolute; top: 0; left:0; right:0; bottom:0;">
-            <img src="https://images.unsplash.com/photo-1500531279542-fc8490c8ea4d?auto=format&fit=crop&w=1502&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D">
-          </div>
-
-          <ion-card-header style="background-color: rgba(255, 255, 255, 0.4)">
-            <ion-card-subtitle color="light">
-              Subtitle
-            </ion-card-subtitle>
-            <ion-card-title color="light">
               Title
             </ion-card-title>
           </ion-card-header>

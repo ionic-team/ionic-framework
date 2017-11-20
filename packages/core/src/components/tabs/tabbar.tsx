@@ -1,12 +1,16 @@
 import { Component, Listen, Prop, State } from '@stencil/core';
 
+import { createThemedClasses } from '../../utils/theme';
+
 @Component({
   tag: 'ion-tabbar',
   host: {
     theme: 'tabbar'
   }
 })
-export class TabBar {
+export class Tabbar {
+  mode: string;
+  color: string;
 
   @State() hidden = false;
 
@@ -15,6 +19,7 @@ export class TabBar {
   @Prop() selectedTab: HTMLIonTabElement;
   @Prop() layout: string = 'icon-top';
   @Prop() highlight: boolean = false;
+  @Prop() translucent: boolean = false;
 
   @Listen('body:keyboardWillHide')
   protected onKeyboardWillHide() {
@@ -28,16 +33,23 @@ export class TabBar {
     }
   }
 
+
   protected hostData() {
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'tabbar-translucent') : {};
+
     const layoutClass = `layout-${this.layout}`;
     const placementClass = `placement-${this.placement}`;
+
+    const hostClasses = {
+      ...themedClasses,
+      'tabbar-hidden': this.hidden,
+      [layoutClass]: true,
+      [placementClass]: true
+    };
+
     return {
-      'role': 'tablist',
-      'class': {
-        'tabbar-hidden': this.hidden,
-        [layoutClass]: true,
-        [placementClass]: true
-      }
+      role: 'tablist',
+      class: hostClasses
     };
   }
 

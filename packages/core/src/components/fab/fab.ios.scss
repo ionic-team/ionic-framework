@@ -37,6 +37,9 @@ $fab-ios-list-button-transition-timing-function:  ease !default;
 /// @prop - Transition delay of the transform and opacity of the button in a list
 $fab-ios-list-button-transition-delay:            10ms !default;
 
+/// @prop - Filter of the translucent fab
+$fab-ios-translucent-filter:                      saturate(180%) blur(20px) !default;
+
 
 .fab-ios {
   color: $fab-ios-text-color;
@@ -68,6 +71,20 @@ $fab-ios-list-button-transition-delay:            10ms !default;
 
 .fab-ios-in-list .icon {
   fill: $fab-ios-list-button-icon-fill-color;
+}
+
+// Translucent FAB buttons
+// --------------------------------------------------
+
+.fab-translucent-ios {
+  background-color: rgba($fab-ios-background-color, 0.88);
+
+  -webkit-backdrop-filter: $fab-ios-translucent-filter;
+  backdrop-filter: $fab-ios-translucent-filter;
+}
+
+.fab-ios-in-list.fab-translucent-ios {
+  background-color: rgba($fab-ios-list-button-background-color, 0.88);
 }
 
 
