@@ -17,7 +17,7 @@ let takeScreenshots = false;
 
 function startDevServer() {
   const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
-  const cmdArgs = ['--config', path.join(__dirname, '../stencil.config.js'), '--no-open'];
+  const cmdArgs = ['--config', path.join(__dirname, '../../stencil.config.js'), '--no-open'];
 
   return server.run(cmdArgs);
 }
