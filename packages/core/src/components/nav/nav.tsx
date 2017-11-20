@@ -4,15 +4,22 @@ import {
   Config,
   FrameworkDelegate,
   NavController,
-  NavState,
   NavOptions,
+  NavState,
   PublicNavController,
   RouterEntries,
-  RouterEntry
+  RouterEntry,
   ViewController
 } from '../../index';
-import {getActiveImpl, getFirstView, getPreviousImpl, getViews, init } from '../../navigation/nav-utils';
-import { isReady } from '../../utils/helpers';
+import {
+  getActiveImpl,
+  getFirstView,
+  getNextNavId,
+  getPreviousImpl,
+  getViews,
+  resolveRoute
+} from '../../navigation/nav-utils';
+import { assert, isReady } from '../../utils/helpers';
 
 /* it is very important to keep this class in sync with ./nav-interface interface */
 @Component({
