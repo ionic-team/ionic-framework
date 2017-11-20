@@ -1594,6 +1594,7 @@ declare global {
         content?: string,
         dismissOnPageChange?: boolean,
         duration?: number,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         loadingId?: string,
