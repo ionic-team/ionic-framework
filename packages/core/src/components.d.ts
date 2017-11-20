@@ -2155,7 +2155,8 @@ declare global {
         exitAnimation?: AnimationBuilder,
         ev?: Event,
         popoverId?: string,
-        showBackdrop?: boolean
+        showBackdrop?: boolean,
+        translucent?: boolean
     }
   }
 }

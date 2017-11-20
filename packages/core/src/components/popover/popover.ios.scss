@@ -28,6 +28,12 @@ $popover-ios-background:                $background-ios-color !default;
 /// @prop - Background of the popover arrow
 $popover-ios-arrow-background:          $popover-ios-background !default;
 
+/// @prop - Filter of the translucent popover
+$popover-ios-translucent-filter:        saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent popover
+$popover-ios-translucent-opacity:       .88 !default;
+
 
 .popover-ios .popover-content {
   @include border-radius($popover-ios-border-radius);
@@ -78,4 +84,15 @@ $popover-ios-arrow-background:          $popover-ios-background !default;
 
 .popover-ios.popover-bottom .popover-arrow::after {
   top: -6px;
+}
+
+// Translucent Popover
+// -----------------------------------------
+
+.popover-translucent-ios .popover-content,
+.popover-translucent-ios .popover-arrow::after {
+  background: rgba($popover-ios-background, $popover-ios-translucent-opacity);
+
+  -webkit-backdrop-filter: $popover-ios-translucent-filter;
+  backdrop-filter: $popover-ios-translucent-filter;
 }
