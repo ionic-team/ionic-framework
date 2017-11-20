@@ -31,6 +31,9 @@ export function getCss(docEle: HTMLElement) {
       break;
     }
   }
+  // for angular universal
+  if (css.transition === undefined)
+    return css;
 
   // The only prefix we care about is webkit for transitions.
   var isWebkit = css.transition.indexOf('webkit') > -1;

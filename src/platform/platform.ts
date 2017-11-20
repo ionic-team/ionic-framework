@@ -590,7 +590,8 @@ export class Platform {
       // we're keeping track of portrait and landscape dimensions
       // separately because the virtual keyboard can really mess
       // up accurate values when the keyboard is up
-      if (win.screen.width > 0 && win.screen.height > 0) {
+      // check for angular universal
+      if (win.screen !== undefined && win.screen.width > 0 && win.screen.height > 0) {
         if (innerWidth < innerHeight) {
 
           // the device is in portrait
@@ -651,6 +652,11 @@ export class Platform {
    */
   timeout(callback: Function, timeout?: number): number {
     const win: any = this._win;
+
+        // for angular universal
+    if (typeof win['__zone_symbol__setTimeout'] === 'undefined')
+      return;
+
     return win['__zone_symbol__setTimeout'](callback, timeout);
   }
 
