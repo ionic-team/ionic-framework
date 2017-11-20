@@ -5,6 +5,7 @@ const glob = require('glob');
 const Mocha = require('mocha');
 const path = require('path');
 const webdriver = require('selenium-webdriver');
+const chromedriver = require('chromedriver');
 
 const Page = require('./e2e-test-page');
 const Snapshot = require('./snapshot');
