@@ -7,7 +7,7 @@ const path = require('path');
 const webdriver = require('selenium-webdriver');
 const chromedriver = require('chromedriver');
 
-const Page = require('./e2e-test-page');
+const Page = require('./page');
 const Snapshot = require('./snapshot');
 
 let driver;
