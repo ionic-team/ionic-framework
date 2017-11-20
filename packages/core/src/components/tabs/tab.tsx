@@ -223,7 +223,7 @@ export class Tab {
     return this.nav;
   }
 
-  protected hostData() {
+  hostData() {
     const visible = this.active && this.selected;
     return {
       'aria-hidden': !visible ? 'true' : null,

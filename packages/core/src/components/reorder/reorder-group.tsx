@@ -182,12 +182,12 @@ export class ReorderGroup {
     }
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.containerEl = this.el.querySelector('ion-gesture') as HTMLElement;
     this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.onDragEnd();
   }
 
@@ -380,7 +380,7 @@ export class ReorderGroup {
     };
   }
 
-  protected render() {
+  render() {
     return (
       <ion-gesture {...{
         disableScroll: true,

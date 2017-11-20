@@ -115,15 +115,15 @@ export class Radio {
    */
   @Prop({ mutable: true }) value: string;
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     this.emitStyle();
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.ionRadioDidLoad.emit({ radio: this });
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.ionRadioDidUnload.emit({ radio: this });
   }
 
@@ -177,7 +177,7 @@ export class Radio {
     };
   }
 
-  protected render() {
+  render() {
     const radioClasses: CssClassMap = {
       'radio-icon': true,
       'radio-checked': this.checked

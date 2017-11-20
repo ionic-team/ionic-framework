@@ -102,7 +102,7 @@ export class Alert {
           firstInput.focus();
         }
 
-        this.ionViewDidEnter();
+        this.componentDidEnter();
         resolve();
       }).play();
     });
@@ -142,8 +142,15 @@ export class Alert {
     });
   }
 
+  componentDidLoad() {
+    this.ionAlertDidLoad.emit({ alert: this });
+  }
 
-  protected ionViewDidUnload() {
+  componentDidEnter() {
+    this.ionAlertDidPresent.emit({ alert: this });
+  }
+
+  componentDidUnload() {
     this.ionAlertDidUnload.emit({ alert: this });
   }
 
@@ -153,14 +160,6 @@ export class Alert {
     ev.preventDefault();
 
     this.dismiss();
-  }
-
-  protected ionViewDidLoad() {
-    this.ionAlertDidLoad.emit({ alert: this });
-  }
-
-  protected ionViewDidEnter() {
-    this.ionAlertDidPresent.emit({ alert: this });
   }
 
   protected backdropClick() {
@@ -326,7 +325,7 @@ export class Alert {
     );
   }
 
-  protected render() {
+  render() {
     const hdrId = `${this.alertId}-hdr`;
     const subHdrId = `${this.alertId}-sub-hdr`;
     const msgId = `${this.alertId}-msg`;

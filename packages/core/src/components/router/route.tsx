@@ -18,7 +18,7 @@ export class Route {
   @Event() ionRouteAdded: EventEmitter<RouterEntry>;
   @Event() ionRouteRemoved: EventEmitter<string>;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.ionRouteAdded.emit({
       path: this.path,
       segments: parseURL(this.path),
@@ -27,7 +27,7 @@ export class Route {
     });
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.ionRouteRemoved.emit(this.path);
   }
 }

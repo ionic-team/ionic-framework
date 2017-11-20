@@ -13,7 +13,7 @@ export class RouterController {
 
   @Prop({ context: 'config' }) config: Config;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     const enabled = this.enabled = this.config.getBoolean('useRouter', false);
     if (enabled) {
       const base = document.querySelector('head > base');

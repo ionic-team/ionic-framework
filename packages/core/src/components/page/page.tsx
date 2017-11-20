@@ -5,7 +5,7 @@ import { Component } from '@stencil/core';
   tag: 'ion-page',
 })
 export class Page {
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

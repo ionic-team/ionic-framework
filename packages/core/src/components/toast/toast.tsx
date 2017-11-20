@@ -91,7 +91,7 @@ export class Toast {
 
       animation.onFinish((a: any) => {
         a.destroy();
-        this.ionViewDidEnter();
+        this.componentDidEnter();
         resolve();
       }).play();
     });
@@ -131,7 +131,20 @@ export class Toast {
     });
   }
 
-  protected ionViewDidUnload() {
+  componentDidLoad() {
+    this.ionToastDidLoad.emit({ toast: this });
+  }
+
+  componentDidEnter() {
+    this.ionToastDidPresent.emit({ toast: this });
+    if (this.duration) {
+      setTimeout(() => {
+        this.dismiss();
+      }, this.duration);
+    }
+  }
+
+  componentDidUnload() {
     this.ionToastDidUnload.emit({ toast: this });
   }
 
@@ -143,20 +156,7 @@ export class Toast {
     this.dismiss();
   }
 
-  protected ionViewDidLoad() {
-    this.ionToastDidLoad.emit({ toast: this });
-  }
-
-  protected ionViewDidEnter() {
-    this.ionToastDidPresent.emit({ toast: this });
-    if (this.duration) {
-      setTimeout(() => {
-        this.dismiss();
-      }, this.duration);
-    }
-  }
-
-  protected render() {
+  render() {
     let userCssClass = 'toast-content';
     if (this.cssClass) {
       userCssClass += ' ' + this.cssClass;

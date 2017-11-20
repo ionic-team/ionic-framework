@@ -98,7 +98,7 @@ export class Toggle implements BooleanInput {
     };
   }
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     this.emitStyle();
   }
 
@@ -175,7 +175,7 @@ export class Toggle implements BooleanInput {
     }
   }
 
-  protected hostData() {
+  hostData() {
     return {
       class: {
         'toggle-activated': this.activated,
@@ -185,7 +185,7 @@ export class Toggle implements BooleanInput {
     };
   }
 
-  protected render() {
+  render() {
     return (
       <ion-gesture {...this.gestureConfig}
         enabled={!this.disabled}>

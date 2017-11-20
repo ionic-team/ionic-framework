@@ -131,7 +131,7 @@ export class Checkbox implements BooleanInput {
   @Prop({ mutable: true }) value: string;
 
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     this.emitStyle();
   }
 
@@ -178,7 +178,7 @@ export class Checkbox implements BooleanInput {
     };
   }
 
-  protected render() {
+  render() {
     const checkboxClasses: CssClassMap = {
       'checkbox-icon': true,
       'checkbox-checked': this.checked

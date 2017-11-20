@@ -63,7 +63,7 @@ export class Navbar {
     console.log('back button click');
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button');
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
@@ -78,7 +78,7 @@ export class Navbar {
     };
   }
 
-  protected render() {
+  render() {
     const backButtonIcon = this.backButtonIcon || this.config.get('backButtonText', 'Back');
     const backButtonText = this.backButtonText || this.config.get('backButtonIcon', 'Back');
 

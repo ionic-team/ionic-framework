@@ -79,11 +79,11 @@ export class Item {
     return this.label ? this.label.getText() : '';
   }
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     this.itemId = (++itemId).toString();
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     // Add item-button classes to each ion-button in the item
     const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
@@ -119,7 +119,7 @@ export class Item {
     return this.itemId + '-' + (++this.ids);
   }
 
-  protected render() {
+  render() {
     let childStyles = {};
 
     for (var key in this.itemStyles) {

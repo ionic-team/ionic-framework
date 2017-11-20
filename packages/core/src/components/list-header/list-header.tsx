@@ -27,7 +27,7 @@ export class ListHeader {
    */
   @Prop() mode: 'ios' | 'md';
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

@@ -69,7 +69,7 @@ export class Gesture {
   @Event() ionPress: EventEmitter;
 
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     // in this case, we already know the GestureController and Gesture are already
     // apart of the same bundle, so it's safe to load it this way
     // only create one instance of GestureController, and reuse the same one later
@@ -445,7 +445,7 @@ export class Gesture {
   }
 
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     if (this.blocker) {
       this.blocker.destroy();
       this.blocker = null;
