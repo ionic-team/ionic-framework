@@ -3213,6 +3213,7 @@ declare global {
         closeButtonText?: string,
         dismissOnPageChange?: boolean,
         position?: string,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         toastId?: string
