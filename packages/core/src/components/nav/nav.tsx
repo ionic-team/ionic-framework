@@ -182,7 +182,7 @@ export class Nav {
     return this.routes;
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

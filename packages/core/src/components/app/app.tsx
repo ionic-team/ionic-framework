@@ -71,7 +71,7 @@ export class App {
     return null;
   }
 
-  protected hostData() {
+  hostData() {
     return {
       class: {
         [this.modeCode]: true,
@@ -80,7 +80,7 @@ export class App {
     };
   }
 
-  protected render() {
+  render() {
     const dom = [<slot></slot>];
     if (this.useRouter) {
       dom.push(<ion-router-controller></ion-router-controller>);

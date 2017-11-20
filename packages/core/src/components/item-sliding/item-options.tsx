@@ -55,7 +55,7 @@ export class ItemOptions {
     this.ionSwipe.emit(value);
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

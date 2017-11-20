@@ -33,7 +33,7 @@ export class CardSubtitle {
     };
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

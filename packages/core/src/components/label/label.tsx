@@ -58,7 +58,7 @@ export class Label {
     return this.el.textContent || '';
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.emitStyle();
   }
 
@@ -76,7 +76,7 @@ export class Label {
     });
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

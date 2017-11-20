@@ -52,7 +52,7 @@ export class FabList {
     };
   }
 
-  protected render() {
+  render() {
     return (
       <slot></slot>
     );

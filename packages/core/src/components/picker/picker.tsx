@@ -98,7 +98,7 @@ export class Picker {
 
       animation.onFinish((a: any) => {
         a.destroy();
-        this.ionViewDidEnter();
+        this.componentDidEnter();
         resolve();
 
       }).play();
@@ -144,19 +144,7 @@ export class Picker {
     });
   }
 
-  protected ionViewDidUnload() {
-    this.ionPickerDidUnload.emit({ picker: this });
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     if (!this.spinner) {
       let defaultSpinner = 'lines';
 
@@ -173,7 +161,7 @@ export class Picker {
     this.ionPickerDidLoad.emit({ picker: this });
   }
 
-  protected ionViewDidEnter() {
+  componentDidEnter() {
     // blur the currently active element
     const activeElement: any = document.activeElement;
     activeElement && activeElement.blur && activeElement.blur();
@@ -184,6 +172,19 @@ export class Picker {
     }
 
     this.ionPickerDidPresent.emit({ picker: this });
+  }
+
+  componentDidUnload() {
+    this.ionPickerDidUnload.emit({ picker: this });
+  }
+
+
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
   }
 
   buttonClick(button: PickerButton) {
@@ -259,7 +260,7 @@ export class Picker {
     }
   }
 
-  protected render() {
+  render() {
     // TODO: cssClass
 
     let buttons = this.buttons

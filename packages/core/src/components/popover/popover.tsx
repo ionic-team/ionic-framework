@@ -218,7 +218,7 @@ export class Popover {
 
       animation.onFinish((a: any) => {
         a.destroy();
-        this.ionViewDidEnter();
+        this.componentDidEnter();
         this.positionPopover();
         resolve();
       }).play();
@@ -259,7 +259,15 @@ export class Popover {
     });
   }
 
-  protected ionViewDidUnload() {
+  componentDidLoad() {
+    this.ionPopoverDidLoad.emit({ popover: this });
+  }
+
+  componentDidEnter() {
+    this.ionPopoverDidPresent.emit({ popover: this });
+  }
+
+  componentDidUnload() {
     this.ionPopoverDidUnload.emit({ popover: this });
   }
 
@@ -271,14 +279,6 @@ export class Popover {
     this.dismiss();
   }
 
-  protected ionViewDidLoad() {
-    this.ionPopoverDidLoad.emit({ popover: this });
-  }
-
-  protected ionViewDidEnter() {
-    this.ionPopoverDidPresent.emit({ popover: this });
-  }
-
   protected backdropClick() {
     if (this.enableBackdropDismiss) {
       // const opts: NavOptions = {
@@ -288,7 +288,7 @@ export class Popover {
     }
   }
 
-  protected render() {
+  render() {
     const ThisComponent = this.component;
 
     const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');

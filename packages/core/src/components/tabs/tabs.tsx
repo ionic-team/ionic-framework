@@ -112,7 +112,7 @@ export interface NavOptions { }
  *
  * @ViewChild('myTabs') tabRef: Tabs;
  *
- * ionViewDidEnter() {
+ * componentDidEnter() {
  *   this.tabRef.select(2);
  *  }
  *
@@ -193,7 +193,7 @@ export class Tabs {
   @Event() ionChange: EventEmitter;
   @Event() ionNavChanged: EventEmitter;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
     this.loadConfig('tabsLayout', 'icon-top');
     this.loadConfig('tabsHighlight', true);
@@ -205,7 +205,7 @@ export class Tabs {
     }
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.tabs = this.selectedTab = null;
   }
 
@@ -345,7 +345,7 @@ export class Tabs {
     }
   }
 
-  protected render() {
+  render() {
     const dom = [
       <div class='tabs-inner'>
         <slot></slot>

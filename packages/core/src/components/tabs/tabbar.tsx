@@ -34,7 +34,7 @@ export class Tabbar {
   }
 
 
-  protected hostData() {
+  hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'tabbar-translucent') : {};
 
     const layoutClass = `layout-${this.layout}`;
@@ -53,7 +53,7 @@ export class Tabbar {
     };
   }
 
-  protected render() {
+  render() {
     const selectedTab = this.selectedTab;
     const dom = this.tabs.map(tab => (
       <ion-tab-button

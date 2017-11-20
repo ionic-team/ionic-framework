@@ -32,7 +32,7 @@ export class PageTab {
     this.getTabs().tabbarHighlight = value;
   }
 
-  protected render() {
+  render() {
     return [
       <ion-header>
         <ion-toolbar>

@@ -55,7 +55,7 @@ export class RangeKnob {
     };
   }
 
-  protected render() {
+  render() {
     if (this.pin) {
       return [
         <div class='range-pin' role='presentation'>{this.val}</div>,

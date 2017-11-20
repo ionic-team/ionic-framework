@@ -22,7 +22,7 @@ export class TabHighlight {
     this.updateTransform();
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.updateTransform();
   }
 
@@ -47,7 +47,7 @@ export class TabHighlight {
       .find(btn => btn.selected);
   }
 
-  protected hostData() {
+  hostData() {
     return {
       style: {
         'transform': this.transform

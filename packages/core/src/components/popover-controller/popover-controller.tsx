@@ -36,7 +36,7 @@ export class PopoverController {
 
 
   @Listen('body:ionPopoverDidLoad')
-  protected viewDidLoad(ev: PopoverEvent) {
+  protected didLoad(ev: PopoverEvent) {
     const popover = ev.detail.popover;
     const popoverResolve = this.popoverResolves[popover.popoverId];
     if (popoverResolve) {

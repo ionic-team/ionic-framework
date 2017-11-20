@@ -36,7 +36,7 @@ export class AlertController {
   }
 
   @Listen('body:ionAlertDidLoad')
-  protected viewDidLoad(ev: AlertEvent) {
+  protected didLoad(ev: AlertEvent) {
     const alert = ev.detail.alert;
     const alertResolve = this.alertResolves[alert.alertId];
     if (alertResolve) {

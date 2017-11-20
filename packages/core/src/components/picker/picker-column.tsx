@@ -33,7 +33,7 @@ export class PickerColumnCmp {
 
   @Prop() col: PickerColumn;
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
@@ -46,7 +46,7 @@ export class PickerColumnCmp {
     this.scaleFactor = pickerScaleFactor;
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     // get the scrollable element within the column
     let colEle = this.el.querySelector('.picker-opts');
     this.colHeight = colEle.clientHeight;
@@ -60,7 +60,7 @@ export class PickerColumnCmp {
     this.refresh();
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     // TODO block goback-swipe and menu-swipe
     // this.activeBlock = 'goback-swipe menu-swipe';
   }
@@ -396,7 +396,7 @@ export class PickerColumnCmp {
     }
   }
 
-  protected hostData() {
+  hostData() {
     return {
       class: {
         'picker-opts-left': this.col.align === 'left',
@@ -408,7 +408,7 @@ export class PickerColumnCmp {
     };
   }
 
-  protected render() {
+  render() {
     let col = this.col;
 
     let options = this.col.options

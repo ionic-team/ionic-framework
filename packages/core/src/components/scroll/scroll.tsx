@@ -49,7 +49,7 @@ export class Scroll {
    */
   @Event() ionScrollEnd: EventEmitter;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     if (Context.isServer) {
       return;
     }
@@ -58,7 +58,7 @@ export class Scroll {
     this.gesture = gestureCtrl.createGesture('scroll', 100, false);
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.gesture && this.gesture.destroy();
     this.gesture = this.detail = this.detail.event = null;
   }
@@ -318,7 +318,7 @@ export class Scroll {
     }
   }
 
-  protected render() {
+  render() {
     return (
       // scroll-inner is used to keep custom user padding
       <div class='scroll-inner'>

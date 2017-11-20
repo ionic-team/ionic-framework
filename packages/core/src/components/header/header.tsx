@@ -35,7 +35,7 @@ export class Header {
     };
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

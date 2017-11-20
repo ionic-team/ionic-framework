@@ -102,7 +102,7 @@ export class NavController {
     });
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

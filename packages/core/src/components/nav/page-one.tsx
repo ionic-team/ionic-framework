@@ -7,7 +7,7 @@ export class PageOne {
 
   @Element() element: HTMLElement;
 
-  ionViewDidEnter() {
+  componentDidEnter() {
     console.log('page one did enter');
   }
 
@@ -16,7 +16,7 @@ export class PageOne {
     nav.push('page-two');
   }
 
-  protected render() {
+  render() {
     return [
       <ion-header>
         <ion-toolbar>

@@ -127,7 +127,7 @@ export class Toolbar {
    */
   @Prop() translucent: boolean = false;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button') as any;
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
@@ -147,7 +147,7 @@ export class Toolbar {
     };
   }
 
-  protected render() {
+  render() {
     const backgroundCss = createThemedClasses(this.mode, this.color, 'toolbar-background');
     const contentCss = createThemedClasses(this.mode, this.color, 'toolbar-content');
 
