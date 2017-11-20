@@ -22,13 +22,13 @@ export class InfiniteScrollContent {
   @Prop() loadingText: string;
 
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     if (!this.loadingSpinner) {
       this.loadingSpinner = this.config.get('infiniteLoadingSpinner', this.config.get('spinner', 'lines'));
     }
   }
 
-  protected render() {
+  render() {
     return (
       <div class='infinite-loading'>
         {this.loadingSpinner &&

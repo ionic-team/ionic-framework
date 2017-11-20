@@ -131,7 +131,7 @@ export class RadioGroup {
     this.value = radio.checked ? radio.value : '';
   }
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     this.radioGroupId = ++radioGroupIds;
 
     // Get the list header if it exists and set the id
@@ -175,7 +175,7 @@ export class RadioGroup {
     };
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

@@ -120,13 +120,13 @@ export class Menu {
    */
   @Event() ionClose: EventEmitter;
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     return this.lazyMenuCtrl.componentOnReady().then(menu => {
       this.menuCtrl = menu as HTMLIonMenuControllerElement;
     });
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     assert(!!this.menuCtrl, 'menucontroller was not initialized');
 
     const el = this.el;
@@ -162,7 +162,7 @@ export class Menu {
     this.enabled = isEnabled;
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.menuCtrl._unregister(this);
     this.animation && this.animation.destroy();
 
@@ -424,7 +424,7 @@ export class Menu {
     this.afterAnimation(false);
   }
 
-  protected hostData() {
+  hostData() {
     const typeClass = 'menu-type-' + this.type;
     return {
       role: 'complementary',
@@ -437,7 +437,7 @@ export class Menu {
     };
   }
 
-  protected render() {
+  render() {
     return ([
       <div class='menu-inner page-inner'>
         <slot></slot>

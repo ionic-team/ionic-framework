@@ -34,7 +34,7 @@ export class ToastController {
   }
 
   @Listen('body:ionToastDidLoad')
-  protected viewDidLoad(ev: ToastEvent) {
+  protected didLoad(ev: ToastEvent) {
     const toast = ev.detail.toast;
     const toastResolve = this.toastResolves[toast.toastId];
     if (toastResolve) {

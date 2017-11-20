@@ -214,14 +214,14 @@ export class InfiniteScroll {
    */
   @Event() ionInfinite: EventEmitter;
 
-  ionViewWillLoad() {
+  componentWillLoad() {
     const scrollEl = this.el.closest('ion-scroll') as StencilElement;
     return scrollEl.componentOnReady().then((el) => {
       this.scrollEl = el as HTMLIonScrollElement;
     });
   }
 
-  ionViewDidLoad() {
+  componentDidLoad() {
     if (this.init) {
       console.warn('instance was already initialized');
       return;
@@ -234,7 +234,7 @@ export class InfiniteScroll {
     }
   }
 
-  ionViewDidUnload() {
+  componentDidUnload() {
     this.enableScrollEvents(false);
     this.scrollEl = null;
   }
@@ -371,7 +371,7 @@ export class InfiniteScroll {
   }
 
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 

@@ -28,7 +28,7 @@ export class TabBar {
     }
   }
 
-  protected hostData() {
+  hostData() {
     const layoutClass = `layout-${this.layout}`;
     const placementClass = `placement-${this.placement}`;
     return {
@@ -41,7 +41,7 @@ export class TabBar {
     };
   }
 
-  protected render() {
+  render() {
     const selectedTab = this.selectedTab;
     const dom = this.tabs.map(tab => (
       <ion-tab-button

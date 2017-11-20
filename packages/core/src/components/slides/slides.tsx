@@ -185,7 +185,7 @@ export class Slides {
   @Prop() keyboardControl: boolean;
 
 
-  protected render() {
+  render() {
     return (
       <div class='swiper-container' data-dir='rtl'>
         <div class='swiper-wrapper'>
@@ -386,9 +386,9 @@ export class Slides {
   /**
    * @hidden
    */
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     /**
-     * TODO: This should change because currently ionViewDidLoad fires independent of whether the
+     * TODO: This should change because currently componentDidLoad fires independent of whether the
      * child components are ready.
      */
     setTimeout(() => {
@@ -547,7 +547,7 @@ export class Slides {
   /**
    * @hidden
    */
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this._init = false;
 
     this.swiper.destroy(true, true);

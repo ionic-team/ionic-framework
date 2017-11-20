@@ -103,7 +103,7 @@ export class FabContainer {
     this.activated = !this.activated;
   }
 
-  protected render() {
+  render() {
     const fab: any = this.el.querySelector('ion-fab-button');
     fab.toggleActive = this.toggleActive;
     fab.activated = this.activated;

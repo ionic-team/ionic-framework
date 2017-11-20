@@ -116,7 +116,7 @@ export class SegmentButton {
     return classList;
   }
 
-  protected render() {
+  render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
     const hostClasses = getElementClassObject(this.el.classList);
 

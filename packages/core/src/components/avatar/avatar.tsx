@@ -20,7 +20,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class Avatar {
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

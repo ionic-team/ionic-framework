@@ -33,7 +33,7 @@ export class CardTitle {
     };
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

@@ -7,7 +7,7 @@ export class PageTwo {
 
   @Element() element: HTMLElement;
 
-  ionViewDidEnter() {
+  componentDidEnter() {
     console.log('page two did enter');
   }
 
@@ -21,7 +21,7 @@ export class PageTwo {
     nav.pop();
   }
 
-  protected render() {
+  render() {
     return [<ion-header>
       <ion-toolbar>
         <ion-title>Page Two</ion-title>

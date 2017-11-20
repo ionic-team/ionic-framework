@@ -37,7 +37,7 @@ export class LoadingController {
 
 
   @Listen('body:ionLoadingDidLoad')
-  protected viewDidLoad(ev: LoadingEvent) {
+  protected didLoad(ev: LoadingEvent) {
     const loading = ev.detail.loading;
     const loadingResolve = this.loadingResolves[loading.loadingId];
     if (loadingResolve) {

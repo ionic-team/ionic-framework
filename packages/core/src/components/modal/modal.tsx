@@ -143,11 +143,11 @@ export class Modal {
     this.dismiss();
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.ionModalDidLoad.emit({ modal: this });
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.ionModalDidUnload.emit({ modal: this });
   }
 
@@ -160,7 +160,7 @@ export class Modal {
     }
   }
 
-  protected render() {
+  render() {
     const ThisComponent = this.component;
 
     let userCssClasses = 'ion-page';

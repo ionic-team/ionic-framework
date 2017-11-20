@@ -16,7 +16,7 @@ export class TabbarButton {
     ev.stopPropagation();
   }
 
-  protected hostData() {
+  hostData() {
     const selected = this.selected;
     const tab = this.tab;
     const hasTitle = !!tab.title;
@@ -41,7 +41,7 @@ export class TabbarButton {
     };
   }
 
-  protected render() {
+  render() {
     const items = [];
     const tab = this.tab;
 

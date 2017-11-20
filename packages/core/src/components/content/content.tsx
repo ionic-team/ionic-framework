@@ -46,12 +46,12 @@ export class Content {
    */
   @Prop() fullscreen: boolean = false;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.scrollEl = this.el.querySelector('ion-scroll') as HTMLIonScrollElement;
     this.resize();
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.scrollEl = null;
   }
 
@@ -123,7 +123,7 @@ export class Content {
     }
   }
 
-  protected render() {
+  render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'content');
     const hostClasses = getElementClassObject(this.el.classList);
 

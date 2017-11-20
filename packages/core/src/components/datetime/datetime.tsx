@@ -443,7 +443,7 @@ export class Datetime {
    */
   @Event() ionCancel: EventEmitter;
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
@@ -819,7 +819,7 @@ export class Datetime {
     };
   }
 
-  protected render() {
+  render() {
     let addPlaceholderClass = false;
 
     // If selected text has been passed in, use that first

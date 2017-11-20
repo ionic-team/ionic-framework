@@ -104,7 +104,7 @@ export class Select {
   @Event() ionCancel: EventEmitter;
 
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     // Get the parent item
     this.item = this.el.closest('ion-item');
 
@@ -368,7 +368,7 @@ export class Select {
     };
   }
 
-  protected render() {
+  render() {
     let addPlaceholderClass = false;
 
     // If selected text has been passed in, use that first

@@ -25,7 +25,7 @@ export class App {
   @Prop({ context: 'config' }) config: Config;
 
 
-  protected componentWillLoad() {
+  componentWillLoad() {
     this.modeCode = this.config.get('mode');
     this.useRouter = this.config.getBoolean('useRouter', false);
     this.hoverCSS = this.config.getBoolean('hoverCSS', true);
@@ -71,7 +71,7 @@ export class App {
     return null;
   }
 
-  protected hostData() {
+  hostData() {
     return {
       class: {
         [this.modeCode]: true,
@@ -80,7 +80,7 @@ export class App {
     };
   }
 
-  protected render() {
+  render() {
     const dom = [<slot></slot>];
     if (this.useRouter) {
       dom.push(<ion-router-controller></ion-router-controller>);

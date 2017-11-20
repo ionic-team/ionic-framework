@@ -109,7 +109,7 @@ export class Segment {
     this.selectButton(val);
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.buttons = this.el.querySelectorAll('ion-segment-button');
 
     for (var i = 0; i < this.buttons.length; i++) {
@@ -154,7 +154,7 @@ export class Segment {
     };
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

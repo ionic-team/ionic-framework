@@ -37,7 +37,7 @@ export class PickerController {
 
 
   @Listen('body:ionPickerDidLoad')
-  protected viewDidLoad(ev: PickerEvent) {
+  protected didLoad(ev: PickerEvent) {
     const picker = ev.detail.picker;
     const pickerResolve = this.pickerResolves[picker.pickerId];
     if (pickerResolve) {

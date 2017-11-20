@@ -56,7 +56,7 @@ export class SelectPopover {
     this.dismiss(value);
   }
 
-  protected render() {
+  render() {
     return (
       <ion-list no-lines={this.mode === 'md'}>
         <ion-radio-group value={this.value}>

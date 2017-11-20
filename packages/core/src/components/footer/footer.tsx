@@ -8,7 +8,7 @@ import { Component } from '@stencil/core';
   }
 })
 export class Footer {
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }
