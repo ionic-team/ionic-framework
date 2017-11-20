@@ -1,0 +1,60 @@
+<div class="title">
+  Ionic Core Group Inputs Demo
+</div>
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <h2>Radio Buttons</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <input id="stdBeef" type="radio" value="beef" [(ngModel)]="radioValue" />
+      <label for="stdBeef">Carne Asada</label>
+      <input id="stdTongue" type="radio" value="tongue" [(ngModel)]="radioValue" />
+      <label for="stdTongue">Lengua</label>
+      <input id="stdBrains" type="radio" value="brains" [(ngModel)]="radioValue" />
+      <label for="stdBrains">Sesos</label>
+      <input id="stdTripe" type="radio" value="tripe" [(ngModel)]="radioValue" />
+      <label for="stdTripe">Tripa</label>
+      <input id="stdChicken" type="radio" value="chicken" [(ngModel)]="radioValue" />
+      <label for="stdChicken">Pollo</label>
+    </ion-col>
+    <ion-col>
+      Value:
+      <span id="radioOutput">{{radioValue}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-radio-group [{ngModel}]="radioValue">
+          <ion-item>
+            <ion-label>Crarne Asada</ion-label>
+            <ion-radio value="beef"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Lengua</ion-label>
+            <ion-radio value="tongue"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Sesos</ion-label>
+            <ion-radio value="brains"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Tripa</ion-label>
+            <ion-radio value="tripe"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Pollo</ion-label>
+            <ion-radio value="chicken"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+
+</ion-grid>
+<a href='home'>Home</a>

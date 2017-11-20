@@ -1,4 +1,4 @@
-import { StencilElement } from '..';
+import { Animation, StencilElement } from '../index';
 
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
@@ -139,6 +139,10 @@ export function getParentElement(elm: any) {
 }
 
 export function getPageElement(el: HTMLElement) {
+  const tabs = el.closest('ion-tabs');
+  if (tabs) {
+    return tabs;
+  }
   const page = el.closest('ion-page,.ion-page,page-inner');
   if (page) {
     return page;
@@ -265,4 +269,13 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   array.splice(indexes.from, 1);
   array.splice(indexes.to, 0, element);
   return array;
+}
+
+export function playAnimationAsync(animation: Animation): Promise<Animation> {
+  return new Promise((resolve) => {
+    animation.onFinish((ani: Animation) => {
+      resolve(ani);
+    });
+    animation.play();
+  });
 }

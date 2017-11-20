@@ -1,8 +1,8 @@
-import { Component, Element, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, Nav, NavContainer } from '../../index';
 import { isReady } from '../../utils/helpers';
 
-const rootNavs = new Map<number, Nav>();
+const rootNavs = new Map<number, NavContainer>();
 
 @Component({
   tag: 'ion-app',
@@ -23,9 +23,8 @@ export class App {
   @State() useRouter: boolean = false;
 
   @Prop({ context: 'config' }) config: Config;
-
-
-  protected componentWillLoad() {
+  
+  componentWillLoad() {
     this.modeCode = this.config.get('mode');
     this.useRouter = this.config.getBoolean('useRouter', false);
     this.hoverCSS = this.config.getBoolean('hoverCSS', true);
@@ -36,7 +35,20 @@ export class App {
     rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
   }
 
-  getActiveNavs(rootNavId?: number): NavContainer[] {
+  @Method() getRootNavs(): NavContainer[] {
+    const navs: NavContainer[] = [];
+    rootNavs.forEach((rootNav: NavContainer) => {
+      navs.push(rootNav);
+    });
+    return navs;
+  }
+
+  @Method() isScrolling(): boolean {
+    // TODO - sync with Manu
+    return false;
+  }
+
+  @Method() getActiveNavs(rootNavId?: number): NavContainer[] {
     /*const portal = portals.get(PORTAL_MODAL);
     if (portal && portal.views && portal.views.length) {
       return findTopNavs(portal);
@@ -60,7 +72,7 @@ export class App {
     return activeNavs;
   }
 
-  getNavByIdOrName(nameOrId: number | string) {
+  @Method() getNavByIdOrName(nameOrId: number | string) {
     const navs = Array.from(rootNavs.values());
     for (const navContainer of navs) {
       const match = getNavByIdOrNameImpl(navContainer, nameOrId);

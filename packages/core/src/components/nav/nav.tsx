@@ -1,13 +1,31 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { ComponentDataPair, Config, FrameworkDelegate, NavController, NavOptions, ViewController } from '../../index';
-import { getActiveImpl, getFirstView, getNextNavId, getPreviousImpl, getViews, resolveRoute } from '../../navigation/nav-utils';
+import {
+  ComponentDataPair,
+  Config,
+  FrameworkDelegate,
+  NavController,
+  NavOptions,
+  NavState,
+  PublicNavController,
+  RouterEntries,
+  RouterEntry,
+  ViewController
+} from '../../index';
+import {
+  getActiveImpl,
+  getFirstView,
+  getNextNavId,
+  getPreviousImpl,
+  getViews,
+  resolveRoute
+} from '../../navigation/nav-utils';
 import { assert, isReady } from '../../utils/helpers';
-import { NavState, RouterEntries, RouterEntry } from '../../index';
 
+/* it is very important to keep this class in sync with ./nav-interface interface */
 @Component({
   tag: 'ion-nav',
 })
-export class Nav {
+export class Nav implements PublicNavController {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;
@@ -126,17 +144,17 @@ export class Nav {
   }
 
   @Method()
-  canGoBack(nav: Nav) {
+  canGoBack(nav: Nav): boolean {
     return nav.views && nav.views.length > 0;
   }
 
   @Method()
-  canSwipeBack() {
+  canSwipeBack(): boolean {
     return true; // TODO, implement this for real
   }
 
   @Method()
-  getFirstView() {
+  getFirstView(): ViewController {
     return getFirstView(this);
   }
 

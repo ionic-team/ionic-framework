@@ -93,6 +93,7 @@ export {
 } from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
+export { PublicNavController } from './components/nav/nav-interface';
 export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
