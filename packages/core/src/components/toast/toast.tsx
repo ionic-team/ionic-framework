@@ -64,7 +64,7 @@ export class Toast {
   @Prop() closeButtonText: string;
   @Prop() dismissOnPageChange: boolean;
   @Prop() position: string;
-  @Prop() translucent: boolean;
+  @Prop() translucent: boolean = false;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() toastId: string;

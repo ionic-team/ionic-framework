@@ -64,7 +64,7 @@ export class Loading {
   @Prop() content: string;
   @Prop() dismissOnPageChange: boolean = false;
   @Prop() duration: number;
-  @Prop() translucent: boolean;
+  @Prop() translucent: boolean = false;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() loadingId: string;

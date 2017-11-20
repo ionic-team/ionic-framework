@@ -67,7 +67,7 @@ export class Popover {
   @Prop() ev: Event;
   @Prop() popoverId: string;
   @Prop() showBackdrop: boolean = true;
-  @Prop() translucent: boolean;
+  @Prop() translucent: boolean = false;
 
 
   present() {
