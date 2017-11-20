@@ -4,7 +4,6 @@ import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@s
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
-
 @Component({
   tag: 'ion-loading',
   styleUrls: {
@@ -184,10 +183,7 @@ export class Loading {
   }
 
   protected render() {
-    let userCssClass = 'loading-content';
-    if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
-    }
+    // TODO: cssClass
 
     const loadingInner: any[] = [];
 
@@ -239,3 +235,5 @@ export interface LoadingEvent extends Event {
     loading: Loading;
   };
 }
+
+export { iOSEnterAnimation, iOSLeaveAnimation };

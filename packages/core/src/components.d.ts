@@ -12,6 +12,7 @@ import {
 import {
   AnimationBuilder,
   PickerOptions,
+  FrameworkDelegate,
   PickerColumn,
 } from './index';
 import {
@@ -26,9 +27,6 @@ import {
   GestureCallback,
   GestureDetail,
 } from './components/gesture/gesture.js';
-import {
-  FrameworkDelegate,
-} from './navigation/nav-interfaces';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
@@ -212,7 +210,7 @@ declare global {
 
 
 import {
-  IonApp as IonApp
+  App as IonApp
 } from './components/app/app';
 
 declare global {
@@ -961,7 +959,7 @@ declare global {
 
 
 import {
-  Col as IonCol
+  Column as IonCol
 } from './components/grid/col';
 
 declare global {
@@ -1408,7 +1406,7 @@ declare global {
 
 
 import {
-  IonKeyboardController as IonKeyboardController
+  KeyboardController as IonKeyboardController
 } from './components/keyboard-controller/keyboard-controller';
 
 declare global {
@@ -1604,7 +1602,7 @@ declare global {
 
 import {
   MenuController as IonMenuController
-} from './components/menu/menu-controller';
+} from './components/menu-controller/menu-controller';
 
 declare global {
   interface HTMLIonMenuControllerElement extends IonMenuController, HTMLElement {
@@ -1741,7 +1739,7 @@ declare global {
 
 
 import {
-  NavControllerImpl as IonNavController
+  NavController as IonNavController
 } from './components/nav-controller/nav-controller';
 
 declare global {
@@ -1802,7 +1800,7 @@ declare global {
 
 
 import {
-  IonNav as IonNav
+  Nav as IonNav
 } from './components/nav/nav';
 
 declare global {
@@ -2425,42 +2423,39 @@ declare global {
   namespace JSXElements {
     export interface IonRouteAttributes extends HTMLAttributes {
       
-        url?: string,
+        path?: string,
         component?: string,
-        componentProps?: any,
-        router?: any
+        props?: any
     }
   }
 }
 
 
 import {
-  Router as IonRouter
-} from './components/router/router';
+  RouterController as IonRouterController
+} from './components/router/router-controller';
 
 declare global {
-  interface HTMLIonRouterElement extends IonRouter, HTMLElement {
+  interface HTMLIonRouterControllerElement extends IonRouterController, HTMLElement {
   }
-  var HTMLIonRouterElement: {
-    prototype: HTMLIonRouterElement;
-    new (): HTMLIonRouterElement;
+  var HTMLIonRouterControllerElement: {
+    prototype: HTMLIonRouterControllerElement;
+    new (): HTMLIonRouterControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-router": HTMLIonRouterElement;
+    "ion-router-controller": HTMLIonRouterControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-router": HTMLIonRouterElement;
+    "ion-router-controller": HTMLIonRouterControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-router": JSXElements.IonRouterAttributes;
+      "ion-router-controller": JSXElements.IonRouterControllerAttributes;
     }
   }
   namespace JSXElements {
-    export interface IonRouterAttributes extends HTMLAttributes {
+    export interface IonRouterControllerAttributes extends HTMLAttributes {
       
-        root?: string,
-        match?: any
     }
   }
 }
@@ -3042,9 +3037,7 @@ declare global {
     export interface IonTabAttributes extends HTMLAttributes {
       
         btnId?: string,
-        root?: any,
-        rootParams?: any,
-        urlPath?: string,
+        path?: string,
         title?: string,
         icon?: string,
         badge?: string,

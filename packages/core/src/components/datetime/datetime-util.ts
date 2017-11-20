@@ -270,7 +270,7 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
   } else {
     // blank data, clear everything out
-    for (var k in existingData) {
+    for (let k in existingData) {
       delete (<any>existingData)[k];
     }
   }

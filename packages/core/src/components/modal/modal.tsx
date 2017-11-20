@@ -5,7 +5,6 @@ import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
-
 @Component({
   tag: 'ion-modal',
   styleUrls: {
@@ -164,13 +163,12 @@ export class Modal {
   protected render() {
     const ThisComponent = this.component;
 
-    let userCssClasses = 'modal-content';
+    let userCssClasses = 'ion-page';
     if (this.cssClass) {
       userCssClasses += ` ${this.cssClass}`;
     }
 
     const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
-    const thisComponentClasses = createThemedClasses(this.mode, this.color, userCssClasses);
 
     return [
       <div
@@ -186,7 +184,7 @@ export class Modal {
       >
         <ThisComponent
           {...this.componentProps}
-          class={thisComponentClasses}
+          class={userCssClasses}
         >
         </ThisComponent>
       </div>
@@ -211,3 +209,5 @@ export interface ModalEvent extends Event {
     modal: Modal;
   };
 }
+
+export { iOSEnterAnimation, iOSLeaveAnimation };

@@ -1,5 +1,5 @@
+import { BlurEvent, BooleanInput, BooleanInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
-
 
 /**
  * @name Checkbox
@@ -76,7 +76,7 @@ import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChang
     theme: 'checkbox'
   }
 })
-export class Checkbox {
+export class Checkbox implements BooleanInput {
   private checkboxId: string;
   private labelId: string;
   private styleTmr: any;
@@ -84,12 +84,22 @@ export class Checkbox {
   /**
    * @output {Event} Emitted when the checked property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<BooleanInputChangeEvent>;
+
+  /**
+   * @output {Event} Emitted when the toggle has focus.
+   */
+  @Event() ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * @output {Event} Emitted when the toggle loses focus.
+   */
+  @Event() ionBlur: EventEmitter<BlurEvent>;
 
   /**
    * @output {Event} Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter;
+  @Event() ionStyle: EventEmitter<StyleEvent>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.

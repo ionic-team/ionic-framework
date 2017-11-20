@@ -1,6 +1,22 @@
 import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
 
-import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+import {
+  DatetimeData,
+  LocaleData,
+  convertFormatToKey,
+  convertToArrayOfNumbers,
+  convertToArrayOfStrings,
+  dateDataSortValue,
+  dateSortValue,
+  dateValueRange,
+  daysInMonth,
+  getValueFromFormat,
+  parseDate,
+  parseTemplate,
+  renderDatetime,
+  renderTextFormat,
+  updateDate
+} from './datetime-util';
 
 import { clamp, isBlank, isObject } from '../../utils/helpers';
 

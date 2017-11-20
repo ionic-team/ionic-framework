@@ -1,5 +1,5 @@
-import { Nav, Transition, ViewController } from './nav-interfaces';
-import { Animation, AnimationOptions, Config, TransitionBuilder } from '..';
+import { Transition } from './nav-interfaces';
+import { Animation, AnimationOptions, Config, Nav, RouterEntry, TransitionBuilder, ViewController } from '..';
 import { isDef } from '../utils/helpers';
 
 export const STATE_NEW = 1;
@@ -33,7 +33,8 @@ export function setZIndex(nav: Nav, enteringView: ViewController, leavingView: V
   if (enteringView) {
     if (nav.isPortal) {
       if (direction === DIRECTION_FORWARD) {
-        updateZIndex(enteringView, nav.zIndexOffset + portalZindex);
+        // TODO - fix typing
+        updateZIndex(enteringView, (nav as any).zIndexOffset + portalZindex);
       }
       portalZindex++;
       return;
@@ -50,7 +51,8 @@ export function setZIndex(nav: Nav, enteringView: ViewController, leavingView: V
       }
 
     } else {
-      updateZIndex(enteringView, INIT_ZINDEX + nav.zIndexOffset);
+      // TODO - fix typing
+      updateZIndex(enteringView, INIT_ZINDEX + (nav as any).zIndexOffset);
     }
   }
 }
@@ -168,11 +170,6 @@ export function getViews(nav: Nav): ViewController[] {
   return nav.views ? nav.views : [];
 }
 
-export function init(nav: Nav) {
-  nav.id = getNextNavId();
-  nav.views = [];
-}
-
 export function getActiveImpl(nav: Nav): ViewController {
   return nav.views && nav.views.length > 0 ? nav.views[nav.views.length - 1] : null;
 }
@@ -186,6 +183,10 @@ export function getPreviousImpl(nav: Nav, viewController: ViewController): ViewC
 
 export function getNextNavId() {
   return navControllerIds++;
+}
+
+export function resolveRoute(nav: Nav, component: string): RouterEntry {
+  return nav.routes.find(r => r.id === component);
 }
 
 let navControllerIds = NAV_ID_START;

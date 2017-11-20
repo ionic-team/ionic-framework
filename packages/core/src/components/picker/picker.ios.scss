@@ -115,7 +115,7 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
   font-weight: $picker-ios-button-strong-font-weight;
 }
 
-.picker-ios .picker-toolbar-button:first-child{
+.picker-ios .picker-toolbar-button:first-child {
   @include text-align(start);
 
   font-weight: normal;
@@ -128,10 +128,9 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 
   height: $picker-ios-button-height;
 
+  font-size: $picker-ios-button-font-size;
   color: $picker-ios-button-text-color;
   background: $picker-ios-button-background-color;
-
-  font-size: $picker-ios-button-font-size;
 }
 
 .picker-columns {
@@ -161,6 +160,11 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
 }
 
 .picker-ios .picker-opt {
+  @include padding(
+    $picker-ios-option-padding-top,
+    $picker-ios-option-padding-end,
+    $picker-ios-option-padding-bottom,
+    $picker-ios-option-padding-start);
   @include margin(0);
   @include transform-origin(center, center);
 
@@ -177,8 +181,6 @@ $picker-ios-option-offset-y:                   (($picker-ios-height - $picker-io
   backface-visibility: hidden;
 
   pointer-events: auto;
-
-  @include padding($picker-ios-option-padding-top, $picker-ios-option-padding-end, $picker-ios-option-padding-bottom, $picker-ios-option-padding-start);
 }
 
 .picker-ios .picker-above-highlight {

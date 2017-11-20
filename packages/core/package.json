@@ -10,23 +10,25 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.0.8-3",
+    "@stencil/core": "0.0.8-5",
     "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
-    "@types/jest": "^21.1.0",
+    "@types/jest": "^21.1.6",
     "ionicons": "^4.0.0-6",
-    "jest": "^21.1.0",
-    "np": "^2.16.1",
-    "sass-lint": "^1.11.1",
+    "jest": "^21.2.1",
+    "mocha": "^4.0.1",
+    "np": "^2.17.0",
+    "sass-lint": "^1.12.1",
     "selenium-webdriver": "^3.6.0",
-    "tslint": "^5.7.0",
+    "tslint": "^5.8.0",
     "tslint-ionic-rules": "0.0.11"
   },
   "scripts": {
     "build": "stencil build",
+    "tsc": "./node_modules/.bin/tsc -p .",
     "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
-    "e2e": "node ./scripts/run-e2e.js",
-    "snapshot": "node ./scripts/e2e.js --snapshot",
+    "e2e": "node ./scripts/e2e",
+    "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
     "clean": "rm -rf dist",
@@ -50,14 +52,15 @@
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "jest": {
     "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
+      "^.+\\.(js|ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
     },
     "testRegex": "src/.*\\.spec\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
       "js",
-      "jsx"
+      "jsx",
+      "d.ts"
     ]
   }
 }

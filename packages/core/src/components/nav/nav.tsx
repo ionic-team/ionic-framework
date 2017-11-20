@@ -1,21 +1,24 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config } from '../..';
-import { ComponentDataPair, FrameworkDelegate, Nav, NavController, NavOptions, ViewController } from '../../navigation/nav-interfaces';
-
-import { getActiveImpl, getFirstView, getPreviousImpl, getViews, init } from '../../navigation/nav-utils';
-import { isReady } from '../../utils/helpers';
+import { ComponentDataPair, Config, FrameworkDelegate, NavController, NavOptions, ViewController } from '../../index';
+import { getActiveImpl, getFirstView, getNextNavId, getPreviousImpl, getViews, resolveRoute } from '../../navigation/nav-utils';
+import { assert, isReady } from '../../utils/helpers';
+import { NavState, RouterEntries, RouterEntry } from '../../index';
 
 @Component({
   tag: 'ion-nav',
 })
-export class IonNav implements Nav {
-  // private navId: number;
+export class Nav {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;
+  @Event() ionNavChanged: EventEmitter;
 
+  useRouter: boolean;
+  navId: number;
+  init = false;
+  routes: RouterEntries = [];
   parent: Nav;
-  views: ViewController[];
+  views: ViewController[] = [];
   transitioning?: boolean;
   destroyed?: boolean;
   transitionId?: number;
@@ -31,11 +34,31 @@ export class IonNav implements Nav {
   @Prop({ context: 'config' }) config: Config;
 
   constructor() {
-    init(this);
+    this.navId = getNextNavId();
+  }
+
+  @Listen('ionRouteAdded')
+  routeAdded(ev: CustomEvent) {
+    this.addRoute(ev.detail);
+  }
+
+  @Listen('ionRouteRemoved')
+  routeRemoved(ev: CustomEvent) {
+    this.removeRoute(ev.detail);
+  }
+
+  componentWillLoad() {
+    this.useRouter = this.config.getBoolean('useRouter', false);
   }
 
   componentDidLoad() {
-    componentDidLoadImpl(this);
+    if (this.init) {
+      return;
+    }
+    this.init = true;
+    if (!this.useRouter) {
+      componentDidLoadImpl(this);
+    }
   }
 
   getViews(): ViewController[] {
@@ -127,10 +150,59 @@ export class IonNav implements Nav {
     navInitializedImpl(this, event);
   }
 
+  @Method()
+  addRoute(route: RouterEntry) {
+    this.routes.push(route);
+  }
+
+  @Method()
+  removeRoute(_: RouterEntry) {
+    throw 'not implemented';
+  }
+
+  @Method()
+  getState(): NavState {
+    assert(this.useRouter, 'routing is disabled');
+    return getState(this);
+  }
+
+  @Method()
+  setRouteId(id: string, _: any = {}): Promise<void> {
+    assert(this.useRouter, 'routing is disabled');
+    const active = this.getActive();
+    if (active && active.component === id) {
+      return Promise.resolve();
+    }
+    return this.setRoot(id);
+  }
+
+  @Method()
+  getRoutes(): RouterEntries {
+    assert(this.useRouter, 'routing is disabled');
+    return this.routes;
+  }
 
   protected render() {
     return <slot></slot>;
   }
+}
+
+export function getState(nav: Nav): NavState {
+  const active = getActiveImpl(nav);
+  if (!active) {
+    return null;
+  }
+  const component = active.component;
+  const route = resolveRoute(nav, component);
+  if (!route) {
+    console.error('cant reverse route by component', component);
+    return null;
+  }
+
+  return {
+    path: route.path,
+    focusNode: active.element
+  };
 }
 
 export function componentDidLoadImpl(nav: Nav) {

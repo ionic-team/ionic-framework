@@ -14,10 +14,9 @@ let timeoutValue: number = null;
 @Component({
   tag: 'ion-keyboard-controller'
 })
-export class IonKeyboardController {
+export class KeyboardController {
 
   @Prop({context: 'config'}) config: Config;
-  @Prop({context: 'dom'}) domController: any;
 
   /**
    * @output {Event} Emitted before the keyboard has shown.
@@ -53,7 +52,7 @@ export class IonKeyboardController {
   }
 }
 
-export function onCloseImpl(keyboardController: IonKeyboardController, callback: Function, pollingInterval: number, maxPollingChecks: number): Promise<any> {
+export function onCloseImpl(keyboardController: KeyboardController, callback: Function, pollingInterval: number, maxPollingChecks: number): Promise<any> {
   let numChecks = 0;
 
   const promise: Promise<any> = callback ? null : new Promise((resolve) => {
@@ -75,7 +74,7 @@ export function onCloseImpl(keyboardController: IonKeyboardController, callback:
   return promise;
 }
 
-export function componentDidLoadImpl(keyboardController: IonKeyboardController) {
+export function componentDidLoadImpl(keyboardController: KeyboardController) {
   focusOutline(getDocument(), keyboardController.config.get('focusOutline'));
   if (keyboardController.config.getBoolean('keyboardResizes', false)) {
     listenV2(getWindow(), keyboardController);
@@ -84,7 +83,7 @@ export function componentDidLoadImpl(keyboardController: IonKeyboardController) 
   }
 }
 
-export function listenV2(win: Window, keyboardController: IonKeyboardController) {
+export function listenV2(win: Window, keyboardController: KeyboardController) {
   v2KeyboardWillShowHandler = () => {
     keyboardController.keyboardWillShow.emit();
   };
@@ -106,7 +105,7 @@ export function listenV2(win: Window, keyboardController: IonKeyboardController)
   win.addEventListener('keyboardDidHide', v2KeyboardDidHideHandler);
 }
 
-export function listenV1(win: Window, keyboardController: IonKeyboardController) {
+export function listenV1(win: Window, keyboardController: KeyboardController) {
   v1keyboardHide = () => {
     blurActiveInput(true, keyboardController);
   };
@@ -118,7 +117,7 @@ export function listenV1(win: Window, keyboardController: IonKeyboardController)
   win.addEventListener('native.keyboardshow', v1keyboardShow);
 }
 
-export function blurActiveInput(shouldBlur: boolean, keyboardController: IonKeyboardController) {
+export function blurActiveInput(shouldBlur: boolean, keyboardController: KeyboardController) {
   clearTimeout(timeoutValue);
   if (shouldBlur) {
     timeoutValue = setTimeout(() => {

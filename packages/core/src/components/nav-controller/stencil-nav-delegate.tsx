@@ -1,7 +1,5 @@
 import { Component, Method } from '@stencil/core';
-
-import { StencilElement } from '../..';
-import { FrameworkDelegate, Nav, ViewController } from '../../navigation/nav-interfaces';
+import { FrameworkDelegate, Nav, ViewController } from '../../index';
 
 @Component({
   tag: 'stencil-ion-nav-delegate'
