@@ -11,7 +11,7 @@
 <body>
   <ion-app>
     <ion-page>
-      <ion-header translucent>
+      <ion-header>
         <ion-toolbar>
           <ion-title>Card - Basic</ion-title>
         </ion-toolbar>
@@ -39,8 +39,11 @@
           </ion-card-content>
         </ion-card>
 
-        <ion-card style="color: white; background-position: center; background-image:url(https://images.unsplash.com/photo-1500531279542-fc8490c8ea4d?auto=format&fit=crop&w=1502&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D)">
-          <ion-card-header>
+        <ion-card>
+          <div style="position: absolute; top: 0; left:0; right:0; bottom:0;">
+            <img style="transform: rotate(145deg) scale(1.5)" src="http://images.all-free-download.com/images/graphiclarge/travel_icons_6813629.jpg">
+          </div>
+          <ion-card-header translucent>
             <ion-card-subtitle>
               Subtitle
             </ion-card-subtitle>
@@ -49,7 +52,24 @@
             </ion-card-title>
           </ion-card-header>
 
-          <ion-card-content>
+          <ion-card-content style="min-height: 200px">
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card style="color: white;">
+          <div style="position: absolute; top: 0; left:0; right:0; bottom:0;">
+            <img style="transform: scale(2)" src="https://images.unsplash.com/photo-1500531279542-fc8490c8ea4d?auto=format&fit=crop&w=1502&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D">
+          </div>
+          <ion-card-header translucent>
+            <ion-card-subtitle>
+              Subtitle
+            </ion-card-subtitle>
+            <ion-card-title>
+              Title
+            </ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content style="padding-top: 100px">
             The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
           </ion-card-content>
         </ion-card>

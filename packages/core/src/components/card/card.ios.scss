@@ -52,6 +52,8 @@ $card-ios-text-color:                  #666 !default;
 
   background: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
+
+  transform: translateZ(0);
 }
 
 .card-ios ion-list {

@@ -465,7 +465,8 @@ declare global {
     export interface IonCardHeaderAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md'
+        mode?: 'ios' | 'md',
+        translucent?: boolean
     }
   }
 }
