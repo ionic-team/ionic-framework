@@ -25,7 +25,7 @@ export class App {
   @Prop({ context: 'config' }) config: Config;
 
 
-  protected componentWillLoad() {
+  componentWillLoad() {
     this.modeCode = this.config.get('mode');
     this.useRouter = this.config.getBoolean('useRouter', false);
     this.hoverCSS = this.config.getBoolean('hoverCSS', true);
