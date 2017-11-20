@@ -33,12 +33,12 @@
         </ion-fab>
 
         <ion-fab bottom right edge id="fab2" slot="fixed">
-          <ion-fab-button translucent onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></ion-fab-button>
+          <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></ion-fab-button>
           <ion-fab-list side="left">
-            <ion-fab-button translucent onclick="openSocial('facebook', 'fab2')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
-            <ion-fab-button translucent onclick="openSocial('twitter', 'fab2')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-            <ion-fab-button translucent onclick="openSocial('vimeo', 'fab2')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-            <ion-fab-button translucent onclick="openSocial('googleplus', 'fab2')"><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
+            <ion-fab-button onclick="openSocial('facebook', 'fab2')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+            <ion-fab-button onclick="openSocial('twitter', 'fab2')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+            <ion-fab-button onclick="openSocial('vimeo', 'fab2')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+            <ion-fab-button onclick="openSocial('googleplus', 'fab2')"><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
           </ion-fab-list>
         </ion-fab>
 
@@ -63,7 +63,7 @@
         </ion-fab>
 
         <ion-fab center middle id="fab5" slot="fixed">
-          <ion-fab-button translucent onclick="clickMainFAB('fab5')" class="e2eFabCenter"><ion-icon name="md-share"></ion-icon></ion-fab-button>
+          <ion-fab-button onclick="clickMainFAB('fab5')" class="e2eFabCenter"><ion-icon name="md-share"></ion-icon></ion-fab-button>
           <ion-fab-list side="top">
             <ion-fab-button onclick="openSocial('vimeo', 'fab5')" color="primary"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
           </ion-fab-list>
@@ -139,10 +139,6 @@
         max-width: 150px;
         height: 150px;
         background: blue;
-      }
-
-      f:nth-child(2) {
-        background: lightpink;
       }
 
       f:last-of-type {

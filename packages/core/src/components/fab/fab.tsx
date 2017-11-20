@@ -118,10 +118,16 @@ export class FabButton {
     if (!this.inList) {
       return [];
     }
-    return [
+    let listClasses = [
       `fab-in-list`,
       `fab-${this.mode}-in-list`
     ];
+
+    if (this.translucent) {
+      listClasses.push(`fab-translucent-${this.mode}-in-list`);
+    }
+
+    return listClasses;
   }
 
   /**

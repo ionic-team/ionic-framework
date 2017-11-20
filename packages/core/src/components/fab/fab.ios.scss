@@ -40,6 +40,9 @@ $fab-ios-list-button-transition-delay:            10ms !default;
 /// @prop - Filter of the translucent fab
 $fab-ios-translucent-filter:                      saturate(180%) blur(20px) !default;
 
+/// @prop - Opacity of the translucent fab
+$fab-ios-translucent-opacity:                     .88 !default;
+
 
 .fab-ios {
   color: $fab-ios-text-color;
@@ -77,14 +80,14 @@ $fab-ios-translucent-filter:                      saturate(180%) blur(20px) !def
 // --------------------------------------------------
 
 .fab-translucent-ios {
-  background-color: rgba($fab-ios-background-color, 0.88);
+  background-color: rgba($fab-ios-background-color, $fab-ios-translucent-opacity);
 
   -webkit-backdrop-filter: $fab-ios-translucent-filter;
   backdrop-filter: $fab-ios-translucent-filter;
 }
 
-.fab-ios-in-list.fab-translucent-ios {
-  background-color: rgba($fab-ios-list-button-background-color, 0.88);
+.fab-translucent-ios-in-list {
+  background-color: rgba($fab-ios-list-button-background-color, $fab-ios-translucent-opacity);
 }
 
 
@@ -108,6 +111,14 @@ $fab-ios-translucent-filter:                      saturate(180%) blur(20px) !def
 
   .fab-ios-#{$color-name}.activated {
     background-color: $bg-color-activated;
+  }
+
+  .fab-translucent-ios-#{$color-name} {
+    background-color: rgba($bg-color, $fab-ios-translucent-opacity);
+  }
+
+  .fab-translucent-ios-#{$color-name}.activated {
+    background-color: rgba($bg-color-activated, $fab-ios-translucent-opacity);
   }
 }
 
