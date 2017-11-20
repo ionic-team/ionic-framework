@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Method, Prop } from '@stencil/core';
+import { Component, Element, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, Nav, NavContainer } from '../../index';
 import { isReady } from '../../utils/helpers';
 
@@ -17,15 +17,22 @@ const rootNavs = new Map<number, NavContainer>();
 export class App {
 
   @Element() element: HTMLElement;
-  @Prop({ context: 'config' }) config: Config;
 
-  @Listen('body:navInit')
-  registerRootNav(event: CustomEvent) {
-    rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
+  @State() modeCode: string;
+  @State() hoverCSS: boolean = false;
+  @State() useRouter: boolean = false;
+
+  @Prop({ context: 'config' }) config: Config;
+  
+  componentWillLoad() {
+    this.modeCode = this.config.get('mode');
+    this.useRouter = this.config.getBoolean('useRouter', false);
+    this.hoverCSS = this.config.getBoolean('hoverCSS', true);
   }
 
-  componentWillLoad() {
-    componentDidLoadImpl(this);
+  @Listen('body:navInit')
+  protected registerRootNav(event: CustomEvent) {
+    rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
   }
 
   @Method() getRootNavs(): NavContainer[] {
@@ -76,10 +83,21 @@ export class App {
     return null;
   }
 
-  protected render() {
-    return (
-      <slot></slot>
-    );
+  hostData() {
+    return {
+      class: {
+        [this.modeCode]: true,
+        'enable-hover': this.hoverCSS
+      }
+    };
+  }
+
+  render() {
+    const dom = [<slot></slot>];
+    if (this.useRouter) {
+      dom.push(<ion-router-controller></ion-router-controller>);
+    }
+    return dom;
   }
 }
 
@@ -109,15 +127,6 @@ export function getNavByIdOrNameImpl(nav: NavContainer, id: number | string): Na
     }
   }
   return null;
-}
-
-export function componentDidLoadImpl(app: App) {
-  app.element.classList.add(app.config.get('mode'));
-  // TODO add platform classes
-  if (app.config.getBoolean('hoverCSS', true)) {
-    app.element.classList.add('enable-hover');
-  }
-  // TODO fire platform ready
 }
 
 export function handleBackButtonClick(): Promise<any> {

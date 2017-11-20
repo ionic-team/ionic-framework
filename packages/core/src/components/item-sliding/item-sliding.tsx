@@ -192,14 +192,14 @@ export class ItemSliding {
     };
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
     this.list = this.el.closest('ion-list') as HTMLIonListElement;
 
     this.updateOptions();
   }
 
-  protected ionViewDidUnLoad() {
+  componentDidUnload() {
     this.item = this.list = this.leftOptions = this.rightOptions = null;
   }
 
@@ -413,7 +413,7 @@ export class ItemSliding {
     this.ionDrag.emit(this);
   }
 
-  protected hostData() {
+  hostData() {
     return {
       class: {
         'item-wrapper': true,
@@ -426,7 +426,7 @@ export class ItemSliding {
     };
   }
 
-  protected render() {
+  render() {
     return (
       <ion-gesture {...this.gestureOptions}>
         <slot></slot>

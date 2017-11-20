@@ -166,7 +166,7 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
-  protected render() {
+  render() {
     const buttonType = this.buttonType;
     const mode = this.mode;
 

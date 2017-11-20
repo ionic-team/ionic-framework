@@ -231,43 +231,11 @@ ion-page,
 
   position: absolute;
   z-index: $z-index-page-container;
-  display: block;
 
   width: 100%;
   height: 100%;
 
   contain: strict;
-}
-
-ion-tabs {
-  display: flex;
-
-  flex-direction: column;
-}
-
-.tabs-inner {
-  position: relative;
-  flex: 1;
-
-  contain: strict;
-}
-
-ion-tab {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-  z-index: -1;
-  display: none;
-
-  width: 100%;
-  height: 100%;
-
-  contain: strict;
-}
-
-ion-tab.show-tab {
-  z-index: $z-index-page-container;
-  display: block;
 }
 
 // Page Container Structure
@@ -308,6 +276,17 @@ ion-header {
 // Misc
 // --------------------------------------------------
 
+ion-route,
+ion-route-controller,
+ion-animation-controller,
+ion-nav-controller,
+ion-menu-controller,
+ion-action-sheet-controller,
+ion-alert-controller,
+ion-loading-controller,
+ion-modal-controller,
+ion-picker-controller,
+ion-toast-controller,
 [app-viewport],
 [overlay-portal],
 [nav-viewport],

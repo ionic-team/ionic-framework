@@ -132,7 +132,7 @@ export class Range implements BaseInputComponent {
     this.emitStyle();
   }
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     this.inputUpdated();
     this.createTicks();
     this.emitStyle();
@@ -401,7 +401,7 @@ export class Range implements BaseInputComponent {
     };
   }
 
-  protected render() {
+  render() {
     return [
       <slot name='start'></slot>,
       <ion-gesture

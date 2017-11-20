@@ -167,12 +167,12 @@ export class SplitPane {
    */
   @Event() ionChange: EventEmitter;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this._styleChildren();
     this.whenChanged();
   }
 
-  protected ionViewDidUnload() {
+  componentDidUnload() {
     this.rmL && this.rmL();
     this.rmL = null;
   }
@@ -269,7 +269,7 @@ export class SplitPane {
     };
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 

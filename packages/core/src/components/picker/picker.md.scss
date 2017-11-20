@@ -93,17 +93,15 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 .picker-md .picker-button,
 .picker-md .picker-button.activated {
   @include margin(0);
+  @include padding(0, 1.1em);
 
   height: $picker-md-button-height;
-
-  color: $picker-md-button-text-color;
-  background: $picker-md-button-background-color;
 
   font-size: $picker-md-button-font-size;
   font-weight: 500;
   text-transform: uppercase;
-  padding: 0 1.1em;
-
+  color: $picker-md-button-text-color;
+  background: $picker-md-button-background-color;
   box-shadow: none;
 }
 

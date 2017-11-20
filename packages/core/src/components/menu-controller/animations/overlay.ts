@@ -26,11 +26,11 @@ export default function(Animation: Animation, _: HTMLElement, menu: Menu): Anima
     .addElement(menu.menuInnerEl)
     .fromTo('translateX', closedX, openedX);
 
-  const backdropApi = new Animation()
+  const backdropAni = new Animation()
     .addElement(menu.backdropEl)
-    .fromTo('opacity', 0.01, 0.35);
+    .fromTo('opacity', 0.01, 0.3);
 
   return baseAnimation(Animation)
     .add(menuAni)
-    .add(backdropApi);
+    .add(backdropAni);
 }

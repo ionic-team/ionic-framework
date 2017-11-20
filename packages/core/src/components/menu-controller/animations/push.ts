@@ -28,7 +28,12 @@ export default function(Animation: Animation, _: HTMLElement, menu: Menu): Anima
     .addElement(menu.contentEl)
     .fromTo('translateX', '0px', contentOpenedX);
 
+  const backdropAni = new Animation()
+    .addElement(menu.backdropEl)
+    .fromTo('opacity', 0.01, 0.2);
+
   return baseAnimation(Animation)
     .add(menuAni)
+    .add(backdropAni)
     .add(contentAni);
 }

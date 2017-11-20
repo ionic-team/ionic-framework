@@ -18,7 +18,6 @@ export class Picker {
   private animation: Animation;
   private durationTimeout: any;
   private mode: string;
-  private lastClick: number = 0;
 
   @Element() private el: HTMLElement;
 
@@ -99,7 +98,7 @@ export class Picker {
 
       animation.onFinish((a: any) => {
         a.destroy();
-        this.ionViewDidEnter();
+        this.componentDidEnter();
         resolve();
 
       }).play();
@@ -145,19 +144,7 @@ export class Picker {
     });
   }
 
-  protected ionViewDidUnload() {
-    this.ionPickerDidUnload.emit({ picker: this });
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     if (!this.spinner) {
       let defaultSpinner = 'lines';
 
@@ -174,7 +161,7 @@ export class Picker {
     this.ionPickerDidLoad.emit({ picker: this });
   }
 
-  protected ionViewDidEnter() {
+  componentDidEnter() {
     // blur the currently active element
     const activeElement: any = document.activeElement;
     activeElement && activeElement.blur && activeElement.blur();
@@ -187,14 +174,25 @@ export class Picker {
     this.ionPickerDidPresent.emit({ picker: this });
   }
 
+  componentDidUnload() {
+    this.ionPickerDidUnload.emit({ picker: this });
+  }
+
+
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
   buttonClick(button: PickerButton) {
     // if (!this.enabled) {
     //   return;
     // }
 
     // keep the time of the most recent button click
-    this.lastClick = Date.now();
-
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -262,11 +260,8 @@ export class Picker {
     }
   }
 
-  protected render() {
-    let userCssClass = 'picker-content';
-    if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
-    }
+  render() {
+    // TODO: cssClass
 
     let buttons = this.buttons
     .map(b => {
@@ -346,12 +341,12 @@ export class Picker {
             </div>
           )}
         </div>
-        <div class="picker-columns">
-          <div class="picker-above-highlight"></div>
+        <div class='picker-columns'>
+          <div class='picker-above-highlight'></div>
           {columns.map(c =>
             <ion-picker-column col={c}></ion-picker-column>
           )}
-          <div class="picker-below-highlight"></div>
+          <div class='picker-below-highlight'></div>
         </div>
       </div>
     ];

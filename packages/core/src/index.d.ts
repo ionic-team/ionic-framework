@@ -122,6 +122,11 @@ export { Radio, RadioEvent } from './components/radio/radio';
 export { RangeKnob } from './components/range/range-knob';
 export { Range, RangeEvent } from './components/range/range';
 export { ReorderGroup } from './components/reorder/reorder-group';
+export {
+  RouterEntry,
+  RouterEntries,
+  NavState,
+} from './components/router/router-utils';
 export { ItemReorder } from './components/reorder/reorder';
 export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
@@ -174,12 +179,6 @@ export interface BaseInputComponent {
   fireFocus: () => void;
   fireBlur: () => void;
 }
-
-export interface BooleanInputComponent extends BaseInputComponent {
-  checked: boolean;
-  toggle: (ev: UIEvent) => void;
-}
-
 
 export interface StencilElement extends HTMLElement {
   componentOnReady(): Promise<HTMLElement>;

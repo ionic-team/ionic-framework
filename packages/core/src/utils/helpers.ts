@@ -81,7 +81,7 @@ export function updateDetail(ev: any, detail: any) {
       var touch = changedTouches[0];
       x = touch.clientX;
       y = touch.clientY;
-    }else if (ev.pageX !== undefined) {
+    } else if (ev.pageX !== undefined) {
       x = ev.pageX;
       y = ev.pageY;
     }

@@ -91,7 +91,7 @@ export class ActionSheet {
 
       animation.onFinish((a: any) => {
         a.destroy();
-        this.ionViewDidEnter();
+        this.componentDidEnter();
         resolve();
       }).play();
     });
@@ -131,7 +131,15 @@ export class ActionSheet {
     });
   }
 
-  protected ionViewDidUnload() {
+  componentDidLoad() {
+    this.ionActionSheetDidLoad.emit({ actionSheet: this });
+  }
+
+  componentDidEnter() {
+    this.ionActionSheetDidPresent.emit({ actionSheet: this });
+  }
+
+  componentDidUnload() {
     this.ionActionSheetDidUnload.emit({ actionSheet: this });
   }
 
@@ -141,14 +149,6 @@ export class ActionSheet {
     ev.preventDefault();
 
     this.dismiss();
-  }
-
-  protected ionViewDidLoad() {
-    this.ionActionSheetDidLoad.emit({ actionSheet: this });
-  }
-
-  protected ionViewDidEnter() {
-    this.ionActionSheetDidPresent.emit({ actionSheet: this });
   }
 
   protected backdropClick() {
@@ -172,7 +172,7 @@ export class ActionSheet {
     }
   }
 
-  protected render() {
+  render() {
     let userCssClass = 'action-sheet-content';
     if (this.cssClass) {
       userCssClass += ' ' + this.cssClass;

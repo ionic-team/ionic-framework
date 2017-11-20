@@ -1,5 +1,6 @@
+import { BlurEvent, BooleanInput, BooleanInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { BooleanInputComponent, GestureDetail } from '../../index';
+import { GestureDetail } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
 
 
@@ -13,7 +14,7 @@ import { hapticSelection } from '../../utils/haptic';
     theme: 'toggle'
   }
 })
-export class Toggle implements BooleanInputComponent {
+export class Toggle implements BooleanInput {
   private toggleId: string;
   private labelId: string;
   private styleTmr: any;
@@ -26,22 +27,22 @@ export class Toggle implements BooleanInputComponent {
   /**
    * @output {Event} Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<BooleanInputChangeEvent>;
 
   /**
    * @output {Event} Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter;
+  @Event() ionStyle: EventEmitter<StyleEvent>;
 
   /**
    * @output {Event} Emitted when the toggle has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus: EventEmitter<FocusEvent>;
 
   /**
    * @output {Event} Emitted when the toggle loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur: EventEmitter<BlurEvent>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -97,7 +98,7 @@ export class Toggle implements BooleanInputComponent {
     };
   }
 
-  protected ionViewWillLoad() {
+  componentWillLoad() {
     this.emitStyle();
   }
 
@@ -174,7 +175,7 @@ export class Toggle implements BooleanInputComponent {
     }
   }
 
-  protected hostData() {
+  hostData() {
     return {
       class: {
         'toggle-activated': this.activated,
@@ -184,11 +185,10 @@ export class Toggle implements BooleanInputComponent {
     };
   }
 
-  protected render() {
+  render() {
     return (
       <ion-gesture {...this.gestureConfig}
-        enabled={!this.disabled}
-      >
+        enabled={!this.disabled}>
         <div class='toggle-icon'>
           <div class='toggle-inner'></div>
         </div>
@@ -199,8 +199,7 @@ export class Toggle implements BooleanInputComponent {
           aria-disabled={this.disabled ? 'true' : false}
           aria-labelledby={this.labelId}
           role='checkbox'
-          tabIndex={0}
-        >
+          tabIndex={0}>
         </div>
       </ion-gesture>
     );

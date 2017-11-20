@@ -90,7 +90,7 @@ export class FabButton {
    */
   @Prop() disabled: boolean = false;
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     const parentNode = this.el.parentNode.nodeName;
 
     this.inList = (parentNode === 'ION-FAB-LIST');
@@ -144,7 +144,7 @@ export class FabButton {
     ];
   }
 
-  protected render() {
+  render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab');
     const hostClasses = getElementClassObject(this.el.classList);
 

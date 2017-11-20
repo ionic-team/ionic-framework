@@ -181,7 +181,7 @@ export class Textarea implements TextareaComponent {
     }
   }
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.emitStyle();
   }
 
@@ -297,7 +297,7 @@ export class Textarea implements TextareaComponent {
   }
 
 
-  protected render() {
+  render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
     // TODO aria-labelledby={this.item.labelId}
 

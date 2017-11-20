@@ -1,27 +1,23 @@
 # Demo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
+The purpose of this application is to provide an Angular CLI application where Ionic Core components can be tested in a simple manner. This application allows the developer to experiment with interactions between Angular and Ionic in an easy and safe manner.
 
-## Development server
+## Getting started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**Note:** This application uses the locally built Ionic Core. It does not grab the latest uploaded version or anything. That allows the developer to use this application as they make changes in core. That also means that you **must** build core before building this application. So if you haven't done that yet, go do that first.
 
-## Code scaffolding
+To use _this_ application perform the following commands from this directory:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- `npm i`
+- `npm start` - to serve the application
+- `npm test` - to run the unit tests
+- `npm run e2e` - to run the end to end tests
 
-## Build
+See the `package.json` file for a complete list of script. The above are just the most common.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Running the Angular CLI
 
-## Running unit tests
+This application installs the Angular CLI locally so you do not need to have it installed globally. You can use `npm` to run any of the `ng` commands. For example:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- `npm run ng build -- --prod` - run a production build
+- `npm run ng g component my-cool-thing`

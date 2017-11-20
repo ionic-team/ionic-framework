@@ -20,10 +20,6 @@ $split-pane-side-max-width: 28% !default;
   contain: strict;
 }
 
-.split-pane-side:not(ion-menu) {
-  display: none;
-}
-
 .split-pane-visible >.split-pane-side,
 .split-pane-visible >.split-pane-main {
   @include position(0, 0, 0, 0);
@@ -44,15 +40,11 @@ $split-pane-side-max-width: 28% !default;
   order: -1;
 }
 
-.split-pane-visible >.split-pane-main,
-.split-pane-visible >ion-nav.split-pane-side,
-.split-pane-visible >ion-tabs.split-pane-side,
-.split-pane-visible >ion-menu.menu-enabled {
-  display: block;
+.split-pane-side:not(ion-menu) {
+  display: none;
 }
 
-.split-pane-visible >ion-split-pane.split-pane-side,
-.split-pane-visible >ion-split-pane.split-pane-main {
+.split-pane-visible > .split-pane-side {
   display: flex;
 }
 

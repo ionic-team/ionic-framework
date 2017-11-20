@@ -51,7 +51,7 @@ export class ToolbarTitle {
   mode: string;
   color: string;
 
-  protected render() {
+  render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'toolbar-title');
 
     return [

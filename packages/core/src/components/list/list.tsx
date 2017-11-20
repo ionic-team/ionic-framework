@@ -36,7 +36,7 @@ export class List {
     return false;
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

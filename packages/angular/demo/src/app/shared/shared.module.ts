@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import { IonCheckboxValueAccessorDirective } from './ion-checkbox-value-accessor.directive';
-import { IonInputValueAccessorDirective } from './ion-input-value-accessor.directive';
+import { IonBooleanValueAccessorDirective } from './ion-boolean-value-accessor/ion-boolean-value-accessor.directive';
+import { IonSelectValueAccessorDirective } from './ion-select-value-accessor/ion-select-value-accessor.directive';
+import { IonTextValueAccessorDirective } from './ion-text-value-accessor/ion-text-value-accessor.directive';
 
 @NgModule({
-  exports: [IonCheckboxValueAccessorDirective, IonInputValueAccessorDirective],
-  declarations: [IonCheckboxValueAccessorDirective, IonInputValueAccessorDirective]
+  exports: [IonBooleanValueAccessorDirective, IonSelectValueAccessorDirective, IonTextValueAccessorDirective],
+  declarations: [IonBooleanValueAccessorDirective, IonSelectValueAccessorDirective, IonTextValueAccessorDirective]
 })
 export class SharedModule { }

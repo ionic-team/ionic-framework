@@ -95,7 +95,7 @@ export class Alert {
         firstInput.focus();
       }
 
-      this.ionViewDidEnter();
+      this.ionAlertDidPresent.emit();
     });
   }
 
@@ -127,8 +127,16 @@ export class Alert {
     });
   }
 
-  protected ionViewDidUnload() {
-    this.ionAlertDidUnload.emit();
+  componentDidLoad() {
+    this.ionAlertDidLoad.emit({ alert: this });
+  }
+
+  componentDidEnter() {
+    this.ionAlertDidPresent.emit({ alert: this });
+  }
+
+  componentDidUnload() {
+    this.ionAlertDidUnload.emit({ alert: this });
   }
 
   @Listen('ionDismiss')
@@ -138,15 +146,7 @@ export class Alert {
 
     this.dismiss();
   }
-
-  protected ionViewDidLoad() {
-    this.ionAlertDidLoad.emit();
-  }
-
-  protected ionViewDidEnter() {
-    this.ionAlertDidPresent.emit();
-  }
-
+  
   protected backdropClick() {
     if (this.enableBackdropDismiss) {
       // const opts: NavOptions = {
@@ -310,7 +310,7 @@ export class Alert {
     );
   }
 
-  protected render() {
+  render() {
     const hdrId = `${this.alertId}-hdr`;
     const subHdrId = `${this.alertId}-sub-hdr`;
     const msgId = `${this.alertId}-msg`;

@@ -28,7 +28,7 @@ export class Slide {
     };
   }
 
-  protected render() {
+  render() {
     return <slot></slot>;
   }
 }

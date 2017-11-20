@@ -17,6 +17,7 @@ import {
   getNextTransitionId,
   getParentTransitionId,
   isViewController,
+  resolveRoute,
   setZIndex,
   toggleHidden,
   transitionFactory,
@@ -213,13 +214,14 @@ export function nextTransaction(nav: Nav): Promise<any> {
 
   let enteringView: ViewController;
   let leavingView: ViewController;
-  return initializeViewBeforeTransition(topTransaction).then(([_enteringView, _leavingView]) => {
+  return initializeViewBeforeTransition(nav, topTransaction).then(([_enteringView, _leavingView]) => {
     enteringView = _enteringView;
     leavingView = _leavingView;
     return attachViewToDom(nav, enteringView, topTransaction.delegate);
   }).then(() => {
     return loadViewAndTransition(nav, enteringView, leavingView, topTransaction);
-  }).then((result: NavResult) => {
+    }).then((result: NavResult) => {
+      nav.ionNavChanged.emit({ isPop: false });
     return successfullyTransitioned(result, topTransaction);
   }).catch((err: Error) => {
     return transitionFailed(err, topTransaction);
@@ -473,11 +475,11 @@ export function attachViewToDom(nav: Nav, enteringView: ViewController, delegate
   return Promise.resolve();
 }
 
-export function initializeViewBeforeTransition(ti: TransitionInstruction): Promise<ViewController[]> {
+export function initializeViewBeforeTransition(nav: Nav, ti: TransitionInstruction): Promise<ViewController[]> {
   let leavingView: ViewController = null;
   let enteringView: ViewController = null;
   return startTransaction(ti).then(() => {
-    const viewControllers = convertComponentToViewController(ti);
+    const viewControllers = convertComponentToViewController(nav, ti);
     ti.insertViews = viewControllers;
     leavingView = ti.nav.getActive();
     enteringView = getEnteringView(ti, ti.nav, leavingView);
@@ -731,7 +733,7 @@ export function convertViewsToViewControllers(views: any[]): ViewController[] {
   }).filter(view => !!view);
 }
 
-export function convertComponentToViewController(ti: TransitionInstruction): ViewController[] {
+export function convertComponentToViewController(nav: Nav, ti: TransitionInstruction): ViewController[] {
   if (ti.insertViews) {
     assert(ti.insertViews.length > 0, 'length can not be zero');
     const viewControllers = convertViewsToViewControllers(ti.insertViews);
@@ -746,6 +748,9 @@ export function convertComponentToViewController(ti: TransitionInstruction): Vie
       }
       if (viewController.state === STATE_DESTROYED) {
         throw new Error('The view has already been destroyed');
+      }
+      if (nav.useRouter && !resolveRoute(nav, viewController.component)) {
+        throw new Error('Route not specified for ' + viewController.component);
       }
     }
     return viewControllers;
@@ -781,7 +786,6 @@ export function getTopTransaction(id: number) {
 export function getDefaultTransition(config: Config) {
   return config.get('mode') === 'md' ? buildMdTransition : buildIOSTransition;
 }
-
 
 let viewIds = VIEW_ID_START;
 const DISABLE_APP_MINIMUM_DURATION = 64;

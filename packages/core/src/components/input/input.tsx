@@ -199,7 +199,7 @@ export class Input implements InputComponent {
   }
 
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.emitStyle();
 
     // By default, password inputs clear after focus when they have content
@@ -318,7 +318,7 @@ export class Input implements InputComponent {
   }
 
 
-  protected render() {
+  render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
     // TODO aria-labelledby={this.item.labelId}
 

@@ -50,7 +50,7 @@ export class ItemOption {
     return !!el;
   }
 
-  protected render() {
+  render() {
 
     const TagType = this.href ? 'a' : 'button';
     return [

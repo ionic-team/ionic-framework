@@ -27,7 +27,7 @@ export class ItemDivider {
    */
   @Prop() mode: 'ios' | 'md';
 
-  protected render() {
+  render() {
     return [
       <slot name='start'></slot>,
       <div class='item-inner'>

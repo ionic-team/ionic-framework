@@ -94,7 +94,7 @@ export class Loading {
 
       animation.onFinish((a: any) => {
         a.destroy();
-        this.ionViewDidEnter();
+        this.componentDidEnter();
         resolve();
 
       }).play();
@@ -140,19 +140,7 @@ export class Loading {
     });
   }
 
-  protected ionViewDidUnload() {
-    this.ionLoadingDidUnload.emit({ loading: this });
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     if (!this.spinner) {
       let defaultSpinner = 'lines';
 
@@ -169,7 +157,7 @@ export class Loading {
     this.ionLoadingDidLoad.emit({ loading: this });
   }
 
-  protected ionViewDidEnter() {
+  componentDidEnter() {
     // blur the currently active element
     const activeElement: any = document.activeElement;
     activeElement && activeElement.blur && activeElement.blur();
@@ -182,11 +170,20 @@ export class Loading {
     this.ionLoadingDidPresent.emit({ loading: this });
   }
 
-  protected render() {
-    let userCssClass = 'loading-content';
-    if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
-    }
+  componentDidUnload() {
+    this.ionLoadingDidUnload.emit({ loading: this });
+  }
+
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  render() {
+    // TODO: cssClass
 
     const loadingInner: any[] = [];
 
@@ -239,4 +236,4 @@ export interface LoadingEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation }
+export { iOSEnterAnimation, iOSLeaveAnimation };

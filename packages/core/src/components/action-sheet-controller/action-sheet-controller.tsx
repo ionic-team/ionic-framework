@@ -36,7 +36,7 @@ export class ActionSheetController {
   }
 
   @Listen('body:ionActionSheetDidLoad')
-  protected viewDidLoad(ev: ActionSheetEvent) {
+  protected didLoad(ev: ActionSheetEvent) {
     const actionSheet = ev.detail.actionSheet;
     const actionSheetResolve = this.actionSheetResolves[actionSheet.actionSheetId];
     if (actionSheetResolve) {

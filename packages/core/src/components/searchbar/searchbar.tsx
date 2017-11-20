@@ -147,7 +147,7 @@ export class Searchbar {
   @Prop({ mutable: true }) value: string;
 
 
-  protected ionViewDidLoad() {
+  componentDidLoad() {
     this.positionElements();
   }
 
@@ -357,7 +357,7 @@ export class Searchbar {
 
   // TODO remove the ion-buttons and replace with native buttons to remove
   // the button dependency
-  protected render() {
+  render() {
     return [
       <div class='searchbar-input-container'>
         <ion-button
