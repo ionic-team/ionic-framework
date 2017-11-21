@@ -87,9 +87,22 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
     this.radios.push(radio);
     radio.name = this.name;
 
-    if (radio.checked && !this.value) {
-      // set the initial value from the check radio's value
+    if (this.value !== undefined && radio.value === this.value) {
+      // this radio-group has a value and this
+      // radio equals the correct radio-group value
+      // so let's check this radio
+      radio.checked = true;
+
+    } else if (this.value === undefined && radio.checked) {
+      // this radio-group does not have a value
+      // but this radio is checked, so let's set the
+      // radio-group's value from the checked radio
       this.value = radio.value;
+
+    } else if (radio.checked) {
+      // if it doesn't match one of the above cases, but the
+      // radio is still checked, then we need to uncheck it
+      radio.checked = false;
     }
   }
 
