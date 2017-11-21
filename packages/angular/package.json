@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@ionic/angular",
-  "version": "4.0.0",
+  "version": "0.0.1",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
