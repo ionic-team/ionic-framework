@@ -10,7 +10,7 @@
       "assets": [
         "assets",
         "favicon.ico",
-        { "glob": "**/*", "input": "../../../core/dist", "output": "./ionic/core" }
+        { "glob": "**/*", "input": "../node_modules/@ionic/core/dist", "output": "./ionic/core" }
       ],
       "index": "index.html",
       "main": "main.ts",
