@@ -2,17 +2,17 @@
 
 This document describes the process of installing the dependencies for, running, and writing end-to-end tests for ionic core. Your working directory is assumed to be `packages/core`.
 
-**Contents**
-- [Dependencies](#dependencies)
-- [Running The Tests](#running-the-tests)
-- [Writing an End-To-End Test](#writing-an-end-to-end-test)
-  - [Simple Navigation Tests](#simple-navigation-tests)
-  - [Extending The `Page` Class](#extending-the-page-class)
-- [Snapshot](#snapshot)
+---
 
 ## Dependencies
 
-Before you proceed, make sure you're running **Node 7.6.0+** and that you've installed all packages:
+Before you proceed, make sure you're running [**Node 7.6.0+**](https://nodejs.org/en/download/):
+
+```sh
+node -v # Should be >= 7.6.0
+```
+
+And that you've installed all packages:
 
 ```sh
 npm install
@@ -116,5 +116,3 @@ npm run snapshot
 - [ ] Adjustments will likely be needed when the Snapshot tool has better reporting, for example the tool will likely have `start` and `finish` methods (or some such thing)
 - [ ] Cycle through the various platforms (or at least iOS and Android)
 - [ ] Remove scrollbar from snapshots
-
-
