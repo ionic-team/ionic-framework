@@ -5,8 +5,9 @@ const glob = require('glob');
 const Mocha = require('mocha');
 const path = require('path');
 const webdriver = require('selenium-webdriver');
+const chromedriver = require('chromedriver');
 
-const Page = require('./e2e-test-page');
+const Page = require('./page');
 const Snapshot = require('./snapshot');
 
 let driver;
@@ -16,7 +17,7 @@ let takeScreenshots = false;
 
 function startDevServer() {
   const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
-  const cmdArgs = ['--config', path.join(__dirname, '../stencil.config.js'), '--no-open'];
+  const cmdArgs = ['--config', path.join(__dirname, '../../stencil.config.js'), '--no-open'];
 
   return server.run(cmdArgs);
 }
