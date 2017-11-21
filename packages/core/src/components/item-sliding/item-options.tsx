@@ -55,6 +55,15 @@ export class ItemOptions {
     this.ionSwipe.emit(value);
   }
 
+  hostData(){
+    return {
+      class:{
+        'ion-options-left': !this.isRightSide(),
+        'ion-options-right': this.isRightSide()
+      }
+    }
+  }
+
   render() {
     return <slot></slot>;
   }
