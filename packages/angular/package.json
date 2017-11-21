@@ -20,10 +20,11 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
+    "build": "npm run clean && npm run compile && npm run clean-generated",
     "clean": "rm -rf dist",
     "clean-generated": "node ./scripts/clean.js",
     "compile": "ngc -p .",
-    "build": "npm run clean && npm run compile && npm run clean-generated"
+    "deploy": "np --any-branch"
   },
   "main": "./dist/src/index.js",
   "modules": "./dist/src/index.js",
