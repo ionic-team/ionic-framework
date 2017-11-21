@@ -10,3 +10,4 @@ These are Angular specific building blocks on top of `@ionic/core` components/se
 ## Publishing
 
 1. Run `npm run deploy`
+2. Commit and push any outstanding changes
