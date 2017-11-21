@@ -1,4 +1,4 @@
-import { BlurEvent, BooleanInput, BooleanInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
+import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 
 /**
@@ -76,7 +76,7 @@ import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChang
     theme: 'checkbox'
   }
 })
-export class Checkbox implements BooleanInput {
+export class Checkbox implements CheckboxInput {
   private checkboxId: string;
   private labelId: string;
   private styleTmr: any;
@@ -84,7 +84,7 @@ export class Checkbox implements BooleanInput {
   /**
    * @output {Event} Emitted when the checked property has changed.
    */
-  @Event() ionChange: EventEmitter<BooleanInputChangeEvent>;
+  @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * @output {Event} Emitted when the toggle has focus.
@@ -123,7 +123,7 @@ export class Checkbox implements BooleanInput {
   /*
    * @input {boolean} If true, the user cannot interact with the checkbox. Default false.
    */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop() disabled: boolean = false;
 
   /**
    * @input {string} the value of the checkbox.
@@ -136,13 +136,16 @@ export class Checkbox implements BooleanInput {
   }
 
   @PropDidChange('checked')
-  protected checkedChanged(val: boolean) {
-    this.ionChange.emit({ checked: val });
+  checkedChanged(isChecked: boolean) {
+    this.ionChange.emit({
+      checked: isChecked,
+      value: this.value
+    });
     this.emitStyle();
   }
 
   @PropDidChange('disabled')
-  protected disabledChanged() {
+  disabledChanged() {
     this.emitStyle();
   }
 
@@ -156,7 +159,6 @@ export class Checkbox implements BooleanInput {
       });
     });
   }
-
 
   @Listen('keydown.space')
   onSpace(ev: KeyboardEvent) {

@@ -1,4 +1,4 @@
-import { BlurEvent, BooleanInput, BooleanInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
+import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
 import { GestureDetail } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
@@ -14,7 +14,7 @@ import { hapticSelection } from '../../utils/haptic';
     theme: 'toggle'
   }
 })
-export class Toggle implements BooleanInput {
+export class Toggle implements CheckboxInput {
   private toggleId: string;
   private labelId: string;
   private styleTmr: any;
@@ -27,7 +27,7 @@ export class Toggle implements BooleanInput {
   /**
    * @output {Event} Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter<BooleanInputChangeEvent>;
+  @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * @output {Event} Emitted when the styles change.
@@ -64,8 +64,11 @@ export class Toggle implements BooleanInput {
   @Prop({ mutable: true }) checked: boolean = false;
 
   @PropDidChange('checked')
-  protected checkedChanged(val: boolean) {
-    this.ionChange.emit({ checked: val });
+  checkedChanged(isChecked: boolean) {
+    this.ionChange.emit({
+      checked: isChecked,
+      value: this.value
+    });
     this.emitStyle();
   }
 
@@ -75,7 +78,7 @@ export class Toggle implements BooleanInput {
   @Prop({ mutable: true }) disabled: boolean = false;
 
   @PropDidChange('disabled')
-  protected disabledChanged() {
+  disabledChanged() {
     this.emitStyle();
   }
 
