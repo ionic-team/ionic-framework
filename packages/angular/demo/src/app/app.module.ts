@@ -4,9 +4,15 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { IonicAngularModule } from '../../../src/module';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [AppRoutingModule, BrowserModule],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    IonicAngularModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
