@@ -9,7 +9,7 @@ export class HomePage {
     return browser.get('/');
   }
 
-  getTitle() {
+  getTitleText() {
     return element(by.css('.title')).getText();
   }
 }

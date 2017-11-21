@@ -3,9 +3,6 @@ import { EventEmitter } from '@stencil/core';
 
 export interface BaseInput {
 
-  // Properties
-  // ------------------------
-
   /**
    * Indicates that the user cannot interact with the control.
    */
@@ -24,9 +21,19 @@ export interface BaseInput {
    */
   value: string;
 
+}
 
-  // Events
-  // ------------------------
+
+export interface CheckboxInput extends BaseInput {
+  /**
+   * Returns / Sets the current state of the element when type is checkbox or radio.
+   */
+  checked: boolean;
+
+  /**
+   * The change event is fired when the value of has changed.
+   */
+  ionChange: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * Removes focus from input; keystrokes will subsequently go nowhere.
@@ -45,27 +52,50 @@ export interface BaseInput {
    * its wrapping ion-item a different style.
    */
   ionStyle: EventEmitter<StyleEvent>;
-
 }
 
 
-export interface BooleanInput extends BaseInput {
+export interface RadioButtonInput extends BaseInput {
   /**
    * Returns / Sets the current state of the element when type is checkbox or radio.
    */
   checked: boolean;
 
   /**
-   * The change event is fired when the value of has changed.
-   * This is actually more similar to the native "input" event
-   * https://developer.mozilla.org/en-US/docs/Web/Events/input
+   * A single radio button fires an ionSelect event, whereas
+   * a radio group fires an ionChange event. It would be more common
+   * to attach listeners to the radio group, not individual radio buttons.
    */
-  ionChange: EventEmitter<BooleanInputChangeEvent>;
+  ionSelect: EventEmitter<CheckedInputChangeEvent>;
+
+  /**
+   * Removes focus from input; keystrokes will subsequently go nowhere.
+   */
+  ionBlur: EventEmitter<BlurEvent>;
+
+  /**
+   * Focus on the input element; keystrokes will subsequently go to this element.
+   */
+  ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the styles change. This is useful for parent
+   * components to know how to style themselves depending on the
+   * child input. For example, a disabled ion-toggle may give
+   * its wrapping ion-item a different style.
+   */
+  ionStyle: EventEmitter<StyleEvent>;
 }
 
 
-export interface BooleanInputChangeEvent {
+export interface CheckedInputChangeEvent {
   checked: boolean;
+  value: string;
+}
+
+
+export interface TextInputChangeEvent {
+  value: string;
 }
 
 
@@ -74,7 +104,6 @@ export interface SelectOptionInput extends BaseInput {
    * Indicates whether the option is currently selected.
    */
   selected: boolean;
-
 }
 
 
@@ -95,18 +124,92 @@ export interface SelectInput extends BaseInput {
    * whether multiple items can be selected.
    */
   multiple: boolean;
+
+  /**
+   * The change event is fired when the value of has changed.
+   * This is actually more similar to the native "input" event
+   * https://developer.mozilla.org/en-US/docs/Web/Events/input
+   */
+  ionChange: EventEmitter<CheckedInputChangeEvent>;
+
+  /**
+   * Removes focus from input; keystrokes will subsequently go nowhere.
+   */
+  ionBlur: EventEmitter<BlurEvent>;
+
+  /**
+   * Focus on the input element; keystrokes will subsequently go to this element.
+   */
+  ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the styles change. This is useful for parent
+   * components to know how to style themselves depending on the
+   * child input. For example, a disabled ion-toggle may give
+   * its wrapping ion-item a different style.
+   */
+  ionStyle: EventEmitter<StyleEvent>;
+}
+
+
+export interface RadioGroupInput extends BaseInput {
+  ionChange: EventEmitter<TextInputChangeEvent>;
 }
 
 
 export interface TextInput extends BaseInput {
   /**
-   *
+   * The change event is fired when the value of has changed.
+   * This is actually more similar to the native "input" event
+   * https://developer.mozilla.org/en-US/docs/Web/Events/input
    */
+  ionChange: EventEmitter<CheckedInputChangeEvent>;
+
+  /**
+   * Removes focus from input; keystrokes will subsequently go nowhere.
+   */
+  ionBlur: EventEmitter<BlurEvent>;
+
+  /**
+   * Focus on the input element; keystrokes will subsequently go to this element.
+   */
+  ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the styles change. This is useful for parent
+   * components to know how to style themselves depending on the
+   * child input. For example, a disabled ion-toggle may give
+   * its wrapping ion-item a different style.
+   */
+  ionStyle: EventEmitter<StyleEvent>;
 }
 
 
 export interface TextMultiLineInput extends TextInput {
+  /**
+   * The change event is fired when the value of has changed.
+   * This is actually more similar to the native "input" event
+   * https://developer.mozilla.org/en-US/docs/Web/Events/input
+   */
+  ionChange: EventEmitter<CheckedInputChangeEvent>;
 
+  /**
+   * Removes focus from input; keystrokes will subsequently go nowhere.
+   */
+  ionBlur: EventEmitter<BlurEvent>;
+
+  /**
+   * Focus on the input element; keystrokes will subsequently go to this element.
+   */
+  ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the styles change. This is useful for parent
+   * components to know how to style themselves depending on the
+   * child input. For example, a disabled ion-toggle may give
+   * its wrapping ion-item a different style.
+   */
+  ionStyle: EventEmitter<StyleEvent>;
 }
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-22",
+  "version": "0.0.2-24",
   "description": "Base components for Ionic",
   "main": "dist/collection/index.js",
   "types": "dist/collection/index.d.ts",
@@ -10,10 +10,11 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.0.8-5",
+    "@stencil/core": "0.0.8-6",
     "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
+    "chromedriver": "^2.33.2",
     "ionicons": "^4.0.0-6",
     "jest": "^21.2.1",
     "mocha": "^4.0.1",

@@ -1,84 +1,118 @@
-# End-to-end Testing Scripts
+# End-To-End Testing Scripts
 
-The end-to-end testing scripts consist of the following modules:
+This document describes the process of installing the dependencies for, running, and writing end-to-end tests for ionic core. Your working directory is assumed to be `packages/core`.
 
-1. `e2e` - the test controller and test utilities
-1. `run-e2e` - the script that npm uses to kick this stuff off
-1. `E2ETestPage` - a base class for end-to-end tests
-1. `Snapshot` - the snapshot tool, copied from the `index.js` file in the [Snapshot Repo](https://github.com/ionic-team/snapshot) (private)
+---
 
-## Writing End-to-end Tests
+## Dependencies
 
-Each end-to-end test file is NodeJS ES2015 script that contains at least one `describe` and registers at least one case.
+Before you proceed, make sure you're running [**Node 7.6.0+**](https://nodejs.org/en/download/):
 
-In general, writing an end-to-end tests consists of the following steps:
+```sh
+node -v # Should be >= 7.6.0
+```
 
-1. create a `e2e.js` file
-1. extend the `Page` class to perform the extra actions a page needs to do (if any)
-1. register each test you would like to run using the `register` method from the `e2e` module, the `register` method takes two parameters: a test description and a callback function that contains the test, the callback is passed the selenium driver that is in use for the test
+And that you've installed all packages:
 
-The most basic end-to-end test just navigates to the page in order to verify that it draws properly. In this case, it is not necessary to extend the E2ETestPage class. The base class contains a navigate method that goes to the page and waits for it to load. The test just needs to instantiate the page with the proper URL and call the navigate. Such a test looks like this:
+```sh
+npm install
+```
 
-```ts
-const { register, navigate } = require('../../../../scripts/e2e');
+## Running The Tests
+
+To run the end-to-end tests:
+
+```
+npm run e2e
+```
+
+## Writing an End-To-End Test
+
+To create an end-to-end test, you'll need to create a directory containing your test page and the tests themselves. Create a directory in your component's `test` directory. That directory should contain an `index.html` and an `e2e.js` file. So, if I were writing a test called `basic` for the `button` component:
+
+```
+button
+└── test/
+    └── basic/
+        ├── e2e.js
+        └── index.html
+```
+
+In your `e2e.js` file, you can group tests together using [Mocha](https://mochajs.org/)'s `describe` function:
+
+```js
+describe('button: basic', () => {
+  // Write tests here.
+});
+```
+
+To register a test, use the `register` method from `scripts/e2e`. The `register` function takes two arguments, a description and a callback. The callback is passed the test [driver](https://www.npmjs.com/package/selenium-webdriver) as its only argument. For async actions, simply return a Promise from your callback.
+
+```js
+const { register } = require('../../../../../scripts/e2e');
+
+describe('button: basic', () => {
+  register('my test', driver => {
+    // Use the driver here.
+  });
+});
+```
+
+The most basic, and most common, test simply navigates to your page to ensure it renders properly. For more complicated cases, you may need to extend the `Page` class provided by the e2e module.
+
+### Simple Navigation Tests
+
+To write a simple navigation test, you can use the `navigate` function from the e2e module:
+
+```js
+const { register, navigate } = require('../../../../../scripts/e2e');
 
 describe('button: basic', () => {
   register('navigates', navigate('http://localhost:3333/src/components/button/test/basic'));
 });
 ```
 
-For more complicated tests, it may be necessary to extend the base E2ETestPage class to add perform more actions that can then be used in the tests. Such a test may look like this:
+### Extending The `Page` Class
 
-```ts
-const { By, until } = require('selenium-webdriver');
+For more complicated tests, you may need to extend the `Page` class:
+
+```js
 const { register, Page } = require('../../../../scripts/e2e');;
 
-class ActionSheetE2ETestPage extends Page {
+class ButtonTestPage extends Page {
   constructor(driver) {
-    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic');
+    super(driver, 'http://localhost:3333/src/components/button/test/basic');
   }
 
-  present(buttonId) {
-    this.navigate();
-    this.driver.findElement(By.id(buttonId)).click();
-    this.driver.wait(until.elementLocated(By.css('.action-sheet-container')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.action-sheet-container'))));
+  someMethod() {
+    // ...
   }
 }
 
-describe('action-sheet: basic', () => {
-  register('navigates', driver => {
-    const page = new ActionSheetE2ETestPage(driver);
-    return page.navigate();
-  });
-
-  describe('present', () => {
-    register('shows basic', driver => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('basic');
-    });
-
-    register('shows noBackdropDismiss',  (driver)  => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('noBackdropDismiss');
-    });
+describe('button: basic', () => {
+  register('some test', driver => {
+    const page = new ButtonTestPage(driver);
+    return page.someMethod();
   });
 });
 ```
 
-Note that you generally do not have to `await` any of the async actions in your tests. Selenium has a call-chain that handles all of that so long as the final promise is waiting upon, and the `register` function takes care of that for you.
+## Snapshot
 
-## Running the Tests
+You can also take snapshots of each end-to-end test to check for visual regressions. You'll need to export the `IONIC_SNAPSHOT_KEY` environment variable to upload to the snapshot app. Ask someone from Ionic for the key.
 
-To run the tests, just use npm from the `packages/core` directory under the `ionic` project.
+**Snapshot compares a base snapshot made on MacOS with a retina screen. (2560x1600) It does not work for Windows, Linux, or non-retina Macs.**
 
-* `npm run e2e`
-* `npm run snapshot`
+To take snapshots:
 
-## TODO Items
+```
+npm run snapshot
+```
 
-1. this script could probably be used for other packages and should be moved back a directory, perhaps the same for the base class as well, that needs to be figured out as we go
-1. turn off animations and then adjust the wait time accordingly
-1. adjustments will likely be needed when the Snapshot tool has better reporting, for example the tool will likely have `start` and `finish` methods (or some such thing)
-1. cycle through the various platforms (or at least iOS and Android) like the current `ionic-angular` does (I think that is currently handled via `gulp`, needs to be looked into)
-1. the current Snapshots seem to have some funky boardering issues when uploaded, may need to look into that
+## TODO
+
+- [ ] Move this script up a directory and use for all packages?
+- [ ] Turn off animations and then adjust the wait time accordingly
+- [ ] Adjustments will likely be needed when the Snapshot tool has better reporting, for example the tool will likely have `start` and `finish` methods (or some such thing)
+- [ ] Cycle through the various platforms (or at least iOS and Android)
+- [ ] Remove scrollbar from snapshots
