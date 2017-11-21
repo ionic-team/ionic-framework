@@ -3,6 +3,8 @@ import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, P
 import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { playAnimationAsync } from '../../utils/helpers';
 
+import { createThemedClasses } from '../../utils/theme';
+
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
@@ -17,6 +19,9 @@ import iOSLeaveAnimation from './animations/ios.leave';
   }
 })
 export class Alert {
+  mode: string;
+  color: string;
+
   private animation: Animation;
   private activeId: string;
   private inputType: string;
@@ -64,6 +69,7 @@ export class Alert {
   @Prop() buttons: AlertButton[] = [];
   @Prop({ mutable: true }) inputs: AlertInput[] = [];
   @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() translucent: boolean = false;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
@@ -146,7 +152,7 @@ export class Alert {
 
     this.dismiss();
   }
-  
+
   protected backdropClick() {
     if (this.enableBackdropDismiss) {
       // const opts: NavOptions = {
@@ -310,6 +316,19 @@ export class Alert {
     );
   }
 
+  hostData() {
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'alert-translucent') : {};
+
+    const hostClasses = {
+      ...themedClasses
+    };
+
+    return {
+      class: hostClasses,
+      id: this.alertId
+    };
+  }
+
   render() {
     const hdrId = `${this.alertId}-hdr`;
     const subHdrId = `${this.alertId}-sub-hdr`;
@@ -413,12 +432,6 @@ export class Alert {
     ];
   }
 
-  hostData() {
-    return {
-      id: this.alertId
-    };
-  }
-
 }
 
 
@@ -431,6 +444,7 @@ export interface AlertOptions {
   inputs?: AlertInput[];
   buttons?: (AlertButton|string)[];
   enableBackdropDismiss?: boolean;
+  translucent?: boolean;
 }
 
 export interface AlertInput {

@@ -1,6 +1,8 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 
+import { createThemedClasses } from '../../utils/theme';
+
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
@@ -15,6 +17,9 @@ import iOSLeaveAnimation from './animations/ios.leave';
   }
 })
 export class ActionSheet {
+  mode: string;
+  color: string;
+
   private animation: Animation;
 
   @Element() private el: HTMLElement;
@@ -57,6 +62,7 @@ export class ActionSheet {
   @Prop() subTitle: string;
   @Prop() buttons: ActionSheetButton[];
   @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() translucent: boolean = false;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
@@ -160,6 +166,16 @@ export class ActionSheet {
     }
   }
 
+  buttonClass(button: ActionSheetButton): CssClassMap {
+    let buttonClass: string[] = !button.role
+      ? ['action-sheet-button']
+      : [`action-sheet-button`, `action-sheet-${button.role}`];
+    return buttonClass.reduce((prevValue: any, cssClass: any) => {
+      prevValue[cssClass] = true;
+      return prevValue;
+    }, {});
+  }
+
   protected buttonClick(button: ActionSheetButton) {
     let shouldDismiss = true;
     if (button.handler) {
@@ -170,6 +186,18 @@ export class ActionSheet {
     if (shouldDismiss) {
       this.dismiss();
     }
+  }
+
+  hostData() {
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'action-sheet-translucent') : {};
+
+    const hostClasses = {
+      ...themedClasses
+    };
+
+    return {
+      class: hostClasses
+    };
   }
 
   render() {
@@ -241,16 +269,6 @@ export class ActionSheet {
       </div>
     ];
   }
-
-  buttonClass(button: ActionSheetButton): CssClassMap {
-    let buttonClass: string[] = !button.role
-      ? ['action-sheet-button']
-      : [`action-sheet-button`, `action-sheet-${button.role}`];
-    return buttonClass.reduce((prevValue: any, cssClass: any) => {
-      prevValue[cssClass] = true;
-      return prevValue;
-    }, {});
-  }
 }
 
 export interface ActionSheetOptions {
@@ -259,6 +277,7 @@ export interface ActionSheetOptions {
   cssClass?: string;
   buttons?: (ActionSheetButton | string)[];
   enableBackdropDismiss?: boolean;
+  translucent?: boolean;
 }
 
 export interface ActionSheetButton {

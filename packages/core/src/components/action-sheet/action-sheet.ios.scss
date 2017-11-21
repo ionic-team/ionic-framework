@@ -103,6 +103,12 @@ $action-sheet-ios-button-cancel-background:             #fff !default;
 /// @prop - Font weight of the action sheet cancel button
 $action-sheet-ios-button-cancel-font-weight:            600 !default;
 
+/// @prop - Filter of the translucent action-sheet
+$action-sheet-ios-translucent-filter:                   saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent action-sheet
+$action-sheet-ios-translucent-opacity:                  .88 !default;
+
 
 .action-sheet-ios {
   @include text-align($action-sheet-ios-text-align);
@@ -113,20 +119,23 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   @include margin(env(safe-area-inset-top), auto, env(safe-area-inset-bottom), auto);
 }
 
+
+// iOS Action Sheet Container
+// -----------------------------------------
+
 .action-sheet-ios .action-sheet-container {
   @include padding($action-sheet-ios-padding-top, $action-sheet-ios-padding-end, $action-sheet-ios-padding-bottom, $action-sheet-ios-padding-start);
 }
+
+
+// iOS Action Sheet Group
+// -----------------------------------------
 
 .action-sheet-ios .action-sheet-group {
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
 
   background: $action-sheet-ios-background;
-
-  // scss-lint:disable VendorPrefix
-  -webkit-overflow-scrolling: touch;
-  // Prevents borders from going outside of the container
-  -webkit-mask-image: -webkit-radial-gradient(circle, #fff, #000);
 }
 
 .action-sheet-ios .action-sheet-group:first-child {
@@ -136,6 +145,21 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 .action-sheet-ios .action-sheet-group:last-child {
   @include margin(null, null, $action-sheet-ios-group-margin-bottom, null);
 }
+
+
+// iOS Translucent Action Sheet
+// -----------------------------------------
+
+.action-sheet-translucent-ios .action-sheet-group {
+  background: rgba($action-sheet-ios-background, $action-sheet-ios-translucent-opacity);
+
+  backdrop-filter: $action-sheet-ios-translucent-filter;
+  -webkit-backdrop-filter: $action-sheet-ios-translucent-filter;
+}
+
+
+// iOS Action Sheet Title
+// -----------------------------------------
 
 .action-sheet-ios .action-sheet-title {
   @include border-radius($action-sheet-ios-title-border-radius);
@@ -150,6 +174,10 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   font-weight: $action-sheet-ios-title-font-weight;
   color: $action-sheet-ios-title-color;
 }
+
+
+// iOS Action Sheet Buttons
+// -----------------------------------------
 
 .action-sheet-ios .action-sheet-button {
   @include margin(0);

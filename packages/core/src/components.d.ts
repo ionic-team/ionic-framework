@@ -101,6 +101,7 @@ declare global {
         subTitle?: string,
         buttons?: ActionSheetButton[],
         enableBackdropDismiss?: boolean,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         actionSheetId?: string
@@ -171,6 +172,7 @@ declare global {
         buttons?: AlertButton[],
         inputs?: AlertInput[],
         enableBackdropDismiss?: boolean,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         alertId?: string
