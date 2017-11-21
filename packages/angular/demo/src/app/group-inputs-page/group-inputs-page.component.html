@@ -10,6 +10,11 @@
   </ion-row>
   <ion-row>
     <ion-col>
+      <h3>Angular</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <input id="stdBeef" type="radio" value="beef" [(ngModel)]="radioValue" />
       <label for="stdBeef">Carne Asada</label>
       <input id="stdTongue" type="radio" value="tongue" [(ngModel)]="radioValue" />
@@ -28,33 +33,70 @@
   </ion-row>
   <ion-row>
     <ion-col>
+      <h3>Ionic With Radio Group</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <ion-list>
-        <ion-radio-group [{ngModel}]="radioValue">
+        <ion-radio-group id="radio-group" name="radio-group" [(ngModel)]="radioValue">
           <ion-item>
             <ion-label>Crarne Asada</ion-label>
-            <ion-radio value="beef"></ion-radio>
+            <ion-radio id="ion-grp-beef" name="ion-grp-beef" value="beef"></ion-radio>
           </ion-item>
           <ion-item>
             <ion-label>Lengua</ion-label>
-            <ion-radio value="tongue"></ion-radio>
+            <ion-radio id="ion-grp-tongue" name="ion-grp-tongue" value="tongue"></ion-radio>
           </ion-item>
           <ion-item>
             <ion-label>Sesos</ion-label>
-            <ion-radio value="brains"></ion-radio>
+            <ion-radio id="ion-grp-brains" name="ion-grp-brains" value="brains"></ion-radio>
           </ion-item>
           <ion-item>
             <ion-label>Tripa</ion-label>
-            <ion-radio value="tripe"></ion-radio>
+            <ion-radio id="ion-grp-tripe" name="ion-grp-tripe" value="tripe"></ion-radio>
           </ion-item>
           <ion-item>
             <ion-label>Pollo</ion-label>
-            <ion-radio value="chicken"></ion-radio>
+            <ion-radio id="ion-grp-chicken" name="ion-grp-chicken" value="chicken"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
     </ion-col>
     <ion-col></ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col>
+      <h3>Ionic Without Radio Group</h3>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-item>
+          <ion-label>Crarne Asada</ion-label>
+          <ion-radio value="beef" id="ion-beef" name="ion-beef" [(ngModel)]="radioValue"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Lengua</ion-label>
+          <ion-radio value="tongue" id="ion-tongue" name="ion-tongue" [(ngModel)]="radioValue"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Sesos</ion-label>
+          <ion-radio value="brains" id="ion-brains" name="ion-brains" [(ngModel)]="radioValue"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Tripa</ion-label>
+          <ion-radio value="tripe" id="ion-tripe" name="ion-tripe" [(ngModel)]="radioValue"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Pollo</ion-label>
+          <ion-radio value="chicken" id="ion-chicken" name="ion-chicken" [(ngModel)]="radioValue"></ion-radio>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row> -->
 
 </ion-grid>
 <a href='home'>Home</a>

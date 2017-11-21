@@ -9,11 +9,11 @@ describe('Demo Home Page', () => {
 
   it('should display title', () => {
     page.navigateTo();
-    expect(page.getTitle()).toEqual('Ionic Core Angular Demo Application');
+    expect(page.getTitleText()).toEqual('Ionic Core Angular Demo Application');
   });
 
   it('should navigate to home for root', () => {
     page.navigateToRoot();
-    expect(page.getTitle()).toEqual('Ionic Core Angular Demo Application');
+    expect(page.getTitleText()).toEqual('Ionic Core Angular Demo Application');
   });
 });
