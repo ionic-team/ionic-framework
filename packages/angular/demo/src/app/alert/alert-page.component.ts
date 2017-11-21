@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AlertController } from '../../../../src/providers/alert-controller';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-alert-page',

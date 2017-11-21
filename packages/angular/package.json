@@ -29,6 +29,9 @@
   "main": "./dist/src/index.js",
   "modules": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
     "@angular/common": "5.0.1",
     "@angular/compiler": "5.0.1",
