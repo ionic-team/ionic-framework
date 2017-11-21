@@ -2890,36 +2890,6 @@ declare global {
 
 
 import {
-  PageTab as PageTab
-} from './components/tabs/page-tab';
-
-declare global {
-  interface HTMLPageTabElement extends PageTab, HTMLElement {
-  }
-  var HTMLPageTabElement: {
-    prototype: HTMLPageTabElement;
-    new (): HTMLPageTabElement;
-  };
-  interface HTMLElementTagNameMap {
-    "page-tab": HTMLPageTabElement;
-  }
-  interface ElementTagNameMap {
-    "page-tab": HTMLPageTabElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "page-tab": JSXElements.PageTabAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface PageTabAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   TabbarButton as IonTabButton
 } from './components/tabs/tab-button';
 
@@ -3089,6 +3059,66 @@ declare global {
         tabbarPlacement?: string,
         tabbarHighlight?: boolean,
         translucent?: boolean
+    }
+  }
+}
+
+
+import {
+  PageTab as PageTab
+} from './components/tabs/test/basic/page-tab';
+
+declare global {
+  interface HTMLPageTabElement extends PageTab, HTMLElement {
+  }
+  var HTMLPageTabElement: {
+    prototype: HTMLPageTabElement;
+    new (): HTMLPageTabElement;
+  };
+  interface HTMLElementTagNameMap {
+    "page-tab": HTMLPageTabElement;
+  }
+  interface ElementTagNameMap {
+    "page-tab": HTMLPageTabElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "page-tab": JSXElements.PageTabAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface PageTabAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  TranslucentPageTab as TranslucentPageTab
+} from './components/tabs/test/translucent/translucent-page-tab';
+
+declare global {
+  interface HTMLTranslucentPageTabElement extends TranslucentPageTab, HTMLElement {
+  }
+  var HTMLTranslucentPageTabElement: {
+    prototype: HTMLTranslucentPageTabElement;
+    new (): HTMLTranslucentPageTabElement;
+  };
+  interface HTMLElementTagNameMap {
+    "translucent-page-tab": HTMLTranslucentPageTabElement;
+  }
+  interface ElementTagNameMap {
+    "translucent-page-tab": HTMLTranslucentPageTabElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "translucent-page-tab": JSXElements.TranslucentPageTabAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface TranslucentPageTabAttributes extends HTMLAttributes {
+      
     }
   }
 }

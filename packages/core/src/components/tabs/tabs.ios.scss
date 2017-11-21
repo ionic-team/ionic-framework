@@ -44,7 +44,10 @@ $tabs-ios-tab-font-size:            10px !default;
 $tabs-ios-tab-icon-size:            30px !default;
 
 /// @prop - Filter of the translucent tabbar
-$tabbar-ios-translucent-filter:    saturate(180%) blur(20px) !default;
+$tabbar-ios-translucent-filter:    saturate(210%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent tabbar
+$tabbar-ios-translucent-opacity:   .8 !default;
 
 
 .tabbar-ios {
@@ -147,7 +150,7 @@ $tabbar-ios-translucent-filter:    saturate(180%) blur(20px) !default;
 // --------------------------------------------------
 
 .tabbar-translucent-ios {
-  background-color: rgba($tabs-ios-background, 0.88);
+  background-color: rgba($tabs-ios-background, $tabbar-ios-translucent-opacity);
 
   -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
   backdrop-filter: $tabbar-ios-translucent-filter;
