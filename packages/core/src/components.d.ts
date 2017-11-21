@@ -8,7 +8,7 @@ import 'ionicons';
 
 import {
   ActionSheetButton,
-} from './components/action-sheet/action-sheet.js';
+} from './components/action-sheet/action-sheet';
 import {
   AnimationBuilder,
   PickerOptions,
@@ -18,7 +18,7 @@ import {
 import {
   AlertButton,
   AlertInput,
-} from './components/alert/alert.js';
+} from './components/alert/alert';
 import {
   ElementRef,
   Side,
@@ -26,20 +26,20 @@ import {
 import {
   GestureCallback,
   GestureDetail,
-} from './components/gesture/gesture.js';
+} from './components/gesture/gesture';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
-} from './components/picker/picker.js';
+} from './components/picker/picker';
 import {
   Event,
 } from '@stencil/core';
 import {
   ScrollCallback,
-} from './components/scroll/scroll.js';
+} from './components/scroll/scroll';
 import {
   SelectPopoverOption,
-} from './components/select/select-popover.js';
+} from './components/select/select-popover';
 
 import {
   ActionSheetController as IonActionSheetController
