@@ -5,7 +5,18 @@ import { AlertController } from '../../../../src/providers/alert-controller';
 @Component({
   selector: 'app-alert-page',
   template: `
-  <button (click)="clickMe()">Click Me</button>
+  <ion-app>
+  <ion-page class="show-page">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Test</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content padding>
+      <ion-button (click)="clickMe()">Blah</ion-button>
+    </ion-content>
+  </ion-page>
+</ion-app>
   `
 })
 export class AlertPageComponent {
@@ -16,7 +27,9 @@ export class AlertPageComponent {
 
   clickMe() {
     const alert = this.alertController.create({
-      message: 'Gretting from an ng cli app'
+      title: 'ohhhh snap',
+      message: 'Gretting from an ng cli app',
+
     });
     alert.present();
   }

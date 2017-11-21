@@ -23,12 +23,13 @@
     "clean": "rm -rf dist",
     "clean-generated": "node ./scripts/clean.js",
     "compile": "ngc -p .",
-    "deploy": "np --any-branch"
+    "deploy": "np --any-branch",
+    "tsc": "tsc -p ."
   },
   "main": "./dist/src/index.js",
   "modules": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
-  "dependencies": {
+  "devDependencies": {
     "@angular/common": "5.0.1",
     "@angular/compiler": "5.0.1",
     "@angular/compiler-cli": "5.0.1",
@@ -37,13 +38,12 @@
     "@angular/http": "5.0.1",
     "@angular/platform-browser": "5.0.1",
     "@angular/platform-browser-dynamic": "5.0.1",
-    "@ionic/core": "latest",
+    "@ionic/core": "next",
+    "@stencil/core": "0.0.7",
+    "glob": "7.1.2",
     "ionicons": "~3.0.0",
     "rxjs": "5.5.2",
-    "zone.js": "0.8.18"
-  },
-  "devDependencies": {
     "typescript": "~2.4.2",
-    "glob": "7.1.2"
+    "zone.js": "0.8.18"
   }
 }
