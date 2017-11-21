@@ -2159,7 +2159,7 @@ declare global {
 
 import {
   RadioGroup as IonRadioGroup
-} from './components/radio/radio-group';
+} from './components/radio-group/radio-group';
 
 declare global {
   interface HTMLIonRadioGroupElement extends IonRadioGroup, HTMLElement {
@@ -2184,6 +2184,7 @@ declare global {
       
         allowEmptySelection?: boolean,
         disabled?: boolean,
+        name?: string,
         value?: string
     }
   }
@@ -2217,8 +2218,9 @@ declare global {
       
         color?: string,
         mode?: 'ios' | 'md',
-        checked?: boolean,
+        name?: string,
         disabled?: boolean,
+        checked?: boolean,
         value?: string
     }
   }
