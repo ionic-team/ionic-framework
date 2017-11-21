@@ -58,7 +58,6 @@ $alert-ios-message-padding-bottom:              21px !default;
 /// @prop - Padding start of the alert message
 $alert-ios-message-padding-start:               $alert-ios-message-padding-end !default;
 
-
 /// @prop - Font size of the alert message
 $alert-ios-message-font-size:                   13px !default;
 
@@ -135,7 +134,7 @@ $alert-ios-button-text-color:                   color($colors-ios, primary) !def
 $alert-ios-button-background-color:             transparent !default;
 
 /// @prop - Background color of the alert activated button
-$alert-ios-button-background-color-activated:   #e9e9e9 !default;
+$alert-ios-button-background-color-activated:   rgba(115, 115, 115, .1) !default;
 
 /// @prop - Border width of the alert button
 $alert-ios-button-border-width:                 $hairlines-width !default;
@@ -144,7 +143,7 @@ $alert-ios-button-border-width:                 $hairlines-width !default;
 $alert-ios-button-border-style:                 solid !default;
 
 /// @prop - Border color of the alert button
-$alert-ios-button-border-color:                 rgba(0, 0, 0, .3) !default;
+$alert-ios-button-border-color:                 rgba(0, 0, 0, .1) !default;
 
 /// @prop - Border radius of the alert button
 $alert-ios-button-border-radius:                0 !default;

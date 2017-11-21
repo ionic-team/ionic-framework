@@ -29,7 +29,7 @@ $action-sheet-ios-group-margin-bottom:                  10px !default;
 $action-sheet-ios-background:                           #f9f9f9 !default;
 
 /// @prop - Border color of the action sheet
-$action-sheet-ios-border-color:                         #d6d6da !default;
+$action-sheet-ios-border-color:                         rgba(0, 0, 0, .1) !default;
 
 /// @prop - Border radius of the action sheet
 $action-sheet-ios-border-radius:                        13px !default;
@@ -89,7 +89,7 @@ $action-sheet-ios-button-border-color:                  #d1d3d6 !default;
 $action-sheet-ios-button-background:                    transparent !default;
 
 /// @prop - Background color of the activated action sheet button
-$action-sheet-ios-button-background-activated:          #ebebeb !default;
+$action-sheet-ios-button-background-activated:          rgba(115, 115, 115, .1) !default;
 
 /// @prop - Destructive text color of the action sheet button
 $action-sheet-ios-button-destructive-text-color:        #f53d3d !default;
