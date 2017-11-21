@@ -1,4 +1,0 @@
-<@ for doc in docs @><@ if doc.URL and doc.private != true and doc.name @>
-<li class="capitalize {% if page.id == '<$ doc.name|lower|replace(' ','-')$>' %}active{% endif %}">
-  <a href="/<$ doc.URL $>"><$ doc.name $></a>
-</li><@ endif @><@ endfor @>
