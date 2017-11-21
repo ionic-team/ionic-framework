@@ -58,8 +58,8 @@ export class ItemOptions {
   hostData(){
     return {
       class:{
-        'ion-options-left': !this.isRightSide(),
-        'ion-options-right': this.isRightSide()
+        'item-options-left': !this.isRightSide(),
+        'item-options-right': this.isRightSide()
       }
     }
   }

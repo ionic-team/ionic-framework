@@ -27,16 +27,16 @@ $item-ios-sliding-button-icon-color:         color-contrast($colors-ios, $item-i
 
 .list-ios ion-item-options {
   border-bottom: $hairlines-width solid $list-ios-border-color;
-
-  &.ion-options-right ion-item-option:last-child {
-    @include safe-area-padding-horizontal(null, .7em);
-  }
-
-  &.ion-options-left ion-item-option:first-child {
-    @include safe-area-padding-horizontal(.7em, null);
-  }
-
 }
+
+.list-ios .item-options-right ion-item-option:last-child {
+  @include safe-area-padding-horizontal(null, .7em);
+}
+
+.list-ios .item-options-left ion-item-option:first-child {
+  @include safe-area-padding-horizontal(.7em, null);
+}
+
 
 .item-option-ios {
   font-size: $item-ios-sliding-button-font-size;
