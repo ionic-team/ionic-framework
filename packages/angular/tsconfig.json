@@ -9,13 +9,13 @@
     "module": "es2015",
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "outDir": "dist",
     "removeComments": false,
     "sourceMap": true,
     "target": "es2015"
   },
   "include": [
-    "src/**/*.ts",
-    "demos/src/**/*.ts"
+    "src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false

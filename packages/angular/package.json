@@ -2,7 +2,7 @@
   "private": true,
   "name": "@ionic/angular",
   "version": "4.0.0",
-  "description": "A powerful framework for building mobile and progressive web apps with TypeScript and Angular",
+  "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
     "framework",
@@ -19,7 +19,15 @@
     "type": "git",
     "url": "https://github.com/ionic-team/ionic.git"
   },
-  "scripts": {},
+  "scripts": {
+    "clean": "rm -rf dist",
+    "clean-generated": "node ./scripts/clean.js",
+    "compile": "ngc -p .",
+    "build": "npm run clean && npm run compile && npm run clean-generated"
+  },
+  "main": "./dist/src/index.js",
+  "modules": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "dependencies": {
     "@angular/common": "5.0.1",
     "@angular/compiler": "5.0.1",
@@ -35,6 +43,7 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "typescript": "~2.4.2"
+    "typescript": "~2.4.2",
+    "glob": "7.1.2"
   }
 }
