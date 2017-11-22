@@ -1,25 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 
-/**
- * @name Searchbar
- * @module ionic
- * @description
- * Manages the display of a Searchbar which can be used to search or filter items.
- *
- * @usage
- * ```html
- * <ion-searchbar
- *   [(ngModel)]="myInput"
- *   [showCancelButton]="shouldShowCancel"
- *   (ionInput)="onInput($event)"
- *   (ionCancel)="onCancel($event)">
- * </ion-searchbar>
- * ```
- *
- * @demo /docs/demos/src/searchbar/
- * @see {@link /docs/components#searchbar Searchbar Component Docs}
- */
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {

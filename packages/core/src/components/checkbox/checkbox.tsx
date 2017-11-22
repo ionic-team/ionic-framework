@@ -1,71 +1,7 @@
-import { BlurEvent, BooleanInput, BooleanInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
-import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
+import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
 
-/**
- * @name Checkbox
- * @module ionic
- *
- * @description
- * placed in an `ion-item` or used as a stand-alone checkbox.
- *
- * See the [Angular Docs](https://angular.io/docs/ts/latest/guide/forms.html)
- * for more info on forms and inputs.
- *
- *
- * @usage
- * ```html
- *
- *  <ion-list>
- *
- *    <ion-item>
- *      <ion-label>Pepperoni</ion-label>
- *      <ion-checkbox [(ngModel)]="pepperoni"></ion-checkbox>
- *    </ion-item>
- *
- *    <ion-item>
- *      <ion-label>Sausage</ion-label>
- *      <ion-checkbox [(ngModel)]="sausage" disabled="true"></ion-checkbox>
- *    </ion-item>
- *
- *    <ion-item>
- *      <ion-label>Mushrooms</ion-label>
- *      <ion-checkbox [(ngModel)]="mushrooms"></ion-checkbox>
- *    </ion-item>
- *
- *  </ion-list>
- * ```
- *
- * @advanced
- *
- * ```html
- *
- * <!-- Call function when state changes -->
- *  <ion-list>
- *
- *    <ion-item>
- *      <ion-label>Cucumber</ion-label>
- *      <ion-checkbox [(ngModel)]="cucumber" (ionChange)="updateCucumber()"></ion-checkbox>
- *    </ion-item>
- *
- *  </ion-list>
- * ```
- *
- * ```ts
- * @Component({
- *   templateUrl: 'main.html'
- * })
- * class SaladPage {
- *   cucumber: boolean;
- *
- *   updateCucumber() {
- *     console.log('Cucumbers new state:' + this.cucumber);
- *   }
- * }
- * ```
- *
- * @demo /docs/demos/src/checkbox/
- * @see {@link /docs/components#checkbox Checkbox Component Docs}
- */
+
 @Component({
   tag: 'ion-checkbox',
   styleUrls: {
@@ -76,30 +12,13 @@ import { Component, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChang
     theme: 'checkbox'
   }
 })
-export class Checkbox implements BooleanInput {
-  private checkboxId: string;
-  private labelId: string;
+export class Checkbox implements CheckboxInput {
+  private didLoad: boolean;
+  private inputId: string;
+  private nativeInput: HTMLInputElement;
   private styleTmr: any;
 
-  /**
-   * @output {Event} Emitted when the checked property has changed.
-   */
-  @Event() ionChange: EventEmitter<BooleanInputChangeEvent>;
-
-  /**
-   * @output {Event} Emitted when the toggle has focus.
-   */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
-
-  /**
-   * @output {Event} Emitted when the toggle loses focus.
-   */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
-
-  /**
-   * @output {Event} Emitted when the styles change.
-   */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
+  @State() keyFocus: boolean;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -116,37 +35,90 @@ export class Checkbox implements BooleanInput {
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * The name of the control, which is submitted with the form data.
+   */
+  @Prop() name: string;
+
+  /**
    * @input {boolean} If true, the checkbox is selected. Defaults to `false`.
    */
-  @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked = false;
 
   /*
    * @input {boolean} If true, the user cannot interact with the checkbox. Default false.
    */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
    * @input {string} the value of the checkbox.
    */
   @Prop({ mutable: true }) value: string;
 
+  /**
+   * @output {Event} Emitted when the checked property has changed.
+   */
+  @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
+
+  /**
+   * @output {Event} Emitted when the toggle has focus.
+   */
+  @Event() ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * @output {Event} Emitted when the toggle loses focus.
+   */
+  @Event() ionBlur: EventEmitter<BlurEvent>;
+
+  /**
+   * @output {Event} Emitted when the styles change.
+   */
+  @Event() ionStyle: EventEmitter<StyleEvent>;
+
 
   componentWillLoad() {
+    this.inputId = 'ion-cb-' + (checkboxIds++);
+    if (this.value === undefined) {
+      this.value = this.inputId;
+    }
     this.emitStyle();
   }
 
+  componentDidLoad() {
+    this.nativeInput.checked = this.checked;
+    this.didLoad = true;
+
+    const parentItem = this.nativeInput.closest('ion-item');
+    if (parentItem) {
+      const itemLabel = parentItem.querySelector('ion-label');
+      if (itemLabel) {
+        itemLabel.id = this.inputId + '-lbl';
+        this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
+      }
+    }
+  }
+
   @PropDidChange('checked')
-  protected checkedChanged(val: boolean) {
-    this.ionChange.emit({ checked: val });
+  checkedChanged(isChecked: boolean) {
+    if (this.nativeInput.checked !== isChecked) {
+      // keep the checked value and native input `nync
+      this.nativeInput.checked = isChecked;
+    }
+    if (this.didLoad) {
+      this.ionChange.emit({
+        checked: isChecked,
+        value: this.value
+      });
+    }
     this.emitStyle();
   }
 
   @PropDidChange('disabled')
-  protected disabledChanged() {
+  disabledChanged(isDisabled: boolean) {
+    this.nativeInput.disabled = isDisabled;
     this.emitStyle();
   }
 
-  private emitStyle() {
+  emitStyle() {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
@@ -157,23 +129,29 @@ export class Checkbox implements BooleanInput {
     });
   }
 
-
-  @Listen('keydown.space')
-  onSpace(ev: KeyboardEvent) {
-    this.toggle();
-    ev.stopPropagation();
-    ev.preventDefault();
+  onChange() {
+    this.checked = !this.checked;
   }
 
-  toggle() {
-    this.checked = !this.checked;
+  onKeyUp() {
+    this.keyFocus = true;
+  }
+
+  onFocus() {
+    this.ionFocus.emit();
+  }
+
+  onBlur() {
+    this.keyFocus = false;
+    this.ionBlur.emit();
   }
 
   hostData() {
     return {
       class: {
         'checkbox-checked': this.checked,
-        'checkbox-disabled': this.disabled
+        'checkbox-disabled': this.disabled,
+        'checkbox-key': this.keyFocus
       }
     };
   }
@@ -188,16 +166,19 @@ export class Checkbox implements BooleanInput {
       <div class={checkboxClasses}>
         <div class='checkbox-inner'></div>
       </div>,
-      <button
-        class='checkbox-cover'
-        onClick={() => this.toggle()}
-        id={this.checkboxId}
-        aria-checked={this.checked ? 'true' : false}
-        aria-disabled={this.disabled ? 'true' : false}
-        aria-labelledby={this.labelId}
-        role='checkbox'
-        tabIndex={0}
-      />
+      <input
+        type='checkbox'
+        onChange={this.onChange.bind(this)}
+        onFocus={this.onFocus.bind(this)}
+        onBlur={this.onBlur.bind(this)}
+        onKeyUp={this.onKeyUp.bind(this)}
+        id={this.inputId}
+        name={this.name}
+        value={this.value}
+        disabled={this.disabled}
+        ref={r => this.nativeInput = (r as any)}/>
     ];
   }
 }
+
+let checkboxIds = 0;

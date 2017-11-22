@@ -1,6 +1,8 @@
 import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
 
+import { createThemedClasses } from '../../utils/theme';
+
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
@@ -15,9 +17,11 @@ import iOSLeaveAnimation from './animations/ios.leave';
   }
 })
 export class Loading {
+  color: string;
+  mode: string;
+
   private animation: Animation;
   private durationTimeout: any;
-  private mode: string;
 
   @Element() private el: HTMLElement;
 
@@ -60,6 +64,7 @@ export class Loading {
   @Prop() content: string;
   @Prop() dismissOnPageChange: boolean = false;
   @Prop() duration: number;
+  @Prop() translucent: boolean = false;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() loadingId: string;
@@ -182,6 +187,18 @@ export class Loading {
     this.dismiss();
   }
 
+  hostData() {
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'loading-translucent') : {};
+
+    const hostClasses = {
+      ...themedClasses
+    };
+
+    return {
+      class: hostClasses
+    };
+  }
+
   render() {
     // TODO: cssClass
 
@@ -227,6 +244,7 @@ export interface LoadingOptions {
   showBackdrop?: boolean;
   dismissOnPageChange?: boolean;
   duration?: number;
+  translucent?: boolean;
 }
 
 

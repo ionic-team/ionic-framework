@@ -22,9 +22,39 @@
         <ion-button block onclick="presentToast('top')">Show Toast Top</ion-button>
         <ion-button block onclick="presentToast('middle')">Show Toast Middle</ion-button>
         <ion-button block onclick="presentToastWithOptions({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show Toast with long message</ion-button>
-        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with close button</ion-button>
-        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with close button and custom text</ion-button>
+        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</ion-button>
+        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</ion-button>
+        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</ion-button>
         <ion-toast-controller></ion-toast-controller>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6>
+              <f class="red"></f>
+            </ion-col>
+            <ion-col col-6>
+              <f class="green"></f>
+            </ion-col>
+            <ion-col col-6>
+              <f class="blue"></f>
+            </ion-col>
+            <ion-col col-6>
+              <f class="yellow"></f>
+            </ion-col>
+            <ion-col col-6>
+              <f class="pink"></f>
+            </ion-col>
+            <ion-col col-6>
+              <f class="purple"></f>
+            </ion-col>
+            <ion-col col-6>
+              <f class="black"></f>
+            </ion-col>
+            <ion-col col-6>
+              <f class="orange"></f>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-content>
     </ion-page>
   </ion-app>
@@ -32,23 +62,65 @@
     function presentToast(position) {
       var toastController = document.querySelector('ion-toast-controller');
       toastController.create({
-          message: 'Hellooo',
-          position,
-          duration: 2000
-        })
-        .then(toast => {
-          toast.present();
-        });
+        message: 'Hellooo',
+        position,
+        duration: 2000
+      }).then(toast => {
+        toast.present();
+      });
     }
 
     function presentToastWithOptions(opts) {
       var toastController = document.querySelector('ion-toast-controller');
-      toastController.create(opts)
-        .then(toast => {
-          toast.present();
-        });
+      toastController.create(opts).then(toast => {
+        toast.present();
+      });
     }
   </script>
+
+  <style>
+    f {
+      display: block;
+      background: blue;
+
+      width: 100%;
+      height: 200px;
+      margin: 20px auto;
+    }
+
+    .red {
+      background-color: #ea445a;
+    }
+
+    .green {
+      background-color: #76d672;
+    }
+
+    .blue {
+      background-color: #3478f6;
+    }
+
+    .yellow {
+      background-color: #ffff80;
+    }
+
+    .pink {
+      background-color: #ff6b86;
+    }
+
+    .purple {
+      background-color: #7e34f6;
+    }
+
+    .black {
+      background-color: #000;
+    }
+
+    .orange {
+      background-color: #f69234;
+    }
+
+  </style>
 </body>
 
 </html>

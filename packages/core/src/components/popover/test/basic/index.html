@@ -23,9 +23,10 @@
       </ion-header>
 
       <ion-content padding>
-        <ion-button class="e2eShowPopover" block onclick="presentPopover('profile-page', event)">Show Popover</ion-button>
-        <ion-button block onclick="presentPopover('list-page', event)">Show Long List Popover</ion-button>
-        <ion-button block onclick="presentPopover('profile-page')">No Event Popover</ion-button>
+        <ion-button class="e2eShowPopover" block onclick="presentPopover({ component: 'profile-page', ev: event })">Show Popover</ion-button>
+        <ion-button block onclick="presentPopover({ component: 'translucent-page', ev: event, translucent: true })">Show Translucent Popover</ion-button>
+        <ion-button block color="secondary" onclick="presentPopover({ component: 'list-page', ev: event })">Show Long List Popover</ion-button>
+        <ion-button block color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</ion-button>
 
         <ion-popover-controller></ion-popover-controller>
       </ion-content>
@@ -43,12 +44,9 @@
     </ion-page>
   </ion-app>
   <script>
-    function presentPopover(componentName, event) {
+    function presentPopover(opts) {
       var popoverController = document.querySelector('ion-popover-controller');
-      popoverController.create({
-        component: componentName,
-        ev: event
-      }).then(popover => {
+      popoverController.create(opts).then(popover => {
         popover.present();
       });
     }
@@ -98,6 +96,22 @@
     }
 
     customElements.define('list-page', ListPage);
+
+    class TranslucentPage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <div padding>
+            <h1>Translucent Popover</h1>
+          </div>
+        `;
+      }
+    }
+
+    customElements.define('translucent-page', TranslucentPage);
   </script>
 </body>
 

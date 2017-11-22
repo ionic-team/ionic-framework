@@ -33,6 +33,12 @@ $toolbar-ios-button-strong-font-weight:     600 !default;
 /// @prop - Height of the navigation bar
 $navbar-ios-height:                         $toolbar-ios-height !default;
 
+/// @prop - Filter of the translucent toolbar
+$toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent toolbar
+$toolbar-ios-translucent-opacity:           .88 !default;
+
 
 .toolbar-ios {
   @include padding($toolbar-ios-padding);
@@ -79,6 +85,21 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
 }
 
 
+// iOS Translucent Toolbar
+// --------------------------------------------------
+
+.header-translucent-ios .toolbar-background-ios,
+.footer-translucent-ios .toolbar-background-ios,
+.toolbar-translucent-ios .toolbar-background-ios {
+  background: rgba($toolbar-ios-background, $toolbar-ios-translucent-opacity);
+}
+
+.toolbar-translucent-ios .toolbar-background-ios {
+  -webkit-backdrop-filter: $toolbar-ios-translucent-filter;
+  backdrop-filter: $toolbar-ios-translucent-filter;
+}
+
+
 // iOS Toolbar Content
 // --------------------------------------------------
 
@@ -106,6 +127,17 @@ $navbar-ios-height:                         $toolbar-ios-height !default;
       @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
       @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
     }
+  }
+
+  // Colored toolbars with translucency
+  .header-translucent-ios .toolbar-ios-#{$color-name},
+  .footer-translucent-ios .toolbar-ios-#{$color-name},
+  .toolbar-translucent-ios-#{$color-name} {
+
+    .toolbar-background-ios {
+      background: rgba($color-base, $toolbar-ios-translucent-opacity);
+    }
+
   }
 }
 

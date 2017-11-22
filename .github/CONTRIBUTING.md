@@ -70,21 +70,7 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 #### Adding Documentation
 
-1. To add or modify API Documentation for a component, it should be added/changed in the component's TypeScript (`*.ts`) file, prior to the Class definition. For example, `Badge` looks similar to this:
-
-  ```
-  /**
-    * @name Badge
-    * @module ionic
-    * @description
-    * Badges are simple components in Ionic containing numbers or text.
-    *
-    * @see {@link /docs/v2/components/#badges Badges Component Docs}
-    * @demo /docs/v2/demos/badge/
-  **/
-  ```
-
-  where `@name` is the Class name, `@description` is the description displayed on the documentation page, `@see` links to any related pages, and `@demo` links to the API demo located in the `demos` folder.
+1. To add or modify API Documentation for a component, it should be added/changed in the `readme.md` file in the component's directory. If the updates are to a specific `@Prop`, `@Event` or `@Method`, then please make the changes to the component's TypeScript (`*.ts`). Properties, events and methods information within the `readme.md` file are auto generated directly from the JSDoc comments within the TypeScript file.
 2. In order to run API documentation locally, you will need to clone the `ionic-site` repo as a sibling to the `ionic` repo and then run it: https://github.com/ionic-team/ionic-site#local-build
 3. Then, run `gulp docs` in the `ionic` repo every time you make a change and the site will update.
 4. If the change affects the component documentation, create an issue on the `ionic-site` repo: https://github.com/ionic-team/ionic-site/issues

@@ -144,7 +144,6 @@ export interface NavOptions { }
   }
 })
 export class Tabs {
-
   private ids: number = -1;
   private tabsId: number = (++tabIds);
 
@@ -179,6 +178,14 @@ export class Tabs {
    * @input {boolean} If true, show the tab highlight bar under the selected tab.
    */
   @Prop({ mutable: true }) tabbarHighlight: boolean;
+
+  /**
+   * @input {boolean} If true, adds transparency to the tabbar.
+   * Note: In order to scroll content behind the tabbar, the `fullscreen`
+   * attribute needs to be set on the content.
+   * Only affects `ios` mode. Defaults to `false`.
+   */
+  @Prop() translucent: boolean = false;
 
   /**
    * @output {any} Emitted when the tab changes.
@@ -342,7 +349,9 @@ export class Tabs {
     const dom = [
       <div class='tabs-inner'>
         <slot></slot>
-      </div>];
+      </div>
+    ];
+
     if (!this.tabbarHidden) {
       dom.push(
         <ion-tabbar
@@ -350,7 +359,8 @@ export class Tabs {
           selectedTab={this.selectedTab}
           highlight={this.tabbarHighlight}
           placement={this.tabbarPlacement}
-          layout={this.tabbarLayout}>
+          layout={this.tabbarLayout}
+          translucent={this.translucent}>
         </ion-tabbar>
       );
     }

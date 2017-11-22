@@ -93,6 +93,7 @@ export {
 } from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
+export { PublicNavController } from './components/nav/nav-interface';
 export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
@@ -116,8 +117,8 @@ export {
   iOSLeaveAnimation as PopoverIOSLeaveAnimation
 } from './components/popover/popover';
 export { PopoverController } from './components/popover-controller/popover-controller';
-export { RadioGroup } from './components/radio/radio-group';
-export { Radio, RadioEvent } from './components/radio/radio';
+export { RadioGroup } from './components/radio-group/radio-group';
+export { Radio, HTMLIonRadioElementEvent } from './components/radio/radio';
 export { RangeKnob } from './components/range/range-knob';
 export { Range, RangeEvent } from './components/range/range';
 export { ReorderGroup } from './components/reorder/reorder-group';

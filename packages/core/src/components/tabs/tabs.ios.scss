@@ -43,6 +43,12 @@ $tabs-ios-tab-font-size:            10px !default;
 /// @prop - Size of the tab button icon
 $tabs-ios-tab-icon-size:            30px !default;
 
+/// @prop - Filter of the translucent tabbar
+$tabbar-ios-translucent-filter:    saturate(210%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent tabbar
+$tabbar-ios-translucent-opacity:   .8 !default;
+
 
 .tabbar-ios {
   justify-content: center;
@@ -140,6 +146,16 @@ $tabs-ios-tab-icon-size:            30px !default;
 //   min-height: $tabs-ios-tab-min-height - 8;
 // }
 
+// iOS Translucent Tabbar
+// --------------------------------------------------
+
+.tabbar-translucent-ios {
+  background-color: rgba($tabs-ios-background, $tabbar-ios-translucent-opacity);
+
+  -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
+  backdrop-filter: $tabbar-ios-translucent-filter;
+}
+
 
 // iOS Tabbar Color Mixin
 // --------------------------------------------------
@@ -158,6 +174,10 @@ $tabs-ios-tab-icon-size:            30px !default;
     color: $color-contrast;
 
     fill: $color-contrast;
+  }
+
+  .tabbar-translucent-ios-#{$color-name} {
+    background-color: rgba($color-base, $tabbar-ios-translucent-opacity);
   }
 
 }

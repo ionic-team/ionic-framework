@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap } from '../../index';
 
+import { createThemedClasses } from '../../utils/theme';
+
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
@@ -15,6 +17,9 @@ import iOSLeaveAnimation from './animations/ios.leave';
   }
 })
 export class Toast {
+  mode: string;
+  color: string;
+
   private animation: Animation;
 
   @Element() private el: HTMLElement;
@@ -59,6 +64,7 @@ export class Toast {
   @Prop() closeButtonText: string;
   @Prop() dismissOnPageChange: boolean;
   @Prop() position: string;
+  @Prop() translucent: boolean = false;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() exitAnimation: AnimationBuilder;
   @Prop() toastId: string;
@@ -156,6 +162,28 @@ export class Toast {
     this.dismiss();
   }
 
+  wrapperClass(): CssClassMap {
+    let wrapperClass: string[] = !this.position
+      ? ['toast-wrapper', 'toast-bottom']
+      : [`toast-wrapper`, `toast-${this.position}`];
+    return wrapperClass.reduce((prevValue: any, cssClass: any) => {
+      prevValue[cssClass] = true;
+      return prevValue;
+    }, {});
+  }
+
+  hostData() {
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
+
+    const hostClasses = {
+      ...themedClasses
+    };
+
+    return {
+      class: hostClasses
+    };
+  }
+
   render() {
     let userCssClass = 'toast-content';
     if (this.cssClass) {
@@ -178,16 +206,6 @@ export class Toast {
     );
   }
 
-  wrapperClass(): CssClassMap {
-    let wrapperClass: string[] = !this.position
-      ? ['toast-wrapper', 'toast-bottom']
-      : [`toast-wrapper`, `toast-${this.position}`];
-    return wrapperClass.reduce((prevValue: any, cssClass: any) => {
-      prevValue[cssClass] = true;
-      return prevValue;
-    }, {});
-  }
-
 }
 
 export interface ToastOptions {
@@ -198,6 +216,7 @@ export interface ToastOptions {
   closeButtonText?: string;
   dismissOnPageChange?: boolean;
   position?: string;
+  translucent?: boolean;
   enterAnimation?: AnimationBuilder;
   exitAnimation?: AnimationBuilder;
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tab - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <script type="text/javascript">
+    window.Ionic.config = {useRouter: true};
+  </script>
+</head>
+<body>
+
+  <ion-app>
+    <ion-tabs color="primary" translucent>
+      <ion-tab title="Today" icon="calendar" path="">
+        <translucent-page-tab class="ion-page"></translucent-page-tab>
+      </ion-tab>
+
+      <ion-tab title="Games" icon="planet" path="tab2">
+        <ion-nav root="page-two">
+          <ion-route path="" component="page-two"></ion-route>
+          <ion-route path="path/to/page/three" component="page-three"></ion-route>
+        </ion-nav>
+      </ion-tab>
+
+      <ion-tab title="Apps" icon="logo-buffer" path="tab3">
+        <ion-nav root="page-three">
+          <ion-route path="/" component="page-three"></ion-route>
+        </ion-nav>
+      </ion-tab>
+
+      <ion-tab title="Updates" icon="download" path="tab4" badge="7" badge-style="danger">
+        <ion-nav root="translucent-page-tab">
+          <ion-route component="page-one"></ion-route>
+          <ion-route path="paginaaaa-two" component="page-two"></ion-route>
+        </ion-nav>
+      </ion-tab>
+
+      <ion-tab title="Search" icon="search" path="tab5">
+        <translucent-page-tab class="ion-page"></translucent-page-tab>
+      </ion-tab>
+    </ion-tabs>
+
+    <ion-nav-controller></ion-nav-controller>
+  </ion-app>
+
+  <style>
+    f {
+      display: block;
+      background: blue;
+
+      width: 100%;
+      height: 200px;
+      margin: 20px auto;
+    }
+
+    .red {
+      background-color: #ea445a;
+    }
+
+    .green {
+      background-color: #76d672;
+    }
+
+    .blue {
+      background-color: #3478f6;
+    }
+
+    .yellow {
+      background-color: #ffff80;
+    }
+
+    .pink {
+      background-color: #ff6b86;
+    }
+
+    .purple {
+      background-color: #7e34f6;
+    }
+
+    .black {
+      background-color: #000;
+    }
+
+    .orange {
+      background-color: #f69234;
+    }
+    </style>
+</body>
+</html>

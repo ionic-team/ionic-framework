@@ -9,7 +9,7 @@ ion-radio {
   display: inline-block;
 }
 
-.radio-cover {
+ion-radio input {
   @include position(0, null, null, 0);
 
   position: absolute;
@@ -19,4 +19,8 @@ ion-radio {
 
   background: transparent;
   cursor: pointer;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }

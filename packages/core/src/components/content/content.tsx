@@ -95,8 +95,10 @@ export class Content {
       return;
     }
     if (this.fullscreen) {
-      Context.dom.read(this.readDimensions.bind(this));
-      Context.dom.write(this.writeDimensions.bind(this));
+      Context.dom.raf(() => {
+        Context.dom.read(this.readDimensions.bind(this));
+        Context.dom.write(this.writeDimensions.bind(this));
+      });
     } else {
       this.cTop = this.cBottom = null;
       Context.dom.write(() => this.scrollEl.removeAttribute('style'));
