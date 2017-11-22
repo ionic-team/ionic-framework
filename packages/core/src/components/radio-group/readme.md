@@ -44,3 +44,61 @@ radio button within the same group.
 
 </ion-list>
 ```
+
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+#### allowEmptySelection
+
+boolean
+
+
+#### disabled
+
+boolean
+
+
+#### name
+
+string
+
+
+#### value
+
+string
+
+
+## Attributes
+
+#### allowEmptySelection
+
+boolean
+
+
+#### disabled
+
+boolean
+
+
+#### name
+
+string
+
+
+#### value
+
+string
+
+
+## Events
+
+#### ionChange
+
+
+
+----------------------------------------------
+
+*Built by [StencilJS](https://stenciljs.com/)*

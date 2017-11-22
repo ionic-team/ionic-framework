@@ -24,6 +24,7 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   @Prop({ mutable: true }) disabled = false;
 
   /**
+   * The name of the control, which is submitted with the form data.
    */
   @Prop({ mutable: true }) name: string;
 

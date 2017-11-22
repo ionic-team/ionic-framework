@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { NavOptions, PublicNavController, ViewController } from '@ionic/core';
 import { hydrateElement } from '../util/util';
 

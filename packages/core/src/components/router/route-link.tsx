@@ -1,10 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 
-/**
-  * @name Route
-  * @module ionic
-  * @description
- */
+
 @Component({
   tag: 'ion-route-link'
 })

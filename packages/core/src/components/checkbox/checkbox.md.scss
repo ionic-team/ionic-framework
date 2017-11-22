@@ -142,6 +142,27 @@ $checkbox-md-item-end-margin-start:      0 !default;
 }
 
 
+// Material Design Checkbox Keyboard Focus
+// -----------------------------------------
+
+.checkbox-key .checkbox-icon::after {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+
+  display: block;
+
+  width: 36px;
+  height: 36px;
+
+  background: #86A8DF;
+  opacity: .3;
+
+  border-radius: 50%;
+  content: '';
+}
+
+
 // Material Design Checkbox Within An Item
 // -----------------------------------------
 

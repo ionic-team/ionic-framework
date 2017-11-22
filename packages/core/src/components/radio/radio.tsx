@@ -1,5 +1,5 @@
 import { BlurEvent, CheckedInputChangeEvent, FocusEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
-import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -14,13 +14,47 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad {
-  didLoad: boolean;
-  inputId: string;
-  nativeInput: HTMLInputElement;
-  styleTmr: any;
+  private didLoad: boolean;
+  private inputId: string;
+  private nativeInput: HTMLInputElement;
+  private styleTmr: any;
 
 
   @State() keyFocus: boolean;
+
+  /**
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @Prop() color: string;
+
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @Prop() mode: 'ios' | 'md';
+
+  /**
+   * The name of the control, which is submitted with the form data.
+   */
+  @Prop() name: string;
+
+  /*
+   * @input {boolean} If true, the user cannot interact with the radio. Default false.
+   */
+  @Prop() disabled = false;
+
+  /**
+   * @input {boolean} If true, the radio is selected. Defaults to `false`.
+   */
+  @Prop({ mutable: true }) checked = false;
+
+  /**
+   * @input {string} the value of the radio.
+   */
+  @Prop({ mutable: true }) value: string;
 
   /**
    * @output {RadioEvent} Emitted when the radio loads.
@@ -51,39 +85,6 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
    * @output {Event} Emitted when the radio button loses focus.
    */
   @Event() ionBlur: EventEmitter<BlurEvent>;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
-   */
-  @Prop() color: string;
-
-  /**
-   * @input {string} The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode: 'ios' | 'md';
-
-  /**
-   */
-  @Prop() name: string;
-
-  /*
-   * @input {boolean} If true, the user cannot interact with the radio. Default false.
-   */
-  @Prop() disabled = false;
-
-  /**
-   * @input {boolean} If true, the radio is selected. Defaults to `false`.
-   */
-  @Prop({ mutable: true }) checked = false;
-
-  /**
-   * @input {string} the value of the radio.
-   */
-  @Prop({ mutable: true }) value: string;
 
 
   componentWillLoad() {
@@ -135,8 +136,8 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   }
 
   @PropDidChange('disabled')
-  disabledChanged(val: boolean) {
-    this.nativeInput.disabled = val;
+  disabledChanged(isDisabled: boolean) {
+    this.nativeInput.disabled = isDisabled;
     this.emitStyle();
   }
 
@@ -153,7 +154,8 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   }
 
   onChange() {
-    this.onClick();
+    this.checked = true;
+    this.nativeInput.focus();
   }
 
   onKeyUp() {
@@ -167,14 +169,6 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
-  }
-
-  @Listen('click')
-  onClick() {
-    if (!this.checked && !this.disabled) {
-      this.checked = true;
-      this.nativeInput.focus();
-    }
   }
 
   hostData() {
@@ -198,7 +192,6 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
       <div class={radioClasses}>
         <div class='radio-inner'/>
       </div>,
-      <div class='radio-outline'/>,
       <input
         type='radio'
         onChange={this.onChange.bind(this)}

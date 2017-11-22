@@ -9,7 +9,7 @@ ion-checkbox {
   display: inline-block;
 }
 
-.checkbox-cover {
+ion-checkbox input {
   @include position(0, null, null, 0);
 
   position: absolute;
@@ -19,4 +19,8 @@ ion-checkbox {
 
   background: transparent;
   cursor: pointer;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }

@@ -4,7 +4,7 @@ The purpose of this application is to provide an Angular CLI application where I
 
 ## Getting started
 
-**Note:** This application uses the locally built Ionic Core. It does not grab the latest uploaded version or anything. That allows the developer to use this application as they make changes in core. That also means that you **must** build core before building this application. So if you haven't done that yet, go do that first.
+**Note:** This application now uses the last published `@ionic/core` package. To test against changes that you have made locally to core use `npm link` (see below). 
 
 To use _this_ application perform the following commands from this directory:
 
@@ -21,3 +21,11 @@ This application installs the Angular CLI locally so you do not need to have it 
 
 - `npm run ng build -- --prod` - run a production build
 - `npm run ng g component my-cool-thing`
+
+## Testing Local Changes
+
+In order to test local core changes, use `npm link` as such:
+
+1. In `packages/core`, run `npm run build`
+2. In `packages/core`, run `npm link`
+3. In `packages/angular/demo`, run `npm link @ionic/core`

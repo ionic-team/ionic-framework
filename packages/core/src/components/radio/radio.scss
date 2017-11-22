@@ -24,23 +24,3 @@ ion-radio input {
   -moz-appearance: none;
   appearance: none;
 }
-
-.radio-outline {
-  display: none;
-}
-
-.radio-key .radio-outline {
-  position: absolute;
-  top: 5px;
-  left: 10px;
-
-  display: block;
-
-  width: 36px;
-  height: 36px;
-
-  background: #86A8DF;
-  opacity: .3;
-
-  border-radius: 50%;
-}

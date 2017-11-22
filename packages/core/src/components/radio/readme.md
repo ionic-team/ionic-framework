@@ -38,3 +38,96 @@ then they will all have the ability to be checked at the same time.
 
 </ion-list>
 ```
+
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+#### checked
+
+boolean
+
+
+#### color
+
+string
+
+
+#### disabled
+
+boolean
+
+
+#### mode
+
+any
+
+
+#### name
+
+string
+
+
+#### value
+
+string
+
+
+## Attributes
+
+#### checked
+
+boolean
+
+
+#### color
+
+string
+
+
+#### disabled
+
+boolean
+
+
+#### mode
+
+any
+
+
+#### name
+
+string
+
+
+#### value
+
+string
+
+
+## Events
+
+#### ionBlur
+
+
+#### ionFocus
+
+
+#### ionRadioDidLoad
+
+
+#### ionRadioDidUnload
+
+
+#### ionSelect
+
+
+#### ionStyle
+
+
+
+----------------------------------------------
+
+*Built by [StencilJS](https://stenciljs.com/)*
