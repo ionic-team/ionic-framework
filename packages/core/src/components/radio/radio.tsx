@@ -1,5 +1,5 @@
 import { BlurEvent, CheckedInputChangeEvent, FocusEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
-import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, CssClassMap, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -14,43 +14,13 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad {
-  didLoad: boolean;
-  inputId: string;
-  nativeInput: HTMLInputElement;
-  styleTmr: any;
+  private didLoad: boolean;
+  private inputId: string;
+  private nativeInput: HTMLInputElement;
+  private styleTmr: any;
 
 
   @State() keyFocus: boolean;
-
-  /**
-   * @output {RadioEvent} Emitted when the radio loads.
-   */
-  @Event() ionRadioDidLoad: EventEmitter;
-
-  /**
-   * @output {RadioEvent} Emitted when the radio unloads.
-   */
-  @Event() ionRadioDidUnload: EventEmitter;
-
-  /**
-   * @output {Event} Emitted when the styles change.
-   */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
-
-  /**
-   * @output {Event} Emitted when the radio button is selected.
-   */
-  @Event() ionSelect: EventEmitter<CheckedInputChangeEvent>;
-
-  /**
-   * @output {Event} Emitted when the radio button has focus.
-   */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
-
-  /**
-   * @output {Event} Emitted when the radio button loses focus.
-   */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -84,6 +54,36 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
    * @input {string} the value of the radio.
    */
   @Prop({ mutable: true }) value: string;
+
+  /**
+   * @output {RadioEvent} Emitted when the radio loads.
+   */
+  @Event() ionRadioDidLoad: EventEmitter;
+
+  /**
+   * @output {RadioEvent} Emitted when the radio unloads.
+   */
+  @Event() ionRadioDidUnload: EventEmitter;
+
+  /**
+   * @output {Event} Emitted when the styles change.
+   */
+  @Event() ionStyle: EventEmitter<StyleEvent>;
+
+  /**
+   * @output {Event} Emitted when the radio button is selected.
+   */
+  @Event() ionSelect: EventEmitter<CheckedInputChangeEvent>;
+
+  /**
+   * @output {Event} Emitted when the radio button has focus.
+   */
+  @Event() ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * @output {Event} Emitted when the radio button loses focus.
+   */
+  @Event() ionBlur: EventEmitter<BlurEvent>;
 
 
   componentWillLoad() {
@@ -135,8 +135,8 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   }
 
   @PropDidChange('disabled')
-  disabledChanged(val: boolean) {
-    this.nativeInput.disabled = val;
+  disabledChanged(isDisabled: boolean) {
+    this.nativeInput.disabled = isDisabled;
     this.emitStyle();
   }
 
@@ -153,7 +153,8 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   }
 
   onChange() {
-    this.onClick();
+    this.checked = true;
+    this.nativeInput.focus();
   }
 
   onKeyUp() {
@@ -167,14 +168,6 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
-  }
-
-  @Listen('click')
-  onClick() {
-    if (!this.checked && !this.disabled) {
-      this.checked = true;
-      this.nativeInput.focus();
-    }
   }
 
   hostData() {
@@ -198,7 +191,6 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
       <div class={radioClasses}>
         <div class='radio-inner'/>
       </div>,
-      <div class='radio-outline'/>,
       <input
         type='radio'
         onChange={this.onChange.bind(this)}
