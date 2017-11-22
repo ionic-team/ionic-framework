@@ -1,6 +1,15 @@
 # ion-searchbar
 
+Manages the display of a Searchbar which can be used to search or filter items.
 
+```html
+<ion-searchbar
+  [(ngModel)]="myInput"
+  [showCancelButton]="shouldShowCancel"
+  (ionInput)="onInput($event)"
+  (ionCancel)="onCancel($event)">
+</ion-searchbar>
+```
 
 <!-- Auto Generated Below -->
 

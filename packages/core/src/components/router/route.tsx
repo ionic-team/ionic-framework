@@ -1,11 +1,7 @@
 import { Component, Event, EventEmitter, Prop } from '@stencil/core';
 import { RouterEntry, parseURL } from './router-utils';
 
-/**
-  * @name Route
-  * @module ionic
-  * @description
- */
+
 @Component({
   tag: 'ion-route'
 })
