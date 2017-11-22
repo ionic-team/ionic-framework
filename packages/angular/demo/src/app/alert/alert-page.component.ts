@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AlertController } from '@ionic/angular';
+// import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-alert-page',
@@ -21,17 +21,18 @@ import { AlertController } from '@ionic/angular';
 })
 export class AlertPageComponent {
 
-  constructor(private alertController: AlertController) {
+  constructor(/*private alertController: AlertController*/) {
 
   }
 
   clickMe() {
-    const alert = this.alertController.create({
+    /*const alert = this.alertController.create({
       title: 'ohhhh snap',
       message: 'Gretting from an ng cli app',
 
     });
-    alert.present();
+    alert.present();*/
+    alert('yeah');
   }
 
 }
