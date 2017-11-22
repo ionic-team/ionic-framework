@@ -176,6 +176,10 @@ $tabbar-ios-translucent-opacity:   .8 !default;
     fill: $color-contrast;
   }
 
+  .tabbar-translucent-ios-#{$color-name} {
+    background-color: rgba($color-base, $tabbar-ios-translucent-opacity);
+  }
+
 }
 
 // iOS Tabbar Color Generation
