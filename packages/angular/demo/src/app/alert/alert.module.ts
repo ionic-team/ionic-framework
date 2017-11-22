@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { AlertPageComponent } from './alert-page.component';
 import { AlertRoutingModule } from './alert-routing.module';
 
+import { AlertController } from '@ionic/angular';
+
 @NgModule({
   imports: [
     CommonModule,

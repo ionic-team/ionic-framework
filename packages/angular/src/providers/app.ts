@@ -1,9 +1,13 @@
+import { Injectable } from '@angular/core';
 import { NavContainer } from '@ionic/core';
 import { hydrateElement } from '../util/util';
 
+@Injectable()
 export class App {
 
-  constructor(private element: HTMLIonAppElement) {
+  private element: HTMLIonAppElement;
+  constructor() {
+    this.element = document.querySelector('ion-app') as HTMLIonAppElement;
   }
 
   setTitle(title: string) {

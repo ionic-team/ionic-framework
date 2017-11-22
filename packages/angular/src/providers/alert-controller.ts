@@ -1,8 +1,11 @@
+import { Injectable } from '@angular/core';
 import { AlertOptions } from '@ionic/core';
 
 import { ensureElementInBody, hydrateElement } from '../util/util';
 
 let alertId = 0;
+
+@Injectable()
 export class AlertController {
   create(opts?: AlertOptions): AlertProxy {
     return getAlertProxy(opts);
