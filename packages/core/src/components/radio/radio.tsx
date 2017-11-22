@@ -37,6 +37,7 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * The name of the control, which is submitted with the form data.
    */
   @Prop() name: string;
 

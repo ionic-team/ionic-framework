@@ -35,6 +35,7 @@ export class Checkbox implements CheckboxInput {
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * The name of the control, which is submitted with the form data.
    */
   @Prop() name: string;
 

@@ -3246,6 +3246,7 @@ declare global {
       
         color?: string,
         mode?: 'ios' | 'md',
+        name?: string,
         checked?: boolean,
         disabled?: boolean,
         value?: string
