@@ -88,6 +88,7 @@ export interface TransitionBuilder {
 }
 
 export interface PublicViewController {
+  id?: string;
   component?: any;
   instance?: any;
   element?: HTMLElement;

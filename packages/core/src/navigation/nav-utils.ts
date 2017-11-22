@@ -40,7 +40,7 @@ export function setZIndex(nav: Nav, enteringView: ViewController, leavingView: V
       return;
     }
 
-    leavingView = leavingView || nav.getPrevious(enteringView);
+    leavingView = leavingView || nav.getPrevious(enteringView) as ViewController;
 
     if (leavingView && isDef(leavingView.zIndex)) {
       if (direction === DIRECTION_BACK) {
@@ -176,7 +176,7 @@ export function getActiveImpl(nav: Nav): ViewController {
 
 export function getPreviousImpl(nav: Nav, viewController: ViewController): ViewController {
   if (!viewController) {
-    viewController = nav.getActive();
+    viewController = nav.getActive() as ViewController;
   }
   return nav.views[nav.views.indexOf(viewController) - 1];
 }

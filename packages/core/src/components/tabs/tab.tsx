@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { StencilElement, ViewController } from '../../index';
+import { PublicViewController, StencilElement } from '../../index';
 
 /**
  * @name Tab
@@ -214,7 +214,7 @@ export class Tab {
   }
 
   @Method()
-  getActive(): Promise<ViewController> {
+  getActive(): Promise<PublicViewController> {
     return this.nav.then(nav => nav && nav.getActive());
   }
 

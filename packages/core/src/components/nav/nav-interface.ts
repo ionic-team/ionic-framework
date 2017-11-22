@@ -1,6 +1,6 @@
 
 /* it is very important to keep this interface in sync with ./nav */
-import { NavOptions, ViewController } from '../../index';
+import { NavOptions, PublicViewController } from '../../index';
 
 export interface PublicNav {
   push(component: any, data?: any, opts?: NavOptions): Promise<any>;
@@ -11,14 +11,14 @@ export interface PublicNav {
   popToRoot(opts?: NavOptions): Promise<any>;
   popTo(indexOrViewCtrl: any, opts?: NavOptions): Promise<any>;
   removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any>;
-  removeView(viewController: ViewController, opts?: NavOptions): Promise<any>;
+  removeView(viewController: PublicViewController, opts?: NavOptions): Promise<any>;
   setPages(componentDataPairs: any[], opts?: NavOptions): Promise<any>;
 
-  getActive?(): ViewController;
-  getPrevious?(view?: ViewController): ViewController;
-  canGoBack?(nav: PublicNav): boolean;
+  getActive?(): PublicViewController;
+  getPrevious?(view?: PublicViewController): PublicViewController;
+  canGoBack?(): boolean;
   canSwipeBack?(): boolean;
-  getFirstView?(): ViewController;
+  getFirstView?(): PublicViewController;
 
   element?: HTMLElement;
 }
