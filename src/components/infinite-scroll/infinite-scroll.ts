@@ -372,9 +372,14 @@ export class InfiniteScroll {
         if (!this._scLsn) {
           this._scLsn = this._content.ionScroll.subscribe(this._onScroll.bind(this));
         }
+        if (!this._escLsn) {
+          this._escLsn = this._content.ionScrollEnd.subscribe(this._onScroll.bind(this));
+        }
       } else {
         this._scLsn && this._scLsn.unsubscribe();
         this._scLsn = null;
+        this._escLsn && this._escLsn.unsubscribe();
+        this._escLsn = null;
       }
     }
   }
