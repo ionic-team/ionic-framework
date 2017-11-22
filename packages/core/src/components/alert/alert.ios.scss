@@ -58,7 +58,6 @@ $alert-ios-message-padding-bottom:              21px !default;
 /// @prop - Padding start of the alert message
 $alert-ios-message-padding-start:               $alert-ios-message-padding-end !default;
 
-
 /// @prop - Font size of the alert message
 $alert-ios-message-font-size:                   13px !default;
 
@@ -135,7 +134,7 @@ $alert-ios-button-text-color:                   color($colors-ios, primary) !def
 $alert-ios-button-background-color:             transparent !default;
 
 /// @prop - Background color of the alert activated button
-$alert-ios-button-background-color-activated:   #e9e9e9 !default;
+$alert-ios-button-background-color-activated:   rgba(115, 115, 115, .1) !default;
 
 /// @prop - Border width of the alert button
 $alert-ios-button-border-width:                 $hairlines-width !default;
@@ -144,7 +143,7 @@ $alert-ios-button-border-width:                 $hairlines-width !default;
 $alert-ios-button-border-style:                 solid !default;
 
 /// @prop - Border color of the alert button
-$alert-ios-button-border-color:                 #dbdbdf !default;
+$alert-ios-button-border-color:                 rgba(0, 0, 0, .1) !default;
 
 /// @prop - Border radius of the alert button
 $alert-ios-button-border-radius:                0 !default;
@@ -278,6 +277,12 @@ $alert-ios-checkbox-icon-border-color:          $background-ios-color !default;
 /// @prop - Transform of the icon in the checkbox alert
 $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
+/// @prop - Filter of the translucent alert
+$alert-ios-translucent-filter:                  saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent alert
+$alert-ios-translucent-opacity:                 .88 !default;
+
 
 .alert-ios .alert-wrapper {
   @include border-radius($alert-ios-border-radius);
@@ -289,6 +294,17 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
   background-color: $alert-ios-background;
 
   box-shadow: $alert-ios-box-shadow;
+}
+
+
+// iOS Translucent Alert
+// -----------------------------------------
+
+.alert-translucent-ios .alert-wrapper {
+  background: rgba($alert-ios-background, $alert-ios-translucent-opacity);
+
+  backdrop-filter: $alert-ios-translucent-filter;
+  -webkit-backdrop-filter: $alert-ios-translucent-filter;
 }
 
 

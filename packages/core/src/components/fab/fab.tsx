@@ -77,6 +77,12 @@ export class FabButton {
    */
   @Prop() href: string;
 
+  /**
+   * @input {boolean} If true, adds transparency to the fab.
+   * Only affects `ios` mode. Defaults to `false`.
+   */
+  @Prop() translucent: boolean = false;
+
   @Prop() activated: boolean = false;
   @Prop() toggleActive: Function = () => {};
 
@@ -112,10 +118,16 @@ export class FabButton {
     if (!this.inList) {
       return [];
     }
-    return [
+    let listClasses = [
       `fab-in-list`,
       `fab-${this.mode}-in-list`
     ];
+
+    if (this.translucent) {
+      listClasses.push(`fab-translucent-${this.mode}-in-list`);
+    }
+
+    return listClasses;
   }
 
   /**
@@ -146,6 +158,7 @@ export class FabButton {
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-translucent') : {};
     const hostClasses = getElementClassObject(this.el.classList);
 
     const elementClasses: CssClassMap = []
@@ -163,6 +176,7 @@ export class FabButton {
 
     const fabClasses = {
       ...themedClasses,
+      ...translucentClasses,
       ...hostClasses,
       ...elementClasses
     };

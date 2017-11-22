@@ -23,7 +23,7 @@
         <ion-button>Test</ion-button>
 
         <ion-fab top right edge id="fab1" slot="fixed">
-          <ion-fab-button onclick="clickMainFAB()" mini class="e2eFabTopRight"><ion-icon name="add"></ion-icon></ion-fab-button>
+          <ion-fab-button onclick="clickMainFAB('fab1')" mini class="e2eFabTopRight"><ion-icon name="add"></ion-icon></ion-fab-button>
           <ion-fab-list>
             <ion-fab-button onclick="openSocial('facebook', 'fab1')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
             <ion-fab-button onclick="openSocial('twitter', 'fab1')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
@@ -33,7 +33,7 @@
         </ion-fab>
 
         <ion-fab bottom right edge id="fab2" slot="fixed">
-          <ion-fab-button onclick="clickMainFAB()" color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></ion-fab-button>
+          <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></ion-fab-button>
           <ion-fab-list side="left">
             <ion-fab-button onclick="openSocial('facebook', 'fab2')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
             <ion-fab-button onclick="openSocial('twitter', 'fab2')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
@@ -43,7 +43,7 @@
         </ion-fab>
 
         <ion-fab top left id="fab3" slot="fixed">
-          <ion-fab-button onclick="clickMainFAB()" color="secondary" class="e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></ion-fab-button>
+          <ion-fab-button onclick="clickMainFAB('fab3')" color="secondary" class="e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></ion-fab-button>
           <ion-fab-list side="right">
             <ion-fab-button onclick="openSocial('facebook', 'fab3')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
             <ion-fab-button onclick="openSocial('twitter', 'fab3')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
@@ -53,7 +53,7 @@
         </ion-fab>
 
         <ion-fab bottom left id="fab4" slot="fixed">
-          <ion-fab-button onclick="clickMainFAB()" color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></ion-fab-button>
+          <ion-fab-button onclick="clickMainFAB('fab4')" color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></ion-fab-button>
           <ion-fab-list side="top">
             <ion-fab-button onclick="openSocial('facebook', 'fab4')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
             <ion-fab-button onclick="openSocial('twitter', 'fab4')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
@@ -63,7 +63,7 @@
         </ion-fab>
 
         <ion-fab center middle id="fab5" slot="fixed">
-          <ion-fab-button onclick="clickMainFAB()" color="danger" class="e2eFabCenter"><ion-icon name="md-share"></ion-icon></ion-fab-button>
+          <ion-fab-button onclick="clickMainFAB('fab5')" class="e2eFabCenter"><ion-icon name="md-share"></ion-icon></ion-fab-button>
           <ion-fab-list side="top">
             <ion-fab-button onclick="openSocial('vimeo', 'fab5')" color="primary"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
           </ion-fab-list>
@@ -109,17 +109,26 @@
         insertLog('add');
       }
 
-      function clickMainFAB() {
+      function clickMainFAB(container) {
         let message = 'Clicked open social menu';
         insertLog(message);
+
+        openLists(container);
       }
 
       function openSocial(network, container) {
         let message = 'Share in ' + network;
         insertLog(message);
 
-        var fab = document.getElementById(container);
-        fab.close();
+        openLists(container);
+      }
+
+      function openLists(container) {
+        var fabLists = document.getElementById(container).querySelectorAll('ion-fab-list');
+
+        for (var i = 0; i < fabLists.length; i++) {
+          fabLists[i].activated = true;
+        }
       }
     </script>
 

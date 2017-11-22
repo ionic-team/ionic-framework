@@ -101,6 +101,7 @@ declare global {
         subTitle?: string,
         buttons?: ActionSheetButton[],
         enableBackdropDismiss?: boolean,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         actionSheetId?: string
@@ -171,6 +172,7 @@ declare global {
         buttons?: AlertButton[],
         inputs?: AlertInput[],
         enableBackdropDismiss?: boolean,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         alertId?: string
@@ -465,7 +467,8 @@ declare global {
     export interface IonCardHeaderAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md'
+        mode?: 'ios' | 'md',
+        translucent?: boolean
     }
   }
 }
@@ -842,6 +845,7 @@ declare global {
         color?: string,
         mode?: 'ios' | 'md',
         href?: string,
+        translucent?: boolean,
         activated?: boolean,
         toggleActive?: Function,
         show?: boolean,
@@ -876,6 +880,7 @@ declare global {
   namespace JSXElements {
     export interface IonFooterAttributes extends HTMLAttributes {
       
+        translucent?: boolean
     }
   }
 }
@@ -1074,6 +1079,7 @@ declare global {
   namespace JSXElements {
     export interface IonHeaderAttributes extends HTMLAttributes {
       
+        translucent?: boolean
     }
   }
 }
@@ -1592,6 +1598,7 @@ declare global {
         content?: string,
         dismissOnPageChange?: boolean,
         duration?: number,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         loadingId?: string,
@@ -2152,7 +2159,8 @@ declare global {
         exitAnimation?: AnimationBuilder,
         ev?: Event,
         popoverId?: string,
-        showBackdrop?: boolean
+        showBackdrop?: boolean,
+        translucent?: boolean
     }
   }
 }
@@ -2887,71 +2895,6 @@ declare global {
 
 
 import {
-  PageTab as PageTab
-} from './components/tabs/page-tab';
-
-declare global {
-  interface HTMLPageTabElement extends PageTab, HTMLElement {
-  }
-  var HTMLPageTabElement: {
-    prototype: HTMLPageTabElement;
-    new (): HTMLPageTabElement;
-  };
-  interface HTMLElementTagNameMap {
-    "page-tab": HTMLPageTabElement;
-  }
-  interface ElementTagNameMap {
-    "page-tab": HTMLPageTabElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "page-tab": JSXElements.PageTabAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface PageTabAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
-  TabBar as IonTabbar
-} from './components/tabs/tab-bar';
-
-declare global {
-  interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
-  }
-  var HTMLIonTabbarElement: {
-    prototype: HTMLIonTabbarElement;
-    new (): HTMLIonTabbarElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-tabbar": HTMLIonTabbarElement;
-  }
-  interface ElementTagNameMap {
-    "ion-tabbar": HTMLIonTabbarElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-tabbar": JSXElements.IonTabbarAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonTabbarAttributes extends HTMLAttributes {
-      
-        placement?: string,
-        tabs?: HTMLIonTabElement[],
-        selectedTab?: HTMLIonTabElement,
-        layout?: string,
-        highlight?: boolean
-    }
-  }
-}
-
-
-import {
   TabbarButton as IonTabButton
 } from './components/tabs/tab-button';
 
@@ -3055,6 +2998,42 @@ declare global {
 
 
 import {
+  Tabbar as IonTabbar
+} from './components/tabs/tabbar';
+
+declare global {
+  interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
+  }
+  var HTMLIonTabbarElement: {
+    prototype: HTMLIonTabbarElement;
+    new (): HTMLIonTabbarElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-tabbar": HTMLIonTabbarElement;
+  }
+  interface ElementTagNameMap {
+    "ion-tabbar": HTMLIonTabbarElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-tabbar": JSXElements.IonTabbarAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTabbarAttributes extends HTMLAttributes {
+      
+        placement?: string,
+        tabs?: HTMLIonTabElement[],
+        selectedTab?: HTMLIonTabElement,
+        layout?: string,
+        highlight?: boolean,
+        translucent?: boolean
+    }
+  }
+}
+
+
+import {
   Tabs as IonTabs
 } from './components/tabs/tabs';
 
@@ -3083,7 +3062,68 @@ declare global {
         tabbarHidden?: boolean,
         tabbarLayout?: string,
         tabbarPlacement?: string,
-        tabbarHighlight?: boolean
+        tabbarHighlight?: boolean,
+        translucent?: boolean
+    }
+  }
+}
+
+
+import {
+  PageTab as PageTab
+} from './components/tabs/test/basic/page-tab';
+
+declare global {
+  interface HTMLPageTabElement extends PageTab, HTMLElement {
+  }
+  var HTMLPageTabElement: {
+    prototype: HTMLPageTabElement;
+    new (): HTMLPageTabElement;
+  };
+  interface HTMLElementTagNameMap {
+    "page-tab": HTMLPageTabElement;
+  }
+  interface ElementTagNameMap {
+    "page-tab": HTMLPageTabElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "page-tab": JSXElements.PageTabAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface PageTabAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  TranslucentPageTab as TranslucentPageTab
+} from './components/tabs/test/translucent/translucent-page-tab';
+
+declare global {
+  interface HTMLTranslucentPageTabElement extends TranslucentPageTab, HTMLElement {
+  }
+  var HTMLTranslucentPageTabElement: {
+    prototype: HTMLTranslucentPageTabElement;
+    new (): HTMLTranslucentPageTabElement;
+  };
+  interface HTMLElementTagNameMap {
+    "translucent-page-tab": HTMLTranslucentPageTabElement;
+  }
+  interface ElementTagNameMap {
+    "translucent-page-tab": HTMLTranslucentPageTabElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "translucent-page-tab": JSXElements.TranslucentPageTabAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface TranslucentPageTabAttributes extends HTMLAttributes {
+      
     }
   }
 }
@@ -3211,6 +3251,7 @@ declare global {
         closeButtonText?: string,
         dismissOnPageChange?: boolean,
         position?: string,
+        translucent?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         toastId?: string
@@ -3315,7 +3356,8 @@ declare global {
     export interface IonToolbarAttributes extends HTMLAttributes {
       
         color?: string,
-        mode?: 'ios' | 'md'
+        mode?: 'ios' | 'md',
+        translucent?: boolean
     }
   }
 }

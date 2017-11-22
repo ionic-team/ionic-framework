@@ -12,29 +12,33 @@
 <body>
 
   <ion-app>
-    <ion-tabs>
-      <ion-tab title="Plain List" icon="star" path="">
-        <page-tab class="ion-page"></page-tab>
+    <ion-tabs color="primary" translucent>
+      <ion-tab title="Today" icon="calendar" path="">
+        <translucent-page-tab class="ion-page"></translucent-page-tab>
       </ion-tab>
 
-      <ion-tab title="Schedule" icon="globe" path="tab2">
+      <ion-tab title="Games" icon="planet" path="tab2">
         <ion-nav root="page-two">
           <ion-route path="" component="page-two"></ion-route>
           <ion-route path="path/to/page/three" component="page-three"></ion-route>
         </ion-nav>
       </ion-tab>
 
-      <ion-tab title="Stopwatch" icon="logo-facebook" path="tab3">
+      <ion-tab title="Apps" icon="logo-buffer" path="tab3">
         <ion-nav root="page-three">
           <ion-route path="/" component="page-three"></ion-route>
         </ion-nav>
       </ion-tab>
 
-      <ion-tab title="Messages" icon="chatboxes" path="tab4">
-        <ion-nav root="page-tab">
+      <ion-tab title="Updates" icon="download" path="tab4" badge="7" badge-style="danger">
+        <ion-nav root="translucent-page-tab">
           <ion-route component="page-one"></ion-route>
           <ion-route path="paginaaaa-two" component="page-two"></ion-route>
         </ion-nav>
+      </ion-tab>
+
+      <ion-tab title="Search" icon="search" path="tab5">
+        <translucent-page-tab class="ion-page"></translucent-page-tab>
       </ion-tab>
     </ion-tabs>
 

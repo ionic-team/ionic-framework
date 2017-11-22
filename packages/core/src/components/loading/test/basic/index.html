@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Toast - Basic</title>
+  <title>Loading - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
@@ -13,19 +13,16 @@
     <ion-page>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Toast - Basic</ion-title>
+          <ion-title>Loading - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content padding>
-        <ion-button block class="e2eShowBottomToast" onclick="presentToast('bottom')">Show Toast Bottom</ion-button>
-        <ion-button block onclick="presentToast('top')">Show Toast Top</ion-button>
-        <ion-button block onclick="presentToast('middle')">Show Toast Middle</ion-button>
-        <ion-button block onclick="presentToastWithOptions({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show Toast with long message</ion-button>
-        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</ion-button>
-        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</ion-button>
-        <ion-button block onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</ion-button>
-        <ion-toast-controller></ion-toast-controller>
+        <ion-button block onclick="presentLoading()" class="e2eShowLoading">Show Loading</ion-button>
+        <ion-button block onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</ion-button>
+        <ion-button block onclick="presentLoadingWithOptions({duration: 2000, message: 'Loading Please Wait...', spinner: 'hide'})">Show Loading with no spinner</ion-button>
+        <ion-button block onclick="presentLoadingWithOptions({duration: 5000, message: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</ion-button>
+        <ion-loading-controller></ion-loading-controller>
 
         <ion-grid>
           <ion-row>
@@ -59,21 +56,20 @@
     </ion-page>
   </ion-app>
   <script>
-    function presentToast(position) {
-      var toastController = document.querySelector('ion-toast-controller');
-      toastController.create({
+    function presentLoading() {
+      var loadingController = document.querySelector('ion-loading-controller');
+      loadingController.create({
         message: 'Hellooo',
-        position,
         duration: 2000
-      }).then(toast => {
-        toast.present();
+      }).then(loading => {
+        loading.present();
       });
     }
 
-    function presentToastWithOptions(opts) {
-      var toastController = document.querySelector('ion-toast-controller');
-      toastController.create(opts).then(toast => {
-        toast.present();
+    function presentLoadingWithOptions(opts) {
+      var loadingController = document.querySelector('ion-loading-controller');
+      loadingController.create(opts).then(loading => {
+        loading.present();
       });
     }
   </script>

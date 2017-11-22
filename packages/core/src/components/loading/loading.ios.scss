@@ -53,6 +53,12 @@ $loading-ios-spinner-crescent-color:    $loading-ios-spinner-color !default;
 /// @prop - Color of the dots loading spinner
 $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 
+/// @prop - Filter of the translucent loading
+$loading-ios-translucent-filter:        saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent loading
+$loading-ios-translucent-opacity:       .88 !default;
+
 
 .loading-ios .loading-wrapper {
   @include border-radius($loading-ios-border-radius);
@@ -64,6 +70,17 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 
   color: $loading-ios-text-color;
   background: $loading-ios-background;
+}
+
+
+// iOS Translucent Loading
+// -----------------------------------------
+
+.loading-translucent-ios .loading-wrapper {
+  background: rgba($loading-ios-background, $loading-ios-translucent-opacity);
+
+  backdrop-filter: $loading-ios-translucent-filter;
+  -webkit-backdrop-filter: $loading-ios-translucent-filter;
 }
 
 

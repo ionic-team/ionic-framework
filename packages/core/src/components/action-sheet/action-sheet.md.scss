@@ -86,6 +86,10 @@ $action-sheet-md-icon-margin-bottom:                    0 !default;
 $action-sheet-md-icon-margin-start:                     0 !default;
 
 
+
+// Material Design Action Sheet Title
+// -----------------------------------------
+
 .action-sheet-md .action-sheet-title,
 .action-sheet-md .action-sheet-sub-title {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
@@ -95,6 +99,26 @@ $action-sheet-md-icon-margin-start:                     0 !default;
   font-size: $action-sheet-md-title-font-size;
   color: $action-sheet-md-title-color;
 }
+
+
+// Material Design Action Sheet Group
+// -----------------------------------------
+
+.action-sheet-md .action-sheet-group {
+  background: $action-sheet-md-background;
+}
+
+.action-sheet-md .action-sheet-group:first-child {
+  @include padding($action-sheet-md-padding-top, null, null, null);
+}
+
+.action-sheet-md .action-sheet-group:last-child {
+  @include padding(null, null, $action-sheet-md-padding-bottom, null);
+}
+
+
+// Material Design Action Sheet Buttons
+// -----------------------------------------
 
 .action-sheet-md .action-sheet-button {
   @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
@@ -126,18 +150,6 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 
   font-size: $action-sheet-md-icon-font-size;
   vertical-align: $action-sheet-md-icon-vertical-align;
-}
-
-.action-sheet-md .action-sheet-group {
-  background: $action-sheet-md-background;
-}
-
-.action-sheet-md .action-sheet-group:first-child {
-  @include padding($action-sheet-md-padding-top, null, null, null);
-}
-
-.action-sheet-md .action-sheet-group:last-child {
-  @include padding(null, null, $action-sheet-md-padding-bottom, null);
 }
 
 .action-sheet-md .action-sheet-group .button-inner {

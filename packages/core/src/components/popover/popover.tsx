@@ -67,6 +67,7 @@ export class Popover {
   @Prop() ev: Event;
   @Prop() popoverId: string;
   @Prop() showBackdrop: boolean = true;
+  @Prop() translucent: boolean = false;
 
 
   present() {
@@ -288,6 +289,18 @@ export class Popover {
     }
   }
 
+  hostData() {
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'popover-translucent') : {};
+
+    const hostClasses = {
+      ...themedClasses
+    };
+
+    return {
+      class: hostClasses
+    };
+  }
+
   render() {
     const ThisComponent = this.component;
 
@@ -320,6 +333,7 @@ export interface PopoverOptions {
   componentProps?: any;
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
+  translucent?: boolean;
   enterAnimation?: AnimationBuilder;
   exitAnimation?: AnimationBuilder;
   cssClass?: string;

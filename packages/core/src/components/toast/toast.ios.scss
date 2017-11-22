@@ -31,6 +31,12 @@ $toast-ios-title-padding-start:                   $toast-ios-title-padding-end !
 /// @prop - Color of the toast button
 $toast-ios-button-color:                          rgba(71, 71, 71, 1) !default;
 
+/// @prop - Filter of the translucent toast
+$toast-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent toast
+$toast-ios-translucent-opacity:                   .88 !default;
+
 
 .toast-ios .toast-wrapper {
   @include position-horizontal(10px, 10px);
@@ -45,6 +51,13 @@ $toast-ios-button-color:                          rgba(71, 71, 71, 1) !default;
   max-width: $toast-max-width;
 
   background: $toast-ios-background;
+}
+
+.toast-translucent-ios .toast-wrapper {
+  background: rgba($toast-ios-background, $toast-ios-translucent-opacity);
+
+  backdrop-filter: $toast-ios-translucent-filter;
+  -webkit-backdrop-filter: $toast-ios-translucent-filter;
 }
 
 .toast-ios .toast-wrapper.toast-top {
