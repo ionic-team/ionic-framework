@@ -3,7 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'app-basic-inputs-page',
   templateUrl: './basic-inputs-page.component.html',
-  styleUrls: ['./basic-inputs-page.component.css'],
+  styleUrls: ['./basic-inputs-page.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class BasicInputsPageComponent implements OnInit {

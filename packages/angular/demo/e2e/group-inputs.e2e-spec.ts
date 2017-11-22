@@ -83,4 +83,21 @@ describe('Group Inputs Page', () => {
       });
     });
   });
+
+  describe('segments', () => {
+    it('should have the proper initial value', () => {
+      page.navigateTo();
+      const el = page.getSegment();
+      expect(el.getAttribute('value')).toEqual('tripe');
+    });
+
+    it('should reflect back the changed value', () => {
+      page.navigateTo();
+      return browser.executeScript('window.scrollTo(0, 500);').then(function() {
+        const btns = page.getSegmentButtons();
+        btns.chicken.click();
+        expect(page.getRadioOutputText()).toEqual('chicken');
+      });
+    });
+  });
 });
