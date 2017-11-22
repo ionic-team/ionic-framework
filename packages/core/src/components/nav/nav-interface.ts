@@ -2,7 +2,7 @@
 /* it is very important to keep this interface in sync with ./nav */
 import { NavOptions, ViewController } from '../../index';
 
-export interface PublicNavController {
+export interface PublicNav {
   push(component: any, data?: any, opts?: NavOptions): Promise<any>;
   pop(opts?: NavOptions): Promise<any>;
   setRoot(component: any, data?: any, opts?: NavOptions): Promise<any>;
@@ -16,7 +16,9 @@ export interface PublicNavController {
 
   getActive?(): ViewController;
   getPrevious?(view?: ViewController): ViewController;
-  canGoBack?(nav: PublicNavController): boolean;
+  canGoBack?(nav: PublicNav): boolean;
   canSwipeBack?(): boolean;
   getFirstView?(): ViewController;
+
+  element?: HTMLElement;
 }

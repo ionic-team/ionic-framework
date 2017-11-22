@@ -6,7 +6,7 @@ import {
   NavController,
   NavOptions,
   NavState,
-  PublicNavController,
+  PublicNav,
   RouterEntries,
   RouterEntry,
   ViewController
@@ -25,7 +25,7 @@ import { assert, isReady } from '../../utils/helpers';
 @Component({
   tag: 'ion-nav',
 })
-export class Nav implements PublicNavController {
+export class Nav implements PublicNav {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;

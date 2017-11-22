@@ -86,3 +86,9 @@ export interface Transition extends Animation {
 export interface TransitionBuilder {
   (rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions ): Transition;
 }
+
+export interface PublicViewController {
+  component?: any;
+  instance?: any;
+  element?: HTMLElement;
+}
