@@ -34,9 +34,12 @@ export class TranslucentPageTab {
 
   render() {
     return [
-      <ion-header>
+      <ion-header translucent>
         <ion-toolbar>
-          <ion-title>Tab Translucent</ion-title>
+          <ion-title>App Store</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar></ion-searchbar>
         </ion-toolbar>
       </ion-header>,
       <ion-content fullscreen={true}>
