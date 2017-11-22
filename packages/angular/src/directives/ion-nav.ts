@@ -104,6 +104,5 @@ export function provideNavControllerInjectable(element: any) {
 }
 
 export function provideAppInjectable() {
-  const ionAppElement = document.querySelector('ion-app');
-  return new App(ionAppElement);
+  return new App();
 }

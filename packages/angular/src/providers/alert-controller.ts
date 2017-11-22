@@ -7,8 +7,9 @@ let alertId = 0;
 
 @Injectable()
 export class AlertController {
-  create(opts?: AlertOptions): AlertProxy {
-    return getAlertProxy(opts);
+  create(opts?: AlertOptions): any {
+    // return getAlertProxy(opts);
+    return { };
   }
 }
 
