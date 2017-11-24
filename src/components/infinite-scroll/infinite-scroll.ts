@@ -145,6 +145,7 @@ export class InfiniteScroll {
   _lastCheck: number = 0;
   _highestY: number = 0;
   _scLsn: any;
+  _escLsn: any;
   _thr: string = '15%';
   _thrPx: number = 0;
   _thrPc: number = 0.15;
