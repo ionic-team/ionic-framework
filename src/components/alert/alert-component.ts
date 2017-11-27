@@ -52,7 +52,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
         '<ng-template ngSwitchDefault>' +
           '<div class="alert-input-group">' +
             '<div *ngFor="let i of d.inputs" class="alert-input-wrapper">' +
-              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" dir="auto" [min]="i.min" [max]="i.max" [attr.id]="i.id" class="alert-input">' +
+              '<input [placeholder]="i.placeholder" [(ngModel)]="i.value" [type]="i.type" dir="auto" [min]="i.min" [max]="i.max" [attr.id]="i.id" [disabled]="i.disabled" class="alert-input">' +
             '</div>' +
           '</div>' +
         '</ng-template>' +
