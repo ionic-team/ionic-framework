@@ -173,6 +173,7 @@ declare global {
         inputs?: AlertInput[],
         enableBackdropDismiss?: boolean,
         translucent?: boolean,
+        animate?: boolean,
         enterAnimation?: AnimationBuilder,
         exitAnimation?: AnimationBuilder,
         alertId?: string
