@@ -308,6 +308,7 @@ export class Alert {
               min={i.min}
               max={i.max}
               id={i.id}
+              disabled={i.disabled}
               tabIndex={0}
               class='alert-input'/>
           </div>
