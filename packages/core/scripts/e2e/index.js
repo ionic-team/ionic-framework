@@ -134,7 +134,7 @@ if (require.main === module) {
 
 module.exports = {
   Page,
-  navigate,
+  navigate: url => driver => new Page(driver, url).navigate(),
   register: registerE2ETest,
   run: run
 };
