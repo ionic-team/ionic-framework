@@ -5,8 +5,8 @@ import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
-import MdEnterAnimation from './animations/md.enter'
-import MdLeaveAnimation from './animations/md.leave'
+import MdEnterAnimation from './animations/md.enter';
+import MdLeaveAnimation from './animations/md.leave';
 
 @Component({
   tag: 'ion-popover',

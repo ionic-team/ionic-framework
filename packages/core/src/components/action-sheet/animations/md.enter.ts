@@ -5,7 +5,6 @@ import { Animation } from '../../../index';
  * MD Action Sheet Enter Animation
  */
 export default function MdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
-  console.log('MD Animation')
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

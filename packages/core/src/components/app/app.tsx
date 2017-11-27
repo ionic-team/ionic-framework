@@ -23,7 +23,7 @@ export class App {
   @State() useRouter: boolean = false;
 
   @Prop({ context: 'config' }) config: Config;
-  
+
   componentWillLoad() {
     this.modeCode = this.config.get('mode');
     this.useRouter = this.config.getBoolean('useRouter', false);
