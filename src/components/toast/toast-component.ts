@@ -154,8 +154,10 @@ export class ToastCmp implements OnInit, AfterViewInit {
 
   dismiss(role: string): Promise<any> {
     clearTimeout(this.dismissTimeout);
-    this.dismissTimeout = undefined;
-    return this._viewCtrl.dismiss(null, role, { disableApp: false });
+    if (this.dismissTimeout) {
+      this.dismissTimeout = undefined;
+      return this._viewCtrl.dismiss(null, role, { disableApp: false });
+    }
   }
 
 }
