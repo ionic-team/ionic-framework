@@ -149,6 +149,7 @@ import { Config } from '../../config/config';
  *  | value       | `string`  | The input's value.                                              |
  *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
  *  | checked     | `boolean` | Whether or not the input is checked.                            |
+ *  | disabled    | `boolean` | Whether or not the input is disabled.                           |
  *  | id          | `string`  | The input's id.                                                 |
  *
  *  Button options

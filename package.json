@@ -39,7 +39,7 @@
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "nightly",
+    "@ionic/app-scripts": "3.1.2",
     "@ionic/commit-hooks": "1.0.3",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
