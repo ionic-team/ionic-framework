@@ -13,7 +13,7 @@ import { AlertController } from '@ionic/angular';
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      <ion-button (click)="clickMe()">Blah</ion-button>
+      <ion-button (click)="clickMe()">Open Basic Alert</ion-button>
     </ion-content>
   </ion-page>
 </ion-app>
@@ -34,20 +34,25 @@ export class AlertPageComponent {
           text: 'Cancel',
           role: 'Cancel',
           handler: () => {
-            console.log('cancel');
+            // console.log('cancel');
           }
         },
         {
           text: 'Okay',
           role: 'Okay',
           handler: () => {
-            console.log('okay');
+            // console.log('okay');
           }
         }
       ]
 
     });
-    alert.present();
+    alert.present().then(() => {
+      return alert.dismiss();
+
+    }).then(() => {
+      console.log('dismissed');
+    });
   }
 
 }
