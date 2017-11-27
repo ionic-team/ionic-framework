@@ -6,6 +6,9 @@ import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
+import MdEnterAnimation from './animations/md.enter';
+import MdLeaveAnimation from './animations/md.leave';
+
 @Component({
   tag: 'ion-loading',
   styleUrls: {
@@ -65,10 +68,11 @@ export class Loading {
   @Prop() dismissOnPageChange: boolean = false;
   @Prop() duration: number;
   @Prop() translucent: boolean = false;
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
   @Prop() loadingId: string;
   @Prop() showBackdrop: boolean = true;
+
+  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() leaveAnimation: AnimationBuilder;
 
   present() {
     return new Promise<void>(resolve => {
@@ -85,13 +89,7 @@ export class Loading {
     this.ionLoadingWillPresent.emit({ loading: this });
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
-
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSEnterAnimation;
-    }
+    const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -118,13 +116,7 @@ export class Loading {
       this.ionLoadingWillDismiss.emit({ loading: this });
 
       // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
-
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        animationBuilder = iOSLeaveAnimation;
-      }
+      const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -254,4 +246,4 @@ export interface LoadingEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation };
+export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };

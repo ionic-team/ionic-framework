@@ -6,6 +6,9 @@ import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
+import MdEnterAnimation from './animations/md.enter';
+import MdLeaveAnimation from './animations/md.leave';
+
 @Component({
   tag: 'ion-toast',
   styleUrls: {
@@ -65,9 +68,10 @@ export class Toast {
   @Prop() dismissOnPageChange: boolean;
   @Prop() position: string;
   @Prop() translucent: boolean = false;
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
   @Prop() toastId: string;
+
+  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() leaveAnimation: AnimationBuilder;
 
   present() {
     return new Promise<void>(resolve => {
@@ -83,13 +87,7 @@ export class Toast {
     this.ionToastWillPresent.emit({ toast: this });
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
-
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSEnterAnimation;
-    }
+    const animationBuilder = this.enterAnimation || this.config.get('toastEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
@@ -112,12 +110,7 @@ export class Toast {
       this.ionToastWillDismiss.emit({ toast: this });
 
       // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        animationBuilder = iOSLeaveAnimation;
-      }
+      const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
@@ -227,4 +220,4 @@ export interface ToastEvent {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation };
+export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };

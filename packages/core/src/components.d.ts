@@ -103,7 +103,7 @@ declare global {
         enableBackdropDismiss?: boolean,
         translucent?: boolean,
         enterAnimation?: AnimationBuilder,
-        exitAnimation?: AnimationBuilder,
+        leaveAnimation?: AnimationBuilder,
         actionSheetId?: string
     }
   }
@@ -173,9 +173,9 @@ declare global {
         inputs?: AlertInput[],
         enableBackdropDismiss?: boolean,
         translucent?: boolean,
+        alertId?: string,
         enterAnimation?: AnimationBuilder,
-        exitAnimation?: AnimationBuilder,
-        alertId?: string
+        leaveAnimation?: AnimationBuilder
     }
   }
 }
@@ -1599,10 +1599,10 @@ declare global {
         dismissOnPageChange?: boolean,
         duration?: number,
         translucent?: boolean,
-        enterAnimation?: AnimationBuilder,
-        exitAnimation?: AnimationBuilder,
         loadingId?: string,
-        showBackdrop?: boolean
+        showBackdrop?: boolean,
+        enterAnimation?: AnimationBuilder,
+        leaveAnimation?: AnimationBuilder
     }
   }
 }
@@ -1737,10 +1737,10 @@ declare global {
         componentProps?: any,
         cssClass?: string,
         enableBackdropDismiss?: boolean,
-        enterAnimation?: AnimationBuilder,
-        exitAnimation?: AnimationBuilder,
         modalId?: string,
-        showBackdrop?: boolean
+        showBackdrop?: boolean,
+        enterAnimation?: AnimationBuilder,
+        leaveAnimation?: AnimationBuilder
     }
   }
 }
@@ -2083,7 +2083,7 @@ declare global {
         dismissOnPageChange?: boolean,
         duration?: number,
         enterAnimation?: AnimationBuilder,
-        exitAnimation?: AnimationBuilder,
+        leaveAnimation?: AnimationBuilder,
         pickerId?: string,
         showBackdrop?: boolean,
         enableBackdropDismiss?: boolean,
@@ -2156,7 +2156,7 @@ declare global {
         cssClass?: string,
         enableBackdropDismiss?: boolean,
         enterAnimation?: AnimationBuilder,
-        exitAnimation?: AnimationBuilder,
+        leaveAnimation?: AnimationBuilder,
         ev?: Event,
         popoverId?: string,
         showBackdrop?: boolean,
@@ -3252,9 +3252,9 @@ declare global {
         dismissOnPageChange?: boolean,
         position?: string,
         translucent?: boolean,
+        toastId?: string,
         enterAnimation?: AnimationBuilder,
-        exitAnimation?: AnimationBuilder,
-        toastId?: string
+        leaveAnimation?: AnimationBuilder
     }
   }
 }

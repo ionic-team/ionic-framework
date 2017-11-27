@@ -5,6 +5,8 @@ import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
+import MdEnterAnimation from './animations/md.enter'
+import MdLeaveAnimation from './animations/md.leave'
 
 @Component({
   tag: 'ion-popover',
@@ -63,7 +65,7 @@ export class Popover {
   @Prop() cssClass: string;
   @Prop() enableBackdropDismiss: boolean = true;
   @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
+  @Prop() leaveAnimation: AnimationBuilder;
   @Prop() ev: Event;
   @Prop() popoverId: string;
   @Prop() showBackdrop: boolean = true;
@@ -205,13 +207,8 @@ export class Popover {
     this.ionPopoverWillPresent.emit({ popover: this });
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
+    const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSEnterAnimation;
-    }
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -235,12 +232,7 @@ export class Popover {
       this.ionPopoverWillDismiss.emit({ popover: this });
 
       // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        animationBuilder = iOSLeaveAnimation;
-      }
+      const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -361,4 +353,4 @@ export const POPOVER_POSITION_PROPERTIES: any = {
   }
 };
 
-export { iOSEnterAnimation, iOSLeaveAnimation };
+export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };

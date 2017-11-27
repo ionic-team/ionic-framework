@@ -8,6 +8,9 @@ import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
+import MdEnterAnimation from './animations/md.enter';
+import MdLeaveAnimation from './animations/md.leave';
+
 @Component({
   tag: 'ion-alert',
   styleUrls: {
@@ -71,9 +74,10 @@ export class Alert {
   @Prop() enableBackdropDismiss: boolean = true;
   @Prop() translucent: boolean = false;
 
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
   @Prop() alertId: string;
+
+  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() leaveAnimation: AnimationBuilder;
 
   @Method() present() {
     if (this.animation) {
@@ -83,12 +87,7 @@ export class Alert {
     this.ionAlertWillPresent.emit();
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSEnterAnimation;
-    }
+    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -113,12 +112,7 @@ export class Alert {
     this.ionAlertWillDismiss.emit();
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.exitAnimation;
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSLeaveAnimation;
-    }
+    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
@@ -471,4 +465,4 @@ export interface AlertButton {
 export interface AlertEvent extends Event {
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation };
+export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };

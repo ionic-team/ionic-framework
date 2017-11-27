@@ -6,6 +6,9 @@ import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
+import MdEnterAnimation from './animations/md.enter';
+import MdLeaveAnimation from './animations/md.leave';
+
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
@@ -65,9 +68,9 @@ export class ActionSheet {
   @Prop() translucent: boolean = false;
 
   @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
-  @Prop() actionSheetId: string;
+  @Prop() leaveAnimation: AnimationBuilder;
 
+  @Prop() actionSheetId: string;
 
   present() {
     return new Promise<void>(resolve => {
@@ -80,16 +83,11 @@ export class ActionSheet {
       this.animation.destroy();
       this.animation = null;
     }
+
     this.ionActionSheetWillPresent.emit({ actionSheet: this });
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
-
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSEnterAnimation;
-    }
+    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -112,12 +110,7 @@ export class ActionSheet {
       this.ionActionSheetWillDismiss.emit({ actionSheet: this });
 
       // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        animationBuilder = iOSLeaveAnimation;
-      }
+      const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -294,4 +287,4 @@ export interface ActionSheetEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation };
+export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };

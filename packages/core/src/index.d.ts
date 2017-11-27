@@ -5,7 +5,9 @@ export {
   ActionSheetEvent,
   ActionSheetOptions,
   iOSEnterAnimation as ActionSheetIOSEnterAnimation,
-  iOSLeaveAnimation as ActionSheetIOSLeaveAnimation
+  iOSLeaveAnimation as ActionSheetIOSLeaveAnimation,
+  MdEnterAnimation as ActionSheetMDEnterAnimation,
+  MdLeaveAnimation as ActionSheetMDLeaveAnimation
 } from './components/action-sheet/action-sheet';
 
 export { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
@@ -16,7 +18,9 @@ export {
   AlertInput,
   AlertOptions,
   iOSEnterAnimation as AlertIOSEnterAnimation,
-  iOSLeaveAnimation as AlertIOSLeaveAnimation
+  iOSLeaveAnimation as AlertIOSLeaveAnimation,
+  MdEnterAnimation as AlertMDEnterAnimation,
+  MdLeaveAnimation as AlertMDLeaveAnimation
 } from './components/alert/alert';
 export { AlertController } from './components/alert-controller/alert-controller';
 export {
@@ -74,7 +78,9 @@ export {
   LoadingEvent,
   LoadingOptions,
   iOSEnterAnimation as LoadingIOSEnterAnimation,
-  iOSLeaveAnimation as LoadingIOSLeaveAnimation
+  iOSLeaveAnimation as LoadingIOSLeaveAnimation,
+  MdEnterAnimation as LoadingMDEnterAnimation,
+  MdLeaveAnimation as LoadingMDLeaveAnimation
 } from './components/loading/loading';
 export { LoadingController } from './components/loading-controller/loading-controller';
 export { Menu } from './components/menu/menu';
@@ -89,7 +95,9 @@ export {
   ModalOptions,
   ModalEvent,
   iOSEnterAnimation as ModalIOSEnterAnimation,
-  iOSLeaveAnimation as ModalIOSLeaveAnimation
+  iOSLeaveAnimation as ModalIOSLeaveAnimation,
+  MdEnterAnimation as ModalMDEnterAnimation,
+  MdLeaveAnimation as ModalMDLeaveAnimation
 } from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
@@ -114,7 +122,9 @@ export {
   PopoverEvent,
   PopoverOptions,
   iOSEnterAnimation as PopoverIOSEnterAnimation,
-  iOSLeaveAnimation as PopoverIOSLeaveAnimation
+  iOSLeaveAnimation as PopoverIOSLeaveAnimation,
+  MdEnterAnimation as PopoverMDEnterAnimation,
+  MdLeaveAnimation as PopoverMDLeaveAnimation
 } from './components/popover/popover';
 export { PopoverController } from './components/popover-controller/popover-controller';
 export { RadioGroup } from './components/radio-group/radio-group';
@@ -150,7 +160,9 @@ export {
   ToastEvent,
   ToastOptions,
   iOSEnterAnimation as ToastIOSEnterAnimation,
-  iOSLeaveAnimation as ToastIOSLeaveAnimation
+  iOSLeaveAnimation as ToastIOSLeaveAnimation,
+  MdEnterAnimation as ToastMDEnterAnimation,
+  MdLeaveAnimation as ToastMDLeaveAnimation
 } from './components/toast/toast';
 export { ToastController } from './components/toast-controller/toast-controller';
 export { Toggle } from './components/toggle/toggle';
