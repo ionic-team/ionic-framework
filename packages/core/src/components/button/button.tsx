@@ -87,8 +87,9 @@ export class Button {
   @Prop() disabled: boolean = false;
 
   /**
-   * @input {string} Set to `"clear"` for a transparent button style or to `"outline"` for a transparent
-   * button style with a border. The default is `"solid"`.
+   * @input {string} Set to `"clear"` for a transparent button, to `"outline"` for a transparent
+   * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
+   * `ion-navbar`, where the default is `"clear"`.
    */
   @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
