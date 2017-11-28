@@ -243,6 +243,96 @@ declare global {
 
 
 import {
+  AppCordovaPageOne as AppCordovaPageOne
+} from './components/app/test/cordova/page-one';
+
+declare global {
+  interface HTMLAppCordovaPageOneElement extends AppCordovaPageOne, HTMLElement {
+  }
+  var HTMLAppCordovaPageOneElement: {
+    prototype: HTMLAppCordovaPageOneElement;
+    new (): HTMLAppCordovaPageOneElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-one": HTMLAppCordovaPageOneElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-one": HTMLAppCordovaPageOneElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-one": JSXElements.AppCordovaPageOneAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageOneAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  AppCordovaPageTabs as AppCordovaPageTabs
+} from './components/app/test/cordova/page-tabs';
+
+declare global {
+  interface HTMLAppCordovaPageTabsElement extends AppCordovaPageTabs, HTMLElement {
+  }
+  var HTMLAppCordovaPageTabsElement: {
+    prototype: HTMLAppCordovaPageTabsElement;
+    new (): HTMLAppCordovaPageTabsElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-tabs": HTMLAppCordovaPageTabsElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-tabs": HTMLAppCordovaPageTabsElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-tabs": JSXElements.AppCordovaPageTabsAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageTabsAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  AppCordovaPageTwo as AppCordovaPageTwo
+} from './components/app/test/cordova/page-two';
+
+declare global {
+  interface HTMLAppCordovaPageTwoElement extends AppCordovaPageTwo, HTMLElement {
+  }
+  var HTMLAppCordovaPageTwoElement: {
+    prototype: HTMLAppCordovaPageTwoElement;
+    new (): HTMLAppCordovaPageTwoElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-two": HTMLAppCordovaPageTwoElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-two": HTMLAppCordovaPageTwoElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-two": JSXElements.AppCordovaPageTwoAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageTwoAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Avatar as IonAvatar
 } from './components/avatar/avatar';
 
