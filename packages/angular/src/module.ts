@@ -1,4 +1,4 @@
-
+// import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { IonBooleanValueAccessor } from './directives/ion-boolean-value-accessor';
@@ -24,6 +24,9 @@ import { AlertController } from './providers/alert-controller';
     IonSelectValueAccessor,
     IonTextValueAccessor
   ],
+  // imports: [
+  //   BrowserModule
+  // ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
