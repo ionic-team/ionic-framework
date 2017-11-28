@@ -109,7 +109,7 @@ export class Button {
     };
 
     return (
-      <TagType class={buttonClasses} disabled={this.disabled}>
+      <TagType class={buttonClasses} disabled={this.disabled} href={this.href}>
         <span class='button-inner'>
           <slot name='icon-only'></slot>
           <slot name='start'></slot>
