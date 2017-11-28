@@ -25,9 +25,9 @@
     "tslint-ionic-rules": "0.0.11"
   },
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build --docs",
     "tsc": "./node_modules/.bin/tsc -p .",
-    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
+    "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/e2e",
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
