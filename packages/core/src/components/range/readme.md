@@ -7,19 +7,24 @@
 
 ## Properties
 
+#### color
+
+string
+
+
+#### debounce
+
+number
+
+
 #### disabled
 
 boolean
 
 
-#### knob
+#### dualKnobs
 
-string
-
-
-#### labelId
-
-string
+boolean
 
 
 #### max
@@ -32,41 +37,51 @@ number
 number
 
 
+#### mode
+
+any
+
+
 #### pin
 
 boolean
 
 
-#### pressed
+#### snaps
 
 boolean
 
 
-#### ratio
+#### step
 
 number
 
 
-#### val
+#### value
 
-number
+any
 
 
 ## Attributes
 
+#### color
+
+string
+
+
+#### debounce
+
+number
+
+
 #### disabled
 
 boolean
 
 
-#### knob
+#### dualKnobs
 
-string
-
-
-#### labelId
-
-string
+boolean
 
 
 #### max
@@ -79,32 +94,51 @@ number
 number
 
 
+#### mode
+
+any
+
+
 #### pin
 
 boolean
 
 
-#### pressed
+#### snaps
 
 boolean
 
 
-#### ratio
+#### step
 
 number
 
 
-#### val
+#### value
 
-number
+any
 
 
 ## Events
 
-#### ionDecrease
+#### ionBlur
 
 
-#### ionIncrease
+#### ionChange
+
+
+#### ionFocus
+
+
+#### ionStyle
+
+
+## Methods
+
+#### ratio()
+
+
+#### ratioUpper()
 
 
 

@@ -111,8 +111,8 @@ export {
 export { PopoverController } from './components/popover-controller/popover-controller';
 export { RadioGroup } from './components/radio-group/radio-group';
 export { Radio, HTMLIonRadioElementEvent } from './components/radio/radio';
-export { RangeKnob } from './components/range/range-knob';
 export { Range, RangeEvent } from './components/range/range';
+export { RangeKnob } from './components/range-knob/range-knob';
 export { ReorderGroup } from './components/reorder/reorder-group';
 export {
   RouterEntry,

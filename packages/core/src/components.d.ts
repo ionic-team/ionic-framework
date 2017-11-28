@@ -2234,7 +2234,7 @@ declare global {
 
 import {
   RangeKnob as IonRangeKnob
-} from './components/range/range-knob';
+} from './components/range-knob/range-knob';
 
 declare global {
   interface HTMLIonRangeKnobElement extends IonRangeKnob, HTMLElement {
