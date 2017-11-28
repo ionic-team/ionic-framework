@@ -1,9 +1,12 @@
 @import "../../themes/ionic.globals.ios";
 @import "./app";
+
 @import "../tabs/tabs.ios.vars";
 
 // iOS App
 // --------------------------------------------------
+
+$app-ios-statusbar-padding:       20px !default;
 
 .app-ios {
 
@@ -13,12 +16,13 @@
   font-size: $font-size-ios-base;
   background-color: $background-ios-color;
 
-  ion-page,
-  > ion-page > ion-header,
+  // TODO this can be simplified
+  .ion-page,
+  .ion-page > ion-header,
   ion-tabs ion-tab ion-nav .ion-page > ion-header,
   ion-menu > .menu-inner,
   ion-menu > .menu-inner > ion-header {
-    @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $cordova-ios-statusbar-padding);
-    @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $cordova-ios-statusbar-padding);
+    @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $app-ios-statusbar-padding);
+    @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $app-ios-statusbar-padding);
   }
 }

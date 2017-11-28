@@ -1,5 +1,8 @@
 @import "../../themes/ionic.globals.ios";
 
+// iOS Tabs
+// --------------------------------------------------
+
 /// @prop - Border on the tabbar (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
 $tabs-ios-border:                   $hairlines-width solid $tabs-ios-border-color !default;
 

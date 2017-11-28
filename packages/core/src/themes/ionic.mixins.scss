@@ -676,52 +676,12 @@
   #{$prop}: calc(#{$value} + env(#{$safe-area-position}));
 }
 
-@mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding) {
 
-  > .toolbar.statusbar-padding:first-child {
-    @include padding(calc(#{$cordova-statusbar-padding} + #{$toolbar-padding}), null, null, null);
-    @include safe-area-padding($toolbar-padding, null, null, null);
-
-    min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
-    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height);
-  }
-
-  > ion-content.statusbar-padding:first-child .scroll-content {
-    @include padding($cordova-statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
-  }
-
-  > ion-content.statusbar-padding:first-child[padding] .scroll-content,
-  > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
-    @include padding(calc(#{$content-padding} + #{$cordova-statusbar-padding}), null, null, null);
-    @include safe-area-padding(0px, null, null, null);
-  }
-
-}
-
-// iOS is the only mode that uses this mixin and it should be removed with #5036
-// --------------------------------------------------------------------------------
-@mixin toolbar-title-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $cordova-statusbar-padding) {
-
-  > .toolbar.statusbar-padding:first-child ion-segment,
-  > .toolbar.statusbar-padding:first-child ion-title {
-    @include padding($cordova-statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
-
-    height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
-    @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height)
-
-    min-height: calc(#{$toolbar-height} + #{$cordova-statusbar-padding});
-    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
-  }
-
-  > ion-content.statusbar-padding:first-child ion-scroll {
-    @include padding($cordova-statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
-  }
-
-}
-
+// Add safe area padding and sizing to the footer area
+// @param {string} $toolbar-height - height of the toolbar
+// @param {string} $toolbar-padding - padding of the toolbar
+// @param {string} $tabs-height - height of the tabs
+// ----------------------------------------------------------
 @mixin footer-safe-area($toolbar-height, $toolbar-padding, $tabs-height) {
   ion-tabs ion-tabbar:not(.placement-top) {
     @include safe-area-padding(null, null, 0px, null);
@@ -734,3 +694,62 @@
   }
 }
 
+
+// Add padding to the toolbar to account for the statusbar
+// @param {string} $toolbar-height - height of the toolbar
+// @param {string} $toolbar-padding - padding of the toolbar
+// @param {string} $content-padding - padding of the content
+// @param {string} $statusbar-padding - padding of the statusbar
+// --------------------------------------------------------------------------------
+@mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
+
+  > .toolbar.statusbar-padding:first-child {
+    @include padding(calc(#{$statusbar-padding} + #{$toolbar-padding}), null, null, null);
+    @include safe-area-padding($toolbar-padding, null, null, null);
+
+    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
+    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height);
+  }
+
+  > ion-content.statusbar-padding:first-child .scroll-content {
+    @include padding($statusbar-padding, null, null, null);
+    @include safe-area-padding(0px, null, null, null);
+  }
+
+  > ion-content.statusbar-padding:first-child[padding] .scroll-content,
+  > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
+    @include padding(calc(#{$content-padding} + #{$statusbar-padding}), null, null, null);
+    @include safe-area-padding(0px, null, null, null);
+  }
+
+}
+
+
+// Add padding to the toolbar to account for the statusbar
+// @param {string} $toolbar-height - height of the toolbar
+// @param {string} $toolbar-padding - padding of the toolbar
+// @param {string} $content-padding - padding of the content
+// @param {string} $statusbar-padding - padding of the statusbar
+//
+// iOS is the only mode that uses this mixin and it should be removed with #5036
+// --------------------------------------------------------------------------------
+@mixin toolbar-title-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
+
+  > .toolbar.statusbar-padding:first-child ion-segment,
+  > .toolbar.statusbar-padding:first-child ion-title {
+    @include padding($statusbar-padding, null, null, null);
+    @include safe-area-padding(0px, null, null, null);
+
+    height: calc(#{$toolbar-height} + #{$statusbar-padding});
+    @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height)
+
+    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
+    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
+  }
+
+  > ion-content.statusbar-padding:first-child ion-scroll {
+    @include padding($statusbar-padding, null, null, null);
+    @include safe-area-padding(0px, null, null, null);
+  }
+
+}
