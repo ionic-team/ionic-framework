@@ -24,6 +24,9 @@ import { AlertController } from './providers/alert-controller';
     IonSelectValueAccessor,
     IonTextValueAccessor
   ],
+  // NOTE: Not sure if we should be including this here or not, but...
+  //  - If not included, ElementRef (and probably Renderer2) are not provided (needed by value accessors)
+  //  - Even if included fixing above issue, NgZone (needed by ion-nav) is not provided for some reason
   // imports: [
   //   BrowserModule
   // ],
