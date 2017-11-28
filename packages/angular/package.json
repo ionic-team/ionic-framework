@@ -42,11 +42,10 @@
     "@angular/platform-browser": "next",
     "@angular/platform-browser-dynamic": "next",
     "@ionic/core": "next",
-    "@stencil/core": "next",
     "glob": "7.1.2",
     "ionicons": "~3.0.0",
     "rxjs": "5.5.2",
-    "typescript": "~2.5.2",
+    "typescript": "~2.4.2",
     "zone.js": "0.8.18"
   }
 }
