@@ -1,22 +1,8 @@
-# ion-header
+# page-tab
 
 
 
 <!-- Auto Generated Below -->
-
-
-## Properties
-
-#### translucent
-
-boolean
-
-
-## Attributes
-
-#### translucent
-
-boolean
 
 
 

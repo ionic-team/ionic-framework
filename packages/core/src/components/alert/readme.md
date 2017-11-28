@@ -12,6 +12,11 @@
 string
 
 
+#### animate
+
+boolean
+
+
 #### buttons
 
 any
@@ -55,6 +60,11 @@ string
 #### title
 
 string
+
+
+#### translucent
+
+boolean
 
 
 ## Attributes
@@ -64,6 +74,11 @@ string
 string
 
 
+#### animate
+
+boolean
+
+
 #### buttons
 
 any
@@ -107,6 +122,11 @@ string
 #### title
 
 string
+
+
+#### translucent
+
+boolean
 
 
 ## Events

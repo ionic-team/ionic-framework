@@ -47,6 +47,11 @@ string
 boolean
 
 
+#### translucent
+
+boolean
+
+
 ## Attributes
 
 #### content
@@ -85,6 +90,11 @@ string
 
 
 #### showBackdrop
+
+boolean
+
+
+#### translucent
 
 boolean
 
