@@ -14,8 +14,10 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { NavController, ViewController } from '@ionic/core';
+import { PublicNav, PublicViewController } from '@ionic/core';
+
 import { App } from '../providers/app';
+
 import { NavController as InjectableNavController } from '../providers/nav-controller';
 
 @Component({
@@ -36,7 +38,7 @@ export class IonNavDelegate {
     controllerElement.delegate = this;
   }
 
-  attachViewToDom(nav: NavController, enteringView: ViewController): Promise<any> {
+  attachViewToDom(nav: PublicNav, enteringView: PublicViewController): Promise<any> {
     return new Promise((resolve, reject) => {
       this.zone.run(() => {
 
@@ -45,7 +47,7 @@ export class IonNavDelegate {
             provide: NavControllerToken, useValue: nav.element,
           },
           {
-            provide: NavController, useFactory: provideNavControllerInjectable, deps: [NavControllerToken]
+            provide: InjectableNavController, useFactory: provideNavControllerInjectable, deps: [NavControllerToken]
           },
 
           {
@@ -75,7 +77,7 @@ export class IonNavDelegate {
     });
   }
 
-  removeViewFromDom(nav: NavController, viewController: ViewController) {
+  removeViewFromDom(nav: PublicNav, viewController: PublicViewController) {
     return new Promise((resolve, reject) => {
       this.zone.run(() => {
 

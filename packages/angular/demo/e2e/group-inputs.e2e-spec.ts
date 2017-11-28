@@ -1,4 +1,4 @@
-import { ElementFinder, promise } from 'protractor/built';
+import { browser, ElementFinder, promise } from 'protractor/built';
 
 import { GroupInputsPage } from './group-inputs.po';
 
@@ -21,7 +21,6 @@ describe('Group Inputs Page', () => {
       expect(el.getAttribute('value')).toEqual('tripe');
     });
 
-    // This test is failing right now, you can also see this in the UI.
     it('should check the proper initial radio button', () => {
       page.navigateTo();
       const btns = page.getGroupedRadioButtons();
@@ -48,6 +47,57 @@ describe('Group Inputs Page', () => {
       expect(btns.tripe.getAttribute('checked')).toEqual(null);
       expect(btns.brains.getAttribute('checked')).toEqual(null);
       expect(btns.tongue.getAttribute('checked')).toEqual(null);
+    });
+  });
+
+  describe('non-grouped radios', () => {
+    it('should check the proper initial radio button', () => {
+      page.navigateTo();
+      const btns = page.getUngroupedRadioButtons();
+      expect(btns.tripe.getAttribute('checked')).toEqual('true');
+      expect(btns.beef.getAttribute('checked')).toEqual(null);
+      expect(btns.chicken.getAttribute('checked')).toEqual(null);
+      expect(btns.brains.getAttribute('checked')).toEqual(null);
+      expect(btns.tongue.getAttribute('checked')).toEqual(null);
+    });
+
+    it('should reflect back the changed value', () => {
+      page.navigateTo();
+      return browser.executeScript('window.scrollTo(0, 500);').then(function() {
+        const btns = page.getUngroupedRadioButtons();
+        btns.chicken.click();
+        expect(page.getRadioOutputText()).toEqual('chicken');
+      });
+    });
+
+    it('should check and uncheck the proper buttons on a changed value', () => {
+      page.navigateTo();
+      return browser.executeScript('window.scrollTo(0, 500);').then(function() {
+        const btns = page.getUngroupedRadioButtons();
+        btns.chicken.click();
+        expect(btns.chicken.getAttribute('checked')).toEqual('true');
+        expect(btns.beef.getAttribute('checked')).toEqual(null);
+        expect(btns.tripe.getAttribute('checked')).toEqual(null);
+        expect(btns.brains.getAttribute('checked')).toEqual(null);
+        expect(btns.tongue.getAttribute('checked')).toEqual(null);
+      });
+    });
+  });
+
+  describe('segments', () => {
+    it('should have the proper initial value', () => {
+      page.navigateTo();
+      const el = page.getSegment();
+      expect(el.getAttribute('value')).toEqual('tripe');
+    });
+
+    it('should reflect back the changed value', () => {
+      page.navigateTo();
+      return browser.executeScript('window.scrollTo(0, 500);').then(function() {
+        const btns = page.getSegmentButtons();
+        btns.chicken.click();
+        expect(page.getRadioOutputText()).toEqual('chicken');
+      });
     });
   });
 });

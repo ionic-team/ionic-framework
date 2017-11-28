@@ -125,16 +125,30 @@ async function run() {
   });
 }
 
-const navigate = url => driver => new Page(driver, url).navigate();
+function parseSemver(str) {
+  return /(\d+)\.(\d+)\.(\d+)/
+    .exec(str)
+    .slice(1)
+    .map(Number);
+}
+
+function validateNodeVersion(version) {
+  const [major, minor] = parseSemver(version);
+
+  if (major < 7 || (major === 7 && minor < 6)) {
+    throw new Error('Running the end-to-end tests requires Node version 7.6.0 or higher.');
+  }
+}
 
 // Invoke run() only if executed directly i.e. `node ./scripts/e2e`
 if (require.main === module) {
+  validateNodeVersion(process.version);
   run();
 }
 
 module.exports = {
   Page,
-  navigate,
+  navigate: url => driver => new Page(driver, url).navigate(),
   register: registerE2ETest,
   run: run
 };

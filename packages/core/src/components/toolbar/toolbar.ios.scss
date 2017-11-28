@@ -50,6 +50,10 @@ $toolbar-ios-translucent-opacity:           .88 !default;
   }
 }
 
+.header-ios {
+  min-height: $toolbar-ios-height;
+}
+
 
 // iOS Toolbar Background
 // --------------------------------------------------

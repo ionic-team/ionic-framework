@@ -98,5 +98,23 @@
     <ion-col></ion-col>
   </ion-row>
 
+  <ion-row>
+    <ion-col>
+      <h2>Ionic Segment</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-segment id="segment" color="primary" [(ngModel)]="radioValue">
+        <ion-segment-button value="beef" id="ion-seg-beef">Carne Asada</ion-segment-button>
+        <ion-segment-button value="tongue" id="ion-seg-tongue">Lengua</ion-segment-button>
+        <ion-segment-button value="brains" id="ion-seg-brains">Sesos</ion-segment-button>
+        <ion-segment-button value="tripe" id="ion-seg-tripe">Tripa</ion-segment-button>
+        <ion-segment-button value="chicken" id="ion-seg-chicken">Pollo</ion-segment-button>
+      </ion-segment>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+
 </ion-grid>
 <a href='home'>Home</a>

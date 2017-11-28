@@ -481,7 +481,7 @@ export function initializeViewBeforeTransition(nav: Nav, ti: TransitionInstructi
   return startTransaction(ti).then(() => {
     const viewControllers = convertComponentToViewController(nav, ti);
     ti.insertViews = viewControllers;
-    leavingView = ti.nav.getActive();
+    leavingView = ti.nav.getActive() as ViewController;
     enteringView = getEnteringView(ti, ti.nav, leavingView);
 
     if (!leavingView && !enteringView) {

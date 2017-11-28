@@ -6,7 +6,8 @@ import {
   NavController,
   NavOptions,
   NavState,
-  PublicNavController,
+  PublicNav,
+  PublicViewController,
   RouterEntries,
   RouterEntry,
   ViewController
@@ -25,7 +26,7 @@ import { assert, isReady } from '../../utils/helpers';
 @Component({
   tag: 'ion-nav',
 })
-export class Nav implements PublicNavController {
+export class Nav implements PublicNav {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;
@@ -79,7 +80,7 @@ export class Nav implements PublicNavController {
     }
   }
 
-  getViews(): ViewController[] {
+  getViews(): PublicViewController[] {
     return getViews(this);
   }
 
@@ -124,7 +125,7 @@ export class Nav implements PublicNavController {
   }
 
   @Method()
-  removeView(viewController: ViewController, opts?: NavOptions): Promise<any> {
+  removeView(viewController: PublicViewController, opts?: NavOptions): Promise<any> {
     return removeViewImpl(this, viewController, opts);
   }
 
@@ -134,18 +135,18 @@ export class Nav implements PublicNavController {
   }
 
   @Method()
-  getActive(): ViewController {
+  getActive(): PublicViewController {
     return getActiveImpl(this);
   }
 
   @Method()
-  getPrevious(view?: ViewController): ViewController {
-    return getPreviousImpl(this, view);
+  getPrevious(view?: PublicViewController): PublicViewController {
+    return getPreviousImpl(this, view as ViewController);
   }
 
   @Method()
-  canGoBack(nav: Nav): boolean {
-    return nav.views && nav.views.length > 0;
+  canGoBack(): boolean {
+    return canGoBackImpl(this);
   }
 
   @Method()
@@ -154,7 +155,7 @@ export class Nav implements PublicNavController {
   }
 
   @Method()
-  getFirstView(): ViewController {
+  getFirstView(): PublicViewController {
     return getFirstView(this);
   }
 
@@ -278,9 +279,9 @@ export function removeImpl(nav: Nav, startIndex: number, removeCount: number, op
   });
 }
 
-export function removeViewImpl(nav: Nav, viewController: ViewController, opts?: NavOptions) {
+export function removeViewImpl(nav: Nav, viewController: PublicViewController, opts?: NavOptions) {
   return getNavController(nav).then(() => {
-    return nav.navController.removeView(nav, viewController, opts);
+    return nav.navController.removeView(nav, viewController as ViewController, opts);
   });
 }
 
@@ -296,6 +297,10 @@ export function getNavController(nav: Nav): Promise<any> {
   }
   nav.navController = document.querySelector('ion-nav-controller') as any as NavController;
   return isReady(nav.navController as any as HTMLElement);
+}
+
+export function canGoBackImpl(nav: Nav) {
+  return nav.views && nav.views.length > 0;
 }
 
 export function navInitializedImpl(potentialParent: Nav, event: CustomEvent) {

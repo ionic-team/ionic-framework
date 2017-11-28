@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-// import { AlertController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-alert-page',
@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      <ion-button (click)="clickMe()">Blah</ion-button>
+      <ion-button (click)="clickMe()">Open Basic Alert</ion-button>
     </ion-content>
   </ion-page>
 </ion-app>
@@ -21,19 +21,38 @@ import { Component } from '@angular/core';
 })
 export class AlertPageComponent {
 
-  constructor(/*private alertController: AlertController*/) {
+  constructor(private alertController: AlertController) {
 
   }
 
   clickMe() {
-    /*const alert = this.alertController.create({
+    const alert = this.alertController.create({
       title: 'ohhhh snap',
-      message: 'Gretting from an ng cli app',
+      message: 'Ive been injected via Angular keeping the old api',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'Cancel',
+          handler: () => {
+            // console.log('cancel');
+          }
+        },
+        {
+          text: 'Okay',
+          role: 'Okay',
+          handler: () => {
+            // console.log('okay');
+          }
+        }
+      ]
 
     });
-    alert.present();
-    */
-    alert('kaboom');
+    alert.present().then(() => {
+      return alert.dismiss();
+
+    }).then(() => {
+      console.log('dismissed');
+    });
   }
 
 }

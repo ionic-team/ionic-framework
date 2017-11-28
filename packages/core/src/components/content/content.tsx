@@ -1,4 +1,4 @@
-import { Component, Element, Method, Prop } from '@stencil/core';
+import { Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config } from '../../index';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 import { getPageElement } from '../../utils/helpers';
@@ -45,6 +45,11 @@ export class Content {
    * to transparent.
    */
   @Prop() fullscreen: boolean = false;
+
+  @Listen('body:ionNavChanged')
+  onNavChanged() {
+    this.resize();
+  }
 
   componentDidLoad() {
     this.scrollEl = this.el.querySelector('ion-scroll') as HTMLIonScrollElement;

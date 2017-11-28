@@ -9,15 +9,7 @@ export {
 } from './components/action-sheet/action-sheet';
 
 export { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
-export {
-  Alert,
-  AlertButton,
-  AlertEvent,
-  AlertInput,
-  AlertOptions,
-  iOSEnterAnimation as AlertIOSEnterAnimation,
-  iOSLeaveAnimation as AlertIOSLeaveAnimation
-} from './components/alert/alert';
+export * from './components/alert/alert';
 export { AlertController } from './components/alert-controller/alert-controller';
 export {
   Animation,
@@ -93,7 +85,7 @@ export {
 } from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
-export { PublicNavController } from './components/nav/nav-interface';
+export { PublicNav } from './components/nav/nav-interface';
 export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
@@ -163,6 +155,8 @@ export { ViewController } from './navigation/view-controller';
 // export all of the component declarations that are dynamically created
 export * from './components';
 
+export { DomController, RafCallback } from './global/dom-controller'
+
 export interface Config {
   get: (key: string, fallback?: any) => any;
   getBoolean: (key: string, fallback?: boolean) => boolean;
@@ -183,4 +177,13 @@ export interface BaseInputComponent {
 export interface StencilElement extends HTMLElement {
   componentOnReady(): Promise<HTMLElement>;
   componentOnReady(done: (cmp?: HTMLElement) => void): void;
+}
+
+export interface OverlayDismissEvent extends CustomEvent {
+  detail: OverlayDismissEventDetail
+}
+
+export interface OverlayDismissEventDetail {
+  data?: any;
+  role?: string;
 }

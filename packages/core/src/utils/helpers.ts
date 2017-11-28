@@ -1,4 +1,4 @@
-import { Animation, StencilElement } from '../index';
+import { Animation, DomController, StencilElement } from '../index';
 
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
@@ -277,5 +277,14 @@ export function playAnimationAsync(animation: Animation): Promise<Animation> {
       resolve(ani);
     });
     animation.play();
+  });
+}
+
+export function domControllerAsync(domControllerFunction: Function, callback: Function) {
+  return new Promise((resolve) => {
+    domControllerFunction(() => {
+      callback();
+      resolve();
+    });
   });
 }

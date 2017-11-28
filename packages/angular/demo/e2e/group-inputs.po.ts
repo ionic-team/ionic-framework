@@ -23,6 +23,16 @@ export class GroupInputsPage {
     };
   }
 
+  getSegmentButtons() {
+    return {
+      beef: element(by.id('ion-seg-beef')),
+      tongue: element(by.id('ion-seg-tongue')),
+      brains: element(by.id('ion-seg-brains')),
+      tripe: element(by.id('ion-seg-tripe')),
+      chicken: element(by.id('ion-seg-chicken'))
+    };
+  }
+
   getUngroupedRadioButtons() {
     return {
       beef: element(by.id('ion-beef')),
@@ -31,6 +41,10 @@ export class GroupInputsPage {
       tripe: element(by.id('ion-tripe')),
       chicken: element(by.id('ion-chicken'))
     };
+  }
+
+  getSegment() {
+    return element(by.id('segment'));
   }
 
   getRadioOutputText() {
