@@ -1927,6 +1927,40 @@ declare global {
 
 
 import {
+  Navbar as IonNavbar
+} from './components/navbar/navbar';
+
+declare global {
+  interface HTMLIonNavbarElement extends IonNavbar, HTMLElement {
+  }
+  var HTMLIonNavbarElement: {
+    prototype: HTMLIonNavbarElement;
+    new (): HTMLIonNavbarElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-navbar": HTMLIonNavbarElement;
+  }
+  interface ElementTagNameMap {
+    "ion-navbar": HTMLIonNavbarElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-navbar": JSXElements.IonNavbarAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonNavbarAttributes extends HTMLAttributes {
+      
+        hideBackButton?: boolean,
+        backButtonText?: string,
+        backButtonIcon?: string,
+        hidden?: boolean
+    }
+  }
+}
+
+
+import {
   Note as IonNote
 } from './components/note/note';
 
@@ -3287,40 +3321,6 @@ declare global {
         checked?: boolean,
         disabled?: boolean,
         value?: string
-    }
-  }
-}
-
-
-import {
-  Navbar as IonNavbar
-} from './components/toolbar/navbar';
-
-declare global {
-  interface HTMLIonNavbarElement extends IonNavbar, HTMLElement {
-  }
-  var HTMLIonNavbarElement: {
-    prototype: HTMLIonNavbarElement;
-    new (): HTMLIonNavbarElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-navbar": HTMLIonNavbarElement;
-  }
-  interface ElementTagNameMap {
-    "ion-navbar": HTMLIonNavbarElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-navbar": JSXElements.IonNavbarAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonNavbarAttributes extends HTMLAttributes {
-      
-        hideBackButton?: boolean,
-        backButtonText?: string,
-        backButtonIcon?: string,
-        hidden?: boolean
     }
   }
 }

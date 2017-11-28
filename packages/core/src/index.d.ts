@@ -86,6 +86,7 @@ export {
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
 export { PublicNav } from './components/nav/nav-interface';
+export { Navbar } from './components/navbar/navbar';
 export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
@@ -146,7 +147,6 @@ export {
 } from './components/toast/toast';
 export { ToastController } from './components/toast-controller/toast-controller';
 export { Toggle } from './components/toggle/toggle';
-export { Navbar } from './components/toolbar/navbar';
 export { Toolbar } from './components/toolbar/toolbar';
 
 export * from './navigation/nav-interfaces';
