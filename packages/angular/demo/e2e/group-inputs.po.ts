@@ -50,4 +50,12 @@ export class GroupInputsPage {
   getRadioOutputText() {
     return element(by.id('radioOutput')).getText();
   }
+
+  getIonicSelect() {
+    return element(by.id('ionSelect'));
+  }
+
+  getSelectOutput() {
+    return element(by.id('selectOutput')).getText();
+  }
 }

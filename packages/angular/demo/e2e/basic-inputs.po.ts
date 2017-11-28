@@ -13,12 +13,12 @@ export class BasicInputsPage {
     return element(by.id('checkboxOutput')).getText();
   }
 
-  getIonicSelect() {
-    return element(by.id('ionSelect'));
+  getIonicDatetime() {
+    return element(by.id('ionDatetimeInput'));
   }
 
-  getSelectOutput() {
-    return element(by.id('selectOutput')).getText();
+  getDatetimeOutput() {
+    return element(by.id('datetimeOutput')).getText();
   }
 
   getIonicToggle() {
