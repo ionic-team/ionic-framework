@@ -12,21 +12,19 @@ import {
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
 
-// NOTE: this is just a sample. It really belongs in @ionic/angular and not at all int his app here
 @Directive({
   /* tslint:disable-next-line:directive-selector */
   selector: 'ion-radio',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: IonRadioValueAccessorDirective,
+      useExisting: IonRadioValueAccessor,
       multi: true
     }
   ]
 })
-export class IonRadioValueAccessorDirective implements ControlValueAccessor {
+export class IonRadioValueAccessor implements ControlValueAccessor {
   @Input() value: any;
-  @Input() name: string;
 
   onChange: (value: any) => void;
   onTouched: () => void;
