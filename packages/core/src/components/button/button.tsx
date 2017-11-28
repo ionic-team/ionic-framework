@@ -77,7 +77,7 @@ export class Button {
 
   /**
    * @input {string} The button size.
-   * Possible values are: `"small"`, `"large"`, `"default"`.
+   * Possible values are: `"small"`, `"large"`.
    */
   @Prop() size: 'small' | 'large';
 
