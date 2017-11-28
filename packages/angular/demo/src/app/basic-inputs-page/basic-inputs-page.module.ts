@@ -11,6 +11,7 @@ import { BasicInputsPageRoutingModule } from './basic-inputs-page-routing.module
     BasicInputsPageRoutingModule,
     CommonModule,
     FormsModule,
+    IonicAngularModule
   ],
   declarations: [BasicInputsPageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
