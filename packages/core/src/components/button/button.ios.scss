@@ -39,6 +39,9 @@ $button-ios-border-radius:                          4px !default;
 /// @prop - Font size of the button text
 $button-ios-font-size:                              1.6rem !default;
 
+/// @prop - Color of the button icon
+$button-ios-icon-fill-color:                        currentColor !default;
+
 /// @prop - Background color of the button
 $button-ios-background-color:                       color($colors-ios, primary) !default;
 
@@ -206,6 +209,10 @@ $button-ios-strong-font-weight:                     600 !default;
 
 .button-ios:hover:not(.disable-hover) {
   opacity: $button-ios-opacity-hover;
+}
+
+.button-ios .icon {
+  fill: $button-ios-icon-fill-color;
 }
 
 

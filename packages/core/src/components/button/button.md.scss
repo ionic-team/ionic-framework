@@ -46,6 +46,9 @@ $button-md-font-weight:                    500 !default;
 /// @prop - Capitalization of the button text
 $button-md-text-transform:                 uppercase !default;
 
+/// @prop - Color of the button icon
+$button-md-icon-fill-color:                currentColor !default;
+
 /// @prop - Background color of the button
 $button-md-background-color:               color($colors-md, primary) !default;
 
@@ -256,6 +259,10 @@ $button-md-strong-font-weight:                  bold !default;
 
 .button-md .button-effect {
   background-color: $button-md-text-color;
+}
+
+.button-md .icon {
+  fill: $button-md-icon-fill-color;
 }
 
 
