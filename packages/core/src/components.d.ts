@@ -754,7 +754,7 @@ declare global {
 
 import {
   FabContainer as IonFab
-} from './components/fab/fab-container';
+} from './components/fab-container/fab-container';
 
 declare global {
   interface HTMLIonFabElement extends IonFab, HTMLElement {
@@ -784,7 +784,7 @@ declare global {
 
 import {
   FabList as IonFabList
-} from './components/fab/fab-list';
+} from './components/fab-list/fab-list';
 
 declare global {
   interface HTMLIonFabListElement extends IonFabList, HTMLElement {
