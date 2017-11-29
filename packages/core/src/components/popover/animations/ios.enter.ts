@@ -4,7 +4,7 @@ import { Animation } from '../../../index';
 /**
  * iOS Popover Enter Animation
  */
-export default function iOSEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

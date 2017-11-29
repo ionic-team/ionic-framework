@@ -3,11 +3,11 @@ import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap }
 
 import { createThemedClasses } from '../../utils/theme';
 
-import iOSEnterAnimation from './animations/ios.enter';
-import iOSLeaveAnimation from './animations/ios.leave';
+import iosEnterAnimation from './animations/ios.enter';
+import iosLeaveAnimation from './animations/ios.leave';
 
-import MdEnterAnimation from './animations/md.enter';
-import MdLeaveAnimation from './animations/md.leave';
+import mdEnterAnimation from './animations/md.enter';
+import mdLeaveAnimation from './animations/md.leave';
 
 @Component({
   tag: 'ion-toast',
@@ -87,7 +87,7 @@ export class Toast {
     this.ionToastWillPresent.emit({ toast: this });
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('toastEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
+    const animationBuilder = this.enterAnimation || this.config.get('toastEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
@@ -110,7 +110,7 @@ export class Toast {
       this.ionToastWillDismiss.emit({ toast: this });
 
       // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
+      const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
@@ -220,4 +220,9 @@ export interface ToastEvent {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };
+export {
+  iosEnterAnimation as ToastiOSEnterAnimation,
+  iosLeaveAnimation as ToastiOSLeaveAnimation,
+  mdEnterAnimation as ToastMdEnterAnimation,
+  mdLeaveAnimation as ToastMdLeaveAnimation
+};

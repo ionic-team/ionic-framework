@@ -1,9 +1,9 @@
 import { Animation } from '../../../index';
 
 /**
- * iOS Toast Leave Animation
+ * md Toast Leave Animation
  */
-export default function iOSLeaveAnimation(
+export default function mdLeaveAnimation(
   Animation: Animation,
   baseElm: HTMLElement,
   position: string

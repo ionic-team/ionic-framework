@@ -3,11 +3,11 @@ import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@s
 
 import { createThemedClasses } from '../../utils/theme';
 
-import iOSEnterAnimation from './animations/ios.enter';
-import iOSLeaveAnimation from './animations/ios.leave';
+import iosEnterAnimation from './animations/ios.enter';
+import iosLeaveAnimation from './animations/ios.leave';
 
-import MdEnterAnimation from './animations/md.enter';
-import MdLeaveAnimation from './animations/md.leave';
+import mdEnterAnimation from './animations/md.enter';
+import mdLeaveAnimation from './animations/md.leave';
 
 @Component({
   tag: 'ion-loading',
@@ -89,7 +89,7 @@ export class Loading {
     this.ionLoadingWillPresent.emit({ loading: this });
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
+    const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -116,7 +116,7 @@ export class Loading {
       this.ionLoadingWillDismiss.emit({ loading: this });
 
       // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
+      const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -246,4 +246,9 @@ export interface LoadingEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };
+export {
+  iosEnterAnimation as LoadingiOSEnterAnimation,
+  iosLeaveAnimation as LoadingiOSLeaveAnimation,
+  mdEnterAnimation as LoadingMdEnterAnimation,
+  mdLeaveAnimation as LoadingMdLeaveAnimation
+};

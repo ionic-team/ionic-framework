@@ -3,10 +3,10 @@ import { Animation, AnimationBuilder, AnimationController, Config } from '../../
 
 import { createThemedClasses } from '../../utils/theme';
 
-import iOSEnterAnimation from './animations/ios.enter';
-import iOSLeaveAnimation from './animations/ios.leave';
-import MdEnterAnimation from './animations/md.enter';
-import MdLeaveAnimation from './animations/md.leave';
+import iosEnterAnimation from './animations/ios.enter';
+import iosLeaveAnimation from './animations/ios.leave';
+import mdEnterAnimation from './animations/md.enter';
+import mdLeaveAnimation from './animations/md.leave';
 
 @Component({
   tag: 'ion-popover',
@@ -207,7 +207,7 @@ export class Popover {
     this.ionPopoverWillPresent.emit({ popover: this });
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
+    const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
 
     // build the animation and kick it off
@@ -232,7 +232,7 @@ export class Popover {
       this.ionPopoverWillDismiss.emit({ popover: this });
 
       // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
+      const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -353,4 +353,9 @@ export const POPOVER_POSITION_PROPERTIES: any = {
   }
 };
 
-export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };
+export {
+  iosEnterAnimation as PopoveriOSEnterAnimation,
+  iosLeaveAnimation as PopoveriOSLeaveAnimation,
+  mdEnterAnimation as PopoverMdEnterAnimation,
+  mdLeaveAnimation as PopoverMdLeaveAnimation
+};
