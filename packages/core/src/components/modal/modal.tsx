@@ -202,8 +202,8 @@ export interface ModalEvent extends Event {
 }
 
 export {
-  iosEnterAnimation as ModaliOSEnterAnimation,
-  iosLeaveAnimation as ModaliOSLeaveAnimation,
-  mdEnterAnimation as ModalMdEnterAnimation,
-  mdLeaveAnimation as ModalMdLeaveAnimation
+  iosEnterAnimation as iosModalEnterAnimation,
+  iosLeaveAnimation as iosModalLeaveAnimation,
+  mdEnterAnimation as mdModalEnterAnimation,
+  mdLeaveAnimation as mdModalLeaveAnimation
 };

@@ -408,6 +408,6 @@ export interface PickerEvent extends Event {
 }
 
 export {
-  iosEnterAnimation as PickeriOSEnterAnimation,
-  iosLeaveAnimation as PickeriOSLeaveAnimation
+  iosEnterAnimation as iosPickerEnterAnimation,
+  iosLeaveAnimation as iosPickerLeaveAnimation
 };

@@ -354,8 +354,8 @@ export const POPOVER_POSITION_PROPERTIES: any = {
 };
 
 export {
-  iosEnterAnimation as PopoveriOSEnterAnimation,
-  iosLeaveAnimation as PopoveriOSLeaveAnimation,
-  mdEnterAnimation as PopoverMdEnterAnimation,
-  mdLeaveAnimation as PopoverMdLeaveAnimation
+  iosEnterAnimation as iosPopoverEnterAnimation,
+  iosLeaveAnimation as iosPopoverLeaveAnimation,
+  mdEnterAnimation as mdPopoverEnterAnimation,
+  mdLeaveAnimation as mdPopoverLeaveAnimation
 };

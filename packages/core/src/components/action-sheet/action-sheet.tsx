@@ -285,8 +285,8 @@ export interface ActionSheetDismissEvent extends OverlayDismissEvent {
 }
 
 export {
-  iosEnterAnimation as ActionSheetiOSEnterAnimation,
-  iosLeaveAnimation as ActionSheetiOSLeaveAnimation,
-  mdEnterAnimation as ActionSheetMdEnterAnimation,
-  mdLeaveAnimation as ActionSheetMdLeaveAnimation,
+  iosEnterAnimation as iosActionSheetEnterAnimation,
+  iosLeaveAnimation as iosActionSheetLeaveAnimation,
+  mdEnterAnimation as mdActionSheetEnterAnimation,
+  mdLeaveAnimation as mdActionSheetetLeaveAnimation,
 };

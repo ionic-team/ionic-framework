@@ -221,8 +221,8 @@ export interface ToastEvent {
 }
 
 export {
-  iosEnterAnimation as ToastiOSEnterAnimation,
-  iosLeaveAnimation as ToastiOSLeaveAnimation,
-  mdEnterAnimation as ToastMdEnterAnimation,
-  mdLeaveAnimation as ToastMdLeaveAnimation
+  iosEnterAnimation as iosToastEnterAnimation,
+  iosLeaveAnimation as iosToastLeaveAnimation,
+  mdEnterAnimation as mdToastEnterAnimation,
+  mdLeaveAnimation as mdToastLeaveAnimation
 };

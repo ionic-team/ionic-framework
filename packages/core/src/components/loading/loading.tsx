@@ -247,8 +247,8 @@ export interface LoadingEvent extends Event {
 }
 
 export {
-  iosEnterAnimation as LoadingiOSEnterAnimation,
-  iosLeaveAnimation as LoadingiOSLeaveAnimation,
-  mdEnterAnimation as LoadingMdEnterAnimation,
-  mdLeaveAnimation as LoadingMdLeaveAnimation
+  iosEnterAnimation as iosLoadingEnterAnimation,
+  iosLeaveAnimation as iosLoadingLeaveAnimation,
+  mdEnterAnimation as mdLoadingEnterAnimation,
+  mdLeaveAnimation as mdLoadingLeaveAnimation
 };

@@ -481,8 +481,8 @@ export interface AlertDismissEvent extends OverlayDismissEvent {
 }
 
 export {
-  iosEnterAnimation as AlertiOSEnterAnimation,
-  iosLeaveAnimation as AlertiOSLeaveAnimation,
-  mdEnterAnimation as AlertMdEnterAnimation,
-  mdLeaveAnimation as AlertMdLeaveAnimation,
+  iosEnterAnimation as iosAlertEnterAnimation,
+  iosLeaveAnimation as iosAlertLeaveAnimation,
+  mdEnterAnimation as mdAlertEnterAnimation,
+  mdLeaveAnimation as mdAlertLeaveAnimation,
 };
