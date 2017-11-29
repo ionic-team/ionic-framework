@@ -1,6 +1,5 @@
 @import "../../themes/ionic.globals.ios";
 @import "./button";
-@import "../icon/icon.ios";
 
 
 // iOS Button
@@ -38,6 +37,9 @@ $button-ios-border-radius:                          4px !default;
 
 /// @prop - Font size of the button text
 $button-ios-font-size:                              1.6rem !default;
+
+/// @prop - Color of the button icon
+$button-ios-icon-fill-color:                        currentColor !default;
 
 /// @prop - Background color of the button
 $button-ios-background-color:                       color($colors-ios, primary) !default;
@@ -97,9 +99,6 @@ $button-ios-small-height:                           2.1em !default;
 
 /// @prop - Font size of the small button
 $button-ios-small-font-size:                        1.3rem !default;
-
-/// @prop - Font size of an icon in the small button
-$button-ios-small-icon-font-size:                   1.3em !default;
 
 
 // iOS Outline Button
@@ -208,6 +207,10 @@ $button-ios-strong-font-weight:                     600 !default;
   opacity: $button-ios-opacity-hover;
 }
 
+.button-ios .icon {
+  fill: $button-ios-icon-fill-color;
+}
+
 
 // iOS Default Button Color Mixin
 // --------------------------------------------------
@@ -245,10 +248,6 @@ $button-ios-strong-font-weight:                     600 !default;
   height: $button-ios-small-height;
 
   font-size: $button-ios-small-font-size;
-}
-
-.button-small-ios ion-icon[slot="icon-only"] {
-  font-size: $button-ios-small-icon-font-size;
 }
 
 // iOS Block Button

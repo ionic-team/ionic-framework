@@ -62,6 +62,11 @@ string
 boolean
 
 
+#### translucent
+
+boolean
+
+
 ## Attributes
 
 #### color
@@ -115,6 +120,11 @@ string
 
 
 #### showBackdrop
+
+boolean
+
+
+#### translucent
 
 boolean
 

@@ -30,15 +30,15 @@ $button-round-border-radius:      64px !default;
 
   border: 0;
 
+  text-decoration: none;
   text-overflow: ellipsis;
   text-transform: none;
+  line-height: 1;
 
   white-space: nowrap;
   cursor: pointer;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  visibility: visible;
 
   transition: background-color, opacity 100ms linear;
 
@@ -61,13 +61,9 @@ $button-round-border-radius:      64px !default;
 }
 
 
-[ion-button] {
-  text-decoration: none;
-}
-
 a[disabled],
 button[disabled],
-[ion-button][disabled] {
+.button[disabled] {
   cursor: default;
   opacity: .4;
 

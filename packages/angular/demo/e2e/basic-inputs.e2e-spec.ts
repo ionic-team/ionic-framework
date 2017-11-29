@@ -100,11 +100,11 @@ describe('Basic Inputs Page', () => {
     });
   });
 
-  describe('select input', () => {
+  describe('date time picker', () => {
     it('should be set the initial value', () => {
       page.navigateTo();
-      const el = page.getIonicSelect();
-      expect(el.getAttribute('value')).toEqual('brains');
+      const el = page.getIonicDatetime();
+      expect(el.getAttribute('value')).toEqual('2017-11-18T14:17:45-06:00');
     });
   });
 

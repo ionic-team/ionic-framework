@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 import { getElementClassObject } from '../../utils/theme';
 
 
@@ -27,22 +27,10 @@ export class Button {
   @Prop() buttonType: string = 'button';
 
   /**
-   * @input {boolean} If true, activates the large button size.
-   * Type: size
+   * @input {string} The button size.
+   * Possible values are: `"small"`, `"large"`.
    */
-  @Prop() large: boolean = false;
-
-  /**
-   * @input {boolean} If true, activates the small button size.
-   * Type: size
-   */
-  @Prop() small: boolean = false;
-
-  /**
-   * @input {boolean} If true, activates the default button size. Normally the default, useful for buttons in an item.
-   * Type: size
-   */
-  @Prop() default: boolean = false;
+  @Prop() size: 'small' | 'large';
 
   /**
    * @input {boolean} If true, sets the button into a disabled state.
@@ -50,22 +38,11 @@ export class Button {
   @Prop() disabled: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a transparent button style with a border.
-   * Type: style
+   * @input {string} Set to `"clear"` for a transparent button, to `"outline"` for a transparent
+   * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
+   * `ion-navbar`, where the default is `"clear"`.
    */
-  @Prop() outline: boolean = false;
-
-  /**
-   * @input {boolean} If true, activates a transparent button style without a border.
-   * Type: style
-   */
-  @Prop() clear: boolean = false;
-
-  /**
-   * @input {boolean} If true, activates a solid button style. Normally the default, useful for buttons in a toolbar.
-   * Type: style
-   */
-  @Prop() solid: boolean = false;
+  @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
   /**
    * @input {boolean} If true, activates a button with rounded corners.
@@ -74,17 +51,10 @@ export class Button {
   @Prop() round: boolean = false;
 
   /**
-   * @input {boolean} If true, activates a button style that fills the available width.
-   * Type: display
+   * @input {string} Set to `"block"` for a full-width button or to `"full"` for a full-width button
+   * without left and right borders.
    */
-  @Prop() block: boolean = false;
-
-  /**
-   * @input {boolean} If true, activates a button style that fills the available width without
-   * a left and right border.
-   * Type: display
-   */
-  @Prop() full: boolean = false;
+  @Prop() expand: 'full' | 'block';
 
   /**
    * @input {boolean} If true, activates a button with a heavier font weight.
@@ -106,49 +76,40 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
-  render() {
-    const buttonType = this.buttonType;
-    const mode = this.mode;
+  protected render() {
 
-    const size =
-      (this.large ? 'large' : null) ||
-      (this.small ? 'small' : null) ||
-      (this.default ? 'default' : null);
+    const {
+      buttonType,
+      itemButton,
+      color,
+      expand,
+      fill,
+      mode,
+      round,
+      size,
+      strong
+    } = this;
 
-    const shape = (this.round ? 'round' : null);
-
-    const display =
-      (this.block ? 'block' : null) ||
-      (this.full ? 'full' : null);
-
-    const decorator = (this.strong ? 'strong' : null);
-
-    const hostClasses = getElementClassObject(this.el.classList);
-
-    const elementClasses: CssClassMap = []
+    const elementClasses: string[] = []
       .concat(
         getButtonClassList(buttonType, mode),
-        getClassList(buttonType, shape, mode),
-        getClassList(buttonType, display, mode),
+        getClassList(buttonType, expand, mode),
         getClassList(buttonType, size, mode),
-        getClassList(buttonType, decorator, mode),
-        getStyleClassList(mode, this.color, buttonType, this.outline, this.clear, this.solid),
-        getItemClassList(this.itemButton, size)
-      )
-      .reduce((prevValue, cssClass) => {
-        prevValue[cssClass] = true;
-        return prevValue;
-      }, {});
+        getClassList(buttonType, round ? 'round' : null, mode),
+        getClassList(buttonType, strong ? 'strong' : null, mode),
+        getColorClassList(buttonType, color, fill, mode),
+        getItemClassList(itemButton, size)
+      );
 
     const TagType = this.href ? 'a' : 'button';
 
     const buttonClasses = {
-      ...hostClasses,
-      ...elementClasses
+      ...getElementClassObject(this.el.classList),
+      ...getElementClassObject(elementClasses)
     };
 
     return (
-      <TagType class={buttonClasses} disabled={this.disabled}>
+      <TagType class={buttonClasses} disabled={this.disabled} href={this.href}>
         <span class='button-inner'>
           <slot name='icon-only'></slot>
           <slot name='start'></slot>
@@ -191,55 +152,33 @@ function getClassList(buttonType: string, type: string, mode: string): string[] 
   ];
 }
 
-/**
- * Get the classes for the color
- */
-function getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
-  style = (buttonType !== 'bar-button' && style === 'solid') ? 'default' : style;
+function getColorClassList(buttonType: string, color: string, fill: string, mode: string): string[] {
+  let className = buttonType;
 
-  let className =
-    buttonType +
-    ((style && style !== 'default') ?
-      '-' + style.toLowerCase() :
-      '');
+  if (buttonType !== 'bar-button' && fill === 'solid') {
+    fill = 'default';
+  }
+
+  if (fill && fill !== 'default') {
+    className += `-${fill.toLowerCase()}`;
+  }
 
   // special case for a default bar button
-  // if the bar button is default it should get the style
-  // but if a color is passed the style shouldn't be added
-  if (buttonType === 'bar-button' && style === 'default') {
+  // if the bar button is default it should get the fill
+  // but if a color is passed the fill shouldn't be added
+  if (buttonType === 'bar-button' && fill === 'default') {
     className = buttonType;
     if (!color) {
-      className += '-' + style.toLowerCase();
+      className += '-' + fill.toLowerCase();
     }
   }
 
   return [`${className}-${mode}`].concat(
-      style !== 'default' ? `${className}` : [],
+      fill !== 'default' ? `${className}` : [],
       color ? `${className}-${mode}-${color}` : []
     );
 }
 
-/**
- * Get the classes for the style
- * e.g. outline, clear, solid
- */
-function getStyleClassList(mode: string, color: string, buttonType: string, outline: boolean, clear: boolean, solid: boolean): string[] {
-  let classList = [].concat(
-    outline ? getColorClassList(color, buttonType, 'outline', mode) : [],
-    clear ? getColorClassList(color, buttonType, 'clear', mode) : [],
-    solid ? getColorClassList(color, buttonType, 'solid', mode) : []
-  );
-
-  if (classList.length === 0) {
-    classList = getColorClassList(color, buttonType, 'default', mode);
-  }
-
-  return classList;
-}
-
-/**
- * Get the item classes for the button
- */
 function getItemClassList(itemButton: boolean, size: string) {
   return itemButton && !size ? ['item-button'] : [];
 }

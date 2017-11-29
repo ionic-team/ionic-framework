@@ -1,8 +1,9 @@
 
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
-import { playAnimationAsync } from '../../utils/helpers';
+import { Component, CssClassMap, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Animation, AnimationBuilder, AnimationController, Config, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
+import { BACKDROP } from '../../utils/overlay-constants';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
@@ -35,32 +36,32 @@ export class Alert {
   /**
    * @output {AlertEvent} Emitted after the alert has loaded.
    */
-  @Event() ionAlertDidLoad: EventEmitter;
+  @Event() ionAlertDidLoad: EventEmitter<AlertEvent>;
 
   /**
    * @output {AlertEvent} Emitted after the alert has presented.
    */
-  @Event() ionAlertDidPresent: EventEmitter;
+  @Event() ionAlertDidPresent: EventEmitter<AlertEvent>;
 
   /**
    * @output {AlertEvent} Emitted before the alert has presented.
    */
-  @Event() ionAlertWillPresent: EventEmitter;
+  @Event() ionAlertWillPresent: EventEmitter<AlertEvent>;
 
   /**
    * @output {AlertEvent} Emitted before the alert has dismissed.
    */
-  @Event() ionAlertWillDismiss: EventEmitter;
+  @Event() ionAlertWillDismiss: EventEmitter<AlertDismissEventDetail>;
 
   /**
    * @output {AlertEvent} Emitted after the alert has dismissed.
    */
-  @Event() ionAlertDidDismiss: EventEmitter;
+  @Event() ionAlertDidDismiss: EventEmitter<AlertDismissEventDetail>;
 
   /**
    * @output {AlertEvent} Emitted after the alert has unloaded.
    */
-  @Event() ionAlertDidUnload: EventEmitter;
+  @Event() ionAlertDidUnload: EventEmitter<AlertEvent>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -74,6 +75,7 @@ export class Alert {
   @Prop() enableBackdropDismiss: boolean = true;
   @Prop() translucent: boolean = false;
 
+  @Prop() animate: boolean = true;
   @Prop() alertId: string;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -92,6 +94,11 @@ export class Alert {
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
+      if (!this.animate) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
@@ -104,12 +111,15 @@ export class Alert {
     });
   }
 
-  @Method() dismiss() {
+  @Method() dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionAlertWillDismiss.emit();
+    this.ionAlertWillDismiss.emit({
+      data: data,
+      role: role
+    });
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
@@ -119,40 +129,32 @@ export class Alert {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      this.ionAlertDidDismiss.emit();
+      this.ionAlertDidDismiss.emit({
+        data: data,
+        role: role
+      });
 
-      Context.dom.write(() => {
+      return domControllerAsync(Context.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
     });
   }
 
   componentDidLoad() {
-    this.ionAlertDidLoad.emit({ alert: this });
+    this.ionAlertDidLoad.emit();
   }
 
   componentDidEnter() {
-    this.ionAlertDidPresent.emit({ alert: this });
+    this.ionAlertDidPresent.emit();
   }
 
   componentDidUnload() {
-    this.ionAlertDidUnload.emit({ alert: this });
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
+    this.ionAlertDidUnload.emit();
   }
 
   protected backdropClick() {
     if (this.enableBackdropDismiss) {
-      // const opts: NavOptions = {
-      //   minClickBlockDuration: 400
-      // };
-      this.dismiss();
+      this.dismiss(null, BACKDROP);
     }
   }
 
@@ -185,8 +187,6 @@ export class Alert {
   }
 
   buttonClick(button: any) {
-    console.log('buttonClick', button);
-
     // TODO keep the time of the most recent button click
     // this.lastClick = Date.now();
 
@@ -202,7 +202,7 @@ export class Alert {
     }
 
     if (shouldDismiss) {
-      this.dismiss();
+      this.dismiss(this.getValues(), button.role);
     }
   }
 
@@ -302,6 +302,7 @@ export class Alert {
               min={i.min}
               max={i.max}
               id={i.id}
+              disabled={i.disabled}
               tabIndex={0}
               class='alert-input'/>
           </div>
@@ -462,7 +463,16 @@ export interface AlertButton {
   handler?: (value: any) => boolean|void;
 }
 
-export interface AlertEvent extends Event {
+export interface AlertEvent extends CustomEvent {
+  // keep this just for the sake of static types and potential future extensions
+}
+
+export interface AlertDismissEventDetail extends OverlayDismissEventDetail {
+  // keep this just for the sake of static types and potential future extensions
+}
+
+export interface AlertDismissEvent extends OverlayDismissEvent {
+  // keep this just for the sake of static types and potential future extensions
 }
 
 export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };

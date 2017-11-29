@@ -190,7 +190,7 @@ export class Toast {
             ? <div class='toast-message'>{this.message}</div>
             : null}
           {this.showCloseButton
-            ? <ion-button clear color='light' class='toast-button' onClick={() => this.dismiss()}>
+            ? <ion-button fill="clear" color='light' class='toast-button' onClick={() => this.dismiss()}>
                 {this.closeButtonText || 'Close'}
               </ion-button>
             : null}

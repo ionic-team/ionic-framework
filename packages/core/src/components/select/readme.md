@@ -1,4 +1,4 @@
-# ion-select-popover
+# ion-select
 
 
 
@@ -7,31 +7,101 @@
 
 ## Properties
 
-#### options
+#### cancelText
+
+string
+
+
+#### disabled
+
+boolean
+
+
+#### interface
+
+string
+
+
+#### multiple
+
+boolean
+
+
+#### okText
+
+string
+
+
+#### placeholder
+
+string
+
+
+#### selectOptions
 
 any
 
 
-#### value
+#### selectedText
 
 string
+
+
+#### value
+
+any
 
 
 ## Attributes
 
-#### options
-
-any
-
-
-#### value
+#### cancelText
 
 string
 
 
+#### disabled
+
+boolean
+
+
+#### interface
+
+string
+
+
+#### multiple
+
+boolean
+
+
+#### okText
+
+string
+
+
+#### placeholder
+
+string
+
+
+#### selectOptions
+
+any
+
+
+#### selectedText
+
+string
+
+
+#### value
+
+any
+
+
 ## Events
 
-#### ionDismiss
+#### ionCancel
 
 
 

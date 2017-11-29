@@ -29,4 +29,27 @@ describe('InputsTestPageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('testInputOne binding', () => {
+    let input;
+    beforeEach(
+      fakeAsync(() => {
+        component.ngOnInit();
+        fixture.detectChanges();
+        tick();
+        input = fixture.debugElement.query(By.css('#stdTextInput')).nativeElement;
+        // This is what I ultimtely want to test...
+        //
+        // const ionInput = fixture.debugElement.query(By.css('#ionTextInput'));
+        // input = ionInput.query(By.css('input')).nativeElement;
+      })
+    );
+
+    it('should reflect changes to the input', () => {
+      expect(input).toBeTruthy();
+      input.value = 'Frank';
+      input.dispatchEvent(new Event('input'));
+      expect(component.textValue).toEqual('Frank');
+    });
+  });
 });

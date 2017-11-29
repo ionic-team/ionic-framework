@@ -52,6 +52,11 @@ boolean
 any
 
 
+#### name
+
+string
+
+
 #### value
 
 string
@@ -79,6 +84,11 @@ boolean
 any
 
 
+#### name
+
+string
+
+
 #### value
 
 string
@@ -96,11 +106,6 @@ string
 
 
 #### ionStyle
-
-
-## Methods
-
-#### toggle()
 
 
 

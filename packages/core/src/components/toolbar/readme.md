@@ -87,44 +87,34 @@ attribute to the element.
 
 ## Properties
 
-#### backButtonIcon
+#### color
 
 string
 
 
-#### backButtonText
+#### mode
 
-string
-
-
-#### hidden
-
-boolean
+any
 
 
-#### hideBackButton
+#### translucent
 
 boolean
 
 
 ## Attributes
 
-#### backButtonIcon
+#### color
 
 string
 
 
-#### backButtonText
+#### mode
 
-string
-
-
-#### hidden
-
-boolean
+any
 
 
-#### hideBackButton
+#### translucent
 
 boolean
 

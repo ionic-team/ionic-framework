@@ -26,11 +26,11 @@ export function createThemedClasses(mode: string, color: string, classes: string
 /**
  * Get the classes from a class list and return them as an object
  */
-export function getElementClassObject(classList: DOMTokenList): CssClassMap {
+export function getElementClassObject(classList: DOMTokenList | string[]): CssClassMap {
   let classObj: CssClassMap = {};
 
   for (var i = 0; i < classList.length; i++) {
-    classObj[classList.item(i)] = true;
+    classObj[classList[i]] = true;
   }
 
   return classObj;

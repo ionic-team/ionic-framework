@@ -52,6 +52,11 @@ boolean
 any
 
 
+#### name
+
+string
+
+
 #### value
 
 string
@@ -77,6 +82,11 @@ boolean
 #### mode
 
 any
+
+
+#### name
+
+string
 
 
 #### value

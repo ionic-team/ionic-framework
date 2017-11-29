@@ -30,26 +30,24 @@ ion-range {
   display: flex;
 
   align-items: center;
-
-
-  ion-label {
-    flex: initial;
-  }
-
-  ion-icon {
-    min-height: 2.4rem;
-
-    font-size: 2.4rem;
-    line-height: 1;
-  }
-
-  ion-gesture,
-  .range-slider {
-    position: relative;
-
-    flex: 1;
-
-    cursor: pointer;
-  }
 }
 
+ion-range ion-label {
+  flex: initial;
+}
+
+ion-range ion-icon {
+  min-height: 2.4rem;
+
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+ion-range ion-gesture,
+ion-range .range-slider {
+  position: relative;
+
+  flex: 1;
+
+  cursor: pointer;
+}

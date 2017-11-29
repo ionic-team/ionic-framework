@@ -17,6 +17,11 @@ string
 any
 
 
+#### translucent
+
+boolean
+
+
 ## Attributes
 
 #### color
@@ -27,6 +32,11 @@ string
 #### mode
 
 any
+
+
+#### translucent
+
+boolean
 
 
 

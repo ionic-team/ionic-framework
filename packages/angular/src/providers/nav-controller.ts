@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { NavOptions, PublicNavController, ViewController } from '@ionic/core';
+import { NavOptions, PublicNav, PublicViewController } from '@ionic/core';
 import { hydrateElement } from '../util/util';
 
-export class NavController implements PublicNavController {
+export class NavController implements PublicNav {
   constructor(public element: HTMLIonNavElement) {
   }
 
@@ -54,7 +54,7 @@ export class NavController implements PublicNavController {
     });
   }
 
-  removeView(viewController: ViewController, opts?: NavOptions): Promise<any> {
+  removeView(viewController: PublicViewController, opts?: NavOptions): Promise<any> {
     return hydrateElement(this.element).then((navElement: HTMLIonNavElement) => {
       return navElement.removeView(viewController, opts);
     });
@@ -66,23 +66,23 @@ export class NavController implements PublicNavController {
     });
   }
 
-  getActive(): ViewController {
+  getActive(): PublicViewController {
     if (this.element.getActive) {
       return this.element.getActive();
     }
     return null;
   }
 
-  getPrevious(view?: ViewController): ViewController {
+  getPrevious(view?: PublicViewController): PublicViewController {
     if (this.element.getPrevious) {
       return this.element.getPrevious(view);
     }
     return null;
   }
 
-  canGoBack(nav: PublicNavController): boolean {
+  canGoBack(): boolean {
     if (this.element.canGoBack) {
-      return this.element.canGoBack(nav as any);
+      return this.element.canGoBack();
     }
     return false;
   }
@@ -94,7 +94,7 @@ export class NavController implements PublicNavController {
     return false;
   }
 
-  getFirstView(): ViewController {
+  getFirstView(): PublicViewController {
     if (this.element.getFirstView) {
       return this.element.getFirstView();
     }

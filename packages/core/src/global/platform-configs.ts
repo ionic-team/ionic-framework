@@ -1,3 +1,4 @@
+import { isCordova } from './platform-utils';
 
 const IPAD = 'ipad';
 const IPHONE = 'iphone';
@@ -23,6 +24,7 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
     settings: {
       mode: IOS,
       tabsHighlight: false,
+      statusbarPadding: isCordova,
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
   },
