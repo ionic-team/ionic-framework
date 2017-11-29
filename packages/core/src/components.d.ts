@@ -670,6 +670,36 @@ declare global {
 
 
 import {
+  Column as IonCol
+} from './components/col/col';
+
+declare global {
+  interface HTMLIonColElement extends IonCol, HTMLElement {
+  }
+  var HTMLIonColElement: {
+    prototype: HTMLIonColElement;
+    new (): HTMLIonColElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-col": HTMLIonColElement;
+  }
+  interface ElementTagNameMap {
+    "ion-col": HTMLIonColElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-col": JSXElements.IonColAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonColAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Content as IonContent
 } from './components/content/content';
 
@@ -961,36 +991,6 @@ declare global {
 
 
 import {
-  Column as IonCol
-} from './components/grid/col';
-
-declare global {
-  interface HTMLIonColElement extends IonCol, HTMLElement {
-  }
-  var HTMLIonColElement: {
-    prototype: HTMLIonColElement;
-    new (): HTMLIonColElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-col": HTMLIonColElement;
-  }
-  interface ElementTagNameMap {
-    "ion-col": HTMLIonColElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-col": JSXElements.IonColAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonColAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   Grid as IonGrid
 } from './components/grid/grid';
 
@@ -1014,36 +1014,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGridAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
-  Row as IonRow
-} from './components/grid/row';
-
-declare global {
-  interface HTMLIonRowElement extends IonRow, HTMLElement {
-  }
-  var HTMLIonRowElement: {
-    prototype: HTMLIonRowElement;
-    new (): HTMLIonRowElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-row": HTMLIonRowElement;
-  }
-  interface ElementTagNameMap {
-    "ion-row": HTMLIonRowElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-row": JSXElements.IonRowAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonRowAttributes extends HTMLAttributes {
       
     }
   }
@@ -2496,6 +2466,36 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterControllerAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  Row as IonRow
+} from './components/row/row';
+
+declare global {
+  interface HTMLIonRowElement extends IonRow, HTMLElement {
+  }
+  var HTMLIonRowElement: {
+    prototype: HTMLIonRowElement;
+    new (): HTMLIonRowElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-row": HTMLIonRowElement;
+  }
+  interface ElementTagNameMap {
+    "ion-row": HTMLIonRowElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-row": JSXElements.IonRowAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRowAttributes extends HTMLAttributes {
       
     }
   }

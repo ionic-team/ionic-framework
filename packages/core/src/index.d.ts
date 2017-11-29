@@ -30,6 +30,7 @@ export { CardTitle } from './components/card-title/card-title';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { ChipButton } from './components/chip-button/chip-button';
+export { Column } from './components/col/col';
 export { Content } from './components/content/content';
 export { Datetime } from './components/datetime/datetime';
 export { FabContainer } from './components/fab-container/fab-container';
@@ -45,9 +46,7 @@ export {
   GestureController,
   GestureDelegate
 } from './components/gesture-controller/gesture-controller';
-export { Column } from './components/grid/col';
 export { Grid } from './components/grid/grid';
-export { Row } from './components/grid/row';
 export { Header } from './components/header/header';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
@@ -120,6 +119,7 @@ export {
   RouterEntries,
   NavState,
 } from './components/router/router-utils';
+export { Row } from './components/row/row';
 export { ItemReorder } from './components/reorder/reorder';
 export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
