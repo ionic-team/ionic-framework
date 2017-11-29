@@ -22,7 +22,7 @@
     "build": "npm run clean && npm run compile && npm run clean-generated",
     "clean": "rm -rf dist",
     "clean-generated": "node ./scripts/clean.js",
-    "compile": "ngc -p .",
+    "compile": "./node_modules/.bin/ngc",
     "deploy": "np --any-branch",
     "tsc": "tsc -p ."
   },
