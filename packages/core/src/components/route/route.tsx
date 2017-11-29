@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Prop } from '@stencil/core';
-import { RouterEntry, parseURL } from './router-utils';
+import { RouterEntry, parseURL } from '../router-controller/router-utils';
 
 
 @Component({

@@ -2379,7 +2379,7 @@ declare global {
 
 import {
   RouteLink as IonRouteLink
-} from './components/router/route-link';
+} from './components/route-link/route-link';
 
 declare global {
   interface HTMLIonRouteLinkElement extends IonRouteLink, HTMLElement {
@@ -2411,7 +2411,7 @@ declare global {
 
 import {
   Route as IonRoute
-} from './components/router/route';
+} from './components/route/route';
 
 declare global {
   interface HTMLIonRouteElement extends IonRoute, HTMLElement {
@@ -2444,7 +2444,7 @@ declare global {
 
 import {
   RouterController as IonRouterController
-} from './components/router/router-controller';
+} from './components/router-controller/router-controller';
 
 declare global {
   interface HTMLIonRouterControllerElement extends IonRouterController, HTMLElement {

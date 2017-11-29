@@ -2,6 +2,7 @@ import { Component, Listen, Prop } from '@stencil/core';
 import { RouterSegments, generateURL, parseURL, readNavState, writeNavState } from './router-utils';
 import { Config } from '../../index';
 
+
 @Component({
   tag: 'ion-router-controller'
 })

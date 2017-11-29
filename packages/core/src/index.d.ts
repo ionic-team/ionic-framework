@@ -118,7 +118,7 @@ export {
   RouterEntry,
   RouterEntries,
   NavState,
-} from './components/router/router-utils';
+} from './components/router-controller/router-utils';
 export { Row } from './components/row/row';
 export { ItemReorder } from './components/reorder/reorder';
 export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
