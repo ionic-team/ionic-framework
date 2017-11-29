@@ -1,9 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 import { Config } from '../../index';
 
-/**
- * @hidden
- */
+
 @Component({
   tag: 'ion-infinite-scroll-content'
 })

@@ -1053,7 +1053,7 @@ declare global {
 
 import {
   InfiniteScrollContent as IonInfiniteScrollContent
-} from './components/infinite-scroll/infinite-scroll-content';
+} from './components/infinite-scroll-content/infinite-scroll-content';
 
 declare global {
   interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLElement {
