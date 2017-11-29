@@ -39,7 +39,7 @@ import {
 } from './components/scroll/scroll';
 import {
   SelectPopoverOption,
-} from './components/select/select-popover';
+} from './components/select-popover/select-popover';
 
 import {
   ActionSheetController as IonActionSheetController
@@ -2683,7 +2683,7 @@ declare global {
 
 import {
   SelectPopover as IonSelectPopover
-} from './components/select/select-popover';
+} from './components/select-popover/select-popover';
 
 declare global {
   interface HTMLIonSelectPopoverElement extends IonSelectPopover, HTMLElement {

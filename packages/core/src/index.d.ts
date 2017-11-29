@@ -125,7 +125,7 @@ export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll
 export { Searchbar } from './components/searchbar/searchbar';
 export { Segment, SegmentEvent } from './components/segment/segment';
 export { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
-export { SelectPopoverOption, SelectPopover } from './components/select/select-popover';
+export { SelectPopoverOption, SelectPopover } from './components/select-popover/select-popover';
 export { Select } from './components/select/select';
 export { SelectOption } from './components/select-option/select-option';
 export { SkeletonText } from './components/skeleton-text/skeleton-text';
