@@ -1252,7 +1252,7 @@ declare global {
 
 import {
   ItemOption as IonItemOption
-} from './components/item-sliding/item-option';
+} from './components/item-option/item-option';
 
 declare global {
   interface HTMLIonItemOptionElement extends IonItemOption, HTMLElement {
@@ -1286,7 +1286,7 @@ declare global {
 
 import {
   ItemOptions as IonItemOptions
-} from './components/item-sliding/item-options';
+} from './components/item-options/item-options';
 
 declare global {
   interface HTMLIonItemOptionsElement extends IonItemOptions, HTMLElement {

@@ -53,7 +53,7 @@ export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scr
 export { Input } from './components/input/input';
 export { Item } from './components/item/item';
 export { ItemDivider } from './components/item-divider/item-divider';
-export { ItemOption } from './components/item-sliding/item-option';
+export { ItemOption } from './components/item-option/item-option';
 export { ItemSliding } from './components/item-sliding/item-sliding';
 export { KeyboardController } from './components/keyboard-controller/keyboard-controller';
 export * from './components/keyboard-controller/keys';

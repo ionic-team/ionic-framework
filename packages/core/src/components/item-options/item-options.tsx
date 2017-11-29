@@ -2,27 +2,6 @@ import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/
 import { Side, isRightSide } from '../../utils/helpers';
 
 
-/**
- * @name ItemOptions
- * @description
- * The option buttons for an `ion-item-sliding`. These buttons can be placed either on the left or right side.
- * You can combine the `(ionSwipe)` event plus the `expandable` directive to create a full swipe action for the item.
- *
- * @usage
- *
- * ```html
- * <ion-item-sliding>
- *   <ion-item>
- *     Item 1
- *   </ion-item>
- *   <ion-item-options side="right" (ionSwipe)="saveItem(item)">
- *     <ion-item-option expandable (click)="saveItem(item)">
- *       <ion-icon name="star"></ion-icon>
- *     </ion-item-option>
- *   </ion-item-options>
- * </ion-item-sliding>
- *```
- */
 @Component({
   tag: 'ion-item-options'
 })
