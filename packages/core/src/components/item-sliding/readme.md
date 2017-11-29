@@ -4,7 +4,6 @@ A sliding item is a list item that can be swiped to reveal buttons. It requires
 an [Item](../Item) component as a child and a [List](../../list/List) component as
 a parent. All buttons to reveal can be placed in the `<ion-item-options>` element.
 
-@usage
 ```html
 <ion-list>
   <ion-item-sliding #item>
