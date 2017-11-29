@@ -36,17 +36,17 @@ export class Alert {
   /**
    * @output {AlertEvent} Emitted after the alert has loaded.
    */
-  @Event() ionAlertDidLoad: EventEmitter<AlertEvent>;
+  @Event() ionAlertDidLoad: EventEmitter<AlertEventDetail>;
 
   /**
    * @output {AlertEvent} Emitted after the alert has presented.
    */
-  @Event() ionAlertDidPresent: EventEmitter<AlertEvent>;
+  @Event() ionAlertDidPresent: EventEmitter<AlertEventDetail>;
 
   /**
    * @output {AlertEvent} Emitted before the alert has presented.
    */
-  @Event() ionAlertWillPresent: EventEmitter<AlertEvent>;
+  @Event() ionAlertWillPresent: EventEmitter<AlertEventDetail>;
 
   /**
    * @output {AlertEvent} Emitted before the alert has dismissed.
@@ -61,7 +61,7 @@ export class Alert {
   /**
    * @output {AlertEvent} Emitted after the alert has unloaded.
    */
-  @Event() ionAlertDidUnload: EventEmitter<AlertEvent>;
+  @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -129,13 +129,14 @@ export class Alert {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      this.ionAlertDidDismiss.emit({
-        data: data,
-        role: role
-      });
 
       return domControllerAsync(Context.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
+      });
+    }).then(() => {
+      this.ionAlertDidDismiss.emit({
+        data: data,
+        role: role
       });
     });
   }
@@ -467,6 +468,10 @@ export interface AlertEvent extends CustomEvent {
   // keep this just for the sake of static types and potential future extensions
 }
 
+export interface AlertEventDetail {
+  detail: any;
+}
+
 export interface AlertDismissEventDetail extends OverlayDismissEventDetail {
   // keep this just for the sake of static types and potential future extensions
 }
@@ -475,4 +480,9 @@ export interface AlertDismissEvent extends OverlayDismissEvent {
   // keep this just for the sake of static types and potential future extensions
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };
+export {
+  iOSEnterAnimation as AlertiOSEnterAnimation,
+  iOSLeaveAnimation as AlertiOSLeaveAnimation,
+  MdEnterAnimation as AlertMDEnterAnimation,
+  MdLeaveAnimation as AlertMDLeaveAnimation,
+};

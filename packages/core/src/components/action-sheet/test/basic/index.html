@@ -33,11 +33,12 @@
 
   <script>
 
-    function presentBasic() {
-      var mode = Ionic.mode;
+    async function presentBasic() {
+      const mode = Ionic.mode;
 
-      var actionSheetController = document.querySelector('ion-action-sheet-controller');
-      actionSheetController.create({
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
         title: "Albums",
         buttons: [{
           text: 'Delete',
@@ -73,14 +74,13 @@
           }
         }]
       })
-      .then(actionSheet => {
-        actionSheet.present()
-      });
+      await actionSheetElement.present();
     }
 
-    function presentNoBackdropDismiss() {
-      var actionSheetController = document.querySelector('ion-action-sheet-controller');
-      actionSheetController.create({
+    async function presentNoBackdropDismiss() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
         buttons: [{
           text: 'Archive',
           handler: () => {
@@ -99,15 +99,14 @@
             console.log('Cancel clicked');
           }
         }]
-      })
-      .then(actionSheet => {
-        actionSheet.present()
       });
+      await actionSheetElement.present();
     }
 
-    function presentAlert() {
-      var actionSheetController = document.querySelector('ion-action-sheet-controller');
-      actionSheetController.create({
+    async function presentAlert() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
         buttons: [{
           text: 'Open Alert',
           handler: () => {
@@ -120,16 +119,14 @@
             console.log('Cancel clicked');
           }
         }]
-      })
-      .then(actionSheet => {
-        actionSheet.present()
       });
+      await actionSheetElement.present();
     }
 
-    function presentScroll() {
-      var actionSheetController = document.querySelector('ion-action-sheet-controller');
-
-      actionSheetController.create({
+    async function presentScroll() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
         buttons: [
           {
             text: 'Add Reaction',
@@ -200,16 +197,14 @@
             }
           }
         ]
-      })
-      .then(actionSheet => {
-        actionSheet.present()
       });
+      await actionSheetElement.present();
     }
 
-    function presentScrollNoCancel() {
-      var actionSheetController = document.querySelector('ion-action-sheet-controller');
-
-      actionSheetController.create({
+    async function presentScrollNoCancel() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
         buttons: [
           {
             text: 'Add Reaction',
@@ -274,16 +269,14 @@
             }
           }
         ]
-      })
-      .then(actionSheet => {
-        actionSheet.present()
       });
+      await actionSheetElement.present();
     }
 
-    function presentCancelOnly() {
-      var actionSheetController = document.querySelector('ion-action-sheet-controller');
-
-      actionSheetController.create({
+    async function presentCancelOnly() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
         buttons: [
           {
             text: 'Cancel',
@@ -293,10 +286,8 @@
             }
           }
         ]
-      })
-      .then(actionSheet => {
-        actionSheet.present()
       });
+      await actionSheetElement.present();
     }
   </script>
 </body>
