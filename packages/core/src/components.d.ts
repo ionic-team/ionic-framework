@@ -2785,7 +2785,7 @@ declare global {
 
 import {
   Slide as IonSlide
-} from './components/slides/slide';
+} from './components/slide/slide';
 
 declare global {
   interface HTMLIonSlideElement extends IonSlide, HTMLElement {

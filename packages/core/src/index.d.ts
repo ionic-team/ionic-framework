@@ -129,7 +129,7 @@ export { SelectPopoverOption, SelectPopover } from './components/select/select-p
 export { Select } from './components/select/select';
 export { SelectOption } from './components/select-option/select-option';
 export { SkeletonText } from './components/skeleton-text/skeleton-text';
-export { Slide } from './components/slides/slide';
+export { Slide } from './components/slide/slide';
 export { Slides } from './components/slides/slides';
 export * from './components/spinner/spinner-configs';
 export { Spinner } from './components/spinner/spinner';

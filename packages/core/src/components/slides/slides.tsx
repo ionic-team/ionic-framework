@@ -2,27 +2,6 @@ import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 import { Swiper } from './vendor/swiper';
 
 
-/**
- * @name Slides
- * @description
- * The Slides component is a multi-section container. Each section can be swiped
- * or dragged between. It contains any number of [Slide](../Slide) components.
- *
- *
- * Adopted from Swiper.js:
- * The most modern mobile touch slider and framework with
- * hardware accelerated transitions.
- *
- * http://www.idangero.us/swiper/
- *
- * Copyright 2016, Vladimir Kharlampidi
- * The iDangero.us
- * http://www.idangero.us/
- *
- * Licensed under MIT
- */
-
-
 @Component({
   tag: 'ion-slides',
   styleUrl: 'slides.scss',
