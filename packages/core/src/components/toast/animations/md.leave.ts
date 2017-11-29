@@ -1,9 +1,9 @@
 import { Animation } from '../../../index';
 
 /**
- * iOS Toast Enter Animation
+ * iOS Toast Leave Animation
  */
-export default function iOSEnterAnimation(
+export default function iOSLeaveAnimation(
   Animation: Animation,
   baseElm: HTMLElement,
   position: string
@@ -16,22 +16,18 @@ export default function iOSEnterAnimation(
 
   switch (position) {
     case 'top':
-      wrapperAnimation.fromTo('translateY', '-100%', '10px');
+      wrapperAnimation.fromTo('translateY', '0px', '-100%');
       break;
     case 'middle':
-      let topPosition = Math.floor(
-        baseElm.clientHeight / 2 - wrapperEle.clientHeight / 2
-      );
-      wrapperEle.style.top = `${topPosition}px`;
-      wrapperAnimation.fromTo('opacity', 0.01, 1);
+      wrapperAnimation.fromTo('opacity', 0.99, 0);
       break;
     default:
-      wrapperAnimation.fromTo('translateY', '100%', '-10px');
+      wrapperAnimation.fromTo('translateY', `0px`, '100%');
       break;
   }
   return baseAnimation
     .addElement(baseElm)
-    .easing('cubic-bezier(.155,1.105,.295,1.12)')
-    .duration(400)
+    .easing('cubic-bezier(.36,.66,.04,1)')
+    .duration(300)
     .add(wrapperAnimation);
 }

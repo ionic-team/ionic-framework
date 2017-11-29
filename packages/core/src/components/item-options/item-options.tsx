@@ -34,13 +34,13 @@ export class ItemOptions {
     this.ionSwipe.emit(value);
   }
 
-  hostData(){
+  hostData() {
     return {
-      class:{
+      class: {
         'item-options-left': !this.isRightSide(),
         'item-options-right': this.isRightSide()
       }
-    }
+    };
   }
 
   render() {

@@ -61,7 +61,7 @@ export class Picker {
   @Prop() dismissOnPageChange: boolean = false;
   @Prop() duration: number;
   @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
+  @Prop() leaveAnimation: AnimationBuilder;
   @Prop() pickerId: string;
   @Prop() showBackdrop: boolean = true;
   @Prop() enableBackdropDismiss: boolean = true;
@@ -84,13 +84,7 @@ export class Picker {
     this.ionPickerWillPresent.emit({ picker: this });
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
-
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSEnterAnimation;
-    }
+    const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iOSEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -117,13 +111,7 @@ export class Picker {
       this.ionPickerWillDismiss.emit({ picker: this });
 
       // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
-
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        animationBuilder = iOSLeaveAnimation;
-      }
+      const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iOSLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {

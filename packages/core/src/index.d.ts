@@ -58,7 +58,9 @@ export {
   LoadingEvent,
   LoadingOptions,
   iOSEnterAnimation as LoadingIOSEnterAnimation,
-  iOSLeaveAnimation as LoadingIOSLeaveAnimation
+  iOSLeaveAnimation as LoadingIOSLeaveAnimation,
+  MdEnterAnimation as LoadingMDEnterAnimation,
+  MdLeaveAnimation as LoadingMDLeaveAnimation
 } from './components/loading/loading';
 export { LoadingController } from './components/loading-controller/loading-controller';
 export { Menu } from './components/menu/menu';
@@ -73,7 +75,9 @@ export {
   ModalOptions,
   ModalEvent,
   iOSEnterAnimation as ModalIOSEnterAnimation,
-  iOSLeaveAnimation as ModalIOSLeaveAnimation
+  iOSLeaveAnimation as ModalIOSLeaveAnimation,
+  MdEnterAnimation as ModalMDEnterAnimation,
+  MdLeaveAnimation as ModalMDLeaveAnimation
 } from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
@@ -99,7 +103,9 @@ export {
   PopoverEvent,
   PopoverOptions,
   iOSEnterAnimation as PopoverIOSEnterAnimation,
-  iOSLeaveAnimation as PopoverIOSLeaveAnimation
+  iOSLeaveAnimation as PopoverIOSLeaveAnimation,
+  MdEnterAnimation as PopoverMDEnterAnimation,
+  MdLeaveAnimation as PopoverMDLeaveAnimation
 } from './components/popover/popover';
 export { PopoverController } from './components/popover-controller/popover-controller';
 export { RadioGroup } from './components/radio-group/radio-group';
@@ -136,7 +142,9 @@ export {
   ToastEvent,
   ToastOptions,
   iOSEnterAnimation as ToastIOSEnterAnimation,
-  iOSLeaveAnimation as ToastIOSLeaveAnimation
+  iOSLeaveAnimation as ToastIOSLeaveAnimation,
+  MdEnterAnimation as ToastMDEnterAnimation,
+  MdLeaveAnimation as ToastMDLeaveAnimation
 } from './components/toast/toast';
 export { ToastController } from './components/toast-controller/toast-controller';
 export { Toggle } from './components/toggle/toggle';
@@ -148,7 +156,7 @@ export { ViewController } from './navigation/view-controller';
 // export all of the component declarations that are dynamically created
 export * from './components';
 
-export { DomController, RafCallback } from './global/dom-controller'
+export { DomController, RafCallback } from './global/dom-controller';
 
 export interface Config {
   get: (key: string, fallback?: any) => any;
@@ -173,7 +181,7 @@ export interface StencilElement extends HTMLElement {
 }
 
 export interface OverlayDismissEvent extends CustomEvent {
-  detail: OverlayDismissEventDetail
+  detail: OverlayDismissEventDetail;
 }
 
 export interface OverlayDismissEventDetail {

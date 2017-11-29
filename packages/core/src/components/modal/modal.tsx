@@ -1,10 +1,12 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
+import MdEnterAnimation from './animations/md.enter';
+import MdLeaveAnimation from './animations/md.leave';
 @Component({
   tag: 'ion-modal',
   styleUrls: {
@@ -49,16 +51,19 @@ export class Modal {
   @Event() ionModalDidUnload: EventEmitter;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
   @Prop() mode: string;
   @Prop() color: string;
   @Prop() component: string;
   @Prop() componentProps: any = {};
   @Prop() cssClass: string;
   @Prop() enableBackdropDismiss: boolean = true;
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
+
   @Prop() modalId: string;
   @Prop() showBackdrop: boolean = true;
+
+  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() leaveAnimation: AnimationBuilder;
 
   private animation: Animation;
 
@@ -78,14 +83,7 @@ export class Modal {
     this.ionModalWillPresent.emit({ modal: this });
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
-
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      // TODO!!
-      animationBuilder = iOSEnterAnimation;
-    }
+    const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -109,14 +107,7 @@ export class Modal {
       this.ionModalWillDismiss.emit({ modal: this });
 
       // get the user's animation fn if one was provided
-      let animationBuilder = this.exitAnimation;
-
-      if (!animationBuilder) {
-        // user did not provide a custom animation fn
-        // decide from the config which animation to use
-        // TODO!!
-        animationBuilder = iOSLeaveAnimation;
-      }
+      const animationBuilder = this.leaveAnimation || this.config.get('modalExit', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -210,4 +201,4 @@ export interface ModalEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation };
+export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };

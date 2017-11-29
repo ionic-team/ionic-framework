@@ -7,6 +7,9 @@ import { createThemedClasses } from '../../utils/theme';
 import iOSEnterAnimation from './animations/ios.enter';
 import iOSLeaveAnimation from './animations/ios.leave';
 
+import MdEnterAnimation from './animations/md.enter';
+import MdLeaveAnimation from './animations/md.leave';
+
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
@@ -67,9 +70,9 @@ export class ActionSheet {
 
   @Prop() animate: boolean = true;
   @Prop() enterAnimation: AnimationBuilder;
-  @Prop() exitAnimation: AnimationBuilder;
-  @Prop() actionSheetId: string;
+  @Prop() leaveAnimation: AnimationBuilder;
 
+  @Prop() actionSheetId: string;
 
   @Method()
   present() {
@@ -80,13 +83,7 @@ export class ActionSheet {
     this.ionActionSheetWillPresent.emit();
 
     // get the user's animation fn if one was provided
-    let animationBuilder = this.enterAnimation;
-
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSEnterAnimation;
-    }
+    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -110,14 +107,8 @@ export class ActionSheet {
       this.animation = null;
     }
     this.ionActionSheetWillDismiss.emit();
+    const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
 
-    // get the user's animation fn if one was provided
-    let animationBuilder = this.exitAnimation;
-    if (!animationBuilder) {
-      // user did not provide a custom animation fn
-      // decide from the config which animation to use
-      animationBuilder = iOSLeaveAnimation;
-    }
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
@@ -295,5 +286,7 @@ export interface ActionSheetDismissEvent extends OverlayDismissEvent {
 
 export {
   iOSEnterAnimation as ActionSheetiOSEnterAnimation,
-  iOSLeaveAnimation as ActionSheetiOSLeaveAnimation
+  iOSLeaveAnimation as ActionSheetiOSLeaveAnimation,
+  MdEnterAnimation as ActionSheetMDEnterAnimation,
+  MdLeaveAnimation as ActionSheetMDLeaveAnimation,
 };
