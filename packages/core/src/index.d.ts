@@ -134,7 +134,7 @@ export { Slides } from './components/slides/slides';
 export * from './components/spinner/spinner-configs';
 export { Spinner } from './components/spinner/spinner';
 export { SplitPane, SplitPaneAlert } from './components/split-pane/split-pane';
-export { Tab } from './components/tabs/tab';
+export { Tab } from './components/tab/tab';
 export { Tabs } from './components/tabs/tabs';
 export { Thumbnail } from './components/thumbnail/thumbnail';
 export { ToolbarTitle } from './components/title/title';

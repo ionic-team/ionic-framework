@@ -2926,7 +2926,7 @@ declare global {
 
 import {
   TabbarButton as IonTabButton
-} from './components/tabs/tab-button';
+} from './components/tab-button/tab-button';
 
 declare global {
   interface HTMLIonTabButtonElement extends IonTabButton, HTMLElement {
@@ -2958,7 +2958,7 @@ declare global {
 
 import {
   TabHighlight as IonTabHighlight
-} from './components/tabs/tab-highlight';
+} from './components/tab-highlight/tab-highlight';
 
 declare global {
   interface HTMLIonTabHighlightElement extends IonTabHighlight, HTMLElement {
@@ -2989,7 +2989,7 @@ declare global {
 
 import {
   Tab as IonTab
-} from './components/tabs/tab';
+} from './components/tab/tab';
 
 declare global {
   interface HTMLIonTabElement extends IonTab, HTMLElement {
@@ -3029,7 +3029,7 @@ declare global {
 
 import {
   Tabbar as IonTabbar
-} from './components/tabs/tabbar';
+} from './components/tabbar/tabbar';
 
 declare global {
   interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {

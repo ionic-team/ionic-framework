@@ -1,6 +1,6 @@
 import { Component, Listen, Prop, State } from '@stencil/core';
-
 import { createThemedClasses } from '../../utils/theme';
+
 
 @Component({
   tag: 'ion-tabbar',

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
-import { Swiper } from './vendor/swiper';
+import { Swiper } from './vendor/swiper.js';
 
 
 @Component({

@@ -1,6 +1,7 @@
 import { Component, Element, Listen, Prop, PropDidChange, State } from '@stencil/core';
 import { getParentElement } from '../../utils/helpers';
 
+
 @Component({
   tag: 'ion-tab-highlight'
 })
