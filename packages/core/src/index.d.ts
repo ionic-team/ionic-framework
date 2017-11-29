@@ -11,21 +11,7 @@ export {
 } from './components/action-sheet/action-sheet';
 
 export { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
-<<<<<<< HEAD
-export {
-  Alert,
-  AlertButton,
-  AlertEvent,
-  AlertInput,
-  AlertOptions,
-  iOSEnterAnimation as AlertIOSEnterAnimation,
-  iOSLeaveAnimation as AlertIOSLeaveAnimation,
-  MdEnterAnimation as AlertMDEnterAnimation,
-  MdLeaveAnimation as AlertMDLeaveAnimation
-} from './components/alert/alert';
-=======
 export * from './components/alert/alert';
->>>>>>> core
 export { AlertController } from './components/alert-controller/alert-controller';
 export {
   Animation,
@@ -179,7 +165,7 @@ export { ViewController } from './navigation/view-controller';
 // export all of the component declarations that are dynamically created
 export * from './components';
 
-export { DomController, RafCallback } from './global/dom-controller'
+export { DomController, RafCallback } from './global/dom-controller';
 
 export interface Config {
   get: (key: string, fallback?: any) => any;
@@ -204,7 +190,7 @@ export interface StencilElement extends HTMLElement {
 }
 
 export interface OverlayDismissEvent extends CustomEvent {
-  detail: OverlayDismissEventDetail
+  detail: OverlayDismissEventDetail;
 }
 
 export interface OverlayDismissEventDetail {
