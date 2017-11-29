@@ -1173,52 +1173,6 @@ declare global {
 
 
 import {
-  Textarea as IonTextarea
-} from './components/input/textarea';
-
-declare global {
-  interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
-  }
-  var HTMLIonTextareaElement: {
-    prototype: HTMLIonTextareaElement;
-    new (): HTMLIonTextareaElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-textarea": HTMLIonTextareaElement;
-  }
-  interface ElementTagNameMap {
-    "ion-textarea": HTMLIonTextareaElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-textarea": JSXElements.IonTextareaAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonTextareaAttributes extends HTMLAttributes {
-      
-        autocapitalize?: string,
-        autocomplete?: string,
-        autofocus?: boolean,
-        clearOnEdit?: boolean,
-        disabled?: boolean,
-        maxlength?: number,
-        minlength?: number,
-        name?: string,
-        placeholder?: string,
-        readonly?: boolean,
-        required?: boolean,
-        spellcheck?: boolean,
-        cols?: number,
-        rows?: number,
-        wrap?: string,
-        value?: string
-    }
-  }
-}
-
-
-import {
   ItemDivider as IonItemDivider
 } from './components/item-divider/item-divider';
 
@@ -3064,6 +3018,52 @@ declare global {
   namespace JSXElements {
     export interface TranslucentPageTabAttributes extends HTMLAttributes {
       
+    }
+  }
+}
+
+
+import {
+  Textarea as IonTextarea
+} from './components/textarea/textarea';
+
+declare global {
+  interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
+  }
+  var HTMLIonTextareaElement: {
+    prototype: HTMLIonTextareaElement;
+    new (): HTMLIonTextareaElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-textarea": HTMLIonTextareaElement;
+  }
+  interface ElementTagNameMap {
+    "ion-textarea": HTMLIonTextareaElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-textarea": JSXElements.IonTextareaAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTextareaAttributes extends HTMLAttributes {
+      
+        autocapitalize?: string,
+        autocomplete?: string,
+        autofocus?: boolean,
+        clearOnEdit?: boolean,
+        disabled?: boolean,
+        maxlength?: number,
+        minlength?: number,
+        name?: string,
+        placeholder?: string,
+        readonly?: boolean,
+        required?: boolean,
+        spellcheck?: boolean,
+        cols?: number,
+        rows?: number,
+        wrap?: string,
+        value?: string
     }
   }
 }
