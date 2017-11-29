@@ -18,10 +18,10 @@
       </ion-header>
 
       <ion-content padding>
-        <ion-button block onclick="presentLoading()" class="e2eShowLoading">Show Loading</ion-button>
-        <ion-button block onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</ion-button>
-        <ion-button block onclick="presentLoadingWithOptions({duration: 2000, message: 'Loading Please Wait...', spinner: 'hide'})">Show Loading with no spinner</ion-button>
-        <ion-button block onclick="presentLoadingWithOptions({duration: 5000, message: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</ion-button>
+        <ion-button expand="block" onclick="presentLoading()" class="e2eShowLoading">Show Loading</ion-button>
+        <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</ion-button>
+        <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 2000, message: 'Loading Please Wait...', spinner: 'hide'})">Show Loading with no spinner</ion-button>
+        <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 5000, message: 'Loading Please Wait...', translucent: true})">Show Loading with translucent</ion-button>
         <ion-loading-controller></ion-loading-controller>
 
         <ion-grid>

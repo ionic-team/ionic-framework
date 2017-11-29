@@ -26,3 +26,5 @@ $app-md-statusbar-padding:       20px !default;
     @include toolbar-statusbar-padding($toolbar-md-height, $toolbar-md-padding, $content-md-padding, $app-md-statusbar-padding);
   }
 }
+
+@import "../icon/icon.md";

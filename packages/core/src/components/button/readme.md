@@ -59,19 +59,9 @@ and be enhanced by a wide range of attributes.
 
 ## Properties
 
-#### block
-
-boolean
-
-
 #### buttonType
 
 string
-
-
-#### clear
-
-boolean
 
 
 #### color
@@ -79,19 +69,19 @@ boolean
 string
 
 
-#### default
-
-boolean
-
-
 #### disabled
 
 boolean
 
 
-#### full
+#### expand
 
-boolean
+any
+
+
+#### fill
+
+any
 
 
 #### href
@@ -104,19 +94,9 @@ string
 boolean
 
 
-#### large
-
-boolean
-
-
 #### mode
 
 any
-
-
-#### outline
-
-boolean
 
 
 #### round
@@ -124,14 +104,9 @@ boolean
 boolean
 
 
-#### small
+#### size
 
-boolean
-
-
-#### solid
-
-boolean
+any
 
 
 #### strong
@@ -141,19 +116,9 @@ boolean
 
 ## Attributes
 
-#### block
-
-boolean
-
-
 #### buttonType
 
 string
-
-
-#### clear
-
-boolean
 
 
 #### color
@@ -161,19 +126,19 @@ boolean
 string
 
 
-#### default
-
-boolean
-
-
 #### disabled
 
 boolean
 
 
-#### full
+#### expand
 
-boolean
+any
+
+
+#### fill
+
+any
 
 
 #### href
@@ -186,19 +151,9 @@ string
 boolean
 
 
-#### large
-
-boolean
-
-
 #### mode
 
 any
-
-
-#### outline
-
-boolean
 
 
 #### round
@@ -206,14 +161,9 @@ boolean
 boolean
 
 
-#### small
+#### size
 
-boolean
-
-
-#### solid
-
-boolean
+any
 
 
 #### strong

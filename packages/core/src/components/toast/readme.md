@@ -57,6 +57,11 @@ boolean
 string
 
 
+#### translucent
+
+boolean
+
+
 ## Attributes
 
 #### closeButtonText
@@ -107,6 +112,11 @@ boolean
 #### toastId
 
 string
+
+
+#### translucent
+
+boolean
 
 
 ## Events

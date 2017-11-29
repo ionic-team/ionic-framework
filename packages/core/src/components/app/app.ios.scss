@@ -26,3 +26,5 @@ $app-ios-statusbar-padding:       20px !default;
     @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $app-ios-statusbar-padding);
   }
 }
+
+@import "../icon/icon.ios";

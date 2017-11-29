@@ -37,7 +37,7 @@ exports.config = {
     { components: ['ion-range', 'ion-range-knob']},
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] },
-    { components: ['ion-nav', 'ion-nav-controller', 'stencil-ion-nav-delegate','page-one', 'page-two', 'page-three'] },
+    { components: ['ion-nav', 'ion-nav-controller', 'stencil-ion-nav-delegate'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
   ],
   collections: [

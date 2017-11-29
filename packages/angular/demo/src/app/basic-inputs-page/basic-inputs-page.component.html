@@ -84,44 +84,6 @@
 
   <ion-row>
     <ion-col>
-      <h2>Select</h2>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <label for="stdSelect">Standard Select (for tacos)</label>
-      <select id="stdSelect" name="stdSelect" [(ngModel)]="selectValue" (blur)="onBlur($event)">
-        <option value="beef">Carne Asada</option>
-        <option value="tongue">Lengua</option>
-        <option value="brains">Sesos</option>
-        <option value="tripe">Tripa</option>
-        <option value="chicken">Pollo</option>
-      </select>
-    </ion-col>
-    <ion-col>
-      Value:
-      <span id="selectOutput">{{selectValue}}</span>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label>Ionic Select (for tacos)</ion-label>
-        <ion-select id="ionSelect" name="ionSelect" [(ngModel)]="selectValue" (blur)="onBlur($event)">
-          <ion-select-option value="beef">Carne Asada</ion-select-option>
-          <ion-select-option value="tongue">Lengua</ion-select-option>
-          <ion-select-option value="brains">Sesos</ion-select-option>
-          <ion-select-option value="tripe">Tripa</ion-select-option>
-          <ion-select-option value="chicken">Pollo</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-    </ion-col>
-  </ion-row>
-
-  <ion-row>
-    <ion-col>
       <h2>Toggle</h2>
     </ion-col>
   </ion-row>
@@ -140,6 +102,32 @@
       <ion-item>
         <ion-label>Ionic Toggle</ion-label>
         <ion-toggle id="ionToggle" name="ionToggle" [(ngModel)]="toggleValue" (ionBlur)="onBlur($event)"></ion-toggle>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <h2>Date Time Picker</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <label for="stdToggle">ISO Formatted Date</label>
+      <input id="stdDatetimeInput" name="stdDatetimeInput" [(ngModel)]="datetimeValue" placeholder="YYYY-MM-DDTHH:mm:ssZ" />
+    </ion-col>
+    <ion-col>
+      Value:
+      <span id="datetimeOutput">{{datetimeValue}}</span>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Ionic Date</ion-label>
+        <ion-datetime id="ionDatetimeInput" pickerFormat="YYYY-MM-DD HH:mm:ss" displayFormat="MM/DD/YYYY HH:mm:ss" name="ionDatetimeInput" [(ngModel)]="datetimeValue"></ion-datetime>
       </ion-item>
     </ion-col>
     <ion-col>

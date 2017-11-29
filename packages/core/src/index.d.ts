@@ -30,10 +30,11 @@ export { CardTitle } from './components/card-title/card-title';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { ChipButton } from './components/chip-button/chip-button';
+export { Column } from './components/col/col';
 export { Content } from './components/content/content';
 export { Datetime } from './components/datetime/datetime';
-export { FabContainer } from './components/fab/fab-container';
-export { FabList } from './components/fab/fab-list';
+export { FabContainer } from './components/fab-container/fab-container';
+export { FabList } from './components/fab-list/fab-list';
 export { FabButton } from './components/fab/fab';
 export { Footer } from './components/footer/footer';
 export { Gesture, GestureCallback, GestureDetail } from './components/gesture/gesture';
@@ -45,16 +46,14 @@ export {
   GestureController,
   GestureDelegate
 } from './components/gesture-controller/gesture-controller';
-export { Column } from './components/grid/col';
 export { Grid } from './components/grid/grid';
-export { Row } from './components/grid/row';
 export { Header } from './components/header/header';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
-export { InfiniteScrollContent } from './components/infinite-scroll/infinite-scroll-content';
+export { InfiniteScrollContent } from './components/infinite-scroll-content/infinite-scroll-content';
 export { Input } from './components/input/input';
 export { Item } from './components/item/item';
 export { ItemDivider } from './components/item-divider/item-divider';
-export { ItemOption } from './components/item-sliding/item-option';
+export { ItemOption } from './components/item-option/item-option';
 export { ItemSliding } from './components/item-sliding/item-sliding';
 export { KeyboardController } from './components/keyboard-controller/keyboard-controller';
 export * from './components/keyboard-controller/keys';
@@ -86,10 +85,11 @@ export {
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
 export { PublicNav } from './components/nav/nav-interface';
+export { Navbar } from './components/navbar/navbar';
 export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
-export { PickerColumnCmp } from './components/picker/picker-column';
+export { PickerColumnCmp } from './components/picker-column/picker-column';
 export {
   Picker,
   PickerButton,
@@ -111,29 +111,30 @@ export {
 export { PopoverController } from './components/popover-controller/popover-controller';
 export { RadioGroup } from './components/radio-group/radio-group';
 export { Radio, HTMLIonRadioElementEvent } from './components/radio/radio';
-export { RangeKnob } from './components/range/range-knob';
 export { Range, RangeEvent } from './components/range/range';
-export { ReorderGroup } from './components/reorder/reorder-group';
+export { RangeKnob } from './components/range-knob/range-knob';
+export { ReorderGroup } from './components/reorder-group/reorder-group';
 export {
   RouterEntry,
   RouterEntries,
   NavState,
-} from './components/router/router-utils';
+} from './components/router-controller/router-utils';
+export { Row } from './components/row/row';
 export { ItemReorder } from './components/reorder/reorder';
 export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
 export { Segment, SegmentEvent } from './components/segment/segment';
 export { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
-export { SelectPopoverOption, SelectPopover } from './components/select/select-popover';
+export { SelectPopoverOption, SelectPopover } from './components/select-popover/select-popover';
 export { Select } from './components/select/select';
 export { SelectOption } from './components/select-option/select-option';
 export { SkeletonText } from './components/skeleton-text/skeleton-text';
-export { Slide } from './components/slides/slide';
+export { Slide } from './components/slide/slide';
 export { Slides } from './components/slides/slides';
 export * from './components/spinner/spinner-configs';
 export { Spinner } from './components/spinner/spinner';
 export { SplitPane, SplitPaneAlert } from './components/split-pane/split-pane';
-export { Tab } from './components/tabs/tab';
+export { Tab } from './components/tab/tab';
 export { Tabs } from './components/tabs/tabs';
 export { Thumbnail } from './components/thumbnail/thumbnail';
 export { ToolbarTitle } from './components/title/title';
@@ -146,7 +147,6 @@ export {
 } from './components/toast/toast';
 export { ToastController } from './components/toast-controller/toast-controller';
 export { Toggle } from './components/toggle/toggle';
-export { Navbar } from './components/toolbar/navbar';
 export { Toolbar } from './components/toolbar/toolbar';
 
 export * from './navigation/nav-interfaces';

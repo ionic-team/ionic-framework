@@ -47,6 +47,11 @@ string
 string
 
 
+#### translucent
+
+boolean
+
+
 ## Attributes
 
 #### actionSheetId
@@ -87,6 +92,11 @@ string
 #### title
 
 string
+
+
+#### translucent
+
+boolean
 
 
 ## Events

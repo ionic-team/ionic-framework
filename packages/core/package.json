@@ -15,7 +15,7 @@
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
     "chromedriver": "^2.33.2",
-    "ionicons": "^4.0.0-6",
+    "ionicons": "4.0.0-7",
     "jest": "^21.2.1",
     "mocha": "^4.0.1",
     "np": "^2.17.0",
@@ -25,9 +25,9 @@
     "tslint-ionic-rules": "0.0.11"
   },
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build --docs",
     "tsc": "./node_modules/.bin/tsc -p .",
-    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\"",
+    "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/e2e",
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
