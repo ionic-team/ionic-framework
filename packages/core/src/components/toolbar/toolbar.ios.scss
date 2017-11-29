@@ -42,9 +42,12 @@ $toolbar-ios-translucent-opacity:           .88 !default;
 
 .toolbar-ios {
   @include padding($toolbar-ios-padding);
-  @include safe-area-padding($toolbar-ios-padding);
 
   min-height: $toolbar-ios-height;
+
+  @media screen and (orientation: landscape) {
+    @include safe-area-padding-horizontal($toolbar-ios-padding);
+  }
 }
 
 .header-ios {

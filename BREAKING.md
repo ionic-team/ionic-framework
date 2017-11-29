@@ -6,6 +6,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Dynamic Mode](#dynamic-mode)
 - [Button](#button)
 - [Chip](#chip)
+- [Cordova](#cordova)
 - [Datetime](#datetime)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
@@ -148,6 +149,23 @@ import { DateTime } from 'ionic-angular';
 import { Datetime } from 'ionic-angular';
 ```
 
+## Cordova
+
+Sass variables for changing the cordova statusbar have been renamed to app:
+
+**Old Usage Example:**
+
+```css
+$cordova-ios-statusbar-padding:   20px;
+$cordova-md-statusbar-padding:    20px;
+```
+
+**New Usage Example:**
+
+```css
+$app-ios-statusbar-padding:   20px;
+$app-md-statusbar-padding:    20px;
+```
 
 ## FAB
 

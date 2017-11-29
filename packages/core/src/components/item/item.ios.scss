@@ -113,7 +113,10 @@ $item-ios-detail-push-svg:                "<svg xmlns='http://www.w3.org/2000/sv
 
 .item-ios.item-block .item-inner {
   @include padding-horizontal(null, $item-ios-padding-end / 2);
-  @include safe-area-padding-horizontal(null, $item-ios-padding-end / 2);
+
+  @media screen and (orientation: landscape) {
+    @include safe-area-padding-horizontal(null, $item-ios-padding-end / 2);
+  }
 
   border-bottom: $hairlines-width solid $list-ios-border-color;
 }

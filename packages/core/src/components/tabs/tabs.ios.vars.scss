@@ -1,0 +1,50 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Tabs
+// --------------------------------------------------
+
+/// @prop - Border on the tabbar (border-top when [tabsPlacement=bottom] and border-bottom when [tabsPlacement=top])
+$tabs-ios-border:                   $hairlines-width solid $tabs-ios-border-color !default;
+
+/// @prop - Padding top on the tab button
+$tabs-ios-tab-padding-top:          0 !default;
+
+/// @prop - Padding end on the tab button
+$tabs-ios-tab-padding-end:          2px !default;
+
+/// @prop - Padding bottom on the tab button
+$tabs-ios-tab-padding-bottom:       $tabs-ios-tab-padding-top !default;
+
+/// @prop - Padding start on the tab button
+$tabs-ios-tab-padding-start:        $tabs-ios-tab-padding-end !default;
+
+/// @prop - Max width of the tab button
+$tabs-ios-tab-max-width:            240px !default;
+
+/// @prop - Minimum height of the tab button
+$tabs-ios-tab-height:               50px !default;
+
+/// @prop - Text color of the inactive tab button
+$tabs-ios-tab-text-color:           $tabs-ios-tab-color-inactive !default;
+
+/// @prop - Text color of the active tab button
+$tabs-ios-tab-text-color-active:    $tabs-ios-tab-color-active !default;
+
+/// @prop - Icon color of the inactive tab button
+$tabs-ios-tab-icon-color:           $tabs-ios-tab-color-inactive !default;
+
+/// @prop - Icon color of the active tab button
+$tabs-ios-tab-icon-color-active:    $tabs-ios-tab-color-active !default;
+
+/// @prop - Font size of the tab button text
+$tabs-ios-tab-font-size:            10px !default;
+
+/// @prop - Size of the tab button icon
+$tabs-ios-tab-icon-size:            30px !default;
+
+/// @prop - Filter of the translucent tabbar
+$tabbar-ios-translucent-filter:    saturate(210%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent tabbar
+$tabbar-ios-translucent-opacity:   .8 !default;
+
