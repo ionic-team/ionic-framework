@@ -188,10 +188,7 @@ export interface OverlayDismissEventDetail {
   data?: any;
   role?: string;
 }
-<<<<<<< HEAD
-=======
 
 export interface OverlayController {
   create(): HTMLElement;
 }
->>>>>>> core
