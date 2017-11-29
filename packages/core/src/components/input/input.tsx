@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
 
 import { createThemedClasses } from '../../utils/theme';
-
 import { InputComponent } from './input-base';
+
 
 @Component({
   tag: 'ion-input',

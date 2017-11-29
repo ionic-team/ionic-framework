@@ -8,6 +8,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class GroupInputsPageComponent implements OnInit {
   radioValue = 'tripe';
+  selectValue = 'brains';
 
   constructor() {}
 

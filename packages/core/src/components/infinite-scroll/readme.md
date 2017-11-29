@@ -1,4 +1,4 @@
-# ion-infinite-scroll-content
+# ion-infinite-scroll
 
 The Infinite Scroll allows you to perform an action when the user
 scrolls a specified distance from the bottom or top of the page.
@@ -11,13 +11,13 @@ on the infinite scroll instance.
 ```html
 <ion-content>
 
- <ion-list>
-   <ion-itemngFor="let i of items">{% raw %}{{i}}{% endraw %}</ion-item>
- </ion-list>
+<ion-list>
+  <ion-itemngFor="let i of items">{% raw %}{{i}}{% endraw %}</ion-item>
+</ion-list>
 
- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-   <ion-infinite-scroll-content></ion-infinite-scroll-content>
- </ion-infinite-scroll>
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
 
 </ion-content>
 ```
@@ -25,29 +25,30 @@ on the infinite scroll instance.
 ```ts
 @Component({...})
 export class NewsFeedPage {
-  items = [];
+items = [];
 
-  constructor() {
+constructor() {
+  for (let i = 0; i < 30; i++) {
+    this.items.push( this.items.length );
+  }
+}
+
+doInfinite(infiniteScroll) {
+  console.log('Begin async operation');
+
+  setTimeout(() => {
     for (let i = 0; i < 30; i++) {
       this.items.push( this.items.length );
     }
-  }
 
-  doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
-
-    setTimeout(() => {
-      for (let i = 0; i < 30; i++) {
-        this.items.push( this.items.length );
-      }
-
-      console.log('Async operation has ended');
-      infiniteScroll.complete();
-    }, 500);
-  }
+    console.log('Async operation has ended');
+    infiniteScroll.complete();
+  }, 500);
+}
 
 }
 ```
+
 
 ## `waitFor` method of InfiniteScroll
 
@@ -57,13 +58,13 @@ In case if your async operation returns promise you can utilize
 ```html
 <ion-content>
 
- <ion-list>
-   <ion-itemngFor="let item of items">{{item}}</ion-item>
- </ion-list>
+<ion-list>
+  <ion-itemngFor="let item of items">{{item}}</ion-item>
+</ion-list>
 
- <ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
-   <ion-infinite-scroll-content></ion-infinite-scroll-content>
- </ion-infinite-scroll>
+<ion-infinite-scroll (ionInfinite)="$event.waitFor(doInfinite())">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
 
 </ion-content>
 ```
@@ -71,30 +72,31 @@ In case if your async operation returns promise you can utilize
 ```ts
 @Component({...})
 export class NewsFeedPage {
-  items = [];
+items = [];
 
-  constructor() {
-    for (var i = 0; i < 30; i++) {
-      this.items.push( this.items.length );
-    }
-  }
-
-  doInfinite(): Promise<any> {
-    console.log('Begin async operation');
-
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        for (var i = 0; i < 30; i++) {
-          this.items.push( this.items.length );
-        }
-
-        console.log('Async operation has ended');
-        resolve();
-      }, 500);
-    })
+constructor() {
+  for (var i = 0; i < 30; i++) {
+    this.items.push( this.items.length );
   }
 }
+
+doInfinite(): Promise<any> {
+  console.log('Begin async operation');
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      for (var i = 0; i < 30; i++) {
+        this.items.push( this.items.length );
+      }
+
+      console.log('Async operation has ended');
+      resolve();
+    }, 500);
+  })
+}
+}
 ```
+
 
 ## Infinite Scroll Content
 
@@ -103,18 +105,18 @@ best for the platform the user is on. However, you can change the
 default spinner or add text by adding properties to the
 `ion-infinite-scroll-content` component.
 
- ```html
- <ion-content>
+```html
+<ion-content>
 
-   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-     <ion-infinite-scroll-content
-       loadingSpinner="bubbles"
-       loadingText="Loading more data...">
-     </ion-infinite-scroll-content>
-   </ion-infinite-scroll>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
- </ion-content>
- ```
+</ion-content>
+```
 
 
 ## Further Customizing Infinite Scroll Content
@@ -133,26 +135,46 @@ You could replace our default content with custom SVG or CSS animations.
 
 ## Properties
 
-#### loadingSpinner
+#### enabled
+
+boolean
+
+
+#### position
 
 string
 
 
-#### loadingText
+#### threshold
 
 string
 
 
 ## Attributes
 
-#### loadingSpinner
+#### enabled
+
+boolean
+
+
+#### position
 
 string
 
 
-#### loadingText
+#### threshold
 
 string
+
+
+## Events
+
+#### ionInfinite
+
+
+## Methods
+
+#### complete()
 
 
 

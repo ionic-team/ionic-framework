@@ -100,4 +100,12 @@ describe('Group Inputs Page', () => {
       });
     });
   });
+
+  describe('select input', () => {
+    it('should be set the initial value', () => {
+      page.navigateTo();
+      const el = page.getIonicSelect();
+      expect(el.getAttribute('value')).toEqual('brains');
+    });
+  });
 });

@@ -39,7 +39,7 @@ import {
 } from './components/scroll/scroll';
 import {
   SelectPopoverOption,
-} from './components/select/select-popover';
+} from './components/select-popover/select-popover';
 
 import {
   ActionSheetController as IonActionSheetController
@@ -244,6 +244,126 @@ declare global {
 
 
 import {
+  AppCordovaPageOne as AppCordovaPageOne
+} from './components/app/test/cordova/page-one';
+
+declare global {
+  interface HTMLAppCordovaPageOneElement extends AppCordovaPageOne, HTMLElement {
+  }
+  var HTMLAppCordovaPageOneElement: {
+    prototype: HTMLAppCordovaPageOneElement;
+    new (): HTMLAppCordovaPageOneElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-one": HTMLAppCordovaPageOneElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-one": HTMLAppCordovaPageOneElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-one": JSXElements.AppCordovaPageOneAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageOneAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  AppCordovaPageTabs as AppCordovaPageTabs
+} from './components/app/test/cordova/page-tabs';
+
+declare global {
+  interface HTMLAppCordovaPageTabsElement extends AppCordovaPageTabs, HTMLElement {
+  }
+  var HTMLAppCordovaPageTabsElement: {
+    prototype: HTMLAppCordovaPageTabsElement;
+    new (): HTMLAppCordovaPageTabsElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-tabs": HTMLAppCordovaPageTabsElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-tabs": HTMLAppCordovaPageTabsElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-tabs": JSXElements.AppCordovaPageTabsAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageTabsAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  AppCordovaPageThree as AppCordovaPageThree
+} from './components/app/test/cordova/page-three';
+
+declare global {
+  interface HTMLAppCordovaPageThreeElement extends AppCordovaPageThree, HTMLElement {
+  }
+  var HTMLAppCordovaPageThreeElement: {
+    prototype: HTMLAppCordovaPageThreeElement;
+    new (): HTMLAppCordovaPageThreeElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-three": HTMLAppCordovaPageThreeElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-three": HTMLAppCordovaPageThreeElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-three": JSXElements.AppCordovaPageThreeAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageThreeAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  AppCordovaPageTwo as AppCordovaPageTwo
+} from './components/app/test/cordova/page-two';
+
+declare global {
+  interface HTMLAppCordovaPageTwoElement extends AppCordovaPageTwo, HTMLElement {
+  }
+  var HTMLAppCordovaPageTwoElement: {
+    prototype: HTMLAppCordovaPageTwoElement;
+    new (): HTMLAppCordovaPageTwoElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-two": HTMLAppCordovaPageTwoElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-two": HTMLAppCordovaPageTwoElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-two": JSXElements.AppCordovaPageTwoAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageTwoAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Avatar as IonAvatar
 } from './components/avatar/avatar';
 
@@ -363,16 +483,11 @@ declare global {
         itemButton?: boolean,
         href?: string,
         buttonType?: string,
-        large?: boolean,
-        small?: boolean,
-        default?: boolean,
+        size?: 'small' | 'large',
         disabled?: boolean,
-        outline?: boolean,
-        clear?: boolean,
-        solid?: boolean,
+        fill?: 'clear' | 'outline' | 'solid' | 'default',
         round?: boolean,
-        block?: boolean,
-        full?: boolean,
+        expand?: 'full' | 'block',
         strong?: boolean,
         color?: string,
         mode?: 'ios' | 'md'
@@ -676,6 +791,36 @@ declare global {
 
 
 import {
+  Column as IonCol
+} from './components/col/col';
+
+declare global {
+  interface HTMLIonColElement extends IonCol, HTMLElement {
+  }
+  var HTMLIonColElement: {
+    prototype: HTMLIonColElement;
+    new (): HTMLIonColElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-col": HTMLIonColElement;
+  }
+  interface ElementTagNameMap {
+    "ion-col": HTMLIonColElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-col": JSXElements.IonColAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonColAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Content as IonContent
 } from './components/content/content';
 
@@ -760,7 +905,7 @@ declare global {
 
 import {
   FabContainer as IonFab
-} from './components/fab/fab-container';
+} from './components/fab-container/fab-container';
 
 declare global {
   interface HTMLIonFabElement extends IonFab, HTMLElement {
@@ -790,7 +935,7 @@ declare global {
 
 import {
   FabList as IonFabList
-} from './components/fab/fab-list';
+} from './components/fab-list/fab-list';
 
 declare global {
   interface HTMLIonFabListElement extends IonFabList, HTMLElement {
@@ -967,36 +1112,6 @@ declare global {
 
 
 import {
-  Column as IonCol
-} from './components/grid/col';
-
-declare global {
-  interface HTMLIonColElement extends IonCol, HTMLElement {
-  }
-  var HTMLIonColElement: {
-    prototype: HTMLIonColElement;
-    new (): HTMLIonColElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-col": HTMLIonColElement;
-  }
-  interface ElementTagNameMap {
-    "ion-col": HTMLIonColElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-col": JSXElements.IonColAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonColAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   Grid as IonGrid
 } from './components/grid/grid';
 
@@ -1020,36 +1135,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGridAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
-  Row as IonRow
-} from './components/grid/row';
-
-declare global {
-  interface HTMLIonRowElement extends IonRow, HTMLElement {
-  }
-  var HTMLIonRowElement: {
-    prototype: HTMLIonRowElement;
-    new (): HTMLIonRowElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-row": HTMLIonRowElement;
-  }
-  interface ElementTagNameMap {
-    "ion-row": HTMLIonRowElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-row": JSXElements.IonRowAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonRowAttributes extends HTMLAttributes {
       
     }
   }
@@ -1089,7 +1174,7 @@ declare global {
 
 import {
   InfiniteScrollContent as IonInfiniteScrollContent
-} from './components/infinite-scroll/infinite-scroll-content';
+} from './components/infinite-scroll-content/infinite-scroll-content';
 
 declare global {
   interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLElement {
@@ -1209,52 +1294,6 @@ declare global {
 
 
 import {
-  Textarea as IonTextarea
-} from './components/input/textarea';
-
-declare global {
-  interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
-  }
-  var HTMLIonTextareaElement: {
-    prototype: HTMLIonTextareaElement;
-    new (): HTMLIonTextareaElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-textarea": HTMLIonTextareaElement;
-  }
-  interface ElementTagNameMap {
-    "ion-textarea": HTMLIonTextareaElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-textarea": JSXElements.IonTextareaAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonTextareaAttributes extends HTMLAttributes {
-      
-        autocapitalize?: string,
-        autocomplete?: string,
-        autofocus?: boolean,
-        clearOnEdit?: boolean,
-        disabled?: boolean,
-        maxlength?: number,
-        minlength?: number,
-        name?: string,
-        placeholder?: string,
-        readonly?: boolean,
-        required?: boolean,
-        spellcheck?: boolean,
-        cols?: number,
-        rows?: number,
-        wrap?: string,
-        value?: string
-    }
-  }
-}
-
-
-import {
   ItemDivider as IonItemDivider
 } from './components/item-divider/item-divider';
 
@@ -1288,7 +1327,7 @@ declare global {
 
 import {
   ItemOption as IonItemOption
-} from './components/item-sliding/item-option';
+} from './components/item-option/item-option';
 
 declare global {
   interface HTMLIonItemOptionElement extends IonItemOption, HTMLElement {
@@ -1322,7 +1361,7 @@ declare global {
 
 import {
   ItemOptions as IonItemOptions
-} from './components/item-sliding/item-options';
+} from './components/item-options/item-options';
 
 declare global {
   interface HTMLIonItemOptionsElement extends IonItemOptions, HTMLElement {
@@ -1843,90 +1882,34 @@ declare global {
 
 
 import {
-  PageOne as PageOne
-} from './components/nav/page-one';
+  Navbar as IonNavbar
+} from './components/navbar/navbar';
 
 declare global {
-  interface HTMLPageOneElement extends PageOne, HTMLElement {
+  interface HTMLIonNavbarElement extends IonNavbar, HTMLElement {
   }
-  var HTMLPageOneElement: {
-    prototype: HTMLPageOneElement;
-    new (): HTMLPageOneElement;
+  var HTMLIonNavbarElement: {
+    prototype: HTMLIonNavbarElement;
+    new (): HTMLIonNavbarElement;
   };
   interface HTMLElementTagNameMap {
-    "page-one": HTMLPageOneElement;
+    "ion-navbar": HTMLIonNavbarElement;
   }
   interface ElementTagNameMap {
-    "page-one": HTMLPageOneElement;
+    "ion-navbar": HTMLIonNavbarElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "page-one": JSXElements.PageOneAttributes;
+      "ion-navbar": JSXElements.IonNavbarAttributes;
     }
   }
   namespace JSXElements {
-    export interface PageOneAttributes extends HTMLAttributes {
+    export interface IonNavbarAttributes extends HTMLAttributes {
       
-    }
-  }
-}
-
-
-import {
-  PageThree as PageThree
-} from './components/nav/page-three';
-
-declare global {
-  interface HTMLPageThreeElement extends PageThree, HTMLElement {
-  }
-  var HTMLPageThreeElement: {
-    prototype: HTMLPageThreeElement;
-    new (): HTMLPageThreeElement;
-  };
-  interface HTMLElementTagNameMap {
-    "page-three": HTMLPageThreeElement;
-  }
-  interface ElementTagNameMap {
-    "page-three": HTMLPageThreeElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "page-three": JSXElements.PageThreeAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface PageThreeAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
-  PageTwo as PageTwo
-} from './components/nav/page-two';
-
-declare global {
-  interface HTMLPageTwoElement extends PageTwo, HTMLElement {
-  }
-  var HTMLPageTwoElement: {
-    prototype: HTMLPageTwoElement;
-    new (): HTMLPageTwoElement;
-  };
-  interface HTMLElementTagNameMap {
-    "page-two": HTMLPageTwoElement;
-  }
-  interface ElementTagNameMap {
-    "page-two": HTMLPageTwoElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "page-two": JSXElements.PageTwoAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface PageTwoAttributes extends HTMLAttributes {
-      
+        hideBackButton?: boolean,
+        backButtonText?: string,
+        backButtonIcon?: string,
+        hidden?: boolean
     }
   }
 }
@@ -1995,6 +1978,37 @@ declare global {
 
 
 import {
+  PickerColumnCmp as IonPickerColumn
+} from './components/picker-column/picker-column';
+
+declare global {
+  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLElement {
+  }
+  var HTMLIonPickerColumnElement: {
+    prototype: HTMLIonPickerColumnElement;
+    new (): HTMLIonPickerColumnElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-picker-column": HTMLIonPickerColumnElement;
+  }
+  interface ElementTagNameMap {
+    "ion-picker-column": HTMLIonPickerColumnElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-picker-column": JSXElements.IonPickerColumnAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonPickerColumnAttributes extends HTMLAttributes {
+      
+        col?: PickerColumn
+    }
+  }
+}
+
+
+import {
   PickerController as IonPickerController
 } from './components/picker-controller/picker-controller';
 
@@ -2019,37 +2033,6 @@ declare global {
   namespace JSXElements {
     export interface IonPickerControllerAttributes extends HTMLAttributes {
       
-    }
-  }
-}
-
-
-import {
-  PickerColumnCmp as IonPickerColumn
-} from './components/picker/picker-column';
-
-declare global {
-  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLElement {
-  }
-  var HTMLIonPickerColumnElement: {
-    prototype: HTMLIonPickerColumnElement;
-    new (): HTMLIonPickerColumnElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-picker-column": HTMLIonPickerColumnElement;
-  }
-  interface ElementTagNameMap {
-    "ion-picker-column": HTMLIonPickerColumnElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-picker-column": JSXElements.IonPickerColumnAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonPickerColumnAttributes extends HTMLAttributes {
-      
-        col?: PickerColumn
     }
   }
 }
@@ -2240,7 +2223,7 @@ declare global {
 
 import {
   RangeKnob as IonRangeKnob
-} from './components/range/range-knob';
+} from './components/range-knob/range-knob';
 
 declare global {
   interface HTMLIonRangeKnobElement extends IonRangeKnob, HTMLElement {
@@ -2320,7 +2303,7 @@ declare global {
 
 import {
   ReorderGroup as IonReorderGroup
-} from './components/reorder/reorder-group';
+} from './components/reorder-group/reorder-group';
 
 declare global {
   interface HTMLIonReorderGroupElement extends IonReorderGroup, HTMLElement {
@@ -2381,7 +2364,7 @@ declare global {
 
 import {
   RouteLink as IonRouteLink
-} from './components/router/route-link';
+} from './components/route-link/route-link';
 
 declare global {
   interface HTMLIonRouteLinkElement extends IonRouteLink, HTMLElement {
@@ -2413,7 +2396,7 @@ declare global {
 
 import {
   Route as IonRoute
-} from './components/router/route';
+} from './components/route/route';
 
 declare global {
   interface HTMLIonRouteElement extends IonRoute, HTMLElement {
@@ -2446,7 +2429,7 @@ declare global {
 
 import {
   RouterController as IonRouterController
-} from './components/router/router-controller';
+} from './components/router-controller/router-controller';
 
 declare global {
   interface HTMLIonRouterControllerElement extends IonRouterController, HTMLElement {
@@ -2468,6 +2451,36 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterControllerAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  Row as IonRow
+} from './components/row/row';
+
+declare global {
+  interface HTMLIonRowElement extends IonRow, HTMLElement {
+  }
+  var HTMLIonRowElement: {
+    prototype: HTMLIonRowElement;
+    new (): HTMLIonRowElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-row": HTMLIonRowElement;
+  }
+  interface ElementTagNameMap {
+    "ion-row": HTMLIonRowElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-row": JSXElements.IonRowAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRowAttributes extends HTMLAttributes {
       
     }
   }
@@ -2655,7 +2668,7 @@ declare global {
 
 import {
   SelectPopover as IonSelectPopover
-} from './components/select/select-popover';
+} from './components/select-popover/select-popover';
 
 declare global {
   interface HTMLIonSelectPopoverElement extends IonSelectPopover, HTMLElement {
@@ -2757,7 +2770,7 @@ declare global {
 
 import {
   Slide as IonSlide
-} from './components/slides/slide';
+} from './components/slide/slide';
 
 declare global {
   interface HTMLIonSlideElement extends IonSlide, HTMLElement {
@@ -2898,7 +2911,7 @@ declare global {
 
 import {
   TabbarButton as IonTabButton
-} from './components/tabs/tab-button';
+} from './components/tab-button/tab-button';
 
 declare global {
   interface HTMLIonTabButtonElement extends IonTabButton, HTMLElement {
@@ -2930,7 +2943,7 @@ declare global {
 
 import {
   TabHighlight as IonTabHighlight
-} from './components/tabs/tab-highlight';
+} from './components/tab-highlight/tab-highlight';
 
 declare global {
   interface HTMLIonTabHighlightElement extends IonTabHighlight, HTMLElement {
@@ -2961,7 +2974,7 @@ declare global {
 
 import {
   Tab as IonTab
-} from './components/tabs/tab';
+} from './components/tab/tab';
 
 declare global {
   interface HTMLIonTabElement extends IonTab, HTMLElement {
@@ -3001,7 +3014,7 @@ declare global {
 
 import {
   Tabbar as IonTabbar
-} from './components/tabs/tabbar';
+} from './components/tabbar/tabbar';
 
 declare global {
   interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
@@ -3126,6 +3139,52 @@ declare global {
   namespace JSXElements {
     export interface TranslucentPageTabAttributes extends HTMLAttributes {
       
+    }
+  }
+}
+
+
+import {
+  Textarea as IonTextarea
+} from './components/textarea/textarea';
+
+declare global {
+  interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
+  }
+  var HTMLIonTextareaElement: {
+    prototype: HTMLIonTextareaElement;
+    new (): HTMLIonTextareaElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-textarea": HTMLIonTextareaElement;
+  }
+  interface ElementTagNameMap {
+    "ion-textarea": HTMLIonTextareaElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-textarea": JSXElements.IonTextareaAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTextareaAttributes extends HTMLAttributes {
+      
+        autocapitalize?: string,
+        autocomplete?: string,
+        autofocus?: boolean,
+        clearOnEdit?: boolean,
+        disabled?: boolean,
+        maxlength?: number,
+        minlength?: number,
+        name?: string,
+        placeholder?: string,
+        readonly?: boolean,
+        required?: boolean,
+        spellcheck?: boolean,
+        cols?: number,
+        rows?: number,
+        wrap?: string,
+        value?: string
     }
   }
 }
@@ -3293,40 +3352,6 @@ declare global {
         checked?: boolean,
         disabled?: boolean,
         value?: string
-    }
-  }
-}
-
-
-import {
-  Navbar as IonNavbar
-} from './components/toolbar/navbar';
-
-declare global {
-  interface HTMLIonNavbarElement extends IonNavbar, HTMLElement {
-  }
-  var HTMLIonNavbarElement: {
-    prototype: HTMLIonNavbarElement;
-    new (): HTMLIonNavbarElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-navbar": HTMLIonNavbarElement;
-  }
-  interface ElementTagNameMap {
-    "ion-navbar": HTMLIonNavbarElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-navbar": JSXElements.IonNavbarAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonNavbarAttributes extends HTMLAttributes {
-      
-        hideBackButton?: boolean,
-        backButtonText?: string,
-        backButtonIcon?: string,
-        hidden?: boolean
     }
   }
 }

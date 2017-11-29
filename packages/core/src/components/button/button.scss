@@ -30,8 +30,10 @@ $button-round-border-radius:      64px !default;
 
   border: 0;
 
+  text-decoration: none;
   text-overflow: ellipsis;
   text-transform: none;
+  line-height: 1;
 
   white-space: nowrap;
   cursor: pointer;
@@ -59,13 +61,9 @@ $button-round-border-radius:      64px !default;
 }
 
 
-[ion-button] {
-  text-decoration: none;
-}
-
 a[disabled],
 button[disabled],
-[ion-button][disabled] {
+.button[disabled] {
   cursor: default;
   opacity: .4;
 

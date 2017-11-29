@@ -1,6 +1,5 @@
 @import "../../themes/ionic.globals.md";
 @import "./button";
-@import "../icon/icon.md";
 
 
 // Material Design Button
@@ -45,6 +44,9 @@ $button-md-font-weight:                    500 !default;
 
 /// @prop - Capitalization of the button text
 $button-md-text-transform:                 uppercase !default;
+
+/// @prop - Color of the button icon
+$button-md-icon-fill-color:                currentColor !default;
 
 /// @prop - Background color of the button
 $button-md-background-color:               color($colors-md, primary) !default;
@@ -119,9 +121,6 @@ $button-md-small-height:                   2.1em !default;
 
 /// @prop - Font size of the small button
 $button-md-small-font-size:                1.3rem !default;
-
-/// @prop - Font size of an icon in the small button
-$button-md-small-icon-font-size:           1.4em !default;
 
 
 // Material Design Outline Button
@@ -258,6 +257,10 @@ $button-md-strong-font-weight:                  bold !default;
   background-color: $button-md-text-color;
 }
 
+.button-md .icon {
+  fill: $button-md-icon-fill-color;
+}
+
 
 // Material Design Default Button Color Mixin
 // --------------------------------------------------
@@ -304,10 +307,6 @@ $button-md-strong-font-weight:                  bold !default;
   height: $button-md-small-height;
 
   font-size: $button-md-small-font-size;
-}
-
-.button-small-md ion-icon[slot="icon-only"] {
-  font-size: $button-md-small-icon-font-size;
 }
 
 // Material Design Block Button

@@ -5,6 +5,20 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### translucent
+
+boolean
+
+
+## Attributes
+
+#### translucent
+
+boolean
+
+
 
 ----------------------------------------------
 
