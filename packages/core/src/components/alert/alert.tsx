@@ -6,11 +6,11 @@ import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { BACKDROP } from '../../utils/overlay-constants';
 import { createThemedClasses } from '../../utils/theme';
 
-import iOSEnterAnimation from './animations/ios.enter';
-import iOSLeaveAnimation from './animations/ios.leave';
+import iosEnterAnimation from './animations/ios.enter';
+import iosLeaveAnimation from './animations/ios.leave';
 
-import MdEnterAnimation from './animations/md.enter';
-import MdLeaveAnimation from './animations/md.leave';
+import mdEnterAnimation from './animations/md.enter';
+import mdLeaveAnimation from './animations/md.leave';
 
 @Component({
   tag: 'ion-alert',
@@ -89,7 +89,7 @@ export class Alert {
     this.ionAlertWillPresent.emit();
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
+    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -122,7 +122,7 @@ export class Alert {
     });
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
+    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
@@ -481,8 +481,8 @@ export interface AlertDismissEvent extends OverlayDismissEvent {
 }
 
 export {
-  iOSEnterAnimation as AlertiOSEnterAnimation,
-  iOSLeaveAnimation as AlertiOSLeaveAnimation,
-  MdEnterAnimation as AlertMDEnterAnimation,
-  MdLeaveAnimation as AlertMDLeaveAnimation,
+  iosEnterAnimation as iosAlertEnterAnimation,
+  iosLeaveAnimation as iosAlertLeaveAnimation,
+  mdEnterAnimation as mdAlertEnterAnimation,
+  mdLeaveAnimation as mdAlertLeaveAnimation,
 };

@@ -4,11 +4,11 @@ import { Animation, AnimationBuilder, AnimationController, Config, OverlayDismis
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
-import iOSEnterAnimation from './animations/ios.enter';
-import iOSLeaveAnimation from './animations/ios.leave';
+import iosEnterAnimation from './animations/ios.enter';
+import iosLeaveAnimation from './animations/ios.leave';
 
-import MdEnterAnimation from './animations/md.enter';
-import MdLeaveAnimation from './animations/md.leave';
+import mdEnterAnimation from './animations/md.enter';
+import mdLeaveAnimation from './animations/md.leave';
 
 @Component({
   tag: 'ion-action-sheet',
@@ -83,7 +83,7 @@ export class ActionSheet {
     this.ionActionSheetWillPresent.emit();
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
+    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -107,7 +107,7 @@ export class ActionSheet {
       this.animation = null;
     }
     this.ionActionSheetWillDismiss.emit();
-    const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
+    const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -285,8 +285,8 @@ export interface ActionSheetDismissEvent extends OverlayDismissEvent {
 }
 
 export {
-  iOSEnterAnimation as ActionSheetiOSEnterAnimation,
-  iOSLeaveAnimation as ActionSheetiOSLeaveAnimation,
-  MdEnterAnimation as ActionSheetMDEnterAnimation,
-  MdLeaveAnimation as ActionSheetMDLeaveAnimation,
+  iosEnterAnimation as iosActionSheetEnterAnimation,
+  iosLeaveAnimation as iosActionSheetLeaveAnimation,
+  mdEnterAnimation as mdActionSheetEnterAnimation,
+  mdLeaveAnimation as mdActionSheetetLeaveAnimation,
 };

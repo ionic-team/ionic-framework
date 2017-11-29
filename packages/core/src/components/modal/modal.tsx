@@ -2,11 +2,11 @@ import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/
 import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { createThemedClasses } from '../../utils/theme';
 
-import iOSEnterAnimation from './animations/ios.enter';
-import iOSLeaveAnimation from './animations/ios.leave';
+import iosEnterAnimation from './animations/ios.enter';
+import iosLeaveAnimation from './animations/ios.leave';
 
-import MdEnterAnimation from './animations/md.enter';
-import MdLeaveAnimation from './animations/md.leave';
+import mdEnterAnimation from './animations/md.enter';
+import mdLeaveAnimation from './animations/md.leave';
 @Component({
   tag: 'ion-modal',
   styleUrls: {
@@ -83,7 +83,7 @@ export class Modal {
     this.ionModalWillPresent.emit({ modal: this });
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iOSEnterAnimation : MdEnterAnimation);
+    const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -107,7 +107,7 @@ export class Modal {
       this.ionModalWillDismiss.emit({ modal: this });
 
       // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('modalExit', this.mode === 'ios' ? iOSLeaveAnimation : MdLeaveAnimation);
+      const animationBuilder = this.leaveAnimation || this.config.get('modalLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -201,4 +201,9 @@ export interface ModalEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation, MdEnterAnimation, MdLeaveAnimation };
+export {
+  iosEnterAnimation as iosModalEnterAnimation,
+  iosLeaveAnimation as iosModalLeaveAnimation,
+  mdEnterAnimation as mdModalEnterAnimation,
+  mdLeaveAnimation as mdModalLeaveAnimation
+};

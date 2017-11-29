@@ -3,7 +3,7 @@ import { Animation } from '../../../index';
 /**
  * Md Alert Enter Animation
  */
-export default function MdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

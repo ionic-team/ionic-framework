@@ -1,8 +1,8 @@
 import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
-import iOSEnterAnimation from './animations/ios.enter';
-import iOSLeaveAnimation from './animations/ios.leave';
+import iosEnterAnimation from './animations/ios.enter';
+import iosLeaveAnimation from './animations/ios.leave';
 
 @Component({
   tag: 'ion-picker',
@@ -84,7 +84,7 @@ export class Picker {
     this.ionPickerWillPresent.emit({ picker: this });
 
     // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iOSEnterAnimation);
+    const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
 
     // build the animation and kick it off
     this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -111,7 +111,7 @@ export class Picker {
       this.ionPickerWillDismiss.emit({ picker: this });
 
       // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iOSLeaveAnimation);
+      const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iosLeaveAnimation);
 
       // build the animation and kick it off
       this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -407,4 +407,7 @@ export interface PickerEvent extends Event {
   };
 }
 
-export { iOSEnterAnimation, iOSLeaveAnimation };
+export {
+  iosEnterAnimation as iosPickerEnterAnimation,
+  iosLeaveAnimation as iosPickerLeaveAnimation
+};

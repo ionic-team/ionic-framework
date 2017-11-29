@@ -2,9 +2,9 @@ import { Animation } from '../../../index';
 
 
 /**
- * iOS Loading Leave Animation
+ * iOS Picker Leave Animation
  */
-export default function iOSLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

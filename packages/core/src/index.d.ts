@@ -53,15 +53,7 @@ export * from './components/keyboard-controller/keys';
 export { Label } from './components/label/label';
 export { List } from './components/list/list';
 export { ListHeader } from './components/list-header/list-header';
-export {
-  Loading,
-  LoadingEvent,
-  LoadingOptions,
-  iOSEnterAnimation as LoadingIOSEnterAnimation,
-  iOSLeaveAnimation as LoadingIOSLeaveAnimation,
-  MdEnterAnimation as LoadingMDEnterAnimation,
-  MdLeaveAnimation as LoadingMDLeaveAnimation
-} from './components/loading/loading';
+export * from './components/loading/loading';
 export { LoadingController } from './components/loading-controller/loading-controller';
 export { Menu } from './components/menu/menu';
 export {
@@ -70,15 +62,7 @@ export {
   MenuPushAnimation,
   MenuRevealAnimation
 } from './components/menu-controller/menu-controller';
-export {
-  Modal,
-  ModalOptions,
-  ModalEvent,
-  iOSEnterAnimation as ModalIOSEnterAnimation,
-  iOSLeaveAnimation as ModalIOSLeaveAnimation,
-  MdEnterAnimation as ModalMDEnterAnimation,
-  MdLeaveAnimation as ModalMDLeaveAnimation
-} from './components/modal/modal';
+export * from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
 export { PublicNav } from './components/nav/nav-interface';
@@ -87,26 +71,9 @@ export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
 export { PickerColumnCmp } from './components/picker-column/picker-column';
-export {
-  Picker,
-  PickerButton,
-  PickerColumn,
-  PickerColumnOption,
-  PickerEvent,
-  PickerOptions,
-  iOSEnterAnimation as PickerIOSEnterAnimation,
-  iOSLeaveAnimation as PickerIOSLeaveAnimation
-} from './components/picker/picker';
+export * from './components/picker/picker';
 export { PickerController } from './components/picker-controller/picker-controller';
-export {
-  Popover,
-  PopoverEvent,
-  PopoverOptions,
-  iOSEnterAnimation as PopoverIOSEnterAnimation,
-  iOSLeaveAnimation as PopoverIOSLeaveAnimation,
-  MdEnterAnimation as PopoverMDEnterAnimation,
-  MdLeaveAnimation as PopoverMDLeaveAnimation
-} from './components/popover/popover';
+export * from './components/popover/popover';
 export { PopoverController } from './components/popover-controller/popover-controller';
 export { RadioGroup } from './components/radio-group/radio-group';
 export { Radio, HTMLIonRadioElementEvent } from './components/radio/radio';
@@ -137,15 +104,7 @@ export { Tab } from './components/tab/tab';
 export { Tabs } from './components/tabs/tabs';
 export { Thumbnail } from './components/thumbnail/thumbnail';
 export { ToolbarTitle } from './components/title/title';
-export {
-  Toast,
-  ToastEvent,
-  ToastOptions,
-  iOSEnterAnimation as ToastIOSEnterAnimation,
-  iOSLeaveAnimation as ToastIOSLeaveAnimation,
-  MdEnterAnimation as ToastMDEnterAnimation,
-  MdLeaveAnimation as ToastMDLeaveAnimation
-} from './components/toast/toast';
+export * from './components/toast/toast';
 export { ToastController } from './components/toast-controller/toast-controller';
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar } from './components/toolbar/toolbar';
