@@ -1993,6 +1993,37 @@ declare global {
 
 
 import {
+  PickerColumnCmp as IonPickerColumn
+} from './components/picker-column/picker-column';
+
+declare global {
+  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLElement {
+  }
+  var HTMLIonPickerColumnElement: {
+    prototype: HTMLIonPickerColumnElement;
+    new (): HTMLIonPickerColumnElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-picker-column": HTMLIonPickerColumnElement;
+  }
+  interface ElementTagNameMap {
+    "ion-picker-column": HTMLIonPickerColumnElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-picker-column": JSXElements.IonPickerColumnAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonPickerColumnAttributes extends HTMLAttributes {
+      
+        col?: PickerColumn
+    }
+  }
+}
+
+
+import {
   PickerController as IonPickerController
 } from './components/picker-controller/picker-controller';
 
@@ -2017,37 +2048,6 @@ declare global {
   namespace JSXElements {
     export interface IonPickerControllerAttributes extends HTMLAttributes {
       
-    }
-  }
-}
-
-
-import {
-  PickerColumnCmp as IonPickerColumn
-} from './components/picker/picker-column';
-
-declare global {
-  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLElement {
-  }
-  var HTMLIonPickerColumnElement: {
-    prototype: HTMLIonPickerColumnElement;
-    new (): HTMLIonPickerColumnElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-picker-column": HTMLIonPickerColumnElement;
-  }
-  interface ElementTagNameMap {
-    "ion-picker-column": HTMLIonPickerColumnElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-picker-column": JSXElements.IonPickerColumnAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonPickerColumnAttributes extends HTMLAttributes {
-      
-        col?: PickerColumn
     }
   }
 }

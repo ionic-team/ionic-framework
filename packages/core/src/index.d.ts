@@ -89,7 +89,7 @@ export { Navbar } from './components/navbar/navbar';
 export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
-export { PickerColumnCmp } from './components/picker/picker-column';
+export { PickerColumnCmp } from './components/picker-column/picker-column';
 export {
   Picker,
   PickerButton,
