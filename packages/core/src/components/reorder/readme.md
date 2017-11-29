@@ -5,20 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-#### enabled
-
-boolean
-
-
-## Attributes
-
-#### enabled
-
-boolean
-
-
 
 ----------------------------------------------
 

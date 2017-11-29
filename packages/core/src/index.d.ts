@@ -113,7 +113,7 @@ export { RadioGroup } from './components/radio-group/radio-group';
 export { Radio, HTMLIonRadioElementEvent } from './components/radio/radio';
 export { Range, RangeEvent } from './components/range/range';
 export { RangeKnob } from './components/range-knob/range-knob';
-export { ReorderGroup } from './components/reorder/reorder-group';
+export { ReorderGroup } from './components/reorder-group/reorder-group';
 export {
   RouterEntry,
   RouterEntries,

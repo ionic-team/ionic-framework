@@ -2,8 +2,10 @@
 
 $reorder-initial-transform: 160% !default;
 
-// Reorder group general
+
+// Reorder Group
 // --------------------------------------------------
+
 ion-reorder-group > ion-gesture {
   display: block;
 }
@@ -22,10 +24,6 @@ ion-reorder-group > ion-gesture {
   opacity: .8;
   transition: none !important;
 }
-
-
-// Reorder icon
-// --------------------------------------------------
 
 ion-reorder.no-hide {
   display: block;

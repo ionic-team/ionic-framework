@@ -2318,7 +2318,7 @@ declare global {
 
 import {
   ReorderGroup as IonReorderGroup
-} from './components/reorder/reorder-group';
+} from './components/reorder-group/reorder-group';
 
 declare global {
   interface HTMLIonReorderGroupElement extends IonReorderGroup, HTMLElement {
