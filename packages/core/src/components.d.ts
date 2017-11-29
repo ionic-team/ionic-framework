@@ -303,6 +303,36 @@ declare global {
 
 
 import {
+  AppCordovaPageThree as AppCordovaPageThree
+} from './components/app/test/cordova/page-three';
+
+declare global {
+  interface HTMLAppCordovaPageThreeElement extends AppCordovaPageThree, HTMLElement {
+  }
+  var HTMLAppCordovaPageThreeElement: {
+    prototype: HTMLAppCordovaPageThreeElement;
+    new (): HTMLAppCordovaPageThreeElement;
+  };
+  interface HTMLElementTagNameMap {
+    "app-cordova-page-three": HTMLAppCordovaPageThreeElement;
+  }
+  interface ElementTagNameMap {
+    "app-cordova-page-three": HTMLAppCordovaPageThreeElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "app-cordova-page-three": JSXElements.AppCordovaPageThreeAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface AppCordovaPageThreeAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   AppCordovaPageTwo as AppCordovaPageTwo
 } from './components/app/test/cordova/page-two';
 
