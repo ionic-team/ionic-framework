@@ -1,12 +1,5 @@
 // Components
-export {
-  ActionSheet,
-  ActionSheetButton,
-  ActionSheetEvent,
-  ActionSheetOptions,
-  iOSEnterAnimation as ActionSheetIOSEnterAnimation,
-  iOSLeaveAnimation as ActionSheetIOSLeaveAnimation
-} from './components/action-sheet/action-sheet';
+export * from './components/action-sheet/action-sheet';
 
 export { ActionSheetController } from './components/action-sheet-controller/action-sheet-controller';
 export * from './components/alert/alert';
@@ -186,4 +179,8 @@ export interface OverlayDismissEvent extends CustomEvent {
 export interface OverlayDismissEventDetail {
   data?: any;
   role?: string;
+}
+
+export interface OverlayController {
+  create(): HTMLElement;
 }
