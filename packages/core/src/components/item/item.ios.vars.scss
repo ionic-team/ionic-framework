@@ -30,8 +30,11 @@ $item-ios-avatar-width:                   36px !default;
 /// @prop - Height of the avatar in the item
 $item-ios-avatar-height:                  $item-ios-avatar-width !default;
 
-/// @prop - Size of the thumbnail in the item
-$item-ios-thumbnail-size:                 56px !default;
+/// @prop - Width of the thumbnail in the item
+$item-ios-thumbnail-width:                56px !default;
+
+/// @prop - Height of the thumbnail in the item
+$item-ios-thumbnail-height:               $item-ios-thumbnail-width !default;
 
 /// @prop - Shows the detail arrow icon on an item
 $item-ios-detail-push-show:               true !default;

@@ -21,8 +21,11 @@ $item-md-avatar-width:               40px !default;
 /// @prop - Height of the avatar in the item
 $item-md-avatar-height:              $item-md-avatar-width !default;
 
-/// @prop - Size of the thumbnail in the item
-$item-md-thumbnail-size:             80px !default;
+/// @prop - Width of the thumbnail in the item
+$item-md-thumbnail-width:            80px !default;
+
+/// @prop - Height of the thumbnail in the item
+$item-md-thumbnail-height:           $item-md-thumbnail-width !default;
 
 /// @prop - Shows the detail arrow icon on an item
 $item-md-detail-push-show:           false !default;

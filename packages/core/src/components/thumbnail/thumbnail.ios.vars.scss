@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Thumbnail
+// --------------------------------------------------
+
+/// @prop - Width of the thumbnail
+$thumbnail-ios-width:                   48px !default;
+
+/// @prop - Height of the thumbnail
+$thumbnail-ios-height:                  $thumbnail-ios-width !default;
+
+/// @prop - Border radius of the thumbnail
+$thumbnail-ios-border-radius:           0 !default;

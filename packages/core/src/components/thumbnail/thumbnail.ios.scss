@@ -1,6 +1,20 @@
-@import "../../themes/ionic.globals.ios";
 @import "./thumbnail";
+@import "./thumbnail.ios.vars";
 
 
 // iOS Thumbnail
 // --------------------------------------------------
+
+.thumbnail-ios {
+  @include border-radius($thumbnail-ios-border-radius);
+
+  width: $thumbnail-ios-width;
+  height: $thumbnail-ios-height;
+}
+
+.thumbnail-ios ion-img,
+.thumbnail-ios img {
+  @include border-radius($thumbnail-ios-border-radius);
+
+  overflow: hidden;
+}

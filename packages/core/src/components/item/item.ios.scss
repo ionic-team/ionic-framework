@@ -130,14 +130,8 @@
 // --------------------------------------------------
 
 .item-ios ion-thumbnail {
-  min-width: $item-ios-thumbnail-size;
-  min-height: $item-ios-thumbnail-size;
-}
-
-.item-ios ion-thumbnail ion-img,
-.item-ios ion-thumbnail img {
-  width: $item-ios-thumbnail-size;
-  height: $item-ios-thumbnail-size;
+  width: $item-ios-thumbnail-width;
+  height: $item-ios-thumbnail-height;
 }
 
 

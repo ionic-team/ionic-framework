@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Thumbnail
+// --------------------------------------------------
+
+/// @prop - Width of the thumbnail
+$thumbnail-md-width:                   48px !default;
+
+/// @prop - Height of the thumbnail
+$thumbnail-md-height:                  $thumbnail-md-width !default;
+
+/// @prop - Border radius of the thumbnail
+$thumbnail-md-border-radius:           0 !default;

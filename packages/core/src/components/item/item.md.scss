@@ -142,14 +142,8 @@
 // --------------------------------------------------
 
 .item-md ion-thumbnail {
-  min-width: $item-md-thumbnail-size;
-  min-height: $item-md-thumbnail-size;
-}
-
-.item-md ion-thumbnail ion-img,
-.item-md ion-thumbnail img {
-  width: $item-md-thumbnail-size;
-  height: $item-md-thumbnail-size;
+  width: $item-md-thumbnail-width;
+  height: $item-md-thumbnail-height;
 }
 
 

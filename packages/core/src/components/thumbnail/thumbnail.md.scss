@@ -1,6 +1,19 @@
-@import "../../themes/ionic.globals.md";
 @import "./thumbnail";
-
+@import "./thumbnail.md.vars";
 
 // Material Design Thumbnail
 // --------------------------------------------------
+
+.thumbnail-md {
+  @include border-radius($thumbnail-md-border-radius);
+
+  width: $thumbnail-md-width;
+  height: $thumbnail-md-height;
+}
+
+.thumbnail-md ion-img,
+.thumbnail-md img {
+  @include border-radius($thumbnail-md-border-radius);
+
+  overflow: hidden;
+}
