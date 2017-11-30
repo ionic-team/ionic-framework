@@ -146,11 +146,14 @@ export class ActionSheet {
   }
 
   buttonClass(button: ActionSheetButton): CssClassMap {
-    let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
-
     let buttonClass: string[] = !button.role
-      ? ['action-sheet-button', customClass]
-      : [`action-sheet-button`, `action-sheet-${button.role}`, customClass];
+      ? ['action-sheet-button']
+      : [`action-sheet-button`, `action-sheet-${button.role}`];
+
+    if (button.cssClass) {
+      let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+      buttonClass.push(customClass);
+    }
 
     return buttonClass.reduce((prevValue: any, cssClass: any) => {
       prevValue[cssClass] = true;

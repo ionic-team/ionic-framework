@@ -241,10 +241,12 @@ export class Alert {
   }
 
   buttonClass(button: AlertButton): CssClassMap {
-    let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
-    let buttonClass: string[] = !button.cssClass
-      ? ['alert-button', customClass]
-      : [`alert-button`, `${button.cssClass}`, customClass];
+    let buttonClass: string[] = ['alert-button'];
+
+    if (button.cssClass) {
+      let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+      buttonClass.push(customClass);
+    }
 
     return buttonClass.reduce((prevValue: any, cssClass: any) => {
       prevValue[cssClass] = true;
