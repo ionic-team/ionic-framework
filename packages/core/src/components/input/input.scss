@@ -145,8 +145,6 @@ input.text-input:-webkit-autofill {
   background-repeat: no-repeat;
 }
 
-// TODO remove all uses of input-has-focus in v4
-// TODO remove all uses of input-has-value in v4
 .item-input-has-focus.item-input-has-value .text-input-clear-icon {
   display: block;
 }

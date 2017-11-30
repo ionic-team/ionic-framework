@@ -1,5 +1,7 @@
 @import "../../themes/ionic.globals.ios";
 
+@import "../item/item.vars";
+
 // iOS Alert
 // --------------------------------------------------
 
@@ -281,3 +283,6 @@ $alert-ios-translucent-filter:                  saturate(180%) blur(20px) !defau
 
 /// @prop - Opacity of the translucent alert
 $alert-ios-translucent-opacity:                 .88 !default;
+
+/// @prop - Minimum height of the tappable inputs in the checkbox alert
+$alert-ios-tappable-min-height:                 $item-min-height !default;

@@ -24,6 +24,8 @@
 // iOS Highlighted Input
 // --------------------------------------------------
 
+// TODO this is angular specific scss
+
 // Input highlight mixin for focus, valid, and invalid states
 @mixin ios-input-highlight($highlight-color) {
   border-bottom-color: $highlight-color;
@@ -34,17 +36,13 @@
   // In order to get a 2px border we need to add an inset
   // box-shadow 1px (this is to avoid the div resizing)
 
-  // TODO remove all uses of input-has-focus in v4
-  // TODO remove all uses of input-has-value in v4
-  .item-ios.item-input.item-input-has-focus .item-inner,
-  .item-ios.item-input.input-has-focus .item-inner {
+  .item-ios.item-input.item-input-has-focus .item-inner {
     @include ios-input-highlight($input-ios-highlight-color);
   }
 
   // The last item in a list has a border on the item, not the
   // inner item, so add it to the item itself
-  .list-ios .item-input.item-input-has-focus:last-child,
-  .list-ios .item-input.input-has-focus:last-child {
+  .list-ios .item-input.item-input-has-focus:last-child {
     @include ios-input-highlight($input-ios-highlight-color);
 
     .item-inner {
@@ -55,13 +53,11 @@
 
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($input-ios-show-valid-highlight) {
-  .item-ios.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
-  .item-ios.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+  .item-ios.item-input.ng-valid.item-input-has-value:not(.item-input-has-focus) .item-inner {
     @include ios-input-highlight($input-ios-highlight-color-valid);
   }
 
-  .list-ios .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
-  .list-ios .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+  .list-ios .item-input.ng-valid.item-input-has-value:not(.item-input-has-focus):last-child {
     @include ios-input-highlight($input-ios-highlight-color-valid);
 
     .item-inner {
@@ -72,11 +68,11 @@
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($input-ios-show-invalid-highlight) {
-  .item-ios.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+  .item-ios.item-input.ng-invalid.ng-touched:not(.item-input-has-focus) .item-inner {
     @include ios-input-highlight($input-ios-highlight-color-invalid);
   }
 
-  .list-ios .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
+  .list-ios .item-input.ng-invalid.ng-touched:not(.item-input-has-focus):last-child {
     @include ios-input-highlight($input-ios-highlight-color-invalid);
 
     .item-inner {

@@ -48,12 +48,8 @@
   transition: transform 150ms ease-in-out;
 }
 
-// TODO remove all uses of input-has-focus in v4
-// TODO remove all uses of input-has-value in v4
 .item-input-has-focus .label-ios[floating],
-.input-has-focus .label-ios[floating],
-.item-input-has-value .label-ios[floating],
-.input-has-value .label-ios[floating] {
+.item-input-has-value .label-ios[floating] {
   @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
@@ -63,9 +59,7 @@
 }
 
 .item-input-has-focus .label-ios[stacked],
-.input-has-focus .label-ios[stacked],
-.item-input-has-focus .label-ios[floating],
-.input-has-focus .label-ios[floating] {
+.item-input-has-focus .label-ios[floating] {
   color: $label-ios-text-color-focused;
 }
 

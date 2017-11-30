@@ -5,6 +5,7 @@
 
 $colors-ios: copy-colors($colors) !default;
 
+$link-ios-color:                       $link-color !default;
 $text-ios-color:                       $text-color !default;
 $background-ios-color:                 $background-color !default;
 $subdued-text-ios-color:               $subdued-text-color !default;

@@ -8,10 +8,9 @@
   @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
 }
 
-// TODO uncomment this and get working
 [text-wrap] .label-md {
-  // font-size: $item-md-body-text-font-size;
-  // line-height: $item-md-body-text-line-height;
+  font-size: $label-md-text-wrap-font-size;
+  line-height: $label-md-text-wrap-line-height;
 }
 
 // Material Design Default Label Inside An Input/Select Item
@@ -43,19 +42,13 @@
   @include margin(null, null, 0, 0);
 }
 
-// TODO remove all uses of input-has-focus in v4
-// TODO remove all uses of input-has-value in v4
 .item-input-has-focus .label-md[stacked],
-.input-has-focus .label-md[stacked],
-.item-input-has-focus .label-md[floating],
-.input-has-focus .label-md[floating] {
+.item-input-has-focus .label-md[floating] {
   color: $label-md-text-color-focused;
 }
 
 .item-input-has-focus .label-md[floating],
-.input-has-focus .label-md[floating],
-.item-input-has-value .label-md[floating],
-.input-has-value .label-md[floating] {
+.item-input-has-value .label-md[floating] {
   @include transform(translate3d(0, 0, 0), scale(.8));
 }
 

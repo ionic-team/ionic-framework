@@ -39,7 +39,6 @@ ion-select {
   @include margin($select-popover-list-margin-top, $select-popover-list-margin-end, $select-popover-list-margin-bottom, $select-popover-list-margin-start);
 }
 
-// TODO remove
 .select-option {
   display: none;
 }

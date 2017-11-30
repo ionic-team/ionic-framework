@@ -1,5 +1,7 @@
 @import "../../themes/ionic.globals.md";
 
+@import "../item/item.md.vars";
+
 // Material Design Label
 // --------------------------------------------------
 
@@ -20,3 +22,9 @@ $label-md-margin-bottom:              $item-md-padding-bottom !default;
 
 /// @prop - Margin start of the label
 $label-md-margin-start:               0 !default;
+
+/// @prop - Font size of the label when the text wraps
+$label-md-text-wrap-font-size:        $item-md-body-text-font-size !default;
+
+/// @prop - Line height of the label when the text wraps
+$label-md-text-wrap-line-height:      $item-md-body-text-line-height !default;

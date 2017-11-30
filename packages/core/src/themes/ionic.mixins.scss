@@ -184,14 +184,14 @@
 
 // If deprecated variable exists, use it, otherwise, use alternative
 // @param {string} $property - property to default
+// @param {string} $variable-name - the deprecated variable's name
 // @param {string} $variable - the deprecated variable
 // ----------------------------------------------------------
-@mixin deprecated-variable($property, $variable) {
+@mixin deprecated-variable($property, $variable-name, $variable) {
   @if $variable == null {
     @content;
   } @else {
-    // TODO find variable name
-    @warn "you are using a deprecated variable";
+    @warn "you are using a deprecated variable: #{$variable-name}";
     #{$property}: $variable;
   }
 }

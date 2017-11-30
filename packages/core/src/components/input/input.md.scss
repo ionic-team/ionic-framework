@@ -35,16 +35,13 @@
   // In order to get a 2px border we need to add an inset
   // box-shadow 1px (this is to avoid the div resizing)
 
-  // TODO remove all uses of input-has-focus in v4
-  .item-md.item-input.item-input-has-focus .item-inner,
-  .item-md.item-input.input-has-focus .item-inner {
+  .item-md.item-input.item-input-has-focus .item-inner {
     @include md-input-highlight($input-md-highlight-color);
   }
 
   // The last item in a list has a border on the item, not the
   // inner item, so add it to the item itself
-  .list-md .item-input.item-input-has-focus:last-child,
-  .list-md .item-input.input-has-focus:last-child {
+  .list-md .item-input.item-input-has-focus:last-child {
     @include md-input-highlight($input-md-highlight-color);
 
     .item-inner {
@@ -53,17 +50,15 @@
   }
 }
 
+// TODO this is angular specific scss
+
 // Show the valid highlight when it has the .ng-valid class and a value
 @if ($input-md-show-valid-highlight) {
-  // TODO remove all uses of input-has-focus in v4
-  // TODO remove all uses of input-has-value in v4
-  .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
-  .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+  .item-md.item-input.ng-valid.item-input-has-value:not(.item-input-has-focus) .item-inner {
     @include md-input-highlight($input-md-highlight-color-valid);
   }
 
-  .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
-  .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
+  .list-md .item-input.ng-valid.item-input-has-value:not(.item-input-has-focus):last-child {
     @include md-input-highlight($input-md-highlight-color-valid);
 
     .item-inner {
@@ -74,11 +69,11 @@
 
 // Show the invalid highlight when it has the invalid class and has been touched
 @if ($input-md-show-invalid-highlight) {
-  .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+  .item-md.item-input.ng-invalid.ng-touched:not(.item-input-has-focus) .item-inner {
     @include md-input-highlight($input-md-highlight-color-invalid);
   }
 
-  .list-md .item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus):last-child {
+  .list-md .item-input.ng-invalid.ng-touched:not(.item-input-has-focus):last-child {
     @include md-input-highlight($input-md-highlight-color-invalid);
 
     .item-inner {

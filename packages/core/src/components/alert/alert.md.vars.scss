@@ -1,5 +1,7 @@
 @import "../../themes/ionic.globals.md";
 
+@import "../item/item.vars";
+
 // Material Design Alert
 // --------------------------------------------------
 
@@ -311,3 +313,6 @@ $alert-md-checkbox-icon-border-color:         color-contrast($colors-md, $alert-
 
 /// @prop - Transform of the icon in the checkbox alert
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
+
+/// @prop - Minimum height of the tappable inputs in the checkbox alert
+$alert-md-tappable-min-height:                $item-min-height !default;

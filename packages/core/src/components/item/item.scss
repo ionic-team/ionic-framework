@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "./item.vars";
 
 // Item
 // --------------------------------------------------
@@ -20,7 +20,6 @@ ion-item {
   contain: content;
 }
 
-
 .item-block {
   @include margin(0);
   @include padding(0);
@@ -33,7 +32,7 @@ ion-item {
   justify-content: space-between;
 
   width: 100%;
-  min-height: 4.4rem;
+  min-height: $item-min-height;
 
   border: 0;
 

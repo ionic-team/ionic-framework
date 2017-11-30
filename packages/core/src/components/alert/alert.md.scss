@@ -90,8 +90,7 @@
 
   overflow: hidden;
 
-  // TODO this should be a variable that matches item
-  min-height: 4.4rem;
+  min-height: $alert-md-tappable-min-height;
 }
 
 
