@@ -1,0 +1,7 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Note
+// --------------------------------------------------
+
+/// @prop - Text color of the note
+$note-ios-color:      darken($list-ios-border-color, 10%) !default;

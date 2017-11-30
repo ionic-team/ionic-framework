@@ -1,9 +1,7 @@
-@import "../../themes/ionic.globals.ios";
+@import "./footer.ios.vars";
 
 // iOS Footer
 // --------------------------------------------------
-
-$footer-ios-translucent-filter:    saturate(180%) blur(20px) !default;
 
 .footer-translucent-ios {
   -webkit-backdrop-filter: $footer-ios-translucent-filter;

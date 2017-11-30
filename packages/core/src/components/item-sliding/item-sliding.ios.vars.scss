@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Item Sliding
+// --------------------------------------------------
+
+/// @prop - Background for the sliding content
+$item-ios-sliding-content-background:        $list-ios-background-color !default;
+
+/// @prop - Font size of the sliding option button
+$item-ios-sliding-button-font-size:          1.6rem !default;
+
+/// @prop - Background color of the sliding option button
+$item-ios-sliding-button-background-color:   color($colors-ios, primary) !default;
+
+/// @prop - Text color of the sliding option button
+$item-ios-sliding-button-text-color:         color-contrast($colors-ios, $item-ios-sliding-button-background-color) !default;
+
+/// @prop - color of the sliding option button icon
+$item-ios-sliding-button-icon-color:         color-contrast($colors-ios, $item-ios-sliding-button-background-color) !default;

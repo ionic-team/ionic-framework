@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Card Header
+// --------------------------------------------------
+
+/// @prop - Padding top of the card header
+$card-md-header-padding-top:          16px !default;
+
+/// @prop - Padding end of the card header
+$card-md-header-padding-end:          $card-md-header-padding-top !default;
+
+/// @prop - Padding bottom of the card header
+$card-md-header-padding-bottom:       $card-md-header-padding-top !default;
+
+/// @prop - Padding start of the card header
+$card-md-header-padding-start:        $card-md-header-padding-end !default;

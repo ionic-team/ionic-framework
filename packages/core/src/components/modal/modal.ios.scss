@@ -1,16 +1,8 @@
-@import "../../themes/ionic.globals.ios";
 @import "./modal";
-
+@import "./modal.ios.vars";
 
 // iOS Modals
 // --------------------------------------------------
-
-/// @prop - Background color for the modal
-$modal-ios-background-color:          $background-ios-color !default;
-
-/// @prop - Border radius for the modal
-$modal-ios-border-radius:             10px !default;
-
 
 .modal-wrapper-ios {
   // hidden by default to prevent flickers, the animation will show it

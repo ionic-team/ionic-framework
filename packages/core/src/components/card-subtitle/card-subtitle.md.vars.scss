@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Card Subtitle
+// --------------------------------------------------
+
+/// @prop - Font size of the card subtitle
+$card-md-subtitle-font-size:            1.6rem !default;
+
+/// @prop - Padding top of the card subtitle
+$card-md-subtitle-padding-top:          0 !default;
+
+/// @prop - Padding end of the card subtitle
+$card-md-subtitle-padding-end:          $card-md-subtitle-padding-top !default;
+
+/// @prop - Padding bottom of the card subtitle
+$card-md-subtitle-padding-bottom:       $card-md-subtitle-padding-top !default;
+
+/// @prop - Padding start of the card subtitle
+$card-md-subtitle-padding-start:        $card-md-subtitle-padding-end !default;
+
+/// @prop - Color of the card subtitle
+$card-md-subtitle-color:                #222 !default;

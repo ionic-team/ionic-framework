@@ -1,0 +1,43 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Item
+// --------------------------------------------------
+
+/// @prop - Font size of the item text
+$item-ios-body-text-font-size:            1.7rem !default;
+
+/// @prop - Margin top of the item paragraph
+$item-ios-paragraph-margin-top:           0 !default;
+
+/// @prop - Margin end of the item paragraph
+$item-ios-paragraph-margin-end:           0 !default;
+
+/// @prop - Margin bottom of the item paragraph
+$item-ios-paragraph-margin-bottom:        2px !default;
+
+/// @prop - Margin start of the item paragraph
+$item-ios-paragraph-margin-start:         $item-ios-paragraph-margin-end !default;
+
+/// @prop - Font size of the item paragraph
+$item-ios-paragraph-font-size:            1.4rem !default;
+
+/// @prop - Color of the item paragraph
+$item-ios-paragraph-text-color:           #8e9093 !default;
+
+/// @prop - Width of the avatar in the item
+$item-ios-avatar-width:                   36px !default;
+
+/// @prop - Height of the avatar in the item
+$item-ios-avatar-height:                  $item-ios-avatar-width !default;
+
+/// @prop - Size of the thumbnail in the item
+$item-ios-thumbnail-size:                 56px !default;
+
+/// @prop - Shows the detail arrow icon on an item
+$item-ios-detail-push-show:               true !default;
+
+/// @prop - Color of the detail arrow icon
+$item-ios-detail-push-color:              $list-ios-border-color !default;
+
+/// @prop - Icon for the detail arrow
+$item-ios-detail-push-svg:                "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-ios-detail-push-color}'/></svg>" !default;

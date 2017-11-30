@@ -1,14 +1,7 @@
-@import "../../themes/ionic.globals";
+@import "./action-sheet.vars";
 
 // Action Sheet
 // --------------------------------------------------
-
-/// @prop - Width of the action sheet
-$action-sheet-width:                             100% !default;
-
-/// @prop - Maximum width of the action sheet
-$action-sheet-max-width:                         500px !default;
-
 
 ion-action-sheet {
   @include position(0, null, null, 0);

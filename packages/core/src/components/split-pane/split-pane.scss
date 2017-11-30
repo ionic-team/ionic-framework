@@ -1,11 +1,7 @@
-
-@import "../../themes/ionic.globals";
+@import "./split-pane.vars";
 
 // Split Pane
 // --------------------------------------------------
-
-$split-pane-side-min-width: 270px !default;
-$split-pane-side-max-width: 28% !default;
 
 .split-pane {
   @include position(0, 0, 0, 0);

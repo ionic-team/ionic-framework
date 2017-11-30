@@ -1,6 +1,20 @@
-@import "../../themes/ionic.globals.md";
 @import "./avatar";
+@import "./avatar.md.vars";
 
 
 // Material Design Avatar
 // --------------------------------------------------
+
+.avatar-md {
+  @include border-radius($avatar-md-border-radius);
+
+  width: $avatar-md-width;
+  height: $avatar-md-height;
+}
+
+.avatar-md ion-img,
+.avatar-md img {
+  @include border-radius($avatar-md-border-radius);
+
+  overflow: hidden;
+}

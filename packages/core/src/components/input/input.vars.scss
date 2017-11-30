@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals";
+
+// Input
+// --------------------------------------------------
+
+/// @prop - Color of the input highlight when valid
+$input-highlight-color-valid:       #32db64 !default;
+
+/// @prop - Color of the input highlight when invalid
+$input-highlight-color-invalid:     #f53d3d !default;
+
+/// @prop - Color of the input placeholder
+$input-placeholder-color:           #999 !default;

@@ -1,6 +1,20 @@
-@import "../../themes/ionic.globals.ios";
 @import "./avatar";
+@import "./avatar.ios.vars";
 
 
 // iOS Avatar
 // --------------------------------------------------
+
+.avatar-ios {
+  @include border-radius($avatar-ios-border-radius);
+
+  width: $avatar-ios-width;
+  height: $avatar-ios-height;
+}
+
+.avatar-ios ion-img,
+.avatar-ios img {
+  @include border-radius($avatar-ios-border-radius);
+
+  overflow: hidden;
+}

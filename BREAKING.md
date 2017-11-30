@@ -11,6 +11,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
 - [Icon](#icon)
+- [Input](#Input)
 - [Item](#item)
 - [Nav](#nav)
 - [Option](#option)
@@ -272,6 +273,23 @@ If any `CSS` is being overridden for an icon it will need to change to override 
   fill: #000;
 }
 ```
+
+## Input
+
+The Sass variables were all renamed from having `$text-input` as the prefix to `$input`.
+
+**Old Usage Example:**
+
+```css
+$text-input-highlight-color-valid:       #32db64;
+```
+
+**New Usage Example:**
+
+```css
+$input-highlight-color-valid:       #32db64;
+```
+
 
 ## Item
 

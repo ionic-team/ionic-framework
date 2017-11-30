@@ -1,69 +1,8 @@
-@import "../../themes/ionic.globals.ios";
 @import "./checkbox";
+@import "./checkbox.ios.vars";
 
 // iOS Checkbox
 // --------------------------------------------------
-
-/// @prop - Background color of the checkbox when off
-$checkbox-ios-background-color-off:       $list-ios-background-color !default;
-
-/// @prop - Background color of the checkbox when on
-$checkbox-ios-background-color-on:        color($colors-ios, primary) !default;
-
-/// @prop - Size of the checkbox icon
-$checkbox-ios-icon-size:                  21px !default;
-
-/// @prop - Border color of the checkbox icon when off
-$checkbox-ios-icon-border-color-off:      $list-ios-border-color !default;
-
-/// @prop - Border color of the checkbox icon when on
-$checkbox-ios-icon-border-color-on:       $checkbox-ios-background-color-on !default;
-
-/// @prop - Border width of the checkbox icon
-$checkbox-ios-icon-border-width:          1px !default;
-
-/// @prop - Border style of the checkbox icon
-$checkbox-ios-icon-border-style:          solid !default;
-
-/// @prop - Border radius of the checkbox icon
-$checkbox-ios-icon-border-radius:         50% !default;
-
-/// @prop - Width of the checkbox icon checkmark
-$checkbox-ios-icon-checkmark-width:       1px !default;
-
-/// @prop - Style of the checkbox icon checkmark
-$checkbox-ios-icon-checkmark-style:       solid !default;
-
-/// @prop - Color of the checkbox icon checkmark
-$checkbox-ios-icon-checkmark-color:       color-contrast($colors-ios, $checkbox-ios-background-color-on) !default;
-
-/// @prop - Opacity of the disabled checkbox
-$checkbox-ios-disabled-opacity:           .3 !default;
-
-/// @prop - Margin top of the left checkbox item
-$checkbox-ios-item-start-margin-top:      $item-ios-padding-media-top !default;
-
-/// @prop - Margin end of the left checkbox item
-$checkbox-ios-item-start-margin-end:      $item-ios-padding-end !default;
-
-/// @prop - Margin bottom of the left checkbox item
-$checkbox-ios-item-start-margin-bottom:   $item-ios-padding-media-bottom !default;
-
-/// @prop - Margin start of the left checkbox item
-$checkbox-ios-item-start-margin-start:    2px !default;
-
-/// @prop - Margin top of the right checkbox item
-$checkbox-ios-item-end-margin-top:        10px !default;
-
-/// @prop - Margin end of the right checkbox item
-$checkbox-ios-item-end-margin-end:        8px !default;
-
-/// @prop - Margin bottom of the right checkbox item
-$checkbox-ios-item-end-margin-bottom:     9px !default;
-
-/// @prop - Margin start of the right checkbox item
-$checkbox-ios-item-end-margin-start:      0 !default;
-
 
 // iOS Checkbox Outer Circle: Unchecked
 // -----------------------------------------

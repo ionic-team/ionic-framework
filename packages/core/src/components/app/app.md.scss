@@ -1,13 +1,8 @@
-@import "../../themes/ionic.globals.md";
 @import "./app";
-
-@import "../tabs/tabs.md.vars";
-
+@import "./app.md.vars";
 
 // Material Design App
 // --------------------------------------------------
-
-$app-md-statusbar-padding:       20px !default;
 
 .app-md {
 

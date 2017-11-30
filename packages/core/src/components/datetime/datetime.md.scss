@@ -1,24 +1,8 @@
-@import "../../themes/ionic.globals.md";
 @import "./datetime";
+@import "./datetime.md.vars";
 
 // Material Design Datetime
 // --------------------------------------------------
-
-/// @prop - Padding top of the Datetime component
-$datetime-md-padding-top:         $item-md-padding-top !default;
-
-/// @prop - Padding end of the Datetime component
-$datetime-md-padding-end:         ($item-md-padding-end / 2) !default;
-
-/// @prop - Padding bottom of the Datetime component
-$datetime-md-padding-bottom:      $item-md-padding-bottom !default;
-
-/// @prop - Padding start of the Datetime component
-$datetime-md-padding-start:       $item-md-padding-start !default;
-
-/// @prop - Color of the Datetime placeholder
-$datetime-md-placeholder-color:   #999 !default;
-
 
 .datetime-md {
   @include padding($datetime-md-padding-top, $datetime-md-padding-end, $datetime-md-padding-bottom, $datetime-md-padding-start);

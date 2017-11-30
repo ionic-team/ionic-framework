@@ -1,25 +1,8 @@
-@import "../../themes/ionic.globals.md";
 @import "./spinner";
-
+@import "./spinner.md.vars";
 
 // Material Design Spinner
 // --------------------------------------------------
-
-/// @prop - Color of the ios spinner
-$spinner-md-ios-color:            #69717d !default;
-
-/// @prop - Color of the bubbles spinner
-$spinner-md-bubbles-color:        #000 !default;
-
-/// @prop - Color of the circles spinner
-$spinner-md-circles-color:        #69717d !default;
-
-/// @prop - Color of the crescent spinner
-$spinner-md-crescent-color:       #000 !default;
-
-/// @prop - Color of the dots spinner
-$spinner-md-dots-color:           #444 !default;
-
 
 .spinner-lines-md line,
 .spinner-lines-sm-md line {

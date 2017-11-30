@@ -1,27 +1,8 @@
-@import "../../themes/ionic.globals.md";
 @import "./select";
+@import "./select.md.vars";
 
 // Material Design Select
 // --------------------------------------------------
-
-/// @prop - Padding top of the select
-$select-md-padding-top:         $item-md-padding-top !default;
-
-/// @prop - Padding end of the select
-$select-md-padding-end:         ($item-md-padding-end / 2) !default;
-
-/// @prop - Padding bottom of the select
-$select-md-padding-bottom:      $item-md-padding-bottom !default;
-
-/// @prop - Padding start of the select
-$select-md-padding-start:       $item-md-padding-start !default;
-
-/// @prop - Color of the select icon
-$select-md-icon-color:          #999 !default;
-
-/// @prop - Color of the select placeholder
-$select-md-placeholder-color:   $select-md-icon-color !default;
-
 
 .select-md {
   @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);

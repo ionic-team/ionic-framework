@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Datetime
+// --------------------------------------------------
+
+/// @prop - Padding top of the Datetime component
+$datetime-ios-padding-top:         $item-ios-padding-top !default;
+
+/// @prop - Padding end of the Datetime component
+$datetime-ios-padding-end:         ($item-ios-padding-end / 2) !default;
+
+/// @prop - Padding bottom of the Datetime component
+$datetime-ios-padding-bottom:      $item-ios-padding-bottom !default;
+
+/// @prop - Padding start of the Datetime component
+$datetime-ios-padding-start:       $item-ios-padding-start !default;
+
+/// @prop - Color of the Datetime placeholder
+$datetime-ios-placeholder-color:   #999 !default;

@@ -1,10 +1,7 @@
-@import "../../themes/ionic.globals";
+@import "./backdrop.vars";
 
 // Backdrop
 // --------------------------------------------------
-
-/// @prop - Color of the backdrop
-$backdrop-color: #000 !default;
 
 ion-backdrop {
   @include position(0, null, null, 0);

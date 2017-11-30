@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals";
+
+// Menu
+// --------------------------------------------------
+
+/// @prop - Width of the menu
+$menu-width:                 304px !default;
+
+/// @prop - Width of the menu on small devices (under 340px)
+$menu-small-width:           $menu-width - 40px !default;

@@ -1,14 +1,7 @@
-@import "../../themes/ionic.globals";
+@import "./picker.vars";
 
 // Picker
 // --------------------------------------------------
-
-/// @prop - Width of the picker
-$picker-width:                             100% !default;
-
-/// @prop - Max width of the picker
-$picker-max-width:                         500px !default;
-
 
 ion-picker {
   @include position(0, null, null, 0);

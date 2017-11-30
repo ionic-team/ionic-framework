@@ -1,24 +1,7 @@
-@import "../../themes/ionic.globals";
-@import "button-icon";
+@import "./button.vars";
 
-// Buttons
+// Button
 // --------------------------------------------------
-
-/// @prop - Padding top of the round button
-$button-round-padding-top:        0 !default;
-
-/// @prop - Padding end of the round button
-$button-round-padding-end:        2.6rem !default;
-
-/// @prop - Padding bottom of the round button
-$button-round-padding-bottom:     $button-round-padding-top !default;
-
-/// @prop - Padding start of the round button
-$button-round-padding-start:      $button-round-padding-end !default;
-
-/// @prop - Border radius of the round button
-$button-round-border-radius:      64px !default;
-
 
 .button {
   @include text-align(center);
@@ -99,6 +82,7 @@ button[disabled],
   contain: strict;
 }
 
+
 // Full Outline Button
 // --------------------------------------------------
 
@@ -107,4 +91,28 @@ button[disabled],
 
   border-right-width: 0;
   border-left-width: 0;
+}
+
+
+// Button Icons
+// --------------------------------------------------
+
+.button ion-icon {
+  width: 1.4em;
+  height: 1.4em;
+
+  pointer-events: none;
+}
+
+.button ion-icon[slot="start"] {
+  margin: 0 0.3em 0 -0.3em;
+}
+
+.button ion-icon[slot="end"] {
+  margin: 0 -0.2em 0 0.3em;
+}
+
+.button ion-icon[slot="icon-only"] {
+  width: 1.8em;
+  height: 1.8em;
 }

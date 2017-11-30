@@ -1,16 +1,8 @@
-@import "../../themes/ionic.globals.ios";
 @import "./content";
-
+@import "./content.ios.vars";
 
 // iOS Content
 // --------------------------------------------------
-
-/// @prop - Background color of the outer content
-$content-ios-outer-background:          #efeff4 !default;
-
-/// @prop - Background color of the content when making transition
-$content-ios-transition-background:     #000 !default;
-
 
 .content-ios {
   color: $text-ios-color;
