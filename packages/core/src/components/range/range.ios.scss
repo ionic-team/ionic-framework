@@ -104,6 +104,7 @@
   @include text-align(center);
   @include border-radius(50px);
   @include transform(translate3d(0, 28px, 0), scale(.01));
+  @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
 
   position: relative;
   top: -20px;
@@ -118,10 +119,6 @@
   background: $range-ios-pin-background-color;
 
   transition: transform 120ms ease;
-
-  @include deprecated-variable(padding, $range-ios-pin-padding) {
-    @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
-  }
 }
 
 .range-ios .range-knob-pressed .range-pin {
