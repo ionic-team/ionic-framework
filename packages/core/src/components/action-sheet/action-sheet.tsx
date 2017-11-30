@@ -127,7 +127,6 @@ export class ActionSheet {
     this.ionActionSheetDidLoad.emit();
   }
 
-
   componentDidUnload() {
     this.ionActionSheetDidUnload.emit();
   }
@@ -147,9 +146,12 @@ export class ActionSheet {
   }
 
   buttonClass(button: ActionSheetButton): CssClassMap {
+    let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+
     let buttonClass: string[] = !button.role
-      ? ['action-sheet-button']
-      : [`action-sheet-button`, `action-sheet-${button.role}`];
+      ? ['action-sheet-button', customClass]
+      : [`action-sheet-button`, `action-sheet-${button.role}`, customClass];
+
     return buttonClass.reduce((prevValue: any, cssClass: any) => {
       prevValue[cssClass] = true;
       return prevValue;
@@ -181,9 +183,10 @@ export class ActionSheet {
   }
 
   render() {
-    let userCssClass = 'action-sheet-content';
     if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
+      this.cssClass.split(' ').forEach(cssClass => {
+        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
+      });
     }
 
     let cancelButton: ActionSheetButton;

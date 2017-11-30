@@ -26,6 +26,7 @@
         <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
         <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
         <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
+        <ion-button expand="block" id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
 
       </ion-content>
     </ion-page>
@@ -289,6 +290,26 @@
       });
       await actionSheetElement.present();
     }
+
+    async function presentWithCssClass() {
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        title: "Custom Css Class",
+        cssClass: "my-class my-custom-class",
+        buttons: [
+          {
+            text: 'Test',
+            cssClass: 'my-cancel-button, my-custom-button customClass',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          }
+        ]
+      });
+      await actionSheetElement.present();
+    }
+
   </script>
 </body>
 
