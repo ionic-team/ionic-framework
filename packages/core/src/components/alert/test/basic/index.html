@@ -28,6 +28,7 @@
         <ion-button expand="block" onclick="presentAlertPrompt()">Prompt</ion-button>
         <ion-button expand="block" onclick="presentAlertRadio()">Radio</ion-button>
         <ion-button expand="block" onclick="presentAlertCheckbox()">Checkbox</ion-button>
+        <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
       </ion-content>
     </ion-page>
   </ion-app>
@@ -289,6 +290,24 @@
       return await alert.present();
     }
 
+    async function presentWithCssClass() {
+      var alertController = document.querySelector('ion-alert-controller');
+      await alertController.componentOnReady();
+      const alert = await alertController.create({
+        title: 'Alert',
+        subTitle: 'Subtitle',
+        cssClass: 'my-class my-customClass   ',
+        message: 'This is an alert message.',
+        buttons: [ {
+            text: 'Ok',
+            cssClass: 'my-class my-customClass   ',
+            handler: () => {
+              console.log('Confirm Ok')
+            }
+          }]
+      });
+      return await alert.present();
+    }
 
 </script>
 </body>

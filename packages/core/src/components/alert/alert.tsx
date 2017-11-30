@@ -241,9 +241,10 @@ export class Alert {
   }
 
   buttonClass(button: AlertButton): CssClassMap {
+    let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
     let buttonClass: string[] = !button.cssClass
-      ? ['alert-button']
-      : [`alert-button`, `${button.cssClass}`];
+      ? ['alert-button', customClass]
+      : [`alert-button`, `${button.cssClass}`, customClass];
 
     return buttonClass.reduce((prevValue: any, cssClass: any) => {
       prevValue[cssClass] = true;
@@ -329,6 +330,13 @@ export class Alert {
     const hdrId = `${this.alertId}-hdr`;
     const subHdrId = `${this.alertId}-sub-hdr`;
     const msgId = `${this.alertId}-msg`;
+
+    if (this.cssClass) {
+      this.cssClass.split(' ').forEach(cssClass => {
+        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
+      });
+    }
+
 
     if (this.title || !this.subTitle) {
       this.hdrId = hdrId;
