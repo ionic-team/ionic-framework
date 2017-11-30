@@ -1,0 +1,22 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Label
+// --------------------------------------------------
+
+/// @prop - Text color of the label by an input, select, or datetime
+$label-ios-text-color:                 null !default;
+
+/// @prop - Text color of the stacked/floating label when it is focused
+$label-ios-text-color-focused:         null !default;
+
+/// @prop - Margin top of the label
+$label-ios-margin-top:                 $item-ios-padding-top !default;
+
+/// @prop - Margin end of the label
+$label-ios-margin-end:                 ($item-ios-padding-end / 2) !default;
+
+/// @prop - Margin bottom of the label
+$label-ios-margin-bottom:              $item-ios-padding-bottom !default;
+
+/// @prop - Margin start of the label
+$label-ios-margin-start:               0 !default;

@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals";
+
+// Chip
+// --------------------------------------------------
+
+/// @prop - Border radius of the icon in the chip
+$chip-icon-border-radius:       50% !default;
+
+/// @prop - Text alignment of the icon in the chip
+$chip-icon-text-align:          center !default;
+
+/// @prop - Width and height of the icon in the chip
+$chip-icon-size:                32px !default;
+
+/// @prop - Font size of the icon in the chip
+$chip-icon-font-size:           18px !default;
+
+/// @prop - Line height of the icon in the chip
+$chip-icon-line-height:         36px !default;

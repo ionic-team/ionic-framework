@@ -1,9 +1,7 @@
-@import "../../themes/ionic.globals.ios";
+@import "./header.ios.vars";
 
 // iOS Header
 // --------------------------------------------------
-
-$header-ios-translucent-filter:    saturate(180%) blur(20px) !default;
 
 .header-translucent-ios {
   -webkit-backdrop-filter: $header-ios-translucent-filter;

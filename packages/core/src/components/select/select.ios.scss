@@ -1,27 +1,8 @@
-@import "../../themes/ionic.globals.ios";
 @import "./select";
+@import "./select.ios.vars";
 
 // iOS Select
 // --------------------------------------------------
-
-/// @prop - Padding top of the select
-$select-ios-padding-top:         $item-ios-padding-top !default;
-
-/// @prop - Padding end of the select
-$select-ios-padding-end:         ($item-ios-padding-end / 2) !default;
-
-/// @prop - Padding bottom of the select
-$select-ios-padding-bottom:      $item-ios-padding-bottom !default;
-
-/// @prop - Padding start of the select
-$select-ios-padding-start:       $item-ios-padding-start !default;
-
-/// @prop - Color of the select icon
-$select-ios-icon-color:          #999 !default;
-
-/// @prop - Color of the select placeholder
-$select-ios-placeholder-color:   $select-ios-icon-color !default;
-
 
 .select-ios {
   @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);

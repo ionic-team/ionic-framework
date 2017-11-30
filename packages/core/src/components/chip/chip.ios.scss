@@ -1,54 +1,8 @@
-@import "../../themes/ionic.globals.ios";
 @import "./chip";
+@import "./chip.ios.vars";
 
 // iOS Chip
 // --------------------------------------------------
-
-/// @prop - Margin top of the chip
-$chip-ios-margin-top:                       2px !default;
-
-/// @prop - Margin end of the chip
-$chip-ios-margin-end:                       0 !default;
-
-/// @prop - Margin bottom of the chip
-$chip-ios-margin-bottom:                    $chip-ios-margin-top !default;
-
-/// @prop - Margin start of the chip
-$chip-ios-margin-start:                     $chip-ios-margin-end !default;
-
-/// @prop - Height of the chip
-$chip-ios-height:                           32px !default;
-
-/// @prop - Border radius of the chip
-$chip-ios-border-radius:                    16px !default;
-
-/// @prop - Font size of the chip
-$chip-ios-font-size:                        13px !default;
-
-/// @prop - Text color of the chip
-$chip-ios-text-color:                       rgba(0, 0, 0, .87) !default;
-
-/// @prop - Background color of the chip
-$chip-ios-background-color:                 rgba(0, 0, 0, .12) !default;
-
-/// @prop - Margin top of the label in the chip
-$chip-ios-label-margin-top:                 0 !default;
-
-/// @prop - Margin end of the label in the chip
-$chip-ios-label-margin-end:                 10px !default;
-
-/// @prop - Margin bottom of the label in the chip
-$chip-ios-label-margin-bottom:              $chip-ios-label-margin-top !default;
-
-/// @prop - Margin start of the label in the chip
-$chip-ios-label-margin-start:               $chip-ios-label-margin-end !default;
-
-/// @prop - Background color of the icon in the chip
-$chip-ios-icon-background-color:            color($colors-ios, primary) !default;
-
-/// @prop - Fill color of the icon in the chip
-$chip-ios-icon-fill-color:                  color-contrast($colors-ios, $chip-ios-icon-background-color) !default;
-
 
 .chip-ios {
   @include border-radius($chip-ios-border-radius);
@@ -71,6 +25,11 @@ $chip-ios-icon-fill-color:                  color-contrast($colors-ios, $chip-io
   background-color: $chip-ios-icon-background-color;
 
   fill: $chip-ios-icon-fill-color;
+}
+
+.chip-ios ion-avatar {
+  width: $chip-ios-avatar-width;
+  height: $chip-ios-avatar-height;
 }
 
 

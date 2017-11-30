@@ -5,7 +5,3 @@
 
 $footer-ios-translucent-filter:    saturate(180%) blur(20px) !default;
 
-.footer-translucent-ios {
-  -webkit-backdrop-filter: $footer-ios-translucent-filter;
-  backdrop-filter: $footer-ios-translucent-filter;
-}

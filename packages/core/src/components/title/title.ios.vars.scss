@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Title
+// --------------------------------------------------
+
+/// @prop - Font size of the toolbar title
+$toolbar-ios-title-font-size:               1.7rem !default;
+
+/// @prop - Font weight of the toolbar title
+$toolbar-ios-title-font-weight:             600 !default;
+
+/// @prop - Text alignment of the toolbar title
+$toolbar-ios-title-text-align:              center !default;
+
+/// @prop - Text color of the toolbar title
+$toolbar-ios-title-text-color:              color-contrast($colors-ios, $toolbar-ios-background) !default;

@@ -1,0 +1,69 @@
+// Globals
+// --------------------------------------------------
+@import "../../themes/ionic.globals";
+@import "../../themes/ionic.mixins";
+
+
+// App
+// --------------------------------------------------
+// All font sizes use rem units
+// By default, 1rem equals 10px. For example, 1.4rem  === 14px
+// $font-size-root value, which is on the <html> element
+// is what can scale all fonts
+
+/// @prop - Font size of the root html
+$font-size-root:               62.5% !default;
+
+/// @prop - Font weight of all headings
+$headings-font-weight:         500 !default;
+
+/// @prop - Line height of all headings
+$headings-line-height:         1.2 !default;
+
+/// @prop - Font size of heading level 1
+$h1-font-size:                 2.6rem !default;
+
+/// @prop - Font size of heading level 2
+$h2-font-size:                 2.4rem !default;
+
+/// @prop - Font size of heading level 3
+$h3-font-size:                 2.2rem !default;
+
+/// @prop - Font size of heading level 4
+$h4-font-size:                 2rem !default;
+
+/// @prop - Font size of heading level 5
+$h5-font-size:                 1.8rem !default;
+
+/// @prop - Font size of heading level 6
+$h6-font-size:                 1.6rem !default;
+
+
+// Responsive Utilities
+// --------------------------------------------------
+
+/// @prop - Whether to include all of the responsive utility attributes
+$include-responsive-utilities:          true !default;
+
+/// @prop - Whether to include all of the responsive text alignment attributes
+$include-text-alignment-utilities:      $include-responsive-utilities !default;
+
+/// @prop - Whether to include all of the responsive text transform attributes
+$include-text-transform-utilities:      $include-responsive-utilities !default;
+
+/// @prop - Whether to include all of the responsive float attributes
+$include-float-element-utilities:       $include-responsive-utilities !default;
+
+
+// Screen Breakpoints
+// --------------------------------------------------
+
+/// @prop - The minimum dimensions at which your layout will change,
+/// adapting to different screen sizes, for use in media queries
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;

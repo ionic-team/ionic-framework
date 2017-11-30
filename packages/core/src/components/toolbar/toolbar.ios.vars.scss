@@ -1,0 +1,37 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Toolbar
+// --------------------------------------------------
+
+/// @prop - Order of the toolbar elements
+$toolbar-order-ios: (
+  back-button: 0,
+  menu-toggle-start: 1,
+  buttons-start: 2,
+  buttons-mode-start: 3,
+  content: 4,
+  buttons-mode-end: 5,
+  buttons-end: 6,
+  menu-toggle-end: 7,
+);
+
+/// @prop - Font size of the toolbar button
+$toolbar-ios-button-font-size:              1.7rem !default;
+
+/// @prop - Text color of the toolbar button
+$toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar-ios-background, ios) !default;
+
+/// @prop - Border radius of the toolbar button
+$toolbar-ios-button-border-radius:          4px !default;
+
+/// @prop - Font weight of the strong toolbar button
+$toolbar-ios-button-strong-font-weight:     600 !default;
+
+/// @prop - Height of the navigation bar
+$navbar-ios-height:                         $toolbar-ios-height !default;
+
+/// @prop - Filter of the translucent toolbar
+$toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent toolbar
+$toolbar-ios-translucent-opacity:           .88 !default;

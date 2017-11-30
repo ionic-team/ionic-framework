@@ -1,0 +1,25 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Toast
+// --------------------------------------------------
+
+/// @prop - Background of the toast wrapper
+$toast-md-background:                            #333 !default;
+
+/// @prop - Color of the toast title
+$toast-md-title-color:                           #fff !default;
+
+/// @prop - Font size of the toast title
+$toast-md-title-font-size:                       1.5rem !default;
+
+/// @prop - Padding top of the toast title
+$toast-md-title-padding-top:                     19px !default;
+
+/// @prop - Padding end of the toast title
+$toast-md-title-padding-end:                     16px !default;
+
+/// @prop - Padding bottom of the toast title
+$toast-md-title-padding-bottom:                  17px !default;
+
+/// @prop - Padding start of the toast title
+$toast-md-title-padding-start:                   $toast-md-title-padding-end !default;

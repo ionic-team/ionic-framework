@@ -1,40 +1,8 @@
-@import "../../themes/ionic.globals.md";
 @import "./item";
-
+@import "./item.md.vars";
 
 // Material Design Item
 // --------------------------------------------------
-
-/// @prop - Font size of the item text
-$item-md-body-text-font-size:        1.4rem !default;
-
-/// @prop - line height of the item text
-$item-md-body-text-line-height:      1.5 !default;
-
-/// @prop - Color of the item paragraph
-$item-md-paragraph-text-color:       #666 !default;
-
-/// @prop - Font size of the item
-$item-md-font-size:                  1.6rem !default;
-
-/// @prop - Size of the avatar in the item
-$item-md-avatar-size:                40px !default;
-
-/// @prop - Border radius of the avatar in the item
-$item-md-avatar-border-radius:       50% !default;
-
-/// @prop - Size of the thumbnail in the item
-$item-md-thumbnail-size:             80px !default;
-
-/// @prop - Shows the detail arrow icon on an item
-$item-md-detail-push-show:           false !default;
-
-/// @prop - Color of the detail arrow icon
-$item-md-detail-push-color:          $list-md-border-color !default;
-
-/// @prop - Icon for the detail arrow
-$item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
-
 
 .item-md {
   @include padding-horizontal($item-md-padding-start, 0);
@@ -165,18 +133,8 @@ $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' vi
 // --------------------------------------------------
 
 .item-md ion-avatar {
-  min-width: $item-md-avatar-size;
-  min-height: $item-md-avatar-size;
-}
-
-.item-md ion-avatar ion-img,
-.item-md ion-avatar img {
-  @include border-radius($item-md-avatar-border-radius);
-
-  overflow: hidden;
-
-  width: $item-md-avatar-size;
-  height: $item-md-avatar-size;
+  width: $item-md-avatar-width;
+  height: $item-md-avatar-height;
 }
 
 

@@ -1,0 +1,58 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Searchbar
+// --------------------------------------------------
+
+/// @prop - Padding top of the searchbar
+$searchbar-ios-padding-top:               12px !default;
+
+/// @prop - Padding end of the searchbar
+$searchbar-ios-padding-end:               $searchbar-ios-padding-top !default;
+
+/// @prop - Padding bottom of the searchbar
+$searchbar-ios-padding-bottom:            $searchbar-ios-padding-top !default;
+
+/// @prop - Padding start of the searchbar
+$searchbar-ios-padding-start:             $searchbar-ios-padding-end !default;
+
+/// @prop - Minimum height of the searchbar
+$searchbar-ios-min-height:                44px !default;
+
+/// @prop - Color of the searchbar input search icon
+$searchbar-ios-input-search-icon-color:   rgba(0, 0, 0, .5) !default;
+
+/// @prop - Svg for the searchbar input search icon
+$searchbar-ios-input-search-icon-svg:     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'><path fill='fg-color' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/><line stroke='fg-color' stroke-miterlimit='10' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>" !default;
+
+/// @prop - Size of the searchbar input search icon
+$searchbar-ios-input-search-icon-size:    13px !default;
+
+/// @prop - Height of the searchbar input
+$searchbar-ios-input-height:              36px !default;
+
+/// @prop - Border radius of the searchbar input
+$searchbar-ios-input-border-radius:       10px !default;
+
+/// @prop - Color of the searchbar input placeholder
+$searchbar-ios-input-placeholder-color:   rgba(0, 0, 0, .5) !default;
+
+/// @prop - Color of the searchbar input text
+$searchbar-ios-input-text-color:          #000 !default;
+
+/// @prop - Background of the searchbar input
+$searchbar-ios-input-background-color:    rgba(15, 22, 64, .1) !default;
+
+/// @prop - Transition of the searchbar input
+$searchbar-ios-input-transition:          all 300ms ease !default;
+
+/// @prop - Transition of the searchbar input cancel button
+$searchbar-ios-cancel-transition:         all 300ms ease !default;
+
+/// @prop - Color of the searchbar input clear icon
+$searchbar-ios-input-clear-icon-color:    rgba(0, 0, 0, .5) !default;
+
+/// @prop - Svg for the searchbar input clear icon
+$searchbar-ios-input-clear-icon-svg:      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='fg-color' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
+
+/// @prop - Size of the searchbar input clear icon
+$searchbar-ios-input-clear-icon-size:     18px !default;

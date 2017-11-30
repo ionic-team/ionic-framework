@@ -1,15 +1,7 @@
-@import "../../themes/ionic.globals";
-
+@import "./menu.vars";
 
 // Menu
 // --------------------------------------------------
-
-/// @prop - Width of the menu
-$menu-width:                 304px !default;
-
-/// @prop - Width of the menu on small devices (under 340px)
-$menu-small-width:           $menu-width - 40px !default;
-
 
 ion-menu {
   @include position(0, 0, 0, 0);

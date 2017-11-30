@@ -1,0 +1,43 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS FAB Button
+// --------------------------------------------------
+
+/// @prop - Background color of the button
+$fab-ios-background-color:                        color($colors-ios, primary) !default;
+
+/// @prop - Text color of the button
+$fab-ios-text-color:                              color-contrast($colors-ios, $fab-ios-background-color) !default;
+
+/// @prop - Color of the button icon
+$fab-ios-icon-fill-color:                         $fab-ios-text-color !default;
+
+/// @prop - Background color of the activated button
+$fab-ios-background-color-activated:              color-shade($fab-ios-background-color) !default;
+
+/// @prop - Background color of the button in a list
+$fab-ios-list-button-background-color:            $fab-list-button-background-color !default;
+
+/// @prop - Text color of the button in a list
+$fab-ios-list-button-text-color:                  color-contrast($colors-ios, $fab-ios-list-button-background-color) !default;
+
+/// @prop - Color of the button icon in a list
+$fab-ios-list-button-icon-fill-color:             $fab-ios-list-button-text-color !default;
+
+/// @prop - Background color of the activated button in a list
+$fab-ios-list-button-background-color-activated:  color-shade($fab-ios-list-button-background-color) !default;
+
+/// @prop - Transition duration of the transform and opacity of the button in a list
+$fab-ios-list-button-transition-duration:         200ms !default;
+
+/// @prop - Speed curve of the transition of the transform and opacity of the button in a list
+$fab-ios-list-button-transition-timing-function:  ease !default;
+
+/// @prop - Transition delay of the transform and opacity of the button in a list
+$fab-ios-list-button-transition-delay:            10ms !default;
+
+/// @prop - Filter of the translucent fab
+$fab-ios-translucent-filter:                      saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent fab
+$fab-ios-translucent-opacity:                     .88 !default;

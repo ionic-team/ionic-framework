@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Chip Button
+// --------------------------------------------------
+
+/// @prop - Background color of the chip button
+$chip-button-md-background-color:          color($colors-md, primary) !default;
+
+/// @prop - Fill color of the icon in the chip button
+$chip-button-md-icon-fill-color:           color-contrast($colors-md, $chip-button-md-background-color) !default;
+
+/// @prop - Background color of the clear chip button
+$chip-button-md-clear-background-color:    transparent !default;
+
+/// @prop - Text color of the clear chip button
+$chip-button-md-clear-text-color:          color($colors-md, primary) !default;
+
+/// @prop - Fill color of the icon in the clear chip button
+$chip-button-md-clear-icon-fill-color:     color($colors-md, primary) !default;

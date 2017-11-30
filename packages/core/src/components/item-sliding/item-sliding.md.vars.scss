@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals.md";
+
+// Material Design Item Sliding
+// --------------------------------------------------
+
+/// @prop - Background for the sliding content
+$item-md-sliding-content-background:         $list-md-background-color !default;
+
+/// @prop - Font size of the sliding option button
+$item-md-sliding-button-font-size:           1.4rem !default;
+
+/// @prop - Background color of the sliding option button
+$item-md-sliding-button-background-color:    color($colors-md, primary) !default;
+
+/// @prop - Text color of the sliding option button
+$item-md-sliding-button-text-color:          color-contrast($colors-md, $item-md-sliding-button-background-color) !default;
+
+/// @prop - color of the sliding option button icon
+$item-md-sliding-button-icon-color:          color-contrast($colors-md, $item-md-sliding-button-background-color) !default;

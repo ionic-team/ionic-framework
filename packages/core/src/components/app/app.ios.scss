@@ -1,12 +1,8 @@
-@import "../../themes/ionic.globals.ios";
 @import "./app";
-
-@import "../tabs/tabs.ios.vars";
+@import "./app.ios.vars";
 
 // iOS App
 // --------------------------------------------------
-
-$app-ios-statusbar-padding:       20px !default;
 
 .app-ios {
 

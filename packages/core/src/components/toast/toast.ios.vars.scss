@@ -1,0 +1,37 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Toast
+// --------------------------------------------------
+
+/// @prop - Background of the toast wrapper
+$toast-ios-background:                            rgba(237, 237, 239, 1) !default;
+
+/// @prop - Border radius of the toast wrapper
+$toast-ios-border-radius:                         14px !default;
+
+/// @prop - Color of the toast title
+$toast-ios-title-color:                           rgba(71, 71, 71, 1) !default;
+
+/// @prop - Font size of the toast title
+$toast-ios-title-font-size:                       14px !default;
+
+/// @prop - Padding top of the toast title
+$toast-ios-title-padding-top:                     15px !default;
+
+/// @prop - Padding end of the toast title
+$toast-ios-title-padding-end:                     $toast-ios-title-padding-top !default;
+
+/// @prop - Padding bottom of the toast title
+$toast-ios-title-padding-bottom:                  $toast-ios-title-padding-top !default;
+
+/// @prop - Padding start of the toast title
+$toast-ios-title-padding-start:                   $toast-ios-title-padding-end !default;
+
+/// @prop - Color of the toast button
+$toast-ios-button-color:                          rgba(71, 71, 71, 1) !default;
+
+/// @prop - Filter of the translucent toast
+$toast-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
+
+/// @prop - Opacity of the translucent toast
+$toast-ios-translucent-opacity:                   .88 !default;

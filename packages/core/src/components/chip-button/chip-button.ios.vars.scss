@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Chip Button
+// --------------------------------------------------
+
+/// @prop - Background color of the chip button
+$chip-button-ios-background-color:          color($colors-ios, primary) !default;
+
+/// @prop - Fill color of the icon in the chip button
+$chip-button-ios-icon-fill-color:           color-contrast($colors-ios, $chip-button-ios-background-color) !default;
+
+/// @prop - Background color of the clear chip button
+$chip-button-ios-clear-background-color:    transparent !default;
+
+/// @prop - Text color of the clear chip button
+$chip-button-ios-clear-text-color:          color($colors-ios, primary) !default;
+
+/// @prop - Fill color of the icon in the clear chip button
+$chip-button-ios-clear-icon-fill-color:     color($colors-ios, primary) !default;
