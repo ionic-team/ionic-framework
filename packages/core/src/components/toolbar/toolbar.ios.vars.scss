@@ -27,9 +27,6 @@ $toolbar-ios-button-border-radius:          4px !default;
 /// @prop - Font weight of the strong toolbar button
 $toolbar-ios-button-strong-font-weight:     600 !default;
 
-/// @prop - Height of the navigation bar
-$navbar-ios-height:                         $toolbar-ios-height !default;
-
 /// @prop - Filter of the translucent toolbar
 $toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
 

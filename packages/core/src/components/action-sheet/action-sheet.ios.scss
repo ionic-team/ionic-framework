@@ -56,13 +56,11 @@
 // -----------------------------------------
 
 .action-sheet-ios .action-sheet-title {
-  @include border-radius($action-sheet-ios-title-border-radius);
-
   @include padding($action-sheet-ios-title-padding);
 
   @include text-align($action-sheet-ios-text-align);
 
-  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
+  border-bottom: $action-sheet-ios-title-border-width $action-sheet-ios-title-border-style $action-sheet-ios-title-border-color;
 
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
@@ -80,7 +78,7 @@
 
   min-height: $action-sheet-ios-button-min-height;
 
-  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-border-color;
+  border-bottom: $action-sheet-ios-button-border-width $action-sheet-ios-button-border-style $action-sheet-ios-button-border-color;
 
   font-size: $action-sheet-ios-button-font-size;
   color: $action-sheet-ios-button-text-color;
