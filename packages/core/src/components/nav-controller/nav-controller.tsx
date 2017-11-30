@@ -2,7 +2,7 @@ import { Component, Element, Method, Prop } from '@stencil/core';
 
 import { Animation, AnimationController, ComponentDataPair, FrameworkDelegate, Nav, NavOptions, ViewController } from '../../index';
 
-import { isReady } from '../../utils/helpers';
+import { DomFrameworkDelegate } from './dom-framework-delegate';
 
 import {
   insert as insertImpl,
@@ -115,13 +115,10 @@ export function hydrateDelegate(navController: NavController): Promise<Framework
   if (navController.delegate) {
     return Promise.resolve(navController.delegate);
   }
-  // no delegate is set, so fall back to inserting the stencil-ion-nav-delegate
-  const element = document.createElement('stencil-ion-nav-delegate');
-  document.body.appendChild(element);
-  return isReady(element).then(() => {
-    defaultDelegate = element as any as FrameworkDelegate;
-    return defaultDelegate;
-  });
+
+  // no delegate is set, so fall back to using the DomFrameworkDelegate
+  defaultDelegate = new DomFrameworkDelegate();
+  return Promise.resolve(defaultDelegate);
 }
 
 export function hydrateAnimationController(animationController: AnimationController): Promise<Animation> {

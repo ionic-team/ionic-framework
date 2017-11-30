@@ -1819,36 +1819,6 @@ declare global {
 
 
 import {
-  StencilNavDelegate as StencilIonNavDelegate
-} from './components/nav-controller/stencil-nav-delegate';
-
-declare global {
-  interface HTMLStencilIonNavDelegateElement extends StencilIonNavDelegate, HTMLElement {
-  }
-  var HTMLStencilIonNavDelegateElement: {
-    prototype: HTMLStencilIonNavDelegateElement;
-    new (): HTMLStencilIonNavDelegateElement;
-  };
-  interface HTMLElementTagNameMap {
-    "stencil-ion-nav-delegate": HTMLStencilIonNavDelegateElement;
-  }
-  interface ElementTagNameMap {
-    "stencil-ion-nav-delegate": HTMLStencilIonNavDelegateElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "stencil-ion-nav-delegate": JSXElements.StencilIonNavDelegateAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface StencilIonNavDelegateAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   Nav as IonNav
 } from './components/nav/nav';
 
