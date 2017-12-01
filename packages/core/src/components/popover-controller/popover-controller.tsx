@@ -32,7 +32,7 @@ export class PopoverController {
   private popovers: Popover[] = [];
 
   /**
-   ** Create a popover component instance
+   * Create a popover component instance
    * @param opts Options when creating a new popover instance
    */
   @Method()
