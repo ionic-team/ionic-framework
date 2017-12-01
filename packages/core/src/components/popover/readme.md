@@ -42,7 +42,7 @@ any
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 
@@ -104,7 +104,7 @@ any
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 

@@ -37,12 +37,12 @@ boolean
 any
 
 
-#### exitAnimation
+#### inputs
 
 any
 
 
-#### inputs
+#### leaveAnimation
 
 any
 
@@ -99,12 +99,12 @@ boolean
 any
 
 
-#### exitAnimation
+#### inputs
 
 any
 
 
-#### inputs
+#### leaveAnimation
 
 any
 

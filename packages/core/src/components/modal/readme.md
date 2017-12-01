@@ -37,7 +37,7 @@ boolean
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 
@@ -89,7 +89,7 @@ boolean
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 

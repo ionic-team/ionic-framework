@@ -32,7 +32,7 @@ number
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 
@@ -89,7 +89,7 @@ number
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 

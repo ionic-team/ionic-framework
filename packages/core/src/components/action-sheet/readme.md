@@ -12,6 +12,11 @@
 string
 
 
+#### animate
+
+boolean
+
+
 #### buttons
 
 any
@@ -32,7 +37,7 @@ boolean
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 
@@ -59,6 +64,11 @@ boolean
 string
 
 
+#### animate
+
+boolean
+
+
 #### buttons
 
 any
@@ -79,7 +89,7 @@ boolean
 any
 
 
-#### exitAnimation
+#### leaveAnimation
 
 any
 
@@ -117,6 +127,14 @@ boolean
 
 
 #### ionActionSheetWillPresent
+
+
+## Methods
+
+#### dismiss()
+
+
+#### present()
 
 
 
