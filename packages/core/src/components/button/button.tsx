@@ -15,62 +15,62 @@ export class Button {
   @Prop() itemButton: boolean = false;
 
   /**
-   * @input {string} Contains a URL or a URL fragment that the hyperlink points to.
+   * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
   @Prop() href: string;
 
   /**
-   * @input {string} The type of button.
+   * The type of button.
    * Possible values are: `"button"`, `"bar-button"`.
    */
   @Prop() buttonType: string = 'button';
 
   /**
-   * @input {string} The button size.
+   * The button size.
    * Possible values are: `"small"`, `"large"`.
    */
   @Prop() size: 'small' | 'large';
 
   /**
-   * @input {boolean} If true, sets the button into a disabled state.
+   * If true, sets the button into a disabled state.
    */
   @Prop() disabled: boolean = false;
 
   /**
-   * @input {string} Set to `"clear"` for a transparent button, to `"outline"` for a transparent
+   * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * `ion-navbar`, where the default is `"clear"`.
    */
   @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
   /**
-   * @input {boolean} If true, activates a button with rounded corners.
+   * If true, activates a button with rounded corners.
    * Type: shape
    */
   @Prop() round: boolean = false;
 
   /**
-   * @input {string} Set to `"block"` for a full-width button or to `"full"` for a full-width button
+   * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
   @Prop() expand: 'full' | 'block';
 
   /**
-   * @input {boolean} If true, activates a button with a heavier font weight.
+   * If true, activates a button with a heavier font weight.
    * Type: decorator
    */
   @Prop() strong: boolean = false;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
