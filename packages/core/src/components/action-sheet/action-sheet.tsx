@@ -23,6 +23,7 @@ import mdLeaveAnimation from './animations/md.leave';
 export class ActionSheet {
   mode: string;
   color: string;
+  actionSheetId: string;
 
   private animation: Animation;
 
@@ -61,19 +62,54 @@ export class ActionSheet {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
 
+  /**
+   * Additional class or classes to apply to the action-sheet
+   */
   @Prop() cssClass: string;
+
+  /**
+   * Title for the action-sheet
+   */
   @Prop() title: string;
+
+  /**
+   * Subtitle for the action-sheet
+   */
   @Prop() subTitle: string;
+
+  /**
+   * An array of buttons for the action-sheet. See ActionsheetButton type for accepted values
+   */
   @Prop() buttons: ActionSheetButton[];
+
+  /**
+   * If true, the action-sheet will be dismissed when the backdrop is clicked.
+   */
   @Prop() enableBackdropDismiss: boolean = true;
+
+  /**
+   * If true, action-sheet will become translucent. Requires support for backdrop-filters.
+   */
   @Prop() translucent: boolean = false;
 
+  /**
+   * Enable action-sheet animations. If false, action-sheet will not animate in
+   */
   @Prop() animate: boolean = true;
+
+  /**
+   * Animation to use when the action-sheet is created
+   */
   @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the action-sheet is dismissed
+   */
   @Prop() leaveAnimation: AnimationBuilder;
 
-  @Prop() actionSheetId: string;
-
+  /**
+   * Present the action-sheet after is has been created
+   */
   @Method()
   present() {
     if (this.animation) {
@@ -100,6 +136,9 @@ export class ActionSheet {
     });
   }
 
+  /**
+   * Dismiss the action-sheet programatically
+   */
   @Method()
   dismiss() {
     if (this.animation) {

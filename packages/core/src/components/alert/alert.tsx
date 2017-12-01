@@ -25,6 +25,7 @@ import mdLeaveAnimation from './animations/md.leave';
 export class Alert {
   mode: string;
   color: string;
+  alertId: string;
 
   private animation: Animation;
   private activeId: string;
@@ -66,21 +67,64 @@ export class Alert {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
 
+  /**
+   * Additional class or classes to apply to the alert
+   */
   @Prop() cssClass: string;
+
+  /**
+   * Title for the alert
+   */
   @Prop() title: string;
+
+  /**
+   * Subtitle for the alert
+   */
   @Prop() subTitle: string;
+
+  /**
+   * Message to be shown in the alert
+   */
   @Prop() message: string;
+
+  /**
+   * Array of buttons to be added to the alert. See AlertButton type for valid options
+   */
   @Prop() buttons: AlertButton[] = [];
+
+  /**
+   * Array of input to show in the alert. See AlertInput type for valid options
+   */
   @Prop({ mutable: true }) inputs: AlertInput[] = [];
+
+  /**
+   * If true, the alert will be dismissed when the backdrop is clicked.
+   */
   @Prop() enableBackdropDismiss: boolean = true;
+
+  /**
+   * If true, alert will become translucent. Requires support for backdrop-filters.
+   */
   @Prop() translucent: boolean = false;
 
+  /**
+   * Enable alert animations. If false, alert will not animate in
+   */
   @Prop() animate: boolean = true;
-  @Prop() alertId: string;
 
+  /**
+   * Animation to be used when the alert is shown
+   */
   @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to be used when the alert is dismissed
+   */
   @Prop() leaveAnimation: AnimationBuilder;
 
+  /**
+   * Present the alert after is has been created
+   */
   @Method() present() {
     if (this.animation) {
       this.animation.destroy();
@@ -111,6 +155,9 @@ export class Alert {
     });
   }
 
+  /**
+   * Dismiss the alert programatically
+   */
   @Method() dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
@@ -439,7 +486,6 @@ export class Alert {
   }
 
 }
-
 
 export interface AlertOptions {
   title?: string;

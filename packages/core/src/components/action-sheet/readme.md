@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### actionSheetId
-
-string
-
-
 #### animate
 
 boolean
@@ -58,11 +53,6 @@ boolean
 
 
 ## Attributes
-
-#### actionSheetId
-
-string
-
 
 #### animate
 

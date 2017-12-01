@@ -10,6 +10,9 @@ export class LoadingController {
   private loadingResolves: {[loadingId: string]: Function} = {};
   private loadings: Loading[] = [];
 
+  /**
+   * Create a loading overlay and pass options to it
+   */
   @Method()
   create(opts?: LoadingOptions): Promise<Loading> {
     // create ionic's wrapping ion-loading component

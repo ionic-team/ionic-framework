@@ -1,11 +1,9 @@
 import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-
 import { createThemedClasses } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
-
 import mdEnterAnimation from './animations/md.enter';
 import mdLeaveAnimation from './animations/md.leave';
 
@@ -22,6 +20,7 @@ import mdLeaveAnimation from './animations/md.leave';
 export class Loading {
   color: string;
   mode: string;
+  loadingId: string;
 
   private animation: Animation;
   private durationTimeout: any;
@@ -63,17 +62,50 @@ export class Loading {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
+
+  /**
+   * Additional classes to apply for custom CSS
+   */
   @Prop() cssClass: string;
+
+  /**
+   * Optional text content to display in the loading indicator
+   */
   @Prop() content: string;
+
+  /**
+   * Dismiss the loading indicator if the page is changed
+   */
   @Prop() dismissOnPageChange: boolean = false;
+
+  /**
+   * Number of milliseconds to wait before dismissing the loading indicator
+   */
   @Prop() duration: number;
+
+  /**
+   * If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
+   */
   @Prop() translucent: boolean = false;
-  @Prop() loadingId: string;
+
+  /**
+   * Show the backdrop of not
+   */
   @Prop() showBackdrop: boolean = true;
 
+  /**
+   * Animation to use when loading indicator is presented
+   */
   @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when a loading indicator is dismissed
+   */
   @Prop() leaveAnimation: AnimationBuilder;
 
+  /**
+   * Present a loading overlay after it has been created
+   */
   present() {
     return new Promise<void>(resolve => {
       this._present(resolve);
@@ -104,6 +136,9 @@ export class Loading {
     });
   }
 
+  /**
+   * Dismiss a loading indicator programatically
+   */
   dismiss() {
     clearTimeout(this.durationTimeout);
 
@@ -228,7 +263,6 @@ export class Loading {
   }
 }
 
-
 export interface LoadingOptions {
   spinner?: string;
   content?: string;
@@ -238,7 +272,6 @@ export interface LoadingOptions {
   duration?: number;
   translucent?: boolean;
 }
-
 
 export interface LoadingEvent extends Event {
   detail: {

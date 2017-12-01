@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### alertId
-
-string
-
-
 #### animate
 
 boolean
@@ -68,11 +63,6 @@ boolean
 
 
 ## Attributes
-
-#### alertId
-
-string
-
 
 #### animate
 

@@ -104,7 +104,6 @@ declare global {
       animate?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
-      actionSheetId?: string;
     }
   }
 }
@@ -173,7 +172,6 @@ declare global {
       enableBackdropDismiss?: boolean;
       translucent?: boolean;
       animate?: boolean;
-      alertId?: string;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
     }

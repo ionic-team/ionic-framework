@@ -10,6 +10,10 @@ export class AlertController {
   private alertResolves: { [alertId: string]: Function } = {};
   private alerts: HTMLIonAlertElement[] = [];
 
+  /**
+   * Open an alert with a title, subTitle, and an array of buttons
+   * @param {AlertOptions} opts Action sheet options
+   */
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
     // create ionic's wrapping ion-alert component
