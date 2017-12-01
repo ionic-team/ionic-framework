@@ -1,7 +1,6 @@
 import { Component, Listen, Method } from '@stencil/core';
 import { Popover, PopoverEvent, PopoverOptions } from '../../index';
 
-
 @Component({
   tag: 'ion-popover-controller'
 })
@@ -10,6 +9,10 @@ export class PopoverController {
   private popoverResolves: {[popoverId: string]: Function} = {};
   private popovers: Popover[] = [];
 
+  /**
+   * Create a popover component instance
+   * @param opts Options when creating a new popover instance
+   */
   @Method()
   create(opts?: PopoverOptions) {
     // create ionic's wrapping ion-popover component

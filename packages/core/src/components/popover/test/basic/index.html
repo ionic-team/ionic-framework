@@ -10,11 +10,11 @@
 
 <body>
   <ion-app>
-    <ion-page>
+    <ion-page class="ion-page">
       <ion-header>
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-button onclick="presentPopover('profile-page', event)">
+            <ion-button onclick="presentPopover({component: 'profile-page', ev: event })">
               <ion-icon slot="icon-only" name="person"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -34,7 +34,7 @@
       <ion-footer>
         <ion-toolbar color="primary">
           <ion-buttons slot="end">
-            <ion-button onclick="presentPopover('profile-page', event)">
+            <ion-button onclick="presentPopover({component: 'profile-page', ev: event })">
               <ion-icon slot="icon-only" name="person"></ion-icon>
             </ion-button>
           </ion-buttons>
