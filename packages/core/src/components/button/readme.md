@@ -7,28 +7,20 @@ and be enhanced by a wide range of attributes.
 
 <!-- Colors -->
 <ion-button>Default</ion-button>
-
 <ion-button color="secondary">Secondary</ion-button>
-
 <ion-button color="danger">Danger</ion-button>
-
 <ion-button color="light">Light</ion-button>
-
 <ion-button color="dark">Dark</ion-button>
 
 <!-- Shapes -->
-<ion-button full>Full Button</ion-button>
-
-<ion-button block>Block Button</ion-button>
-
+<ion-button expand="full">Full Button</ion-button>
+<ion-button expand="block">Block Button</ion-button>
 <ion-button round>Round Button</ion-button>
 
 <!-- Outline -->
-<ion-button full outline>Outline + Full</ion-button>
-
-<ion-button block outline>Outline + Block</ion-button>
-
-<ion-button round outline>Outline + Round</ion-button>
+<ion-button expand="full" fill="outline">Outline + Full</ion-button>
+<ion-button expand="block" fill="outline">Outline + Block</ion-button>
+<ion-button round fill="outline">Outline + Round</ion-button>
 
 <!-- Icons -->
 <ion-button>
@@ -46,11 +38,9 @@ and be enhanced by a wide range of attributes.
 </ion-button>
 
 <!-- Sizes -->
-<ion-button large>Large</ion-button>
-
+<ion-button size="large">Large</ion-button>
 <ion-button>Default</ion-button>
-
-<ion-button small>Small</ion-button>
+<ion-button size="small">Small</ion-button>
 ```
 
 
