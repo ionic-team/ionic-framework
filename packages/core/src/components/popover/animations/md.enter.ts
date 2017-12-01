@@ -3,11 +3,7 @@ import { Animation } from '../../../index';
 /**
  * Md Popover Enter Animation
  */
-export default function mdEnterAnimation(
-  Animation: Animation,
-  baseElm: HTMLElement,
-  ev?: Event
-): Animation {
+export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement, ev?: Event): Animation {
   let originY = 'top';
   let originX = 'left';
 
