@@ -59,22 +59,22 @@
     </ion-page>
   </ion-app>
   <script>
-    function presentToast(position) {
-      var toastController = document.querySelector('ion-toast-controller');
-      toastController.create({
+    async function presentToast(position) {
+      const toastController = document.querySelector('ion-toast-controller');
+      await toastController.componentOnReady();
+      const toastElement = await toastController.create({
         message: 'Hellooo',
         position,
         duration: 2000
-      }).then(toast => {
-        toast.present();
       });
+      return await toastElement.present();
     }
 
-    function presentToastWithOptions(opts) {
-      var toastController = document.querySelector('ion-toast-controller');
-      toastController.create(opts).then(toast => {
-        toast.present();
-      });
+    async function presentToastWithOptions(opts) {
+      const toastController = document.querySelector('ion-toast-controller');
+      await toastController.componentOnReady();
+      const toastElement = await toastController.create(opts);
+      return await toastElement.present();
     }
   </script>
 

@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Toast, ToastEvent, ToastOptions } from '../../index';
+import { ToastEvent, ToastOptions } from '../../index';
 
 @Component({
   tag: 'ion-toast-controller'
@@ -7,10 +7,10 @@ import { Toast, ToastEvent, ToastOptions } from '../../index';
 export class ToastController {
   private ids = 0;
   private toastResolves: { [toastId: string]: Function } = {};
-  private toasts: Toast[] = [];
+  private toasts: HTMLIonToastElement[] = [];
 
   @Method()
-  create(opts?: ToastOptions) {
+  create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
     // create ionic's wrapping ion-toast component
     const toast = document.createElement('ion-toast');
     const id = this.ids++;
@@ -28,14 +28,14 @@ export class ToastController {
     appRoot.appendChild(toast as any);
 
     // store the resolve function to be called later up when the toast loads
-    return new Promise<Toast>(resolve => {
+    return new Promise<HTMLIonToastElement>(resolve => {
       this.toastResolves[toast.toastId] = resolve;
     });
   }
 
   @Listen('body:ionToastDidLoad')
   protected didLoad(ev: ToastEvent) {
-    const toast = ev.detail.toast;
+    const toast = ev.target as HTMLIonToastElement;
     const toastResolve = this.toastResolves[toast.toastId];
     if (toastResolve) {
       toastResolve(toast);
@@ -45,12 +45,12 @@ export class ToastController {
 
   @Listen('body:ionToastWillPresent')
   protected willPresent(ev: ToastEvent) {
-    this.toasts.push(ev.detail.toast);
+    this.toasts.push(ev.target as HTMLIonToastElement);
   }
 
   @Listen('body:ionToastWillDismiss, body:ionToastDidUnload')
   protected willDismiss(ev: ToastEvent) {
-    const index = this.toasts.indexOf(ev.detail.toast);
+    const index = this.toasts.indexOf(ev.target as HTMLIonToastElement);
     if (index > -1) {
       this.toasts.splice(index, 1);
     }

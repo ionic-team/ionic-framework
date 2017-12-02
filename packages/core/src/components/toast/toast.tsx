@@ -1,5 +1,14 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap } from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import {
+  Animation,
+  AnimationBuilder,
+  AnimationController,
+  Config,
+  CssClassMap,
+  OverlayDismissEvent,
+  OverlayDismissEventDetail
+} from '../../index';
+import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
 import { createThemedClasses } from '../../utils/theme';
 
@@ -30,32 +39,32 @@ export class Toast {
   /**
    * @output {ToastEvent} Emitted after the toast has loaded.
    */
-  @Event() ionToastDidLoad: EventEmitter;
+  @Event() ionToastDidLoad: EventEmitter<ToastEventDetail>;
 
   /**
    * @output {ToastEvent} Emitted after the toast has presented.
    */
-  @Event() ionToastDidPresent: EventEmitter;
+  @Event() ionToastDidPresent: EventEmitter<ToastEventDetail>;
 
   /**
    * @output {ToastEvent} Emitted before the toast has presented.
    */
-  @Event() ionToastWillPresent: EventEmitter;
+  @Event() ionToastWillPresent: EventEmitter<ToastEventDetail>;
 
   /**
    * @output {ToastEvent} Emitted before the toast has dismissed.
    */
-  @Event() ionToastWillDismiss: EventEmitter;
+  @Event() ionToastWillDismiss: EventEmitter<ToastDismissEventDetail>;
 
   /**
    * @output {ToastEvent} Emitted after the toast has dismissed.
    */
-  @Event() ionToastDidDismiss: EventEmitter;
+  @Event() ionToastDidDismiss: EventEmitter<ToastDismissEventDetail>;
 
   /**
    * @output {ToastEvent} Emitted after the toast has unloaded.
    */
-  @Event() ionToastDidUnload: EventEmitter;
+  @Event() ionToastDidUnload: EventEmitter<ToastEventDetail>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -69,73 +78,73 @@ export class Toast {
   @Prop() position: string;
   @Prop() translucent: boolean = false;
   @Prop() toastId: string;
+  @Prop() animate: boolean;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
 
+  @Method()
   present() {
-    return new Promise<void>(resolve => {
-      this._present(resolve);
-    });
-  }
-
-  private _present(resolve: Function) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionToastWillPresent.emit({ toast: this });
+    this.ionToastWillPresent.emit();
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('toastEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-
-      animation.onFinish((a: any) => {
-        a.destroy();
-        this.componentDidEnter();
-        resolve();
-      }).play();
+      if (!this.animate) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.componentDidEnter();
     });
   }
 
-  dismiss() {
+  @Method()
+  dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    return new Promise(resolve => {
-      this.ionToastWillDismiss.emit({ toast: this });
 
-      // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+    this.ionToastWillDismiss.emit({
+      data,
+      role
+    });
 
-      // build the animation and kick it off
-      this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
-        this.animation = animation;
+    const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-        animation.onFinish((a: any) => {
-          a.destroy();
-          this.ionToastDidDismiss.emit({ toast: this });
-
-          Context.dom.write(() => {
-            this.el.parentNode.removeChild(this.el);
-          });
-
-          resolve();
-        }).play();
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      return domControllerAsync(Context.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    }).then(() => {
+      this.ionToastDidDismiss.emit({
+        data,
+        role
       });
     });
   }
 
   componentDidLoad() {
-    this.ionToastDidLoad.emit({ toast: this });
+    this.ionToastDidLoad.emit();
   }
 
   componentDidEnter() {
-    this.ionToastDidPresent.emit({ toast: this });
+    this.ionToastDidPresent.emit();
     if (this.duration) {
       setTimeout(() => {
         this.dismiss();
@@ -144,7 +153,7 @@ export class Toast {
   }
 
   componentDidUnload() {
-    this.ionToastDidUnload.emit({ toast: this });
+    this.ionToastDidUnload.emit();
   }
 
   @Listen('ionDismiss')
@@ -190,7 +199,7 @@ export class Toast {
             ? <div class='toast-message'>{this.message}</div>
             : null}
           {this.showCloseButton
-            ? <ion-button fill="clear" color='light' class='toast-button' onClick={() => this.dismiss()}>
+            ? <ion-button fill='clear' color='light' class='toast-button' onClick={() => this.dismiss()}>
                 {this.closeButtonText || 'Close'}
               </ion-button>
             : null}
@@ -214,10 +223,20 @@ export interface ToastOptions {
   exitAnimation?: AnimationBuilder;
 }
 
-export interface ToastEvent {
-  detail: {
-    toast: Toast;
-  };
+export interface ToastEvent extends CustomEvent {
+  detail: ToastEventDetail;
+}
+
+export interface ToastEventDetail {
+
+}
+
+export interface ToastDismissEventDetail extends OverlayDismissEventDetail {
+  // keep this just for the sake of static types and potential future extensions
+}
+
+export interface ToastDismissEvent extends OverlayDismissEvent {
+  // keep this just for the sake of static types and potential future extensions
 }
 
 export {
