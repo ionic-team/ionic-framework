@@ -1,5 +1,12 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import {
+  Animation,
+  AnimationBuilder,
+  AnimationController,
+  Config,
+  OverlayDismissEvent,
+  OverlayDismissEventDetail
+} from '../../index';
 
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
@@ -122,7 +129,7 @@ export class ActionSheet {
     const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
       if (!this.animate) {
         // if the duration is 0, it won't actually animate I don't think
@@ -140,12 +147,15 @@ export class ActionSheet {
    * Dismiss the action-sheet programatically
    */
   @Method()
-  dismiss() {
+  dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionActionSheetWillDismiss.emit();
+    this.ionActionSheetWillDismiss.emit({
+      data,
+      role
+    });
     const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
 
@@ -158,7 +168,10 @@ export class ActionSheet {
         this.el.parentNode.removeChild(this.el);
       });
     }).then(() => {
-      this.ionActionSheetDidDismiss.emit();
+      this.ionActionSheetDidDismiss.emit({
+        data,
+        role
+      });
     });
   }
 
