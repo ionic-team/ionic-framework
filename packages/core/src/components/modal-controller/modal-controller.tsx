@@ -8,11 +8,11 @@ import { Modal, ModalEvent, ModalOptions } from '../../index';
 export class ModalController {
   private ids = 0;
   private modalResolves: {[modalId: string]: Function} = {};
-  private modals: Modal[] = [];
+  private modals: HTMLIonModalElement[] = [];
 
 
   @Method()
-  create(opts?: ModalOptions) {
+  create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
     // create ionic's wrapping ion-modal component
     const modal = document.createElement('ion-modal');
 
@@ -31,7 +31,7 @@ export class ModalController {
     appRoot.appendChild(modal as any);
 
     // store the resolve function to be called later up when the modal loads
-    return new Promise<Modal>(resolve => {
+    return new Promise<HTMLIonModalElement>(resolve => {
       this.modalResolves[modal.modalId] = resolve;
     });
   }
@@ -39,7 +39,7 @@ export class ModalController {
 
   @Listen('body:ionModalDidLoad')
   protected modalDidLoad(ev: ModalEvent) {
-    const modal = ev.detail.modal;
+    const modal = ev.target as HTMLIonModalElement;
     const modalResolve = this.modalResolves[modal.modalId];
     if (modalResolve) {
       modalResolve(modal);
@@ -50,13 +50,13 @@ export class ModalController {
 
   @Listen('body:ionModalWillPresent')
   protected modalWillPresent(ev: ModalEvent) {
-    this.modals.push(ev.detail.modal);
+    this.modals.push(ev.target as HTMLIonModalElement);
   }
 
 
   @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
   protected modalWillDismiss(ev: ModalEvent) {
-    const index = this.modals.indexOf(ev.detail.modal);
+    const index = this.modals.indexOf(ev.target as HTMLIonModalElement);
     if (index > -1) {
       this.modals.splice(index, 1);
     }

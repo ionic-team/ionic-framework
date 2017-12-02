@@ -1,5 +1,13 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import {
+  Animation,
+  AnimationBuilder,
+  AnimationController,
+  Config,
+  OverlayDismissEvent,
+  OverlayDismissEventDetail
+} from '../../index';
+import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
@@ -23,32 +31,32 @@ export class Modal {
   /**
    * @output {ModalEvent} Emitted after the modal has loaded.
    */
-  @Event() ionModalDidLoad: EventEmitter;
+  @Event() ionModalDidLoad: EventEmitter<ModalEventDetail>;
 
   /**
    * @output {ModalEvent} Emitted after the modal has presented.
    */
-  @Event() ionModalDidPresent: EventEmitter;
+  @Event() ionModalDidPresent: EventEmitter<ModalEventDetail>;
 
   /**
    * @output {ModalEvent} Emitted before the modal has presented.
    */
-  @Event() ionModalWillPresent: EventEmitter;
+  @Event() ionModalWillPresent: EventEmitter<ModalEventDetail>;
 
   /**
    * @output {ModalEvent} Emitted before the modal has dismissed.
    */
-  @Event() ionModalWillDismiss: EventEmitter;
+  @Event() ionModalWillDismiss: EventEmitter<ModalDismissEventDetail>;
 
   /**
    * @output {ModalEvent} Emitted after the modal has dismissed.
    */
-  @Event() ionModalDidDismiss: EventEmitter;
+  @Event() ionModalDidDismiss: EventEmitter<ModalDismissEventDetail>;
 
   /**
    * @output {ModalEvent} Emitted after the modal has unloaded.
    */
-  @Event() ionModalDidUnload: EventEmitter;
+  @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -64,64 +72,65 @@ export class Modal {
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() animate: boolean;
 
   private animation: Animation;
 
 
+  @Method()
   present() {
-    return new Promise<void>(resolve => {
-      this._present(resolve);
-    });
-  }
-
-  private _present(resolve: Function) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
 
-    this.ionModalWillPresent.emit({ modal: this });
+    this.ionModalWillPresent.emit({ loading: this });
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    // build the animation and kick it off
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-
-      animation.onFinish((a: any) => {
-        a.destroy();
-        this.ionModalDidPresent.emit({ modal: this });
-        resolve();
-      }).play();
+      if (!this.animate) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.ionModalDidPresent.emit();
     });
   }
 
-  dismiss() {
+  @Method()
+  dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
+    this.ionModalWillDismiss.emit({
+      data,
+      role
+    });
 
-    return new Promise<void>(resolve => {
-      this.ionModalWillDismiss.emit({ modal: this });
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.leaveAnimation || this.config.get('modalLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-      // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('modalLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-      // build the animation and kick it off
-      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-        this.animation = animation;
-
-        animation.onFinish((a: any) => {
-          a.destroy();
-          this.ionModalDidDismiss.emit({ modal: this });
-
-          Context.dom.write(() => {
-            this.el.parentNode.removeChild(this.el);
-          });
-          resolve();
-        }).play();
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      return domControllerAsync(Context.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    }).then(() => {
+      this.ionModalDidDismiss.emit({
+        data,
+        role
       });
     });
   }
@@ -195,10 +204,20 @@ export interface ModalOptions {
 }
 
 
-export interface ModalEvent extends Event {
-  detail: {
-    modal: Modal;
-  };
+export interface ModalEvent extends CustomEvent {
+  detail: ModalEventDetail;
+}
+
+export interface ModalEventDetail {
+
+}
+
+export interface ModalDismissEventDetail extends OverlayDismissEventDetail {
+  // keep this just for the sake of static types and potential future extensions
+}
+
+export interface ModalDismissEvent extends OverlayDismissEvent {
+  // keep this just for the sake of static types and potential future extensions
 }
 
 export {
