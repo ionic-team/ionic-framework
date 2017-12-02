@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### animate
+
+boolean
+
+
 #### buttons
 
 any
@@ -63,6 +68,11 @@ boolean
 
 
 ## Attributes
+
+#### animate
+
+boolean
+
 
 #### buttons
 
@@ -147,10 +157,16 @@ boolean
 #### addColumn()
 
 
+#### dismiss()
+
+
 #### getColumn()
 
 
 #### getColumns()
+
+
+#### present()
 
 
 

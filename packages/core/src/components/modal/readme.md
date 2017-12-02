@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### animate
+
+boolean
+
+
 #### color
 
 string
@@ -58,6 +63,11 @@ boolean
 
 
 ## Attributes
+
+#### animate
+
+boolean
+
 
 #### color
 
@@ -127,6 +137,14 @@ boolean
 
 
 #### ionModalWillPresent
+
+
+## Methods
+
+#### dismiss()
+
+
+#### present()
 
 
 

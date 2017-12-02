@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### animate
+
+boolean
+
+
 #### color
 
 string
@@ -68,6 +73,11 @@ boolean
 
 
 ## Attributes
+
+#### animate
+
+boolean
+
 
 #### color
 
@@ -147,6 +157,14 @@ boolean
 
 
 #### ionPopoverWillPresent
+
+
+## Methods
+
+#### dismiss()
+
+
+#### present()
 
 
 

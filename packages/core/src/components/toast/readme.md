@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### animate
+
+boolean
+
+
 #### closeButtonText
 
 string
@@ -63,6 +68,11 @@ boolean
 
 
 ## Attributes
+
+#### animate
+
+boolean
+
 
 #### closeButtonText
 
@@ -137,6 +147,14 @@ boolean
 
 
 #### ionToastWillPresent
+
+
+## Methods
+
+#### dismiss()
+
+
+#### present()
 
 
 

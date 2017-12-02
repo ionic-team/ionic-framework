@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### animate
+
+boolean
+
+
 #### content
 
 string
@@ -35,11 +40,6 @@ any
 #### leaveAnimation
 
 any
-
-
-#### loadingId
-
-string
 
 
 #### showBackdrop
@@ -54,6 +54,11 @@ boolean
 
 ## Attributes
 
+#### animate
+
+boolean
+
+
 #### content
 
 string
@@ -82,11 +87,6 @@ any
 #### leaveAnimation
 
 any
-
-
-#### loadingId
-
-string
 
 
 #### showBackdrop
@@ -117,6 +117,14 @@ boolean
 
 
 #### ionLoadingWillPresent
+
+
+## Methods
+
+#### dismiss()
+
+
+#### present()
 
 
 
