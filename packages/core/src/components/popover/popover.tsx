@@ -1,6 +1,13 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
-
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import {
+  Animation,
+  AnimationBuilder,
+  AnimationController,
+  Config,
+  OverlayDismissEvent,
+  OverlayDismissEventDetail
+} from '../../index';
+import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
@@ -26,32 +33,32 @@ export class Popover {
   /**
    * @output {PopoverEvent} Emitted after the popover has loaded.
    */
-  @Event() ionPopoverDidLoad: EventEmitter;
+  @Event() ionPopoverDidLoad: EventEmitter<PopoverEventDetail>;
 
   /**
    * @output {PopoverEvent} Emitted after the popover has presented.
    */
-  @Event() ionPopoverDidPresent: EventEmitter;
+  @Event() ionPopoverDidPresent: EventEmitter<PopoverEventDetail>;
 
   /**
    * @output {PopoverEvent} Emitted before the popover has presented.
    */
-  @Event() ionPopoverWillPresent: EventEmitter;
+  @Event() ionPopoverWillPresent: EventEmitter<PopoverEventDetail>;
 
   /**
    * @output {PopoverEvent} Emitted before the popover has dismissed.
    */
-  @Event() ionPopoverWillDismiss: EventEmitter;
+  @Event() ionPopoverWillDismiss: EventEmitter<PopoverDismissEventDetail>;
 
   /**
    * @output {PopoverEvent} Emitted after the popover has dismissed.
    */
-  @Event() ionPopoverDidDismiss: EventEmitter;
+  @Event() ionPopoverDidDismiss: EventEmitter<PopoverDismissEventDetail>;
 
   /**
    * @output {PopoverEvent} Emitted after the popover has unloaded.
    */
-  @Event() ionPopoverDidUnload: EventEmitter;
+  @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -68,76 +75,76 @@ export class Popover {
   @Prop() popoverId: string;
   @Prop() showBackdrop: boolean = true;
   @Prop() translucent: boolean = false;
+  @Prop() animate: boolean;
 
 
+  @Method()
   present() {
-    return new Promise<void>(resolve => {
-      this._present(resolve);
-    });
-  }
-
-  private _present(resolve: Function) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionPopoverWillPresent.emit({ popover: this });
+    this.ionPopoverWillPresent.emit();
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-
     // build the animation and kick it off
-    this.animationCtrl.create(animationBuilder, this.el, this.ev).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-
-      animation.onFinish((a: any) => {
-        a.destroy();
-        this.componentDidEnter();
-        resolve();
-      }).play();
+      if (!this.animate) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.componentDidEnter();
     });
   }
 
-  dismiss() {
+
+  @Method()
+  dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    return new Promise(resolve => {
-      this.ionPopoverWillDismiss.emit({ popover: this });
 
-      // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+    this.ionPopoverWillDismiss.emit({
+      data,
+      role
+    });
 
-      // build the animation and kick it off
-      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-        this.animation = animation;
+    const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-        animation.onFinish((a: any) => {
-          a.destroy();
-          this.ionPopoverDidDismiss.emit({ popover: this });
-
-          Context.dom.write(() => {
-            this.el.parentNode.removeChild(this.el);
-          });
-
-          resolve();
-        }).play();
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      return domControllerAsync(Context.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    }).then(() => {
+      this.ionPopoverDidDismiss.emit({
+        data,
+        role
       });
     });
   }
 
   componentDidLoad() {
-    this.ionPopoverDidLoad.emit({ popover: this });
+    this.ionPopoverDidLoad.emit();
   }
 
   componentDidEnter() {
-    this.ionPopoverDidPresent.emit({ popover: this });
+    this.ionPopoverDidPresent.emit();
   }
 
   componentDidUnload() {
-    this.ionPopoverDidUnload.emit({ popover: this });
+    this.ionPopoverDidUnload.emit();
   }
 
   @Listen('ionDismiss')
@@ -205,10 +212,20 @@ export interface PopoverOptions {
   ev: Event;
 }
 
-export interface PopoverEvent {
-  detail: {
-    popover: Popover;
-  };
+export interface PopoverEvent extends CustomEvent {
+  detail: PopoverEventDetail;
+}
+
+export interface PopoverEventDetail {
+
+}
+
+export interface PopoverDismissEventDetail extends OverlayDismissEventDetail {
+  // keep this just for the sake of static types and potential future extensions
+}
+
+export interface PopoverDismissEvent extends OverlayDismissEvent {
+  // keep this just for the sake of static types and potential future extensions
 }
 
 export const POPOVER_POSITION_PROPERTIES: any = {

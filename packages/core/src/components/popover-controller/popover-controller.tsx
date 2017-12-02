@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Popover, PopoverEvent, PopoverOptions } from '../../index';
+import { PopoverEvent, PopoverOptions } from '../../index';
 
 @Component({
   tag: 'ion-popover-controller'
@@ -7,14 +7,14 @@ import { Popover, PopoverEvent, PopoverOptions } from '../../index';
 export class PopoverController {
   private ids = 0;
   private popoverResolves: {[popoverId: string]: Function} = {};
-  private popovers: Popover[] = [];
+  private popovers: HTMLIonPopoverElement[] = [];
 
   /**
    * Create a popover component instance
    * @param opts Options when creating a new popover instance
    */
   @Method()
-  create(opts?: PopoverOptions) {
+  create(opts?: PopoverOptions): Promise<HTMLIonPopoverElement> {
     // create ionic's wrapping ion-popover component
     const popover = document.createElement('ion-popover');
     const id = this.ids++;
@@ -32,7 +32,7 @@ export class PopoverController {
     appRoot.appendChild(popover as any);
 
     // store the resolve function to be called later up when the popover loads
-    return new Promise<Popover>(resolve => {
+    return new Promise<HTMLIonPopoverElement>(resolve => {
       this.popoverResolves[popover.popoverId] = resolve;
     });
   }
@@ -40,7 +40,7 @@ export class PopoverController {
 
   @Listen('body:ionPopoverDidLoad')
   protected didLoad(ev: PopoverEvent) {
-    const popover = ev.detail.popover;
+    const popover = ev.target as HTMLIonPopoverElement;
     const popoverResolve = this.popoverResolves[popover.popoverId];
     if (popoverResolve) {
       popoverResolve(popover);
@@ -51,13 +51,13 @@ export class PopoverController {
 
   @Listen('body:ionPopoverWillPresent')
   protected willPresent(ev: PopoverEvent) {
-    this.popovers.push(ev.detail.popover);
+    this.popovers.push(ev.target as HTMLIonPopoverElement);
   }
 
 
   @Listen('body:ionPopoverWillDismiss, body:ionPopoverDidUnload')
   protected willDismiss(ev: PopoverEvent) {
-    const index = this.popovers.indexOf(ev.detail.popover);
+    const index = this.popovers.indexOf(ev.target as HTMLIonPopoverElement);
     if (index > -1) {
       this.popovers.splice(index, 1);
     }

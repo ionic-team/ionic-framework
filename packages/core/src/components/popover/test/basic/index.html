@@ -44,11 +44,11 @@
     </ion-page>
   </ion-app>
   <script>
-    function presentPopover(opts) {
-      var popoverController = document.querySelector('ion-popover-controller');
-      popoverController.create(opts).then(popover => {
-        popover.present();
-      });
+    async function presentPopover(opts) {
+      const popoverController = document.querySelector('ion-popover-controller');
+      await popoverController.componentOnReady();
+      const popoverElement = await popoverController.create(opts);
+      return await popoverElement.present();
     }
 
     class ProfilePage extends HTMLElement {
