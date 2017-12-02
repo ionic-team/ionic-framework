@@ -128,12 +128,11 @@ export class Loading {
       this.animation = null;
     }
 
-    this.ionLoadingWillPresent.emit({ loading: this });
+    this.ionLoadingWillPresent.emit();
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-    // build the animation and kick it off
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
@@ -198,7 +197,7 @@ export class Loading {
     if (this.showSpinner === null || this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
-    this.ionLoadingDidLoad.emit({ loading: this });
+    this.ionLoadingDidLoad.emit();
   }
 
   componentDidEnter() {
@@ -211,11 +210,11 @@ export class Loading {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
 
-    this.ionLoadingDidPresent.emit({ loading: this });
+    this.ionLoadingDidPresent.emit();
   }
 
   componentDidUnload() {
-    this.ionLoadingDidUnload.emit({ loading: this });
+    this.ionLoadingDidUnload.emit();
   }
 
   @Listen('ionDismiss')
