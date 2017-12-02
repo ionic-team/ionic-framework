@@ -84,7 +84,7 @@ export class Modal {
       this.animation = null;
     }
 
-    this.ionModalWillPresent.emit({ loading: this });
+    this.ionModalWillPresent.emit();
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
@@ -144,11 +144,11 @@ export class Modal {
   }
 
   componentDidLoad() {
-    this.ionModalDidLoad.emit({ modal: this });
+    this.ionModalDidLoad.emit();
   }
 
   componentDidUnload() {
-    this.ionModalDidUnload.emit({ modal: this });
+    this.ionModalDidUnload.emit();
   }
 
   protected backdropClick() {
