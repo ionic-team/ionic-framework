@@ -56,21 +56,21 @@
     </ion-page>
   </ion-app>
   <script>
-    function presentLoading() {
-      var loadingController = document.querySelector('ion-loading-controller');
-      loadingController.create({
+    async function presentLoading() {
+      const loadingController = document.querySelector('ion-loading-controller');
+      await loadingController.componentOnReady();
+      const loadingElement = await loadingController.create({
         message: 'Hellooo',
         duration: 2000
-      }).then(loading => {
-        loading.present();
       });
+      return await loadingElement.present();
     }
 
-    function presentLoadingWithOptions(opts) {
-      var loadingController = document.querySelector('ion-loading-controller');
-      loadingController.create(opts).then(loading => {
-        loading.present();
-      });
+    async function presentLoadingWithOptions(opts) {
+      const loadingController = document.querySelector('ion-loading-controller');
+      await loadingController.componentOnReady();
+      const loadingElement = await loadingController.create(opts);
+      return await loadingElement.present();
     }
   </script>
 

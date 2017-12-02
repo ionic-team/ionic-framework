@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Loading, LoadingEvent, LoadingOptions } from '../../index';
+import { LoadingEvent, LoadingOptions } from '../../index';
 
 
 @Component({
@@ -8,13 +8,13 @@ import { Loading, LoadingEvent, LoadingOptions } from '../../index';
 export class LoadingController {
   private ids = 0;
   private loadingResolves: {[loadingId: string]: Function} = {};
-  private loadings: Loading[] = [];
+  private loadings: HTMLIonLoadingElement[] = [];
 
   /**
    * Create a loading overlay and pass options to it
    */
   @Method()
-  create(opts?: LoadingOptions): Promise<Loading> {
+  create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
     // create ionic's wrapping ion-loading component
     const loading = document.createElement('ion-loading');
 
@@ -33,7 +33,7 @@ export class LoadingController {
     appRoot.appendChild(loading as any);
 
     // store the resolve function to be called later up when the loading loads
-    return new Promise<Loading>(resolve => {
+    return new Promise<HTMLIonLoadingElement>(resolve => {
       this.loadingResolves[loading.loadingId] = resolve;
     });
   }
@@ -41,7 +41,7 @@ export class LoadingController {
 
   @Listen('body:ionLoadingDidLoad')
   protected didLoad(ev: LoadingEvent) {
-    const loading = ev.detail.loading;
+    const loading = ev.target as HTMLIonLoadingElement;
     const loadingResolve = this.loadingResolves[loading.loadingId];
     if (loadingResolve) {
       loadingResolve(loading);
@@ -52,13 +52,13 @@ export class LoadingController {
 
   @Listen('body:ionLoadingWillPresent')
   protected willPresent(ev: LoadingEvent) {
-    this.loadings.push(ev.detail.loading);
+    this.loadings.push(ev.target as HTMLIonLoadingElement);
   }
 
 
   @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
   protected willDismiss(ev: LoadingEvent) {
-    const index = this.loadings.indexOf(ev.detail.loading);
+    const index = this.loadings.indexOf(ev.target as HTMLIonLoadingElement);
     if (index > -1) {
       this.loadings.splice(index, 1);
     }

@@ -1,6 +1,16 @@
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
-import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+
+import {
+  Animation,
+  AnimationBuilder,
+  AnimationController,
+  Config,
+  OverlayDismissEvent,
+  OverlayDismissEventDetail
+} from '../../index';
+import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
+
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -30,32 +40,32 @@ export class Loading {
   /**
    * @output {LoadingEvent} Emitted after the loading has loaded.
    */
-  @Event() ionLoadingDidLoad: EventEmitter;
+  @Event() ionLoadingDidLoad: EventEmitter<LoadingEventDetail>;
 
   /**
    * @output {LoadingEvent} Emitted after the loading has presented.
    */
-  @Event() ionLoadingDidPresent: EventEmitter;
+  @Event() ionLoadingDidPresent: EventEmitter<LoadingEventDetail>;
 
   /**
    * @output {LoadingEvent} Emitted before the loading has presented.
    */
-  @Event() ionLoadingWillPresent: EventEmitter;
+  @Event() ionLoadingWillPresent: EventEmitter<LoadingEventDetail>;
 
   /**
    * @output {LoadingEvent} Emitted before the loading has dismissed.
    */
-  @Event() ionLoadingWillDismiss: EventEmitter;
+  @Event() ionLoadingWillDismiss: EventEmitter<LoadingDismissEventDetail>;
 
   /**
    * @output {LoadingEvent} Emitted after the loading has dismissed.
    */
-  @Event() ionLoadingDidDismiss: EventEmitter;
+  @Event() ionLoadingDidDismiss: EventEmitter<LoadingDismissEventDetail>;
 
   /**
    * @output {LoadingEvent} Emitted after the loading has unloaded.
    */
-  @Event() ionLoadingDidUnload: EventEmitter;
+  @Event() ionLoadingDidUnload: EventEmitter<LoadingEventDetail>;
 
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;
@@ -104,15 +114,15 @@ export class Loading {
   @Prop() leaveAnimation: AnimationBuilder;
 
   /**
+   * Toggles whether animation should occur or not
+   */
+  @Prop() animate: boolean;
+
+  /**
    * Present a loading overlay after it has been created
    */
+  @Method()
   present() {
-    return new Promise<void>(resolve => {
-      this._present(resolve);
-    });
-  }
-
-  private _present(resolve: Function) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -124,22 +134,26 @@ export class Loading {
     const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    // build the animation and kick it off
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-
-      animation.onFinish((a: any) => {
-        a.destroy();
-        this.componentDidEnter();
-        resolve();
-
-      }).play();
+      if (!this.animate) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.componentDidEnter();
     });
   }
 
   /**
    * Dismiss a loading indicator programatically
    */
-  dismiss() {
+  @Method()
+  dismiss(data?: any, role?: string) {
     clearTimeout(this.durationTimeout);
 
     if (this.animation) {
@@ -147,27 +161,25 @@ export class Loading {
       this.animation = null;
     }
 
-    return new Promise(resolve => {
-      this.ionLoadingWillDismiss.emit({ loading: this });
+    this.ionLoadingWillDismiss.emit({
+      data,
+      role
+    });
 
-      // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+    const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-      // build the animation and kick it off
-      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-        this.animation = animation;
-
-        animation.onFinish((a: any) => {
-          a.destroy();
-          this.ionLoadingDidDismiss.emit({ loading: this });
-
-          Context.dom.write(() => {
-            this.el.parentNode.removeChild(this.el);
-          });
-
-          resolve();
-
-        }).play();
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      return domControllerAsync(Context.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    }).then(() => {
+      this.ionLoadingDidDismiss.emit({
+        data,
+        role
       });
     });
   }
@@ -273,10 +285,20 @@ export interface LoadingOptions {
   translucent?: boolean;
 }
 
-export interface LoadingEvent extends Event {
-  detail: {
-    loading: Loading;
-  };
+export interface LoadingEvent extends CustomEvent {
+  detail: LoadingEventDetail;
+}
+
+export interface LoadingEventDetail {
+
+}
+
+export interface LoadingDismissEventDetail extends OverlayDismissEventDetail {
+  // keep this just for the sake of static types and potential future extensions
+}
+
+export interface LoadingDismissEvent extends OverlayDismissEvent {
+  // keep this just for the sake of static types and potential future extensions
 }
 
 export {
