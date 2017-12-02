@@ -1,5 +1,15 @@
-import { Animation, AnimationBuilder, AnimationController, Config } from '../../index';
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+
+import {
+  Animation,
+  AnimationBuilder,
+  AnimationController,
+  Config,
+  OverlayDismissEvent,
+  OverlayDismissEventDetail
+} from '../../index';
+import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
+
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -24,32 +34,32 @@ export class Picker {
   /**
    * @output {PickerEvent} Emitted after the picker has loaded.
    */
-  @Event() ionPickerDidLoad: EventEmitter;
+  @Event() ionPickerDidLoad: EventEmitter<PickerEventDetail>;
 
   /**
    * @output {PickerEvent} Emitted after the picker has presented.
    */
-  @Event() ionPickerDidPresent: EventEmitter;
+  @Event() ionPickerDidPresent: EventEmitter<PickerEventDetail>;
 
   /**
    * @output {PickerEvent} Emitted before the picker has presented.
    */
-  @Event() ionPickerWillPresent: EventEmitter;
+  @Event() ionPickerWillPresent: EventEmitter<PickerEventDetail>;
 
   /**
    * @output {PickerEvent} Emitted before the picker has dismissed.
    */
-  @Event() ionPickerWillDismiss: EventEmitter;
+  @Event() ionPickerWillDismiss: EventEmitter<PickerDismissEventDetail>;
 
   /**
    * @output {PickerEvent} Emitted after the picker has dismissed.
    */
-  @Event() ionPickerDidDismiss: EventEmitter;
+  @Event() ionPickerDidDismiss: EventEmitter<PickerDismissEventDetail>;
 
   /**
    * @output {PickerEvent} Emitted after the picker has unloaded.
    */
-  @Event() ionPickerDidUnload: EventEmitter;
+  @Event() ionPickerDidUnload: EventEmitter<PickerEventDetail>;
 
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;
@@ -65,41 +75,40 @@ export class Picker {
   @Prop() pickerId: string;
   @Prop() showBackdrop: boolean = true;
   @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() animate: boolean;
 
   @Prop() buttons: PickerButton[] = [];
   @Prop() columns: PickerColumn[] = [];
 
+  @Method()
   present() {
-    return new Promise<void>(resolve => {
-      this._present(resolve);
-    });
-  }
-
-  private _present(resolve: Function) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
 
-    this.ionPickerWillPresent.emit({ picker: this });
+    this.ionPickerWillPresent.emit();
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
 
     // build the animation and kick it off
-    this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-
-      animation.onFinish((a: any) => {
-        a.destroy();
-        this.componentDidEnter();
-        resolve();
-
-      }).play();
+      if (!this.animate) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.componentDidEnter();
     });
   }
 
-  dismiss() {
+  @Method()
+  dismiss(data?: any, role?: string) {
     clearTimeout(this.durationTimeout);
 
     if (this.animation) {
@@ -107,27 +116,25 @@ export class Picker {
       this.animation = null;
     }
 
-    return new Promise(resolve => {
-      this.ionPickerWillDismiss.emit({ picker: this });
+    this.ionPickerWillDismiss.emit({
+      data,
+      role
+    });
 
-      // get the user's animation fn if one was provided
-      const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iosLeaveAnimation);
+    const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iosLeaveAnimation);
 
-      // build the animation and kick it off
-      this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-        this.animation = animation;
-
-        animation.onFinish((a: any) => {
-          a.destroy();
-          this.ionPickerDidDismiss.emit({ picker: this });
-
-          Context.dom.write(() => {
-            this.el.parentNode.removeChild(this.el);
-          });
-
-          resolve();
-
-        }).play();
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      return domControllerAsync(Context.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    }).then(() => {
+      this.ionPickerDidDismiss.emit({
+        data,
+        role
       });
     });
   }
@@ -146,7 +153,7 @@ export class Picker {
     if (this.showSpinner === null || this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
-    this.ionPickerDidLoad.emit({ picker: this });
+    this.ionPickerDidLoad.emit();
   }
 
   componentDidEnter() {
@@ -159,11 +166,11 @@ export class Picker {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
 
-    this.ionPickerDidPresent.emit({ picker: this });
+    this.ionPickerDidPresent.emit();
   }
 
   componentDidUnload() {
-    this.ionPickerDidUnload.emit({ picker: this });
+    this.ionPickerDidUnload.emit();
   }
 
 
@@ -401,10 +408,20 @@ export interface PickerColumnOption {
   selected?: boolean;
 }
 
-export interface PickerEvent extends Event {
-  detail: {
-    picker: Picker;
-  };
+export interface PickerEvent extends CustomEvent {
+  detail: PickerEventDetail;
+}
+
+export interface PickerEventDetail {
+
+}
+
+export interface PickerDismissEventDetail extends OverlayDismissEventDetail {
+  // keep this just for the sake of static types and potential future extensions
+}
+
+export interface PickerDismissEvent extends OverlayDismissEvent {
+  // keep this just for the sake of static types and potential future extensions
 }
 
 export {

@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Picker, PickerEvent, PickerOptions } from '../../index';
+import { PickerEvent, PickerOptions } from '../../index';
 
 
 @Component({
@@ -8,10 +8,10 @@ import { Picker, PickerEvent, PickerOptions } from '../../index';
 export class PickerController {
   private ids = 0;
   private pickerResolves: {[pickerId: string]: Function} = {};
-  private pickers: Picker[] = [];
+  private pickers: HTMLIonPickerElement[] = [];
 
   @Method()
-  create(opts?: PickerOptions): Promise<Picker> {
+  create(opts?: PickerOptions): Promise<HTMLIonPickerElement> {
     // create ionic's wrapping ion-picker component
     const picker = document.createElement('ion-picker');
 
@@ -30,7 +30,7 @@ export class PickerController {
     appRoot.appendChild(picker as any);
 
     // store the resolve function to be called later up when the picker loads
-    return new Promise<Picker>(resolve => {
+    return new Promise<HTMLIonPickerElement>(resolve => {
       this.pickerResolves[picker.pickerId] = resolve;
     });
   }
@@ -38,7 +38,7 @@ export class PickerController {
 
   @Listen('body:ionPickerDidLoad')
   protected didLoad(ev: PickerEvent) {
-    const picker = ev.detail.picker;
+    const picker = ev.target as HTMLIonPickerElement;
     const pickerResolve = this.pickerResolves[picker.pickerId];
     if (pickerResolve) {
       pickerResolve(picker);
@@ -49,13 +49,13 @@ export class PickerController {
 
   @Listen('body:ionPickerWillPresent')
   protected willPresent(ev: PickerEvent) {
-    this.pickers.push(ev.detail.picker);
+    this.pickers.push(ev.target as HTMLIonPickerElement);
   }
 
 
   @Listen('body:ionPickerWillDismiss, body:ionPickerDidUnload')
   protected willDismiss(ev: PickerEvent) {
-    const index = this.pickers.indexOf(ev.detail.picker);
+    const index = this.pickers.indexOf(ev.target as HTMLIonPickerElement);
     if (index > -1) {
       this.pickers.splice(index, 1);
     }
