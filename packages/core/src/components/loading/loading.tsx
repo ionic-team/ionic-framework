@@ -67,8 +67,7 @@ export class Loading {
    */
   @Event() ionLoadingDidUnload: EventEmitter<LoadingEventDetail>;
 
-  @State() private showSpinner: boolean = null;
-  @State() private spinner: string;
+  @Prop() spinner: string;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
@@ -116,7 +115,7 @@ export class Loading {
   /**
    * Toggles whether animation should occur or not
    */
-  @Prop() animate: boolean;
+  @Prop() animate: boolean = true;
 
   /**
    * Present a loading overlay after it has been created
@@ -185,17 +184,7 @@ export class Loading {
 
   componentDidLoad() {
     if (!this.spinner) {
-      let defaultSpinner = 'lines';
-
-      if (this.mode === 'md') {
-        defaultSpinner = 'crescent';
-      }
-
-      this.spinner = this.config.get('loadingSpinner') || defaultSpinner;
-    }
-
-    if (this.showSpinner === null || this.showSpinner === undefined) {
-      this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
+      this.spinner = this.config.get('loadingSPinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
     this.ionLoadingDidLoad.emit();
   }
@@ -238,11 +227,15 @@ export class Loading {
   }
 
   render() {
-    // TODO: cssClass
+    if (this.cssClass) {
+      this.cssClass.split(' ').forEach(cssClass => {
+        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
+      });
+    }
 
     const loadingInner: any[] = [];
 
-    if (this.showSpinner) {
+    if (this.spinner !== 'hide') {
       loadingInner.push(
         <div class='loading-spinner'>
           <ion-spinner name={this.spinner}></ion-spinner>

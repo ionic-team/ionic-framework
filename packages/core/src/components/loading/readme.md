@@ -47,6 +47,11 @@ any
 boolean
 
 
+#### spinner
+
+string
+
+
 #### translucent
 
 boolean
@@ -92,6 +97,11 @@ any
 #### showBackdrop
 
 boolean
+
+
+#### spinner
+
+string
 
 
 #### translucent
