@@ -19,18 +19,6 @@
 }
 
 
-// iOS Input By Label
-// --------------------------------------------------
-
-.label-ios + ion-input .text-input,
-.label-ios + ion-textarea .text-input,
-.label-ios + .input + .cloned-input {
-  @include margin-horizontal($item-ios-padding-start, null);
-
-  width: calc(100% - (#{$item-ios-padding-end} / 2) - #{$item-ios-padding-start});
-}
-
-
 // iOS Stacked & Floating Labels
 // --------------------------------------------------
 
@@ -51,11 +39,6 @@
 .item-input-has-focus .label-ios[floating],
 .item-input-has-value .label-ios[floating] {
   @include transform(translate3d(0, 0, 0), scale(.8));
-}
-
-.item-ios.item-label-stacked [slot="end"],
-.item-ios.item-label-floating [slot="end"] {
-  @include margin($item-ios-padding-media-top - 2, null, $item-ios-padding-media-bottom - 2, null);
 }
 
 .item-input-has-focus .label-ios[stacked],

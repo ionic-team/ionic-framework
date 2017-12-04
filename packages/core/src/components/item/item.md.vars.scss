@@ -35,3 +35,27 @@ $item-md-detail-push-color:          $list-md-border-color !default;
 
 /// @prop - Icon for the detail arrow
 $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
+
+/// @prop - Padding top for the item content
+$item-md-padding-top:                 13px !default;
+
+/// @prop - Padding end for the item content
+$item-md-padding-end:                 16px !default;
+
+/// @prop - Padding bottom for the item content
+$item-md-padding-bottom:              13px !default;
+
+/// @prop - Padding start for the item content
+$item-md-padding-start:               16px !default;
+
+/// @prop - Padding top for the media content
+$item-md-padding-media-top:           9px !default;
+
+/// @prop - Padding bottom for the media content
+$item-md-padding-media-bottom:        9px !default;
+
+/// @prop - Padding top for the icon in an item
+$item-md-padding-icon-top:            11px !default;
+
+/// @prop - Padding bottom for the icon in an item
+$item-md-padding-icon-bottom:         10px !default;

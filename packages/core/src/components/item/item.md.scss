@@ -128,6 +128,11 @@
   @include margin(($item-md-padding-end / 2));
 }
 
+.item-md.item-label-stacked [slot="end"],
+.item-md.item-label-floating [slot="end"] {
+  @include margin($item-md-padding-media-top - 2, null, $item-md-padding-media-bottom - 2, null);
+}
+
 
 // Material Design Item Avatar
 // --------------------------------------------------

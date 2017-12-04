@@ -16,8 +16,8 @@
 // --------------------------------------------------
 
 .input-ios .inset-input {
-  @include padding(($item-ios-padding-top / 2), ($item-ios-padding-end / 2), ($item-ios-padding-bottom / 2), ($item-ios-padding-start / 2));
-  @include margin(($item-ios-padding-top / 2), $item-ios-padding-end, ($item-ios-padding-bottom / 2), 0);
+  @include padding($input-ios-inset-padding-top, $input-ios-inset-padding-end, $input-ios-inset-padding-bottom, $input-ios-inset-padding-start);
+  @include margin($input-ios-inset-margin-top, $input-ios-inset-margin-end, $input-ios-inset-margin-bottom, $input-ios-inset-margin-start);
 }
 
 
@@ -102,20 +102,28 @@
   @include padding(8px, null, 8px, 0);
 }
 
+// iOS Input After Label
+// --------------------------------------------------
+
+.label-ios + ion-input .text-input,
+.label-ios + ion-textarea .text-input,
+.label-ios + .input + .cloned-input {
+  @include margin-horizontal($item-ios-padding-start, null);
+}
 
 // iOS Clear Input Icon
 // --------------------------------------------------
 
-.input-ios[clearInput] {
+.input-ios[clear-input] {
   position: relative;
 }
 
-.input-ios[clearInput] .text-input {
-  @include padding-horizontal(null, $input-ios-input-clear-icon-width);
+.input-ios[clear-input] .text-input {
+  @include padding-horizontal(null, ($input-ios-input-clear-icon-width + $item-ios-padding-end));
 }
 
 .input-ios .text-input-clear-icon {
-  @include position-horizontal(null, ($item-ios-padding-end / 2));
+  @include position-horizontal(null, 0);
   @include svg-background-image($input-ios-input-clear-icon-svg);
 
   width: $input-ios-input-clear-icon-width;

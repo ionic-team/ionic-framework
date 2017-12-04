@@ -16,8 +16,8 @@
 // --------------------------------------------------
 
 .input-md .inset-input {
-  @include padding(($item-md-padding-top / 2), ($item-md-padding-end / 2), ($item-md-padding-bottom / 2), ($item-md-padding-start / 2));
-  @include margin(($item-md-padding-top / 2), $item-md-padding-end, ($item-md-padding-bottom / 2), $item-md-padding-start);
+  @include padding($input-md-inset-padding-top, $input-md-inset-padding-end, $input-md-inset-padding-bottom, $input-md-inset-padding-start);
+  @include margin($input-md-inset-margin-top, $input-md-inset-margin-end, $input-md-inset-margin-bottom, $input-md-inset-margin-start);
 }
 
 
@@ -102,16 +102,16 @@
 // Material Design Clear Input Icon
 // --------------------------------------------------
 
-.input-md[clearInput] {
+.input-md[clear-input] {
   position: relative;
 }
 
-.input-md[clearInput] .text-input {
+.input-md[clear-input] .text-input {
   @include padding-horizontal(null, $input-md-input-clear-icon-width);
 }
 
 .input-md .text-input-clear-icon {
-  @include position-horizontal(null, ($item-md-padding-end / 2));
+  @include position-horizontal(null, 0);
   @include svg-background-image($input-md-input-clear-icon-svg);
 
   width: $input-md-input-clear-icon-width;
