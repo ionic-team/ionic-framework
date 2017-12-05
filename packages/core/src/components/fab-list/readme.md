@@ -1,19 +1,26 @@
 # ion-fab-list
 
-`ion-fab-list` is a container for multiple FAB buttons. They are components of `ion-fab` and allow you to specificy the buttons position, left, right, top, bottom.
+The `ion-fab-list` element is a container for multiple FAB buttons. This collection of FAB buttons contains actions related to the main FAB button and is flung out on click. To specify the side of the main button to show the list on, use the following:
+
+```
+[top] - Show the list of buttons above the main FAB button
+[bottom] - Show the list of buttons under the main FAB button
+[left] - Show the list of buttons to the left of the main FAB button
+[right] - Show the list of buttons to the right of the main FAB button
+```
 
 ```html
- <ion-fab bottom right>
-   <button ion-fab>Share</button>
-   <ion-fab-list side="top">
-     <button ion-fab>Facebook</button>
-     <button ion-fab>Twitter</button>
-     <button ion-fab>Youtube</button>
-   </ion-fab-list>
-   <ion-fab-list side="left">
-     <button ion-fab>Vimeo</button>
-   </ion-fab-list>
- </ion-fab>
+<ion-fab bottom right>
+  <ion-fab-button>Share</ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button>Facebook</ion-fab-button>
+    <ion-fab-button>Twitter</ion-fab-button>
+    <ion-fab-button>Youtube</ion-fab-button>
+  </ion-fab-list>
+  <ion-fab-list side="left">
+    <ion-fab-button>Vimeo</ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
 ```
 
 

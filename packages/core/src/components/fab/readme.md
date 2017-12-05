@@ -1,121 +1,62 @@
 # ion-fab
 
-FABs (Floating Action Buttons) are standard material design components. They are shaped as a circle that represents a promoted action. When pressed, it may contain more related actions.
-FABs as its name suggests are floating over the content in a fixed position. This is not achieved exclusively with `<button ion-fab>Button</button>` but it has to wrapped with the `<ion-fab>` component, like this:
+The `<ion-fab>` element is a container element that places the FAB button (`<ion-fab-button>`) in a fixed position that does not scroll with the content. It is also used to display a list of FAB buttons. It accepts the following attributes to position the FAB button element with respect to the content:
+
+```
+[top] - Places the container at the top of the content
+[bottom] - Places the container at the bottom of the content
+[left] - Places the container on the left
+[right] - Places the container on the right
+[middle] - Places the container in the middle vertically
+[center] - Places the container in the center horizontally
+[edge] - Used to place the container between the content and the header/footer
+```
+
 
 ```html
+<!-- this fab is placed at the top right -->
 <ion-content>
- <!-- Real floating action button, fixed. It will not scroll with the content -->
- <ion-fab>
-   <button ion-fab>Button</button>
- </ion-fab>
+  <ion-fab top right>
+    <ion-fab-button>Button</ion-fab-button>
+  </ion-fab>
 
- <!-- Button shaped as a circle that just like a normal button scrolls with the content -->
- <button ion-fab>Button</button>
+  <!-- this fab is placed at the center of the content -->
+  <ion-fab center middle>
+    <ion-fab-button>Button</ion-fab-button>
+  </ion-fab>
 </ion-content>
 ```
 
-In case the button is not wrapped with `<ion-fab>`, the fab button will behave like a normal button, scrolling with the content.
+Ionic's FAB also supports FAB lists. This is a list of related buttons that show when the main FAB button is clicked.
+
+The same `ion-fab` container can contain several `ion-fab-list` elements with different side values:
+`top`, `bottom`, `left` and `right`. If side is ommited, the default is `bottom`.
+
 
 ```html
-
-<!-- Colors -->
-<ion-fab>
-  <button ion-fab color="primary">Button</button>
-</ion-fab>
-
-<!-- Mini -->
-<ion-fab>
-  <button ion-fab mini>Small</button>
-</ion-fab>
+<ion-content>
+  <!-- this fab is placed at bottom right -->
+  <ion-fab bottom right>
+    <ion-fab-button>Share</ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>Facebook</ion-fab-button>
+      <ion-fab-button>Twitter</ion-fab-button>
+      <ion-fab-button>Youtube</ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="left">
+      <ion-fab-button>Vimeo</ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
 ```
 
 
 <!-- Auto Generated Below -->
 
 
-## Properties
+## Methods
 
-#### activated
-
-boolean
-
-
-#### color
-
-string
-
-
-#### disabled
-
-boolean
-
-
-#### href
-
-string
-
-
-#### mode
-
-any
-
-
-#### show
-
-boolean
-
-
-#### toggleActive
-
-any
-
-
-#### translucent
-
-boolean
-
-
-## Attributes
-
-#### activated
-
-boolean
-
-
-#### color
-
-string
-
-
-#### disabled
-
-boolean
-
-
-#### href
-
-string
-
-
-#### mode
-
-any
-
-
-#### show
-
-boolean
-
-
-#### toggleActive
-
-any
-
-
-#### translucent
-
-boolean
+#### close()
 
 
 

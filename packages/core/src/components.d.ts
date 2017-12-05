@@ -768,30 +768,37 @@ declare global {
 
 
 import {
-  FabContainer as IonFab
-} from './components/fab-container/fab-container';
+  FabButton as IonFabButton
+} from './components/fab-button/fab-button';
 
 declare global {
-  interface HTMLIonFabElement extends IonFab, HTMLElement {
+  interface HTMLIonFabButtonElement extends IonFabButton, HTMLElement {
   }
-  var HTMLIonFabElement: {
-    prototype: HTMLIonFabElement;
-    new (): HTMLIonFabElement;
+  var HTMLIonFabButtonElement: {
+    prototype: HTMLIonFabButtonElement;
+    new (): HTMLIonFabButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-fab": HTMLIonFabElement;
+    "ion-fab-button": HTMLIonFabButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-fab": HTMLIonFabElement;
+    "ion-fab-button": HTMLIonFabButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-fab": JSXElements.IonFabAttributes;
+      "ion-fab-button": JSXElements.IonFabButtonAttributes;
     }
   }
   namespace JSXElements {
-    export interface IonFabAttributes extends HTMLAttributes {
-      
+    export interface IonFabButtonAttributes extends HTMLAttributes {
+      color?: string;
+      mode?: 'ios' | 'md';
+      href?: string;
+      translucent?: boolean;
+      activated?: boolean;
+      toggleActive?: Function;
+      show?: boolean;
+      disabled?: boolean;
     }
   }
 }
@@ -828,37 +835,30 @@ declare global {
 
 
 import {
-  FabButton as IonFabButton
+  Fab as IonFab
 } from './components/fab/fab';
 
 declare global {
-  interface HTMLIonFabButtonElement extends IonFabButton, HTMLElement {
+  interface HTMLIonFabElement extends IonFab, HTMLElement {
   }
-  var HTMLIonFabButtonElement: {
-    prototype: HTMLIonFabButtonElement;
-    new (): HTMLIonFabButtonElement;
+  var HTMLIonFabElement: {
+    prototype: HTMLIonFabElement;
+    new (): HTMLIonFabElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-fab-button": HTMLIonFabButtonElement;
+    "ion-fab": HTMLIonFabElement;
   }
   interface ElementTagNameMap {
-    "ion-fab-button": HTMLIonFabButtonElement;
+    "ion-fab": HTMLIonFabElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-fab-button": JSXElements.IonFabButtonAttributes;
+      "ion-fab": JSXElements.IonFabAttributes;
     }
   }
   namespace JSXElements {
-    export interface IonFabButtonAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
-      href?: string;
-      translucent?: boolean;
-      activated?: boolean;
-      toggleActive?: Function;
-      show?: boolean;
-      disabled?: boolean;
+    export interface IonFabAttributes extends HTMLAttributes {
+      
     }
   }
 }
