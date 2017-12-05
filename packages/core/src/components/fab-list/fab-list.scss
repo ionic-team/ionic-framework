@@ -1,0 +1,65 @@
+@import './fab-list.vars';
+
+// Floating Action Button List
+// --------------------------------------------------
+
+ion-fab-list {
+  @include margin($fab-size + $fab-list-margin, 0);
+
+  position: absolute;
+  top: 0;
+  display: none;
+
+  flex-direction: column;
+  align-items: center;
+
+  min-width: $fab-size;
+  min-height: $fab-size;
+}
+
+.fab-list-active {
+  display: flex;
+}
+
+.fab-button-in-list {
+  @include margin(8px, 0);
+
+  width: $fab-mini-size;
+  height: $fab-mini-size;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0);
+}
+
+.fab-button-in-list.fab-button-show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+ion-fab-list[side=left] .fab-button-in-list,
+ion-fab-list[side=right] .fab-button-in-list {
+  @include margin(0, 8px);
+}
+
+ion-fab-list[side=top] {
+  top: auto;
+  bottom: 0;
+
+  flex-direction: column-reverse;
+}
+
+ion-fab-list[side=left] {
+  @include margin(0, $fab-size + $fab-list-margin);
+  @include position-horizontal(null, 0);
+
+  flex-direction: row-reverse;
+}
+
+ion-fab-list[side=right] {
+  @include margin(0, $fab-size + $fab-list-margin);
+  @include position(null, null, null, 0);
+
+  flex-direction: row;
+}
