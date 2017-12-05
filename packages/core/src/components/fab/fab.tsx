@@ -3,6 +3,7 @@ import { Component, Element, Method, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-fab',
+  styleUrl: 'fab.scss'
 })
 export class Fab {
   @Element() private el: HTMLElement;

@@ -4,23 +4,23 @@
 // iOS FAB Button
 // --------------------------------------------------
 
-.fab-ios {
+.fab-button-ios {
   color: $fab-ios-text-color;
   background-color: $fab-ios-background-color;
 }
 
-.fab-ios.activated {
+.fab-button-ios.activated {
   background-color: $fab-ios-background-color-activated;
 }
 
-.fab-ios .icon {
+.fab-button-ios .icon {
   fill: $fab-ios-icon-fill-color;
 }
 
 // FAB buttons in a list
 // --------------------------------------------------
 
-.fab-ios-in-list {
+.fab-button-ios-in-list {
   color: $fab-ios-list-button-text-color;
   background-color: $fab-ios-list-button-background-color;
 
@@ -28,11 +28,11 @@
               opacity $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay;
 }
 
-.fab-ios-in-list.activated {
+.fab-button-ios-in-list.activated {
   background-color: $fab-ios-list-button-background-color-activated;
 }
 
-.fab-ios-in-list .icon {
+.fab-button-ios-in-list .icon {
   fill: $fab-ios-list-button-icon-fill-color;
 }
 
@@ -60,16 +60,16 @@
   $bg-color-activated: color-shade($bg-color);
   $fg-color: $color-contrast;
 
-  .fab-ios-#{$color-name} {
+  .fab-button-ios-#{$color-name} {
     color: $fg-color;
     background-color: $bg-color;
   }
 
-  .fab-ios-#{$color-name} .icon {
+  .fab-button-ios-#{$color-name} .icon {
     fill: $fg-color;
   }
 
-  .fab-ios-#{$color-name}.activated {
+  .fab-button-ios-#{$color-name}.activated {
     background-color: $bg-color-activated;
   }
 

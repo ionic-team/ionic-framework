@@ -3,7 +3,7 @@
 // Floating Action Buttons
 // --------------------------------------------------
 
-.fab {
+.fab-button {
   @include text-align(center);
   @include appearance(none);
   @include border-radius(50%);
@@ -31,7 +31,7 @@
   contain: strict;
 }
 
-.fab ion-icon {
+.fab-button ion-icon {
   flex: 1;
 
   font-size: 2.4rem;
@@ -41,7 +41,7 @@
 // FAB Mini
 // --------------------------------------------------
 
-ion-fab-button[mini] .fab {
+ion-fab-button[mini] .fab-button {
   @include margin(($fab-size - $fab-mini-size) / 2);
 
   width: $fab-mini-size;
@@ -50,143 +50,10 @@ ion-fab-button[mini] .fab {
   line-height: $fab-mini-size;
 }
 
-
-// FAB Container
-// --------------------------------------------------
-
-ion-fab {
-  position: absolute;
-  z-index: $z-index-fixed-content;
-
-  &[center] {
-    @include position(null, null, null, 50%);
-    @include margin-horizontal(-$fab-size / 2, null);
-  }
-
-  &[middle] {
-    @include margin(-$fab-size / 2, null, null, null);
-
-    top: 50%;
-  }
-
-  &[top] {
-    top: $fab-content-margin;
-  }
-
-  &[right] {
-    // scss-lint:disable PropertySpelling
-    @include multi-dir() {
-      right: $fab-content-margin;
-    }
-
-    @include multi-dir() {
-      right: calc(#{$fab-content-margin} + constant(safe-area-inset-right));
-      right: calc(#{$fab-content-margin} + env(safe-area-inset-right));
-    }
-  }
-
-  &[end] {
-    @include position-horizontal(null, $fab-content-margin);
-    @include safe-position-horizontal(null, $fab-content-margin);
-  }
-
-  &[bottom] {
-    bottom: $fab-content-margin;
-  }
-
-  &[left] {
-    // scss-lint:disable PropertySpelling
-    @include multi-dir() {
-      left: $fab-content-margin;
-    }
-
-
-    @include multi-dir() {
-      left: calc(#{$fab-content-margin} + constant(safe-area-inset-left));
-      left: calc(#{$fab-content-margin} + env(safe-area-inset-left));
-    }
-  }
-
-  &[start] {
-    @include position-horizontal($fab-content-margin, null);
-    @include safe-position-horizontal($fab-content-margin, null);
-  }
-
-  &[top][edge] {
-    top: -$fab-size / 2;
-  }
-
-  &[bottom][edge] {
-    bottom: -$fab-size / 2;
-  }
-}
-
-
-// FAB List (Speed Dial)
-// --------------------------------------------------
-
-ion-fab-list {
-  @include margin($fab-size + $fab-list-margin, 0);
-
-  position: absolute;
-  top: 0;
-  display: none;
-
-  flex-direction: column;
-  align-items: center;
-
-  min-width: $fab-size;
-  min-height: $fab-size;
-}
-
-.fab-in-list {
-  @include margin(8px, 0);
-
-  width: $fab-mini-size;
-  height: $fab-mini-size;
-
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(0);
-}
-
-.fab-in-list.show {
-  opacity: 1;
-  visibility: visible;
-  transform: scale(1);
-}
-
-ion-fab-list[side=left] .fab-in-list,
-ion-fab-list[side=right] .fab-in-list {
-  @include margin(0, 8px);
-}
-
-ion-fab-list[side=top] {
-  top: auto;
-  bottom: 0;
-
-  flex-direction: column-reverse;
-}
-
-ion-fab-list[side=left] {
-  @include margin(0, $fab-size + $fab-list-margin);
-  @include position-horizontal(null, 0);
-
-  flex-direction: row-reverse;
-}
-
-ion-fab-list[side=right] {
-  @include margin(0, $fab-size + $fab-list-margin);
-  @include position(null, null, null, 0);
-
-  flex-direction: row;
-}
-
-
 // FAB Close Icon
 // --------------------------------------------------
 
-.fab-close-icon {
+.fab-button-close-icon {
   @include position(0, 0, null, 0);
 
   position: absolute;
@@ -199,7 +66,7 @@ ion-fab-list[side=right] {
   transition-property: transform, opacity;
 }
 
-.fab-close-icon .icon-inner {
+.fab-button-close-icon .icon-inner {
   display: flex;
 
   align-items: center;
@@ -212,21 +79,17 @@ ion-fab-list[side=right] {
 // FAB Animation
 // --------------------------------------------------
 
-.fab-list-active {
-  display: flex;
-}
-
-.fab .button-inner {
+.fab-button .button-inner {
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
 }
 
-.fab-close-active .fab-close-icon {
+.fab-button-close-active .fab-button-close-icon {
   opacity: 1;
   transform: scale(1) rotateZ(0deg);
 }
 
-.fab-close-active .button-inner {
+.fab-button-close-active .button-inner {
   opacity: 0;
   transform: scale(.4) rotateZ(45deg);
 }

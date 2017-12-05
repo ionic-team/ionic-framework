@@ -74,12 +74,12 @@ export class FabButton {
       return [];
     }
     let listClasses = [
-      `fab-in-list`,
-      `fab-${this.mode}-in-list`
+      `fab-button-in-list`,
+      `fab-button-${this.mode}-in-list`
     ];
 
     if (this.translucent) {
-      listClasses.push(`fab-translucent-${this.mode}-in-list`);
+      listClasses.push(`fab-button-translucent-${this.mode}-in-list`);
     }
 
     return listClasses;
@@ -94,7 +94,7 @@ export class FabButton {
       return [];
     }
     return [
-      `fab-close-active`
+      `fab-button-close-active`
     ];
   }
 
@@ -107,13 +107,13 @@ export class FabButton {
       return [];
     }
     return [
-      `show`
+      `fab-button-show`
     ];
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'fab');
-    const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-translucent') : {};
+    const themedClasses = createThemedClasses(this.mode, this.color, 'fab-button');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-button-translucent') : {};
     const hostClasses = getElementClassObject(this.el.classList);
 
     const elementClasses: CssClassMap = []
@@ -138,7 +138,7 @@ export class FabButton {
 
     return (
       <TagType class={fabClasses} onClick={this.clickedFab.bind(this)} disabled={this.disabled}>
-        <ion-icon name='close' class='fab-close-icon'></ion-icon>
+        <ion-icon name='close' class='fab-button-close-icon'></ion-icon>
         <span class='button-inner'>
           <slot></slot>
         </span>

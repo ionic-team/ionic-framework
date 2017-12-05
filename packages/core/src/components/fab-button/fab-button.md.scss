@@ -4,7 +4,7 @@
 // Material Design FAB Button
 // --------------------------------------------------
 
-.fab-md {
+.fab-button-md {
   color: $fab-md-text-color;
   background-color: $fab-md-background-color;
 
@@ -15,12 +15,12 @@
               color $fab-button-md-transition-duration $fab-button-md-transition-timing-function;
 }
 
-.fab-md.activated {
+.fab-button-md.activated {
   background-color: $fab-md-background-color-activated;
   box-shadow: $fab-md-box-shadow-activated;
 }
 
-.fab-md .icon {
+.fab-button-md .icon {
   fill: $fab-md-icon-fill-color;
 }
 
@@ -28,7 +28,7 @@
 // FAB buttons in a list
 // --------------------------------------------------
 
-.fab-md-in-list {
+.fab-button-md-in-list {
   color: $fab-md-list-button-text-color;
   background-color: $fab-md-list-button-background-color;
 
@@ -39,11 +39,11 @@
               color $fab-button-md-transition-duration $fab-button-md-transition-timing-function;
 }
 
-.fab-md-in-list.activated {
+.fab-button-md-in-list.activated {
   background-color: $fab-md-list-button-background-color-activated;
 }
 
-.fab-md-in-list .icon {
+.fab-button-md-in-list .icon {
   fill: $fab-md-list-button-icon-fill-color;
 }
 
@@ -51,7 +51,7 @@
 // Material Design FAB Ripple
 // --------------------------------------------------
 
-.fab-md .button-effect {
+.fab-button-md .button-effect {
   background-color: color-contrast($colors-md, $fab-md-background-color);
 }
 
@@ -65,20 +65,20 @@
   $bg-color-activated: color-shade($bg-color);
   $fg-color: $color-contrast;
 
-  .fab-md-#{$color-name} {
+  .fab-button-md-#{$color-name} {
     color: $fg-color;
     background-color: $bg-color;
   }
 
-  .fab-md-#{$color-name} .icon {
+  .fab-button-md-#{$color-name} .icon {
     fill: $fg-color;
   }
 
-  .fab-md-#{$color-name}.activated {
+  .fab-button-md-#{$color-name}.activated {
     background-color: $bg-color-activated;
   }
 
-  .fab-md-#{$color-name} .button-effect {
+  .fab-button-md-#{$color-name} .button-effect {
     background-color: $fg-color;
   }
 }

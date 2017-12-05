@@ -3,6 +3,7 @@ import { Component, Element, Prop, PropDidChange } from '@stencil/core';
 
 @Component({
   tag: 'ion-fab-list',
+  styleUrl: 'fab-list.scss'
 })
 export class FabList {
   @Element() private el: HTMLIonFabElement;
