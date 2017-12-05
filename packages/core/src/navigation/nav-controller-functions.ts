@@ -1,28 +1,7 @@
 import { Animation, AnimationOptions, Config, FrameworkDelegate, Nav, NavOptions, Transition} from '../index';
-import {
-  ComponentDataPair,
-  NavResult,
-  TransitionInstruction,
-} from './nav-interfaces';
+import { ComponentDataPair, NavResult, TransitionInstruction } from './nav-interfaces';
 
-import {
-  DIRECTION_BACK,
-  DIRECTION_FORWARD,
-  STATE_ATTACHED,
-  STATE_DESTROYED,
-  STATE_NEW,
-  VIEW_ID_START,
-  destroyTransition,
-  getHydratedTransition,
-  getNextTransitionId,
-  getParentTransitionId,
-  isViewController,
-  resolveRoute,
-  setZIndex,
-  toggleHidden,
-  transitionFactory,
-} from './nav-utils';
-
+import { DIRECTION_BACK, DIRECTION_FORWARD, STATE_ATTACHED, STATE_DESTROYED, STATE_NEW, VIEW_ID_START, destroyTransition, getHydratedTransition, getNextTransitionId, getParentTransitionId, isViewController, resolveRoute, setZIndex, toggleHidden, transitionFactory } from './nav-utils';
 
 import { ViewController } from './view-controller';
 

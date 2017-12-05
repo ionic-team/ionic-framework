@@ -65,7 +65,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonActionSheetControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -133,7 +133,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAlertControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -203,7 +203,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAnimationControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -233,7 +233,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAppAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -263,7 +263,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAvatarAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -293,7 +293,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackdropAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -394,7 +394,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonButtonsAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -680,7 +680,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonColAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -858,7 +858,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonFabAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -918,7 +918,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGestureControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -995,7 +995,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGridAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1267,7 +1267,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonItemSlidingAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1329,7 +1329,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonKeyboardControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1424,7 +1424,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1454,7 +1454,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonLoadingControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1523,7 +1523,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonMenuControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1590,7 +1590,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonModalControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1786,7 +1786,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPageAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1846,7 +1846,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPickerControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -1917,7 +1917,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPopoverControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -2165,7 +2165,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonReorderAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -2258,7 +2258,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterControllerAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -2288,7 +2288,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRowAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -2591,7 +2591,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSlideAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
@@ -2876,41 +2876,243 @@ declare global {
 
 
 import {
-  Searchbar as IonSearchbar
-} from './components/searchbar/searchbar';
+  Textarea as IonTextarea
+} from './components/textarea/textarea';
 
 declare global {
-  interface HTMLIonSearchbarElement extends IonSearchbar, HTMLElement {
+  interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
   }
-  var HTMLIonSearchbarElement: {
-    prototype: HTMLIonSearchbarElement;
-    new (): HTMLIonSearchbarElement;
+  var HTMLIonTextareaElement: {
+    prototype: HTMLIonTextareaElement;
+    new (): HTMLIonTextareaElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-searchbar": HTMLIonSearchbarElement;
+    "ion-textarea": HTMLIonTextareaElement;
   }
   interface ElementTagNameMap {
-    "ion-searchbar": HTMLIonSearchbarElement;
+    "ion-textarea": HTMLIonTextareaElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-searchbar": JSXElements.IonSearchbarAttributes;
+      "ion-textarea": JSXElements.IonTextareaAttributes;
     }
   }
   namespace JSXElements {
-    export interface IonSearchbarAttributes extends HTMLAttributes {
+    export interface IonTextareaAttributes extends HTMLAttributes {
+      autocapitalize?: string;
+      autocomplete?: string;
+      autofocus?: boolean;
+      clearOnEdit?: boolean;
+      disabled?: boolean;
+      maxlength?: number;
+      minlength?: number;
+      name?: string;
+      placeholder?: string;
+      readonly?: boolean;
+      required?: boolean;
+      spellcheck?: boolean;
+      cols?: number;
+      rows?: number;
+      wrap?: string;
+      value?: string;
+    }
+  }
+}
+
+
+import {
+  Thumbnail as IonThumbnail
+} from './components/thumbnail/thumbnail';
+
+declare global {
+  interface HTMLIonThumbnailElement extends IonThumbnail, HTMLElement {
+  }
+  var HTMLIonThumbnailElement: {
+    prototype: HTMLIonThumbnailElement;
+    new (): HTMLIonThumbnailElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-thumbnail": HTMLIonThumbnailElement;
+  }
+  interface ElementTagNameMap {
+    "ion-thumbnail": HTMLIonThumbnailElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-thumbnail": JSXElements.IonThumbnailAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonThumbnailAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  ToolbarTitle as IonTitle
+} from './components/title/title';
+
+declare global {
+  interface HTMLIonTitleElement extends IonTitle, HTMLElement {
+  }
+  var HTMLIonTitleElement: {
+    prototype: HTMLIonTitleElement;
+    new (): HTMLIonTitleElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-title": HTMLIonTitleElement;
+  }
+  interface ElementTagNameMap {
+    "ion-title": HTMLIonTitleElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-title": JSXElements.IonTitleAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTitleAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  ToastController as IonToastController
+} from './components/toast-controller/toast-controller';
+
+declare global {
+  interface HTMLIonToastControllerElement extends IonToastController, HTMLElement {
+  }
+  var HTMLIonToastControllerElement: {
+    prototype: HTMLIonToastControllerElement;
+    new (): HTMLIonToastControllerElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-toast-controller": HTMLIonToastControllerElement;
+  }
+  interface ElementTagNameMap {
+    "ion-toast-controller": HTMLIonToastControllerElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-toast-controller": JSXElements.IonToastControllerAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonToastControllerAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
+  Toast as IonToast
+} from './components/toast/toast';
+
+declare global {
+  interface HTMLIonToastElement extends IonToast, HTMLElement {
+  }
+  var HTMLIonToastElement: {
+    prototype: HTMLIonToastElement;
+    new (): HTMLIonToastElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-toast": HTMLIonToastElement;
+  }
+  interface ElementTagNameMap {
+    "ion-toast": HTMLIonToastElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-toast": JSXElements.IonToastAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonToastAttributes extends HTMLAttributes {
+      message?: string;
+      cssClass?: string;
+      duration?: number;
+      showCloseButton?: boolean;
+      closeButtonText?: string;
+      dismissOnPageChange?: boolean;
+      position?: string;
+      translucent?: boolean;
+      toastId?: string;
+      animate?: boolean;
+      enterAnimation?: AnimationBuilder;
+      leaveAnimation?: AnimationBuilder;
+    }
+  }
+}
+
+
+import {
+  Toggle as IonToggle
+} from './components/toggle/toggle';
+
+declare global {
+  interface HTMLIonToggleElement extends IonToggle, HTMLElement {
+  }
+  var HTMLIonToggleElement: {
+    prototype: HTMLIonToggleElement;
+    new (): HTMLIonToggleElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-toggle": HTMLIonToggleElement;
+  }
+  interface ElementTagNameMap {
+    "ion-toggle": HTMLIonToggleElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-toggle": JSXElements.IonToggleAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonToggleAttributes extends HTMLAttributes {
       color?: string;
       mode?: 'ios' | 'md';
-      animated?: boolean;
-      autocomplete?: string;
-      autocorrect?: string;
-      cancelButtonText?: string;
-      debounce?: number;
-      placeholder?: string;
-      showCancelButton?: boolean;
-      spellcheck?: boolean;
-      type?: string;
+      name?: string;
+      checked?: boolean;
+      disabled?: boolean;
       value?: string;
+    }
+  }
+}
+
+
+import {
+  Toolbar as IonToolbar
+} from './components/toolbar/toolbar';
+
+declare global {
+  interface HTMLIonToolbarElement extends IonToolbar, HTMLElement {
+  }
+  var HTMLIonToolbarElement: {
+    prototype: HTMLIonToolbarElement;
+    new (): HTMLIonToolbarElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-toolbar": HTMLIonToolbarElement;
+  }
+  interface ElementTagNameMap {
+    "ion-toolbar": HTMLIonToolbarElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-toolbar": JSXElements.IonToolbarAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonToolbarAttributes extends HTMLAttributes {
+      color?: string;
+      mode?: 'ios' | 'md';
+      translucent?: boolean;
     }
   }
 }
