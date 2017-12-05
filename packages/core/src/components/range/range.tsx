@@ -13,8 +13,6 @@ import { clamp } from '../../utils/helpers';
   }
 })
 export class Range implements BaseInputComponent {
-  // private rangeId: string;
-  // private labelId: string;
 
   private styleTmr: any;
 
@@ -128,7 +126,7 @@ export class Range implements BaseInputComponent {
 
   @PropDidChange('value')
   protected valueChanged(val: boolean) {
-    this.ionChange.emit({ value: val });
+    setTimeout(() => this.ionChange.emit({value: val}), this.debounce);
     this.emitStyle();
   }
 

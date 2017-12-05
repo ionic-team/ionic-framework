@@ -70,6 +70,9 @@
           <ion-item>
             <ion-range dual-knobs="true" id="multiKnob"></ion-range>
           </ion-item>
+          <ion-item>
+            <ion-range id="debounce" debounce="5000"></ion-range>
+          </ion-item>
         </ion-list>
 
         <ion-button onclick="elTest()">Test</ion-button>
@@ -79,6 +82,7 @@
 
   <script>
     var knob = document.getElementById('multiKnob')
+    var debounceRange = document.getElementById('debounce')
     knob.value = {
       lower: 33,
       upper: 60
@@ -90,6 +94,9 @@
       console.log('blur', ev)
     })
     knob.addEventListener('ionChange', function(ev) {
+      console.log('change', ev)
+    })
+    debounceRange.addEventListener('ionChange', function(ev) {
       console.log('change', ev)
     })
 
