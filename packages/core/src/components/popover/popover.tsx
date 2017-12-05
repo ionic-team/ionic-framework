@@ -75,7 +75,7 @@ export class Popover {
   @Prop() popoverId: string;
   @Prop() showBackdrop: boolean = true;
   @Prop() translucent: boolean = false;
-  @Prop() animate: boolean;
+  @Prop() animate: boolean = true;
 
 
   @Method()
@@ -90,7 +90,7 @@ export class Popover {
     const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el, this.ev).then(animation => {
       this.animation = animation;
       if (!this.animate) {
         // if the duration is 0, it won't actually animate I don't think

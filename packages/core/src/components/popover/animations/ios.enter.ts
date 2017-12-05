@@ -97,25 +97,17 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
 
   if (checkSafeAreaLeft) {
     if (CSS.supports('left', 'constant(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${
-        popoverCSS.left
-      }px + constant(safe-area-inset-left)`;
+      contentEl.style.left = `calc(${popoverCSS.left}px + constant(safe-area-inset-left)`;
     } else if (CSS.supports('left', 'env(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${
-        popoverCSS.left
-      }px + env(safe-area-inset-left)`;
+      contentEl.style.left = `calc(${popoverCSS.left}px + env(safe-area-inset-left)`;
     }
   }
 
   if (checkSafeAreaRight) {
     if (CSS.supports('right', 'constant(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${
-        popoverCSS.left
-      }px - constant(safe-area-inset-right)`;
+      contentEl.style.left = `calc(${popoverCSS.left}px - constant(safe-area-inset-right)`;
     } else if (CSS.supports('right', 'env(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${
-        popoverCSS.left
-      }px - env(safe-area-inset-right)`;
+      contentEl.style.left = `calc(${popoverCSS.left}px - env(safe-area-inset-right)`;
     }
   }
 

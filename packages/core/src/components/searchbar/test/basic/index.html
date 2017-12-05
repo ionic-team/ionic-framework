@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Searchbar - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
 </head>
 <body>
   <ion-app>
-    <ion-page>
+    <ion-page class="ion-page">
       <ion-header>
         <ion-toolbar>
           <ion-title>Searchbar - Basic</ion-title>
@@ -84,6 +84,17 @@
           placeholder="Search">
         </ion-searchbar>
 
+        <h5 padding-left padding-top> Search - DebounceTime </h5>
+        <ion-searchbar
+          autocorrect="on"
+          show-cancel-button="true"
+          autocomplete="on"
+          spellcheck="true"
+          type="text"
+          debounce="5000"
+          placeholder="Check the log">
+        </ion-searchbar>
+
         <h5 padding-left padding-top> Search - Animated and No Cancel</h5>
         <ion-searchbar
           id="dynamicAttr"
@@ -135,6 +146,13 @@
             // Toggle spellcheck property
             const propIsSpellcheck = dynamicProp.spellcheck === true ? false : true;
             dynamicProp.spellcheck = propIsSpellcheck;
+          }
+
+          const searchbars = document.querySelectorAll('ion-searchbar')
+          for(let i=0; i <searchbars.length; i++){
+            searchbars[i].addEventListener('ionInput', (ev)=>{
+              console.log(ev);
+            })
           }
         </script>
       </ion-content>
