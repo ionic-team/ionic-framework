@@ -156,14 +156,9 @@ export class Searchbar {
    */
   inputChanged(ev: any) {
     this.value = ev.target.value;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.ionInput.emit(ev);
-
-    }, this.debounce)
-    // this._inputDebouncer.debounce(() => {
-    // // TODO fix to be inside debounce
-    // this.ionInput.emit(ev);
-    // });
+    }, this.debounce);
   }
 
   /**
@@ -333,7 +328,7 @@ export class Searchbar {
         <ion-button
           onClick={this.cancelSearchbar.bind(this)}
           onMouseDown={this.cancelSearchbar.bind(this)}
-          fill="clear"
+          fill='clear'
           color='dark'
           class='searchbar-md-cancel'>
             <ion-icon name='md-arrow-back'></ion-icon>
@@ -351,7 +346,7 @@ export class Searchbar {
           autoCorrect={this.autocorrect}
           spellCheck={this.spellcheck}/>
         <ion-button
-          fill="clear"
+          fill='clear'
           class='searchbar-clear-icon'
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}>
@@ -359,7 +354,7 @@ export class Searchbar {
       </div>,
       <ion-button
         tabindex={this.activated ? 1 : -1}
-        fill="clear"
+        fill='clear'
         onClick={this.cancelSearchbar.bind(this)}
         onMouseDown={this.cancelSearchbar.bind(this)}
         class='searchbar-ios-cancel'>
