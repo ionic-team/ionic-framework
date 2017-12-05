@@ -76,6 +76,10 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
+  private removeFocus = (e: Event) => {
+    (e.currentTarget as HTMLElement).blur();
+  }
+
   protected render() {
 
     const {
@@ -109,14 +113,18 @@ export class Button {
     };
 
     return (
-      <TagType class={buttonClasses} disabled={this.disabled} href={this.href}>
-        <span class='button-inner'>
-          <slot name='icon-only'></slot>
-          <slot name='start'></slot>
-          <slot></slot>
-          <slot name='end'></slot>
-        </span>
-        <div class='button-effect'></div>
+      <TagType
+        class={buttonClasses}
+        disabled={this.disabled}
+        href={this.href}
+        onClick={this.removeFocus}>
+          <span class='button-inner'>
+            <slot name='icon-only'></slot>
+            <slot name='start'></slot>
+            <slot></slot>
+            <slot name='end'></slot>
+          </span>
+          <div class='button-effect'></div>
       </TagType>
     );
   }
