@@ -1,13 +1,22 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
-import { ControlValueAccessor, DefaultValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  DefaultValueAccessor,
+  NG_VALUE_ACCESSOR
+} from '@angular/forms';
 
-// NOTE: this is just a sample. It really belongs in @ionic/angular and not at all int his app here
 @Directive({
   /* tslint:disable-next-line:directive-selector */
   selector: 'ion-checkbox,ion-toggle',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonBooleanValueAccessorDirective, multi: true }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: IonBooleanValueAccessor,
+      multi: true
+    }
+  ]
 })
-export class IonBooleanValueAccessorDirective implements ControlValueAccessor {
+export class IonBooleanValueAccessor implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
     this.onTouched = () => {};
@@ -39,6 +48,10 @@ export class IonBooleanValueAccessorDirective implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(this.element.nativeElement, 'disabled', isDisabled);
+    this.renderer.setProperty(
+      this.element.nativeElement,
+      'disabled',
+      isDisabled
+    );
   }
 }
