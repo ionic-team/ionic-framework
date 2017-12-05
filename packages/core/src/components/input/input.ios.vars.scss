@@ -17,6 +17,9 @@ $input-ios-margin-bottom:                 $item-ios-padding-bottom !default;
 /// @prop - Margin start of the input
 $input-ios-margin-start:                  0 !default;
 
+/// @prop - Margin start of the input when it is after a label
+$input-ios-by-label-margin-start:         $item-ios-padding-start !default;
+
 /// @prop - Padding top of the inset input
 $input-ios-inset-padding-top:             ($item-ios-padding-top / 2) !default;
 
@@ -52,6 +55,9 @@ $input-ios-input-clear-icon-svg:          "<svg xmlns='http://www.w3.org/2000/sv
 
 /// @prop - Size of the icon used to clear the input
 $input-ios-input-clear-icon-size:         18px !default;
+
+/// @prop - Padding end of the input with clear input
+$input-ios-input-clear-padding-end:       ($input-ios-input-clear-icon-width + $item-ios-padding-end) !default;
 
 /// @prop - Show the focus highlight when the input has focus
 $input-ios-show-focus-highlight:          false !default;

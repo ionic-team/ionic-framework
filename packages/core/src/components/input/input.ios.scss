@@ -108,7 +108,7 @@
 .label-ios + ion-input .text-input,
 .label-ios + ion-textarea .text-input,
 .label-ios + .input + .cloned-input {
-  @include margin-horizontal($item-ios-padding-start, null);
+  @include margin-horizontal($input-ios-by-label-margin-start, null);
 }
 
 // iOS Clear Input Icon
@@ -119,7 +119,7 @@
 }
 
 .input-ios[clear-input] .text-input {
-  @include padding-horizontal(null, ($input-ios-input-clear-icon-width + $item-ios-padding-end));
+  @include padding-horizontal(null, $input-ios-input-clear-padding-end);
 }
 
 .input-ios .text-input-clear-icon {
