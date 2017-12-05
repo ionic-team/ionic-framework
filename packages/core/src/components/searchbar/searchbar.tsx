@@ -82,21 +82,6 @@ export class Searchbar {
    */
   @Prop({ mutable: true }) cancelButtonText: string = 'Cancel';
 
-
-//   _inputDebouncer: TimeoutDebouncer = new TimeoutDebouncer(0);
-
-//   /**
-//    * @input {number} How long, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
-//    */
-//   @Input()
-//   get debounce(): number {
-//     return this._debouncer.wait;
-//   }
-//   set debounce(val: number) {
-//     this._debouncer.wait = val;
-//     this._inputDebouncer.wait = val;
-//   }
-
   /**
    * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
    */
@@ -171,9 +156,13 @@ export class Searchbar {
    */
   inputChanged(ev: any) {
     this.value = ev.target.value;
+    setTimeout(()=>{
+      this.ionInput.emit(ev);
+
+    }, this.debounce)
     // this._inputDebouncer.debounce(() => {
-    // TODO fix to be inside debounce
-    this.ionInput.emit(ev);
+    // // TODO fix to be inside debounce
+    // this.ionInput.emit(ev);
     // });
   }
 
