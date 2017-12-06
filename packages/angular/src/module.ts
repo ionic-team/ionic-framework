@@ -1,4 +1,8 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  ModuleWithProviders,
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA
+} from '@angular/core';
 
 import { BooleanValueAccessor } from './control-value-accessors/boolean-value-accessor';
 import { RadioValueAccessor } from './control-value-accessors/radio-value-accessor';
@@ -26,9 +30,15 @@ import { AlertController } from './providers/alert-controller';
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ],
-  providers: [
-    AlertController
   ]
 })
-export class IonicAngularModule { }
+export class IonicAngularModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: IonicAngularModule,
+      providers: [
+        AlertController
+      ]
+    };
+  }
+}
