@@ -1,27 +1,28 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { IonBooleanValueAccessor } from './directives/ion-boolean-value-accessor';
+import { BooleanValueAccessor } from './control-value-accessors/boolean-value-accessor';
+import { RadioValueAccessor } from './control-value-accessors/radio-value-accessor';
+import { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
+import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
+
 import { IonNavDelegate } from './directives/ion-nav';
-import { IonRadioValueAccessor } from './directives/ion-radio-value-accessor';
-import { IonSelectValueAccessor } from './directives/ion-select-value-accessor';
-import { IonTextValueAccessor } from './directives/ion-text-value-accessor';
 
 import { AlertController } from './providers/alert-controller';
 
 @NgModule({
   declarations: [
-    IonBooleanValueAccessor,
+    BooleanValueAccessor,
     IonNavDelegate,
-    IonRadioValueAccessor,
-    IonSelectValueAccessor,
-    IonTextValueAccessor
+    RadioValueAccessor,
+    SelectValueAccessor,
+    TextValueAccessor
   ],
   exports: [
-    IonBooleanValueAccessor,
+    BooleanValueAccessor,
     IonNavDelegate,
-    IonRadioValueAccessor,
-    IonSelectValueAccessor,
-    IonTextValueAccessor
+    RadioValueAccessor,
+    SelectValueAccessor,
+    TextValueAccessor
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -30,6 +31,4 @@ import { AlertController } from './providers/alert-controller';
     AlertController
   ]
 })
-export class IonicAngularModule {
-
-}
+export class IonicAngularModule { }

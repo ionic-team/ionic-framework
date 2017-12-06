@@ -18,12 +18,12 @@ import {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: IonRadioValueAccessor,
+      useExisting: RadioValueAccessor,
       multi: true
     }
   ]
 })
-export class IonRadioValueAccessor implements ControlValueAccessor {
+export class RadioValueAccessor implements ControlValueAccessor {
   @Input() value: any;
 
   onChange: (value: any) => void;

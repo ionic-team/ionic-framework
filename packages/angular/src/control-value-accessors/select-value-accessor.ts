@@ -6,9 +6,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Directive({
   /* tslint:disable-next-line:directive-selector */
   selector: 'ion-select, ion-radio-group, ion-segment, ion-datetime',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonSelectValueAccessor, multi: true }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: SelectValueAccessor,
+      multi: true
+    }
+  ]
 })
-export class IonSelectValueAccessor implements ControlValueAccessor {
+export class SelectValueAccessor implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
     this.onTouched = () => {};

@@ -6,9 +6,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Directive({
   /* tslint:disable-next-line:directive-selector */
   selector: 'ion-input,ion-textarea',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: IonTextValueAccessor, multi: true }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: TextValueAccessor,
+      multi: true
+    }
+  ]
 })
-export class IonTextValueAccessor implements ControlValueAccessor {
+export class TextValueAccessor implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
     this.onTouched = () => {};

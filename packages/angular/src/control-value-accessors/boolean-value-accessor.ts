@@ -11,12 +11,12 @@ import {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: IonBooleanValueAccessor,
+      useExisting: BooleanValueAccessor,
       multi: true
     }
   ]
 })
-export class IonBooleanValueAccessor implements ControlValueAccessor {
+export class BooleanValueAccessor implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
     this.onTouched = () => {};
