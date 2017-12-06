@@ -13,7 +13,7 @@ To use _this_ application perform the following commands from this directory:
 - `npm test` - to run the unit tests
 - `npm run e2e` - to run the end to end tests
 
-See the `package.json` file for a complete list of script. The above are just the most common.
+See the `package.json` file for a complete list of scripts. The above are just the most common.
 
 ## Running the Angular CLI
 
@@ -24,8 +24,10 @@ This application installs the Angular CLI locally so you do not need to have it 
 
 ## Testing Local Changes
 
-In order to test local core changes, use `npm link` as such:
+In order to test local changes they need to be copied into `node_modules` after the initial `npm i`
 
 1. In `packages/core`, run `npm run build`
-2. In `packages/core`, run `npm link`
-3. In `packages/angular/demo`, run `npm link @ionic/core`
+1. In `packages/demos/angular`, run `rm -rf node_modules/\@ionic/core/dist`
+1. In `packages/demos/angular`, run `cp -r ../../core/dist node_modules/\@ionic/core/dist`
+
+Use a similar procedure if you want to test local changes to `@ionic/angular`

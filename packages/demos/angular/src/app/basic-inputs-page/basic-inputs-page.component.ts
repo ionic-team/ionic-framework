@@ -17,12 +17,4 @@ export class BasicInputsPageComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  onBlur(evt) {
-    console.log('blur: ', evt);
-  }
-
-  change(evt) {
-    console.log('change: ', evt);
-  }
 }

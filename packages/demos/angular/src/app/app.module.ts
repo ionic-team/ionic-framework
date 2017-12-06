@@ -11,9 +11,7 @@ import { IonicAngularModule } from '@ionic/angular';
   imports: [
     AppRoutingModule,
     BrowserModule,
-    IonicAngularModule
-  ],
-  providers: [
+    IonicAngularModule.forRoot()
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
