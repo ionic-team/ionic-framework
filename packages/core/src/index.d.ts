@@ -23,7 +23,7 @@ export { CardTitle } from './components/card-title/card-title';
 export { Checkbox } from './components/checkbox/checkbox';
 export { Chip } from './components/chip/chip';
 export { ChipButton } from './components/chip-button/chip-button';
-export { Column } from './components/col/col';
+export { Col } from './components/col/col';
 export { Content } from './components/content/content';
 export { Datetime } from './components/datetime/datetime';
 export { Fab } from './components/fab/fab';
@@ -86,7 +86,7 @@ export {
   NavState,
 } from './components/router-controller/router-utils';
 export { Row } from './components/row/row';
-export { ItemReorder } from './components/reorder/reorder';
+export { Reorder } from './components/reorder/reorder';
 export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
 export { Segment, SegmentEvent } from './components/segment/segment';
@@ -101,6 +101,7 @@ export * from './components/spinner/spinner-configs';
 export { Spinner } from './components/spinner/spinner';
 export { SplitPane, SplitPaneAlert } from './components/split-pane/split-pane';
 export { Tab } from './components/tab/tab';
+export { TabButton } from './components/tab-button/tab-button';
 export { Tabs } from './components/tabs/tabs';
 export { Thumbnail } from './components/thumbnail/thumbnail';
 export { ToolbarTitle } from './components/title/title';

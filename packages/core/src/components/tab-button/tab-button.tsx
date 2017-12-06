@@ -4,7 +4,7 @@ import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 @Component({
   tag: 'ion-tab-button'
 })
-export class TabbarButton {
+export class TabButton {
 
   @Prop() selected = false;
   @Prop() tab: HTMLIonTabElement;

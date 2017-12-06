@@ -657,7 +657,7 @@ declare global {
 
 
 import {
-  Column as IonCol
+  Col as IonCol
 } from './components/col/col';
 
 declare global {
@@ -2142,7 +2142,7 @@ declare global {
 
 
 import {
-  ItemReorder as IonReorder
+  Reorder as IonReorder
 } from './components/reorder/reorder';
 
 declare global {
@@ -2706,7 +2706,7 @@ declare global {
 
 
 import {
-  TabbarButton as IonTabButton
+  TabButton as IonTabButton
 } from './components/tab-button/tab-button';
 
 declare global {
