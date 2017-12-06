@@ -3,8 +3,11 @@ import { Component, Element, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-reorder',
+  host: {
+    theme: 'reorder'
+  }
 })
-export class ItemReorder {
+export class Reorder {
 
   @State() hasContent: boolean = null;
   @Element() private el: HTMLElement;
