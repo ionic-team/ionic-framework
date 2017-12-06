@@ -80,6 +80,16 @@ string
 string
 
 
+#### root
+
+string
+
+
+#### rootParams
+
+any
+
+
 #### selected
 
 boolean
@@ -132,6 +142,16 @@ string
 string
 
 
+#### root
+
+string
+
+
+#### rootParams
+
+any
+
+
 #### selected
 
 boolean
@@ -166,6 +186,9 @@ string
 
 
 #### getNav()
+
+
+#### getPath()
 
 
 #### goToRoot()

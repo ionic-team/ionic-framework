@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
 import { RouterEntry, parseURL } from '../router-controller/router-utils';
 
 
@@ -11,19 +11,13 @@ export class Route {
   @Prop() component: string;
   @Prop() props: any = {};
 
-  @Event() ionRouteAdded: EventEmitter<RouterEntry>;
-  @Event() ionRouteRemoved: EventEmitter<string>;
-
-  componentDidLoad() {
-    this.ionRouteAdded.emit({
+  @Method()
+  getRoute(): RouterEntry {
+    return {
       path: this.path,
       segments: parseURL(this.path),
       id: this.component,
       props: this.props
-    });
-  }
-
-  componentDidUnload() {
-    this.ionRouteRemoved.emit(this.path);
+    };
   }
 }

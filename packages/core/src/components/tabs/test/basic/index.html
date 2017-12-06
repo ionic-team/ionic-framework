@@ -14,27 +14,21 @@
   <ion-app>
     <ion-tabs>
       <ion-tab title="Plain List" icon="star" path="">
-        <page-tab class="ion-page"></page-tab>
+        <ion-route path="" component="page-tab"></ion-route>
       </ion-tab>
 
       <ion-tab title="Schedule" icon="globe" path="tab2">
-        <ion-nav root="page-two">
-          <ion-route path="" component="page-two"></ion-route>
-          <ion-route path="path/to/page/three" component="page-three"></ion-route>
-        </ion-nav>
+        <ion-route path="" component="page-two"></ion-route>
+        <ion-route path="path/to/page/three" component="page-three"></ion-route>
       </ion-tab>
 
       <ion-tab title="Stopwatch" icon="logo-facebook" path="tab3">
-        <ion-nav root="page-three">
-          <ion-route path="/" component="page-three"></ion-route>
-        </ion-nav>
+        <ion-route path="/" component="page-three"></ion-route>
       </ion-tab>
 
       <ion-tab title="Messages" icon="chatboxes" path="tab4">
-        <ion-nav root="page-tab">
-          <ion-route component="page-one"></ion-route>
-          <ion-route path="paginaaaa-two" component="page-two"></ion-route>
-        </ion-nav>
+        <ion-route component="page-one"></ion-route>
+        <ion-route path="paginaaaa-two" component="page-two"></ion-route>
       </ion-tab>
     </ion-tabs>
 

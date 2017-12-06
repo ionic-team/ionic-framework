@@ -49,9 +49,6 @@ any
 
 ## Methods
 
-#### addRoute()
-
-
 #### canGoBack()
 
 
@@ -92,9 +89,6 @@ any
 
 
 #### removeIndex()
-
-
-#### removeRoute()
 
 
 #### removeView()

@@ -39,12 +39,9 @@ string
 any
 
 
-## Events
+## Methods
 
-#### ionRouteAdded
-
-
-#### ionRouteRemoved
+#### getRoute()
 
 
 

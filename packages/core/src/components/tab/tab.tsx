@@ -16,6 +16,16 @@ export class Tab {
   @State() active = false;
 
   /**
+   * @input {Page} Set the root page for this tab.
+   */
+  @Prop() root: string;
+
+  /**
+   * @input {object} Any nav-params to pass to the root page of this tab.
+   */
+  @Prop() rootParams: any;
+
+  /**
    * @input {string} Set the root page for this tab.
    */
   @Prop() btnId: string;
@@ -83,24 +93,42 @@ export class Tab {
   protected componentDidUpdate() {
     if (this.init && this.resolveNav) {
       const nav = this.el.querySelector('ion-nav') as any as StencilElement;
-      if (nav) {
-        nav.componentOnReady(this.resolveNav);
-      } else {
-        this.resolveNav(null);
-      }
+      nav.componentOnReady(this.resolveNav);
       this.resolveNav = null;
     }
   }
 
   @Method()
-  _setActive(active: boolean): Promise<any> {
-    if (this.active === active) {
+  _setActive(shouldActive: boolean): Promise<any> {
+    if (this.active === shouldActive) {
       return Promise.resolve();
     }
-    this.active = active;
-    this.selected = active;
+    this.active = shouldActive;
+    this.selected = shouldActive;
 
-    return Promise.resolve();
+    const needsLifecycle = this.init;
+    if (shouldActive) {
+      this.init = true;
+    }
+    if (needsLifecycle) {
+      if (shouldActive) {
+        // lifecycle didEnter
+      } else {
+        // lifecycle didLeave
+      }
+    }
+    return this.nav;
+  }
+
+  @Method()
+  getPath(): string {
+    if (this.path != null) {
+      return this.path;
+    }
+    if (this.title) {
+      return this.title.toLowerCase();
+    }
+    return '';
   }
 
   @Method()
@@ -128,5 +156,12 @@ export class Tab {
         'show-tab': this.active
       }
     };
+  }
+
+  render() {
+    if (this.init) {
+      return <ion-nav><slot></slot></ion-nav>;
+    }
+    return null;
   }
 }

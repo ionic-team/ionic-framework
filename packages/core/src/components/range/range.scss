@@ -3,13 +3,13 @@
 // Range
 // --------------------------------------------------
 
-.item .item-inner {
+.item ion-range .item-inner {
   overflow: visible;
 
   width: 100%;
 }
 
-.item .input-wrapper {
+.item ion-range .input-wrapper {
   overflow: visible;
 
   flex-direction: column;

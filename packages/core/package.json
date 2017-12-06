@@ -10,7 +10,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.0.8-9",
+    "@stencil/core": "0.0.8-10",
     "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",

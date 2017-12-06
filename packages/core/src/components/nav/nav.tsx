@@ -9,7 +9,6 @@ import {
   PublicNav,
   PublicViewController,
   RouterEntries,
-  RouterEntry,
   ViewController
 } from '../../index';
 import {
@@ -56,17 +55,9 @@ export class Nav implements PublicNav {
     this.navId = getNextNavId();
   }
 
-  @Listen('ionRouteAdded')
-  routeAdded(ev: CustomEvent) {
-    this.addRoute(ev.detail);
-  }
-
-  @Listen('ionRouteRemoved')
-  routeRemoved(ev: CustomEvent) {
-    this.removeRoute(ev.detail);
-  }
-
   componentWillLoad() {
+    this.routes = Array.from(this.element.querySelectorAll('ion-route'))
+      .map(child => child.getRoute());
     this.useRouter = this.config.getBoolean('useRouter', false);
   }
 
@@ -167,16 +158,6 @@ export class Nav implements PublicNav {
   @Listen('navInit')
   navInitialized(event: CustomEvent) {
     navInitializedImpl(this, event);
-  }
-
-  @Method()
-  addRoute(route: RouterEntry) {
-    this.routes.push(route);
-  }
-
-  @Method()
-  removeRoute(_: RouterEntry) {
-    throw 'not implemented';
   }
 
   @Method()

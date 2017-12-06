@@ -45,6 +45,7 @@ export class RouterController {
     if (this.isBlocked()) {
       return;
     }
+    debugger;
     console.debug('[IN] nav changed -> update URL');
     const { stack, pivot } = this.readNavState();
     if (pivot) {
@@ -91,7 +92,7 @@ export class RouterController {
   }
 
   private isHash() {
-    return this.basePrefix.length > 0 && this.basePrefix[0];
+    return this.basePrefix.length > 0 && this.basePrefix[0] === '#';
   }
 
   private readURL(): string[] {

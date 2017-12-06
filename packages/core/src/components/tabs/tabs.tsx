@@ -78,7 +78,7 @@ export class Tabs {
   }
 
   @Listen('ionTabbarClick')
-  @Listen('ionSelect')
+  // @Listen('ionSelect')
   protected tabChange(ev: CustomEvent) {
     const selectedTab = ev.detail as HTMLIonTabElement;
     this.select(selectedTab);
@@ -102,6 +102,7 @@ export class Tabs {
     }
     selectedTab.selected = true;
 
+    console.log('HEY');
     // The same selected was selected
     // we need to set root in the nested ion-nav if it exist
     if (this.selectedTab === selectedTab) {
@@ -157,19 +158,21 @@ export class Tabs {
       return null;
     }
     return {
-      path: selectedTab.path,
+      path: selectedTab.getPath(),
       focusNode: selectedTab
     };
   }
 
   @Method()
   getRoutes(): RouterEntries {
-    return this.tabs.map(t => {
+    debugger;
+    const a = this.tabs.map(t => {
       return {
-        path: t.path,
+        path: t.getPath(),
         id: t
       };
     });
+    return a;
   }
 
   @Method()
