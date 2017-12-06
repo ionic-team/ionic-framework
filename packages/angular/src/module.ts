@@ -9,9 +9,15 @@ import { RadioValueAccessor } from './control-value-accessors/radio-value-access
 import { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
 import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
-import { IonNavDelegate } from './directives/ion-nav';
 
+import { IonNavDelegate } from './components/ion-nav';
+
+/* Providers */
+import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
+import { AngularFrameworkDelegate } from './providers/angular-framework-delegate';
+import { LoadingController } from './providers/loading-controller';
+import { ToastController } from './providers/toast-controller';
 
 @NgModule({
   declarations: [
@@ -30,14 +36,18 @@ import { AlertController } from './providers/alert-controller';
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
 })
 export class IonicAngularModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: IonicAngularModule,
       providers: [
-        AlertController
+        AlertController,
+        ActionSheetController,
+        AngularFrameworkDelegate,
+        LoadingController,
+        ToastController
       ]
     };
   }

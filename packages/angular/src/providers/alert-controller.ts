@@ -53,6 +53,11 @@ export function present(alertProxy: AlertProxyInternal): Promise<any> {
     if (alertProxy.state === PRESENTING) {
       return alertElement.present();
     }
+
+    // we'll only ever get here if someone tried to dismiss the overlay or mess with it's internal state
+    // attribute before it could async load and present itself.
+    // with that in mind, just return null to make the TS compiler happy
+    return null;
   });
 }
 
@@ -69,7 +74,7 @@ export function dismiss(alertProxy: AlertProxyInternal): Promise<any> {
   return Promise.resolve();
 }
 
-export function loadOverlay(opts: AlertOptions) {
+export function loadOverlay(opts: AlertOptions): Promise<HTMLIonAlertElement> {
   const element = ensureElementInBody('ion-alert-controller') as HTMLIonAlertControllerElement;
   return hydrateElement(element).then(() => {
     return element.create(opts);

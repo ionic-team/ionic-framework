@@ -1,13 +1,8 @@
-import { Injectable } from '@angular/core';
 import { NavContainer } from '@ionic/core';
-import { hydrateElement } from '../util/util';
 
-@Injectable()
 export class App {
 
-  private element: HTMLIonAppElement;
-  constructor() {
-    this.element = document.querySelector('ion-app') as HTMLIonAppElement;
+  constructor(public _element: HTMLIonAppElement) {
   }
 
   setTitle(title: string) {
@@ -15,30 +10,46 @@ export class App {
   }
 
   isScrolling(): boolean {
-    if (this.element.isScrolling) {
-      return this.element.isScrolling();
-    }
-    return false;
+    return isScrollingImpl(this);
   }
 
   getRootNavs(): NavContainer[] {
-    if (this.element.getRootNavs) {
-      return this.element.getRootNavs();
-    }
-    return [];
+    return getRootNavsImpl(this);
   }
 
   getActiveNavs(rootNavId?: number): NavContainer[] {
-    if (this.element.getActiveNavs) {
-      return this.element.getActiveNavs(rootNavId);
-    }
-    return [];
+    return getActiveNavsImpl(this, rootNavId);
   }
 
   getNavByIdOrName(nameOrId: number | string): NavContainer {
-    if (this.element.getNavByIdOrName) {
-      return this.element.getNavByIdOrName(nameOrId);
-    }
-    return null;
+    return getNavByIdOrNameImpl(this, nameOrId);
   }
+}
+
+export function isScrollingImpl(app: App) {
+  if (app._element && app._element.isScrolling) {
+    return app._element.isScrolling();
+  }
+  return false;
+}
+
+export function getRootNavsImpl(app: App) {
+  if (app._element && app._element.getRootNavs) {
+    return app._element.getRootNavs();
+  }
+  return [];
+}
+
+export function getActiveNavsImpl(app: App, rootNavId?: number): NavContainer[] {
+  if (app._element && app._element.getActiveNavs) {
+    return app._element.getActiveNavs(rootNavId);
+  }
+  return [];
+}
+
+export function getNavByIdOrNameImpl(app: App, nameOrId: number | string): NavContainer {
+  if (app._element && app._element.getNavByIdOrName) {
+    return app._element.getNavByIdOrName(nameOrId);
+  }
+  return null;
 }
