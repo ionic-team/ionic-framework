@@ -51,20 +51,21 @@
 // -----------------------------------------
 
 .radio-key .radio-icon::after {
+  @include border-radius(50%);
+  @include position(-8px, null, null, -9px);
+
   position: absolute;
-  top: -8px;
-  left: -9px;
 
   display: block;
 
   width: 36px;
   height: 36px;
 
-  background: #86A8DF;
-  opacity: .3;
+  background: #86a8df;
 
-  border-radius: 50%;
-  content: '';
+  content: "";
+
+  opacity: .3;
 }
 
 

@@ -672,7 +672,7 @@
 // ----------------------------------------------------------
 @mixin footer-safe-area($toolbar-height, $toolbar-padding, $tabs-height) {
   ion-tabs ion-tabbar:not(.placement-top) {
-    @include safe-area-padding(null, null, 0px, null);
+    @include safe-area-padding(null, null, 0, null);
     @include safe-area-sizing(height, safe-area-inset-bottom, $tabs-height)
   }
 

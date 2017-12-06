@@ -25,9 +25,10 @@
 // -----------------------------------------
 
 .searchbar-ios .searchbar-search-icon {
-  @include position(0, null, null, 9px);
+  @include background-position(center);
   @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
   @include margin-horizontal(calc(50% - 60px), null);
+  @include position(0, null, null, 9px);
 
   position: absolute;
 
@@ -36,7 +37,6 @@
 
   background-repeat: no-repeat;
   background-size: $searchbar-ios-input-search-icon-size;
-  background-position: center;
 }
 
 

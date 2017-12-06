@@ -10,7 +10,7 @@ $menu-ios-background:            $background-ios-color !default;
 $menu-ios-box-shadow-color:      rgba(0, 0, 0, .08) !default;
 
 /// @prop - Box shadow of the menu
-$menu-ios-box-shadow:            -8px 0px 42px $menu-ios-box-shadow-color !default;
+$menu-ios-box-shadow:            -8px 0 42px $menu-ios-box-shadow-color !default;
 
 /// @prop - Box shadow of the reveal menu
 $menu-ios-box-shadow-reveal:     $menu-ios-box-shadow !default;

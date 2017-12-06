@@ -13,10 +13,11 @@
 
   border: 0;
 
+  line-height: 1;
+
   text-decoration: none;
   text-overflow: ellipsis;
   text-transform: none;
-  line-height: 1;
 
   white-space: nowrap;
   cursor: pointer;
@@ -105,11 +106,11 @@ button[disabled],
 }
 
 .button ion-icon[slot="start"] {
-  margin: 0 0.3em 0 -0.3em;
+  @include margin(0, .3em, 0, -.3em);
 }
 
 .button ion-icon[slot="end"] {
-  margin: 0 -0.2em 0 0.3em;
+  @include margin(0, -.2em, 0, .3em);
 }
 
 .button ion-icon[slot="icon-only"] {

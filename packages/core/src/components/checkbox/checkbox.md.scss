@@ -70,20 +70,21 @@
 // -----------------------------------------
 
 .checkbox-key .checkbox-icon::after {
+  @include border-radius(50%);
+  @include position(-12px, null, null, -12px);
+
   position: absolute;
-  top: -12px;
-  left: -12px;
 
   display: block;
 
   width: 36px;
   height: 36px;
 
-  background: #86A8DF;
-  opacity: .3;
+  background: #86a8df;
 
-  border-radius: 50%;
-  content: '';
+  content: "";
+
+  opacity: .3;
 }
 
 
