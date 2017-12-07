@@ -19,17 +19,17 @@ string
 
 #### component
 
-string
-
-
-#### componentProps
-
 any
 
 
 #### cssClass
 
 string
+
+
+#### data
+
+any
 
 
 #### enableBackdropDismiss
@@ -76,17 +76,17 @@ string
 
 #### component
 
-string
-
-
-#### componentProps
-
 any
 
 
 #### cssClass
 
 string
+
+
+#### data
+
+any
 
 
 #### enableBackdropDismiss
