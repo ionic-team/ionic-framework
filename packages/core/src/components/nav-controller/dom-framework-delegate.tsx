@@ -1,18 +1,28 @@
-import { FrameworkDelegate, Nav, ViewController } from '../../index';
+import { FrameworkDelegate, FrameworkMountingData, } from '../../index';
+import { isString } from '../../utils/helpers';
 
 export class DomFrameworkDelegate implements FrameworkDelegate {
-  attachViewToDom(nav: Nav, enteringView: ViewController): Promise<any> {
+  attachViewToDom(parentElement: HTMLElement, tagOrElement: string | HTMLElement, classesToAdd: string[] = []): Promise<FrameworkMountingData> {
+
     return new Promise((resolve) => {
-      const usersElement = document.createElement(enteringView.component) as HTMLElement;
-      usersElement.classList.add('ion-page');
-      enteringView.element = usersElement;
-      nav.element.appendChild(usersElement);
-      resolve();
+      const usersElement = (isString(tagOrElement) ? document.createElement(tagOrElement) : tagOrElement) as HTMLElement;
+      if (classesToAdd.length) {
+        for (const clazz of classesToAdd) {
+          usersElement.classList.add(clazz);
+        }
+        parentElement.appendChild(usersElement);
+        resolve({
+          element: usersElement
+        });
+      }
     });
   }
 
-  removeViewFromDom(nav: Nav, leavingView: ViewController): Promise<any> {
-    nav.element.removeChild(leavingView.element);
-    return Promise.resolve();
+  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement): Promise<FrameworkMountingData> {
+
+    parentElement.removeChild(childElement);
+    return Promise.resolve({
+      element: null
+    });
   }
 }

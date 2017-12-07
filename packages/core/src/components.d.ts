@@ -1623,7 +1623,7 @@ declare global {
       mode?: string;
       color?: string;
       component?: string;
-      componentProps?: any;
+      data?: any;
       cssClass?: string;
       enableBackdropDismiss?: boolean;
       modalId?: string;

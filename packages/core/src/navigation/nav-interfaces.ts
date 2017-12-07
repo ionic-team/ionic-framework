@@ -6,8 +6,13 @@ import {
 } from '../index';
 
 export interface FrameworkDelegate {
-  attachViewToDom(navController: Nav, enteringView: ViewController): Promise<any>;
-  removeViewFromDom(navController: Nav, leavingView: ViewController): Promise<any>;
+
+  attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any): Promise<FrameworkMountingData>;
+  removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any): Promise<FrameworkMountingData>;
+}
+
+export interface FrameworkMountingData {
+  element: HTMLElement;
 }
 
 export interface NavContainer {
