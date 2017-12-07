@@ -292,13 +292,15 @@ export class ActionSheet {
                   class={this.buttonClass(cancelButton)}
                   onClick={() => this.buttonClick(cancelButton)}
                 >
-                  {cancelButton.icon
-                    ? <ion-icon
-                        name={cancelButton.icon}
-                        class='action-sheet-icon'
-                      />
-                    : null}
-                  {cancelButton.text}
+                  <span class='button-inner'>
+                    {cancelButton.icon
+                      ? <ion-icon
+                          name={cancelButton.icon}
+                          class='action-sheet-icon'
+                        />
+                      : null}
+                    {cancelButton.text}
+                  </span>
                 </button>
 
               </div>

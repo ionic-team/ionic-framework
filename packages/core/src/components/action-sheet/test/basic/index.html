@@ -21,6 +21,7 @@
         <ion-action-sheet-controller></ion-action-sheet-controller>
 
         <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
+        <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
         <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
         <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
         <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
@@ -35,6 +36,45 @@
   <script>
 
     async function presentBasic() {
+      const mode = Ionic.mode;
+
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        title: "Albums",
+        buttons: [{
+          text: 'Delete',
+          role: 'destructive',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      })
+      await actionSheetElement.present();
+    }
+
+    async function presentIcons() {
       const mode = Ionic.mode;
 
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
@@ -62,14 +102,14 @@
           }
         }, {
           text: 'Favorite',
-          icon: mode !== 'ios' ? 'heart' : null,
+          icon: 'heart',
           handler: () => {
             console.log('Favorite clicked');
           }
         }, {
           text: 'Cancel',
           role: 'cancel',
-          icon: mode !== 'ios' ? 'close' : null,
+          icon: 'close',
           handler: () => {
             console.log('Cancel clicked');
           }
