@@ -24,5 +24,8 @@ $toolbar-md-button-color:                color-contrast($colors-md, $toolbar-md-
 /// @prop - Border radius of the toolbar button
 $toolbar-md-button-border-radius:        2px !default;
 
+/// @prop - Fill color of the toolbar button icon
+$toolbar-md-button-icon-fill-color:      currentColor !default;
+
 /// @prop - Font weight of the strong toolbar button
 $toolbar-md-button-strong-font-weight:   bold !default;
