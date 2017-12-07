@@ -12,5 +12,4 @@ export interface AngularViewController extends PublicViewController {
   componentRef?: ComponentRef<any>;
   instance?: any;
   angularHostElement?: HTMLElement;
-
 }

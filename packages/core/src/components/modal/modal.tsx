@@ -62,8 +62,8 @@ export class Modal {
   @Prop({ context: 'config' }) config: Config;
   @Prop() mode: string;
   @Prop() color: string;
-  @Prop() component: string;
-  @Prop() componentProps: any = {};
+  @Prop() component: any;
+  @Prop() data: any = {};
   @Prop() cssClass: string;
   @Prop() enableBackdropDismiss: boolean = true;
 
@@ -161,15 +161,7 @@ export class Modal {
   }
 
   render() {
-    const ThisComponent = this.component;
-
-    let userCssClasses = 'ion-page';
-    if (this.cssClass) {
-      userCssClasses += ` ${this.cssClass}`;
-    }
-
     const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
-
     return [
       <div
         onClick={this.backdropClick.bind(this)}
@@ -182,11 +174,6 @@ export class Modal {
         role='dialog'
         class={dialogClasses}
       >
-        <ThisComponent
-          {...this.componentProps}
-          class={userCssClasses}
-        >
-        </ThisComponent>
       </div>
     ];
   }
@@ -194,8 +181,8 @@ export class Modal {
 
 
 export interface ModalOptions {
-  component: string;
-  componentProps?: any;
+  component: any;
+  data?: any;
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
   enterAnimation?: AnimationBuilder;
