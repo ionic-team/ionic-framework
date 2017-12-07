@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import {
   ControlValueAccessor,
-  DefaultValueAccessor,
-  NgControl,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
 

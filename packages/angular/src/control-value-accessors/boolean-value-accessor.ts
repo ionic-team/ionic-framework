@@ -1,7 +1,6 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import {
   ControlValueAccessor,
-  DefaultValueAccessor,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
 
