@@ -1,4 +1,3 @@
-
 import { Component, CssClassMap, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
@@ -235,9 +234,6 @@ export class Alert {
   }
 
   buttonClick(button: any) {
-    // TODO keep the time of the most recent button click
-    // this.lastClick = Date.now();
-
     let shouldDismiss = true;
 
     if (button.handler) {
