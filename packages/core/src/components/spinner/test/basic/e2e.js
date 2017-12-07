@@ -1,7 +1,7 @@
 const { register, navigate } = require('../../../../../scripts/e2e');
 
-describe('spinner: basic', () => {
+describe('spinner/basic', () => {
 
-  register('navigates', navigate('http://localhost:3333/src/components/spinner/test/basic'));
+  register('should init', navigate('http://localhost:3333/src/components/spinner/test/basic'));
 
 });

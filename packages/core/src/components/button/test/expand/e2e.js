@@ -1,7 +1,7 @@
 const { register, navigate } = require('../../../../../scripts/e2e');
 
-describe('button: expand', () => {
+describe('button/expand', () => {
 
-  register('navigates', navigate('http://localhost:3333/src/components/button/test/expand'));
+  register('should init', navigate('http://localhost:3333/src/components/button/test/expand'));
 
 });

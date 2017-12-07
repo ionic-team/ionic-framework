@@ -2,9 +2,9 @@ const { register, navigate, Page } = require('../../../../../scripts/e2e');
 const testPageURL = 'http://localhost:3333/src/components/popover/test/basic';
 
 
-describe('popover: basic', () => {
+describe('popover/basic', () => {
 
-  register('navigates', navigate(testPageURL));
+  register('should init', navigate(testPageURL));
 
   describe('present', () => {
 
