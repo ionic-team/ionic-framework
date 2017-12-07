@@ -19,7 +19,7 @@ string
 
 #### component
 
-string
+any
 
 
 #### cssClass
@@ -76,7 +76,7 @@ string
 
 #### component
 
-string
+any
 
 
 #### cssClass

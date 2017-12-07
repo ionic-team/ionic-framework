@@ -446,7 +446,7 @@ export function fireViewWillLifecycles(enteringView: ViewController, leavingView
 
 export function attachViewToDom(nav: Nav, enteringView: ViewController, delegate: FrameworkDelegate) {
   if (enteringView && enteringView.state === STATE_NEW) {
-    return delegate.attachViewToDom(nav.element, enteringView.component).then((mountingData) => {
+    return delegate.attachViewToDom(nav.element, enteringView.component, ['ion-page']).then((mountingData) => {
       Object.assign(enteringView, mountingData);
       enteringView.state = STATE_ATTACHED;
     });

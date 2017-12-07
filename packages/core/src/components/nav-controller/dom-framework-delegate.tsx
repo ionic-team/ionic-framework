@@ -10,11 +10,11 @@ export class DomFrameworkDelegate implements FrameworkDelegate {
         for (const clazz of classesToAdd) {
           usersElement.classList.add(clazz);
         }
-        parentElement.appendChild(usersElement);
-        resolve({
-          element: usersElement
-        });
       }
+      parentElement.appendChild(usersElement);
+      resolve({
+        element: usersElement
+      });
     });
   }
 

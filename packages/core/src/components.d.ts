@@ -1622,7 +1622,7 @@ declare global {
     export interface IonModalAttributes extends HTMLAttributes {
       mode?: string;
       color?: string;
-      component?: string;
+      component?: any;
       data?: any;
       cssClass?: string;
       enableBackdropDismiss?: boolean;

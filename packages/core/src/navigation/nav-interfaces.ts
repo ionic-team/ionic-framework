@@ -7,7 +7,7 @@ import {
 
 export interface FrameworkDelegate {
 
-  attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any): Promise<FrameworkMountingData>;
+  attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, classesToAdd?: string[]): Promise<FrameworkMountingData>;
   removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any): Promise<FrameworkMountingData>;
 }
 
