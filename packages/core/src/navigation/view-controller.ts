@@ -99,7 +99,7 @@ export function dismiss(navCtrl: any, dismissProxy: any, data?: any, role?: stri
 
 export function destroy(viewController: ViewController, delegate?: FrameworkDelegate): Promise<any> {
   assert(viewController.state !== STATE_DESTROYED, 'view state must be attached');
-  return delegate ? delegate.removeViewFromDom(viewController.nav, viewController) : Promise.resolve().then(() => {
+  return delegate ? delegate.removeViewFromDom(viewController.nav.element, viewController.element) : Promise.resolve().then(() => {
 
     if (viewController.component) {
       // TODO - consider removing classes and styles as thats what we do in ionic-angular
