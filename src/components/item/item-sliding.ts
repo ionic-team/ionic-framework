@@ -190,6 +190,38 @@ export class ItemSliding {
    */
   @Output() ionDrag: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
 
+  /**
+   * @output {event} Emitted when the sliding is closed
+   * 
+   * ```html
+   * <ion-list>
+   *   <!-- Register the 'ionClose' event -->
+   *   <ion-item-sliding #slidingItem (ionClose)="onClose($event)">
+   *     <ion-item>
+   *       Item
+   *     </ion-item>
+   *     <ion-item-options>
+   *       <button ion-button>Share</button>
+   *     </ion-item-options>
+   *   </ion-item-sliding>
+   * </ion-list>
+   * ```
+   *
+   * ```ts
+   * onClose(item: ItemSliding) {
+   *   let amount = item.getOpenAmount();
+   * 
+   *   // Make sure that item is closed
+   *   if (amount == 0) {
+   *     // is closed
+   *     console.log('closed item');
+   *   }
+   * }
+   * ```
+   *
+   */
+  @Output() ionClose: EventEmitter<ItemSliding> = new EventEmitter<ItemSliding>();
+
   constructor(
     @Optional() list: List,
     private _plt: Platform,
@@ -309,18 +341,18 @@ export class ItemSliding {
       restingPoint = 0;
     }
 
-    this.fireSwipeEvent();
     this._setOpenAmount(restingPoint, true);
+    this.fireSwipeEvent();
     return restingPoint;
   }
 
   /**
    * @hidden
    */
-  private fireSwipeEvent() {
-    if (this._state & SlidingState.SwipeRight) {
+  protected fireSwipeEvent() {
+    if (this._state & (SlidingState.SwipeRight | SlidingState.Right)) {
       this._zone.run(() => this._rightOptions.ionSwipe.emit(this));
-    } else if (this._state & SlidingState.SwipeLeft) {
+    } else if (this._state & (SlidingState.SwipeLeft | SlidingState.Left)) {
       this._zone.run(() => this._leftOptions.ionSwipe.emit(this));
     }
   }
@@ -439,6 +471,7 @@ export class ItemSliding {
    */
   close() {
     this._setOpenAmount(0, true);
+    this.ionClose.emit(this);
   }
 
   /**
