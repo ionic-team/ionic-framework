@@ -1,7 +1,7 @@
 import {
   RouterEntries, RouterEntry, RouterSegments, breadthFirstSearch,
   generateURL, initRoute, matchRoute, parseURL
-} from '../router-utils';
+} from '../../router-controller/router-utils';
 
 describe('RouterSegments', () => {
   it ('should initialize with empty array', () => {
