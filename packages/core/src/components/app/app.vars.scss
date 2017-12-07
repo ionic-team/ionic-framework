@@ -6,13 +6,6 @@
 
 // App
 // --------------------------------------------------
-// All font sizes use rem units
-// By default, 1rem equals 10px. For example, 1.4rem  === 14px
-// $font-size-root value, which is on the <html> element
-// is what can scale all fonts
-
-/// @prop - Font size of the root html
-$font-size-root:               62.5% !default;
 
 /// @prop - Font weight of all headings
 $headings-font-weight:         500 !default;
@@ -21,22 +14,22 @@ $headings-font-weight:         500 !default;
 $headings-line-height:         1.2 !default;
 
 /// @prop - Font size of heading level 1
-$h1-font-size:                 2.6rem !default;
+$h1-font-size:                 26px !default;
 
 /// @prop - Font size of heading level 2
-$h2-font-size:                 2.4rem !default;
+$h2-font-size:                 24px !default;
 
 /// @prop - Font size of heading level 3
-$h3-font-size:                 2.2rem !default;
+$h3-font-size:                 22px !default;
 
 /// @prop - Font size of heading level 4
-$h4-font-size:                 2rem !default;
+$h4-font-size:                 20px !default;
 
 /// @prop - Font size of heading level 5
-$h5-font-size:                 1.8rem !default;
+$h5-font-size:                 18px !default;
 
 /// @prop - Font size of heading level 6
-$h6-font-size:                 1.6rem !default;
+$h6-font-size:                 16px !default;
 
 
 // Responsive Utilities

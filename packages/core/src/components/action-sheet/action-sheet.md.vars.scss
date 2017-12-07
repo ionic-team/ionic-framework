@@ -10,16 +10,16 @@ $action-sheet-md-text-align:                            start !default;
 $action-sheet-md-background:                            #fafafa !default;
 
 /// @prop - Padding top of the action sheet
-$action-sheet-md-padding-top:                           .8rem !default;
+$action-sheet-md-padding-top:                           8px !default;
 
 /// @prop - Padding bottom of the action sheet
-$action-sheet-md-padding-bottom:                        .8rem !default;
+$action-sheet-md-padding-bottom:                        8px !default;
 
 /// @prop - Color of the action sheet title
 $action-sheet-md-title-color:                           #757575 !default;
 
 /// @prop - Font size of the action sheet title
-$action-sheet-md-title-font-size:                       1.6rem !default;
+$action-sheet-md-title-font-size:                       16px !default;
 
 /// @prop - Padding top of the action sheet title
 $action-sheet-md-title-padding-top:                     11px !default;
@@ -34,13 +34,13 @@ $action-sheet-md-title-padding-bottom:                  17px !default;
 $action-sheet-md-title-padding-start:                   $action-sheet-md-title-padding-end !default;
 
 /// @prop - Minimum height of the action sheet button
-$action-sheet-md-button-min-height:                     4.8rem !default;
+$action-sheet-md-button-min-height:                     48px !default;
 
 /// @prop - Text color of the action sheet button
 $action-sheet-md-button-text-color:                     #222 !default;
 
 /// @prop - Font size of the action sheet button
-$action-sheet-md-button-font-size:                      1.6rem !default;
+$action-sheet-md-button-font-size:                      16px !default;
 
 /// @prop - Padding top of the action sheet button
 $action-sheet-md-button-padding-top:                    0 !default;
@@ -61,10 +61,10 @@ $action-sheet-md-button-background:                     transparent !default;
 $action-sheet-md-button-background-activated:           #f1f1f1 !default;
 
 /// @prop - Font size of the icon in the action sheet button
-$action-sheet-md-icon-font-size:                        2.4rem !default;
+$action-sheet-md-icon-font-size:                        24px !default;
 
 /// @prop - Width of the icon in the action sheet button
-$action-sheet-md-icon-width:                            2.3rem !default;
+$action-sheet-md-icon-width:                            23px !default;
 
 /// @prop - Text align of the icon in the action sheet button
 $action-sheet-md-icon-text-align:                       center !default;

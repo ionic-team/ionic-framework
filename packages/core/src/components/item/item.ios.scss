@@ -25,14 +25,14 @@
 .item-ios h1 {
   @include margin(0, 0, 2px);
 
-  font-size: 2.4rem;
+  font-size: 24px;
   font-weight: normal;
 }
 
 .item-ios h2 {
   @include margin(0, 0, 2px);
 
-  font-size: 1.7rem;
+  font-size: 17px;
   font-weight: normal;
 }
 
@@ -42,7 +42,7 @@
 .item-ios h6 {
   @include margin(0, 0, 3px);
 
-  font-size: 1.4rem;
+  font-size: 14px;
   font-weight: normal;
   line-height: normal;
 }
@@ -99,7 +99,7 @@
 
   height: 24px;
 
-  font-size: 1.3rem;
+  font-size: 13px;
 }
 
 .item-ios .item-button ion-icon[slot="icon-only"] {

@@ -140,7 +140,7 @@
 // --------------------------------------------------
 
 .bar-button-md {
-  @include margin(0, .2rem, 0, .2rem);
+  @include margin(0, 2px, 0, 2px);
   @include padding(0, 5px);
   @include border-radius($toolbar-md-button-border-radius);
 
@@ -306,7 +306,7 @@
   @include padding(0, 6px);
   @include text-align(start);
 
-  font-size: 2.4rem;
+  font-size: 24px;
   font-weight: normal;
 }
 
@@ -326,7 +326,7 @@
 .bar-button-menutoggle-md ion-icon {
   @include padding(0, 6px);
 
-  font-size: 2.4rem;
+  font-size: 24px;
 }
 
 .bar-button-menutoggle-md[slot="mode-end"],

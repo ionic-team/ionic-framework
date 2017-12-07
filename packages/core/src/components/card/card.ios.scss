@@ -33,20 +33,20 @@
 }
 
 .card .note-ios {
-  font-size: 1.3rem;
+  font-size: 13px;
 }
 
 .card-ios h1 {
   @include margin(0, 0, 2px);
 
-  font-size: 2.4rem;
+  font-size: 24px;
   font-weight: normal;
 }
 
 .card-ios h2 {
   @include margin(2px, 0);
 
-  font-size: 1.6rem;
+  font-size: 16px;
   font-weight: normal;
 }
 
@@ -56,14 +56,14 @@
 .card-ios h6 {
   @include margin(2px, 0);
 
-  font-size: 1.4rem;
+  font-size: 14px;
   font-weight: normal;
 }
 
 .card-ios p {
   @include margin(0, 0, 2px);
 
-  font-size: 1.4rem;
+  font-size: 14px;
   color: $card-ios-text-color;
 }
 

@@ -16,7 +16,7 @@ $toolbar-order-ios: (
 );
 
 /// @prop - Font size of the toolbar button
-$toolbar-ios-button-font-size:              1.7rem !default;
+$toolbar-ios-button-font-size:              17px !default;
 
 /// @prop - Text color of the toolbar button
 $toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar-ios-background, ios) !default;

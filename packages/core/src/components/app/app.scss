@@ -24,8 +24,6 @@ html {
   width: 100%;
   height: 100%;
 
-  font-size: $font-size-root;
-
   text-size-adjust: 100%;
 }
 
@@ -75,7 +73,7 @@ h3,
 h4,
 h5,
 h6 {
-  @include margin(1.6rem, null, 1rem, null);
+  @include margin(16px, null, 10px, null);
 
   font-weight: $headings-font-weight;
   line-height: $headings-line-height;
@@ -89,7 +87,7 @@ h6 {
   h5,
   h6 {
     &:first-child {
-      @include margin(-.3rem, null, null, null);
+      @include margin(-3px, null, null, null);
     }
   }
 }
@@ -97,17 +95,17 @@ h6 {
 h1 + h2,
 h1 + h3,
 h2 + h3 {
-  @include margin(-.3rem, null, null, null);
+  @include margin(-3px, null, null, null);
 }
 
 h1 {
-  @include margin(2rem, null, null, null);
+  @include margin(20px, null, null, null);
 
   font-size: $h1-font-size;
 }
 
 h2 {
-  @include margin(1.8rem, null, null, null);
+  @include margin(18px, null, null, null);
 
   font-size: $h2-font-size;
 }

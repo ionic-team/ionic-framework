@@ -289,7 +289,7 @@
 
   order: map-get($toolbar-order-ios, back-button);
 
-  min-height: 3.2rem;
+  min-height: 32px;
 
   line-height: 1;
   transform: translateZ(0);
@@ -302,7 +302,7 @@
 
   min-width: 18px;
 
-  font-size: 3.4rem;
+  font-size: 34px;
 }
 
 .back-button-text-ios {
@@ -324,7 +324,7 @@
   ion-icon {
     @include padding(0, 6px);
 
-    font-size: 2.8rem;
+    font-size: 28px;
   }
 }
 

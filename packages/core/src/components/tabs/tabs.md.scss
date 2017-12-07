@@ -65,13 +65,13 @@
 }
 
 .tabbar-md.layout-icon-top .has-icon .tab-button-text {
-  @include margin(null, null, -.2rem, null);
+  @include margin(null, null, -2px, null);
 }
 
 .tabbar-md.layout-icon-bottom .tab-button-text {
   @include transform-origin(center, top);
 
-  @include margin(-.2rem, null, null, null);
+  @include margin(-2px, null, null, null);
 }
 
 
