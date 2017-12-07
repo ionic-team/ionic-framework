@@ -3,6 +3,21 @@
 // Badge
 // --------------------------------------------------
 
+/// @prop - Padding top of the badge
+$badge-ios-padding-top:           3px !default;
+
+/// @prop - Padding end of the badge
+$badge-ios-padding-end:           8px !default;
+
+/// @prop - Padding bottom of the badge
+$badge-ios-padding-bottom:        $badge-ios-padding-top !default;
+
+/// @prop - Padding start of the badge
+$badge-ios-padding-start:         $badge-ios-padding-end !default;
+
+/// @prop - Minimum width of the badge
+$badge-min-width:                 10px !default;
+
 /// @prop - Font size of the badge
 $badge-font-size:                 13px !default;
 

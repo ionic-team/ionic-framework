@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals";
+
+// Datetime
+// --------------------------------------------------
+
+/// @prop - Minimum width of the datetime text
+$datetime-text-min-width:             16px !default;
+
+/// @prop - Minimum height of the datetime text
+$datetime-text-min-height:            1.2em !default;
+
+/// @prop - Line height of the datetime text
+$datetime-text-line-height:           1.2 !default;
+
+/// @prop - Opacity of the disabled datetime
+$datetime-disabled-opacity:           .4 !default;

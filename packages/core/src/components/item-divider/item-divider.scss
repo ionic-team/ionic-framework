@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "./item-divider.vars";
 
 
 // Item Divider
@@ -17,7 +17,7 @@ ion-item-divider {
 
   width: 100%;
 
-  min-height: 30px;
+  min-height: $item-divider-min-height;
 }
 
 ion-item-divider[sticky] {

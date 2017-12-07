@@ -4,15 +4,16 @@
 // --------------------------------------------------
 
 ion-badge {
-  @include padding(3px, 8px);
+  @include padding($badge-ios-padding-top, $badge-ios-padding-end, $badge-ios-padding-bottom, $badge-ios-padding-start);
   @include text-align(center);
 
   display: inline-block;
 
-  min-width: 10px;
+  min-width: $badge-min-width;
 
   font-size: $badge-font-size;
   font-weight: $badge-font-weight;
+
   line-height: 1;
 
   white-space: nowrap;
