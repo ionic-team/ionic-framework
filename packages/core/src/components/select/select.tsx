@@ -4,6 +4,7 @@ import { deepCopy, isCheckedProperty } from '../../utils/helpers';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
+import { Label } from '../label/label';
 import { Popover } from '../popover/popover';
 
 import { SelectOption } from '../select-option/select-option';
@@ -31,7 +32,7 @@ export class Select {
   texts: any = [];
 
   // TODO typing
-  item: any;
+  label: Label;
 
   options: SelectOption[] = [];
   overlay: ActionSheet | Alert | Popover;
@@ -105,8 +106,8 @@ export class Select {
 
 
   componentDidLoad() {
-    // Get the parent item
-    this.item = this.el.closest('ion-item');
+    // Get the nearest label
+    this.label = this.el.closest('ion-item').querySelector('ion-label');
 
     this.setOptions();
   }
@@ -332,8 +333,8 @@ export class Select {
     }];
 
     // if the selectOptions didn't provide a title then use the label's text
-    if (!selectOptions.title && this.item) {
-      selectOptions.title = this.item.getLabelText();
+    if (!selectOptions.title && this.label) {
+      selectOptions.title = this.label.getText();
     }
 
     // If the user passed in an invalid interface we need to reset it to alert
