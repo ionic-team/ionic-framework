@@ -16,8 +16,8 @@ class ActionSheetE2ETestPage extends Page {
   }
 }
 
-describe('action-sheet: basic', () => {
-  register('navigates', driver => {
+describe('action-sheet/basic', () => {
+  register('should init', driver => {
     const page = new ActionSheetE2ETestPage(driver);
     return page.navigate();
   });

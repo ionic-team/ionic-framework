@@ -1,9 +1,9 @@
 const { register, navigate, Page } = require('../../../../../scripts/e2e');
 const testPageURL = 'http://localhost:3333/src/components/menu/test/basic';
 
-describe('menu: basic', () => {
+describe('menu/basic', () => {
 
-  register('navigates', navigate(testPageURL));
+  register('should init', navigate(testPageURL));
 
   describe('present', () => {
 

@@ -8,10 +8,10 @@ module.exports = class E2ETestPage {
     this.driver = driver;
   }
 
-  navigate() {
+  navigate(tagName = '') {
     this.driver.navigate().to(this.url);
     this.driver.wait(until.elementLocated(By.css('.hydrated')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.hydrated'))));
+    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css(`${tagName}.hydrated`))));
   }
 
   present(clickTarget, options) {
