@@ -1,0 +1,83 @@
+@import "./reorder.vars";
+
+// Reorder
+// --------------------------------------------------
+
+.reorder[slot] {
+  @include margin(auto, null);
+
+  line-height: 0;
+}
+
+.reorder[slot="start"] {
+  order: -1;
+}
+
+.reorder.no-hide {
+  display: block;
+
+  visibility: normal;
+}
+
+.reorder:not(.no-hide) {
+  display: none;
+
+  pointer-events: all;
+  touch-action: manipulation;
+}
+
+.reorder-enabled .reorder {
+  display: block;
+
+  cursor: grab;
+  cursor: -webkit-grab;
+}
+
+.reorder-selected,
+.reorder-selected .reorder {
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.reorder-selected {
+  position: relative;
+  z-index: $z-index-reorder-selected;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+  opacity: .8;
+
+  // TODO remove !important
+  transition: none !important;
+}
+
+
+// Reorder Icon
+// --------------------------------------------------
+
+.reorder-icon {
+  @include transform(translate3d($reorder-initial-transform, 0, 0));
+
+  display: block;
+
+  font-size: 1.3em;
+  transition: transform 140ms ease-in;
+}
+
+.reorder-icon svg {
+  min-width: 1em;
+}
+
+.item-ios .reorder-icon {
+  font-size: 2em;
+
+  fill: currentColor;
+  opacity: .4;
+}
+
+.reorder[slot="start"] .reorder-icon {
+  @include transform(translate3d(-$reorder-initial-transform, 0, 0));
+}
+
+.reorder-visible .reorder .reorder-icon {
+  @include transform(translate3d(0, 0, 0));
+}

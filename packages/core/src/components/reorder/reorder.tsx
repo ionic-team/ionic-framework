@@ -3,6 +3,7 @@ import { Component, Element, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-reorder',
+  styleUrl: 'reorder.scss',
   host: {
     theme: 'reorder'
   }
