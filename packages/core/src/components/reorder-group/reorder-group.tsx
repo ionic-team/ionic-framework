@@ -19,7 +19,10 @@ export class ReorderIndexes {
 
 @Component({
   tag: 'ion-reorder-group',
-  styleUrl: 'reorder-group.scss'
+  styleUrl: 'reorder-group.scss',
+  host: {
+    theme: 'reorder-group'
+  }
 })
 export class ReorderGroup {
   private selectedItemEl: HTMLElement = null;

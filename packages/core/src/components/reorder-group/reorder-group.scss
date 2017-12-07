@@ -67,13 +67,17 @@
 .reorder-icon {
   @include transform(translate3d($reorder-initial-transform, 0, 0));
 
+  display: block;
+
   font-size: 1.3em;
   transition: transform 140ms ease-in;
 }
 
 .item-ios .reorder-icon {
   font-size: 2em;
-  opacity: .3;
+
+  fill: currentColor;
+  opacity: .4;
 }
 
 .reorder[slot="start"] .reorder-icon {

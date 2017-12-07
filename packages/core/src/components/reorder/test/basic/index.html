@@ -39,9 +39,9 @@
               <ion-reorder slot="start"></ion-reorder>
             </ion-item>
 
-            <ion-item>
-              Item 4 (custom ion-reorder)
-              <ion-reorder slot="end"><ion-icon name="pizza"></ion-reorder>
+            <ion-item color="secondary">
+              Item 4 (default ion-reorder slot="start")
+              <ion-reorder slot="start"></ion-reorder>
             </ion-item>
 
             <ion-item>
@@ -50,13 +50,14 @@
             </ion-item>
 
             <ion-item>
-              Item 6 (custom ion-reorder slot="start")
-              <ion-reorder slot="start"><ion-icon name="pizza"></ion-reorder>
+              Item 6 (custom ion-reorder)
+              <ion-reorder slot="end"><ion-icon name="pizza"></ion-reorder>
             </ion-item>
 
-            <ion-reorder class="no-hide">
-              <ion-item>Item 7 (the whole item can be dragged)</ion-item>
-            </ion-reorder>
+            <ion-item>
+              Item 7 (custom ion-reorder slot="start")
+              <ion-reorder slot="start"><ion-icon name="pizza"></ion-reorder>
+            </ion-item>
 
             <ion-reorder class="no-hide">
               <ion-item>Item 8 (the whole item can be dragged)</ion-item>
@@ -64,6 +65,10 @@
 
             <ion-reorder class="no-hide">
               <ion-item>Item 9 (the whole item can be dragged)</ion-item>
+            </ion-reorder>
+
+            <ion-reorder class="no-hide">
+              <ion-item>Item 10 (the whole item can be dragged)</ion-item>
             </ion-reorder>
 
           </ion-reorder-group>
