@@ -10,7 +10,7 @@
 
 <body>
   <ion-app>
-    <ion-page>
+    <div class="ion-page">
       <ion-header>
         <ion-toolbar>
           <ion-title>Action Sheet - Translucent</ion-title>
@@ -40,13 +40,13 @@
             <ion-col col-4><f class="orange"></f></ion-col>
           </ion-row>
         </ion-grid>
-    </ion-content>
-    </ion-page>
+      </ion-content>
+    </div>
   </ion-app>
 
   <script>
 
-    function presentBasic() {
+    async function presentBasic() {
       var mode = Ionic.mode;
 
       const actionSheetController = document.querySelector('ion-action-sheet-controller');

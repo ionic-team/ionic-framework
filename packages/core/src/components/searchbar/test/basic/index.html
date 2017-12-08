@@ -8,7 +8,7 @@
 </head>
 <body>
   <ion-app>
-    <ion-page class="ion-page">
+    <div class="ion-page">
       <ion-header>
         <ion-toolbar>
           <ion-title>Searchbar - Basic</ion-title>
@@ -107,7 +107,7 @@
           <ion-button expand="block" (click)="changeValue()">Change Value</ion-button>
         </p>
 
-      <div padding-horizontal>
+        <div padding-horizontal>
           <ion-button expand="block" onClick="toggleProp()">Toggle Property</ion-button>
         </div>
         <div padding>
@@ -131,32 +131,32 @@
             dynamicAttr.setAttribute('placeholder', attrPlaceholder);
           }
 
-          function toggleProp() {
-            var dynamicProp = document.getElementById('dynamicProp');
-            console.log(dynamicProp.autocorrect, dynamicProp.autocomplete, dynamicProp.spellcheck);
+function toggleProp() {
+  var dynamicProp = document.getElementById('dynamicProp');
+  console.log(dynamicProp.autocorrect, dynamicProp.autocomplete, dynamicProp.spellcheck);
 
-            // Toggle autocorrect property
-            const propIsAutocorrect = dynamicProp.autocorrect === 'on' ? 'off' : 'on';
-            dynamicProp.autocorrect = propIsAutocorrect;
+  // Toggle autocorrect property
+  const propIsAutocorrect = dynamicProp.autocorrect === 'on' ? 'off' : 'on';
+  dynamicProp.autocorrect = propIsAutocorrect;
 
-            // Toggle autocomplete property
-            const propIsAutocomplete = dynamicProp.autocomplete === 'on' ? 'off' : 'on';
-            dynamicProp.autocomplete = propIsAutocomplete;
+  // Toggle autocomplete property
+  const propIsAutocomplete = dynamicProp.autocomplete === 'on' ? 'off' : 'on';
+  dynamicProp.autocomplete = propIsAutocomplete;
 
-            // Toggle spellcheck property
-            const propIsSpellcheck = dynamicProp.spellcheck === true ? false : true;
-            dynamicProp.spellcheck = propIsSpellcheck;
-          }
+  // Toggle spellcheck property
+  const propIsSpellcheck = dynamicProp.spellcheck === true ? false : true;
+  dynamicProp.spellcheck = propIsSpellcheck;
+}
 
-          const searchbars = document.querySelectorAll('ion-searchbar')
-          for(let i=0; i <searchbars.length; i++){
-            searchbars[i].addEventListener('ionInput', (ev)=>{
-              console.log(ev);
-            })
-          }
+const searchbars = document.querySelectorAll('ion-searchbar')
+for(let i=0; i <searchbars.length; i++){
+  searchbars[i].addEventListener('ionInput', (ev)=>{
+    console.log(ev);
+  })
+}
         </script>
       </ion-content>
-    </ion-page>
+    </div>
   </ion-app>
 </body>
 </html>
