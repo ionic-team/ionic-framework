@@ -10,11 +10,9 @@ class App extends Component {
   render() {
     return (
       <ion-app>
-        <ion-nav-controller ref={wc({}, {
-          delegate: Delegate
-        })}></ion-nav-controller>
         <ion-nav ref={wc({},{
-          root: PageOne
+          root: PageOne,
+          delegate: Delegate
         })}></ion-nav>
       </ion-app>
     );

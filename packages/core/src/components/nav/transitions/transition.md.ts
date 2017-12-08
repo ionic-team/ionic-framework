@@ -1,6 +1,6 @@
-import { AnimationOptions, Transition, ViewController } from '../../index';
+import { AnimationOptions, Transition, ViewController } from '../../../index';
 import { canNavGoBack } from '../nav-utils';
-import { isDef } from '../../utils/helpers';
+import { isDef } from '../../../utils/helpers';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';

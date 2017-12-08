@@ -1,6 +1,6 @@
 import { Transition } from './nav-interfaces';
-import { Animation, AnimationOptions, Config, Nav, RouterEntry, TransitionBuilder, ViewController } from '..';
-import { isDef } from '../utils/helpers';
+import { Animation, AnimationOptions, Config, Nav, RouterEntry, TransitionBuilder, ViewController } from '../../index';
+import { isDef } from '../../utils/helpers';
 
 export const STATE_NEW = 1;
 export const STATE_INITIALIZED = 2;
