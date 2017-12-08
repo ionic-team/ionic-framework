@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ionic/core": "0.0.2-29",
-    "@ionic/react": "0.0.1",
+    "@ionic/core": "next",
+    "@ionic/react": "next",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17"
