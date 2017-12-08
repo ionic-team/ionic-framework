@@ -1,0 +1,43 @@
+{
+  "name": "@ionic/react",
+  "version": "0.0.0",
+  "description": "React specific wrapper for @ionic/core",
+  "keywords": [
+    "ionic",
+    "framework",
+    "mobile",
+    "app",
+    "hybrid",
+    "webapp",
+    "cordova",
+    "progressive web app",
+    "pwa"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/ionic.git"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf dist",
+    "compile": "npm run tsc",
+    "deploy": "np --any-branch",
+    "tsc": "tsc -p ."
+  },
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "devDependencies": {
+    "@ionic/core": "next",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "typescript": "~2.5.2"
+  },
+  "dependencies": {
+    "@stencil/core": "0.0.8"
+  }
+}
