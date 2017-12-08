@@ -65,9 +65,9 @@ export {
 export * from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export { Nav } from './components/nav/nav';
-export { PublicNav } from './components/nav/nav-interface';
+export * from './components/nav/nav-interfaces';
+export { ViewController } from './components/nav/view-controller';
 export { Navbar } from './components/navbar/navbar';
-export { NavController } from './components/nav-controller/nav-controller';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
 export { PickerColumnCmp } from './components/picker-column/picker-column';
@@ -110,9 +110,6 @@ export { ToastController } from './components/toast-controller/toast-controller'
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar } from './components/toolbar/toolbar';
 
-export * from './navigation/nav-interfaces';
-export { ViewController } from './navigation/view-controller';
-
 // export all of the component declarations that are dynamically created
 export * from './components';
 
@@ -151,4 +148,13 @@ export interface OverlayDismissEventDetail {
 
 export interface OverlayController {
   create(): HTMLElement;
+}
+
+export interface FrameworkDelegate {
+  attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, propsOrDataObj?: any, classesToAdd?: string[]): Promise<FrameworkMountingData>;
+  removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any): Promise<FrameworkMountingData>;
+}
+
+export interface FrameworkMountingData {
+  element: HTMLElement;
 }

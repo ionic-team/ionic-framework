@@ -1,7 +1,7 @@
-import { FrameworkDelegate, Nav, PublicViewController } from '../index';
+import { FrameworkDelegate, Nav, PublicViewController } from '../../index';
 import { STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED, STATE_NEW } from './nav-utils';
 
-import { assert } from '../utils/helpers';
+import { assert } from '../../utils/helpers';
 
 export class ViewController implements PublicViewController {
 

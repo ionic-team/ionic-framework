@@ -1637,36 +1637,6 @@ declare global {
 
 
 import {
-  NavController as IonNavController
-} from './components/nav-controller/nav-controller';
-
-declare global {
-  interface HTMLIonNavControllerElement extends IonNavController, HTMLElement {
-  }
-  var HTMLIonNavControllerElement: {
-    prototype: HTMLIonNavControllerElement;
-    new (): HTMLIonNavControllerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-nav-controller": HTMLIonNavControllerElement;
-  }
-  interface ElementTagNameMap {
-    "ion-nav-controller": HTMLIonNavControllerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-nav-controller": JSXElements.IonNavControllerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonNavControllerAttributes extends HTMLAttributes {
-      delegate?: FrameworkDelegate;
-    }
-  }
-}
-
-
-import {
   Nav as IonNav
 } from './components/nav/nav';
 

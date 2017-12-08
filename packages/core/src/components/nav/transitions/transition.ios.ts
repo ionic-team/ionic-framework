@@ -1,6 +1,6 @@
-import { AnimationOptions, Transition, ViewController } from '../../index';
+import { AnimationOptions, Transition, ViewController } from '../../../index';
 import { canNavGoBack } from '../nav-utils';
-import { isDef } from '../../utils/helpers';
+import { isDef } from '../../../utils/helpers';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
