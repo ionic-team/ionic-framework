@@ -5,7 +5,7 @@ const { register, Page } = require('../../../../../scripts/e2e');
 
 class ActionSheetE2ETestPage extends Page {
   constructor(driver) {
-    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic/index.html');
+    super(driver, 'http://localhost:3333/src/components/action-sheet/test/basic');
   }
 
   present(buttonId) {

@@ -59,7 +59,7 @@ function registerE2ETest(desc, tst) {
     await tst(driver);
     if (takeScreenshots) {
       await snapshot.takeScreenshot(driver, {
-        name: this.test.fullTitle(),
+        name: this.test.fullTitle().replace(/(^[\w-]+\/[\w-]+)/, '$1:'),
         specIndex: specIndex++
       });
     }

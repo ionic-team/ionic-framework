@@ -93,13 +93,24 @@ class Snapshot {
 
   async _takeScreenshot(driver, options) {
     const capabilities = await driver.getCapabilities();
+
     const png = await driver.takeScreenshot();
-    const url = await driver.getCurrentUrl();
+    let url = await driver.getCurrentUrl();
+
+    // TODO remove the modified url/description once we're happy with the comparison to v3
+    let platform = 'android';
+
+    let replacedUrl = url.replace('3333', '8876').replace('src/components', '/e2e').replace('test/', '');
+    url = replacedUrl + `/index.html?ionicplatform=${platform}&ionicOverlayCreatedDiff=0&snapshot=true`;
+    console.log('url', url);
+
+    let description = options.name.replace(': ', `: ${platform} `) + '.';
+    console.log('description', description);
 
     return Promise.resolve({
       app_id: this.appId,
       group_id: this.groupId,
-      description: options.name,
+      description: description,
       spec_index: options.specIndex,
       total_specs: this.totalSpecs,
       test_id: this.testId,
