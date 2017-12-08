@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toggle - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-toggle checked></ion-toggle>
+  <ion-toggle color="secondary" (ionChange)="kiwiChange($event)" checked></ion-toggle>
+  <ion-toggle color="danger" name="cherry" checked></ion-toggle>
+  <ion-toggle color="light" (ionChange)="strawberryChange($event)" checked="true"></ion-toggle>
+  <ion-toggle color="dark" checked></ion-toggle>
+  <ion-toggle checked disabled></ion-toggle>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toast - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-button expand="block" onclick="presentToast('bottom')">Show Toast Bottom</ion-button>
+
+  <ion-toast-controller></ion-toast-controller>
+
+  <script>
+    async function presentToast(position) {
+      const toastController = document.querySelector('ion-toast-controller');
+      await toastController.componentOnReady();
+      const toastElement = await toastController.create({
+        message: 'Hellooo',
+        position,
+        duration: 2000
+      });
+      return await toastElement.present();
+    }
+  </script>
+</body>
+</html>

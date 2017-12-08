@@ -3,42 +3,22 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Infinite Scroll - Basic</title>
+  <title>Infinite Scroll - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
 
 <body>
-  <ion-app>
-    <ion-page main>
+  <ion-list id="list">
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Infinite Scroll - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
+  </ion-list>
 
-      <ion-content padding>
-
-        <ion-button onclick="toggleInfiniteScroll()" block>
-          Toggle InfiniteScroll Enabled
-        </ion-button>
-
-        <ion-list id="list">
-
-        </ion-list>
-
-        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
-          <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ion-content>
-
-    </ion-page>
-
-  </ion-app>
+  <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <script>
     let items = [];

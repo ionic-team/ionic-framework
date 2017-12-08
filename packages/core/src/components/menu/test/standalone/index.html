@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Menu - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-menu side="left">
+    <ion-header>
+      <ion-toolbar color="secondary">
+        <ion-title>Left Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Open Right Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+        <ion-item detail-none>Close Menu</ion-item>
+      </ion-list>
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar color="secondary">
+        <ion-title>Footer</ion-title>
+      </ion-toolbar>
+    </ion-footer>
+
+  </ion-menu>
+
+  <ion-page main>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      <p>
+        <ion-button class="e2eOpenLeftMenu" onclick="openLeft()">Open left menu</ion-button>
+        <ion-button onclick="openRight()">Open right menu</ion-button>
+      </p>
+      <p>
+        <ion-button onclick="setPush()">Set Push</ion-button>
+        <ion-button onclick="setOverlay()">Set Overlay</ion-button>
+        <ion-button onclick="setReveal()">Set Reveal</ion-button>
+
+        <ion-button onclick="setEnabled()">Set Swipe Enabled False</ion-button>
+      </p>
+    </ion-content>
+
+  </ion-page>
+</body>
+</html>

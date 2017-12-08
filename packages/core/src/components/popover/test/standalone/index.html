@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Popover - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-button expand="block" onclick="presentPopover({ component: 'profile-page', ev: event })">Show Popover</ion-button>
+
+  <ion-popover-controller></ion-popover-controller>
+
+  <script>
+    async function presentPopover(opts) {
+      const popoverController = document.querySelector('ion-popover-controller');
+      await popoverController.componentOnReady();
+      const popoverElement = await popoverController.create(opts);
+      return await popoverElement.present();
+    }
+
+    class ProfilePage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-content>
+            <ion-list>
+              <ion-list-header>Ionic</ion-list-header>
+              <ion-item><ion-label>Item 0</ion-label></ion-item>
+              <ion-item><ion-label>Item 1</ion-label></ion-item>
+              <ion-item><ion-label>Item 2</ion-label></ion-item>
+              <ion-item><ion-label>Item 3</ion-label></ion-item>
+            </ion-list>
+          </ion-content>
+        `;
+      }
+    }
+
+    customElements.define('profile-page', ProfilePage);
+  </script>
+</body>
+</html>

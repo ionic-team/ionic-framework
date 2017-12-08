@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Alert - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-alert-controller></ion-alert-controller>
+
+  <ion-button expand="block" onclick="presentAlert()">Alert</ion-button>
+
+  <script>
+    async function presentAlert() {
+      var alertController = document.querySelector('ion-alert-controller');
+      await alertController.componentOnReady();
+      const alert = await alertController.create({
+        title: 'Alert',
+        subTitle: 'Subtitle',
+        message: 'This is an alert message.',
+        buttons: ['OK']
+      });
+      return await alert.present();
+    }
+  </script>
+</body>
+
+</html>

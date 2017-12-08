@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>FAB - Standalone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-fab top right id="fab1">
+    <ion-fab-button onclick="openLists('fab1')" mini class="e2eFabTopRight"><ion-icon name="add"></ion-icon></ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <script>
+    function openLists(container) {
+      var fabLists = document.getElementById(container).querySelectorAll('ion-fab-list');
+
+      for (var i = 0; i < fabLists.length; i++) {
+        fabLists[i].activated = true;
+      }
+    }
+  </script>
+</body>
+</html>
