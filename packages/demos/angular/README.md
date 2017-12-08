@@ -31,3 +31,6 @@ In order to test local changes they need to be copied into `node_modules` after 
 1. In `packages/demos/angular`, run `cp -r ../../core/dist node_modules/\@ionic/core/dist`
 
 Use a similar procedure if you want to test local changes to `@ionic/angular`
+
+**Note:** A couple of short scripts have been created to handle the copy bits. Just run `./cpang.sh` or `./cpcore.sh` from 
+`packages/demos/angular` after you have built `@ionic/angular` or `@ionic/core`.
