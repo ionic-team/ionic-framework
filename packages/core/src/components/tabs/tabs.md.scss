@@ -1,7 +1,6 @@
 @import "./tabs";
 @import "./tabs.md.vars";
 
-
 .tabbar-md {
   height: $tabs-md-tab-height;
 
@@ -38,15 +37,32 @@
   fill: $tabs-md-tab-icon-color;
 }
 
+.tabbar-md.scroll-overflow > ion-scroll {
+  max-width: 1024px;
+  margin: 0 8px;
+
+  ion-tab-button {
+    overflow: hidden;
+    flex: 1 0 auto;
+  }
+}
+
 .tabbar-md .tab-selected {
   color: $tabs-md-tab-text-color-active;
 
   fill: $tabs-md-tab-icon-color-active;
 }
 
-
 // Material Design Tab Button Text
 // --------------------------------------------------
+
+.tabbar-md.placement-top {
+  .tab-selected {
+    .tab-button-icon, .tab-button-text {
+      transform: inherit;
+    }
+  }
+}
 
 .tabbar-md .tab-button-text {
   @include margin($tabs-md-tab-text-margin-top, $tabs-md-tab-text-margin-end, $tabs-md-tab-text-margin-bottom, $tabs-md-tab-text-margin-start);
@@ -73,7 +89,6 @@
 
   @include margin(-2px, null, null, null);
 }
-
 
 // Material Design Tab Button Icon
 // --------------------------------------------------
@@ -109,7 +124,6 @@
   @include transform(translate3d($tabs-md-tab-icon-left-transform-x-active, $tabs-md-tab-icon-left-transform-y-active, $tabs-md-tab-icon-left-transform-z-active));
 }
 
-
 // Material Design Tab with Icon or Title only
 // --------------------------------------------------
 
@@ -144,7 +158,6 @@
   }
 
 }
-
 
 // Material Design Tabbar Color Generation
 // --------------------------------------------------
