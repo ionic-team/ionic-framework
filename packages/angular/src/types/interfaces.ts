@@ -4,11 +4,11 @@ import {
   Injector
 } from '@angular/core';
 
-import { PublicViewController } from '@ionic/core';
+import { FrameworkMountingData } from '@ionic/core';
 
-export interface AngularViewController extends PublicViewController {
+export interface AngularMountingData extends FrameworkMountingData {
   componentFactory?: ComponentFactory<any>;
-  injector?: Injector;
+  childInjector?: Injector;
   componentRef?: ComponentRef<any>;
   instance?: any;
   angularHostElement?: HTMLElement;
