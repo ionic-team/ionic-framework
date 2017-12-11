@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Segment - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
+
 <body>
   <ion-app>
     <ion-page>
@@ -88,30 +90,31 @@
 
         <script>
           var dynamicAttrDisable = document.getElementById('dynamicAttrDisable');
-var dynamicPropDisable = document.getElementById('dynamicPropDisable');
+          var dynamicPropDisable = document.getElementById('dynamicPropDisable');
 
-function toggleDisabled() {
-  const attrIsDisabled = dynamicAttrDisable.getAttribute('disabled') === 'true' ? false : true;
-  const propIsDisabled = dynamicPropDisable.disabled === true ? false : true;
-  dynamicAttrDisable.setAttribute('disabled', attrIsDisabled);
-  dynamicPropDisable.disabled = propIsDisabled;
-}
+          function toggleDisabled() {
+            const attrIsDisabled = dynamicAttrDisable.getAttribute('disabled') === 'true' ? false : true;
+            const propIsDisabled = dynamicPropDisable.disabled === true ? false : true;
+            dynamicAttrDisable.setAttribute('disabled', attrIsDisabled);
+            dynamicPropDisable.disabled = propIsDisabled;
+          }
 
-function toggleValue() {
-  var dynamicAttrElem = document.getElementById('dynamicAttrElem');
-  var dynamicAttrValue = dynamicAttrElem.getAttribute('value');
+          function toggleValue() {
+            var dynamicAttrElem = document.getElementById('dynamicAttrElem');
+            var dynamicAttrValue = dynamicAttrElem.getAttribute('value');
 
-  if (dynamicAttrValue === 'active') {
-    dynamicAttrElem.setAttribute('value', 'inactive');
-  } else if (dynamicAttrValue === 'inactive') {
-    dynamicAttrElem.setAttribute('value', 'disabled');
-  } else {
-    dynamicAttrElem.setAttribute('value', 'active');
-  }
-}
+            if (dynamicAttrValue === 'active') {
+              dynamicAttrElem.setAttribute('value', 'inactive');
+            } else if (dynamicAttrValue === 'inactive') {
+              dynamicAttrElem.setAttribute('value', 'disabled');
+            } else {
+              dynamicAttrElem.setAttribute('value', 'active');
+            }
+          }
         </script>
       </ion-content>
     </ion-page>
   </ion-app>
 </body>
+
 </html>
