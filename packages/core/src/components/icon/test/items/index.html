@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Icon - Items</title>
@@ -11,6 +12,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <ion-app>
@@ -145,7 +147,7 @@
 
           dynamicColor.setAttribute('color', 'danger');
 
-          let interval = setInterval(function () {
+          let interval = setInterval(function() {
             if (dynamicProp.name === 'home') {
               dynamicProp.name = 'ios-home';
               dynamicAttr.setAttribute('name', 'ios-home');
@@ -158,7 +160,7 @@
             }
           }, 1000);
 
-          setTimeout(function () {
+          setTimeout(function() {
             clearInterval(interval);
           }, 4000);
         </script>
@@ -167,4 +169,5 @@
     </ion-page>
   </ion-app>
 </body>
+
 </html>

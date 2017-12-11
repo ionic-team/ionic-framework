@@ -70,7 +70,7 @@ export class Toast {
   @Prop() position: string;
   @Prop() translucent: boolean = false;
   @Prop() toastId: string;
-  @Prop() animate: boolean;
+  @Prop() animate: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
@@ -87,7 +87,7 @@ export class Toast {
     const animationBuilder = this.enterAnimation || this.config.get('toastEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
       this.animation = animation;
       if (!this.animate) {
         // if the duration is 0, it won't actually animate I don't think
@@ -115,7 +115,7 @@ export class Toast {
 
     const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+    return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
       this.animation = animation;
       return playAnimationAsync(animation);
     }).then((animation) => {
