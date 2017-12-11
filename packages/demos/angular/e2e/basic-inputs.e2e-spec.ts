@@ -1,4 +1,4 @@
-import { ElementFinder, promise } from 'protractor/built';
+import { browser, ElementFinder, promise } from 'protractor/built';
 
 import { BasicInputsPage } from './basic-inputs.po';
 
@@ -42,6 +42,22 @@ describe('Basic Inputs Page', () => {
     });
   });
 
+  describe('numeric input', () => {
+    it('should remain type number with modifications', () => {
+      page.navigateTo();
+      const el = page.getIonicNumericInput();
+      const inp = page.getIonicNumericInputEditable();
+      expect(page.getNumericOutputType()).toEqual('number');
+      inp.sendKeys('318');
+      expect(page.getNumericOutputType()).toEqual('number');
+      inp.clear();
+      inp.sendKeys('-0');
+      expect(page.getNumericOutputType()).toEqual('number');
+      inp.sendKeys('.48859');
+      expect(page.getNumericOutputType()).toEqual('number');
+    });
+  });
+
   describe('textarea input', () => {
     it('should display the starting text', () => {
       page.navigateTo();
@@ -79,9 +95,11 @@ describe('Basic Inputs Page', () => {
 
     it('should reflect toggling the value', () => {
       page.navigateTo();
-      const el = page.getIonicCheckbox();
-      el.click();
-      expect(page.getCheckboxOutput()).toEqual('false');
+      return browser.executeScript('window.scrollTo(0, 500);').then(function() {
+        const el = page.getIonicCheckbox();
+        el.click();
+        expect(page.getCheckboxOutput()).toEqual('false');
+      });
     });
   });
 
@@ -94,9 +112,11 @@ describe('Basic Inputs Page', () => {
 
     it('should reflect toggling the value', () => {
       page.navigateTo();
-      const el = page.getIonicToggle();
-      el.click();
-      expect(page.getToggleOutput()).toEqual('true');
+      return browser.executeScript('window.scrollTo(0, 500);').then(function() {
+        const el = page.getIonicToggle();
+        el.click();
+        expect(page.getToggleOutput()).toEqual('true');
+      });
     });
   });
 

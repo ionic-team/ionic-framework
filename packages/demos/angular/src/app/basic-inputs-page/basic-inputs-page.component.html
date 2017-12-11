@@ -39,17 +39,17 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Numeric Input</ion-label>
-        <ion-input type="number" id="ionNumberInput" name="ionNumberInput" [(ngModel)]="numberValue"></ion-input>
+        <ion-input type="number" id="ionNumericInput" name="ionNumericInput" [(ngModel)]="numericValue"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <div>
         Value:
-        <span id="numberOutput">{{numberValue}}</span>
+        <span id="numericOutput">{{numericValue}}</span>
       </div>
       <div>
         Type:
-        <span id="numberOutputType">{{typeOf(numberValue)}}</span>
+        <span id="numericOutputType">{{typeOf(numericValue)}}</span>
       </div>
     </ion-col>
   </ion-row>
