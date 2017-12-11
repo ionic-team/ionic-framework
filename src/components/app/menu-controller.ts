@@ -112,7 +112,7 @@ import { assert, removeArrayItem  } from '../../util/util';
  * @demo /docs/demos/src/menu/
  *
  * @see {@link /docs/components#menus Menu Component Docs}
- * @see {@link ../menu Menu API Docs}
+ * @see {@link /docs/api/components/menu/Menu/ Menu API Docs}
  *
  */
 export class MenuController {
