@@ -6,13 +6,9 @@ describe('popover/basic', () => {
 
   register('should init', navigate(testPageURL));
 
-  describe('present', () => {
-
-    register('shows modal', driver => {
-      const page = new Page(driver, testPageURL);
-      return page.present('.e2eShowPopover', { waitFor: 'ion-popover' });
-    });
-
+  register('shows modal', driver => {
+    const page = new Page(driver, testPageURL);
+    return page.present('.e2eShowPopover', { waitFor: 'ion-popover' });
   });
 
 });

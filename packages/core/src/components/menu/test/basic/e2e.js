@@ -5,13 +5,9 @@ describe('menu/basic', () => {
 
   register('should init', navigate(testPageURL));
 
-  describe('present', () => {
-
-    register('shows left menu', driver => {
-      const page = new Page(driver, testPageURL);
-      return page.present('.e2eOpenLeftMenu', { waitFor: '.e2eLeftMenu' })
-    });
-
+  register('shows left menu', driver => {
+    const page = new Page(driver, testPageURL);
+    return page.present('.e2eOpenLeftMenu', { waitFor: '.e2eLeftMenu' })
   });
 
 });

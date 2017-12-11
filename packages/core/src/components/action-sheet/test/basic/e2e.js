@@ -14,6 +14,10 @@ class ActionSheetE2ETestPage extends Page {
     this.driver.wait(until.elementLocated(By.css('.action-sheet-container')));
     return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.action-sheet-container'))));
   }
+
+  closeWithBackdrop() {
+    this.driver.findElement(By.css('ion-backdrop')).click();
+  }
 }
 
 describe('action-sheet/basic', () => {
@@ -22,35 +26,38 @@ describe('action-sheet/basic', () => {
     return page.navigate();
   });
 
-  describe('present', () => {
-    register('shows basic', driver => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('basic');
-    });
+  register('should open action sheet', driver => {
+    const page = new ActionSheetE2ETestPage(driver);
+    return page.present('basic');
+  });
 
-    register('shows noBackdropDismiss',  (driver)  => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('noBackdropDismiss');
-    });
+  register('should close with backdrop click', driver => {
+    const page = new ActionSheetE2ETestPage(driver);
+    return page.closeWithBackdrop();
+  });
 
-    register('shows alertFromActionSheet',  (driver)  => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('alertFromActionSheet');
-    });
+  register('shows noBackdropDismiss',  (driver)  => {
+    const page = new ActionSheetE2ETestPage(driver);
+    return page.present('noBackdropDismiss');
+  });
 
-    register('shows scrollableOptions',  (driver)  => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('scrollableOptions');
-    });
+  register('shows alertFromActionSheet',  (driver)  => {
+    const page = new ActionSheetE2ETestPage(driver);
+    return page.present('alertFromActionSheet');
+  });
 
-    register('shows scrollWithoutCancel',  (driver)  => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('scrollWithoutCancel');
-    });
+  register('shows scrollableOptions',  (driver)  => {
+    const page = new ActionSheetE2ETestPage(driver);
+    return page.present('scrollableOptions');
+  });
 
-    register('shows cancelOnly',  (driver)  => {
-      const page = new ActionSheetE2ETestPage(driver);
-      return page.present('cancelOnly');
-    });
+  register('shows scrollWithoutCancel',  (driver)  => {
+    const page = new ActionSheetE2ETestPage(driver);
+    return page.present('scrollWithoutCancel');
+  });
+
+  register('shows cancelOnly',  (driver)  => {
+    const page = new ActionSheetE2ETestPage(driver);
+    return page.present('cancelOnly');
   });
 });

@@ -20,14 +20,14 @@
       <ion-content padding>
         <ion-alert-controller></ion-alert-controller>
 
-        <ion-button expand="block" onclick="presentAlert()">Alert</ion-button>
-        <ion-button expand="block" onclick="presentAlertLongMessage()">Alert Long Message</ion-button>
-        <ion-button expand="block" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</ion-button>
-        <ion-button expand="block" onclick="presentAlertNoMessage()">Alert No Message</ion-button>
-        <ion-button expand="block" onclick="presentAlertConfirm()">Confirm</ion-button>
-        <ion-button expand="block" onclick="presentAlertPrompt()">Prompt</ion-button>
-        <ion-button expand="block" onclick="presentAlertRadio()">Radio</ion-button>
-        <ion-button expand="block" onclick="presentAlertCheckbox()">Checkbox</ion-button>
+        <ion-button id="basic" expand="block" onclick="presentAlert()">Alert</ion-button>
+        <ion-button id="longMessage" expand="block" onclick="presentAlertLongMessage()">Alert Long Message</ion-button>
+        <ion-button id="multipleButtons" expand="block" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</ion-button>
+        <ion-button id="noMessage" expand="block" onclick="presentAlertNoMessage()">Alert No Message</ion-button>
+        <ion-button id="confirm" expand="block" onclick="presentAlertConfirm()">Confirm</ion-button>
+        <ion-button id="prompt" expand="block" onclick="presentAlertPrompt()">Prompt</ion-button>
+        <ion-button id="radio" expand="block" onclick="presentAlertRadio()">Radio</ion-button>
+        <ion-button id="checkbox" expand="block" onclick="presentAlertCheckbox()">Checkbox</ion-button>
         <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
       </ion-content>
     </ion-page>

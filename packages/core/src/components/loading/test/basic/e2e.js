@@ -5,13 +5,9 @@ describe('loading/basic', () => {
 
   register('should init', navigate(testPageURL));
 
-  describe('present', () => {
-
-    register('shows loading', driver => {
-      const page = new Page(driver, testPageURL);
-      return page.present('.e2eShowLoading', { waitFor: 'ion-loading' });
-    });
-
+  register('shows loading', driver => {
+    const page = new Page(driver, testPageURL);
+    return page.present('.e2eShowLoading', { waitFor: 'ion-loading' });
   });
 
 });

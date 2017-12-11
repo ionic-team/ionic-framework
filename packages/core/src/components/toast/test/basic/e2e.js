@@ -5,13 +5,9 @@ describe('toast/basic', () => {
 
   register('should init', navigate(testPageURL));
 
-  describe('present', () => {
-
-    register('shows bottom toast', driver => {
-      const page = new Page(driver, testPageURL);
-      return page.present('.e2eShowBottomToast', { waitFor: 'ion-toast' });
-    });
-
+  register('shows bottom toast', driver => {
+    const page = new Page(driver, testPageURL);
+    return page.present('.e2eShowBottomToast', { waitFor: 'ion-toast' });
   });
 
 });
