@@ -142,27 +142,27 @@
 
         <script>
           var dynamicColor = document.getElementById('dynamicColor');
-var dynamicProp = document.getElementById('dynamicProp');
-var dynamicAttr = document.getElementById('dynamicAttr');
+          var dynamicProp = document.getElementById('dynamicProp');
+          var dynamicAttr = document.getElementById('dynamicAttr');
 
-dynamicColor.setAttribute('color', 'danger');
+          dynamicColor.setAttribute('color', 'danger');
 
-let interval = setInterval(function() {
-  if (dynamicProp.name === 'home') {
-    dynamicProp.name = 'ios-home';
-    dynamicAttr.setAttribute('name', 'ios-home');
-  } else if (dynamicProp.name === 'ios-home') {
-    dynamicProp.name = 'md-home';
-    dynamicAttr.setAttribute('name', 'md-home');
-  } else {
-    dynamicProp.name = 'home';
-    dynamicAttr.setAttribute('name', 'home');
-  }
-}, 1000);
+          let interval = setInterval(function() {
+            if (dynamicProp.name === 'home') {
+              dynamicProp.name = 'ios-home';
+              dynamicAttr.setAttribute('name', 'ios-home');
+            } else if (dynamicProp.name === 'ios-home') {
+              dynamicProp.name = 'md-home';
+              dynamicAttr.setAttribute('name', 'md-home');
+            } else {
+              dynamicProp.name = 'home';
+              dynamicAttr.setAttribute('name', 'home');
+            }
+          }, 1000);
 
-setTimeout(function() {
-  clearInterval(interval);
-}, 4000);
+          setTimeout(function() {
+            clearInterval(interval);
+          }, 4000);
         </script>
 
       </ion-content>
