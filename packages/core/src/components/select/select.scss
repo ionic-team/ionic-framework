@@ -42,3 +42,11 @@ ion-select {
 .select-option {
   display: none;
 }
+
+.select button:focus {
+  outline: none;
+}
+
+.select-key button {
+  border: 2px solid blue;
+}

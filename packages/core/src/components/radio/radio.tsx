@@ -14,6 +14,7 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad {
+  private checkedTmr: any;
   private didLoad: boolean;
   private inputId: string;
   private nativeInput: HTMLInputElement;
@@ -125,13 +126,18 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
       // keep the checked value and native input `nync
       this.nativeInput.checked = isChecked;
     }
-    if (this.didLoad && isChecked) {
+
+    clearTimeout(this.checkedTmr);
+    this.checkedTmr = setTimeout(() => {
       // only emit ionSelect when checked is true
-      this.ionSelect.emit({
-        checked: isChecked,
-        value: this.value
-       });
-    }
+      if (this.didLoad && isChecked) {
+        this.ionSelect.emit({
+          checked: isChecked,
+          value: this.value
+        });
+      }
+    });
+
     this.emitStyle();
   }
 
@@ -151,6 +157,10 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
         'radio-disabled': this.disabled
       });
     });
+  }
+
+  onClick() {
+    this.checkedChanged(true);
   }
 
   onChange() {
@@ -194,6 +204,7 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
       </div>,
       <input
         type='radio'
+        onClick={this.onClick.bind(this)}
         onChange={this.onChange.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}

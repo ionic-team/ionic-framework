@@ -1,13 +1,14 @@
 import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
 import { HTMLIonRadioElementEvent } from '../radio/radio';
-import { RadioGroupInput, TextInputChangeEvent } from '../../utils/input-interfaces';
+import { InputChangeEvent, RadioGroupInput } from '../../utils/input-interfaces';
 
 
 @Component({
   tag: 'ion-radio-group'
 })
 export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
-  radios: HTMLIonRadioElement[] = [];
+  private didLoad: boolean;
+  private radios: HTMLIonRadioElement[] = [];
 
   @Element() el: HTMLElement;
 
@@ -73,14 +74,16 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
       });
     }
 
-    // emit the new value
-    this.ionChange.emit({ value: this.value });
+    if (this.didLoad) {
+      // emit the new value
+      this.ionChange.emit({ value: this.value });
+    }
   }
 
   /**
    * @output {Event} Emitted when the value has changed.
    */
-  @Event() ionChange: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange: EventEmitter<InputChangeEvent>;
 
   @Listen('ionRadioDidLoad')
   onRadioDidLoad(ev: HTMLIonRadioElementEvent) {
@@ -120,7 +123,9 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
     // ionSelect only come from the checked radio button
     this.radios.forEach(radio => {
       if (radio === ev.target) {
-        this.value = radio.value;
+        if (radio.value !== this.value) {
+          this.value = radio.value;
+        }
       } else {
         radio.checked = false;
       }
@@ -144,6 +149,8 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
         this.labelId = label.id = this.name + '-lbl';
       }
     }
+
+    this.didLoad = true;
   }
 
   hostData() {

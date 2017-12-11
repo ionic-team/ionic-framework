@@ -22,9 +22,19 @@ boolean
 string
 
 
+#### interfaceOptions
+
+any
+
+
 #### multiple
 
 boolean
+
+
+#### name
+
+string
 
 
 #### okText
@@ -35,11 +45,6 @@ string
 #### placeholder
 
 string
-
-
-#### selectOptions
-
-any
 
 
 #### selectedText
@@ -69,9 +74,19 @@ boolean
 string
 
 
+#### interfaceOptions
+
+any
+
+
 #### multiple
 
 boolean
+
+
+#### name
+
+string
 
 
 #### okText
@@ -82,11 +97,6 @@ string
 #### placeholder
 
 string
-
-
-#### selectOptions
-
-any
 
 
 #### selectedText
@@ -101,7 +111,16 @@ any
 
 ## Events
 
+#### ionBlur
+
+
 #### ionCancel
+
+
+#### ionChange
+
+
+#### ionFocus
 
 
 

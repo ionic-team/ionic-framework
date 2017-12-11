@@ -1,5 +1,4 @@
-
-import { Component, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Listen, Prop } from '@stencil/core';
 
 
 export interface SelectPopoverOption {
@@ -17,49 +16,20 @@ export interface SelectPopoverOption {
   }}
 )
 export class SelectPopover {
-  mode: string;
-  color: string;
+  private mode: string;
 
-  /**
-   * @output {Event} Emitted when the select popover is dismissed.
-   */
-  @Event() ionDismiss: EventEmitter;
+  @Prop() options: SelectPopoverOption[] = [];
 
-  @Prop() options: SelectPopoverOption[];
-
-  /**
-   * @input {string} the value of the select popover.
-   */
-  @Prop({ mutable: true }) value: string;
-
-  @Listen('ionChange')
-  onChange(ev: CustomEvent) {
-    this.value = ev.detail.value;
-  }
-
-  // public get value() {
-  //   let checkedOption = this.options.find(option => option.checked);
-
-  //   return checkedOption ? checkedOption.value : undefined;
-  // }
-
-  dismiss(value: any) {
-    this.ionDismiss.emit(value);
-  }
-
-  @PropDidChange('value')
-  protected valueChanged(value: string) {
-    let checkedOption = this.options.find(option => option.value === value);
-    if (checkedOption && checkedOption.handler) {
-      checkedOption.handler();
-    }
-    this.dismiss(value);
+  @Listen('ionSelect')
+  onSelect(ev: any) {
+    const option = this.options.find(o => o.value === ev.target.value);
+    option && option.handler && option.handler();
   }
 
   render() {
     return (
       <ion-list no-lines={this.mode === 'md'}>
-        <ion-radio-group value={this.value}>
+        <ion-radio-group>
           {this.options.map(option =>
             <ion-item>
               <ion-label>

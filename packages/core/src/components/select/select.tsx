@@ -1,17 +1,15 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
+import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
+import { BlurEvent, FocusEvent, SelectInputChangeEvent } from '../../utils/input-interfaces';
 
-import { deepCopy, isCheckedProperty } from '../../utils/helpers';
-
-import { ActionSheet } from '../action-sheet/action-sheet';
-import { Alert } from '../alert/alert';
-import { Label } from '../label/label';
-import { Popover } from '../popover/popover';
-
-import { SelectOption } from '../select-option/select-option';
+import { ActionSheet, ActionSheetButton, ActionSheetOptions  } from '../action-sheet/action-sheet';
+import { Alert, AlertOptions } from '../alert/alert';
+import { Popover, PopoverOptions } from '../popover/popover';
 
 import { ActionSheetController } from '../action-sheet-controller/action-sheet-controller';
 import { AlertController } from '../alert-controller/alert-controller';
 import { PopoverController } from '../popover-controller/popover-controller';
+import { SelectPopoverOption } from '../select-popover/select-popover';
 
 
 @Component({
@@ -25,153 +23,382 @@ import { PopoverController } from '../popover-controller/popover-controller';
   }
 })
 export class Select {
+  private childOpts: HTMLIonSelectOptionElement[] = [];
   private selectId: string;
   private labelId: string;
+  private overlay: ActionSheet | Alert | Popover;
 
-  // TODO rename this
-  texts: any = [];
+  @Element() private el: HTMLIonSelectElement;
 
-  // TODO typing
-  label: Label;
+  @State() isExpanded = false;
 
-  options: SelectOption[] = [];
-  overlay: ActionSheet | Alert | Popover;
+  @State() keyFocus: boolean;
+
+  @State() text: string;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
   @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
 
-  @Element() private el: HTMLElement;
-
-  @State() text: string;
-
   /**
-   * @input {boolean} If true, the user cannot interact with the select. Defaults to `false`.
+   * If true, the user cannot interact with the select. Defaults to `false`.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
-   * @input {string} The text to display on the cancel button. Default: `Cancel`.
+   * The text to display on the cancel button. Default: `Cancel`.
    */
-  @Prop() cancelText: string = 'Cancel';
+  @Prop() cancelText = 'Cancel';
 
   /**
-   * @input {string} The text to display on the ok button. Default: `OK`.
+   * The text to display on the ok button. Default: `OK`.
    */
-  @Prop() okText: string = 'OK';
+  @Prop() okText = 'OK';
 
   /**
-   * @input {string} The text to display when the select is empty.
+   * The text to display when the select is empty.
    */
   @Prop() placeholder: string;
 
   /**
-   * @input {any} Any additional options that the `alert`, `action-sheet` or `popover` interface
+   * The name of the control, which is submitted with the form data.
+   */
+  @Prop({ mutable: true }) name: string;
+
+  /**
+   * The text to display instead of the selected option's value.
+   */
+  @Prop() selectedText: string;
+
+  /**
+   * If true, the select can accept multiple values.
+   */
+  @Prop() multiple: boolean;
+
+  /**
+   * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+   */
+  @Prop() interface = 'alert';
+
+  /**
+   * Any additional options that the `alert`, `action-sheet` or `popover` interface
    * can take. See the [AlertController API docs](../../alert/AlertController/#create), the
    * [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the
    * [PopoverController API docs](../../popover/PopoverController/#create) for the
    * create options for each interface.
    */
-  @Prop() selectOptions: any = {};
+  @Prop() interfaceOptions: any = {};
 
   /**
-   * @input {string} The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+   *
    */
-  @Prop() interface: string = 'alert';
-
-  /**
-   * @input {string} The text to display instead of the selected option's value.
-   */
-  @Prop() selectedText: string;
-
-  /**
-   * @input {boolean} If true, the select can accept multiple values.
-   */
-  @Prop() multiple: boolean;
-
-  /**
-   * @input {string} the value of the select.
-   */
-  @Prop({ mutable: true }) value: string | string[];
+  @Prop({ mutable: true }) value: string|string[];
 
   @PropDidChange('value')
-  protected valueChanged() {
-    this.optionUpdated();
+  valueChanged() {
+    // this select value just changed
+    // double check the select option with this value is checked
+    if (this.value === undefined) {
+      // set to undefined
+      // ensure all that are checked become unchecked
+      this.childOpts.filter(o => o.selected).forEach(selectOption => {
+        selectOption.selected = false;
+      });
+      this.text = '';
+
+    } else {
+      let hasChecked = false;
+      const texts: string[] = [];
+
+      this.childOpts.forEach(selectOption => {
+        if ((Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
+          if (!selectOption.selected && (this.multiple || !hasChecked)) {
+            // correct value for this select option
+            // but this select option isn't checked yet
+            // and we haven't found a checked yet
+            // so CHECK IT!
+            selectOption.selected = true;
+
+          } else if (!this.multiple && hasChecked && selectOption.selected) {
+            // somehow we've got multiple select options
+            // with the same value, but only one can be checked
+            selectOption.selected = false;
+          }
+
+          // remember we've got a checked select option button now
+          hasChecked = true;
+
+        } else if (selectOption.selected) {
+          // this select option doesn't have the correct value
+          // and it's also checked, so let's uncheck it
+          selectOption.selected = false;
+        }
+
+        if (selectOption.selected) {
+          texts.push(selectOption.textContent);
+        }
+      });
+
+      this.text = texts.join(', ');
+    }
+
+    // emit the new value
+    this.ionChange.emit({
+      value: this.value,
+      text: this.text
+    });
   }
 
   /**
-   * @output {Event} Emitted when the selection is cancelled.
+   * Emitted when the value has changed.
+   */
+  @Event() ionChange: EventEmitter<SelectInputChangeEvent>;
+
+  /**
+   * Emitted when the selection is cancelled.
    */
   @Event() ionCancel: EventEmitter;
 
+  /**
+   * Emitted when the select has focus.
+   */
+  @Event() ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the select loses focus.
+   */
+  @Event() ionBlur: EventEmitter<BlurEvent>;
+
+
+  @Listen('ionSelectOptionDidLoad')
+  optLoad(ev: HTMLIonSelectOptionElementEvent) {
+    const selectOption = ev.target;
+    this.childOpts.push(selectOption);
+
+    if (this.value !== undefined && selectOption.value === this.value) {
+      // this select has a value and this
+      // radio equals the correct select value
+      // so let's check this select option
+      selectOption.selected = true;
+
+    } else if (this.value === undefined && selectOption.selected) {
+      // this select does not have a value
+      // but this selection option is checked, so let's set the
+      // select's value from the checked select option
+      this.value = selectOption.value;
+
+    } else if (selectOption.selected) {
+      // if it doesn't match one of the above cases, but the
+      // select option is still checked, then we need to uncheck it
+      selectOption.selected = false;
+    }
+  }
+
+  @Listen('ionSelectOptionDidUnload')
+  optUnload(ev: HTMLIonSelectOptionElementEvent) {
+    const index = this.childOpts.indexOf(ev.target);
+    if (index > -1) {
+      this.childOpts.splice(index, 1);
+    }
+  }
+
+  @Listen('ionSelect')
+  onSelect(ev: HTMLIonSelectOptionElementEvent) {
+    // ionSelect only come from the checked select option
+    this.childOpts.forEach(selectOption => {
+      if (selectOption === ev.target) {
+        this.value = selectOption.value;
+      } else {
+        selectOption.selected = false;
+      }
+    });
+  }
+
+  constructor() {
+    this.selectId = 'ion-sel-' + (selectIds++);
+  }
+
+  componentWillLoad() {
+    if (!this.value) {
+      this.value = this.multiple ? [] : undefined;
+    }
+    this.name = this.name || this.selectId;
+  }
 
   componentDidLoad() {
-    // Get the nearest label
-    this.label = this.el.closest('ion-item').querySelector('ion-label');
+    const label = this.getLabel();
+    if (label) {
+      this.labelId = label.id = this.name + '-lbl';
+    }
 
-    this.setOptions();
-  }
-
-
-  setOptions() {
-    // Get the options
-    const options = this.el.querySelectorAll('ion-select-option');
-
-    Array.from(options).forEach(option => {
-      if (!option.value) {
-        option.value = option.getText();
-      }
-      this.options.push(option);
-    });
-
-    const values = this.getValues();
-
-    if (values.length === 0) {
+    if (this.multiple) {
       // there are no values set at this point
       // so check to see who should be selected
-      let filtered = this.options.filter(o => o.selected).map(o => o.value);
-      this.value = filtered;
-    } else {
-      this.optionUpdated();
-    }
-  }
-
-
-  /**
-   * @hidden
-   * Update the select options when the value changes
-   */
-  optionUpdated() {
-    this.texts = [];
-
-    if (this.options) {
-      this.options.forEach(option => {
-        // check this option if the option's value is in the values array
-        option.selected = this.getValues().some(selectValue => {
-          return isCheckedProperty(selectValue, option.value);
-        });
-
-        if (option.selected) {
-          this.texts.push(option.getText());
-        }
+      const checked = this.childOpts.filter(o => o.selected);
+      (this.value as string[]).length = 0;
+      checked.forEach(o => {
+        // doing this instead of map() so we don't
+        // fire off an unecessary change event
+        (this.value as string[]).push(o.value);
       });
-    }
+      this.text = checked.map(o => o.textContent).join(', ');
 
-    this.text = this.texts.join(', ');
+    } else {
+      const checked = this.childOpts.find(o => o.selected);
+      if (checked) {
+        this.value = checked.value;
+        this.text = checked.textContent;
+      }
+    }
   }
 
-
-  /**
-   * @hidden
-   */
-  getValues(): any[] {
-    if (!this.value) {
-      return [];
+  getLabel() {
+    const item = this.el.closest('ion-item');
+    if (item) {
+      return item.querySelector('ion-label');
     }
-    const values = Array.isArray(this.value) ? this.value : [this.value];
-    return values;
+    return null;
   }
 
+  open(ev: UIEvent) {
+    let selectInterface = this.interface;
+
+    if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
+      console.warn('Select interface cannot be "' + selectInterface + '" with a multi-value select. Using the "alert" interface instead.');
+      selectInterface = 'alert';
+    }
+
+    if (selectInterface === 'popover' && !ev) {
+      console.warn('Select interface cannot be a "popover" without passing an event. Using the "alert" interface instead.');
+      selectInterface = 'alert';
+    }
+
+    if (selectInterface === 'popover') {
+      return this.openPopover(ev);
+    }
+
+    if (selectInterface === 'action-sheet') {
+      return this.openActionSheet();
+    }
+
+    return this.openAlert();
+  }
+
+  openPopover(ev: UIEvent) {
+    const popoverOpts: PopoverOptions = {
+      component: 'ion-select-popover',
+      componentProps: {
+        value: this.value,
+        options: this.childOpts.map(o => {
+          return {
+            text: o.textContent,
+            value: o.value,
+            checked: o.selected,
+            disabled: o.disabled,
+            handler: () => {
+              this.value = o.value;
+              this.close();
+            }
+          } as SelectPopoverOption;
+        })
+      },
+      cssClass: 'select-popover ' + (this.interfaceOptions.cssClass ? ' ' + this.interfaceOptions.cssClass : ''),
+      ev: ev
+    };
+
+    const popover = this.popoverCtrl.create(popoverOpts);
+
+    return popover.then(overlay => {
+      this.overlay = overlay;
+
+      return overlay.present().then(() => {
+        this.isExpanded = true;
+        return overlay;
+      });
+    });
+  }
+
+  openActionSheet() {
+    const actionSheetButtons: ActionSheetButton[] = this.childOpts.map(option => {
+      return {
+        role: (option.selected ? 'selected' : ''),
+        text: option.textContent,
+        handler: () => {
+          this.value = option.value;
+        }
+      };
+    });
+
+    actionSheetButtons.push({
+      text: this.cancelText,
+      role: 'cancel',
+      handler: () => {
+        this.ionCancel.emit(this);
+      }
+    });
+
+    const actionSheetOpts: ActionSheetOptions = {
+      buttons: actionSheetButtons,
+      cssClass: 'select-action-sheet' + (this.interfaceOptions.cssClass ? ' ' + this.interfaceOptions.cssClass : '')
+    };
+
+    const actionSheet = this.actionSheetCtrl.create(actionSheetOpts);
+    return actionSheet.then(overlay => {
+      this.overlay = overlay;
+      return overlay.present().then(() => {
+        this.isExpanded = true;
+        return overlay;
+      });
+    });
+  }
+
+  openAlert() {
+    const label = this.getLabel();
+    let labelText: string = null;
+    if (label) {
+      labelText = label.textContent;
+    }
+
+    const alertOpts: AlertOptions = {
+      title: labelText,
+      inputs: this.childOpts.map(o => {
+        return {
+          type: (this.multiple ? 'checkbox' : 'radio'),
+          label: o.textContent,
+          value: o.value,
+          checked: o.selected,
+          disabled: o.disabled
+        };
+      }),
+      buttons: [
+        {
+          text: this.cancelText,
+          role: 'cancel',
+          handler: () => {
+            this.ionCancel.emit(this);
+          }
+        },
+        {
+          text: this.okText,
+          handler: (selectedValues) => {
+            this.value = selectedValues;
+          }
+        }
+      ],
+      cssClass: 'select-alert ' +
+                (this.multiple ? 'multiple-select-alert' : 'single-select-alert') +
+                (this.interfaceOptions.cssClass ? ' ' + this.interfaceOptions.cssClass : '')
+    };
+
+    const alert = this.alertCtrl.create(alertOpts);
+    return alert.then(overlay => {
+      this.overlay = overlay;
+      return overlay.present().then(() => {
+        this.isExpanded = true;
+        return overlay;
+      });
+    });
+  }
 
   /**
    * Close the select interface.
@@ -179,192 +406,35 @@ export class Select {
   close(): Promise<any> | void {
     // TODO check !this.overlay || !this.isFocus()
     if (!this.overlay) {
-      return;
+      return Promise.resolve();
     }
 
-    return this.overlay.dismiss();
+    const overlay = this.overlay;
+    this.overlay = null;
+
+    this.isExpanded = false;
+
+    return overlay.dismiss();
   }
 
-
-  /**
-   * @hidden
-   */
-  getText() {
-    return (this.multiple ? this.texts : this.texts.join());
+  onKeyUp() {
+    this.keyFocus = true;
   }
 
-  /**
-   * @hidden
-   */
-  resetInterface(ev: Event): string {
-    let selectInterface = this.interface;
-
-    if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
-      console.warn('Interface cannot be "' + selectInterface + '" with a multi-value select. Using the "alert" interface instead.');
-      selectInterface = 'alert';
-    }
-
-    if (selectInterface === 'popover' && !ev) {
-      console.warn('Interface cannot be "' + selectInterface + '" without passing an event. Using the "alert" interface instead.');
-      selectInterface = 'alert';
-    }
-
-    return selectInterface;
+  onFocus() {
+    this.ionFocus.emit();
   }
 
-  buildAlert(selectOptions: any) {
-    console.debug('Build Select: Alert with', selectOptions, this.options);
-
-    // user cannot provide inputs from selectOptions
-    // alert inputs must be created by ionic from ion-select-options
-    selectOptions.inputs = this.options.map((option: any) => {
-      return {
-        type: (this.multiple ? 'checkbox' : 'radio'),
-        label: option.getText(),
-        value: option.value,
-        checked: option.selected,
-        disabled: option.disabled,
-        handler: (selectedOption: any) => {
-          // Only emit the select event if it is being checked
-          // For multi selects this won't emit when unchecking
-          if (selectedOption.checked) {
-            option.ionSelect.emit(option.value);
-          }
-        }
-      };
-    });
-
-    // If multiple is true use checkboxes, else use radio buttons
-    var selectCssClass = 'select-alert ' + this.multiple ? 'multiple-select-alert' : 'single-select-alert';
-
-    // If the user passed a cssClass for the select, add it
-    selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-
-    // Add an ok button to the alert
-    selectOptions.buttons = selectOptions.buttons.concat({
-      text: this.okText,
-      handler: (selectedValues: any) => this.value = selectedValues
-    });
-
-    // create the alert instance from our built up selectOptions
-    const alertOptions = {
-      cssClass: selectCssClass,
-      ...selectOptions
-    };
-
-    console.debug('Built Select: Alert with', alertOptions);
-    return this.alertCtrl.create(alertOptions);
-  }
-
-  buildActionSheet(selectOptions: any) {
-    console.debug('Building Select: Action Sheet with', selectOptions, this.options);
-
-    selectOptions.buttons = selectOptions.buttons.concat(this.options.map((option: any) => {
-      return {
-        role: (option.selected ? 'selected' : ''),
-        text: option.getText(),
-        handler: () => {
-          this.value = option.value;
-          option.ionSelect.emit(option.value);
-        }
-      };
-    }));
-
-    var selectCssClass = 'select-action-sheet';
-
-    // If the user passed a cssClass for the select, add it
-    selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-
-    const actionSheetOptions = {
-      cssClass: selectCssClass,
-      ...selectOptions
-    };
-
-    console.debug('Built Select: Action Sheet with', actionSheetOptions);
-    return this.actionSheetCtrl.create(actionSheetOptions);
-  }
-
-  buildPopover(selectOptions: any) {
-    console.debug('Building Select: Popover with', selectOptions, this.options);
-
-    selectOptions = this.options.map((option: any) => {
-      return {
-        text: option.getText(),
-        checked: option.selected,
-        disabled: option.disabled,
-        value: option.value,
-        handler: () => {
-          this.value = option.value;
-          option.ionSelect.emit(option.value);
-        }
-      };
-    });
-
-    var selectCssClass = 'select-popover';
-
-    // If the user passed a cssClass for the select, add it
-    selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-
-    const popoverOptions = {
-      component: 'ion-select-popover',
-      componentProps: {
-        options: selectOptions
-      },
-      cssClass: selectCssClass,
-      ev: event
-    };
-
-    console.debug('Built Select: Popover with', popoverOptions);
-    return this.popoverCtrl.create(popoverOptions);
-  }
-
-  open(ev: UIEvent) {
-    // the user may have assigned some options specifically for the alert
-    const selectOptions = deepCopy(this.selectOptions);
-
-    // make sure their buttons array is removed from the options
-    // and we create a new array for the alert's two buttons
-    selectOptions.buttons = [{
-      text: this.cancelText,
-      role: 'cancel',
-      handler: () => {
-        this.ionCancel.emit(this);
-      }
-    }];
-
-    // if the selectOptions didn't provide a title then use the label's text
-    if (!selectOptions.title && this.label) {
-      selectOptions.title = this.label.getText();
-    }
-
-    // If the user passed in an invalid interface we need to reset it to alert
-    let selectInterface = this.resetInterface(ev);
-
-    let controller: Promise<any>;
-
-    if (selectInterface === 'action-sheet') {
-      controller = this.buildActionSheet(selectOptions);
-    } else if (selectInterface === 'popover') {
-      controller = this.buildPopover(selectOptions);
-    } else {
-      controller = this.buildAlert(selectOptions);
-    }
-
-    controller.then((component: any) => {
-      component.present();
-
-      // component.onDidDismiss(() => {
-      //   this.overlay = undefined;
-      // })
-
-      // this.overlay = component;
-    });
+  onBlur() {
+    this.keyFocus = false;
+    this.ionBlur.emit();
   }
 
   hostData() {
     return {
       class: {
-        'select-disabled': this.disabled
+        'select-disabled': this.disabled,
+        'select-key': this.keyFocus
       }
     };
   }
@@ -372,7 +442,6 @@ export class Select {
   render() {
     let addPlaceholderClass = false;
 
-    // If selected text has been passed in, use that first
     let selectText = this.selectedText || this.text;
     if (!selectText && this.placeholder) {
       selectText = this.placeholder;
@@ -385,18 +454,30 @@ export class Select {
     };
 
     return [
-      <div class={ selectTextClasses }>{ selectText }</div>,
-      <div class='select-icon'>
+      <div
+        role='textbox'
+        aria-multiline='false'
+        class={ selectTextClasses }>{ selectText }
+      </div>,
+      <div class='select-icon' role='presentation'>
         <div class='select-icon-inner'></div>
       </div>,
       <button
-        aria-haspopup='true'
-        id={this.selectId}
+        role='combobox'
+        aria-haspopup='dialog'
+        aria-expanded={this.isExpanded}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
+        onKeyUp={this.onKeyUp.bind(this)}
+        onFocus={this.onFocus.bind(this)}
+        onBlur={this.onBlur.bind(this)}
         class='item-cover'>
-      </button>
+        <slot></slot>
+      </button>,
+      <input type='hidden' name={this.name} value={this.value}/>
     ];
   }
 }
+
+let selectIds = 0;
