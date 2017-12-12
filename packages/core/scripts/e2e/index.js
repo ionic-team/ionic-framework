@@ -10,10 +10,13 @@ const chromedriver = require('chromedriver');
 const Page = require('./page');
 const Snapshot = require('./snapshot');
 
+const platforms = ['android', 'ios'];
+
 let driver;
 let snapshot;
 let specIndex = 0;
 let takeScreenshots = false;
+let folder = null;
 
 function startDevServer() {
   const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
@@ -34,7 +37,12 @@ function generateTestId() {
 
 function getTestFiles() {
   return new Promise((resolve, reject) => {
-    const src = path.join(__dirname, '../../src/**/e2e.js');
+    let src = path.join(__dirname, '../../src/**/e2e.js');
+
+    if (folder) {
+      src = path.join(__dirname, `../../src/**/${folder}/**/e2e.js`);
+    }
+
     glob(src, (err, files) => {
       if (err) {
         reject(err);
@@ -49,6 +57,10 @@ function processCommandLine() {
   process.argv.forEach(arg => {
     if (arg === '--snapshot') {
       takeScreenshots = true;
+    }
+
+    if (arg.indexOf('-f') > -1) {
+      folder = arg.split('=')[1];
     }
   });
 }
@@ -79,7 +91,14 @@ async function run() {
     slow: 2000
   });
 
-  driver = new webdriver.Builder().forBrowser('chrome').build();
+  // setting chrome options to start the browser without an info bar
+  let chromeCapabilities = webdriver.Capabilities.chrome();
+  let chromeOptions = {
+    'args': ['--disable-infobars']
+  };
+  chromeCapabilities.set('chromeOptions', chromeOptions);
+
+  driver = new webdriver.Builder().withCapabilities(chromeCapabilities).forBrowser('chrome').build();
 
   processCommandLine();
 
@@ -150,5 +169,6 @@ module.exports = {
   Page,
   navigate: (url, tagName) => driver => new Page(driver, url).navigate(tagName),
   register: registerE2ETest,
-  run: run
+  run: run,
+  platforms: platforms
 };

@@ -91,6 +91,12 @@ class Snapshot {
       .setSize(this.width, this.height);
   }
 
+  _getQueryString(field, url) {
+    var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+    var string = reg.exec(url);
+    return string ? string[1] : null;
+  };
+
   async _takeScreenshot(driver, options) {
     const capabilities = await driver.getCapabilities();
 
@@ -100,12 +106,16 @@ class Snapshot {
     // TODO remove the modified url/description once we're happy with the comparison to v3
     let platform = 'android';
 
-    let replacedUrl = url.replace('3333', '8876').replace('src/components', '/e2e').replace('test/', '');
+    if (url.indexOf('ionicplatform') > -1) {
+      platform = this._getQueryString('ionicplatform', url);
+    }
+
+    let replacedUrl = url.replace('3333', '8876').replace('src/components', '/e2e').replace('test/', '').replace(`?ionicplatform=${platform}`, '');
     url = replacedUrl + `/index.html?ionicplatform=${platform}&ionicOverlayCreatedDiff=0&snapshot=true`;
-    console.log('url', url);
+    // console.log('url', url);
 
     let description = options.name.replace(': ', `: ${platform} `) + '.';
-    console.log('description', description);
+    // console.log('description', description);
 
     return Promise.resolve({
       app_id: this.appId,
