@@ -1,5 +1,19 @@
-const { register, navigate } = require('../../../../../scripts/e2e');
+'use strict';
 
-describe('button/toolbar', () => {
-  register('should init', navigate('http://localhost:3333/src/components/button/test/toolbar'));
+const { By, until } = require('selenium-webdriver');
+const { register, Page, platforms } = require('../../../../../scripts/e2e');
+
+class E2ETestPage extends Page {
+  constructor(driver, platform) {
+    super(driver, `http://localhost:3333/src/components/button/test/toolbar?ionicplatform=${platform}`);
+  }
+}
+
+platforms.forEach(platform => {
+  describe('button/toolbar', () => {
+    register('should init', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.navigate();
+    });
+  });
 });
