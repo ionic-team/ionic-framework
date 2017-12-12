@@ -112,10 +112,8 @@ class Snapshot {
 
     let replacedUrl = url.replace('3333', '8876').replace('src/components', '/e2e').replace('test/', '').replace(`?ionicplatform=${platform}`, '');
     url = replacedUrl + `/index.html?ionicplatform=${platform}&ionicOverlayCreatedDiff=0&snapshot=true`;
-    // console.log('url', url);
 
     let description = options.name.replace(': ', `: ${platform} `) + '.';
-    // console.log('description', description);
 
     return Promise.resolve({
       app_id: this.appId,
