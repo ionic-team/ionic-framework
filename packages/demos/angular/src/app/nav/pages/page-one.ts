@@ -1,33 +1,62 @@
 import { Component } from '@angular/core';
 
+import { PageTwo } from './page-two';
+
 @Component({
-  selector: 'app-page-one',
+  selector: 'page-one',
   template: `
 <ion-header>
   <ion-toolbar>
     <ion-title>Page One</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
-  Page One - {{blah}}
+<ion-content>
+  Page One
+  <div>
+    <ion-button (click)="goToPageTwo()">Go to Page Two</ion-button>
+  </div>
+  <ul>
+    <li>ngOnInit - {{ngOnInitDetection}}</li>
+    <li>ionViewWillEnter - {{ionViewWillEnterDetection}}</li>
+    <li>ionViewDidEnter - {{ionViewDidEnterDetection}}</li>
+  </ul>
 </ion-content>
   `
 })
-export class PageOneComponent {
+export class PageOne {
 
-  blah = 'initial';
+  ngOnInitDetection = 'initial';
+  ionViewWillEnterDetection = 'initial';
+  ionViewDidEnterDetection = 'initial';
+
   constructor() {
 
   }
 
+
+  ngOnInit() {
+    console.log('page one ngOnInit');
+    setInterval(() => {
+      this.ngOnInitDetection = '' + Date.now();
+    }, 500);
+  }
+
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
+    console.log('page one ionViewWillEnter');
+    setInterval(() => {
+      this.ionViewWillEnterDetection = '' + Date.now();
+    }, 500);
   }
 
   ionViewDidEnter() {
+    console.log('page one ionViewDidEnter');
     setInterval(() => {
-      this.blah = '' + Math.random();
-      console.log('interval');
-    }, 250);
+      this.ionViewDidEnterDetection = '' + Date.now();
+    }, 500);
+  }
+
+  goToPageTwo() {
+    const nav = document.querySelector('ion-nav') as any;
+    nav.push(PageTwo).then(() => console.log('push complete'));
   }
 }

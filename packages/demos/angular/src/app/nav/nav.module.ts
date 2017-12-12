@@ -5,7 +5,9 @@ import { NavPageComponent } from './nav.component';
 import { NavRoutingModule } from './nav-routing.module';
 import { IonicAngularModule } from '@ionic/angular';
 
-import { PageOneComponent } from './pages/page-one';
+import { PageOne } from './pages/page-one';
+import { PageTwo } from './pages/page-two';
+import { PageThree } from './pages/page-three';
 
 @NgModule({
   imports: [
@@ -15,10 +17,14 @@ import { PageOneComponent } from './pages/page-one';
   ],
   declarations: [
     NavPageComponent,
-    PageOneComponent
+    PageOne,
+    PageTwo,
+    PageThree
   ],
   entryComponents: [
-    PageOneComponent
+    PageOne,
+    PageTwo,
+    PageThree
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

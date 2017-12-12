@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { PageOneComponent } from './pages/page-one';
+import { PageOne } from './pages/page-one';
 
 @Component({
   selector: 'app-nav-page',
@@ -12,7 +12,7 @@ import { PageOneComponent } from './pages/page-one';
 })
 export class NavPageComponent {
 
-  pageOne: any = PageOneComponent;
+  pageOne: any = PageOne;
   constructor() {
 
   }
