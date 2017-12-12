@@ -17,6 +17,7 @@ class E2ETestPage extends Page {
 
   closeWithBackdrop() {
     this.driver.findElement(By.css('ion-backdrop')).click();
+    return this.driver.wait(until.elementIsNotVisible(this.driver.findElement(By.css('ion-backdrop'))));
   }
 }
 

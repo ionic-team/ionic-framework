@@ -11,8 +11,8 @@ class E2ETestPage extends Page {
   present(buttonId) {
     this.navigate();
     this.driver.findElement(By.id(buttonId)).click();
-    this.driver.wait(until.elementLocated(By.css('.menu-wrapper')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.menu-wrapper'))));
+    this.driver.wait(until.elementLocated(By.css('.menu-inner')));
+    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.menu-inner'))));
   }
 }
 
