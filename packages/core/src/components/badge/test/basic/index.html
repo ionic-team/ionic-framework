@@ -45,7 +45,7 @@
             <ion-label>Dark Badge</ion-label>
           </ion-item>
           <ion-item onclick="toggleColor()">
-            <ion-badge id="toggleColor" slot="end" color="primary">99</ion-badge>
+            <ion-badge id="toggleColor" slot="end" color="primary">primary</ion-badge>
             <ion-label>Dynamic Badge Color (toggle)</ion-label>
           </ion-item>
         </ion-list>
@@ -87,8 +87,8 @@
 
     function toggleColor() {
       const prev = badge.getAttribute('color');
-      const base = 'secondary';
-      badge.setAttribute('color', prev === base ? null : base);
+      badge.setAttribute('color', prev === 'secondary' ? 'primary' : 'secondary');
+      badge.innerHTML = prev === 'secondary' ? 'primary' : 'secondary';
     }
   </script>
 </body>
