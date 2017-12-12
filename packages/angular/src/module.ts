@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 
 import { BooleanValueAccessor } from './control-value-accessors/boolean-value-accessor';
+import { NumericValueAccessor } from './control-value-accessors/numeric-value-accesssor';
 import { RadioValueAccessor } from './control-value-accessors/radio-value-accessor';
 import { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
 import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
@@ -23,6 +24,7 @@ import { ToastController } from './providers/toast-controller';
   declarations: [
     BooleanValueAccessor,
     IonNavDelegate,
+    NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
     TextValueAccessor
@@ -30,6 +32,7 @@ import { ToastController } from './providers/toast-controller';
   exports: [
     BooleanValueAccessor,
     IonNavDelegate,
+    NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
     TextValueAccessor

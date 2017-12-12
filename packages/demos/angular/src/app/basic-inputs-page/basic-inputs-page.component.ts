@@ -10,6 +10,7 @@ export class BasicInputsPageComponent implements OnInit {
   datetimeValue = '2017-11-18T14:17:45-06:00';
   textareaValue = 'This is the Textarea Input';
   textValue = 'This is the Text Input';
+  numericValue = 1138;
 
   checkboxValue = true;
   toggleValue = false;
@@ -17,4 +18,8 @@ export class BasicInputsPageComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  typeOf(v: any): string {
+    return typeof v;
+  }
 }

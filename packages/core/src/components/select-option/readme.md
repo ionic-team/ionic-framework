@@ -41,12 +41,10 @@ string
 
 ## Events
 
-#### ionSelect
+#### ionSelectOptionDidLoad
 
 
-## Methods
-
-#### getText()
+#### ionSelectOptionDidUnload
 
 
 

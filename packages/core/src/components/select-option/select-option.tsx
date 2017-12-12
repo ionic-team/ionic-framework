@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 
 @Component({
@@ -8,31 +8,56 @@ import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/
   }
 })
 export class SelectOption {
-  @Element() private el: HTMLElement;
+  id: string;
 
-  /**
-   * @output {SelectOptionEvent} Emitted when the select option is selected.
-   */
-  @Event() ionSelect: EventEmitter;
+  @Element() el: HTMLElement;
 
   /**
    * @input {boolean} If true, the user cannot interact with the select option.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
-   * @input {boolean} If true, the element is selected.
+   * If true, the element is selected.
    */
-  @Prop({ mutable: true }) selected: boolean = false;
+  @Prop({ mutable: true }) selected = false;
 
   /**
-   * @input {string} The text value of the option.
+   * The text value of the option.
    */
-  @Prop() value: string;
+  @Prop({ mutable: true }) value: string;
 
-  @Method()
-  getText(): string {
-    return this.el.textContent || '';
+  /**
+   * Emitted when the select option loads.
+   */
+  @Event() ionSelectOptionDidLoad: EventEmitter;
+
+  /**
+   * Emitted when the select option unloads.
+   */
+  @Event() ionSelectOptionDidUnload: EventEmitter;
+
+  constructor() {
+    this.id = 'ion-selopt-' + (selectOptionIds++);
+  }
+
+  componentWillLoad() {
+    this.value = this.value || this.el.textContent;
+  }
+
+  componentDidLoad() {
+    this.ionSelectOptionDidLoad.emit();
+  }
+
+  componentDidUnload() {
+    this.ionSelectOptionDidUnload.emit();
+  }
+
+  hostData() {
+    return {
+      'role': 'option',
+      'id': this.id
+    };
   }
 
   render() {
@@ -40,3 +65,10 @@ export class SelectOption {
   }
 
 }
+
+
+export interface HTMLIonSelectOptionElementEvent extends CustomEvent {
+  target: HTMLIonSelectOptionElement;
+}
+
+let selectOptionIds = 0;

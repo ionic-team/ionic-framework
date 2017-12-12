@@ -2493,7 +2493,6 @@ declare global {
   namespace JSXElements {
     export interface IonSelectPopoverAttributes extends HTMLAttributes {
       options?: SelectPopoverOption[];
-      value?: string;
     }
   }
 }
@@ -2527,11 +2526,12 @@ declare global {
       cancelText?: string;
       okText?: string;
       placeholder?: string;
-      selectOptions?: any;
-      interface?: string;
+      name?: string;
       selectedText?: string;
       multiple?: boolean;
-      value?: string | string[];
+      interface?: string;
+      interfaceOptions?: any;
+      value?: string|string[];
     }
   }
 }

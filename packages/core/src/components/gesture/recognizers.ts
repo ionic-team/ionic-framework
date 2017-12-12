@@ -8,8 +8,6 @@ export class PanRecognizer {
   private threshold: number;
   private maxCosine: number;
   private isDirX: boolean;
-
-  private angle = 0;
   private isPan = 0;
 
   constructor(direction: string, threshold: number, maxAngle: number) {
@@ -22,7 +20,6 @@ export class PanRecognizer {
   start(x: number, y: number) {
     this.startX = x;
     this.startY = y;
-    this.angle = 0;
     this.isPan = 0;
     this.dirty = true;
   }

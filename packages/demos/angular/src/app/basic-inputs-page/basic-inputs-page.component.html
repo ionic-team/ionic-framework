@@ -32,6 +32,30 @@
 
   <ion-row>
     <ion-col>
+      <h2>Numeric Input</h2>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Ionic Numeric Input</ion-label>
+        <ion-input type="number" id="ionNumericInput" name="ionNumericInput" [(ngModel)]="numericValue"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <div>
+        Value:
+        <span id="numericOutput">{{numericValue}}</span>
+      </div>
+      <div>
+        Type:
+        <span id="numericOutputType">{{typeOf(numericValue)}}</span>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
       <h2>Textarea Input</h2>
     </ion-col>
   </ion-row>
@@ -127,7 +151,8 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Date</ion-label>
-        <ion-datetime id="ionDatetimeInput" pickerFormat="YYYY-MM-DD HH:mm:ss" displayFormat="MM/DD/YYYY HH:mm:ss" name="ionDatetimeInput" [(ngModel)]="datetimeValue"></ion-datetime>
+        <ion-datetime id="ionDatetimeInput" pickerFormat="YYYY-MM-DD HH:mm:ss" displayFormat="MM/DD/YYYY HH:mm:ss" name="ionDatetimeInput"
+          [(ngModel)]="datetimeValue"></ion-datetime>
       </ion-item>
     </ion-col>
     <ion-col>

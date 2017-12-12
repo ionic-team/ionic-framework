@@ -30,6 +30,8 @@ export interface CheckboxInput extends BaseInput {
    */
   checked: boolean;
 
+  name: string;
+
   /**
    * The change event is fired when the value of has changed.
    */
@@ -61,6 +63,8 @@ export interface RadioButtonInput extends BaseInput {
    */
   checked: boolean;
 
+  name: string;
+
   /**
    * A single radio button fires an ionSelect event, whereas
    * a radio group fires an ionChange event. It would be more common
@@ -77,33 +81,16 @@ export interface RadioButtonInput extends BaseInput {
    * Focus on the input element; keystrokes will subsequently go to this element.
    */
   ionFocus: EventEmitter<FocusEvent>;
-
-  /**
-   * Emitted when the styles change. This is useful for parent
-   * components to know how to style themselves depending on the
-   * child input. For example, a disabled ion-toggle may give
-   * its wrapping ion-item a different style.
-   */
-  ionStyle: EventEmitter<StyleEvent>;
 }
 
 
-export interface CheckedInputChangeEvent {
+export interface InputChangeEvent {
+  value: string;
+}
+
+
+export interface CheckedInputChangeEvent extends InputChangeEvent {
   checked: boolean;
-  value: string;
-}
-
-
-export interface TextInputChangeEvent {
-  value: string;
-}
-
-
-export interface SelectOptionInput extends BaseInput {
-  /**
-   * Indicates whether the option is currently selected.
-   */
-  selected: boolean;
 }
 
 
@@ -124,6 +111,8 @@ export interface SelectInput extends BaseInput {
    * whether multiple items can be selected.
    */
   multiple: boolean;
+
+  name: string;
 
   /**
    * The change event is fired when the value of has changed.
@@ -152,8 +141,14 @@ export interface SelectInput extends BaseInput {
 }
 
 
+export interface SelectInputChangeEvent {
+  value: string|string[];
+  text: string;
+}
+
+
 export interface RadioGroupInput extends BaseInput {
-  ionChange: EventEmitter<TextInputChangeEvent>;
+  ionChange: EventEmitter<InputChangeEvent>;
 }
 
 

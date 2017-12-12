@@ -322,7 +322,7 @@ export interface ActionSheetOptions {
 
 export interface ActionSheetButton {
   text?: string;
-  role?: 'cancel' | 'destructive' | 'selected';
+  role?: 'cancel' | 'destructive' | 'selected' | string;
   icon?: string;
   cssClass?: string;
   handler?: () => boolean | void;

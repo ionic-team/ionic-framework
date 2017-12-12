@@ -3,16 +3,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
   /* tslint:disable-next-line:directive-selector */
-  selector: 'ion-input:not([type=number]),ion-textarea',
+  selector: 'ion-input[type=number]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: TextValueAccessor,
+      useExisting: NumericValueAccessor,
       multi: true
     }
   ]
 })
-export class TextValueAccessor implements ControlValueAccessor {
+export class NumericValueAccessor implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
     this.onChange = () => {};
     this.onTouched = () => {};
@@ -21,25 +21,34 @@ export class TextValueAccessor implements ControlValueAccessor {
   onChange: (value: any) => void;
   onTouched: () => void;
 
-  writeValue(value: any) {
-    this.renderer.setProperty(this.element.nativeElement, 'value', value);
+  writeValue(value: any): void {
+    // The value needs to be normalized for IE9, otherwise it is set to 'null' when null
+    // Probably not an issue for us, but it doesn't really cost anything either
+    const normalizedValue = value == null ? '' : value;
+    this.renderer.setProperty(
+      this.element.nativeElement,
+      'value',
+      normalizedValue
+    );
   }
 
   @HostListener('input', ['$event.target.value'])
-  _handleInputEvent(value: any) {
+  _handleInputEvent(value: any): void {
     this.onChange(value);
   }
 
   @HostListener('ionBlur')
-  _handleBlurEvent() {
+  _handleBlurEvent(): void {
     this.onTouched();
   }
 
-  registerOnChange(fn: (value: any) => void) {
-    this.onChange = fn;
+  registerOnChange(fn: (_: number | null) => void): void {
+    this.onChange = value => {
+      fn(value == '' ? null : parseFloat(value));
+    };
   }
 
-  registerOnTouched(fn: () => void) {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
