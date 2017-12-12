@@ -24,144 +24,24 @@ Licensed under MIT
 
 ## Properties
 
-#### autoplay
-
-number
-
-
-#### control
+#### opts
 
 any
-
-
-#### direction
-
-any
-
-
-#### effect
-
-string
-
-
-#### initialSlide
-
-number
-
-
-#### keyboardControl
-
-boolean
-
-
-#### loop
-
-boolean
 
 
 #### pager
-
-boolean
-
-
-#### paginationType
-
-string
-
-
-#### parallax
-
-boolean
-
-
-#### slidesPerView
-
-any
-
-
-#### spaceBetween
-
-number
-
-
-#### speed
-
-number
-
-
-#### zoom
 
 boolean
 
 
 ## Attributes
 
-#### autoplay
-
-number
-
-
-#### control
+#### opts
 
 any
-
-
-#### direction
-
-any
-
-
-#### effect
-
-string
-
-
-#### initialSlide
-
-number
-
-
-#### keyboardControl
-
-boolean
-
-
-#### loop
-
-boolean
 
 
 #### pager
-
-boolean
-
-
-#### paginationType
-
-string
-
-
-#### parallax
-
-boolean
-
-
-#### slidesPerView
-
-any
-
-
-#### spaceBetween
-
-number
-
-
-#### speed
-
-number
-
-
-#### zoom
 
 boolean
 
@@ -205,6 +85,50 @@ boolean
 
 
 #### ionSlideWillChange
+
+
+## Methods
+
+#### getActiveIndex()
+
+
+#### getPreviousIndex()
+
+
+#### isBeginning()
+
+
+#### isEnd()
+
+
+#### length()
+
+
+#### lockSwipeToNext()
+
+
+#### lockSwipeToPrev()
+
+
+#### lockSwipes()
+
+
+#### slideNext()
+
+
+#### slidePrev()
+
+
+#### slideTo()
+
+
+#### startAutoplay()
+
+
+#### stopAutoplay()
+
+
+#### update()
 
 
 
