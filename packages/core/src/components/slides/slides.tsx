@@ -8,13 +8,13 @@ import { Swiper } from './vendor/swiper.js';
 })
 export class Slides {
 
-  private _container: HTMLElement;
-  private _init: boolean;
-  private _tmr: number;
-  private _swiper: any;
-  private _finalOptions: any;
-  private _slidesId: number;
-  private _slideId: string;
+  private container: HTMLElement;
+  private init: boolean;
+  private tmr: number;
+  private swiper: any;
+  private finalOptions: any;
+  private slidesId: number;
+  private slideId: string;
 
   @Element() private el: HTMLElement;
 
@@ -111,15 +111,15 @@ export class Slides {
   }
 
   constructor() {
-    this._slidesId = ++slidesId;
-    this._slideId = 'slides-' + this._slidesId;
+    this.slidesId = ++slidesId;
+    this.slideId = 'slides-' + this.slidesId;
   }
 
   private _initSlides() {
-    if (!this._init) {
+    if (!this.init) {
       console.debug(`ion-slides, init`);
 
-      this._container = this.el.children[0] as HTMLElement;
+      this.container = this.el.children[0] as HTMLElement;
 
       // Base options, can be changed
       var swiperOptions = {
@@ -232,21 +232,21 @@ export class Slides {
       };
 
       // Merge the base, user options, and events together then pas to swiper
-      this._finalOptions = Object.assign(
+      this.finalOptions = Object.assign(
         {},
         swiperOptions,
         this.opts,
         eventOptions
       );
       // init swiper core
-      this._swiper = new Swiper(this._container, this._finalOptions);
+      this.swiper = new Swiper(this.container, this.finalOptions);
 
-      if (this._finalOptions.keyboardControl) {
+      if (this.finalOptions.keyboardControl) {
         // init keyboard event listeners
         this.enableKeyboardControl(true);
       }
 
-      this._init = true;
+      this.init = true;
     }
   }
 
@@ -269,14 +269,14 @@ export class Slides {
    */
   @Method()
   update(debounce = 300) {
-    if (this._init) {
-      window.clearTimeout(this._tmr);
-      this._tmr = window.setTimeout(() => {
-        this._swiper.update();
+    if (this.init) {
+      window.clearTimeout(this.tmr);
+      this.tmr = window.setTimeout(() => {
+        this.swiper.update();
 
         // Don't allow pager to show with > 10 slides
         if (this.length() > 10) {
-          this._finalOptions.paginationType = undefined;
+          this.finalOptions.paginationType = undefined;
         }
       }, debounce);
     }
@@ -291,7 +291,7 @@ export class Slides {
    */
   @Method()
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
-    this._swiper.slideTo(index, speed, runCallbacks);
+    this.swiper.slideTo(index, speed, runCallbacks);
   }
 
   /**
@@ -302,7 +302,7 @@ export class Slides {
    */
   @Method()
   slideNext(speed?: number, runCallbacks?: boolean) {
-    this._swiper.slideNext(runCallbacks, speed);
+    this.swiper.slideNext(runCallbacks, speed);
   }
 
   /**
@@ -313,7 +313,7 @@ export class Slides {
    */
   @Method()
   slidePrev(speed?: number, runCallbacks?: boolean) {
-    this._swiper.slidePrev(runCallbacks, speed);
+    this.swiper.slidePrev(runCallbacks, speed);
   }
 
   /**
@@ -323,7 +323,7 @@ export class Slides {
    */
   @Method()
   getActiveIndex(): number {
-    return this._swiper.activeIndex;
+    return this.swiper.activeIndex;
   }
 
   /**
@@ -333,7 +333,7 @@ export class Slides {
    */
   @Method()
   getPreviousIndex(): number {
-    return this._swiper.previousIndex;
+    return this.swiper.previousIndex;
   }
 
   /**
@@ -343,7 +343,7 @@ export class Slides {
    */
   @Method()
   length(): number {
-    return this._swiper.slides.length;
+    return this.swiper.slides.length;
   }
 
   /**
@@ -353,7 +353,7 @@ export class Slides {
    */
   @Method()
   isEnd(): boolean {
-    return this._swiper.isEnd;
+    return this.swiper.isEnd;
   }
 
   /**
@@ -363,7 +363,7 @@ export class Slides {
    */
   @Method()
   isBeginning(): boolean {
-    return this._swiper.isBeginning;
+    return this.swiper.isBeginning;
   }
 
   /**
@@ -371,7 +371,7 @@ export class Slides {
    */
   @Method()
   startAutoplay(): void {
-    this._swiper.startAutoplay();
+    this.swiper.startAutoplay();
   }
 
   /**
@@ -379,7 +379,7 @@ export class Slides {
    */
   @Method()
   stopAutoplay(): void {
-    this._swiper.stopAutoplay();
+    this.swiper.stopAutoplay();
   }
 
   /**
@@ -388,9 +388,9 @@ export class Slides {
   @Method()
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
     if (shouldLockSwipeToNext) {
-      return this._swiper.lockSwipeToNext();
+      return this.swiper.lockSwipeToNext();
     }
-    this._swiper.unlockSwipeToNext();
+    this.swiper.unlockSwipeToNext();
   }
 
   /**
@@ -399,9 +399,9 @@ export class Slides {
   @Method()
   lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
     if (shouldLockSwipeToPrev) {
-      return this._swiper.lockSwipeToPrev();
+      return this.swiper.lockSwipeToPrev();
     }
-    this._swiper.unlockSwipeToPrev();
+    this.swiper.unlockSwipeToPrev();
   }
 
   /**
@@ -410,9 +410,9 @@ export class Slides {
   @Method()
   lockSwipes(shouldLockSwipes: boolean) {
     if (shouldLockSwipes) {
-      return this._swiper.lockSwipes();
+      return this.swiper.lockSwipes();
     }
-    this._swiper.unlockSwipes();
+    this.swiper.unlockSwipes();
   }
 
   /**
@@ -420,18 +420,18 @@ export class Slides {
    */
   enableKeyboardControl(shouldEnableKeyboard: boolean) {
     if (shouldEnableKeyboard) {
-      return this._swiper.enableKeyboardControl();
+      return this.swiper.enableKeyboardControl();
     }
-    this._swiper.disableKeyboardControl();
+    this.swiper.disableKeyboardControl();
   }
 
   /**
    * @hidden
    */
   componentDidUnload() {
-    this._init = false;
+    this.init = false;
 
-    this._swiper.destroy(true, true);
+    this.swiper.destroy(true, true);
     this.enableKeyboardControl(false);
   }
 }
