@@ -115,7 +115,7 @@ export class Slides {
     this.slideId = 'slides-' + this.slidesId;
   }
 
-  private _initSlides() {
+  private initSlides() {
     if (!this.init) {
       console.debug(`ion-slides, init`);
 
@@ -259,7 +259,7 @@ export class Slides {
      * child components are ready.
      */
     setTimeout(() => {
-      this._initSlides();
+      this.initSlides();
     }, 10);
   }
 
