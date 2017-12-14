@@ -105,4 +105,9 @@ $cordova-statusbar-padding-modal-max-width:         767px !default;
     min-height: calc(#{$toolbar-height} + constant(safe-area-inset-bottom));
     min-height: calc(#{$toolbar-height} + env(safe-area-inset-bottom));
   }
+
+  .tabs:not(.tabs-ios[tabsPlacement='top']) ion-footer .toolbar:last-child {
+    @include padding(null, null, $toolbar-padding, null);
+    min-height: $toolbar-height;
+  }
 }
