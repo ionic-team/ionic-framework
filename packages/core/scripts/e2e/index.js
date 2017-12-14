@@ -94,7 +94,7 @@ async function run() {
   // setting chrome options to start the browser without an info bar
   let chromeCapabilities = webdriver.Capabilities.chrome();
   let chromeOptions = {
-    'args': ['--disable-infobars']
+    // 'args': ['--disable-infobars']
   };
   chromeCapabilities.set('chromeOptions', chromeOptions);
 
@@ -125,7 +125,7 @@ async function run() {
           platform_index: 0,
           platform_count: 1,
           width: 400,
-          height: 800
+          height: 814
         }
       },
       accessKey: process.env.IONIC_SNAPSHOT_KEY
