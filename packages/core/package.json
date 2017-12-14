@@ -15,7 +15,7 @@
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
     "chromedriver": "^2.33.2",
-    "ionicons": "4.0.0-8",
+    "ionicons": "4.0.0-9",
     "jest": "^21.2.1",
     "mocha": "^4.0.1",
     "np": "^2.17.0",
