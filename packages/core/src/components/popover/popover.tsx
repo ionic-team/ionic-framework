@@ -4,9 +4,12 @@ import {
   AnimationBuilder,
   AnimationController,
   Config,
+  FrameworkDelegate,
   OverlayDismissEvent,
   OverlayDismissEventDetail
 } from '../../index';
+
+import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -26,7 +29,6 @@ import mdLeaveAnimation from './animations/md.leave';
   }
 })
 export class Popover {
-  private animation: Animation;
 
   @Element() private el: HTMLElement;
 
@@ -66,7 +68,7 @@ export class Popover {
   @Prop() mode: string;
   @Prop() color: string;
   @Prop() component: string;
-  @Prop() componentProps: any = {};
+  @Prop() data: any = {};
   @Prop() cssClass: string;
   @Prop() enableBackdropDismiss: boolean = true;
   @Prop() enterAnimation: AnimationBuilder;
@@ -76,7 +78,10 @@ export class Popover {
   @Prop() showBackdrop: boolean = true;
   @Prop() translucent: boolean = false;
   @Prop() animate: boolean = true;
+  @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
+  private animation: Animation;
+  private usersComponentElement: HTMLElement;
 
   @Method()
   present() {
@@ -91,8 +96,24 @@ export class Popover {
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-    // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el, this.ev).then(animation => {
+    const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
+    if (!this.delegate) {
+      this.delegate = new DomFrameworkDelegate();
+    }
+
+    const cssClasses: string[] = [];
+    if (this.cssClass && this.cssClass.length) {
+      cssClasses.push(this.cssClass);
+    }
+
+     // add the modal by default to the data being passed
+     this.data = this.data || {};
+     this.data.modal = this.el;
+     return this.delegate.attachViewToDom(userComponentParent, this.component,
+                        this.data, cssClasses).then((mountingData) => {
+      this.usersComponentElement = mountingData.element;
+      return this.animationCtrl.create(animationBuilder, this.el, this.ev);
+     }).then((animation) => {
       this.animation = animation;
       if (!this.animate) {
         // if the duration is 0, it won't actually animate I don't think
@@ -100,7 +121,7 @@ export class Popover {
         this.animation = animation.duration(0);
       }
       return playAnimationAsync(animation);
-    }).then((animation) => {
+     }).then((animation) => {
       animation.destroy();
       this.componentDidEnter();
     });
@@ -119,6 +140,10 @@ export class Popover {
       role
     });
 
+    if (!this.delegate) {
+      this.delegate = new DomFrameworkDelegate();
+    }
+
     const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
@@ -126,10 +151,13 @@ export class Popover {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      return domControllerAsync(Context.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
+      return domControllerAsync(Context.dom.write, () => {});
     }).then(() => {
+      // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
+      const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
+      return this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
+    }).then(() => {
+      this.el.parentElement.removeChild(this.el);
       this.ionPopoverDidDismiss.emit({
         data,
         role
@@ -179,7 +207,6 @@ export class Popover {
   }
 
   render() {
-    const ThisComponent = this.component;
     const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
 
     return [
@@ -190,11 +217,7 @@ export class Popover {
       <div class={wrapperClasses}>
         <div class='popover-arrow'/>
         <div class='popover-content'>
-          <div class='popover-viewport'>
-            <ThisComponent
-              {...this.componentProps}
-              class={this.cssClass}
-            />
+          <div class={USER_COMPONENT_POPOVER_CONTAINER_CLASS}>
           </div>
         </div>
       </div>
@@ -203,8 +226,8 @@ export class Popover {
 }
 
 export interface PopoverOptions {
-  component: string;
-  componentProps?: any;
+  component: any;
+  data?: any;
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
   translucent?: boolean;
@@ -212,6 +235,7 @@ export interface PopoverOptions {
   leavenimation?: AnimationBuilder;
   cssClass?: string;
   ev: Event;
+  delegate?: FrameworkDelegate;
 }
 
 export interface PopoverEvent extends CustomEvent {
@@ -251,3 +275,5 @@ export {
   mdEnterAnimation as mdPopoverEnterAnimation,
   mdLeaveAnimation as mdPopoverLeaveAnimation
 };
+
+export const USER_COMPONENT_POPOVER_CONTAINER_CLASS = 'popover-viewport';

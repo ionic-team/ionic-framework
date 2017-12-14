@@ -1920,7 +1920,7 @@ declare global {
       mode?: string;
       color?: string;
       component?: string;
-      componentProps?: any;
+      data?: any;
       cssClass?: string;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
@@ -1930,6 +1930,7 @@ declare global {
       showBackdrop?: boolean;
       translucent?: boolean;
       animate?: boolean;
+      delegate?: FrameworkDelegate;
     }
   }
 }

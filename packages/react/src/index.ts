@@ -1,3 +1,3 @@
 export { Delegate } from './react-framework-delegate';
-export { createModal } from './apis/modal';
+export * from './apis/apis';
 export * from './utils/wc-shim';

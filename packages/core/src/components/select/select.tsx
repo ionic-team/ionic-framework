@@ -287,7 +287,7 @@ export class Select {
   openPopover(ev: UIEvent) {
     const popoverOpts: PopoverOptions = {
       component: 'ion-select-popover',
-      componentProps: {
+      data: {
         value: this.value,
         options: this.childOpts.map(o => {
           return {
