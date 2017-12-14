@@ -1,6 +1,6 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
 import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
-import { BlurEvent, FocusEvent, SelectInputChangeEvent } from '../../utils/input-interfaces';
+import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
 import { ActionSheet, ActionSheetButton, ActionSheetOptions  } from '../action-sheet/action-sheet';
 import { Alert, AlertOptions } from '../alert/alert';
@@ -27,6 +27,7 @@ export class Select {
   private selectId: string;
   private labelId: string;
   private overlay: ActionSheet | Alert | Popover;
+  private styleTmr: any;
 
   @Element() private el: HTMLIonSelectElement;
 
@@ -37,7 +38,9 @@ export class Select {
   @State() text: string;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
+
   @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
+
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
 
   /**
@@ -90,9 +93,40 @@ export class Select {
   @Prop() interfaceOptions: any = {};
 
   /**
-   *
+   * @input {string} the value of the select.
    */
-  @Prop({ mutable: true }) value: string|string[];
+  @Prop({ mutable: true }) value: string | string[];
+
+  /**
+   * Emitted when the value has changed.
+   */
+  @Event() ionChange: EventEmitter<SelectInputChangeEvent>;
+
+  /**
+   * Emitted when the selection is cancelled.
+   */
+  @Event() ionCancel: EventEmitter;
+
+  /**
+   * Emitted when the select has focus.
+   */
+  @Event() ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the select loses focus.
+   */
+  @Event() ionBlur: EventEmitter<BlurEvent>;
+
+  /**
+   * @output {Event} Emitted when the styles change.
+   */
+  @Event() ionStyle: EventEmitter<StyleEvent>;
+
+
+  @PropDidChange('disabled')
+  disabledChanged() {
+    this.emitStyle();
+  }
 
   @PropDidChange('value')
   valueChanged() {
@@ -149,41 +183,24 @@ export class Select {
     });
   }
 
-  /**
-   * Emitted when the value has changed.
-   */
-  @Event() ionChange: EventEmitter<SelectInputChangeEvent>;
-
-  /**
-   * Emitted when the selection is cancelled.
-   */
-  @Event() ionCancel: EventEmitter;
-
-  /**
-   * Emitted when the select has focus.
-   */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
-
-  /**
-   * Emitted when the select loses focus.
-   */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
-
-
   @Listen('ionSelectOptionDidLoad')
   optLoad(ev: HTMLIonSelectOptionElementEvent) {
     const selectOption = ev.target;
     this.childOpts.push(selectOption);
 
-    if (this.value !== undefined && selectOption.value === this.value) {
+    if (this.value !== undefined && (Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
       // this select has a value and this
-      // radio equals the correct select value
+      // option equals the correct select value
       // so let's check this select option
       selectOption.selected = true;
 
+    } else if (Array.isArray(this.value) && this.multiple && selectOption.selected) {
+      // if the value is an array we need to push the option on
+      this.value.push(selectOption.value);
+
     } else if (this.value === undefined && selectOption.selected) {
       // this select does not have a value
-      // but this selection option is checked, so let's set the
+      // but this select option is checked, so let's set the
       // select's value from the checked select option
       this.value = selectOption.value;
 
@@ -223,6 +240,7 @@ export class Select {
       this.value = this.multiple ? [] : undefined;
     }
     this.name = this.name || this.selectId;
+    this.emitStyle();
   }
 
   componentDidLoad() {
@@ -428,6 +446,16 @@ export class Select {
   onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
+  }
+
+  emitStyle() {
+    clearTimeout(this.styleTmr);
+
+    this.styleTmr = setTimeout(() => {
+      this.ionStyle.emit({
+        'select-disabled': this.disabled
+      });
+    });
   }
 
   hostData() {

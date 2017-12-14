@@ -2502,7 +2502,7 @@ declare global {
       multiple?: boolean;
       interface?: string;
       interfaceOptions?: any;
-      value?: string|string[];
+      value?: string | string[];
     }
   }
 }
