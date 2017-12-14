@@ -1,6 +1,6 @@
-import { AnimationOptions, Transition, ViewController } from '../../index';
+import { AnimationOptions, Transition, ViewController } from '../../../index';
 import { canNavGoBack } from '../nav-utils';
-import { isDef } from '../../utils/helpers';
+import { isDef } from '../../../utils/helpers';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -31,7 +31,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
   if (enteringView) {
     const enteringContent = rootTransition.create();
-    enteringContent.addElement(enteringView.element.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
+    enteringContent.addElement(enteringView.element.querySelectorAll('ion-header > *:not(ion-toolbar),ion-footer > *'));
 
     rootTransition.add(enteringContent);
 
@@ -42,30 +42,30 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
       enteringContent.beforeClearStyles([OPACITY]).fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
     }
 
-    const enteringNavbarEle = enteringView.element.querySelector('ion-navbar');
-    if (enteringNavbarEle) {
-      const enteringNavBar = rootTransition.create();
-      enteringNavBar.addElement(enteringNavbarEle);
+    const enteringToolBarEle = enteringView.element.querySelector('ion-toolbar');
+    if (enteringToolBarEle) {
+      const enteringToolBar = rootTransition.create();
+      enteringToolBar.addElement(enteringToolBarEle);
 
-      rootTransition.add(enteringNavBar);
+      rootTransition.add(enteringToolBar);
 
       const enteringTitle = rootTransition.create();
-      enteringTitle.addElement(enteringNavbarEle.querySelector('ion-title'));
-      const enteringNavbarItems = rootTransition.create();
-      enteringNavbarItems.addElement(enteringNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
-      const enteringNavbarBg = rootTransition.create();
-      enteringNavbarBg.addElement(enteringNavbarEle.querySelector('.toolbar-background'));
+      enteringTitle.addElement(enteringToolBarEle.querySelector('ion-title'));
+      const enteringToolBarItems = rootTransition.create();
+      enteringToolBarItems.addElement(enteringToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+      const enteringToolBarBg = rootTransition.create();
+      enteringToolBarBg.addElement(enteringToolBarEle.querySelector('.toolbar-background'));
       const enteringBackButton = rootTransition.create();
-      enteringBackButton.addElement(enteringNavbarEle.querySelector('.back-button'));
+      enteringBackButton.addElement(enteringToolBarEle.querySelector('.back-button'));
 
-      enteringNavBar
+      enteringToolBar
       .add(enteringTitle)
-      .add(enteringNavbarItems)
-      .add(enteringNavbarBg)
+      .add(enteringToolBarItems)
+      .add(enteringToolBarBg)
       .add(enteringBackButton);
 
       enteringTitle.fromTo(OPACITY, 0.01, 1, true);
-      enteringNavbarItems.fromTo(OPACITY, 0.01, 1, true);
+      enteringToolBarItems.fromTo(OPACITY, 0.01, 1, true);
 
       if (backDirection) {
         enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
@@ -75,10 +75,10 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
           enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS).fromTo(OPACITY, 0.01, 1, true);
         }
       } else {
-        // entering navbar, forward direction
+        // entering toolbar, forward direction
         enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
-        enteringNavbarBg.beforeClearStyles([OPACITY]).fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+        enteringToolBarBg.beforeClearStyles([OPACITY]).fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
         if (canNavGoBack(enteringView.nav)) {
           // forward direction, entering page has a back button
@@ -86,10 +86,10 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
 
           const enteringBackBtnText = rootTransition.create();
-          enteringBackBtnText.addElement(enteringNavbarEle.querySelector('.back-button-text'));
+          enteringBackBtnText.addElement(enteringToolBarEle.querySelector('.back-button-text'));
 
           enteringBackBtnText.fromTo(TRANSLATEX, (isRTL ? '-100px' : '100px'), '0px');
-          enteringNavBar.add(enteringBackBtnText);
+          enteringToolBar.add(enteringBackBtnText);
 
         } else {
           enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
@@ -103,7 +103,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
     const leavingContent = rootTransition.create();
     leavingContent.addElement(leavingView.element);
-    leavingContent.addElement(leavingView.element.querySelectorAll('ion-header > *:not(ion-navbar),ion-footer > *'));
+    leavingContent.addElement(leavingView.element.querySelectorAll('ion-header > *:not(ion-toolbar),ion-footer > *'));
 
     rootTransition.add(leavingContent);
 
@@ -119,59 +119,59 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
         .afterClearStyles([TRANSFORM, OPACITY]);
     }
 
-    const leavingNavbarEle = leavingView.element.querySelector('ion-navbar');
-    if (leavingNavbarEle) {
-      const leavingNavBar = rootTransition.create();
-      leavingNavBar.addElement(leavingNavbarEle);
+    const leavingToolBarEle = leavingView.element.querySelector('ion-toolbar');
+    if (leavingToolBarEle) {
+      const leavingToolBar = rootTransition.create();
+      leavingToolBar.addElement(leavingToolBarEle);
 
       const leavingTitle = rootTransition.create();
-      leavingTitle.addElement(leavingNavbarEle.querySelector('ion-title'));
+      leavingTitle.addElement(leavingToolBarEle.querySelector('ion-title'));
 
-      const leavingNavbarItems = rootTransition.create();
-      leavingNavbarItems.addElement(leavingNavbarEle.querySelectorAll('ion-buttons,[menuToggle]'));
+      const leavingToolBarItems = rootTransition.create();
+      leavingToolBarItems.addElement(leavingToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
 
-      const leavingNavbarBg = rootTransition.create();
-      leavingNavbarBg.addElement(leavingNavbarEle.querySelector('.toolbar-background'));
+      const leavingToolBarBg = rootTransition.create();
+      leavingToolBarBg.addElement(leavingToolBarEle.querySelector('.toolbar-background'));
 
       const leavingBackButton = rootTransition.create();
-      leavingBackButton.addElement(leavingNavbarEle.querySelector('.back-button'));
+      leavingBackButton.addElement(leavingToolBarEle.querySelector('.back-button'));
 
-      leavingNavBar
+      leavingToolBar
         .add(leavingTitle)
-        .add(leavingNavbarItems)
+        .add(leavingToolBarItems)
         .add(leavingBackButton)
-        .add(leavingNavbarBg);
-      this.add(leavingNavBar);
+        .add(leavingToolBarBg);
+      this.add(leavingToolBar);
 
-      // fade out leaving navbar items
+      // fade out leaving toolbar items
       leavingBackButton.fromTo(OPACITY, 0.99, 0);
       leavingTitle.fromTo(OPACITY, 0.99, 0);
-      leavingNavbarItems.fromTo(OPACITY, 0.99, 0);
+      leavingToolBarItems.fromTo(OPACITY, 0.99, 0);
 
       if (backDirection) {
-        // leaving navbar, back direction
+        // leaving toolbar, back direction
         leavingTitle.fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
 
-        // leaving navbar, back direction, and there's no entering navbar
+        // leaving toolbar, back direction, and there's no entering toolbar
         // should just slide out, no fading out
-        leavingNavbarBg
+        leavingToolBarBg
           .beforeClearStyles([OPACITY])
           .fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
 
         const leavingBackBtnText = rootTransition.create();
-        leavingBackBtnText.addElement(leavingNavbarEle.querySelector('.back-button-text'));
+        leavingBackBtnText.addElement(leavingToolBarEle.querySelector('.back-button-text'));
         leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (isRTL ? -300 : 300) + 'px');
-        leavingNavBar.add(leavingBackBtnText);
+        leavingToolBar.add(leavingBackBtnText);
 
       } else {
-        // leaving navbar, forward direction
+        // leaving toolbar, forward direction
         leavingTitle
           .fromTo(TRANSLATEX, CENTER, OFF_LEFT)
           .afterClearStyles([TRANSFORM]);
 
         leavingBackButton.afterClearStyles([OPACITY]);
         leavingTitle.afterClearStyles([OPACITY]);
-        leavingNavbarItems.afterClearStyles([OPACITY]);
+        leavingToolBarItems.afterClearStyles([OPACITY]);
       }
     }
   }

@@ -32,6 +32,11 @@ string
 any
 
 
+#### delegate
+
+any
+
+
 #### enableBackdropDismiss
 
 boolean
@@ -89,6 +94,11 @@ string
 any
 
 
+#### delegate
+
+any
+
+
 #### enableBackdropDismiss
 
 boolean
@@ -142,6 +152,9 @@ boolean
 ## Methods
 
 #### dismiss()
+
+
+#### getUserComponentContainer()
 
 
 #### present()

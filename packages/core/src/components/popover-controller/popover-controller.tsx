@@ -21,7 +21,6 @@ export class PopoverController {
 
     // give this popover a unique id
     popover.popoverId = `popover-${id}`;
-    popover.style.zIndex = (10000 + id).toString();
 
     // convert the passed in popover options into props
     // that get passed down into the new popover

@@ -8,10 +8,16 @@ export const NavControllerToken = new InjectionToken<any>('NavControllerToken');
 export const ViewControllerToken = new InjectionToken<any>('ViewControllerToken');
 export const AppToken = new InjectionToken<any>('AppToken');
 
-export function getProviders(element: HTMLIonNavElement) {
+export function getProviders(element: HTMLElement) {
+  if (element.tagName !== 'ion-nav') {
+    element.closest('ion-nav');
+  }
+
+  const nearestNavElement = (element.tagName.toLowerCase() === 'ion-nav' ? element : element.closest('ion-nav')) as HTMLIonNavElement;
+
   return [
     {
-      provide: NavControllerToken, useValue: element
+      provide: NavControllerToken, useValue: nearestNavElement
     },
 
     {
