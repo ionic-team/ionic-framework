@@ -22,14 +22,19 @@ string
 string
 
 
-#### componentProps
+#### cssClass
+
+string
+
+
+#### data
 
 any
 
 
-#### cssClass
+#### delegate
 
-string
+any
 
 
 #### enableBackdropDismiss
@@ -89,14 +94,19 @@ string
 string
 
 
-#### componentProps
+#### cssClass
+
+string
+
+
+#### data
 
 any
 
 
-#### cssClass
+#### delegate
 
-string
+any
 
 
 #### enableBackdropDismiss

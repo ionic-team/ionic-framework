@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'toast', loadChildren: 'app/toast/toast.module#ToastModule' },
   { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' },
   { path: 'nav', loadChildren: 'app/nav/nav.module#NavModule' },
-  { path: 'modal', loadChildren: 'app/modal/modal.module#ModalModule' }
+  { path: 'modal', loadChildren: 'app/modal/modal.module#ModalModule' },
+  { path: 'popover', loadChildren: 'app/popover/popover.module#PopoverModule' },
 ];
 
 @NgModule({

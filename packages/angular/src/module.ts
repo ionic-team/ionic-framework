@@ -21,6 +21,7 @@ import { AlertController } from './providers/alert-controller';
 import { AngularComponentMounter } from './providers/angular-component-mounter';
 import { LoadingController } from './providers/loading-controller';
 import { ModalController } from './providers/modal-controller';
+import { PopoverController } from './providers/popover-controller';
 import { ToastController } from './providers/toast-controller';
 
 @NgModule({
@@ -57,6 +58,7 @@ export class IonicAngularModule {
         AngularComponentMounter,
         LoadingController,
         ModalController,
+        PopoverController,
         ToastController
       ]
     };

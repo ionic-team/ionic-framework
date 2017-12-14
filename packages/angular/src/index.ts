@@ -10,4 +10,5 @@ export { App } from './providers/app';
 export { LoadingController, LoadingProxy } from './providers/loading-controller';
 export { ModalController, ModalProxy } from './providers/modal-controller';
 export { NavController } from './providers/nav-controller';
+export { PopoverController, PopoverProxy } from './providers/popover-controller';
 export { ToastController, ToastProxy } from './providers/toast-controller';
