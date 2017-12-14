@@ -89,6 +89,8 @@ export class Picker {
 
     this.ionPickerWillPresent.emit();
 
+    this.el.style.zIndex = `${20000 + this.pickerId}`;
+
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
 

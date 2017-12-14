@@ -86,6 +86,8 @@ export class Popover {
     }
     this.ionPopoverWillPresent.emit();
 
+    this.el.style.zIndex = `${10000 + this.popoverId}`;
+
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 

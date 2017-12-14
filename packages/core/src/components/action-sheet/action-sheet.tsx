@@ -125,6 +125,8 @@ export class ActionSheet {
     }
     this.ionActionSheetWillPresent.emit();
 
+    this.el.style.zIndex = `${20000 + this.actionSheetId}`;
+
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 

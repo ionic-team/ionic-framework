@@ -1631,6 +1631,8 @@ declare global {
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
       animate?: boolean;
+      delegate?: FrameworkDelegate;
+      delegateModalWrapper?: boolean;
     }
   }
 }

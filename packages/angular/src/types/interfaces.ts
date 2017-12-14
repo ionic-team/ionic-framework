@@ -13,3 +13,10 @@ export interface AngularMountingData extends FrameworkMountingData {
   instance?: any;
   angularHostElement?: HTMLElement;
 }
+
+export interface ModalDelegate {
+  showModal: boolean;
+  isHydrated: boolean;
+  role: string;
+  classes: string[];
+}

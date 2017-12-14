@@ -32,6 +32,16 @@ string
 any
 
 
+#### delegate
+
+any
+
+
+#### delegateModalWrapper
+
+boolean
+
+
 #### enableBackdropDismiss
 
 boolean
@@ -89,6 +99,16 @@ string
 any
 
 
+#### delegate
+
+any
+
+
+#### delegateModalWrapper
+
+boolean
+
+
 #### enableBackdropDismiss
 
 boolean
@@ -142,6 +162,9 @@ boolean
 ## Methods
 
 #### dismiss()
+
+
+#### getModalWrapperDetails()
 
 
 #### present()

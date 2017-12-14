@@ -4,9 +4,12 @@ import {
   AnimationBuilder,
   AnimationController,
   Config,
+  FrameworkDelegate,
   OverlayDismissEvent,
   OverlayDismissEventDetail
 } from '../../index';
+
+import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -73,12 +76,14 @@ export class Modal {
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
   @Prop() animate: boolean;
+  @Prop({ mutable: true }) delegate: FrameworkDelegate;
+  @Prop() delegateModalWrapper: boolean = false;
 
   private animation: Animation;
-
+  private usersComponentElement: HTMLElement;
 
   @Method()
-  present() {
+  async present() {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -86,27 +91,35 @@ export class Modal {
 
     this.ionModalWillPresent.emit();
 
+    this.el.style.zIndex = `${20000 + this.modalId}`;
+
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-    // build the animation and kick it off
-    // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.animate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionModalDidPresent.emit();
-    });
+    const modalWrapper = this.el.querySelector(`.${MODAL_WRAPPER}`);
+    if (!this.delegate) {
+      this.delegate = new DomFrameworkDelegate();
+    }
+
+    const cssClasses = ['ion-page'];
+    if (this.cssClass && this.cssClass.length) {
+      cssClasses.push(this.cssClass);
+    }
+    const mountingData = await this.delegate.attachViewToDom(modalWrapper, this.component, this.data, cssClasses);
+    this.usersComponentElement = mountingData.element;
+    this.animation = await this.animationCtrl.create(animationBuilder, this.el);
+    if (!this.animate) {
+      // if the duration is 0, it won't actually animate I don't think
+      // TODO - validate this
+      this.animation = this.animation.duration(0);
+    }
+    await playAnimationAsync(this.animation);
+    this.animation.destroy();
+    this.ionModalDidPresent.emit();
   }
 
   @Method()
-  dismiss(data?: any, role?: string) {
+  async dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -116,23 +129,39 @@ export class Modal {
       role
     });
 
+    if (!this.delegate) {
+      this.delegate = new DomFrameworkDelegate();
+    }
+
     // get the user's animation fn if one was provided
     const animationBuilder = this.leaveAnimation || this.config.get('modalLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      return domControllerAsync(Context.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    }).then(() => {
-      this.ionModalDidDismiss.emit({
-        data,
-        role
-      });
+    this.animation = await this.animationCtrl.create(animationBuilder, this.el);
+    await playAnimationAsync(this.animation);
+    this.animation.destroy();
+
+
+    await domControllerAsync(Context.dom.write, () => {});
+
+    // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
+    const modalWrapper = this.el.querySelector(`.${MODAL_WRAPPER}`);
+    await this.delegate.removeViewFromDom(modalWrapper, this.usersComponentElement);
+
+    this.el.parentElement.removeChild(this.el);
+
+    this.ionModalDidDismiss.emit({
+      data,
+      role
     });
+  }
+
+  @Method()
+  getModalWrapperDetails() {
+    const dictionary = createThemedClasses(this.mode, this.color, MODAL_WRAPPER);
+    return {
+      role: 'dialogue',
+      classes: Object.keys(dictionary)
+    };
   }
 
   @Listen('ionDismiss')
@@ -161,21 +190,25 @@ export class Modal {
   }
 
   render() {
-    const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
-    return [
-      <div
-        onClick={this.backdropClick.bind(this)}
-        class={{
-          'modal-backdrop': true,
-          'hide-backdrop': !this.showBackdrop
-        }}
-      ></div>,
-      <div
-        role='dialog'
-        class={dialogClasses}
+    const elements: JSX.Element[] = [];
+    elements.push(<div
+      onClick={this.backdropClick.bind(this)}
+      class={{
+        'modal-backdrop': true,
+        'hide-backdrop': !this.showBackdrop
+      }}
+    ></div>);
+    if (!this.delegateModalWrapper) {
+      const details = this.getModalWrapperDetails();
+      const clazz = details.classes.join(' ');
+      elements.push(<div
+        role={details.role}
+        class={clazz}
       >
-      </div>
-    ];
+      </div>);
+    }
+
+    return elements;
   }
 }
 
@@ -188,6 +221,7 @@ export interface ModalOptions {
   enterAnimation?: AnimationBuilder;
   exitAnimation?: AnimationBuilder;
   cssClass?: string;
+  delegate?: FrameworkDelegate;
 }
 
 
@@ -213,3 +247,5 @@ export {
   mdEnterAnimation as mdModalEnterAnimation,
   mdLeaveAnimation as mdModalLeaveAnimation
 };
+
+const MODAL_WRAPPER = 'modal-wrapper';
