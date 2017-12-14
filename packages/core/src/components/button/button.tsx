@@ -12,8 +12,6 @@ import { getElementClassObject } from '../../utils/theme';
 export class Button {
   @Element() private el: HTMLElement;
 
-  @Prop() itemButton: boolean = false;
-
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
@@ -28,9 +26,9 @@ export class Button {
 
   /**
    * The button size.
-   * Possible values are: `"small"`, `"large"`.
+   * Possible values are: `"small"`, `"default"`, `"large"`.
    */
-  @Prop() size: 'small' | 'large';
+  @Prop() size: 'small' | 'default' | 'large';
 
   /**
    * If true, sets the button into a disabled state.
@@ -40,13 +38,12 @@ export class Button {
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
-   * `ion-navbar`, where the default is `"clear"`.
+   * a toolbar, where the default is `"clear"`.
    */
   @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
   /**
    * If true, activates a button with rounded corners.
-   * Type: shape
    */
   @Prop() round: boolean = false;
 
@@ -58,7 +55,6 @@ export class Button {
 
   /**
    * If true, activates a button with a heavier font weight.
-   * Type: decorator
    */
   @Prop() strong: boolean = false;
 
@@ -80,7 +76,6 @@ export class Button {
 
     const {
       buttonType,
-      itemButton,
       color,
       expand,
       fill,
@@ -98,7 +93,6 @@ export class Button {
         getClassList(buttonType, round ? 'round' : null, mode),
         getClassList(buttonType, strong ? 'strong' : null, mode),
         getColorClassList(buttonType, color, fill, mode),
-        getItemClassList(itemButton, size)
       );
 
     const TagType = this.href ? 'a' : 'button';
@@ -177,8 +171,4 @@ function getColorClassList(buttonType: string, color: string, fill: string, mode
       fill !== 'default' ? `${className}` : [],
       color ? `${className}-${mode}-${color}` : []
     );
-}
-
-function getItemClassList(itemButton: boolean, size: string) {
-  return itemButton && !size ? ['item-button'] : [];
 }

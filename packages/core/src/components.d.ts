@@ -354,10 +354,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonButtonAttributes extends HTMLAttributes {
-      itemButton?: boolean;
       href?: string;
       buttonType?: string;
-      size?: 'small' | 'large';
+      size?: 'small' | 'default' | 'large';
       disabled?: boolean;
       fill?: 'clear' | 'outline' | 'solid' | 'default';
       round?: boolean;
