@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
 </ion-content>
   `
 })
-export class PageOne {
+export class ModalPageToPresent {
 
   ngOnInitDetection = 'initial';
 

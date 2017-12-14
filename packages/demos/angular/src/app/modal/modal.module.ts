@@ -5,22 +5,22 @@ import { IonicAngularModule } from '@ionic/angular';
 import { ModalPageComponent } from './modal-page.component';
 import { ModalRoutingModule } from './modal-routing.module';
 
-import { PageOne } from './page-one';
+import { ModalPageToPresent } from './modal-page-to-present';
 
 @NgModule({
   imports: [
     CommonModule,
-    IonicAngularModule,
+    IonicAngularModule.forRoot(),
     ModalRoutingModule
   ],
   declarations: [
     ModalPageComponent,
-    PageOne
+    ModalPageToPresent
   ],
   providers: [
   ],
   entryComponents: [
-    PageOne
+    ModalPageToPresent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

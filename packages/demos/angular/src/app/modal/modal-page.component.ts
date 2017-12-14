@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
-import { PageOne } from './page-one';
+import { ModalPageToPresent } from './modal-page-to-present';
 
 @Component({
   selector: 'app-modal-page',
@@ -27,7 +27,7 @@ export class ModalPageComponent {
 
   clickMe() {
     const modal = this.modalController.create({
-      component: PageOne
+      component: ModalPageToPresent
     });
     return modal.present();
   }

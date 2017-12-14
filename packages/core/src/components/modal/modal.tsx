@@ -77,7 +77,6 @@ export class Modal {
   @Prop() leaveAnimation: AnimationBuilder;
   @Prop() animate: boolean;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
-  @Prop() delegateModalWrapper: boolean = false;
 
   private animation: Animation;
   private usersComponentElement: HTMLElement;
@@ -96,7 +95,7 @@ export class Modal {
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-    const modalWrapper = this.el.querySelector(`.${MODAL_WRAPPER}`);
+    const modalWrapper = this.el.querySelector(`.${USER_COMPONENT_CONTAINER_CLASS}`);
     if (!this.delegate) {
       this.delegate = new DomFrameworkDelegate();
     }
@@ -144,7 +143,7 @@ export class Modal {
     await domControllerAsync(Context.dom.write, () => {});
 
     // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
-    const modalWrapper = this.el.querySelector(`.${MODAL_WRAPPER}`);
+    const modalWrapper = this.el.querySelector(`.${USER_COMPONENT_CONTAINER_CLASS}`);
     await this.delegate.removeViewFromDom(modalWrapper, this.usersComponentElement);
 
     this.el.parentElement.removeChild(this.el);
@@ -156,12 +155,8 @@ export class Modal {
   }
 
   @Method()
-  getModalWrapperDetails() {
-    const dictionary = createThemedClasses(this.mode, this.color, MODAL_WRAPPER);
-    return {
-      role: 'dialogue',
-      classes: Object.keys(dictionary)
-    };
+  getUserComponentContainer(): HTMLElement {
+    return this.el.querySelector(`.${USER_COMPONENT_CONTAINER_CLASS}`);
   }
 
   @Listen('ionDismiss')
@@ -190,25 +185,21 @@ export class Modal {
   }
 
   render() {
-    const elements: JSX.Element[] = [];
-    elements.push(<div
-      onClick={this.backdropClick.bind(this)}
-      class={{
-        'modal-backdrop': true,
-        'hide-backdrop': !this.showBackdrop
-      }}
-    ></div>);
-    if (!this.delegateModalWrapper) {
-      const details = this.getModalWrapperDetails();
-      const clazz = details.classes.join(' ');
-      elements.push(<div
-        role={details.role}
-        class={clazz}
+    const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
+    return [
+      <div
+        onClick={this.backdropClick.bind(this)}
+        class={{
+          'modal-backdrop': true,
+          'hide-backdrop': !this.showBackdrop
+        }}
+      ></div>,
+      <div
+        role='dialog'
+        class={dialogClasses}
       >
-      </div>);
-    }
-
-    return elements;
+      </div>
+    ];
   }
 }
 
@@ -248,4 +239,4 @@ export {
   mdLeaveAnimation as mdModalLeaveAnimation
 };
 
-const MODAL_WRAPPER = 'modal-wrapper';
+export const USER_COMPONENT_CONTAINER_CLASS = 'modal-wrapper';

@@ -37,11 +37,6 @@ any
 any
 
 
-#### delegateModalWrapper
-
-boolean
-
-
 #### enableBackdropDismiss
 
 boolean
@@ -104,11 +99,6 @@ any
 any
 
 
-#### delegateModalWrapper
-
-boolean
-
-
 #### enableBackdropDismiss
 
 boolean
@@ -164,7 +154,7 @@ boolean
 #### dismiss()
 
 
-#### getModalWrapperDetails()
+#### getUserComponentContainer()
 
 
 #### present()
