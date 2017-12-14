@@ -38,6 +38,6 @@
     "typescript": "~2.5.2"
   },
   "dependencies": {
-    "@stencil/core": "0.0.8"
+    "@stencil/core": "next"
   }
 }
