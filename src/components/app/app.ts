@@ -323,10 +323,18 @@ export class App {
    * @hidden
    */
   goBack(): Promise<any> {
+    // Try to dismiss an active overlay if exists
+    const overlay = this._appRoot._overlayPortal.getActive();
+    if (overlay && overlay.dismiss) {
+      return overlay.dismiss();
+    }
+
+    // Try to close the menu if open
     if (this._menuCtrl && this._menuCtrl.isOpen()) {
       return this._menuCtrl.close();
     }
 
+    // Try to pop navigation if not a root page
     const navPromise = this.navPop();
     if (!navPromise) {
       // no views to go back to
