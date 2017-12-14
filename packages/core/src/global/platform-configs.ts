@@ -24,7 +24,7 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
     settings: {
       mode: IOS,
       tabsHighlight: false,
-      statusbarPadding: isCordova,
+      statusbarPadding: isCordova(),
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
   },
