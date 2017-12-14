@@ -1,26 +1,50 @@
-import { Injectable } from '@angular/core';
-import { ModalDismissEvent, ModalOptions } from '@ionic/core';
+import {
+  ComponentFactoryResolver,
+  Injectable,
+  Injector,
+  Type,
+} from '@angular/core';
 
-import { ModalDelegate } from '../types/interfaces';
+import {
+  FrameworkDelegate,
+  ModalDismissEvent,
+  ModalOptions
+} from '@ionic/core';
+
+import { AngularComponentMounter } from '../providers/angular-component-mounter';
+import { AngularMountingData } from '../types/interfaces';
+
+import { ensureElementInBody, hydrateElement } from '../util/util';
 
 let modalId = 0;
 
 @Injectable()
-export class ModalController {
+export class ModalController implements FrameworkDelegate {
 
-  public delegate: ModalDelegate;
-  create(opts?: ModalOptions): ModalProxy {
-    return getModalProxy(opts, this);
+  constructor(private angularComponentMounter: AngularComponentMounter, private componentResolveFactory: ComponentFactoryResolver, private injector: Injector) {
   }
 
+  create(opts?: ModalOptions): ModalProxy {
+    opts.delegate = this;
+    return getModalProxy(opts);
+  }
+
+  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
+
+    const hostElement = document.createElement('div');
+    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, hostElement, elementOrComponentToMount, this.componentResolveFactory, this.injector, classesToAdd);
+  }
+
+  removeViewFromDom(_parentElement: HTMLElement, childElement: HTMLElement) {
+    return this.angularComponentMounter.removeViewFromDom(childElement);
+  }
 }
 
-export function getModalProxy(opts: ModalOptions, modalController: ModalController) {
+export function getModalProxy(opts: ModalOptions) {
   return {
     id: modalId++,
     state: PRESENTING,
     opts: opts,
-    delegate: modalController.delegate,
     present: function() { return present(this); },
     dismiss: function() { return dismiss(this); },
     onDidDismiss: function(callback: (data: any, role: string) => void) {
@@ -34,7 +58,7 @@ export function getModalProxy(opts: ModalOptions, modalController: ModalControll
 
 export function present(modalProxy: ModalProxyInternal): Promise<any> {
   modalProxy.state = PRESENTING;
-  return loadOverlay(modalProxy.delegate).then((modalElement: HTMLIonModalElement) => {
+  return loadOverlay(modalProxy.opts).then((modalElement: HTMLIonModalElement) => {
     Object.assign(modalElement, modalProxy.opts);
     modalProxy.element = modalElement;
 
@@ -79,22 +103,10 @@ export function dismiss(modalProxy: ModalProxyInternal): Promise<any> {
   return Promise.resolve();
 }
 
-export function loadOverlay(delegate: ModalDelegate): Promise<HTMLIonModalElement> {
-
-  if (!delegate) {
-    console.warn('In order to use the ModalController from @ionic/angular, make sure that an `ion-app` or `ion-modal-container` element are within an Angular template');
-    return Promise.reject(new Error('Missing modal delegate'));
-  }
-
-  delegate.showModal = true;
-
-  return queryAsync('ion-modal', 30).then((modal: HTMLIonModalElement) => {
-    return (modal as any).componentOnReady();
-  }).then((modal: HTMLIonModalElement) => {
-    const details = modal.getModalWrapperDetails();
-    delegate.role = details.role;
-    delegate.classes = details.classes;
-    return modal;
+export function loadOverlay(opts: ModalOptions): Promise<HTMLIonModalElement> {
+  const element = ensureElementInBody('ion-modal-controller') as HTMLIonModalControllerElement;
+  return hydrateElement(element).then(() => {
+    return element.create(opts);
   });
 }
 
@@ -112,7 +124,6 @@ export interface ModalProxyInternal extends ModalProxy {
   element: HTMLIonModalElement;
   onDidDismissHandler?: (data: any, role: string) => void;
   onWillDismissHandler?: (data: any, role: string) => void;
-  delegate: ModalDelegate;
 }
 
 export const PRESENTING = 1;
@@ -121,22 +132,3 @@ export const DISMISSING = 2;
 const ION_MODAL_DID_DISMISS_EVENT = 'ionModalDidDismiss';
 const ION_MODAL_WILL_DISMISS_EVENT = 'ionModalWillDismiss';
 
-
-export function queryAsync(selector: string, duration: number): Promise<HTMLIonModalElement> {
-  return new Promise((resolve) => {
-
-    function check(callback: Function) {
-      setTimeout(() => {
-        const modal = document.querySelector(selector);
-        console.log('setTimeout: ', modal);
-        if (modal && (modal as any).componentOnReady) {
-          callback(modal);
-        } else {
-          check(callback);
-        }
-      }, duration);
-    }
-
-    check(resolve);
-  });
-}

@@ -12,8 +12,6 @@ import { TextValueAccessor } from './control-value-accessors/text-value-accessor
 
 
 /* Components */
-import { IonApp } from './components/ion-app';
-import { ModalContainer } from './components/ion-modal-container';
 import { IonNavDelegate } from './components/ion-nav';
 
 /* Providers */
@@ -27,18 +25,14 @@ import { ToastController } from './providers/toast-controller';
 @NgModule({
   declarations: [
     BooleanValueAccessor,
-    IonApp,
     IonNavDelegate,
-    ModalContainer,
     RadioValueAccessor,
     SelectValueAccessor,
     TextValueAccessor
   ],
   exports: [
     BooleanValueAccessor,
-    IonApp,
     IonNavDelegate,
-    ModalContainer,
     RadioValueAccessor,
     SelectValueAccessor,
     TextValueAccessor
