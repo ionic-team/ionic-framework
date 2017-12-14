@@ -23,7 +23,6 @@ export class AlertController {
 
     // give this action sheet a unique id
     alert.alertId = `alert-${id}`;
-    alert.style.zIndex = (20000 + id).toString();
 
     // convert the passed in action sheet options into props
     // that get passed down into the new action sheet

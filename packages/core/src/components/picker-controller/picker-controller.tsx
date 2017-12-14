@@ -19,7 +19,6 @@ export class PickerController {
 
     // give this picker a unique id
     picker.pickerId = `picker-${id}`;
-    picker.style.zIndex = (20000 + id).toString();
 
     // convert the passed in picker options into props
     // that get passed down into the new picker

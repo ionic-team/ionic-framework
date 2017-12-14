@@ -1,6 +1,6 @@
-import { AnimationOptions, Transition, ViewController } from '../../index';
+import { AnimationOptions, Transition, ViewController } from '../../../index';
 import { canNavGoBack } from '../nav-utils';
-import { isDef } from '../../utils/helpers';
+import { isDef } from '../../../utils/helpers';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
@@ -27,14 +27,14 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
       .fromTo('opacity', 0.01, 1, true);
     }
 
-    const enteringNavbarEle = enteringView.element.querySelector('ion-navbar');
-    if (enteringNavbarEle) {
-      const enteringNavBar = rootTransition.create();
-      enteringNavBar.addElement(enteringNavbarEle);
-      rootTransition.add(enteringNavBar);
+    const enteringToolbarEle = enteringView.element.querySelector('ion-toolbar');
+    if (enteringToolbarEle) {
+      const enteringToolBar = rootTransition.create();
+      enteringToolBar.addElement(enteringToolbarEle);
+      rootTransition.add(enteringToolBar);
 
       const enteringBackButton = rootTransition.create();
-      enteringBackButton.addElement(enteringNavbarEle.querySelector('.back-button'));
+      enteringBackButton.addElement(enteringToolbarEle.querySelector('.back-button'));
       rootTransition.add(enteringBackButton);
 
       if (canNavGoBack(enteringView.nav)) {

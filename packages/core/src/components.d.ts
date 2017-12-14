@@ -1630,35 +1630,6 @@ declare global {
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
       animate?: boolean;
-    }
-  }
-}
-
-
-import {
-  NavController as IonNavController
-} from './components/nav-controller/nav-controller';
-
-declare global {
-  interface HTMLIonNavControllerElement extends IonNavController, HTMLElement {
-  }
-  var HTMLIonNavControllerElement: {
-    prototype: HTMLIonNavControllerElement;
-    new (): HTMLIonNavControllerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-nav-controller": HTMLIonNavControllerElement;
-  }
-  interface ElementTagNameMap {
-    "ion-nav-controller": HTMLIonNavControllerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-nav-controller": JSXElements.IonNavControllerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonNavControllerAttributes extends HTMLAttributes {
       delegate?: FrameworkDelegate;
     }
   }
@@ -1948,8 +1919,8 @@ declare global {
     export interface IonPopoverAttributes extends HTMLAttributes {
       mode?: string;
       color?: string;
-      component?: string;
-      componentProps?: any;
+      component?: any;
+      data?: any;
       cssClass?: string;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
@@ -1959,6 +1930,7 @@ declare global {
       showBackdrop?: boolean;
       translucent?: boolean;
       animate?: boolean;
+      delegate?: FrameworkDelegate;
     }
   }
 }
