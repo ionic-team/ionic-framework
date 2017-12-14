@@ -72,8 +72,14 @@ $action-sheet-ios-button-icon-padding-right:            .1em !default;
 /// @prop - Height of the action sheet button icon
 $action-sheet-ios-button-icon-height:                   .7em !default;
 
+/// @prop - Width of the icon in the action sheet button
+$action-sheet-ios-icon-width:                            23px !default;
+
 /// @prop - Margin top of the action sheet button icon
 $action-sheet-ios-button-icon-margin-top:               -10px !default;
+
+/// @prop - Vertical align of the icon in the action sheet button
+$action-sheet-ios-icon-vertical-align:                   middle !default;
 
 /// @prop - Font size of the action sheet button
 $action-sheet-ios-button-font-size:                     20px !default;
