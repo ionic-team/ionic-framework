@@ -105,6 +105,20 @@
     <ion-col>
     </ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Ionic Checkbox No ngModel</ion-label>
+        <ion-checkbox id="ionCheckboxNoModel"
+         name="ionCheckboxNoModel"
+          [checked]="checkboxValue"
+           (ionChange)="checkboxValue=$event.target.checked"
+           ></ion-checkbox>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+    </ion-col>
+  </ion-row>
 
   <ion-row>
     <ion-col>
