@@ -16,6 +16,10 @@ Chips represent complex entities in small blocks, such as a contact.
   <ion-label color="dark">Secondary w/ Dark label</ion-label>
 </ion-chip>
 
+<ion-chip color="warning">
+  <ion-label>Warning</ion-label>
+</ion-chip>
+
 <ion-chip color="danger">
   <ion-label>Danger</ion-label>
 </ion-chip>
