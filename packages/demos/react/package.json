@@ -16,6 +16,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "@stencil/core": "0.0.8"
+    "@stencil/core": "next"
   }
 }
