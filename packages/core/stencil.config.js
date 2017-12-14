@@ -45,7 +45,7 @@ exports.config = {
     'ionicons'
   ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
-  global: 'src/global/ionic-global.ts'
+  globalScript: 'src/global/ionic-global.ts'
 };
 
 exports.devServer = {
