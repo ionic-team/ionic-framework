@@ -1920,8 +1920,8 @@ declare global {
     export interface IonPopoverAttributes extends HTMLAttributes {
       mode?: string;
       color?: string;
-      component?: string;
-      componentProps?: any;
+      component?: any;
+      data?: any;
       cssClass?: string;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
@@ -1931,6 +1931,7 @@ declare global {
       showBackdrop?: boolean;
       translucent?: boolean;
       animate?: boolean;
+      delegate?: FrameworkDelegate;
     }
   }
 }

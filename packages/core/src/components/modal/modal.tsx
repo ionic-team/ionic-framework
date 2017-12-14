@@ -95,7 +95,7 @@ export class Modal {
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-    const modalWrapper = this.el.querySelector(`.${USER_COMPONENT_CONTAINER_CLASS}`);
+    const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
     if (!this.delegate) {
       this.delegate = new DomFrameworkDelegate();
     }
@@ -104,7 +104,11 @@ export class Modal {
     if (this.cssClass && this.cssClass.length) {
       cssClasses.push(this.cssClass);
     }
-    const mountingData = await this.delegate.attachViewToDom(modalWrapper, this.component, this.data, cssClasses);
+
+    // add the modal by default to the data being passed
+    this.data = this.data || {};
+    this.data.modal = this.el;
+    const mountingData = await this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses);
     this.usersComponentElement = mountingData.element;
     this.animation = await this.animationCtrl.create(animationBuilder, this.el);
     if (!this.animate) {
@@ -143,8 +147,8 @@ export class Modal {
     await domControllerAsync(Context.dom.write, () => {});
 
     // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
-    const modalWrapper = this.el.querySelector(`.${USER_COMPONENT_CONTAINER_CLASS}`);
-    await this.delegate.removeViewFromDom(modalWrapper, this.usersComponentElement);
+    const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
+    await this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
 
     this.el.parentElement.removeChild(this.el);
 
@@ -156,7 +160,7 @@ export class Modal {
 
   @Method()
   getUserComponentContainer(): HTMLElement {
-    return this.el.querySelector(`.${USER_COMPONENT_CONTAINER_CLASS}`);
+    return this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
   }
 
   @Listen('ionDismiss')
@@ -239,4 +243,4 @@ export {
   mdLeaveAnimation as mdModalLeaveAnimation
 };
 
-export const USER_COMPONENT_CONTAINER_CLASS = 'modal-wrapper';
+export const USER_COMPONENT_MODAL_CONTAINER_CLASS = 'modal-wrapper';

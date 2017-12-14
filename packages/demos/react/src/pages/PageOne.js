@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
+import { createModal } from '@ionic/react';
+
 import PageTwo from './PageTwo';
+import ModalPage from './ModalPage';
 
 export default class PageOne extends Component {
 
@@ -35,6 +38,14 @@ export default class PageOne extends Component {
     nav.push(PageTwo, { paramOne: 'Tobey Flenderson'});
   }
 
+  openModal() {
+    return createModal({
+      component: ModalPage
+    }).then((modal) => {
+      return modal.present();
+    });
+  }
+
   componentDidMount() {
     setInterval(() => {
       this.setState({ content: Math.random() * 1000});
@@ -53,6 +64,9 @@ export default class PageOne extends Component {
         Page One
         <div>
           <ion-button onClick={() => this.goToPageTwo()}>Go to Page Two</ion-button>
+        </div>
+        <div>
+          <ion-button onClick={() => this.openModal()}>OpenModal</ion-button>
         </div>
         <div>
           Some random content: {this.state.content}
