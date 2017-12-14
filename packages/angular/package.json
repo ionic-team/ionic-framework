@@ -49,6 +49,6 @@
     "zone.js": "0.8.18"
   },
   "dependencies": {
-    "@stencil/core": "0.0.7"
+    "@stencil/core": "next"
   }
 }
