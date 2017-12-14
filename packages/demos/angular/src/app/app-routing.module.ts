@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'actionSheet', loadChildren: 'app/action-sheet/action-sheet.module#ActionSheetModule' },
   { path: 'toast', loadChildren: 'app/toast/toast.module#ToastModule' },
   { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' },
-  { path: 'nav', loadChildren: 'app/nav/nav.module#NavModule' }
+  { path: 'nav', loadChildren: 'app/nav/nav.module#NavModule' },
+  { path: 'modal', loadChildren: 'app/modal/modal.module#ModalModule' }
 ];
 
 @NgModule({

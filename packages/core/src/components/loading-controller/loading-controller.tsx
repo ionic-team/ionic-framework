@@ -22,7 +22,6 @@ export class LoadingController {
 
     // give this loading a unique id
     loading.loadingId = `loading-${id}`;
-    loading.style.zIndex = (20000 + id).toString();
 
     // convert the passed in loading options into props
     // that get passed down into the new loading

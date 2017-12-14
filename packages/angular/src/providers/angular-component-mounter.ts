@@ -1,51 +1,70 @@
 import {
-  ChangeDetectorRef,
+  ApplicationRef,
   ComponentFactoryResolver,
   ComponentRef,
   Injectable,
   Injector,
   NgZone,
   ReflectiveInjector,
-  Type,
+  Type
 } from '@angular/core';
 
+import { getProviders } from '../di/di';
 import { AngularMountingData } from '../types/interfaces';
+
+const elementToComponentRefMap = new Map<HTMLElement, ComponentRef<any>>();
 
 @Injectable()
 export class AngularComponentMounter {
 
-  constructor(private defaultCfr: ComponentFactoryResolver, private zone: NgZone) {
+  constructor(private defaultCfr: ComponentFactoryResolver, private zone: NgZone, private appRef: ApplicationRef) {
   }
 
-  attachViewToDom(parentElement: HTMLElement, componentToMount: Type<any>, providers: any[], changeDetection: ChangeDetectorRef, componentResolveFactory: ComponentFactoryResolver, injector: Injector): Promise<AngularMountingData> {
+  attachViewToDom(parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, componentResolveFactory: ComponentFactoryResolver, injector: Injector, classesToAdd: string[]): Promise<AngularMountingData> {
 
     return new Promise((resolve) => {
       this.zone.run(() => {
-        console.log('parentElement: ', parentElement);
+
         const crf = componentResolveFactory ? componentResolveFactory : this.defaultCfr;
-        const mountingData = attachViewToDom(crf, componentToMount, parentElement, providers, changeDetection, injector);
+
+        const mountingData = attachViewToDom(crf, parentElement, hostElement, componentToMount, injector, this.appRef, classesToAdd);
         resolve(mountingData);
       });
     });
   }
 
-  removeViewFromDom(componentRef: ComponentRef<any>): Promise<any> {
+  removeViewFromDom(childElement: HTMLElement): Promise<any> {
     return new Promise((resolve) => {
       this.zone.run(() => {
-        componentRef.destroy();
+        removeViewFromDom(childElement);
         resolve();
       });
     });
   }
 }
 
-export function attachViewToDom(crf: ComponentFactoryResolver, componentToMount: Type<any>, element: HTMLElement, providers: any, changeDetection: ChangeDetectorRef, injector: Injector): AngularMountingData {
-  const componentFactory = crf.resolveComponentFactory(componentToMount);
-  const componentProviders = ReflectiveInjector.resolve(providers);
-  const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, injector);
-  const componentRef = componentFactory.create(childInjector, [], element);
+export function removeViewFromDom(childElement: HTMLElement) {
+  const componentRef = elementToComponentRefMap.get(childElement);
+  if (componentRef) {
+    componentRef.destroy();
+  }
+}
 
-  changeDetection.detectChanges();
+export function attachViewToDom(crf: ComponentFactoryResolver, parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, injector: Injector, appRef: ApplicationRef, classesToAdd: string[]): AngularMountingData {
+
+  const componentProviders = ReflectiveInjector.resolve(getProviders(parentElement));
+  const componentFactory = crf.resolveComponentFactory(componentToMount);
+  const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, injector);
+  const componentRef = componentFactory.create(childInjector, [], hostElement);
+  for (const clazz of classesToAdd) {
+    hostElement.classList.add(clazz);
+  }
+
+  parentElement.appendChild(hostElement);
+
+  appRef.attachView(componentRef.hostView);
+
+  elementToComponentRefMap.set(hostElement, componentRef);
 
   return {
     componentFactory,
@@ -53,7 +72,7 @@ export function attachViewToDom(crf: ComponentFactoryResolver, componentToMount:
     componentRef: componentRef,
     instance: componentRef.instance,
     angularHostElement: componentRef.location.nativeElement,
-    element: componentRef.location.nativeElement,
+    element: hostElement,
   };
 }
 
