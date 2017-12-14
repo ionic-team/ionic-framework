@@ -22,7 +22,6 @@ export class ActionSheetController {
 
     // give this action sheet a unique id
     actionSheet.actionSheetId = `action-sheet-${id}`;
-    actionSheet.style.zIndex = (20000 + id).toString();
 
     // convert the passed in action sheet options into props
     // that get passed down into the new action sheet

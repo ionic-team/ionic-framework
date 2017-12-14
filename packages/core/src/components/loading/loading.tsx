@@ -129,6 +129,8 @@ export class Loading {
 
     this.ionLoadingWillPresent.emit();
 
+    this.el.style.zIndex = `${20000 + this.loadingId}`;
+
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 

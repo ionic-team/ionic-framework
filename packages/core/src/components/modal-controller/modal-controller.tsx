@@ -20,7 +20,6 @@ export class ModalController {
 
     // give this modal a unique id
     modal.modalId = `modal-${id}`;
-    modal.style.zIndex = (10000 + id).toString();
 
     // convert the passed in modal options into props
     // that get passed down into the new modal

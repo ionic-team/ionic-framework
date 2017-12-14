@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ModuleWithProviders,
   NgModule,
@@ -11,6 +12,7 @@ import { SelectValueAccessor } from './control-value-accessors/select-value-acce
 import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
 
+/* Components */
 import { IonNavDelegate } from './components/ion-nav';
 
 /* Providers */
@@ -18,6 +20,7 @@ import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
 import { AngularComponentMounter } from './providers/angular-component-mounter';
 import { LoadingController } from './providers/loading-controller';
+import { ModalController } from './providers/modal-controller';
 import { ToastController } from './providers/toast-controller';
 
 @NgModule({
@@ -37,6 +40,9 @@ import { ToastController } from './providers/toast-controller';
     SelectValueAccessor,
     TextValueAccessor
   ],
+  imports: [
+    CommonModule,
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
@@ -50,6 +56,7 @@ export class IonicAngularModule {
         ActionSheetController,
         AngularComponentMounter,
         LoadingController,
+        ModalController,
         ToastController
       ]
     };

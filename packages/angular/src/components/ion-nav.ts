@@ -1,65 +1,33 @@
 import {
-  ChangeDetectorRef,
-  Component,
   ComponentFactoryResolver,
-  ComponentRef,
+  Directive,
   ElementRef,
   Injector,
-  ReflectiveInjector,
   Type,
-  ViewContainerRef,
-  ViewChild
 } from '@angular/core';
 
 import { FrameworkDelegate } from '@ionic/core';
 
-import { getProviders } from '../di/di';
 import { AngularComponentMounter } from '../providers/angular-component-mounter';
 import { AngularMountingData } from '../types/interfaces';
 
-const elementToComponentRefMap = new Map<HTMLElement, ComponentRef<any>>();
-
-@Component({
+@Directive({
   selector: 'ion-nav',
-  template: `
-    <div #viewport class="ng-nav-viewport"></div>
-  `
 })
 export class IonNavDelegate implements FrameworkDelegate {
 
-  @ViewChild('viewport', { read: ViewContainerRef}) viewport: ViewContainerRef;
-
-  constructor(private elementRef: ElementRef, private changeDetection: ChangeDetectorRef, private angularComponentMounter: AngularComponentMounter, private injector: Injector, private componentResolveFactory: ComponentFactoryResolver) {
+  constructor(private elementRef: ElementRef, private angularComponentMounter: AngularComponentMounter, private componentResolveFactory: ComponentFactoryResolver, private injector: Injector) {
     this.elementRef.nativeElement.delegate = this;
-
   }
 
-  async attachViewToDom(elementOrContainerToMountTo: HTMLIonNavElement, elementOrComponentToMount: Type<any>,
-                    _propsOrDataObj?: any, _classesToAdd?: string[]): Promise<AngularMountingData> {
+  attachViewToDom(elementOrContainerToMountTo: HTMLIonNavElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
 
-    const componentProviders = ReflectiveInjector.resolve(getProviders(elementOrContainerToMountTo));
-    console.log('componentProviders: ', componentProviders);
-
-    const element = document.createElement('ion-page');
-    for (const clazz of _classesToAdd) {
-      element.classList.add(clazz);
-    }
-
-    elementOrContainerToMountTo.appendChild(element);
-    const mountingData = await this.angularComponentMounter.attachViewToDom(element, elementOrComponentToMount, [], this.changeDetection, this.componentResolveFactory, this.injector);
-    mountingData.element = element;
-
-    elementToComponentRefMap.set(mountingData.angularHostElement, mountingData.componentRef);
-
-    return mountingData;
+    const hostElement = document.createElement('div');
+    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, hostElement, elementOrComponentToMount, this.componentResolveFactory, this.injector, classesToAdd);
   }
 
-  async removeViewFromDom(_parentElement: HTMLElement, childElement: HTMLElement) {
-    const componentRef = elementToComponentRefMap.get(childElement);
-    if (componentRef) {
-      return this.angularComponentMounter.removeViewFromDom(componentRef);
-    }
-    return Promise.resolve();
+  removeViewFromDom(_parentElement: HTMLElement, childElement: HTMLElement) {
+    return this.angularComponentMounter.removeViewFromDom(childElement);
   }
 }
 
