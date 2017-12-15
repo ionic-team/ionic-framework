@@ -2592,20 +2592,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSlidesAttributes extends HTMLAttributes {
-      effect?: string;
-      autoplay?: number;
-      control?: any;
-      direction?: 'horizontal' | 'vertical';
-      initialSlide?: number;
-      loop?: boolean;
+      opts?: any;
       pager?: boolean;
-      paginationType?: string;
-      parallax?: boolean;
-      slidesPerView?: number | 'auto';
-      spaceBetween?: number;
-      speed?: number;
-      zoom?: boolean;
-      keyboardControl?: boolean;
     }
   }
 }
