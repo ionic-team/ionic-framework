@@ -8,7 +8,7 @@ import {
   OverlayDismissEventDetail
 } from '../../index';
 
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
+import { domControllerAsync, playAnimationAsync, isDef } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
@@ -132,8 +132,11 @@ export class ActionSheet {
 
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+
       this.animation = animation;
-      if (!this.animate) {
+
+      // Check if prop animate is false or if the config for animate is defined/false
+      if (!this.animate || (isDef(this.config.get('animate')) && this.config.get('animate') === false)) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);
@@ -160,9 +163,13 @@ export class ActionSheet {
     });
     const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
+
+      if (!this.animate || (isDef(this.config.get('animate')) && this.config.get('animate') === false)) {
+        this.animation = animation.duration(0);
+      }
+
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
