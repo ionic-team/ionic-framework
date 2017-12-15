@@ -28,6 +28,8 @@ view. See the [usage](#usage) section for an example of passing this event.
 
 #### create()
 
+Create a popover component instance
+
 
 
 ----------------------------------------------

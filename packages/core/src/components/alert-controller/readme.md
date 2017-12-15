@@ -46,6 +46,8 @@ building the form within a modal instead.
 
 #### create()
 
+Open an alert with a title, subTitle, and an array of buttons
+
 
 
 ----------------------------------------------

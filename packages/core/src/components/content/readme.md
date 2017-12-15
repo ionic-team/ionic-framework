@@ -56,8 +56,12 @@ any
 
 #### scrollToBottom()
 
+Scroll to the bottom of the content component.
+
 
 #### scrollToTop()
+
+Scroll to the top of the content component.
 
 
 

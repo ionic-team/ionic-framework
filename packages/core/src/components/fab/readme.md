@@ -58,6 +58,8 @@ The same `ion-fab` container can contain several `ion-fab-list` elements with di
 
 #### close()
 
+Close an active FAB list container
+
 
 
 ----------------------------------------------

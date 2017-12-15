@@ -82,50 +82,80 @@ This attribute specifies the size of the button. Setting this attribute will cha
 
 string
 
+The type of button.
+Possible values are: `"button"`, `"bar-button"`.
+
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
 
 boolean
 
+If true, sets the button into a disabled state.
+
 
 #### expand
 
 any
+
+Set to `"block"` for a full-width button or to `"full"` for a full-width button
+without left and right borders.
 
 
 #### fill
 
 any
 
+Set to `"clear"` for a transparent button, to `"outline"` for a transparent
+button with a border, or to `"solid"`. The default style is `"solid"` except inside of
+a toolbar, where the default is `"clear"`.
+
 
 #### href
 
 string
+
+Contains a URL or a URL fragment that the hyperlink points to.
+If this property is set, an anchor tag will be rendered.
 
 
 #### mode
 
 any
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
 
 #### round
 
 boolean
+
+If true, activates a button with rounded corners.
 
 
 #### size
 
 any
 
+The button size.
+Possible values are: `"small"`, `"default"`, `"large"`.
+
 
 #### strong
 
 boolean
+
+If true, activates a button with a heavier font weight.
 
 
 ## Attributes
@@ -134,50 +164,80 @@ boolean
 
 string
 
+The type of button.
+Possible values are: `"button"`, `"bar-button"`.
+
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
 
 boolean
 
+If true, sets the button into a disabled state.
+
 
 #### expand
 
 any
+
+Set to `"block"` for a full-width button or to `"full"` for a full-width button
+without left and right borders.
 
 
 #### fill
 
 any
 
+Set to `"clear"` for a transparent button, to `"outline"` for a transparent
+button with a border, or to `"solid"`. The default style is `"solid"` except inside of
+a toolbar, where the default is `"clear"`.
+
 
 #### href
 
 string
+
+Contains a URL or a URL fragment that the hyperlink points to.
+If this property is set, an anchor tag will be rendered.
 
 
 #### mode
 
 any
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
 
 #### round
 
 boolean
+
+If true, activates a button with rounded corners.
 
 
 #### size
 
 any
 
+The button size.
+Possible values are: `"small"`, `"default"`, `"large"`.
+
 
 #### strong
 
 boolean
+
+If true, activates a button with a heavier font weight.
 
 
 
