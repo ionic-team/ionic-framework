@@ -37,8 +37,8 @@
   fill: $tabs-md-tab-icon-color;
 }
 
-.tabbar-md.scroll-overflow > ion-scroll {
-  max-width: 1024px;
+.tabbar-md.scrollable > ion-scroll {
+  max-width: 650px;
   margin: 0 8px;
 
   ion-tab-button {

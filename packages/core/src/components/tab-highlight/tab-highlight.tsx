@@ -24,7 +24,9 @@ export class TabHighlight {
   }
 
   componentDidLoad() {
-    this.updateTransform();
+    setTimeout(() => {
+      this.updateTransform();
+    }, 80);
   }
 
   protected updateTransform() {

@@ -2891,15 +2891,13 @@ declare global {
   namespace JSXElements {
     export interface IonTabbarAttributes extends HTMLAttributes {
       
-        canScrollLeft?: boolean,
-        canScrollRight?: boolean,
         placement?: string,
         tabs?: HTMLIonTabElement[],
         selectedTab?: HTMLIonTabElement,
+        scrollable?: Boolean,
         layout?: string,
         highlight?: boolean,
-        translucent?: boolean,
-        scrollOverflow?: boolean
+        translucent?: boolean
     }
   }
 }

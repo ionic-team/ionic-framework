@@ -23,7 +23,7 @@ export class TabButton {
     const selected = this.selected;
     const tab = this.tab;
     const hasTitle = !!tab.title;
-    const hasIcon = !! tab.icon;
+    const hasIcon = !!tab.icon;
     const hasTitleOnly = (hasTitle && !hasIcon);
     const hasIconOnly = (hasIcon && !hasTitle);
     const hasBadge = !!tab.badge;

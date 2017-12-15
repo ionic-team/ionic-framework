@@ -55,7 +55,7 @@ export class Tabs {
    */
   @Prop() translucent: boolean = false;
 
-  @Prop() scrollable: boolean = true;
+  @Prop() scrollable: boolean = false;
 
   /**
    * @output {any} Emitted when the tab changes.
@@ -233,7 +233,7 @@ export class Tabs {
           placement={this.tabbarPlacement}
           layout={this.tabbarLayout}
           translucent={this.translucent}
-          scrollOverflow={this.scrollable}>
+          scrollable={this.scrollable}>
         </ion-tabbar>
       );
     }
