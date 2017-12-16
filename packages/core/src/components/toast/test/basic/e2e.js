@@ -1,17 +1,36 @@
-const { register, navigate, Page } = require('../../../../../scripts/e2e');
-const testPageURL = 'http://localhost:3333/src/components/toast/test/basic';
+'use strict';
 
-describe('toast/basic', () => {
+const { By, until } = require('selenium-webdriver');
+const { register, Page, platforms } = require('../../../../../scripts/e2e');
 
-  register('should init', navigate(testPageURL));
+class E2ETestPage extends Page {
+  constructor(driver, platform) {
+    super(driver, `http://localhost:3333/src/components/toast/test/basic?ionicplatform=${platform}`);
+  }
 
-  describe('present', () => {
+  present(buttonId) {
+    this.navigate();
+    this.driver.findElement(By.id(buttonId)).click();
+    this.driver.wait(until.elementLocated(By.css('.toast-wrapper')));
+    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.toast-wrapper'))));
+  }
 
-    register('shows bottom toast', driver => {
-      const page = new Page(driver, testPageURL);
-      return page.present('.e2eShowBottomToast', { waitFor: 'ion-toast' });
+  closeWithBackdrop() {
+    this.driver.findElement(By.css('ion-backdrop')).click();
+    return this.driver.wait(until.elementIsNotVisible(this.driver.findElement(By.css('ion-backdrop'))));
+  }
+}
+
+platforms.forEach(platform => {
+  describe('toast/basic', () => {
+    register('should init', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.navigate();
     });
 
+    register('shows bottom toast', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.present('showBottomToast');
+    });
   });
-
 });

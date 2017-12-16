@@ -111,6 +111,29 @@ We can call `delete` by either clicking the button, or by doing a full swipe on 
 
 #### close()
 
+Close the sliding item. Items can also be closed from the [List](../../list/List).
+
+The sliding item can be closed by grabbing a reference to `ItemSliding`. In the
+below example, the template reference variable `slidingItem` is placed on the element
+and passed to the `share` method.
+
+```html
+<ion-list>
+   <ion-item-sliding #slidingItem>
+     <ion-item>
+       Item
+     </ion-item>
+     <ion-item-options>
+       <ion-button (click)="share(slidingItem)">Share</ion-button>
+     </ion-item-options>
+   </ion-item-sliding>
+</ion-list>
+```
+
+```ts
+import { Component } from '@angular/core';
+import { ItemSliding } from 'ionic-angular';
+
 
 #### closeOpened()
 

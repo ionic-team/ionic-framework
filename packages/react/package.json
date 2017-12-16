@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "0.0.2-1",
+  "version": "0.0.2-2",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -38,6 +38,6 @@
     "typescript": "~2.5.2"
   },
   "dependencies": {
-    "@stencil/core": "0.0.8"
+    "@stencil/core": "next"
   }
 }

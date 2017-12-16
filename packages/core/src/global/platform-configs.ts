@@ -24,7 +24,7 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
     settings: {
       mode: IOS,
       tabsHighlight: false,
-      statusbarPadding: isCordova,
+      statusbarPadding: isCordova(),
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
   },
@@ -47,7 +47,6 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
 
 ];
 
-
 export function detectPlatforms(url: string, userAgent: string, platforms: PlatformConfig[], defaultPlatform: string) {
   // bracket notation to ensure they're not property renamed
   let validPlatforms = platforms.filter(p => p.isMatch && p.isMatch(url, userAgent));
@@ -58,7 +57,6 @@ export function detectPlatforms(url: string, userAgent: string, platforms: Platf
 
   return validPlatforms;
 }
-
 
 export function isPlatformMatch(url: string, userAgent: string, platformName: string, userAgentAtLeastHas: string[], userAgentMustNotHave: string[]) {
   const queryValue = queryParam(url, 'ionicplatform');
@@ -85,13 +83,12 @@ export function isPlatformMatch(url: string, userAgent: string, platformName: st
 }
 
 
-function queryParam(url: string, key: string) {
+export function queryParam(url: string, key: string) {
   key = key.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
   var regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
   var results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
 }
-
 
 export interface PlatformConfig {
   name: string;

@@ -56,6 +56,8 @@ any
 
 string
 
+The name of the control, which is submitted with the form data.
+
 
 #### value
 
@@ -87,6 +89,8 @@ any
 #### name
 
 string
+
+The name of the control, which is submitted with the form data.
 
 
 #### value

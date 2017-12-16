@@ -22,7 +22,7 @@ the array) is the main button.
 
 Optionally, a `role` property can be added to a button, such as `cancel`.
 If a `cancel` role is on one of the buttons, then if the alert is
-dismissed by tapping the backdrop, then it will fire the handler from
+dismissed by tapping the backdrop, then it will call the handler from
 the button with a cancel role.
 
 
@@ -33,7 +33,7 @@ back to the app. Inputs can be used as a simple way to prompt users for
 information. Radios, checkboxes and text inputs are all accepted, but they
 cannot be mixed. For example, an alert could have all radio button inputs,
 or all checkbox inputs, but the same alert cannot mix radio and checkbox
-inputs. Do note however, different types of "text"" inputs can be mixed,
+inputs. Do note however, different types of "text" inputs can be mixed,
 such as `url`, `email`, `text`, etc. If you require a complex form UI
 which doesn't fit within the guidelines of an alert then we recommend
 building the form within a modal instead.
@@ -45,6 +45,8 @@ building the form within a modal instead.
 ## Methods
 
 #### create()
+
+Open an alert with a title, subTitle, and an array of buttons
 
 
 

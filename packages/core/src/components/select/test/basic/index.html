@@ -29,7 +29,7 @@
 
           <ion-item>
             <ion-label>Hair Color</ion-label>
-            <ion-select name="hairColor" ok-text="Okay" cancel-text="Dismiss">
+            <ion-select value="brown" name="hairColor" ok-text="Okay" cancel-text="Dismiss">
               <ion-select-option value="brown" selected>Brown</ion-select-option>
               <ion-select-option value="blonde">Blonde</ion-select-option>
               <ion-select-option value="black">Black</ion-select-option>
@@ -186,7 +186,7 @@
 
           <ion-item>
             <ion-label>Pets</ion-label>
-            <ion-select name="pets" multiple="true">
+            <ion-select id="pets" name="pets" multiple="true">
               <ion-select-option value="bird">Bird</ion-select-option>
               <ion-select-option value="cat">Cat</ion-select-option>
               <ion-select-option value="dog">Dog</ion-select-option>
@@ -224,6 +224,9 @@
     </ion-page>
 
     <script>
+      var pets = document.getElementById('pets');
+      pets.value = ['bird', 'dog'];
+
       function toggleBoolean(id, prop) {
         var el = document.getElementById(id);
 

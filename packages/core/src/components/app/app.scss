@@ -154,7 +154,6 @@ sub {
 ion-app,
 ion-nav,
 ion-tabs,
-ion-page,
 .ion-page {
   @include position(0, null, null, 0);
 
@@ -170,7 +169,6 @@ ion-page,
 // Page Container Structure
 // --------------------------------------------------
 
-ion-page,
 .ion-page,
 .page-inner {
   display: flex;

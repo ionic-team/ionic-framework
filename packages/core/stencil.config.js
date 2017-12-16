@@ -38,14 +38,14 @@ exports.config = {
     { components: ['ion-range', 'ion-range-knob']},
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button', 'ion-tab-highlight'] },
     { components: ['ion-toggle'] },
-    { components: ['ion-nav', 'ion-nav-controller'] },
+    { components: ['ion-nav'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
   ],
   collections: [
     'ionicons'
   ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
-  global: 'src/global/ionic-global.ts'
+  globalScript: 'src/global/ionic-global.ts'
 };
 
 exports.devServer = {

@@ -105,8 +105,14 @@ You can also take snapshots of each end-to-end test to check for visual regressi
 
 To take snapshots:
 
-```
+```bash
 npm run snapshot
+```
+
+To take snapshots of a specific folder:
+
+```bash
+npm run snapshot -- -f=toast
 ```
 
 ## TODO
@@ -114,5 +120,3 @@ npm run snapshot
 - [ ] Move this script up a directory and use for all packages?
 - [ ] Turn off animations and then adjust the wait time accordingly
 - [ ] Adjustments will likely be needed when the Snapshot tool has better reporting, for example the tool will likely have `start` and `finish` methods (or some such thing)
-- [ ] Cycle through the various platforms (or at least iOS and Android)
-- [ ] Remove scrollbar from snapshots

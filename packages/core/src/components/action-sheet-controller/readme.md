@@ -4,7 +4,7 @@
  options. It appears on top of the app's content, and must be manually
  dismissed by the user before they can resume interaction with the app.
  Dangerous (destructive) options are made obvious in `ios` mode. There are easy
- ways to cancel out of the action sheet, such as tapping the backdrop or
+ ways to cancel the action sheet, such as tapping the backdrop or
  hitting the escape key on desktop.
 
  An action sheet is created from an array of `buttons`, with each button
@@ -19,7 +19,7 @@
  have been added to the `buttons` array. Note: We recommend that `destructive`
  buttons are always the first button in the array, making them the top button.
  Additionally, if the action sheet is dismissed by tapping the backdrop, then
- it will fire the handler from the button with the cancel role.
+ it will call the handler from the button with the cancel role.
 
  You can pass all of the action sheet's options in the first argument of
  the create method: `ActionSheet.create(opts)`.
@@ -31,6 +31,8 @@
 ## Methods
 
 #### create()
+
+Open an action-sheet with a title, subTitle, and an array of buttons
 
 
 

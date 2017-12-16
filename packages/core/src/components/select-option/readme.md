@@ -16,10 +16,14 @@ boolean
 
 boolean
 
+If true, the element is selected.
+
 
 #### value
 
 string
+
+The text value of the option.
 
 
 ## Attributes
@@ -33,20 +37,26 @@ boolean
 
 boolean
 
+If true, the element is selected.
+
 
 #### value
 
 string
 
+The text value of the option.
+
 
 ## Events
 
-#### ionSelect
+#### ionSelectOptionDidLoad
+
+Emitted when the select option loads.
 
 
-## Methods
+#### ionSelectOptionDidUnload
 
-#### getText()
+Emitted when the select option unloads.
 
 
 

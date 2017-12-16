@@ -1,95 +1,99 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Item - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
 </head>
+
 <body>
   <ion-app>
     <ion-page>
       <ion-header>
         <ion-toolbar>
           <ion-title>Item - Basic</ion-title>
-          <ion-buttons slot="end">
-            <ion-button color="secondary">
-              Default
-              <ion-icon name="star" slot="end"></ion-icon>
-            </ion-button>
-            <ion-button color="secondary">
-              <ion-icon slot="icon-only" name="home"></ion-icon>
-            </ion-button>
-          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
+        <ion-list>
+          <ion-list-header>
+            List Header
+          </ion-list-header>
+          <ion-item>
+            Item
+          </ion-item>
+          <ion-item-divider>
+            Item Divider
+          </ion-item-divider>
+          <ion-item>
+            Item
+          </ion-item>
+        </ion-list>
+
         <ion-item>
-          <ion-label>Item Icons</ion-label>
-          <ion-icon name="heart" slot="end"></ion-icon>
-          <ion-icon name="star" slot="start"></ion-icon>
+          <ion-label>
+            Plain Ol' div with some text
+          </ion-label>
         </ion-item>
 
         <ion-item>
-          <ion-label>Item No Size Button</ion-label>
-          <ion-button slot="start"><ion-icon name="heart" slot="end"></ion-icon>Start Button</ion-button>
-          <ion-button slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
+          <ion-label>
+            Single line text that should have ellipses when it doesn't all fit in the item
+          </ion-label>
+        </ion-item>
+
+        <ion-item no-lines>
+          <ion-label>
+            Single line item with no lines
+          </ion-label>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-label>
+            Multiline text that should wrap when it is too long to fit on one line in the item. Attribute on .item
+          </ion-label>
+        </ion-item>
+
+        <ion-item text-wrap color="secondary">
+          <ion-label>
+            <h1>H1 Title Text</h1>
+            <p>Paragraph line 1</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-label>
+            <h2>H2 Title Text</h2>
+            <p>Paragraph line 1</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-label>
+            <h3 ion-text color="primary">H3 Title Text</h3>
+            <p>Paragraph line 1</p>
+            <p ion-text color="secondary">Paragraph line 2 secondary</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-label>
+            <h4>H4 Title Text</h4>
+            <p>Paragraph line 1</p>
+            <p>Paragraph line 2</p>
+            <p>Paragraph line 3</p>
+          </ion-label>
         </ion-item>
 
         <ion-item>
-          <ion-label>Item Outline Button</ion-label>
-          <ion-button outline slot="start"><ion-icon name="heart" slot="end"></ion-icon>Start Button</ion-button>
-          <ion-button outline slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
+          <ion-label>
+            Item using inner ion-label
+          </ion-label>
         </ion-item>
 
-        <ion-item>
-          <ion-label>Item Large Button</ion-label>
-          <ion-button large slot="start"><ion-icon name="star" slot="end"></ion-icon>Start Button</ion-button>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Item Large Button</ion-label>
-          <ion-button large slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Item Small Button</ion-label>
-          <ion-button small slot="start"><ion-icon name="star" slot="end"></ion-icon>Start Button</ion-button>
-          <ion-button small slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Item Default Button</ion-label>
-          <ion-button default slot="start"><ion-icon name="star" slot="end"></ion-icon>Start Button</ion-button>
-          <ion-button default slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
-        </ion-item>
-
-        <ion-item-group>
-          <ion-item-divider color="light">Divider</ion-item-divider>
-
-        <ion-item>
-          <ion-label>Item Large Button</ion-label>
-          <ion-button large slot="start"><ion-icon name="star" slot="end"></ion-icon>Start Button</ion-button>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Item Large Button</ion-label>
-          <ion-button large slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Item Small Button</ion-label>
-          <ion-button small slot="start"><ion-icon name="star" slot="end"></ion-icon>Start Button</ion-button>
-          <ion-button small slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Item Default Button</ion-label>
-          <ion-button default slot="start"><ion-icon name="star" slot="end"></ion-icon>Start Button</ion-button>
-          <ion-button default slot="end">End Button<ion-icon name="star" slot="start"></ion-icon></ion-button>
-        </ion-item>
-        </ion-item-group>
       </ion-content>
 
       <ion-footer>
@@ -100,4 +104,5 @@
     </ion-page>
   </ion-app>
 </body>
+
 </html>

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
+import { createModal, createPopover } from '@ionic/react';
+
 import PageTwo from './PageTwo';
+import ModalPage from './ModalPage';
+import PopoverPage from './PopoverPage';
 
 export default class PageOne extends Component {
 
@@ -35,6 +39,23 @@ export default class PageOne extends Component {
     nav.push(PageTwo, { paramOne: 'Tobey Flenderson'});
   }
 
+  openModal() {
+    return createModal({
+      component: ModalPage
+    }).then((modal) => {
+      return modal.present();
+    });
+  }
+
+  openPopover(event) {
+    return createPopover({
+      component: PopoverPage,
+      ev: event
+    }).then((popover) => {
+      return popover.present();
+    });
+  }
+
   componentDidMount() {
     setInterval(() => {
       this.setState({ content: Math.random() * 1000});
@@ -53,6 +74,12 @@ export default class PageOne extends Component {
         Page One
         <div>
           <ion-button onClick={() => this.goToPageTwo()}>Go to Page Two</ion-button>
+        </div>
+        <div>
+          <ion-button onClick={() => this.openModal()}>Open Modal</ion-button>
+        </div>
+        <div>
+          <ion-button onClick={(event) => this.openPopover(event)}>Open Popover</ion-button>
         </div>
         <div>
           Some random content: {this.state.content}

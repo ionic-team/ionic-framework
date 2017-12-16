@@ -65,6 +65,8 @@ boolean
 
 string
 
+The name of the control, which is submitted with the form data.
+
 
 #### value
 
@@ -86,6 +88,8 @@ boolean
 #### name
 
 string
+
+The name of the control, which is submitted with the form data.
 
 
 #### value

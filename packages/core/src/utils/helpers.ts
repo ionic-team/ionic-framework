@@ -223,11 +223,6 @@ export function getOrAppendElement(tagName: string): Element {
   return tmp;
 }
 
-/** @hidden */
-export function deepCopy(obj: any) {
-  return JSON.parse(JSON.stringify(obj));
-}
-
 export function getWindow() {
   return window;
 }

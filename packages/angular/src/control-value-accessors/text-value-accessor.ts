@@ -1,11 +1,9 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-// NOTE: May need to look at this to see if we need anything else:
-// https://github.com/angular/angular/blob/5.0.1/packages/forms/src/directives/default_value_accessor.ts#L33-L101
 @Directive({
   /* tslint:disable-next-line:directive-selector */
-  selector: 'ion-input,ion-textarea',
+  selector: 'ion-input:not([type=number]),ion-textarea',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -43,5 +41,13 @@ export class TextValueAccessor implements ControlValueAccessor {
 
   registerOnTouched(fn: () => void) {
     this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.renderer.setProperty(
+      this.element.nativeElement,
+      'disabled',
+      isDisabled
+    );
   }
 }

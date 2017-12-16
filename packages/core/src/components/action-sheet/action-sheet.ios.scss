@@ -90,9 +90,12 @@
 
   @include padding-horizontal(null, $action-sheet-ios-button-icon-padding-right);
 
+  width: $action-sheet-ios-icon-width;
   height: $action-sheet-ios-button-icon-height;
 
   font-size: $action-sheet-ios-button-icon-font-size;
+
+  vertical-align: $action-sheet-ios-icon-vertical-align;
 
   fill: $action-sheet-ios-button-icon-fill-color;
 }

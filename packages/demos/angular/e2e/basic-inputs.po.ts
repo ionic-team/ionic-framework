@@ -55,7 +55,20 @@ export class BasicInputsPage {
     return parent.all(by.css('input')).first();
   }
 
+  getIonicNumericInput() {
+    return element(by.id('ionNumericInput'));
+  }
+
+  getIonicNumericInputEditable() {
+    const parent = this.getIonicNumericInput();
+    return parent.all(by.css('input')).first();
+  }
+
   getTextOutput() {
     return element(by.id('textOutput')).getText();
+  }
+
+  getNumericOutputType() {
+    return element(by.id('numericOutputType')).getText();
   }
 }

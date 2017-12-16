@@ -62,10 +62,13 @@ export class Item {
   }
 
   componentDidLoad() {
-    // Add item-button classes to each ion-button in the item
-    const buttons = this.el.querySelectorAll('ion-button') as any;
+    // Change the button size to small for each ion-button in the item
+    // unless the size is explicitly set
+    const buttons = this.el.querySelectorAll('ion-button');
     for (var i = 0; i < buttons.length; i++) {
-      buttons[i].itemButton = true;
+      if (!buttons[i].size) {
+        buttons[i].size = 'small';
+      }
     }
   }
 

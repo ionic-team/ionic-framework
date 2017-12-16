@@ -9,21 +9,40 @@
 <body>
   <ion-app>
     <ion-page>
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Button - Round</ion-title>
-          </ion-toolbar>
-        </ion-header>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Button - Round</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-        <ion-content padding no-bounce>
-          <p><ion-button round>Default</ion-button></p>
-          <p><ion-button round fill="outline" color="secondary">Outline</ion-button></p>
-          <p><ion-button round fill="clear">Clear</ion-button></p>
-          <p><ion-button round expand="block" color="danger">Block</ion-button></p>
-          <p><ion-button round expand="full" color="dark">Full</ion-button></p>
-          <p><ion-button round strong>Strong</ion-button></p>
-        </ion-content>
+      <ion-content padding text-center no-bounce>
+        <ion-button round>Button</ion-button>
+        <ion-button round color="light">Button Light</ion-button>
+        <ion-button round color="secondary">Button Secondary</ion-button>
+        <ion-button round color="warning">Button Warning</ion-button>
+        <ion-button round color="danger">Button Danger</ion-button>
+        <ion-button round color="dark">Button Dark</ion-button>
+
+        <ion-button fill="outline" round>Button</ion-button>
+        <ion-button fill="outline" round color="light">Button Light</ion-button>
+        <ion-button fill="outline" round color="secondary">Button Secondary</ion-button>
+        <ion-button fill="outline" round color="warning">Button Warning</ion-button>
+        <ion-button fill="outline" round color="danger">Button Danger</ion-button>
+        <ion-button fill="outline" round color="dark">Button Dark</ion-button>
+
+        <ion-button round fill="clear">Clear</ion-button>
+        <ion-button round expand="block" color="danger">Block</ion-button>
+        <ion-button round expand="full" color="dark">Full</ion-button>
+        <ion-button round strong>Strong</ion-button>
+      </ion-content>
     </ion-page>
   </ion-app>
+
+  <style>
+    ion-button {
+      display: block !important;
+      margin: 8px auto !important;
+    }
+  </style>
 </body>
 </html>

@@ -12,26 +12,11 @@
 any
 
 
-#### value
-
-string
-
-
 ## Attributes
 
 #### options
 
 any
-
-
-#### value
-
-string
-
-
-## Events
-
-#### ionDismiss
 
 
 

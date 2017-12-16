@@ -9,7 +9,10 @@ const routes: Routes = [
   { path: 'alert', loadChildren: 'app/alert/alert.module#AlertModule' },
   { path: 'actionSheet', loadChildren: 'app/action-sheet/action-sheet.module#ActionSheetModule' },
   { path: 'toast', loadChildren: 'app/toast/toast.module#ToastModule' },
-  { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' }
+  { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' },
+  { path: 'nav', loadChildren: 'app/nav/nav.module#NavModule' },
+  { path: 'modal', loadChildren: 'app/modal/modal.module#ModalModule' },
+  { path: 'popover', loadChildren: 'app/popover/popover.module#PopoverModule' },
 ];
 
 @NgModule({

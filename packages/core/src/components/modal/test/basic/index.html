@@ -12,26 +12,37 @@
   <ion-app>
     <ion-page>
       <ion-header>
-          <ion-toolbar>
-            <ion-title>Modal - Basic</ion-title>
-          </ion-toolbar>
-        </ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-        <ion-content padding>
-          <ion-modal-controller></ion-modal-controller>
-          <p>
-            <ion-button class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
-          </p>
-        </ion-content>
+      <ion-content padding>
+        <ion-modal-controller></ion-modal-controller>
+        <p>
+          <ion-button class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
+        </p>
+      </ion-content>
     </ion-page>
   </ion-app>
 
   <script>
     async function presentModal() {
+      const element = document.createElement('div');
+      element.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Cool Modal</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content padding>
+        <div>Sure, I like dogs. I like caravans moar.</div>
+      </ion-content>
+      `;
       const modalController = document.querySelector('ion-modal-controller');
       await modalController.componentOnReady();
       const modalElement = await modalController.create({
-        component: 'page-one'
+        component: element
       });
       modalElement.present();
     }

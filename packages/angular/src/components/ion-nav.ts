@@ -1,59 +1,33 @@
 import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  ReflectiveInjector,
-  ViewContainerRef,
-  ViewChild
+  ComponentFactoryResolver,
+  Directive,
+  ElementRef,
+  Injector,
+  Type,
 } from '@angular/core';
 
-import { PublicNav } from '@ionic/core';
+import { FrameworkDelegate } from '@ionic/core';
 
-import { getProviders } from '../di/di';
-import { AngularFrameworkDelegate } from '../providers/angular-framework-delegate';
-import { AngularViewController } from '../types/angular-view-controller';
+import { AngularComponentMounter } from '../providers/angular-component-mounter';
+import { AngularMountingData } from '../types/interfaces';
 
-@Component({
+@Directive({
   selector: 'ion-nav',
-  template: `
-    <div #viewport class="ng-nav-viewport"></div>
-  `
 })
-export class IonNavDelegate implements OnInit {
+export class IonNavDelegate implements FrameworkDelegate {
 
-  @ViewChild('viewport', { read: ViewContainerRef}) viewport: ViewContainerRef;
-
-  constructor(private changeDetection: ChangeDetectorRef, private angularFrameworkDelegate: AngularFrameworkDelegate) {
+  constructor(private elementRef: ElementRef, private angularComponentMounter: AngularComponentMounter, private componentResolveFactory: ComponentFactoryResolver, private injector: Injector) {
+    this.elementRef.nativeElement.delegate = this;
   }
 
-  ngOnInit() {
-    const controllerElement = document.querySelector('ion-nav-controller') as any;
-    controllerElement.delegate = this;
+  attachViewToDom(elementOrContainerToMountTo: HTMLIonNavElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
+
+    const hostElement = document.createElement('div');
+    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, hostElement, elementOrComponentToMount, this.componentResolveFactory, this.injector, classesToAdd);
   }
 
-  attachViewToDom(nav: PublicNav, enteringView: AngularViewController): Promise<any> {
-
-    const componentProviders = ReflectiveInjector.resolve(getProviders(nav.element as HTMLIonNavElement));
-    return this.angularFrameworkDelegate.attachViewToDom(enteringView.component, this.viewport, componentProviders, this.changeDetection).then((angularMountingData) => {
-
-      enteringView.componentFactory = angularMountingData.componentFactory;
-      enteringView.injector = angularMountingData.childInjector;
-      enteringView.componentRef = angularMountingData.componentRef;
-      enteringView.instance = angularMountingData.componentRef.instance;
-      enteringView.angularHostElement = angularMountingData.componentRef.location.nativeElement;
-      enteringView.element = angularMountingData.componentRef.location.nativeElement.querySelector('ion-page');
-    });
-  }
-
-  removeViewFromDom(_nav: PublicNav, viewController: AngularViewController) {
-    return this.angularFrameworkDelegate.removeViewFromDom((viewController as any).componentRef).then(() => {
-      viewController.componentFactory = null;
-      viewController.injector = null;
-      viewController.componentRef = null;
-      viewController.instance = null;
-      viewController.angularHostElement = null;
-      viewController.element = null;
-    });
+  removeViewFromDom(_parentElement: HTMLElement, childElement: HTMLElement) {
+    return this.angularComponentMounter.removeViewFromDom(childElement);
   }
 }
 

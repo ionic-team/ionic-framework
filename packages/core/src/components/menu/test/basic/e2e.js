@@ -1,17 +1,31 @@
-const { register, navigate, Page } = require('../../../../../scripts/e2e');
-const testPageURL = 'http://localhost:3333/src/components/menu/test/basic';
+'use strict';
 
-describe('menu/basic', () => {
+const { By, until } = require('selenium-webdriver');
+const { register, Page, platforms } = require('../../../../../scripts/e2e');
 
-  register('should init', navigate(testPageURL));
+class E2ETestPage extends Page {
+  constructor(driver, platform) {
+    super(driver, `http://localhost:3333/src/components/menu/test/basic?ionicplatform=${platform}`);
+  }
 
-  describe('present', () => {
+  present(buttonId) {
+    this.navigate();
+    this.driver.findElement(By.id(buttonId)).click();
+    this.driver.wait(until.elementLocated(By.css('.menu-inner')));
+    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.menu-inner'))));
+  }
+}
 
-    register('shows left menu', driver => {
-      const page = new Page(driver, testPageURL);
-      return page.present('.e2eOpenLeftMenu', { waitFor: '.e2eLeftMenu' })
+platforms.forEach(platform => {
+  describe('menu/basic', () => {
+    register('should init', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.navigate();
     });
 
+    register('should open left menu', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.present('left');
+    });
   });
-
 });
