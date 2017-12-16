@@ -12,6 +12,16 @@ export class TabButton {
   @Prop() tab: HTMLIonTabElement;
 
   @Event() ionTabbarClick: EventEmitter;
+  @Event() ionTabButtonDidLoad: EventEmitter;
+  @Event() ionTabButtonDidUnload: EventEmitter;
+
+  componentDidLoad() {
+    this.ionTabButtonDidLoad.emit({ button: this });
+  }
+
+  componentDidUnload() {
+    this.ionTabButtonDidUnload.emit({ button: this });
+  }
 
   @Listen('click')
   protected onClick(ev: UIEvent) {

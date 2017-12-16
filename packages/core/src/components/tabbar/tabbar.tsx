@@ -49,13 +49,14 @@ export class Tabbar {
     }
   }
 
-  componentDidLoad() {
-    Context.dom.read(() => {
-      setTimeout(() => {
-        this.updateBoundaries();
-        this.scrollable = this.canScrollRight;
-      }, 50);
-    });
+  @Listen('ionTabButtonDidLoad')
+  onTabButtonLoad() {
+    this.updateBoundaries();
+  }
+
+  @Listen('ionTabButtonDidUnload')
+  onTabButtonUnload() {
+    this.updateBoundaries();
   }
 
   protected analyzeTabs() {
