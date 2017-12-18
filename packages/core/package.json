@@ -13,6 +13,7 @@
     "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
+    "chai": "^4.1.2",
     "chromedriver": "^2.33.2",
     "ionicons": "4.0.0-11",
     "jest": "^21.2.1",
@@ -21,7 +22,8 @@
     "sass-lint": "^1.12.1",
     "selenium-webdriver": "^3.6.0",
     "tslint": "^5.8.0",
-    "tslint-ionic-rules": "0.0.11"
+    "tslint-ionic-rules": "0.0.11",
+    "yargs": "^10.0.3"
   },
   "scripts": {
     "build": "stencil build --docs",
