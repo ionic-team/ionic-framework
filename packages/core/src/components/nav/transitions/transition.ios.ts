@@ -11,7 +11,7 @@ const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
-export function buildIOSTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
+export function buildIOSTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Promise<Transition> {
 
   rootTransition.enteringView = enteringView;
   rootTransition.leavingView = leavingView;
@@ -141,7 +141,8 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
         .add(leavingToolBarItems)
         .add(leavingBackButton)
         .add(leavingToolBarBg);
-      this.add(leavingToolBar);
+
+      rootTransition.add(leavingToolBar);
 
       // fade out leaving toolbar items
       leavingBackButton.fromTo(OPACITY, 0.99, 0);
@@ -175,5 +176,5 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
       }
     }
   }
-  return rootTransition;
+  return Promise.resolve(rootTransition);
 }
