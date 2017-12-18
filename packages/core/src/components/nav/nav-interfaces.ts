@@ -105,7 +105,7 @@ export interface Transition extends Animation {
 }
 
 export interface TransitionBuilder {
-  (rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions ): Transition;
+  (rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions ): Promise<Transition>;
 }
 
 export interface PublicViewController {

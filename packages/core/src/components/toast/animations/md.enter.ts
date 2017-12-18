@@ -3,11 +3,7 @@ import { Animation } from '../../../index';
 /**
  * MD Toast Enter Animation
  */
-export default function mdEnterAnimation(
-  Animation: Animation,
-  baseElm: HTMLElement,
-  position: string
-): Animation {
+export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement, position: string): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();
@@ -29,9 +25,9 @@ export default function mdEnterAnimation(
       wrapperAnimation.fromTo('translateY', '100%', '0%');
       break;
   }
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(400)
-    .add(wrapperAnimation);
+    .add(wrapperAnimation));
 }

@@ -588,7 +588,6 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
     });
   }
 
-  let transition: Transition = null;
   const transitionId = getParentTransitionId(nav);
   nav.transitionId = transitionId >= 0 ? transitionId : getNextTransitionId();
 
@@ -605,21 +604,22 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
 
 
   const emptyTransition = transitionFactory(ti.animation);
-  transition = getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, getDefaultTransition(nav.config));
+  return getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, getDefaultTransition(nav.config)).then((transition) => {
 
-  if (nav.swipeToGoBackTransition) {
-    nav.swipeToGoBackTransition.destroy();
-    nav.swipeToGoBackTransition = null;
-  }
+    if (nav.swipeToGoBackTransition) {
+      nav.swipeToGoBackTransition.destroy();
+      nav.swipeToGoBackTransition = null;
+    }
 
-  // it's a swipe to go back transition
-  if (transition.isRoot() && ti.opts.progressAnimation) {
-    nav.swipeToGoBackTransition = transition;
-  }
+    // it's a swipe to go back transition
+    if (transition.isRoot() && ti.opts.progressAnimation) {
+      nav.swipeToGoBackTransition = transition;
+    }
 
-  transition.start();
+    transition.start();
 
-  return executeAsyncTransition(nav, transition, enteringView, leavingView, ti.delegate, ti.opts, ti.nav.config.getBoolean('animate'));
+    return executeAsyncTransition(nav, transition, enteringView, leavingView, ti.delegate, ti.opts, ti.nav.config.getBoolean('animate'));
+  });
 }
 
 // TODO - transition type

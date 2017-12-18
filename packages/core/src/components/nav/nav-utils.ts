@@ -132,22 +132,22 @@ export function destroyTransition(transitionId: number) {
   }
 }
 
-export function getHydratedTransition(name: string, config: Config, transitionId: number, emptyTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions, defaultTransitionFactory: TransitionBuilder) {
+export function getHydratedTransition(name: string, config: Config, transitionId: number, emptyTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions, defaultTransitionFactory: TransitionBuilder): Promise<Transition> {
 
   const transitionFactory = config.get(name) as TransitionBuilder || defaultTransitionFactory;
-  const hydratedTransition = transitionFactory(emptyTransition, enteringView, leavingView, opts);
-  hydratedTransition.transitionId = transitionId;
 
-  if (!activeTransitions.has(transitionId)) {
-    // sweet, this is the root transition
-    activeTransitions.set(transitionId, hydratedTransition);
-  } else {
-    // we've got a parent transition going
-    // just append this transition to the existing one
-    activeTransitions.get(transitionId).add(hydratedTransition);
-  }
-
-  return hydratedTransition;
+  return transitionFactory(emptyTransition, enteringView, leavingView, opts).then((hydratedTransition) => {
+    hydratedTransition.transitionId = transitionId;
+    if (!activeTransitions.has(transitionId)) {
+      // sweet, this is the root transition
+      activeTransitions.set(transitionId, hydratedTransition);
+    } else {
+      // we've got a parent transition going
+      // just append this transition to the existing one
+      activeTransitions.get(transitionId).add(hydratedTransition);
+    }
+    return hydratedTransition;
+  });
 }
 
 export function canGoBack(nav: Nav) {

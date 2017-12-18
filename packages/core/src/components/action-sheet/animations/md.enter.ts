@@ -4,7 +4,7 @@ import { Animation } from '../../../index';
 /**
  * MD Action Sheet Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
@@ -16,10 +16,12 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
   backdropAnimation.fromTo('opacity', 0.01, 0.26);
   wrapperAnimation.fromTo('translateY', '100%', '0%');
 
-  return baseAnimation
+  const ani = baseAnimation
     .addElement(baseElm)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(400)
     .add(backdropAnimation)
     .add(wrapperAnimation);
+
+  return Promise.resolve(ani);
 }

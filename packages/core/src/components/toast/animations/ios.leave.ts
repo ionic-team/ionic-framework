@@ -3,11 +3,7 @@ import { Animation } from '../../../index';
 /**
  * iOS Toast Leave Animation
  */
-export default function iosLeaveAnimation(
-  Animation: Animation,
-  baseElm: HTMLElement,
-  position: string
-): Animation {
+export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement, position: string): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();
@@ -24,9 +20,9 @@ export default function iosLeaveAnimation(
       wrapperAnimation.fromTo('translateY', `${0 - 10}px`, '100%');
       break;
   }
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(300)
-    .add(wrapperAnimation);
+    .add(wrapperAnimation));
 }

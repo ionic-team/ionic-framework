@@ -3,7 +3,7 @@ import { Animation } from '../../../index';
 /**
  * Md Alert Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
@@ -16,10 +16,10 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
 
   wrapperAnimation.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
 
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('ease-in-out')
     .duration(200)
     .add(backdropAnimation)
-    .add(wrapperAnimation);
+    .add(wrapperAnimation));
 }

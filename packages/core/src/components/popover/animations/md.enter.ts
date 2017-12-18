@@ -3,7 +3,7 @@ import { Animation } from '../../../index';
 /**
  * Md Popover Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement, ev?: Event): Animation {
+export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
@@ -85,13 +85,13 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
   viewportAnimation.addElement(baseElm.querySelector('.popover-viewport'));
   viewportAnimation.fromTo('opacity', 0.01, 1);
 
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(300)
     .add(backdropAnimation)
     .add(wrapperAnimation)
     .add(contentAnimation)
-    .add(viewportAnimation);
+    .add(viewportAnimation));
 }
 const POPOVER_MD_BODY_PADDING = 12;

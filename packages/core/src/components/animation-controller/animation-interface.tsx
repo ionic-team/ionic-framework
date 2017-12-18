@@ -42,7 +42,7 @@ export interface Animation {
 
 
 export interface AnimationBuilder {
-(Animation: Animation, baseElm?: HTMLElement, opts?: any): Animation;
+(Animation: Animation, baseElm?: HTMLElement, opts?: any): Promise<Animation>;
 }
 
 

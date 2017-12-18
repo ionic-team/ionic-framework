@@ -3,10 +3,7 @@ import { Animation } from '../../../index';
 /**
  * Md Modal Leave Animation
  */
-export default function mdLeaveAnimation(
-  Animation: Animation,
-  baseElm: HTMLElement
-): Animation {
+export default function mdLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
@@ -22,10 +19,10 @@ export default function mdLeaveAnimation(
 
   backdropAnimation.fromTo('opacity', 0.4, 0.0);
 
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('cubic-bezier(0.47,0,0.745,0.715)')
     .duration(200)
     .add(backdropAnimation)
-    .add(wrapperAnimation);
+    .add(wrapperAnimation));
 }
