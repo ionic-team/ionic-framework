@@ -9,12 +9,12 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.0.9-3",
+    "@stencil/core": "0.0.9-4",
     "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
     "chromedriver": "^2.33.2",
-    "ionicons": "4.0.0-10",
+    "ionicons": "4.0.0-11",
     "jest": "^21.2.1",
     "mocha": "^4.0.1",
     "np": "^2.17.0",

@@ -1,5 +1,5 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
 import { BACKDROP } from '../../utils/overlay-constants';
@@ -65,6 +65,7 @@ export class Alert {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
 
   /**
    * Additional class or classes to apply to the alert
@@ -178,7 +179,7 @@ export class Alert {
     }).then((animation) => {
       animation.destroy();
 
-      return domControllerAsync(Context.dom.write, () => {
+      return domControllerAsync(this.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
     }).then(() => {

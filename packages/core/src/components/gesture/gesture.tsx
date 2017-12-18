@@ -1,7 +1,11 @@
 import { ElementRef, applyStyles, assert, getElementReference, updateDetail } from '../../utils/helpers';
 import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+import { DomController } from '../../index';
 import { PanRecognizer } from './recognizers';
+
+declare const Ionic: { gesture: GestureController };
+
 
 @Component({
   tag: 'ion-gesture'
@@ -22,6 +26,9 @@ export class Gesture {
   private blocker: BlockerDelegate;
 
   @Element() private el: HTMLElement;
+
+  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'enableListener' }) enableListener: any;
 
   @Prop() enabled: boolean = true;
   @Prop() attachTo: ElementRef = 'child';
@@ -73,7 +80,7 @@ export class Gesture {
     // in this case, we already know the GestureController and Gesture are already
     // apart of the same bundle, so it's safe to load it this way
     // only create one instance of GestureController, and reuse the same one later
-    this.ctrl = Context.gesture = Context.gesture || new GestureController;
+    this.ctrl = Ionic.gesture = Ionic.gesture || new GestureController();
     this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
 
     const types = this.type.replace(/\s/g, '').toLowerCase().split(',');
@@ -84,7 +91,7 @@ export class Gesture {
 
     this.enabledChanged(this.enabled);
     if (this.pan || this.hasPress) {
-      Context.dom.write(() => {
+      this.dom.write(() => {
         applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
       });
     }
@@ -98,8 +105,8 @@ export class Gesture {
   @PropDidChange('enabled')
   protected enabledChanged(isEnabled: boolean) {
     if (this.pan || this.hasPress) {
-      Context.enableListener(this, 'touchstart', isEnabled, this.attachTo);
-      Context.enableListener(this, 'mousedown', isEnabled, this.attachTo);
+      this.enableListener(this, 'touchstart', isEnabled, this.attachTo);
+      this.enableListener(this, 'mousedown', isEnabled, this.attachTo);
       if (!isEnabled) {
         this.abortGesture();
       }
@@ -216,7 +223,7 @@ export class Gesture {
       if (!this.isMoveQueued && this.hasFiredStart) {
         this.isMoveQueued = true;
         this.calcGestureData(ev);
-        Context.dom.write(this.fireOnMove.bind(this));
+        this.dom.write(this.fireOnMove.bind(this));
       }
       return;
     }
@@ -424,18 +431,18 @@ export class Gesture {
 
   private enableMouse(shouldEnable: boolean) {
     if (this.pan) {
-      Context.enableListener(this, 'document:mousemove', shouldEnable);
+      this.enableListener(this, 'document:mousemove', shouldEnable);
     }
-    Context.enableListener(this, 'document:mouseup', shouldEnable);
+    this.enableListener(this, 'document:mouseup', shouldEnable);
   }
 
 
   private enableTouch(shouldEnable: boolean) {
     if (this.pan) {
-      Context.enableListener(this, 'touchmove', shouldEnable, this.attachTo);
+      this.enableListener(this, 'touchmove', shouldEnable, this.attachTo);
     }
-    Context.enableListener(this, 'touchcancel', shouldEnable, this.attachTo);
-    Context.enableListener(this, 'touchend', shouldEnable, this.attachTo);
+    this.enableListener(this, 'touchcancel', shouldEnable, this.attachTo);
+    this.enableListener(this, 'touchend', shouldEnable, this.attachTo);
   }
 
 

@@ -4,11 +4,12 @@ import {
   AnimationBuilder,
   AnimationController,
   Config,
+  DomController,
   OverlayDismissEvent,
   OverlayDismissEventDetail
 } from '../../index';
 
-import { domControllerAsync, playAnimationAsync, isDef } from '../../utils/helpers';
+import { domControllerAsync, isDef, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
@@ -68,6 +69,7 @@ export class ActionSheet {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
 
   /**
    * Additional class or classes to apply to the action-sheet
@@ -173,7 +175,7 @@ export class ActionSheet {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      return domControllerAsync(Context.dom.write, () => {
+      return domControllerAsync(this.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
     }).then(() => {

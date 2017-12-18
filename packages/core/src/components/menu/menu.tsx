@@ -35,6 +35,7 @@ export class Menu {
 
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: StencilElement;
+  @Prop({ context: 'enableListener' }) enableListener: any;
 
   /**
    * @input {string} The content's id the menu should use.
@@ -374,7 +375,7 @@ export class Menu {
     this.isAnimating = false;
 
     // add/remove backdrop click listeners
-    Context.enableListener(this, 'body:click', isOpen);
+    this.enableListener(this, 'body:click', isOpen);
 
     if (isOpen) {
       // disable swipe to go back gesture

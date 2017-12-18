@@ -5,6 +5,7 @@ import {
   AnimationBuilder,
   AnimationController,
   Config,
+  DomController,
   OverlayDismissEvent,
   OverlayDismissEventDetail
 } from '../../index';
@@ -66,6 +67,8 @@ export class Picker {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+
   @Prop() cssClass: string;
   @Prop() content: string;
   @Prop() dismissOnPageChange: boolean = false;
@@ -130,7 +133,7 @@ export class Picker {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      return domControllerAsync(Context.dom.write, () => {
+      return domControllerAsync(this.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
     }).then(() => {

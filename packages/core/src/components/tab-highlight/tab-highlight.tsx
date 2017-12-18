@@ -1,4 +1,5 @@
 import { Component, Element, Listen, Prop, PropDidChange, State } from '@stencil/core';
+import { DomController } from '../../index';
 import { getParentElement } from '../../utils/helpers';
 
 
@@ -11,6 +12,8 @@ export class TabHighlight {
 
   @State() animated = false;
   @State() transform = '';
+
+  @Prop({ context: 'dom' }) dom: DomController;
 
   @Prop() selectedTab: HTMLIonTabElement;
   @PropDidChange('selectedTab')
@@ -28,7 +31,7 @@ export class TabHighlight {
   }
 
   protected updateTransform() {
-    Context.dom.read(() => {
+    this.dom.read(() => {
       const btn = this.getSelectedButton();
       this.transform = (btn)
         ? `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`

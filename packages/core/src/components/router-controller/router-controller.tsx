@@ -1,6 +1,6 @@
 import { Component, Listen, Prop } from '@stencil/core';
 import { RouterSegments, generateURL, parseURL, readNavState, writeNavState } from './router-utils';
-import { Config } from '../../index';
+import { Config, DomController } from '../../index';
 
 
 @Component({
@@ -13,6 +13,7 @@ export class RouterController {
   private basePrefix: string = '#';
 
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
 
   componentDidLoad() {
     const enabled = this.enabled = this.config.getBoolean('useRouter', false);
@@ -25,7 +26,7 @@ export class RouterController {
         }
       }
 
-      Context.dom.raf(() => {
+      this.dom.raf(() => {
         console.debug('[OUT] page load -> write nav state');
         this.writeNavStateRoot();
       });
@@ -45,7 +46,7 @@ export class RouterController {
     if (this.isBlocked()) {
       return;
     }
-    debugger;
+
     console.debug('[IN] nav changed -> update URL');
     const { stack, pivot } = this.readNavState();
     if (pivot) {
