@@ -1,4 +1,5 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { BlurEvent, FocusEvent } from '../../utils/input-interfaces';
+import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { getElementClassObject } from '../../utils/theme';
 
 
@@ -11,6 +12,8 @@ import { getElementClassObject } from '../../utils/theme';
 })
 export class Button {
   @Element() private el: HTMLElement;
+
+  @State() keyFocus: boolean;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -72,6 +75,29 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
+    /**
+   * Emitted when the button has focus.
+   */
+  @Event() ionFocus: EventEmitter<FocusEvent>;
+
+  /**
+   * Emitted when the button loses focus.
+   */
+  @Event() ionBlur: EventEmitter<BlurEvent>;
+
+  onFocus() {
+    this.ionFocus.emit();
+  }
+
+  onKeyUp() {
+    this.keyFocus = true;
+  }
+
+  onBlur() {
+    this.keyFocus = false;
+    this.ionBlur.emit();
+  }
+
   protected render() {
 
     const {
@@ -99,18 +125,25 @@ export class Button {
 
     const buttonClasses = {
       ...getElementClassObject(this.el.classList),
-      ...getElementClassObject(elementClasses)
+      ...getElementClassObject(elementClasses),
+      'button-key': this.keyFocus
     };
 
     return (
-      <TagType class={buttonClasses} disabled={this.disabled} href={this.href}>
-        <span class='button-inner'>
-          <slot name='icon-only'></slot>
-          <slot name='start'></slot>
-          <slot></slot>
-          <slot name='end'></slot>
-        </span>
-        <div class='button-effect'></div>
+      <TagType
+        class={buttonClasses}
+        disabled={this.disabled}
+        href={this.href}
+        onFocus={this.onFocus.bind(this)}
+        onKeyUp={this.onKeyUp.bind(this)}
+        onBlur={this.onBlur.bind(this)}>
+          <span class='button-inner'>
+            <slot name='icon-only'></slot>
+            <slot name='start'></slot>
+            <slot></slot>
+            <slot name='end'></slot>
+          </span>
+          <div class='button-effect'></div>
       </TagType>
     );
   }
