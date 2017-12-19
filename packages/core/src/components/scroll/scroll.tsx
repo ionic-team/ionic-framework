@@ -148,7 +148,7 @@ export class Scroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        this.dom.raf(step);
+        self.dom.raf(step);
 
       } else {
         stopScroll = true;

@@ -1,5 +1,6 @@
 import {Component, Element, Listen, Prop, PropDidChange, State} from '@stencil/core';
 import {createThemedClasses} from '../../utils/theme';
+import {DomController} from "../../index";
 
 @Component({
   tag: 'ion-tabbar',
@@ -13,16 +14,18 @@ export class Tabbar {
 
   @Element() el: HTMLElement;
 
-  private scrollEl: HTMLIonScrollElement;
   @State() canScrollLeft: boolean = false;
   @State() canScrollRight: boolean = false;
 
   @State() hidden = false;
 
+  @Prop({ context: 'dom' }) dom: DomController;
   @Prop() placement = 'bottom';
-  @Prop() tabs: HTMLIonTabElement[];
   @Prop() selectedTab: HTMLIonTabElement;
   @Prop() scrollable:Boolean;
+  @Prop() tabs: HTMLIonTabElement[];
+
+  private scrollEl: HTMLIonScrollElement;
 
   @PropDidChange('selectedTab')
   selectedTabChanged() {
@@ -54,7 +57,7 @@ export class Tabbar {
   @Listen('ionTabButtonDidLoad')
   @Listen('ionTabButtonDidUnload')
   onTabButtonLoad() {
-    this.updateBoundaries();
+    this.scrollable && this.updateBoundaries();
     this.highlight && this.updateHighlight()
   }
 
@@ -138,7 +141,7 @@ export class Tabbar {
   }
 
   protected scrollToSelectedButton() {
-    Context.dom.read(async () => {
+    this.dom.read(() => {
       const activeTabButton: HTMLIonTabButtonElement = this.getSelectedButton();
 
       if (activeTabButton) {
@@ -156,22 +159,24 @@ export class Tabbar {
         }
 
         if (amount !== undefined) {
-          await this.scrollEl.scrollToPoint(amount, 0, 250);
-          this.updateBoundaries();
+          this.scrollEl.scrollToPoint(amount, 0, 250).then(() => {
+            this.updateBoundaries();
+          });
         }
       }
     });
   }
 
   scrollByTab(direction: 'left' | 'right') {
-    Context.dom.read(async () => {
+    this.dom.read(() => {
       const {previous, next} = this.analyzeTabs(),
         info = direction === 'right' ? next : previous,
         amount = info && info.amount;
 
       if (info) {
-        await this.scrollEl.scrollToPoint(amount, 0, 250);
-        this.updateBoundaries();
+        this.scrollEl.scrollToPoint(amount, 0, 250).then(() => {
+          this.updateBoundaries();
+        });
       }
     });
   }
@@ -182,7 +187,7 @@ export class Tabbar {
   }
 
   updateHighlight() {
-    Context.dom.read(() => {
+    this.dom.read(() => {
       const btn = this.getSelectedButton(),
         ionTabbarHighlight:HTMLElement = this.highlight && this.el.querySelector('div.ion-tab-highlight') as HTMLElement;
 

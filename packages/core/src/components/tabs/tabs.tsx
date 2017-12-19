@@ -166,7 +166,6 @@ export class Tabs {
 
   @Method()
   getRoutes(): RouterEntries {
-    debugger;
     const a = this.tabs.map(t => {
       return {
         path: t.getPath(),
