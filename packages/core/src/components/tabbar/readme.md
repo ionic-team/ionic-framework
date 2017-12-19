@@ -22,6 +22,11 @@ string
 string
 
 
+#### scrollable
+
+any
+
+
 #### selectedTab
 
 any
@@ -52,6 +57,11 @@ string
 #### placement
 
 string
+
+
+#### scrollable
+
+any
 
 
 #### selectedTab

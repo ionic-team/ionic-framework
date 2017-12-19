@@ -169,7 +169,7 @@ ion-tab-button {
 // Tab Highlight
 // --------------------------------------------------
 
-ion-tab-highlight {
+.ion-tab-highlight {
   @include position(null, null, 0, 0);
   @include transform-origin(0, 0);
 
@@ -191,11 +191,11 @@ ion-tab-highlight {
   }
 }
 
-.placement-top > ion-tab-highlight {
+.placement-top > .ion-tab-highlight {
   bottom: 0;
 }
 
-.placement-bottom > ion-tab-highlight {
+.placement-bottom > .ion-tab-highlight {
   top: 0;
 }
 

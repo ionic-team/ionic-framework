@@ -31,6 +31,12 @@ any
 
 ## Events
 
+#### ionTabButtonDidLoad
+
+
+#### ionTabButtonDidUnload
+
+
 #### ionTabbarClick
 
 
