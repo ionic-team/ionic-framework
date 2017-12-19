@@ -3,7 +3,7 @@ import { Animation } from '../../../index';
 /**
  * iOS Alert Leave Animation
  */
-export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
@@ -16,10 +16,12 @@ export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLEle
 
   wrapperAnimation.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
 
-  return baseAnimation
+  const ani = baseAnimation
     .addElement(baseElm)
     .easing('ease-in-out')
     .duration(200)
     .add(backdropAnimation)
     .add(wrapperAnimation);
+
+  return Promise.resolve(ani);
 }

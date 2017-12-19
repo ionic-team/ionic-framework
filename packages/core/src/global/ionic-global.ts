@@ -5,6 +5,8 @@ import { createDomControllerClient } from './dom-controller';
 
 const Ionic = (window as any).Ionic = (window as any).Ionic || {};
 
+declare const Context: any;
+
 // add dom controller, used to coordinate DOM reads and write in order to avoid
 // layout thrashing
 if (!Context.dom) {

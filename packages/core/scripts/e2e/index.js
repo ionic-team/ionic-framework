@@ -6,6 +6,7 @@ const Mocha = require('mocha');
 const path = require('path');
 const webdriver = require('selenium-webdriver');
 const chromedriver = require('chromedriver');
+const argv = require('yargs').argv
 
 const Page = require('./page');
 const Snapshot = require('./snapshot');
@@ -54,21 +55,19 @@ function getTestFiles() {
 }
 
 function processCommandLine() {
-  process.argv.forEach(arg => {
-    if (arg === '--snapshot') {
-      takeScreenshots = true;
-    }
+  if (argv.snapshot) {
+    takeScreenshots = true;
+  }
 
-    if (arg.indexOf('-f') > -1) {
-      folder = arg.split('=')[1];
-    }
-  });
+  if (argv.f || argv.folder) {
+    folder = argv.f || argv.folder;
+  }
 }
 
 function registerE2ETest(desc, tst) {
   // NOTE: Do not use an arrow function here because: https://mochajs.org/#arrow-functions
   it(desc, async function() {
-    await tst(driver);
+    await tst(driver, this);
     if (takeScreenshots) {
       await snapshot.takeScreenshot(driver, {
         name: this.test.fullTitle().replace(/(^[\w-]+\/[\w-]+)/, '$1:'),
@@ -106,43 +105,59 @@ async function run() {
 
   const files = await getTestFiles();
   files.forEach(f => mocha.addFile(f));
-  mocha.loadFiles(() => {
-    specIndex = 0;
+  const snapshot = await mochaLoadFiles(mocha);
+  const failures = await mochaRun(mocha);
 
-    snapshot = new Snapshot({
-      groupId: 'ionic-core',
-      appId: 'snapshots',
-      testId: generateTestId(),
-      domain: 'ionic-snapshot-go.appspot.com',
-      // domain: 'localhost:8080',
-      sleepBetweenSpecs: 750,
-      totalSpecs: getTotalTests(mocha.suite),
-      platformDefaults: {
-        browser: 'chrome',
-        platform: 'linux',
-        params: {
-          platform_id: 'chrome_400x800',
-          platform_index: 0,
-          platform_count: 1,
-          width: 400,
-          height: 814
-        }
-      },
-      accessKey: process.env.IONIC_SNAPSHOT_KEY
-    });
+  if (takeScreenshots) {
+    snapshot.finish();
+  }
+  devServer.close();
+  driver.quit();
 
+  if (failures) {
+    throw new Error(failures);
+  }
+}
+
+function mochaRun(mocha) {
+  return new Promise((resolve, reject) => {
     mocha.run(function(failures) {
-      process.on('exit', function() {
-        process.exit(failures); // exit with non-zero status if there were failures
-      });
-      if (takeScreenshots) {
-        snapshot.finish();
-      }
-      devServer.close();
-      driver.quit();
+      resolve(failures);
     });
   });
 }
+
+function mochaLoadFiles(mocha) {
+  return new Promise((resolve, reject) => {
+    mocha.loadFiles(() => {
+      specIndex = 0;
+
+      const snapshot = new Snapshot({
+        groupId: 'ionic-core',
+        appId: 'snapshots',
+        testId: generateTestId(),
+        domain: 'ionic-snapshot-go.appspot.com',
+        // domain: 'localhost:8080',
+        sleepBetweenSpecs: 750,
+        totalSpecs: getTotalTests(mocha.suite),
+        platformDefaults: {
+          browser: 'chrome',
+          platform: 'linux',
+          params: {
+            platform_id: 'chrome_400x800',
+            platform_index: 0,
+            platform_count: 1,
+            width: 400,
+            height: 814
+          }
+        },
+        accessKey: process.env.IONIC_SNAPSHOT_KEY
+      });
+      resolve(snapshot);
+    });
+  });
+}
+
 
 function parseSemver(str) {
   return /(\d+)\.(\d+)\.(\d+)/
@@ -162,7 +177,11 @@ function validateNodeVersion(version) {
 // Invoke run() only if executed directly i.e. `node ./scripts/e2e`
 if (require.main === module) {
   validateNodeVersion(process.version);
-  run();
+  run().catch((err) => {
+    console.log(err);
+    // fail with non-zero status code
+    process.exit(1);
+  });
 }
 
 module.exports = {

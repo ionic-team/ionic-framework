@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { ScrollDetail, StencilElement } from '../../index';
+import { DomController, ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
   Top = 'top',
@@ -22,6 +22,9 @@ export class InfiniteScroll {
 
   @Element() private el: HTMLElement;
   @State() isLoading: boolean = false;
+
+  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'enableListener' }) enableListener: any;
 
   /**
    * @input {string} The threshold distance from the bottom
@@ -97,7 +100,7 @@ export class InfiniteScroll {
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(this.enabled);
     if (this.position === Position.Top) {
-      Context.dom.write(() => this.scrollEl.scrollToBottom(0));
+      this.dom.write(() => this.scrollEl.scrollToBottom(0));
     }
   }
 
@@ -196,14 +199,14 @@ export class InfiniteScroll {
       const prev = this.scrollEl.scrollHeight - this.scrollEl.scrollTop;
 
       // ******** DOM READ ****************
-      Context.dom.read(() => {
+      this.dom.read(() => {
         // UI has updated, save the new content dimensions
         const scrollHeight = this.scrollEl.scrollHeight;
         // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
         const newScrollTop = scrollHeight - prev;
 
         // ******** DOM WRITE ****************
-        Context.dom.write(() => {
+        this.dom.write(() => {
           this.scrollEl.scrollTop = newScrollTop;
           this.isBusy = false;
         });
@@ -225,7 +228,7 @@ export class InfiniteScroll {
    * @hidden
    */
   private enableScrollEvents(shouldListen: boolean) {
-    Context.enableListener(this, 'ionScroll', shouldListen, this.scrollEl);
+    this.enableListener(this, 'ionScroll', shouldListen, this.scrollEl);
   }
 
   hostData() {
@@ -236,7 +239,6 @@ export class InfiniteScroll {
       }
     };
   }
-
 
   render() {
     return <slot></slot>;

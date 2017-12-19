@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
-import { Config } from '../../index';
+import { Config, DomController } from '../../index';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 import { getPageElement } from '../../utils/helpers';
 
@@ -23,6 +23,7 @@ export class Content {
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
 
   /**
    * @output {ScrollEvent} Emitted when the scrolling first starts.
@@ -100,13 +101,13 @@ export class Content {
       return;
     }
     if (this.fullscreen) {
-      Context.dom.raf(() => {
-        Context.dom.read(this.readDimensions.bind(this));
-        Context.dom.write(this.writeDimensions.bind(this));
+      this.dom.raf(() => {
+        this.dom.read(this.readDimensions.bind(this));
+        this.dom.write(this.writeDimensions.bind(this));
       });
     } else {
       this.cTop = this.cBottom = null;
-      Context.dom.write(() => this.scrollEl.removeAttribute('style'));
+      this.dom.write(() => this.scrollEl.removeAttribute('style'));
     }
   }
 

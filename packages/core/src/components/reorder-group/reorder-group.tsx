@@ -1,5 +1,5 @@
 import { Component, Element, Prop, PropDidChange, State } from '@stencil/core';
-import { GestureDetail } from '../../index';
+import { DomController, GestureDetail } from '../../index';
 import { clamp, reorderArray } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
 import { CSS_PROP } from '../animation-controller/constants';
@@ -45,6 +45,8 @@ export class ReorderGroup {
 
   @Element() private el: HTMLElement;
 
+  @Prop({ context: 'dom' }) dom: DomController;
+
   @Prop() enabled: boolean = false;
 
   /**
@@ -54,7 +56,7 @@ export class ReorderGroup {
   protected enabledChanged(enabled: boolean) {
     if (enabled) {
       this._enabled = true;
-      Context.dom.raf(() => {
+      this.dom.raf(() => {
         this._iconVisible = true;
       });
     } else {

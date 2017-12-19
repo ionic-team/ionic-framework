@@ -3,7 +3,7 @@ import { Animation } from '../../../index';
 /**
  * iOS Popover Enter Animation
  */
-export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLElement, ev?: Event): Animation {
+export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
@@ -123,11 +123,11 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   wrapperAnimation.addElement(baseElm.querySelector('.popover-wrapper'));
   wrapperAnimation.fromTo('opacity', 0.01, 1);
 
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('ease')
     .duration(100)
     .add(backdropAnimation)
-    .add(wrapperAnimation);
+    .add(wrapperAnimation));
 }
 const POPOVER_IOS_BODY_PADDING = 5;

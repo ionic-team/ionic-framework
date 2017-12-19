@@ -3,7 +3,7 @@ import { Animation } from '../../../index';
 /**
  * iOS Popover Leave Animation
  */
-export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
@@ -15,10 +15,10 @@ export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLEle
   wrapperAnimation.fromTo('opacity', 0.99, 0);
   backdropAnimation.fromTo('opacity', 0.08, 0);
 
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('ease')
     .duration(500)
     .add(backdropAnimation)
-    .add(wrapperAnimation);
+    .add(wrapperAnimation));
 }

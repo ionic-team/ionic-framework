@@ -7,7 +7,7 @@ import baseAnimation from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
-export default function(Animation: Animation, _: HTMLElement, menu: Menu): Animation {
+export default function(Animation: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
 
   let contentOpenedX: string, menuClosedX: string;
   const width = menu.width;
@@ -32,8 +32,9 @@ export default function(Animation: Animation, _: HTMLElement, menu: Menu): Anima
     .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.2);
 
-  return baseAnimation(Animation)
-    .add(menuAni)
+  return baseAnimation(Animation).then((animation) => {
+    return animation.add(menuAni)
     .add(backdropAni)
     .add(contentAni);
+  });
 }

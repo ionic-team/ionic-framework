@@ -1,10 +1,10 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import {
   Animation,
   AnimationBuilder,
   AnimationController,
   Config,
+  DomController,
   OverlayDismissEvent,
   OverlayDismissEventDetail
 } from '../../index';
@@ -71,6 +71,7 @@ export class Loading {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
 
   /**
    * Additional classes to apply for custom CSS
@@ -173,7 +174,7 @@ export class Loading {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      return domControllerAsync(Context.dom.write, () => {
+      return domControllerAsync(this.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
     }).then(() => {

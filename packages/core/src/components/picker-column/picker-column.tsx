@@ -1,8 +1,7 @@
 import { Component, Element, Prop } from '@stencil/core';
-
-import { GestureDetail, PickerColumn, PickerColumnOption } from '../../index';
-
+import { DomController, GestureDetail, PickerColumn, PickerColumnOption } from '../../index';
 import { clamp } from '../../utils/helpers';
+
 
 @Component({
   tag: 'ion-picker-column',
@@ -14,7 +13,6 @@ export class PickerColumnCmp {
   private mode: string;
 
   private bounceFrom: number;
-  private colHeight: number;
   private lastIndex: number;
   private lastTempIndex: number;
   private minY: number;
@@ -30,6 +28,8 @@ export class PickerColumnCmp {
   private activeBlock: string;
 
   @Element() private el: HTMLElement;
+
+  @Prop({ context: 'dom' }) dom: DomController;
 
   @Prop() col: PickerColumn;
 
@@ -49,7 +49,6 @@ export class PickerColumnCmp {
   componentDidLoad() {
     // get the scrollable element within the column
     let colEle = this.el.querySelector('.picker-opts');
-    this.colHeight = colEle.clientHeight;
 
     // get the height of one option
     this.optHeight = (colEle.firstElementChild ? colEle.firstElementChild.clientHeight : 0);
@@ -94,7 +93,6 @@ export class PickerColumnCmp {
     let opt: PickerColumnOption;
     let optOffset: number;
     let visible: boolean;
-    let translateX: number;
     let translateY: number;
     let translateZ: number;
     let rotateX: number;
@@ -121,13 +119,11 @@ export class PickerColumnCmp {
         if (Math.abs(rotateX) > 90) {
           visible = false;
         } else {
-          translateX = 0;
           translateY = 0;
           translateZ = 90;
           transform = `rotateX(${rotateX}deg) `;
         }
       } else {
-        translateX = 0;
         translateZ = 0;
         translateY = optOffset;
         if (Math.abs(translateY) > 170) {
@@ -224,7 +220,7 @@ export class PickerColumnCmp {
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        Context.dom.raf(() => this.decelerate());
+        this.dom.raf(() => this.decelerate());
       }
 
     } else if (this.y % this.optHeight !== 0) {

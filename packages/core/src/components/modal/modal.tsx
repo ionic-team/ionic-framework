@@ -4,6 +4,7 @@ import {
   AnimationBuilder,
   AnimationController,
   Config,
+  DomController,
   FrameworkDelegate,
   OverlayDismissEvent,
   OverlayDismissEventDetail
@@ -63,6 +64,8 @@ export class Modal {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+
   @Prop() mode: string;
   @Prop() color: string;
   @Prop() component: any;
@@ -144,7 +147,7 @@ export class Modal {
     this.animation.destroy();
 
 
-    await domControllerAsync(Context.dom.write, () => {});
+    await domControllerAsync(this.dom.write, () => {});
 
     // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
     const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);

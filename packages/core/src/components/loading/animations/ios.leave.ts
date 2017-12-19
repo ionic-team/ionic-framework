@@ -4,7 +4,7 @@ import { Animation } from '../../../index';
 /**
  * iOS Loading Leave Animation
  */
-export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Animation {
+export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
@@ -19,10 +19,10 @@ export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLEle
                   .fromTo('scale', 1, 0.9);
 
 
-  return baseAnimation
+  return Promise.resolve(baseAnimation
     .addElement(baseElm)
     .easing('ease-in-out')
     .duration(200)
     .add(backdropAnimation)
-    .add(wrapperAnimation);
+    .add(wrapperAnimation));
 }

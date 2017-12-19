@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange } from '@stencil/core';
-import { Config, GestureDetail } from '../../index';
+import { Config, DomController, GestureDetail } from '../../index';
 import { GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
+
+declare const Ionic: { gesture: GestureController };
 
 
 @Component({
@@ -21,6 +23,9 @@ export class Scroll {
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'config'}) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'isServer' }) isServer: boolean;
+
   @Prop() enabled: boolean = true;
   @Prop() jsScroll: boolean = false;
   @PropDidChange('jsScroll')
@@ -50,11 +55,11 @@ export class Scroll {
   @Event() ionScrollEnd: EventEmitter;
 
   componentDidLoad() {
-    if (Context.isServer) {
+    if (this.isServer) {
       return;
     }
 
-    const gestureCtrl = Context.gesture = Context.gesture || new GestureController;
+    const gestureCtrl = Ionic.gesture = Ionic.gesture || new GestureController();
     this.gesture = gestureCtrl.createGesture('scroll', 100, false);
   }
 
@@ -143,7 +148,7 @@ export class Scroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        Context.dom.raf(step);
+        this.dom.raf(step);
 
       } else {
         stopScroll = true;
@@ -157,8 +162,8 @@ export class Scroll {
     self.isScrolling = true;
 
     // chill out for a frame first
-    Context.dom.write(() => {
-      Context.dom.write(timeStamp => {
+    this.dom.write(() => {
+      this.dom.write(timeStamp => {
         startTime = timeStamp;
         step(timeStamp);
       });
@@ -174,7 +179,7 @@ export class Scroll {
     if (!this.queued) {
       this.queued = true;
 
-      Context.dom.read((timeStamp) => {
+      this.dom.read(timeStamp => {
         this.queued = false;
         this.onScroll(timeStamp);
       });
@@ -249,7 +254,7 @@ export class Scroll {
       // haven't scrolled in a while, so it's a scrollend
       this.isScrolling = false;
 
-      Context.dom.read((timeStamp) => {
+      this.dom.read(timeStamp => {
         if (!this.isScrolling) {
           this.onEnd(timeStamp);
         }

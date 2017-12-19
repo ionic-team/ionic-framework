@@ -7,7 +7,7 @@ const OFF_BOTTOM = '40px';
 const CENTER = '0px';
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
-export function buildMdTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Transition {
+export function buildMdTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Promise<Transition> {
 
   rootTransition.enteringView = enteringView;
   rootTransition.leavingView = leavingView;
@@ -54,5 +54,5 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
     rootTransition.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 1, 0));
   }
 
-  return rootTransition;
+  return Promise.resolve(rootTransition);
 }

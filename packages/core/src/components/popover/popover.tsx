@@ -4,6 +4,7 @@ import {
   AnimationBuilder,
   AnimationController,
   Config,
+  DomController,
   FrameworkDelegate,
   OverlayDismissEvent,
   OverlayDismissEventDetail
@@ -64,6 +65,7 @@ export class Popover {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
 
   @Prop() mode: string;
   @Prop() color: string;
@@ -151,7 +153,7 @@ export class Popover {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      return domControllerAsync(Context.dom.write, () => {});
+      return domControllerAsync(this.dom.write, () => {});
     }).then(() => {
       // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
       const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
