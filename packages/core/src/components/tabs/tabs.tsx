@@ -55,6 +55,8 @@ export class Tabs {
    */
   @Prop() translucent: boolean = false;
 
+  @Prop() scrollable: boolean = false;
+
   /**
    * @output {any} Emitted when the tab changes.
    */
@@ -102,7 +104,6 @@ export class Tabs {
     }
     selectedTab.selected = true;
 
-    console.log('HEY');
     // The same selected was selected
     // we need to set root in the nested ion-nav if it exist
     if (this.selectedTab === selectedTab) {
@@ -165,7 +166,6 @@ export class Tabs {
 
   @Method()
   getRoutes(): RouterEntries {
-    debugger;
     const a = this.tabs.map(t => {
       return {
         path: t.getPath(),
@@ -231,7 +231,8 @@ export class Tabs {
           highlight={this.tabbarHighlight}
           placement={this.tabbarPlacement}
           layout={this.tabbarLayout}
-          translucent={this.translucent}>
+          translucent={this.translucent}
+          scrollable={this.scrollable}>
         </ion-tabbar>
       );
     }

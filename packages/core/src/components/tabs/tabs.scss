@@ -45,6 +45,7 @@ ion-tabbar {
   display: flex;
 
   justify-content: center;
+  align-items: center;
 
   order: 1;
 
@@ -165,11 +166,10 @@ ion-tab-button {
   @include position(null, calc(50% - 50px), null, null);
 }
 
-
 // Tab Highlight
 // --------------------------------------------------
 
-ion-tab-highlight {
+.tabbar-highlight {
   @include position(null, null, 0, 0);
   @include transform-origin(0, 0);
 
@@ -191,11 +191,27 @@ ion-tab-highlight {
   }
 }
 
-.placement-top > ion-tab-highlight {
+.placement-top .tabbar-highlight {
   bottom: 0;
 }
 
-.placement-bottom > ion-tab-highlight {
+.placement-bottom .tabbar-highlight {
   top: 0;
 }
 
+// Overflow Scrolling
+// --------------------------------------------------
+
+ion-tabbar.scrollable ion-scroll {
+  overflow: hidden;
+}
+
+ion-tabbar.scrollable .scroll-inner {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+ion-tabbar.scrollable ion-button.inactive {
+  visibility: hidden;
+}

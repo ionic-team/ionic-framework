@@ -95,6 +95,11 @@ components to switch to `TabsRoot3`:
 string
 
 
+#### scrollable
+
+boolean
+
+
 #### tabbarHidden
 
 boolean
@@ -125,6 +130,11 @@ boolean
 #### name
 
 string
+
+
+#### scrollable
+
+boolean
 
 
 #### tabbarHidden

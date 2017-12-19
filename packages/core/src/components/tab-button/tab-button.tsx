@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import {Component, Element, Event, EventEmitter, Listen, Prop} from '@stencil/core';
 
 
 @Component({
@@ -6,10 +6,22 @@ import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 })
 export class TabButton {
 
+  @Element() el: HTMLElement;
+
   @Prop() selected = false;
   @Prop() tab: HTMLIonTabElement;
 
   @Event() ionTabbarClick: EventEmitter;
+  @Event() ionTabButtonDidLoad: EventEmitter;
+  @Event() ionTabButtonDidUnload: EventEmitter;
+
+  componentDidLoad() {
+    this.ionTabButtonDidLoad.emit({ button: this });
+  }
+
+  componentDidUnload() {
+    this.ionTabButtonDidUnload.emit({ button: this });
+  }
 
   @Listen('click')
   protected onClick(ev: UIEvent) {
@@ -21,7 +33,7 @@ export class TabButton {
     const selected = this.selected;
     const tab = this.tab;
     const hasTitle = !!tab.title;
-    const hasIcon = !! tab.icon;
+    const hasIcon = !!tab.icon;
     const hasTitleOnly = (hasTitle && !hasIcon);
     const hasIconOnly = (hasIcon && !hasTitle);
     const hasBadge = !!tab.badge;

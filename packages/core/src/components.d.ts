@@ -2708,36 +2708,6 @@ declare global {
 
 
 import {
-  TabHighlight as IonTabHighlight
-} from './components/tab-highlight/tab-highlight';
-
-declare global {
-  interface HTMLIonTabHighlightElement extends IonTabHighlight, HTMLElement {
-  }
-  var HTMLIonTabHighlightElement: {
-    prototype: HTMLIonTabHighlightElement;
-    new (): HTMLIonTabHighlightElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-tab-highlight": HTMLIonTabHighlightElement;
-  }
-  interface ElementTagNameMap {
-    "ion-tab-highlight": HTMLIonTabHighlightElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-tab-highlight": JSXElements.IonTabHighlightAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonTabHighlightAttributes extends HTMLAttributes {
-      selectedTab?: HTMLIonTabElement;
-    }
-  }
-}
-
-
-import {
   Tab as IonTab
 } from './components/tab/tab';
 
@@ -2805,6 +2775,7 @@ declare global {
       highlight?: boolean;
       layout?: string;
       placement?: string;
+      scrollable?: Boolean;
       selectedTab?: HTMLIonTabElement;
       tabs?: HTMLIonTabElement[];
       translucent?: boolean;
@@ -2838,6 +2809,7 @@ declare global {
   namespace JSXElements {
     export interface IonTabsAttributes extends HTMLAttributes {
       name?: string;
+      scrollable?: boolean;
       tabbarHidden?: boolean;
       tabbarHighlight?: boolean;
       tabbarLayout?: string;
