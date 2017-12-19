@@ -1,6 +1,6 @@
 import {Component, Element, Listen, Prop, PropDidChange, State} from '@stencil/core';
 import {createThemedClasses} from '../../utils/theme';
-import {DomController} from "../../index";
+import {DomController} from '../../index';
 
 @Component({
   tag: 'ion-tabbar',
@@ -22,7 +22,7 @@ export class Tabbar {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop() placement = 'bottom';
   @Prop() selectedTab: HTMLIonTabElement;
-  @Prop() scrollable:Boolean;
+  @Prop() scrollable: Boolean;
   @Prop() tabs: HTMLIonTabElement[];
 
   private scrollEl: HTMLIonScrollElement;
@@ -58,7 +58,7 @@ export class Tabbar {
   @Listen('ionTabButtonDidUnload')
   onTabButtonLoad() {
     this.scrollable && this.updateBoundaries();
-    this.highlight && this.updateHighlight()
+    this.highlight && this.updateHighlight();
   }
 
   protected analyzeTabs() {
@@ -131,12 +131,12 @@ export class Tabbar {
         <ion-button onClick={() => this.scrollByTab('right')} fill='clear' class={{inactive: !this.canScrollRight}}>
           <ion-icon name='arrow-dropright'/>
         </ion-button>
-      ]
+      ];
     } else {
       return [
         ...tabButtons,
         ionTabbarHighlight
-      ]
+      ];
     }
   }
 
@@ -182,14 +182,14 @@ export class Tabbar {
   }
 
   updateBoundaries() {
-    this.canScrollLeft = this.scrollEl.scrollLeft != 0;
+    this.canScrollLeft = this.scrollEl.scrollLeft !== 0;
     this.canScrollRight = this.scrollEl.scrollLeft < (this.scrollEl.scrollWidth - this.scrollEl.offsetWidth);
   }
 
   updateHighlight() {
     this.dom.read(() => {
       const btn = this.getSelectedButton(),
-        ionTabbarHighlight:HTMLElement = this.highlight && this.el.querySelector('div.tabbar-highlight') as HTMLElement;
+        ionTabbarHighlight: HTMLElement = this.highlight && this.el.querySelector('div.tabbar-highlight') as HTMLElement;
 
       if (btn && ionTabbarHighlight) {
         ionTabbarHighlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
