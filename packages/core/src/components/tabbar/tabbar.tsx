@@ -112,7 +112,7 @@ export class Tabbar {
 
   render() {
     const selectedTab = this.selectedTab,
-      ionTabbarHighlight = this.highlight ? <div class='animated ion-tab-highlight'/> as HTMLElement : null,
+      ionTabbarHighlight = this.highlight ? <div class='animated tabbar-highlight'/> as HTMLElement : null,
       tabButtons = this.tabs.map(tab => <ion-tab-button tab={tab} selected={selectedTab === tab}/>);
 
 
@@ -189,7 +189,7 @@ export class Tabbar {
   updateHighlight() {
     this.dom.read(() => {
       const btn = this.getSelectedButton(),
-        ionTabbarHighlight:HTMLElement = this.highlight && this.el.querySelector('div.ion-tab-highlight') as HTMLElement;
+        ionTabbarHighlight:HTMLElement = this.highlight && this.el.querySelector('div.tabbar-highlight') as HTMLElement;
 
       if (btn && ionTabbarHighlight) {
         ionTabbarHighlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
