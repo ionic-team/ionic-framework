@@ -442,8 +442,8 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
   }
 
   /**
-  * @hidden
-  */
+   * @hidden
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if ('virtualScroll' in changes) {
       // React on virtualScroll changes only once all inputs have been initialized
@@ -842,7 +842,11 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     this._scrollSub && this._scrollSub.unsubscribe();
     this._scrollEndSub && this._scrollEndSub.unsubscribe();
     this._resizeSub = this._scrollEndSub = this._scrollSub = null;
-    this._hdrFn = this._ftrFn = this._records = this._cells = this._nodes = this._data = null;
+    this._hdrFn = this._ftrFn = null;
+    this._cells = this._nodes = this._records = [];
+    this._data = {
+      scrollTop: 0,
+    };
   }
 }
 
