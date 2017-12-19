@@ -56,10 +56,7 @@
 // Material Design Tab Button Text
 // --------------------------------------------------
 
-.tabbar-md.placement-top .tab-selected .tab-button-icon {
-  transform: inherit;
-}
-
+.tabbar-md.placement-top .tab-selected .tab-button-icon,
 .tabbar-md.placement-top .tab-selected .tab-button-text {
   transform: inherit;
 }
