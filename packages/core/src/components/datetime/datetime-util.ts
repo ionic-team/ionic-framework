@@ -11,9 +11,9 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {
       var token = '{' + index + '}';
-      var text = renderTextFormat(format.f, (<any>value)[format.k], value, locale);
+      var text = renderTextFormat(format.f, (value as any)[format.k], value, locale);
 
-      if (!hasText && text && (<any>value)[format.k]) {
+      if (!hasText && text && (value as any)[format.k]) {
         hasText = true;
       }
 
@@ -259,7 +259,7 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
       // merge new values from the picker's selection
       // to the existing DatetimeData values
       for (var k in newData) {
-        (<any>existingData)[k] = newData[k].value;
+        (existingData as any)[k] = newData[k].value;
       }
 
       return true;
@@ -271,7 +271,7 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
   } else {
     // blank data, clear everything out
     for (let k in existingData) {
-      delete (<any>existingData)[k];
+      delete (existingData as any)[k];
     }
   }
   return false;
@@ -319,7 +319,7 @@ export function getValueFromFormat(date: DatetimeData, format: string) {
   if (format === FORMAT_hh || format === FORMAT_h) {
     return (date.hour > 12 ? date.hour - 12 : date.hour);
   }
-  return (<any>date)[convertFormatToKey(format)];
+  return (date as any)[convertFormatToKey(format)];
 }
 
 

@@ -155,7 +155,7 @@ export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: stri
 
   if (elm) {
     for (var i = 0; i < styleProps.length; i++) {
-      (<any>elm.style)[styleProps[i]] = styles[styleProps[i]];
+      (elm.style as any)[styleProps[i]] = styles[styleProps[i]];
     }
   }
 }
