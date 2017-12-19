@@ -70,8 +70,9 @@
 .item-ios .reorder-icon {
   font-size: 2em;
 
-  fill: currentColor;
   opacity: .4;
+
+  fill: currentColor;
 }
 
 .reorder[slot="start"] .reorder-icon {

@@ -11,11 +11,11 @@
   @include padding($padding-width / 2);
   @include margin-horizontal(auto);
 
+  display: flex;
+  flex-direction: column;
+
   width: 100%;
 
-  display: flex;
-
-  flex-direction: column;
 
   // Remove the padding from the grid and all immediate children columns
   &[no-padding] {
@@ -105,9 +105,9 @@
 
   position: relative;
 
-  width: 100%;
   flex-basis: 0;
   flex-grow: 1;
+  width: 100%;
   max-width: 100%;
   min-height: 1px; // Prevent columns from collapsing when empty
 
