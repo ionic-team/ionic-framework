@@ -10,7 +10,7 @@
   contain: strict;
 }
 
-.tabbar-md > .tabbar-highlight {
+.tabbar-md .tabbar-highlight {
   background: $tabs-md-tab-color-active;
 }
 
@@ -37,14 +37,14 @@
   fill: $tabs-md-tab-icon-color;
 }
 
-.tabbar-md.scrollable > ion-scroll {
+.tabbar-md.scrollable ion-scroll {
   max-width: 650px;
   margin: 0 8px;
+}
 
-  ion-tab-button {
-    overflow: hidden;
-    flex: 1 0 auto;
-  }
+.tabbar-md.scrollable ion-tab-button {
+  overflow: hidden;
+  flex: 1 0 auto;
 }
 
 .tabbar-md .tab-selected {
@@ -56,12 +56,12 @@
 // Material Design Tab Button Text
 // --------------------------------------------------
 
-.tabbar-md.placement-top {
-  .tab-selected {
-    .tab-button-icon, .tab-button-text {
-      transform: inherit;
-    }
-  }
+.tabbar-md.placement-top .tab-selected .tab-button-icon {
+  transform: inherit;
+}
+
+.tabbar-md.placement-top .tab-selected .tab-button-text {
+  transform: inherit;
 }
 
 .tabbar-md .tab-button-text {

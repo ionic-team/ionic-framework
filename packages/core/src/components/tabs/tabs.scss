@@ -202,18 +202,16 @@ ion-tab-button {
 // Overflow Scrolling
 // --------------------------------------------------
 
-ion-tabbar.scrollable {
-  & > ion-scroll {
-    overflow: hidden;
+ion-tabbar.scrollable ion-scroll {
+  overflow: hidden;
+}
 
-    & .scroll-inner {
-      position: relative;
-      display: flex;
-      flex-direction: row;
-    }
-  }
+ion-tabbar.scrollable .scroll-inner {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
 
-  ion-button.inactive {
-    visibility: hidden;
-  }
+ion-tabbar.scrollable ion-button.inactive {
+  visibility: hidden;
 }
