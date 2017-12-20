@@ -1,7 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, NavState, RouterEntries } from '../../index';
-
-export interface NavOptions { }
+import { Config } from '../../index';
 
 
 @Component({
@@ -61,7 +59,6 @@ export class Tabs {
    * @output {any} Emitted when the tab changes.
    */
   @Event() ionChange: EventEmitter;
-  @Event() ionNavChanged: EventEmitter;
 
   componentDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
@@ -69,10 +66,7 @@ export class Tabs {
     this.loadConfig('tabsHighlight', true);
 
     this.initTabs();
-    const useRouter = this.config.getBoolean('useRouter', false);
-    if (!useRouter) {
-      this.initSelect();
-    }
+    this.initSelect();
   }
 
   componentDidUnload() {
@@ -106,21 +100,21 @@ export class Tabs {
 
     // The same selected was selected
     // we need to set root in the nested ion-nav if it exist
-    if (this.selectedTab === selectedTab) {
+    /*if (this.selectedTab === selectedTab) {
       return selectedTab.goToRoot();
     }
+    */
 
     const leavingTab = this.selectedTab;
     this.selectedTab = selectedTab;
 
-    let promise = selectedTab._setActive(true);
+    let promise = selectedTab.setActive(true);
     if (leavingTab) {
-      promise = promise.then(() => leavingTab._setActive(false));
+      promise = promise.then(() => leavingTab.setActive(false));
     }
 
     return promise.then(() => {
       this.ionChange.emit(selectedTab);
-      this.ionNavChanged.emit({ isPop: false });
     });
   }
 
@@ -152,7 +146,7 @@ export class Tabs {
     return this.tabs;
   }
 
-  @Method()
+ /*@Method()
   getState(): NavState {
     const selectedTab = this.getSelected();
     if (!selectedTab) {
@@ -175,6 +169,7 @@ export class Tabs {
     return a;
   }
 
+
   @Method()
   setRouteId(id: any, _: any = {}): Promise<void> {
     if (this.selectedTab === id) {
@@ -182,10 +177,11 @@ export class Tabs {
     }
     return this.select(id);
   }
+  */
 
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
-    for (let tab of tabs) {
+    for (const tab of tabs) {
       const id = `t-${this.tabsId}-${++this.ids}`;
       tab.btnId = 'tab-' + id;
       tab.id = 'tabpanel-' + id;
@@ -194,18 +190,16 @@ export class Tabs {
 
   private initSelect() {
     // find pre-selected tabs
-    let selectedTab = this.tabs.find(t => t.selected);
+    const selectedTab = this.tabs.find(t => t.selected) || this.tabs.find(t => t.show && t.enabled);
 
     // reset all tabs none is selected
-    for (let tab of this.tabs) {
-      tab.selected = false;
+    for (const tab of this.tabs) {
+      if (tab !== selectedTab) {
+        tab.selected = false;
+      }
     }
 
-    // find a tab candidate in case, the selected in null
-    if (!selectedTab) {
-      selectedTab = this.tabs.find(t => t.show && t.enabled);
-    }
-    selectedTab._setActive(true);
+    selectedTab.setActive(true);
     this.selectedTab = selectedTab;
   }
 
@@ -241,3 +235,5 @@ export class Tabs {
 }
 
 let tabIds = -1;
+
+
