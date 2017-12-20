@@ -1,5 +1,4 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
-import { PublicViewController, StencilElement } from '../../index';
 
 
 @Component({
@@ -7,23 +6,10 @@ import { PublicViewController, StencilElement } from '../../index';
 })
 export class Tab {
 
-  private nav: Promise<HTMLIonNavElement>;
-  private resolveNav: (el: HTMLIonNavElement) => void;
-
   @Element() el: HTMLElement;
 
   @State() init = false;
   @State() active = false;
-
-  /**
-   * @input {Page} Set the root page for this tab.
-   */
-  @Prop() root: string;
-
-  /**
-   * @input {object} Any nav-params to pass to the root page of this tab.
-   */
-  @Prop() rootParams: any;
 
   /**
    * @input {string} Set the root page for this tab.
@@ -73,51 +59,24 @@ export class Tab {
    */
   @Prop() tabsHideOnSubPages = false;
 
-  constructor() {
-    this.nav = new Promise((resolve) => this.resolveNav = resolve);
-  }
 
   @Prop({ mutable: true }) selected = false;
   @PropDidChange('selected')
   selectedChanged(selected: boolean) {
     if (selected) {
-      this.ionSelect.emit(this.el);
+      this.ionSelect.emit();
     }
   }
 
   /**
    * @output {Tab} Emitted when the current tab is selected.
    */
-  @Event() ionSelect: EventEmitter;
-
-  protected componentDidUpdate() {
-    if (this.init && this.resolveNav) {
-      const nav = this.el.querySelector('ion-nav') as any as StencilElement;
-      nav.componentOnReady(this.resolveNav);
-      this.resolveNav = null;
-    }
-  }
+  @Event() ionSelect: EventEmitter<TabEventDetail>;
 
   @Method()
-  _setActive(shouldActive: boolean): Promise<any> {
-    if (this.active === shouldActive) {
-      return Promise.resolve();
-    }
-    this.active = shouldActive;
-    this.selected = shouldActive;
-
-    const needsLifecycle = this.init;
-    if (shouldActive) {
-      this.init = true;
-    }
-    if (needsLifecycle) {
-      if (shouldActive) {
-        // lifecycle didEnter
-      } else {
-        // lifecycle didLeave
-      }
-    }
-    return this.nav;
+  setActive(active: boolean): Promise<any> {
+    this.active = active;
+    return Promise.resolve();
   }
 
   @Method()
@@ -129,21 +88,6 @@ export class Tab {
       return this.title.toLowerCase();
     }
     return '';
-  }
-
-  @Method()
-  goToRoot(opts: any = {}) {
-    return this.nav.then(nav => nav && nav.setRoot(nav.root, null, opts));
-  }
-
-  @Method()
-  getActive(): Promise<PublicViewController> {
-    return this.nav.then(nav => nav && nav.getActive());
-  }
-
-  @Method()
-  getNav(): Promise<HTMLIonNavElement> {
-    return this.nav;
   }
 
   hostData() {
@@ -159,9 +103,14 @@ export class Tab {
   }
 
   render() {
-    if (this.init) {
-      return <ion-nav><slot></slot></ion-nav>;
-    }
-    return null;
+    return <slot></slot>;
   }
+}
+
+export interface TabEvent extends CustomEvent {
+  detail: TabEventDetail;
+}
+
+export interface TabEventDetail {
+
 }

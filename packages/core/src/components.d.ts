@@ -2737,8 +2737,6 @@ declare global {
       enabled?: boolean;
       icon?: string;
       path?: string;
-      root?: string;
-      rootParams?: any;
       selected?: boolean;
       show?: boolean;
       tabsHideOnSubPages?: boolean;
