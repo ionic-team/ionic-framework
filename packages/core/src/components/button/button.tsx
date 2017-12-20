@@ -126,7 +126,7 @@ export class Button {
     const buttonClasses = {
       ...getElementClassObject(this.el.classList),
       ...getElementClassObject(elementClasses),
-      'button-key': this.keyFocus
+      'focused': this.keyFocus
     };
 
     return (
