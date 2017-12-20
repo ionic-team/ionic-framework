@@ -58,6 +58,7 @@ const queueMap = new Map<number, TransitionInstruction[]>();
 /* it is very important to keep this class in sync with ./nav-interface interface */
 @Component({
   tag: 'ion-nav',
+  styleUrl: 'nav.scss'
 })
 export class Nav implements PublicNav {
 

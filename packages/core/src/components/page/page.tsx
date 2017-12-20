@@ -3,6 +3,7 @@ import { Component } from '@stencil/core';
 
 @Component({
   tag: 'ion-page',
+  styleUrl: 'page.scss'
 })
 export class Page {
 
