@@ -36,6 +36,7 @@
 
   <script>
 
+    window.addEventListener('ionActionSheetDidDismiss', function(e){console.log('didDismiss', e)})
     async function presentBasic() {
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();

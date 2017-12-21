@@ -171,16 +171,21 @@ export class Loading {
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
+      if (!this.animate) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    }).then(() => {
       this.ionLoadingDidDismiss.emit({
         data,
         role
+      });
+    }).then(() => {
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
       });
     });
   }

@@ -59,6 +59,9 @@
     </ion-page>
   </ion-app>
   <script>
+    window.addEventListener('ionToastDidDismiss', function(e){console.log('didDismiss', e)})
+    window.addEventListener('ionToastWillDismiss', function(e){console.log('willDismiss', e)})
+    
     async function presentToast(position) {
       const toastController = document.querySelector('ion-toast-controller');
       await toastController.componentOnReady();

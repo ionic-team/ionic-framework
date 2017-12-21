@@ -78,14 +78,14 @@ export class Modal {
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() animate: boolean;
+  @Prop() animate: boolean = true;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   private animation: Animation;
   private usersComponentElement: HTMLElement;
 
   @Method()
-  async present() {
+  present() {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -111,29 +111,30 @@ export class Modal {
     // add the modal by default to the data being passed
     this.data = this.data || {};
     this.data.modal = this.el;
-    const mountingData = await this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses);
-    this.usersComponentElement = mountingData.element;
-    this.animation = await this.animationCtrl.create(animationBuilder, this.el);
-    if (!this.animate) {
-      // if the duration is 0, it won't actually animate I don't think
-      // TODO - validate this
-      this.animation = this.animation.duration(0);
-    }
-    await playAnimationAsync(this.animation);
-    this.animation.destroy();
-    this.ionModalDidPresent.emit();
+    this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
+     .then((mountingData) => {
+       this.usersComponentElement = mountingData.element;
+     });
+
+     return this.animationCtrl.create(animationBuilder, this.el)
+     .then(animation => {
+      this.animation = animation;
+      if (!this.animate) this.animation = animation.duration(0);
+      return playAnimationAsync(animation);
+    })
+    .then((animation) => {
+      animation.destroy();
+      this.ionModalDidPresent.emit();
+    });
   }
 
   @Method()
-  async dismiss(data?: any, role?: string) {
+  dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    this.ionModalWillDismiss.emit({
-      data,
-      role
-    });
+    this.ionModalWillDismiss.emit({data, role});
 
     if (!this.delegate) {
       this.delegate = new DomFrameworkDelegate();
@@ -142,22 +143,25 @@ export class Modal {
     // get the user's animation fn if one was provided
     const animationBuilder = this.leaveAnimation || this.config.get('modalLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    this.animation = await this.animationCtrl.create(animationBuilder, this.el);
-    await playAnimationAsync(this.animation);
-    this.animation.destroy();
 
-
-    await domControllerAsync(this.dom.write, () => {});
-
-    // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
-    const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
-    await this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
-
-    this.el.parentElement.removeChild(this.el);
-
-    this.ionModalDidDismiss.emit({
-      data,
-      role
+    return this.animationCtrl.create(animationBuilder, this.el)
+    .then(animation => {
+      this.animation = animation;
+      if (!this.animate) {
+        this.animation = animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    })
+    .then((animation) => {
+      animation.destroy();
+      this.ionModalDidDismiss.emit({data, role});
+    })
+    .then(() => {
+      return domControllerAsync(this.dom.write, () => {
+        const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
+        this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
+        this.el.parentNode.removeChild(this.el);
+      });
     });
   }
 

@@ -178,14 +178,13 @@ export class Alert {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    }).then(() => {
       this.ionAlertDidDismiss.emit({
         data: data,
         role: role
+      });
+    }).then(() => {
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
       });
     });
   }

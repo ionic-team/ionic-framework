@@ -44,6 +44,10 @@
     </ion-page>
   </ion-app>
   <script>
+
+
+    // window.addEventListener('ionPopoverDidDismiss', function(e){console.log('didDismiss', e)})
+    // window.addEventListener('ionPopoverWillDismiss', function(e){console.log('willDismiss', e)})
     async function presentPopover(opts) {
       const popoverController = document.querySelector('ion-popover-controller');
       await popoverController.componentOnReady();

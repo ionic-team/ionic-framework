@@ -121,13 +121,13 @@ export class Toast {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    }).then(() => {
       this.ionToastDidDismiss.emit({
         data,
         role
+      });
+    }).then(() => {
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
       });
     });
   }

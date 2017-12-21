@@ -27,6 +27,8 @@
   </ion-app>
 
   <script>
+    window.addEventListener("ionModalDidDismiss", function(e){console.log('DidDismiss', e)})
+    window.addEventListener("ionModalWillDismiss", function(e){console.log('WillDismiss', e)})
     async function presentModal() {
       const element = document.createElement('div');
       element.innerHTML = `

@@ -108,27 +108,26 @@ export class Popover {
       cssClasses.push(this.cssClass);
     }
 
-     // add the modal by default to the data being passed
-     this.data = this.data || {};
-     this.data.modal = this.el;
-     return this.delegate.attachViewToDom(userComponentParent, this.component,
-                        this.data, cssClasses).then((mountingData) => {
-      this.usersComponentElement = mountingData.element;
-      return this.animationCtrl.create(animationBuilder, this.el, this.ev);
-     }).then((animation) => {
-      this.animation = animation;
-      if (!this.animate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-     }).then((animation) => {
-      animation.destroy();
-      this.componentDidEnter();
-    });
-  }
+    // add the modal by default to the data being passed
+    this.data = this.data || {};
+    this.data.modal = this.el;
 
+    return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
+      .then((mountingData) => {
+        this.usersComponentElement = mountingData.element;
+        return domControllerAsync(this.dom.raf, () => { })
+        .then(() => this.animationCtrl.create(animationBuilder, this.el, this.ev))
+      })
+      .then((animation) => {
+        this.animation = animation;
+        if (!this.animate) this.animation = animation.duration(0);
+        return playAnimationAsync(animation);
+      })
+      .then((animation) => {
+        animation.destroy();
+        this.componentDidEnter();
+      });
+  }
 
   @Method()
   dismiss(data?: any, role?: string) {
@@ -137,10 +136,7 @@ export class Popover {
       this.animation = null;
     }
 
-    this.ionPopoverWillDismiss.emit({
-      data,
-      role
-    });
+    this.ionPopoverWillDismiss.emit({ data, role });
 
     if (!this.delegate) {
       this.delegate = new DomFrameworkDelegate();
@@ -148,23 +144,22 @@ export class Popover {
 
     const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      return domControllerAsync(this.dom.write, () => {});
-    }).then(() => {
-      // TODO - Figure out how to make DOM controller work with callbacks that return a promise or are async
-      const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
-      return this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
-    }).then(() => {
-      this.el.parentElement.removeChild(this.el);
-      this.ionPopoverDidDismiss.emit({
-        data,
-        role
+    return this.animationCtrl.create(animationBuilder, this.el)
+      .then(animation => {
+        this.animation = animation;
+        return playAnimationAsync(animation);
+      })
+      .then((animation) => {
+        animation.destroy();
+        this.ionPopoverDidDismiss.emit({ data, role });
+      })
+      .then(() => {
+        return domControllerAsync(this.dom.write, () => {
+          const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
+          this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
+          this.el.parentNode.removeChild(this.el);
+        });
       });
-    });
   }
 
   componentDidLoad() {
@@ -217,7 +212,7 @@ export class Popover {
         class='popover-backdrop'
       />,
       <div class={wrapperClasses}>
-        <div class='popover-arrow'/>
+        <div class='popover-arrow' />
         <div class='popover-content'>
           <div class={USER_COMPONENT_POPOVER_CONTAINER_CLASS}>
           </div>
