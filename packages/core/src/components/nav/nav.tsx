@@ -93,7 +93,7 @@ export class Nav implements PublicNav {
   componentWillLoad() {
     this.routes = Array.from(this.element.querySelectorAll('ion-route'))
       .map(child => child.getRoute());
-    this.useRouter = this.config.getBoolean('useRouter', false);
+    this.useRouter = false; // this.config.getBoolean('useRouter', false);
   }
 
   componentDidLoad() {
