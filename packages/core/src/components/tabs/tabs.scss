@@ -224,3 +224,7 @@ ion-tabbar.scrollable ion-button.inactive {
 ion-tabs {
   @extend .ion-page
 }
+
+ion-tab-button {
+  box-sizing: border-box;
+}
