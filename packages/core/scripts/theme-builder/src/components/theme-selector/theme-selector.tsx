@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-import { STORED_THEME_KEY, THEME_VARIABLES, getThemeUrl } from '../../theme-variables';
+import { STORED_THEME_KEY, cleanCssValue, getThemeUrl } from '../helpers';
+import { THEME_VARIABLES } from '../../theme-variables';
 
 
 @Component({
@@ -71,7 +72,7 @@ export class ThemeSelector {
     c.push(':root {');
 
     this.themeVariables.forEach(themeVariable => {
-      themeVariable.value = (themeVariable.value || '').trim();
+      themeVariable.value = cleanCssValue(themeVariable.value);
       c.push(`  ${themeVariable.property}: ${themeVariable.value};`);
     });
 
