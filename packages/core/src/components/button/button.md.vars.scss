@@ -75,6 +75,9 @@ $button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5
 /// @prop - Background color of the ripple on the button
 $button-md-ripple-background-color:       #555 !default;
 
+/// @prop - Background color of the focused button
+$button-md-background-color-focused:       color-shade($button-md-background-color, 12%) !default;
+
 
 // Material Design Large Button
 // --------------------------------------------------
@@ -156,6 +159,9 @@ $button-md-outline-opacity-activated:           1 !default;
 /// @prop - Background color of the ripple on the outline button
 $button-md-outline-ripple-background-color:     $button-md-background-color !default;
 
+/// @prop - Background color of the focused outline button
+$button-md-outline-background-color-focused:    rgba($button-md-background-color, 0.12) !default;
+
 
 // Material Design Clear Button
 // --------------------------------------------------
@@ -186,6 +192,9 @@ $button-md-clear-background-color-hover:        rgba(158, 158, 158, .1) !default
 
 /// @prop - Background color of the ripple on the clear button
 $button-md-clear-ripple-background-color:       #999 !default;
+
+/// @props - Background color of the focused clear button
+$button-md-clear-background-color-focused:      rgba($button-md-background-color, 0.12) !default;
 
 
 // Material Design Round Button
