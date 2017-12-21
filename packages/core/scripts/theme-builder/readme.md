@@ -5,7 +5,7 @@ CD to core package:
     cd packages/core
 
 
-Let latest:
+Pull latest:
 
     git pull --rebase
 
@@ -20,6 +20,14 @@ Open Theme Builder App
     npm run theme-builder
 
 
-Commit CSS Changes
+Github App: Commit CSS Changes, and use this format:
 
     style(theme): update oceanic theme
+
+
+Pull the latest again for safe measure:
+
+    git pull --rebase
+
+
+Github App: Push to Origin
