@@ -15,17 +15,22 @@ NPM Install
     npm install
 
 
-Open Theme Builder App
+Run Theme Builder
 
     npm run theme-builder
 
 
-Github App: Commit CSS Changes, and use this format:
+Open Theme Builder App
+
+    http://localhost:3333/theme-builder
+
+
+Github App: Commit CSS changes using this format:
 
     style(theme): update oceanic theme
 
 
-Pull the latest again for safe measure:
+Pull the latest again for good measure:
 
     git pull --rebase
 
