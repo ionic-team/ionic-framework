@@ -2,7 +2,7 @@
 
 
 :root {
-  --primary: #3880ff;
+  --primary: #ff4f12;
   --primary-contrast: #ffffff;
   --secondary: #0cd1e8;
   --secondary-contrast: #ffffff;
@@ -20,9 +20,9 @@
   --medium-contrast: #000000;
   --dark: #222428;
   --dark-contrast: #f4f5f8;
-  --content-color: #222428;
-  --content-sub-color: #222428;
-  --content-background: #eeeeee;
+  --content-color: #ffffff;
+  --content-sub-color: #A7ADBA;
+  --content-background: #1B2B34;
   --content-sub-background: #eeeeee;
   --toolbar-background: #eeeeee;
   --tabbar-background: #eeeeee;
