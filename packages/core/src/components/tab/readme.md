@@ -80,16 +80,6 @@ string
 string
 
 
-#### root
-
-string
-
-
-#### rootParams
-
-any
-
-
 #### selected
 
 boolean
@@ -142,16 +132,6 @@ string
 string
 
 
-#### root
-
-string
-
-
-#### rootParams
-
-any
-
-
 #### selected
 
 boolean
@@ -179,19 +159,10 @@ string
 
 ## Methods
 
-#### _setActive()
-
-
-#### getActive()
-
-
-#### getNav()
-
-
 #### getPath()
 
 
-#### goToRoot()
+#### setActive()
 
 
 

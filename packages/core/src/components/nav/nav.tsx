@@ -58,6 +58,7 @@ const queueMap = new Map<number, TransitionInstruction[]>();
 /* it is very important to keep this class in sync with ./nav-interface interface */
 @Component({
   tag: 'ion-nav',
+  styleUrl: 'nav.scss'
 })
 export class Nav implements PublicNav {
 
@@ -92,7 +93,7 @@ export class Nav implements PublicNav {
   componentWillLoad() {
     this.routes = Array.from(this.element.querySelectorAll('ion-route'))
       .map(child => child.getRoute());
-    this.useRouter = this.config.getBoolean('useRouter', false);
+    this.useRouter = false; // this.config.getBoolean('useRouter', false);
   }
 
   componentDidLoad() {

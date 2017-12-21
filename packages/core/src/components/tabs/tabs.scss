@@ -1,5 +1,9 @@
 @import "../../themes/ionic.globals";
 
+// Util
+// --------------------------------------------------
+@import "../../themes/util";
+
 // Tabs
 // --------------------------------------------------
 
@@ -214,4 +218,13 @@ ion-tabbar.scrollable .scroll-inner {
 
 ion-tabbar.scrollable ion-button.inactive {
   visibility: hidden;
+}
+
+
+ion-tabs {
+  @extend .ion-page
+}
+
+ion-tab-button {
+  box-sizing: border-box;
 }

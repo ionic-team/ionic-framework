@@ -11,16 +11,16 @@ export class TabButton {
   @Prop() selected = false;
   @Prop() tab: HTMLIonTabElement;
 
-  @Event() ionTabbarClick: EventEmitter;
-  @Event() ionTabButtonDidLoad: EventEmitter;
-  @Event() ionTabButtonDidUnload: EventEmitter;
+  @Event() ionTabbarClick: EventEmitter<TabButtonEventDetail>;
+  @Event() ionTabButtonDidLoad: EventEmitter<TabButtonEventDetail>;
+  @Event() ionTabButtonDidUnload: EventEmitter<TabButtonEventDetail>;
 
   componentDidLoad() {
-    this.ionTabButtonDidLoad.emit({ button: this });
+    this.ionTabButtonDidLoad.emit();
   }
 
   componentDidUnload() {
-    this.ionTabButtonDidUnload.emit({ button: this });
+    this.ionTabButtonDidUnload.emit();
   }
 
   @Listen('click')
@@ -71,4 +71,12 @@ export class TabButton {
 
     return items;
   }
+}
+
+export interface TabButtonEvent extends CustomEvent {
+  detail: TabButtonEventDetail;
+}
+
+export interface TabButtonEventDetail extends HTMLIonTabElement {
+
 }
