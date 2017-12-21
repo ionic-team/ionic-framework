@@ -8,10 +8,22 @@ export const THEME_VARIABLES = [
     property: '--primary-contrast'
   },
   {
+    property: '--primary-tint'
+  },
+  {
+    property: '--primary-shade'
+  },
+  {
     property: '--secondary'
   },
   {
     property: '--secondary-contrast'
+  },
+  {
+    property: '--secondary-tint'
+  },
+  {
+    property: '--secondary-shade'
   },
   {
     property: '--tertiary'
@@ -20,10 +32,22 @@ export const THEME_VARIABLES = [
     property: '--tertiary-contrast'
   },
   {
+    property: '--tertiary-tint'
+  },
+  {
+    property: '--tertiary-shade'
+  },
+  {
     property: '--success'
   },
   {
     property: '--success-contrast'
+  },
+  {
+    property: '--success-tint'
+  },
+  {
+    property: '--success-shade'
   },
   {
     property: '--warning'
@@ -32,10 +56,22 @@ export const THEME_VARIABLES = [
     property: '--warning-contrast'
   },
   {
+    property: '--warning-tint'
+  },
+  {
+    property: '--warning-shade'
+  },
+  {
     property: '--danger'
   },
   {
     property: '--danger-contrast'
+  },
+  {
+    property: '--danger-tint'
+  },
+  {
+    property: '--danger-shade'
   },
   {
     property: '--light'
@@ -44,16 +80,34 @@ export const THEME_VARIABLES = [
     property: '--light-contrast'
   },
   {
+    property: '--light-tint'
+  },
+  {
+    property: '--light-shade'
+  },
+  {
     property: '--medium'
   },
   {
     property: '--medium-contrast'
   },
   {
+    property: '--medium-tint'
+  },
+  {
+    property: '--medium-shade'
+  },
+  {
     property: '--dark'
   },
   {
     property: '--dark-contrast'
+  },
+  {
+    property: '--dark-tint'
+  },
+  {
+    property: '--dark-shade'
   },
   {
     property: '--text-color'
