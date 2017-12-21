@@ -56,7 +56,7 @@
 // -----------------------------------------
 
 .action-sheet-ios .action-sheet-title {
-  @include padding($action-sheet-ios-title-padding);
+  @include padding($action-sheet-ios-title-padding-top, $action-sheet-ios-title-padding-end, $action-sheet-ios-title-padding-bottom, $action-sheet-ios-title-padding-start);
 
   @include text-align($action-sheet-ios-text-align);
 
@@ -65,6 +65,12 @@
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
   color: $action-sheet-ios-title-color;
+}
+
+.action-sheet-ios .action-sheet-sub-title {
+  @include padding($action-sheet-ios-sub-title-padding-top, $action-sheet-ios-sub-title-padding-end, $action-sheet-ios-sub-title-padding-bottom, $action-sheet-ios-sub-title-padding-start);
+
+  font-size: $action-sheet-ios-sub-title-font-size;
 }
 
 
