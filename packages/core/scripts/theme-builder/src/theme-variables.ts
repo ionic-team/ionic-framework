@@ -56,16 +56,16 @@ export const THEME_VARIABLES = [
     property: '--dark-contrast'
   },
   {
-    property: '--content-color'
+    property: '--text-color'
   },
   {
-    property: '--content-sub-color'
+    property: '--text-sub-color'
   },
   {
-    property: '--content-background'
+    property: '--background-color'
   },
   {
-    property: '--content-sub-background'
+    property: '--background-color-alt'
   },
   {
     property: '--toolbar-background'
@@ -74,13 +74,16 @@ export const THEME_VARIABLES = [
     property: '--tabbar-background'
   },
   {
-    property: '--item-background'
+    property: '--item-background-color'
   },
   {
-    property: '--item-sub-background'
+    property: '--item-background-color-alt'
   },
   {
     property: '--border-color'
+  },
+  {
+    property: '--box-shadow'
   },
 
 ];
