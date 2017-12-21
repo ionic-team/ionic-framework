@@ -1,0 +1,18 @@
+
+main {
+  display: flex;
+  height: calc(100% - 10px);
+}
+
+main > section {
+  flex: 1 auto;
+}
+
+.preview-column {
+  max-width: 480px;
+  min-height: 700px;
+}
+
+.selector-column {
+  max-width: 600px;
+}

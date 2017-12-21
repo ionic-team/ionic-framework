@@ -1,0 +1,32 @@
+/** oceanic theme **/
+
+
+:root {
+  --primary: #3880ff;
+  --primary-contrast: #ffffff;
+  --secondary: #0cd1e8;
+  --secondary-contrast: #ffffff;
+  --tertiary: #7044ff;
+  --tertiary-contrast: #ffffff;
+  --success: #10dc60;
+  --success-contrast: #ffffff;
+  --warning: #ffce00;
+  --warning-contrast: #ffffff;
+  --danger: #f04141;
+  --danger-contrast: #ffffff;
+  --light: #f4f5f8;
+  --light-contrast: #000000;
+  --medium: #898b93;
+  --medium-contrast: #000000;
+  --dark: #222428;
+  --dark-contrast: #f4f5f8;
+  --content-color: #222428;
+  --content-sub-color: #222428;
+  --content-background: #eeeeee;
+  --content-sub-background: #eeeeee;
+  --toolbar-background: #eeeeee;
+  --tabbar-background: #eeeeee;
+  --item-background: #eeeeee;
+  --item-sub-background: #eeeeee;
+  --border-color: #222428;
+}

@@ -1,0 +1,35 @@
+
+section {
+  display: flex;
+}
+
+.property-label {
+  font-family: Courier New, Courier, monospace;
+  white-space: nowrap;
+
+  flex: 1;
+  padding-left: 10px;
+}
+
+input[type="text"] {
+  font-family: Courier New, Courier, monospace;
+  font-size: 14px;
+  width: 150px;
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+	border: none;
+	width: 64px;
+  height: 20px;
+  outline: none;
+  background: transparent;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+	border: 1px solid black;
+}
