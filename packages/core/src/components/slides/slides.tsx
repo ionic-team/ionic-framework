@@ -179,19 +179,16 @@ export class Slides {
   }
 
   /**
-   * @hidden
    * Height of container.
    */
   private height: number;
 
   /**
-   * @hidden
    * Width of container.
    */
   private width: number;
 
   /**
-   * @hidden
    * Enabled this option and swiper will be operated as usual except it will
    * not move, real translate values on wrapper will not be set. Useful when
    * you may need to create custom slide transition.
@@ -199,7 +196,6 @@ export class Slides {
   private virtualTranslate = false;
 
   /**
-   * @hidden
    * Set to true to round values of slides width and height to prevent blurry
    * texts on usual resolution screens (if you have such)
    */
@@ -207,9 +203,6 @@ export class Slides {
 
   // Slides grid
 
-  /**
-   * @hidden
-   */
   private originalEvent: any;
 
   /**
@@ -223,11 +216,8 @@ export class Slides {
    * Properties that are exposed publicly but no docs.
    * ------------------------------------
    */
-  /** @hidden */
   private container: HTMLElement;
-  /** @hidden */
   private slidesId: number;
-  /** @hidden */
   private slideId: string;
 
 
@@ -362,9 +352,6 @@ export class Slides {
     }
   }
 
-  /**
-   * @hidden
-   */
   componentDidLoad() {
     /**
      * TODO: This should change because currently componentDidLoad fires independent of whether the
@@ -523,9 +510,6 @@ export class Slides {
     this.swiper.disableKeyboardControl();
   }
 
-  /**
-   * @hidden
-   */
   componentDidUnload() {
     this._init = false;
 

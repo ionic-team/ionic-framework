@@ -160,7 +160,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * NO DOM
    */
 
@@ -359,7 +358,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -391,7 +389,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -426,7 +423,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -459,7 +455,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -482,7 +477,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * NO RECURSION
    * ROOT ANIMATION
@@ -529,7 +523,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -562,7 +555,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -581,7 +573,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -613,7 +604,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * NO DOM
    * NO RECURSION
    */
@@ -624,7 +614,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -707,7 +696,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -745,7 +733,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM READ
    * DOM WRITE
    * RECURSION
@@ -769,7 +756,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -822,7 +808,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM READ
    * RECURSION
    */
@@ -845,7 +830,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -868,7 +852,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    */
   _setAfterStyles() {
@@ -944,7 +927,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * NO RECURSION
    */
@@ -992,7 +974,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1073,7 +1054,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * DOM WRITE
    * RECURSION
    */
@@ -1124,7 +1104,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * NO DOM
    * RECURSION
    */
@@ -1140,7 +1119,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
@@ -1218,7 +1196,6 @@ export class Animator {
   }
 
   /**
-   * @hidden
    * NO DOM
    */
   _transEl(): HTMLElement {

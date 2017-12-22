@@ -68,14 +68,10 @@ export class Input implements InputComponent {
    */
   @Prop() checked: boolean = false;
 
-  /**
-   * @hidden
-   */
   @PropDidChange('checked')
   protected checkedChanged() {
     this.emitStyle();
   }
-
 
   /**
    * @input {boolean} If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
@@ -92,9 +88,6 @@ export class Input implements InputComponent {
    */
   @Prop() disabled: boolean = false;
 
-  /**
-   * @hidden
-   */
   @PropDidChange('disabled')
   protected disabledChanged() {
     this.emitStyle();
@@ -187,7 +180,6 @@ export class Input implements InputComponent {
 
 
   /**
-   * @hidden
    * Update the native input element when the value changes
    */
   @PropDidChange('value')
@@ -224,10 +216,6 @@ export class Input implements InputComponent {
     });
   }
 
-
-  /**
-   * @hidden
-   */
   inputBlurred(ev: any) {
     this.ionBlur.emit(ev);
 
@@ -235,19 +223,11 @@ export class Input implements InputComponent {
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputChanged(ev: any) {
     this.value = ev.target && ev.target.value;
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputFocused(ev: any) {
     this.ionFocus.emit(ev);
 
@@ -255,10 +235,6 @@ export class Input implements InputComponent {
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   focusChange(inputHasFocus: boolean) {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
     if (this.clearOnEdit && !inputHasFocus && this.hasValue()) {
@@ -266,10 +242,6 @@ export class Input implements InputComponent {
     }
   }
 
-
-  /**
-   * @hidden
-   */
   inputKeydown() {
     this.checkClearOnEdit();
   }
@@ -277,7 +249,6 @@ export class Input implements InputComponent {
 
   /**
   * Check if we need to clear the text input if clearOnEdit is enabled
-  * @hidden
   */
   checkClearOnEdit() {
     if (!this.clearOnEdit) {
@@ -294,29 +265,18 @@ export class Input implements InputComponent {
     this.didBlurAfterEdit = false;
   }
 
-  /**
-   * @hidden
-   */
   clearTextInput() {
     this.value = '';
   }
 
-  /**
-   * @hidden
-   */
   hasFocus(): boolean {
     // check if an input has focus or not
     return this.el && (this.el.querySelector(':focus') === this.el.querySelector('input'));
   }
 
-
-  /**
-   * @hidden
-   */
   hasValue(): boolean {
     return (this.value !== null && this.value !== undefined && this.value !== '');
   }
-
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');

@@ -50,9 +50,6 @@ export class Label {
    */
   @Prop() stacked: boolean = false;
 
-  /**
-   * @hidden
-   */
   @Method()
   getText(): string {
     return this.el.textContent || '';

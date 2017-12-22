@@ -67,7 +67,6 @@ export class SegmentButton {
   }
 
   /**
-   * @hidden
    * Get the classes for the segment button state
    */
   getElementClassList() {

@@ -130,9 +130,6 @@ export class SplitPane {
     }
   }
 
-  /**
-   * @hidden
-   */
   @Method()
   isVisible(): boolean {
     return this.visible;

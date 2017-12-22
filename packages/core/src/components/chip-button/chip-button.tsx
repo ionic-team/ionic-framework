@@ -43,7 +43,6 @@ export class ChipButton {
   @Prop() disabled: boolean = false;
 
   /**
-   * @hidden
    * Get the classes based on the button type
    * e.g. alert-button, action-sheet-button
    */
@@ -58,7 +57,6 @@ export class ChipButton {
   }
 
   /**
-   * @hidden
    * Get the classes for the color
    */
   private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
@@ -71,7 +69,6 @@ export class ChipButton {
   }
 
   /**
-   * @hidden
    * Get the classes for the style
    * Chip buttons can only be clear or default (solid)
    */

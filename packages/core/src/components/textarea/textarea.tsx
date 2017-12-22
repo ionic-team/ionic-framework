@@ -69,9 +69,6 @@ export class Textarea implements TextareaComponent {
    */
   @Prop() disabled: boolean = false;
 
-  /**
-   * @hidden
-   */
   @PropDidChange('disabled')
   protected disabledChanged() {
     this.emitStyle();
@@ -133,7 +130,6 @@ export class Textarea implements TextareaComponent {
   @Prop({ mutable: true }) value: string;
 
   /**
-   * @hidden
    * Update the native input element when the value changes
    */
   @PropDidChange('value')
@@ -147,7 +143,6 @@ export class Textarea implements TextareaComponent {
   componentDidLoad() {
     this.emitStyle();
   }
-
 
   private emitStyle() {
     clearTimeout(this.styleTmr);
@@ -165,18 +160,10 @@ export class Textarea implements TextareaComponent {
     });
   }
 
-
-  /**
-   * @hidden
-   */
   clearTextInput() {
     this.value = '';
   }
 
-
-  /**
-   * @hidden
-   */
   inputBlurred(ev: any) {
     this.ionBlur.emit(ev);
 
@@ -184,19 +171,11 @@ export class Textarea implements TextareaComponent {
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputChanged(ev: any) {
     this.value = ev.target && ev.target.value;
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputFocused(ev: any) {
     this.ionFocus.emit(ev);
 
@@ -204,17 +183,12 @@ export class Textarea implements TextareaComponent {
     this.emitStyle();
   }
 
-  /**
-   * @hidden
-   */
   inputKeydown() {
     this.checkClearOnEdit();
   }
 
-
   /**
   * Check if we need to clear the text input if clearOnEdit is enabled
-  * @hidden
   */
   checkClearOnEdit() {
     if (!this.clearOnEdit) {
@@ -231,10 +205,6 @@ export class Textarea implements TextareaComponent {
     this.didBlurAfterEdit = false;
   }
 
-
-  /**
-   * @hidden
-   */
   focusChange(inputHasFocus: boolean) {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
     if (this.clearOnEdit && !inputHasFocus && this.hasValue()) {
@@ -242,23 +212,14 @@ export class Textarea implements TextareaComponent {
     }
   }
 
-
-  /**
-   * @hidden
-   */
   hasFocus(): boolean {
     // check if an input has focus or not
     return this.el && (this.el.querySelector(':focus') === this.el.querySelector('textarea'));
   }
 
-
-  /**
-   * @hidden
-   */
   hasValue(): boolean {
     return (this.value !== null && this.value !== undefined && this.value !== '');
   }
-
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');

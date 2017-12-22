@@ -285,16 +285,10 @@ export class ReorderGroup {
   }
 }
 
-/**
- * @hidden
- */
 function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-/**
- * @hidden
- */
 function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement {
   let nested = 0;
   let parent;
