@@ -2493,7 +2493,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSelectPopoverAttributes extends HTMLAttributes {
+      message?: string;
       options?: SelectPopoverOption[];
+      subTitle?: string;
+      title?: string;
     }
   }
 }
