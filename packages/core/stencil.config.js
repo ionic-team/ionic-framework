@@ -14,6 +14,7 @@ exports.config = {
     { components: ['ion-checkbox'] },
     { components: ['ion-chip', 'ion-chip-button'] },
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
+    { components: ['ion-events'] },
     { components: ['ion-fab', 'ion-fab-list'] },
     { components: ['ion-fab-button'] },
     { components: ['ion-gesture'], priority: 'low' },
