@@ -40,6 +40,16 @@
   pointer-events: none;
 }
 
+
+// Stacked & Floating Select
+// --------------------------------------------------
+
+.item-label-stacked .select-md,
+.item-label-floating .select-md {
+  @include padding(8px, null, 8px, 0);
+}
+
+
 // Select Popover Interface
 // --------------------------------------------------
 
