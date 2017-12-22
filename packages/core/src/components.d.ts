@@ -767,6 +767,36 @@ declare global {
 
 
 import {
+  Events as IonEvents
+} from './components/events/events';
+
+declare global {
+  interface HTMLIonEventsElement extends IonEvents, HTMLElement {
+  }
+  var HTMLIonEventsElement: {
+    prototype: HTMLIonEventsElement;
+    new (): HTMLIonEventsElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-events": HTMLIonEventsElement;
+  }
+  interface ElementTagNameMap {
+    "ion-events": HTMLIonEventsElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-events": JSXElements.IonEventsAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonEventsAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   FabButton as IonFabButton
 } from './components/fab-button/fab-button';
 

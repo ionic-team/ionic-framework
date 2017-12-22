@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Events</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body onload="init()">
+  <ion-events></ion-events>
+  <ion-app>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Events</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content padding>
+
+        <div class="container">
+          <div>
+              The first secret is: <span class="secret-one">TBD</span>
+          </div>
+          <div>
+              The second secret is: <span class="secret-two">TBD</span>
+          </div>
+        </div>
+        <ion-button class="publish">Publish the data</ion-button>
+      </ion-content>
+
+    </ion-page>
+  </ion-app>
+
+  <script>
+
+    async function runTest() {
+      const ionEvents = document.querySelector('ion-events');
+      await ionEvents.componentOnReady();
+
+      ionEvents.subscribe('secretOne', (secretOne) => {
+        const span = document.querySelector('.secret-one');
+        span.textContent = secretOne;
+      });
+
+      ionEvents.subscribe('secretTwo', (secretTwo) => {
+        const span = document.querySelector('.secret-two');
+        span.textContent = secretTwo;
+      });
+
+      const publishButton = document.querySelector('ion-button .publish');
+      publishButton.addEventListener('click', async () => {
+        await ionEvents.publish('secretOne', 'Taco');
+        await ionEvents.publish('secretTwo', 'Burrito');
+      });
+    }
+
+    function init() {
+      setTimeout(runTest(), 100);
+    }
+  </script>
+</body>
+
+</html>
