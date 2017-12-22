@@ -8,13 +8,6 @@ class E2ETestPage extends Page {
   constructor(driver, platform) {
     super(driver, `http://localhost:3333/src/components/select/test/basic?ionicplatform=${platform}`);
   }
-
-  present(buttonId) {
-    this.navigate();
-    this.driver.findElement(By.id(buttonId)).click();
-    this.driver.wait(until.elementLocated(By.css('.select-wrapper')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.select-wrapper'))));
-  }
 }
 
 platforms.forEach(platform => {
@@ -22,6 +15,16 @@ platforms.forEach(platform => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
       return page.navigate();
+    });
+
+    register('should open gender single select', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.present('#gender', { waitFor: '.alert-wrapper' });
+    });
+
+    register('should open custom action sheet select', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.present('#customSelect', { waitFor: '.action-sheet-wrapper' });
     });
   });
 });
