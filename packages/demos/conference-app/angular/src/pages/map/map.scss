@@ -1,0 +1,31 @@
+
+page-map ion-content {
+  background: rgb(229, 227, 223);
+}
+
+page-map {
+  #map_canvas {
+    height: 500px;
+    width: 320px;
+    background-color : transparent;
+  }
+}
+
+page-map ion-content {
+  background: rgb(229, 227, 223);
+}
+
+page-map #map_canvas {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 150ms ease-in
+}
+
+page-map #map_canvas.show-map {
+  opacity: 1;
+}
+
+ion-app._gmaps_cdv_ .nav-decor{
+  background-color: transparent !important;
+}
