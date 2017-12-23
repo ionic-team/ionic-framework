@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </ion-button>
+    <ion-title>Speakers</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="outer-content speaker-list">
+  <ion-list>
+    <ion-grid fixed>
+      <ion-row align-items-stretch>
+
+        <ion-col col-12 col-md-6 align-self-stretch align-self-center *virtualItem="let speaker" approxItemHeight="457px">
+
+          <ion-card class="speaker-card">
+            <ion-card-header>
+              <ion-button ion-item detail-none (click)="goToSpeakerDetail(speaker)">
+                <ion-avatar item-start>
+                  <img [src]="speaker.profilePic" alt="Speaker profile pic">
+                </ion-avatar>
+                {{speaker.name}}
+              </ion-button>
+            </ion-card-header>
+
+            <ion-card-content class="outer-content">
+              <ion-list>
+                <ion-button ion-item *ngFor="let session of speaker.sessions" (click)="goToSessionDetail(session)">
+                  <h3>{{session.name}}</h3>
+                </ion-button>
+
+                <ion-button ion-item (click)="goToSpeakerDetail(speaker)">
+                  <h3>About {{speaker.name}}</h3>
+                </ion-button>
+              </ion-list>
+            </ion-card-content>
+
+            <ion-row no-padding>
+              <ion-col col-12 col-lg-auto text-center text-lg-left>
+                <ion-button clear small color="primary" icon-start (click)="goToSpeakerTwitter(speaker)">
+                  <ion-icon name="logo-twitter"></ion-icon>
+                  Tweet
+                </ion-button>
+              </ion-col>
+              <ion-col col-12 col-lg-auto text-center>
+                <ion-button clear small color="primary" icon-start (click)="openSpeakerShare(speaker)">
+                  <ion-icon name='share-alt'></ion-icon>
+                  Share
+                </ion-button>
+              </ion-col>
+              <ion-col col-12 col-lg-auto text-center text-lg-right>
+                <ion-button clear small color="primary" icon-start (click)="openContact(speaker)">
+                  <ion-icon name='chatboxes'></ion-icon>
+                  Contact
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+          </ion-card>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>
