@@ -23,11 +23,11 @@ export function getProviders(element: HTMLElement, data: any) {
     },
 
     {
-      provide: NavControllerToken, useValue: data
+      provide: NavParamsToken, useValue: data
     },
 
     {
-      provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavControllerToken]
+      provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavParamsToken]
     },
   ]
 }
