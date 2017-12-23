@@ -19,6 +19,7 @@ import { IonNavDelegate } from './components/ion-nav';
 import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
 import { AngularComponentMounter } from './providers/angular-component-mounter';
+import { App } from './providers/app';
 import { Events } from './providers/events';
 import { LoadingController } from './providers/loading-controller';
 import { ModalController } from './providers/modal-controller';
@@ -57,6 +58,7 @@ export class IonicAngularModule {
         AlertController,
         ActionSheetController,
         AngularComponentMounter,
+        App,
         Events,
         LoadingController,
         ModalController,

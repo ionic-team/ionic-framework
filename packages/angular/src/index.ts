@@ -11,5 +11,6 @@ export { Events } from './providers/events';
 export { LoadingController, LoadingProxy } from './providers/loading-controller';
 export { ModalController, ModalProxy } from './providers/modal-controller';
 export { NavController } from './providers/nav-controller';
+export { NavParams } from './providers/nav-params';
 export { PopoverController, PopoverProxy } from './providers/popover-controller';
 export { ToastController, ToastProxy } from './providers/toast-controller';

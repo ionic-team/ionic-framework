@@ -1,14 +1,12 @@
 
 import { InjectionToken } from '@angular/core';
-
-import { App } from '../providers/app';
 import { NavController } from '../providers/nav-controller';
+import { NavParams } from '../providers/nav-params';
 
 export const NavControllerToken = new InjectionToken<any>('NavControllerToken');
-export const ViewControllerToken = new InjectionToken<any>('ViewControllerToken');
-export const AppToken = new InjectionToken<any>('AppToken');
+export const NavParamsToken = new InjectionToken<any>('NavParamsToken');
 
-export function getProviders(element: HTMLElement) {
+export function getProviders(element: HTMLElement, data: any) {
   if (element.tagName !== 'ion-nav') {
     element.closest('ion-nav');
   }
@@ -25,11 +23,12 @@ export function getProviders(element: HTMLElement) {
     },
 
     {
-      provide: AppToken, useValue: null,
+      provide: NavControllerToken, useValue: data
     },
+
     {
-      provide: App, useFactory: provideAppInjectable, deps: [AppToken]
-    }
+      provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavControllerToken]
+    },
   ]
 }
 
@@ -37,7 +36,6 @@ export function provideNavControllerInjectable(element: HTMLIonNavElement) {
   return new NavController(element);
 }
 
-export function provideAppInjectable() {
-  const element = document.querySelector('ion-app');
-  return new App(element);
+export function provideNavParamsInjectable(data: any) {
+  return new NavParams(data);
 }
