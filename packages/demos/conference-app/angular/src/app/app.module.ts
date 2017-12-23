@@ -12,6 +12,10 @@ import { AppComponent } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { PopoverPage } from '../pages/about-popover/about-popover';
 import { MapPage } from '../pages/map/map';
+import { SchedulePage } from '../pages/schedule/schedule';
+import { ScheduleFilterPage } from '../pages/schedule-filter/schedule-filter';
+import { SessionDetailPage } from '../pages/session-detail/session-detail';
+import { SpeakerDetailPage } from '../pages/speaker-detail/speaker-detail';
 import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 
@@ -24,6 +28,10 @@ import { UserData } from '../providers/user-data';
     AppComponent,
     MapPage,
     PopoverPage,
+    SchedulePage,
+    ScheduleFilterPage,
+    SessionDetailPage,
+    SpeakerDetailPage,
     SpeakerListPage,
     TabsPage
   ],
@@ -31,6 +39,10 @@ import { UserData } from '../providers/user-data';
     AboutPage,
     MapPage,
     PopoverPage,
+    SchedulePage,
+    ScheduleFilterPage,
+    SessionDetailPage,
+    SpeakerDetailPage,
     SpeakerListPage,
     TabsPage
   ],

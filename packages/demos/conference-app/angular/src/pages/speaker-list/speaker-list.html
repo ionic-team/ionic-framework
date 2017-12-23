@@ -12,7 +12,7 @@
     <ion-grid fixed>
       <ion-row align-items-stretch>
 
-        <ion-col col-12 col-md-6 align-self-stretch align-self-center *virtualItem="let speaker" approxItemHeight="457px">
+        <ion-col col-12 col-md-6 align-self-stretch align-self-center *ngFor="let speaker of speakers" approxItemHeight="457px">
 
           <ion-card class="speaker-card">
             <ion-card-header>

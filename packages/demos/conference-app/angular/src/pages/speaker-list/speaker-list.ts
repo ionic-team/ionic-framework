@@ -10,7 +10,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ConferenceData } from '../../providers/conference-data';
 
-// import { SessionDetailPage } from '../session-detail/session-detail';
+import { SessionDetailPage } from '../session-detail/session-detail';
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 
 @Component({
@@ -34,11 +34,11 @@ export class SpeakerListPage {
   }
 
   goToSessionDetail(session: any) {
-    // this.navCtrl.push(SessionDetailPage, { sessionId: session.id });
+    this.navCtrl.push(SessionDetailPage, { sessionId: session.id });
   }
 
   goToSpeakerDetail(speaker: any) {
-    // this.navCtrl.push(SpeakerDetailPage, { speakerId: speaker.id });
+    this.navCtrl.push(SpeakerDetailPage, { speakerId: speaker.id });
   }
 
   goToSpeakerTwitter(speaker: any) {
