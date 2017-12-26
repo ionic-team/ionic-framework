@@ -935,7 +935,7 @@ The following selectors to style the text color of the native text elements have
 h1[color], h2[color], h3[color], h4[color], h5[color], h6[color], a[color]:not([ion-button]):not([ion-item]):not([ion-fab]), p[color], span[color], b[color], i[color], strong[color], em[color], small[color], sub[color], sup[color]
 ```
 
-These have been throwing a deprecation warning since rc.3 but still working. They are officially gone and therefore these elements will not get the color unless the `ion-text` attribute is added. Please see the documentation for more information: http://ionicframework.com/docs/api/components/typography/Typography/
+These have been throwing a deprecation warning since rc.3 but still working. They are officially gone and therefore these elements will not get the color unless the `ion-text` attribute is added. Please see the documentation for more information: https://ionicframework.com/docs/api/components/typography/Typography/
 
 #### Slides
 
@@ -1035,7 +1035,7 @@ of ion-slides.
 ### What's new
 
 #### Split Pane
-As part of our initiative to improve desktop support we have introduced a new component called [Split Pane](http://ionicframework.com/docs/v2/api/components/split-pane/SplitPane/). Split Pane makes it possible to easily create multi-view layouts. It allows elements, such as a menu or another navigation pane, to be displayed on large viewports. Split Pane can be used to achieve a layout similar to the Gmail (Android) or Mail (Apple) applications.
+As part of our initiative to improve desktop support we have introduced a new component called [Split Pane](https://ionicframework.com/docs/v2/api/components/split-pane/SplitPane/). Split Pane makes it possible to easily create multi-view layouts. It allows elements, such as a menu or another navigation pane, to be displayed on large viewports. Split Pane can be used to achieve a layout similar to the Gmail (Android) or Mail (Apple) applications.
 
 #### Angular 2.4.8
 Ionic has been updated to depend on Angular 2.4.8, which is the latest version that we have tested and confirmed to be compatible with Ionic. This means that updating to the 2.2.0 release of Ionic will automatically work with all of the performance updates, bug fixes and features in Angular 2.4.8!
@@ -1221,7 +1221,7 @@ As part of the refactor to improve tree shaking the `TextArea` has been merged i
 
 #### Slides
 
-ion-slides was refactored to remove the external dependencies, and rewritten in TypeScript/ES6 modules to again improve tree shaking abilities. In order to work with tree shaking, the `options` attribute had to be removed. See the [Slides API Documentation](http://ionicframework.com/docs/v2/api/components/slides/Slides/) for usage information.
+ion-slides was refactored to remove the external dependencies, and rewritten in TypeScript/ES6 modules to again improve tree shaking abilities. In order to work with tree shaking, the `options` attribute had to be removed. See the [Slides API Documentation](https://ionicframework.com/docs/v2/api/components/slides/Slides/) for usage information.
 
 
 ### Bug Fixes
@@ -1725,7 +1725,7 @@ RC0 requires changes to the structure of your app. To get started updating your 
 * Typescript 2.0
 * `@types` support for third-party libraries
 * Move away from `gulp` ([ionic-gulp-tasks](https://github.com/ionic-team/ionic-gulp-tasks)) to `npm scripts` ([ionic-app-scripts](https://github.com/ionic-team/ionic-app-scripts))
-* Use [Rollup](http://rollupjs.org) for bundling instead of `browserify` or `webpack`
+* Use [Rollup](https://rollupjs.org) for bundling instead of `browserify` or `webpack`
 
 
 ### BREAKING CHANGES
@@ -1837,8 +1837,8 @@ Components with this property:
 
 Select’s `alertOptions` input has been renamed to `selectOptions`. It now allows you to pass options for either the alert or action-sheet interface. Refer to their documentation for the options each of them accept.
 
-- [ActionSheet](http://ionicframework.com/docs/v2/api/components/action-sheet/ActionSheetController/#create)
-- [Alert](http://ionicframework.com/docs/v2/api/components/alert/AlertController/#create)
+- [ActionSheet](https://ionicframework.com/docs/v2/api/components/action-sheet/ActionSheetController/#create)
+- [Alert](https://ionicframework.com/docs/v2/api/components/alert/AlertController/#create)
 
 
 #### New Behavior of Button
@@ -2319,7 +2319,7 @@ The Option component’s `checked` attribute has been renamed to `selected` in o
 
 If a `ngModel` is added to the Select component the value of the `ngModel` will take precedence over the `selected` attribute.
 
-See the [Select](http://ionicframework.com/docs/v2/api/components/select/Select/) and [Option](http://ionicframework.com/docs/v2/api/components/option/Option/) documentation for usage examples.
+See the [Select](https://ionicframework.com/docs/v2/api/components/select/Select/) and [Option](https://ionicframework.com/docs/v2/api/components/option/Option/) documentation for usage examples.
 
 #### Tab Input/Config [#7143](https://github.com/ionic-team/ionic/issues/7143)
 
@@ -2371,7 +2371,7 @@ $tabs-md-tab-font-weight: 500;
 $tabs-md-tab-text-transform: scale(1);
 ```
 
-For a searchable list of all of the Sass variables, see the theming documentation: http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+For a searchable list of all of the Sass variables, see the theming documentation: https://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
 
 #### Input Highlight [#6449](https://github.com/ionic-team/ionic/issues/6449)
@@ -2717,7 +2717,7 @@ $text-input-wp-show-invalid-highlight: $text-input-wp-show-focus-highlight !defa
   }
   ```
 
-- `ngModel` is no longer required on Searchbar, but it can still be used. You can get the value of the input through Searchbar's [Output Events](http://ionicframework.com/docs/v2/api/components/searchbar/Searchbar/#output-events).
+- `ngModel` is no longer required on Searchbar, but it can still be used. You can get the value of the input through Searchbar's [Output Events](https://ionicframework.com/docs/v2/api/components/searchbar/Searchbar/#output-events).
 - Added the ability to pass `autocomplete`, `autocorrect`, `spellcheck`, and `type` to the searchbar which is passed to the input.
 - The `hideCancelButton` attribute was removed in favor of `showCancelButton` which is set to `false` by default.
 
@@ -2873,7 +2873,7 @@ All Ionic component events have been renamed to start with `ion`. This is to pre
   "ionic-angular": "^2.0.0-beta.8",
   ```
 
-  **This is the way to update Ionic to any version, more information can be found in the [docs](http://ionicframework.com/docs/v2/resources/using-npm/).**
+  **This is the way to update Ionic to any version, more information can be found in the [docs](https://ionicframework.com/docs/v2/resources/using-npm/).**
 
 2. Replace all instances of `@Page` with `@Component`:
 
