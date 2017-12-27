@@ -5,6 +5,125 @@
 
 $colors-md: copy-colors($colors) !default;
 
+$app-colors: (
+  primary: (
+    base: #3880FF,
+    contrast: #dddddd,
+    shade: #2439ff,
+    tint: #75c6ff
+  ),
+  secondary: (
+    base: #ff3520,
+    contrast: #ddddde,
+    shade: #6a140c,
+    tint: #ff5b54
+  ),
+  tertiary: (
+    base: #ff00ca,
+    contrast: #191919,
+    shade: #4e003e,
+    tint: #ff8bf3
+  ),
+  foo: #fe5563
+);
+
+$status-colors: (
+  success: (
+    base: #10DC60,
+    contrast: #161616,
+    shade: #067c2f,
+    tint: #24dc02
+  ),
+  warning: (
+    base: #FFCE00,
+    contrast: #161616,
+    shade: #6c5500,
+    tint: #fff674,
+  ),
+  danger: (
+    base: #F04141,
+    contrast: #dadada,
+    shade: #3d1414,
+    tint: #f03712
+  )
+);
+
+$shade-colors: (
+  light: (
+    base: #F4F5F8,
+    contrast: #272729,
+    shade: #b1b2b4,
+    tint: #d0d1d4
+  ),
+  medium: (
+    base: #898B93,
+    contrast: #d6d8e2,
+    shade: #5a5b61,
+    tint: #303135,
+  ),
+  dark: (
+    base: #222428,
+    contrast: #d5e0f8,
+    shade: #858a92,
+    tint: #aab4c8,
+  )
+);
+
+$base-colors: (
+  border: #d56300,
+  content: (
+    base: ion-color-reference($app-colors, primary),
+    subdued: #404040
+  ),
+  content-background: (
+    base: #cdcdcd,
+    subdued: #aeaeae
+  ),
+  toolbar-background: ion-color-reference($app-colors, primary, tint),
+  tabbar-background: ion-color-reference($app-colors, primary),
+  item-background: (
+    base: #cdcdcd,
+    subdued: #b7b7b7
+  )
+);
+
+// Used for auto generated component colors
+$color-map: ion-extend-colors($app-colors, $status-colors, $shade-colors);
+// overall color map used for all lookups
+$ion-colors: ion-extend-colors($color-map, $base-colors);
+
+@include init-colors($ion-colors);
+
+$v: ion-color($ion-colors, "rgb(var(--color-primary-contrast))", contrast);
+@warn $v;
+
+//
+//$color-ref: ion-color($ion-colors, primary, contrast);
+//$color-ref-2: ion-color($ion-colors, $color-ref, shade);
+//$color-ref-3: ion-color($ion-colors, $color-ref-2, tint);
+//$color-ref-4: ion-color($ion-colors, $color-ref-3, tint);
+
+html {
+  //background-color: ion-color($ion-colors, toolbar-background);
+  //background-color: ion-color($ion-colors, content);
+  //color: ion-color($ion-colors, $color-ref);
+  //color: ion-color($ion-colors, $color-ref-2);
+  //color: ion-color($ion-colors, $color-ref-3);
+  //color: ion-color($ion-colors, $color-ref-4);
+  //background-color: ion-color($ion-colors, #3880FF, shade, $opacity: .4);
+  //background-color: ion-color($ion-colors, 'rgb(var(--color-primary))');
+  //background-color: ion-color($ion-colors, ion-color($ion-colors, primary, contrast));
+  //background-color: ion-color($ion-colors, rgb(56,128,255), $opacity: .5);
+  //background-color: ion-color($colors, rgb(255,0,0), shade);
+  //background-color: ion-color($ion-colors, rgb(56,128,255), shade);
+  //background-color: ion-color($ion-colors, #3880FF);
+  //background-color: ion-color($ion-colors, rgba(255,0,0,.2), $opacity: .3);
+}
+
+/*body {
+  display: none;
+}*/
+
 
 $link-md-color:                       $link-color !default;
 $text-md-color:                       $text-color !default;

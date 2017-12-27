@@ -1,0 +1,10 @@
+@import "./ionic.functions.string";
+
+// URL Encode Function
+// --------------------------------------------------
+
+@function url-encode($val) {
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
+}

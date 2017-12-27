@@ -1,0 +1,363 @@
+$default-color-variation: base;
+$default-color-prefix: --color-;
+$generated-colors: ();
+$enable-css-variables: true;
+$enable-css-variable-fallbacks: true;
+
+/**
+  Parses a css variable string into its original name/variation pair
+  @private
+ */
+@function css-variable-to-name-variation($variable) {
+  $index: str-index($variable, $default-color-prefix);
+  // Determine the name of this color from the CSS Variable
+  $end-index: str-index($variable, ',');
+  @if ($end-index == null) {
+    $end-index: str-index($variable, ')');
+  }
+  $name: str-slice($variable, $index + str-length($default-color-prefix), $end-index - 1);
+  $variation: $default-color-variation;
+
+  // Determine if this CSS variable is itself a variation (e.g. primary-contrast)
+  $index: str-index($name, '-');
+  @if ($index != null) {
+    $variation: str-slice($name, $index + 1);
+    $name: str-slice($name, 0, $index - 1);
+  }
+
+  @return (name: $name, variation: $variation);
+}
+
+/**
+  Parses a color into its name/variation pairs from the color map
+  // TODO: Discuss the issues with same colors across multiple colors in map
+  // current solution is first in wins
+  @private
+ */
+@function color-to-name-variation($colors, $color, $variation: null) {
+  $results: ();
+  $found: false;
+  @each $color-name, $color-value in $colors {
+    @if (not $found and type-of($color-value) == map) {
+      @each $color-variation-name, $color-variation-value in $color-value {
+        @if ($color == $color-variation-value) {
+          $variation: if($variation == $color-variation-name, $default-color-variation, $variation);
+          @if($variation) {
+            $results: map-merge($results, (variation: $variation))
+          }
+          $results: map-merge($results, (name: $color-name));
+          $found: true;
+        }
+      }
+    } @else if (not $found and $color == $color-value) {
+      $results: map-merge($results, (name: $color-name));
+      $found: true;
+    }
+  }
+
+  @return $results;
+}
+
+/*
+  Analyzes a color returning RGB values from hex or CSS variable reference.
+
+  returns the RGB and CSS Value
+  @private
+ */
+@function parse-color($color) {
+  $css-value: $color;
+  $rgb-value: null;
+
+  $index: (type-of($color) == string) and (str-index($color, $default-color-prefix));
+  @if ($enable-css-variables and $index) {
+    $results: css-variable-to-name-variation($color);
+    $reference-name: map-get($results, name);
+    $reference-variation: map-get($results, variation);
+    $reference-color: map-get($generated-colors, $reference-name);
+
+    @if (type-of($reference-color) == map) {
+      $reference-color: map-get($reference-color, $reference-variation);
+    }
+
+    $css-value: unquote($color);
+    $rgb-value: $reference-color;
+  } @else {
+    // This is a 'vanilla' color, with no variations. Also can be looked at
+    // as a single color with only a base variation
+    $css-value: unquote("#{red($color)},#{green($color)},#{blue($color)}");
+    $rgb-value: $css-value;
+  }
+
+  @return (
+    css: $css-value,
+    rgb: $rgb-value
+  )
+}
+
+/**
+  This method converts all colors in the color map into R,G,B lists for lookup later
+  all colors are also added as CSS variables if needed
+ */
+@mixin init-colors($colors) {
+  :root {
+    @each $name, $color in $colors {
+      @if (type-of($color) == map) {
+        $values: ();
+        @each $variation-name, $variation-color in $color {
+          $results: parse-color($variation-color);
+          $css: map-get($results, css);
+          $rgb: map-get($results, rgb);
+          $values: map-merge($values, ($variation-name: $rgb));
+
+          @if $enable-css-variables {
+            @if $variation-name == $default-color-variation {
+              #{$default-color-prefix}#{$name}: $css;
+            } @else {
+              #{$default-color-prefix}#{$name}-#{$variation-name}: $css;
+            }
+          }
+        }
+        // save the converted r,g,b values into a map for later reference
+        $generated-colors: map-merge($generated-colors, ($name: $values)) !global;
+      } @else {
+        $results: parse-color($color);
+        $css: map-get($results, css);
+        $rgb: map-get($results, rgb);
+
+        @if $enable-css-variables {
+          #{$default-color-prefix}#{$name}: $css;
+        }
+        $generated-colors: map-merge($generated-colors, ($name: $rgb)) !global;
+      }
+    }
+  }
+}
+
+/**
+  Method will return a hex, rgb() or rgba() value.
+  Return value will be embedded with a color or css variable
+
+  Can handle parsing the following situation
+  // Reference by map key name
+  ion-color($colors, primary); // rgb(var(--color-primary, 56,128,255))
+  ion-color($colors, primary, base); // same as above
+  ion-color($colors, primary, shade); // rgb(var(--color-primary-shade, 36,57,255))
+  ion-color($colors, primary, shade, .5);//  rgba(var(--color-primary-shade, 36,57,255), 0.5)
+
+  // Reference by hex value
+  ion-color($colors, #3880FF, shade); //  rgb(var(--color-primary-shade, 36,57,255))
+  ion-color($colors, #3880FF, shade, .3); //  rgba(var(--color-primary-shade, 36,57,255), 0.3)
+  ion-color($colors, #ff0000, shade); //warning
+  ion-color($colors, #f045ee, $opacity: .5); // rgba(240,69,238,0.5)
+
+  // Reference by rgb(a) value
+  ion-color($colors, rgb(255,0,0)); // red
+  ion-color($colors, rgb(255,0,0), $opacity: .4); // rgba(255,0,0,0.4)
+  ion-color($colors, rgba(255,0,0,.5)); // rgba(255, 0, 0, 0.5)
+  ion-color($colors, rgba(255,0,0,.5), $opacity: .3); // rgba(255,0,0,0.3)
+  ion-color($colors, rgb(255,0,0), shade); //throws warning
+
+  // Reference to matching color in map
+  ion-color($colors, rgb(56,128,255)); //  rgb(var(--color-primary, 56,128,255))
+  ion-color($colors, rgb(56,128,255), shade);// rgb(var(--color-primary-shade, 36,57,255))
+  ion-color($colors, rgb(56,128,255), $opacity: .5); //  rgba(var(--color-primary, 56,128,255), 0.5)
+  ion-color($colors, #3880FF); //  rgb(var(--color-primary, 56,128,255))
+  ion-color($colors, #3880FF, shade); // rgb(var(--color-primary-shade, 36,57,255))
+  ion-color($colors, #3880FF, $opacity: .5); // rgba(var(--color-primary, 56,128,255), 0.5)
+
+  // Reference by reference
+  ion-color($colors, ion-color($colors, primary)); //  rgb(var(--color-primary, 56,128,255))
+  ion-color($colors, ion-color($colors, primary, shade)); // rgb(var(--color-primary-shade, 36,57,255))
+  ion-color($colors, ion-color($colors, primary, shade), contrast); // rgb(var(--color-primary-contrast, 221,221,221))
+  ion-color($colors, ion-color($colors, primary, contrast), contrast); // rgb(var(--color-primary, 56,128,255))
+
+  // Reference to single color in map (no variations) (foo: #fe5563)
+  ion-color($colors, ion-color($colors, foo)); //  rgb(var(--color-foo, 254,85,99))
+  ion-color($colors, ion-color($colors, foo, base)); //  rgb(var(--color-foo, 254,85,99))
+  ion-color($colors, ion-color($colors, foo, shade)); //throws warning, uses bases
+
+  //Reference by css variable value
+  ion-color($colors, "rgb(var(--color-primary))"); // rgb(var(--color-primary))
+  ion-color($colors, "rgb(var(--color-primary))", shade); // rgb(var(--color-primary-shade, 36,57,255))
+  ion-color($colors, "rgb(var(--color-primary-contrast))"); // rgb(var(--color-primary-contrast))
+  ion-color($colors, "rgb(var(--color-primary-contrast))", shade); // rgb(var(--color-primary-shade, 36,57,255))
+  ion-color($colors, "rgb(var(--color-primary-contrast))", contrast); // rgb(var(--color-primary, 56,128,255))
+ */
+@function ion-color($colors, $name, $variation: null, $opacity: 1) {
+
+  // If this is a vanilla color (hex/rgb(a)) we need to convert it back
+  // to a name/variation pair for references and variation
+  // conversion
+  // If the color does not exist in the map we will simply return
+  // the color requested, allowing for alpha modifications
+  @if (type-of($name) == color) {
+    $results: color-to-name-variation($colors, $name, $variation);
+    @if(map-has-key($results, name)) {
+      $name: map-get($results, name);
+      @if(map-has-key($results, variation)) {
+        $variation: map-get($results, variation);
+      }
+    } @else {
+      @if ($variation) {
+        @warn "Color '#{$name}' does not exist in map. Unable to set to variation '#{$variation}'"
+      }
+      @if ($opacity == 1) {
+        @return $name;
+      } @else {
+        $color: "#{red($name)},#{green($name)},#{blue($name)}";
+        @return unquote("rgba(#{$color},#{$opacity})");
+      }
+    }
+  }
+
+  // Does the name contain the CSS Variable color prefix
+  // If so this is not a simple color name, this is a reference to
+  // a CSS variable
+  $index: str-index($name, $default-color-prefix);
+  @if ($index != null) {
+    // If there is no variation change, just return the css variable
+    @if ($variation == null) {
+      @return unquote($name);
+    } @else {
+      // Convert the CSS Variable into a name/variation pair
+      $results: css-variable-to-name-variation($name);
+      $name: map-get($results, name);
+      $current-variation: map-get($results, variation);
+
+      // TODO: Talk about logic here to determine what variation to use
+      // If the existing variation and requested variation are the same (inverse && inverse)
+      // we will default to base
+      // Otherwise we will just use the variation requested
+      // For example an existing variation of inverse paired with a requested
+      // variation of contrast, will result in contrast.
+      $variation: if($variation == $current-variation, $default-color-variation, $variation);
+    }
+  }
+
+  // Create the CSS variable name
+  $variable-name: "#{$default-color-prefix}#{$name}";
+  $color: map-get($colors, $name);
+  $rgb-color: map-get($generated-colors, $name);
+  // If there is no variation use the default
+  $variation: if($variation == null, $default-color-variation, $variation);
+
+  // If the color contains variations pick the appropriate one
+  @if (type-of($color) == map) {
+    @if (not map-has-key($color, $variation)) {
+      @warn "Unknown Color: '#{$name}' with variation '#{$variation}'. Using #{$default-color-variation}";
+      $variation: $default-color-variation;
+    }
+    $color: map-get($color, $variation);
+    $rgb-color: map-get($rgb-color, $variation);
+    $variable-name: if($variation != $default-color-variation, "#{$variable-name}-#{$variation}", $variable-name);
+  } @else if $variation != $default-color-variation {
+    @warn "Color '#{$name}' is not a map. Cannot contain variation '#{$variation}'. Using #{$default-color-variation}";
+    $variation: $default-color-variation;
+  }
+
+  @if $enable-css-variables {
+    // Write out the color as a CSS variable
+    $css-variable: "var(#{$variable-name}#{if($enable-css-variable-fallbacks, ', #{$rgb-color}', '')})";
+    @if $color and $opacity != 1 {
+      @return unquote("rgba(#{$css-variable}, #{$opacity})");
+    } @else if $color {
+      @return unquote("rgb(#{$css-variable})");
+    }
+  } @else {
+    // Write out the color as absolute value
+    @if $color and $opacity != 1 {
+      @return unquote("rgba(#{$rgb-color},#{$opacity})");
+    } @else if $color {
+      @return $color;
+    }
+  }
+
+  @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
+}
+
+/**
+  Returns either a css variable reference or a color value
+  Allows for colors to reference other colors
+
+  // Map name
+  ion-color-reference($colors, primary); // var(--color-primary)
+  // Map name and variation
+  ion-color-reference($colors, primary, tint); // var(--color-primary-tint)
+
+  // Reference to variable using a reference
+  $color: ion-color-reference($app-colors, primary, tint);
+  $reference-color: ion-color-reference($base-colors, $color); // var(--color-primary-tint)
+
+  // Reference to color in map using a reference
+  $foo-colors: (
+    foo-color: ion-color-reference($app-colors, primary, tint)
+  );
+
+  $reference-color: ion-color-reference($foo-colors, foo-color); // var(--color-foo-color)
+  $reference-color: ion-color-reference($foo-colors, foo-color, tint); // throws warning
+ */
+@function ion-color-reference($colors, $name, $variation: null) {
+  $variable-name: "#{$default-color-prefix}#{$name}";
+  $color: map-get($colors, $name);
+
+  // Reference to a reference?
+  @if ($enable-css-variables) {
+
+    // Reference css variable string has been passed in
+    $index: (str-index($name, $default-color-prefix));
+    @if ($index) {
+      @return unquote($name);
+    }
+
+    // Reference with value of a css variable has been passed in
+    $index: (type-of($color) == string) and (str-index($color, $default-color-prefix));
+    @if ($index) {
+      @if ($variation == null) {
+        @return "var(#{$variable-name})";
+      } @else {
+        @warn "Unable to use color '#{$name}' with variant '#{$variation}' as refrences to reference. Defaulting to #{$default-color-variation}'";
+        @return "var(#{$variable-name})";
+        /*$results: css-variable-to-name-variation($color);
+        $name: map-get($results, name);
+        $current-variation: map-get($results, variation);
+        $variation: if($variation == $current-variation, $default-color-variation, $variation);
+        $variable-name: "#{$name}#{if($variation != $default-color-variation, -#{$variation}, '')}";
+        @return "var(#{$default-color-prefix}#{$variable-name})";*/
+      }
+    }
+  }
+
+  $variation: if($variation, $variation, $default-color-variation);
+  @if (type-of($color) == map) {
+    $color: map-get($color, $variation);
+    $variable-name: "#{$variable-name}#{if($variation != $default-color-variation, -#{$variation}, '')}";
+  }
+
+  @if (type-of($color) == color) {
+    @if ($enable-css-variables) {
+      @return "var(#{$variable-name})";
+    } @else {
+      @return $color;
+    }
+  } @else {
+    @error "Color '#{$name}' does not exist with variation '#{$variation}'";
+  }
+}
+
+@function ion-extend-colors($parent, $children...) {
+  $result: $parent;
+  @each $child in $children {
+    @each $key, $value in $child {
+      @if type-of($value) == map {
+        $obj: ();
+        @if (map-has-key($result, $key)) {
+          $obj: map-get($result, $key);
+        }
+        $result: map-merge($result, ($key: ion-extend-colors($obj, $value)));
+      } @else {
+        $result: map-merge($result, ($key: $value));
+      }
+    }
+  }
+  @return $result;
+}

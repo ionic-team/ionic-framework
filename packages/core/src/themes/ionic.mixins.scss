@@ -561,20 +561,20 @@
   $safe-area-end-env: null;
 
   @if ($start) {
-    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
-    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
   @if ($end) {
-    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
-    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
+    $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
+    $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
   @if ($top){
-    $safe-area-top: calc(constant(safe-area-inset-top) + #{$top});
-    $safe-area-top-env: calc(env(safe-area-inset-top) + #{$top});
+    $safe-area-top: unquote("calc(constant(safe-area-inset-top) + #{$top})");
+    $safe-area-top-env: unquote("calc(env(safe-area-inset-top) + #{$top})");
   }
   @if ($bottom){
-    $safe-area-bottom: calc(constant(safe-area-inset-bottom) + #{$bottom});
-    $safe-area-bottom-env: calc(env(safe-area-inset-bottom) + #{$bottom});
+    $safe-area-bottom: unquote("calc(constant(safe-area-inset-bottom) + #{$bottom})");
+    $safe-area-bottom-env: unquote("calc(env(safe-area-inset-bottom) + #{$bottom})");
   }
 
   @include padding($safe-area-top, $safe-area-end, $safe-area-bottom, $safe-area-start);
@@ -593,12 +593,12 @@
   $safe-area-end-env: null;
 
   @if ($end) {
-    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
-    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
+    $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
+    $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
   @if ($start) {
-    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
-    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
 
   @include padding-horizontal($safe-area-start, $safe-area-end);
@@ -616,12 +616,12 @@
   $safe-area-start-env: null;
   $safe-area-end-env: null;
   @if ($start) {
-    $safe-area-start: calc(constant(safe-area-inset-left) + #{$start});
-    $safe-area-start-env: calc(env(safe-area-inset-left) + #{$start});
+    $safe-area-start: unquote("calc(constant(safe-area-inset-left) + #{$start})");
+    $safe-area-start-env: unquote("calc(env(safe-area-inset-left) + #{$start})");
   }
   @if ($end) {
-    $safe-area-end: calc(constant(safe-area-inset-right) + #{$end});
-    $safe-area-end-env: calc(env(safe-area-inset-right) + #{$end});
+    $safe-area-end: unquote("calc(constant(safe-area-inset-right) + #{$end})");
+    $safe-area-end-env: unquote("calc(env(safe-area-inset-right) + #{$end})");
   }
 
   @if $safe-area-start == $safe-area-end {
@@ -660,8 +660,8 @@
 // @param {string} $value - additional value you want to modify, if none, pass 0px
 // ----------------------------------------------------------
 @mixin safe-area-sizing($prop, $safe-area-position, $value){
-  #{$prop}: calc(#{$value} + constant(#{$safe-area-position}));
-  #{$prop}: calc(#{$value} + env(#{$safe-area-position}));
+  #{$prop}: unquote("calc(#{$value} + constant(#{$safe-area-position}))");
+  #{$prop}: unquote("calc(#{$value} + env(#{$safe-area-position}))");
 }
 
 
@@ -729,7 +729,7 @@
     @include safe-area-padding(0px, null, null, null);
 
     height: calc(#{$toolbar-height} + #{$statusbar-padding});
-    @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height)
+    @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height);
 
     min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
     @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
