@@ -2,31 +2,31 @@
 
 
 :root {
-  --primary: #ff4f12;
+  --primary: #549EE7;
   --primary-contrast: #ffffff;
-  --secondary: #0cd1e8;
+  --secondary: #5FB3B3;
   --secondary-contrast: #ffffff;
-  --tertiary: #7044ff;
+  --tertiary: #FAC863;
   --tertiary-contrast: #ffffff;
-  --success: #10dc60;
+  --success: #90d089;
   --success-contrast: #ffffff;
-  --warning: #ffce00;
+  --warning: #F99157;
   --warning-contrast: #ffffff;
-  --danger: #f04141;
+  --danger: #EC5f67;
   --danger-contrast: #ffffff;
-  --light: #f4f5f8;
-  --light-contrast: #000000;
-  --medium: #898b93;
-  --medium-contrast: #000000;
-  --dark: #222428;
-  --dark-contrast: #f4f5f8;
+  --light: #D8DEE9;
+  --light-contrast: #1b2b34;
+  --medium: #65737E;
+  --medium-contrast: #d8dee9;
+  --dark: #1B2B34;
+  --dark-contrast: #D8DEE9;
   --content-color: #ffffff;
-  --content-sub-color: #A7ADBA;
+  --content-sub-color: #a7adba;
   --content-background: #1B2B34;
-  --content-sub-background: #eeeeee;
-  --toolbar-background: #eeeeee;
-  --tabbar-background: #eeeeee;
-  --item-background: #eeeeee;
-  --item-sub-background: #eeeeee;
-  --border-color: #222428;
+  --content-sub-background: #343D46;
+  --toolbar-background: #343D46;
+  --tabbar-background: #343D46;
+  --item-background: #343D46;
+  --item-sub-background: #65737E;
+  --border-color: #1B2B34;
 }
