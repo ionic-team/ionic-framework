@@ -72,9 +72,9 @@
         </ion-item>
 
         <p aria-hidden="true" padding>
-          <code>toppings: <span id="toppingsResults"></span></code><br>
-          <code>carFeatures: <span id="carFeaturesResults"></span></code><br>
-          <code>pets: <span id="petsResults"></span></code><br>
+          <code>toppings: <span id="toppingsResult"></span></code><br>
+          <code>carFeatures: <span id="carFeaturesResult"></span></code><br>
+          <code>pets: <span id="petsResult"></span></code><br>
         </p>
 
         <form>
@@ -138,7 +138,7 @@
 
       function setResults(select) {
         if (select.id) {
-          var resultsEl = document.getElementById(select.id + 'Results');
+          var resultsEl = document.getElementById(select.id + 'Result');
           if (resultsEl) {
             resultsEl.innerHTML = select.value;
           }
