@@ -30,8 +30,17 @@ $action-sheet-ios-background:                           #f9f9f9 !default;
 /// @prop - Border radius of the action sheet
 $action-sheet-ios-border-radius:                        13px !default;
 
-/// @prop - Padding of the action sheet title
-$action-sheet-ios-title-padding:                        15px !default;
+/// @prop - Padding top of the action sheet title
+$action-sheet-ios-title-padding-top:                    15px !default;
+
+/// @prop - Padding end of the action sheet title
+$action-sheet-ios-title-padding-end:                    $action-sheet-ios-title-padding-top !default;
+
+/// @prop - Padding bottom of the action sheet title
+$action-sheet-ios-title-padding-bottom:                 $action-sheet-ios-title-padding-top !default;
+
+/// @prop - Padding start of the action sheet title
+$action-sheet-ios-title-padding-start:                  $action-sheet-ios-title-padding-end !default;
 
 /// @prop - Color of the action sheet title
 $action-sheet-ios-title-color:                          #8f8f8f !default;
@@ -43,13 +52,28 @@ $action-sheet-ios-title-font-size:                      13px !default;
 $action-sheet-ios-title-font-weight:                    400 !default;
 
 /// @prop - Border width of the action sheet title
-$action-sheet-ios-title-border-width:                  $hairlines-width !default;
+$action-sheet-ios-title-border-width:                   $hairlines-width !default;
 
 /// @prop - Border style of the action sheet title
-$action-sheet-ios-title-border-style:                  solid !default;
+$action-sheet-ios-title-border-style:                   solid !default;
 
 /// @prop - Border color of the action sheet title
-$action-sheet-ios-title-border-color:                  rgba(0, 0, 0, .1) !default;
+$action-sheet-ios-title-border-color:                   rgba(0, 0, 0, .1) !default;
+
+/// @prop - Font size of the action sheet sub title
+$action-sheet-ios-sub-title-font-size:                  12px !default;
+
+/// @prop - Padding top of the action sheet sub title
+$action-sheet-ios-sub-title-padding-top:                15px !default;
+
+/// @prop - Padding end of the action sheet sub title
+$action-sheet-ios-sub-title-padding-end:                0 !default;
+
+/// @prop - Padding bottom of the action sheet sub title
+$action-sheet-ios-sub-title-padding-bottom:             0 !default;
+
+/// @prop - Padding start of the action sheet sub title
+$action-sheet-ios-sub-title-padding-start:              $action-sheet-ios-sub-title-padding-end !default;
 
 /// @prop - Minimum height of the action sheet button
 $action-sheet-ios-button-min-height:                    56px !default;

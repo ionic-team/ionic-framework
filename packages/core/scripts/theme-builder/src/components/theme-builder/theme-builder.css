@@ -15,4 +15,6 @@ main > section {
 
 .selector-column {
   max-width: 600px;
+  height: 100%;
+  overflow-y: scroll;
 }

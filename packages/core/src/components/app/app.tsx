@@ -95,7 +95,7 @@ export class App {
   render() {
     const dom = [<slot></slot>];
     if (this.useRouter) {
-      dom.push(<ion-router-controller></ion-router-controller>);
+      // dom.push(<ion-router-controller></ion-router-controller>);
     }
     return dom;
   }

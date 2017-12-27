@@ -223,10 +223,6 @@ export class InfiniteScroll {
     action.then(enable, enable);
   }
 
-
-  /**
-   * @hidden
-   */
   private enableScrollEvents(shouldListen: boolean) {
     this.enableListener(this, 'ionScroll', shouldListen, this.scrollEl);
   }

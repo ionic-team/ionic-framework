@@ -105,7 +105,7 @@ async function run() {
 
   const files = await getTestFiles();
   files.forEach(f => mocha.addFile(f));
-  const snapshot = await mochaLoadFiles(mocha);
+  snapshot = await mochaLoadFiles(mocha);
   const failures = await mochaRun(mocha);
 
   if (takeScreenshots) {
@@ -132,7 +132,7 @@ function mochaLoadFiles(mocha) {
     mocha.loadFiles(() => {
       specIndex = 0;
 
-      const snapshot = new Snapshot({
+      snapshot = new Snapshot({
         groupId: 'ionic-core',
         appId: 'snapshots',
         testId: generateTestId(),

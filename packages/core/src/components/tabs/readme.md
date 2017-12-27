@@ -167,9 +167,6 @@ boolean
 #### ionChange
 
 
-#### ionNavChanged
-
-
 ## Methods
 
 #### getByIndex()
@@ -178,22 +175,13 @@ boolean
 #### getIndex()
 
 
-#### getRoutes()
-
-
 #### getSelected()
-
-
-#### getState()
 
 
 #### getTabs()
 
 
 #### select()
-
-
-#### setRouteId()
 
 
 

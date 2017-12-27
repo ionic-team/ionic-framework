@@ -8,10 +8,22 @@ export const THEME_VARIABLES = [
     property: '--primary-contrast'
   },
   {
+    property: '--primary-tint'
+  },
+  {
+    property: '--primary-shade'
+  },
+  {
     property: '--secondary'
   },
   {
     property: '--secondary-contrast'
+  },
+  {
+    property: '--secondary-tint'
+  },
+  {
+    property: '--secondary-shade'
   },
   {
     property: '--tertiary'
@@ -20,10 +32,22 @@ export const THEME_VARIABLES = [
     property: '--tertiary-contrast'
   },
   {
+    property: '--tertiary-tint'
+  },
+  {
+    property: '--tertiary-shade'
+  },
+  {
     property: '--success'
   },
   {
     property: '--success-contrast'
+  },
+  {
+    property: '--success-tint'
+  },
+  {
+    property: '--success-shade'
   },
   {
     property: '--warning'
@@ -32,10 +56,22 @@ export const THEME_VARIABLES = [
     property: '--warning-contrast'
   },
   {
+    property: '--warning-tint'
+  },
+  {
+    property: '--warning-shade'
+  },
+  {
     property: '--danger'
   },
   {
     property: '--danger-contrast'
+  },
+  {
+    property: '--danger-tint'
+  },
+  {
+    property: '--danger-shade'
   },
   {
     property: '--light'
@@ -44,10 +80,22 @@ export const THEME_VARIABLES = [
     property: '--light-contrast'
   },
   {
+    property: '--light-tint'
+  },
+  {
+    property: '--light-shade'
+  },
+  {
     property: '--medium'
   },
   {
     property: '--medium-contrast'
+  },
+  {
+    property: '--medium-tint'
+  },
+  {
+    property: '--medium-shade'
   },
   {
     property: '--dark'
@@ -56,16 +104,22 @@ export const THEME_VARIABLES = [
     property: '--dark-contrast'
   },
   {
-    property: '--content-color'
+    property: '--dark-tint'
   },
   {
-    property: '--content-sub-color'
+    property: '--dark-shade'
   },
   {
-    property: '--content-background'
+    property: '--text-color'
   },
   {
-    property: '--content-sub-background'
+    property: '--text-sub-color'
+  },
+  {
+    property: '--background-color'
+  },
+  {
+    property: '--background-color-alt'
   },
   {
     property: '--toolbar-background'
@@ -74,36 +128,16 @@ export const THEME_VARIABLES = [
     property: '--tabbar-background'
   },
   {
-    property: '--item-background'
+    property: '--item-background-color'
   },
   {
-    property: '--item-sub-background'
+    property: '--item-background-color-alt'
   },
   {
     property: '--border-color'
   },
+  {
+    property: '--box-shadow'
+  },
 
 ];
-
-export const SERVER_DOMAIN = `http://localhost:5454`;
-export const DATA_URL = `${SERVER_DOMAIN}/data`;
-export const SAVE_CSS_URL = `${SERVER_DOMAIN}/save-css`;
-export const DELETE_CSS_URL = `${SERVER_DOMAIN}/delete-css`;
-export const CSS_THEME_FILE_PATH = `/src/themes/css`;
-
-export function saveCssUrl(themeName: string, cssText: string) {
-  cssText = encodeURIComponent(cssText);
-  return `${SAVE_CSS_URL}?theme=${themeName}&css=${cssText}`;
-}
-
-export function deleteCssUrl(themeName: string) {
-  return `${DELETE_CSS_URL}?theme=${themeName}`;
-}
-
-export function getThemeUrl(themeName: string) {
-  return `${CSS_THEME_FILE_PATH}/${themeName}.css`;
-}
-
-export const STORED_DEMO_URL_KEY = 'theme-builder-demo-url';
-export const STORED_DEMO_MODE_KEY = 'theme-builder-demo-mode';
-export const STORED_THEME_KEY = 'theme-builder-theme-url';

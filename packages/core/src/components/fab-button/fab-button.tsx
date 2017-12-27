@@ -66,7 +66,6 @@ export class FabButton {
   }
 
   /**
-   * @hidden
    * Get the classes for fab buttons in lists
    */
   getFabListClassList() {
@@ -86,7 +85,6 @@ export class FabButton {
   }
 
   /**
-   * @hidden
    * Get the close active class for fab buttons
    */
   getFabActiveClassList() {
@@ -99,7 +97,6 @@ export class FabButton {
   }
 
   /**
-   * @hidden
    * Get the show class for fab buttons
    */
   getFabShowClassList() {

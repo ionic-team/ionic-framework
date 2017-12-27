@@ -25,6 +25,10 @@
   opacity: $button-ios-opacity-activated;
 }
 
+.button-ios.focused {
+  background-color: $button-ios-background-color-focused;
+}
+
 .button-ios:hover:not(.disable-hover) {
   opacity: $button-ios-opacity-hover;
 }
@@ -40,6 +44,7 @@
 @mixin ios-button-default($color-name, $color-base, $color-contrast) {
   $bg-color: $color-base;
   $bg-color-activated: color-shade($bg-color);
+  $bg-color-focused: color-shade($color-base, 12%);
   $fg-color: $color-contrast;
 
   .button-ios-#{$color-name} {
@@ -49,6 +54,10 @@
 
   .button-ios-#{$color-name}.activated {
     background-color: $bg-color-activated;
+  }
+
+  .button-ios-#{$color-name}.focused {
+    background-color: $bg-color-focused;
   }
 }
 
@@ -109,10 +118,20 @@
   opacity: $button-ios-outline-opacity-activated;
 }
 
+.button-outline-ios.focused {
+  background-color: $button-ios-outline-background-color-focused;
+}
+
+.button-outline-ios.activated.focused {
+  background-color: color-shade($button-ios-background-color, 12%);
+  border-color: color-shade($button-ios-background-color, 12%);
+}
+
 // iOS Outline Button Color Mixin
 // --------------------------------------------------
 
 @mixin ios-button-outline($color-name, $color-base, $color-contrast) {
+  $bg-color-focused: rgba($color-base, 0.12);
 
   .button-outline-ios-#{$color-name} {
     border-color: $color-base;
@@ -125,6 +144,14 @@
     background-color: $color-base;
   }
 
+  .button-outline-ios-#{$color-name}.focused {
+    background-color: $bg-color-focused;
+  }
+
+  .button-outline-ios-#{$color-name}.activated.focused {
+    background-color: color-shade($color-base, 12%);
+    border-color: color-shade($color-base, 12%);
+  }
 }
 
 
@@ -142,6 +169,10 @@
   opacity: $button-ios-clear-opacity-activated;
 }
 
+.button-clear-ios.focused {
+  background-color: $button-ios-clear-background-color-focused;
+}
+
 .button-clear-ios:hover:not(.disable-hover) {
   color: $button-ios-clear-text-color-hover;
   opacity: $button-ios-clear-opacity-hover;
@@ -153,6 +184,7 @@
 
 @mixin ios-button-clear($color-name, $color-base, $color-contrast) {
   $fg-color: $color-base;
+  $bg-color-focused: rgba($color-base, 0.12);
 
   .button-clear-ios-#{$color-name} {
     border-color: $button-ios-clear-border-color;
@@ -162,6 +194,10 @@
 
   .button-clear-ios-#{$color-name}.activated {
     opacity: $button-ios-clear-opacity-activated;
+  }
+
+  .button-clear-ios-#{$color-name}.focused {
+    background-color: $bg-color-focused;
   }
 
   .button-clear-ios-#{$color-name}:hover:not(.disable-hover) {

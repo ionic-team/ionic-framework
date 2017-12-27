@@ -148,22 +148,8 @@ sub {
 }
 
 
-// Nav Container Structure
-// --------------------------------------------------
-
-ion-app,
-ion-nav,
-ion-tabs,
-.ion-page {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-  z-index: $z-index-page-container;
-
-  width: 100%;
-  height: 100%;
-
-  contain: layout size style;
+ion-app {
+  @extend .ion-page
 }
 
 // Page Container Structure

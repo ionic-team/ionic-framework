@@ -93,11 +93,6 @@
   width: calc(100% - #{$input-md-margin-end});
 }
 
-.item-label-stacked .select-md,
-.item-label-floating .select-md {
-  @include padding(8px, null, 8px, 0);
-}
-
 
 // Material Design Clear Input Icon
 // --------------------------------------------------

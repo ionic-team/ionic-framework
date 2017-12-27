@@ -99,11 +99,7 @@ export class Menu {
    */
   @Prop() persistent: boolean = false;
 
-  /**
-   * @hidden
-   */
   @Prop() maxEdgeStart: number = 50;
-
 
   /**
    * @output {Event} Emitted when the sliding position changes.

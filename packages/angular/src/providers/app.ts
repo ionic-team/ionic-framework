@@ -2,7 +2,9 @@ import { NavContainer } from '@ionic/core';
 
 export class App {
 
-  constructor(public _element: HTMLIonAppElement) {
+  _element: HTMLIonAppElement;
+  constructor() {
+    this._element = document.querySelector('ion-app');
   }
 
   setTitle(title: string) {

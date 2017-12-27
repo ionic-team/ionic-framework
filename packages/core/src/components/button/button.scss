@@ -32,6 +32,11 @@
   contain: content;
 }
 
+.button:active,
+.button:focus {
+  outline: none;
+}
+
 .button-inner {
   display: flex;
 

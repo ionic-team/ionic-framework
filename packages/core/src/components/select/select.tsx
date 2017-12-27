@@ -253,6 +253,7 @@ export class Select {
       // there are no values set at this point
       // so check to see who should be selected
       const checked = this.childOpts.filter(o => o.selected);
+
       (this.value as string[]).length = 0;
       checked.forEach(o => {
         // doing this instead of map() so we don't
@@ -303,9 +304,14 @@ export class Select {
   }
 
   openPopover(ev: UIEvent) {
-    const popoverOpts: PopoverOptions = {
+    let interfaceOptions = {...this.interfaceOptions};
+
+    const popoverOpts: PopoverOptions = Object.assign(interfaceOptions, {
       component: 'ion-select-popover',
       data: {
+        title: interfaceOptions.title,
+        subTitle: interfaceOptions.subTitle,
+        message: interfaceOptions.message,
         value: this.value,
         options: this.childOpts.map(o => {
           return {
@@ -320,9 +326,9 @@ export class Select {
           } as SelectPopoverOption;
         })
       },
-      cssClass: 'select-popover ' + (this.interfaceOptions.cssClass ? ' ' + this.interfaceOptions.cssClass : ''),
+      cssClass: 'select-popover' + (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : ''),
       ev: ev
-    };
+    });
 
     const popover = this.popoverCtrl.create(popoverOpts);
 
@@ -337,6 +343,8 @@ export class Select {
   }
 
   openActionSheet() {
+    let interfaceOptions = {...this.interfaceOptions};
+
     const actionSheetButtons: ActionSheetButton[] = this.childOpts.map(option => {
       return {
         role: (option.selected ? 'selected' : ''),
@@ -355,10 +363,10 @@ export class Select {
       }
     });
 
-    const actionSheetOpts: ActionSheetOptions = {
+    const actionSheetOpts: ActionSheetOptions = Object.assign(interfaceOptions, {
       buttons: actionSheetButtons,
-      cssClass: 'select-action-sheet' + (this.interfaceOptions.cssClass ? ' ' + this.interfaceOptions.cssClass : '')
-    };
+      cssClass: 'select-action-sheet' + (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
+    });
 
     const actionSheet = this.actionSheetCtrl.create(actionSheetOpts);
     return actionSheet.then(overlay => {
@@ -371,14 +379,16 @@ export class Select {
   }
 
   openAlert() {
+    let interfaceOptions = {...this.interfaceOptions};
+
     const label = this.getLabel();
     let labelText: string = null;
     if (label) {
       labelText = label.textContent;
     }
 
-    const alertOpts: AlertOptions = {
-      title: labelText,
+    const alertOpts: AlertOptions = Object.assign(interfaceOptions, {
+      title: interfaceOptions.title ? interfaceOptions.title : labelText,
       inputs: this.childOpts.map(o => {
         return {
           type: (this.multiple ? 'checkbox' : 'radio'),
@@ -398,15 +408,15 @@ export class Select {
         },
         {
           text: this.okText,
-          handler: (selectedValues) => {
+          handler: (selectedValues: any) => {
             this.value = selectedValues;
           }
         }
       ],
       cssClass: 'select-alert ' +
                 (this.multiple ? 'multiple-select-alert' : 'single-select-alert') +
-                (this.interfaceOptions.cssClass ? ' ' + this.interfaceOptions.cssClass : '')
-    };
+                (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
+    });
 
     const alert = this.alertCtrl.create(alertOpts);
     return alert.then(overlay => {
@@ -448,11 +458,20 @@ export class Select {
     this.ionBlur.emit();
   }
 
+  hasValue(): boolean {
+    if (Array.isArray(this.value)) {
+      return this.value.length > 0;
+    }
+    return (this.value !== null && this.value !== undefined && this.value !== '');
+  }
+
   emitStyle() {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
       this.ionStyle.emit({
+        'select': true,
+        'input-has-value': this.hasValue(),
         'select-disabled': this.disabled
       });
     });

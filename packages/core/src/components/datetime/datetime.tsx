@@ -192,7 +192,6 @@ export class Datetime {
   @Prop({ mutable: true }) value: string;
 
   /**
-   * @hidden
    * Update the datetime value when the value changes
    */
   @PropDidChange('value')
@@ -221,7 +220,6 @@ export class Datetime {
   }
 
   /**
-   * @hidden
    * Update the datetime text and datetime value
    */
   updateValue() {
@@ -286,7 +284,6 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   generateColumns(): PickerColumn[] {
     let columns: PickerColumn[] = [];
@@ -421,7 +418,6 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   calcMinMax(now?: Date) {
     const todaysYear = (now || new Date()).getFullYear();
@@ -477,7 +473,6 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
     const column = this.picker.getColumn(name);
@@ -518,7 +513,6 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   divyColumns(columns: PickerColumn[]): PickerColumn[] {
     const pickerColumns = columns;
@@ -555,7 +549,6 @@ export class Datetime {
   }
 
   /**
-   * @hidden
    */
   updateText() {
     // create the text of the formatted data
@@ -564,7 +557,6 @@ export class Datetime {
   }
 
   /**
-   * @hidden
    */
   hasValue(): boolean {
     const val = this.datetimeValue;

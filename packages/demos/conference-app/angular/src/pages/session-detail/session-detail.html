@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="session">{{session.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="session">
+    <h1>{{session.name}}</h1>
+    <h4 *ngFor="let speaker of session?.speakers">
+    {{speaker.name}}
+  </h4>
+    <p>
+      {{session.timeStart}} - {{session.timeEnd}}
+    </p>
+    <p>{{session.location}}</p>
+    <p>{{session.description}}</p>
+  </div>
+</ion-content>

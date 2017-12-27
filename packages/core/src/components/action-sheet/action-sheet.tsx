@@ -281,10 +281,12 @@ export class ActionSheet {
         <div class='action-sheet-container'>
           <div class='action-sheet-group'>
             {this.title
-              ? <div class='action-sheet-title'>{this.title}</div>
-              : null}
-            {this.subTitle
-              ? <div class='action-sheet-sub-title'>{this.subTitle}</div>
+              ? <div class='action-sheet-title'>
+                {this.title}
+                {this.subTitle
+                ? <div class='action-sheet-sub-title'>{this.subTitle}</div>
+                : null}
+              </div>
               : null}
             {buttons.map(b =>
               <button class={this.buttonClass(b)} onClick={() => this.buttonClick(b)}>

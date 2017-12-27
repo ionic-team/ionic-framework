@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { STORED_THEME_KEY, deleteCssUrl, getThemeUrl, saveCssUrl } from '../../theme-variables';
+import { STORED_THEME_KEY, deleteCssUrl, getThemeUrl, saveCssUrl } from '../helpers';
 
 
 @Component({

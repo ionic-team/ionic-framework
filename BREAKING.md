@@ -18,6 +18,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Radio](#radio)
 - [Range](#range)
 - [Segment](#segment)
+- [Select](#select)
 - [Toolbar](#toolbar)
 - [Sass](#sass)
 
@@ -551,6 +552,41 @@ These have been renamed to the following:
 ## Segment
 
 The markup hasn't changed for Segments, but now writing `<ion-segment-button>` will render a native button element inside of it.
+
+
+## Select
+
+The `selectOptions` property was renamed to `interfaceOptions` since it directly correlates with the `interface` property.
+
+**Old Usage Example:**
+
+```html
+<ion-select [selectOptions]="customOptions">
+  ...
+</ion-select>
+```
+
+```ts
+this.customOptions = {
+  title: 'Pizza Toppings',
+  subTitle: 'Select your toppings'
+};
+```
+
+**New Usage Example:**
+
+```html
+<ion-select [interfaceOptions]="customOptions">
+  ...
+</ion-select>
+```
+
+```ts
+this.customOptions = {
+  title: 'Pizza Toppings',
+  subTitle: 'Select your toppings'
+};
+```
 
 
 ## Toolbar

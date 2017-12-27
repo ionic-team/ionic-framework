@@ -118,7 +118,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Clears the input field and triggers the control change.
    */
   clearInput(ev: UIEvent) {
@@ -137,7 +136,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Clears the input field and tells the input to blur since
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
@@ -151,7 +149,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: any) {
@@ -161,9 +158,6 @@ export class Searchbar {
     }, this.debounce);
   }
 
-  /**
-   * @hidden
-   */
   inputUpdated() {
     // const inputEle = this.el.querySelector('.searchbar-input') as HTMLInputElement;
 
@@ -178,7 +172,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
@@ -200,7 +193,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Sets the Searchbar to focused and active on input focus.
    */
   inputFocused() {
@@ -214,7 +206,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Positions the input search icon, placeholder, and the cancel button
    * based on the input value and if it is focused. (ios only)
    */
@@ -237,7 +228,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Positions the input placeholder
    */
   positionPlaceholder() {
@@ -277,7 +267,6 @@ export class Searchbar {
   }
 
   /**
-   * @hidden
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   positionCancelButton() {

@@ -1,5 +1,5 @@
 import { Component, Listen, State } from '@stencil/core';
-import { DATA_URL, STORED_DEMO_MODE_KEY, STORED_DEMO_URL_KEY } from '../../theme-variables';
+import { DATA_URL, STORED_DEMO_MODE_KEY, STORED_DEMO_URL_KEY } from '../helpers';
 
 
 @Component({

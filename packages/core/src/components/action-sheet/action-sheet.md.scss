@@ -7,14 +7,19 @@
 // Material Design Action Sheet Title
 // -----------------------------------------
 
-.action-sheet-md .action-sheet-title,
-.action-sheet-md .action-sheet-sub-title {
+.action-sheet-md .action-sheet-title {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 
   @include text-align($action-sheet-md-text-align);
 
   font-size: $action-sheet-md-title-font-size;
   color: $action-sheet-md-title-color;
+}
+
+.action-sheet-md .action-sheet-sub-title {
+  @include padding($action-sheet-md-sub-title-padding-top, $action-sheet-md-sub-title-padding-end, $action-sheet-md-sub-title-padding-bottom, $action-sheet-md-sub-title-padding-start);
+
+  font-size: $action-sheet-md-sub-title-font-size;
 }
 
 

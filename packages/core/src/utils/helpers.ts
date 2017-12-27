@@ -275,11 +275,15 @@ export function playAnimationAsync(animation: Animation): Promise<Animation> {
   });
 }
 
-export function domControllerAsync(domControllerFunction: Function, callback: Function) {
+export function domControllerAsync(domControllerFunction: Function, callback?: Function): Promise<any> {
   return new Promise((resolve) => {
     domControllerFunction(() => {
-      callback();
-      resolve();
+      if (!callback) {
+        return resolve();
+      }
+      Promise.resolve(callback()).then((...args: any[]) => {
+        resolve(args);
+      });
     });
   });
 }
