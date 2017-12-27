@@ -48,6 +48,12 @@ describe('Infinite Scroll', () => {
       expect(result).toEqual(2);
     });
 
+    it('should not kill thread if ev is undefined', () => {
+      inf._lastCheck = Date.now();
+      var result = inf._onScroll(undefined);
+      expect(result).toEqual(2);
+    });
+
     it('should not run if state is disabled', () => {
       inf.state = 'disabled';
       var result = inf._onScroll(ev);
