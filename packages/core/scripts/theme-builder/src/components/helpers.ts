@@ -53,3 +53,18 @@ function cleanRgb(value: string) {
     return /[rgba0-9\,\.\(\)]/.test(c) ? c : '';
   }).join('');
 }
+
+export function isValidColorValue(value: string) {
+  if (value) {
+    if (value.charAt(0) === '#') {
+      const rxValidHex = /^#[0-9a-f]{6}$/i;
+      return rxValidHex.test(value);
+    }
+    if (value.charAt(0) === 'r') {
+      const rxValidRgb = /([R][G][B][A]?[(]\s*([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\s*,\s*([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\s*,\s*([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])(\s*,\s*((0\.[0-9]{1})|(1\.0)|(1)))?[)])/i;
+      return rxValidRgb.test(value);
+    }
+  }
+
+  return false;
+}
