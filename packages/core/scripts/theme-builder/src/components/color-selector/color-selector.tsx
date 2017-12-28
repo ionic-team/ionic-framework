@@ -1,4 +1,5 @@
 import { Component, Event, EventEmitter, Prop } from '@stencil/core';
+import { isValidColorValue } from '../helpers';
 
 
 @Component({
@@ -11,7 +12,7 @@ export class ColorSelector {
   @Prop() property: string;
   @Prop({ mutable: true }) value: string;
   @Prop() isRgb: boolean;
-
+  isValid: boolean;
 
   onChange(ev) {
     if (this.isRgb) {
@@ -33,7 +34,7 @@ export class ColorSelector {
     const hex = rgbToHex(value);
 
     return [
-      <section>
+      <section class={isValidColorValue(value) ? 'valid' : 'invalid'}>
         <div class='color-square'>
           <input type='color' value={hex} onInput={this.onChange.bind(this)} tabindex='-1' />
         </div>
