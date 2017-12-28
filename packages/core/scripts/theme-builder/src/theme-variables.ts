@@ -139,5 +139,8 @@ export const THEME_VARIABLES = [
   {
     property: '--box-shadow'
   },
+  {
+    property: '--backdrop'
+  },
 
 ];
