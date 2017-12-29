@@ -4,12 +4,12 @@
 :root {
   --color-primary: #3880ff;
   --color-primary-contrast: #ffffff;
-  --color-primary-tint: #ff00ff;
-  --color-primary-shade: #ff00ff;
+  --color-primary-tint: #5896ff;
+  --color-primary-shade: #135ddf;
   --color-secondary: #0cd1e8;
   --color-secondary-contrast: #ffffff;
-  --color-secondary-tint: #ff00ff;
-  --color-secondary-shade: #ff00ff;
+  --color-secondary-tint: #5de6f6;
+  --color-secondary-shade: #00bce0;
   --color-tertiary: #7044ff;
   --color-tertiary-contrast: #ffffff;
   --color-tertiary-tint: #ff00ff;
