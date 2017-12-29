@@ -5,19 +5,16 @@ export const THEME_VARIABLES = [
     property: '--color-primary'
   },
   {
-    property: '--color-primary-contrast'
-  },
-  {
     property: '--color-primary-tint'
   },
   {
     property: '--color-primary-shade'
   },
   {
-    property: '--color-secondary'
+    property: '--color-primary-contrast'
   },
   {
-    property: '--color-secondary-contrast'
+    property: '--color-secondary'
   },
   {
     property: '--color-secondary-tint'
@@ -26,10 +23,10 @@ export const THEME_VARIABLES = [
     property: '--color-secondary-shade'
   },
   {
-    property: '--color-tertiary'
+    property: '--color-secondary-contrast'
   },
   {
-    property: '--color-tertiary-contrast'
+    property: '--color-tertiary'
   },
   {
     property: '--color-tertiary-tint'
@@ -38,10 +35,10 @@ export const THEME_VARIABLES = [
     property: '--color-tertiary-shade'
   },
   {
-    property: '--color-success'
+    property: '--color-tertiary-contrast'
   },
   {
-    property: '--color-success-contrast'
+    property: '--color-success'
   },
   {
     property: '--color-success-tint'
@@ -50,10 +47,10 @@ export const THEME_VARIABLES = [
     property: '--color-success-shade'
   },
   {
-    property: '--color-warning'
+    property: '--color-success-contrast'
   },
   {
-    property: '--color-warning-contrast'
+    property: '--color-warning'
   },
   {
     property: '--color-warning-tint'
@@ -62,10 +59,10 @@ export const THEME_VARIABLES = [
     property: '--color-warning-shade'
   },
   {
-    property: '--color-danger'
+    property: '--color-warning-contrast'
   },
   {
-    property: '--color-danger-contrast'
+    property: '--color-danger'
   },
   {
     property: '--color-danger-tint'
@@ -74,10 +71,10 @@ export const THEME_VARIABLES = [
     property: '--color-danger-shade'
   },
   {
-    property: '--color-light'
+    property: '--color-danger-contrast'
   },
   {
-    property: '--color-light-contrast'
+    property: '--color-light'
   },
   {
     property: '--color-light-tint'
@@ -86,10 +83,10 @@ export const THEME_VARIABLES = [
     property: '--color-light-shade'
   },
   {
-    property: '--color-medium'
+    property: '--color-light-contrast'
   },
   {
-    property: '--color-medium-contrast'
+    property: '--color-medium'
   },
   {
     property: '--color-medium-tint'
@@ -98,16 +95,19 @@ export const THEME_VARIABLES = [
     property: '--color-medium-shade'
   },
   {
-    property: '--color-dark'
+    property: '--color-medium-contrast'
   },
   {
-    property: '--color-dark-contrast'
+    property: '--color-dark'
   },
   {
     property: '--color-dark-tint'
   },
   {
     property: '--color-dark-shade'
+  },
+  {
+    property: '--color-dark-contrast'
   },
   {
     property: '--text-color'
@@ -146,7 +146,7 @@ export const THEME_VARIABLES = [
     property: '--backdrop-color'
   },
   {
-    property: '--box-shadow'
+    property: '--box-shadow-color'
   },
 
 ];
