@@ -1,45 +1,110 @@
 @import "./ionic.globals";
 
-
 // Default Theme
 // ----------------------------------
+$colors:          () !default;
+$ion-colors:  (
+  primary: (
+    base:         #3880ff,
+    tint:         #5896ff,
+    shade:        #135ddf,
+    contrast:     #ffffff
+  ),
+  secondary: (
+    base:         #0cd1e8,
+    tint:         #5de6f6,
+    shade:        #00bce0,
+    contrast:     #ffffff
+  ),
+  tertiary: (
+    base:         #7044ff,
+    tint:         #896bff,
+    shade:        #4d16d6,
+    contrast:     #ffffff
+  ),
+  success: (
+    base:         #10dc60,
+    tint:         #38ec7f,
+    shade:        #00bc4a,
+    contrast:     #ffffff
+  ),
+  warning: (
+    base:         #ffce00,
+    tint:         #ffe05e,
+    shade:        #f5ad00,
+    contrast:     #ffffff
+  ),
+  danger: (
+    base:         #f04141,
+    tint:         #ff6464,
+    shade:        #ca1717,
+    contrast:     #ffffff
+  ),
+  light: (
+    base:         #f4f5f8,
+    tint:         #ffffff,
+    shade:        #e2e4e9,
+    contrast:     #000000
+  ),
+  medium: (
+    base:         #989aa2,
+    tint:         #c1c4cd,
+    shade:        #62646a,
+    contrast:     #000000
+  ),
+  dark: (
+    base:         #222428,
+    tint:         #3f4248,
+    shade:        #000000,
+    contrast:     #ffffff
+  )
+);
+$colors:                                ion-extend-colors($ion-colors, $colors);
 
-$colors: (
+// Default General
+// --------------------------------------------------
+$content-margin:                        16px !default;
+$content-padding:                       16px !default;
+$font-family-base:                      -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif !default;
+$font-size-base:                        14px !default; // TODO: remove
 
-  primary:    #488aff,
-  secondary:  #32db64,
-  warning:    #ffeb3b,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
+// Default General Colors
+// --------------------------------------------------
+$backdrop-color:                        css-var(#000000, backdrop-color) !default;
+$background-color:                      css-var(#ffffff, background-color) !default;
+$background-color-alt:                  css-var(#f4f5f8, background-color-alt) !default;
+$border-color:                          css-var(#c1c4cd, border-color) !default;
+$box-shadow-color:                      css-var(#000000, box-shadow-color) !default;
+$text-color:                            css-var(#000000, text-color) !default;
+$text-color-alt:                        css-var(#898b93, text-color-alt) !default;
+//$text-color:                            #000 !default;
+//$link-color:                            color($colors, primary) !default;
+//$background-color:                      #fff !default;
+//$subdued-text-color:                    #666 !default;
 
-) !default;
+// Default Tabs & Tab bar
+// --------------------------------------------------
+$tabbar-background-color:               css-var(#f4f5f8, tabbar-background-color) !default;
+$tabbar-text-color:                     css-var(#989aa2, tabbar-text-color) !default;
+$tabbar-text-color-active:              css-var(#3880ff, tabbar-text-color-active) !default;
+//$tabs-background:                       #f8f8f8 !default;
+//$tabs-border-color:                     #b2b2b2 !default;
+//$tabs-tab-color-inactive:               #8c8c8c !default;
+//$tabs-tab-color-active:                 $link-color !default;
 
+// Default List & List Items
+// --------------------------------------------------
+$item-background-color:                 css-var(#ffffff, item-background-color) !default;
+$item-background-color-alt:             css-var(#c1c4cd, item-background-color-alt) !default;
+//$list-text-color:                       $text-color !default;
+//$list-background-color:                 $background-color !default;
+//$list-border-color:                     #c8c7cc !default;
 
-$text-color:                 #000 !default;
-$link-color:                 color($colors, primary) !default;
-$background-color:           #fff !default;
-$subdued-text-color:         #666 !default;
-
-$font-family-base:           -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif !default;
-
-// TODO remove
-$font-size-base:             14px !default;
-
-$content-padding:            16px !default;
-$content-margin:             16px !default;
-
-$toolbar-background:         #f8f8f8 !default;
-$toolbar-border-color:       #b2b2b2 !default;
-$toolbar-text-color:         $text-color !default;
-$toolbar-active-color:       $link-color !default;
-$toolbar-inactive-color:     #8c8c8c !default;
-
-$tabs-background:            #f8f8f8 !default;
-$tabs-border-color:          #b2b2b2 !default;
-$tabs-tab-color-inactive:    #8c8c8c !default;
-$tabs-tab-color-active:      $link-color !default;
-
-$list-text-color:            $text-color !default;
-$list-background-color:      $background-color !default;
-$list-border-color:          #c8c7cc !default;
+// Default Toolbar
+// --------------------------------------------------
+$toolbar-background-color:              css-var(#f4f5f8, toolbar-background-color) !default;
+//$toolbar-background:                    #f8f8f8 !default;
+//$toolbar-border-color:                  #b2b2b2 !default;
+//$toolbar-text-color:                    $text-color !default;
+//$toolbar-active-color:                  $link-color !default;
+//$toolbar-inactive-color:                #8c8c8c !default;

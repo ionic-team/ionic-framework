@@ -55,3 +55,11 @@
 
   @return null;
 }
+
+@function str-contains($string, $needle) {
+  @if (type-of($string) == string) {
+    @return str-index($string, $needle) != null;
+  }
+
+  @return false;
+}
