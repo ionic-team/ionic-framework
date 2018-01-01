@@ -63,6 +63,7 @@ ion-picker {
 }
 
 .picker-col {
+  box-sizing: content-box;
   position: relative;
   display: flex;
 
@@ -70,8 +71,6 @@ ion-picker {
   justify-content: center;
 
   height: 100%;
-
-  box-sizing: content-box;
 
   contain: content;
 }
