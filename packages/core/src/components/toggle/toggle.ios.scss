@@ -5,12 +5,11 @@
 // -----------------------------------------
 
 .toggle-ios {
+  box-sizing: content-box;
   position: relative;
 
   width: $toggle-ios-width;
   height: $toggle-ios-height;
-
-  box-sizing: content-box;
 
   contain: strict;
 }

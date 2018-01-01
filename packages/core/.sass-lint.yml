@@ -62,9 +62,12 @@ rules:
 
       # Box
 
+      - box-sizing
       - position
       - top
+      - right
       - bottom
+      - left
       - z-index
       - display
       - overflow
@@ -134,10 +137,13 @@ rules:
       - font
       - font-family
       - font-size
-      - font-smoothing
+      - -moz-osx-font-smoothing
+      - -webkit-font-smoothing
+      - font-smooth
       - font-style
       - font-variant
       - font-weight
+      - src
 
       - letter-spacing
       - line-height

@@ -37,11 +37,11 @@ ion-item-options {
     justify-content: flex-start;
 
     &:not([side=right]) {
-      justify-content: flex-end;
-
       // scss-lint:disable PropertySpelling
       right: auto;
       left: 0;
+
+      justify-content: flex-end;
     }
   }
 }

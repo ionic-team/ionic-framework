@@ -22,6 +22,7 @@ ion-slide {
 .swiper-slide {
   @include text-align(center);
 
+  box-sizing: border-box;
   position: relative;
 
   // Center slide text vertically
@@ -36,8 +37,6 @@ ion-slide {
   height: 100%;
 
   font-size: 18px;
-
-  box-sizing: border-box;
 }
 
 .swiper-slide img {
