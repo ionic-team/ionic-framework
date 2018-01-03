@@ -22,11 +22,12 @@ export class IonNavDelegate implements FrameworkDelegate {
 
   attachViewToDom(elementOrContainerToMountTo: HTMLIonNavElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
 
-    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, _propsOrDataObj, classesToAdd);
+    // wrap whatever the user provides in an ion-page
+    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, _propsOrDataObj, classesToAdd, true);
   }
 
-  removeViewFromDom(_parentElement: HTMLElement, childElement: HTMLElement) {
-    return this.angularComponentMounter.removeViewFromDom(childElement);
+  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {
+    return this.angularComponentMounter.removeViewFromDom(parentElement, childElement);
   }
 }
 
