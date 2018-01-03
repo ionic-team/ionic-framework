@@ -4,7 +4,10 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2015"],
+    "lib": [
+      "dom",
+      "es2015"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -17,12 +20,20 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
-    "types": ["jasmine", "systemjs"]
+    "types": [
+      "jasmine",
+      "systemjs"
+    ]
   },
   "include": [
     "src/**/*.ts",
     "demos/src/**/*.ts"
   ],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true
+  },
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
