@@ -91,11 +91,10 @@ export class Slides {
   @Prop() options:  SwiperOptions;
 
   @PropDidChange('options')
-  private updateSwiperOptions() {
+  updateSwiperOptions() {
     let newOptions = this.normalizeOptions();
-    console.log(newOptions)
-    this.swiper.params = newOptions;
-    // this.update();
+    this.swiper.params = Object.assign({}, this.swiper.params, newOptions);
+    this.update();
   }
 
   /**
@@ -146,7 +145,7 @@ export class Slides {
       // Base options, can be changed
       var swiperOptions = {
         effect: 'slide',
-        autoplay: false,
+        autoplay: 0,
         direction: 'horizontal',
         initialSlide: 0,
         loop: false,
@@ -263,9 +262,6 @@ export class Slides {
 
   }
 
-  /**
-   * @hidden
-   */
   componentDidLoad() {
     /**
      * TODO: This should change because currently componentDidLoad fires independent of whether the
@@ -282,8 +278,7 @@ export class Slides {
    */
   @Method()
   update(debounce = 300) {
-
-        this.swiper.update();
+    this.swiper.update();
     // if (this.init) {
     //   window.clearTimeout(this.tmr);
     //   this.tmr = window.setTimeout(() => {

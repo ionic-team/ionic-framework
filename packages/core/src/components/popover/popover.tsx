@@ -116,7 +116,7 @@ export class Popover {
       .then((mountingData) => {
         this.usersComponentElement = mountingData.element;
         return domControllerAsync(this.dom.raf, () => { })
-        .then(() => this.animationCtrl.create(animationBuilder, this.el, this.ev))
+        .then(() => this.animationCtrl.create(animationBuilder, this.el, this.ev));
       })
       .then((animation) => {
         this.animation = animation;

@@ -42,19 +42,15 @@
   </ion-app>
   <script>
     const slides = document.getElementById('slides')
-console.log(slides)
     slides.pager = false;
-    slides.options = {
-      speed: 600,
-      loop: true,
-    }
+    slides.options = {}
 
     function slideNext() {
-      slides.slideNext(5000)
+      slides.slideNext(500)
     };
 
     function slidePrev() {
-      slides.slidePrev(5000);
+      slides.slidePrev(500);
     };
 
     function slideTo() {
@@ -62,6 +58,7 @@ console.log(slides)
     }
 
     function slideAutoPlay() {
+      slides.options = Object.assign({}, slides.options, {autoplay: 300});
       slides.startAutoplay();
     }
 
@@ -70,10 +67,9 @@ console.log(slides)
     }
 
     function setOptions() {
-      slides.options = Object.assign({}, slides.options, {slidesPerView:2});
-      console.log(slides.options)
-      slides.update()
-
+      slides.options = Object.assign({}, slides.options, {
+        slidesPerView: 2,
+      });
     }
 
     function slideLength() {
@@ -88,11 +84,11 @@ console.log(slides)
       console.log(slides.getPreviousIndex());
     };
 
-    function isEnd(){
+    function isEnd() {
       console.log(slides.isEnd());
     }
 
-    function isBeginning(){
+    function isBeginning() {
       console.log(slides.isBeginning());
     }
     slides.addEventListener('ionSlideDidChange', function(e) {
