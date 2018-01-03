@@ -54,6 +54,9 @@ export function attachViewToDom(crf: ComponentFactoryResolver, parentElement: HT
 
   const componentProviders = ReflectiveInjector.resolve(getProviders(parentElement, data));
   const componentFactory = crf.resolveComponentFactory(componentToMount);
+  if (!hostElement) {
+    hostElement = document.createElement(componentFactory.selector);
+  }
   const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, injector);
   const componentRef = componentFactory.create(childInjector, [], hostElement);
   for (const clazz of classesToAdd) {
