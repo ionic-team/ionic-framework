@@ -33,8 +33,8 @@
   ],
   "devDependencies": {
     "@ionic/core": "next",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "latest",
+    "react-dom": "latest",
     "typescript": "~2.5.2"
   },
   "dependencies": {
