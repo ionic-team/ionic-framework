@@ -25,7 +25,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
         '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
       '</div>' +
       '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
-      '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
+      '<div *ngIf="d.inputs?.length" [ngSwitch]="inputType">' +
 
         '<ng-template ngSwitchCase="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
@@ -58,7 +58,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
         '</ng-template>' +
 
       '</div>' +
-      '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
+      '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons?.length>2}">' +
         '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
         '</button>' +

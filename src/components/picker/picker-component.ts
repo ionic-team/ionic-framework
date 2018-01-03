@@ -28,7 +28,7 @@ import { PickerColumnCmp } from './picker-column';
       </div>
       <div class="picker-columns">
         <div class="picker-above-highlight"></div>
-        <div *ngFor="let c of d.columns" [col]="c" class="picker-col" (ionChange)="_colChange($event)"></div>
+        <div *ngFor="let c of d.columns" [col]="c" class="picker-col" (ionChange)="_colChange()"></div>
         <div class="picker-below-highlight"></div>
       </div>
     </div>

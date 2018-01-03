@@ -127,8 +127,8 @@ import { Platform } from '../../platform/platform';
 
   '<button ion-button *ngIf="_clearInput" clear class="text-input-clear-icon" ' +
     'type="button" ' +
-    '(click)="clearTextInput($event)" ' +
-    '(mousedown)="clearTextInput($event)" ' +
+    '(click)="clearTextInput()" ' +
+    '(mousedown)="clearTextInput()" ' +
     'tabindex="-1"></button>' +
 
   '<div class="input-cover" *ngIf="_useAssist" ' +
