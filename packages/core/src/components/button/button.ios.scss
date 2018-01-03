@@ -123,8 +123,8 @@
 }
 
 .button-outline-ios.activated.focused {
-  background-color: color-shade($button-ios-background-color, 12%);
   border-color: color-shade($button-ios-background-color, 12%);
+  background-color: color-shade($button-ios-background-color, 12%);
 }
 
 // iOS Outline Button Color Mixin
@@ -149,8 +149,8 @@
   }
 
   .button-outline-ios-#{$color-name}.activated.focused {
-    background-color: color-shade($color-base, 12%);
     border-color: color-shade($color-base, 12%);
+    background-color: color-shade($color-base, 12%);
   }
 }
 

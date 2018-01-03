@@ -4,6 +4,10 @@ import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-footer',
+  styleUrls: {
+    ios: 'footer.ios.scss',
+    md: 'footer.md.scss'
+  },
   host: {
     theme: 'footer'
   }

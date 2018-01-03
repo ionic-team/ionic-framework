@@ -4,14 +4,13 @@
 // --------------------------------------------------
 
 ion-chip {
+  box-sizing: border-box;
   display: inline-flex;
 
   align-self: center;
 
   font-weight: normal;
   vertical-align: middle;
-
-  box-sizing: border-box;
 }
 
 ion-chip ion-icon {

@@ -5,7 +5,8 @@ import { createThemedClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-header',
   styleUrls: {
-    ios: 'header.ios.scss'
+    ios: 'header.ios.scss',
+    md: 'header.md.scss'
   },
   host: {
     theme: 'header'

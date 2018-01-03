@@ -3,6 +3,10 @@ section {
   display: flex;
 }
 
+.invalid {
+  background: #f0b2b1;
+}
+
 .property-label {
   font-family: Courier New, Courier, monospace;
   white-space: nowrap;
