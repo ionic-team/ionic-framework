@@ -27,7 +27,7 @@ export class SpeakerListPage {
     public inAppBrowser: InAppBrowser
   ) {}
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.confData.getSpeakers().subscribe((speakers: any[]) => {
       this.speakers = speakers;
     });
