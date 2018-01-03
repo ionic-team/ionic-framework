@@ -7,6 +7,13 @@ class E2ETestPage extends Page {
   constructor(driver, platform) {
     super(driver, `http://localhost:3333/src/components/toast/test/standalone?ionicplatform=${platform}`);
   }
+
+  present(buttonId) {
+    this.navigate();
+    this.driver.findElement(By.id(buttonId)).click();
+    this.driver.wait(until.elementLocated(By.css('.toast-wrapper')));
+    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.toast-wrapper'))));
+  }
 }
 
 platforms.forEach(platform => {
@@ -14,6 +21,11 @@ platforms.forEach(platform => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
       return page.navigate();
+    });
+
+    register('shows basic toast', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.present('basic');
     });
   });
 });

@@ -10,21 +10,32 @@
 
 <body>
   <ion-fab top right id="fab1">
-    <ion-fab-button onclick="openLists('fab1')" mini class="e2eFabTopRight"><ion-icon name="add"></ion-icon></ion-fab-button>
+    <ion-fab-button onclick="toggleList('fab1')" mini><ion-icon name="add"></ion-icon></ion-fab-button>
     <ion-fab-list>
-      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
-      <ion-fab-button onclick="openLists('fab1')"><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="toggleList('fab1')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="toggleList('fab1')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="toggleList('fab1')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="toggleList('fab1')"><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab bottom left id="fab2">
+    <ion-fab-button onclick="toggleList('fab2')">More</ion-fab-button>
+    <ion-fab-list side="right">
+      <ion-fab-button onclick="toggleList('fab2')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="toggleList('fab2')"><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="toggleList('fab2')"><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+      <ion-fab-button onclick="toggleList('fab2')"><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 
   <script>
-    function openLists(container) {
+    function toggleList(container) {
       var fabLists = document.getElementById(container).querySelectorAll('ion-fab-list');
 
       for (var i = 0; i < fabLists.length; i++) {
-        fabLists[i].activated = true;
+        var activated = fabLists[i].activated;
+        fabLists[i].activated = activated ? false : true;
       }
     }
   </script>
