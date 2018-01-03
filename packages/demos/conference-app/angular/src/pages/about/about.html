@@ -1,12 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button menuToggle>
+    <ion-button menuToggle> <!-- TODO menuToggle -->
       <ion-icon name="menu"></ion-icon>
     </ion-button>
     <ion-title>About</ion-title>
-    <ion-buttons end>
-      <ion-button icon-only (click)="presentPopover($event)">
-        <ion-icon name="more"></ion-icon>
+
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" (click)="presentPopover($event)">
+        <ion-icon name="more" style="width: 20px"></ion-icon> <!-- TODO remove temporary width style -->
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -21,19 +22,19 @@
 
     <ion-list no-lines>
       <ion-item>
-        <ion-icon name="calendar" item-start></ion-icon>
+        <ion-icon name="calendar" slot="start"></ion-icon>
         <ion-label>Date</ion-label>
         <ion-datetime displayFormat="MMM DD, YYYY" max="2056" [(ngModel)]="conferenceDate"></ion-datetime>
       </ion-item>
 
       <ion-item>
-        <ion-icon name="pin" item-start></ion-icon>
+        <ion-icon name="pin" slot="start"></ion-icon>
         <ion-label>Location</ion-label>
         <ion-select>
-          <ion-option value="madison" selected>Madison, WI</ion-option>
-          <ion-option value="austin">Austin, TX</ion-option>
-          <ion-option value="chicago">Chicago, IL</ion-option>
-          <ion-option value="seattle">Seattle, WA</ion-option>
+          <ion-select-option value="madison" selected>Madison, WI</ion-select-option>
+          <ion-select-option value="austin">Austin, TX</ion-select-option>
+          <ion-select-option value="chicago">Chicago, IL</ion-select-option>
+          <ion-select-option value="seattle">Seattle, WA</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>
