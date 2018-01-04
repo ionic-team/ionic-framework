@@ -84,8 +84,9 @@ function getTotalTests(suite) {
 }
 
 async function run() {
+  // TODO look into removing chrome startup from the timeout
   const mocha = new Mocha({
-    timeout: 5000,
+    timeout: 10000,
     slow: 2000
   });
 
