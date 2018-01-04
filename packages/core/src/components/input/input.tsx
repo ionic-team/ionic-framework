@@ -279,7 +279,7 @@ export class Input implements InputComponent {
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
+    const themedClasses = createThemedClasses(this.mode, this.color, 'native-input');
     // TODO aria-labelledby={this.item.labelId}
 
     return [
@@ -317,7 +317,7 @@ export class Input implements InputComponent {
       />,
       <button
         hidden={this.clearInput !== true}
-        class='text-input-clear-icon'
+        class='input-clear-icon'
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}>
       </button>

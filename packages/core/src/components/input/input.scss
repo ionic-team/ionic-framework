@@ -3,8 +3,7 @@
 // Input
 // --------------------------------------------------
 
-ion-input,
-ion-textarea {
+ion-input {
   position: relative;
   display: block;
 
@@ -13,24 +12,18 @@ ion-textarea {
   width: 100%;
 }
 
-.item-input ion-input,
-.item-input ion-textarea {
-  position: static;
-}
-
-
-// Textarea Within An Item
+// Input Within An Item
 // --------------------------------------------------
 
-.item.item-textarea {
-  align-items: stretch;
+.item-input ion-input {
+  position: static;
 }
 
 
 // Native Text Input
 // --------------------------------------------------
 
-.text-input {
+.native-input {
   @include placeholder($input-placeholder-color);
   @include appearance(none);
   @include border-radius(0);
@@ -47,20 +40,12 @@ ion-textarea {
   background: transparent;
 }
 
-textarea.text-input {
-  display: block;
-}
-
-.text-input[disabled] {
+.native-input[disabled] {
   opacity: .4;
 }
 
-input.text-input:-webkit-autofill {
+input.native-input:-webkit-autofill {
   background-color: transparent;
-}
-
-.platform-mobile textarea.text-input {
-  resize: none;
 }
 
 
@@ -100,7 +85,6 @@ input.text-input:-webkit-autofill {
 }
 
 .item-input-has-focus input,
-.item-input-has-focus textarea,
 .item-input-has-focus a,
 .item-input-has-focus button {
   pointer-events: auto;
@@ -131,7 +115,7 @@ input.text-input:-webkit-autofill {
 // Clear Input Icon
 // --------------------------------------------------
 
-.text-input-clear-icon {
+.input-clear-icon {
   @include margin(0);
   @include padding(0);
   @include background-position(center);
@@ -145,6 +129,6 @@ input.text-input:-webkit-autofill {
   background-repeat: no-repeat;
 }
 
-.item-input-has-focus.item-input-has-value .text-input-clear-icon {
+.item-input-has-focus.item-input-has-value .input-clear-icon {
   display: block;
 }

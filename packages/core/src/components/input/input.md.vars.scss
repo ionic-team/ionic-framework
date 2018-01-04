@@ -5,6 +5,12 @@
 // Material Design Input
 // --------------------------------------------------
 
+/// @prop - Font family of the input
+$input-md-font-family:                    $font-family-md-base !default;
+
+/// @prop - Font size of the input
+$input-md-font-size:                      inherit !default;
+
 /// @prop - Margin top of the input
 $input-md-margin-top:                     $item-md-padding-top !default;
 

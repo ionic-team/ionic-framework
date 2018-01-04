@@ -4,11 +4,14 @@
 // iOS Input
 // --------------------------------------------------
 
-.text-input-ios {
+.native-input-ios {
   @include margin($input-ios-margin-top, $input-ios-margin-end, $input-ios-margin-bottom, $input-ios-margin-start);
   @include padding(0);
 
   width: calc(100% - #{($input-ios-margin-end + $input-ios-margin-start)});
+
+  font-family: $input-ios-font-family;
+  font-size: $input-ios-font-size;
 }
 
 
@@ -85,8 +88,8 @@
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
-.item-ios.item-label-stacked .text-input,
-.item-ios.item-label-floating .text-input {
+.item-ios.item-label-stacked .native-input,
+.item-ios.item-label-floating .native-input {
   @include margin(8px, null, 8px, 0);
 
   width: calc(100% - #{$input-ios-margin-end});
@@ -101,8 +104,7 @@
 // iOS Input After Label
 // --------------------------------------------------
 
-.label-ios + ion-input .text-input,
-.label-ios + ion-textarea .text-input,
+.label-ios + ion-input .native-input,
 .label-ios + .input + .cloned-input {
   @include margin-horizontal($input-ios-by-label-margin-start, null);
 }
@@ -114,11 +116,11 @@
   position: relative;
 }
 
-.input-ios[clear-input] .text-input {
+.input-ios[clear-input] .native-input {
   @include padding-horizontal(null, $input-ios-input-clear-padding-end);
 }
 
-.input-ios .text-input-clear-icon {
+.input-ios .input-clear-icon {
   @include position-horizontal(null, 0);
   @include svg-background-image($input-ios-input-clear-icon-svg);
 
