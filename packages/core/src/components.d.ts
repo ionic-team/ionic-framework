@@ -2881,6 +2881,7 @@ declare global {
       autofocus?: boolean;
       clearOnEdit?: boolean;
       cols?: number;
+      debounce?: number;
       disabled?: boolean;
       maxlength?: number;
       minlength?: number;
