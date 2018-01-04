@@ -1,7 +1,6 @@
 import {
   ApplicationRef,
   ComponentFactoryResolver,
-  ComponentRef,
   Injectable,
   Injector,
   NgZone,
@@ -12,7 +11,7 @@ import {
 import { getProviders } from '../di/di';
 import { AngularMountingData } from '../types/interfaces';
 
-const elementToComponentRefMap = new Map<HTMLElement, ComponentRef<any>>();
+const elementToComponentRefMap = new Map<HTMLElement, AngularMountingData>();
 
 @Injectable()
 export class AngularComponentMounter {
@@ -20,14 +19,14 @@ export class AngularComponentMounter {
   constructor(private defaultCfr: ComponentFactoryResolver, private zone: NgZone, private appRef: ApplicationRef) {
   }
 
-  attachViewToDom(parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, componentResolveFactory: ComponentFactoryResolver, injector: Injector, data: any, classesToAdd: string[], wrapUserTemplateInIonPage: boolean): Promise<AngularMountingData> {
+  attachViewToDom(parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, componentResolveFactory: ComponentFactoryResolver, injector: Injector, data: any, classesToAdd: string[], wrapUserComponentInIonPage: boolean): Promise<AngularMountingData> {
 
     return new Promise((resolve) => {
       this.zone.run(() => {
 
         const crf = componentResolveFactory ? componentResolveFactory : this.defaultCfr;
 
-        const mountingData = attachViewToDom(crf, parentElement, hostElement, componentToMount, injector, this.appRef, data, classesToAdd, wrapUserTemplateInIonPage);
+        const mountingData = attachViewToDom(crf, parentElement, hostElement, componentToMount, injector, this.appRef, data, classesToAdd, wrapUserComponentInIonPage);
         resolve(mountingData);
       });
     });
@@ -45,16 +44,17 @@ export class AngularComponentMounter {
 }
 
 export function removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {
-  const componentRef = elementToComponentRefMap.get(childElement);
-  if (componentRef) {
-    componentRef.destroy();
-    if (parentElement.contains(childElement)) {
-      parentElement.removeChild(childElement);
+  const mountingData = elementToComponentRefMap.get(childElement);
+  if (mountingData) {
+    const componentParent = mountingData.element.parentNode;
+    mountingData.componentRef.destroy();
+    if (mountingData.wrapUserComponentInIonPage && parentElement.contains(componentParent) ) {
+      parentElement.removeChild(componentParent)
     }
   }
 }
 
-export function attachViewToDom(crf: ComponentFactoryResolver, parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, injector: Injector, appRef: ApplicationRef, data: any, classesToAdd: string[], wrapUserTemplateInIonPage: boolean): AngularMountingData {
+export function attachViewToDom(crf: ComponentFactoryResolver, parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, injector: Injector, appRef: ApplicationRef, data: any, classesToAdd: string[], wrapUserComponentInIonPage: boolean): AngularMountingData {
 
   const componentProviders = ReflectiveInjector.resolve(getProviders(parentElement, data));
   const componentFactory = crf.resolveComponentFactory(componentToMount);
@@ -62,32 +62,34 @@ export function attachViewToDom(crf: ComponentFactoryResolver, parentElement: HT
     hostElement = document.createElement(componentFactory.selector);
   }
 
-  let mountingElement = hostElement;
-  if (wrapUserTemplateInIonPage) {
-    const ionPageElement = document.createElement('ion-page');
-    hostElement.appendChild(ionPageElement);
-    mountingElement = ionPageElement;
-  }
-
   const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, injector);
-  const componentRef = componentFactory.create(childInjector, [], mountingElement);
+  const componentRef = componentFactory.create(childInjector, [], hostElement);
   for (const clazz of classesToAdd) {
     hostElement.classList.add(clazz);
   }
 
-  parentElement.appendChild(hostElement);
+  const elementToAppend = wrapUserComponentInIonPage ? getIonPageElement(hostElement) : hostElement;
+  parentElement.appendChild(elementToAppend);
 
   appRef.attachView(componentRef.hostView);
 
-  elementToComponentRefMap.set(hostElement, componentRef);
-
-  return {
+  const mountingData = {
     componentFactory,
     childInjector,
     componentRef,
     instance: componentRef.instance,
     angularHostElement: componentRef.location.nativeElement,
     element: hostElement,
+    wrapUserComponentInIonPage
   };
+
+  elementToComponentRefMap.set(hostElement, mountingData);
+
+  return mountingData;
 }
 
+export function getIonPageElement(hostElement: HTMLElement) {
+  const page = document.createElement('ion-page');
+  page.appendChild(hostElement);
+  return page;
+}

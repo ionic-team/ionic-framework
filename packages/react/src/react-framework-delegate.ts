@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { FrameworkDelegate } from '@ionic/core';
+import { isElementModal, isElementNav } from './utils/helpers';
 
 export function attachViewToDom(parentElement: HTMLElement, reactComponent: any, propsOrData: any, classesToAdd: string[]) {
-  console.log('parentElement: ', parentElement);
-  console.log('reactComponent: ', reactComponent);
   const wrappingDiv = shouldWrapInIonPage(parentElement) ? document.createElement('ion-page') : document.createElement('div');
   if (classesToAdd) {
     for (const clazz of classesToAdd) {
@@ -41,8 +40,5 @@ export { Delegate }
 
 
 export function shouldWrapInIonPage(element: HTMLElement) {
-  if (element.tagName.toUpperCase() === 'ION-NAV' || element.classList.contains('modal-wrapper')) {
-    return true;
-  }
-  return false;
+  return isElementModal(element) || isElementNav(element);
 }
