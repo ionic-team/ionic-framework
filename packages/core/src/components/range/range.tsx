@@ -76,7 +76,7 @@ export class Range implements BaseInputComponent {
    */
   @Prop() debounce: number = 0;
   @PropDidChange('debounce')
-  debounceChange() {
+  private debounceChange() {
     this.ionChange.emit = debounce(
       this.ionChange.emit.bind(this.ionChange),
       this.debounce
