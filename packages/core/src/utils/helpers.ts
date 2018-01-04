@@ -295,3 +295,11 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
     });
   });
 }
+
+export function debounce(func: Function, wait: number = 250) {
+  let timer: number;
+  return (...args: any[]): void => {
+    clearTimeout(timer);
+    timer = setTimeout(func, wait, ...args);
+  };
+}
