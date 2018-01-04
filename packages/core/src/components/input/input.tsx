@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
 
+import { debounce } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
@@ -22,6 +23,11 @@ export class Input implements InputComponent {
   styleTmr: number;
 
   @Element() private el: HTMLElement;
+
+  /**
+   * @output {Event} Emitted when the input value has changed.
+   */
+  @Event() ionInput: EventEmitter;
 
   /**
    * @output {Event} Emitted when the styles change.
@@ -82,6 +88,18 @@ export class Input implements InputComponent {
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop({ mutable: true }) clearOnEdit: boolean;
+
+  /**
+   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+   */
+  @Prop() debounce: number = 250;
+  @PropDidChange('debounce')
+  private debounceInput() {
+    this.ionInput.emit = debounce(
+      this.ionInput.emit.bind(this.ionInput),
+      this.debounce
+    );
+  }
 
   /**
    * @input {boolean} If true, the user cannot interact with the input. Defaults to `false`.
@@ -192,6 +210,7 @@ export class Input implements InputComponent {
 
 
   componentDidLoad() {
+    this.debounceInput();
     this.emitStyle();
 
     // By default, password inputs clear after focus when they have content
@@ -225,6 +244,7 @@ export class Input implements InputComponent {
 
   inputChanged(ev: any) {
     this.value = ev.target && ev.target.value;
+    this.ionInput.emit(ev);
     this.emitStyle();
   }
 
@@ -242,15 +262,15 @@ export class Input implements InputComponent {
     }
   }
 
-  inputKeydown() {
-    this.checkClearOnEdit();
+  inputKeydown(ev: any) {
+    this.checkClearOnEdit(ev);
   }
 
 
   /**
   * Check if we need to clear the text input if clearOnEdit is enabled
   */
-  checkClearOnEdit() {
+  checkClearOnEdit(ev: any) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -258,15 +278,16 @@ export class Input implements InputComponent {
     // Did the input value change after it was blurred and edited?
     if (this.didBlurAfterEdit && this.hasValue()) {
       // Clear the input
-      this.clearTextInput();
+      this.clearTextInput(ev);
     }
 
     // Reset the flag
     this.didBlurAfterEdit = false;
   }
 
-  clearTextInput() {
+  clearTextInput(ev: any) {
     this.value = '';
+    this.ionInput.emit(ev);
   }
 
   hasFocus(): boolean {

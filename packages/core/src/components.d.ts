@@ -1155,6 +1155,7 @@ declare global {
       checked?: boolean;
       clearInput?: boolean;
       clearOnEdit?: boolean;
+      debounce?: number;
       disabled?: boolean;
       inputmode?: string;
       max?: string;
