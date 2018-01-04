@@ -12,4 +12,5 @@ export interface AngularMountingData extends FrameworkMountingData {
   componentRef?: ComponentRef<any>;
   instance?: any;
   angularHostElement?: HTMLElement;
+  wrapUserComponentInIonPage?: boolean;
 }
