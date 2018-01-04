@@ -1,3 +1,3 @@
 ## React Demo
 
-To run, run `./run.sh`
+To run, run `npm run start`.
