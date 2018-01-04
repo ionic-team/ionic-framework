@@ -4,6 +4,12 @@
 // --------------------------------------------------
 
 /// @prop - Background of the segment button
+$segment-ios-font-family:                       $font-family-ios-base !default;
+
+// TODO either move to button or rename
+// ---------------------------------------------
+
+/// @prop - Background of the segment button
 $segment-button-ios-background-color:           transparent !default;
 
 /// @prop - Background of the activated segment button

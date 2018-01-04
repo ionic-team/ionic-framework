@@ -14,6 +14,9 @@ ion-picker {
   height: $picker-width;
 
   contain: strict;
+
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 
 .picker-toolbar {
@@ -121,6 +124,8 @@ ion-picker {
 
   width: 100%;
 
+  border: 0;
+
   text-overflow: ellipsis;
   white-space: nowrap;
 
@@ -161,4 +166,9 @@ ion-picker {
   display: none;
 
   pointer-events: none;
+}
+
+.picker-button {
+  border: 0;
+  font-family: inherit;
 }

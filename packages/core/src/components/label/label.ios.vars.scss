@@ -5,6 +5,9 @@
 // iOS Label
 // --------------------------------------------------
 
+/// @prop - Font family of the label
+$label-ios-font-family:                $font-family-ios-base !default;
+
 /// @prop - Text color of the label by an input, select, or datetime
 $label-ios-text-color:                 null !default;
 

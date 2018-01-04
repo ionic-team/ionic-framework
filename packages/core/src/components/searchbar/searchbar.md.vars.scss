@@ -15,8 +15,11 @@ $searchbar-md-padding-bottom:            $searchbar-md-padding-top !default;
 /// @prop - Padding start of the searchbar
 $searchbar-md-padding-start:             $searchbar-md-padding-end !default;
 
+/// @prop - Font family of the searchbar
+$searchbar-md-font-family:               $font-family-md-base !default;
+
 /// @prop - Background of the searchbar
-$searchbar-md-background-color:          inherit !default;
+$searchbar-md-background:                inherit !default;
 
 /// @prop - Color of the searchbar input search icon
 $searchbar-md-input-search-icon-color:   #5b5b5b !default;

@@ -471,8 +471,8 @@ export class Select {
     this.styleTmr = setTimeout(() => {
       this.ionStyle.emit({
         'select': true,
-        'input-has-value': this.hasValue(),
-        'select-disabled': this.disabled
+        'select-disabled': this.disabled,
+        'input-has-value': this.hasValue()
       });
     });
   }
@@ -519,7 +519,7 @@ export class Select {
         onKeyUp={this.onKeyUp.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        class='item-cover'>
+        class='select-cover'>
         <slot></slot>
       </button>,
       <input type='hidden' name={this.name} value={this.value}/>

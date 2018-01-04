@@ -15,6 +15,7 @@
 
   height: $button-md-height;
 
+  font-family: $button-md-font-family;
   font-size: $button-md-font-size;
   font-weight: $button-md-font-weight;
 
@@ -156,7 +157,7 @@
 
 @mixin md-button-outline($color-name, $color-base, $color-contrast) {
   $fg-color: color-shade($color-base, 5%);
-  $bg-color-focused: rgba($color-base, 0.12);
+  $bg-color-focused: rgba($color-base, .12);
 
   .button-outline-md-#{$color-name} {
     border-color: $fg-color;
@@ -216,7 +217,7 @@
 
 @mixin md-button-clear($color-name, $color-base, $color-contrast) {
   $fg-color: $color-base;
-  $bg-color-focused: rgba($color-base, 0.12);
+  $bg-color-focused: rgba($color-base, .12);
 
   .button-clear-md-#{$color-name} {
     border-color: $button-md-clear-border-color;

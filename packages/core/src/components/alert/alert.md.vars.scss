@@ -5,6 +5,9 @@
 // Material Design Alert
 // --------------------------------------------------
 
+/// @prop - Font family of the alert
+$alert-md-font-family:                        $font-family-md-base !default;
+
 /// @prop - Max width of the alert
 $alert-md-max-width:                          280px !default;
 

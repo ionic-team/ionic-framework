@@ -3,14 +3,11 @@
 // Material Design Item
 // --------------------------------------------------
 
-/// @prop - Font size of the item text
-$item-md-body-text-font-size:        14px !default;
-
-/// @prop - line height of the item text
-$item-md-body-text-line-height:      1.5 !default;
-
 /// @prop - Color of the item paragraph
 $item-md-paragraph-text-color:       #666 !default;
+
+/// @prop - Font family of the item
+$item-md-font-family:                $font-family-md-base !default;
 
 /// @prop - Font size of the item
 $item-md-font-size:                  16px !default;

@@ -8,6 +8,8 @@
   @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
 
   min-height: $searchbar-ios-min-height;
+
+  font-family: $searchbar-ios-font-family;
 }
 
 

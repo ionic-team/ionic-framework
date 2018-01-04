@@ -3,6 +3,9 @@
 // Material Design Button
 // --------------------------------------------------
 
+/// @prop - Font family of the button
+$button-md-font-family:                    $font-family-md-base !default;
+
 /// @prop - Margin top of the button
 $button-md-margin-top:                     4px !default;
 
@@ -160,7 +163,7 @@ $button-md-outline-opacity-activated:           1 !default;
 $button-md-outline-ripple-background-color:     $button-md-background-color !default;
 
 /// @prop - Background color of the focused outline button
-$button-md-outline-background-color-focused:    rgba($button-md-background-color, 0.12) !default;
+$button-md-outline-background-color-focused:    rgba($button-md-background-color, .12) !default;
 
 
 // Material Design Clear Button
@@ -194,7 +197,7 @@ $button-md-clear-background-color-hover:        rgba(158, 158, 158, .1) !default
 $button-md-clear-ripple-background-color:       #999 !default;
 
 /// @props - Background color of the focused clear button
-$button-md-clear-background-color-focused:      rgba($button-md-background-color, 0.12) !default;
+$button-md-clear-background-color-focused:      rgba($button-md-background-color, .12) !default;
 
 
 // Material Design Round Button
