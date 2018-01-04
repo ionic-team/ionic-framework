@@ -90,9 +90,9 @@ export class Input implements InputComponent {
   @Prop({ mutable: true }) clearOnEdit: boolean;
 
   /**
-   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
    */
-  @Prop() debounce: number = 250;
+  @Prop() debounce: number = 0;
   @PropDidChange('debounce')
   private debounceInput() {
     this.ionInput.emit = debounce(
