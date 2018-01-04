@@ -1,4 +1,5 @@
-import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { debounce } from '../../utils/helpers';
 
 
 @Component({
@@ -86,6 +87,13 @@ export class Searchbar {
    * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
    */
   @Prop({ mutable: true }) debounce: number = 250;
+  @PropDidChange('debounce')
+  debounceInput() {
+    this.ionInput.emit = debounce(
+      this.ionInput.emit.bind(this.ionInput),
+      this.debounce
+    );
+  }
 
   /**
    * @input {string} Set the input's placeholder. Default `"Search"`.
@@ -115,6 +123,7 @@ export class Searchbar {
 
   componentDidLoad() {
     this.positionElements();
+    this.debounceInput();
   }
 
   /**
@@ -153,9 +162,7 @@ export class Searchbar {
    */
   inputChanged(ev: any) {
     this.value = ev.target.value;
-    setTimeout(() => {
-      this.ionInput.emit(ev);
-    }, this.debounce);
+    this.ionInput.emit(ev);
   }
 
   inputUpdated() {
