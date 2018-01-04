@@ -88,7 +88,7 @@ export class Searchbar {
    */
   @Prop({ mutable: true }) debounce: number = 250;
   @PropDidChange('debounce')
-  debounceInput() {
+  private debounceInput() {
     this.ionInput.emit = debounce(
       this.ionInput.emit.bind(this.ionInput),
       this.debounce
