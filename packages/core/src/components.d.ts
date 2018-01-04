@@ -1155,6 +1155,7 @@ declare global {
       checked?: boolean;
       clearInput?: boolean;
       clearOnEdit?: boolean;
+      debounce?: number;
       disabled?: boolean;
       inputmode?: string;
       max?: string;
@@ -2880,6 +2881,7 @@ declare global {
       autofocus?: boolean;
       clearOnEdit?: boolean;
       cols?: number;
+      debounce?: number;
       disabled?: boolean;
       maxlength?: number;
       minlength?: number;
