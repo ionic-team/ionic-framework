@@ -1,8 +1,8 @@
 'use strict';
 
-const { By, until } = require('selenium-webdriver');
 const expect = require('chai').expect;
 const { register, Page, platforms } = require('../../../../../scripts/e2e');
+const { getElement, waitForTransition } = require('../../../../../scripts/e2e/utils');
 
 class E2ETestPage extends Page {
   constructor(driver, platform) {
@@ -26,44 +26,44 @@ platforms.forEach(platform => {
 
       console.log('On Nav One Page One');
       const navOnePageOneNextButtonSelector = '.nav-one-page-one ion-button.next.hydrated';
-      const navOnePageOneNextButton = await waitAndGetElement(driver, navOnePageOneNextButtonSelector);
+      const navOnePageOneNextButton = await getElement(driver, navOnePageOneNextButtonSelector);
       navOnePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoNextButtonSelector = '.nav-one-page-two ion-button.next.hydrated';
-      const navOnePageTwoNextButton = await waitAndGetElement(driver, navOnePageTwoNextButtonSelector);
+      const navOnePageTwoNextButton = await getElement(driver, navOnePageTwoNextButtonSelector);
       navOnePageTwoNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page One');
       const navTwoPageOneNextButtonSelector = '.nav-two-page-one ion-button.next.nav-one.hydrated';
-      const navTwoPageOneNextButton = await waitAndGetElement(driver, navTwoPageOneNextButtonSelector);
+      const navTwoPageOneNextButton = await getElement(driver, navTwoPageOneNextButtonSelector);
       navTwoPageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Three');
       const navOnePageThreePreviousButtonSelector = '.nav-one-page-three ion-button.previous.hydrated';
-      const navOnePageThreePreviousButton = await waitAndGetElement(driver, navOnePageThreePreviousButtonSelector);
+      const navOnePageThreePreviousButton = await getElement(driver, navOnePageThreePreviousButtonSelector);
       navOnePageThreePreviousButton.click();
       await waitForTransition(600);
 
 
       console.log('On Nav Two Page One');
       const navTwoPageOnePreviousButtonSelector = '.nav-two-page-one ion-button.previous.nav-one.hydrated';
-      const navTwoPageOnePreviousButton = await waitAndGetElement(driver, navTwoPageOnePreviousButtonSelector);
+      const navTwoPageOnePreviousButton = await getElement(driver, navTwoPageOnePreviousButtonSelector);
       navTwoPageOnePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoPreviousButtonSelector = '.nav-one-page-two ion-button.previous.hydrated';
-      const navOnePageTwoPreviousButton = await waitAndGetElement(driver, navOnePageTwoPreviousButtonSelector);
+      const navOnePageTwoPreviousButton = await getElement(driver, navOnePageTwoPreviousButtonSelector);
       navOnePageTwoPreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page One');
       const navOnePageOneSelector = '.nav-one-page-one';
-      const navOnePageOne = await waitAndGetElement(driver, navOnePageOneSelector);
+      const navOnePageOne = await getElement(driver, navOnePageOneSelector);
     });
 
 
@@ -76,68 +76,68 @@ platforms.forEach(platform => {
 
       console.log('On Nav One Page One');
       const navOnePageOneNextButtonSelector = '.nav-one-page-one ion-button.next.hydrated';
-      const navOnePageOneNextButton = await waitAndGetElement(driver, navOnePageOneNextButtonSelector);
+      const navOnePageOneNextButton = await getElement(driver, navOnePageOneNextButtonSelector);
       navOnePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoNextButtonSelector = '.nav-one-page-two ion-button.next.hydrated';
-      const navOnePageTwoNextButton = await waitAndGetElement(driver, navOnePageTwoNextButtonSelector);
+      const navOnePageTwoNextButton = await getElement(driver, navOnePageTwoNextButtonSelector);
       navOnePageTwoNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page One');
       const navTwoPageOneNextButtonSelector = '.nav-two-page-one ion-button.next.nav-two.hydrated';
-      const navTwoPageOneNextButton = await waitAndGetElement(driver, navTwoPageOneNextButtonSelector);
+      const navTwoPageOneNextButton = await getElement(driver, navTwoPageOneNextButtonSelector);
       navTwoPageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page Two');
       const navTwoPageTwoNextButtonSelector = '.nav-two-page-two ion-button.next.hydrated';
-      const navTwoPageTwoNextButton = await waitAndGetElement(driver, navTwoPageTwoNextButtonSelector);
+      const navTwoPageTwoNextButton = await getElement(driver, navTwoPageTwoNextButtonSelector);
       navTwoPageTwoNextButton.click();
       await waitForTransition(600);
 
 
       console.log('On Nav Three Page One');
       const navThreePageOneNextButtonSelector = '.nav-three-page-one ion-button.next.nav-two.hydrated';
-      const navThreePageOneNextButton = await waitAndGetElement(driver, navThreePageOneNextButtonSelector);
+      const navThreePageOneNextButton = await getElement(driver, navThreePageOneNextButtonSelector);
       navThreePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page Three');
       const navTwoPageThreePreviousButtonSelector = '.nav-two-page-three ion-button.previous.hydrated';
-      const navTwoPageThreePreviousButton = await waitAndGetElement(driver, navTwoPageThreePreviousButtonSelector);
+      const navTwoPageThreePreviousButton = await getElement(driver, navTwoPageThreePreviousButtonSelector);
       navTwoPageThreePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Three Page One');
       const navThreePageOnePreviousButtonSelector = '.nav-three-page-one ion-button.previous.nav-two.hydrated';
-      const navThreePageOnePreviousButton = await waitAndGetElement(driver, navThreePageOnePreviousButtonSelector);
+      const navThreePageOnePreviousButton = await getElement(driver, navThreePageOnePreviousButtonSelector);
       navThreePageOnePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page Two');
       const navTwoPageTwoPreviousButtonSelector = '.nav-two-page-two ion-button.previous.hydrated';
-      const navTwoPageTwoPreviousButton = await waitAndGetElement(driver, navTwoPageTwoPreviousButtonSelector);
+      const navTwoPageTwoPreviousButton = await getElement(driver, navTwoPageTwoPreviousButtonSelector);
       navTwoPageTwoPreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page One');
       const navTwoPageOnePreviousButtonSelector = '.nav-two-page-one ion-button.previous.nav-one.hydrated';
-      const navTwoPageOnePreviousButton = await waitAndGetElement(driver, navTwoPageOnePreviousButtonSelector);
+      const navTwoPageOnePreviousButton = await getElement(driver, navTwoPageOnePreviousButtonSelector);
       navTwoPageOnePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoPreviousButtonSelector = '.nav-one-page-two ion-button.previous.hydrated';
-      const navOnePageTwoPreviousButton = await waitAndGetElement(driver, navOnePageTwoPreviousButtonSelector);
+      const navOnePageTwoPreviousButton = await getElement(driver, navOnePageTwoPreviousButtonSelector);
       navOnePageTwoPreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page One');
       const navOnePageOneSelector = '.nav-one-page-one';
-      const navOnePageOne = await waitAndGetElement(driver, navOnePageOneSelector);
+      const navOnePageOne = await getElement(driver, navOnePageOneSelector);
 
     });
 
@@ -150,43 +150,43 @@ platforms.forEach(platform => {
 
       console.log('On Nav One Page One');
       const navOnePageOneNextButtonSelector = '.nav-one-page-one ion-button.next.hydrated';
-      const navOnePageOneNextButton = await waitAndGetElement(driver, navOnePageOneNextButtonSelector);
+      const navOnePageOneNextButton = await getElement(driver, navOnePageOneNextButtonSelector);
       navOnePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoNextButtonSelector = '.nav-one-page-two ion-button.next.hydrated';
-      const navOnePageTwoNextButton = await waitAndGetElement(driver, navOnePageTwoNextButtonSelector);
+      const navOnePageTwoNextButton = await getElement(driver, navOnePageTwoNextButtonSelector);
       navOnePageTwoNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page One');
       const navTwoPageOneNextButtonSelector = '.nav-two-page-one ion-button.next.nav-two.hydrated';
-      const navTwoPageOneNextButton = await waitAndGetElement(driver, navTwoPageOneNextButtonSelector);
+      const navTwoPageOneNextButton = await getElement(driver, navTwoPageOneNextButtonSelector);
       navTwoPageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page Two');
       const navTwoPageTwoNextButtonSelector = '.nav-two-page-two ion-button.next.hydrated';
-      const navTwoPageTwoNextButton = await waitAndGetElement(driver, navTwoPageTwoNextButtonSelector);
+      const navTwoPageTwoNextButton = await getElement(driver, navTwoPageTwoNextButtonSelector);
       navTwoPageTwoNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Three Page One');
       const navThreePageOnePreviousButtonSelector = '.nav-three-page-one ion-button.previous.nav-one.hydrated';
-      const navThreePageOnePreviousButton = await waitAndGetElement(driver, navThreePageOnePreviousButtonSelector);
+      const navThreePageOnePreviousButton = await getElement(driver, navThreePageOnePreviousButtonSelector);
       navThreePageOnePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoPreviousButtonSelector = '.nav-one-page-two ion-button.previous.hydrated';
-      const navOnePageTwoPreviousButton = await waitAndGetElement(driver, navOnePageTwoPreviousButtonSelector);
+      const navOnePageTwoPreviousButton = await getElement(driver, navOnePageTwoPreviousButtonSelector);
       navOnePageTwoPreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page One');
       const navOnePageOneSelector = '.nav-one-page-one';
-      const navOnePageOne = await waitAndGetElement(driver, navOnePageOneSelector);
+      const navOnePageOne = await getElement(driver, navOnePageOneSelector);
     });
 
     register('should go from nav-one-page-one, nav-one-page-two, nav-two-page-one, nav-two-page-two, nav-three-page-one, nav-three-page-two, nav-three-page-three, nav-three-page-two, nav-three-page-one, nav-two-page-two, nav-two-page-one, nav-one-page-two, nav-one-page-one', async (driver, testContext) => {
@@ -198,92 +198,79 @@ platforms.forEach(platform => {
 
       console.log('On Nav One Page One');
       const navOnePageOneNextButtonSelector = '.nav-one-page-one ion-button.next.hydrated';
-      const navOnePageOneNextButton = await waitAndGetElement(driver, navOnePageOneNextButtonSelector);
+      const navOnePageOneNextButton = await getElement(driver, navOnePageOneNextButtonSelector);
       navOnePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoNextButtonSelector = '.nav-one-page-two ion-button.next.hydrated';
-      const navOnePageTwoNextButton = await waitAndGetElement(driver, navOnePageTwoNextButtonSelector);
+      const navOnePageTwoNextButton = await getElement(driver, navOnePageTwoNextButtonSelector);
       navOnePageTwoNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page One');
       const navTwoPageOneNextButtonSelector = '.nav-two-page-one ion-button.next.nav-two.hydrated';
-      const navTwoPageOneNextButton = await waitAndGetElement(driver, navTwoPageOneNextButtonSelector);
+      const navTwoPageOneNextButton = await getElement(driver, navTwoPageOneNextButtonSelector);
       navTwoPageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page Two');
       const navTwoPageTwoNextButtonSelector = '.nav-two-page-two ion-button.next.hydrated';
-      const navTwoPageTwoNextButton = await waitAndGetElement(driver, navTwoPageTwoNextButtonSelector);
+      const navTwoPageTwoNextButton = await getElement(driver, navTwoPageTwoNextButtonSelector);
       navTwoPageTwoNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Three Page One');
       const navThreePageOneNextButtonSelector = '.nav-three-page-one ion-button.next.nav-three.hydrated';
-      const navThreePageOneNextButton = await waitAndGetElement(driver, navThreePageOneNextButtonSelector);
+      const navThreePageOneNextButton = await getElement(driver, navThreePageOneNextButtonSelector);
       navThreePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Three Page Two');
       const navThreePageTwoNextButtonSelector = '.nav-three-page-two ion-button.next.hydrated';
-      const navThreePageTwoNextButton = await waitAndGetElement(driver, navThreePageTwoNextButtonSelector);
+      const navThreePageTwoNextButton = await getElement(driver, navThreePageTwoNextButtonSelector);
       navThreePageTwoNextButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Three Page Three');
       const navThreePageThreePreviousButtonSelector = '.nav-three-page-three ion-button.previous.hydrated';
-      const navThreePageThreePreviousButton = await waitAndGetElement(driver, navThreePageThreePreviousButtonSelector);
+      const navThreePageThreePreviousButton = await getElement(driver, navThreePageThreePreviousButtonSelector);
       navThreePageThreePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Three Page Two');
       const navThreePageTwoPreviousButtonSelector = '.nav-three-page-two ion-button.previous.hydrated';
-      const navThreePageTwoPreviousButton = await waitAndGetElement(driver, navThreePageTwoPreviousButtonSelector);
+      const navThreePageTwoPreviousButton = await getElement(driver, navThreePageTwoPreviousButtonSelector);
       navThreePageTwoPreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Three Page One');
       const navThreePageOnePreviousButtonSelector = '.nav-three-page-one ion-button.nav-two.previous.hydrated';
-      const navThreePageOnePreviousButton = await waitAndGetElement(driver, navThreePageOnePreviousButtonSelector);
+      const navThreePageOnePreviousButton = await getElement(driver, navThreePageOnePreviousButtonSelector);
       navThreePageOnePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page Two');
       const navTwoPageTwoPreviousButtonSelector = '.nav-two-page-two ion-button.previous.hydrated';
-      const navTwoPageTwoPreviousButton = await waitAndGetElement(driver, navTwoPageTwoPreviousButtonSelector);
+      const navTwoPageTwoPreviousButton = await getElement(driver, navTwoPageTwoPreviousButtonSelector);
       navTwoPageTwoPreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav Two Page One');
       const navTwoPageOnePreviousButtonSelector = '.nav-two-page-one ion-button.previous.nav-one.hydrated';
-      const navTwoPageOnePreviousButton = await waitAndGetElement(driver, navTwoPageOnePreviousButtonSelector);
+      const navTwoPageOnePreviousButton = await getElement(driver, navTwoPageOnePreviousButtonSelector);
       navTwoPageOnePreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page Two');
       const navOnePageTwoPreviousButtonSelector = '.nav-one-page-two ion-button.previous.hydrated';
-      const navOnePageTwoPreviousButton = await waitAndGetElement(driver, navOnePageTwoPreviousButtonSelector);
+      const navOnePageTwoPreviousButton = await getElement(driver, navOnePageTwoPreviousButtonSelector);
       navOnePageTwoPreviousButton.click();
       await waitForTransition(600);
 
       console.log('On Nav One Page One');
       const navOnePageTwoSelector = '.nav-one-page-one';
-      const navOnePageTwo = await waitAndGetElement(driver, navOnePageTwoSelector);
+      const navOnePageTwo = await getElement(driver, navOnePageTwoSelector);
     });
   });
 });
-
-async function waitAndGetElement(driver, selector) {
-  driver.wait(until.elementLocated(By.css(selector)));
-  const element = driver.findElement(By.css(selector));
-  await driver.wait(until.elementIsVisible(driver.findElement(By.css(selector))));
-  return element;
-}
-
-function waitForTransition(duration) {
-  return new Promise(resolve => {
-    setTimeout(resolve, duration);
-  })
-}
