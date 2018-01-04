@@ -4,12 +4,9 @@
 
 
 ion-nav {
-  position: absolute;
+  @include position(0);
 
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: absolute;
 
   z-index: $z-index-page-container;
 
@@ -20,12 +17,9 @@ ion-nav {
 }
 
 .ion-page {
-  position: absolute;
+  @include position(0);
 
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: absolute;
 
   z-index: $z-index-page-container;
 
