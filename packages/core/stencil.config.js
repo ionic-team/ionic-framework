@@ -4,7 +4,6 @@ exports.config = {
   generateWWW: false,
   bundles: [
     { components: ['ion-animation-controller'] },
-    { components: ['ion-page'] },
     { components: ['ion-app', 'ion-content', 'ion-scroll', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
     { components: ['ion-alert', 'ion-alert-controller'] },
@@ -27,6 +26,7 @@ exports.config = {
     { components: ['ion-loading', 'ion-loading-controller'] },
     { components: ['ion-menu', 'ion-menu-controller'], priority: 'low' },
     { components: ['ion-modal', 'ion-modal-controller'] },
+    { components: ['ion-page'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
