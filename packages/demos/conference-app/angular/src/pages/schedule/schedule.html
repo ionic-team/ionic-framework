@@ -13,8 +13,8 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-buttons end>
-      <ion-button icon-only (click)="presentFilter()">
+    <ion-buttons slot="end">
+      <ion-button (click)="presentFilter()" slot="icon-only">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -22,9 +22,9 @@
 
   <ion-toolbar no-border-top>
     <ion-searchbar color="primary"
-                   [(ngModel)]="queryText"
-                   (ionInput)="updateSchedule()"
-                   placeholder="Search">
+                    [(ngModel)]="queryText"
+                    (ionInput)="updateSchedule()"
+                    placeholder="Search">
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -46,22 +46,22 @@
 
       <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase" [hidden]="session.hide">
 
-        <ion-item (click)="goToSessionDetail(session)">
+        <button ion-item (click)="goToSessionDetail(session)">
           <h3>{{session.name}}</h3>
           <p>
             {{session.timeStart}} &mdash;
             {{session.timeEnd}}:
             {{session.location}}
           </p>
-        </ion-item>
+        </button>
 
         <ion-item-options>
-          <ion-button color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
+          <button ion-button color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
             Favorite
-          </ion-button>
-          <ion-button color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
+          </button>
+          <button ion-button color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
             Remove
-          </ion-button>
+          </button>
         </ion-item-options>
 
       </ion-item-sliding>
@@ -75,13 +75,12 @@
   </ion-list-header>
 
   <ion-fab bottom right #fab>
-    <ion-fab><ion-icon name="share"></ion-icon></ion-fab>
+    <button ion-fab><ion-icon name="share"></ion-icon></button>
     <ion-fab-list side="top">
-      <ion-fab color="vimeo" (click)="openSocial('Vimeo', fab)"><ion-icon name="logo-vimeo"></ion-icon></ion-fab>
-      <ion-fab color="google" (click)="openSocial('Google+', fab)"><ion-icon name="logo-googleplus"></ion-icon></ion-fab>
-      <ion-fab ion-fab color="twitter" (click)="openSocial('Twitter', fab)"><ion-icon name="logo-twitter"></ion-icon></ion-fab>
-      <ion-fab ion-fab color="facebook" (click)="openSocial('Facebook', fab)"><ion-icon name="logo-facebook"></ion-icon></ion-fab>
+      <button ion-fab color="vimeo" (click)="openSocial('Vimeo', fab)"><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab color="google" (click)="openSocial('Google+', fab)"><ion-icon name="logo-googleplus"></ion-icon></button>
+      <button ion-fab color="twitter" (click)="openSocial('Twitter', fab)"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab color="facebook" (click)="openSocial('Facebook', fab)"><ion-icon name="logo-facebook"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
-
 </ion-content>

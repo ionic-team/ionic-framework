@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
 
+import { debounce } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
 
@@ -27,6 +28,11 @@ export class Textarea implements TextareaComponent {
   styleTmr: number;
 
   @Element() private el: HTMLElement;
+
+  /**
+   * @output {Event} Emitted when the input value has changed.
+   */
+  @Event() ionInput: EventEmitter;
 
   /**
    * @output {Event} Emitted when the styles change.
@@ -62,6 +68,18 @@ export class Textarea implements TextareaComponent {
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop({ mutable: true }) clearOnEdit: boolean;
+
+  /**
+   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+   */
+  @Prop() debounce: number = 0;
+  @PropDidChange('debounce')
+  private debounceInput() {
+    this.ionInput.emit = debounce(
+      this.ionInput.emit.bind(this.ionInput),
+      this.debounce
+    );
+  }
 
   /**
    * @input {boolean} If true, the user cannot interact with the textarea. Defaults to `false`.
@@ -140,6 +158,7 @@ export class Textarea implements TextareaComponent {
   }
 
   componentDidLoad() {
+    this.debounceInput();
     this.emitStyle();
   }
 
@@ -159,8 +178,9 @@ export class Textarea implements TextareaComponent {
     });
   }
 
-  clearTextInput() {
+  clearTextInput(ev: any) {
     this.value = '';
+    this.ionInput.emit(ev);
   }
 
   inputBlurred(ev: any) {
@@ -172,6 +192,7 @@ export class Textarea implements TextareaComponent {
 
   inputChanged(ev: any) {
     this.value = ev.target && ev.target.value;
+    this.ionInput.emit(ev);
     this.emitStyle();
   }
 
@@ -182,14 +203,14 @@ export class Textarea implements TextareaComponent {
     this.emitStyle();
   }
 
-  inputKeydown() {
-    this.checkClearOnEdit();
+  inputKeydown(ev: any) {
+    this.checkClearOnEdit(ev);
   }
 
   /**
   * Check if we need to clear the text input if clearOnEdit is enabled
   */
-  checkClearOnEdit() {
+  checkClearOnEdit(ev: any) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -197,7 +218,7 @@ export class Textarea implements TextareaComponent {
     // Did the input value change after it was blurred and edited?
     if (this.didBlurAfterEdit && this.hasValue()) {
       // Clear the input
-      this.clearTextInput();
+      this.clearTextInput(ev);
     }
 
     // Reset the flag

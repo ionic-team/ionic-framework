@@ -38,12 +38,14 @@
 }
 
 .tabbar-md.scrollable ion-scroll {
+  @include margin(0, 8px);
+
   max-width: 650px;
-  margin: 0 8px;
 }
 
 .tabbar-md.scrollable ion-tab-button {
   overflow: hidden;
+
   flex: 1 0 auto;
 }
 

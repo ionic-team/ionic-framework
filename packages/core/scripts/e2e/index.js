@@ -5,7 +5,6 @@ const glob = require('glob');
 const Mocha = require('mocha');
 const path = require('path');
 const webdriver = require('selenium-webdriver');
-const chromedriver = require('chromedriver');
 const argv = require('yargs').argv
 
 const Page = require('./page');
@@ -85,8 +84,9 @@ function getTotalTests(suite) {
 }
 
 async function run() {
+  // TODO look into removing chrome startup from the timeout
   const mocha = new Mocha({
-    timeout: 5000,
+    timeout: 10000,
     slow: 2000
   });
 
@@ -111,8 +111,9 @@ async function run() {
   if (takeScreenshots) {
     snapshot.finish();
   }
+
   devServer.close();
-  driver.quit();
+  await driver.quit();
 
   if (failures) {
     throw new Error(failures);
@@ -177,7 +178,8 @@ function validateNodeVersion(version) {
 // Invoke run() only if executed directly i.e. `node ./scripts/e2e`
 if (require.main === module) {
   validateNodeVersion(process.version);
-  run().catch((err) => {
+  run().then(() => {
+  }).catch((err) => {
     console.log(err);
     // fail with non-zero status code
     process.exit(1);

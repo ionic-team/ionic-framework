@@ -1,8 +1,8 @@
 'use strict';
 
-const { By, until } = require('selenium-webdriver');
 const expect = require('chai').expect;
 const { register, Page, platforms } = require('../../../../../scripts/e2e');
+const { getElement, waitAndGetElementById, waitForTransition } = require('../../../../../scripts/e2e/utils');
 
 class E2ETestPage extends Page {
   constructor(driver, platform) {
@@ -26,13 +26,13 @@ platforms.forEach(platform => {
 
       console.log('On Tab One Page One');
       const tabOnePageOneNextButtonSelector = 'page-one ion-button.next.hydrated';
-      const tabOnePageOneNextButton = await waitAndGetElement(driver, tabOnePageOneNextButtonSelector);
+      const tabOnePageOneNextButton = await getElement(driver, tabOnePageOneNextButtonSelector);
       tabOnePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Tab One Page Two');
       const tabOnePageTwoNextButtonSelector = 'page-two ion-button.next.hydrated';
-      const tabOnePageTwoNextButton = await waitAndGetElement(driver, tabOnePageTwoNextButtonSelector);
+      const tabOnePageTwoNextButton = await getElement(driver, tabOnePageTwoNextButtonSelector);
       tabOnePageTwoNextButton.click();
       await waitForTransition(600);
 
@@ -45,13 +45,13 @@ platforms.forEach(platform => {
 
       console.log('On Tab Two Page One');
       const tabTwoPageOneNextButtonSelector = 'page-four ion-button.next.hydrated';
-      const tabTwoPageOneNextButton = await waitAndGetElement(driver, tabTwoPageOneNextButtonSelector);
+      const tabTwoPageOneNextButton = await getElement(driver, tabTwoPageOneNextButtonSelector);
       tabTwoPageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Tab Two Page Two');
       const tabTwoPageTwoNextButtonSelector = 'page-five ion-button.next.hydrated';
-      const tabTwoPageTwoNextButton = await waitAndGetElement(driver, tabTwoPageTwoNextButtonSelector);
+      const tabTwoPageTwoNextButton = await getElement(driver, tabTwoPageTwoNextButtonSelector);
       tabTwoPageTwoNextButton.click();
       await waitForTransition(600);
 
@@ -64,13 +64,13 @@ platforms.forEach(platform => {
 
       console.log('On Tab Three Page One');
       const tabThreePageOneNextButtonSelector = 'page-seven ion-button.next.hydrated';
-      const tabThreePageOneNextButton = await waitAndGetElement(driver, tabThreePageOneNextButtonSelector);
+      const tabThreePageOneNextButton = await getElement(driver, tabThreePageOneNextButtonSelector);
       tabThreePageOneNextButton.click();
       await waitForTransition(600);
 
       console.log('On Tab Two Page Two');
       const tabThreePageTwoNextButtonSelector = 'page-eight ion-button.next.hydrated';
-      const tabThreePageTwoNextButton = await waitAndGetElement(driver, tabThreePageTwoNextButtonSelector);
+      const tabThreePageTwoNextButton = await getElement(driver, tabThreePageTwoNextButtonSelector);
       tabThreePageTwoNextButton.click();
       await waitForTransition(600);
 
@@ -83,7 +83,7 @@ platforms.forEach(platform => {
 
       console.log('On Tab One Page Three');
       const tabOnePageThreeBackButtonSelector = 'page-three ion-button.back.hydrated';
-      const tabOnePageThreeBackButton = await waitAndGetElement(driver, tabOnePageThreeBackButtonSelector);
+      const tabOnePageThreeBackButton = await getElement(driver, tabOnePageThreeBackButtonSelector);
       tabOnePageThreeBackButton.click();
       await waitForTransition(600);
 
@@ -93,7 +93,7 @@ platforms.forEach(platform => {
 
       console.log('On Tab Three Page Three');
       const tabThreePageThreeBackButtonSelector = 'page-nine ion-button.back.hydrated';
-      const tabThreePageThreeBackButton = await waitAndGetElement(driver, tabThreePageThreeBackButtonSelector);
+      const tabThreePageThreeBackButton = await getElement(driver, tabThreePageThreeBackButtonSelector);
       tabThreePageThreeBackButton.click();
       await waitForTransition(600);
 
@@ -105,13 +105,13 @@ platforms.forEach(platform => {
 
       console.log('On Tab Two Page Three');
       const tabTwoPageThreeBackButtonSelector = 'page-six ion-button.back.hydrated';
-      const tabTwoPageThreeBackButton = await waitAndGetElement(driver, tabTwoPageThreeBackButtonSelector);
+      const tabTwoPageThreeBackButton = await getElement(driver, tabTwoPageThreeBackButtonSelector);
       tabTwoPageThreeBackButton.click();
       await waitForTransition(600);
 
       console.log('On Tab Two Page Two');
       const tabTwoPageTwoBackButtonSelector = 'page-five ion-button.back.hydrated';
-      const tabTwoPageTwoBackButton = await waitAndGetElement(driver, tabTwoPageTwoBackButtonSelector);
+      const tabTwoPageTwoBackButton = await getElement(driver, tabTwoPageTwoBackButtonSelector);
       tabTwoPageTwoBackButton.click();
       await waitForTransition(600);
 
@@ -123,7 +123,7 @@ platforms.forEach(platform => {
 
       console.log('On Tab One Page Two');
       const tabOnePageTwoBackButtonSelector = 'page-two ion-button.back.hydrated';
-      const tabOnePageTwoBackButton = await waitAndGetElement(driver, tabOnePageTwoBackButtonSelector);
+      const tabOnePageTwoBackButton = await getElement(driver, tabOnePageTwoBackButtonSelector);
       tabOnePageTwoBackButton.click();
 
       await waitForTransition(600);
@@ -136,7 +136,7 @@ platforms.forEach(platform => {
 
       console.log('On Tab Three Page Two');
       const tabThreePageTwoBackButtonSelector = 'page-eight ion-button.back.hydrated';
-      const tabThreePageTwoBackButton = await waitAndGetElement(driver, tabThreePageTwoBackButtonSelector);
+      const tabThreePageTwoBackButton = await getElement(driver, tabThreePageTwoBackButtonSelector);
       tabThreePageTwoBackButton.click();
       await waitForTransition(600);
 
@@ -144,23 +144,3 @@ platforms.forEach(platform => {
     });
   });
 });
-
-async function waitAndGetElement(driver, selector) {
-  driver.wait(until.elementLocated(By.css(selector)));
-  const element = driver.findElement(By.css(selector));
-  await driver.wait(until.elementIsVisible(driver.findElement(By.css(selector))));
-  return element;
-}
-
-async function waitAndGetElementById(driver, selector) {
-  driver.wait(until.elementLocated(By.id(selector)));
-  const element = driver.findElement(By.id(selector));
-  await driver.wait(until.elementIsVisible(driver.findElement(By.id(selector))));
-  return element;
-}
-
-function waitForTransition(duration) {
-  return new Promise(resolve => {
-    setTimeout(resolve, duration);
-  })
-}

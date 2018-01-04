@@ -5,9 +5,9 @@
 // -----------------------------------------
 
 .toggle-md {
-  box-sizing: content-box;
-
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
+
+  box-sizing: content-box;
 
   position: relative;
 

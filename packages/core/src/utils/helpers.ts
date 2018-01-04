@@ -24,6 +24,14 @@ export function isStringOrNumber(v: any): v is (string | number) { return isStri
 
 export function isBlank(val: any): val is null { return val === undefined || val === null; }
 
+export function isElementNav(element: HTMLElement) {
+  return element.tagName.toUpperCase() === 'ION-NAV';
+}
+
+export function isElementModal(element: HTMLElement) {
+  return element.classList.contains('modal-wrapper');
+}
+
 /** @hidden */
 export function isCheckedProperty(a: any, b: any): boolean {
   if (a === undefined || a === null || a === '') {
@@ -286,4 +294,12 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
       });
     });
   });
+}
+
+export function debounce(func: Function, wait: number = 250) {
+  let timer: number;
+  return (...args: any[]): void => {
+    clearTimeout(timer);
+    timer = setTimeout(func, wait, ...args);
+  };
 }

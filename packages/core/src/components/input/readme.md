@@ -47,6 +47,11 @@ boolean
 boolean
 
 
+#### debounce
+
+number
+
+
 #### disabled
 
 boolean
@@ -179,6 +184,11 @@ boolean
 boolean
 
 
+#### debounce
+
+number
+
+
 #### disabled
 
 boolean
@@ -275,6 +285,9 @@ string
 
 
 #### ionFocus
+
+
+#### ionInput
 
 
 #### ionStyle

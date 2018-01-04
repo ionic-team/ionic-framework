@@ -8,12 +8,9 @@
 // --------------------------------------------------
 
 ion-tabs {
-  position: absolute;
+  @include position(0);
 
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: absolute;
 
   z-index: $z-index-page-container;
 
@@ -79,10 +76,11 @@ ion-tabbar.placement-top {
 }
 
 ion-tab-button {
-  box-sizing: border-box;
   @include margin(0);
   @include text-align(center);
   @include border-radius(0);
+
+  box-sizing: border-box;
 
   position: relative;
   z-index: 0;
@@ -228,6 +226,7 @@ ion-tabbar.scrollable ion-scroll {
 ion-tabbar.scrollable .scroll-inner {
   position: relative;
   display: flex;
+
   flex-direction: row;
 }
 

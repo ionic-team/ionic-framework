@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { FrameworkDelegate } from '@ionic/core';
+import { isElementModal, isElementNav } from './utils/helpers';
 
 export function attachViewToDom(parentElement: HTMLElement, reactComponent: any, propsOrData: any, classesToAdd: string[]) {
-  const wrappingDiv = document.createElement('div');
+  const wrappingDiv = shouldWrapInIonPage(parentElement) ? document.createElement('ion-page') : document.createElement('div');
   if (classesToAdd) {
     for (const clazz of classesToAdd) {
       wrappingDiv.classList.add(clazz);
@@ -22,7 +23,6 @@ export function attachViewToDom(parentElement: HTMLElement, reactComponent: any,
     reactElement: reactElement,
     instance: mountedComponentInstance
   });
-
 }
 
 export function removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement): Promise<any> {
@@ -37,3 +37,8 @@ const Delegate: FrameworkDelegate = {
 };
 
 export { Delegate }
+
+
+export function shouldWrapInIonPage(element: HTMLElement) {
+  return isElementModal(element) || isElementNav(element);
+}

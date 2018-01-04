@@ -10,7 +10,9 @@
     "react-scripts": "1.0.17"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-original": "react-scripts start",
+    "copy": "cp -R ./node_modules/@ionic/core/dist ./public/dist",
+    "start": "npm run copy && npm run start-original",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

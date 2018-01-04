@@ -1,7 +1,7 @@
 'use strict';
 
-const { By, until } = require('selenium-webdriver');
 const { register, Page, platforms } = require('../../../../../scripts/e2e');
+const { getElement, waitForTransition } = require('../../../../../scripts/e2e/utils');
 
 class E2ETestPage extends Page {
   constructor(driver, platform) {
@@ -50,16 +50,3 @@ platforms.forEach(platform => {
     });
   });
 });
-
-async function getElement(driver, selector) {
-  driver.wait(until.elementLocated(By.css(selector)));
-  const element = driver.findElement(By.css(selector));
-  await driver.wait(until.elementIsVisible(driver.findElement(By.css(selector))));
-  return element;
-}
-
-function waitForTransition(duration) {
-  return new Promise(resolve => {
-    setTimeout(resolve, duration);
-  })
-}
