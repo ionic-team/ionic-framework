@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
 import { BaseInputComponent, GestureDetail } from '../../index';
-import { clamp } from '../../utils/helpers';
+import { clamp, debounce } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-range',
@@ -75,6 +75,13 @@ export class Range implements BaseInputComponent {
    * `ionChange` event after each change in the range value. Default `0`.
    */
   @Prop() debounce: number = 0;
+  @PropDidChange('debounce')
+  debounceChange() {
+    this.ionChange.emit = debounce(
+      this.ionChange.emit.bind(this.ionChange),
+      this.debounce
+    );
+  }
 
   /*
    * @input {boolean} If true, the user cannot interact with the range. Default false.
@@ -126,13 +133,14 @@ export class Range implements BaseInputComponent {
 
   @PropDidChange('value')
   protected valueChanged(val: boolean) {
-    setTimeout(() => this.ionChange.emit({value: val}), this.debounce);
+    this.ionChange.emit({value: val});
     this.emitStyle();
   }
 
   componentWillLoad() {
     this.inputUpdated();
     this.createTicks();
+    this.debounceChange();
     this.emitStyle();
   }
 
