@@ -31,6 +31,7 @@
     "tsc": "./node_modules/.bin/tsc -p .",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/e2e",
+    "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",

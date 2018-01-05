@@ -6,23 +6,21 @@ const expect = require('chai').expect;
 
 class E2ETestPage extends Page {
   constructor(driver, platform) {
-    super(driver, `http://localhost:3333/src/components/app/test/cordova?ionicplatform=${platform}`);
+    super(driver, `http://localhost:3333/src/components/app/test/cordova?ionicplatform=${platform}&ts=${Date.now()}`);
   }
 }
 
 platforms.forEach(platform => {
   describe('app/cordova', () => {
 
-    register('should init', driver => {
+    register('should init', async (driver) => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      await page.navigate();
     });
 
     register('should have status bar padding for all pages', async (driver, testContext) => {
-
       testContext.timeout(10000);
       const page = new E2ETestPage(driver, platform);
-
       await waitForTransition(200);
       const pageOneToolbarSelector = 'page-one ion-toolbar';
       const pageOneToolbar = await getElement(driver, pageOneToolbarSelector);
@@ -49,23 +47,38 @@ platforms.forEach(platform => {
         expect(paddingTopPageTwo).to.equal('24px');
       }
 
+      // reset the test to the original state
+      const backButtonSelector = 'page-two ion-button';
+      const backButton = await getElement(driver, backButtonSelector);
+      await backButton.click();
+      await waitForTransition(600);
+
     });
 
-    register('should have status bar padding for a single modal', async (driver, testContext) => {
+    /*register('should have status bar padding for a single modal', async (driver, testContext) => {
       testContext.timeout(10000);
       const page = new E2ETestPage(driver, platform);
 
       await waitForTransition(200);
 
-      const singleModalButtonSelector = '#test';
+      const singleModalButtonSelector = '.single-modal';
       const singleModalButton = await getElement(driver, singleModalButtonSelector);
-      const blah = await singleModalButton.getAttribute('outerHTML');
-      console.log('blah: ', blah);
       await singleModalButton.click();
       await waitForTransition(600);
 
+      console.log('blah');
 
+      const modalOneToolbarSelector = 'modal-one ion-toolbar';
+      const modalOneToolbar = await getElement(driver, modalOneToolbarSelector);
+      const paddingTopModalOne = await modalOneToolbar.getCssValue('padding-top');
+      console.log('paddingTopModalOne: ', paddingTopModalOne);
+      if (platform === 'ios') {
+        expect(paddingTopModalOne).to.equal('24px');
+      } else {
+        expect(paddingTopModalOne).to.equal('24px');
+      }
 
     });
+    */
   });
 });
