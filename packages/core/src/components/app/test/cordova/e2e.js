@@ -50,5 +50,22 @@ platforms.forEach(platform => {
       }
 
     });
+
+    register('should have status bar padding for a single modal', async (driver, testContext) => {
+      testContext.timeout(10000);
+      const page = new E2ETestPage(driver, platform);
+
+      await waitForTransition(200);
+
+      const singleModalButtonSelector = '#test';
+      const singleModalButton = await getElement(driver, singleModalButtonSelector);
+      const blah = await singleModalButton.getAttribute('outerHTML');
+      console.log('blah: ', blah);
+      await singleModalButton.click();
+      await waitForTransition(600);
+
+
+
+    });
   });
 });
