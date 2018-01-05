@@ -40,6 +40,9 @@ import {
 import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
+import {
+  SwiperOptions,
+} from './components/slides/vendor/swiper';
 
 import {
   ActionSheetController as IonActionSheetController
@@ -2626,20 +2629,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSlidesAttributes extends HTMLAttributes {
-      autoplay?: number;
-      control?: any;
-      direction?: 'horizontal' | 'vertical';
-      effect?: string;
-      initialSlide?: number;
-      keyboardControl?: boolean;
-      loop?: boolean;
+      options?: SwiperOptions;
       pager?: boolean;
-      paginationType?: string;
-      parallax?: boolean;
-      slidesPerView?: number | 'auto';
-      spaceBetween?: number;
-      speed?: number;
-      zoom?: boolean;
     }
   }
 }
