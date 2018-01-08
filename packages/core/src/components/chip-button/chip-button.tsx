@@ -33,9 +33,9 @@ export class ChipButton {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * @input {boolean} If true, activates a transparent button style.
+   * Set to `"clear"` for a transparent button style.
    */
-  @Prop() clear: boolean = false;
+  @Prop() fill: string;
 
   /**
    * @input {boolean} If true, sets the button into a disabled state.
@@ -73,15 +73,7 @@ export class ChipButton {
    * Chip buttons can only be clear or default (solid)
    */
   private getStyleClassList(buttonType: string): string[] {
-    let classList = [].concat(
-      this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : []
-    );
-
-    if (classList.length === 0) {
-      classList = this.getColorClassList(this.color, buttonType, 'default', this.mode);
-    }
-
-    return classList;
+    return this.getColorClassList(this.color, buttonType, this.fill || 'default', this.mode);
   }
 
   render() {

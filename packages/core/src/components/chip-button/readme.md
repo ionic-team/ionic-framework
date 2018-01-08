@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### clear
-
-boolean
-
-
 #### color
 
 string
@@ -20,6 +15,13 @@ string
 #### disabled
 
 boolean
+
+
+#### fill
+
+string
+
+Set to `"clear"` for a transparent button style.
 
 
 #### href
@@ -34,11 +36,6 @@ any
 
 ## Attributes
 
-#### clear
-
-boolean
-
-
 #### color
 
 string
@@ -47,6 +44,13 @@ string
 #### disabled
 
 boolean
+
+
+#### fill
+
+string
+
+Set to `"clear"` for a transparent button style.
 
 
 #### href
