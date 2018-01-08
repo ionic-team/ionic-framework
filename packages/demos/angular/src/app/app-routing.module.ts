@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'alert', loadChildren: 'app/alert/alert.module#AlertModule' },
   { path: 'actionSheet', loadChildren: 'app/action-sheet/action-sheet.module#ActionSheetModule' },
   { path: 'badge', loadChildren: 'app/badge/badge.module#BadgeModule' },
+  { path: 'card', loadChildren: 'app/card/card.module#CardModule' },
   { path: 'toast', loadChildren: 'app/toast/toast.module#ToastModule' },
   { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' },
   { path: 'nav', loadChildren: 'app/nav/nav.module#NavModule' },
