@@ -13,6 +13,7 @@
     "@stencil/dev-server": "0.0.18-0",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
+    "axios": "^0.17.1",
     "chai": "^4.1.2",
     "chromedriver": "^2.33.2",
     "glob": "^7.1.2",
@@ -66,5 +67,6 @@
       "jsx",
       "d.ts"
     ]
-  }
+  },
+  "dependencies": {}
 }
