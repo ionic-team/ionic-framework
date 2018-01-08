@@ -1662,7 +1662,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
-      modalId?: string;
+      modalId?: number;
       mode?: string;
       showBackdrop?: boolean;
     }

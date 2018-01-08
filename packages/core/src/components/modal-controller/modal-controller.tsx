@@ -1,73 +1,72 @@
 import { Component, Listen, Method } from '@stencil/core';
 import { Modal, ModalEvent, ModalOptions } from '../../index';
 
+let ids: 0;
+const modals = new Map<number, Modal>();
 
 @Component({
   tag: 'ion-modal-controller'
 })
 export class ModalController {
-  private ids = 0;
-  private modalResolves: {[modalId: string]: Function} = {};
-  private modals: HTMLIonModalElement[] = [];
-
 
   @Method()
   create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
     // create ionic's wrapping ion-modal component
-    const modal = document.createElement('ion-modal');
-
-    const id = this.ids++;
+    const modalElement = document.createElement('ion-modal');
 
     // give this modal a unique id
-    modal.modalId = `modal-${id}`;
+    modalElement.modalId = ids++;
 
     // convert the passed in modal options into props
     // that get passed down into the new modal
-    Object.assign(modal, opts);
+    Object.assign(modalElement, opts);
 
     // append the modal element to the document body
     const appRoot = document.querySelector('ion-app') || document.body;
-    appRoot.appendChild(modal as any);
+    appRoot.appendChild(modalElement);
 
-    // store the resolve function to be called later up when the modal loads
-    return new Promise<HTMLIonModalElement>(resolve => {
-      this.modalResolves[modal.modalId] = resolve;
-    });
+    return (modalElement as any).componentOnReady();
   }
 
-
-  @Listen('body:ionModalDidLoad')
-  protected modalDidLoad(ev: ModalEvent) {
-    const modal = ev.target as HTMLIonModalElement;
-    const modalResolve = this.modalResolves[modal.modalId];
-    if (modalResolve) {
-      modalResolve(modal);
-      delete this.modalResolves[modal.modalId];
-    }
+  @Method()
+  dismiss(data?: any, role?: any, modalId: number = -1) {
+    modalId = modalId >= 0 ? modalId : getHighestId();
+    const modal = modals.get(modalId);
+    return modal.dismiss(data, role);
   }
 
 
   @Listen('body:ionModalWillPresent')
   protected modalWillPresent(ev: ModalEvent) {
-    this.modals.push(ev.target as HTMLIonModalElement);
+    console.log('modalWillPresent');
+    modals.set(ev.target.modalId, ev.target);
   }
 
 
   @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
   protected modalWillDismiss(ev: ModalEvent) {
-    const index = this.modals.indexOf(ev.target as HTMLIonModalElement);
-    if (index > -1) {
-      this.modals.splice(index, 1);
-    }
+    console.log('modalWillDismiss');
+    modals.delete(ev.target.modalId);
   }
 
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {
-    const lastModal = this.modals[this.modals.length - 1];
-    if (lastModal) {
-      lastModal.dismiss();
-    }
+    removeLastModal();
   }
+}
 
+function getHighestId() {
+  let minimum = -1;
+  modals.forEach((_modal: Modal, id: number) => {
+    if (id > minimum) {
+      minimum = id;
+    }
+  });
+  return minimum;
+}
+
+function removeLastModal() {
+  const toRemove = modals.get(getHighestId());
+  return toRemove ? toRemove.dismiss() : Promise.resolve();
 }

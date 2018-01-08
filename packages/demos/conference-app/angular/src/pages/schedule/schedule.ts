@@ -26,7 +26,8 @@ import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 
 @Component({
   selector: 'page-schedule',
-  templateUrl: 'schedule.html'
+  templateUrl: 'schedule.html',
+  styleUrls: ['./schedule.scss']
 })
 export class SchedulePage {
   // the list is a child of the schedule page

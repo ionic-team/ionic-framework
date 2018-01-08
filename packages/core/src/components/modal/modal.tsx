@@ -73,7 +73,7 @@ export class Modal {
   @Prop() cssClass: string;
   @Prop() enableBackdropDismiss: boolean = true;
 
-  @Prop() modalId: string;
+  @Prop() modalId: number;
   @Prop() showBackdrop: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -103,7 +103,7 @@ export class Modal {
       this.delegate = new DomFrameworkDelegate();
     }
 
-    const cssClasses = ['ion-page'];
+    const cssClasses = [];
     if (this.cssClass && this.cssClass.length) {
       cssClasses.push(this.cssClass);
     }
@@ -228,6 +228,7 @@ export interface ModalOptions {
 
 
 export interface ModalEvent extends CustomEvent {
+  target: HTMLIonModalElement;
   detail: ModalEventDetail;
 }
 
