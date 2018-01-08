@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange } from '@stencil/core';
 import { Swiper } from './vendor/swiper.js';
-import { SwiperOptions } from './vendor/swiper';
+// import { SwiperOptions } from './vendor/swiper'; // TODO
 
 @Component({
   tag: 'ion-slides',
@@ -88,7 +88,7 @@ export class Slides {
    * Options to pass to the swiper instance.
    * See http://idangero.us/swiper/api/ for valid options
    */
-  @Prop() options:  SwiperOptions;
+  @Prop() options: any; // SwiperOptions;  // TODO
 
   @PropDidChange('options')
   updateSwiperOptions() {
