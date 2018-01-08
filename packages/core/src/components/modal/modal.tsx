@@ -103,7 +103,7 @@ export class Modal {
       this.delegate = new DomFrameworkDelegate();
     }
 
-    const cssClasses = ['ion-page'];
+    const cssClasses = [];
     if (this.cssClass && this.cssClass.length) {
       cssClasses.push(this.cssClass);
     }
