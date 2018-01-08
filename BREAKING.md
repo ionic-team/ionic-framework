@@ -129,7 +129,7 @@ Buttons inside of an `<ion-chip>` container should now be written as an `<ion-ch
 ```html
 <ion-chip>
   <ion-label>Default</ion-label>
-  <ion-chip-button clear color="light">
+  <ion-chip-button fill="clear" color="light">
     <ion-icon name="close-circle"></ion-icon>
   </ion-chip-button>
 </ion-chip>
