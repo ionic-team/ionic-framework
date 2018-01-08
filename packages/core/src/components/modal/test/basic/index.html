@@ -30,6 +30,12 @@
     window.addEventListener("ionModalDidDismiss", function(e){console.log('DidDismiss', e)})
     window.addEventListener("ionModalWillDismiss", function(e){console.log('WillDismiss', e)})
     async function presentModal() {
+
+      // initialize controller
+      const modalController = document.querySelector('ion-modal-controller');
+      await modalController.componentOnReady();
+
+      // create component to open
       const element = document.createElement('div');
       element.innerHTML = `
       <ion-header>
@@ -38,11 +44,19 @@
         </ion-toolbar>
       </ion-header>
       <ion-content padding>
-        <div>Sure, I like dogs. I like caravans moar.</div>
+        <h1>Super content</h1>
+        <div>Additional content</div>
+        <ion-button>Close the modal</ion-button>
       </ion-content>
       `;
-      const modalController = document.querySelector('ion-modal-controller');
-      await modalController.componentOnReady();
+
+      // listen for close event
+      const button = element.querySelector('ion-button');
+      button.addEventListener('click', () => {
+        modalController.dismiss();
+      });
+
+      // present the modal
       const modalElement = await modalController.create({
         component: element
       });

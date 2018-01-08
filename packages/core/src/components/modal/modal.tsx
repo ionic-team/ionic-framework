@@ -73,7 +73,7 @@ export class Modal {
   @Prop() cssClass: string;
   @Prop() enableBackdropDismiss: boolean = true;
 
-  @Prop() modalId: string;
+  @Prop() modalId: number;
   @Prop() showBackdrop: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -228,6 +228,7 @@ export interface ModalOptions {
 
 
 export interface ModalEvent extends CustomEvent {
+  target: HTMLIonModalElement;
   detail: ModalEventDetail;
 }
 

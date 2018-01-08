@@ -54,7 +54,7 @@ any
 
 #### modalId
 
-string
+number
 
 
 #### mode
@@ -116,7 +116,7 @@ any
 
 #### modalId
 
-string
+number
 
 
 #### mode
