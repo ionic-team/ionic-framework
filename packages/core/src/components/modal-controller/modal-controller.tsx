@@ -1,7 +1,7 @@
 import { Component, Listen, Method } from '@stencil/core';
 import { Modal, ModalEvent, ModalOptions } from '../../index';
 
-let ids: 0;
+let ids = 0;
 const modals = new Map<number, Modal>();
 
 @Component({
