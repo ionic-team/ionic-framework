@@ -153,19 +153,6 @@
 }
 
 
-// Material Design Item Group
-// --------------------------------------------------
-
-ion-item-group .item-md:first-child .item-inner {
-  border-top-width: 0;
-}
-
-ion-item-group .item-md:last-child .item-inner,
-ion-item-group .item-md .item-wrapper:last-child .item-inner {
-  border: 0;
-}
-
-
 // Generate Material Design Item and Item Divider Colors
 // --------------------------------------------------
 

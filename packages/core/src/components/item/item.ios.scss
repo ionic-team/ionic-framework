@@ -167,19 +167,6 @@
 }
 
 
-// iOS Item Group
-// --------------------------------------------------
-
-ion-item-group .item-ios:first-child .item-inner {
-  border-top-width: 0;
-}
-
-ion-item-group .item-ios:last-child .item-inner,
-ion-item-group .item-wrapper:last-child .item-ios .item-inner {
-  border: 0;
-}
-
-
 // Generate iOS Item and Item Divider Colors
 // --------------------------------------------------
 
