@@ -3,24 +3,22 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'page-three',
   template: `
-<ion-page>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Page Three</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    Page Three
-    <div>
-    <ion-button (click)="goBack()">Go Back</ion-button>
-  </div>
-    <ul>
-      <li>ngOnInit - {{ngOnInitDetection}}</li>
-      <li>ionViewWillEnter - {{ionViewWillEnterDetection}}</li>
-      <li>ionViewDidEnter - {{ionViewDidEnterDetection}}</li>
-    </ul>
-  </ion-content>
-</ion-page>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Page Three</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  Page Three
+  <div>
+  <ion-button (click)="goBack()">Go Back</ion-button>
+</div>
+  <ul>
+    <li>ngOnInit - {{ngOnInitDetection}}</li>
+    <li>ionViewWillEnter - {{ionViewWillEnterDetection}}</li>
+    <li>ionViewDidEnter - {{ionViewDidEnterDetection}}</li>
+  </ul>
+</ion-content>
   `
 })
 export class PageThree {
