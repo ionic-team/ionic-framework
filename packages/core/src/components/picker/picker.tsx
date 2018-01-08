@@ -78,7 +78,7 @@ export class Picker {
   @Prop() pickerId: string;
   @Prop() showBackdrop: boolean = true;
   @Prop() enableBackdropDismiss: boolean = true;
-  @Prop() animate: boolean;
+  @Prop() willAnimate: boolean = true;
 
   @Prop() buttons: PickerButton[] = [];
   @Prop() columns: PickerColumn[] = [];
@@ -100,7 +100,7 @@ export class Picker {
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);

@@ -104,7 +104,7 @@ export class ActionSheet {
   /**
    * Enable action-sheet animations. If false, action-sheet will not animate in
    */
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate: boolean = true;
 
   /**
    * Animation to use when the action-sheet is created
@@ -138,7 +138,7 @@ export class ActionSheet {
       this.animation = animation;
 
       // Check if prop animate is false or if the config for animate is defined/false
-      if (!this.animate || (isDef(this.config.get('animate')) && this.config.get('animate') === false)) {
+      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);
@@ -168,7 +168,7 @@ export class ActionSheet {
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
 
-      if (!this.animate || (isDef(this.config.get('animate')) && this.config.get('animate') === false)) {
+      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
         this.animation = animation.duration(0);
       }
 

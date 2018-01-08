@@ -78,7 +78,7 @@ export class Modal {
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate: boolean = true;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   private animation: Animation;
@@ -119,7 +119,7 @@ export class Modal {
      return this.animationCtrl.create(animationBuilder, this.el)
      .then(animation => {
       this.animation = animation;
-      if (!this.animate) this.animation = animation.duration(0);
+      if (!this.willAnimate) this.animation = animation.duration(0);
       return playAnimationAsync(animation);
     })
     .then((animation) => {
@@ -147,7 +147,7 @@ export class Modal {
     return this.animationCtrl.create(animationBuilder, this.el)
     .then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         this.animation = animation.duration(0);
       }
       return playAnimationAsync(animation);

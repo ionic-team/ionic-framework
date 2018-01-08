@@ -7,13 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-Enable alert animations. If false, alert will not animate in
-
-
 #### buttons
 
 any
@@ -82,17 +75,17 @@ Title for the alert
 boolean
 
 If true, alert will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable alert animations. If false, alert will not animate in
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-Enable alert animations. If false, alert will not animate in
-
-
 #### buttons
 
 any
@@ -161,6 +154,13 @@ Title for the alert
 boolean
 
 If true, alert will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable alert animations. If false, alert will not animate in
 
 
 ## Events

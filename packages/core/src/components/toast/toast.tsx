@@ -71,7 +71,7 @@ export class Toast {
   @Prop() position: string;
   @Prop() translucent: boolean = false;
   @Prop() toastId: string;
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate: boolean = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
@@ -90,7 +90,7 @@ export class Toast {
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);

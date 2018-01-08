@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-
 #### color
 
 string
@@ -63,17 +58,17 @@ string
 
 
 #### showBackdrop
+
+boolean
+
+
+#### willAnimate
 
 boolean
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-
 #### color
 
 string
@@ -125,6 +120,11 @@ string
 
 
 #### showBackdrop
+
+boolean
+
+
+#### willAnimate
 
 boolean
 

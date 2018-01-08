@@ -110,7 +110,7 @@ export class Alert {
   /**
    * Enable alert animations. If false, alert will not animate in
    */
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate: boolean = true;
 
   /**
    * Animation to be used when the alert is shown
@@ -140,7 +140,7 @@ export class Alert {
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);

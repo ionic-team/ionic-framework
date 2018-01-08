@@ -7,13 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-Toggles whether animation should occur or not
-
-
 #### content
 
 string
@@ -73,17 +66,17 @@ string
 boolean
 
 If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
+
+
+#### willAnimate
+
+boolean
+
+Toggles whether animation should occur or not
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-Toggles whether animation should occur or not
-
-
 #### content
 
 string
@@ -143,6 +136,13 @@ string
 boolean
 
 If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
+
+
+#### willAnimate
+
+boolean
+
+Toggles whether animation should occur or not
 
 
 ## Events

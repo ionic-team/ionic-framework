@@ -7,13 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-Enable action-sheet animations. If false, action-sheet will not animate in
-
-
 #### buttons
 
 any
@@ -68,17 +61,17 @@ Title for the action-sheet
 boolean
 
 If true, action-sheet will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable action-sheet animations. If false, action-sheet will not animate in
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-Enable action-sheet animations. If false, action-sheet will not animate in
-
-
 #### buttons
 
 any
@@ -133,6 +126,13 @@ Title for the action-sheet
 boolean
 
 If true, action-sheet will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable action-sheet animations. If false, action-sheet will not animate in
 
 
 ## Events

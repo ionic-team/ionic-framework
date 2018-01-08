@@ -79,7 +79,7 @@ export class Popover {
   @Prop() popoverId: string;
   @Prop() showBackdrop: boolean = true;
   @Prop() translucent: boolean = false;
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate: boolean = true;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   private animation: Animation;
@@ -120,7 +120,7 @@ export class Popover {
       })
       .then((animation) => {
         this.animation = animation;
-        if (!this.animate) this.animation = animation.duration(0);
+        if (!this.willAnimate) this.animation = animation.duration(0);
         return playAnimationAsync(animation);
       })
       .then((animation) => {

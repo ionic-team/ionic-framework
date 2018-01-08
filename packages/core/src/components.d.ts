@@ -98,7 +98,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonActionSheetAttributes extends HTMLAttributes {
-      animate?: boolean;
       buttons?: ActionSheetButton[];
       cssClass?: string;
       enableBackdropDismiss?: boolean;
@@ -107,6 +106,7 @@ declare global {
       subTitle?: string;
       title?: string;
       translucent?: boolean;
+      willAnimate?: boolean;
     }
   }
 }
@@ -166,7 +166,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAlertAttributes extends HTMLAttributes {
-      animate?: boolean;
       buttons?: AlertButton[];
       cssClass?: string;
       enableBackdropDismiss?: boolean;
@@ -177,6 +176,7 @@ declare global {
       subTitle?: string;
       title?: string;
       translucent?: boolean;
+      willAnimate?: boolean;
     }
   }
 }
@@ -1517,7 +1517,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonLoadingAttributes extends HTMLAttributes {
-      animate?: boolean;
       content?: string;
       cssClass?: string;
       dismissOnPageChange?: boolean;
@@ -1527,6 +1526,7 @@ declare global {
       showBackdrop?: boolean;
       spinner?: string;
       translucent?: boolean;
+      willAnimate?: boolean;
     }
   }
 }
@@ -1653,7 +1653,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonModalAttributes extends HTMLAttributes {
-      animate?: boolean;
       color?: string;
       component?: any;
       cssClass?: string;
@@ -1665,6 +1664,7 @@ declare global {
       modalId?: number;
       mode?: string;
       showBackdrop?: boolean;
+      willAnimate?: boolean;
     }
   }
 }
@@ -1880,7 +1880,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPickerAttributes extends HTMLAttributes {
-      animate?: boolean;
       buttons?: PickerButton[];
       columns?: PickerColumn[];
       content?: string;
@@ -1892,6 +1891,7 @@ declare global {
       leaveAnimation?: AnimationBuilder;
       pickerId?: string;
       showBackdrop?: boolean;
+      willAnimate?: boolean;
     }
   }
 }
@@ -1951,7 +1951,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPopoverAttributes extends HTMLAttributes {
-      animate?: boolean;
       color?: string;
       component?: string;
       cssClass?: string;
@@ -1965,6 +1964,7 @@ declare global {
       popoverId?: string;
       showBackdrop?: boolean;
       translucent?: boolean;
+      willAnimate?: boolean;
     }
   }
 }
@@ -3003,7 +3003,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonToastAttributes extends HTMLAttributes {
-      animate?: boolean;
       closeButtonText?: string;
       cssClass?: string;
       dismissOnPageChange?: boolean;
@@ -3015,6 +3014,7 @@ declare global {
       showCloseButton?: boolean;
       toastId?: string;
       translucent?: boolean;
+      willAnimate?: boolean;
     }
   }
 }
