@@ -6,6 +6,8 @@
 
 .range-md {
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
+
+  font-family: $range-md-font-family;
 }
 
 .range-md [slot="range-start"] {

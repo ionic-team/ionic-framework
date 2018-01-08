@@ -10,6 +10,8 @@
 
   width: calc(100% - #{($card-ios-margin-end + $card-ios-margin-start)});
 
+  font-family: $card-ios-font-family;
+
   font-size: $card-ios-font-size;
 
   background: $card-ios-background-color;

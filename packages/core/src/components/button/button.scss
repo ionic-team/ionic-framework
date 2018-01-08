@@ -30,6 +30,9 @@
   user-select: none;
 
   contain: content;
+
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 
 .button:active,

@@ -3,6 +3,9 @@
 // iOS Toast
 // --------------------------------------------------
 
+/// @prop - Font family of the toast
+$toast-ios-font-family:                           $font-family-ios-base !default;
+
 /// @prop - Background of the toast wrapper
 $toast-ios-background:                            rgba(237, 237, 239, 1) !default;
 

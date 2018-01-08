@@ -6,6 +6,8 @@
 
 .action-sheet-ios {
   @include text-align($action-sheet-ios-text-align);
+
+  font-family: $action-sheet-ios-font-family;
 }
 
 .action-sheet-ios .action-sheet-wrapper {

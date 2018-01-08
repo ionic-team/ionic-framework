@@ -9,6 +9,8 @@
 
   min-height: $toolbar-ios-height;
 
+  font-family: $toolbar-ios-font-family;
+
   @media screen and (orientation: landscape) {
     @include safe-area-padding-horizontal($toolbar-ios-padding);
   }

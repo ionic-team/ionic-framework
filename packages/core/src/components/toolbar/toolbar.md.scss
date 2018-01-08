@@ -8,6 +8,8 @@
   @include padding($toolbar-md-padding);
 
   min-height: $toolbar-md-height;
+
+  font-family: $toolbar-md-font-family;
 }
 
 

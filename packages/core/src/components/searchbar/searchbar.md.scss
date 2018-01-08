@@ -7,7 +7,9 @@
 .searchbar-md {
   @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
 
-  background: $searchbar-md-background-color;
+  font-family: $searchbar-md-font-family;
+
+  background: $searchbar-md-background;
 }
 
 

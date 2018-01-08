@@ -3,6 +3,9 @@
 // Material Design Segment
 // --------------------------------------------------
 
+/// @prop - Background of the segment button
+$segment-md-font-family:                       $font-family-md-base !default;
+
 /// @prop - Text color of the activated segment button
 $segment-button-md-text-color-activated:       $toolbar-md-active-color !default;
 

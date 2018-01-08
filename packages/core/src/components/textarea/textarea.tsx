@@ -12,13 +12,12 @@ import { TextareaComponent } from '../input/input-base';
   // right now we're cheating by knowing ion-input
   // css is bundled with ion-textarea
 
-  // styleUrls: {
-  //   ios: 'input.ios.scss',
-  //   md: 'input.md.scss'
-  // },
-
+  styleUrls: {
+    ios: 'textarea.ios.scss',
+    md: 'textarea.md.scss'
+  },
   host: {
-    theme: 'input'
+    theme: 'textarea'
   }
 })
 export class Textarea implements TextareaComponent {
@@ -243,7 +242,7 @@ export class Textarea implements TextareaComponent {
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
+    const themedClasses = createThemedClasses(this.mode, this.color, 'native-textarea');
     // TODO aria-labelledby={this.item.labelId}
 
     return (

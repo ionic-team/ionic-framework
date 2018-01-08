@@ -1,0 +1,82 @@
+@import "./textarea.vars";
+
+// Textarea
+// --------------------------------------------------
+
+ion-textarea {
+  position: relative;
+  display: block;
+
+  flex: 1;
+
+  width: 100%;
+}
+
+.item-input ion-textarea {
+  position: static;
+}
+
+// Textarea Within An Item
+// --------------------------------------------------
+
+.item.item-textarea {
+  align-items: stretch;
+}
+
+// Native Textarea
+// --------------------------------------------------
+
+.native-textarea {
+  @include placeholder($textarea-placeholder-color);
+  @include appearance(none);
+  @include border-radius(0);
+
+  display: block;
+
+  flex: 1;
+
+  width: 92%;
+  width: calc(100% - 10px);
+
+  border: 0;
+
+  font-size: inherit;
+
+  background: transparent;
+}
+
+.native-textarea[disabled] {
+  opacity: .4;
+}
+
+.platform-mobile .native-textarea {
+  resize: none;
+}
+
+.item-input-has-focus a,
+.item-input-has-focus button,
+.item-input-has-focus textarea {
+  pointer-events: auto;
+}
+
+// Input Cover: Unfocused
+// --------------------------------------------------
+// The input cover is the div that actually receives the
+// tap/click event when scroll assist is configured to true.
+// This make it so the native input element is not clickable.
+// This will only show when the scroll assist is configured
+// otherwise the .input-cover will not be rendered at all
+// The input cover is not clickable when the input is disabled
+
+.textarea-cover {
+  @include position(0, null, null, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+.textarea[disabled] .textarea-cover {
+  pointer-events: none;
+}

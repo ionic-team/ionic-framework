@@ -11,7 +11,9 @@
 
   position: relative;
 
-  font-size: $item-ios-body-text-font-size;
+  font-family: $item-ios-font-family;
+
+  font-size: $item-ios-font-size;
   color: $list-ios-text-color;
   background-color: $list-ios-background-color;
   transition: background-color 200ms linear;

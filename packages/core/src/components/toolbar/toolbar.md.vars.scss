@@ -15,6 +15,9 @@ $toolbar-order-md: (
   menu-toggle-end: 7,
 );
 
+/// @prop - Font family of the toolbar
+$toolbar-md-font-family:                 $font-family-md-base !default;
+
 /// @prop - Font size of the toolbar button
 $toolbar-md-button-font-size:            14px !default;
 

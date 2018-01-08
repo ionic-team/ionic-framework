@@ -596,7 +596,7 @@ export class Datetime {
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
-        class='item-cover'>
+        class='datetime-cover'>
       </button>
     ];
   }

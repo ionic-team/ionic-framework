@@ -6,6 +6,8 @@
 
 .select-ios {
   @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);
+
+  font-family: $select-ios-font-family;
 }
 
 .select-ios .select-placeholder {

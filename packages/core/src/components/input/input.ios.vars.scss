@@ -5,6 +5,12 @@
 // iOS Input
 // --------------------------------------------------
 
+/// @prop - Font family of the input
+$input-ios-font-family:                   $font-family-ios-base !default;
+
+/// @prop - Font size of the input
+$input-ios-font-size:                     inherit !default;
+
 /// @prop - Margin top of the input
 $input-ios-margin-top:                    $item-ios-padding-top !default;
 

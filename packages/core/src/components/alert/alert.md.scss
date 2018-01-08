@@ -4,6 +4,10 @@
 // Material Design Alert
 // --------------------------------------------------
 
+.alert-md {
+  font-family: $alert-md-font-family;
+}
+
 .alert-md .alert-wrapper {
   @include border-radius($alert-md-border-radius);
 
@@ -229,6 +233,8 @@
 
 .alert-md .alert-button-group {
   @include padding($alert-md-button-group-padding-top, $alert-md-button-group-padding-end, $alert-md-button-group-padding-bottom, $alert-md-button-group-padding-start);
+
+  box-sizing: border-box;
 
   flex-wrap: $alert-md-button-group-flex-wrap;
   justify-content: $alert-md-button-group-justify-content;

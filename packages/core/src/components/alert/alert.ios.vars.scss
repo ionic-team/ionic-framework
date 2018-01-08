@@ -5,6 +5,9 @@
 // iOS Alert
 // --------------------------------------------------
 
+/// @prop - Font family of the alert
+$alert-ios-font-family:                         $font-family-ios-base !default;
+
 /// @prop - Max width of the alert
 $alert-ios-max-width:                           270px !default;
 

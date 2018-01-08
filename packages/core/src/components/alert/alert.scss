@@ -87,6 +87,8 @@ ion-alert input {
   z-index: 0;
   display: block;
 
+  border: 0;
+
   font-size: $alert-button-font-size;
   line-height: $alert-button-line-height;
 }
