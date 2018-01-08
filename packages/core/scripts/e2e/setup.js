@@ -4,6 +4,7 @@
  */
 const chromedriver = require('chromedriver');
 const webdriver = require('selenium-webdriver');
+const utils = require('./utils');
 
 global.driver = new webdriver.Builder()
   .forBrowser('chrome')
@@ -21,14 +22,14 @@ const getTestURL = (desc, platform) => {
 
 /**
  * Monkey-patch describe to run the callback for each platform
- * and pass a pre-built test URL.
+ * then pass a pre-built test URL and utils.
  */
 const _describe = describe;
 global.describe = (desc, callback) => {
   platforms.forEach(platform => {
 
     _describe(`${desc}: ${platform}`, () => {
-      callback(getTestURL(desc, platform));
+      callback(getTestURL(desc, platform), utils);
     });
 
   });
