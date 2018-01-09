@@ -123,7 +123,7 @@ export function isCheckedProperty(a: any, b: any): boolean {
   } else if (a === 0 || a === '0') {
     return (b === 0 || b === '0');
     
-  } else if ((a === Object(a)) && (b === Object(b))) {
+  } else if ((typeof a === 'object') && (typeof b === 'object')) {
     // if params are objects, stringify and compare
     return JSON.stringify(a) == JSON.stringify(b);// tslint:disable-line
     
