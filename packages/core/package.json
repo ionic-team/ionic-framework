@@ -10,7 +10,7 @@
   ],
   "devDependencies": {
     "@stencil/core": "0.1.2",
-    "@stencil/dev-server": "0.0.18-1",
+    "@stencil/dev-server": "0.0.18",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
     "chai": "^4.1.2",
