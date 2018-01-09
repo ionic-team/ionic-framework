@@ -25,7 +25,7 @@ exports.config = {
     { components: ['ion-loading', 'ion-loading-controller'] },
     { components: ['ion-menu', 'ion-menu-controller'] },
     { components: ['ion-modal', 'ion-modal-controller'] },
-    { components: ['ion-page'] },
+    { components: ['ion-nav', 'ion-page'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
@@ -39,7 +39,6 @@ exports.config = {
     { components: ['ion-range', 'ion-range-knob']},
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
     { components: ['ion-toggle'] },
-    { components: ['ion-nav'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
   ],
   collections: [
