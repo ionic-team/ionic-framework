@@ -42,14 +42,14 @@
           <ion-content>
             <h1>Content of doom</h1>
             <div>Here's some more content</div>
-            <ion-button>Dismiss Modal</ion-button>
+            <ion-button class="dismiss">Dismiss Modal</ion-button>
           </ion-content>
         </ion-page>`;
 
           // listen for close event
         const button = this.querySelector('ion-button');
         button.addEventListener('click', async () => {
-          await this.querySelector('ion-modal-controller').dismiss();
+          await document.querySelector('ion-modal-controller').dismiss();
         });
       }
     }
