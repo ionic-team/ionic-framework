@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
   /* tslint:disable-next-line:directive-selector */
-  selector: 'ion-input:not([type=number]),ion-textarea',
+  selector: 'ion-input:not([type=number]),ion-textarea,ion-searchbar',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
