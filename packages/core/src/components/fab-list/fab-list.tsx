@@ -1,4 +1,4 @@
-import { Component, Element, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Prop, Watch } from '@stencil/core';
 
 
 @Component({
@@ -10,7 +10,7 @@ export class FabList {
 
   @Prop() activated: boolean = false;
 
-  @PropDidChange('activated')
+  @Watch('activated')
   protected activatedChanged(activated: boolean) {
     const fabs = this.el.querySelectorAll('ion-fab-button');
 

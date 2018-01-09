@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
 import { Config, DomController, GestureDetail } from '../../index';
 import { GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 
@@ -28,7 +28,8 @@ export class Scroll {
 
   @Prop() enabled: boolean = true;
   @Prop() jsScroll: boolean = false;
-  @PropDidChange('jsScroll')
+
+  @Watch('jsScroll')
   jsScrollChanged(js: boolean) {
     if (js) {
       throw 'jsScroll: TODO!';

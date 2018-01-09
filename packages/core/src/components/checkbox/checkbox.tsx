@@ -1,5 +1,5 @@
 import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
-import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 
 @Component({
@@ -97,7 +97,7 @@ export class Checkbox implements CheckboxInput {
     }
   }
 
-  @PropDidChange('checked')
+  @Watch('checked')
   checkedChanged(isChecked: boolean) {
     if (this.nativeInput.checked !== isChecked) {
       // keep the checked value and native input `nync
@@ -112,7 +112,7 @@ export class Checkbox implements CheckboxInput {
     this.emitStyle();
   }
 
-  @PropDidChange('disabled')
+  @Watch('disabled')
   disabledChanged(isDisabled: boolean) {
     this.nativeInput.disabled = isDisabled;
     this.emitStyle();

@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import {
   DatetimeData,
@@ -194,7 +194,7 @@ export class Datetime {
   /**
    * Update the datetime value when the value changes
    */
-  @PropDidChange('value')
+  @Watch('value')
   protected valueChanged() {
     this.updateValue();
   }

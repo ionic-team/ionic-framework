@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
 
 @Component({
@@ -46,7 +46,7 @@ export class Segment {
    */
   @Prop({ mutable: true }) value: string;
 
-  @PropDidChange('value')
+  @Watch('value')
   protected valueChanged(val: string) {
     this.selectButton(val);
   }

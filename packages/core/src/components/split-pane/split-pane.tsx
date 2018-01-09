@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -83,7 +83,7 @@ export class SplitPane {
     }
   }
 
-  @PropDidChange('when')
+  @Watch('when')
   protected whenChanged() {
     this.rmL && this.rmL();
     this.rmL = null;

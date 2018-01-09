@@ -1,5 +1,5 @@
 import { BlurEvent, CheckedInputChangeEvent, FocusEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
-import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -115,12 +115,12 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
     this.ionRadioDidUnload.emit({ radio: this });
   }
 
-  @PropDidChange('color')
+  @Watch('color')
   colorChanged() {
     this.emitStyle();
   }
 
-  @PropDidChange('checked')
+  @Watch('checked')
   checkedChanged(isChecked: boolean) {
     if (this.nativeInput.checked !== isChecked) {
       // keep the checked value and native input `nync
@@ -141,7 +141,7 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
     this.emitStyle();
   }
 
-  @PropDidChange('disabled')
+  @Watch('disabled')
   disabledChanged(isDisabled: boolean) {
     this.nativeInput.disabled = isDisabled;
     this.emitStyle();

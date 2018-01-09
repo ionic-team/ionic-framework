@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { DomController, ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
@@ -37,7 +37,8 @@ export class InfiniteScroll {
    * Default is `15%`.
    */
   @Prop() threshold: string = '15%';
-  @PropDidChange('threshold')
+
+  @Watch('threshold')
   protected thresholdChanged(val: string) {
     if (val.lastIndexOf('%') > -1) {
       this.thrPx = 0;
@@ -64,7 +65,8 @@ export class InfiniteScroll {
    * and hide the display.
    */
   @Prop() enabled: boolean = true;
-  @PropDidChange('enabled')
+
+  @Watch('enabled')
   protected enabledChanged(val: boolean) {
     this.enableScrollEvents(val);
   }

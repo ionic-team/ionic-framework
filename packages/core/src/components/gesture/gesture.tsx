@@ -1,6 +1,6 @@
+import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 import { ElementRef, applyStyles, assert, getElementReference, updateDetail } from '../../utils/helpers';
 import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
-import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 import { DomController } from '../../index';
 import { PanRecognizer } from './recognizers';
 
@@ -102,7 +102,7 @@ export class Gesture {
     }
   }
 
-  @PropDidChange('enabled')
+  @Watch('enabled')
   protected enabledChanged(isEnabled: boolean) {
     if (this.pan || this.hasPress) {
       this.enableListener(this, 'touchstart', isEnabled, this.attachTo);
@@ -113,7 +113,7 @@ export class Gesture {
     }
   }
 
-  @PropDidChange('block')
+  @Watch('block')
   protected blockChanged(block: string) {
     if (this.blocker) {
       this.blocker.destroy();

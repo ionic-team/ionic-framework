@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, PropWillChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
 import { Animation, Config, GestureDetail, SplitPaneAlert, StencilElement } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
@@ -53,7 +53,8 @@ export class Menu {
    * `"overlay"`, `"reveal"`, `"push"`.
    */
   @Prop({ mutable: true }) type: string = 'overlay';
-  @PropWillChange('type')
+
+  @Watch('type')
   typeChanged(type: string) {
     if (this.contentEl) {
       this.contentEl.classList.remove('menu-content-' + this.type);
@@ -71,7 +72,8 @@ export class Menu {
    * @input {boolean} If true, the menu is enabled. Default `true`.
    */
   @Prop({ mutable: true }) enabled: boolean;
-  @PropDidChange('enabled')
+
+  @Watch('enabled')
   protected enabledChanged() {
     this.updateState();
   }
@@ -80,7 +82,8 @@ export class Menu {
    * @input {string} Which side of the view the menu should be placed. Default `"start"`.
    */
   @Prop() side: Side = 'start';
-  @PropDidChange('side')
+
+  @Watch('side')
   protected sideChanged() {
     this.isRightSide = isRightSide(this.side);
   }
@@ -89,7 +92,8 @@ export class Menu {
    * @input {boolean} If true, swiping the menu is enabled. Default `true`.
    */
   @Prop() swipeEnabled: boolean = true;
-  @PropDidChange('swipeEnabled')
+
+  @Watch('swipeEnabled')
   protected swipeEnabledChanged() {
     this.updateState();
   }

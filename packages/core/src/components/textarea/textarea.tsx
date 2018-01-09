@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 import { debounce } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
@@ -73,7 +73,8 @@ export class Textarea implements TextareaComponent {
    * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
    */
   @Prop() debounce: number = 0;
-  @PropDidChange('debounce')
+
+  @Watch('debounce')
   private debounceInput() {
     this.ionInput.emit = debounce(
       this.ionInput.emit.bind(this.ionInput),
@@ -86,7 +87,7 @@ export class Textarea implements TextareaComponent {
    */
   @Prop() disabled: boolean = false;
 
-  @PropDidChange('disabled')
+  @Watch('disabled')
   protected disabledChanged() {
     this.emitStyle();
   }
@@ -149,7 +150,7 @@ export class Textarea implements TextareaComponent {
   /**
    * Update the native input element when the value changes
    */
-  @PropDidChange('value')
+  @Watch('value')
   protected valueChanged() {
     const inputEl = this.el.querySelector('textarea');
     if (inputEl.value !== this.value) {

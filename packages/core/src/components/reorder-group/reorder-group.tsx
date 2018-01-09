@@ -1,4 +1,4 @@
-import { Component, Element, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, Element, Prop, State, Watch } from '@stencil/core';
 import { DomController, GestureDetail } from '../../index';
 import { clamp, reorderArray } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
@@ -52,7 +52,7 @@ export class ReorderGroup {
   /**
    * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
    */
-  @PropDidChange('enabled')
+  @Watch('enabled')
   protected enabledChanged(enabled: boolean) {
     if (enabled) {
       this._enabled = true;

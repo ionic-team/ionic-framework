@@ -1,6 +1,6 @@
-import {Component, Element, Listen, Prop, PropDidChange, State} from '@stencil/core';
-import {createThemedClasses} from '../../utils/theme';
-import {DomController} from '../../index';
+import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
+import { createThemedClasses } from '../../utils/theme';
+import { DomController } from '../../index';
 
 @Component({
   tag: 'ion-tabbar',
@@ -27,7 +27,7 @@ export class Tabbar {
 
   private scrollEl: HTMLIonScrollElement;
 
-  @PropDidChange('selectedTab')
+  @Watch('selectedTab')
   selectedTabChanged() {
     this.scrollable && this.scrollToSelectedButton();
     this.highlight && this.updateHighlight();

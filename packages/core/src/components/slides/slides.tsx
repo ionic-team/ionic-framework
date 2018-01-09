@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Swiper } from './vendor/swiper.js';
 // import { SwiperOptions } from './vendor/swiper'; // TODO
 
@@ -11,9 +11,7 @@ export class Slides {
 
   private container: HTMLElement;
   private init: boolean;
-  private tmr: number;
   private swiper: any;
-  private finalOptions: any;
   private slidesId: number;
   private slideId: string;
 
@@ -90,7 +88,7 @@ export class Slides {
    */
   @Prop() options: any; // SwiperOptions;  // TODO
 
-  @PropDidChange('options')
+  @Watch('options')
   updateSwiperOptions() {
     let newOptions = this.normalizeOptions();
     this.swiper.params = Object.assign({}, this.swiper.params, newOptions);

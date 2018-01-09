@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
 import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
 import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
@@ -123,12 +123,12 @@ export class Select {
   @Event() ionStyle: EventEmitter<StyleEvent>;
 
 
-  @PropDidChange('disabled')
+  @Watch('disabled')
   disabledChanged() {
     this.emitStyle();
   }
 
-  @PropDidChange('value')
+  @Watch('value')
   valueChanged() {
     // this select value just changed
     // double check the select option with this value is checked
