@@ -878,8 +878,8 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     min.minute = min.minute || 0;
     max.minute = max.minute != null ? max.minute : 59;
     min.second = min.second || 0;
-    max.second = max.second != null ? max.second : 59;    
-    
+    max.second = max.second != null ? max.second : 59;
+
     // Ensure min/max constraits
     if (min.year > max.year) {
       console.error('min.year > max.year');
