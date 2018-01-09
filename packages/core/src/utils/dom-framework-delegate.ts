@@ -1,5 +1,5 @@
 import { FrameworkDelegate, FrameworkMountingData, } from '../index';
-import { isElementModal, isElementNav, isString } from './helpers';
+import { isString } from './helpers';
 
 export class DomFrameworkDelegate implements FrameworkDelegate {
 
@@ -14,11 +14,10 @@ export class DomFrameworkDelegate implements FrameworkDelegate {
         }
       }
 
-      const elementToAppend = shouldWrapInIonPage(parentElement) ? createIonPageAndAppendUserElement(usersElement) : usersElement;
-      parentElement.appendChild(elementToAppend);
+      parentElement.appendChild(usersElement);
 
       resolve({
-        element: elementToAppend
+        element: usersElement
       });
     });
   }
@@ -29,14 +28,4 @@ export class DomFrameworkDelegate implements FrameworkDelegate {
       element: null
     });
   }
-}
-
-export function shouldWrapInIonPage(element: HTMLElement) {
-  return isElementModal(element) || isElementNav(element);
-}
-
-export function createIonPageAndAppendUserElement(userElement: HTMLElement) {
-  const wrappingElement = document.createElement('ion-page');
-  wrappingElement.appendChild(userElement);
-  return wrappingElement;
 }

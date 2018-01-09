@@ -29,39 +29,46 @@
   <script>
     window.addEventListener("ionModalDidDismiss", function(e){console.log('DidDismiss', e)})
     window.addEventListener("ionModalWillDismiss", function(e){console.log('WillDismiss', e)})
+
+    class ModalPage extends HTMLElement {
+      async connectedCallback() {
+        this.innerHTML = `
+        <ion-page>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>Super Modal</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content>
+            <h1>Content of doom</h1>
+            <div>Here's some more content</div>
+            <ion-button>Dismiss Modal</ion-button>
+          </ion-content>
+        </ion-page>`;
+
+          // listen for close event
+        const button = this.querySelector('ion-button');
+        button.addEventListener('click', async () => {
+          await this.querySelector('ion-modal-controller').dismiss();
+        });
+      }
+    }
+
+
     async function presentModal() {
 
       // initialize controller
       const modalController = document.querySelector('ion-modal-controller');
       await modalController.componentOnReady();
 
-      // create component to open
-      const element = document.createElement('ion-page');
-      element.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Super Modal</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <h1>Content of doom</h1>
-        <div>Here's some more content</div>
-        <ion-button>Dismiss Modal</ion-button>
-      </ion-content>
-      `;
-
-      // listen for close event
-      const button = element.querySelector('ion-button');
-      button.addEventListener('click', () => {
-        modalController.dismiss();
-      });
-
       // present the modal
       const modalElement = await modalController.create({
-        component: element
+        component: 'modal-page'
       });
       modalElement.present();
     }
+
+    customElements.define('modal-page', ModalPage);
   </script>
 </body>
 </html>
