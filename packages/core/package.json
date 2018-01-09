@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-37",
+  "version": "0.0.2-38",
   "description": "Base components for Ionic",
   "main": "dist/ionic.js",
   "types": "dist/types/index.d.ts",
@@ -33,7 +33,7 @@
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
     "snapshot": "node ./scripts/e2e --snapshot",
-    "test": "echo 'skipping'",
+    "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
     "clean": "rm -rf dist",
     "lint": "npm run tslint & npm run sass-lint",
