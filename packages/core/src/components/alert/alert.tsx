@@ -34,32 +34,32 @@ export class Alert {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has loaded.
+   * Emitted after the alert has loaded.
    */
   @Event() ionAlertDidLoad: EventEmitter<AlertEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has presented.
+   * Emitted after the alert has presented.
    */
   @Event() ionAlertDidPresent: EventEmitter<AlertEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted before the alert has presented.
+   * Emitted before the alert has presented.
    */
   @Event() ionAlertWillPresent: EventEmitter<AlertEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted before the alert has dismissed.
+   * Emitted before the alert has dismissed.
    */
   @Event() ionAlertWillDismiss: EventEmitter<AlertDismissEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has dismissed.
+   * Emitted after the alert has dismissed.
    */
   @Event() ionAlertDidDismiss: EventEmitter<AlertDismissEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has unloaded.
+   * Emitted after the alert has unloaded.
    */
   @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
 
@@ -158,7 +158,7 @@ export class Alert {
   }
 
   /**
-   * Dismiss the alert programatically
+   * Dismiss the alert
    */
   @Method() dismiss(data?: any, role?: string) {
     if (this.animation) {

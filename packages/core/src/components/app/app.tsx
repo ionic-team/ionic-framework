@@ -35,7 +35,12 @@ export class App {
     rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
   }
 
-  @Method() getRootNavs(): NavContainer[] {
+
+  /**
+   * Returns an array of top level Navs
+   */
+  @Method()
+  getRootNavs(): NavContainer[] {
     const navs: NavContainer[] = [];
     rootNavs.forEach((rootNav: NavContainer) => {
       navs.push(rootNav);
@@ -43,6 +48,10 @@ export class App {
     return navs;
   }
 
+
+  /**
+   * Check if the app is currently scrolling
+   */
   @Method() isScrolling(): boolean {
     // TODO - sync with Manu
     return false;

@@ -38,32 +38,32 @@ export class ActionSheet {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has loaded.
+   * Emitted after the alert has loaded.
    */
   @Event() ionActionSheetDidLoad: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has presented.
+   * Emitted after the alert has presented.
    */
   @Event() ionActionSheetDidPresent: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has presented.
+   * Emitted before the alert has presented.
    */
   @Event() ionActionSheetWillPresent: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has dismissed.
+   * Emitted before the alert has dismissed.
    */
   @Event() ionActionSheetWillDismiss: EventEmitter<ActionSheetDismissEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has dismissed.
+   * Emitted after the alert has dismissed.
    */
   @Event() ionActionSheetDidDismiss: EventEmitter<ActionSheetDismissEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has unloaded.
+   * Emitted after the alert has unloaded.
    */
   @Event() ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
 
@@ -151,7 +151,7 @@ export class ActionSheet {
   }
 
   /**
-   * Dismiss the action-sheet programatically
+   * Dismiss the action-sheet
    */
   @Method()
   dismiss(data?: any, role?: string) {

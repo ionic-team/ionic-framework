@@ -15,8 +15,12 @@
 
 #### getRootNavs()
 
+Returns an array of top level Navs
+
 
 #### isScrolling()
+
+Check if the app is currently scrolling
 
 
 

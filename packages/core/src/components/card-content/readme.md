@@ -1,5 +1,7 @@
 # ion-card-content
 
+`ion-card-content` is child component of `ion-card` that adds some content padding.
+It is recommended that any text content for a card should be placed in an `ion-card-content`.
 
 
 <!-- Auto Generated Below -->
@@ -11,10 +13,16 @@
 
 string
 
+The color to use for the text.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+
 
 #### mode
 
 any
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 ## Attributes
@@ -23,10 +31,16 @@ any
 
 string
 
+The color to use for the text.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+
 
 #### mode
 
 any
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 
