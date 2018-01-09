@@ -104,7 +104,7 @@ export class App {
 
 export function findTopNavs(nav: NavContainer): NavContainer[] {
   let containers: NavContainer[] = [];
-  const childNavs = nav.getActiveChildNavs();
+  const childNavs = nav.getChildNavs();
   if (!childNavs || !childNavs.length) {
     containers.push(nav);
   } else {

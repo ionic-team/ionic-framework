@@ -58,6 +58,9 @@ any
 #### getActive()
 
 
+#### getChildNavs()
+
+
 #### getFirstView()
 
 

@@ -22,11 +22,12 @@ export interface PublicNav {
   removeView(viewController: PublicViewController, opts?: NavOptions): Promise<any>;
   setPages(componentDataPairs: any[], opts?: NavOptions): Promise<any>;
 
-  getActive?(): PublicViewController;
-  getPrevious?(view?: PublicViewController): PublicViewController;
-  canGoBack?(): boolean;
-  canSwipeBack?(): boolean;
-  getFirstView?(): PublicViewController;
+  getActive(): PublicViewController;
+  getPrevious(view?: PublicViewController): PublicViewController;
+  canGoBack(): boolean;
+  canSwipeBack(): boolean;
+  getFirstView(): PublicViewController;
+  getChildNavs(): PublicNav[];
 
   element?: HTMLElement;
 }
@@ -35,7 +36,7 @@ export interface NavContainer {
   id?: number;
   name?: string;
   parent?: Nav;
-  getActiveChildNavs?(): NavContainer[];
+  getChildNavs?(): NavContainer[];
   getAllChildNavs?(): NavContainer[];
   getType?(): string;
   getSecondaryIdentifier?(): string;

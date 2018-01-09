@@ -6,6 +6,7 @@ import {
   ComponentDataPair,
   Config,
   FrameworkDelegate,
+  NavContainer,
   NavOptions,
   NavResult,
   NavState,
@@ -60,7 +61,7 @@ const queueMap = new Map<number, TransitionInstruction[]>();
   tag: 'ion-nav',
   styleUrl: 'nav.scss'
 })
-export class Nav implements PublicNav {
+export class Nav implements PublicNav, NavContainer {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;
@@ -215,6 +216,11 @@ export class Nav implements PublicNav {
   getRoutes(): RouterEntries {
     assert(this.useRouter, 'routing is disabled');
     return this.routes;
+  }
+
+  @Method()
+  getChildNavs(): PublicNav[] {
+    return this.childNavs || [];
   }
 
   render() {
