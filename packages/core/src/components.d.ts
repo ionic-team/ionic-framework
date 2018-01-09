@@ -2871,6 +2871,37 @@ declare global {
 
 
 import {
+  Text as IonText
+} from './components/text/text';
+
+declare global {
+  interface HTMLIonTextElement extends IonText, HTMLElement {
+  }
+  var HTMLIonTextElement: {
+    prototype: HTMLIonTextElement;
+    new (): HTMLIonTextElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-text": HTMLIonTextElement;
+  }
+  interface ElementTagNameMap {
+    "ion-text": HTMLIonTextElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-text": JSXElements.IonTextAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTextAttributes extends HTMLAttributes {
+      color?: string;
+      mode?: 'ios' | 'md';
+    }
+  }
+}
+
+
+import {
   Textarea as IonTextarea
 } from './components/textarea/textarea';
 
