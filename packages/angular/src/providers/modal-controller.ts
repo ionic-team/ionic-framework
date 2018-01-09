@@ -29,10 +29,10 @@ export class ModalController implements FrameworkDelegate {
     return getModalProxy(opts);
   }
 
-  dismiss(id?: number, data?: any, role?: string) {
+  dismiss(data?: any, role?: string, id?: number) {
     const modalController = document.querySelector('ion-modal-controller');
     return (modalController as any).componentOnReady().then(() => {
-      modalController.dismiss(data, role, id);
+      return modalController.dismiss(data, role, id);
     });
   }
 

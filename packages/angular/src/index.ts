@@ -9,6 +9,7 @@ export { AlertController, AlertProxy } from './providers/alert-controller';
 export { App } from './providers/app';
 export { Events } from './providers/events';
 export { LoadingController, LoadingProxy } from './providers/loading-controller';
+export { MenuController } from './providers/menu-controller';
 export { ModalController, ModalProxy } from './providers/modal-controller';
 export { NavController } from './providers/nav-controller';
 export { NavParams } from './providers/nav-params';
