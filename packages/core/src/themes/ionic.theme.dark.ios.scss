@@ -3,58 +3,109 @@
 // iOS Dark Theme
 // ----------------------------------
 
-$colors-ios: copy-colors($colors) !default;
+$colors-ios:      () !default;
+$ion-colors-ios: (
+  primary: (
+    base:         #3880ff,
+    tint:         #5896ff,
+    shade:        #135ddf,
+    contrast:     #ffffff
+  ),
+  secondary: (
+    base:         #0cd1e8,
+    tint:         #5de6f6,
+    shade:        #00bce0,
+    contrast:     #ffffff
+  ),
+  tertiary: (
+    base:         #7044ff,
+    tint:         #896bff,
+    shade:        #4d16d6,
+    contrast:     #ffffff
+  ),
+  success: (
+    base:         #10dc60,
+    tint:         #38ec7f,
+    shade:        #00bc4a,
+    contrast:     #ffffff
+  ),
+  warning: (
+    base:         #ffce00,
+    tint:         #ffe05e,
+    shade:        #f5ad00,
+    contrast:     #ffffff
+  ),
+  danger: (
+    base:         #f04141,
+    tint:         #ff6464,
+    shade:        #ca1717,
+    contrast:     #ffffff
+  ),
+  light: (
+    base:         #f4f5f8,
+    tint:         #ffffff,
+    shade:        #e2e4e9,
+    contrast:     #000000
+  ),
+  medium: (
+    base:         #989aa2,
+    tint:         #c1c4cd,
+    shade:        #62646a,
+    contrast:     #000000
+  ),
+  dark: (
+    base:         #222428,
+    tint:         #3f4248,
+    shade:        #000000,
+    contrast:     #ffffff
+  )
+);
+$colors-ios:                            ion-extend-colors($colors, $ion-colors-ios, $colors-ios);
 
-$link-ios-color:                       $link-color !default;
-$text-ios-color:                       $text-color !default;
-$background-ios-color:                 $background-color !default;
-$subdued-text-ios-color:               $subdued-text-color !default;
-
+// iOS General
+// --------------------------------------------------
 $font-family-ios-base:                 $font-family-base !default;
 $font-size-ios-base:                   $font-size-base !default;
 
+// iOS General Colors
+// --------------------------------------------------
+//$link-ios-color:                       $link-color !default;
+//$text-ios-color:                       $text-color !default;
+//$background-ios-color:                 $background-color !default;
+//$subdued-text-ios-color:               $subdued-text-color !default;
 
 // iOS Outer content
 // --------------------------------------------------
-$content-ios-outer-background:         $background-color !default;
+//$content-ios-outer-background:         $background-color !default;
 
-
-// iOS Toolbar
+// iOS Tabs & Tab bar
 // --------------------------------------------------
-
-$toolbar-ios-background:               $toolbar-background !default;
-$toolbar-ios-border-color:             rgba(255, 255, 255, .1) !default;
-$toolbar-ios-text-color:               $toolbar-text-color !default;
-$toolbar-ios-active-color:             $toolbar-active-color !default;
-$toolbar-ios-inactive-color:           $toolbar-inactive-color !default;
-
-
-// iOS Tabs
-// --------------------------------------------------
-
-$tabs-ios-background:                  $tabs-background !default;
-$tabs-ios-border-color:                rgba(255, 255, 255, .1) !default;
-$tabs-ios-tab-color-inactive:          $tabs-tab-color-inactive !default;
-$tabs-ios-tab-color-active:            $tabs-tab-color-active !default;
-
-
-// iOS List
-// --------------------------------------------------
-
-$list-ios-text-color:                  $list-text-color !default;
-$list-ios-border-color:                $list-border-color !default;
-$list-ios-background-color:            $list-background-color !default;
-$list-ios-activated-background-color:  #d9d9d9 !default;
-
-
-// iOS List header
-// --------------------------------------------------
-$list-ios-header-color:                $text-color !default;
-$item-ios-divider-background:          #151515 !default;
-$item-ios-divider-color:               $text-color !default;
-
+//$tabs-ios-background:                  $tabs-background !default;
+//$tabs-ios-border-color:                rgba(255, 255, 255, .1) !default;
+//$tabs-ios-tab-color-inactive:          $tabs-tab-color-inactive !default;
+//$tabs-ios-tab-color-active:            $tabs-tab-color-active !default;
 
 // iOS Toggle
 // --------------------------------------------------
+//$toggle-ios-handle-background-color:  #f4f4f4 !default;
 
-$toggle-ios-handle-background-color:  #f4f4f4 !default;
+// iOS Toolbar
+// --------------------------------------------------
+//$toolbar-ios-background:               $toolbar-background !default;
+//$toolbar-ios-border-color:             rgba(255, 255, 255, .1) !default;
+//$toolbar-ios-text-color:               $toolbar-text-color !default;
+//$toolbar-ios-active-color:             $toolbar-active-color !default;
+//$toolbar-ios-inactive-color:           $toolbar-inactive-color !default;
+
+// iOS List & List Items
+// --------------------------------------------------
+//$list-ios-text-color:                  $list-text-color !default;
+//$list-ios-border-color:                $list-border-color !default;
+//$list-ios-background-color:            $list-background-color !default;
+//$list-ios-activated-background-color:  #d9d9d9 !default;
+
+// iOS List header
+// --------------------------------------------------
+//$list-ios-header-color:                $text-color !default;
+//$item-ios-divider-background:          #151515 !default;
+//$item-ios-divider-color:               $text-color !default;

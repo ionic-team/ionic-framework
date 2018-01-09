@@ -70,13 +70,13 @@ $font-size-ios-base:                    $font-size-base !default;
 
 // iOS General Colors
 // --------------------------------------------------
-$backdrop-color-ios:                    css-var(#000000, backdrop-color, ios) !default;
-$background-color-ios:                  css-var(#ffffff, background-color, ios) !default;
-$background-color-alt-ios:              css-var(#f4f5f8, background-color-alt, ios) !default;
-$border-color-ios:                      css-var(#c1c4cd, border-color, ios) !default;
-$box-shadow-color-ios:                  css-var(#000000, box-shadow-color, ios) !default;
-$text-color-ios:                        css-var(#000000, text-color, ios) !default;
-$text-color-alt-ios:                    css-var(#898b93, text-color-alt, ios) !default;
+$backdrop-ios-color:                    css-var(#000000, backdrop-ios-color) !default;
+$background-ios-color:                  css-var(#ffffff, background-ios-color) !default;
+$background-ios-color-alt:              css-var(#f4f5f8, background-ios-color-alt) !default;
+$border-ios-color:                      css-var(#c1c4cd, border-ios-color) !default;
+$box-shadow-ios-color:                  css-var(#000000, box-shadow-ios-color) !default;
+$text-ios-color:                        css-var(#000000, text-ios-color) !default;
+$text-ios-color-alt:                    css-var(#898b93, text-ios-color-alt) !default;
 //$link-ios-color:                        $link-color !default;
 //$text-ios-color:                        $text-color !default;
 //$background-ios-color:                  $background-color !default;
@@ -84,26 +84,17 @@ $text-color-alt-ios:                    css-var(#898b93, text-color-alt, ios) !d
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-background-color-ios:           css-var(#f4f5f8, tabbar-background-color, ios) !default;
-$tabbar-text-color-ios:                 css-var(#989aa2, tabbar-text-color, ios) !default;
-$tabbar-text-color-active-ios:          css-var(#3880ff, tabbar-text-color-active, ios) !default;
+$tabbar-ios-background-color:           css-var(#f4f5f8, tabbar-ios-background-color) !default;
+$tabbar-text-ios-color:                  css-var(#989aa2, tabbar-text-ios-color) !default;
+$tabbar-text-ios-color-active:           css-var(#3880ff, tabbar-text-ios-color-active) !default;
 //$tabs-ios-background:                   $tabs-background !default;
 //$tabs-ios-border-color:                 rgba(0, 0, 0, .2) !default;
 //$tabs-ios-tab-color-inactive:           $tabs-tab-color-inactive !default;
 //$tabs-ios-tab-color-active:             $tabs-tab-color-active !default;
 
-// iOS List & List Items
-// --------------------------------------------------
-$item-background-color-ios:             css-var(#ffffff, item-background-color, ios) !default;
-$item-background-color-alt-ios:         css-var(#c1c4cd, item-background-color-alt, ios) !default;
-//$list-ios-text-color:                   $list-text-color !default;
-//$list-ios-border-color:                 $list-border-color !default;
-//$list-ios-background-color:             $list-background-color !default;
-//$list-ios-activated-background-color:   #d9d9d9 !default;
-
 // iOS Toolbar
 // --------------------------------------------------
-$toolbar-background-color-ios:          css-var(#f4f5f8, toolbar-background-color, ios) !default;
+$toolbar-ios-background-color:          css-var(#f4f5f8, toolbar-ios-background-color) !default;
 $toolbar-ios-height:                    44px !default;
 $toolbar-ios-padding:                   4px !default;
 //$toolbar-ios-background:                $toolbar-background !default;
@@ -111,3 +102,30 @@ $toolbar-ios-padding:                   4px !default;
 //$toolbar-ios-text-color:                $toolbar-text-color !default;
 //$toolbar-ios-active-color:              $toolbar-active-color !default;
 //$toolbar-ios-inactive-color:            $toolbar-inactive-color !default;
+
+// iOS List & List Items
+// --------------------------------------------------
+$item-ios-background-color:             css-var(#ffffff, item-ios-background-color) !default;
+$item-ios-background-color-alt:         css-var(#c1c4cd, item-ios-background-color-alt) !default;
+//$list-ios-text-color:                   $list-text-color !default;
+//$list-ios-border-color:                 $list-border-color !default;
+//$list-ios-background-color:             $list-background-color !default;
+//$list-ios-activated-background-color:   #d9d9d9 !default;
+
+
+$link-ios-color:                        red;
+$text-ios-color:                        red;
+$background-ios-color:                  red;
+$tabs-ios-background:                   red;
+$tabs-ios-border-color:                 red;
+$tabs-ios-tab-color-inactive:           red;
+$tabs-ios-tab-color-active:             red;
+$toolbar-ios-background:                red;
+$toolbar-ios-border-color:              red;
+$toolbar-ios-text-color:                red;
+$toolbar-ios-active-color:              red;
+$toolbar-ios-inactive-color:            red;
+$list-ios-text-color:                   red;
+$list-ios-border-color:                 red;
+$list-ios-background-color:             red;
+$list-ios-activated-background-color:   red;

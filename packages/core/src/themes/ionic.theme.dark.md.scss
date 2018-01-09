@@ -3,68 +3,113 @@
 // Material Design Dark Theme
 // ----------------------------------
 
-$colors-md: copy-colors($colors) !default;
+$colors-md:       () !default;
+$ion-colors-md: (
+  primary: (
+    base:         #3880ff,
+    tint:         #5896ff,
+    shade:        #135ddf,
+    contrast:     #ffffff
+  ),
+  secondary: (
+    base:         #0cd1e8,
+    tint:         #5de6f6,
+    shade:        #00bce0,
+    contrast:     #ffffff
+  ),
+  tertiary: (
+    base:         #7044ff,
+    tint:         #896bff,
+    shade:        #4d16d6,
+    contrast:     #ffffff
+  ),
+  success: (
+    base:         #10dc60,
+    tint:         #38ec7f,
+    shade:        #00bc4a,
+    contrast:     #ffffff
+  ),
+  warning: (
+    base:         #ffce00,
+    tint:         #ffe05e,
+    shade:        #f5ad00,
+    contrast:     #ffffff
+  ),
+  danger: (
+    base:         #f04141,
+    tint:         #ff6464,
+    shade:        #ca1717,
+    contrast:     #ffffff
+  ),
+  light: (
+    base:         #f4f5f8,
+    tint:         #ffffff,
+    shade:        #e2e4e9,
+    contrast:     #000000
+  ),
+  medium: (
+    base:         #989aa2,
+    tint:         #c1c4cd,
+    shade:        #62646a,
+    contrast:     #000000
+  ),
+  dark: (
+    base:         #222428,
+    tint:         #3f4248,
+    shade:        #000000,
+    contrast:     #ffffff
+  )
+);
+$colors-md:                             ion-extend-colors($colors, $ion-colors-md, $colors-md);
 
-
-$link-md-color:                       $link-color !default;
-$text-md-color:                       $text-color !default;
-$background-md-color:                 $background-color !default;
-$subdued-text-md-color:               $subdued-text-color !default;
-
+// Material Design General
+// --------------------------------------------------
 $font-family-md-base:                 "Roboto", "Helvetica Neue", sans-serif !default;
 $font-size-md-base:                   $font-size-base !default;
 
-
-// Material Design Toolbar
+// Material Design General Colors
 // --------------------------------------------------
-
-$toolbar-md-background:               $toolbar-background !default;
-$toolbar-md-border-color:             $toolbar-border-color !default;
-$toolbar-md-text-color:               #fff !default;
-$toolbar-md-active-color:             $toolbar-active-color !default;
-$toolbar-md-inactive-color:           $toolbar-inactive-color !default;
-
-
-// Material Design Tabs
-// --------------------------------------------------
-
-$tabs-md-background:                  $tabs-background !default;
-$tabs-md-border-color:                rgba(255, 255, 255, .1) !default;
-$tabs-md-tab-color-inactive:          $tabs-tab-color-inactive !default;
-$tabs-md-tab-color-active:            $tabs-tab-color-active !default;
-
+//$link-md-color:                       $link-color !default;
+//$text-md-color:                       $text-color !default;
+//$background-md-color:                 $background-color !default;
+//$subdued-text-md-color:               $subdued-text-color !default;
 
 // Material Design Card
 // --------------------------------------------------
+//$card-md-title-text-color:            #fff !default;
+//$card-md-text-color:                  #ddd !default;
 
-$card-md-title-text-color:            #fff !default;
-$card-md-text-color:                  #ddd !default;
 
-
-// Material Design List
+// Material Design Tabs & Tab bar
 // --------------------------------------------------
-
-$list-md-text-color:                  $list-text-color !default;
-$list-md-border-color:                #dedede !default;
-$list-md-background-color:            $list-background-color !default;
-$list-md-activated-background-color:  #d9d9d9 !default;
-
-
-// Material Design Item
-// --------------------------------------------------
-
-$item-md-divider-background:          #151515 !default;
-$item-md-divider-color:               #f4f4f4 !default;
-
+//$tabs-md-background:                  $tabs-background !default;
+//$tabs-md-border-color:                rgba(255, 255, 255, .1) !default;
+//$tabs-md-tab-color-inactive:          $tabs-tab-color-inactive !default;
+//$tabs-md-tab-color-active:            $tabs-tab-color-active !default;
 
 // Material Design Toggle
 // ---------------------------------------------------
-$toggle-md-handle-background-color-off: #f4f4f4 !default;
+//$toggle-md-handle-background-color-off: #f4f4f4 !default;
 
+// Material Design Toolbar
+// --------------------------------------------------
+//$toolbar-md-background:               $toolbar-background !default;
+//$toolbar-md-border-color:             $toolbar-border-color !default;
+//$toolbar-md-text-color:               #fff !default;
+//$toolbar-md-active-color:             $toolbar-active-color !default;
+//$toolbar-md-inactive-color:           $toolbar-inactive-color !default;
+
+// Material Design List & List Items
+// --------------------------------------------------
+//$list-md-text-color:                  $list-text-color !default;
+//$list-md-border-color:                #dedede !default;
+//$list-md-background-color:            $list-background-color !default;
+//$list-md-activated-background-color:  #d9d9d9 !default;
+//$item-md-divider-background:          #151515 !default;
+//$item-md-divider-color:               #f4f4f4 !default;
 
 // Ripple Color
 // --------------------------------------------------
-
 @function ripple-background-color($button-color) {
   @return rgba(red($button-color), green($button-color), blue($button-color), .1);
 }

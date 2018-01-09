@@ -70,13 +70,13 @@ $font-size-md-base:                     $font-size-base !default;
 
 // Material Design General Colors
 // --------------------------------------------------
-$backdrop-color-md:                     css-var(#000000, backdrop-color, md) !default;
-$background-color-md:                   css-var(#ffffff, background-color, md) !default;
-$background-color-alt-md:               css-var(#f4f5f8, background-color-alt, md) !default;
-$border-color-md:                       css-var(#c1c4cd, border-color, md) !default;
-$box-shadow-color-md:                   css-var(#000000, box-shadow-color, md) !default;
-$text-color-md:                         css-var(#000000, text-color, md) !default;
-$text-color-alt-md:                     css-var(#898b93, text-color-alt, md) !default;
+$backdrop-md-color:                     css-var(#000000, backdrop-md-color) !default;
+$background-md-color:                   css-var(#ffffff, background-md-color) !default;
+$background-md-color-alt:               css-var(#f4f5f8, background-md-color-alt) !default;
+$border-md-color:                       css-var(#c1c4cd, border-md-color) !default;
+$box-shadow-md-color:                   css-var(#000000, box-shadow-md-color) !default;
+$text-md-color:                         css-var(#000000, text-md-color) !default;
+$text-md-color-alt:                     css-var(#898b93, text-md-color-alt) !default;
 //$link-md-color:                         $link-color !default;
 //$text-md-color:                         $text-color !default;
 //$background-md-color:                   $background-color !default;
@@ -84,26 +84,17 @@ $text-color-alt-md:                     css-var(#898b93, text-color-alt, md) !de
 
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-background-color-md:            css-var(#f4f5f8, tabbar-background-color, md) !default;
-$tabbar-text-color-md:                  css-var(#989aa2, tabbar-text-color, md) !default;
-$tabbar-text-color-active-md:           css-var(#3880ff, tabbar-text-color-active, md) !default;
+$tabbar-md-background-color:            css-var(#f4f5f8, tabbar-md-background-color) !default;
+$tabbar-text-md-color:                  css-var(#989aa2, tabbar-text-md-color) !default;
+$tabbar-text-md-color-active:           css-var(#3880ff, tabbar-text-md-color-active) !default;
 //$tabs-md-background:                    $tabs-background !default;
 //$tabs-md-border-color:                  rgba(0, 0, 0, .07) !default;
 //$tabs-md-tab-color-inactive:            #3c3c3c !default;
 //$tabs-md-tab-color-active:              $tabs-tab-color-active !default;
 
-// Material Design List & List Items
-// --------------------------------------------------
-$item-background-color-md:              css-var(#ffffff, item-background-color, md) !default;
-$item-background-color-alt-md:          css-var(#c1c4cd, item-background-color-alt, md) !default;
-//$list-md-text-color:                    $list-text-color !default;
-//$list-md-border-color:                  #dedede !default;
-//$list-md-background-color:              $list-background-color !default;
-//$list-md-activated-background-color:    #f1f1f1 !default;
-
 // Material Design Toolbar
 // --------------------------------------------------
-$toolbar-background-color-md:           css-var(#f4f5f8, toolbar-background-color, md) !default;
+$toolbar-md-background-color:           css-var(#f4f5f8, toolbar-md-background-color) !default;
 $toolbar-md-height:                     56px !default;
 $toolbar-md-padding:                    4px !default;
 //$toolbar-md-background:                 $toolbar-background !default;
@@ -112,4 +103,46 @@ $toolbar-md-padding:                    4px !default;
 //$toolbar-md-active-color:               $toolbar-active-color !default;
 //$toolbar-md-inactive-color:             $toolbar-inactive-color !default;
 
-//@include css-variables-to-root();
+// Material Design List & List Items
+// --------------------------------------------------
+$item-md-background-color:              css-var(#ffffff, item-md-background-color) !default;
+$item-md-background-color-alt:          css-var(#c1c4cd, item-md-background-color-alt) !default;
+//$list-md-text-color:                    $list-text-color !default;
+//$list-md-border-color:                  #dedede !default;
+//$list-md-background-color:              $list-background-color !default;
+//$list-md-activated-background-color:    #f1f1f1 !default;
+
+$link-md-color:                         red;
+$text-md-color:                         red;
+$background-md-color:                   red;
+$tabs-md-background:                    red;
+$tabs-md-border-color:                  red;
+$tabs-md-tab-color-inactive:            red;
+$tabs-md-tab-color-active:              red;
+$toolbar-md-background:                 red;
+$toolbar-md-border-color:               red;
+$toolbar-md-text-color:                 red;
+$toolbar-md-active-color:               red;
+$toolbar-md-inactive-color:             red;
+$list-md-text-color:                    red;
+$list-md-border-color:                  red;
+$list-md-background-color:              red;
+$list-md-activated-background-color:    red;
+
+body {
+  display: none;
+}
+
+$ref: css-var($item-md-background-color, my-reference-ios-color);
+$refa: ion-color($colors-md, primary);
+$ref2: ion-color($colors-md, $refa, contrast);
+
+html {
+  //background-color: ion-color($colors-md, primary, $mode: ios);
+  //background-color: ion-color($colors-md, primary, contrast, ios);
+  //background-color: ion-color($colors-md, primary, tint, ios);
+  //background-color: ion-color($colors-md, primary, shade);
+  background-color: $backdrop-md-color;
+}
+
+@include css-variables-to-root();

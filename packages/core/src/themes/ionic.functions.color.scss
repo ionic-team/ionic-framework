@@ -1,3 +1,4 @@
+@import './ionic.functions.list.scss';
 @import './ionic.functions.string.scss';
 
 $css-variable-prefix:       '--';
@@ -5,6 +6,7 @@ $default-color-variation:   base;
 $default-color-prefix:      color-;
 $enable-css-variables:      true;
 $css-variables:             ();
+$modes:                     (ios,md);
 
 @mixin css-variables-to-root {
   :root {
@@ -12,6 +14,16 @@ $css-variables:             ();
       #{$name}: $color;
     }
   }
+}
+
+@function get-mode($name) {
+  @each $mode in $modes {
+  @if (str-contains($name, "-#{$mode}-") or (str-index($name, "#{$mode}-") == 1)) {
+      @return $mode;
+    }
+  }
+
+  @return null;
 }
 
 /**
@@ -27,16 +39,25 @@ $css-variables:             ();
   }
   $name: str-slice($variable, $index + str-length($default-color-prefix), $end-index - 1);
   $variation: $default-color-variation;
+  $mode: get-mode($name);
 
   // Determine if this CSS variable is itself a variation (e.g. primary-contrast)
   $extracted: str-split($name, '-');
 
-  @if (length($extracted) > 1) {
+  // If this color already has a mode prefix, remove it
+  @if ($mode != null) {
+    $extracted: remove-nth($extracted, 1);
+  }
+
+  @if (length($extracted) > 0) {
     $name: nth($extracted, 1);
+  }
+
+  @if (length($extracted) > 1) {
     $variation: nth($extracted, 2);
   }
 
-  @return (name: $name, variation: $variation);
+  @return (name: $name, variation: $variation, mode: $mode);
 }
 
 /**
@@ -67,13 +88,17 @@ $css-variables:             ();
   @return $results;
 }
 
-@function css-var($color, $name, $mode: null) {
+@function css-var($color, $name) {
   @if ($enable-css-variables) {
     $is-reference: str-contains($color, $css-variable-prefix);
     $global-css-variable: #{$css-variable-prefix}#{$name};
+    $mode: get-mode($name);
 
     @if ($mode != null) {
-      $mode-css-variable: #{$global-css-variable}-#{$mode};
+      $mode-css-variable: $global-css-variable;
+      $mode: "-#{$mode}-";
+      $global-css-variable: str-replace($mode-css-variable, $mode, '-');
+
       $css-variables: map-merge($css-variables, ($mode-css-variable: $color)) !global;
       $color: #{if($is-reference,'#{$color}','var(#{$global-css-variable}, #{$color})')};
       $color: "var(#{$mode-css-variable}, #{$color})";
@@ -82,7 +107,9 @@ $css-variables:             ();
       $color: "var(#{$global-css-variable}, #{$color})";
     }
   }
-  @return unquote($color);
+
+  $color: if(type-of($color) == color, $color, unquote($color));
+  @return $color;
 }
 
 @function ion-color($colors, $name, $variation: null, $mode: null) {
@@ -99,14 +126,13 @@ $css-variables:             ();
         @if ($variation) {
           @warn "Color '#{$name}' does not exist in map. Unable to set to variation '#{$variation}'"
         }
-        @return $name;
       }
     }
   }
 
   // Does the name contain the CSS Variable color prefix
   // If so this is this is a reference to a CSS variable
-  @if (str-contains($name, $css-variable-prefix)) {
+  @if ($enable-css-variables and str-contains($name, $css-variable-prefix)) {
     // If there is no variation change, just return the css variable
     @if ($variation == null) {
       @return unquote($name);
@@ -115,7 +141,9 @@ $css-variables:             ();
       $results: css-variable-to-name-variation($name);
       $name: map-get($results, name);
       $current-variation: map-get($results, variation);
+      $current-mode: map-get($results, mode);
       $variation: if($variation == $current-variation, $default-color-variation, $variation);
+      $mode: if($current-mode != null, $current-mode, $mode);
     }
   }
 
@@ -134,11 +162,11 @@ $css-variables:             ();
       @error "Color '#{$name}' is not a map. Cannot contain variation '#{$variation}'. Using #{$default-color-variation}";
     }
 
-    $name: #{$default-color-prefix}#{$name};
+    $name: "#{$default-color-prefix}#{if($mode, '#{$mode}-', '')}#{$name}";
     @if $variation != $default-color-variation {
       $name: "#{$name}-#{$variation}";
     }
-    @return css-var($color, $name, $mode);
+    @return css-var($color, $name);
   }
 
   @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
