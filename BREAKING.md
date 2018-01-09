@@ -13,6 +13,8 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Icon](#icon)
 - [Input](#Input)
 - [Item](#item)
+- [Item Divider](#item-divider)
+- [List Header](#list-header)
 - [Nav](#nav)
 - [Option](#option)
 - [Radio](#radio)
@@ -332,7 +334,7 @@ Item should now be written as an `<ion-item>` element. Ionic will determine when
 
 ### Label Required
 
-Previously an `ion-label` would automatically get added to an `ion-item`, `ion-item-divider` and `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+Previously an `ion-label` would automatically get added to an `ion-item` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
 
 ```html
 <ion-item>
@@ -376,6 +378,30 @@ These have been renamed to the following:
   <ion-label>Item Label</ion-label>
   <div slot="end">Right on LTR, Left on RTL</div>
 </ion-item>
+```
+
+## Item Divider
+
+### Label Required
+
+Previously an `ion-label` would automatically get added to an `ion-item-divider` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+
+```html
+<ion-item-divider>
+  <ion-label>Item Divider Label</ion-label>
+</ion-item-divider>
+```
+
+## List Header
+
+### Label Required
+
+Previously an `ion-label` would automatically get added to an `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+
+```html
+<ion-list-header>
+  <ion-label>List Header Label</ion-label>
+</ion-list-header>
 ```
 
 ## Nav
