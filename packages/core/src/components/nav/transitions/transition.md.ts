@@ -12,7 +12,9 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
   rootTransition.enteringView = enteringView;
   rootTransition.leavingView = leavingView;
 
-  rootTransition.addElement(enteringView.element);
+  const ionPageElement = getIonPageElement(enteringView.element);
+
+  rootTransition.addElement(ionPageElement);
   rootTransition.beforeRemoveClass('hide-page');
 
   const backDirection = (opts.direction === 'back');
@@ -27,7 +29,7 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
       .fromTo('opacity', 0.01, 1, true);
     }
 
-    const enteringToolbarEle = enteringView.element.querySelector('ion-toolbar');
+    const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
     if (enteringToolbarEle) {
       const enteringToolBar = rootTransition.create();
       enteringToolBar.addElement(enteringToolbarEle);
@@ -50,9 +52,16 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
     // leaving content
     rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
     const leavingPage = rootTransition.create();
-    leavingPage.addElement(leavingView.element);
+    leavingPage.addElement(getIonPageElement(leavingView.element));
     rootTransition.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 1, 0));
   }
 
   return Promise.resolve(rootTransition);
+}
+
+function getIonPageElement(element: HTMLElement) {
+  if (element.tagName.toLowerCase() === 'ion-page') {
+    return element;
+  }
+  return element.querySelector('ion-page');
 }
