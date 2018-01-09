@@ -1,13 +1,13 @@
-# ion-navbar
+# ion-toolbar
 
 A Toolbar is a generic bar that is positioned above or below content.
-Unlike a [Navbar](../../navbar/Navbar), a toolbar can be used as a subheader.
 When toolbars are placed within an `<ion-header>` or `<ion-footer>`,
 the toolbars stay fixed in their respective location. When placed within
 `<ion-content>`, toolbars will scroll with the content.
 
 
 ### Buttons in a Toolbar
+
 Buttons placed in a toolbar should be placed inside of the `<ion-buttons>`
 element. An exception to this is a [menuToggle](../../menu/MenuToggle) button.
 It should not be placed inside of the `<ion-buttons>` element. Both the
