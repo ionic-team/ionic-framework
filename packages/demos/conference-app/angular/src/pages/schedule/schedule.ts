@@ -4,7 +4,6 @@ import {
   AlertController,
   App,
   LoadingController,
-  MenuController,
   ModalController,
   NavController,
   ToastController
@@ -49,7 +48,6 @@ export class SchedulePage {
     public alertCtrl: AlertController,
     public app: App,
     public loadingCtrl: LoadingController,
-    public menuController: MenuController,
     public modalCtrl: ModalController,
     public navCtrl: NavController,
     public toastCtrl: ToastController,
@@ -184,8 +182,4 @@ export class SchedulePage {
     });
   }
   */
-
-  toggleMenu() {
-    this.menuController.toggle();
-  }
 }
