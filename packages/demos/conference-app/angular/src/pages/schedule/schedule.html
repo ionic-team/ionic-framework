@@ -8,7 +8,7 @@
       </ion-buttons>
 
 
-      <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
+      <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()" ngDefaultControl>
         <ion-segment-button value="all">
           All
         </ion-segment-button>
@@ -29,12 +29,11 @@
       <ion-searchbar color="primary"
                       [(ngModel)]="queryText"
                       (ionInput)="updateSchedule()"
-                      placeholder="Search">
+                      placeholder="Search" ngDefaultControl>
       </ion-searchbar>
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    Segment value is: {{segment}}
     <ion-list #scheduleList [hidden]="shownSessions === 0">
         <div *ngFor="let group of groups" [hidden]="group.hide"> <!-- TODO should be ion-item-wrapper or whatever its called -->
           <ion-item-divider sticky>
@@ -56,7 +55,7 @@
               <ion-item-option color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
                 Favorite
               </ion-item-option>
-              <ion-item-option color="danger" click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
+              <ion-item-option color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
                   Remove
               </ion-item-option>
             </ion-item-options>
