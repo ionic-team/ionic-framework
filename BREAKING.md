@@ -384,6 +384,8 @@ These have been renamed to the following:
 
 The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
 
+The `getActiveChildNavs` method has been renamed to `getChildNavs`.
+
 ## Option
 
 ### Markup Changed
