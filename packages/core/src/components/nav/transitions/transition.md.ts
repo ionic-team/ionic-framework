@@ -63,5 +63,11 @@ function getIonPageElement(element: HTMLElement) {
   if (element.tagName.toLowerCase() === 'ion-page') {
     return element;
   }
-  return element.querySelector('ion-page');
+  const ionPage = element.querySelector('ion-page');
+  if (ionPage) {
+    return ionPage;
+  }
+
+  // idk, return the original element so at least something animates and we don't have a null pointer
+  return element;
 }
