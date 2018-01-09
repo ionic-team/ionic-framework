@@ -8,7 +8,7 @@
   <script src="/dist/ionic.js"></script>
 </head>
 
-<body>
+<body onload="listenForEvent()">
   <ion-app>
     <ion-page>
       <ion-header>
@@ -19,7 +19,7 @@
 
       <ion-content>
         <ion-toolbar no-border-top>
-          <ion-segment value="Free">
+          <ion-segment class="event-tester" value="Free">
             <ion-segment-button value="Paid">
               Paid
             </ion-segment-button>
@@ -110,6 +110,14 @@
             } else {
               dynamicAttrElem.setAttribute('value', 'active');
             }
+          }
+
+          async function listenForEvent() {
+            const ionSegmentElement = document.querySelector('ion-segment.event-tester');
+            await ionSegmentElement.componentOnReady();
+            ionSegmentElement.addEventListener('ionChange', (event) => {
+              console.log('event.target: ', event.target.value);
+            });
           }
         </script>
       </ion-content>

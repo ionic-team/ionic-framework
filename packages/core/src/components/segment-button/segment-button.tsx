@@ -14,7 +14,7 @@ export class SegmentButton {
   /**
    * @output {SegmentButtonEvent} Emitted when the segment button is clicked.
    */
-  @Event() ionClick: EventEmitter;
+  @Event() ionClick: EventEmitter<SegmentButtonEventDetail>;
 
   @State() activated: boolean = false;
 
@@ -62,7 +62,7 @@ export class SegmentButton {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
-      this.ionClick.emit({ segmentButton: this });
+      this.ionClick.emit();
     });
   }
 
@@ -105,9 +105,10 @@ export class SegmentButton {
   }
 }
 
+export interface SegmentButtonEvent extends CustomEvent {
+  detail: SegmentButtonEventDetail;
+}
 
-export interface SegmentButtonEvent extends Event {
-  detail: {
-    segmentButton: SegmentButton;
-  };
+export interface SegmentButtonEventDetail {
+
 }

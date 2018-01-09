@@ -20,7 +20,7 @@ export class Segment {
   /**
    * @output {Event} Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange: EventEmitter<SegmentEventDetail>;
 
   /**
    * @input {string} The color to use from your Sass `$colors` map.
@@ -69,13 +69,13 @@ export class Segment {
 
   @Listen('ionClick')
   segmentClick(ev: CustomEvent) {
-    let selectedButton = ev.detail.segmentButton;
+    const selectedButton = ev.target as HTMLIonSegmentButtonElement;
 
     this.value = selectedButton.value;
     this.selectButton(this.value);
 
     // TODO should this move to valueChanged
-    this.ionChange.emit({ segment: this });
+    this.ionChange.emit();
   }
 
   selectButton(val: string) {
@@ -101,8 +101,9 @@ export class Segment {
   }
 }
 
-export interface SegmentEvent extends Event {
-  detail: {
-    segment: Segment;
-  };
+export interface SegmentEvent extends CustomEvent {
+  detail: SegmentEventDetail;
+}
+
+export interface SegmentEventDetail {
 }
