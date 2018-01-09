@@ -5,25 +5,27 @@ import { PageThree } from './page-three';
 @Component({
   selector: 'page-two',
   template: `
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Page Two</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  Page Two
-  <div>
-    <ion-button (click)="goNext()">Go to Page Three</ion-button>
+<ion-page>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Page Two</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    Page Two
+    <div>
+      <ion-button (click)="goNext()">Go to Page Three</ion-button>
+    </div>
+    <div>
+    <ion-button (click)="goBack()">Go Back</ion-button>
   </div>
-  <div>
-  <ion-button (click)="goBack()">Go Back</ion-button>
-</div>
-  <ul>
-    <li>ngOnInit - {{ngOnInitDetection}}</li>
-    <li>ionViewWillEnter - {{ionViewWillEnterDetection}}</li>
-    <li>ionViewDidEnter - {{ionViewDidEnterDetection}}</li>
-  </ul>
-</ion-content>
+    <ul>
+      <li>ngOnInit - {{ngOnInitDetection}}</li>
+      <li>ionViewWillEnter - {{ionViewWillEnterDetection}}</li>
+      <li>ionViewDidEnter - {{ionViewDidEnterDetection}}</li>
+    </ul>
+  </ion-content>
+</ion-page>
   `
 })
 export class PageTwo {
