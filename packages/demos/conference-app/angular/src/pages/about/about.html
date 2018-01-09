@@ -1,14 +1,16 @@
 <ion-page>
   <ion-header>
     <ion-toolbar>
-      <ion-button menuToggle> <!-- TODO menuToggle -->
-        <ion-icon name="menu"></ion-icon>
-      </ion-button>
+      <ion-buttons>
+        <ion-button menuToggle>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-buttons>
       <ion-title>About</ion-title>
 
       <ion-buttons slot="end">
-        <ion-button slot="icon-only" (click)="presentPopover($event)">
-          <ion-icon name="more" style="width: 20px"></ion-icon> <!-- TODO remove temporary width style -->
+        <ion-button (click)="presentPopover($event)">
+          <ion-icon slot="icon-only" name="more"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
