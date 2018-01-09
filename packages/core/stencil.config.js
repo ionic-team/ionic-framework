@@ -18,7 +18,7 @@ exports.config = {
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
     { components: ['ion-gesture'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
-    { components: ['ion-item', 'ion-item-divider', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
+    { components: ['ion-item', 'ion-item-divider', 'ion-item-group', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
     { components: ['ion-input', 'ion-textarea'] },
