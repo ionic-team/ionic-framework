@@ -15,6 +15,9 @@ import { TextValueAccessor } from './control-value-accessors/text-value-accessor
 /* Components */
 import { IonNavDelegate } from './components/ion-nav';
 
+/* Directives */
+import { MenuToggle } from './directives/menu-toggle';
+
 /* Providers */
 import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
@@ -31,6 +34,7 @@ import { ToastController } from './providers/toast-controller';
   declarations: [
     BooleanValueAccessor,
     IonNavDelegate,
+    MenuToggle,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
@@ -39,6 +43,7 @@ import { ToastController } from './providers/toast-controller';
   exports: [
     BooleanValueAccessor,
     IonNavDelegate,
+    MenuToggle,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,

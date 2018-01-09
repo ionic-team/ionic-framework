@@ -1,7 +1,10 @@
 export { IonicAngularModule } from './module';
 
-/* Directives/Components */
+/* Components */
 export { IonNavDelegate } from './components/ion-nav';
+
+/* Directives */
+export { MenuToggle } from './directives/menu-toggle';
 
 /* Providers */
 export { ActionSheetController, ActionSheetProxy } from './providers/action-sheet-controller';
