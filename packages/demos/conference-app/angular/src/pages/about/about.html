@@ -1,52 +1,54 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-button menuToggle> <!-- TODO menuToggle -->
-      <ion-icon name="menu"></ion-icon>
-    </ion-button>
-    <ion-title>About</ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button slot="icon-only" (click)="presentPopover($event)">
-        <ion-icon name="more" style="width: 20px"></ion-icon> <!-- TODO remove temporary width style -->
+<ion-page>
+  <ion-header>
+    <ion-toolbar>
+      <ion-button menuToggle> <!-- TODO menuToggle -->
+        <ion-icon name="menu"></ion-icon>
       </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+      <ion-title>About</ion-title>
 
-<ion-content>
-  <div class="about-header">
-    <img src="assets/img/ionic-logo-white.svg" alt="ionic logo">
-  </div>
-  <div padding class="about-info">
-    <h4>Ionic Conference</h4>
+      <ion-buttons slot="end">
+        <ion-button slot="icon-only" (click)="presentPopover($event)">
+          <ion-icon name="more" style="width: 20px"></ion-icon> <!-- TODO remove temporary width style -->
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-    <ion-list no-lines>
-      <ion-item>
-        <ion-icon name="calendar" slot="start"></ion-icon>
-        <ion-label>Date</ion-label>
-        <ion-datetime displayFormat="MMM DD, YYYY" max="2056" [(ngModel)]="conferenceDate"></ion-datetime>
-      </ion-item>
+  <ion-content>
+    <div class="about-header">
+      <img src="assets/img/ionic-logo-white.svg" alt="ionic logo">
+    </div>
+    <div padding class="about-info">
+      <h4>Ionic Conference</h4>
 
-      <ion-item>
-        <ion-icon name="pin" slot="start"></ion-icon>
-        <ion-label>Location</ion-label>
-        <ion-select>
-          <ion-select-option value="madison" selected>Madison, WI</ion-select-option>
-          <ion-select-option value="austin">Austin, TX</ion-select-option>
-          <ion-select-option value="chicago">Chicago, IL</ion-select-option>
-          <ion-select-option value="seattle">Seattle, WA</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+      <ion-list no-lines>
+        <ion-item>
+          <ion-icon name="calendar" slot="start"></ion-icon>
+          <ion-label>Date</ion-label>
+          <ion-datetime displayFormat="MMM DD, YYYY" max="2056" [(ngModel)]="conferenceDate"></ion-datetime>
+        </ion-item>
 
-    <p>
-      The Ionic Conference is a one-day conference featuring talks from the
-      Ionic team. It is focused on Ionic applications being built with
-      Ionic 2. This includes migrating apps from Ionic 1 to Ionic 2,
-      Angular concepts, Webpack, Sass, and many other technologies used
-      in Ionic 2. Tickets are completely sold out, and we’re expecting
-      more than 1000 developers – making this the largest Ionic
-      conference ever!
-    </p>
-  </div>
-</ion-content>
+        <ion-item>
+          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-label>Location</ion-label>
+          <ion-select>
+            <ion-select-option value="madison" selected>Madison, WI</ion-select-option>
+            <ion-select-option value="austin">Austin, TX</ion-select-option>
+            <ion-select-option value="chicago">Chicago, IL</ion-select-option>
+            <ion-select-option value="seattle">Seattle, WA</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <p>
+        The Ionic Conference is a one-day conference featuring talks from the
+        Ionic team. It is focused on Ionic applications being built with
+        Ionic 2. This includes migrating apps from Ionic 1 to Ionic 2,
+        Angular concepts, Webpack, Sass, and many other technologies used
+        in Ionic 2. Tickets are completely sold out, and we’re expecting
+        more than 1000 developers – making this the largest Ionic
+        conference ever!
+      </p>
+    </div>
+  </ion-content>
+</ion-page>

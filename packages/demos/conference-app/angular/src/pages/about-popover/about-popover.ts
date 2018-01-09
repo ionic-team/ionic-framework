@@ -6,6 +6,7 @@ import { App } from '@ionic/angular';
 
 @Component({
   template: `
+  <ion-page>
     <ion-list>
       <ion-item (click)="close('http://ionicframework.com/docs/v2/getting-started')">
         <ion-label>Learn Ionic</ion-label>
@@ -23,6 +24,7 @@ import { App } from '@ionic/angular';
         <ion-label>Support</ion-label>
       </ion-item>
     </ion-list>
+  </ion-page>
   `
 })
 export class PopoverPage {

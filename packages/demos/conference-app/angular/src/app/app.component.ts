@@ -69,12 +69,15 @@ export class AppComponent implements OnInit {
     // Check if the user has already seen the tutorial
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
+        console.log('hasSeenTutorial: ', hasSeenTutorial);
         if (hasSeenTutorial) {
           this.rootPage = TabsPage;
         } else {
           this.rootPage = TutorialPage;
         }
-        // this.platformReady()
+        getNav(this.navRef).then((nav) => {
+          nav.setRoot(this.rootPage);
+        });
       });
 
     // load the conference data
@@ -121,7 +124,9 @@ export class AppComponent implements OnInit {
   }
 
   openTutorial() {
-    return getNav(this.navRef).setRoot(TutorialPage);
+    return getNav(this.navRef).then((navElement) => {
+      navElement.setRoot(TutorialPage);
+    });
   }
 
   listenToLoginEvents() {
@@ -145,7 +150,7 @@ export class AppComponent implements OnInit {
 
   isActive(page: PageInterface) {
     return 'primary';
-    //const childNav = getNav(this.navRef).getChildNavs()[0];
+    // const childNav = getNav(this.navRef).getChildNavs()[0];
 
     // Tabs are a special case because they have their own navigation
     /*if (childNav) {
@@ -163,8 +168,10 @@ export class AppComponent implements OnInit {
   }
 }
 
-function getNav(elementRef: ElementRef) {
-  return elementRef.nativeElement as HTMLIonNavElement;
+function getNav(elementRef: ElementRef): Promise<HTMLIonNavElement> {
+  return (elementRef.nativeElement as any).componentOnReady().then(() => {
+    return elementRef.nativeElement as HTMLIonNavElement;
+  });
 }
 
 export interface PageInterface {
