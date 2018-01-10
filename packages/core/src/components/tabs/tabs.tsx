@@ -112,7 +112,7 @@ export class Tabs {
   }
 
 
-   /**
+  /**
    * @param {number} index Index of the tab you want to get
    * @returns {HTMLIonTabElement} Returns the tab who's index matches the one passed
    */
