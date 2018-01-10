@@ -58,6 +58,9 @@ Segments provide functionality similar to tabs, selecting one will unselect all 
 
 string
 
+The color to use for the text color.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+
 
 #### disabled
 
@@ -68,10 +71,15 @@ boolean
 
 any
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+
 
 #### value
 
 string
+
+the value of the segment.
 
 
 ## Attributes
@@ -80,6 +88,9 @@ string
 
 string
 
+The color to use for the text color.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+
 
 #### disabled
 
@@ -90,15 +101,22 @@ boolean
 
 any
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+
 
 #### value
 
 string
 
+the value of the segment.
+
 
 ## Events
 
 #### ionChange
+
+Emitted when the value property has changed.
 
 
 

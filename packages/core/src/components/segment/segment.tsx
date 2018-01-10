@@ -18,31 +18,29 @@ export class Segment {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {Event} Emitted when the value property has changed.
+   * Emitted when the value property has changed.
    */
   @Event() ionChange: EventEmitter<SegmentEventDetail>;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use for the text color.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
 
   /*
-   * @input {boolean} If true, the user cannot interact with the segment. Default false.
+   * If true, the user cannot interact with the segment. Default false.
    */
   @Prop({ mutable: true }) disabled: boolean = false;
 
   /**
-   * @input {string} the value of the segment.
+   * the value of the segment.
    */
   @Prop({ mutable: true }) value: string;
 
@@ -53,7 +51,6 @@ export class Segment {
 
   componentDidLoad() {
     this.buttons = this.el.querySelectorAll('ion-segment-button');
-
     for (var i = 0; i < this.buttons.length; i++) {
       const button = this.buttons[i];
 

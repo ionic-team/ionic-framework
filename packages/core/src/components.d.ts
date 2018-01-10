@@ -2425,6 +2425,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSegmentButtonAttributes extends HTMLAttributes {
+      activated?: boolean;
       checked?: boolean;
       color?: string;
       disabled?: boolean;
