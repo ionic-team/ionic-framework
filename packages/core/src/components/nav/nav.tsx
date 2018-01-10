@@ -103,14 +103,12 @@ export class Nav implements PublicNav, NavContainer {
     }
     this.init = true;
     if (!this.useRouter) {
-      console.log('componentDidLoadImpl: ', this.root);
       componentDidLoadImpl(this);
     }
   }
 
   @Watch('root')
   updateRootComponent(): any {
-    console.log('updateRootComponent: ', this.root);
     if (this.init) {
       return this.setRoot(this.root);
     }
@@ -193,11 +191,6 @@ export class Nav implements PublicNav, NavContainer {
   @Method()
   getFirstView(): PublicViewController {
     return getFirstView(this);
-  }
-
-  @Method()
-  resize() {
-    console.log('resize content');
   }
 
   @Listen('navInit')
@@ -862,8 +855,7 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
     // batch all of lifecycles together
     if (destroyQueue && destroyQueue.length) {
       // TODO, figure out how the zone stuff should work in angular
-      for (let i = 0; i < destroyQueue.length; i++) {
-        const view = destroyQueue[i];
+      for (const view of destroyQueue) {
         view.willLeave(true);
         view.didLeave();
         view.willUnload();
@@ -879,11 +871,7 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
   }).then(() => {
     // set which animation it should use if it wasn't set yet
     if (ti.requiresTransition && !ti.opts.animation) {
-      if (isDef(ti.removeStart)) {
-        ti.opts.animation = (leavingView || enteringView).getTransitionName(ti.opts.direction);
-      } else {
-        ti.opts.animation = (enteringView || leavingView).getTransitionName(ti.opts.direction);
-      }
+      ti.opts.animation = isDef(ti.removeStart) ? (leavingView || enteringView).getTransitionName(ti.opts.direction) : (enteringView || leavingView).getTransitionName(ti.opts.direction);
     }
   });
 }
