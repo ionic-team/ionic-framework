@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
 import {
   Animation,
   AnimationController,
@@ -103,7 +103,16 @@ export class Nav implements PublicNav, NavContainer {
     }
     this.init = true;
     if (!this.useRouter) {
+      console.log('componentDidLoadImpl: ', this.root);
       componentDidLoadImpl(this);
+    }
+  }
+
+  @Watch('root')
+  updateRootComponent(): any {
+    console.log('updateRootComponent: ', this.root);
+    if (this.init) {
+      return this.setRoot(this.root);
     }
   }
 
