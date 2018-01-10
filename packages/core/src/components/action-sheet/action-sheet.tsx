@@ -94,17 +94,17 @@ export class ActionSheet {
   /**
    * If true, the action-sheet will be dismissed when the backdrop is clicked.
    */
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
 
   /**
    * If true, action-sheet will become translucent. Requires support for backdrop-filters.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   /**
    * Enable action-sheet animations. If false, action-sheet will not animate in
    */
-  @Prop() willAnimate: boolean = true;
+  @Prop() willAnimate = true;
 
   /**
    * Animation to use when the action-sheet is created
@@ -209,12 +209,12 @@ export class ActionSheet {
   }
 
   buttonClass(button: ActionSheetButton): CssClassMap {
-    let buttonClass: string[] = !button.role
+    const buttonClass: string[] = !button.role
       ? ['action-sheet-button']
       : [`action-sheet-button`, `action-sheet-${button.role}`];
 
     if (button.cssClass) {
-      let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+      const customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
       buttonClass.push(customClass);
     }
 
@@ -256,7 +256,7 @@ export class ActionSheet {
     }
 
     let cancelButton: ActionSheetButton;
-    let buttons = this.buttons
+    const buttons = this.buttons
       .map(b => {
         if (typeof b === 'string') {
           b = { text: b };

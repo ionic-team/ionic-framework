@@ -40,7 +40,7 @@ export class ChipButton {
   /**
    * @input {boolean} If true, sets the button into a disabled state.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
    * Get the classes based on the button type
@@ -60,7 +60,7 @@ export class ChipButton {
    * Get the classes for the color
    */
   private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
-    let className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
+    const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
 
     return [`${className}-${mode}`].concat(
         style !== 'default' ? `${className}` : [],

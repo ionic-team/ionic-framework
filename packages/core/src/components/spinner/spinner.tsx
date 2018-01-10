@@ -44,7 +44,7 @@ export class Spinner {
   /**
    * @input {boolean} If true, pause the animation.
    */
-  @Prop() paused: boolean = false;
+  @Prop() paused = false;
 
 
   private getName(): string {

@@ -7,31 +7,31 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
   let originY = 'top';
   let originX = 'left';
 
-  let contentEl = baseElm.querySelector('.popover-content') as HTMLElement;
-  let contentDimentions = contentEl.getBoundingClientRect();
-  let contentWidth = contentDimentions.width;
-  let contentHeight = contentDimentions.height;
+  const contentEl = baseElm.querySelector('.popover-content');
+  const contentDimentions = contentEl.getBoundingClientRect();
+  const contentWidth = contentDimentions.width;
+  const contentHeight = contentDimentions.height;
 
-  let bodyWidth = window.innerWidth;
-  let bodyHeight = window.innerHeight;
+  const bodyWidth = window.innerWidth;
+  const bodyHeight = window.innerHeight;
 
   // If ev was passed, use that for target element
-  let targetDim =
+  const targetDim =
     ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
-  let targetTop =
+  const targetTop =
     targetDim && 'top' in targetDim
       ? targetDim.top
       : bodyHeight / 2 - contentHeight / 2;
 
-  let targetLeft =
+  const targetLeft =
     targetDim && 'left' in targetDim
       ? targetDim.left
       : bodyWidth / 2 - contentWidth / 2;
 
-  let targetHeight = (targetDim && targetDim.height) || 0;
+  const targetHeight = (targetDim && targetDim.height) || 0;
 
-  let popoverCSS: { top: any; left: any } = {
+  const popoverCSS: { top: any; left: any } = {
     top: targetTop,
     left: targetLeft
   };

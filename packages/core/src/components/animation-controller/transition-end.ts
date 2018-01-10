@@ -1,9 +1,9 @@
 
 
 export function transitionEnd(elm: HTMLElement, callback: {(ev?: TransitionEvent): void}) {
-  var unRegTrans: Function;
-  var unRegWKTrans: Function;
-  var opts: any = { passive: true };
+  let unRegTrans: Function;
+  let unRegWKTrans: Function;
+  let opts: any = { passive: true };
 
   function unregister() {
     unRegWKTrans && unRegWKTrans();

@@ -415,7 +415,7 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animatio
   return queueTransaction(config, done);
 }
 
-export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount: number = 1, opts?: NavOptions, done?: () => void): Promise<any> {
+export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     removeStart: startIndex,
     removeCount: removeCount,
@@ -1017,7 +1017,7 @@ export function getEnteringView(ti: TransitionInstruction, nav: Nav, leavingView
     return ti.insertViews[ti.insertViews.length - 1];
   }
   if (isDef(ti.removeStart)) {
-    var removeEnd = ti.removeStart + ti.removeCount;
+    let removeEnd = ti.removeStart + ti.removeCount;
     for (let i = nav.views.length - 1; i >= 0; i--) {
       if ((i < ti.removeStart || i >= removeEnd) && nav.views[i] !== leavingView) {
         return nav.views[i];

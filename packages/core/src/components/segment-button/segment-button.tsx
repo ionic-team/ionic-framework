@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 import { CssClassMap } from '../../index';
 import { createThemedClasses, getElementClassObject } from '../../utils/theme';
 
@@ -16,7 +16,7 @@ export class SegmentButton {
    */
   @Event() ionClick: EventEmitter<SegmentButtonEventDetail>;
 
-  @Prop({mutable: true}) activated: boolean = false;
+  @Prop({mutable: true}) activated = false;
 
   /**
    * The color to use for the text color.
@@ -33,12 +33,12 @@ export class SegmentButton {
   /**
    * If true, the segment button is selected. Defaults to `false`.
    */
-  @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked = false;
 
   /*
    * If true, the user cannot interact with the segment button. Default false.
    */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) disabled = false;
 
   /**
    * The value of the segment button.
@@ -68,7 +68,7 @@ export class SegmentButton {
    * Get the classes for the segment button state
    */
   getElementClassList() {
-    let classList = [].concat(
+    const classList = [].concat(
       this.disabled ? 'segment-button-disabled' : [],
       this.activated ? 'segment-activated' : [],
     );

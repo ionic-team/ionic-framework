@@ -43,10 +43,10 @@ export class Item {
 
     let hasChildStyleChange = false;
 
-    let tagName: string = (ev.target as HTMLElement).tagName;
-    let updatedStyles: any = ev.detail;
+    const tagName: string = (ev.target as HTMLElement).tagName;
+    const updatedStyles: any = ev.detail;
 
-    for (var key in updatedStyles) {
+    for (const key in updatedStyles) {
       if (('item-' + key) !== key) {
         Object.defineProperty(updatedStyles, 'item-' + key, Object.getOwnPropertyDescriptor(updatedStyles, key));
         delete updatedStyles[key];
@@ -65,7 +65,7 @@ export class Item {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
     const buttons = this.el.querySelectorAll('ion-button');
-    for (var i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
       if (!buttons[i].size) {
         buttons[i].size = 'small';
       }
@@ -75,11 +75,11 @@ export class Item {
   render() {
     let childStyles = {};
 
-    for (var key in this.itemStyles) {
+    for (const key in this.itemStyles) {
       childStyles = Object.assign(childStyles, this.itemStyles[key]);
     }
 
-    let themedClasses = {
+    const themedClasses = {
       ...childStyles,
       ...createThemedClasses(this.mode, this.color, 'item'),
       'item-block': true

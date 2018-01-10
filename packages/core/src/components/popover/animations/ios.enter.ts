@@ -7,43 +7,43 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   let originY = 'top';
   let originX = 'left';
 
-  let contentEl = baseElm.querySelector('.popover-content') as HTMLElement;
-  let contentDimentions = contentEl.getBoundingClientRect();
-  let contentWidth = contentDimentions.width;
-  let contentHeight = contentDimentions.height;
+  const contentEl = baseElm.querySelector('.popover-content');
+  const contentDimentions = contentEl.getBoundingClientRect();
+  const contentWidth = contentDimentions.width;
+  const contentHeight = contentDimentions.height;
 
-  let bodyWidth = window.innerWidth;
-  let bodyHeight = window.innerHeight;
+  const bodyWidth = window.innerWidth;
+  const bodyHeight = window.innerHeight;
 
   // If ev was passed, use that for target element
-  let targetDim =
+  const targetDim =
     ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
-  let targetTop =
+  const targetTop =
     targetDim && 'top' in targetDim
       ? targetDim.top
       : bodyHeight / 2 - contentHeight / 2;
-  let targetLeft =
+  const targetLeft =
     targetDim && 'left' in targetDim ? targetDim.left : bodyWidth / 2;
-  let targetWidth = (targetDim && targetDim.width) || 0;
-  let targetHeight = (targetDim && targetDim.height) || 0;
+  const targetWidth = (targetDim && targetDim.width) || 0;
+  const targetHeight = (targetDim && targetDim.height) || 0;
 
-  let arrowEl = baseElm.querySelector('.popover-arrow') as HTMLElement;
+  const arrowEl = baseElm.querySelector('.popover-arrow');
 
-  let arrowDim = arrowEl.getBoundingClientRect();
-  let arrowWidth = arrowDim.width;
-  let arrowHeight = arrowDim.height;
+  const arrowDim = arrowEl.getBoundingClientRect();
+  const arrowWidth = arrowDim.width;
+  const arrowHeight = arrowDim.height;
 
   if (!targetDim) {
     arrowEl.style.display = 'none';
   }
 
-  let arrowCSS = {
+  const arrowCSS = {
     top: targetTop + targetHeight,
     left: targetLeft + targetWidth / 2 - arrowWidth / 2
   };
 
-  let popoverCSS: { top: any; left: any } = {
+  const popoverCSS: { top: any; left: any } = {
     top: targetTop + targetHeight + (arrowHeight - 1),
     left: targetLeft + targetWidth / 2 - contentWidth / 2
   };

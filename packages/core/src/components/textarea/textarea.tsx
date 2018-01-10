@@ -52,17 +52,17 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {string} Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
    */
-  @Prop() autocapitalize: string = 'none';
+  @Prop() autocapitalize = 'none';
 
   /**
    * @input {string} Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
    */
-  @Prop() autocomplete: string = 'off';
+  @Prop() autocomplete = 'off';
 
   /**
    * @input {string} This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
    */
-  @Prop() autofocus: boolean = false;
+  @Prop() autofocus = false;
 
   /**
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
@@ -72,7 +72,7 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
    */
-  @Prop() debounce: number = 0;
+  @Prop() debounce = 0;
 
   @Watch('debounce')
   private debounceInput() {
@@ -85,7 +85,7 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {boolean} If true, the user cannot interact with the textarea. Defaults to `false`.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -115,17 +115,17 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {boolean} If true, the user cannot modify the value. Defaults to `false`.
    */
-  @Prop() readonly: boolean = false;
+  @Prop() readonly = false;
 
   /**
    * @input {boolean} If true, the user must fill in a value before submitting a form.
    */
-  @Prop() required: boolean = false;
+  @Prop() required = false;
 
   /**
    * @input {string} If true, the element will have its spelling and grammar checked. Defaults to `false`.
    */
-  @Prop() spellcheck: boolean = false;
+  @Prop() spellcheck = false;
 
   /**
    * @input {number} The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
@@ -166,7 +166,7 @@ export class Textarea implements TextareaComponent {
   private emitStyle() {
     clearTimeout(this.styleTmr);
 
-    let styles = {
+    const styles = {
       'textarea': true,
       'input': true,
       'input-disabled': this.disabled,

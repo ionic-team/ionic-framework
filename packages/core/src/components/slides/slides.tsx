@@ -90,7 +90,7 @@ export class Slides {
 
   @Watch('options')
   updateSwiperOptions() {
-    let newOptions = this.normalizeOptions();
+    const newOptions = this.normalizeOptions();
     this.swiper.params = Object.assign({}, this.swiper.params, newOptions);
     this.update();
   }
@@ -98,7 +98,7 @@ export class Slides {
   /**
    * Show or hide the pager
    */
-  @Prop() pager: boolean = true;
+  @Prop() pager = true;
 
   render() {
     return (
@@ -141,7 +141,7 @@ export class Slides {
 
   normalizeOptions() {
       // Base options, can be changed
-      var swiperOptions = {
+      const swiperOptions = {
         effect: 'slide',
         autoplay: 0,
         direction: 'horizontal',
@@ -234,7 +234,7 @@ export class Slides {
 
       // Keep the event options separate, we dont want users
       // overwriting these
-      var eventOptions = {
+      const eventOptions = {
         onSlideChangeStart: this.ionSlideWillChange.emit,
         onSlideChangeEnd: this.ionSlideDidChange.emit,
         onSlideNextStart: this.ionSlideNextStart.emit,

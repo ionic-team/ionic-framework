@@ -25,7 +25,7 @@ export class Button {
    * The type of button.
    * Possible values are: `"button"`, `"bar-button"`.
    */
-  @Prop() buttonType: string = 'button';
+  @Prop() buttonType = 'button';
 
   /**
    * The button size.
@@ -36,7 +36,7 @@ export class Button {
   /**
    * If true, sets the button into a disabled state.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
@@ -48,7 +48,7 @@ export class Button {
   /**
    * If true, activates a button with rounded corners.
    */
-  @Prop() round: boolean = false;
+  @Prop() round = false;
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
@@ -59,7 +59,7 @@ export class Button {
   /**
    * If true, activates a button with a heavier font weight.
    */
-  @Prop() strong: boolean = false;
+  @Prop() strong = false;
 
   /**
    * The color to use from your Sass `$colors` map.

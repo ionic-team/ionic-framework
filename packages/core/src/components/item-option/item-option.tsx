@@ -31,7 +31,7 @@ export class ItemOption {
   /**
    * @input {boolean} If true, sets the button into a disabled state.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   notCaptured() {
     // if (!clickedOptionButton(ev)) {
@@ -40,7 +40,7 @@ export class ItemOption {
   }
 
   clickedOptionButton(ev: any): boolean {
-    let el = ev.target.closest('ion-item-option');
+    const el = ev.target.closest('ion-item-option');
     return !!el;
   }
 

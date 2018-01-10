@@ -72,14 +72,14 @@ export class Popover {
   @Prop() component: string;
   @Prop() data: any = {};
   @Prop() cssClass: string;
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
   @Prop() ev: Event;
   @Prop() popoverId: string;
-  @Prop() showBackdrop: boolean = true;
-  @Prop() translucent: boolean = false;
-  @Prop() willAnimate: boolean = true;
+  @Prop() showBackdrop = true;
+  @Prop() translucent = false;
+  @Prop() willAnimate = true;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   private animation: Animation;

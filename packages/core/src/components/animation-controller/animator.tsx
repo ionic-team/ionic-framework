@@ -30,18 +30,18 @@ export class Animator {
   private _timerId: any;
   private _unregisterTrnsEnd: Function;
   private _writeCallbacks: Function[];
-  private _destroyed: boolean = false;
+  private _destroyed = false;
 
   parent: Animator;
   opts: AnimationOptions;
-  hasChildren: boolean = false;
-  isPlaying: boolean = false;
-  hasCompleted: boolean = false;
+  hasChildren = false;
+  isPlaying = false;
+  hasCompleted = false;
 
   addElement(elm: Node|Node[]|NodeList): Animator {
     if (elm) {
       if ((elm as NodeList).length) {
-        for (var i = 0; i < (elm as NodeList).length; i++) {
+        for (let i = 0; i < (elm as NodeList).length; i++) {
           this._addElm((elm as any)[i]);
         }
 
@@ -141,7 +141,7 @@ export class Animator {
    * Add the "to" value for a specific property.
    */
   to(prop: string, val: any, clearProperyAfterTransition?: boolean): Animator {
-    var fx = this._addProp('to', prop, val);
+    let fx = this._addProp('to', prop, val);
 
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
@@ -174,11 +174,11 @@ export class Animator {
   }
 
   private _addProp(state: string, prop: string, val: any): EffectProperty {
-    var fxProp = this._getProp(prop);
+    let fxProp = this._getProp(prop);
 
     if (!fxProp) {
       // first time we've see this EffectProperty
-      var shouldTrans = (TRANSFORM_PROPS[prop] === 1);
+      let shouldTrans = (TRANSFORM_PROPS[prop] === 1);
       fxProp = {
         effectName: prop,
         trans: shouldTrans,
@@ -190,7 +190,7 @@ export class Animator {
     }
 
     // add from/to EffectState to the EffectProperty
-    var fxState: EffectState = {
+    let fxState: EffectState = {
       val: val,
       num: null,
       effectUnit: '',
@@ -198,8 +198,8 @@ export class Animator {
     fxProp[state] = fxState;
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
-      var r = val.match(CSS_VALUE_REGEX);
-      var num = parseFloat(r[1]);
+      let r = val.match(CSS_VALUE_REGEX);
+      let num = parseFloat(r[1]);
 
       if (!isNaN(num)) {
         fxState.num = num;
@@ -246,7 +246,7 @@ export class Animator {
    */
   beforeClearStyles(propertyNames: string[]): Animator {
     this._beforeStyles = this._beforeStyles || {};
-    for (var i = 0; i < propertyNames.length; i++) {
+    for (let i = 0; i < propertyNames.length; i++) {
       this._beforeStyles[propertyNames[i]] = '';
     }
     return this;
@@ -303,7 +303,7 @@ export class Animator {
    */
   afterClearStyles(propertyNames: string[]): Animator {
     this._afterStyles = this._afterStyles || {};
-    for (var i = 0; i < propertyNames.length; i++) {
+    for (let i = 0; i < propertyNames.length; i++) {
       this._afterStyles[propertyNames[i]] = '';
     }
     return this;
@@ -313,7 +313,7 @@ export class Animator {
    * Play the animation.
    */
   play(opts?: PlayOptions) {
-    var self = this;
+    let self = this;
 
     // If the animation was already invalidated (it did finish), do nothing
     if (self._destroyed) {
@@ -349,7 +349,7 @@ export class Animator {
   syncPlay() {
     // If the animation was already invalidated (it did finish), do nothing
     if (!this._destroyed) {
-      var opts = { duration: 0 };
+      let opts = { duration: 0 };
       this._isAsync = false;
       this._clearAsync();
       this._playInit(opts);
@@ -371,8 +371,8 @@ export class Animator {
     this.hasCompleted = false;
     this._hasDur = (this.getDuration(opts) > DURATION_MIN);
 
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i]._playInit(opts);
     }
@@ -394,7 +394,7 @@ export class Animator {
    * ROOT ANIMATION
    */
   _playDomInspect(opts: PlayOptions) {
-    var self = this;
+    let self = this;
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
     // so we can read their dimensions if need be
@@ -405,7 +405,7 @@ export class Animator {
     // for the root animation only
     // set the async TRANSITION END event
     // and run onFinishes when the transition ends
-    var dur = self.getDuration(opts);
+    let dur = self.getDuration(opts);
     if (self._isAsync) {
       self._asyncEnd(dur, true);
     }
@@ -427,8 +427,8 @@ export class Animator {
    * RECURSION
    */
   _playProgress(opts: PlayOptions) {
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i]._playProgress(opts);
     }
@@ -460,8 +460,8 @@ export class Animator {
    */
   _playToStep(stepValue: number) {
     if (!this._destroyed) {
-      var children = this._childAnimations;
-      for (var i = 0; i < this._childAnimationTotal; i++) {
+      let children = this._childAnimations;
+      for (let i = 0; i < this._childAnimationTotal; i++) {
         // ******** DOM WRITE ****************
         children[i]._playToStep(stepValue);
       }
@@ -482,7 +482,7 @@ export class Animator {
    * ROOT ANIMATION
    */
   _asyncEnd(dur: number, shouldComplete: boolean) {
-    var self = this;
+    let self = this;
 
     function onTransitionEnd() {
       // congrats! a successful transition completed!
@@ -527,8 +527,8 @@ export class Animator {
    * RECURSION
    */
   _playEnd(stepValue?: number) {
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i]._playEnd(stepValue);
     }
@@ -563,8 +563,8 @@ export class Animator {
       return true;
     }
 
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       if (children[i]._hasDuration(opts)) {
         return true;
       }
@@ -581,8 +581,8 @@ export class Animator {
       return true;
     }
 
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       if (children[i]._hasDomReads()) {
         return true;
       }
@@ -619,9 +619,9 @@ export class Animator {
    */
   _progress(stepValue: number) {
     // bread 'n butter
-    var val: any;
-    var effects = this._fxProperties;
-    var nuElements = this._elementTotal;
+    let val: any;
+    let effects = this._fxProperties;
+    let nuElements = this._elementTotal;
 
     if (!effects || !nuElements || this._destroyed) {
       return;
@@ -631,19 +631,19 @@ export class Animator {
     if (this._isReverse) {
       stepValue = 1 - stepValue;
     }
-    var i = 0;
-    var j = 0;
-    var finalTransform = '';
-    var elements = this._elements;
-    var fx: EffectProperty;
+    let i = 0;
+    let j = 0;
+    let finalTransform = '';
+    let elements = this._elements;
+    let fx: EffectProperty;
 
     for (i = 0; i < effects.length; i++) {
       fx = effects[i];
 
       if (fx.from && fx.to) {
-        var fromNum = fx.from.num;
-        var toNum = fx.to.num;
-        var tweenEffect = (fromNum !== toNum);
+        let fromNum = fx.from.num;
+        let toNum = fx.to.num;
+        let tweenEffect = (fromNum !== toNum);
 
         if (tweenEffect) {
           this._hasTweenEffect = true;
@@ -659,8 +659,8 @@ export class Animator {
 
         } else if (tweenEffect) {
           // EVERYTHING IN BETWEEN
-          var valNum = (((toNum - fromNum) * stepValue) + fromNum);
-          var unit = fx.to.effectUnit;
+          let valNum = (((toNum - fromNum) * stepValue) + fromNum);
+          let unit = fx.to.effectUnit;
           if (unit === 'px') {
             valNum = Math.round(valNum);
           }
@@ -668,7 +668,7 @@ export class Animator {
         }
 
         if (val !== null) {
-          var prop = fx.effectName;
+          let prop = fx.effectName;
           if (fx.trans) {
             finalTransform += prop + '(' + val + ') ';
 
@@ -706,15 +706,15 @@ export class Animator {
     }
 
     // set the TRANSITION properties inline on the element
-    var elements = this._elements;
-    var easing = (forcedLinearEasing ? 'linear' : this.getEasing());
-    var durString = dur + 'ms';
-    var cssTransform = CSS_PROP.transitionProp;
-    var cssTransitionDuration = CSS_PROP.transitionDurationProp;
-    var cssTransitionTimingFn = CSS_PROP.transitionTimingFnProp;
+    let elements = this._elements;
+    let easing = (forcedLinearEasing ? 'linear' : this.getEasing());
+    let durString = dur + 'ms';
+    let cssTransform = CSS_PROP.transitionProp;
+    let cssTransitionDuration = CSS_PROP.transitionDurationProp;
+    let cssTransitionTimingFn = CSS_PROP.transitionTimingFnProp;
 
-    var eleStyle: any;
-    for (var i = 0; i < this._elementTotal; i++) {
+    let eleStyle: any;
+    for (let i = 0; i < this._elementTotal; i++) {
       eleStyle = elements[i].style;
       if (dur > 0) {
         // ******** DOM WRITE ****************
@@ -760,8 +760,8 @@ export class Animator {
    * RECURSION
    */
   _setBeforeStyles() {
-    var i: number, j: number;
-    var children = this._childAnimations;
+    let i: number, j: number;
+    let children = this._childAnimations;
     for (i = 0; i < this._childAnimationTotal; i++) {
       children[i]._setBeforeStyles();
     }
@@ -771,12 +771,12 @@ export class Animator {
     if (this._isReverse) {
       return;
     }
-    var addClasses = this._beforeAddClasses;
-    var removeClasses = this._beforeRemoveClasses;
+    let addClasses = this._beforeAddClasses;
+    let removeClasses = this._beforeRemoveClasses;
 
-    var elm: HTMLElement;
-    var elementClassList: DOMTokenList;
-    var prop: string;
+    let elm: HTMLElement;
+    let elementClassList: DOMTokenList;
+    let prop: string;
     for (i = 0; i < this._elementTotal; i++) {
       elm = this._elements[i];
       elementClassList = elm.classList;
@@ -812,15 +812,15 @@ export class Animator {
    * RECURSION
    */
   _fireBeforeReadFunc() {
-    var children = this._childAnimations;
-    var i = 0;
+    let children = this._childAnimations;
+    let i = 0;
 
     for (i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM READ ****************
       children[i]._fireBeforeReadFunc();
     }
 
-    var readFunctions = this._readCallbacks;
+    let readFunctions = this._readCallbacks;
     if (readFunctions) {
       for (i = 0; i < readFunctions.length; i++) {
         // ******** DOM READ ****************
@@ -834,15 +834,15 @@ export class Animator {
    * RECURSION
    */
   _fireBeforeWriteFunc() {
-    var children = this._childAnimations;
-    var i = 0;
+    let children = this._childAnimations;
+    let i = 0;
 
     for (i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i]._fireBeforeWriteFunc();
     }
 
-    var writeFunctions = this._writeCallbacks;
+    let writeFunctions = this._writeCallbacks;
     if (this._writeCallbacks) {
       for (i = 0; i < writeFunctions.length; i++) {
         // ******** DOM WRITE ****************
@@ -855,11 +855,11 @@ export class Animator {
    * DOM WRITE
    */
   _setAfterStyles() {
-    var i: number, j: number;
-    var elm: HTMLElement;
-    var elementClassList: DOMTokenList;
-    var elements = this._elements;
-    var prop: string;
+    let i: number, j: number;
+    let elm: HTMLElement;
+    let elementClassList: DOMTokenList;
+    let elements = this._elements;
+    let prop: string;
 
     for (i = 0; i < this._elementTotal; i++) {
       elm = elements[i];
@@ -931,15 +931,15 @@ export class Animator {
    * NO RECURSION
    */
   _willChange(addWillChange: boolean) {
-    var i = 0;
-    var wc: string[];
-    var effects = this._fxProperties;
-    var willChange: string;
+    let i = 0;
+    let wc: string[];
+    let effects = this._fxProperties;
+    let willChange: string;
 
     if (addWillChange && effects) {
       wc = [];
       for (i = 0; i < effects.length; i++) {
-        var propWC = effects[i].wc;
+        let propWC = effects[i].wc;
         if (propWC === 'webkitTransform') {
           wc.push('transform', '-webkit-transform');
 
@@ -978,8 +978,8 @@ export class Animator {
    * RECURSION
    */
   _progressStart() {
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i]._progressStart();
     }
@@ -999,8 +999,8 @@ export class Animator {
     // only update if the last update was more than 16ms ago
     stepValue = Math.min(1, Math.max(0, stepValue));
 
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i].progressStep(stepValue);
     }
@@ -1013,7 +1013,7 @@ export class Animator {
    * End the progress animation.
    */
   progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number) {
-    var self = this;
+    let self = this;
     if (dur === undefined) {
       dur = -1;
     }
@@ -1023,9 +1023,9 @@ export class Animator {
       // flip the step value: 0 becomes 1, 1 becomes 0
       currentStepValue = ((currentStepValue * -1) + 1);
     }
-    var stepValue = shouldComplete ? 1 : 0;
+    let stepValue = shouldComplete ? 1 : 0;
 
-    var diff = Math.abs(currentStepValue - stepValue);
+    let diff = Math.abs(currentStepValue - stepValue);
     if (diff < 0.05) {
       dur = 0;
     } else if (dur < 0) {
@@ -1058,8 +1058,8 @@ export class Animator {
    * RECURSION
    */
   _progressEnd(shouldComplete: boolean, stepValue: number, dur: number, isAsync: boolean) {
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
       children[i]._progressEnd(shouldComplete, stepValue, dur, isAsync);
     }
@@ -1108,8 +1108,8 @@ export class Animator {
    * RECURSION
    */
   _didFinishAll(hasCompleted: boolean, finishAsyncAnimations: boolean, finishNoDurationAnimations: boolean) {
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       children[i]._didFinishAll(hasCompleted, finishAsyncAnimations, finishNoDurationAnimations);
     }
 
@@ -1124,7 +1124,7 @@ export class Animator {
   _didFinish(hasCompleted: boolean) {
     this.isPlaying = false;
     this.hasCompleted = hasCompleted;
-    var i = 0;
+    let i = 0;
 
     if (this._onFinishCallbacks) {
       // run all finish callbacks
@@ -1149,8 +1149,8 @@ export class Animator {
     if (shouldReverse === undefined) {
       shouldReverse = true;
     }
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       children[i].reverse(shouldReverse);
     }
     this._isReverse = shouldReverse;
@@ -1163,8 +1163,8 @@ export class Animator {
   destroy() {
     this._destroyed = true;
 
-    var children = this._childAnimations;
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    let children = this._childAnimations;
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       children[i].destroy();
     }
 
@@ -1200,9 +1200,9 @@ export class Animator {
    */
   _transEl(): HTMLElement {
     // get the lowest level element that has an Animation
-    var targetEl: HTMLElement;
+    let targetEl: HTMLElement;
 
-    for (var i = 0; i < this._childAnimationTotal; i++) {
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       targetEl = this._childAnimations[i]._transEl();
       if (targetEl) {
         return targetEl;

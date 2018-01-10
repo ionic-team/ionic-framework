@@ -30,17 +30,17 @@ export class Gesture {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'enableListener' }) enableListener: any;
 
-  @Prop() enabled: boolean = true;
+  @Prop() enabled = true;
   @Prop() attachTo: ElementRef = 'child';
-  @Prop() autoBlockAll: boolean = false;
+  @Prop() autoBlockAll = false;
   @Prop() block: string = null;
-  @Prop() disableScroll: boolean = false;
-  @Prop() direction: string = 'x';
-  @Prop() gestureName: string = '';
-  @Prop() gesturePriority: number = 0;
-  @Prop() maxAngle: number = 40;
-  @Prop() threshold: number = 10;
-  @Prop() type: string = 'pan';
+  @Prop() disableScroll = false;
+  @Prop() direction = 'x';
+  @Prop() gestureName = '';
+  @Prop() gesturePriority = 0;
+  @Prop() maxAngle = 40;
+  @Prop() threshold = 10;
+  @Prop() type = 'pan';
 
   @Prop() canStart: GestureCallback;
   @Prop() onWillStart: (_: GestureDetail) => Promise<void>;
@@ -277,9 +277,9 @@ export class Gesture {
 
     if (startPos > 1) {
       // compute relative movement between these two points
-      var frequency = 1 / (positions[startPos] - timestamp);
-      var movedY = positions[startPos - 1] - currentY;
-      var movedX = positions[startPos - 2] - currentX;
+      let frequency = 1 / (positions[startPos] - timestamp);
+      let movedY = positions[startPos - 1] - currentY;
+      let movedX = positions[startPos - 2] - currentX;
 
       // based on XXms compute the movement to apply for each render step
       // velocity = space/time = s*(1/t) = s*frequency

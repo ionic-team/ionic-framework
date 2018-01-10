@@ -4,7 +4,7 @@ export class PanRecognizer {
   private startX: number;
   private startY: number;
 
-  private dirty: boolean = false;
+  private dirty = false;
   private threshold: number;
   private maxCosine: number;
   private isDirX: boolean;

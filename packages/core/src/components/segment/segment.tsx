@@ -37,7 +37,7 @@ export class Segment {
   /*
    * If true, the user cannot interact with the segment. Default false.
    */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) disabled = false;
 
   /**
    * the value of the segment.
@@ -51,7 +51,8 @@ export class Segment {
 
   componentDidLoad() {
     this.buttons = this.el.querySelectorAll('ion-segment-button');
-    for (var i = 0; i < this.buttons.length; i++) {
+
+    for (let i = 0; i < this.buttons.length; i++) {
       const button = this.buttons[i];
 
       button.activated = (button.value === this.value);
@@ -76,7 +77,7 @@ export class Segment {
   }
 
   selectButton(val: string) {
-    for (var i = 0; i < this.buttons.length; i++) {
+    for (let i = 0; i < this.buttons.length; i++) {
       const button = this.buttons[i];
       button.activated = (button.value === val);
     }

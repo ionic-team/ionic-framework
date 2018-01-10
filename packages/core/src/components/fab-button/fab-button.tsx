@@ -36,20 +36,20 @@ export class FabButton {
    * @input {boolean} If true, adds transparency to the fab.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
-  @Prop() activated: boolean = false;
+  @Prop() activated = false;
   @Prop() toggleActive: Function = () => {};
 
-  @Prop() show: boolean = false;
+  @Prop() show = false;
 
-  @State() private inContainer: boolean = false;
-  @State() private inList: boolean = false;
+  @State() private inContainer = false;
+  @State() private inList = false;
 
   /**
    * @input {boolean} If true, sets the button into a disabled state.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   componentDidLoad() {
     const parentNode = this.el.parentNode.nodeName;
@@ -72,7 +72,7 @@ export class FabButton {
     if (!this.inList) {
       return [];
     }
-    let listClasses = [
+    const listClasses = [
       `fab-button-in-list`,
       `fab-button-${this.mode}-in-list`
     ];

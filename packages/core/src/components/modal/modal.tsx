@@ -71,14 +71,14 @@ export class Modal {
   @Prop() component: any;
   @Prop() data: any = {};
   @Prop() cssClass: string;
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
 
   @Prop() modalId: number;
-  @Prop() showBackdrop: boolean = true;
+  @Prop() showBackdrop = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() willAnimate: boolean = true;
+  @Prop() willAnimate = true;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   private animation: Animation;

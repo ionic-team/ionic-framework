@@ -39,7 +39,7 @@ export class Tab {
   /**
    * @input {string} The badge color for the tab button.
    */
-  @Prop() badgeStyle: string = 'default';
+  @Prop() badgeStyle = 'default';
 
   /**
    * @input {boolean} If true, enable the tab. If false,

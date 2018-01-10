@@ -304,7 +304,7 @@ export class Select {
   }
 
   openPopover(ev: UIEvent) {
-    let interfaceOptions = {...this.interfaceOptions};
+    const interfaceOptions = {...this.interfaceOptions};
 
     const popoverOpts: PopoverOptions = Object.assign(interfaceOptions, {
       component: 'ion-select-popover',
@@ -343,7 +343,7 @@ export class Select {
   }
 
   openActionSheet() {
-    let interfaceOptions = {...this.interfaceOptions};
+    const interfaceOptions = {...this.interfaceOptions};
 
     const actionSheetButtons: ActionSheetButton[] = this.childOpts.map(option => {
       return {
@@ -379,7 +379,7 @@ export class Select {
   }
 
   openAlert() {
-    let interfaceOptions = {...this.interfaceOptions};
+    const interfaceOptions = {...this.interfaceOptions};
 
     const label = this.getLabel();
     let labelText: string = null;

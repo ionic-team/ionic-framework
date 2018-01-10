@@ -69,9 +69,9 @@ export class Toast {
   @Prop() closeButtonText: string;
   @Prop() dismissOnPageChange: boolean;
   @Prop() position: string;
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
   @Prop() toastId: string;
-  @Prop() willAnimate: boolean = true;
+  @Prop() willAnimate = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
@@ -158,7 +158,7 @@ export class Toast {
   }
 
   wrapperClass(): CssClassMap {
-    let wrapperClass: string[] = !this.position
+    const wrapperClass: string[] = !this.position
       ? ['toast-wrapper', 'toast-bottom']
       : [`toast-wrapper`, `toast-${this.position}`];
     return wrapperClass.reduce((prevValue: any, cssClass: any) => {

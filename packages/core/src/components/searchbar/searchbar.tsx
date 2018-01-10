@@ -13,15 +13,15 @@ import { debounce } from '../../utils/helpers';
   }
 })
 export class Searchbar {
-  private _isCancelVisible: boolean = false;
-  private _shouldBlur: boolean = true;
-  private _shouldAlignLeft: boolean = true;
+  private _isCancelVisible = false;
+  private _shouldBlur = true;
+  private _shouldAlignLeft = true;
 
   @Element() private el: HTMLElement;
 
-  @State() activated: boolean = false;
+  @State() activated = false;
 
-  @State() focused: boolean = false;
+  @State() focused = false;
 
 
   /**
@@ -66,27 +66,27 @@ export class Searchbar {
   /**
    * @input {boolean} If true, enable searchbar animation. Default `false`.
    */
-  @Prop({ mutable: true }) animated: boolean = false;
+  @Prop({ mutable: true }) animated = false;
 
   /**
    * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Prop({ mutable: true }) autocomplete: string = 'off';
+  @Prop({ mutable: true }) autocomplete = 'off';
 
   /**
    * @input {string} Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
    */
-  @Prop({ mutable: true }) autocorrect: string = 'off';
+  @Prop({ mutable: true }) autocorrect = 'off';
 
   /**
    * @input {string} Set the the cancel button text. Default: `"Cancel"`.
    */
-  @Prop({ mutable: true }) cancelButtonText: string = 'Cancel';
+  @Prop({ mutable: true }) cancelButtonText = 'Cancel';
 
   /**
    * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
    */
-  @Prop({ mutable: true }) debounce: number = 250;
+  @Prop({ mutable: true }) debounce = 250;
 
   @Watch('debounce')
   private debounceInput() {
@@ -99,22 +99,22 @@ export class Searchbar {
   /**
    * @input {string} Set the input's placeholder. Default `"Search"`.
    */
-  @Prop({ mutable: true }) placeholder: string = 'Search';
+  @Prop({ mutable: true }) placeholder = 'Search';
 
   /**
    * @input {boolean} If true, show the cancel button. Default `false`.
    */
-  @Prop({ mutable: true }) showCancelButton: boolean = false;
+  @Prop({ mutable: true }) showCancelButton = false;
 
   /**
    * @input {boolean} If true, enable spellcheck on the input. Default `false`.
    */
-  @Prop({ mutable: true }) spellcheck: boolean = false;
+  @Prop({ mutable: true }) spellcheck = false;
 
   /**
    * @input {string} Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
    */
-  @Prop({ mutable: true }) type: string = 'search';
+  @Prop({ mutable: true }) type = 'search';
 
   /**
    * @input {string} the value of the searchbar.
@@ -136,7 +136,7 @@ export class Searchbar {
     // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
     setTimeout(() => {
-      let value = this.value;
+      const value = this.value;
       if (value !== undefined && value !== '') {
         this.value = '';
         this.ionInput.emit({event: ev});
@@ -184,7 +184,7 @@ export class Searchbar {
    * based on whether there is a value in the searchbar or not.
    */
   inputBlurred() {
-    const inputEle = this.el.querySelector('.searchbar-input') as HTMLElement;
+    const inputEle = this.el.querySelector('.searchbar-input');
 
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
@@ -240,8 +240,8 @@ export class Searchbar {
    */
   positionPlaceholder() {
     const isRTL = document.dir === 'rtl';
-    const inputEle = this.el.querySelector('.searchbar-input') as HTMLElement;
-    const iconEle = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
+    const inputEle = this.el.querySelector('.searchbar-input');
+    const iconEle = this.el.querySelector('.searchbar-search-icon');
 
     if (this._shouldAlignLeft) {
       inputEle.removeAttribute('style');
@@ -249,19 +249,19 @@ export class Searchbar {
 
     } else {
       // Create a dummy span to get the placeholder width
-      var tempSpan = document.createElement('span');
+      const tempSpan = document.createElement('span');
       tempSpan.innerHTML = this.placeholder;
       document.body.appendChild(tempSpan);
 
       // Get the width of the span then remove it
-      var textWidth = tempSpan.offsetWidth;
+      const textWidth = tempSpan.offsetWidth;
       document.body.removeChild(tempSpan);
 
       // Calculate the input padding
-      var inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
+      const inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
 
       // Calculate the icon margin
-      var iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
+      const iconLeft = 'calc(50% - ' + ((textWidth / 2) + 30) + 'px)';
 
       // Set the input padding start and icon margin start
       if (isRTL) {
@@ -279,11 +279,11 @@ export class Searchbar {
    */
   positionCancelButton() {
     const isRTL = document.dir === 'rtl';
-    const cancelButton = this.el.querySelector('.searchbar-ios-cancel') as HTMLElement;
+    const cancelButton = this.el.querySelector('.searchbar-ios-cancel');
     const shouldShowCancel = this.focused;
 
     if (shouldShowCancel !== this._isCancelVisible) {
-      var cancelStyle = cancelButton.style;
+      const cancelStyle = cancelButton.style;
       this._isCancelVisible = shouldShowCancel;
       if (shouldShowCancel) {
         if (isRTL) {
@@ -292,7 +292,7 @@ export class Searchbar {
           cancelStyle.marginRight = '0';
         }
       } else {
-        var offset = cancelButton.offsetWidth;
+        const offset = cancelButton.offsetWidth;
         if (offset > 0) {
           if (isRTL) {
             cancelStyle.marginLeft = -offset + 'px';

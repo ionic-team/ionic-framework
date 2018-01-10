@@ -13,15 +13,15 @@ const enum Position {
 })
 export class InfiniteScroll {
 
-  private thrPx: number = 0;
-  private thrPc: number = 0.15;
+  private thrPx = 0;
+  private thrPc = 0.15;
   private scrollEl: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
   private init = false;
 
   @Element() private el: HTMLElement;
-  @State() isLoading: boolean = false;
+  @State() isLoading = false;
 
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'enableListener' }) enableListener: any;
@@ -36,7 +36,7 @@ export class InfiniteScroll {
    * scroll is within 100 pixels from the bottom of the page.
    * Default is `15%`.
    */
-  @Prop() threshold: string = '15%';
+  @Prop() threshold = '15%';
 
   @Watch('threshold')
   protected thresholdChanged(val: string) {
@@ -64,7 +64,7 @@ export class InfiniteScroll {
    * enabled or not. Setting to `false` will remove scroll event listeners
    * and hide the display.
    */
-  @Prop() enabled: boolean = true;
+  @Prop() enabled = true;
 
   @Watch('enabled')
   protected enabledChanged(val: boolean) {

@@ -1,4 +1,4 @@
-import { Animation, DomController, StencilElement } from '../index';
+import { Animation, StencilElement } from '../index';
 
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
@@ -59,7 +59,7 @@ export function pointerCoordX(ev: any): number {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    var changedTouches = ev.changedTouches;
+    let changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       return changedTouches[0].clientX;
     }
@@ -76,9 +76,9 @@ export function updateDetail(ev: any, detail: any) {
   let x = 0;
   let y = 0;
   if (ev) {
-    var changedTouches = ev.changedTouches;
+    let changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
-      var touch = changedTouches[0];
+      let touch = changedTouches[0];
       x = touch.clientX;
       y = touch.clientY;
     } else if (ev.pageX !== undefined) {
@@ -94,7 +94,7 @@ export function pointerCoordY(ev: any): number {
   // get Y coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    var changedTouches = ev.changedTouches;
+    let changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       return changedTouches[0].clientY;
     }
@@ -154,7 +154,7 @@ export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: stri
   const styleProps = Object.keys(styles);
 
   if (elm) {
-    for (var i = 0; i < styleProps.length; i++) {
+    for (let i = 0; i < styleProps.length; i++) {
       (elm.style as any)[styleProps[i]] = styles[styleProps[i]];
     }
   }
@@ -179,7 +179,7 @@ export function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: 
  * @param isRTL whether the application dir is rtl
  * @param defaultRight whether the default side is right
  */
-export function isRightSide(side: Side, defaultRight: boolean = false): boolean {
+export function isRightSide(side: Side, defaultRight = false): boolean {
   const isRTL = document.dir === 'rtl';
   switch (side) {
     case 'right': return true;
@@ -288,7 +288,7 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
   });
 }
 
-export function debounce(func: Function, wait: number = 250) {
+export function debounce(func: Function, wait = 250) {
   let timer: number;
   return (...args: any[]): void => {
     clearTimeout(timer);

@@ -100,17 +100,17 @@ export class Alert {
   /**
    * If true, the alert will be dismissed when the backdrop is clicked.
    */
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
 
   /**
    * If true, alert will become translucent. Requires support for backdrop-filters.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   /**
    * Enable alert animations. If false, alert will not animate in
    */
-  @Prop() willAnimate: boolean = true;
+  @Prop() willAnimate = true;
 
   /**
    * Animation to be used when the alert is shown
@@ -148,7 +148,7 @@ export class Alert {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
+      const firstInput = this.el.querySelector('[tabindex]');
       if (firstInput) {
         firstInput.focus();
       }
@@ -286,10 +286,10 @@ export class Alert {
   }
 
   buttonClass(button: AlertButton): CssClassMap {
-    let buttonClass: string[] = ['alert-button'];
+    const buttonClass: string[] = ['alert-button'];
 
     if (button.cssClass) {
-      let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+      const customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
       buttonClass.push(customClass);
     }
 
@@ -412,7 +412,7 @@ export class Alert {
 
     this.inputs = this.inputs
       .map((i, index) => {
-        let r: AlertInput = {
+        const r: AlertInput = {
           type: i.type || 'text',
           name: i.name ? i.name : index + '',
           placeholder: i.placeholder ? i.placeholder : '',

@@ -17,7 +17,7 @@ export class Scroll {
   private tmr: any;
   private queued = false;
 
-  isScrolling: boolean = false;
+  isScrolling = false;
   detail: ScrollDetail = {};
 
   @Element() private el: HTMLElement;
@@ -26,13 +26,13 @@ export class Scroll {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'isServer' }) isServer: boolean;
 
-  @Prop() enabled: boolean = true;
-  @Prop() jsScroll: boolean = false;
+  @Prop() enabled = true;
+  @Prop() jsScroll = false;
 
   @Watch('jsScroll')
   jsScrollChanged(js: boolean) {
     if (js) {
-      throw 'jsScroll: TODO!';
+      throw new Error('jsScroll: TODO!');
     }
   }
 
@@ -136,7 +136,7 @@ export class Scroll {
 
       // where .5 would be 50% of time on a linear scale easedT gives a
       // fraction based on the easing method
-      let easedT = (--time) * time * time + 1;
+      const easedT = (--time) * time * time + 1;
 
       if (fromY !== y) {
         self.setTop((easedT * (y - fromY)) + fromY);
@@ -228,20 +228,20 @@ export class Scroll {
       detail.deltaY = (detail.scrollTop - detail.startY);
       detail.deltaX = (detail.scrollLeft - detail.startX);
 
-      var endPos = (positions.length - 1);
-      var startPos = endPos;
-      var timeRange = (detail.timeStamp - 100);
+      const endPos = (positions.length - 1);
+      let startPos = endPos;
+      const timeRange = (detail.timeStamp - 100);
 
       // move pointer to position measured 100ms ago
-      for (var i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
+      for (let i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
         startPos = i;
       }
 
       if (startPos !== endPos) {
         // compute relative movement between these two points
-        var deltaY = (positions[startPos - 2] - positions[endPos - 2]);
-        var deltaX = (positions[startPos - 1] - positions[endPos - 1]);
-        var factor = 1 / (positions[startPos] - positions[endPos]);
+        const deltaY = (positions[startPos - 2] - positions[endPos - 2]);
+        const deltaX = (positions[startPos - 1] - positions[endPos - 1]);
+        const factor = 1 / (positions[startPos] - positions[endPos]);
 
         // based on XXms compute the movement to apply for each render step
         detail.velocityY = deltaY * factor;

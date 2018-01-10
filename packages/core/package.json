@@ -23,7 +23,7 @@
     "sass-lint": "^1.12.1",
     "selenium-webdriver": "^3.6.0",
     "tslint": "^5.8.0",
-    "tslint-ionic-rules": "0.0.11",
+    "tslint-ionic-rules": "0.0.12",
     "yargs": "^10.0.3"
   },
   "scripts": {

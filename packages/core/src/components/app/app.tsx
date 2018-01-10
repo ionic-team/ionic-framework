@@ -19,8 +19,8 @@ export class App {
   @Element() element: HTMLElement;
 
   @State() modeCode: string;
-  @State() hoverCSS: boolean = false;
-  @State() useRouter: boolean = false;
+  @State() hoverCSS = false;
+  @State() useRouter = false;
 
   @Prop({ context: 'config' }) config: Config;
 

@@ -39,15 +39,15 @@ export class ReorderGroup {
   private containerTop: number;
   private containerBottom: number;
 
-  @State() _enabled: boolean = false;
-  @State() _iconVisible: boolean = false;
-  @State() _actived: boolean = false;
+  @State() _enabled = false;
+  @State() _iconVisible = false;
+  @State() _actived = false;
 
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'dom' }) dom: DomController;
 
-  @Prop() enabled: boolean = false;
+  @Prop() enabled = false;
 
   /**
    * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
@@ -108,8 +108,8 @@ export class ReorderGroup {
     }
 
     let sum = 0;
-    for (var i = 0, ilen = children.length; i < ilen; i++) {
-      var child = children[i];
+    for (let i = 0, ilen = children.length; i < ilen; i++) {
+      const child = children[i];
       sum += child.offsetHeight;
       heights.push(sum);
       child.$ionIndex = i;
@@ -120,7 +120,7 @@ export class ReorderGroup {
     this.containerBottom = box.bottom;
 
     if (this.scrollEl) {
-      var scrollBox = this.scrollEl.getBoundingClientRect();
+      const scrollBox = this.scrollEl.getBoundingClientRect();
       this.scrollElInitial = this.scrollEl.scrollTop;
       this.scrollElTop = scrollBox.top + AUTO_SCROLL_MARGIN;
       this.scrollElBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
@@ -155,7 +155,7 @@ export class ReorderGroup {
     const normalizedY = currentY - top;
     const toIndex = this.itemIndexForTop(normalizedY);
     if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
-      let fromIndex = indexForItem(selectedItem);
+      const fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
       hapticSelectionChanged();
@@ -224,9 +224,9 @@ export class ReorderGroup {
     const itemHeight = this.selectedItemHeight;
     const children = this.containerEl.children;
     const transform = CSS_PROP.transformProp;
-    for (var i = 0; i < children.length; i++) {
-      var style = (children[i] as any).style;
-      var value = '';
+    for (let i = 0; i < children.length; i++) {
+      const style = (children[i] as any).style;
+      let value = '';
       if (i > fromIndex && i <= toIndex) {
         value = `translateY(${-itemHeight}px)`;
       } else if (i < fromIndex && i >= toIndex) {

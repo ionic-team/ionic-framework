@@ -22,7 +22,7 @@ export class Footer {
    * attribute needs to be set on the content.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'header-translucent') : {};

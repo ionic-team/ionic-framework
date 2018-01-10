@@ -117,7 +117,7 @@ describe('matchRoute', () => {
       { id: 4, path: '' },
     ];
     const seg = new RouterSegments(['hola', 'manu', 'adam']);
-    let match = matchRoute(seg, routes);
+    const match = matchRoute(seg, routes);
     expect(match).toBeNull();
   });
 
@@ -171,7 +171,7 @@ describe('matchRoute', () => {
       { id: 3, path: 'adam/manu' },
     ];
     const seg = new RouterSegments(['adam', 'manu', 'hello', 'menu', 'hello']);
-    let match = matchRoute(seg, routes);
+    const match = matchRoute(seg, routes);
     expect(match.id).toEqual(1);
     expect(matchRoute(seg, routes)).toBeNull();
   });

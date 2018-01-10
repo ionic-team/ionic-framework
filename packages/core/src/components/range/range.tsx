@@ -16,18 +16,18 @@ export class Range implements BaseInputComponent {
 
   private styleTmr: any;
 
-  activated: boolean = false;
-  hasFocus: boolean = false;
+  activated = false;
+  hasFocus = false;
   startX: number;
 
   @Element() private el: HTMLElement;
 
   @State() barL: string;
   @State() barR: string;
-  @State() valA: number = 0;
-  @State() valB: number = 0;
-  @State() ratioA: number = 0;
-  @State() ratioB: number = 0;
+  @State() valA = 0;
+  @State() valB = 0;
+  @State() ratioA = 0;
+  @State() ratioB = 0;
   @State() ticks: any[] = [];
   @State() activeB: boolean;
   @State() rect: ClientRect;
@@ -74,7 +74,7 @@ export class Range implements BaseInputComponent {
    * @input {number} How long, in milliseconds, to wait to trigger the
    * `ionChange` event after each change in the range value. Default `0`.
    */
-  @Prop() debounce: number = 0;
+  @Prop() debounce = 0;
 
   @Watch('debounce')
   private debounceChange() {
@@ -87,39 +87,39 @@ export class Range implements BaseInputComponent {
   /*
    * @input {boolean} If true, the user cannot interact with the range. Default false.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
    * @input {boolean} Show two knobs. Defaults to `false`.
    */
-  @Prop() dualKnobs: boolean = false;
+  @Prop() dualKnobs = false;
 
   /**
    * @input {number} Maximum integer value of the range. Defaults to `100`.
    */
-  @Prop() max: number = 100;
+  @Prop() max = 100;
 
   /**
    * @input {number} Minimum integer value of the range. Defaults to `0`.
    */
-  @Prop() min: number = 0;
+  @Prop() min = 0;
 
   /**
    * @input {boolean} If true, a pin with integer value is shown when the knob
    * is pressed. Defaults to `false`.
    */
-  @Prop() pin: boolean = false;
+  @Prop() pin = false;
 
   /**
    * @input {boolean} If true, the knob snaps to tick marks evenly spaced based
    * on the step property value. Defaults to `false`.
    */
-  @Prop() snaps: boolean = false;
+  @Prop() snaps = false;
 
   /**
    * @input {number} Specifies the value granularity. Defaults to `1`.
    */
-  @Prop() step: number = 1;
+  @Prop() step = 1;
 
   /**
    * @input {string} the value of the range.
@@ -203,7 +203,7 @@ export class Range implements BaseInputComponent {
   createTicks() {
     if (this.snaps) {
       for (let value = this.min; value <= this.max; value += this.step) {
-        let ratio = this.valueToRatio(value);
+        const ratio = this.valueToRatio(value);
         this.ticks.push({
           ratio,
           left: `${ratio * 100}%`
@@ -218,7 +218,7 @@ export class Range implements BaseInputComponent {
     const ratio = this.ratio;
     if (this.snaps && ticks) {
       if (this.dualKnobs) {
-        let upperRatio = this.ratioUpper();
+        const upperRatio = this.ratioUpper();
 
         ticks.forEach(t => {
           t.active = t.ratio >= ratio && t.ratio <= upperRatio;
@@ -256,7 +256,7 @@ export class Range implements BaseInputComponent {
     // figure out where the pointer is currently at
     // update the knob being interacted with
     let ratio = clamp(0, (current.x - rect.left) / rect.width, 1);
-    let val = this.ratioToValue(ratio);
+    const val = this.ratioToValue(ratio);
 
     if (this.snaps) {
       // snaps the ratio to the current value

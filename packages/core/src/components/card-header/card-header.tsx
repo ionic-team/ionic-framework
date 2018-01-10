@@ -29,7 +29,7 @@ export class CardHeader {
    * If true, adds transparency to the card header.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'card-header-translucent') : {};

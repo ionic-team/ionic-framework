@@ -10,7 +10,7 @@ import { Config } from '../../index';
   }
 })
 export class Tabs {
-  private ids: number = -1;
+  private ids = -1;
   private tabsId: number = (++tabIds);
 
   @Element() el: HTMLElement;
@@ -51,9 +51,9 @@ export class Tabs {
    * attribute needs to be set on the content.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
-  @Prop() scrollable: boolean = false;
+  @Prop() scrollable = false;
 
   /**
    * @output {any} Emitted when the tab changes.
@@ -91,7 +91,7 @@ export class Tabs {
     }
 
     // Reset rest of tabs
-    for (let tab of this.tabs) {
+    for (const tab of this.tabs) {
       if (selectedTab !== tab) {
         tab.selected = false;
       }

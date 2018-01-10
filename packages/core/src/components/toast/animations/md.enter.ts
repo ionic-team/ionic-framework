@@ -7,7 +7,7 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();
-  const wrapperEle = baseElm.querySelector('.toast-wrapper') as HTMLElement;
+  const wrapperEle = baseElm.querySelector('.toast-wrapper');
   wrapperAnimation.addElement(wrapperEle);
 
   switch (position) {
@@ -15,7 +15,7 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
       wrapperAnimation.fromTo('translateY', '-100%', '0%');
       break;
     case 'middle':
-      let topPosition = Math.floor(
+      const topPosition = Math.floor(
         baseElm.clientHeight / 2 - wrapperEle.clientHeight / 2
       );
       wrapperEle.style.top = `${topPosition}px`;

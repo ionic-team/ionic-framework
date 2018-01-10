@@ -45,7 +45,7 @@ export class Content {
    * and footers. This effect can easily be seen by setting the toolbar
    * to transparent.
    */
-  @Prop() fullscreen: boolean = false;
+  @Prop() fullscreen = false;
 
   @Listen('body:ionNavChanged')
   onNavChanged() {
@@ -53,7 +53,7 @@ export class Content {
   }
 
   componentDidLoad() {
-    this.scrollEl = this.el.querySelector('ion-scroll') as HTMLIonScrollElement;
+    this.scrollEl = this.el.querySelector('ion-scroll');
     this.resize();
   }
 
@@ -81,7 +81,7 @@ export class Content {
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
   @Method()
-  scrollToTop(duration: number = 300) {
+  scrollToTop(duration = 300) {
     return this.scrollEl.scrollToTop(duration);
   }
 
@@ -92,7 +92,7 @@ export class Content {
    * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
    */
   @Method()
-  scrollToBottom(duration: number = 300) {
+  scrollToBottom(duration = 300) {
     return this.scrollEl.scrollToBottom(duration);
   }
 

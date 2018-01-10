@@ -49,12 +49,12 @@ export class Toggle implements CheckboxInput {
   /**
    * @input {boolean} If true, the toggle is selected. Defaults to `false`.
    */
-  @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked = false;
 
   /*
    * @input {boolean} If true, the user cannot interact with the toggle. Default false.
    */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) disabled = false;
 
   /**
    * @input {string} the value of the toggle.

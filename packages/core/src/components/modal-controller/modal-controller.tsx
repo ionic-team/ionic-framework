@@ -29,7 +29,7 @@ export class ModalController {
   }
 
   @Method()
-  dismiss(data?: any, role?: any, modalId: number = -1) {
+  dismiss(data?: any, role?: any, modalId = -1) {
     modalId = modalId >= 0 ? modalId : getHighestId();
     const modal = modals.get(modalId);
     return modal.dismiss(data, role);
