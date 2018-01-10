@@ -49,7 +49,6 @@ export class SegmentButton {
     ev.preventDefault();
     ev.stopPropagation();
 
-    console.log('in segment button click');
     this.emitClick();
   }
 

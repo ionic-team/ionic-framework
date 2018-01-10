@@ -50,14 +50,12 @@ export class AlertController {
 
   @Listen('body:ionAlertWillPresent')
   protected willPresent(event: AlertEvent) {
-    console.log('willPresent: ', event);
     this.alerts.push(event.target as HTMLIonAlertElement);
   }
 
   @Listen('body:ionAlertWillDismiss')
   @Listen('body:ionAlertDidUnload')
   protected willDismiss(event: AlertEvent) {
-    console.log('willDismiss: ', event);
     const index = this.alerts.indexOf(event.target as HTMLIonAlertElement);
     if (index > -1) {
       this.alerts.splice(index, 1);

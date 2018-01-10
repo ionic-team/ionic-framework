@@ -23,8 +23,6 @@ export class Navbar {
   backButtonClick(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
-
-    console.log('back button click');
   }
 
   componentDidLoad() {

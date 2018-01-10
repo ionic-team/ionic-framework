@@ -145,6 +145,5 @@ export function handleBackButtonClick(): Promise<any> {
   const promise = menuControllerElement ?  isReady(menuControllerElement) : Promise.resolve();
   return promise.then(() => {
     // TODO check if the menu is open, close it if so
-    console.log('todo');
   });
 }
