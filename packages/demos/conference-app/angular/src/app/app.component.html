@@ -8,17 +8,41 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
+
           <ion-list>
             <ion-list-header>
               Navigate
             </ion-list-header>
-            <ion-item (click)="openPage(p)" *ngFor="let p of appPages">
+            <ion-item menuToggle (click)="openPage(p)" *ngFor="let p of appPages">
               <ion-icon slot="start" [name]="p.icon" [color]="isActive(p)"></ion-icon>
               <ion-label>
                 {{p.title}}
               </ion-label>
             </ion-item>
           </ion-list>
+
+          <ion-list>
+            <ion-list-header>
+              Account
+            </ion-list-header>
+            <ion-item menuToggle *ngFor="let p of loggedOutPages" (click)="openPage(p)">
+              <ion-icon slot="start" [name]="p.icon" [color]="isActive(p)"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+          <ion-list>
+            <ion-list-header>
+              Tutorial
+            </ion-list-header>
+            <ion-item menuToggle (click)="openTutorial()">
+              <ion-icon slot="start" name="hammer"></ion-icon>
+              <ion-label>Show Tutorial</ion-label>
+            </ion-item>
+          </ion-list>
+
         </ion-content>
     </ion-menu>
 

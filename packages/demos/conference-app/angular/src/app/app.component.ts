@@ -69,7 +69,6 @@ export class AppComponent implements OnInit {
     // Check if the user has already seen the tutorial
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
-        console.log('hasSeenTutorial: ', hasSeenTutorial);
         if (hasSeenTutorial) {
           this.rootPage = TabsPage;
         } else {
@@ -96,7 +95,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  openPage(page: PageInterface) {
+  openPage(page: PageInterface): Promise<any> {
     let params = {};
 
     // the nav component was found using @ViewChild(Nav)
@@ -106,25 +105,30 @@ export class AppComponent implements OnInit {
       params = { tabIndex: page.index };
     }
 
-    // If we are already on tabs just change the selected tab
-    // don't setRoot again, this maintains the history stack of the
-    // tabs even if changing them from the menu
-    /*if (getNav(this.navRef).getChildNavs().length && page.index !== undefined) {
-      getNav(this.navRef).getChildNavs()[0].select(page.index);
-    } else {
-      // Set the root of the nav with params if it's a tab index
-      getNav(this.navRef).setRoot(page.name, params).catch((err: any) => {
-        console.log(`Didn't set nav root: ${err}`);
-      });
+    // check if it's in the appPAges
+    for (const appPage of this.appPages) {
+      if (page === appPage) {
+        // sweet, select the tab
+        const tabs = document.querySelector('ion-tabs');
+        return (tabs as any).componentOnReady().then(() => {
+          return tabs.select(page.index);
+        }).then(() => {
+          if (page.logsOut === true) {
+            // Give the menu time to close before changing to logged out
+            return this.userData.logout();
+          }
+        });
+      }
     }
-    */
-    console.log('TODO DANNNNNNN');
 
-
-    if (page.logsOut === true) {
-      // Give the menu time to close before changing to logged out
-      this.userData.logout();
-    }
+    return getNav(this.navRef).then(() => {
+      return nav.setRoot(page.component, params);
+    }).then(() => {
+      if (page.logsOut === true) {
+        // Give the menu time to close before changing to logged out
+        return this.userData.logout();
+      }
+    });
   }
 
   openTutorial() {
