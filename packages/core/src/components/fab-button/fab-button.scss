@@ -32,10 +32,8 @@
 }
 
 .fab-button ion-icon {
-  flex: 1;
-
   font-size: 24px;
-  line-height: 18px;
+  line-height: 1;
 }
 
 // FAB Mini
@@ -64,15 +62,6 @@ ion-fab-button[mini] .fab-button {
   transform: scale(.4) rotateZ(-45deg);
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
-}
-
-.fab-button-close-icon .icon-inner {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  height: 100%;
 }
 
 
