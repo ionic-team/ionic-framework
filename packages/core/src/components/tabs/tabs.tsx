@@ -98,18 +98,11 @@ export class Tabs {
     }
     selectedTab.selected = true;
 
-    // The same selected was selected
-    // we need to set root in the nested ion-nav if it exist
-    /*if (this.selectedTab === selectedTab) {
-      return selectedTab.goToRoot();
-    }
-    */
-
     const leavingTab = this.selectedTab;
     this.selectedTab = selectedTab;
 
     let promise = selectedTab.setActive(true);
-    if (leavingTab) {
+    if (leavingTab && leavingTab !== selectedTab) {
       promise = promise.then(() => leavingTab.setActive(false));
     }
 
