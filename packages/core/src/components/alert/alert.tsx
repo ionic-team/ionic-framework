@@ -148,7 +148,7 @@ export class Alert {
       return playAnimationAsync(animation);
     }).then((animation) => {
       animation.destroy();
-      const firstInput = this.el.querySelector('[tabindex]');
+      const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
       if (firstInput) {
         firstInput.focus();
       }

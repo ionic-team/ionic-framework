@@ -504,7 +504,7 @@ export class Datetime {
       }
     }
     const selectedIndex = column.selectedIndex = clamp(indexMin, column.selectedIndex, indexMax);
-    opt = column.options[selectedIndex];
+    const opt = column.options[selectedIndex];
     if (opt) {
       return opt.value;
     }

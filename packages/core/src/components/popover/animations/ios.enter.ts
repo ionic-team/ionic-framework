@@ -7,7 +7,7 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   let originY = 'top';
   let originX = 'left';
 
-  const contentEl = baseElm.querySelector('.popover-content');
+  const contentEl = baseElm.querySelector('.popover-content') as HTMLElement;
   const contentDimentions = contentEl.getBoundingClientRect();
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
@@ -28,7 +28,7 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   const targetWidth = (targetDim && targetDim.width) || 0;
   const targetHeight = (targetDim && targetDim.height) || 0;
 
-  const arrowEl = baseElm.querySelector('.popover-arrow');
+  const arrowEl = baseElm.querySelector('.popover-arrow') as HTMLElement;
 
   const arrowDim = arrowEl.getBoundingClientRect();
   const arrowWidth = arrowDim.width;

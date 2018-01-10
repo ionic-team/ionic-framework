@@ -184,7 +184,7 @@ export class Searchbar {
    * based on whether there is a value in the searchbar or not.
    */
   inputBlurred() {
-    const inputEle = this.el.querySelector('.searchbar-input');
+    const inputEle = this.el.querySelector('.searchbar-input') as HTMLInputElement;
 
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
@@ -240,8 +240,8 @@ export class Searchbar {
    */
   positionPlaceholder() {
     const isRTL = document.dir === 'rtl';
-    const inputEle = this.el.querySelector('.searchbar-input');
-    const iconEle = this.el.querySelector('.searchbar-search-icon');
+    const inputEle = this.el.querySelector('.searchbar-input') as HTMLInputElement;
+    const iconEle = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this._shouldAlignLeft) {
       inputEle.removeAttribute('style');
@@ -279,7 +279,7 @@ export class Searchbar {
    */
   positionCancelButton() {
     const isRTL = document.dir === 'rtl';
-    const cancelButton = this.el.querySelector('.searchbar-ios-cancel');
+    const cancelButton = this.el.querySelector('.searchbar-ios-cancel') as HTMLElement;
     const shouldShowCancel = this.focused;
 
     if (shouldShowCancel !== this._isCancelVisible) {

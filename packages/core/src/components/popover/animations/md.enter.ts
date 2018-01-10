@@ -7,7 +7,7 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
   let originY = 'top';
   let originX = 'left';
 
-  const contentEl = baseElm.querySelector('.popover-content');
+  const contentEl = baseElm.querySelector('.popover-content') as HTMLElement;
   const contentDimentions = contentEl.getBoundingClientRect();
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
