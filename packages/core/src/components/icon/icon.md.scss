@@ -10,7 +10,7 @@
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   .icon-md-#{$color-name} {
-    fill: $color-base;
+    color: $color-base;
   }
 
 }
