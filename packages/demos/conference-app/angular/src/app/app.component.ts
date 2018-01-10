@@ -39,22 +39,22 @@ export class AppComponent implements OnInit {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
-    { title: 'Schedule', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'calendar' },
-    { title: 'Speakers', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'contacts' },
-    { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map' },
-    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle' }
+    { title: 'Schedule', name: 'TabsPage', component: TabsPage, tabComponent: SchedulePage, index: 0, icon: 'calendar', color: null },
+    { title: 'Speakers', name: 'TabsPage', component: TabsPage, tabComponent: SpeakerListPage, index: 1, icon: 'contacts', color: null },
+    { title: 'Map', name: 'TabsPage', component: TabsPage, tabComponent: MapPage, index: 2, icon: 'map', color: null },
+    { title: 'About', name: 'TabsPage', component: TabsPage, tabComponent: AboutPage, index: 3, icon: 'information-circle', color: null }
   ];
 
   loggedInPages: PageInterface[] = [
-    { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person' },
-    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
-    { title: 'Logout', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true }
+    { title: 'Account', name: 'AccountPage', component: AccountPage, icon: 'person', color: null },
+    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help', color: null },
+    { title: 'Logout', name: 'TabsPage', component: TabsPage, icon: 'log-out', logsOut: true, color: null }
   ];
 
   loggedOutPages: PageInterface[] = [
-    { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
-    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
-    { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add' }
+    { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in', color: null },
+    { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help', color: null },
+    { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add', color: null }
   ];
 
   constructor(
@@ -75,8 +75,8 @@ export class AppComponent implements OnInit {
         } else {
           this.rootPage = TutorialPage;
         }
-        getNav(this.navRef).then((nav) => {
-          nav.setRoot(this.rootPage);
+        getNav(this.navRef).then((navElement) => {
+          navElement.setRoot(this.rootPage);
         });
       });
 
@@ -90,6 +90,10 @@ export class AppComponent implements OnInit {
     this.enableMenu(true);
 
     this.listenToLoginEvents();
+
+    return getNav(this.navRef).then(() => {
+      this.appPages = this.appPages.concat([]);
+    });
   }
 
   openPage(page: PageInterface) {
@@ -149,27 +153,28 @@ export class AppComponent implements OnInit {
   }
 
   isActive(page: PageInterface) {
-    return 'primary';
-    // const childNav = getNav(this.navRef).getChildNavs()[0];
-
-    // Tabs are a special case because they have their own navigation
-    /*if (childNav) {
-      if (childNav.getSelected() && childNav.getSelected().root === page.tabComponent) {
-        return 'primary';
-      }
+    if (!nav) {
       return;
     }
-
-    if (this.nav.getActive() && this.nav.getActive().name === page.name) {
-      return 'primary';
+    if (nav.root === TabsPage) {
+      const selectedTab = nav.element.querySelector('ion-tab-button.selected-tab');
+      const childNav = selectedTab.querySelector('ion-nav');
+      if ( childNav.root === page.component) {
+        return 'primary';
+      }
+      return '';
+    } else {
+      if (nav.getActive() && nav.getActive().component === page.component) {
+        page.color = 'primary';
+      }
+      page.color = '';
     }
-    return;
-    */
   }
 }
 
 function getNav(elementRef: ElementRef): Promise<HTMLIonNavElement> {
   return (elementRef.nativeElement as any).componentOnReady().then(() => {
+    nav = elementRef.nativeElement;
     return elementRef.nativeElement as HTMLIonNavElement;
   });
 }
@@ -183,4 +188,7 @@ export interface PageInterface {
   index?: number;
   tabName?: string;
   tabComponent?: any;
+  color: string;
 }
+
+let nav: HTMLIonNavElement = null;
