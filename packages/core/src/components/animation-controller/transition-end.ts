@@ -3,7 +3,7 @@
 export function transitionEnd(elm: HTMLElement, callback: {(ev?: TransitionEvent): void}) {
   let unRegTrans: Function;
   let unRegWKTrans: Function;
-  let opts: any = { passive: true };
+  const opts: any = { passive: true };
 
   function unregister() {
     unRegWKTrans && unRegWKTrans();

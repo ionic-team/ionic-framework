@@ -59,7 +59,7 @@ export function pointerCoordX(ev: any): number {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    let changedTouches = ev.changedTouches;
+    const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       return changedTouches[0].clientX;
     }
@@ -76,9 +76,9 @@ export function updateDetail(ev: any, detail: any) {
   let x = 0;
   let y = 0;
   if (ev) {
-    let changedTouches = ev.changedTouches;
+    const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
-      let touch = changedTouches[0];
+      const touch = changedTouches[0];
       x = touch.clientX;
       y = touch.clientY;
     } else if (ev.pageX !== undefined) {
@@ -94,7 +94,7 @@ export function pointerCoordY(ev: any): number {
   // get Y coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    let changedTouches = ev.changedTouches;
+    const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       return changedTouches[0].clientY;
     }

@@ -1,6 +1,6 @@
 
 export let CSS_PROP = function(docEle: HTMLElement) {
-  let css: {
+  const css: {
     transformProp?: string;
     transitionProp?: string;
     transitionDurationProp?: string;
@@ -28,7 +28,7 @@ export let CSS_PROP = function(docEle: HTMLElement) {
   }
 
   // The only prefix we care about is webkit for transitions.
-  let prefix = css.transitionProp.indexOf('webkit') > -1 ? '-webkit-' : '';
+  const prefix = css.transitionProp.indexOf('webkit') > -1 ? '-webkit-' : '';
 
   // transition duration
   css.transitionDurationProp = prefix + 'transition-duration';

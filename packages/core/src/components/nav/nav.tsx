@@ -1017,7 +1017,7 @@ export function getEnteringView(ti: TransitionInstruction, nav: Nav, leavingView
     return ti.insertViews[ti.insertViews.length - 1];
   }
   if (isDef(ti.removeStart)) {
-    let removeEnd = ti.removeStart + ti.removeCount;
+    const removeEnd = ti.removeStart + ti.removeCount;
     for (let i = nav.views.length - 1; i >= 0; i--) {
       if ((i < ti.removeStart || i >= removeEnd) && nav.views[i] !== leavingView) {
         return nav.views[i];

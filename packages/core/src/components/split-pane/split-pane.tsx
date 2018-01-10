@@ -67,8 +67,8 @@ export class SplitPane {
     const nu = this.el.childElementCount;
     let foundMain = false;
     for (let i = 0; i < nu; i++) {
-      let child = children[i] as HTMLElement;
-      let isMain = child.hasAttribute('main');
+      const child = children[i] as HTMLElement;
+      const isMain = child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
           console.warn('split pane can not have more than one main node');

@@ -277,9 +277,9 @@ export class Gesture {
 
     if (startPos > 1) {
       // compute relative movement between these two points
-      let frequency = 1 / (positions[startPos] - timestamp);
-      let movedY = positions[startPos - 1] - currentY;
-      let movedX = positions[startPos - 2] - currentX;
+      const frequency = 1 / (positions[startPos] - timestamp);
+      const movedY = positions[startPos - 1] - currentY;
+      const movedX = positions[startPos - 2] - currentX;
 
       // based on XXms compute the movement to apply for each render step
       // velocity = space/time = s*(1/t) = s*frequency

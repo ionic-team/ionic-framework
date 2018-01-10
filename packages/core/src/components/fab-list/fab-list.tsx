@@ -15,7 +15,7 @@ export class FabList {
     const fabs = this.el.querySelectorAll('ion-fab-button');
 
     // if showing the fabs add a timeout, else show immediately
-    let timeout = activated ? 30 : 0;
+    const timeout = activated ? 30 : 0;
     for (let i = 0; i < fabs.length; i++) {
       const fab = fabs[i];
       setTimeout(() => fab.show = activated, i * timeout);

@@ -85,8 +85,8 @@ export function isPlatformMatch(url: string, userAgent: string, platformName: st
 
 export function queryParam(url: string, key: string) {
   key = key.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  let regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
-  let results = regex.exec(url);
+  const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
+  const results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
 }
 
