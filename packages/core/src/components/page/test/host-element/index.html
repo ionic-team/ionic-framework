@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Page - Host Element</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+
+  <script>
+
+  class PageOne extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `
+      <ion-page>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Page One</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Content for the host element
+        </ion-content>
+      `;
+    }
+  }
+
+  customElements.define('page-one', PageOne);
+  </script>
+</head>
+
+<body>
+  <div>
+    <page-one></page-one>
+  </div>
+</body>
+
+</html>
