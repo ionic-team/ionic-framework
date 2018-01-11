@@ -26,22 +26,22 @@ export class Content {
   @Prop({ context: 'dom' }) dom: DomController;
 
   /**
-   * @output {ScrollEvent} Emitted when the scrolling first starts.
+   * Emitted when the scrolling first starts.
    */
   @Prop() ionScrollStart: Function;
 
   /**
-   * @output {ScrollEvent} Emitted on every scroll event.
+   * Emitted on every scroll event.
    */
   @Prop() ionScroll: Function;
 
   /**
-   * @output {ScrollEvent} Emitted when scrolling ends.
+   * Emitted when scrolling ends.
    */
   @Prop() ionScrollEnd: Function;
 
   /**
-   * @input {boolean} If true, the content will scroll behind the headers
+   * If true, the content will scroll behind the headers
    * and footers. This effect can easily be seen by setting the toolbar
    * to transparent.
    */
@@ -77,8 +77,8 @@ export class Content {
   /**
    * Scroll to the top of the content component.
    *
-   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
+   * Duration of the scroll animation in milliseconds. Defaults to `300`.
+   * Returns a promise which is resolved when the scroll has completed.
    */
   @Method()
   scrollToTop(duration = 300) {
@@ -88,8 +88,8 @@ export class Content {
   /**
    * Scroll to the bottom of the content component.
    *
-   * @param {number} [duration]  Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * @returns {Promise} Returns a promise which is resolved when the scroll has completed.
+   * Duration of the scroll animation in milliseconds. Defaults to `300`.
+   * Returns a promise which is resolved when the scroll has completed.
    */
   @Method()
   scrollToBottom(duration = 300) {
