@@ -1,7 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Swiper } from './vendor/swiper.js';
-// import { SwiperOptions } from './vendor/swiper'; // TODO
-
+import { debounce } from '../../utils/helpers';
 @Component({
   tag: 'ion-slides',
   styleUrl: 'slides.scss',
@@ -12,73 +11,71 @@ export class Slides {
   private container: HTMLElement;
   private init: boolean;
   private swiper: any;
-  private slidesId: number;
-  private slideId: string;
 
   @Element() private el: HTMLElement;
 
   /**
-   * @output {Event} Emitted before the active slide has changed.
+   * Emitted before the active slide has changed.
    */
   @Event() ionSlideWillChange: EventEmitter;
 
   /**
-   * @output {Event} Emitted after the active slide has changed.
+   * Emitted after the active slide has changed.
    */
   @Event() ionSlideDidChange: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the next slide has started.
+   * Emitted when the next slide has started.
    */
   @Event() ionSlideNextStart: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the previous slide has started.
+   * Emitted when the previous slide has started.
    */
   @Event() ionSlidePrevStart: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the next slide has ended.
+   * Emitted when the next slide has ended.
    */
   @Event() ionSlideNextEnd: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the previous slide has ended.
+   * Emitted when the previous slide has ended.
    */
   @Event() ionSlidePrevEnd: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the slide transition has started.
+   * Emitted when the slide transition has started.
    */
   @Event() ionSlideTransitionStart: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the slide transition has ended.
+   * Emitted when the slide transition has ended.
    */
   @Event() ionSlideTransitionEnd: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the slider is actively being moved.
+   * Emitted when the slider is actively being moved.
    */
   @Event() ionSlideDrag: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the slider is at its initial position.
+   * Emitted when the slider is at its initial position.
    */
   @Event() ionSlideReachStart: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the slider is at the last slide.
+   * Emitted when the slider is at the last slide.
    */
   @Event() ionSlideReachEnd: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the user first touches the slider.
+   * Emitted when the user first touches the slider.
    */
   @Event() ionSlideTouchStart: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the user releases the touch.
+   * Emitted when the user releases the touch.
    */
   @Event() ionSlideTouchEnd: EventEmitter;
 
@@ -116,21 +113,16 @@ export class Slides {
     );
   }
 
-  constructor() {
-    this.slidesId = ++slidesId;
-    this.slideId = 'slides-' + this.slidesId;
-  }
-
   private initSlides() {
     if (!this.init) {
       console.debug(`ion-slides, init`);
 
       this.container = this.el.children[0] as HTMLElement;
-
+      const finalOptions = this.normalizeOptions();
       // init swiper core
-      this.swiper = new Swiper(this.container, this.normalizeOptions());
+      this.swiper = new Swiper(this.container, finalOptions);
 
-      if (this.options.keyboardControl) {
+      if (finalOptions.keyboardControl) {
         // init keyboard event listeners
         this.enableKeyboardControl(true);
       }
@@ -261,13 +253,9 @@ export class Slides {
   }
 
   componentDidLoad() {
-    /**
-     * TODO: This should change because currently componentDidLoad fires independent of whether the
-     * child components are ready.
-     */
-    setTimeout(() => {
-      this.initSlides();
-    }, 10);
+    let timer: number;
+    clearTimeout(timer);
+    timer = setTimeout(this.initSlides.bind(this), 10);
   }
 
   /**
@@ -292,10 +280,6 @@ export class Slides {
 
   /**
    * Transition to the specified slide.
-   *
-   * @param {number} index  The index number of the slide.
-   * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks] Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   @Method()
   slideTo(index: number, speed?: number, runCallbacks?: boolean) {
@@ -304,9 +288,6 @@ export class Slides {
 
   /**
    * Transition to the next slide.
-   *
-   * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   @Method()
   slideNext(speed?: number, runCallbacks?: boolean) {
@@ -315,9 +296,6 @@ export class Slides {
 
   /**
    * Transition to the previous slide.
-   *
-   * @param {number} [speed]  Transition duration (in ms).
-   * @param {boolean} [runCallbacks]  Whether or not to emit the `ionSlideWillChange`/`ionSlideDidChange` events. Default true.
    */
   @Method()
   slidePrev(speed?: number, runCallbacks?: boolean) {
@@ -326,8 +304,6 @@ export class Slides {
 
   /**
    * Get the index of the active slide.
-   *
-   * @returns {number} The index number of the current slide.
    */
   @Method()
   getActiveIndex(): number {
@@ -336,8 +312,6 @@ export class Slides {
 
   /**
    * Get the index of the previous slide.
-   *
-   * @returns {number} The index number of the previous slide.
    */
   @Method()
   getPreviousIndex(): number {
@@ -346,8 +320,6 @@ export class Slides {
 
   /**
    * Get the total number of slides.
-   *
-   * @returns {number} The total number of slides.
    */
   @Method()
   length(): number {
@@ -357,7 +329,6 @@ export class Slides {
   /**
    * Get whether or not the current slide is the last slide.
    *
-   * @returns {boolean} If the slide is the last slide or not.
    */
   @Method()
   isEnd(): boolean {
@@ -366,8 +337,6 @@ export class Slides {
 
   /**
    * Get whether or not the current slide is the first slide.
-   *
-   * @returns {boolean} If the slide is the first slide or not.
    */
   @Method()
   isBeginning(): boolean {
@@ -378,7 +347,7 @@ export class Slides {
    * Start auto play.
    */
   @Method()
-  startAutoplay(speed?: number): void {
+  startAutoplay(): void {
     this.swiper.startAutoplay();
   }
 
@@ -433,9 +402,6 @@ export class Slides {
     this.swiper.disableKeyboardControl();
   }
 
-  /**
-   * @hidden
-   */
   componentDidUnload() {
     this.init = false;
 

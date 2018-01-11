@@ -97,9 +97,6 @@ any
 #### removeView()
 
 
-#### resize()
-
-
 #### setPages()
 
 
