@@ -3,11 +3,11 @@ import { Animation } from '../../../index';
 /**
  * Md Popover Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement, ev?: Event): Promise<Animation> {
+export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
-  const contentEl = baseElm.querySelector('.popover-content') as HTMLElement;
+  const contentEl = baseEl.querySelector('.popover-content') as HTMLElement;
   const contentDimentions = contentEl.getBoundingClientRect();
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
@@ -56,7 +56,7 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
     targetTop - contentHeight > 0
   ) {
     popoverCSS.top = targetTop - contentHeight;
-    baseElm.className = baseElm.className + ' popover-bottom';
+    baseEl.className = baseEl.className + ' popover-bottom';
     originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off
   } else if (targetTop + targetHeight + contentHeight > bodyHeight) {
@@ -70,23 +70,23 @@ export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElem
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.popover-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('.popover-backdrop'));
   backdropAnimation.fromTo('opacity', 0.01, 0.08);
 
   const wrapperAnimation = new Animation();
-  wrapperAnimation.addElement(baseElm.querySelector('.popover-wrapper'));
+  wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
   wrapperAnimation.fromTo('opacity', 0.01, 1);
 
   const contentAnimation = new Animation();
-  contentAnimation.addElement(baseElm.querySelector('.popover-content'));
+  contentAnimation.addElement(baseEl.querySelector('.popover-content'));
   contentAnimation.fromTo('scale', 0.001, 1);
 
   const viewportAnimation = new Animation();
-  viewportAnimation.addElement(baseElm.querySelector('.popover-viewport'));
+  viewportAnimation.addElement(baseEl.querySelector('.popover-viewport'));
   viewportAnimation.fromTo('opacity', 0.01, 1);
 
   return Promise.resolve(baseAnimation
-    .addElement(baseElm)
+    .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(300)
     .add(backdropAnimation)

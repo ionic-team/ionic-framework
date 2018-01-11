@@ -53,8 +53,6 @@ export function toDashCase(str: string) {
   return str.replace(/([A-Z])/g, (g) => '-' + g[0].toLowerCase());
 }
 
-export function noop() {}
-
 export function pointerCoordX(ev: any): number {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
@@ -107,33 +105,33 @@ export function pointerCoordY(ev: any): number {
 
 export type ElementRef = 'child' | 'parent' | 'body' | 'document' | 'window';
 
-export function getElementReference(elm: any, ref: ElementRef) {
+export function getElementReference(el: any, ref: ElementRef) {
   if (ref === 'child') {
-    return elm.firstElementChild;
+    return el.firstElementChild;
   }
   if (ref === 'parent') {
-    return getParentElement(elm) || elm;
+    return getParentElement(el) || el;
   }
   if (ref === 'body') {
-    return elm.ownerDocument.body;
+    return el.ownerDocument.body;
   }
   if (ref === 'document') {
-    return elm.ownerDocument;
+    return el.ownerDocument;
   }
   if (ref === 'window') {
-    return elm.ownerDocument.defaultView;
+    return el.ownerDocument.defaultView;
   }
-  return elm;
+  return el;
 }
 
-export function getParentElement(elm: any) {
-  if (elm.parentElement ) {
+export function getParentElement(el: any) {
+  if (el.parentElement ) {
     // normal element with a parent element
-    return elm.parentElement;
+    return el.parentElement;
   }
-  if (elm.parentNode && elm.parentNode.host) {
+  if (el.parentNode && el.parentNode.host) {
     // shadow dom's document fragment
-    return elm.parentNode.host;
+    return el.parentNode.host;
   }
   return null;
 }
@@ -150,12 +148,12 @@ export function getPageElement(el: HTMLElement) {
   return getParentElement(el);
 }
 
-export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: string|number}) {
+export function applyStyles(el: HTMLElement, styles: {[styleProp: string]: string|number}) {
   const styleProps = Object.keys(styles);
 
-  if (elm) {
+  if (el) {
     for (let i = 0; i < styleProps.length; i++) {
-      (elm.style as any)[styleProps[i]] = styles[styleProps[i]];
+      (el.style as any)[styleProps[i]] = styles[styleProps[i]];
     }
   }
 }

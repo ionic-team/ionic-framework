@@ -128,16 +128,11 @@ export class InfiniteScroll {
     const height = this.scrollEl.offsetHeight;
     const threshold = this.thrPc ? (height * this.thrPc) : this.thrPx;
 
-    let distanceFromInfinite: number;
+    const distanceFromInfinite = (this.position === Position.Bottom)
+      ? scrollHeight - infiniteHeight - scrollTop - threshold - height
+      : scrollTop - infiniteHeight - threshold;
 
-    if (this.position === Position.Bottom) {
-      distanceFromInfinite = scrollHeight - infiniteHeight - scrollTop - threshold - height;
-    } else {
-      // assert(this.position === Position.Top, '_position should be top');
-      distanceFromInfinite = scrollTop - infiniteHeight - threshold;
-    }
-
-    if (distanceFromInfinite < 0) {
+      if (distanceFromInfinite < 0) {
       if (!this.didFire) {
         this.isLoading = true;
         this.didFire = true;
@@ -177,7 +172,8 @@ export class InfiniteScroll {
     this.isLoading = false;
 
     if (this.position === Position.Top) {
-      /** New content is being added at the top, but the scrollTop position stays the same,
+      /**
+       * New content is being added at the top, but the scrollTop position stays the same,
        * which causes a scroll jump visually. This algorithm makes sure to prevent this.
        * (Frame 1)
        *    - complete() is called, but the UI hasn't had time to update yet.
@@ -217,9 +213,9 @@ export class InfiniteScroll {
   }
 
   /**
-  * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
-  * change state of infiniteScroll to "complete"
-  */
+   * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
+   * change state of infiniteScroll to "complete"
+   */
   waitFor(action: Promise<any>) {
     const enable = this.complete.bind(this);
     action.then(enable, enable);

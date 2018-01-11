@@ -871,7 +871,9 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
   }).then(() => {
     // set which animation it should use if it wasn't set yet
     if (ti.requiresTransition && !ti.opts.animation) {
-      ti.opts.animation = isDef(ti.removeStart) ? (leavingView || enteringView).getTransitionName(ti.opts.direction) : (enteringView || leavingView).getTransitionName(ti.opts.direction);
+      ti.opts.animation = isDef(ti.removeStart)
+        ? (leavingView || enteringView).getTransitionName(ti.opts.direction)
+        : (enteringView || leavingView).getTransitionName(ti.opts.direction);
     }
   });
 }

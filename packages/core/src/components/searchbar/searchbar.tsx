@@ -167,13 +167,13 @@ export class Searchbar {
   }
 
   inputUpdated() {
-    // const inputEle = this.el.querySelector('.searchbar-input') as HTMLInputElement;
+    // const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElment;
 
     // It is important not to re-assign the value if it is the same, because,
     // otherwise, the caret is moved to the end of the input
-    // if (inputEle && inputEle.value !== this.value) {
-    //   // inputEle.value = this.value;
-    //   this.value = inputEle.value;
+    // if (inputEl && inputEl.value !== this.value) {
+    //   // inputEl.value = this.value;
+    //   this.value = inputEl.value;
     // }
 
     this.positionElements();
@@ -184,12 +184,12 @@ export class Searchbar {
    * based on whether there is a value in the searchbar or not.
    */
   inputBlurred() {
-    const inputEle = this.el.querySelector('.searchbar-input') as HTMLInputElement;
+    const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElement;
 
     // _shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
     if (this._shouldBlur === false) {
-      inputEle.focus();
+      inputEl.focus();
       this._shouldBlur = true;
       this.ionBlur.emit({this: this});
       this.inputUpdated();
@@ -240,12 +240,12 @@ export class Searchbar {
    */
   positionPlaceholder() {
     const isRTL = document.dir === 'rtl';
-    const inputEle = this.el.querySelector('.searchbar-input') as HTMLInputElement;
-    const iconEle = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
+    const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElement;
+    const iconEl = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this._shouldAlignLeft) {
-      inputEle.removeAttribute('style');
-      iconEle.removeAttribute('style');
+      inputEl.removeAttribute('style');
+      iconEl.removeAttribute('style');
 
     } else {
       // Create a dummy span to get the placeholder width
@@ -265,11 +265,11 @@ export class Searchbar {
 
       // Set the input padding start and icon margin start
       if (isRTL) {
-        inputEle.style.paddingRight = inputLeft;
-        iconEle.style.marginRight = iconLeft;
+        inputEl.style.paddingRight = inputLeft;
+        iconEl.style.marginRight = iconLeft;
       } else {
-        inputEle.style.paddingLeft = inputLeft;
-        iconEle.style.marginLeft = iconLeft;
+        inputEl.style.paddingLeft = inputLeft;
+        iconEl.style.marginLeft = iconLeft;
       }
     }
   }

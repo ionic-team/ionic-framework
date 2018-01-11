@@ -273,7 +273,9 @@ export class Gesture {
     // move pointer to position measured 100ms ago
     for (;
       startPos > 0 && positions[startPos] > timeRange;
-      startPos -= 3) { }
+      startPos -= 3) {
+        // TODO why is this empty?
+    }
 
     if (startPos > 1) {
       // compute relative movement between these two points

@@ -314,14 +314,11 @@ export class Datetime {
         const key = convertFormatToKey(format);
         let values: any[];
 
-        // first see if they have exact values to use for this input
-        if (this[key + 'Values']) {
-          // user provide exact values for this date part
-          values = convertToArrayOfNumbers(this[key + 'Values'], key);
-        } else {
-          // use the default date part values
-          values = dateValueRange(format, this.datetimeMin, this.datetimeMax);
-        }
+        // check if they have exact values to use for this date part
+        // otherwise use the default date part values
+        values = this[key + 'Values']
+          ? convertToArrayOfNumbers(this[key + 'Values'], key)
+          : dateValueRange(format, this.datetimeMin, this.datetimeMax);
 
         const column: PickerColumn = {
           name: key,

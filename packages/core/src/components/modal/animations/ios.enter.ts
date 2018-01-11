@@ -4,14 +4,14 @@ import { Animation } from '../../../index';
 /**
  * iOS Modal Enter Animation
  */
-export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
+export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.modal-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('.modal-backdrop'));
 
   const wrapperAnimation = new Animation();
-  wrapperAnimation.addElement(baseElm.querySelector('.modal-wrapper'));
+  wrapperAnimation.addElement(baseEl.querySelector('.modal-wrapper'));
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
                   .fromTo('translateY', '100%', '0%');
@@ -19,7 +19,7 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   backdropAnimation.fromTo('opacity', 0.01, 0.4);
 
   return Promise.resolve(baseAnimation
-    .addElement(baseElm)
+    .addElement(baseEl)
     .easing('cubic-bezier(0.36,0.66,0.04,1)')
     .duration(400)
     .beforeAddClass('show-modal')
@@ -30,7 +30,7 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
 /**
  * Animations for modals
  */
-// export function modalSlideIn(rootElm: HTMLElement) {
+// export function modalSlideIn(rootEl: HTMLElement) {
 
 // }
 

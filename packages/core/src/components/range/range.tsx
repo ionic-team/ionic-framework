@@ -337,7 +337,7 @@ export class Range implements BaseInputComponent {
   keyChng(ev: RangeEvent) {
     const step = this.step;
     if (ev.detail.knob === 'knobB') {
-      if (!!ev.detail.isIncrease) {
+      if (ev.detail.isIncrease) {
         this.valB += step;
       } else {
         this.valB -= step;
@@ -345,7 +345,7 @@ export class Range implements BaseInputComponent {
       this.valB = clamp(this.min, this.valB, this.max);
       this.ratioB = this.valueToRatio(this.valB);
     } else {
-      if (!!ev.detail.isIncrease) {
+      if (ev.detail.isIncrease) {
         this.valA += step;
       } else {
         this.valA -= step;

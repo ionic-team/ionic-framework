@@ -234,8 +234,8 @@ describe('breadthFirstSearch', () => {
   });
 });
 
-describe('readNavState', () => {
-  it('should read state', () => {
+// describe('readNavState', () => {
+//   it('should read state', () => {
 
-  });
-});
+//   });
+// });

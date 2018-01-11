@@ -38,15 +38,15 @@ export class Animator {
   isPlaying = false;
   hasCompleted = false;
 
-  addElement(elm: Node|Node[]|NodeList): Animator {
-    if (elm) {
-      if ((elm as NodeList).length) {
-        for (let i = 0; i < (elm as NodeList).length; i++) {
-          this._addElm((elm as any)[i]);
+  addElement(el: Node|Node[]|NodeList): Animator {
+    if (el) {
+      if ((el as NodeList).length) {
+        for (let i = 0; i < (el as NodeList).length; i++) {
+          this._addEl((el as any)[i]);
         }
 
       } else {
-        this._addElm(elm);
+        this._addEl(el);
       }
     }
 
@@ -56,9 +56,9 @@ export class Animator {
   /**
    * NO DOM
    */
-  private _addElm(elm: any) {
-    if (elm.nodeType === 1) {
-      this._elementTotal = (this._elements = this._elements || []).push(elm);
+  private _addEl(el: any) {
+    if (el.nodeType === 1) {
+      this._elementTotal = (this._elements = this._elements || []).push(el);
     }
   }
 
@@ -774,12 +774,12 @@ export class Animator {
     const addClasses = this._beforeAddClasses;
     const removeClasses = this._beforeRemoveClasses;
 
-    let elm: HTMLElement;
+    let el: HTMLElement;
     let elementClassList: DOMTokenList;
     let prop: string;
     for (i = 0; i < this._elementTotal; i++) {
-      elm = this._elements[i];
-      elementClassList = elm.classList;
+      el = this._elements[i];
+      elementClassList = el.classList;
 
       // css classes to add before the animation
       if (addClasses) {
@@ -801,7 +801,7 @@ export class Animator {
       if (this._beforeStyles) {
         for (prop in this._beforeStyles) {
           // ******** DOM WRITE ****************
-          (elm as any).style[prop] = this._beforeStyles[prop];
+          (el as any).style[prop] = this._beforeStyles[prop];
         }
       }
     }
@@ -856,18 +856,18 @@ export class Animator {
    */
   _setAfterStyles() {
     let i: number, j: number;
-    let elm: HTMLElement;
+    let el: HTMLElement;
     let elementClassList: DOMTokenList;
     const elements = this._elements;
     let prop: string;
 
     for (i = 0; i < this._elementTotal; i++) {
-      elm = elements[i];
-      elementClassList = elm.classList;
+      el = elements[i];
+      elementClassList = el.classList;
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      (elm as any).style[CSS_PROP.transitionDurationProp] = (elm as any).style[CSS_PROP.transitionTimingFnProp] = '';
+      (el as any).style[CSS_PROP.transitionDurationProp] = (el as any).style[CSS_PROP.transitionTimingFnProp] = '';
 
       if (this._isReverse) {
         // finished in reverse direction
@@ -892,7 +892,7 @@ export class Animator {
         if (this._beforeStyles) {
           for (prop in this._beforeStyles) {
             // ******** DOM WRITE ****************
-            (elm as any).style[prop] = '';
+            (el as any).style[prop] = '';
           }
         }
 
@@ -919,7 +919,7 @@ export class Animator {
         if (this._afterStyles) {
           for (prop in this._afterStyles) {
             // ******** DOM WRITE ****************
-            (elm as any).style[prop] = this._afterStyles[prop];
+            (el as any).style[prop] = this._afterStyles[prop];
           }
         }
       }

@@ -47,7 +47,9 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData,
 
       return (locale.dayShortNames ? locale.dayShortNames : DAY_SHORT_NAMES)[value];
 
-    } catch (e) {}
+    } catch (e) {
+      // ignore
+    }
 
     return '';
   }
@@ -248,12 +250,9 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
       // do some magic for 12-hour values
       if (newData.ampm && newData.hour) {
-        if (newData.ampm.value === 'pm') {
-          newData.hour.value = (newData.hour.value === 12 ? 12 : newData.hour.value + 12);
-
-        } else {
-          newData.hour.value = (newData.hour.value === 12 ? 0 : newData.hour.value);
-        }
+        newData.hour.value = (newData.ampm.value === 'pm')
+          ? (newData.hour.value === 12 ? 12 : newData.hour.value + 12)
+          : (newData.hour.value === 12 ? 0 : newData.hour.value);
       }
 
       // merge new values from the picker's selection

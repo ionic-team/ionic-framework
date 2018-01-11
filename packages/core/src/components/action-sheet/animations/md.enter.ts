@@ -4,20 +4,20 @@ import { Animation } from '../../../index';
 /**
  * MD Action Sheet Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
+export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.action-sheet-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('.action-sheet-backdrop'));
 
   const wrapperAnimation = new Animation();
-  wrapperAnimation.addElement(baseElm.querySelector('.action-sheet-wrapper'));
+  wrapperAnimation.addElement(baseEl.querySelector('.action-sheet-wrapper'));
 
   backdropAnimation.fromTo('opacity', 0.01, 0.26);
   wrapperAnimation.fromTo('translateY', '100%', '0%');
 
   const ani = baseAnimation
-    .addElement(baseElm)
+    .addElement(baseEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(400)
     .add(backdropAnimation)

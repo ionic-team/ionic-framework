@@ -75,7 +75,7 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
-    /**
+  /**
    * Emitted when the button has focus.
    */
   @Event() ionFocus: EventEmitter<FocusEvent>;

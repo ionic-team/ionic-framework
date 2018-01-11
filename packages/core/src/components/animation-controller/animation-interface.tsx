@@ -1,12 +1,12 @@
 export interface AnimationController {
-  create(animationBuilder?: AnimationBuilder, baseElm?: any, opts?: any): Promise<Animation>;
+  create(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation>;
 }
 
 export interface Animation {
-  new (): Animation;
+  new (): any;
   parent: Animation;
   hasChildren: boolean;
-  addElement(elm: Node|Node[]|NodeList): Animation;
+  addElement(el: Node|Node[]|NodeList): Animation;
   add(childAnimation: Animation): Animation;
   duration(milliseconds: number): Animation;
   easing(name: string): Animation;
@@ -42,7 +42,7 @@ export interface Animation {
 
 
 export interface AnimationBuilder {
-(Animation: Animation, baseElm?: HTMLElement, opts?: any): Promise<Animation>;
+(Animation: Animation, baseEl?: HTMLElement, opts?: any): Promise<Animation>;
 }
 
 

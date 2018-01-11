@@ -48,10 +48,10 @@ export class PickerColumnCmp {
 
   componentDidLoad() {
     // get the scrollable element within the column
-    const colEle = this.el.querySelector('.picker-opts');
+    const colEl = this.el.querySelector('.picker-opts');
 
     // get the height of one option
-    this.optHeight = (colEle.firstElementChild ? colEle.firstElementChild.clientHeight : 0);
+    this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
 
     // TODO block goback-swipe and menu-swipe
     // this.activeBlock = 'goback-swipe menu-swipe';

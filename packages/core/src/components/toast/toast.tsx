@@ -180,9 +180,10 @@ export class Toast {
   }
 
   render() {
-    let userCssClass = 'toast-content';
     if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
+      this.cssClass.split(' ').forEach(cssClass => {
+        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
+      });
     }
 
     return (

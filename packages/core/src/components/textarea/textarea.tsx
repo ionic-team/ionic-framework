@@ -209,8 +209,8 @@ export class Textarea implements TextareaComponent {
   }
 
   /**
-  * Check if we need to clear the text input if clearOnEdit is enabled
-  */
+   * Check if we need to clear the text input if clearOnEdit is enabled
+   */
   checkClearOnEdit(ev: any) {
     if (!this.clearOnEdit) {
       return;

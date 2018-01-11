@@ -39,7 +39,7 @@ export class FabButton {
   @Prop() translucent = false;
 
   @Prop() activated = false;
-  @Prop() toggleActive: Function = () => {};
+  @Prop() toggleActive: Function;
 
   @Prop() show = false;
 

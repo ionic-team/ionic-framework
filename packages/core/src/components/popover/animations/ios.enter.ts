@@ -3,11 +3,11 @@ import { Animation } from '../../../index';
 /**
  * iOS Popover Enter Animation
  */
-export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLElement, ev?: Event): Promise<Animation> {
+export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
-  const contentEl = baseElm.querySelector('.popover-content') as HTMLElement;
+  const contentEl = baseEl.querySelector('.popover-content') as HTMLElement;
   const contentDimentions = contentEl.getBoundingClientRect();
   const contentWidth = contentDimentions.width;
   const contentHeight = contentDimentions.height;
@@ -28,7 +28,7 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   const targetWidth = (targetDim && targetDim.width) || 0;
   const targetHeight = (targetDim && targetDim.height) || 0;
 
-  const arrowEl = baseElm.querySelector('.popover-arrow') as HTMLElement;
+  const arrowEl = baseEl.querySelector('.popover-arrow') as HTMLElement;
 
   const arrowDim = arrowEl.getBoundingClientRect();
   const arrowWidth = arrowDim.width;
@@ -82,7 +82,7 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   ) {
     arrowCSS.top = targetTop - (arrowHeight + 1);
     popoverCSS.top = targetTop - contentHeight - (arrowHeight - 1);
-    baseElm.className = baseElm.className + ' popover-bottom';
+    baseEl.className = baseEl.className + ' popover-bottom';
     originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off
   } else if (targetTop + targetHeight + contentHeight > bodyHeight) {
@@ -116,15 +116,15 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.popover-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('.popover-backdrop'));
   backdropAnimation.fromTo('opacity', 0.01, 0.08);
 
   const wrapperAnimation = new Animation();
-  wrapperAnimation.addElement(baseElm.querySelector('.popover-wrapper'));
+  wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
   wrapperAnimation.fromTo('opacity', 0.01, 1);
 
   return Promise.resolve(baseAnimation
-    .addElement(baseElm)
+    .addElement(baseEl)
     .easing('ease')
     .duration(100)
     .add(backdropAnimation)

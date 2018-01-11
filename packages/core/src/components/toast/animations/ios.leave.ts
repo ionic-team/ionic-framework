@@ -3,11 +3,11 @@ import { Animation } from '../../../index';
 /**
  * iOS Toast Leave Animation
  */
-export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLElement, position: string): Promise<Animation> {
+export default function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();
-  const wrapperEle = baseElm.querySelector('.toast-wrapper') as HTMLElement;
+  const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
   wrapperAnimation.addElement(wrapperEle);
   switch (position) {
     case 'top':
@@ -21,7 +21,7 @@ export default function iosLeaveAnimation(Animation: Animation, baseElm: HTMLEle
       break;
   }
   return Promise.resolve(baseAnimation
-    .addElement(baseElm)
+    .addElement(baseEl)
     .easing('cubic-bezier(.36,.66,.04,1)')
     .duration(300)
     .add(wrapperAnimation));

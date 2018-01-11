@@ -1,6 +1,6 @@
 
 
-export function transitionEnd(elm: HTMLElement, callback: {(ev?: TransitionEvent): void}) {
+export function transitionEnd(el: HTMLElement, callback: {(ev?: TransitionEvent): void}) {
   let unRegTrans: Function;
   let unRegWKTrans: Function;
   const opts: any = { passive: true };
@@ -11,21 +11,21 @@ export function transitionEnd(elm: HTMLElement, callback: {(ev?: TransitionEvent
   }
 
   function onTransitionEnd(ev: TransitionEvent) {
-    if (elm === ev.target) {
+    if (el === ev.target) {
       unregister();
       callback(ev);
     }
   }
 
-  if (elm) {
-    elm.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+  if (el) {
+    el.addEventListener('webkitTransitionEnd', onTransitionEnd, opts);
     unRegWKTrans = function() {
-      elm.removeEventListener('webkitTransitionEnd', onTransitionEnd, opts);
+      el.removeEventListener('webkitTransitionEnd', onTransitionEnd, opts);
     };
 
-    elm.addEventListener('transitionend', onTransitionEnd, opts);
+    el.addEventListener('transitionend', onTransitionEnd, opts);
     unRegTrans = function() {
-      elm.removeEventListener('transitionend', onTransitionEnd, opts);
+      el.removeEventListener('transitionend', onTransitionEnd, opts);
     };
   }
 
