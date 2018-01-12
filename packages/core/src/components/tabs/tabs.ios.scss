@@ -10,7 +10,7 @@
   height: $tabs-ios-tab-height;
 
   border-top: $tabs-ios-border;
-  background: $tabs-ios-background;
+  background-color: $tabs-ios-background-color;
 
   contain: strict;
 }
@@ -104,7 +104,7 @@
 // --------------------------------------------------
 
 .tabbar-translucent-ios {
-  background-color: rgba($tabs-ios-background, $tabbar-ios-translucent-opacity);
+  background-color: $tabs-ios-translucent-background-color;
 
   -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
   backdrop-filter: $tabbar-ios-translucent-filter;
@@ -114,14 +114,20 @@
 // iOS Tabbar Color Mixin
 // --------------------------------------------------
 
-@mixin tabbar-ios($color-name, $color-base, $color-contrast) {
+@mixin tabbar-ios($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
+
+  $color-base-value: ion-color($colors-ios, $color-name, base, ios, true);
+  $color-contrast-value: ion-color($colors-ios, $color-name, contrast, ios, true);
 
   .tabbar-ios-#{$color-name} {
-    border-color: darken($color-base, 10%);
-    color: rgba($color-contrast, .7);
+    border-color: darken($color-base-value, 10%);
+    color: rgba($color-contrast-value, .7);
     background-color: $color-base;
 
-    fill: rgba($color-contrast, .7);
+    fill: rgba($color-contrast-value, .7);
   }
 
   .tabbar-ios-#{$color-name} .tab-selected {
@@ -131,7 +137,7 @@
   }
 
   .tabbar-translucent-ios-#{$color-name} {
-    background-color: rgba($color-base, $tabbar-ios-translucent-opacity);
+    background-color: rgba($color-base-value, $tabbar-ios-translucent-opacity);
   }
 
 }
@@ -139,6 +145,6 @@
 // iOS Tabbar Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  @include tabbar-ios($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-ios {
+  @include tabbar-ios($color-name);
 }

@@ -209,7 +209,7 @@ export class Popover {
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class='popover-backdrop'
+        class={'popover-backdrop popover-backdrop-' + this.mode}
       />,
       <div class={wrapperClasses}>
         <div class='popover-arrow' />

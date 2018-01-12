@@ -110,7 +110,9 @@
 // Material Design Checkbox Color Mixin
 // --------------------------------------------------
 
-@mixin checkbox-theme-md($color-name, $color-base, $color-contrast) {
+@mixin checkbox-theme-md($color-name) {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
 
   .checkbox-md-#{$color-name} .checkbox-checked {
     border-color: $color-base;
@@ -120,13 +122,12 @@
   .checkbox-md-#{$color-name} .checkbox-checked .checkbox-inner {
     border-color: $color-contrast;
   }
-
 }
 
 
 // Generate Material Design Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  @include checkbox-theme-md($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-md {
+  @include checkbox-theme-md($color-name);
 }

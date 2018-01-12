@@ -11,7 +11,7 @@
 
   max-width: $alert-ios-max-width;
 
-  background-color: $alert-ios-background;
+  background-color: $alert-ios-background-color;
 
   box-shadow: $alert-ios-box-shadow;
 }
@@ -21,7 +21,7 @@
 // -----------------------------------------
 
 .alert-translucent-ios .alert-wrapper {
-  background: rgba($alert-ios-background, $alert-ios-translucent-opacity);
+  background: $alert-ios-translucent-background-color;
 
   backdrop-filter: $alert-ios-translucent-filter;
   -webkit-backdrop-filter: $alert-ios-translucent-filter;

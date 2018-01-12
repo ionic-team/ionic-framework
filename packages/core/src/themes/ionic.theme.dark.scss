@@ -17,7 +17,7 @@ $colors: (
 
 
 $text-color:                 #fff !default;
-$link-color:                 color($colors, primary) !default;
+$link-color:                 ion-color($colors, primary) !default;
 $background-color:           #191919 !default;
 
 $font-family-base:           -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif !default;

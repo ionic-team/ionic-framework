@@ -43,10 +43,10 @@ $chip-ios-label-margin-bottom:              $chip-ios-label-margin-top !default;
 $chip-ios-label-margin-start:               $chip-ios-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
-$chip-ios-icon-background-color:            color($colors-ios, primary) !default;
+$chip-ios-icon-background-color:            ion-color($colors-ios, primary, $mode: ios) !default;
 
 /// @prop - Fill color of the icon in the chip
-$chip-ios-icon-fill-color:                  color-contrast($colors-ios, $chip-ios-icon-background-color) !default;
+$chip-ios-icon-fill-color:                  ion-color($colors-ios, $chip-ios-icon-background-color, contrast, ios) !default;
 
 /// @prop - Width of the avatar in the chip
 $chip-ios-avatar-width:                     32px !default;

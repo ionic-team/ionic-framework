@@ -39,7 +39,7 @@ $input-md-show-valid-highlight:           $input-md-show-focus-highlight !defaul
 $input-md-show-invalid-highlight:         $input-md-show-focus-highlight !default;
 
 /// @prop - Color of the input highlight
-$input-md-highlight-color:                color($colors-md, primary) !default;
+$input-md-highlight-color:                ion-color($colors-md, primary) !default;
 
 /// @prop - Color of the input highlight when valid
 $input-md-highlight-color-valid:          $input-highlight-color-valid !default;

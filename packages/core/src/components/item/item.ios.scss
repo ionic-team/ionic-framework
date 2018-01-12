@@ -181,7 +181,11 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
 // Generate iOS Item and Item Divider Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
+
   // If there is text with a color it should use this color
   // and override whatever item sets it to
   .item-ios .text-ios-#{$color-name} {
@@ -198,7 +202,7 @@ ion-item-group .item-wrapper:last-child .item-ios .item-inner {
     }
 
     &.activated {
-      background-color: color-shade($color-base);
+      background-color: $color-shade;
     }
   }
 }

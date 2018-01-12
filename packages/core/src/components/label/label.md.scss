@@ -57,7 +57,8 @@
 // Generate Material Design Label colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
 
   .label-md-#{$color-name},
   .item-input .label-md-#{$color-name},
@@ -65,5 +66,4 @@
   .item-datetime .label-md-#{$color-name} {
     color: $color-base;
   }
-
 }

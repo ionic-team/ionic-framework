@@ -102,7 +102,9 @@
 // iOS Checkbox Color Mixin
 // --------------------------------------------------
 
-@mixin checkbox-theme-ios($color-name, $color-base, $color-contrast) {
+@mixin checkbox-theme-ios($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .checkbox-ios-#{$color-name} .checkbox-checked {
     border-color: $color-base;
@@ -112,13 +114,12 @@
   .checkbox-ios-#{$color-name} .checkbox-checked .checkbox-inner {
     border-color: $color-contrast;
   }
-
 }
 
 
 // Generate iOS Checkbox Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  @include checkbox-theme-ios($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-ios {
+  @include checkbox-theme-ios($color-name);
 }

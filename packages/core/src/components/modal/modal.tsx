@@ -202,6 +202,7 @@ export class Modal {
         onClick={this.backdropClick.bind(this)}
         class={{
           'modal-backdrop': true,
+          ['modal-backdrop-' + this.mode]: true,
           'hide-backdrop': !this.showBackdrop
         }}
       ></div>,

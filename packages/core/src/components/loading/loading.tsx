@@ -265,6 +265,7 @@ export class Loading {
         autoBlockAll
         class={{
           'loading-backdrop': true,
+          ['loading-backdrop-' + this.mode] : true,
           'hide-backdrop': !this.showBackdrop
         }}
       ></ion-gesture>,

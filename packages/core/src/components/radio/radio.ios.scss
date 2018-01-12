@@ -99,7 +99,8 @@
 // iOS Radio Color Mixin
 // --------------------------------------------------
 
-@mixin radio-theme-ios($color-name, $color-base) {
+@mixin radio-theme-ios($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .item-radio-ios-#{$color-name}.item-radio-checked ion-label {
     color: $color-base;
@@ -112,13 +113,12 @@
   .radio-ios-#{$color-name} .radio-checked  .radio-inner {
     border-color: $color-base;
   }
-
 }
 
 
 // Generate iOS Radio Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  @include radio-theme-ios($color-name, $color-base);
+@each $color-name, $color-value in $colors-ios {
+  @include radio-theme-ios($color-name);
 }

@@ -32,13 +32,20 @@ $modes:                     (ios,md);
  */
 @function css-variable-to-name-variation($variable) {
   // Determine the name of this color from the CSS Variable
-  $index: str-index($variable, $default-color-prefix);
-  $end-index: str-index($variable, ',');
-  @if ($end-index == null) {
-    $end-index: str-index($variable, ')');
-  }
-  $name: str-slice($variable, $index + str-length($default-color-prefix), $end-index - 1);
+  $prefix: #{$css-variable-prefix}#{$default-color-prefix};
+  // Extract the last css variable
+  $index: str-index($variable, $prefix);
+  $end-index: str-index($variable, ')');
+  $value: str-slice($variable, $index, $end-index);
+
+  // Find the name of the variable
+  $end-index: str-index($value, ',');
+  $name: str-slice($value, str-length($prefix) + 1, $end-index - 1);
+
+  // Default variation (base)
   $variation: $default-color-variation;
+
+  // Check for a mode (-md-or -ios-)
   $mode: get-mode($name);
 
   // Determine if this CSS variable is itself a variation (e.g. primary-contrast)
@@ -112,7 +119,7 @@ $modes:                     (ios,md);
   @return $color;
 }
 
-@function ion-color($colors, $name, $variation: null, $mode: null) {
+@function ion-color($colors, $name, $variation: null, $mode: null, $returnColor: false) {
 
   // If CSS variables are off, we will be passed color values
   // we need to look up the map in order to provide variations
@@ -166,6 +173,11 @@ $modes:                     (ios,md);
     @if $variation != $default-color-variation {
       $name: "#{$name}-#{$variation}";
     }
+
+    @if ($returnColor) {
+      @return $color;
+    }
+
     @return css-var($color, $name);
   }
 

@@ -27,7 +27,7 @@
   line-height: $segment-button-md-line-height;
   text-transform: uppercase;
 
-  color: $segment-button-md-text-color-activated;
+  color: $segment-button-md-text-color-active;
   background-color: transparent;
   opacity: $segment-button-md-opacity;
   transition: 100ms all linear;
@@ -39,7 +39,7 @@
 
   &.activated,
   &.segment-activated {
-    border-color: $segment-button-md-border-color-activated;
+    border-color: $segment-button-md-border-color-active;
     opacity: $segment-button-md-opacity-activated;
   }
 }
@@ -68,7 +68,8 @@
 // Material Design Segment Button Mixin
 // --------------------------------------------------
 
-@mixin md-segment-button($color-name, $color-base, $color-contrast) {
+@mixin md-segment-button($color-name) {
+  $color-base: ion-color($colors-md, $color-name, base, md);
 
   .segment-md-#{$color-name} .segment-button {
     color: $color-base;
@@ -87,6 +88,6 @@
 // Material Design Segment Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  @include md-segment-button($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-md {
+  @include md-segment-button($color-name);
 }

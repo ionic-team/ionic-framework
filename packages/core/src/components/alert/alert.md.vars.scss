@@ -93,7 +93,7 @@ $alert-md-input-border-width-focused:         2px !default;
 $alert-md-input-border-style-focused:         $alert-md-input-border-style !default;
 
 /// @prop - Border color of the alert input when focused
-$alert-md-input-border-color-focused:         color($colors-md, primary) !default;
+$alert-md-input-border-color-focused:         ion-color($colors-md, primary) !default;
 
 /// @prop - Margin top of the alert input
 $alert-md-input-margin-top:                   5px !default;
@@ -153,7 +153,7 @@ $alert-md-button-margin-start:                0 !default;
 $alert-md-button-font-weight:                 500 !default;
 
 /// @prop - Text color of the alert button
-$alert-md-button-text-color:                  color($colors-md, primary) !default;
+$alert-md-button-text-color:                  ion-color($colors-md, primary) !default;
 
 /// @prop - Background color of the alert button
 $alert-md-button-background-color:            transparent !default;
@@ -216,7 +216,7 @@ $alert-md-radio-border-style:                 solid !default;
 $alert-md-radio-border-radius:                50% !default;
 
 /// @prop - Border color of the alert radio when off
-$alert-md-radio-border-color-off:             darken($list-md-border-color, 40%) !default;
+$alert-md-radio-border-color-off:             #ababab !default;
 
 /// @prop - Border color of the alert radio when on
 $alert-md-radio-border-color-on:              $alert-md-button-text-color !default;
@@ -285,7 +285,7 @@ $alert-md-checkbox-border-style:              solid !default;
 $alert-md-checkbox-border-radius:             2px !default;
 
 /// @prop - Border color of the checkbox in the alert when off
-$alert-md-checkbox-border-color-off:          darken($list-md-border-color, 40%) !default;
+$alert-md-checkbox-border-color-off:          #787878 !default;
 
 /// @prop - Border color of the checkbox in the alert when on
 $alert-md-checkbox-border-color-on:           $alert-md-button-text-color !default;
@@ -309,7 +309,7 @@ $alert-md-checkbox-icon-border-width:         2px !default;
 $alert-md-checkbox-icon-border-style:         solid !default;
 
 /// @prop - Border color of the icon in the checkbox alert
-$alert-md-checkbox-icon-border-color:         color-contrast($colors-md, $alert-md-checkbox-border-color-on) !default;
+$alert-md-checkbox-icon-border-color:         ion-color($colors-md, $alert-md-checkbox-border-color-on, contrast, md) !default;
 
 /// @prop - Transform of the icon in the checkbox alert
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;

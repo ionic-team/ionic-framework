@@ -43,10 +43,10 @@ $chip-md-label-margin-bottom:              $chip-md-label-margin-top !default;
 $chip-md-label-margin-start:               $chip-md-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
-$chip-md-icon-background-color:            color($colors-md, primary) !default;
+$chip-md-icon-background-color:            ion-color($colors-md, primary, $mode: md) !default;
 
 /// @prop - Fill color of the icon in the chip
-$chip-md-icon-fill-color:                  color-contrast($colors-md, $chip-md-icon-background-color) !default;
+$chip-md-icon-fill-color:                  ion-color($colors-md, $chip-md-icon-background-color, contrast, md) !default;
 
 /// @prop - Width of the avatar in the chip
 $chip-md-avatar-width:                     32px !default;

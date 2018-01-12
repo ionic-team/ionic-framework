@@ -1,6 +1,10 @@
 @import "./loading";
 @import "./loading.ios.vars";
 
+.loading-backdrop-ios {
+  background-color: $loading-backdrop-ios-color;
+}
+
 // iOS Loading Indicator
 // --------------------------------------------------
 
@@ -13,7 +17,7 @@
   max-height: $loading-ios-max-height;
 
   color: $loading-ios-text-color;
-  background: $loading-ios-background;
+  background-color: $loading-ios-background-color;
 }
 
 
@@ -21,7 +25,7 @@
 // -----------------------------------------
 
 .loading-translucent-ios .loading-wrapper {
-  background: rgba($loading-ios-background, $loading-ios-translucent-opacity);
+  background-color: $loading-ios-translucent-background-color;
 
   backdrop-filter: $loading-ios-translucent-filter;
   -webkit-backdrop-filter: $loading-ios-translucent-filter;

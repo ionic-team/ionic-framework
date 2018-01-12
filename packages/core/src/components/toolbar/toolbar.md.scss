@@ -16,7 +16,7 @@
 
 .toolbar-background-md {
   border-color: $toolbar-md-border-color;
-  background: $toolbar-md-background;
+  background: $toolbar-md-background-color;
 }
 
 
@@ -71,7 +71,10 @@
 }
 
 
-@mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
+@mixin md-toolbar-theme($color-name) {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+
   .toolbar-md-#{$color-name} {
 
     .toolbar-background-md {
@@ -97,10 +100,10 @@
       border-color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
-      @include md-bar-button-default($color-name, $color-base, $color-contrast);
-      @include md-bar-button-outline($color-name, $color-base, $color-contrast);
-      @include md-bar-button-solid($color-name, $color-base, $color-contrast);
+    @each $color-name, $color-value in $colors-md {
+      @include md-bar-button-default($color-name);
+      @include md-bar-button-outline($color-name);
+      @include md-bar-button-solid($color-name);
     }
   }
 }
@@ -158,7 +161,10 @@
   overflow: hidden;
 }
 
-@mixin md-bar-button-default($color-name, $color-base, $color-contrast) {
+@mixin md-bar-button-default($color-name, $color-base: null) {
+  @if($color-base == null) {
+    $color-base: ion-color($colors-md, $color-name, base, md);
+  }
 
   .bar-button-#{$color-name}-md,
   .bar-button-clear-md-#{$color-name},
@@ -170,7 +176,6 @@
       color: $color-base;
     }
   }
-
 }
 
 
@@ -205,12 +210,12 @@
   }
 }
 
-@mixin md-bar-button-outline($color-name, $color-base, $color-contrast) {
+@mixin md-bar-button-outline($color-name) {
+  $color-shade: ion-color($colors-md, $color-name, shade, md);
 
   .bar-button-outline-md-#{$color-name} {
-    $fg-color: color-shade($color-base);
-    border-color: $fg-color;
-    color: $fg-color;
+    border-color: $color-shade;
+    color: $color-shade;
     background-color: transparent;
 
     &.activated {
@@ -218,10 +223,9 @@
     }
 
     .button-effect {
-      background-color: $fg-color;
+      background-color: $color-shade;
     }
   }
-
 }
 
 
@@ -229,20 +233,22 @@
 // --------------------------------------------------
 
 .bar-button-solid-md {
-  color: color-contrast($colors-md, $toolbar-md-button-color, md);
+  color: ion-color($colors-md, $toolbar-md-button-color, contrast, md);
   background-color: $toolbar-md-button-color;
 
   &:hover:not(.disable-hover) {
-    color: color-contrast($colors-md, $toolbar-md-button-color, md);
+    color: ion-color($colors-md, $toolbar-md-button-color, contrast, md);
   }
 
   &.activated {
-    color: color-contrast($colors-md, $toolbar-md-button-color, md);
-    background-color: color-shade($toolbar-md-button-color);
+    color: ion-color($colors-md, $toolbar-md-button-color, contrast, md);
+    background-color: ion-color($colors-md, $toolbar-md-button-color, shade, md);
   }
 }
 
-@mixin md-bar-button-solid($color-name, $color-base, $color-contrast) {
+@mixin md-bar-button-solid($color-name) {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
 
   .bar-button-solid-md-#{$color-name} {
     color: $color-contrast;
@@ -250,10 +256,9 @@
 
     &.activated {
       color: $color-contrast;
-      background-color: color-shade($color-base);
+      background-color: ion-color($colors-md, $color-base, shade, md);
     }
   }
-
 }
 
 
@@ -342,14 +347,14 @@
 // Material Design Toolbar Color Generation
 // --------------------------------------------------
 
-@include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
-@include md-bar-button-default(clear, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
+@include md-bar-button-default(default, $toolbar-md-button-color);
+@include md-bar-button-default(clear, $toolbar-md-button-color);
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
-  @include md-toolbar-theme($color-name, $color-base, $color-contrast);
-  @include md-bar-button-default($color-name, $color-base, $color-contrast);
-  @include md-bar-button-outline($color-name, $color-base, $color-contrast);
-  @include md-bar-button-solid($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-md {
+  @include md-toolbar-theme($color-name);
+  @include md-bar-button-default($color-name);
+  @include md-bar-button-outline($color-name);
+  @include md-bar-button-solid($color-name);
 }
 
 

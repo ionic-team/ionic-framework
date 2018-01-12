@@ -22,10 +22,10 @@ $range-md-hit-height:                        $range-md-slider-height !default;
 $range-md-bar-height:                        2px !default;
 
 /// @prop - Background of the range bar
-$range-md-bar-background-color:              #bdbdbd !default;
+$range-md-bar-background-color:              ion-color($colors-md, quaternary, $mode: md) !default;
 
 /// @prop - Background of the active range bar
-$range-md-bar-active-background-color:       color($colors-md, primary) !default;
+$range-md-bar-active-background-color:       ion-color($colors-md, primary, $mode: md) !default;
 
 /// @prop - Width of the range knob
 $range-md-knob-width:                        18px !default;
@@ -61,7 +61,7 @@ $range-md-tick-active-background-color:      $range-md-tick-background-color !de
 $range-md-pin-background-color:              $range-md-bar-active-background-color !default;
 
 /// @prop - Color of the range pin
-$range-md-pin-color:                         color-contrast($colors-md, $range-md-bar-active-background-color) !default;
+$range-md-pin-color:                         ion-color($colors-md, $range-md-bar-active-background-color, contrast, md) !default;
 
 /// @prop - Font size of the range pin
 $range-md-pin-font-size:                     12px !default;

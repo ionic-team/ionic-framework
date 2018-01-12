@@ -1,0 +1,6 @@
+@import "./backdrop";
+@import "./backdrop.md.vars";
+
+.backdrop-md {
+  background-color: $backdrop-md-color;
+}

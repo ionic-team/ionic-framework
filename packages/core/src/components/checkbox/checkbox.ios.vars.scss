@@ -9,7 +9,7 @@
 $checkbox-ios-background-color-off:       $list-ios-background-color !default;
 
 /// @prop - Background color of the checkbox when on
-$checkbox-ios-background-color-on:        color($colors-ios, primary) !default;
+$checkbox-ios-background-color-on:        ion-color($colors-ios, primary, $mode: ios) !default;
 
 /// @prop - Size of the checkbox icon
 $checkbox-ios-icon-size:                  21px !default;
@@ -36,7 +36,7 @@ $checkbox-ios-icon-checkmark-width:       1px !default;
 $checkbox-ios-icon-checkmark-style:       solid !default;
 
 /// @prop - Color of the checkbox icon checkmark
-$checkbox-ios-icon-checkmark-color:       color-contrast($colors-ios, $checkbox-ios-background-color-on) !default;
+$checkbox-ios-icon-checkmark-color:       ion-color($colors-ios, $checkbox-ios-background-color-on, contrast, ios) !default;
 
 /// @prop - Opacity of the disabled checkbox
 $checkbox-ios-disabled-opacity:           .3 !default;

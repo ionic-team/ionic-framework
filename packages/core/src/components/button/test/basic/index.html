@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Button - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
 <body>
@@ -61,6 +62,10 @@
           <ion-button id="dynamicColor2" onclick="changeColor(event)" fill="outline">Change Color</ion-button>
         </p>
 
+        <p>
+          <ion-button id="oceanic" onclick="toggleTheme(event)">Oceanicify</ion-button>
+        </p>
+
       </ion-content>
     </ion-page>
   </ion-app>
@@ -72,13 +77,59 @@
       dynamicColor2: 0
     };
 
-    function changeColor(ev) {
+    function changeColor (ev) {
       el = ev.currentTarget;
 
       testingColorIndex[el.id] = (testingColorIndex[el.id] >= testingColors.length - 1 ? 0 : testingColorIndex[el.id] + 1);
       newColor = testingColors[testingColorIndex[el.id]];
 
       el.color = newColor;
+    }
+
+    function toggleTheme (event) {
+      var target = event.currentTarget,
+          textNode = target.querySelector('.button-inner'),
+          isOcean = !!document.documentElement.style.getPropertyValue('--color-primary').length;
+
+        if(textNode) {
+          if (isOcean) {
+            textNode.textContent = 'Oceanicify';
+          } else {
+            textNode.textContent = 'Un-Oceanicify';
+          }
+        }
+
+        document.documentElement.style.cssText = isOcean ? '' :
+          `--color-primary: #ff4f12;
+          --color-primary-shade: #eb4911;
+          --color-primary-tint: #e04610;
+          --color-primary-contrast: #ffffff;
+          --color-secondary: #0cd1e8;
+          --color-secondary-shade: #1fd5ea;
+          --color-secondary-tint: #29d7eb;
+          --color-secondary-contrast: #ffffff;
+          --color-tertiary: #7044ff;
+          --color-tertiary-shade: #673feb;
+          --color-tertiary-tint: #633ce0;
+          --color-tertiary-contrast: #ffffff;
+          --color-success: #10dc60;
+          --color-success-contrast: #ffffff;
+          --color-warning: #ffce00;
+          --color-warning-contrast: #ffffff;
+          --color-danger: #f04141;
+          --color-danger-contrast: #ffffff;
+          --color-light: #f4f5f8;
+          --color-light-contrast: #000000;
+          --color-medium: #898b93;
+          --color-medium-contrast: #000000;
+          --color-dark: #222428;
+          --color-dark-contrast: #f4f5f8;
+          --text-color: #ffffff;
+          --background-color: #1B2B34;
+          --border-color: #222428;
+          --toolbar-background-color: #eeeeee;
+          --tabs-background-color: #eeeeee;
+          --list-background-color: #eeeeee;`;
     }
   </script>
 </body>

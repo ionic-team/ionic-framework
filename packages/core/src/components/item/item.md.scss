@@ -168,7 +168,11 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
 // Generate Material Design Item and Item Divider Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+  $color-shade: ion-color($colors-md, $color-name, shade, md);
+
   // If there is text with a color it should use this color
   // and override whatever item sets it to
   .item-md .text-md-#{$color-name} {
@@ -185,7 +189,7 @@ ion-item-group .item-md .item-wrapper:last-child .item-inner {
     }
 
     &.activated {
-      background-color: color-shade($color-base);
+      background-color: $color-shade;
     }
   }
 }

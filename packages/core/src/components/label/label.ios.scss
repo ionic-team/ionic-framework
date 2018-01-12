@@ -50,7 +50,8 @@
 // Generate iOS Label colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .label-ios-#{$color-name},
   .item-input .label-ios-#{$color-name},
@@ -58,5 +59,4 @@
   .item-datetime .label-ios-#{$color-name} {
     color: $color-base;
   }
-
 }

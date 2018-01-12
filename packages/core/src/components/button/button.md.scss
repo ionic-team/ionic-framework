@@ -53,11 +53,11 @@
 // Material Design Default Button Color Mixin
 // --------------------------------------------------
 
-@mixin md-button-default($color-name, $color-base, $color-contrast) {
-  $bg-color: $color-base;
-  $bg-color-activated: color-shade($bg-color);
-  $bg-color-focused: color-shade($bg-color, 12%);
-  $fg-color: $color-contrast;
+@mixin md-button-default($color-name) {
+  $bg-color: ion-color($colors-md, $color-name, base, md);
+  $bg-color-activated: ion-color($colors-md, $color-name, shade, md);
+  $bg-color-focused: ion-color($colors-md, $color-name, tint, md);
+  $fg-color: ion-color($colors-md, $color-name, contrast, md);
 
   .button-md-#{$color-name} {
     color: $fg-color;
@@ -154,9 +154,9 @@
 // Material Design Outline Button Color Mixin
 // --------------------------------------------------
 
-@mixin md-button-outline($color-name, $color-base, $color-contrast) {
-  $fg-color: color-shade($color-base, 5%);
-  $bg-color-focused: rgba($color-base, 0.12);
+@mixin md-button-outline($color-name) {
+  $fg-color: ion-color($colors-md, $color-name, shade, md);
+  $bg-color-focused: ion-color($colors-md, $color-name, tint, md);
 
   .button-outline-md-#{$color-name} {
     border-color: $fg-color;
@@ -214,9 +214,9 @@
 // Material Design Clear Button Color Mixin
 // --------------------------------------------------
 
-@mixin md-button-clear($color-name, $color-base, $color-contrast) {
-  $fg-color: $color-base;
-  $bg-color-focused: rgba($color-base, 0.12);
+@mixin md-button-clear($color-name) {
+  $fg-color: ion-color($colors-md, $color-name, base, md);
+  $bg-color-focused: ion-color($colors-md, $color-name, tint, md);
 
   .button-clear-md-#{$color-name} {
     border-color: $button-md-clear-border-color;
@@ -289,10 +289,10 @@
 // Generate Material Design Button Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  @include md-button-default($color-name, $color-base, $color-contrast);
-  @include md-button-outline($color-name, $color-base, $color-contrast);
-  @include md-button-clear($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-md {
+  @include md-button-default($color-name);
+  @include md-button-outline($color-name);
+  @include md-button-clear($color-name);
 }
 
 

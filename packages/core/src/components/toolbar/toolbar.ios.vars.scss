@@ -19,7 +19,7 @@ $toolbar-order-ios: (
 $toolbar-ios-button-font-size:              17px !default;
 
 /// @prop - Text color of the toolbar button
-$toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar-ios-background, ios) !default;
+$toolbar-ios-button-color:                  ion-color($colors-ios, $toolbar-ios-background-color, contrast, ios) !default;
 
 /// @prop - Border radius of the toolbar button
 $toolbar-ios-button-border-radius:          4px !default;

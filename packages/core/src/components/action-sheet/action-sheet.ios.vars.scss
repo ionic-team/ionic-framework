@@ -25,7 +25,10 @@ $action-sheet-ios-group-margin-top:                     10px !default;
 $action-sheet-ios-group-margin-bottom:                  10px !default;
 
 /// @prop - Background color of the action sheet
-$action-sheet-ios-background:                           #f9f9f9 !default;
+$action-sheet-ios-background-color:                     #f9f9f9 !default;
+
+/// @prop - Background color of the action sheet when translucent
+$action-sheet-ios-translucent-background-color:         rgba(#f9f9f9, .88) !default;
 
 /// @prop - Border radius of the action sheet
 $action-sheet-ios-border-radius:                        13px !default;
@@ -113,6 +116,3 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
 
 /// @prop - Filter of the translucent action-sheet
 $action-sheet-ios-translucent-filter:                   saturate(180%) blur(20px) !default;
-
-/// @prop - Opacity of the translucent action-sheet
-$action-sheet-ios-translucent-opacity:                  .88 !default;

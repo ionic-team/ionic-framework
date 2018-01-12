@@ -6,10 +6,10 @@
 // --------------------------------------------------
 
 /// @prop - Color of the checked radio
-$radio-md-color-on:                  color($colors-md, primary) !default;
+$radio-md-color-on:                  ion-color($colors-md, primary) !default;
 
 /// @prop - Color of the unchecked radio
-$radio-md-color-off:                 darken($list-md-border-color, 40%) !default;
+$radio-md-color-off:                 #787878 !default;
 
 /// @prop - Width of the radio icon
 $radio-md-icon-width:                16px !default;

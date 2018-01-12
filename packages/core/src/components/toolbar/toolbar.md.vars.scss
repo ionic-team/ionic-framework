@@ -19,7 +19,7 @@ $toolbar-order-md: (
 $toolbar-md-button-font-size:            14px !default;
 
 /// @prop - Text color of the toolbar button
-$toolbar-md-button-color:                color-contrast($colors-md, $toolbar-md-background, md) !default;
+$toolbar-md-button-color:                ion-color($colors-md, $toolbar-md-background-color, contrast) !default;
 
 /// @prop - Border radius of the toolbar button
 $toolbar-md-button-border-radius:        2px !default;

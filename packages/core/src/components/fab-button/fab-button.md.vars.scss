@@ -10,28 +10,28 @@ $fab-md-box-shadow:                               0 4px 6px 0 rgba(0, 0, 0, .14)
 $fab-md-box-shadow-activated:                     0 5px 15px 0 rgba(0, 0, 0, .4), 0 4px 7px 0 rgba(0, 0, 0, .1) !default;
 
 /// @prop - Background color of the button
-$fab-md-background-color:                         color($colors-md, primary) !default;
+$fab-md-background-color:                         ion-color($colors-md, primary, $mode: md) !default;
 
 /// @prop - Text color of the button
-$fab-md-text-color:                               color-contrast($colors-md, $fab-md-background-color) !default;
+$fab-md-text-color:                               ion-color($colors-md, $fab-md-background-color, contrast, md) !default;
 
 /// @prop - Color of the button icon
 $fab-md-icon-fill-color:                          $fab-md-text-color !default;
 
 /// @prop - Background color of the activated button
-$fab-md-background-color-activated:               color-shade($fab-md-background-color) !default;
+$fab-md-background-color-activated:               ion-color($colors-md, $fab-md-background-color, shade, md) !default;
 
 /// @prop - Background color of the button in a list
-$fab-md-list-button-background-color:             $fab-list-button-background-color !default;
+$fab-md-list-button-background-color:             ion-color($colors-md, tertiary, $mode: md) !default;
 
 /// @prop - Text color of the button in a list
-$fab-md-list-button-text-color:                   color-contrast($colors-md, $fab-md-list-button-background-color) !default;
+$fab-md-list-button-text-color:                   ion-color($colors-md, $fab-md-list-button-background-color, contrast, md) !default;
 
 /// @prop - Color of the button icon in a list
 $fab-md-list-button-icon-fill-color:              $fab-md-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
-$fab-md-list-button-background-color-activated:   color-shade($fab-md-list-button-background-color) !default;
+$fab-md-list-button-background-color-activated:   ion-color($colors-md, $fab-md-list-button-background-color, shade, md) !default;
 
 /// @prop - Transition duration of the transform and opacity of the button in a list
 $fab-md-list-button-transition-duration:          200ms !default;

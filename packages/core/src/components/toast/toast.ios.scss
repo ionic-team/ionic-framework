@@ -16,11 +16,11 @@
 
   max-width: $toast-max-width;
 
-  background: $toast-ios-background;
+  background: $toast-ios-background-color
 }
 
 .toast-translucent-ios .toast-wrapper {
-  background: rgba($toast-ios-background, $toast-ios-translucent-opacity);
+  background: $toast-ios-translucent-background-color;
 
   backdrop-filter: $toast-ios-translucent-filter;
   -webkit-backdrop-filter: $toast-ios-translucent-filter;

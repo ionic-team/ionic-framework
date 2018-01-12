@@ -3,60 +3,73 @@
 // Default Theme
 // ----------------------------------
 $colors:          () !default;
+
 $ion-colors:  (
   primary: (
-    base:         #3880ff,
-    tint:         #5896ff,
-    shade:        #135ddf,
-    contrast:     #ffffff
+    base:         #488aff,
+    contrast:     #fff,
+    shade:        #427feb,
+    tint:         #3f79e0
   ),
   secondary: (
-    base:         #0cd1e8,
-    tint:         #5de6f6,
-    shade:        #00bce0,
-    contrast:     #ffffff
+    base:         #32db64,
+    contrast:     #fff,
+    shade:        #2ec95c,
+    tint:         #2cc158
   ),
   tertiary: (
-    base:         #7044ff,
-    tint:         #896bff,
-    shade:        #4d16d6,
-    contrast:     #ffffff
+    base:         #f4f4f4,
+    contrast:     #000,
+    tint:         #d7d7d7,
+    shade:        #e0e0e0
+  ),
+  quaternary: (
+    base:         #bdbdbd,
+    contrast:     #000,
+    shade:        #aeaeae,
+    tint:         #a6a6a6
+  ),
+  quinary: (
+    base:         #f8f8f8,
+    contrast:     #000,
+    shade:        #e4e4e4,
+    tint:         #dadada
   ),
   success: (
     base:         #10dc60,
-    tint:         #38ec7f,
-    shade:        #00bc4a,
-    contrast:     #ffffff
+    contrast:     #fff,
+    shade:        #23df6d,
+    tint:         #2de073
   ),
   warning: (
     base:         #ffce00,
-    tint:         #ffe05e,
-    shade:        #f5ad00,
-    contrast:     #ffffff
+    contrast:     #fff,
+    shade:        #ffd214,
+    tint:         #ffd41f
   ),
   danger: (
-    base:         #f04141,
-    tint:         #ff6464,
-    shade:        #ca1717,
-    contrast:     #ffffff
+    base:         #f53d3d,
+    contrast:     #fff,
+    shade:        #e13838,
+    tint:         #d83636
   ),
   light: (
-    base:         #f4f5f8,
-    tint:         #ffffff,
-    shade:        #e2e4e9,
-    contrast:     #000000
+    base:         #f4f4f4,
+    contrast:     #000,
+    shade:        #e0e0e0,
+    tint:         #d7d7d7
   ),
   medium: (
     base:         #989aa2,
-    tint:         #c1c4cd,
-    shade:        #62646a,
-    contrast:     #000000
+    contrast:     #000,
+    shade:        #8c8e95,
+    tint:         #86888f
   ),
   dark: (
-    base:         #222428,
-    tint:         #3f4248,
-    shade:        #000000,
-    contrast:     #ffffff
+    base:         #222,
+    contrast:     #fff,
+    shade:        #343434,
+    tint:         #3d3d3d
   )
 );
 $colors:                                ion-extend-colors($ion-colors, $colors);
@@ -70,41 +83,31 @@ $font-size-base:                        14px !default; // TODO: remove
 
 // Default General Colors
 // --------------------------------------------------
-$backdrop-color:                        css-var(#000000, backdrop-color) !default;
-$background-color:                      css-var(#ffffff, background-color) !default;
-$background-color-alt:                  css-var(#f4f5f8, background-color-alt) !default;
-$border-color:                          css-var(#c1c4cd, border-color) !default;
-$box-shadow-color:                      css-var(#000000, box-shadow-color) !default;
-$text-color:                            css-var(#000000, text-color) !default;
-$text-color-alt:                        css-var(#898b93, text-color-alt) !default;
-//$text-color:                            #000 !default;
-//$link-color:                            color($colors, primary) !default;
-//$background-color:                      #fff !default;
-//$subdued-text-color:                    #666 !default;
+$backdrop-color:                        css-var(#000, backdrop-color) !default;
+$background-color:                      css-var(#fff, background-color) !default;
+$border-color:                          css-var(#b2b2b2, border-color) !default;
+$box-shadow-color:                      css-var(#000, box-shadow-color) !default;
+$text-color:                            css-var(#000, text-color) !default;
+$link-color:                            css-var(ion-color($colors, primary), link-color) !default;
 
 // Default Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-background-color:               css-var(#f4f5f8, tabbar-background-color) !default;
-$tabbar-text-color:                     css-var(#989aa2, tabbar-text-color) !default;
-$tabbar-text-color-active:              css-var(#3880ff, tabbar-text-color-active) !default;
-//$tabs-background:                       #f8f8f8 !default;
-//$tabs-border-color:                     #b2b2b2 !default;
-//$tabs-tab-color-inactive:               #8c8c8c !default;
-//$tabs-tab-color-active:                 $link-color !default;
-
-// Default List & List Items
-// --------------------------------------------------
-$item-background-color:                 css-var(#ffffff, item-background-color) !default;
-$item-background-color-alt:             css-var(#c1c4cd, item-background-color-alt) !default;
-//$list-text-color:                       $text-color !default;
-//$list-background-color:                 $background-color !default;
-//$list-border-color:                     #c8c7cc !default;
+$tabs-background-color:                 css-var(ion-color($colors, quinary), tabs-background-color) !default;
+$tabs-border-color:                     $border-color !default;
+$tabs-tab-color-active:                 css-var($link-color, tabs-tab-color-active) !default;
+$tabs-tab-color-inactive:               css-var(#8c8c8c, tabs-tab-color-inactive) !default;
 
 // Default Toolbar
 // --------------------------------------------------
-$toolbar-background-color:              css-var(#f4f5f8, toolbar-background-color) !default;
-//$toolbar-background:                    #f8f8f8 !default;
-//$toolbar-border-color:                  #b2b2b2 !default;
-//$toolbar-text-color:                    $text-color !default;
-//$toolbar-active-color:                  $link-color !default;
-//$toolbar-inactive-color:                #8c8c8c !default;
+$toolbar-background-color:              css-var(ion-color($colors, quinary), toolbar-background-color) !default;
+$toolbar-border-color:                  $border-color !default
+$toolbar-color-active:                  $link-color !default;
+$toolbar-color-inactive:                #8c8c8c !default;
+$toolbar-text-color:                    $text-color !default;
+
+// Default List & List Items
+// --------------------------------------------------
+$list-background-color:                 css-var($background-color, list-background-color) !default;
+$list-background-color-active:          css-var($background-color, list-background-color-active) !default;
+$list-text-color:                       css-var($text-color, list-text-color) !default;
+$list-border-color:                     css-var(#c8c7cc, list-border-color) !default;

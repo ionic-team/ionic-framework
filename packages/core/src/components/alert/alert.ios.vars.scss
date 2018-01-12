@@ -12,7 +12,10 @@ $alert-ios-max-width:                           270px !default;
 $alert-ios-border-radius:                       13px !default;
 
 /// @prop - Background color of the alert
-$alert-ios-background:                          #f8f8f8 !default;
+$alert-ios-background-color:                    #f8f8f8 !default;
+
+/// @prop - Background color of the alert when translucent
+$alert-ios-translucent-background-color:        rgba(#f8f8f8, .88) !default;
 
 /// @prop - Box shadow of the alert
 $alert-ios-box-shadow:                          none !default;
@@ -129,7 +132,7 @@ $alert-ios-button-min-height:                   44px !default;
 $alert-ios-button-font-size:                    17px !default;
 
 /// @prop - Color of the text in the alert button
-$alert-ios-button-text-color:                   color($colors-ios, primary) !default;
+$alert-ios-button-text-color:                   ion-color($colors-ios, primary, $mode: ios) !default;
 
 /// @prop - Background color of the alert button
 $alert-ios-button-background-color:             transparent !default;
@@ -246,13 +249,13 @@ $alert-ios-checkbox-border-radius:              50% !default;
 $alert-ios-checkbox-border-color-off:           $list-ios-border-color !default;
 
 /// @prop - Border color of the checkbox in the alert when on
-$alert-ios-checkbox-border-color-on:            color($colors-ios, primary) !default;
+$alert-ios-checkbox-border-color-on:            ion-color($colors-ios, primary, $mode: ios) !default;
 
 /// @prop - Background color of the checkbox in the alert when off
 $alert-ios-checkbox-background-color-off:       $list-ios-background-color !default;
 
 /// @prop - Background color of the checkbox in the alert when on
-$alert-ios-checkbox-background-color-on:        color($colors-ios, primary) !default;
+$alert-ios-checkbox-background-color-on:        ion-color($colors-ios, primary, $mode: ios) !default;
 
 /// @prop - Top of the icon in the checkbox alert
 $alert-ios-checkbox-icon-top:                   4px !default;
@@ -280,9 +283,6 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 /// @prop - Filter of the translucent alert
 $alert-ios-translucent-filter:                  saturate(180%) blur(20px) !default;
-
-/// @prop - Opacity of the translucent alert
-$alert-ios-translucent-opacity:                 .88 !default;
 
 /// @prop - Minimum height of the tappable inputs in the checkbox alert
 $alert-ios-tappable-min-height:                 $item-min-height !default;

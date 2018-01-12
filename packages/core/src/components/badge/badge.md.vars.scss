@@ -7,7 +7,7 @@
 $badge-md-border-radius:            4px !default;
 
 /// @prop - Background color of the badge
-$badge-md-background-color:         color($colors-md, primary) !default;
+$badge-md-background-color:         ion-color($colors-md, primary, $mode: ios) !default;
 
 /// @prop - Text color of the badge
-$badge-md-text-color:               color-contrast($colors-md, $badge-md-background-color) !default;
+$badge-md-text-color:               ion-color($colors-md, $badge-md-background-color, contrast, ios) !default;

@@ -37,6 +37,22 @@
   @return $split-arr;
 }
 
+@function str-last-index($str, $search) {
+  $split: str-split($str, $search);
+  $len: length($split);
+
+  @if ( $len > 1) {
+    $count: 0;
+    @for $i from 1 through ($len - 1)  {
+      $item: nth($split, $i);
+      $count: $count + str-length($item);
+    }
+
+    @return $count + $len;
+  } @else {
+    @error "str-last-index was unable to find any instances of '#{$search}' inside '#{$str}'";
+  }
+}
 
 // Str extract between start and end
 // --------------------------------------------------

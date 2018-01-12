@@ -15,11 +15,13 @@
 // Generate iOS Badge Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $base-color: ion-color($colors-ios, $color-name, base, ios);
+  $contrast-color: ion-color($colors-ios, $color-name, contrast, ios);
 
   .badge-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
+    color: $base-color;
+    background-color: $contrast-color;
   }
 
 }

@@ -5,7 +5,7 @@
   height: $tabs-md-tab-height;
 
   border-top: 1px solid $tabs-md-border-color;
-  background: $tabs-md-background;
+  background: $tabs-md-background-color;
 
   contain: strict;
 }
@@ -134,13 +134,17 @@
 // Material Design Tabs Color Mixin
 // --------------------------------------------------
 
-@mixin tabbar-md($color-name, $color-base, $color-contrast) {
+@mixin tabbar-md($color-name) {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+
+  $color-contrast-value: ion-color($colors-md, $color-name, contrast, md, true);
 
   .tabbar-md-#{$color-name} {
-    color: rgba($color-contrast, $tabs-md-tab-opacity);
+    color: rgba($color-contrast-value, $tabs-md-tab-opacity);
     background-color: $color-base;
 
-    fill: rgba($color-contrast, $tabs-md-tab-opacity);
+    fill: rgba($color-contrast-value, $tabs-md-tab-opacity);
   }
 
   .tabbar-md-#{$color-name} ion-tab-button:hover:not(.disable-hover),
@@ -153,12 +157,11 @@
   .tabbar-md-#{$color-name} .tabbar-highlight {
     background: $color-contrast;
   }
-
 }
 
 // Material Design Tabbar Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  @include tabbar-md($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-md {
+  @include tabbar-md($color-name);
 }

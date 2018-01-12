@@ -18,7 +18,11 @@
 // Generate Material Design Item Divider Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+  $color-shade: ion-color($colors-md, $color-name, shade, md);
+
   .item-divider-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
@@ -28,7 +32,7 @@
     }
 
     &.activated {
-      background-color: color-shade($color-base);
+      background-color: $color-shade;
     }
   }
 }

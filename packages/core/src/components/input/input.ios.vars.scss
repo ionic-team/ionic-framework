@@ -69,7 +69,7 @@ $input-ios-show-valid-highlight:          $input-ios-show-focus-highlight !defau
 $input-ios-show-invalid-highlight:        $input-ios-show-focus-highlight !default;
 
 /// @prop - Color of the input highlight
-$input-ios-highlight-color:               color($colors-ios, primary) !default;
+$input-ios-highlight-color:               ion-color($colors-ios, primary, $mode: ios) !default;
 
 /// @prop - Color of the input highlight when valid
 $input-ios-highlight-color-valid:         $input-highlight-color-valid !default;

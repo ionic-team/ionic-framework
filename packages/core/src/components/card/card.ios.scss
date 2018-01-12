@@ -75,7 +75,9 @@
 // Generate iOS Card Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .card-ios .text-ios-#{$color-name} {
     color: $color-base;
@@ -89,11 +91,11 @@
       color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+    @each $color-name, $color-value in $colors-ios {
+      $color-base: ion-color($colors-ios, $color-name, base, ios);
       .text-ios-#{$color-name} {
         color: $color-base;
       }
     }
   }
-
 }
