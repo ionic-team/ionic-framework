@@ -6,12 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { IonicAngularModule } from '@ionic/angular';
 
-import { IonicRouterOutlet } from './ionic-router-outlet';
-
 @NgModule({
   declarations: [
     AppComponent,
-    IonicRouterOutlet
   ],
   imports: [
     AppRoutingModule,
