@@ -64,7 +64,7 @@ export {
 } from './components/menu-controller/menu-controller';
 export * from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
-export { Nav } from './components/nav/nav';
+export *  from './components/nav/nav';
 export * from './components/nav/nav-interfaces';
 export { ViewController } from './components/nav/view-controller';
 export { Note } from './components/note/note';
@@ -150,10 +150,14 @@ export interface OverlayController {
 }
 
 export interface FrameworkDelegate {
+  shouldDeferToRouter?(elementOrComponentToMount: any): Promise<boolean>;
+  routeToUrl?(elementOrComponentToMount: any): Promise<any>;
   attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, propsOrDataObj?: any, classesToAdd?: string[], escapeHatch?: any): Promise<FrameworkMountingData>;
   removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<FrameworkMountingData>;
 }
 
 export interface FrameworkMountingData {
   element: HTMLElement;
+  component: any;
+  data: any;
 }

@@ -6,6 +6,7 @@ import {
   ComponentDataPair,
   Config,
   FrameworkDelegate,
+  FrameworkMountingData,
   NavContainer,
   NavOptions,
   NavResult,
@@ -64,8 +65,8 @@ const queueMap = new Map<number, TransitionInstruction[]>();
 export class Nav implements PublicNav, NavContainer {
 
   @Element() element: HTMLElement;
-  @Event() navInit: EventEmitter;
-  @Event() ionNavChanged: EventEmitter;
+  @Event() navInit: EventEmitter<NavEventDetail>;
+  @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
   useRouter: boolean;
   navId: number;
@@ -84,6 +85,7 @@ export class Nav implements PublicNav, NavContainer {
   @Prop() mode: string;
   @Prop() root: any;
   @Prop() delegate: FrameworkDelegate;
+  @Prop() useUrls = false;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
 
@@ -119,53 +121,53 @@ export class Nav implements PublicNav, NavContainer {
   }
 
   @Method()
-  push(component: any, data?: any, opts?: NavOptions): Promise<any> {
-    return pushImpl(this, component, data, opts);
+  push(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return pushImpl(this, component, data, opts, escapeHatch);
   }
 
   @Method()
-  pop(opts?: NavOptions): Promise<any> {
-    return popImpl(this, opts);
+  pop(opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return popImpl(this, opts, escapeHatch);
   }
 
   @Method()
-  setRoot(component: any, data?: any, opts?: NavOptions): Promise<any> {
-    return setRootImpl(this, component, data, opts);
+  setRoot(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return setRootImpl(this, component, data, opts, escapeHatch);
   }
 
   @Method()
-  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions): Promise<any> {
-    return insertImpl(this, insertIndex, page, params, opts);
+  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return insertImpl(this, insertIndex, page, params, opts, escapeHatch);
   }
 
   @Method()
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions): Promise<any> {
-    return insertPagesImpl(this, insertIndex, insertPages, opts);
+  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return insertPagesImpl(this, insertIndex, insertPages, opts, escapeHatch);
   }
 
   @Method()
-  popToRoot(opts?: NavOptions): Promise<any> {
-    return popToRootImpl(this, opts);
+  popToRoot(opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return popToRootImpl(this, opts, escapeHatch);
   }
 
   @Method()
-  popTo(indexOrViewCtrl: any, opts?: NavOptions): Promise<any> {
-    return popToImpl(this, indexOrViewCtrl, opts);
+  popTo(indexOrViewCtrl: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return popToImpl(this, indexOrViewCtrl, opts, escapeHatch);
   }
 
   @Method()
-  removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions): Promise<any> {
-    return removeImpl(this, startIndex, removeCount, opts);
+  removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return removeImpl(this, startIndex, removeCount, opts, escapeHatch);
   }
 
   @Method()
-  removeView(viewController: PublicViewController, opts?: NavOptions): Promise<any> {
-    return removeViewImpl(this, viewController, opts);
+  removeView(viewController: PublicViewController, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return removeViewImpl(this, viewController, opts, escapeHatch);
   }
 
   @Method()
-  setPages(componentDataPairs: ComponentDataPair[], opts?: NavOptions): Promise<any> {
-    return setPagesImpl(this, componentDataPairs, opts);
+  setPages(componentDataPairs: ComponentDataPair[], opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+    return setPagesImpl(this, componentDataPairs, opts, escapeHatch);
   }
 
   @Method()
@@ -225,6 +227,21 @@ export class Nav implements PublicNav, NavContainer {
     return this.childNavs || [];
   }
 
+  @Method()
+  retrofitFromMountingData(mountingData: FrameworkMountingData, clearExistingViews = true) {
+    return retrofitFromMountingDataImpl(this, mountingData, clearExistingViews);
+  }
+
+  @Method()
+  isTransitioning() {
+    return !!this.transitionId;
+  }
+
+  @Method()
+  getId() {
+    return this.navId;
+  }
+
   render() {
     return <slot></slot>;
   }
@@ -249,60 +266,60 @@ export function getState(nav: Nav): NavState {
 }
 
 export function componentDidLoadImpl(nav: Nav) {
-  nav.navInit.emit(nav);
+  nav.navInit.emit();
   if (nav.root) {
     nav.setRoot(nav.root);
   }
 }
 
-export async function pushImpl(nav: Nav, component: any, data: any, opts: NavOptions) {
+export async function pushImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return push(nav, nav.delegate, animation, component, data, opts);
+  return push(nav, nav.delegate, animation, component, data, opts, null, escapeHatch);
 }
 
-export async function popImpl(nav: Nav, opts: NavOptions) {
+export async function popImpl(nav: Nav, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return pop(nav, nav.delegate, animation, opts);
+  return pop(nav, nav.delegate, animation, opts, null, escapeHatch);
 }
 
-export async function setRootImpl(nav: Nav, component: any, data: any, opts: NavOptions) {
+export async function setRootImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return setRoot(nav, nav.delegate, animation, component, data, opts);
+  return setRoot(nav, nav.delegate, animation, component, data, opts, null, escapeHatch);
 }
 
-export async function insertImpl(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions) {
+export async function insertImpl(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return insert(nav, nav.delegate, animation, insertIndex, page, params, opts);
+  return insert(nav, nav.delegate, animation, insertIndex, page, params, opts, null, escapeHatch);
 }
 
-export async function insertPagesImpl(nav: Nav, insertIndex: number, pagesToInsert: any[], opts: NavOptions) {
+export async function insertPagesImpl(nav: Nav, insertIndex: number, pagesToInsert: any[], opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return insertPages(nav, nav.delegate, animation, insertIndex, pagesToInsert, opts);
+  return insertPages(nav, nav.delegate, animation, insertIndex, pagesToInsert, opts, null, escapeHatch);
 }
 
-export async function popToRootImpl(nav: Nav, opts: NavOptions) {
+export async function popToRootImpl(nav: Nav, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return popToRoot(nav, nav.delegate, animation, opts);
+  return popToRoot(nav, nav.delegate, animation, opts, null, escapeHatch);
 }
 
-export async function popToImpl(nav: Nav, indexOrViewCtrl: any, opts: NavOptions) {
+export async function popToImpl(nav: Nav, indexOrViewCtrl: any, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return popTo(nav, nav.delegate, animation, indexOrViewCtrl, opts);
+  return popTo(nav, nav.delegate, animation, indexOrViewCtrl, opts, null, escapeHatch);
 }
 
-export async function removeImpl(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions) {
+export async function removeImpl(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return remove(nav, nav.delegate, animation, startIndex, removeCount, opts);
+  return remove(nav, nav.delegate, animation, startIndex, removeCount, opts, null, escapeHatch);
 }
 
-export async function removeViewImpl(nav: Nav, viewController: PublicViewController, opts?: NavOptions) {
+export async function removeViewImpl(nav: Nav, viewController: PublicViewController, opts: NavOptions, escapeHatch?: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return removeView(nav, nav.delegate, animation, viewController as ViewController, opts);
+  return removeView(nav, nav.delegate, animation, viewController as ViewController, opts, null, escapeHatch);
 }
 
-export async function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPair[], opts?: NavOptions) {
+export async function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPair[], opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return setPages(nav, nav.delegate, animation, componentDataPairs, opts);
+  return setPages(nav, nav.delegate, animation, componentDataPairs, opts, null, escapeHatch);
 }
 
 export function canGoBackImpl(nav: Nav) {
@@ -329,75 +346,87 @@ export function hydrateAnimationController(animationController: AnimationControl
 
 // public api
 
-export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data?: any, opts?: NavOptions, done?: () => void): Promise<any> {
+export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   return queueTransaction({
     insertStart: -1,
-    insertViews: [{page: component, params: data}],
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    insertViews: [{component, data}],
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'push'
   }, done);
 }
 
-export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
+export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, component: any, data: any, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   return queueTransaction({
     insertStart: insertIndex,
-    insertViews: [{ page: page, params: params }],
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    insertViews: [{ component, data }],
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'insert'
   }, done);
 }
 
-export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts?: NavOptions, done?: () => void): Promise<any> {
+export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   return queueTransaction({
     insertStart: insertIndex,
     insertViews: insertPages,
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'insertPages'
   }, done);
 }
 
-export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts?: NavOptions, done?: () => void): Promise<any> {
+export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   return queueTransaction({
     removeStart: -1,
     removeCount: 1,
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'pop'
   }, done);
 }
 
-export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts?: NavOptions, done?: () => void): Promise<any> {
+export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   return queueTransaction({
     removeStart: 1,
     removeCount: -1,
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'popToRoot'
   }, done);
 }
 
-export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animation, indexOrViewCtrl: any, opts?: NavOptions, done?: () => void): Promise<any> {
+export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animation, indexOrViewCtrl: any, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   const config: TransitionInstruction = {
     removeStart: -1,
     removeCount: -1,
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'popTo'
   };
   if (isViewController(indexOrViewCtrl)) {
     config.removeView = indexOrViewCtrl;
@@ -408,36 +437,49 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animatio
   return queueTransaction(config, done);
 }
 
-export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts?: NavOptions, done?: () => void): Promise<any> {
+export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   return queueTransaction({
     removeStart: startIndex,
     removeCount: removeCount,
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'remove'
   }, done);
 }
 
-export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts?: NavOptions, done?: () => void): Promise<any> {
+export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   return queueTransaction({
     removeView: viewController,
     removeStart: 0,
     removeCount: 1,
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'removeView'
   }, done);
 }
 
-export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, page: any, params?: any, opts?: NavOptions, done?: () => void): Promise<any> {
-  return setPages(nav, delegate, animation, [{ page: page, params: params }], opts, done);
+export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
+  return setPages(nav, delegate, animation, [{ component, data }], opts, done, escapeHatch);
 }
 
-export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPars: ComponentDataPair[], opts?: NavOptions, done?: () => void): Promise<any> {
+export function retrofitFromMountingDataImpl(nav: Nav, mountingData: FrameworkMountingData, clearExistingViews: boolean): void {
+  if (clearExistingViews) {
+    nav.views = [];
+  }
+  const viewController = new ViewController(mountingData.component, mountingData.data);
+  Object.assign(viewController, mountingData);
+  nav.views.push(viewController);
+}
+
+export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPairs: ComponentDataPair[], opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   if (!isDef(opts)) {
     opts = {};
   }
@@ -446,26 +488,18 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
   }
   return queueTransaction({
     insertStart: 0,
-    insertViews: componentDataPars,
+    insertViews: componentDataPairs,
     removeStart: 0,
     removeCount: -1,
-    opts: opts,
-    nav: nav,
-    delegate: delegate,
+    opts,
+    nav,
+    delegate,
     id: nav.navId,
-    animation: animation
+    animation,
+    escapeHatch,
+    method: 'setPages'
   }, done);
 }
-
-
-
-
-
-
-
-
-
-
 
 // private api, exported for testing
 export function queueTransaction(ti: TransitionInstruction, done: () => void): Promise<boolean> {
@@ -510,19 +544,38 @@ export function nextTransaction(nav: Nav): Promise<any> {
     return Promise.resolve();
   }
 
+  if (topTransaction.method === 'push') {
+    return routeOrNav(nav, topTransaction);
+  }
+  return doNav(nav, topTransaction);
+}
+
+export function routeOrNav(nav: Nav, ti: TransitionInstruction) {
+  const component = ti.insertViews[0].component;
+  const deferPromise = nav.delegate.shouldDeferToRouter ? nav.delegate.shouldDeferToRouter(component) : Promise.resolve(false);
+  return deferPromise.then((response: boolean) => {
+    if (response) {
+      const routePromise = nav.delegate.routeToUrl ? nav.delegate.routeToUrl(component) : Promise.resolve(true);
+      return routePromise;
+    }
+    return doNav(nav, ti);
+  });
+}
+
+export function doNav(nav: Nav, ti: TransitionInstruction) {
   let enteringView: ViewController;
   let leavingView: ViewController;
-  return initializeViewBeforeTransition(nav, topTransaction).then(([_enteringView, _leavingView]) => {
+  return initializeViewBeforeTransition(nav, ti).then(([_enteringView, _leavingView]) => {
     enteringView = _enteringView;
     leavingView = _leavingView;
-    return attachViewToDom(nav, enteringView, topTransaction.delegate);
+    return attachViewToDom(nav, enteringView, ti.delegate, ti.escapeHatch);
   }).then(() => {
-    return loadViewAndTransition(nav, enteringView, leavingView, topTransaction);
+    return loadViewAndTransition(nav, enteringView, leavingView, ti);
     }).then((result: NavResult) => {
-      nav.ionNavChanged.emit({ isPop: false });
-    return successfullyTransitioned(result, topTransaction);
+      nav.ionNavChanged.emit({ isPop: ti.method === 'pop' });
+    return successfullyTransitioned(result, ti);
   }).catch((err: Error) => {
-    return transitionFailed(err, topTransaction);
+    return transitionFailed(err, ti);
   });
 }
 
@@ -552,6 +605,7 @@ export function successfullyTransitioned(result: NavResult, ti: TransitionInstru
     );
   }
   ti.resolve(result.hasCompleted);
+
 }
 
 export function transitionFailed(error: Error, ti: TransitionInstruction) {
@@ -631,7 +685,7 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
   });
 }
 
-// TODO - transition type
+
 export function executeAsyncTransition(nav: Nav, transition: Transition, enteringView: ViewController, leavingView: ViewController, delegate: FrameworkDelegate, opts: NavOptions, configShouldAnimate: boolean): Promise<NavResult> {
   assert(nav.transitioning, 'must be transitioning');
   nav.transitionId = null;
@@ -763,9 +817,9 @@ export function fireViewWillLifecycles(enteringView: ViewController, leavingView
   enteringView && enteringView.willEnter();
 }
 
-export function attachViewToDom(nav: Nav, enteringView: ViewController, delegate: FrameworkDelegate) {
+export function attachViewToDom(nav: Nav, enteringView: ViewController, delegate: FrameworkDelegate, escapeHatch: any) {
   if (enteringView && enteringView.state === STATE_NEW) {
-    return delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, []).then((mountingData) => {
+    return delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, [], escapeHatch).then((mountingData) => {
       Object.assign(enteringView, mountingData);
       enteringView.state = STATE_ATTACHED;
     });
@@ -779,7 +833,7 @@ export function initializeViewBeforeTransition(nav: Nav, ti: TransitionInstructi
   let enteringView: ViewController = null;
   return startTransaction(ti).then(() => {
     const viewControllers = convertComponentToViewController(nav, ti);
-    ti.insertViews = viewControllers;
+    ti.viewControllers = viewControllers;
     leavingView = ti.nav.getActive() as ViewController;
     enteringView = getEnteringView(ti, ti.nav, leavingView);
 
@@ -798,7 +852,6 @@ export function initializeViewBeforeTransition(nav: Nav, ti: TransitionInstructi
   });
 }
 
-// called _postViewInit in old world
 export function updateNavStacks(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): Promise<any> {
   return Promise.resolve().then(() => {
     assert(!!(leavingView || enteringView), 'Both leavingView and enteringView are null');
@@ -832,15 +885,15 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
 
     // At this point the transition can not be rejected, any throw should be an error
     // there are views to insert
-    if (ti.insertViews) {
+    if (ti.viewControllers) {
       // manually set the new view's id if an id was passed in the options
       if (isDef(ti.opts.id)) {
         enteringView.id = ti.opts.id;
       }
 
       // add the views to the stack
-      for (let i = 0; i < ti.insertViews.length; i++) {
-        insertViewIntoNav(ti.nav, ti.insertViews[i], ti.insertStart + i);
+      for (let i = 0; i < ti.viewControllers.length; i++) {
+        insertViewIntoNav(ti.nav, ti.viewControllers[i], ti.insertStart + i);
       }
 
       if (ti.enteringRequiresTransition) {
@@ -1001,10 +1054,10 @@ export function startTransaction(ti: TransitionInstruction): Promise<any> {
 }
 
 export function getEnteringView(ti: TransitionInstruction, nav: Nav, leavingView: ViewController): ViewController {
-  if (ti.insertViews && ti.insertViews.length) {
+  if (ti.viewControllers && ti.viewControllers.length) {
     // grab the very last view of the views to be inserted
     // and initialize it as the new entering view
-    return ti.insertViews[ti.insertViews.length - 1];
+    return ti.viewControllers[ti.viewControllers.length - 1];
   }
   if (isDef(ti.removeStart)) {
     const removeEnd = ti.removeStart + ti.removeCount;
@@ -1017,16 +1070,11 @@ export function getEnteringView(ti: TransitionInstruction, nav: Nav, leavingView
   return null;
 }
 
-export function convertViewsToViewControllers(views: any[]): ViewController[] {
-  return views.map(view => {
-    if (view) {
-      if (isViewController(view)) {
-        return view as ViewController;
-      }
-      return new ViewController(view.page, view.params);
-    }
-    return null;
-  }).filter(view => !!view);
+export function convertViewsToViewControllers(pairs: ComponentDataPair[]): ViewController[] {
+  return pairs.filter(pair => !!pair)
+    .map(pair => {
+      return new ViewController(pair.component, pair.data);
+    });
 }
 
 export function convertComponentToViewController(nav: Nav, ti: TransitionInstruction): ViewController[] {
@@ -1085,3 +1133,12 @@ export function getDefaultTransition(config: Config) {
 
 let viewIds = VIEW_ID_START;
 const DISABLE_APP_MINIMUM_DURATION = 64;
+
+export interface NavEvent extends CustomEvent {
+  target: HTMLIonNavElement;
+  detail: NavEventDetail;
+}
+
+export interface NavEventDetail {
+  isPop?: boolean;
+}

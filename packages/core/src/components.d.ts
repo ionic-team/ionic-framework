@@ -1702,6 +1702,7 @@ declare global {
       delegate?: FrameworkDelegate;
       mode?: string;
       root?: any;
+      useUrls?: boolean;
     }
   }
 }

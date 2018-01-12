@@ -3,10 +3,10 @@ import { isString } from './helpers';
 
 export class DomFrameworkDelegate implements FrameworkDelegate {
 
-  attachViewToDom(parentElement: HTMLElement, tagOrElement: string | HTMLElement, propsOrDataObj: any = {}, classesToAdd: string[] = []): Promise<FrameworkMountingData> {
+  attachViewToDom(parentElement: HTMLElement, tagOrElement: string | HTMLElement, data: any = {}, classesToAdd: string[] = []): Promise<FrameworkMountingData> {
     return new Promise((resolve) => {
       const usersElement = (isString(tagOrElement) ? document.createElement(tagOrElement) : tagOrElement);
-      Object.assign(usersElement, propsOrDataObj);
+      Object.assign(usersElement, data);
 
       if (classesToAdd.length) {
         for (const clazz of classesToAdd) {
@@ -17,7 +17,9 @@ export class DomFrameworkDelegate implements FrameworkDelegate {
       parentElement.appendChild(usersElement);
 
       resolve({
-        element: usersElement
+        element: usersElement,
+        data: data,
+        component: tagOrElement
       });
     });
   }
@@ -25,7 +27,17 @@ export class DomFrameworkDelegate implements FrameworkDelegate {
   removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement): Promise<FrameworkMountingData> {
     parentElement.removeChild(childElement);
     return Promise.resolve({
-      element: null
+      element: null,
+      data: null,
+      component: null
     });
+  }
+
+  shouldDeferToRouter(_elementOrComponentToMount: any): Promise<boolean> {
+    return Promise.resolve(false);
+  }
+
+  routeToUrl(_elementOrComponentToMount: any): Promise<any> {
+    return Promise.resolve('todo');
   }
 }
