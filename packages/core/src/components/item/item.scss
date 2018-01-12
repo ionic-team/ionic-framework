@@ -96,3 +96,8 @@ ion-input.item {
   background: transparent;
   cursor: pointer;
 }
+
+.item > ion-icon,
+.item-inner > ion-icon  {
+  font-size: 1.6em;
+}

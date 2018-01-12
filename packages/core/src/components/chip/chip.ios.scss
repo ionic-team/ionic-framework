@@ -14,7 +14,6 @@
   font-family: $chip-ios-font-family;
 
   font-size: $chip-ios-font-size;
-  line-height: $chip-ios-height;
   color: $chip-ios-text-color;
   background: $chip-ios-background-color;
 }
@@ -26,7 +25,7 @@
 .chip-ios > ion-icon {
   background-color: $chip-ios-icon-background-color;
 
-  fill: $chip-ios-icon-fill-color;
+  color: $chip-ios-icon-fill-color;
 }
 
 .chip-ios ion-avatar {
@@ -48,7 +47,7 @@
   .chip-ios .icon-ios-#{$color-name} {
     background-color: $color-base;
 
-    fill: $color-contrast;
+    color: $color-contrast;
   }
 
 }

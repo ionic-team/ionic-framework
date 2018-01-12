@@ -7,19 +7,24 @@ ion-chip {
   box-sizing: border-box;
   display: inline-flex;
 
+  align-items: center;
   align-self: center;
 
   font-weight: normal;
   vertical-align: middle;
 }
 
-ion-chip ion-icon {
-  @include text-align($chip-icon-text-align);
+ion-chip > ion-icon {
   @include border-radius($chip-icon-border-radius);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   width: $chip-icon-size;
   height: $chip-icon-size;
+}
 
+ion-chip ion-icon {
   font-size: $chip-icon-font-size;
-  line-height: $chip-icon-line-height;
 }
