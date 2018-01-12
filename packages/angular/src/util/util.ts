@@ -15,3 +15,13 @@ export function ensureElementInBody(elementName: string) {
   }
   return element;
 }
+
+export function removeAllNodeChildren(element: HTMLElement) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+export function isString(something: any) {
+  return typeof something === 'string' ? true : false;
+}

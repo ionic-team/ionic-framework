@@ -13,9 +13,10 @@ import { TextValueAccessor } from './control-value-accessors/text-value-accessor
 
 
 /* Components */
-import { IonNavDelegate } from './components/ion-nav';
+
 
 /* Directives */
+import { IonNavDelegate } from './directives/ion-nav';
 import { MenuToggle } from './directives/menu-toggle';
 
 /* Providers */

@@ -1,5 +1,6 @@
 import {
   ComponentFactory,
+  ComponentFactoryResolver,
   ComponentRef,
   Injector
 } from '@angular/core';
@@ -12,4 +13,9 @@ export interface AngularMountingData extends FrameworkMountingData {
   componentRef?: ComponentRef<any>;
   instance?: any;
   angularHostElement?: HTMLElement;
+}
+
+export interface AngularEscapeHatch {
+  cfr: ComponentFactoryResolver;
+  injector: Injector;
 }
