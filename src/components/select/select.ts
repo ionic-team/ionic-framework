@@ -231,6 +231,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
    * @output {any} Emitted when the selection was cancelled.
    */
   @Output() ionCancel: EventEmitter<Select> = new EventEmitter();
+  @Output() ionOk: EventEmitter<Select> = new EventEmitter();
 
   constructor(
     private _app: App,
@@ -396,7 +397,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
       (overlay as Alert).addButton({
         text: this.okText,
-        handler: (selectedValues: any) => this.value = selectedValues
+        handler: (selectedValues: any) => {this.value = selectedValues ; this.ionOk.emit(this);}
       });
 
     }
