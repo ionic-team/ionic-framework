@@ -41,6 +41,7 @@
     "@angular/http": "next",
     "@angular/platform-browser": "next",
     "@angular/platform-browser-dynamic": "next",
+    "@angular/router": "next",
     "@ionic/core": "next",
     "glob": "7.1.2",
     "ionicons": "~3.0.0",
