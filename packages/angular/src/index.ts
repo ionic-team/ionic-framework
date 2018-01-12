@@ -1,9 +1,7 @@
 export { IonicAngularModule } from './module';
 
-/* Components */
-export { IonNavDelegate } from './components/ion-nav';
-
 /* Directives */
+export { IonNavDelegate } from './directives/ion-nav';
 export { MenuToggle } from './directives/menu-toggle';
 
 /* Providers */
