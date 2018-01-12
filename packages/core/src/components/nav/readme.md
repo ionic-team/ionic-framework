@@ -22,6 +22,11 @@ string
 any
 
 
+#### useUrls
+
+boolean
+
+
 ## Attributes
 
 #### delegate
@@ -37,6 +42,11 @@ string
 #### root
 
 any
+
+
+#### useUrls
+
+boolean
 
 
 ## Events
@@ -64,6 +74,9 @@ any
 #### getFirstView()
 
 
+#### getId()
+
+
 #### getPrevious()
 
 
@@ -77,6 +90,9 @@ any
 
 
 #### insertPages()
+
+
+#### isTransitioning()
 
 
 #### pop()
@@ -97,7 +113,7 @@ any
 #### removeView()
 
 
-#### resize()
+#### retrofitFromMountingData()
 
 
 #### setPages()

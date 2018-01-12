@@ -68,7 +68,8 @@ export interface NavOptions {
 export interface TransitionInstruction {
   opts: NavOptions;
   insertStart?: number;
-  insertViews?: any[];
+  insertViews?: ComponentDataPair[];
+  viewControllers?: ViewController[];
   removeView?: any; // TODO make VC
   removeStart?: number;
   removeCount?: number;
@@ -82,6 +83,8 @@ export interface TransitionInstruction {
   nav?: Nav;
   delegate?: FrameworkDelegate;
   animation?: Animation;
+  escapeHatch?: any;
+  method?: string;
 }
 
 export interface NavResult {
@@ -91,8 +94,8 @@ export interface NavResult {
 }
 
 export interface ComponentDataPair {
-  page: any;
-  params: any;
+  component: any;
+  data: any;
 }
 
 export interface Transition extends Animation {
