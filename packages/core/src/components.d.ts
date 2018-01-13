@@ -993,6 +993,7 @@ declare global {
       onPress?: GestureCallback;
       onStart?: GestureCallback;
       onWillStart?: (_: GestureDetail) => Promise<void>;
+      passive?: boolean;
       threshold?: number;
       type?: string;
     }
@@ -2138,6 +2139,73 @@ declare global {
       snaps?: boolean;
       step?: number;
       value?: any;
+    }
+  }
+}
+
+
+import {
+  RefresherContent as IonRefresherContent
+} from './components/refresher-content/refresher-content';
+
+declare global {
+  interface HTMLIonRefresherContentElement extends IonRefresherContent, HTMLElement {
+  }
+  var HTMLIonRefresherContentElement: {
+    prototype: HTMLIonRefresherContentElement;
+    new (): HTMLIonRefresherContentElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-refresher-content": HTMLIonRefresherContentElement;
+  }
+  interface ElementTagNameMap {
+    "ion-refresher-content": HTMLIonRefresherContentElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-refresher-content": JSXElements.IonRefresherContentAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRefresherContentAttributes extends HTMLAttributes {
+      pullingIcon?: string;
+      pullingText?: string;
+      refreshingSpinner?: string;
+      refreshingText?: string;
+    }
+  }
+}
+
+
+import {
+  Refresher as IonRefresher
+} from './components/refresher/refresher';
+
+declare global {
+  interface HTMLIonRefresherElement extends IonRefresher, HTMLElement {
+  }
+  var HTMLIonRefresherElement: {
+    prototype: HTMLIonRefresherElement;
+    new (): HTMLIonRefresherElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-refresher": HTMLIonRefresherElement;
+  }
+  interface ElementTagNameMap {
+    "ion-refresher": HTMLIonRefresherElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-refresher": JSXElements.IonRefresherAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRefresherAttributes extends HTMLAttributes {
+      closeDuration?: string;
+      enabled?: boolean;
+      pullDelta?: number;
+      pullMin?: number;
+      snapbackDuration?: string;
     }
   }
 }

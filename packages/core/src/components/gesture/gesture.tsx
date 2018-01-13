@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
 import { ElementRef, applyStyles, assert, getElementReference, updateDetail } from '../../utils/helpers';
 import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 import { DomController } from '../../index';
@@ -28,7 +28,7 @@ export class Gesture {
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'dom' }) dom: DomController;
-  @Prop({ context: 'enableListener' }) enableListener: any;
+  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   @Prop() enabled = true;
   @Prop() attachTo: ElementRef = 'child';
@@ -38,6 +38,7 @@ export class Gesture {
   @Prop() direction = 'x';
   @Prop() gestureName = '';
   @Prop() gesturePriority = 0;
+  @Prop() passive = true;
   @Prop() maxAngle = 40;
   @Prop() threshold = 10;
   @Prop() type = 'pan';
@@ -105,8 +106,8 @@ export class Gesture {
   @Watch('enabled')
   protected enabledChanged(isEnabled: boolean) {
     if (this.pan || this.hasPress) {
-      this.enableListener(this, 'touchstart', isEnabled, this.attachTo);
-      this.enableListener(this, 'mousedown', isEnabled, this.attachTo);
+      this.enableListener(this, 'touchstart', isEnabled, this.attachTo, this.passive);
+      this.enableListener(this, 'mousedown', isEnabled, this.attachTo, this.passive);
       if (!isEnabled) {
         this.abortGesture();
       }
@@ -433,18 +434,18 @@ export class Gesture {
 
   private enableMouse(shouldEnable: boolean) {
     if (this.pan) {
-      this.enableListener(this, 'document:mousemove', shouldEnable);
+      this.enableListener(this, 'document:mousemove', shouldEnable, undefined, this.passive);
     }
-    this.enableListener(this, 'document:mouseup', shouldEnable);
+    this.enableListener(this, 'document:mouseup', shouldEnable, undefined, this.passive);
   }
 
 
   private enableTouch(shouldEnable: boolean) {
     if (this.pan) {
-      this.enableListener(this, 'touchmove', shouldEnable, this.attachTo);
+      this.enableListener(this, 'touchmove', shouldEnable, this.attachTo, this.passive);
     }
-    this.enableListener(this, 'touchcancel', shouldEnable, this.attachTo);
-    this.enableListener(this, 'touchend', shouldEnable, this.attachTo);
+    this.enableListener(this, 'touchcancel', shouldEnable, this.attachTo, this.passive);
+    this.enableListener(this, 'touchend', shouldEnable, this.attachTo, this.passive);
   }
 
 
