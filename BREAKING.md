@@ -23,7 +23,6 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Select](#select)
 - [Text/Typography](#text-typography)
 - [Toolbar](#toolbar)
-- [Sass](#sass)
 
 
 ## Dynamic Mode
@@ -277,6 +276,10 @@ If any `CSS` is being overridden for an icon it will need to change to override 
   fill: #000;
 }
 ```
+
+### Property Removed
+
+The `isActive` property has been removed. It only worked for `ios` icons previously. If you would like to switch between an outline and solid icon you should set it in the `name`, or `ios`/`md` attribute and then change it when needed.
 
 ## Input
 
@@ -686,13 +689,3 @@ The properties have been renamed to the following:
 | `end`        | `slot="mode-end"`   | Positions element to the `right` of the content in `ios` mode, and to the far right in `md` and `wp` mode.       |
 | `left`       | `slot="start"`      | Positions element to the `left` of all other elements in `LTR`, and to the `right` in `RTL`.                     |
 | `right`      | `slot="end"`        | Positions element to the `right` of all other elements in `LTR`, and to the `left` in `RTL`.                     |
-
-## Sass
-
-### Deprecated Styles
-
-Deprecated variables and styles have been removed.
-
-- [e0a29db](https://github.com/ionic-team/ionic/commit/e0a29db)
-- [07e4330](https://github.com/ionic-team/ionic/commit/07e4330)
-- TODO continue to add what is removed here

@@ -14,7 +14,6 @@
   font-family: $chip-md-font-family;
 
   font-size: $chip-md-font-size;
-  line-height: $chip-md-height;
   color: $chip-md-text-color;
   background: $chip-md-background-color;
 }
@@ -26,7 +25,7 @@
 .chip-md > ion-icon {
   background-color: $chip-md-icon-background-color;
 
-  fill: $chip-md-icon-fill-color;
+  color: $chip-md-icon-fill-color;
 }
 
 .chip-md ion-avatar {
@@ -48,7 +47,7 @@
   .chip-md .icon-md-#{$color-name} {
     background-color: $color-base;
 
-    fill: $color-contrast;
+    color: $color-contrast;
   }
 
 }
