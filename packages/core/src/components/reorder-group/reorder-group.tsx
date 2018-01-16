@@ -266,12 +266,13 @@ export class ReorderGroup {
   render() {
     return (
       <ion-gesture {...{
-        disableScroll: true,
         canStart: this.canStart.bind(this),
         onStart: this.onDragStart.bind(this),
         onMove: this.onDragMove.bind(this),
         onEnd: this.onDragEnd.bind(this),
         enabled: this.enabled,
+        passive: false,
+        disableScroll: true,
         gestureName: 'reorder',
         gesturePriority: 30,
         type: 'pan',

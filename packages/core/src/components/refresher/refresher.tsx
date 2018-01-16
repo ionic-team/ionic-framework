@@ -98,7 +98,7 @@ export class Refresher {
       'gestureName': 'refresher',
       'gesturePriority': 10,
       'type': 'pan',
-      // 'passive': false,
+      'passive': false,
       'direction': 'y',
       'threshold': 0,
       'attachTo': 'body'
