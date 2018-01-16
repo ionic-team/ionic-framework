@@ -331,6 +331,36 @@ declare global {
 
 
 import {
+  ButtonEffect as IonButtonEffect
+} from './components/button-effect/button-effect';
+
+declare global {
+  interface HTMLIonButtonEffectElement extends IonButtonEffect, HTMLElement {
+  }
+  var HTMLIonButtonEffectElement: {
+    prototype: HTMLIonButtonEffectElement;
+    new (): HTMLIonButtonEffectElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-button-effect": HTMLIonButtonEffectElement;
+  }
+  interface ElementTagNameMap {
+    "ion-button-effect": HTMLIonButtonEffectElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-button-effect": JSXElements.IonButtonEffectAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonButtonEffectAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Button as IonButton
 } from './components/button/button';
 

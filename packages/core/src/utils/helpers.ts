@@ -53,6 +53,11 @@ export function toDashCase(str: string) {
   return str.replace(/([A-Z])/g, (g) => '-' + g[0].toLowerCase());
 }
 
+
+export function now(ev: UIEvent) {
+  return ev.timeStamp || Date.now();
+}
+
 export function pointerCoordX(ev: any): number {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event

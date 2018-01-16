@@ -143,7 +143,7 @@ export class Button {
             <slot></slot>
             <slot name='end'></slot>
           </span>
-          <div class='button-effect'></div>
+          <ion-button-effect />
       </TagType>
     );
   }

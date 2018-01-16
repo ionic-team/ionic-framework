@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
-import { ElementRef, applyStyles, assert, getElementReference, updateDetail } from '../../utils/helpers';
+import { ElementRef, applyStyles, assert, getElementReference, now, updateDetail } from '../../utils/helpers';
 import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 import { DomController } from '../../index';
 import { PanRecognizer } from './recognizers';
@@ -475,11 +475,6 @@ const GESTURE_INLINE_STYLES = {
 };
 
 const MOUSE_WAIT = 2500;
-
-
-function now(ev: UIEvent) {
-  return ev.timeStamp || Date.now();
-}
 
 
 export interface GestureDetail {

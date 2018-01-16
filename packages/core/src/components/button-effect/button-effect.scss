@@ -1,0 +1,36 @@
+@import "../../themes/ionic.globals";
+
+/// @prop - Background color of the ripple on the button
+$button-effect-ripple-background-color:       #000 !default;
+
+ion-button-effect {
+  @include position(0);
+
+  position: absolute;
+}
+
+ion-button-effect > .ripple {
+  @include border-radius(50%);
+  position: absolute;
+
+  background: $button-effect-ripple-background-color;
+  opacity: 0;
+
+  will-change: transform;
+
+  animation-name: rippleAnimation;
+  animation-duration: 1000ms;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes rippleAnimation {
+  0% {
+    opacity: .2;
+    transform: scale(.001);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
