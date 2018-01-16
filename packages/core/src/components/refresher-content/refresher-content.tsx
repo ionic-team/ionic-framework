@@ -1,9 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Config } from '../../index';
 
-/**
- * @hidden
- */
 @Component({
   tag: 'ion-refresher-content'
 })
@@ -12,22 +9,22 @@ export class RefresherContent {
   @Prop({ context: 'config' }) config: Config;
 
   /**
-   * @input {string} a static icon to display when you begin to pull down
+   * A static icon to display when you begin to pull down
    */
   @Prop({mutable: true}) pullingIcon: string;
 
   /**
-   * @input {string} the text you want to display when you begin to pull down
+   * The text you want to display when you begin to pull down
    */
   @Prop() pullingText: string;
 
   /**
-   * @input {string} An animated SVG spinner that shows when refreshing begins
+   * An animated SVG spinner that shows when refreshing begins
    */
   @Prop({mutable: true}) refreshingSpinner: string;
 
   /**
-   * @input {string} the text you want to display when performing a refresh
+   * The text you want to display when performing a refresh
    */
   @Prop() refreshingText: string;
 

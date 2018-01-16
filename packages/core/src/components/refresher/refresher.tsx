@@ -12,86 +12,6 @@ const enum RefresherState {
   _BUSY_ = Refreshing | Cancelling | Completing,
 }
 
-/**
- * @name Refresher
- * @description
- * The Refresher provides pull-to-refresh functionality on a content component.
- * Place the `ion-refresher` as the first child of your `ion-content` element.
- *
- * Pages can then listen to the refresher's various output events. The
- * `refresh` output event is fired when the user has pulled down far
- * enough to kick off the refreshing process. Once the async operation
- * has completed and the refreshing should end, call `complete()`.
- *
- * Note: Do not wrap the `ion-refresher` in a `*ngIf`. It will not render
- * properly this way. Please use the `enabled` property instead to
- * display or hide the refresher.
- *
- * @usage
- * ```html
- * <ion-content>
- *
- *   <ion-refresher (ionRefresh)="doRefresh($event)">
- *     <ion-refresher-content></ion-refresher-content>
- *   </ion-refresher>
- *
- * </ion-content>
- * ```
- *
- * ```ts
- * @Component({...})
- * export class NewsFeedPage {
- *
- *   doRefresh(refresher) {
- *     console.log('Begin async operation', refresher);
- *
- *     setTimeout(() => {
- *       console.log('Async operation has ended');
- *       refresher.complete();
- *     }, 2000);
- *   }
- *
- * }
- * ```
- *
- *
- * ## Refresher Content
- *
- * By default, Ionic provides the pulling icon and refreshing spinner that
- * looks best for the platform the user is on. However, you can change the
- * default icon and spinner, along with adding text for each state by
- * adding properties to the child `ion-refresher-content` component.
- *
- *  ```html
- *  <ion-content>
- *
- *    <ion-refresher (ionRefresh)="doRefresh($event)">
- *      <ion-refresher-content
- *        pullingIcon="arrow-dropdown"
- *        pullingText="Pull to refresh"
- *        refreshingSpinner="circles"
- *        refreshingText="Refreshing...">
- *      </ion-refresher-content>
- *    </ion-refresher>
- *
- *  </ion-content>
- *  ```
- *
- *
- * ## Further Customizing Refresher Content
- *
- * The `ion-refresher` component holds the refresh logic.
- * It requires a child component in order to display the content.
- * Ionic uses `ion-refresher-content` by default. This component
- * displays the refresher and changes the look depending
- * on the refresher's state. Separating these components
- * allows developers to create their own refresher content
- * components. You could replace our default content with
- * custom SVG or CSS animations.
- *
- * @demo /docs/demos/src/refresher/
- *
- */
 @Component({
   tag: 'ion-refresher',
   styleUrl: 'refresher.scss'
@@ -123,13 +43,13 @@ export class Refresher {
   @Element() el: HTMLElement;
 
   /**
-   * @input {number} The min distance the user must pull down until the
+   * The min distance the user must pull down until the
    * refresher can go into the `refreshing` state. Default is `60`.
    */
   @Prop() pullMin = 60;
 
   /**
-   * @input {number} The maximum distance of the pull until the refresher
+   * The maximum distance of the pull until the refresher
    * will automatically go into the `refreshing` state. By default, the pull
    * maximum will be the result of `pullMin + 60`.
    */
@@ -137,22 +57,22 @@ export class Refresher {
 
   // TODO: NEVER USED
   /**
-   * @input {number} Time it takes to close the refresher. Default is `280ms`.
+   * Time it takes to close the refresher. Default is `280ms`.
    */
   @Prop() closeDuration = '280ms';
 
   /**
-   * @input {string} Time it takes the refresher to to snap back to the `refreshing` state. Default is `280ms`.
+   * Time it takes the refresher to to snap back to the `refreshing` state. Default is `280ms`.
    */
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * @input {boolean} If the refresher is enabled or not. This should be used in place of an `ngIf`. Default is `true`.
+   * If the refresher is enabled or not. This should be used in place of an `ngIf`. Default is `true`.
    */
   @Prop() enabled = false;
 
   /**
-   * @output {event} Emitted when the user lets go and has pulled down
+   * Emitted when the user lets go and has pulled down
    * far enough, which would be farther than the `pullMin`, then your refresh hander if
    * fired and the state is updated to `refreshing`. From within your refresh handler,
    * you must call the `complete()` method when your async operation has completed.
@@ -160,12 +80,12 @@ export class Refresher {
   @Event() ionRefresh: EventEmitter;
 
   /**
-   * @output {event} Emitted while the user is pulling down the content and exposing the refresher.
+   * Emitted while the user is pulling down the content and exposing the refresher.
    */
   @Event() ionPull: EventEmitter;
 
   /**
-   * @output {event} Emitted when the user begins to start pulling down.
+   * Emitted when the user begins to start pulling down.
    */
   @Event() ionStart: EventEmitter;
 
