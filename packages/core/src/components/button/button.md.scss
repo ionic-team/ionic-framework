@@ -250,39 +250,6 @@
 }
 
 
-// Material Design Ripple Effect
-// --------------------------------------------------
-// Only Material uses the button effect, so by default
-// it's display none, and .md sets to display block.
-
-.button-effect {
-  @include border-radius(50%);
-  @include transform-origin(center, center);
-
-  position: absolute;
-  z-index: 0;
-  display: none;
-
-  background-color: $button-md-ripple-background-color;
-  opacity: .2;
-
-  transition-timing-function: ease-in-out;
-
-  pointer-events: none;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    top: 0;
-
-    left: 0;
-  }
-}
-
-.md .button-effect {
-  display: block;
-}
-
-
 // Generate Material Design Button Colors
 // --------------------------------------------------
 

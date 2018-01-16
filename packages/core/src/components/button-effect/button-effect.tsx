@@ -31,17 +31,18 @@ export class ButtonEffect {
 
   private addRipple(pageX: number, pageY: number) {
     const rect = this.el.getBoundingClientRect();
-
-    const size = Math.hypot(rect.width, rect.height) * 2;
+    const width = rect.width;
+    const height = rect.height;
+    const size = Math.sqrt(width * width + height * height) * 2;
     const x = pageX - rect.left - size / 2;
     const y = pageY - rect.top - size / 2;
 
     this.schedule({x, y, size});
   }
 
-  schedule({x, y, size}: Ripple) {
+  private schedule({x, y, size}: Ripple) {
     const div = document.createElement('div');
-    div.classList.add('ripple');
+    div.classList.add('button-effect');
     const style = div.style;
     const duration = Math.max(800 * Math.sqrt(size / TOUCH_DOWN_ACCEL) + 0.5, 260);
     style.top = y + 'px';
