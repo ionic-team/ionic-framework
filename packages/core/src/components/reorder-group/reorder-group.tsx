@@ -68,6 +68,9 @@ export class ReorderGroup {
   componentDidLoad() {
     this.containerEl = this.el.querySelector('ion-gesture') as HTMLElement;
     this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
+    if (this.enabled) {
+      this.enabledChanged(true);
+    }
   }
 
   componentDidUnload() {
