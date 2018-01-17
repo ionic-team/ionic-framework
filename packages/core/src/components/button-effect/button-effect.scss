@@ -12,6 +12,8 @@ ion-button-effect {
   @include position(0, 0, 0, 0);
 
   position: absolute;
+
+  contain: strict;
 }
 
 .button-effect {
@@ -21,11 +23,13 @@ ion-button-effect {
   background: $button-effect-ripple-background-color;
   opacity: 0;
 
-  will-change: transform;
+  will-change: transform, opacity;
 
   animation-name: rippleAnimation;
-  animation-duration: 1000ms;
+  animation-duration: 200ms;
   animation-timing-function: ease-in-out;
+
+  contain: strict;
 }
 
 @keyframes rippleAnimation {

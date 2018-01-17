@@ -1,12 +1,6 @@
-import { Component, Element, Listen, State } from '@stencil/core';
+import { Component, Element, Listen, Prop, State } from '@stencil/core';
 import { now } from '../../utils/helpers';
-
-interface Ripple {
-  x: number;
-  y: number;
-  size: number;
-  time?: number;
-}
+import { DomController } from '../../global/dom-controller';
 
 @Component({
   tag: 'ion-button-effect',
@@ -14,47 +8,52 @@ interface Ripple {
 })
 export class ButtonEffect {
 
-  private lastClick = 0;
+  private lastClick = -10000;
   @Element() el: HTMLElement;
 
   @State() state = 0;
 
-  @Listen('mousedown')
+  @Prop({context: 'dom'}) dom: DomController;
+
   @Listen('touchstart')
-  pointerDown(ev: MouseEvent) {
+  touchStart(ev: TouchEvent) {
+    this.lastClick = now(ev);
+    const touches = ev.touches[0];
+    this.addRipple(touches.clientX, touches.clientY);
+  }
+
+  @Listen('mousedown')
+  mouseDown(ev: MouseEvent) {
     const timeStamp = now(ev);
-    if (this.lastClick < (timeStamp - DELAY)) {
-      this.addRipple(ev.clientX, ev.clientY);
-      this.lastClick = timeStamp;
+    if (this.lastClick < (timeStamp - 1000)) {
+      this.addRipple(ev.pageX, ev.pageY);
     }
   }
 
   private addRipple(pageX: number, pageY: number) {
-    const rect = this.el.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const size = Math.sqrt(width * width + height * height) * 2;
-    const x = pageX - rect.left - size / 2;
-    const y = pageY - rect.top - size / 2;
+    let x: number, y: number, size: number;
 
-    this.schedule({x, y, size});
+    this.dom.read(() => {
+      const rect = this.el.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      size = Math.sqrt(width * width + height * height) * 2;
+      x = pageX - rect.left - (size / 2);
+      y = pageY - rect.top - (size / 2);
+    });
+    this.dom.write(() => {
+      const div = document.createElement('div');
+      div.classList.add('button-effect');
+      const style = div.style;
+      const duration = Math.max(800 * Math.sqrt(size / 350) + 0.5, 260);
+      style.top = y + 'px';
+      style.left = x + 'px';
+      style.width = size + 'px';
+      style.height = size + 'px';
+      style.animationDuration = duration + 'ms';
+
+      this.el.appendChild(div);
+      setTimeout(() => this.el.removeChild(div), duration + 50);
+    });
   }
-
-  private schedule({x, y, size}: Ripple) {
-    const div = document.createElement('div');
-    div.classList.add('button-effect');
-    const style = div.style;
-    const duration = Math.max(800 * Math.sqrt(size / TOUCH_DOWN_ACCEL) + 0.5, 260);
-    style.top = y + 'px';
-    style.left = x + 'px';
-    style.width = size + 'px';
-    style.height = size + 'px';
-    style.animationDuration = duration + 'ms';
-
-    this.el.appendChild(div);
-    setTimeout(() => this.el.removeChild(div), duration + 50);
-  }
-
 }
-const TOUCH_DOWN_ACCEL = 350;
-const DELAY = 50;
