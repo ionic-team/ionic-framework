@@ -42,7 +42,7 @@
   background-color: $button-md-background-color-focused;
 }
 
-.button-md .button-effect {
+.button-md .ripple-effect {
   background-color: $button-md-text-color;
 }
 
@@ -74,7 +74,7 @@
     background-color: $bg-color-focused;
   }
 
-  .button-md-#{$color-name} .button-effect {
+  .button-md-#{$color-name} .ripple-effect {
     background-color: $fg-color;
   }
 }
@@ -143,7 +143,7 @@
   background-color: $button-md-outline-background-color-focused;
 }
 
-.button-outline-md .button-effect {
+.button-outline-md .ripple-effect {
   background-color: $button-md-outline-ripple-background-color;
 }
 
@@ -173,7 +173,7 @@
     background-color: $bg-color-focused;
   }
 
-  .button-outline-md-#{$color-name} .button-effect {
+  .button-outline-md-#{$color-name} .ripple-effect {
     background-color: $fg-color;
   }
 }
@@ -203,7 +203,7 @@
   background-color: $button-md-clear-background-color-hover;
 }
 
-.button-clear-md .button-effect {
+.button-clear-md .ripple-effect {
   background-color: $button-md-clear-ripple-background-color;
 }
 

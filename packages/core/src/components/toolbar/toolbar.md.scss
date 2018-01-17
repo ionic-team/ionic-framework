@@ -90,7 +90,7 @@
     .bar-button-clear-md,
     .bar-button-default-md,
     .bar-button-outline-md {
-      .button-effect {
+      .ripple-effect {
         background-color: $color-contrast;
       }
     }
@@ -202,7 +202,7 @@
     background-color: transparent;
   }
 
-  .button-effect {
+  .ripple-effect {
     background-color: $toolbar-md-button-color;
   }
 }
@@ -219,7 +219,7 @@
       background-color: transparent;
     }
 
-    .button-effect {
+    .ripple-effect {
       background-color: $fg-color;
     }
   }

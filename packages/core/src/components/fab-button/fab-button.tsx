@@ -139,7 +139,7 @@ export class FabButton {
         <span class='button-inner'>
           <slot></slot>
         </span>
-        <div class='button-effect'></div>
+        { this.mode === 'md' && <ion-ripple-effect /> }
       </TagType>
     );
   }

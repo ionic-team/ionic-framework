@@ -143,7 +143,7 @@ export class Button {
             <slot></slot>
             <slot name='end'></slot>
           </span>
-          <ion-button-effect />
+          { this.mode === 'md' && <ion-ripple-effect /> }
       </TagType>
     );
   }

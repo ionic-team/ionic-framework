@@ -5,10 +5,7 @@
 // Only Material uses the button effect, so by default
 // it's display none, and .md sets to display block.
 
-/// @prop - Background color of the ripple on the button
-$button-effect-ripple-background-color:       #000 !default;
-
-ion-button-effect {
+ion-ripple-effect {
   @include position(0, 0, 0, 0);
 
   position: absolute;
@@ -16,11 +13,11 @@ ion-button-effect {
   contain: strict;
 }
 
-.button-effect {
+.ripple-effect {
   @include border-radius(50%);
   position: absolute;
 
-  background: $button-effect-ripple-background-color;
+  background: #000;
   opacity: 0;
 
   will-change: transform, opacity;

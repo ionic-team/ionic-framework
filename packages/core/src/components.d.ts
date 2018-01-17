@@ -331,36 +331,6 @@ declare global {
 
 
 import {
-  ButtonEffect as IonButtonEffect
-} from './components/button-effect/button-effect';
-
-declare global {
-  interface HTMLIonButtonEffectElement extends IonButtonEffect, HTMLElement {
-  }
-  var HTMLIonButtonEffectElement: {
-    prototype: HTMLIonButtonEffectElement;
-    new (): HTMLIonButtonEffectElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-button-effect": HTMLIonButtonEffectElement;
-  }
-  interface ElementTagNameMap {
-    "ion-button-effect": HTMLIonButtonEffectElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-button-effect": JSXElements.IonButtonEffectAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonButtonEffectAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   Button as IonButton
 } from './components/button/button';
 
@@ -2302,6 +2272,36 @@ declare global {
 
 
 import {
+  RippleEffect as IonRippleEffect
+} from './components/ripple-effect/ripple-effect';
+
+declare global {
+  interface HTMLIonRippleEffectElement extends IonRippleEffect, HTMLElement {
+  }
+  var HTMLIonRippleEffectElement: {
+    prototype: HTMLIonRippleEffectElement;
+    new (): HTMLIonRippleEffectElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-ripple-effect": HTMLIonRippleEffectElement;
+  }
+  interface ElementTagNameMap {
+    "ion-ripple-effect": HTMLIonRippleEffectElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-ripple-effect": JSXElements.IonRippleEffectAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRippleEffectAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   RouteLink as IonRouteLink
 } from './components/route-link/route-link';
 
@@ -2851,6 +2851,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabButtonAttributes extends HTMLAttributes {
+      mode?: 'ios' | 'md';
       selected?: boolean;
       tab?: HTMLIonTabElement;
     }

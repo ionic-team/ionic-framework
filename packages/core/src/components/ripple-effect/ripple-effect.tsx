@@ -1,17 +1,15 @@
-import { Component, Element, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Listen, Prop } from '@stencil/core';
 import { now } from '../../utils/helpers';
 import { DomController } from '../../global/dom-controller';
 
 @Component({
-  tag: 'ion-button-effect',
-  styleUrl: 'button-effect.scss'
+  tag: 'ion-ripple-effect',
+  styleUrl: 'ripple-effect.scss'
 })
-export class ButtonEffect {
+export class RippleEffect {
 
   private lastClick = -10000;
   @Element() el: HTMLElement;
-
-  @State() state = 0;
 
   @Prop({context: 'dom'}) dom: DomController;
 
@@ -37,13 +35,13 @@ export class ButtonEffect {
       const rect = this.el.getBoundingClientRect();
       const width = rect.width;
       const height = rect.height;
-      size = Math.sqrt(width * width + height * height) * 2;
+      size = Math.min(Math.sqrt(width * width + height * height) * 2, 600);
       x = pageX - rect.left - (size / 2);
       y = pageY - rect.top - (size / 2);
     });
     this.dom.write(() => {
       const div = document.createElement('div');
-      div.classList.add('button-effect');
+      div.classList.add('ripple-effect');
       const style = div.style;
       const duration = Math.max(800 * Math.sqrt(size / 350) + 0.5, 260);
       style.top = y + 'px';
