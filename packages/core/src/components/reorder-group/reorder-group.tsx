@@ -93,11 +93,6 @@ export class ReorderGroup {
   }
 
   private onDragStart(ev: GestureDetail) {
-    if (ev.event) {
-      ev.event.preventDefault();
-      ev.event.stopPropagation();
-    }
-
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
@@ -271,7 +266,6 @@ export class ReorderGroup {
         onMove: this.onDragMove.bind(this),
         onEnd: this.onDragEnd.bind(this),
         enabled: this.enabled,
-        passive: false,
         disableScroll: true,
         gestureName: 'reorder',
         gesturePriority: 30,

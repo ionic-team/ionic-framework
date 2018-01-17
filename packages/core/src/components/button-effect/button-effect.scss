@@ -25,9 +25,10 @@ ion-button-effect {
 
   will-change: transform, opacity;
 
+  pointer-events: none;
   animation-name: rippleAnimation;
   animation-duration: 200ms;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: ease-out;
 
   contain: strict;
 }
@@ -35,7 +36,7 @@ ion-button-effect {
 @keyframes rippleAnimation {
   0% {
     opacity: .2;
-    transform: scale(.001);
+    transform: scale(.05);
   }
 
   100% {
