@@ -13,13 +13,16 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Icon](#icon)
 - [Input](#Input)
 - [Item](#item)
+- [Item Divider](#item-divider)
+- [List Header](#list-header)
 - [Nav](#nav)
 - [Option](#option)
 - [Radio](#radio)
 - [Range](#range)
 - [Segment](#segment)
+- [Select](#select)
+- [Text/Typography](#text-typography)
 - [Toolbar](#toolbar)
-- [Sass](#sass)
 
 
 ## Dynamic Mode
@@ -128,7 +131,7 @@ Buttons inside of an `<ion-chip>` container should now be written as an `<ion-ch
 ```html
 <ion-chip>
   <ion-label>Default</ion-label>
-  <ion-chip-button clear color="light">
+  <ion-chip-button fill="clear" color="light">
     <ion-icon name="close-circle"></ion-icon>
   </ion-chip-button>
 </ion-chip>
@@ -274,6 +277,10 @@ If any `CSS` is being overridden for an icon it will need to change to override 
 }
 ```
 
+### Property Removed
+
+The `isActive` property has been removed. It only worked for `ios` icons previously. If you would like to switch between an outline and solid icon you should set it in the `name`, or `ios`/`md` attribute and then change it when needed.
+
 ## Input
 
 The Sass variables were all renamed from having `$text-input` as the prefix to `$input`.
@@ -331,7 +338,7 @@ Item should now be written as an `<ion-item>` element. Ionic will determine when
 
 ### Label Required
 
-Previously an `ion-label` would automatically get added to an `ion-item`, `ion-item-divider` and `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+Previously an `ion-label` would automatically get added to an `ion-item` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
 
 ```html
 <ion-item>
@@ -377,11 +384,37 @@ These have been renamed to the following:
 </ion-item>
 ```
 
+## Item Divider
+
+### Label Required
+
+Previously an `ion-label` would automatically get added to an `ion-item-divider` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+
+```html
+<ion-item-divider>
+  <ion-label>Item Divider Label</ion-label>
+</ion-item-divider>
+```
+
+## List Header
+
+### Label Required
+
+Previously an `ion-label` would automatically get added to an `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+
+```html
+<ion-list-header>
+  <ion-label>List Header Label</ion-label>
+</ion-list-header>
+```
+
 ## Nav
 
 ### Method renamed
 
 The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
+
+The `getActiveChildNavs` method has been renamed to `getChildNavs`.
 
 ## Option
 
@@ -553,6 +586,86 @@ These have been renamed to the following:
 The markup hasn't changed for Segments, but now writing `<ion-segment-button>` will render a native button element inside of it.
 
 
+## Select
+
+The `selectOptions` property was renamed to `interfaceOptions` since it directly correlates with the `interface` property.
+
+**Old Usage Example:**
+
+```html
+<ion-select [selectOptions]="customOptions">
+  ...
+</ion-select>
+```
+
+```ts
+this.customOptions = {
+  title: 'Pizza Toppings',
+  subTitle: 'Select your toppings'
+};
+```
+
+**New Usage Example:**
+
+```html
+<ion-select [interfaceOptions]="customOptions">
+  ...
+</ion-select>
+```
+
+```ts
+this.customOptions = {
+  title: 'Pizza Toppings',
+  subTitle: 'Select your toppings'
+};
+```
+
+## Text / Typography
+
+### Markup Changed
+
+Typography should now be written as an `<ion-text>` element. Previously the `ion-text` attribute could be added to any HTML element to set its color. It should now be used as a wrapper around the HTML elements to style.
+
+**Old Usage Example:**
+
+```html
+<h1 ion-text color="secondary">H1: The quick brown fox jumps over the lazy dog</h1>
+
+<h2 ion-text color="primary">H2: The quick brown fox jumps over the lazy dog</h2>
+
+<h3 ion-text color="light">H3: The quick brown fox jumps over the lazy dog</h3>
+
+<p>
+  I saw a werewolf with a Chinese menu in his hand.
+  Walking through the <sub ion-text color="danger">streets</sub> of Soho in the rain.
+  He <i ion-text color="primary">was</i> looking for a place called Lee Ho Fook's.
+  Gonna get a <a ion-text color="secondary">big dish of beef chow mein.</a>
+</p>
+```
+
+**New Usage Example:**
+
+```html
+<ion-text color="secondary">
+  <h1>H1: The quick brown fox jumps over the lazy dog</h1>
+</ion-text>
+
+<ion-text color="primary">
+  <h2>H2: The quick brown fox jumps over the lazy dog</h2>
+</ion-text>
+
+<ion-text color="light">
+  <h3>H3: The quick brown fox jumps over the lazy dog</h3>
+</ion-text>
+
+<p>
+  I saw a werewolf with a Chinese menu in his hand.
+  Walking through the <ion-text color="danger"><sub>streets</sub></ion-text> of Soho in the rain.
+  He <ion-text color="primary"><i>was</i></ion-text> looking for a place called Lee Ho Fook's.
+  Gonna get a <ion-text color="secondary"><a>big dish of beef chow mein.</a></ion-text>
+</p>
+```
+
 ## Toolbar
 
 ### Attributes Renamed
@@ -576,13 +689,3 @@ The properties have been renamed to the following:
 | `end`        | `slot="mode-end"`   | Positions element to the `right` of the content in `ios` mode, and to the far right in `md` and `wp` mode.       |
 | `left`       | `slot="start"`      | Positions element to the `left` of all other elements in `LTR`, and to the `right` in `RTL`.                     |
 | `right`      | `slot="end"`        | Positions element to the `right` of all other elements in `LTR`, and to the `left` in `RTL`.                     |
-
-## Sass
-
-### Deprecated Styles
-
-Deprecated variables and styles have been removed.
-
-- [e0a29db](https://github.com/ionic-team/ionic/commit/e0a29db)
-- [07e4330](https://github.com/ionic-team/ionic/commit/07e4330)
-- TODO continue to add what is removed here

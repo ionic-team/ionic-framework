@@ -44,7 +44,7 @@ export class Spinner {
   /**
    * @input {boolean} If true, pause the animation.
    */
-  @Prop() paused: boolean = false;
+  @Prop() paused = false;
 
 
   private getName(): string {
@@ -91,17 +91,14 @@ export class Spinner {
 
     const svgs: any[] = [];
 
-    let i = 0;
-    let l = 0;
-
     if (spinner.circles) {
-      for (i = 0, l = spinner.circles; i < l; i++) {
-        svgs.push(buildCircle(spinner, duration, i, l));
+      for (let i = 0; i < spinner.circles; i++) {
+        svgs.push(buildCircle(spinner, duration, i, spinner.circles));
       }
 
     } else if (spinner.lines) {
-      for (i = 0, l = spinner.lines; i < l; i++) {
-        svgs.push(buildLine(spinner, duration, i, l));
+      for (let i = 0; i < spinner.lines; i++) {
+        svgs.push(buildLine(spinner, duration, i, spinner.lines));
       }
     }
 

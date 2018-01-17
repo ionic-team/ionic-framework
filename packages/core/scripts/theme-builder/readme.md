@@ -27,7 +27,8 @@ Open Theme Builder App
 
 Github App: Commit CSS changes using this format:
 
-    style(theme): update oceanic theme
+    feat(theme): create oceanic theme
+    refactor(theme): update default theme
 
 
 Pull the latest again for good measure:

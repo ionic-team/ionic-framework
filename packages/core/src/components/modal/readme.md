@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-
 #### color
 
 string
@@ -54,7 +49,7 @@ any
 
 #### modalId
 
-string
+number
 
 
 #### mode
@@ -63,17 +58,17 @@ string
 
 
 #### showBackdrop
+
+boolean
+
+
+#### willAnimate
 
 boolean
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-
 #### color
 
 string
@@ -116,7 +111,7 @@ any
 
 #### modalId
 
-string
+number
 
 
 #### mode
@@ -125,6 +120,11 @@ string
 
 
 #### showBackdrop
+
+boolean
+
+
+#### willAnimate
 
 boolean
 

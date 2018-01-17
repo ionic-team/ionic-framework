@@ -1,26 +1,30 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'page-one',
   template: `
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Page One</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  Page One
-  <ul>
-    <li>ngOnInit - {{ngOnInitDetection}}</li>
-  </ul>
-</ion-content>
+<ion-page>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Page One</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    Page One
+    <ul>
+      <li>ngOnInit - {{ngOnInitDetection}}</li>
+    </ul>
+    <ion-button (click)="dismiss()">Close Modal</ion-button>
+  </ion-content>
+</ion-page>
   `
 })
 export class ModalPageToPresent {
 
   ngOnInitDetection = 'initial';
 
-  constructor() {
+  constructor(private modalController: ModalController) {
 
   }
 
@@ -32,4 +36,7 @@ export class ModalPageToPresent {
     }, 500);
   }
 
+  dismiss() {
+    this.modalController.dismiss();
+  }
 }

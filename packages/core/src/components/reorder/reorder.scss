@@ -21,9 +21,6 @@
 
 .reorder:not(.no-hide) {
   display: none;
-
-  pointer-events: all;
-  touch-action: manipulation;
 }
 
 .reorder-enabled .reorder {
@@ -31,6 +28,9 @@
 
   cursor: grab;
   cursor: -webkit-grab;
+
+  pointer-events: all;
+  touch-action: none;
 }
 
 .reorder-selected,

@@ -6,6 +6,8 @@
 
 .action-sheet-ios {
   @include text-align($action-sheet-ios-text-align);
+
+  font-family: $action-sheet-ios-font-family;
 }
 
 .action-sheet-ios .action-sheet-wrapper {
@@ -56,7 +58,7 @@
 // -----------------------------------------
 
 .action-sheet-ios .action-sheet-title {
-  @include padding($action-sheet-ios-title-padding);
+  @include padding($action-sheet-ios-title-padding-top, $action-sheet-ios-title-padding-end, $action-sheet-ios-title-padding-bottom, $action-sheet-ios-title-padding-start);
 
   @include text-align($action-sheet-ios-text-align);
 
@@ -65,6 +67,12 @@
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
   color: $action-sheet-ios-title-color;
+}
+
+.action-sheet-ios .action-sheet-sub-title {
+  @include padding($action-sheet-ios-sub-title-padding-top, $action-sheet-ios-sub-title-padding-end, $action-sheet-ios-sub-title-padding-bottom, $action-sheet-ios-sub-title-padding-start);
+
+  font-size: $action-sheet-ios-sub-title-font-size;
 }
 
 
@@ -90,14 +98,9 @@
 
   @include padding-horizontal(null, $action-sheet-ios-button-icon-padding-right);
 
-  width: $action-sheet-ios-icon-width;
   height: $action-sheet-ios-button-icon-height;
 
   font-size: $action-sheet-ios-button-icon-font-size;
-
-  vertical-align: $action-sheet-ios-icon-vertical-align;
-
-  fill: $action-sheet-ios-button-icon-fill-color;
 }
 
 .action-sheet-ios .action-sheet-button:last-child {
@@ -119,10 +122,6 @@
 
 .action-sheet-ios .action-sheet-destructive {
   color: $action-sheet-ios-button-destructive-text-color;
-}
-
-.action-sheet-ios .action-sheet-destructive .action-sheet-icon {
-  fill: $action-sheet-ios-button-destructive-icon-fill-color;
 }
 
 .action-sheet-ios .action-sheet-cancel {

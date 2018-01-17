@@ -15,11 +15,17 @@ import { TextValueAccessor } from './control-value-accessors/text-value-accessor
 /* Components */
 import { IonNavDelegate } from './components/ion-nav';
 
+/* Directives */
+import { MenuToggle } from './directives/menu-toggle';
+
 /* Providers */
 import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
 import { AngularComponentMounter } from './providers/angular-component-mounter';
+import { App } from './providers/app';
+import { Events } from './providers/events';
 import { LoadingController } from './providers/loading-controller';
+import { MenuController } from './providers/menu-controller';
 import { ModalController } from './providers/modal-controller';
 import { PopoverController } from './providers/popover-controller';
 import { ToastController } from './providers/toast-controller';
@@ -28,6 +34,7 @@ import { ToastController } from './providers/toast-controller';
   declarations: [
     BooleanValueAccessor,
     IonNavDelegate,
+    MenuToggle,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
@@ -36,6 +43,7 @@ import { ToastController } from './providers/toast-controller';
   exports: [
     BooleanValueAccessor,
     IonNavDelegate,
+    MenuToggle,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
@@ -56,7 +64,10 @@ export class IonicAngularModule {
         AlertController,
         ActionSheetController,
         AngularComponentMounter,
+        App,
+        Events,
         LoadingController,
+        MenuController,
         ModalController,
         PopoverController,
         ToastController

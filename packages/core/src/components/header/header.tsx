@@ -5,7 +5,8 @@ import { createThemedClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-header',
   styleUrls: {
-    ios: 'header.ios.scss'
+    ios: 'header.ios.scss',
+    md: 'header.md.scss'
   },
   host: {
     theme: 'header'
@@ -21,7 +22,7 @@ export class Header {
    * attribute needs to be set on the content.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'header-translucent') : {};

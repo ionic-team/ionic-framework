@@ -1,0 +1,16 @@
+@import "./text.ios.vars";
+
+// iOS Text
+// --------------------------------------------------
+
+// Generate iOS Text Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+
+  .text-ios-#{$color-name},
+  .text-ios-#{$color-name} a {
+    color: $color-base;
+  }
+
+}

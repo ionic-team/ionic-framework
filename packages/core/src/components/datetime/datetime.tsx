@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import {
   DatetimeData,
@@ -50,7 +50,7 @@ export class Datetime {
   /**
    * @input {boolean} If true, the user cannot interact with the datetime. Defaults to `false`.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
    * @input {string} The minimum datetime allowed. Value must be a date string
@@ -79,7 +79,7 @@ export class Datetime {
    * the datetime picker's columns. See the `pickerFormat` input description for
    * more info. Defaults to `MMM D, YYYY`.
    */
-  @Prop() displayFormat: string = 'MMM D, YYYY';
+  @Prop() displayFormat = 'MMM D, YYYY';
 
   /**
    * @input {string} The format of the date and time picker columns the user selects.
@@ -94,12 +94,12 @@ export class Datetime {
   /**
    * @input {string} The text to display on the picker's cancel button. Default: `Cancel`.
    */
-  @Prop() cancelText: string = 'Cancel';
+  @Prop() cancelText = 'Cancel';
 
   /**
    * @input {string} The text to display on the picker's "Done" button. Default: `Done`.
    */
-  @Prop() doneText: string = 'Done';
+  @Prop() doneText = 'Done';
 
   /**
    * @input {array | string} Values used to create the list of selectable years. By default
@@ -192,10 +192,9 @@ export class Datetime {
   @Prop({ mutable: true }) value: string;
 
   /**
-   * @hidden
    * Update the datetime value when the value changes
    */
-  @PropDidChange('value')
+  @Watch('value')
   protected valueChanged() {
     this.updateValue();
   }
@@ -221,7 +220,6 @@ export class Datetime {
   }
 
   /**
-   * @hidden
    * Update the datetime text and datetime value
    */
   updateValue() {
@@ -286,7 +284,6 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   generateColumns(): PickerColumn[] {
     let columns: PickerColumn[] = [];
@@ -314,17 +311,14 @@ export class Datetime {
       parseTemplate(template).forEach((format: any) => {
         // loop through each format in the template
         // create a new picker column to build up with data
-        let key = convertFormatToKey(format);
+        const key = convertFormatToKey(format);
         let values: any[];
 
-        // first see if they have exact values to use for this input
-        if (this[key + 'Values']) {
-          // user provide exact values for this date part
-          values = convertToArrayOfNumbers(this[key + 'Values'], key);
-        } else {
-          // use the default date part values
-          values = dateValueRange(format, this.datetimeMin, this.datetimeMax);
-        }
+        // check if they have exact values to use for this date part
+        // otherwise use the default date part values
+        values = this[key + 'Values']
+          ? convertToArrayOfNumbers(this[key + 'Values'], key)
+          : dateValueRange(format, this.datetimeMin, this.datetimeMax);
 
         const column: PickerColumn = {
           name: key,
@@ -382,7 +376,7 @@ export class Datetime {
         selectedYear = yearCol.options[0].value;
       }
 
-      var yearOpt = yearCol.options[yearCol.selectedIndex];
+      const yearOpt = yearCol.options[yearCol.selectedIndex];
       if (yearOpt) {
         // they have a selected year value
         selectedYear = yearOpt.value;
@@ -421,13 +415,12 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   calcMinMax(now?: Date) {
     const todaysYear = (now || new Date()).getFullYear();
 
     if (this.yearValues) {
-      var years = convertToArrayOfNumbers(this.yearValues, 'year');
+      const years = convertToArrayOfNumbers(this.yearValues, 'year');
       if (isBlank(this.min)) {
         this.min = Math.min.apply(Math, years);
       }
@@ -477,7 +470,6 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
     const column = this.picker.getColumn(name);
@@ -491,13 +483,13 @@ export class Datetime {
     let indexMin = options.length - 1;
     let indexMax = 0;
 
-    for (var i = 0; i < options.length; i++) {
-      var opt = options[i];
-      var value = opt.value;
+    for (let i = 0; i < options.length; i++) {
+      const opt = options[i];
+      const value = opt.value;
       lb[index] = opt.value;
       ub[index] = opt.value;
 
-      var disabled = opt.disabled = (
+      const disabled = opt.disabled = (
         value < lowerBounds[index] ||
         value > upperBounds[index] ||
         dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4]) < min ||
@@ -508,8 +500,8 @@ export class Datetime {
         indexMax = Math.max(indexMax, i);
       }
     }
-    let selectedIndex = column.selectedIndex = clamp(indexMin, column.selectedIndex, indexMax);
-    opt = column.options[selectedIndex];
+    const selectedIndex = column.selectedIndex = clamp(indexMin, column.selectedIndex, indexMax);
+    const opt = column.options[selectedIndex];
     if (opt) {
       return opt.value;
     }
@@ -518,18 +510,17 @@ export class Datetime {
 
 
   /**
-   * @hidden
    */
   divyColumns(columns: PickerColumn[]): PickerColumn[] {
     const pickerColumns = columns;
-    let columnsWidth: number[] = [];
+    const columnsWidth: number[] = [];
     let col: PickerColumn;
     let width: number;
-    for (var i = 0; i < pickerColumns.length; i++) {
+    for (let i = 0; i < pickerColumns.length; i++) {
       col = pickerColumns[i];
       columnsWidth.push(0);
 
-      for (var j = 0; j < col.options.length; j++) {
+      for (let j = 0; j < col.options.length; j++) {
         width = col.options[j].text.length;
         if (width > columnsWidth[i]) {
           columnsWidth[i] = width;
@@ -555,7 +546,6 @@ export class Datetime {
   }
 
   /**
-   * @hidden
    */
   updateText() {
     // create the text of the formatted data
@@ -564,7 +554,6 @@ export class Datetime {
   }
 
   /**
-   * @hidden
    */
   hasValue(): boolean {
     const val = this.datetimeValue;
@@ -604,7 +593,7 @@ export class Datetime {
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
-        class='item-cover'>
+        class='datetime-cover'>
       </button>
     ];
   }

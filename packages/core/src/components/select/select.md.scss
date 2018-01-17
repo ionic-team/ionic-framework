@@ -6,6 +6,8 @@
 
 .select-md {
   @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
+
+  font-family: $select-md-font-family;
 }
 
 .select-md .select-placeholder {
@@ -39,6 +41,16 @@
 
   pointer-events: none;
 }
+
+
+// Stacked & Floating Select
+// --------------------------------------------------
+
+.item-label-stacked .select-md,
+.item-label-floating .select-md {
+  @include padding(8px, null, 8px, 0);
+}
+
 
 // Select Popover Interface
 // --------------------------------------------------

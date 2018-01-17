@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, PropDidChange, PropWillChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
 import { Animation, Config, GestureDetail, SplitPaneAlert, StencilElement } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
@@ -17,13 +17,13 @@ export class Menu {
   private gestureBlocker: string;
   private animation: Animation;
   private isPane = false;
-  private _isOpen: boolean = false;
+  private _isOpen = false;
   private lastOnEnd = 0;
 
   mode: string;
   color: string;
-  isAnimating: boolean = false;
-  isRightSide: boolean = false;
+  isAnimating = false;
+  isRightSide = false;
   width: number = null;
 
   backdropEl: HTMLElement;
@@ -52,8 +52,9 @@ export class Menu {
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type: string = 'overlay';
-  @PropWillChange('type')
+  @Prop({ mutable: true }) type = 'overlay';
+
+  @Watch('type')
   typeChanged(type: string) {
     if (this.contentEl) {
       this.contentEl.classList.remove('menu-content-' + this.type);
@@ -71,7 +72,8 @@ export class Menu {
    * @input {boolean} If true, the menu is enabled. Default `true`.
    */
   @Prop({ mutable: true }) enabled: boolean;
-  @PropDidChange('enabled')
+
+  @Watch('enabled')
   protected enabledChanged() {
     this.updateState();
   }
@@ -80,7 +82,8 @@ export class Menu {
    * @input {string} Which side of the view the menu should be placed. Default `"start"`.
    */
   @Prop() side: Side = 'start';
-  @PropDidChange('side')
+
+  @Watch('side')
   protected sideChanged() {
     this.isRightSide = isRightSide(this.side);
   }
@@ -88,8 +91,9 @@ export class Menu {
   /**
    * @input {boolean} If true, swiping the menu is enabled. Default `true`.
    */
-  @Prop() swipeEnabled: boolean = true;
-  @PropDidChange('swipeEnabled')
+  @Prop() swipeEnabled = true;
+
+  @Watch('swipeEnabled')
   protected swipeEnabledChanged() {
     this.updateState();
   }
@@ -97,13 +101,9 @@ export class Menu {
   /**
    * @input {boolean} If true, the menu will persist on child pages.
    */
-  @Prop() persistent: boolean = false;
+  @Prop() persistent = false;
 
-  /**
-   * @hidden
-   */
-  @Prop() maxEdgeStart: number = 50;
-
+  @Prop() maxEdgeStart = 50;
 
   /**
    * @output {Event} Emitted when the sliding position changes.
@@ -135,13 +135,13 @@ export class Menu {
       ? '#' + this.content
       : '[main]';
     const parent = el.parentElement;
-    const content = this.contentEl = parent.querySelector(contentQuery) as HTMLElement;
+    const content = this.contentEl = parent.querySelector(contentQuery);
     if (!content || !content.tagName) {
       // requires content element
       return console.error('Menu: must have a "content" element to listen for drag events on.');
     }
-    this.menuInnerEl = el.querySelector('.menu-inner') as HTMLElement;
-    this.backdropEl = el.querySelector('.menu-backdrop') as HTMLElement;
+    this.menuInnerEl = el.querySelector('.menu-inner');
+    this.backdropEl = el.querySelector('.menu-backdrop');
 
     // add menu's content classes
     content.classList.add('menu-content');
@@ -197,7 +197,7 @@ export class Menu {
   }
 
   @Method()
-  setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
+  setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currenly being animated, let's do nothing
     if (!this.isActive() || this.isAnimating || (shouldOpen === this._isOpen)) {
       return Promise.resolve(this._isOpen);

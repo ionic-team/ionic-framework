@@ -7,12 +7,12 @@
 .toggle-md {
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 
+  box-sizing: content-box;
+
   position: relative;
 
   width: $toggle-md-track-width;
   height: $toggle-md-track-height;
-
-  box-sizing: content-box;
 
   contain: strict;
 }

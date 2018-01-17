@@ -6,6 +6,8 @@
 
 .datetime-ios {
   @include padding($datetime-ios-padding-top, $datetime-ios-padding-end, $datetime-ios-padding-bottom, $datetime-ios-padding-start);
+
+  font-family: $datetime-ios-font-family;
 }
 
 .datetime-ios .datetime-placeholder {

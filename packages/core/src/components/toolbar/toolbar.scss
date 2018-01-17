@@ -3,7 +3,8 @@
 // Toolbar
 // --------------------------------------------------
 
-.toolbar {
+ion-toolbar {
+  box-sizing: border-box;
   position: relative;
   z-index: $z-index-toolbar;
 
@@ -16,7 +17,14 @@
 
   width: 100%;
 
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+
   contain: content;
+}
+
+ion-toolbar ion-title {
+  box-sizing: border-box;
 }
 
 .toolbar-background {

@@ -1,5 +1,6 @@
-import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
+import { debounce } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
 
@@ -11,13 +12,12 @@ import { TextareaComponent } from '../input/input-base';
   // right now we're cheating by knowing ion-input
   // css is bundled with ion-textarea
 
-  // styleUrls: {
-  //   ios: 'input.ios.scss',
-  //   md: 'input.md.scss'
-  // },
-
+  styleUrls: {
+    ios: 'textarea.ios.scss',
+    md: 'textarea.md.scss'
+  },
   host: {
-    theme: 'input'
+    theme: 'textarea'
   }
 })
 export class Textarea implements TextareaComponent {
@@ -28,6 +28,11 @@ export class Textarea implements TextareaComponent {
   styleTmr: number;
 
   @Element() private el: HTMLElement;
+
+  /**
+   * @output {Event} Emitted when the input value has changed.
+   */
+  @Event() ionInput: EventEmitter;
 
   /**
    * @output {Event} Emitted when the styles change.
@@ -47,17 +52,17 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {string} Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
    */
-  @Prop() autocapitalize: string = 'none';
+  @Prop() autocapitalize = 'none';
 
   /**
    * @input {string} Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
    */
-  @Prop() autocomplete: string = 'off';
+  @Prop() autocomplete = 'off';
 
   /**
    * @input {string} This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
    */
-  @Prop() autofocus: boolean = false;
+  @Prop() autofocus = false;
 
   /**
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
@@ -65,14 +70,24 @@ export class Textarea implements TextareaComponent {
   @Prop({ mutable: true }) clearOnEdit: boolean;
 
   /**
-   * @input {boolean} If true, the user cannot interact with the textarea. Defaults to `false`.
+   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() debounce = 0;
+
+  @Watch('debounce')
+  private debounceInput() {
+    this.ionInput.emit = debounce(
+      this.ionInput.emit.bind(this.ionInput),
+      this.debounce
+    );
+  }
 
   /**
-   * @hidden
+   * @input {boolean} If true, the user cannot interact with the textarea. Defaults to `false`.
    */
-  @PropDidChange('disabled')
+  @Prop() disabled = false;
+
+  @Watch('disabled')
   protected disabledChanged() {
     this.emitStyle();
   }
@@ -100,17 +115,17 @@ export class Textarea implements TextareaComponent {
   /**
    * @input {boolean} If true, the user cannot modify the value. Defaults to `false`.
    */
-  @Prop() readonly: boolean = false;
+  @Prop() readonly = false;
 
   /**
    * @input {boolean} If true, the user must fill in a value before submitting a form.
    */
-  @Prop() required: boolean = false;
+  @Prop() required = false;
 
   /**
    * @input {string} If true, the element will have its spelling and grammar checked. Defaults to `false`.
    */
-  @Prop() spellcheck: boolean = false;
+  @Prop() spellcheck = false;
 
   /**
    * @input {number} The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
@@ -133,10 +148,9 @@ export class Textarea implements TextareaComponent {
   @Prop({ mutable: true }) value: string;
 
   /**
-   * @hidden
    * Update the native input element when the value changes
    */
-  @PropDidChange('value')
+  @Watch('value')
   protected valueChanged() {
     const inputEl = this.el.querySelector('textarea');
     if (inputEl.value !== this.value) {
@@ -145,14 +159,14 @@ export class Textarea implements TextareaComponent {
   }
 
   componentDidLoad() {
+    this.debounceInput();
     this.emitStyle();
   }
-
 
   private emitStyle() {
     clearTimeout(this.styleTmr);
 
-    let styles = {
+    const styles = {
       'textarea': true,
       'input': true,
       'input-disabled': this.disabled,
@@ -165,18 +179,11 @@ export class Textarea implements TextareaComponent {
     });
   }
 
-
-  /**
-   * @hidden
-   */
-  clearTextInput() {
+  clearTextInput(ev: any) {
     this.value = '';
+    this.ionInput.emit(ev);
   }
 
-
-  /**
-   * @hidden
-   */
   inputBlurred(ev: any) {
     this.ionBlur.emit(ev);
 
@@ -184,19 +191,12 @@ export class Textarea implements TextareaComponent {
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputChanged(ev: any) {
     this.value = ev.target && ev.target.value;
+    this.ionInput.emit(ev);
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputFocused(ev: any) {
     this.ionFocus.emit(ev);
 
@@ -204,19 +204,14 @@ export class Textarea implements TextareaComponent {
     this.emitStyle();
   }
 
-  /**
-   * @hidden
-   */
-  inputKeydown() {
-    this.checkClearOnEdit();
+  inputKeydown(ev: any) {
+    this.checkClearOnEdit(ev);
   }
 
-
   /**
-  * Check if we need to clear the text input if clearOnEdit is enabled
-  * @hidden
-  */
-  checkClearOnEdit() {
+   * Check if we need to clear the text input if clearOnEdit is enabled
+   */
+  checkClearOnEdit(ev: any) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -224,17 +219,13 @@ export class Textarea implements TextareaComponent {
     // Did the input value change after it was blurred and edited?
     if (this.didBlurAfterEdit && this.hasValue()) {
       // Clear the input
-      this.clearTextInput();
+      this.clearTextInput(ev);
     }
 
     // Reset the flag
     this.didBlurAfterEdit = false;
   }
 
-
-  /**
-   * @hidden
-   */
   focusChange(inputHasFocus: boolean) {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
     if (this.clearOnEdit && !inputHasFocus && this.hasValue()) {
@@ -242,26 +233,17 @@ export class Textarea implements TextareaComponent {
     }
   }
 
-
-  /**
-   * @hidden
-   */
   hasFocus(): boolean {
     // check if an input has focus or not
     return this.el && (this.el.querySelector(':focus') === this.el.querySelector('textarea'));
   }
 
-
-  /**
-   * @hidden
-   */
   hasValue(): boolean {
     return (this.value !== null && this.value !== undefined && this.value !== '');
   }
 
-
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
+    const themedClasses = createThemedClasses(this.mode, this.color, 'native-textarea');
     // TODO aria-labelledby={this.item.labelId}
 
     return (

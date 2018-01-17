@@ -48,7 +48,7 @@ export class AlertPageComponent {
 
     });
     alert.present().then(() => {
-      return alert.dismiss();
+      // return alert.dismiss();
 
     }).then(() => {
       console.log('dismissed');

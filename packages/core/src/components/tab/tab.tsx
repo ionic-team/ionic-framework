@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class Tab {
   /**
    * @input {string} The badge color for the tab button.
    */
-  @Prop() badgeStyle: string = 'default';
+  @Prop() badgeStyle = 'default';
 
   /**
    * @input {boolean} If true, enable the tab. If false,
@@ -61,7 +61,8 @@ export class Tab {
 
 
   @Prop({ mutable: true }) selected = false;
-  @PropDidChange('selected')
+
+  @Watch('selected')
   selectedChanged(selected: boolean) {
     if (selected) {
       this.ionSelect.emit();

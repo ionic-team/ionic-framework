@@ -18,6 +18,12 @@ export interface SelectPopoverOption {
 export class SelectPopover {
   private mode: string;
 
+  @Prop() title: string;
+
+  @Prop() subTitle: string;
+
+  @Prop() message: string;
+
   @Prop() options: SelectPopoverOption[] = [];
 
   @Listen('ionSelect')
@@ -29,6 +35,15 @@ export class SelectPopover {
   render() {
     return (
       <ion-list no-lines={this.mode === 'md'}>
+        { this.title ? <ion-list-header>{this.title}</ion-list-header> : null }
+        { this.subTitle || this.message
+          ? <ion-item>
+              <ion-label>
+                { this.subTitle ? <h3>{this.subTitle}</h3> : null }
+                { this.message ? <p>{this.message}</p> : null }
+              </ion-label>
+            </ion-item>
+            : null}
         <ion-radio-group>
           {this.options.map(option =>
             <ion-item>

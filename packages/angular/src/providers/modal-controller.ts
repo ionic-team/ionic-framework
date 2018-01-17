@@ -29,14 +29,20 @@ export class ModalController implements FrameworkDelegate {
     return getModalProxy(opts);
   }
 
-  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
-
-    const hostElement = document.createElement('div');
-    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, hostElement, elementOrComponentToMount, this.componentResolveFactory, this.injector, classesToAdd);
+  dismiss(data?: any, role?: string, id?: number) {
+    const modalController = document.querySelector('ion-modal-controller');
+    return (modalController as any).componentOnReady().then(() => {
+      return modalController.dismiss(data, role, id);
+    });
   }
 
-  removeViewFromDom(_parentElement: HTMLElement, childElement: HTMLElement) {
-    return this.angularComponentMounter.removeViewFromDom(childElement);
+  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
+
+    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, _propsOrDataObj, classesToAdd);
+  }
+
+  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {
+    return this.angularComponentMounter.removeViewFromDom(parentElement, childElement);
   }
 }
 

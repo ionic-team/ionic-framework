@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-radio {
+  box-sizing: border-box;
+
   position: relative;
   display: inline-block;
 }
@@ -22,4 +24,8 @@ ion-radio input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+ion-radio .radio-icon {
+  box-sizing: border-box;
 }

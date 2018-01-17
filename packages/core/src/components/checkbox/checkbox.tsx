@@ -1,5 +1,5 @@
 import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
-import { Component, CssClassMap, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 
 @Component({
@@ -21,16 +21,14 @@ export class Checkbox implements CheckboxInput {
   @State() keyFocus: boolean;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
 
@@ -40,40 +38,39 @@ export class Checkbox implements CheckboxInput {
   @Prop() name: string;
 
   /**
-   * @input {boolean} If true, the checkbox is selected. Defaults to `false`.
+   * If true, the checkbox is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
-  /*
-   * @input {boolean} If true, the user cannot interact with the checkbox. Default false.
+  /**
+   * If true, the user cannot interact with the checkbox. Default false.
    */
   @Prop() disabled = false;
 
   /**
-   * @input {string} the value of the checkbox.
+   * the value of the checkbox.
    */
   @Prop({ mutable: true }) value: string;
 
   /**
-   * @output {Event} Emitted when the checked property has changed.
+   * Emitted when the checked property has changed.
    */
   @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
 
   /**
-   * @output {Event} Emitted when the toggle has focus.
+   * Emitted when the toggle has focus.
    */
   @Event() ionFocus: EventEmitter<FocusEvent>;
 
   /**
-   * @output {Event} Emitted when the toggle loses focus.
+   * Emitted when the toggle loses focus.
    */
   @Event() ionBlur: EventEmitter<BlurEvent>;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter<StyleEvent>;
-
 
   componentWillLoad() {
     this.inputId = 'ion-cb-' + (checkboxIds++);
@@ -97,7 +94,7 @@ export class Checkbox implements CheckboxInput {
     }
   }
 
-  @PropDidChange('checked')
+  @Watch('checked')
   checkedChanged(isChecked: boolean) {
     if (this.nativeInput.checked !== isChecked) {
       // keep the checked value and native input `nync
@@ -112,7 +109,7 @@ export class Checkbox implements CheckboxInput {
     this.emitStyle();
   }
 
-  @PropDidChange('disabled')
+  @Watch('disabled')
   disabledChanged(isDisabled: boolean) {
     this.nativeInput.disabled = isDisabled;
     this.emitStyle();

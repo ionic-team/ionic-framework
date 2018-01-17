@@ -36,20 +36,20 @@ export class FabButton {
    * @input {boolean} If true, adds transparency to the fab.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
-  @Prop() activated: boolean = false;
-  @Prop() toggleActive: Function = () => {};
+  @Prop() activated = false;
+  @Prop() toggleActive: Function;
 
-  @Prop() show: boolean = false;
+  @Prop() show = false;
 
-  @State() private inContainer: boolean = false;
-  @State() private inList: boolean = false;
+  @State() private inContainer = false;
+  @State() private inList = false;
 
   /**
    * @input {boolean} If true, sets the button into a disabled state.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   componentDidLoad() {
     const parentNode = this.el.parentNode.nodeName;
@@ -66,14 +66,13 @@ export class FabButton {
   }
 
   /**
-   * @hidden
    * Get the classes for fab buttons in lists
    */
   getFabListClassList() {
     if (!this.inList) {
       return [];
     }
-    let listClasses = [
+    const listClasses = [
       `fab-button-in-list`,
       `fab-button-${this.mode}-in-list`
     ];
@@ -86,7 +85,6 @@ export class FabButton {
   }
 
   /**
-   * @hidden
    * Get the close active class for fab buttons
    */
   getFabActiveClassList() {
@@ -99,7 +97,6 @@ export class FabButton {
   }
 
   /**
-   * @hidden
    * Get the show class for fab buttons
    */
   getFabShowClassList() {
@@ -142,7 +139,7 @@ export class FabButton {
         <span class='button-inner'>
           <slot></slot>
         </span>
-        <div class='button-effect'></div>
+        { this.mode === 'md' && <ion-ripple-effect /> }
       </TagType>
     );
   }

@@ -56,19 +56,3 @@ $z-index-item-options:           1; // scss-lint:disable DefaultRule
 $z-index-item-divider:           100; // scss-lint:disable DefaultRule
 
 $z-index-reorder-selected:       100; // scss-lint:disable DefaultRule
-
-.ion-page {
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  z-index: $z-index-page-container;
-
-  width: 100%;
-  height: 100%;
-
-  contain: layout size style;
-}

@@ -36,20 +36,30 @@ Placed in an `ion-item` or used as a stand-alone checkbox.
 
 boolean
 
+If true, the checkbox is selected. Defaults to `false`.
+
 
 #### color
 
 string
+
+The color to use.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
 
 
 #### disabled
 
 boolean
 
+If true, the user cannot interact with the checkbox. Default false.
+
 
 #### mode
 
 any
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### name
@@ -62,6 +72,8 @@ The name of the control, which is submitted with the form data.
 #### value
 
 string
+
+the value of the checkbox.
 
 
 ## Attributes
@@ -70,20 +82,30 @@ string
 
 boolean
 
+If true, the checkbox is selected. Defaults to `false`.
+
 
 #### color
 
 string
+
+The color to use.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
 
 
 #### disabled
 
 boolean
 
+If true, the user cannot interact with the checkbox. Default false.
+
 
 #### mode
 
 any
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### name
@@ -97,19 +119,29 @@ The name of the control, which is submitted with the form data.
 
 string
 
+the value of the checkbox.
+
 
 ## Events
 
 #### ionBlur
 
+Emitted when the toggle loses focus.
+
 
 #### ionChange
+
+Emitted when the checked property has changed.
 
 
 #### ionFocus
 
+Emitted when the toggle has focus.
+
 
 #### ionStyle
+
+Emitted when the styles change.
 
 
 

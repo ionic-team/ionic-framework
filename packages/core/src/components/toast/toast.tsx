@@ -69,9 +69,9 @@ export class Toast {
   @Prop() closeButtonText: string;
   @Prop() dismissOnPageChange: boolean;
   @Prop() position: string;
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
   @Prop() toastId: string;
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
@@ -90,7 +90,7 @@ export class Toast {
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);
@@ -158,7 +158,7 @@ export class Toast {
   }
 
   wrapperClass(): CssClassMap {
-    let wrapperClass: string[] = !this.position
+    const wrapperClass: string[] = !this.position
       ? ['toast-wrapper', 'toast-bottom']
       : [`toast-wrapper`, `toast-${this.position}`];
     return wrapperClass.reduce((prevValue: any, cssClass: any) => {
@@ -180,9 +180,10 @@ export class Toast {
   }
 
   render() {
-    let userCssClass = 'toast-content';
     if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
+      this.cssClass.split(' ').forEach(cssClass => {
+        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
+      });
     }
 
     return (

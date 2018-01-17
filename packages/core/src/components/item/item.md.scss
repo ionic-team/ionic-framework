@@ -9,6 +9,7 @@
 
   position: relative;
 
+  font-family: $item-md-font-family;
   font-size: $item-md-font-size;
   font-weight: normal;
   text-transform: none;
@@ -149,19 +150,6 @@
 .item-md ion-thumbnail {
   width: $item-md-thumbnail-width;
   height: $item-md-thumbnail-height;
-}
-
-
-// Material Design Item Group
-// --------------------------------------------------
-
-ion-item-group .item-md:first-child .item-inner {
-  border-top-width: 0;
-}
-
-ion-item-group .item-md:last-child .item-inner,
-ion-item-group .item-md .item-wrapper:last-child .item-inner {
-  border: 0;
 }
 
 

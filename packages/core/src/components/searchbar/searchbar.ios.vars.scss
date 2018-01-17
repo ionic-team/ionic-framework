@@ -15,6 +15,9 @@ $searchbar-ios-padding-bottom:            $searchbar-ios-padding-top !default;
 /// @prop - Padding start of the searchbar
 $searchbar-ios-padding-start:             $searchbar-ios-padding-end !default;
 
+/// @prop - Font family of the searchbar
+$searchbar-ios-font-family:               $font-family-ios-base !default;
+
 /// @prop - Minimum height of the searchbar
 $searchbar-ios-min-height:                44px !default;
 

@@ -38,32 +38,32 @@ export class ActionSheet {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has loaded.
+   * Emitted after the alert has loaded.
    */
   @Event() ionActionSheetDidLoad: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has presented.
+   * Emitted after the alert has presented.
    */
   @Event() ionActionSheetDidPresent: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has presented.
+   * Emitted before the alert has presented.
    */
   @Event() ionActionSheetWillPresent: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has dismissed.
+   * Emitted before the alert has dismissed.
    */
   @Event() ionActionSheetWillDismiss: EventEmitter<ActionSheetDismissEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has dismissed.
+   * Emitted after the alert has dismissed.
    */
   @Event() ionActionSheetDidDismiss: EventEmitter<ActionSheetDismissEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has unloaded.
+   * Emitted after the alert has unloaded.
    */
   @Event() ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
 
@@ -94,17 +94,17 @@ export class ActionSheet {
   /**
    * If true, the action-sheet will be dismissed when the backdrop is clicked.
    */
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
 
   /**
    * If true, action-sheet will become translucent. Requires support for backdrop-filters.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   /**
    * Enable action-sheet animations. If false, action-sheet will not animate in
    */
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate = true;
 
   /**
    * Animation to use when the action-sheet is created
@@ -138,7 +138,7 @@ export class ActionSheet {
       this.animation = animation;
 
       // Check if prop animate is false or if the config for animate is defined/false
-      if (!this.animate || (isDef(this.config.get('animate')) && this.config.get('animate') === false)) {
+      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);
@@ -151,7 +151,7 @@ export class ActionSheet {
   }
 
   /**
-   * Dismiss the action-sheet programatically
+   * Dismiss the action-sheet
    */
   @Method()
   dismiss(data?: any, role?: string) {
@@ -168,7 +168,7 @@ export class ActionSheet {
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
 
-      if (!this.animate || (isDef(this.config.get('animate')) && this.config.get('animate') === false)) {
+      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
         this.animation = animation.duration(0);
       }
 
@@ -209,12 +209,12 @@ export class ActionSheet {
   }
 
   buttonClass(button: ActionSheetButton): CssClassMap {
-    let buttonClass: string[] = !button.role
+    const buttonClass: string[] = !button.role
       ? ['action-sheet-button']
       : [`action-sheet-button`, `action-sheet-${button.role}`];
 
     if (button.cssClass) {
-      let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+      const customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
       buttonClass.push(customClass);
     }
 
@@ -256,7 +256,7 @@ export class ActionSheet {
     }
 
     let cancelButton: ActionSheetButton;
-    let buttons = this.buttons
+    const buttons = this.buttons
       .map(b => {
         if (typeof b === 'string') {
           b = { text: b };
@@ -281,10 +281,12 @@ export class ActionSheet {
         <div class='action-sheet-container'>
           <div class='action-sheet-group'>
             {this.title
-              ? <div class='action-sheet-title'>{this.title}</div>
-              : null}
-            {this.subTitle
-              ? <div class='action-sheet-sub-title'>{this.subTitle}</div>
+              ? <div class='action-sheet-title'>
+                {this.title}
+                {this.subTitle
+                ? <div class='action-sheet-sub-title'>{this.subTitle}</div>
+                : null}
+              </div>
               : null}
             {buttons.map(b =>
               <button class={this.buttonClass(b)} onClick={() => this.buttonClick(b)}>

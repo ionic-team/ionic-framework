@@ -3,6 +3,9 @@
 // Material Design Range
 // --------------------------------------------------
 
+/// @prop - Font family of the range
+$range-md-font-family:                       $font-family-md-base !default;
+
 /// @prop - Padding top/bottom of the range
 $range-md-padding-vertical:                  8px !default;
 

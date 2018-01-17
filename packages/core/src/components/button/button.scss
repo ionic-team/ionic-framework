@@ -30,6 +30,9 @@
   user-select: none;
 
   contain: content;
+
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 
 .button:active,
@@ -104,8 +107,7 @@ button[disabled],
 // --------------------------------------------------
 
 .button ion-icon {
-  width: 1.4em;
-  height: 1.4em;
+  font-size: 1.4em;
 
   pointer-events: none;
 }
@@ -119,6 +121,5 @@ button[disabled],
 }
 
 .button ion-icon[slot="icon-only"] {
-  width: 1.8em;
-  height: 1.8em;
+  font-size: 1.8em;
 }

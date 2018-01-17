@@ -3,6 +3,9 @@
 // Material Design Action Sheet
 // --------------------------------------------------
 
+/// @prop - Font family of the action sheet
+$action-sheet-md-font-family:                           $font-family-md-base !default;
+
 /// @prop - Text align of the action sheet
 $action-sheet-md-text-align:                            start !default;
 
@@ -33,6 +36,21 @@ $action-sheet-md-title-padding-bottom:                  17px !default;
 /// @prop - Padding start of the action sheet title
 $action-sheet-md-title-padding-start:                   $action-sheet-md-title-padding-end !default;
 
+/// @prop - Font size of the action sheet sub title
+$action-sheet-md-sub-title-font-size:                   14px !default;
+
+/// @prop - Padding top of the action sheet sub title
+$action-sheet-md-sub-title-padding-top:                 16px !default;
+
+/// @prop - Padding end of the action sheet sub title
+$action-sheet-md-sub-title-padding-end:                 0 !default;
+
+/// @prop - Padding bottom of the action sheet sub title
+$action-sheet-md-sub-title-padding-bottom:              0 !default;
+
+/// @prop - Padding start of the action sheet sub title
+$action-sheet-md-sub-title-padding-start:               $action-sheet-md-sub-title-padding-end !default;
+
 /// @prop - Minimum height of the action sheet button
 $action-sheet-md-button-min-height:                     48px !default;
 
@@ -62,15 +80,6 @@ $action-sheet-md-button-background-activated:           #f1f1f1 !default;
 
 /// @prop - Font size of the icon in the action sheet button
 $action-sheet-md-icon-font-size:                        24px !default;
-
-/// @prop - Width of the icon in the action sheet button
-$action-sheet-md-icon-width:                            23px !default;
-
-/// @prop - Text align of the icon in the action sheet button
-$action-sheet-md-icon-text-align:                       center !default;
-
-/// @prop - Vertical align of the icon in the action sheet button
-$action-sheet-md-icon-vertical-align:                   middle !default;
 
 /// @prop - Margin top of the icon in the action sheet button
 $action-sheet-md-icon-margin-top:                       0 !default;

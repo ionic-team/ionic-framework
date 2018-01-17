@@ -1,4 +1,4 @@
-import { DomController, createDomControllerClient } from '../dom-controller';
+// import { DomController, createDomControllerClient } from '../dom-controller';
 
 describe('DomController', () => {
   it('should schedule reads then writes', () => {
@@ -25,18 +25,18 @@ describe('DomController', () => {
     // expect(stack).toEqual(['r1', 'r2', 'r3', 'w1', 'w2', 'w3']);
   });
 
-  let win: any;
-  let dom: DomController;
-  beforeEach(() => {
-    win = {
-      requestAnimationFrame: (cb: any) => {
-        this.cb = cb;
-      },
-      doRAF: (time: number) => {
-        this.cb(time);
-      }
-    } as any as Window;
-    const now = () => 1;
-    dom = createDomControllerClient(win, now, false);
-  });
+  // let win: any;
+  // let dom: DomController;
+  // beforeEach(() => {
+  //   win = {
+  //     requestAnimationFrame: (cb: any) => {
+  //       this.cb = cb;
+  //     },
+  //     doRAF: (time: number) => {
+  //       this.cb(time);
+  //     }
+  //   } as any as Window;
+  //   const now = () => 1;
+  //   dom = createDomControllerClient(win, now, false);
+  // });
 });

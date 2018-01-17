@@ -99,4 +99,11 @@ export class NavController implements PublicNav {
     }
     return null;
   }
+
+  getChildNavs(): PublicNav[] {
+    if (this.element.getChildNavs) {
+      return this.element.getChildNavs();
+    }
+    return [];
+  }
 }

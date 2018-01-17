@@ -7,13 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-Enable action-sheet animations. If false, action-sheet will not animate in
-
-
 #### buttons
 
 any
@@ -68,17 +61,17 @@ Title for the action-sheet
 boolean
 
 If true, action-sheet will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable action-sheet animations. If false, action-sheet will not animate in
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-Enable action-sheet animations. If false, action-sheet will not animate in
-
-
 #### buttons
 
 any
@@ -133,33 +126,52 @@ Title for the action-sheet
 boolean
 
 If true, action-sheet will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable action-sheet animations. If false, action-sheet will not animate in
 
 
 ## Events
 
 #### ionActionSheetDidDismiss
 
+Emitted after the alert has dismissed.
+
 
 #### ionActionSheetDidLoad
+
+Emitted after the alert has loaded.
 
 
 #### ionActionSheetDidPresent
 
+Emitted after the alert has presented.
+
 
 #### ionActionSheetDidUnload
+
+Emitted after the alert has unloaded.
 
 
 #### ionActionSheetWillDismiss
 
+Emitted before the alert has dismissed.
+
 
 #### ionActionSheetWillPresent
+
+Emitted before the alert has presented.
 
 
 ## Methods
 
 #### dismiss()
 
-Dismiss the action-sheet programatically
+Dismiss the action-sheet
 
 
 #### present()

@@ -1,6 +1,6 @@
-import {Component, Element, Listen, Prop, PropDidChange, State} from '@stencil/core';
-import {createThemedClasses} from '../../utils/theme';
-import {DomController} from '../../index';
+import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
+import { createThemedClasses } from '../../utils/theme';
+import { DomController } from '../../index';
 
 @Component({
   tag: 'ion-tabbar',
@@ -14,8 +14,8 @@ export class Tabbar {
 
   @Element() el: HTMLElement;
 
-  @State() canScrollLeft: boolean = false;
-  @State() canScrollRight: boolean = false;
+  @State() canScrollLeft = false;
+  @State() canScrollRight = false;
 
   @State() hidden = false;
 
@@ -27,15 +27,15 @@ export class Tabbar {
 
   private scrollEl: HTMLIonScrollElement;
 
-  @PropDidChange('selectedTab')
+  @Watch('selectedTab')
   selectedTabChanged() {
     this.scrollable && this.scrollToSelectedButton();
     this.highlight && this.updateHighlight();
   }
 
-  @Prop() layout: string = 'icon-top';
-  @Prop() highlight: boolean = false;
-  @Prop() translucent: boolean = false;
+  @Prop() layout = 'icon-top';
+  @Prop() highlight = false;
+  @Prop() translucent = false;
 
   @Listen('body:keyboardWillHide')
   protected onKeyboardWillHide() {
@@ -77,7 +77,7 @@ export class Tabbar {
       }
 
       if (!next && right > (tabsWidth + scrollLeft)) {
-        let amount = right - tabsWidth;
+        const amount = right - tabsWidth;
         next = {tab, amount};
       }
     });
@@ -189,7 +189,7 @@ export class Tabbar {
   updateHighlight() {
     this.dom.read(() => {
       const btn = this.getSelectedButton(),
-        ionTabbarHighlight: HTMLElement = this.highlight && this.el.querySelector('div.tabbar-highlight') as HTMLElement;
+        ionTabbarHighlight: HTMLElement = this.highlight && this.el.querySelector('div.tabbar-highlight');
 
       if (btn && ionTabbarHighlight) {
         ionTabbarHighlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;

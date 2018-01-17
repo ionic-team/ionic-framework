@@ -4,6 +4,10 @@
 // Material Design Segment
 // --------------------------------------------------
 
+.segment-md {
+  font-family: $segment-md-font-family;
+}
+
 .segment-md ion-segment-button {
   display: flex;
 

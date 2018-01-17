@@ -2,118 +2,118 @@
 export const THEME_VARIABLES = [
 
   {
-    property: '--primary'
+    property: '--color-primary'
   },
   {
-    property: '--primary-contrast'
+    property: '--color-primary-tint'
   },
   {
-    property: '--primary-tint'
+    property: '--color-primary-shade'
   },
   {
-    property: '--primary-shade'
+    property: '--color-primary-contrast'
   },
   {
-    property: '--secondary'
+    property: '--color-secondary'
   },
   {
-    property: '--secondary-contrast'
+    property: '--color-secondary-tint'
   },
   {
-    property: '--secondary-tint'
+    property: '--color-secondary-shade'
   },
   {
-    property: '--secondary-shade'
+    property: '--color-secondary-contrast'
   },
   {
-    property: '--tertiary'
+    property: '--color-tertiary'
   },
   {
-    property: '--tertiary-contrast'
+    property: '--color-tertiary-tint'
   },
   {
-    property: '--tertiary-tint'
+    property: '--color-tertiary-shade'
   },
   {
-    property: '--tertiary-shade'
+    property: '--color-tertiary-contrast'
   },
   {
-    property: '--success'
+    property: '--color-success'
   },
   {
-    property: '--success-contrast'
+    property: '--color-success-tint'
   },
   {
-    property: '--success-tint'
+    property: '--color-success-shade'
   },
   {
-    property: '--success-shade'
+    property: '--color-success-contrast'
   },
   {
-    property: '--warning'
+    property: '--color-warning'
   },
   {
-    property: '--warning-contrast'
+    property: '--color-warning-tint'
   },
   {
-    property: '--warning-tint'
+    property: '--color-warning-shade'
   },
   {
-    property: '--warning-shade'
+    property: '--color-warning-contrast'
   },
   {
-    property: '--danger'
+    property: '--color-danger'
   },
   {
-    property: '--danger-contrast'
+    property: '--color-danger-tint'
   },
   {
-    property: '--danger-tint'
+    property: '--color-danger-shade'
   },
   {
-    property: '--danger-shade'
+    property: '--color-danger-contrast'
   },
   {
-    property: '--light'
+    property: '--color-light'
   },
   {
-    property: '--light-contrast'
+    property: '--color-light-tint'
   },
   {
-    property: '--light-tint'
+    property: '--color-light-shade'
   },
   {
-    property: '--light-shade'
+    property: '--color-light-contrast'
   },
   {
-    property: '--medium'
+    property: '--color-medium'
   },
   {
-    property: '--medium-contrast'
+    property: '--color-medium-tint'
   },
   {
-    property: '--medium-tint'
+    property: '--color-medium-shade'
   },
   {
-    property: '--medium-shade'
+    property: '--color-medium-contrast'
   },
   {
-    property: '--dark'
+    property: '--color-dark'
   },
   {
-    property: '--dark-contrast'
+    property: '--color-dark-tint'
   },
   {
-    property: '--dark-tint'
+    property: '--color-dark-shade'
   },
   {
-    property: '--dark-shade'
+    property: '--color-dark-contrast'
   },
   {
     property: '--text-color'
   },
   {
-    property: '--text-sub-color'
+    property: '--text-color-alt'
   },
   {
     property: '--background-color'
@@ -122,10 +122,16 @@ export const THEME_VARIABLES = [
     property: '--background-color-alt'
   },
   {
-    property: '--toolbar-background'
+    property: '--toolbar-background-color'
   },
   {
-    property: '--tabbar-background'
+    property: '--tabbar-background-color'
+  },
+  {
+    property: '--tabbar-text-color'
+  },
+  {
+    property: '--tabbar-text-color-active'
   },
   {
     property: '--item-background-color'
@@ -137,7 +143,10 @@ export const THEME_VARIABLES = [
     property: '--border-color'
   },
   {
-    property: '--box-shadow'
+    property: '--backdrop-color'
+  },
+  {
+    property: '--box-shadow-color'
   },
 
 ];

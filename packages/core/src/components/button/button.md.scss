@@ -15,6 +15,7 @@
 
   height: $button-md-height;
 
+  font-family: $button-md-font-family;
   font-size: $button-md-font-size;
   font-weight: $button-md-font-weight;
 
@@ -41,12 +42,8 @@
   background-color: $button-md-background-color-focused;
 }
 
-.button-md .button-effect {
+.button-md .ripple-effect {
   background-color: $button-md-text-color;
-}
-
-.button-md .icon {
-  fill: $button-md-icon-fill-color;
 }
 
 
@@ -77,7 +74,7 @@
     background-color: $bg-color-focused;
   }
 
-  .button-md-#{$color-name} .button-effect {
+  .button-md-#{$color-name} .ripple-effect {
     background-color: $fg-color;
   }
 }
@@ -146,7 +143,7 @@
   background-color: $button-md-outline-background-color-focused;
 }
 
-.button-outline-md .button-effect {
+.button-outline-md .ripple-effect {
   background-color: $button-md-outline-ripple-background-color;
 }
 
@@ -156,7 +153,7 @@
 
 @mixin md-button-outline($color-name) {
   $fg-color: ion-color($colors-md, $color-name, shade, md);
-  $bg-color-focused: ion-color($colors-md, $color-name, tint, md);
+  $bg-color-focused: rgba(ion-color($colors-md, $color-name, base, md, true), .12);
 
   .button-outline-md-#{$color-name} {
     border-color: $fg-color;
@@ -176,7 +173,7 @@
     background-color: $bg-color-focused;
   }
 
-  .button-outline-md-#{$color-name} .button-effect {
+  .button-outline-md-#{$color-name} .ripple-effect {
     background-color: $fg-color;
   }
 }
@@ -206,7 +203,7 @@
   background-color: $button-md-clear-background-color-hover;
 }
 
-.button-clear-md .button-effect {
+.button-clear-md .ripple-effect {
   background-color: $button-md-clear-ripple-background-color;
 }
 
@@ -216,7 +213,7 @@
 
 @mixin md-button-clear($color-name) {
   $fg-color: ion-color($colors-md, $color-name, base, md);
-  $bg-color-focused: ion-color($colors-md, $color-name, tint, md);
+  $bg-color-focused: rgba(ion-color($colors-md, $color-name, base, md, true), .12);
 
   .button-clear-md-#{$color-name} {
     border-color: $button-md-clear-border-color;
@@ -250,39 +247,6 @@
 
 .button-md ion-icon[slot="icon-only"] {
   @include padding(0);
-}
-
-
-// Material Design Ripple Effect
-// --------------------------------------------------
-// Only Material uses the button effect, so by default
-// it's display none, and .md sets to display block.
-
-.button-effect {
-  @include border-radius(50%);
-  @include transform-origin(center, center);
-
-  position: absolute;
-  z-index: 0;
-  display: none;
-
-  background-color: $button-md-ripple-background-color;
-  opacity: .2;
-
-  transition-timing-function: ease-in-out;
-
-  pointer-events: none;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    top: 0;
-
-    left: 0;
-  }
-}
-
-.md .button-effect {
-  display: block;
 }
 
 

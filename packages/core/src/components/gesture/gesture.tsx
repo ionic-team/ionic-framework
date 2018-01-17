@@ -1,6 +1,6 @@
-import { ElementRef, applyStyles, assert, getElementReference, updateDetail } from '../../utils/helpers';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
+import { ElementRef, applyStyles, assert, getElementReference, now, updateDetail } from '../../utils/helpers';
 import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
-import { Component, Element, Event, EventEmitter, Listen, Prop, PropDidChange } from '@stencil/core';
 import { DomController } from '../../index';
 import { PanRecognizer } from './recognizers';
 
@@ -28,19 +28,20 @@ export class Gesture {
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'dom' }) dom: DomController;
-  @Prop({ context: 'enableListener' }) enableListener: any;
+  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
-  @Prop() enabled: boolean = true;
+  @Prop() enabled = true;
   @Prop() attachTo: ElementRef = 'child';
-  @Prop() autoBlockAll: boolean = false;
+  @Prop() autoBlockAll = false;
   @Prop() block: string = null;
-  @Prop() disableScroll: boolean = false;
-  @Prop() direction: string = 'x';
-  @Prop() gestureName: string = '';
-  @Prop() gesturePriority: number = 0;
-  @Prop() maxAngle: number = 40;
-  @Prop() threshold: number = 10;
-  @Prop() type: string = 'pan';
+  @Prop() disableScroll = false;
+  @Prop() direction = 'x';
+  @Prop() gestureName = '';
+  @Prop() gesturePriority = 0;
+  @Prop() passive = true;
+  @Prop() maxAngle = 40;
+  @Prop() threshold = 10;
+  @Prop() type = 'pan';
 
   @Prop() canStart: GestureCallback;
   @Prop() onWillStart: (_: GestureDetail) => Promise<void>;
@@ -102,18 +103,18 @@ export class Gesture {
     }
   }
 
-  @PropDidChange('enabled')
+  @Watch('enabled')
   protected enabledChanged(isEnabled: boolean) {
     if (this.pan || this.hasPress) {
-      this.enableListener(this, 'touchstart', isEnabled, this.attachTo);
-      this.enableListener(this, 'mousedown', isEnabled, this.attachTo);
+      this.enableListener(this, 'touchstart', isEnabled, this.attachTo, this.passive);
+      this.enableListener(this, 'mousedown', isEnabled, this.attachTo, this.passive);
       if (!isEnabled) {
         this.abortGesture();
       }
     }
   }
 
-  @PropDidChange('block')
+  @Watch('block')
   protected blockChanged(block: string) {
     if (this.blocker) {
       this.blocker.destroy();
@@ -273,13 +274,15 @@ export class Gesture {
     // move pointer to position measured 100ms ago
     for (;
       startPos > 0 && positions[startPos] > timeRange;
-      startPos -= 3) { }
+      startPos -= 3) {
+        // TODO why is this empty?
+    }
 
     if (startPos > 1) {
       // compute relative movement between these two points
-      var frequency = 1 / (positions[startPos] - timestamp);
-      var movedY = positions[startPos - 1] - currentY;
-      var movedX = positions[startPos - 2] - currentX;
+      const frequency = 1 / (positions[startPos] - timestamp);
+      const movedY = positions[startPos - 1] - currentY;
+      const movedX = positions[startPos - 2] - currentX;
 
       // based on XXms compute the movement to apply for each render step
       // velocity = space/time = s*(1/t) = s*frequency
@@ -431,18 +434,18 @@ export class Gesture {
 
   private enableMouse(shouldEnable: boolean) {
     if (this.pan) {
-      this.enableListener(this, 'document:mousemove', shouldEnable);
+      this.enableListener(this, 'document:mousemove', shouldEnable, undefined, this.passive);
     }
-    this.enableListener(this, 'document:mouseup', shouldEnable);
+    this.enableListener(this, 'document:mouseup', shouldEnable, undefined, this.passive);
   }
 
 
   private enableTouch(shouldEnable: boolean) {
     if (this.pan) {
-      this.enableListener(this, 'touchmove', shouldEnable, this.attachTo);
+      this.enableListener(this, 'touchmove', shouldEnable, this.attachTo, this.passive);
     }
-    this.enableListener(this, 'touchcancel', shouldEnable, this.attachTo);
-    this.enableListener(this, 'touchend', shouldEnable, this.attachTo);
+    this.enableListener(this, 'touchcancel', shouldEnable, this.attachTo, this.passive);
+    this.enableListener(this, 'touchend', shouldEnable, this.attachTo, this.passive);
   }
 
 
@@ -472,11 +475,6 @@ const GESTURE_INLINE_STYLES = {
 };
 
 const MOUSE_WAIT = 2500;
-
-
-function now(ev: UIEvent) {
-  return ev.timeStamp || Date.now();
-}
 
 
 export interface GestureDetail {

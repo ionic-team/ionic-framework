@@ -7,6 +7,8 @@
 .badge-md {
   @include border-radius($badge-md-border-radius);
 
+  font-family: $badge-md-font-family;
+
   color: $badge-md-text-color;
   background-color: $badge-md-background-color;
 }

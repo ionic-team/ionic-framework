@@ -7,13 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-Enable alert animations. If false, alert will not animate in
-
-
 #### buttons
 
 any
@@ -82,17 +75,17 @@ Title for the alert
 boolean
 
 If true, alert will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable alert animations. If false, alert will not animate in
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-Enable alert animations. If false, alert will not animate in
-
-
 #### buttons
 
 any
@@ -161,33 +154,52 @@ Title for the alert
 boolean
 
 If true, alert will become translucent. Requires support for backdrop-filters.
+
+
+#### willAnimate
+
+boolean
+
+Enable alert animations. If false, alert will not animate in
 
 
 ## Events
 
 #### ionAlertDidDismiss
 
+Emitted after the alert has dismissed.
+
 
 #### ionAlertDidLoad
+
+Emitted after the alert has loaded.
 
 
 #### ionAlertDidPresent
 
+Emitted after the alert has presented.
+
 
 #### ionAlertDidUnload
+
+Emitted after the alert has unloaded.
 
 
 #### ionAlertWillDismiss
 
+Emitted before the alert has dismissed.
+
 
 #### ionAlertWillPresent
+
+Emitted before the alert has presented.
 
 
 ## Methods
 
 #### dismiss()
 
-Dismiss the alert programatically
+Dismiss the alert
 
 
 #### present()

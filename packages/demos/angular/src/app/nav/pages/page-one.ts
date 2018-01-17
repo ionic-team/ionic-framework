@@ -5,22 +5,24 @@ import { PageTwo } from './page-two';
 @Component({
   selector: 'page-one',
   template: `
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Page One</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  Page One
-  <div>
-    <ion-button (click)="goToPageTwo()">Go to Page Two</ion-button>
-  </div>
-  <ul>
-    <li>ngOnInit - {{ngOnInitDetection}}</li>
-    <li>ionViewWillEnter - {{ionViewWillEnterDetection}}</li>
-    <li>ionViewDidEnter - {{ionViewDidEnterDetection}}</li>
-  </ul>
-</ion-content>
+<ion-page>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Page One</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    Page One
+    <div>
+      <ion-button (click)="goToPageTwo()">Go to Page Two</ion-button>
+    </div>
+    <ul>
+      <li>ngOnInit - {{ngOnInitDetection}}</li>
+      <li>ionViewWillEnter - {{ionViewWillEnterDetection}}</li>
+      <li>ionViewDidEnter - {{ionViewDidEnterDetection}}</li>
+    </ul>
+  </ion-content>
+</ion-page>
   `
 })
 export class PageOne {

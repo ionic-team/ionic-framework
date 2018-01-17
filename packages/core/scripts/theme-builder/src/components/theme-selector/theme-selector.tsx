@@ -54,7 +54,7 @@ export class ThemeSelector {
     const computed = window.getComputedStyle(document.body);
 
     this.themeVariables = THEME_VARIABLES.map(themeVariable => {
-      const value = (computed.getPropertyValue(themeVariable.property) || '#eeeeee').trim().toLowerCase();
+      const value = (computed.getPropertyValue(themeVariable.property) || PLACEHOLDER_COLOR).trim().toLowerCase();
       return {
         property: themeVariable.property.trim(),
         value: value,
@@ -120,3 +120,5 @@ export class ThemeSelector {
     ];
   }
 }
+
+const PLACEHOLDER_COLOR = `#ff00ff`;

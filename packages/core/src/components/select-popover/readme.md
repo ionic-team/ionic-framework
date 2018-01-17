@@ -7,16 +7,46 @@
 
 ## Properties
 
+#### message
+
+string
+
+
 #### options
 
 any
+
+
+#### subTitle
+
+string
+
+
+#### title
+
+string
 
 
 ## Attributes
 
+#### message
+
+string
+
+
 #### options
 
 any
+
+
+#### subTitle
+
+string
+
+
+#### title
+
+string
 
 
 

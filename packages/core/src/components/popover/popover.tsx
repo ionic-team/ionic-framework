@@ -72,14 +72,14 @@ export class Popover {
   @Prop() component: string;
   @Prop() data: any = {};
   @Prop() cssClass: string;
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
   @Prop() ev: Event;
   @Prop() popoverId: string;
-  @Prop() showBackdrop: boolean = true;
-  @Prop() translucent: boolean = false;
-  @Prop() animate: boolean = true;
+  @Prop() showBackdrop = true;
+  @Prop() translucent = false;
+  @Prop() willAnimate = true;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   private animation: Animation;
@@ -115,12 +115,12 @@ export class Popover {
     return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
       .then((mountingData) => {
         this.usersComponentElement = mountingData.element;
-        return domControllerAsync(this.dom.raf, () => { })
-        .then(() => this.animationCtrl.create(animationBuilder, this.el, this.ev))
+        return domControllerAsync(this.dom.raf)
+        .then(() => this.animationCtrl.create(animationBuilder, this.el, this.ev));
       })
       .then((animation) => {
         this.animation = animation;
-        if (!this.animate) this.animation = animation.duration(0);
+        if (!this.willAnimate) this.animation = animation.duration(0);
         return playAnimationAsync(animation);
       })
       .then((animation) => {

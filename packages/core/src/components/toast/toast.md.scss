@@ -4,6 +4,10 @@
 // Material Design Toast
 // --------------------------------------------------
 
+.toast-md {
+  font-family: $toast-md-font-family;
+}
+
 .toast-md .toast-wrapper {
   @include position-horizontal(0, 0);
   @include margin(auto);

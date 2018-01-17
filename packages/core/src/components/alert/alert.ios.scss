@@ -4,6 +4,10 @@
 // iOS Alert
 // --------------------------------------------------
 
+.alert-ios {
+  font-family: $alert-ios-font-family;
+}
+
 .alert-ios .alert-wrapper {
   @include border-radius($alert-ios-border-radius);
 

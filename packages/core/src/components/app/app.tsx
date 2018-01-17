@@ -19,8 +19,8 @@ export class App {
   @Element() element: HTMLElement;
 
   @State() modeCode: string;
-  @State() hoverCSS: boolean = false;
-  @State() useRouter: boolean = false;
+  @State() hoverCSS = false;
+  @State() useRouter = false;
 
   @Prop({ context: 'config' }) config: Config;
 
@@ -35,7 +35,12 @@ export class App {
     rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
   }
 
-  @Method() getRootNavs(): NavContainer[] {
+
+  /**
+   * Returns an array of top level Navs
+   */
+  @Method()
+  getRootNavs(): NavContainer[] {
     const navs: NavContainer[] = [];
     rootNavs.forEach((rootNav: NavContainer) => {
       navs.push(rootNav);
@@ -43,6 +48,10 @@ export class App {
     return navs;
   }
 
+
+  /**
+   * Check if the app is currently scrolling
+   */
   @Method() isScrolling(): boolean {
     // TODO - sync with Manu
     return false;
@@ -104,7 +113,7 @@ export class App {
 
 export function findTopNavs(nav: NavContainer): NavContainer[] {
   let containers: NavContainer[] = [];
-  const childNavs = nav.getActiveChildNavs();
+  const childNavs = nav.getChildNavs();
   if (!childNavs || !childNavs.length) {
     containers.push(nav);
   } else {
@@ -136,6 +145,5 @@ export function handleBackButtonClick(): Promise<any> {
   const promise = menuControllerElement ?  isReady(menuControllerElement) : Promise.resolve();
   return promise.then(() => {
     // TODO check if the menu is open, close it if so
-    console.log('todo');
   });
 }

@@ -6,6 +6,8 @@
 
 .select-ios {
   @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);
+
+  font-family: $select-ios-font-family;
 }
 
 .select-ios .select-placeholder {
@@ -34,4 +36,13 @@
   color: $select-ios-icon-color;
 
   pointer-events: none;
+}
+
+
+// Stacked & Floating Select
+// --------------------------------------------------
+
+.item-label-stacked .select-ios,
+.item-label-floating .select-ios {
+  @include padding(8px, null, 8px, 0);
 }

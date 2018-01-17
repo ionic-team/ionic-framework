@@ -3,7 +3,7 @@
 // Definitions by: Sebastián Galiano <https://github.com/sgaliano/>, Luca Trazzi <https://github.com/lucax88x/>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-interface SwiperOptions {
+export interface SwiperOptions {
     initialSlide?: number;
     direction?: string;
     speed?: number;

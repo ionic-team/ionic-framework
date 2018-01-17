@@ -11,6 +11,11 @@ import { PopoverPageToPresent } from './popover-page-to-present';
       <ion-header>
         <ion-toolbar>
           <ion-title>Test</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="clickMe()">
+              No event passed
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content padding>

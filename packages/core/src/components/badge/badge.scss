@@ -19,6 +19,9 @@ ion-badge {
   white-space: nowrap;
   vertical-align: baseline;
 
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+
   contain: content;
 }
 

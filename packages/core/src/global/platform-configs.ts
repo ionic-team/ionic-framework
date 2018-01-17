@@ -67,9 +67,9 @@ export function isPlatformMatch(url: string, userAgent: string, platformName: st
   if (userAgent) {
     userAgent = userAgent.toLowerCase();
 
-    for (var i = 0; i < userAgentAtLeastHas.length; i++) {
+    for (let i = 0; i < userAgentAtLeastHas.length; i++) {
       if (userAgent.indexOf(userAgentAtLeastHas[i]) > -1) {
-        for (var j = 0; j < userAgentMustNotHave.length; j++) {
+        for (let j = 0; j < userAgentMustNotHave.length; j++) {
           if (userAgent.indexOf(userAgentMustNotHave[j]) > -1) {
             return false;
           }
@@ -85,8 +85,8 @@ export function isPlatformMatch(url: string, userAgent: string, platformName: st
 
 export function queryParam(url: string, key: string) {
   key = key.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  var regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
-  var results = regex.exec(url);
+  const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
+  const results = regex.exec(url);
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
 }
 

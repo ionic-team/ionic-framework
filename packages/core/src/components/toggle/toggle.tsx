@@ -1,5 +1,5 @@
 import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
-import { Component, Event, EventEmitter, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { GestureDetail } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
 
@@ -49,12 +49,12 @@ export class Toggle implements CheckboxInput {
   /**
    * @input {boolean} If true, the toggle is selected. Defaults to `false`.
    */
-  @Prop({ mutable: true }) checked: boolean = false;
+  @Prop({ mutable: true }) checked = false;
 
   /*
    * @input {boolean} If true, the user cannot interact with the toggle. Default false.
    */
-  @Prop({ mutable: true }) disabled: boolean = false;
+  @Prop({ mutable: true }) disabled = false;
 
   /**
    * @input {string} the value of the toggle.
@@ -118,7 +118,7 @@ export class Toggle implements CheckboxInput {
     }
   }
 
-  @PropDidChange('checked')
+  @Watch('checked')
   checkedChanged(isChecked: boolean) {
     if (this.nativeInput.checked !== isChecked) {
       // keep the checked value and native input `nync
@@ -133,7 +133,7 @@ export class Toggle implements CheckboxInput {
     this.emitStyle();
   }
 
-  @PropDidChange('disabled')
+  @Watch('disabled')
   disabledChanged(isDisabled: boolean) {
     this.nativeInput.disabled = isDisabled;
     this.emitStyle();

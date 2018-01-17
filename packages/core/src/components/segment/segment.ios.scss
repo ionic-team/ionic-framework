@@ -4,6 +4,10 @@
 // iOS Segment
 // --------------------------------------------------
 
+.segment-ios {
+  font-family: $segment-ios-font-family;
+}
+
 .segment-ios ion-segment-button {
   display: flex;
 

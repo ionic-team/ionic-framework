@@ -1,0 +1,14 @@
+@import "../../themes/ionic.globals";
+
+// Footer
+// --------------------------------------------------
+
+ion-footer {
+  position: relative;
+  z-index: $z-index-toolbar;
+  display: block;
+
+  order: 1;
+
+  width: 100%;
+}

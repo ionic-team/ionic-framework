@@ -1,0 +1,16 @@
+@import "./text.md.vars";
+
+// Material Design Text
+// --------------------------------------------------
+
+// Generate Material Design Text Colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+
+  .text-md-#{$color-name},
+  .text-md-#{$color-name} a {
+    color: $color-base;
+  }
+
+}

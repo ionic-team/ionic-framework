@@ -8,9 +8,20 @@
 // --------------------------------------------------
 
 ion-tabs {
+  @include position(0);
+
+  position: absolute;
+
+  z-index: $z-index-page-container;
+
   display: flex;
 
   flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+
+  contain: layout size style;
 }
 
 .tabs-inner {
@@ -68,6 +79,8 @@ ion-tab-button {
   @include margin(0);
   @include text-align(center);
   @include border-radius(0);
+
+  box-sizing: border-box;
 
   position: relative;
   z-index: 0;
@@ -213,18 +226,10 @@ ion-tabbar.scrollable ion-scroll {
 ion-tabbar.scrollable .scroll-inner {
   position: relative;
   display: flex;
+
   flex-direction: row;
 }
 
 ion-tabbar.scrollable ion-button.inactive {
   visibility: hidden;
-}
-
-
-ion-tabs {
-  @extend .ion-page
-}
-
-ion-tab-button {
-  box-sizing: border-box;
 }

@@ -9,9 +9,9 @@ import { Animator } from './animator';
 export class AnimationControllerImpl implements AnimationController {
 
   @Method()
-  create(animationBuilder?: AnimationBuilder, baseElm?: any, opts?: any): Promise<Animation> {
+  create(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation> {
     if (animationBuilder) {
-      return animationBuilder(Animator as any, baseElm, opts);
+      return animationBuilder(Animator as any, baseEl, opts);
     }
     return Promise.resolve(new Animator() as any);
   }

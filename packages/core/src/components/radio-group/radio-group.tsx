@@ -1,4 +1,4 @@
-import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
 import { HTMLIonRadioElementEvent } from '../radio/radio';
 import { InputChangeEvent, RadioGroupInput } from '../../utils/input-interfaces';
 
@@ -34,7 +34,7 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
    */
   @Prop({ mutable: true }) value: string;
 
-  @PropDidChange('value')
+  @Watch('value')
   valueChanged() {
     // this radio group's value just changed
     // double check the button with this value is checked

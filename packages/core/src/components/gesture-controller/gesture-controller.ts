@@ -5,7 +5,7 @@ import { Component } from '@stencil/core';
   tag: 'ion-gesture-controller'
 })
 export class GestureController {
-  private gestureId: number = 0;
+  private gestureId = 0;
   private requestedStart: { [eventId: number]: number } = {};
   private disabledGestures: { [eventName: string]: Set<number> } = {};
   private disabledScroll: Set<number> = new Set<number>();
@@ -41,9 +41,9 @@ export class GestureController {
     if (!this.start(gestureName, id, priority)) {
       return false;
     }
-    let requestedStart = this.requestedStart;
+    const requestedStart = this.requestedStart;
     let maxPriority = -10000;
-    for (let gestureID in requestedStart) {
+    for (const gestureID in requestedStart) {
       maxPriority = Math.max(maxPriority, requestedStart[gestureID]);
     }
 
@@ -75,7 +75,7 @@ export class GestureController {
   }
 
   enableGesture(gestureName: string, id: number) {
-    let set = this.disabledGestures[gestureName];
+    const set = this.disabledGestures[gestureName];
     if (set) {
       set.delete(id);
     }
@@ -121,7 +121,7 @@ export class GestureController {
   }
 
   isDisabled(gestureName: string): boolean {
-    let disabled = this.disabledGestures[gestureName];
+    const disabled = this.disabledGestures[gestureName];
     if (disabled && disabled.size > 0) {
       return true;
     }
@@ -162,7 +162,7 @@ export class GestureDelegate {
       return false;
     }
 
-    let captured = this.ctrl.capture(this.name, this.gestureDelegateId, this.priority);
+    const captured = this.ctrl.capture(this.name, this.gestureDelegateId, this.priority);
     if (captured && this.disableScroll) {
       this.ctrl.disableScroll(this.gestureDelegateId);
     }
@@ -190,7 +190,7 @@ export class GestureDelegate {
 
 export class BlockerDelegate {
 
-  blocked: boolean = false;
+  blocked = false;
 
   constructor(
     private blockerDelegateId: number,

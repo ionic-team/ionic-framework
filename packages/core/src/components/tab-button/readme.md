@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### mode
+
+any
+
+
 #### selected
 
 boolean
@@ -18,6 +23,11 @@ any
 
 
 ## Attributes
+
+#### mode
+
+any
+
 
 #### selected
 

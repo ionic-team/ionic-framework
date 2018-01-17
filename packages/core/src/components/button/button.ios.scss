@@ -14,6 +14,7 @@
 
   height: $button-ios-height;
 
+  font-family: $button-ios-font-family;
   font-size: $button-ios-font-size;
 
   color: $button-ios-text-color;
@@ -32,11 +33,6 @@
 .button-ios:hover:not(.disable-hover) {
   opacity: $button-ios-opacity-hover;
 }
-
-.button-ios .icon {
-  fill: $button-ios-icon-fill-color;
-}
-
 
 // iOS Default Button Color Mixin
 // --------------------------------------------------

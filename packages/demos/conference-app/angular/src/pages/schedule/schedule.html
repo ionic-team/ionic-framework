@@ -1,0 +1,66 @@
+<ion-page>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button menuToggle>
+          <ion-icon slot="icon-only" name="menu"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()" color="light">
+        <ion-segment-button value="all">
+          All
+        </ion-segment-button>
+        <ion-segment-button value="favorites">
+          Favorites
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="presentFilter()">
+          <ion-icon slot="icon-only" name="options"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+    <ion-toolbar no-border-top color="primary">
+      <ion-searchbar
+                      [(ngModel)]="queryText"
+                      (ionInput)="updateSchedule()"
+                      placeholder="Search" ngDefaultControl>
+      </ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list #scheduleList [hidden]="shownSessions === 0">
+        <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
+          <ion-item-divider sticky>
+            <ion-label>
+              {{group.time}}
+            </ion-label>
+          </ion-item-divider>
+          <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase" [hidden]="session.hide">
+
+            <ion-item (click)="goToSessionDetail(session)">
+              <ion-label>
+                <h3>{{session.name}}</h3>
+                <p>
+                  {{session.timeStart}} &mdash;
+                  {{session.timeEnd}}:
+                  {{session.location}}
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item-options>
+              <ion-item-option color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
+                Favorite
+              </ion-item-option>
+              <ion-item-option color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
+                  Remove
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-item-group>
+    </ion-list>
+  </ion-content>
+</ion-page>

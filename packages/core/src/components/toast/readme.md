@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-
 #### closeButtonText
 
 string
@@ -63,17 +58,17 @@ string
 
 
 #### translucent
+
+boolean
+
+
+#### willAnimate
 
 boolean
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-
 #### closeButtonText
 
 string
@@ -125,6 +120,11 @@ string
 
 
 #### translucent
+
+boolean
+
+
+#### willAnimate
 
 boolean
 

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
 import {
   Animation,
   AnimationController,
@@ -6,6 +6,7 @@ import {
   ComponentDataPair,
   Config,
   FrameworkDelegate,
+  NavContainer,
   NavOptions,
   NavResult,
   NavState,
@@ -60,7 +61,7 @@ const queueMap = new Map<number, TransitionInstruction[]>();
   tag: 'ion-nav',
   styleUrl: 'nav.scss'
 })
-export class Nav implements PublicNav {
+export class Nav implements PublicNav, NavContainer {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter;
@@ -103,6 +104,13 @@ export class Nav implements PublicNav {
     this.init = true;
     if (!this.useRouter) {
       componentDidLoadImpl(this);
+    }
+  }
+
+  @Watch('root')
+  updateRootComponent(): any {
+    if (this.init) {
+      return this.setRoot(this.root);
     }
   }
 
@@ -185,11 +193,6 @@ export class Nav implements PublicNav {
     return getFirstView(this);
   }
 
-  @Method()
-  resize() {
-    console.log('resize content');
-  }
-
   @Listen('navInit')
   navInitialized(event: CustomEvent) {
     navInitializedImpl(this, event);
@@ -215,6 +218,11 @@ export class Nav implements PublicNav {
   getRoutes(): RouterEntries {
     assert(this.useRouter, 'routing is disabled');
     return this.routes;
+  }
+
+  @Method()
+  getChildNavs(): PublicNav[] {
+    return this.childNavs || [];
   }
 
   render() {
@@ -400,7 +408,7 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animatio
   return queueTransaction(config, done);
 }
 
-export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount: number = 1, opts?: NavOptions, done?: () => void): Promise<any> {
+export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts?: NavOptions, done?: () => void): Promise<any> {
   return queueTransaction({
     removeStart: startIndex,
     removeCount: removeCount,
@@ -757,7 +765,7 @@ export function fireViewWillLifecycles(enteringView: ViewController, leavingView
 
 export function attachViewToDom(nav: Nav, enteringView: ViewController, delegate: FrameworkDelegate) {
   if (enteringView && enteringView.state === STATE_NEW) {
-    return delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, ['ion-page']).then((mountingData) => {
+    return delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, []).then((mountingData) => {
       Object.assign(enteringView, mountingData);
       enteringView.state = STATE_ATTACHED;
     });
@@ -847,8 +855,7 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
     // batch all of lifecycles together
     if (destroyQueue && destroyQueue.length) {
       // TODO, figure out how the zone stuff should work in angular
-      for (let i = 0; i < destroyQueue.length; i++) {
-        const view = destroyQueue[i];
+      for (const view of destroyQueue) {
         view.willLeave(true);
         view.didLeave();
         view.willUnload();
@@ -864,11 +871,9 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
   }).then(() => {
     // set which animation it should use if it wasn't set yet
     if (ti.requiresTransition && !ti.opts.animation) {
-      if (isDef(ti.removeStart)) {
-        ti.opts.animation = (leavingView || enteringView).getTransitionName(ti.opts.direction);
-      } else {
-        ti.opts.animation = (enteringView || leavingView).getTransitionName(ti.opts.direction);
-      }
+      ti.opts.animation = isDef(ti.removeStart)
+        ? (leavingView || enteringView).getTransitionName(ti.opts.direction)
+        : (enteringView || leavingView).getTransitionName(ti.opts.direction);
     }
   });
 }
@@ -1002,7 +1007,7 @@ export function getEnteringView(ti: TransitionInstruction, nav: Nav, leavingView
     return ti.insertViews[ti.insertViews.length - 1];
   }
   if (isDef(ti.removeStart)) {
-    var removeEnd = ti.removeStart + ti.removeCount;
+    const removeEnd = ti.removeStart + ti.removeCount;
     for (let i = nav.views.length - 1; i >= 0; i--) {
       if ((i < ti.removeStart || i >= removeEnd) && nav.views[i] !== leavingView) {
         return nav.views[i];

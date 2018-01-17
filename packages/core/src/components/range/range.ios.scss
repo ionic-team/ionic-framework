@@ -1,3 +1,4 @@
+@import "./range";
 @import "./range.ios.vars";
 
 // iOS Range
@@ -5,6 +6,8 @@
 
 .range-ios {
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
+
+  font-family: $range-ios-font-family;
 }
 
 .range-ios [range-left] {

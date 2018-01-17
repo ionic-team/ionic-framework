@@ -71,14 +71,14 @@ export class Modal {
   @Prop() component: any;
   @Prop() data: any = {};
   @Prop() cssClass: string;
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
 
-  @Prop() modalId: string;
-  @Prop() showBackdrop: boolean = true;
+  @Prop() modalId: number;
+  @Prop() showBackdrop = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate = true;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   private animation: Animation;
@@ -103,7 +103,7 @@ export class Modal {
       this.delegate = new DomFrameworkDelegate();
     }
 
-    const cssClasses = ['ion-page'];
+    const cssClasses = [];
     if (this.cssClass && this.cssClass.length) {
       cssClasses.push(this.cssClass);
     }
@@ -119,7 +119,7 @@ export class Modal {
      return this.animationCtrl.create(animationBuilder, this.el)
      .then(animation => {
       this.animation = animation;
-      if (!this.animate) this.animation = animation.duration(0);
+      if (!this.willAnimate) this.animation = animation.duration(0);
       return playAnimationAsync(animation);
     })
     .then((animation) => {
@@ -147,7 +147,7 @@ export class Modal {
     return this.animationCtrl.create(animationBuilder, this.el)
     .then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         this.animation = animation.duration(0);
       }
       return playAnimationAsync(animation);
@@ -229,6 +229,7 @@ export interface ModalOptions {
 
 
 export interface ModalEvent extends CustomEvent {
+  target: HTMLIonModalElement;
   detail: ModalEventDetail;
 }
 

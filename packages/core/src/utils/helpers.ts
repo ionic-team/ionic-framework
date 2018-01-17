@@ -1,4 +1,4 @@
-import { Animation, DomController, StencilElement } from '../index';
+import { Animation, StencilElement } from '../index';
 
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
@@ -53,13 +53,16 @@ export function toDashCase(str: string) {
   return str.replace(/([A-Z])/g, (g) => '-' + g[0].toLowerCase());
 }
 
-export function noop() {}
+
+export function now(ev: UIEvent) {
+  return ev.timeStamp || Date.now();
+}
 
 export function pointerCoordX(ev: any): number {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    var changedTouches = ev.changedTouches;
+    const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       return changedTouches[0].clientX;
     }
@@ -76,9 +79,9 @@ export function updateDetail(ev: any, detail: any) {
   let x = 0;
   let y = 0;
   if (ev) {
-    var changedTouches = ev.changedTouches;
+    const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
-      var touch = changedTouches[0];
+      const touch = changedTouches[0];
       x = touch.clientX;
       y = touch.clientY;
     } else if (ev.pageX !== undefined) {
@@ -94,7 +97,7 @@ export function pointerCoordY(ev: any): number {
   // get Y coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
-    var changedTouches = ev.changedTouches;
+    const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       return changedTouches[0].clientY;
     }
@@ -107,33 +110,33 @@ export function pointerCoordY(ev: any): number {
 
 export type ElementRef = 'child' | 'parent' | 'body' | 'document' | 'window';
 
-export function getElementReference(elm: any, ref: ElementRef) {
+export function getElementReference(el: any, ref: ElementRef) {
   if (ref === 'child') {
-    return elm.firstElementChild;
+    return el.firstElementChild;
   }
   if (ref === 'parent') {
-    return getParentElement(elm) || elm;
+    return getParentElement(el) || el;
   }
   if (ref === 'body') {
-    return elm.ownerDocument.body;
+    return el.ownerDocument.body;
   }
   if (ref === 'document') {
-    return elm.ownerDocument;
+    return el.ownerDocument;
   }
   if (ref === 'window') {
-    return elm.ownerDocument.defaultView;
+    return el.ownerDocument.defaultView;
   }
-  return elm;
+  return el;
 }
 
-export function getParentElement(elm: any) {
-  if (elm.parentElement ) {
+export function getParentElement(el: any) {
+  if (el.parentElement ) {
     // normal element with a parent element
-    return elm.parentElement;
+    return el.parentElement;
   }
-  if (elm.parentNode && elm.parentNode.host) {
+  if (el.parentNode && el.parentNode.host) {
     // shadow dom's document fragment
-    return elm.parentNode.host;
+    return el.parentNode.host;
   }
   return null;
 }
@@ -150,12 +153,12 @@ export function getPageElement(el: HTMLElement) {
   return getParentElement(el);
 }
 
-export function applyStyles(elm: HTMLElement, styles: {[styleProp: string]: string|number}) {
+export function applyStyles(el: HTMLElement, styles: {[styleProp: string]: string|number}) {
   const styleProps = Object.keys(styles);
 
-  if (elm) {
-    for (var i = 0; i < styleProps.length; i++) {
-      (elm.style as any)[styleProps[i]] = styles[styleProps[i]];
+  if (el) {
+    for (let i = 0; i < styleProps.length; i++) {
+      (el.style as any)[styleProps[i]] = styles[styleProps[i]];
     }
   }
 }
@@ -179,7 +182,7 @@ export function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: 
  * @param isRTL whether the application dir is rtl
  * @param defaultRight whether the default side is right
  */
-export function isRightSide(side: Side, defaultRight: boolean = false): boolean {
+export function isRightSide(side: Side, defaultRight = false): boolean {
   const isRTL = document.dir === 'rtl';
   switch (side) {
     case 'right': return true;
@@ -286,4 +289,12 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
       });
     });
   });
+}
+
+export function debounce(func: Function, wait = 250) {
+  let timer: number;
+  return (...args: any[]): void => {
+    clearTimeout(timer);
+    timer = setTimeout(func, wait, ...args);
+  };
 }

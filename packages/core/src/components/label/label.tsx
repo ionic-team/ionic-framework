@@ -38,21 +38,18 @@ export class Label {
   /**
    * @output {Event} If true, the label will sit alongside an input. Defaults to `false`.
    */
-  @Prop() fixed: boolean = false;
+  @Prop() fixed = false;
 
   /**
    * @output {Event} If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
    */
-  @Prop() floating: boolean = false;
+  @Prop() floating = false;
 
   /**
    * @output {Event} If true, the label will be stacked above an input. Defaults to `false`.
    */
-  @Prop() stacked: boolean = false;
+  @Prop() stacked = false;
 
-  /**
-   * @hidden
-   */
   @Method()
   getText(): string {
     return this.el.textContent || '';
@@ -65,7 +62,7 @@ export class Label {
   emitStyle() {
     clearTimeout(this.styleTmr);
 
-    let styles = {
+    const styles = {
       'label-fixed': this.fixed,
       'label-floating': this.floating,
       'label-stacked': this.stacked

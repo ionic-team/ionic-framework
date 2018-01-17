@@ -15,6 +15,7 @@
 
 * {
   box-sizing: border-box;
+
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
@@ -39,10 +40,10 @@ body {
   height: 100%;
   max-height: 100%;
 
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-
   text-rendering: optimizeLegibility;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 
   -webkit-user-drag: none;
 
@@ -147,10 +148,19 @@ sub {
   bottom: -.25em;
 }
 
-
 ion-app {
-  @extend .ion-page
+  @include position(0);
+
+  position: absolute;
+
+  z-index: $z-index-page-container;
+
+  width: 100%;
+  height: 100%;
+
+  contain: layout size style;
 }
+
 
 // Page Container Structure
 // --------------------------------------------------
@@ -165,24 +175,6 @@ ion-app {
 
 .hide-page {
   opacity: 0;
-}
-
-// Toolbar Container Structure
-// --------------------------------------------------
-
-ion-header,
-ion-footer {
-  position: relative;
-  z-index: $z-index-toolbar;
-  display: block;
-
-  order: 1;
-
-  width: 100%;
-}
-
-ion-header {
-  order: -1;
 }
 
 

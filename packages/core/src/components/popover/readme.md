@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### animate
-
-boolean
-
-
 #### color
 
 string
@@ -73,17 +68,17 @@ boolean
 
 
 #### translucent
+
+boolean
+
+
+#### willAnimate
 
 boolean
 
 
 ## Attributes
 
-#### animate
-
-boolean
-
-
 #### color
 
 string
@@ -145,6 +140,11 @@ boolean
 
 
 #### translucent
+
+boolean
+
+
+#### willAnimate
 
 boolean
 

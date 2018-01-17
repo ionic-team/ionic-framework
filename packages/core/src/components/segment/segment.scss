@@ -14,6 +14,7 @@ ion-segment {
 }
 
 .segment-button {
+  @include border-radius(0);
   @include margin-horizontal(0);
   @include text-align(center);
 

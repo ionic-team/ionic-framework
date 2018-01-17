@@ -34,9 +34,7 @@ using Sass.
 ## How it works
 
 The grid is a mobile-first system made up of any number of rows and columns.
-It is built with flexbox making it extremely responsive. The components that
-make up the grid can be written as an element (e.g., `<ion-grid>`) or added as
-an attribute to any element (e.g., `<div ion-row>`).
+It is built with flexbox making it extremely responsive.
 
 Here's how it works:
 

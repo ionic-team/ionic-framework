@@ -11,16 +11,13 @@
 </head>
 <body>
   <ion-tabs>
-    <ion-tab title="Plain List" icon="star" path="">
-      <div class="div-one">Div One</div>
+    <ion-tab title="Tab One" icon="star" path="">
+      <div class="div-one" slot="not-initialized">Div One</div>
     </ion-tab>
 
-    <ion-tab title="Schedule" icon="globe" path="tab2">
-      <div class="div-two">Div Two</div>
+    <ion-tab title="Tab Two" icon="globe" path="tab2">
+      <div class="div-two" slot="not-initialized">Div Two</div>
     </ion-tab>
-
-    <ion-tab title="Schedule" icon="save" path="tab2">
-      <div class="div-three">Div Three</div>
   </ion-tabs>
 
   <style>
@@ -32,12 +29,6 @@
 
     .div-two {
       background-color: red;
-      height: 100%;
-      color: #FFF;
-    }
-
-    .div-three {
-      background-color: green;
       height: 100%;
       color: #FFF;
     }

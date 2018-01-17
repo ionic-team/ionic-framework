@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, PropDidChange, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -27,13 +27,13 @@ export class SplitPane {
   private rmL: any;
 
   @Element() private el: HTMLElement;
-  @State() private visible: boolean = false;
+  @State() private visible = false;
 
   /**
    * @input {boolean} If `false`, the split-pane is disabled, ie. the side pane will
    * never be displayed. Default `true`.
    */
-  @Prop() enabled: boolean = true;
+  @Prop() enabled = true;
 
   /**
    * @input {string | boolean} When the split-pane should be shown.
@@ -66,9 +66,9 @@ export class SplitPane {
     const children = this.el.children;
     const nu = this.el.childElementCount;
     let foundMain = false;
-    for (var i = 0; i < nu; i++) {
-      var child = children[i] as HTMLElement;
-      var isMain = child.hasAttribute('main');
+    for (let i = 0; i < nu; i++) {
+      const child = children[i] as HTMLElement;
+      const isMain = child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
           console.warn('split pane can not have more than one main node');
@@ -83,7 +83,7 @@ export class SplitPane {
     }
   }
 
-  @PropDidChange('when')
+  @Watch('when')
   protected whenChanged() {
     this.rmL && this.rmL();
     this.rmL = null;
@@ -130,9 +130,6 @@ export class SplitPane {
     }
   }
 
-  /**
-   * @hidden
-   */
   @Method()
   isVisible(): boolean {
     return this.visible;

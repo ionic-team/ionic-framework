@@ -11,6 +11,6 @@
   $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .icon-ios-#{$color-name} {
-    fill: $color-base;
+    color: $color-base;
   }
 }

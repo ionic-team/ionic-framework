@@ -13,37 +13,34 @@ export class ChipButton {
   @Element() private el: HTMLElement;
 
   /**
-   * @input {string} Contains a URL or a URL fragment that the hyperlink points to.
+   * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
   @Prop() href: string;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * @input {boolean} If true, activates a transparent button style.
+   * Set to `"clear"` for a transparent button style.
    */
-  @Prop() clear: boolean = false;
+  @Prop() fill: string;
 
   /**
-   * @input {boolean} If true, sets the button into a disabled state.
+   * If true, sets the button into a disabled state.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   /**
-   * @hidden
    * Get the classes based on the button type
    * e.g. alert-button, action-sheet-button
    */
@@ -58,11 +55,10 @@ export class ChipButton {
   }
 
   /**
-   * @hidden
    * Get the classes for the color
    */
   private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
-    let className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
+    const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
 
     return [`${className}-${mode}`].concat(
         style !== 'default' ? `${className}` : [],
@@ -71,20 +67,11 @@ export class ChipButton {
   }
 
   /**
-   * @hidden
    * Get the classes for the style
    * Chip buttons can only be clear or default (solid)
    */
   private getStyleClassList(buttonType: string): string[] {
-    let classList = [].concat(
-      this.clear ? this.getColorClassList(this.color, buttonType, 'clear', this.mode) : []
-    );
-
-    if (classList.length === 0) {
-      classList = this.getColorClassList(this.color, buttonType, 'default', this.mode);
-    }
-
-    return classList;
+    return this.getColorClassList(this.color, buttonType, this.fill || 'default', this.mode);
   }
 
   render() {
@@ -114,7 +101,7 @@ export class ChipButton {
         <span class='button-inner'>
           <slot></slot>
         </span>
-        <div class='button-effect'></div>
+        { this.mode === 'md' && <ion-ripple-effect /> }
       </TagType>
     );
   }

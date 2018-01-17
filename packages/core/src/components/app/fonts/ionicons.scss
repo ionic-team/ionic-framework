@@ -12,19 +12,17 @@ $ionicons-font-path: $font-path !default;
 
 @font-face {
   font-family: "Ionicons";
+  font-style: normal;
+  font-weight: normal;
   src: url("#{$ionicons-font-path}/ionicons.woff2?v=#{$ionicons-version}") format("woff2"),
     url("#{$ionicons-font-path}/ionicons.woff?v=#{$ionicons-version}") format("woff"),
     url("#{$ionicons-font-path}/ionicons.ttf?v=#{$ionicons-version}") format("truetype");
-  font-weight: normal;
-  font-style: normal;
 }
 
 ion-icon {
   display: inline-block;
 
   font-family: "Ionicons";
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
   font-style: normal;
   font-variant: normal;
   font-weight: normal;
@@ -32,6 +30,9 @@ ion-icon {
   text-rendering: auto;
   text-transform: none;
   speak: none;
+
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 
   @include rtl() {
     &[aria-label^="arrow"]::before,

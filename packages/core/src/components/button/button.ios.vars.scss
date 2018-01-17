@@ -3,6 +3,9 @@
 // iOS Button
 // --------------------------------------------------
 
+/// @prop - Font family of the button
+$button-ios-font-family:                            $font-family-ios-base !default;
+
 /// @prop - Margin top of the button
 $button-ios-margin-top:                             4px !default;
 
@@ -35,9 +38,6 @@ $button-ios-border-radius:                          4px !default;
 
 /// @prop - Font size of the button text
 $button-ios-font-size:                              16px !default;
-
-/// @prop - Color of the button icon
-$button-ios-icon-fill-color:                        currentColor !default;
 
 /// @prop - Background color of the button
 $button-ios-background-color:                       ion-color($colors-ios, primary, $mode: ios) !default;
@@ -133,7 +133,7 @@ $button-ios-outline-background-color-activated:     $button-ios-background-color
 $button-ios-outline-opacity-activated:              1 !default;
 
 /// @prop - Background color of the focused outline button
-$button-ios-outline-background-color-focused:       rgba(#488aff, 0.12) !default;
+$button-ios-outline-background-color-focused:       rgba(ion-color($colors-ios, primary, base, ios, true), 0.12) !default;
 
 
 // iOS Clear Button
@@ -158,7 +158,7 @@ $button-ios-clear-text-color-hover:                 $button-ios-background-color
 $button-ios-clear-opacity-hover:                    .6 !default;
 
 /// @prop - Background color of the focused clear button
-$button-ios-clear-background-color-focused:         rgba(#488aff, 0.12) !default;
+$button-ios-clear-background-color-focused:         rgba(ion-color($colors-ios, primary, base, ios, true), 0.12) !default;
 
 
 // iOS Round Button

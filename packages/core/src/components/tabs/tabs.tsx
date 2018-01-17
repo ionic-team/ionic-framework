@@ -10,7 +10,7 @@ import { Config } from '../../index';
   }
 })
 export class Tabs {
-  private ids: number = -1;
+  private ids = -1;
   private tabsId: number = (++tabIds);
 
   @Element() el: HTMLElement;
@@ -51,9 +51,9 @@ export class Tabs {
    * attribute needs to be set on the content.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
-  @Prop() scrollable: boolean = false;
+  @Prop() scrollable = false;
 
   /**
    * @output {any} Emitted when the tab changes.
@@ -91,25 +91,18 @@ export class Tabs {
     }
 
     // Reset rest of tabs
-    for (let tab of this.tabs) {
+    for (const tab of this.tabs) {
       if (selectedTab !== tab) {
         tab.selected = false;
       }
     }
     selectedTab.selected = true;
 
-    // The same selected was selected
-    // we need to set root in the nested ion-nav if it exist
-    /*if (this.selectedTab === selectedTab) {
-      return selectedTab.goToRoot();
-    }
-    */
-
     const leavingTab = this.selectedTab;
     this.selectedTab = selectedTab;
 
     let promise = selectedTab.setActive(true);
-    if (leavingTab) {
+    if (leavingTab && leavingTab !== selectedTab) {
       promise = promise.then(() => leavingTab.setActive(false));
     }
 
@@ -119,7 +112,7 @@ export class Tabs {
   }
 
 
-   /**
+  /**
    * @param {number} index Index of the tab you want to get
    * @returns {HTMLIonTabElement} Returns the tab who's index matches the one passed
    */

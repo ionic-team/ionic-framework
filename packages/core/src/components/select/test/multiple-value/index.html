@@ -11,7 +11,7 @@
     <ion-page>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Select - Multiple Value</ion-title>
+          <ion-title>Select Item: Multiple Value</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -66,15 +66,15 @@
           <ion-label>Statuses</ion-label>
           <ion-select id="status" multiple>
             <ion-select-option value="selected" selected="true">Selected</ion-select-option>
-            <ion-select-option value="default" selected>Default</ion-select-option>
+            <ion-select-option value="default">Default</ion-select-option>
             <ion-select-option value="disabled" disabled="true">Disabled</ion-select-option>
           </ion-select>
         </ion-item>
 
         <p aria-hidden="true" padding>
-          <code>toppings: <span id="toppingsResults"></span></code><br>
-          <code>carFeatures: <span id="carFeaturesResults"></span></code><br>
-          <code>pets: <span id="petsResults"></span></code><br>
+          <code>toppings: <span id="toppingsResult"></span></code><br>
+          <code>carFeatures: <span id="carFeaturesResult"></span></code><br>
+          <code>pets: <span id="petsResult"></span></code><br>
         </p>
 
         <form>
@@ -138,7 +138,7 @@
 
       function setResults(select) {
         if (select.id) {
-          var resultsEl = document.getElementById(select.id + 'Results');
+          var resultsEl = document.getElementById(select.id + 'Result');
           if (resultsEl) {
             resultsEl.innerHTML = select.value;
           }

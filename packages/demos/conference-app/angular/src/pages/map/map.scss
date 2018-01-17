@@ -1,0 +1,17 @@
+
+page-map .scroll-inner{
+  background: rgb(229, 227, 223);;
+  height: 100%;
+  width: 100%;
+}
+
+.map-canvas {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 150ms ease-in;
+}
+
+.show-map {
+  opacity: 1;
+}

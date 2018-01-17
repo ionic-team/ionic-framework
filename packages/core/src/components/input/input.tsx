@@ -1,5 +1,6 @@
-import { Component, Element, Event, EventEmitter, Prop, PropDidChange } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
+import { debounce } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
@@ -24,6 +25,11 @@ export class Input implements InputComponent {
   @Element() private el: HTMLElement;
 
   /**
+   * @output {Event} Emitted when the input value has changed.
+   */
+  @Event() ionInput: EventEmitter;
+
+  /**
    * @output {Event} Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
@@ -46,41 +52,37 @@ export class Input implements InputComponent {
   /**
    * @input {string} Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
    */
-  @Prop() autocapitalize: string = 'none';
+  @Prop() autocapitalize = 'none';
 
   /**
    * @input {string} Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
    */
-  @Prop() autocomplete: string = 'off';
+  @Prop() autocomplete = 'off';
 
   /**
    * @input {string} Whether autocorrection should be enabled when the user is entering/editing the text value. Defaults to `"off"`.
    */
-  @Prop() autocorrect: string = 'off';
+  @Prop() autocorrect = 'off';
 
   /**
    * @input {string} This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
    */
-  @Prop() autofocus: boolean = false;
+  @Prop() autofocus = false;
 
   /**
    * @input {boolean} If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
    */
-  @Prop() checked: boolean = false;
+  @Prop() checked = false;
 
-  /**
-   * @hidden
-   */
-  @PropDidChange('checked')
+  @Watch('checked')
   protected checkedChanged() {
     this.emitStyle();
   }
 
-
   /**
    * @input {boolean} If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
    */
-  @Prop() clearInput: boolean = false;
+  @Prop() clearInput = false;
 
   /**
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
@@ -88,14 +90,24 @@ export class Input implements InputComponent {
   @Prop({ mutable: true }) clearOnEdit: boolean;
 
   /**
-   * @input {boolean} If true, the user cannot interact with the input. Defaults to `false`.
+   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() debounce = 0;
+
+  @Watch('debounce')
+  private debounceInput() {
+    this.ionInput.emit = debounce(
+      this.ionInput.emit.bind(this.ionInput),
+      this.debounce
+    );
+  }
 
   /**
-   * @hidden
+   * @input {boolean} If true, the user cannot interact with the input. Defaults to `false`.
    */
-  @PropDidChange('disabled')
+  @Prop() disabled = false;
+
+  @Watch('disabled')
   protected disabledChanged() {
     this.emitStyle();
   }
@@ -148,12 +160,12 @@ export class Input implements InputComponent {
   /**
    * @input {boolean} If true, the user cannot modify the value. Defaults to `false`.
    */
-  @Prop() readonly: boolean = false;
+  @Prop() readonly = false;
 
   /**
    * @input {boolean} If true, the user must fill in a value before submitting a form.
    */
-  @Prop() required: boolean = false;
+  @Prop() required = false;
 
   /**
    * @input {number} This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
@@ -163,7 +175,7 @@ export class Input implements InputComponent {
   /**
    * @input {string} If true, the element will have its spelling and grammar checked. Defaults to `false`.
    */
-  @Prop() spellcheck: boolean = false;
+  @Prop() spellcheck = false;
 
   /**
    * @input {string} Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
@@ -178,7 +190,7 @@ export class Input implements InputComponent {
   /**
    * @input {string} The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
-  @Prop() type: string = 'text';
+  @Prop() type = 'text';
 
   /**
    * @input {string} The value of the input.
@@ -187,10 +199,9 @@ export class Input implements InputComponent {
 
 
   /**
-   * @hidden
    * Update the native input element when the value changes
    */
-  @PropDidChange('value')
+  @Watch('value')
   protected valueChanged() {
     const inputEl = this.el.querySelector('input');
     if (inputEl.value !== this.value) {
@@ -200,6 +211,7 @@ export class Input implements InputComponent {
 
 
   componentDidLoad() {
+    this.debounceInput();
     this.emitStyle();
 
     // By default, password inputs clear after focus when they have content
@@ -211,7 +223,7 @@ export class Input implements InputComponent {
   private emitStyle() {
     clearTimeout(this.styleTmr);
 
-    let styles = {
+    const styles = {
       'input': true,
       'input-checked': this.checked,
       'input-disabled': this.disabled,
@@ -224,10 +236,6 @@ export class Input implements InputComponent {
     });
   }
 
-
-  /**
-   * @hidden
-   */
   inputBlurred(ev: any) {
     this.ionBlur.emit(ev);
 
@@ -235,19 +243,12 @@ export class Input implements InputComponent {
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputChanged(ev: any) {
     this.value = ev.target && ev.target.value;
+    this.ionInput.emit(ev);
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   inputFocused(ev: any) {
     this.ionFocus.emit(ev);
 
@@ -255,10 +256,6 @@ export class Input implements InputComponent {
     this.emitStyle();
   }
 
-
-  /**
-   * @hidden
-   */
   focusChange(inputHasFocus: boolean) {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
     if (this.clearOnEdit && !inputHasFocus && this.hasValue()) {
@@ -266,20 +263,15 @@ export class Input implements InputComponent {
     }
   }
 
-
-  /**
-   * @hidden
-   */
-  inputKeydown() {
-    this.checkClearOnEdit();
+  inputKeydown(ev: any) {
+    this.checkClearOnEdit(ev);
   }
 
 
   /**
-  * Check if we need to clear the text input if clearOnEdit is enabled
-  * @hidden
-  */
-  checkClearOnEdit() {
+   * Check if we need to clear the text input if clearOnEdit is enabled
+   */
+  checkClearOnEdit(ev: any) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -287,39 +279,29 @@ export class Input implements InputComponent {
     // Did the input value change after it was blurred and edited?
     if (this.didBlurAfterEdit && this.hasValue()) {
       // Clear the input
-      this.clearTextInput();
+      this.clearTextInput(ev);
     }
 
     // Reset the flag
     this.didBlurAfterEdit = false;
   }
 
-  /**
-   * @hidden
-   */
-  clearTextInput() {
+  clearTextInput(ev: any) {
     this.value = '';
+    this.ionInput.emit(ev);
   }
 
-  /**
-   * @hidden
-   */
   hasFocus(): boolean {
     // check if an input has focus or not
     return this.el && (this.el.querySelector(':focus') === this.el.querySelector('input'));
   }
 
-
-  /**
-   * @hidden
-   */
   hasValue(): boolean {
     return (this.value !== null && this.value !== undefined && this.value !== '');
   }
 
-
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'text-input');
+    const themedClasses = createThemedClasses(this.mode, this.color, 'native-input');
     // TODO aria-labelledby={this.item.labelId}
 
     return [
@@ -357,7 +339,7 @@ export class Input implements InputComponent {
       />,
       <button
         hidden={this.clearInput !== true}
-        class='text-input-clear-icon'
+        class='input-clear-icon'
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}>
       </button>

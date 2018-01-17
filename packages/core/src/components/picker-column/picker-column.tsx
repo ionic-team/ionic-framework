@@ -23,7 +23,7 @@ export class PickerColumnCmp {
   private scaleFactor: number;
   private startY: number;
   private velocity: number;
-  private y: number = 0;
+  private y = 0;
 
   private activeBlock: string;
 
@@ -48,10 +48,10 @@ export class PickerColumnCmp {
 
   componentDidLoad() {
     // get the scrollable element within the column
-    let colEle = this.el.querySelector('.picker-opts');
+    const colEl = this.el.querySelector('.picker-opts');
 
     // get the height of one option
-    this.optHeight = (colEle.firstElementChild ? colEle.firstElementChild.clientHeight : 0);
+    this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
 
     // TODO block goback-swipe and menu-swipe
     // this.activeBlock = 'goback-swipe menu-swipe';
@@ -76,7 +76,7 @@ export class PickerColumnCmp {
   setSelected(selectedIndex: number, duration: number) {
     // if there is a selected index, then figure out it's y position
     // if there isn't a selected index, then just use the top y position
-    let y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
+    const y = (selectedIndex > -1) ? ((selectedIndex * this.optHeight) * -1) : 0;
 
     this.velocity = 0;
 
@@ -214,7 +214,7 @@ export class PickerColumnCmp {
         this.velocity = 0;
       }
 
-      var notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
+      const notLockedIn = (y % this.optHeight !== 0 || Math.abs(this.velocity) > 1);
 
       this.update(y, 0, true, !notLockedIn);
 
@@ -225,7 +225,7 @@ export class PickerColumnCmp {
 
     } else if (this.y % this.optHeight !== 0) {
       // needs to still get locked into a position so options line up
-      var currentPos = Math.abs(this.y % this.optHeight);
+      const currentPos = Math.abs(this.y % this.optHeight);
 
       // create a velocity in the direction it needs to scroll
       this.velocity = (currentPos > (this.optHeight / 2) ? 1 : -1);
@@ -233,7 +233,7 @@ export class PickerColumnCmp {
       this.decelerate();
     }
 
-    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    const currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
 
     // TODO
     // if (currentIndex !== this.lastTempIndex) {
@@ -267,10 +267,10 @@ export class PickerColumnCmp {
     this.pos.length = 0;
     this.pos.push(this.startY, Date.now());
 
-    let options = this.col.options;
+    const options = this.col.options;
     let minY = (options.length - 1);
     let maxY = 0;
-    for (var i = 0; i < options.length; i++) {
+    for (let i = 0; i < options.length; i++) {
       if (!options[i].disabled) {
         minY = Math.min(minY, i);
         maxY = Math.max(maxY, i);
@@ -290,7 +290,7 @@ export class PickerColumnCmp {
 
     console.debug('picker, onDragMove', detail);
 
-    let currentY = detail.currentY;
+    const currentY = detail.currentY;
     this.pos.push(currentY, Date.now());
 
     if (this.startY === null) {
@@ -316,7 +316,7 @@ export class PickerColumnCmp {
 
     this.update(y, 0, false, false);
 
-    let currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
+    const currentIndex = Math.max(Math.abs(Math.round(y / this.optHeight)), 0);
     if (currentIndex !== this.lastTempIndex) {
       this.lastTempIndex = currentIndex;
     }
@@ -341,31 +341,31 @@ export class PickerColumnCmp {
       return;
     }
 
-    let endY = detail.currentY;
+    const endY = detail.currentY;
 
     this.pos.push(endY, Date.now());
 
-    let endPos = (this.pos.length - 1);
+    const endPos = (this.pos.length - 1);
     let startPos = endPos;
-    let timeRange = (Date.now() - 100);
+    const timeRange = (Date.now() - 100);
 
     // move pointer to position measured 100ms ago
-    for (var i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
+    for (let i = endPos; i > 0 && this.pos[i] > timeRange; i -= 2) {
       startPos = i;
     }
 
     if (startPos !== endPos) {
       // compute relative movement between these two points
-      var timeOffset = (this.pos[endPos] - this.pos[startPos]);
-      var movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
+      const timeOffset = (this.pos[endPos] - this.pos[startPos]);
+      const movedTop = (this.pos[startPos - 1] - this.pos[endPos - 1]);
 
       // based on XXms compute the movement to apply for each render step
-      var velocity = ((movedTop / timeOffset) * FRAME_MS);
+      const velocity = ((movedTop / timeOffset) * FRAME_MS);
       this.velocity = clamp(-MAX_PICKER_SPEED, velocity, MAX_PICKER_SPEED);
     }
 
     if (Math.abs(endY - this.startY) > 3) {
-      var y = this.y + (endY - this.startY);
+      const y = this.y + (endY - this.startY);
       this.update(y, 0, true, true);
     }
 
@@ -377,7 +377,7 @@ export class PickerColumnCmp {
     let min = this.col.options.length - 1;
     let max = 0;
     const options = this.col.options;
-    for (var i = 0; i < options.length; i++) {
+    for (let i = 0; i < options.length; i++) {
       if (!options[i].disabled) {
         min = Math.min(min, i);
         max = Math.max(max, i);
@@ -386,7 +386,7 @@ export class PickerColumnCmp {
 
     const selectedIndex = clamp(min, this.col.selectedIndex, max);
     if (this.col.prevSelected !== selectedIndex) {
-      var y = (selectedIndex * this.optHeight) * -1;
+      const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;
       this.update(y, 150, true, false);
     }
@@ -405,9 +405,9 @@ export class PickerColumnCmp {
   }
 
   render() {
-    let col = this.col;
+    const col = this.col;
 
-    let options = this.col.options
+    const options = this.col.options
     .map(o => {
       if (typeof o === 'string') {
         o = { text: o };
@@ -416,7 +416,7 @@ export class PickerColumnCmp {
     })
     .filter(clientInformation => clientInformation !== null);
 
-    let results: any[] = [];
+    const results: any[] = [];
 
     if (col.prefix) {
       results.push(

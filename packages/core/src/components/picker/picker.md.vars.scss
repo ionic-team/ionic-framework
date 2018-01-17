@@ -3,6 +3,9 @@
 // Material Design Picker
 // --------------------------------------------------
 
+/// @prop - Font family of the picker
+$picker-md-font-family:                       $font-family-md-base !default;
+
 /// @prop - Height of the picker wrapper
 $picker-md-height:                                  260px !default;
 

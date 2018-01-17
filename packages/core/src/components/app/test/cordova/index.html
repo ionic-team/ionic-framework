@@ -9,7 +9,7 @@
     window.Ionic.config = { statusbarPadding: true };
   </script>
 </head>
-<body>
+<body onload="initialize()">
   <ion-app>
     <ion-menu side="left">
 
@@ -53,12 +53,255 @@
 
     </ion-menu>
 
-    <ion-nav main></ion-nav>
+    <ion-nav></ion-nav>
 
-    <ion-nav-controller></ion-nav-controller>
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
+  <ion-modal-controller></ion-modal-controller>
+  <script>
 
-  <script type="module" src="cordova/bootstrap.js"></script>
+async function initialize() {
+  const nav = document.querySelector('ion-nav');
+  await nav.componentOnReady();
+  await nav.setRoot('page-one');
+}
+
+class PageOne extends HTMLElement {
+  async connectedCallback() {
+    this.innerHTML = `
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot='start'>
+      <ion-button><ion-icon slot='icon-only' name='menu'></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-segment color='light'>
+      <ion-segment-button checked>All</ion-segment-button>
+      <ion-segment-button>Favorites</ion-segment-button>
+    </ion-segment>
+    <ion-buttons slot='end'>
+      <ion-button><ion-icon slot='icon-only' name='search'></ion-icon></ion-button>
+      <ion-button><ion-icon slot='icon-only' name='menu'></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>I'm a toolbar</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div padding-bottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dolor lacus, ut vehicula arcu dapibus id. Morbi iaculis fermentum blandit. Curabitur tempus, ante et vehicula tempor, urna velit rutrum massa, quis suscipit purus lacus eget est. Sed nisi nulla, tempus id dictum a, cursus ut felis. Aliquam orci magna, rutrum nec tempor ac, fermentum quis eros. Sed ullamcorper felis sit amet tristique sagittis. Nullam sed tempus mi. Morbi sit amet lacinia leo. Nunc facilisis orci id consectetur dignissim. Integer dictum consectetur enim. Vivamus auctor, turpis ut eleifend pharetra, purus magna mattis arcu, vel pharetra tellus orci eget ex. Integer blandit posuere vehicula. Ut ipsum lorem, efficitur vitae eleifend tincidunt, fermentum nec lacus. Ut nec fermentum dui.</div>
+
+  <ion-button expand='block' class='e2eCordovaPage2 next'>Go to Page Two</ion-button>
+  <ion-button color='secondary' expand='block' class='e2eCordovaPage2 tabs'>Go to Tabs</ion-button>
+  <ion-button color='warning' expand='block' class='e2eCordovaPage2 single-modal'>Open Single Modal</ion-button>
+  <ion-button color='secondary' expand='block' class='e2eCordovaPage2 nav-modal'>Open Modal Nav</ion-button>
+
+  <div padding-bottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dolor lacus, ut vehicula arcu dapibus id. Morbi iaculis fermentum blandit. Curabitur tempus, ante et vehicula tempor, urna velit rutrum massa, quis suscipit purus lacus eget est. Sed nisi nulla, tempus id dictum a, cursus ut felis. Aliquam orci magna, rutrum nec tempor ac, fermentum quis eros. Sed ullamcorper felis sit amet tristique sagittis. Nullam sed tempus mi. Morbi sit amet lacinia leo. Nunc facilisis orci id consectetur dignissim. Integer dictum consectetur enim. Vivamus auctor, turpis ut eleifend pharetra, purus magna mattis arcu, vel pharetra tellus orci eget ex. Integer blandit posuere vehicula. Ut ipsum lorem, efficitur vitae eleifend tincidunt, fermentum nec lacus. Ut nec fermentum dui.</div>
+
+  <div padding-bottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dolor lacus, ut vehicula arcu dapibus id. Morbi iaculis fermentum blandit. Curabitur tempus, ante et vehicula tempor, urna velit rutrum massa, quis suscipit purus lacus eget est. Sed nisi nulla, tempus id dictum a, cursus ut felis. Aliquam orci magna, rutrum nec tempor ac, fermentum quis eros. Sed ullamcorper felis sit amet tristique sagittis. Nullam sed tempus mi. Morbi sit amet lacinia leo. Nunc facilisis orci id consectetur dignissim. Integer dictum consectetur enim. Vivamus auctor, turpis ut eleifend pharetra, purus magna mattis arcu, vel pharetra tellus orci eget ex. Integer blandit posuere vehicula. Ut ipsum lorem, efficitur vitae eleifend tincidunt, fermentum nec lacus. Ut nec fermentum dui.</div>
+
+  <div padding-bottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dolor lacus, ut vehicula arcu dapibus id. Morbi iaculis fermentum blandit. Curabitur tempus, ante et vehicula tempor, urna velit rutrum massa, quis suscipit purus lacus eget est. Sed nisi nulla, tempus id dictum a, cursus ut felis. Aliquam orci magna, rutrum nec tempor ac, fermentum quis eros. Sed ullamcorper felis sit amet tristique sagittis. Nullam sed tempus mi. Morbi sit amet lacinia leo. Nunc facilisis orci id consectetur dignissim. Integer dictum consectetur enim. Vivamus auctor, turpis ut eleifend pharetra, purus magna mattis arcu, vel pharetra tellus orci eget ex. Integer blandit posuere vehicula. Ut ipsum lorem, efficitur vitae eleifend tincidunt, fermentum nec lacus. Ut nec fermentum dui.</div>
+
+</ion-content>`;
+
+
+    const pageTwoButton = this.querySelector('ion-button.next');
+
+    pageTwoButton.addEventListener('click', async () => {
+      // okay, go to page two
+      await this.closest('ion-nav').push('page-two');
+    });
+
+    const tabsButton = this.querySelector('ion-button.tabs');
+    tabsButton.addEventListener('click', async () => {
+      await this.closest('ion-nav').setRoot('tabs-page');
+    });
+
+    const navModalButton = this.querySelector('ion-button.nav-modal');
+    navModalButton.addEventListener('click', async () => {
+      const modalController = document.querySelector('ion-modal-controller');
+      await modalController.componentOnReady();
+      const modalElement = await modalController.create({
+        component: 'modal-container'
+      });
+      modalElement.present();
+    });
+
+    const modalButton = this.querySelector('ion-button.single-modal');
+    modalButton.addEventListener('click', async () => {
+      const modalController = document.querySelector('ion-modal-controller');
+      await modalController.componentOnReady();
+      const modalElement = await modalController.create({
+        component: 'modal-one'
+      });
+      modalElement.present();
+    });
+  }
+}
+
+class PageTwo extends HTMLElement {
+  async connectedCallback() {
+    this.innerHTML = `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Page Two</ion-title>
+    <ion-buttons slot='end'>
+      <ion-button><ion-icon slot='icon-only' name='filter'></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    Hello I am a sub header, with no border on top
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div padding-bottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dolor lacus, ut vehicula arcu dapibus id. Morbi iaculis fermentum blandit. Curabitur tempus, ante et vehicula tempor, urna velit rutrum massa, quis suscipit purus lacus eget est. Sed nisi nulla, tempus id dictum a, cursus ut felis. Aliquam orci magna, rutrum nec tempor ac, fermentum quis eros. Sed ullamcorper felis sit amet tristique sagittis. Nullam sed tempus mi. Morbi sit amet lacinia leo. Nunc facilisis orci id consectetur dignissim. Integer dictum consectetur enim. Vivamus auctor, turpis ut eleifend pharetra, purus magna mattis arcu, vel pharetra tellus orci eget ex. Integer blandit posuere vehicula. Ut ipsum lorem, efficitur vitae eleifend tincidunt, fermentum nec lacus. Ut nec fermentum dui.</div>
+
+  <ion-button expand='block' class="back">Go Back</ion-button>
+  <ion-button expand='block' class='next e2eCordovaPage3'>Go to Page Three</ion-button>
+  <ion-button expand='block' color='secondary' class='e2eCordovaOpenModal modal'>Open Modal</ion-button>
+
+</ion-content>
+    `;
+
+    const backButton = this.querySelector('ion-button.back');
+    backButton.addEventListener('click', async () => {
+      await this.closest('ion-nav').pop();
+    });
+
+    const nextButton = this.querySelector('ion-button.next');
+    nextButton.addEventListener('click', async () => {
+      await this.closest('ion-nav').push('page-three');
+    });
+
+    const modalButton = this.querySelector('ion-button.modal');
+    modalButton.addEventListener('click', () => {
+      alert('This is a problem for future Ionic team, let\'s let those comrades deal with it.');
+    });
+  }
+}
+
+class PageThree extends HTMLElement {
+  async connectedCallback() {
+    this.innerHTML = `
+<ion-content>
+  <h2>Page 3</h2>
+  <div padding-bottom>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi scelerisque dolor lacus, ut vehicula arcu dapibus id. Morbi iaculis fermentum blandit. Curabitur tempus, ante et vehicula tempor, urna velit rutrum massa, quis suscipit purus lacus eget est. Sed nisi nulla, tempus id dictum a, cursus ut felis. Aliquam orci magna, rutrum nec tempor ac, fermentum quis eros. Sed ullamcorper felis sit amet tristique sagittis. Nullam sed tempus mi. Morbi sit amet lacinia leo. Nunc facilisis orci id consectetur dignissim. Integer dictum consectetur enim. Vivamus auctor, turpis ut eleifend pharetra, purus magna mattis arcu, vel pharetra tellus orci eget ex. Integer blandit posuere vehicula. Ut ipsum lorem, efficitur vitae eleifend tincidunt, fermentum nec lacus. Ut nec fermentum dui.</div>
+
+  <ion-button class='e2eCordovaGoBack back'>Go Back</ion-button>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>I'm a bottom toolbar</ion-title>
+  </ion-toolbar>
+</ion-footer>
+    `;
+
+    const backButton = this.querySelector('ion-button.back');
+    backButton.addEventListener('click', async () => {
+      await this.closest('ion-nav').pop();
+    });
+  }
+}
+
+class TabsPage extends HTMLElement {
+  async connectedCallback() {
+    this.innerHTML = `
+<ion-tabs>
+  <ion-tab title='Page 1' icon='chatboxes' class='tab-one'>
+    <ion-nav class="tab-one-nav"></ion-nav>
+  </ion-tab>
+
+  <ion-tab title='Page 2' icon='map' class='tab-two'>
+    <ion-nav class="tab-two-nav"></ion-nav>
+  </ion-tab>
+
+  <ion-tab title='Page 3' icon='person' class='tab-three'>
+    <ion-nav class="tab-three-nav"></ion-nav>
+  </ion-tab>
+</ion-tabs>
+    `;
+
+    const navOne = this.querySelector('ion-tab.tab-one ion-nav');
+    await navOne.componentOnReady();
+    await navOne.setRoot('page-one');
+
+    const navTwo = this.querySelector('ion-tab.tab-two ion-nav');
+    await navTwo.componentOnReady();
+    await navTwo.setRoot('page-two');
+
+    const navThree = this.querySelector('ion-tab.tab-three ion-nav');
+    await navThree.componentOnReady();
+    await navThree.setRoot('page-three');
+  }
+}
+
+class ModalContainer extends HTMLElement {
+  async connectedCallback() {
+    this.innerHTML = `
+      <ion-nav></ion-nav>
+    `;
+
+    const nav = this.querySelector('ion-nav');
+    await nav.componentOnReady();
+    nav.setRoot('modal-one');
+  }
+}
+
+class ModalOne extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Modal Page One</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  Modal Page One
+  <div>
+    <ion-button class="next">Go to Page Two</ion-button>
+  </div>
+</ion-content>
+    `;
+
+    const nextButton = this.querySelector('ion-button.next');
+    nextButton.addEventListener('click', async () => {
+      this.closest('ion-nav').push('modal-two');
+    });
+  }
+}
+
+class ModalTwo extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Modal Page Two</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  Modal Page Two
+  <div>
+    <ion-button class="back">Go Back</ion-button>
+  </div>
+</ion-content>
+    `;
+
+    const backButton = this.querySelector('ion-button.back');
+    backButton.addEventListener('click', async () => {
+      this.closest('ion-nav').pop();
+    });
+  }
+}
+
+customElements.define('page-one', PageOne);
+customElements.define('page-two', PageTwo);
+customElements.define('page-three', PageThree);
+customElements.define('tabs-page', TabsPage);
+customElements.define('modal-container', ModalContainer);
+customElements.define('modal-one', ModalOne);
+customElements.define('modal-two', ModalTwo);
+
+  </script>
 </body>
 </html>

@@ -58,6 +58,9 @@ any
 #### getActive()
 
 
+#### getChildNavs()
+
+
 #### getFirstView()
 
 
@@ -92,9 +95,6 @@ any
 
 
 #### removeView()
-
-
-#### resize()
 
 
 #### setPages()

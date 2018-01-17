@@ -87,6 +87,11 @@ any
 any
 
 
+#### passive
+
+boolean
+
+
 #### threshold
 
 number
@@ -177,6 +182,11 @@ any
 #### onWillStart
 
 any
+
+
+#### passive
+
+boolean
 
 
 #### threshold

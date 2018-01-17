@@ -86,7 +86,7 @@ export class Loading {
   /**
    * Dismiss the loading indicator if the page is changed
    */
-  @Prop() dismissOnPageChange: boolean = false;
+  @Prop() dismissOnPageChange = false;
 
   /**
    * Number of milliseconds to wait before dismissing the loading indicator
@@ -96,12 +96,12 @@ export class Loading {
   /**
    * If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   /**
    * Show the backdrop of not
    */
-  @Prop() showBackdrop: boolean = true;
+  @Prop() showBackdrop = true;
 
   /**
    * Animation to use when loading indicator is presented
@@ -116,7 +116,7 @@ export class Loading {
   /**
    * Toggles whether animation should occur or not
    */
-  @Prop() animate: boolean = true;
+  @Prop() willAnimate = true;
 
   /**
    * Present a loading overlay after it has been created
@@ -138,7 +138,7 @@ export class Loading {
     // build the animation and kick it off
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);
@@ -171,7 +171,7 @@ export class Loading {
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
-      if (!this.animate) {
+      if (!this.willAnimate) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
         this.animation = animation.duration(0);

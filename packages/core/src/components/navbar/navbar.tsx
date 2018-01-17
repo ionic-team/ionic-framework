@@ -15,21 +15,19 @@ export class Navbar {
   color: string;
 
   @Prop({ context: 'config' }) config: Config;
-  @Prop() hideBackButton: boolean = false;
+  @Prop() hideBackButton = false;
   @Prop() backButtonText: string;
   @Prop() backButtonIcon: string;
-  @Prop() hidden: boolean = false;
+  @Prop() hidden = false;
 
   backButtonClick(ev: UIEvent) {
     ev.preventDefault();
     ev.stopPropagation();
-
-    console.log('back button click');
   }
 
   componentDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button');
-    for (var i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
     }
   }

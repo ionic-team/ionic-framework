@@ -10,7 +10,7 @@ export class RouterController {
 
   private busy = false;
   private enabled = false;
-  private basePrefix: string = '#';
+  private basePrefix = '#';
 
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
@@ -88,7 +88,7 @@ export class RouterController {
   }
 
   private readNavState() {
-    let root = document.querySelector('ion-app') as HTMLElement;
+    const root = document.querySelector('ion-app') as HTMLElement;
     return readNavState(root);
   }
 

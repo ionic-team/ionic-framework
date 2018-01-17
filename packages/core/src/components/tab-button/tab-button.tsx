@@ -8,6 +8,13 @@ export class TabButton {
 
   @Element() el: HTMLElement;
 
+  /**
+   * @input {string} The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @Prop() mode: 'ios' | 'md';
+
   @Prop() selected = false;
   @Prop() tab: HTMLIonTabElement;
 
@@ -67,8 +74,9 @@ export class TabButton {
     if (tab.badge) {
       items.push(<ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge>);
     }
-    items.push(<div class='button-effect'></div>);
-
+    if (this.mode === 'md') {
+      items.push(<ion-ripple-effect />);
+    }
     return items;
   }
 }

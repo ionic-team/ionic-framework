@@ -5,6 +5,9 @@
 // Material Design Label
 // --------------------------------------------------
 
+/// @prop - Font family of the label
+$label-md-font-family:                $font-family-md-base !default;
+
 /// @prop - Text color of the label by an input, select, or datetime
 $label-md-text-color:                 #999 !default;
 
@@ -24,7 +27,7 @@ $label-md-margin-bottom:              $item-md-padding-bottom !default;
 $label-md-margin-start:               0 !default;
 
 /// @prop - Font size of the label when the text wraps
-$label-md-text-wrap-font-size:        $item-md-body-text-font-size !default;
+$label-md-text-wrap-font-size:        14px !default;
 
 /// @prop - Line height of the label when the text wraps
-$label-md-text-wrap-line-height:      $item-md-body-text-line-height !default;
+$label-md-text-wrap-line-height:      1.5 !default;

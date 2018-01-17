@@ -6,12 +6,12 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
     return '';
   }
 
-  let tokens: string[] = [];
+  const tokens: string[] = [];
   let hasText = false;
   FORMAT_KEYS.forEach((format, index) => {
     if (template.indexOf(format.f) > -1) {
-      var token = '{' + index + '}';
-      var text = renderTextFormat(format.f, (value as any)[format.k], value, locale);
+      const token = '{' + index + '}';
+      const text = renderTextFormat(format.f, (value as any)[format.k], value, locale);
 
       if (!hasText && text && (value as any)[format.k]) {
         hasText = true;
@@ -27,7 +27,7 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
     return '';
   }
 
-  for (var i = 0; i < tokens.length; i += 2) {
+  for (let i = 0; i < tokens.length; i += 2) {
     template = template.replace(tokens[i], tokens[i + 1]);
   }
 
@@ -47,7 +47,9 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData,
 
       return (locale.dayShortNames ? locale.dayShortNames : DAY_SHORT_NAMES)[value];
 
-    } catch (e) {}
+    } catch (e) {
+      // ignore
+    }
 
     return '';
   }
@@ -99,7 +101,7 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData,
 
 
 export function dateValueRange(format: string, min: DatetimeData, max: DatetimeData): any[] {
-  let opts: any[] = [];
+  const opts: any[] = [];
   let i: number;
 
   if (format === FORMAT_YYYY || format === FORMAT_YY) {
@@ -150,7 +152,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
   return opts;
 }
 
-export function dateSortValue(year: number, month: number, day: number, hour: number = 0, minute: number = 0): number {
+export function dateSortValue(year: number, month: number, day: number, hour = 0, minute = 0): number {
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
@@ -198,11 +200,11 @@ export function parseDate(val: any): DatetimeData {
   }
 
   // ensure all the parse values exist with at least 0
-  for (var i = 1; i < 8; i++) {
+  for (let i = 1; i < 8; i++) {
     parse[i] = (parse[i] !== undefined ? parseInt(parse[i], 10) : null);
   }
 
-  var tzOffset = 0;
+  let tzOffset = 0;
   if (parse[9] && parse[10]) {
     // hours
     tzOffset = parseInt(parse[10], 10) * 60;
@@ -248,17 +250,14 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
       // do some magic for 12-hour values
       if (newData.ampm && newData.hour) {
-        if (newData.ampm.value === 'pm') {
-          newData.hour.value = (newData.hour.value === 12 ? 12 : newData.hour.value + 12);
-
-        } else {
-          newData.hour.value = (newData.hour.value === 12 ? 0 : newData.hour.value);
-        }
+        newData.hour.value = (newData.ampm.value === 'pm')
+          ? (newData.hour.value === 12 ? 12 : newData.hour.value + 12)
+          : (newData.hour.value === 12 ? 0 : newData.hour.value);
       }
 
       // merge new values from the picker's selection
       // to the existing DatetimeData values
-      for (var k in newData) {
+      for (const k in newData) {
         (existingData as any)[k] = newData[k].value;
       }
 
@@ -270,7 +269,7 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
   } else {
     // blank data, clear everything out
-    for (let k in existingData) {
+    for (const k in existingData) {
       delete (existingData as any)[k];
     }
   }
@@ -324,7 +323,7 @@ export function getValueFromFormat(date: DatetimeData, format: string) {
 
 
 export function convertFormatToKey(format: string): string {
-  for (var k in FORMAT_KEYS) {
+  for (const k in FORMAT_KEYS) {
     if (FORMAT_KEYS[k].f === format) {
       return FORMAT_KEYS[k].k;
     }
@@ -406,7 +405,7 @@ export function convertToArrayOfStrings(input: any, type: string): string[] {
     input = input.replace(/\[|\]/g, '').split(',');
   }
 
-  var values: string[];
+  let values: string[];
   if (isArray(input)) {
     // trim up each string value
     values = input.map((val: string) => val.trim());

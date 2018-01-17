@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <ion-slides style="background: black" pager="true" effect="flip">
+  <ion-slides style="background: black" pager="true">
 
     <ion-slide style="background: red; color: white;">
       <h1>Slide 1</h1>
@@ -24,5 +24,12 @@
     </ion-slide>
 
   </ion-slides>
+  <script>
+    var slides = document.getElementsByTagName('ion-slides');
+    slides[0].options = {
+      effect: 'flip'
+    }
+  </script>
 </body>
+
 </html>
