@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Item - Inputs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Item inputs</ion-title>
+          <ion-buttons slot="end">
+            <ion-button id="toggleDisabled" class="e2eDisableButton" onClick="toggleDisabled()">
+              <span id="toggleDisabledSpan"></span>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-label>Simple item</ion-label>
+          </ion-item>
+
+          <ion-item id="item" onclick="testClick(event)">
+            <ion-label>Item Button</ion-label>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>DateTime</ion-label>
+            <ion-datetime id="datetime" value="2016-12-09" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY" required></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Select</ion-label>
+            <ion-select id="select">
+              <ion-select-option value="">No Game Console</ion-select-option>
+              <ion-select-option value="nes">NES</ion-select-option>
+              <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+              <ion-select-option value="ps">PlayStation</ion-select-option>
+              <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+              <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+              <ion-select-option value="snes">SNES</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Toggle</ion-label>
+            <ion-toggle name="Actually" slot="end" id="toggle" checked></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Input (text)</ion-label>
+            <ion-input id="text" value="Text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Input (placeholder)</ion-label>
+            <ion-input id="placeholder" placeholder="Placeholder"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Checkbox</ion-label>
+            <ion-checkbox id="checkbox" slot="start" checked></ion-checkbox>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Toggle (left)</ion-label>
+            <ion-toggle id="toggle" slot="start" checked></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Range</ion-label>
+            <ion-range id="range" value="10"></ion-range>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-page>
+  </ion-app>
+
+  <script>
+    var disabledIds = ['item', 'datetime', 'select', 'toggle', 'text', 'placeholder', 'checkbox', 'toggle', 'range']
+    var toggleDisabledButton = document.getElementById('toggleDisabledSpan');
+    var isDisabled = true;
+
+    toggleDisabled();
+
+    function toggleDisabled() {
+      isDisabled = !isDisabled;
+      toggleAll(isDisabled);
+      toggleDisabledButton.innerHTML = isDisabled ? 'Enable' : 'Disable';
+    }
+
+    function toggleAll(disabled) {
+      for (var i = 0; i < disabledIds.length; i++) {
+        var el = document.getElementById(disabledIds[i]);
+        el.disabled = disabled;
+      }
+    }
+
+    function testClick(ev) {
+      console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
+    }
+  </script>
+</html>

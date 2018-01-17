@@ -11,16 +11,7 @@
     <ion-page>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Item - Buttons</ion-title>
-          <ion-buttons slot="end">
-            <ion-button color="secondary">
-              Default
-              <ion-icon name="star" slot="end"></ion-icon>
-            </ion-button>
-            <ion-button color="secondary">
-              <ion-icon slot="icon-only" name="home"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+          <ion-title>Items as Links/Buttons</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -41,11 +32,11 @@
           button[ion-item]
         </ion-item>
 
-        <ion-item class="activated" (click)="testClick(event)">
+        <ion-item class="activated" onclick="testClick(event)">
           button[ion-item].activated
         </ion-item>
 
-        <ion-item color="danger" (click)="testClick(event)">
+        <ion-item color="danger" onclick="testClick(event)">
           button[ion-item] danger
         </ion-item>
 
@@ -68,14 +59,14 @@
         </ion-item>
 
         <ion-item>
-          <ion-button slot="start" icon-end onclick="testClick(event)">
+          <ion-button slot="start" onclick="testClick(event)">
             Right Icon
-            <ion-icon name="home"></ion-icon>
+            <ion-icon name="home" slot="end"></ion-icon>
           </ion-button>
           right icon buttons
-          <ion-button fill="outline" slot="end" icon-end onclick="testClick(event)">
+          <ion-button fill="outline" slot="end" onclick="testClick(event)">
             Right Icon
-            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star" slot="end"></ion-icon>
           </ion-button>
         </ion-item>
 
