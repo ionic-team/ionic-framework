@@ -23,16 +23,18 @@ import { PageThree } from '../page-three/page-three';
 })
 export class PageTwo {
 
-  constructor(private navController: NavController) {
+  constructor(/*private navController: NavController*/private router: Router) {
   }
 
 
   navPush() {
-    this.navController.push('/page-three');
+    // this.navController.push('/page-three');
+    this.router.navigateByUrl('/page-three');
   }
 
   navPop() {
-    this.navController.pop();
+    // this.navController.pop();
+    this.router.navigateByUrl('/page-one');
   }
 
 }

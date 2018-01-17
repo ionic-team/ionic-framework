@@ -17,6 +17,8 @@ import {
   RouterOutlet
 } from '@angular/router';
 
+import { RouterIntegration } from './router-integration';
+
 @Directive({
   selector: 'ion-outlet'
 })
@@ -32,7 +34,8 @@ export class IonicRouterOutlet extends RouterOutlet {
     private _location: ViewContainerRef,
     private componentFactoryResolver: ComponentFactoryResolver,
     @Attribute('name') private _name: string,
-    changeDetector: ChangeDetectorRef
+    changeDetector: ChangeDetectorRef,
+    private integration: RouterIntegration
   ) {
     super(_parentContexts, _location, componentFactoryResolver, name, changeDetector);
   }
@@ -48,6 +51,7 @@ export class IonicRouterOutlet extends RouterOutlet {
   }
 
   activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver) {
+    /*console.log('activatedRoute: ', activatedRoute);
     const snapshot = (activatedRoute as any)._futureSnapshot as ActivatedRouteSnapshot;
     const component = snapshot.routeConfig.component;
     const resolverToUse = resolver || this.componentFactoryResolver;
@@ -58,5 +62,8 @@ export class IonicRouterOutlet extends RouterOutlet {
     const componentRef = factory.create(this._location.injector, [], hostElement);
     this.appRef.attachView(componentRef.hostView);
     (this.elementRef.nativeElement).appendChild(hostElement);
+    */
+
+    this.integration.updateSegmentToResolver(activatedRoute, resolver, this.elementRef);
   }
 }

@@ -22,12 +22,13 @@ import { PageTwo } from '../page-two/page-two';
 })
 export class PageOne {
 
-  constructor(private navController: NavController) {
+  constructor(/*private navController: NavController*/private router: Router) {
   }
 
 
   pushPageTwoComponent() {
-    this.navController.push('/page-two');
+    // this.navController.push('/page-two');
+    this.router.navigateByUrl('/page-two');
   }
 
 }
