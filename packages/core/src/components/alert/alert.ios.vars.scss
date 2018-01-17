@@ -135,7 +135,7 @@ $alert-ios-button-min-height:                   44px !default;
 $alert-ios-button-font-size:                    17px !default;
 
 /// @prop - Color of the text in the alert button
-$alert-ios-button-text-color:                   ion-color($colors-ios, primary, $mode: ios) !default;
+$alert-ios-button-text-color:                   ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Background color of the alert button
 $alert-ios-button-background-color:             transparent !default;
@@ -252,13 +252,13 @@ $alert-ios-checkbox-border-radius:              50% !default;
 $alert-ios-checkbox-border-color-off:           $list-ios-border-color !default;
 
 /// @prop - Border color of the checkbox in the alert when on
-$alert-ios-checkbox-border-color-on:            ion-color($colors-ios, primary, $mode: ios) !default;
+$alert-ios-checkbox-border-color-on:            ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Background color of the checkbox in the alert when off
 $alert-ios-checkbox-background-color-off:       $list-ios-background-color !default;
 
 /// @prop - Background color of the checkbox in the alert when on
-$alert-ios-checkbox-background-color-on:        ion-color($colors-ios, primary, $mode: ios) !default;
+$alert-ios-checkbox-background-color-on:        ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Top of the icon in the checkbox alert
 $alert-ios-checkbox-icon-top:                   4px !default;

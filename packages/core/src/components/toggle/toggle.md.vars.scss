@@ -6,7 +6,7 @@
 // --------------------------------------------------
 
 /// @prop - Color of the active toggle
-$toggle-md-active-color:                 ion-color($colors-md, primary) !default;
+$toggle-md-active-color:                 ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Width of the toggle track
 $toggle-md-track-width:                  36px !default;

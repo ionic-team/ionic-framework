@@ -96,7 +96,7 @@ $alert-md-input-border-width-focused:         2px !default;
 $alert-md-input-border-style-focused:         $alert-md-input-border-style !default;
 
 /// @prop - Border color of the alert input when focused
-$alert-md-input-border-color-focused:         ion-color($colors-md, primary) !default;
+$alert-md-input-border-color-focused:         ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Margin top of the alert input
 $alert-md-input-margin-top:                   5px !default;
@@ -156,7 +156,7 @@ $alert-md-button-margin-start:                0 !default;
 $alert-md-button-font-weight:                 500 !default;
 
 /// @prop - Text color of the alert button
-$alert-md-button-text-color:                  ion-color($colors-md, primary) !default;
+$alert-md-button-text-color:                  ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Background color of the alert button
 $alert-md-button-background-color:            transparent !default;

@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Background color of the button
-$fab-ios-background-color:                              ion-color($colors-ios, primary, $mode: ios) !default;
+$fab-ios-background-color:                              ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Background color of the button in translucent mode
 $fab-ios-translucent-background-color:                  rgba(#488aff, .88) !default;
@@ -19,7 +19,7 @@ $fab-ios-icon-fill-color:                               $fab-ios-text-color !def
 $fab-ios-background-color-activated:                    ion-color($colors-ios, $fab-ios-background-color, shade, ios) !default;
 
 /// @prop - Background color of the button in a list
-$fab-ios-list-button-background-color:                  ion-color($colors-ios, tertiary, $mode: ios) !default;
+$fab-ios-list-button-background-color:                  ion-color($colors-ios, tertiary, base, ios) !default;
 
 /// @prop - Background color of the button in a list
 $fab-ios-list-button-translucent-background-color:      rgba(#f4f4f4, .88) !default;

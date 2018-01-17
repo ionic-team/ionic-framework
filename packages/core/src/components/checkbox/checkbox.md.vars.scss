@@ -12,7 +12,7 @@ $checkbox-md-disabled-opacity:           .3 !default;
 $checkbox-md-icon-background-color-off:  $list-md-background-color !default;
 
 /// @prop - Background color of the checkbox icon when on
-$checkbox-md-icon-background-color-on:   ion-color($colors-md, primary, $mode: md) !default;
+$checkbox-md-icon-background-color-on:   ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Size of the checkbox icon
 $checkbox-md-icon-size:                  16px !default;
@@ -39,7 +39,7 @@ $checkbox-md-icon-border-radius:         2px !default;
 $checkbox-md-icon-border-color-off:      #787878 !default;
 
 /// @prop - Border color of the checkbox icon when on
-$checkbox-md-icon-border-color-on:       ion-color($colors-md, primary, $mode: md) !default;
+$checkbox-md-icon-border-color-on:       ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Transition duration of the checkbox
 $checkbox-md-transition-duration:        280ms !default;

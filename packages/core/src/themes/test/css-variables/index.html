@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Variable - Basic</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+<body>
+  <ion-app>
+    <ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>CSS Variable - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content padding no-bounce text-center>
+        <p>
+          <ion-button>Default</ion-button>
+          <ion-button class="activated">Default.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button color="primary">Primary</ion-button>
+          <ion-button color="primary" class="activated">Primary.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button color="secondary">Secondary</ion-button>
+          <ion-button color="secondary" class="activated">Secondary.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button color="warning">Warning</ion-button>
+          <ion-button color="warning" class="activated">Warning.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button color="danger">Danger</ion-button>
+          <ion-button color="danger" class="activated">Danger.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button color="light">Light</ion-button>
+          <ion-button color="light" class="activated">Light.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button color="dark">Dark</ion-button>
+          <ion-button color="dark" class="activated">Dark.activated</ion-button>
+        </p>
+
+        <p>
+          <ion-button disabled>Button Disabled</ion-button>
+          <ion-button color="secondary" disabled>Secondary Disabled</ion-button>
+        </p>
+
+        <p>
+          <ion-button id="dynamicColor1" onclick="changeColor(event)">Change Color</ion-button>
+          <ion-button id="dynamicColor2" onclick="changeColor(event)" fill="outline">Change Color</ion-button>
+        </p>
+
+        <p>
+          <ion-button id="oceanic" onclick="toggleTheme(event)">Oceanicify</ion-button>
+        </p>
+
+      </ion-content>
+    </ion-page>
+  </ion-app>
+
+  <script>
+    testingColors = ['primary', 'secondary', 'danger', 'dark'];
+    testingColorIndex = {
+      dynamicColor1: 0,
+      dynamicColor2: 0
+    };
+
+    function changeColor (ev) {
+      var el = ev.currentTarget;
+      testingColorIndex[el.id] = (testingColorIndex[el.id] >= testingColors.length - 1 ? 0 : testingColorIndex[el.id] + 1);
+      el.color = testingColors[testingColorIndex[el.id]];
+    }
+
+    function toggleTheme (event) {
+      var target = event.currentTarget,
+          textNode = target.querySelector('.button-inner'),
+          isOcean = !!document.documentElement.style.getPropertyValue('--color-primary').length;
+
+        if(textNode) {
+          if (isOcean) {
+            textNode.textContent = 'Oceanicify';
+          } else {
+            textNode.textContent = 'Un-Oceanicify';
+          }
+        }
+
+        document.documentElement.style.cssText = isOcean ? '' :
+          `--color-primary: #549ee7;
+          --color-primary-tint: #59aafc;
+          --color-primary-shade: #498bce;
+          --color-primary-contrast: #ffffff;
+          --color-secondary: #5fb3b3;
+          --color-secondary-tint: #6ececf;
+          --color-secondary-shade: #34a29d;
+          --color-secondary-contrast: #ffffff;
+          --color-tertiary: #fac863;
+          --color-tertiary-tint: #ffd36a;
+          --color-tertiary-shade: #eab30f;
+          --color-tertiary-contrast: #ffffff;
+          --color-success: #90d089;
+          --color-success-tint: #a1eb9a;
+          --color-success-shade: #81bc7b;
+          --color-success-contrast: #ffffff;
+          --color-warning: #f99157;
+          --color-warning-tint: #ff9e60;
+          --color-warning-shade: #ec8a54;
+          --color-warning-contrast: #ffffff;
+          --color-danger: #ec5f67;
+          --color-danger-tint: #ff707b;
+          --color-danger-shade: #cb535b;
+          --color-danger-contrast: #ffffff;
+          --color-light: #d8dee9;
+          --color-light-tint: #ecf2ff;
+          --color-light-shade: #bcc1cd;
+          --color-light-contrast: #1b2b34;
+          --color-medium: #65737e;
+          --color-medium-tint: #a7adba;
+          --color-medium-shade: #4f5b66;
+          --color-medium-contrast: #ffffff;
+          --color-dark: #1b2b34;
+          --color-dark-tint: #343d46;
+          --color-dark-shade: #070b0d;
+          --color-dark-contrast: #d8dee9;
+          --backdrop-color: #1b2b34;
+          --background-color: #1b2b34;
+          --border-color: #1b2b34;
+          --box-shadow-color: #000000;
+          --text-color: #ffffff;
+          --tabs-background-color: #343d46;
+          --tabs-tab-color-inactive: #a7adba;
+          --tabs-tab-color-active: #549ee7;
+          --toolbar-background-color: #343d46;
+          --list-background-color: #343d46;
+          --list-background-color-active: #65737e;`;
+    }
+  </script>
+</body>
+</html>

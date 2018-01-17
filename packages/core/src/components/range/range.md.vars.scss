@@ -25,10 +25,10 @@ $range-md-hit-height:                        $range-md-slider-height !default;
 $range-md-bar-height:                        2px !default;
 
 /// @prop - Background of the range bar
-$range-md-bar-background-color:              ion-color($colors-md, quaternary, $mode: md) !default;
+$range-md-bar-background-color:              ion-color($colors-md, quaternary, base, md) !default;
 
 /// @prop - Background of the active range bar
-$range-md-bar-active-background-color:       ion-color($colors-md, primary, $mode: md) !default;
+$range-md-bar-active-background-color:       ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Width of the range knob
 $range-md-knob-width:                        18px !default;

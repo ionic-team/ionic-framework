@@ -88,18 +88,18 @@ $background-color:                      css-var(#fff, background-color) !default
 $border-color:                          css-var(#b2b2b2, border-color) !default;
 $box-shadow-color:                      css-var(#000, box-shadow-color) !default;
 $text-color:                            css-var(#000, text-color) !default;
-$link-color:                            css-var(ion-color($colors, primary), link-color) !default;
+$link-color:                            css-var(ion-color($colors, primary, base), link-color) !default;
 
 // Default Tabs & Tab bar
 // --------------------------------------------------
-$tabs-background-color:                 css-var(ion-color($colors, quinary), tabs-background-color) !default;
+$tabs-background-color:                 css-var(ion-color($colors, quinary, base), tabs-background-color) !default;
 $tabs-border-color:                     $border-color !default;
 $tabs-tab-color-active:                 css-var($link-color, tabs-tab-color-active) !default;
 $tabs-tab-color-inactive:               css-var(#8c8c8c, tabs-tab-color-inactive) !default;
 
 // Default Toolbar
 // --------------------------------------------------
-$toolbar-background-color:              css-var(ion-color($colors, quinary), toolbar-background-color) !default;
+$toolbar-background-color:              css-var(ion-color($colors, quinary, base), toolbar-background-color) !default;
 $toolbar-border-color:                  $border-color !default
 $toolbar-color-active:                  $link-color !default;
 $toolbar-color-inactive:                #8c8c8c !default;

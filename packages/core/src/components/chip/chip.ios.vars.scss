@@ -46,7 +46,7 @@ $chip-ios-label-margin-bottom:              $chip-ios-label-margin-top !default;
 $chip-ios-label-margin-start:               $chip-ios-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
-$chip-ios-icon-background-color:            ion-color($colors-ios, primary, $mode: ios) !default;
+$chip-ios-icon-background-color:            ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Fill color of the icon in the chip
 $chip-ios-icon-fill-color:                  ion-color($colors-ios, $chip-ios-icon-background-color, contrast, ios) !default;

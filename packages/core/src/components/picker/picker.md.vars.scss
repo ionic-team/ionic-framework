@@ -31,7 +31,7 @@ $picker-md-toolbar-background-color:                $picker-md-top-background-co
 $picker-md-button-height:                           $picker-md-toolbar-height !default;
 
 /// @prop - Text color of the picker button
-$picker-md-button-text-color:                       ion-color($colors-md, primary) !default;
+$picker-md-button-text-color:                       ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Background of the picker button
 $picker-md-button-background-color:                 transparent !default;
@@ -76,4 +76,4 @@ $picker-md-option-height:                           42px !default;
 $picker-md-option-offset-y:                         (($picker-md-height - $picker-md-toolbar-height) / 2) - ($picker-md-option-height / 2) - 10 !default;
 
 /// @prop - Text color of the selected picker option
-$picker-md-option-selected-color:                   ion-color($colors-md, primary) !default;
+$picker-md-option-selected-color:                   ion-color($colors-md, primary, base, md) !default;

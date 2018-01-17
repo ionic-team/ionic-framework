@@ -10,7 +10,7 @@ $item-md-sliding-content-background:         $list-md-background-color !default;
 $item-md-sliding-button-font-size:           14px !default;
 
 /// @prop - Background color of the sliding option button
-$item-md-sliding-button-background-color:    ion-color($colors-md, primary, $mode: md) !default;
+$item-md-sliding-button-background-color:    ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Text color of the sliding option button
 $item-md-sliding-button-text-color:          ion-color($colors-md, $item-md-sliding-button-background-color, contrast, md) !default;

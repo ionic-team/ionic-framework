@@ -10,7 +10,7 @@ $badge-ios-border-radius:      10px !default;
 $badge-ios-font-family:        $font-family-ios-base !default;
 
 /// @prop - Background color of the badge
-$badge-ios-background-color:   ion-color($colors-ios, primary, $mode: ios) !default;
+$badge-ios-background-color:   ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Text color of the badge
 $badge-ios-text-color:         ion-color($colors-ios, $badge-ios-background-color, contrast, ios) !default;

@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Background color of the chip button
-$chip-button-ios-background-color:          ion-color($colors-ios, primary, $mode: ios) !default;
+$chip-button-ios-background-color:          ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Fill color of the icon in the chip button
 $chip-button-ios-icon-fill-color:           ion-color($colors-ios, $chip-button-ios-background-color, contrast, ios) !default;
@@ -13,7 +13,7 @@ $chip-button-ios-icon-fill-color:           ion-color($colors-ios, $chip-button-
 $chip-button-ios-clear-background-color:    transparent !default;
 
 /// @prop - Text color of the clear chip button
-$chip-button-ios-clear-text-color:          ion-color($colors-ios, primary, $mode: ios) !default;
+$chip-button-ios-clear-text-color:          ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Fill color of the icon in the clear chip button
-$chip-button-ios-clear-icon-fill-color:     ion-color($colors-ios, primary, $mode: ios) !default;
+$chip-button-ios-clear-icon-fill-color:     ion-color($colors-ios, primary, base, ios) !default;
