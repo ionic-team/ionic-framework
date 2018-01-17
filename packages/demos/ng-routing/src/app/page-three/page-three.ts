@@ -20,12 +20,13 @@ import { NavController } from '@ionic/angular';
 })
 export class PageThree {
 
-  constructor(private navController: NavController) {
+  constructor(/*private navController: NavController*/private router: Router) {
   }
 
 
   navPop() {
-    this.navController.pop();
+    // this.navController.pop();
+    this.router.navigateByUrl('/page-two');
   }
 
 }
