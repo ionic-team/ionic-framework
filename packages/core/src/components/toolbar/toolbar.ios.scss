@@ -198,7 +198,7 @@
   }
 
   &.activated {
-    color: ion-color($colors-ios, $toolbar-ios-button-color, contrast, ios);
+    color: $toolbar-ios-text-color;
     background-color: $toolbar-ios-button-color;
   }
 }
@@ -224,17 +224,17 @@
 // --------------------------------------------------
 
 .bar-button-solid-ios {
-  color: ion-color($colors-ios, $toolbar-ios-button-color, contrast, ios);
+  color: $toolbar-ios-button-background-color;
   background-color: $toolbar-ios-button-color;
 
   &:hover:not(.disable-hover) {
-    color: ion-color($colors-ios, $toolbar-ios-button-color, contrast, ios);
+    color: $toolbar-ios-button-background-color;
     opacity: .4;
   }
 
   &.activated {
-    color: ion-color($colors-ios, $toolbar-ios-button-color, contrast, ios);
-    background-color: ion-color($colors-ios, $toolbar-ios-button-color, shade, ios);
+    color: $toolbar-ios-button-background-color;
+    background-color: $toolbar-ios-button-background-color-activated;
     opacity: .4;
   }
 }

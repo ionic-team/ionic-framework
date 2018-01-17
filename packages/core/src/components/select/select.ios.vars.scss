@@ -25,3 +25,6 @@ $select-ios-icon-color:          #999 !default;
 
 /// @prop - Color of the select placeholder
 $select-ios-placeholder-color:   $select-ios-icon-color !default;
+
+/// @prop - Text Color of the selected item
+$select-ios-text-color:          $text-ios-color !default;

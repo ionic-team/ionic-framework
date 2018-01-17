@@ -235,16 +235,16 @@
 // --------------------------------------------------
 
 .bar-button-solid-md {
-  color: ion-color($colors-md, $toolbar-md-button-color, contrast, md);
+  color: $toolbar-md-button-background-color;
   background-color: $toolbar-md-button-color;
 
   &:hover:not(.disable-hover) {
-    color: ion-color($colors-md, $toolbar-md-button-color, contrast, md);
+    color: $toolbar-md-button-background-color;
   }
 
   &.activated {
-    color: ion-color($colors-md, $toolbar-md-button-color, contrast, md);
-    background-color: ion-color($colors-md, $toolbar-md-button-color, shade, md);
+    color: $toolbar-md-button-background-color;
+    background-color: $toolbar-md-button-background-color-activated;
   }
 }
 

@@ -18,22 +18,10 @@ $ion-colors:  (
     tint:         #2cc158
   ),
   tertiary: (
-    base:         #f4f4f4,
-    contrast:     #000,
-    tint:         #d7d7d7,
-    shade:        #e0e0e0
-  ),
-  quaternary: (
-    base:         #bdbdbd,
-    contrast:     #000,
-    shade:        #aeaeae,
-    tint:         #a6a6a6
-  ),
-  quinary: (
-    base:         #f8f8f8,
-    contrast:     #000,
-    shade:        #e4e4e4,
-    tint:         #dadada
+    base:         #f4a942,
+    contrast:     #fff,
+    tint:         #ffa529,
+    shade:        #d6903d
   ),
   success: (
     base:         #10dc60,
@@ -92,14 +80,14 @@ $link-color:                            css-var(ion-color($colors, primary, base
 
 // Default Tabs & Tab bar
 // --------------------------------------------------
-$tabs-background-color:                 css-var(ion-color($colors, quinary, base), tabs-background-color) !default;
+$tabs-background-color:                 css-var(#f8f8f8, tabs-background-color) !default;
 $tabs-border-color:                     $border-color !default;
 $tabs-tab-color-active:                 css-var($link-color, tabs-tab-color-active) !default;
 $tabs-tab-color-inactive:               css-var(#8c8c8c, tabs-tab-color-inactive) !default;
 
 // Default Toolbar
 // --------------------------------------------------
-$toolbar-background-color:              css-var(ion-color($colors, quinary, base), toolbar-background-color) !default;
+$toolbar-background-color:              css-var(#f8f8f8, toolbar-background-color) !default;
 $toolbar-border-color:                  $border-color !default
 $toolbar-color-active:                  $link-color !default;
 $toolbar-color-inactive:                #8c8c8c !default;
@@ -109,5 +97,5 @@ $toolbar-text-color:                    $text-color !default;
 // --------------------------------------------------
 $list-background-color:                 css-var($background-color, list-background-color) !default;
 $list-background-color-active:          css-var($background-color, list-background-color-active) !default;
-$list-text-color:                       css-var($text-color, list-text-color) !default;
 $list-border-color:                     css-var(#c8c7cc, list-border-color) !default;
+$list-text-color:                       css-var($text-color, list-text-color) !default;

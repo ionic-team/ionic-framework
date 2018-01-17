@@ -16,19 +16,25 @@ $toolbar-order-md: (
 );
 
 /// @prop - Font family of the toolbar
-$toolbar-md-font-family:                 $font-family-md-base !default;
+$toolbar-md-font-family:                          $font-family-md-base !default;
 
 /// @prop - Font size of the toolbar button
-$toolbar-md-button-font-size:            14px !default;
+$toolbar-md-button-font-size:                     14px !default;
 
 /// @prop - Text color of the toolbar button
-$toolbar-md-button-color:                ion-color($colors-md, $toolbar-md-background-color, contrast, md) !default;
+$toolbar-md-button-color:                         $toolbar-md-text-color !default;
+
+/// @prop - Background color of the toolbar button
+$toolbar-md-button-background-color:              $toolbar-md-background-color !default;
+
+/// @prop - Background color of the toolbar button when activated
+$toolbar-md-button-background-color-activated:    ion-color($colors-md, primary, shade, md);
 
 /// @prop - Border radius of the toolbar button
-$toolbar-md-button-border-radius:        2px !default;
+$toolbar-md-button-border-radius:                 2px !default;
 
 /// @prop - Fill color of the toolbar button icon
-$toolbar-md-button-icon-fill-color:      currentColor !default;
+$toolbar-md-button-icon-fill-color:               currentColor !default;
 
 /// @prop - Font weight of the strong toolbar button
-$toolbar-md-button-strong-font-weight:   bold !default;
+$toolbar-md-button-strong-font-weight:            bold !default;

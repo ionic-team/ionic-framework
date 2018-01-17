@@ -7,4 +7,4 @@
 $toolbar-md-title-font-size:             20px !default;
 
 /// @prop - Text color of the toolbar title
-$toolbar-md-title-text-color:            ion-color($colors-md, $toolbar-md-background-color, contrast, md) !default;
+$toolbar-md-title-text-color:            $toolbar-md-text-color !default;

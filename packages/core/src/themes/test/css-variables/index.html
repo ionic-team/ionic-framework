@@ -6,6 +6,34 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <style>
+    .wrapper {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    section {
+      display: flex;
+      flex: 1 1 auto;
+      padding: 16px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    section > * {
+      padding: 8px;
+    }
+
+    .right-container {
+      display: flex;
+      position: absolute;
+      top: 4px;
+      right: 12px;
+    }
+  </style>
 </head>
 <body>
   <ion-app>
@@ -13,137 +41,250 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>CSS Variable - Basic</ion-title>
+
+          <div class="right-container">
+            <ion-label>Select a Theme:</ion-label>
+            <ion-select id="theme-picker">
+              <ion-select-option value="default">Default</ion-select-option>
+              <ion-select-option value="oceanic" selected>Oceanic</ion-select-option>
+              <ion-select-option value="fire-and-ice">Fire & Ice</ion-select-option>
+            </ion-select>
+          </div>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content padding no-bounce text-center>
-        <p>
-          <ion-button>Default</ion-button>
-          <ion-button class="activated">Default.activated</ion-button>
-        </p>
+      <div class="wrapper">
+        <section>
+          <p>
+            <ion-button>Default</ion-button>
+            <ion-button class="activated">Default.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button color="primary">Primary</ion-button>
-          <ion-button color="primary" class="activated">Primary.activated</ion-button>
-        </p>
+          <p>
+            <ion-button color="primary">Primary</ion-button>
+            <ion-button color="primary" class="activated">Primary.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button color="secondary">Secondary</ion-button>
-          <ion-button color="secondary" class="activated">Secondary.activated</ion-button>
-        </p>
+          <p>
+            <ion-button color="secondary">Secondary</ion-button>
+            <ion-button color="secondary" class="activated">Secondary.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button color="warning">Warning</ion-button>
-          <ion-button color="warning" class="activated">Warning.activated</ion-button>
-        </p>
+          <p>
+            <ion-button color="tertiary">Tertiary</ion-button>
+            <ion-button color="tertiary" class="activated">Tertiary.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button color="danger">Danger</ion-button>
-          <ion-button color="danger" class="activated">Danger.activated</ion-button>
-        </p>
+          <p>
+            <ion-button color="warning">Warning</ion-button>
+            <ion-button color="warning" class="activated">Warning.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button color="light">Light</ion-button>
-          <ion-button color="light" class="activated">Light.activated</ion-button>
-        </p>
+          <p>
+            <ion-button color="danger">Danger</ion-button>
+            <ion-button color="danger" class="activated">Danger.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button color="dark">Dark</ion-button>
-          <ion-button color="dark" class="activated">Dark.activated</ion-button>
-        </p>
+          <p>
+            <ion-button color="light">Light</ion-button>
+            <ion-button color="light" class="activated">Light.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button disabled>Button Disabled</ion-button>
-          <ion-button color="secondary" disabled>Secondary Disabled</ion-button>
-        </p>
+          <p>
+            <ion-button color="medium">Medium</ion-button>
+            <ion-button color="medium" class="activated">Medium.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button id="dynamicColor1" onclick="changeColor(event)">Change Color</ion-button>
-          <ion-button id="dynamicColor2" onclick="changeColor(event)" fill="outline">Change Color</ion-button>
-        </p>
+          <p>
+            <ion-button color="dark">Dark</ion-button>
+            <ion-button color="dark" class="activated">Dark.activated</ion-button>
+          </p>
 
-        <p>
-          <ion-button id="oceanic" onclick="toggleTheme(event)">Oceanicify</ion-button>
-        </p>
+          <p>
+            <ion-button disabled>Button Disabled</ion-button>
+            <ion-button color="secondary" disabled>Secondary Disabled</ion-button>
+          </p>
+        </section>
 
-      </ion-content>
+        <section>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Card Header</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              Keep close to Nature's heart... and break clear away, once in awhile,
+              and climb a mountain or spend a week in the woods. Wash your spirit clean.
+            </ion-card-content>
+          </ion-card>
+          <ion-card>
+            <ion-item>
+              <ion-icon name="pin" slot="start"></ion-icon>
+              ion-item in a card, icon left, button right
+              <ion-button fill="outline" slot="end">View</ion-button>
+            </ion-item>
+
+            <ion-card-content>
+              This is content, without any paragraph or header tags,
+              within an ion-card-content element.
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-item href="#" class="activated">
+              <ion-icon name="wifi" slot="start"></ion-icon>
+              Card Link Item 1 .activated
+            </ion-item>
+
+            <ion-item href="#">
+              <ion-icon name="wine" slot="start"></ion-icon>
+              Card Link Item 2
+            </ion-item>
+
+            <ion-item class="activated">
+              <ion-icon name="warning" slot="start"></ion-icon>
+              Card Button Item 1 .activated
+            </ion-item>
+
+            <ion-item>
+              <ion-icon name="walk" slot="start"></ion-icon>
+              Card Button Item 2
+            </ion-item>
+          </ion-card>
+        </section>
+
+        <section>
+          <ion-list>
+            <ion-item>Pokémon Yellow</ion-item>
+            <ion-item>Super Metroid</ion-item>
+            <ion-item>Mega Man X</ion-item>
+            <ion-item>The Legend of Zelda</ion-item>
+            <ion-item>Pac-Man</ion-item>
+            <ion-item>Super Mario World</ion-item>
+            <ion-item>Street Fighter II</ion-item>
+            <ion-item>Half Life</ion-item>
+            <ion-item>Portal</ion-item>
+            <ion-item>Final Fantasy VII</ion-item>
+            <ion-item>Star Fox</ion-item>
+            <ion-item>Tetris</ion-item>
+            <ion-item>Donkey Kong III</ion-item>
+            <ion-item>Goldeneye 007</ion-item>
+            <ion-item>Doom</ion-item>
+            <ion-item>Fallout</ion-item>
+            <ion-item>GTA</ion-item>
+            <ion-item>Halo</ion-item>
+          </ion-list>
+        </section>
+
+        <section>
+          <ion-radio-group id="fruitRadio">
+            <ion-item-divider>
+              <ion-label>Fruits (Group w/ values)</ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-label>Apple</ion-label>
+              <ion-radio slot="start" value="apple"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Grape, checked, disabled</ion-label>
+              <ion-radio slot="start" id="grapeChecked" value="grape" checked disabled></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Cherry</ion-label>
+              <ion-radio slot="start" color="danger" value="cherry"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
+          <ion-item>
+            <ion-range value="20"></ion-range>
+          </ion-item>
+
+          <section>
+            <ion-fab-button><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
+            <ion-fab-button mini><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+            <ion-fab-button color=secondary><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+            <ion-fab-button color=tertiary><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
+          </section>
+
+          <section>
+            <ion-chip>
+              <ion-label>Default</ion-label>
+            </ion-chip>
+            <ion-chip>
+              <ion-label color="secondary">Default</ion-label>
+            </ion-chip>
+          </section>
+        </section>
+
+        <section>
+          <ion-item>
+            <ion-label>Default</ion-label>
+            <ion-checkbox checked></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Primary</ion-label>
+            <ion-checkbox color="primary" checked></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Secondary</ion-label>
+            <ion-checkbox color="secondary" checked></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Warning</ion-label>
+            <ion-checkbox color="warning" checked></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Danger</ion-label>
+            <ion-checkbox color="danger" checked></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Light</ion-label>
+            <ion-checkbox color="light" checked></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Dark</ion-label>
+            <ion-checkbox color="dark" checked></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Unchecked by Default</ion-label>
+            <ion-checkbox></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Disabled</ion-label>
+            <ion-checkbox disabled></ion-checkbox>
+          </ion-item>
+        </section>
+      </div>
     </ion-page>
   </ion-app>
 
   <script>
-    testingColors = ['primary', 'secondary', 'danger', 'dark'];
-    testingColorIndex = {
-      dynamicColor1: 0,
-      dynamicColor2: 0
-    };
+    const cssCache = new Map(),
+      select = document.querySelector('#theme-picker');
 
-    function changeColor (ev) {
-      var el = ev.currentTarget;
-      testingColorIndex[el.id] = (testingColorIndex[el.id] >= testingColors.length - 1 ? 0 : testingColorIndex[el.id] + 1);
-      el.color = testingColors[testingColorIndex[el.id]];
-    }
+    select.addEventListener("ionChange", (event) => {
+      const theme = event.detail && event.detail.value;
+      toggleTheme(theme);
+    });
 
-    function toggleTheme (event) {
-      var target = event.currentTarget,
-          textNode = target.querySelector('.button-inner'),
-          isOcean = !!document.documentElement.style.getPropertyValue('--color-primary').length;
-
-        if(textNode) {
-          if (isOcean) {
-            textNode.textContent = 'Oceanicify';
-          } else {
-            textNode.textContent = 'Un-Oceanicify';
-          }
+    function toggleTheme (theme) {
+      const styleTarget = document.documentElement.style;
+      if (theme === 'default') {
+        styleTarget.cssText = '';
+      } else {
+        if (cssCache.has(theme)) {
+          styleTarget.cssText = cssCache.get(theme);
+        } else {
+          fetch(`/src/themes/css/${theme}.css`)
+            .then(result => result.text())
+            .then(css => {
+              cssCache.set(theme, css.replace(/(:root ?{)|}|\/\*\*.*\*\*\/|\s/g, '').trim());
+              toggleTheme(theme);
+            });
         }
-
-        document.documentElement.style.cssText = isOcean ? '' :
-          `--color-primary: #549ee7;
-          --color-primary-tint: #59aafc;
-          --color-primary-shade: #498bce;
-          --color-primary-contrast: #ffffff;
-          --color-secondary: #5fb3b3;
-          --color-secondary-tint: #6ececf;
-          --color-secondary-shade: #34a29d;
-          --color-secondary-contrast: #ffffff;
-          --color-tertiary: #fac863;
-          --color-tertiary-tint: #ffd36a;
-          --color-tertiary-shade: #eab30f;
-          --color-tertiary-contrast: #ffffff;
-          --color-success: #90d089;
-          --color-success-tint: #a1eb9a;
-          --color-success-shade: #81bc7b;
-          --color-success-contrast: #ffffff;
-          --color-warning: #f99157;
-          --color-warning-tint: #ff9e60;
-          --color-warning-shade: #ec8a54;
-          --color-warning-contrast: #ffffff;
-          --color-danger: #ec5f67;
-          --color-danger-tint: #ff707b;
-          --color-danger-shade: #cb535b;
-          --color-danger-contrast: #ffffff;
-          --color-light: #d8dee9;
-          --color-light-tint: #ecf2ff;
-          --color-light-shade: #bcc1cd;
-          --color-light-contrast: #1b2b34;
-          --color-medium: #65737e;
-          --color-medium-tint: #a7adba;
-          --color-medium-shade: #4f5b66;
-          --color-medium-contrast: #ffffff;
-          --color-dark: #1b2b34;
-          --color-dark-tint: #343d46;
-          --color-dark-shade: #070b0d;
-          --color-dark-contrast: #d8dee9;
-          --backdrop-color: #1b2b34;
-          --background-color: #1b2b34;
-          --border-color: #1b2b34;
-          --box-shadow-color: #000000;
-          --text-color: #ffffff;
-          --tabs-background-color: #343d46;
-          --tabs-tab-color-inactive: #a7adba;
-          --tabs-tab-color-active: #549ee7;
-          --toolbar-background-color: #343d46;
-          --list-background-color: #343d46;
-          --list-background-color-active: #65737e;`;
+      }
     }
   </script>
 </body>

@@ -1,0 +1,59 @@
+/** Fire & Ice theme **/
+
+
+:root {
+  --color-primary: #dd2d0b;
+  --color-primary-tint: #f1380a;
+  --color-primary-shade: #c13423;
+  --color-primary-contrast: #ced8e1;
+  --color-secondary: #1dbecc;
+  --color-secondary-tint: #1dd5e3;
+  --color-secondary-shade: #1d94a2;
+  --color-secondary-contrast: #ced8e1;
+  --color-tertiary: #ffc800;
+  --color-tertiary-tint: #ffe506;
+  --color-tertiary-shade: #e0a001;
+  --color-tertiary-contrast: #1c1c1c;
+  --color-success: #61b246;
+  --color-success-tint: #7cd14a;
+  --color-success-shade: #4c953e;
+  --color-success-contrast: #ced8e1;
+  --color-warning: #ee8424;
+  --color-warning-tint: #fd9f18;
+  --color-warning-shade: #da6f24;
+  --color-warning-contrast: #ced8e1;
+  --color-danger: #b82625;
+  --color-danger-tint: #df3739;
+  --color-danger-shade: #9a1418;
+  --color-danger-contrast: #ced8e1;
+  --color-light: #99d0d4;
+  --color-light-tint: #ace6ea;
+  --color-light-shade: #8abcc0;
+  --color-light-contrast: #1c1c1c;
+  --color-medium: #638c96;
+  --color-medium-tint: #81b5bf;
+  --color-medium-shade: #4c707a;
+  --color-medium-contrast: #fff;
+  --color-dark: #30464f;
+  --color-dark-tint: #496069;
+  --color-dark-shade: #23353e;
+  --color-dark-contrast: #ced8e1;
+  --backdrop-color: #1d0b0b;
+  --background-color: #af381c;
+  --border-color: #608f99;
+  --box-shadow-color: #171717;
+  --link-color: var(--color-primary);
+  --text-color: #ced8e1;
+  --tabs-background-color: #687e81;
+  --tabs-tab-color-inactive: rgba(206, 216, 225, 0.57);
+  --tabs-tab-color-active: #ced8e1;
+  --toolbar-background-color: #343d46;
+  --toolbar-border-color: var(--border-color);
+  --toolbar-color-active: var(--link-color);
+  --toolbar-color-inactive: rgba(206, 216, 225, 0.57);
+  --toolbar-text-color: var(--text-color);
+  --list-background-color: #364a52;
+  --list-background-color-active: #243840;
+  --list-border-color: var(--border-color);
+  --list-text-color: var(--text-color);
+}

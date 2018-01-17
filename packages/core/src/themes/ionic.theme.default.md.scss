@@ -19,12 +19,12 @@ $backdrop-md-color:                     css-var($backdrop-color, backdrop-md-col
 $background-md-color:                   css-var($background-color, background-md-color) !default;
 $border-md-color:                       css-var(#c1c4cd, border-md-color) !default;
 $box-shadow-md-color:                   css-var($box-shadow-color, box-shadow-md-color) !default;
-$text-md-color:                         css-var($text-color, text-md-color) !default;
 $link-md-color:                         css-var(ion-color($colors-md, primary, base, md), link-md-color) !default;
+$text-md-color:                         css-var($text-color, text-md-color) !default;
 
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
-$tabs-md-background-color:              css-var(ion-color($colors-md, quinary, base, md), tabs-md-background-color) !default;
+$tabs-md-background-color:              css-var($tabs-background-color, tabs-md-background-color) !default;
 $tabs-md-border-color:                  css-var(rgba(0, 0, 0, .07), tabs-md-border-color) !default;
 $tabs-md-tab-color-inactive:            css-var(#rgba(60, 60, 60, 0.7), tabs-md-tab-color-inactive) !default;
 $tabs-md-tab-color-active:              css-var($tabs-tab-color-active, tabs-md-tab-color-active) !default;
@@ -33,7 +33,7 @@ $tabs-md-tab-color-active:              css-var($tabs-tab-color-active, tabs-md-
 // --------------------------------------------------
 $toolbar-md-height:                     56px !default;
 $toolbar-md-padding:                    4px !default;
-$toolbar-md-background-color:           css-var(ion-color($colors-md, quinary, base, md), toolbar-md-background-color) !default;
+$toolbar-md-background-color:           css-var($toolbar-background-color, toolbar-md-background-color) !default;
 $toolbar-md-border-color:               css-var($toolbar-border-color, toolbar-md-border-color) !default;
 $toolbar-md-color-active:               css-var($toolbar-color-active, toolbar-md-color-active) !default;
 $toolbar-md-color-inactive:             css-var($toolbar-color-inactive, toolbar-md-color-inactive) !default;
@@ -42,6 +42,6 @@ $toolbar-md-text-color:                 css-var(#424242, toolbar-md-text-color) 
 // Material Design List & List Items
 // --------------------------------------------------
 $list-md-background-color:              css-var($list-background-color, list-md-background-color) !default;
-$list-md-activated-background-color:    css-var(#f1f1f1, list-md-activated-background-color) !default;
+$list-md-background-color-active:       css-var(#f1f1f1, list-md-background-color-active) !default;
 $list-md-border-color:                  css-var(#dedede, list-md-border-color) !default;
 $list-md-text-color:                    css-var($list-text-color, list-md-text-color) !default;

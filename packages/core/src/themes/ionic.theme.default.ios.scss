@@ -24,7 +24,7 @@ $link-ios-color:                              css-var(ion-color($colors-ios, pri
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
-$tabs-ios-background-color:                   css-var(ion-color($colors-ios, quinary, base, ios), tabs-ios-background-color) !default;
+$tabs-ios-background-color:                   css-var($tabs-background-color, tabs-ios-background-color) !default;
 $tabs-ios-translucent-background-color:       css-var(rgba(248, 248, 248, 0.8), tabs-ios-background-color) !default;
 $tabs-ios-border-color:                       css-var(rgba(0, 0, 0, .2), tabs-ios-border-color) !default;
 $tabs-ios-tab-color-inactive:                 css-var($tabs-tab-color-inactive, tabs-ios-tab-color-inactive) !default;
@@ -34,7 +34,7 @@ $tabs-ios-tab-color-active:                   css-var($tabs-tab-color-active, ta
 // --------------------------------------------------
 $toolbar-ios-height:                          44px !default;
 $toolbar-ios-padding:                         4px !default;
-$toolbar-ios-background-color:                css-var(ion-color($colors-ios, quinary, base, ios), toolbar-ios-background-color) !default;
+$toolbar-ios-background-color:                css-var($tabs-background-color, toolbar-ios-background-color) !default;
 $toolbar-ios-translucent-background-color:    css-var(rgba(248, 248, 248, 0.8), toolbar-ios-background-color) !default;
 $toolbar-ios-border-color:                    css-var(rgba(0, 0, 0, .2), toolbar-ios-border-color) !default;
 $toolbar-ios-color-active:                    css-var($toolbar-color-active, toolbar-ios-color-active) !default;
@@ -44,6 +44,6 @@ $toolbar-ios-text-color:                      css-var($toolbar-text-color, toolb
 // iOS List & List Items
 // --------------------------------------------------
 $list-ios-background-color:                   css-var($list-background-color, list-ios-background-color) !default;
-$list-ios-activated-background-color:         css-var(#d9d9d9, list-ios-activated-background-color) !default;
+$list-ios-background-color-active:            css-var(#d9d9d9, list-ios-background-color-active) !default;
 $list-ios-border-color:                       css-var($list-border-color, list-ios-border-color) !default;
 $list-ios-text-color:                         css-var($list-text-color, list-ios-text-color) !default;

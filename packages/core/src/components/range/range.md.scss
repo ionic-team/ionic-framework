@@ -168,7 +168,7 @@
 
     .range-pin,
     .range-pin::before {
-      color: ion-color($colors-md, $range-md-pin-min-background-color, contrast, md);
+      color: ion-color($colors-md, primary, contrast, md);
       background: $range-md-pin-min-background-color;
     }
   }
